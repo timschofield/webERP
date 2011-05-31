@@ -967,7 +967,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=284 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2294,7 +2294,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2356,7 +2356,7 @@ CREATE TABLE `stockserialmoves` (
   KEY `serialno` (`serialno`),
   CONSTRAINT `stockserialmoves_ibfk_1` FOREIGN KEY (`stockmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
   CONSTRAINT `stockserialmoves_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2799,7 +2799,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-29 21:56:20
+-- Dump completed on 2011-05-30 20:52:01
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -11017,6 +11017,8 @@ INSERT INTO `gltrans` VALUES (278,25,34,0,'2011-05-19',9,1460,'PO: 2 GOTSTUFF - 
 INSERT INTO `gltrans` VALUES (279,25,34,0,'2011-05-19',9,2150,'PO1305801077: 2 GOTSTUFF - SALT - Salt x 2 @ 6.39',-12.7894,1,'',0);
 INSERT INTO `gltrans` VALUES (280,12,11,0,'2011-05-26',9,1300,'bull',-34,0,'',0);
 INSERT INTO `gltrans` VALUES (281,12,11,0,'2011-05-26',9,1030,'test',34,0,'',0);
+INSERT INTO `gltrans` VALUES (282,17,21,0,'2011-05-30',9,5700,'HIT3043-5 x 5 @ 1235 ',-6175,0,'',0);
+INSERT INTO `gltrans` VALUES (283,17,21,0,'2011-05-30',9,1460,'HIT3043-5 x 5 @ 1235 ',6175,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -11082,7 +11084,7 @@ INSERT INTO `locstock` VALUES ('MEL','FUJI990101',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3042-4',0,0);
-INSERT INTO `locstock` VALUES ('MEL','HIT3043-5',0,0);
+INSERT INTO `locstock` VALUES ('MEL','HIT3043-5',5,0);
 INSERT INTO `locstock` VALUES ('MEL','SALT',5,0);
 INSERT INTO `locstock` VALUES ('MEL','SLICE',0,0);
 INSERT INTO `locstock` VALUES ('MEL','YEAST',0,0);
@@ -11567,11 +11569,15 @@ INSERT INTO `paymentterms` VALUES ('CA','Cash Only',2,0);
 -- Dumping data for table `pcexpenses`
 --
 
+INSERT INTO `pcexpenses` VALUES ('motor','Motor Expenses',7600);
+INSERT INTO `pcexpenses` VALUES ('parking','Parking',7650);
 
 --
 -- Dumping data for table `pctabexpenses`
 --
 
+INSERT INTO `pctabexpenses` VALUES ('DEFAULT','motor');
+INSERT INTO `pctabexpenses` VALUES ('DEFAULT','parking');
 
 --
 -- Dumping data for table `pctabs`
@@ -11617,7 +11623,8 @@ INSERT INTO `periods` VALUES (10,'2011-06-30');
 INSERT INTO `prices` VALUES ('BIGEARS12','DE','AUD','','4428.0000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('BirthdayCakeConstruc','DE','AUD','','1476.0000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('BREAD','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
-INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','','246.0000','','1999-01-01','0000-00-00');
+INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','','246.0000','','1999-01-01','2011-05-29');
+INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','','250.0000','','2011-05-30','9999-12-31');
 INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','','124.5000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-CASE','DE','GBP','DUMBLE','52.6500','DUMBLE','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-CASE','DE','USD','ANGRY','150.0000','ANGRY','2011-05-13','0000-00-00');
@@ -13363,6 +13370,7 @@ INSERT INTO `stockmoves` VALUES (70,'FLOUR',10,16,'TOR','2011-05-03','QUICK','SL
 INSERT INTO `stockmoves` VALUES (71,'SALT',25,34,'MEL','2011-05-19','','','100.0000',9,'GOTSTUFF (We Got the Stuff Inc) - 2',2,0,3.3654888888889,1,5,0,NULL);
 INSERT INTO `stockmoves` VALUES (72,'DVD-CASE',16,24,'MEL','2011-05-29','','','0.0000',9,'To TOR',-1,0,0,1,34,0,NULL);
 INSERT INTO `stockmoves` VALUES (73,'DVD-CASE',16,24,'TOR','2011-05-29','','','0.0000',9,'From MEL',1,0,0,1,187,0,NULL);
+INSERT INTO `stockmoves` VALUES (74,'HIT3043-5',17,21,'MEL','2011-05-30','','','0.0000',9,'',5,0,0,1,5,0,NULL);
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -13396,6 +13404,11 @@ INSERT INTO `stockmovestaxes` VALUES (70,13,0,0,0);
 INSERT INTO `stockserialitems` VALUES ('DVD-TOPGUN','MEL','23','0000-00-00 00:00:00',-1,'');
 INSERT INTO `stockserialitems` VALUES ('FLOUR','MEL','5433','0000-00-00 00:00:00',-4,'');
 INSERT INTO `stockserialitems` VALUES ('FLOUR','TOR','reww211','0000-00-00 00:00:00',8,'');
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','122234','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','12241','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','122445','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','1234','0000-00-00 00:00:00',1,'');
+INSERT INTO `stockserialitems` VALUES ('HIT3043-5','MEL','123434','0000-00-00 00:00:00',1,'');
 
 --
 -- Dumping data for table `stockserialmoves`
@@ -13405,6 +13418,11 @@ INSERT INTO `stockserialmoves` VALUES (1,3,'DVD-TOPGUN','23',1);
 INSERT INTO `stockserialmoves` VALUES (2,9,'FLOUR','5433',4);
 INSERT INTO `stockserialmoves` VALUES (3,60,'FLOUR','reww211',12);
 INSERT INTO `stockserialmoves` VALUES (4,70,'FLOUR','reww211',-4);
+INSERT INTO `stockserialmoves` VALUES (5,74,'HIT3043-5','1234',1);
+INSERT INTO `stockserialmoves` VALUES (6,74,'HIT3043-5','123434',1);
+INSERT INTO `stockserialmoves` VALUES (7,74,'HIT3043-5','122234',1);
+INSERT INTO `stockserialmoves` VALUES (8,74,'HIT3043-5','12241',1);
+INSERT INTO `stockserialmoves` VALUES (9,74,'HIT3043-5','122445',1);
 
 --
 -- Dumping data for table `suppallocs`
@@ -13481,7 +13499,7 @@ INSERT INTO `systypes` VALUES (11,'Credit Note',7);
 INSERT INTO `systypes` VALUES (12,'Receipt',11);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',24);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',20);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',21);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',17);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
 INSERT INTO `systypes` VALUES (20,'Purchase Invoice',25);
@@ -13643,7 +13661,7 @@ INSERT INTO `workorders` VALUES (13,'TOR','2010-10-15','2010-08-14',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-05-29 18:50:37','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-05-30 20:00:14','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
 INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b','test','','','','','','MEL',6,'2011-05-19 19:05:46','','A4','1,1,1,0,0,0,0,0,0,0,',0,50,'silverwolf','en_GB.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -13652,5 +13670,5 @@ INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-29 21:56:20
+-- Dump completed on 2011-05-30 20:52:01
 SET FOREIGN_KEY_CHECKS = 1;

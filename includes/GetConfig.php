@@ -87,6 +87,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	}
 	
 	/*Now read in smtp email settings - not needed in a properly set up server environment - but helps for those who can't control their server .. I think! */
+		
 	$sql="SELECT id,
 				host,
 				port,
@@ -96,17 +97,21 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 				timeout,
 				auth
 			FROM emailsettings";
-	$result=DB_query($sql, $db);
-	$myrow=DB_fetch_array($result);
-
-	$_SESSION['SMTPSettings']['host']=$myrow['host'];
-	$_SESSION['SMTPSettings']['port']=$myrow['port'];
-	$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
-	$_SESSION['SMTPSettings']['username']=$myrow['username'];
-	$_SESSION['SMTPSettings']['password']=$myrow['password'];
-	$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
-	$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
-
+	$result=DB_query($sql, $db,'','',false,false);
+	if (DB_error_no($db)==0) { 
+		/*test to ensure that the emailsettings table exists!!
+		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway 
+		*/
+		$myrow=DB_fetch_array($result);
+	
+		$_SESSION['SMTPSettings']['host']=$myrow['host'];
+		$_SESSION['SMTPSettings']['port']=$myrow['port'];
+		$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
+		$_SESSION['SMTPSettings']['username']=$myrow['username'];
+		$_SESSION['SMTPSettings']['password']=$myrow['password'];
+		$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
+		$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
+	}
 } //end if force reload or not set already
 
 

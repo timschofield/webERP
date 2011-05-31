@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.13rc0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 21:48+1200\n"
+"POT-Creation-Date: 2011-05-30 20:51+1200\n"
 "PO-Revision-Date: 2011-02-05 16:02+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -360,7 +360,7 @@ msgstr "Ändra"
 #: Labels.php:414 Locations.php:378 MRPDemands.php:304 MRPDemandTypes.php:121
 #: PaymentMethods.php:203 Payments.php:1006 PaymentTerms.php:204
 #: PcAssignCashToTab.php:259 PcClaimExpensesFromTab.php:253 PcExpenses.php:209
-#: PcExpensesTypeTab.php:182 PcTabs.php:235 PcTypeTabs.php:173
+#: PcExpensesTypeTab.php:185 PcTabs.php:235 PcTypeTabs.php:173
 #: PO_AuthorisationLevels.php:151 PO_Items.php:687 Prices_Customer.php:281
 #: Prices.php:247 PurchData.php:211 SalesAnalReptCols.php:294
 #: SalesAnalRepts.php:302 SalesCategories.php:257 SalesGLPostings.php:133
@@ -820,7 +820,7 @@ msgstr "Tillbaka till menyn"
 msgid "The details of outstanding transactions for customer"
 msgstr "?ppna transaktioner för kunden"
 
-#: AgedDebtors.php:371 AgedSuppliers.php:189 GLAccountCSV.php:167
+#: AgedDebtors.php:371 AgedSuppliers.php:189 GLAccountCSV.php:168
 #: GLAccountInquiry.php:145 GLAccountReportphp:149 GLAccountReport.php:93
 #: PO_Items.php:416 PO_Items.php:538 PO_Items.php:562
 #: SalesAnalReptCols.php:356 SpecialOrder.php:370
@@ -1278,7 +1278,7 @@ msgstr "Bankadress"
 #: PO_AuthorisationLevels.php:205 PO_AuthorisationLevels.php:210
 #: PO_AuthoriseMyOrders.php:114 PO_Header.php:545
 #: PO_SelectOSPurchOrder.php:437 PO_SelectPurchOrder.php:393
-#: PricesByCost.php:254 Prices.php:217 Prices.php:287 PurchData.php:175
+#: PricesByCost.php:271 Prices.php:217 Prices.php:287 PurchData.php:175
 #: PurchData.php:341 PurchData.php:465 SelectSupplier.php:247
 #: SupplierCredit.php:265 SupplierInvoice.php:231 SupplierTransInquiry.php:95
 #: SuppPriceList.php:265 includes/PDFBankingSummaryPageHeader.inc:42
@@ -1379,9 +1379,9 @@ msgstr "Visa"
 msgid "from"
 msgstr "från"
 
-#: BankMatching.php:110 ConfirmDispatchControlled_Invoice.php:59
+#: BankMatching.php:110 ConfirmDispatchControlled_Invoice.php:58
 #: EmailCustTrans.php:65 FixedAssetRegister.php:78 FTP_RadioBeacon.php:280
-#: GLAccountCSV.php:170 GLAccountReport.php:102 Payments.php:717
+#: GLAccountCSV.php:171 GLAccountReport.php:102 Payments.php:717
 #: PcReportTab.php:102 PDFChequeListing.php:107 PDFChequeListing.php:117
 #: PDFChequeListing.php:192 PDFDeliveryDifferences.php:166
 #: PDFDeliveryDifferences.php:179 PDFDeliveryDifferences.php:287
@@ -2041,11 +2041,11 @@ msgstr "En nivå"
 #: MRPDemands.php:289 MRPDemandTypes.php:113 MRPPlannedWorkOrders.php:256
 #: MRPReport.php:535 MRPReport.php:739 MRPReschedules.php:176
 #: MRPShortages.php:334 PaymentTerms.php:180 PcExpenses.php:181
-#: PcExpenses.php:273 PcExpensesTypeTab.php:166 PcReportTab.php:171
+#: PcExpenses.php:273 PcExpensesTypeTab.php:169 PcReportTab.php:171
 #: PcTypeTabs.php:156 PDFOrdersInvoiced.php:342 PDFOrderStatus.php:316
 #: PDFPrintLabel.php:238 PO_Items.php:640 PO_Items.php:929
 #: PO_SelectOSPurchOrder.php:211 PO_SelectPurchOrder.php:178
-#: PricesByCost.php:135 ReorderLevelLocation.php:55 ReorderLevel.php:254
+#: PricesByCost.php:152 ReorderLevelLocation.php:55 ReorderLevel.php:254
 #: ReverseGRN.php:377 SalesCategories.php:423 SecurityTokens.php:86
 #: SecurityTokens.php:92 SecurityTokens.php:102 SelectAsset.php:243
 #: SelectCompletedOrder.php:536 SelectContract.php:156
@@ -2221,7 +2221,7 @@ msgstr "SQL"
 #: MRPPlannedWorkOrders.php:255 MRPReport.php:738 PDFOrdersInvoiced.php:341
 #: PDFOrderStatus.php:315 PDFPrintLabel.php:238 PO_Header.php:542
 #: PO_Items.php:928 PO_SelectOSPurchOrder.php:210 PO_SelectPurchOrder.php:177
-#: PricesByCost.php:134 PurchData.php:339 ReorderLevelLocation.php:54
+#: PricesByCost.php:151 PurchData.php:339 ReorderLevelLocation.php:54
 #: ReorderLevelLocation.php:203 SalesPeople.php:184
 #: SelectCompletedOrder.php:535 SelectCreditItems.php:220
 #: SelectCreditItems.php:956 SelectCustomer.php:458 SelectGLAccount.php:105
@@ -2682,7 +2682,7 @@ msgstr "Lagerkategori"
 
 #: COGSGLPostings.php:90 COGSGLPostings.php:194 COGSGLPostings.php:306
 #: Customers.php:739 Customers.php:742 DiscountMatrix.php:96
-#: DiscountMatrix.php:152 PricesByCost.php:242 Prices.php:218
+#: DiscountMatrix.php:152 PricesByCost.php:259 Prices.php:218
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:224 SalesGLPostings.php:354 SelectOrderItems.php:752
 #: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
@@ -2715,7 +2715,7 @@ msgstr "Annan typ"
 
 #: COGSGLPostings.php:306 Customers.php:742 EDIProcessOrders.php:389
 #: PDFCustomerList.php:332 PDFPriceList.php:17 PDFPriceList.php:121
-#: PDFPriceList.php:251 PricesBasedOnMarkUp.php:223 PricesByCost.php:242
+#: PDFPriceList.php:251 PricesBasedOnMarkUp.php:223 PricesByCost.php:259
 #: SalesGLPostings.php:354 SelectOrderItems.php:752 SuppPriceList.php:118
 #: SuppPriceList.php:222
 msgid "Price List"
@@ -2908,7 +2908,7 @@ msgstr "Skapa konteringar för lagertransaktioner"
 #: GLTags.php:62 GoodsReceived.php:229 GoodsReceived.php:235
 #: GoodsReceived.php:242 GoodsReceived.php:699 Labels.php:262
 #: MRPCalendar.php:307 Payments.php:860 PcAuthorizeExpenses.php:283
-#: PO_AuthoriseMyOrders.php:132 PricesByCost.php:204 PurchData.php:505
+#: PO_AuthoriseMyOrders.php:132 PricesByCost.php:221 PurchData.php:505
 #: ReorderLevelLocation.php:156 SecurityTokens.php:89
 #: SelectCreditItems.php:898 SMTPServer.php:64 StockCostUpdate.php:163
 #: StockReorderLevel.php:94 Stocks.php:1037 SystemParameters.php:1005
@@ -2916,15 +2916,15 @@ msgstr "Skapa konteringar för lagertransaktioner"
 msgid "Update"
 msgstr "Uppdatera"
 
-#: ConfirmDispatchControlled_Invoice.php:9
+#: ConfirmDispatchControlled_Invoice.php:8
 msgid "Specify Dispatched Controlled Items"
 msgstr "Ange utlevererade kontrollerade produkter"
 
-#: ConfirmDispatchControlled_Invoice.php:20
+#: ConfirmDispatchControlled_Invoice.php:19
 msgid "Select a line item to invoice"
 msgstr "Välj en rad som skall faktureras"
 
-#: ConfirmDispatchControlled_Invoice.php:22
+#: ConfirmDispatchControlled_Invoice.php:21
 msgid ""
 "This page can only be opened if a line item on a sales order to be invoiced "
 "has been selected"
@@ -2932,17 +2932,17 @@ msgstr ""
 "Denna sida kan bara visas om en rad på en kundorder som skall faktureras har "
 "valts"
 
-#: ConfirmDispatchControlled_Invoice.php:22 CreditItemsControlled.php:33
+#: ConfirmDispatchControlled_Invoice.php:21 CreditItemsControlled.php:33
 #: CreditItemsControlled.php:44 GoodsReceivedControlled.php:28
 #: GoodsReceivedControlled.php:40
 msgid "Please do that first"
 msgstr "Gör det först"
 
-#: ConfirmDispatchControlled_Invoice.php:30 ConfirmDispatch_Invoice.php:18
+#: ConfirmDispatchControlled_Invoice.php:29 ConfirmDispatch_Invoice.php:18
 msgid "Select a sales order to invoice"
 msgstr "Välj en kundorder som ska faktureras"
 
-#: ConfirmDispatchControlled_Invoice.php:32
+#: ConfirmDispatchControlled_Invoice.php:31
 msgid ""
 "This page can only be opened if a sales order and line item has been "
 "selected Please do that first"
@@ -2950,11 +2950,11 @@ msgstr ""
 "Denna sida kan bara visas om man valt en kundorder och en rad först, gör det "
 "först."
 
-#: ConfirmDispatchControlled_Invoice.php:45
+#: ConfirmDispatchControlled_Invoice.php:44
 msgid "Back to the Sales Order"
 msgstr "Tillbaka till kundorder"
 
-#: ConfirmDispatchControlled_Invoice.php:47
+#: ConfirmDispatchControlled_Invoice.php:46
 msgid ""
 "The line item must be defined as controlled to require input of the batch "
 "numbers or serial numbers being sold"
@@ -2962,11 +2962,11 @@ msgstr ""
 "Raden måste vara definieras som kontrolleras för att man skall registrera "
 "batch- eller serienummer"
 
-#: ConfirmDispatchControlled_Invoice.php:57
+#: ConfirmDispatchControlled_Invoice.php:56
 msgid "Back to Confirmation of Dispatch"
 msgstr "Tillbaka till godkännande av leverans"
 
-#: ConfirmDispatchControlled_Invoice.php:57 CounterSales.php:1207
+#: ConfirmDispatchControlled_Invoice.php:56 CounterSales.php:1207
 #: DeliveryDetails.php:583 DeliveryDetails.php:783 EmailCustTrans.php:11
 #: PaymentAllocations.php:33 SelectSalesOrder.php:742 SelectSalesOrder.php:811
 #: SelectSalesOrder.php:838 Z_SalesIntegrityCheck.php:46
@@ -2975,15 +2975,15 @@ msgstr "Tillbaka till godkännande av leverans"
 msgid "Invoice"
 msgstr "Faktura"
 
-#: ConfirmDispatchControlled_Invoice.php:59
+#: ConfirmDispatchControlled_Invoice.php:58
 msgid "Dispatch of up to"
 msgstr "Leverans av upp till"
 
-#: ConfirmDispatchControlled_Invoice.php:59
+#: ConfirmDispatchControlled_Invoice.php:58
 msgid "Controlled items"
 msgstr "Kontrollerade produkter"
 
-#: ConfirmDispatchControlled_Invoice.php:59 GoodsReceivedControlled.php:65
+#: ConfirmDispatchControlled_Invoice.php:58 GoodsReceivedControlled.php:65
 msgid "on order"
 msgstr "beställt"
 
@@ -3038,7 +3038,7 @@ msgstr "Bekräfta leverans och faktura"
 #: CustomerReceipt.php:844 CustomerReceipt.php:895 CustomerReceipt.php:1020
 #: Customers.php:12 Customers.php:347 CustomerTransInquiry.php:88
 #: DeliveryDetails.php:800 FTP_RadioBeacon.php:51 PDFOrdersInvoiced.php:299
-#: PDFOrderStatus.php:272 PricesByCost.php:136 SalesGraph.php:169
+#: PDFOrderStatus.php:272 PricesByCost.php:153 SalesGraph.php:169
 #: SelectCompletedOrder.php:586 SelectContract.php:157 SelectCustomer.php:24
 #: SelectCustomer.php:281 SelectOrderItems.php:643
 #: SelectRecurringSalesOrder.php:78 SelectSalesOrder.php:744
@@ -3148,7 +3148,7 @@ msgstr "Denna leverans"
 #: DeliveryDetails.php:824 DeliveryDetails.php:889 GoodsReceived.php:98
 #: OffersReceived.php:97 OffersReceived.php:197 OffersReceived.php:244
 #: OrderDetails.php:157 PDFOrdersInvoiced.php:385 PDFPriceList.php:359
-#: PDFPrintLabel.php:238 PO_AuthoriseMyOrders.php:115 PricesByCost.php:228
+#: PDFPrintLabel.php:238 PO_AuthoriseMyOrders.php:115 PricesByCost.php:245
 #: Prices_Customer.php:345 Prices.php:219 Prices.php:331
 #: PrintCustTrans.php:803 PrintCustTrans.php:891 PrintCustTrans.php:938
 #: PrintCustTransPortrait.php:859 PrintCustTransPortrait.php:942
@@ -4104,7 +4104,7 @@ msgstr ""
 
 #: ContractBOM.php:41 ContractOtherReqts.php:45 Contracts.php:88
 #: Contracts.php:97 DeliveryDetails.php:259 DeliveryDetails.php:268
-#: EmailCustTrans.php:24 EmailCustTrans.php:28 GLAccountCSV.php:260
+#: EmailCustTrans.php:24 EmailCustTrans.php:28 GLAccountCSV.php:261
 #: PO_Header.php:237 POReport.php:1467 SalesAnalysis_UserDefined.php:46
 #: SelectOrderItems.php:1158 StockQties_csv.php:43 StockUsage.php:22
 #: SupplierCredit.php:216 SupplierCredit.php:228 SupplierCredit.php:240
@@ -4943,7 +4943,7 @@ msgstr "Rensa"
 
 #: Contracts.php:775 CustomerInquiry.php:193 CustomerTransInquiry.php:89
 #: FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:300 PDFOrderStatus.php:273
-#: PDFPriceList.php:356 PricesByCost.php:137 Prices_Customer.php:258
+#: PDFPriceList.php:356 PricesByCost.php:154 Prices_Customer.php:258
 #: Prices_Customer.php:328 PrintCustTrans.php:751
 #: PrintCustTransPortrait.php:804 SelectCompletedOrder.php:587
 #: SelectCreditItems.php:221 SelectCustomer.php:460 SelectOrderItems.php:644
@@ -4990,7 +4990,7 @@ msgid "Contract Reference"
 msgstr "Avtalets referensnummer"
 
 #: Contracts.php:846 InventoryQuantities.php:212 PDFPriceList.php:352
-#: PDFPrintLabel.php:94 PricesByCost.php:221 ReorderLevelLocation.php:189
+#: PDFPrintLabel.php:94 PricesByCost.php:238 ReorderLevelLocation.php:189
 #: ReorderLevel.php:242 SalesCategoryPeriodInquiry.php:162
 #: SalesTopItemsInquiry.php:218 SpecialOrder.php:606 StockDispatch.php:344
 #: Stocks.php:728 SuppPriceList.php:211 SuppPriceList.php:261
@@ -5212,8 +5212,8 @@ msgstr "Leveransplatsdetaljer för leveransplats"
 msgid "against customer code"
 msgstr "mot kundkod"
 
-#: CounterSales.php:151 DeliveryDetails.php:151 GLAccountCSV.php:181
-#: GLAccountCSV.php:210 GLAccountInquiry.php:175 GLAccountInquiry.php:214
+#: CounterSales.php:151 DeliveryDetails.php:151 GLAccountCSV.php:182
+#: GLAccountCSV.php:211 GLAccountInquiry.php:175 GLAccountInquiry.php:214
 #: GLAccountReportphp:176 GLAccountReportphp:215 GLAccountReport.php:114
 #: GLAccountReport.php:146 SelectOrderItems.php:477
 msgid "could not be retrieved"
@@ -5348,7 +5348,7 @@ msgstr ""
 msgid "QOH"
 msgstr "QOH"
 
-#: CounterSales.php:706 PricesByCost.php:141 SelectOrderItems.php:1312
+#: CounterSales.php:706 PricesByCost.php:158 SelectOrderItems.php:1312
 msgid "GP %"
 msgstr "GP%"
 
@@ -6055,7 +6055,7 @@ msgstr "Denna sida kan bara öppnas om en rad har valts"
 msgid "Back to Credit Note Entry"
 msgstr "Tillbaka till kreditfakturarregistrering"
 
-#: CreditItemsControlled.php:58 StockAdjustmentsControlled.php:34
+#: CreditItemsControlled.php:58 StockAdjustmentsControlled.php:32
 #: StockTransferControlled.php:49
 msgid "Notice"
 msgstr "Observera"
@@ -6412,7 +6412,7 @@ msgstr "Inköp"
 #: PricesByCost.php:8 ReorderLevelLocation.php:13 ReorderLevel.php:161
 #: SelectProduct.php:73 StockDispatch.php:219 StockMovements.php:19
 #: StockQties_csv.php:8 StockQuantityByDate.php:9 StockReorderLevel.php:17
-#: StockSerialItemResearch.php:10 StockSerialItems.php:10 StockStatus.php:44
+#: StockSerialItemResearch.php:10 StockSerialItems.php:8 StockStatus.php:44
 #: StockTransferControlled.php:14 SuppLoginSetup.php:14 WWW_Users.php:16
 msgid "Inventory"
 msgstr "Lager"
@@ -6827,8 +6827,8 @@ msgstr "Behandla allokeringar"
 #: CustomerAllocations.php:425 CustomerReceipt.php:1013 Labels.php:268
 #: Payments.php:977 PcAssignCashToTab.php:174 PcAssignCashToTab.php:363
 #: PcAuthorizeExpenses.php:318 PcClaimExpensesFromTab.php:167
-#: PcClaimExpensesFromTab.php:385 PcExpenses.php:300 PcExpensesTypeTab.php:141
-#: PcExpensesTypeTab.php:229 PcTabs.php:466 PcTypeTabs.php:236
+#: PcClaimExpensesFromTab.php:385 PcExpenses.php:300 PcExpensesTypeTab.php:140
+#: PcExpensesTypeTab.php:228 PcTabs.php:466 PcTypeTabs.php:236
 #: SalesTypes.php:271 SelectCreditItems.php:899 Z_CheckDebtorsControl.php:69
 msgid "Cancel"
 msgstr "Avbryt"
@@ -7644,8 +7644,8 @@ msgstr "Inbetalningstyp"
 #: GLJournal.php:131 GLJournal.php:333 OffersReceived.php:101 Payments.php:977
 #: PcAssignCashToTab.php:174 PcAssignCashToTab.php:362
 #: PcAuthorizeExpenses.php:317 PcClaimExpensesFromTab.php:167
-#: PcClaimExpensesFromTab.php:385 PcExpenses.php:300 PcExpensesTypeTab.php:140
-#: PcExpensesTypeTab.php:228 PcTabs.php:466 PcTypeTabs.php:236
+#: PcClaimExpensesFromTab.php:385 PcExpenses.php:300 PcExpensesTypeTab.php:139
+#: PcExpensesTypeTab.php:227 PcTabs.php:466 PcTypeTabs.php:236
 #: SalesTypes.php:271 SupplierTypes.php:246 Z_CheckDebtorsControl.php:68
 msgid "Accept"
 msgstr "Ok"
@@ -9993,7 +9993,7 @@ msgstr "Tillgång ID"
 msgid "Date Purchased"
 msgstr "Inköpsdatum"
 
-#: FixedAssetDepreciation.php:86 PricesByCost.php:140 SalesAnalReptCols.php:38
+#: FixedAssetDepreciation.php:86 PricesByCost.php:157 SalesAnalReptCols.php:38
 #: SalesAnalReptCols.php:40 SelectProduct.php:186 SelectProduct.php:343
 #: ShipmentCosting.php:148 ShipmentCosting.php:149 StockCostUpdate.php:149
 #: includes/PDFAssetRegisterHeader.inc:66
@@ -10322,8 +10322,8 @@ msgid "Bar Code"
 msgstr "Streckkod"
 
 #: FixedAssetItems.php:515 FixedAssetRegister.php:82
-#: StockSerialItemResearch.php:30 StockSerialItems.php:88
-#: StockSerialItems.php:90 StockSerialItems.php:92
+#: StockSerialItemResearch.php:30 StockSerialItems.php:86
+#: StockSerialItems.php:88 StockSerialItems.php:90
 msgid "Serial Number"
 msgstr "Serienummer"
 
@@ -11265,56 +11265,56 @@ msgstr "Alla etiketter"
 msgid "Make CSV File"
 msgstr "Skapa csv fil"
 
-#: GLAccountCSV.php:89 GLAccountInquiry.php:86 GLAccountReportphp:94
+#: GLAccountCSV.php:90 GLAccountInquiry.php:86 GLAccountReportphp:94
 #: GLAccountReport.php:18
 msgid "A period or range of periods must be selected from the list box"
 msgstr "En period eller ett intervall måste väljas från listboxen"
 
-#: GLAccountCSV.php:94 GLAccountReport.php:23 GLAccountReport.php:215
+#: GLAccountCSV.php:95 GLAccountReport.php:23 GLAccountReport.php:215
 msgid "An account or range of accounts must be selected from the list box"
 msgstr "Ett konto eller ett intervall måste väljas från listboxen"
 
-#: GLAccountCSV.php:108 StockQties_csv.php:31
+#: GLAccountCSV.php:109 StockQties_csv.php:31
 msgid "Could not open or create the file under"
 msgstr "Kunde inte öppna eller skapa filen under"
 
-#: GLAccountCSV.php:167 GLAccountInquiry.php:145 GLAccountReportphp:149
+#: GLAccountCSV.php:168 GLAccountInquiry.php:145 GLAccountReportphp:149
 #: GLAccountReport.php:93
 msgid "The transactions for account"
 msgstr "Transaktionerna för konto"
 
-#: GLAccountCSV.php:170
+#: GLAccountCSV.php:171
 msgid "for period"
 msgstr "för perioden"
 
-#: GLAccountCSV.php:181 GLAccountCSV.php:210 GLAccountInquiry.php:175
+#: GLAccountCSV.php:182 GLAccountCSV.php:211 GLAccountInquiry.php:175
 #: GLAccountInquiry.php:214 GLAccountReportphp:176 GLAccountReportphp:215
 #: GLAccountReport.php:114 GLAccountReport.php:146
 msgid "The chart details for account"
 msgstr "Informationen för konto"
 
-#: GLAccountCSV.php:187 GLAccountCSV.php:189 GLAccountInquiry.php:183
+#: GLAccountCSV.php:188 GLAccountCSV.php:190 GLAccountInquiry.php:183
 #: GLAccountInquiry.php:190 GLAccountReportphp:183 GLAccountReportphp:190
 #: GLAccountReport.php:120
 msgid "Brought Forward Balance"
 msgstr "Brought Forward Balance"
 
-#: GLAccountCSV.php:214 GLAccountCSV.php:216 GLAccountCSV.php:239
-#: GLAccountCSV.php:241 GLAccountReport.php:150
+#: GLAccountCSV.php:215 GLAccountCSV.php:217 GLAccountCSV.php:240
+#: GLAccountCSV.php:242 GLAccountReport.php:150
 msgid "Period Total"
 msgstr "Total period"
 
-#: GLAccountCSV.php:246 GLAccountCSV.php:248 GLAccountInquiry.php:297
+#: GLAccountCSV.php:247 GLAccountCSV.php:249 GLAccountInquiry.php:297
 #: GLAccountReportphp:288 GLAccountReport.php:199
 msgid "Total Period Movement"
 msgstr "Total förändring för perioden"
 
-#: GLAccountCSV.php:252 GLAccountCSV.php:254 GLAccountInquiry.php:299
+#: GLAccountCSV.php:253 GLAccountCSV.php:255 GLAccountInquiry.php:299
 #: GLAccountReportphp:290 GLAccountReport.php:201
 msgid "Balance C/Fwd"
 msgstr "Balance C/Fwd"
 
-#: GLAccountCSV.php:260 POReport.php:1467 StockQties_csv.php:43
+#: GLAccountCSV.php:261 POReport.php:1467 StockQties_csv.php:43
 msgid "to view the file"
 msgstr "Fel vid försök att visa fil"
 
@@ -14076,7 +14076,7 @@ msgstr "Exkludera total kvantitet mindre än"
 msgid "Multiplier"
 msgstr "Faktor"
 
-#: MRPCreateDemands.php:245 PricesByCost.php:266 ReorderLevelLocation.php:206
+#: MRPCreateDemands.php:245 PricesByCost.php:283 ReorderLevelLocation.php:206
 msgid "Submit"
 msgstr "Spara"
 
@@ -15658,7 +15658,7 @@ msgid "Days"
 msgstr "Dagar"
 
 #: PcAssignCashToTab.php:217 PcAuthorizeExpenses.php:88
-#: PcExpensesTypeTab.php:165
+#: PcExpensesTypeTab.php:168
 msgid "Expense Code"
 msgstr "Utgiftskod"
 
@@ -15670,7 +15670,7 @@ msgstr "Utgiftskod"
 msgid "Authorised"
 msgstr "Autoriserad"
 
-#: PcAssignCashToTab.php:258 PcExpensesTypeTab.php:182
+#: PcAssignCashToTab.php:258 PcExpensesTypeTab.php:185
 #, php-format
 msgid ""
 "Are you sure you wish to delete this code and the expense it may have set up?"
@@ -15760,7 +15760,7 @@ msgid "Petty Cash Tabs for User "
 msgstr "Handkassa Flikar för användare "
 
 #: PcClaimExpensesFromTab.php:153 PcClaimExpensesFromTab.php:348
-#: PcExpenses.php:285 PcExpensesTypeTab.php:124 PcExpensesTypeTab.php:209
+#: PcExpenses.php:285 PcExpensesTypeTab.php:123 PcExpensesTypeTab.php:211
 #, fuzzy
 msgid "Not Yet Selected"
 msgstr "Inget dokument markerat"
@@ -15961,15 +15961,15 @@ msgstr "Utgiftskod"
 msgid "for type of tab"
 msgstr "för typ av tab"
 
-#: PcExpensesTypeTab.php:116
+#: PcExpensesTypeTab.php:115
 msgid "Select Type of Tab"
 msgstr "Välj typ av Tab"
 
-#: PcExpensesTypeTab.php:150 PcExpensesTypeTab.php:163
+#: PcExpensesTypeTab.php:149 PcExpensesTypeTab.php:166
 msgid "Expense Codes for Type of Tab "
 msgstr "Kostnad Koder för typ av Tab "
 
-#: PcExpensesTypeTab.php:200
+#: PcExpensesTypeTab.php:202
 msgid "Select Expense Code"
 msgstr "Välj utgiftskod"
 
@@ -16992,7 +16992,7 @@ msgid "Re-run the price list once the customer has been selected"
 msgstr "Köra om prislistan när kunden har valt"
 
 #: PDFPriceList.php:30 PDFPriceList.php:38 PDFPriceList.php:135
-#: PDFRemittanceAdvice.php:40 PricesByCost.php:205 PricesByCost.php:209
+#: PDFRemittanceAdvice.php:40 PricesByCost.php:222 PricesByCost.php:226
 msgid "Back"
 msgstr "Åter"
 
@@ -17027,7 +17027,7 @@ msgstr ""
 msgid "Prices"
 msgstr "Priser"
 
-#: PDFPriceList.php:172 PricesByCost.php:186 Prices_Customer.php:214
+#: PDFPriceList.php:172 PricesByCost.php:203 Prices_Customer.php:214
 #: Prices_Customer.php:268 Prices.php:235
 msgid "No End Date"
 msgstr "Inget slutdatum"
@@ -18773,7 +18773,7 @@ msgstr "Ej färdig"
 msgid "Stock Categories"
 msgstr "Lagerkategorier"
 
-#: POReport.php:1556 PricesByCost.php:223 SalesInquiry.php:1101
+#: POReport.php:1556 PricesByCost.php:240 SalesInquiry.php:1101
 msgid "All Categories"
 msgstr "Alla kategorier"
 
@@ -19157,49 +19157,49 @@ msgstr "Uppdatera priser efter kostnad"
 msgid "Update Price By Cost"
 msgstr "Uppdatera pris efter kostnad"
 
-#: PricesByCost.php:125
+#: PricesByCost.php:142
 msgid "category"
 msgstr "kategori"
 
-#: PricesByCost.php:127
+#: PricesByCost.php:144
 msgid "all Categories"
 msgstr "alla kategorier"
 
-#: PricesByCost.php:130
+#: PricesByCost.php:147
 msgid "Items in"
 msgstr "Objekt i"
 
-#: PricesByCost.php:130
+#: PricesByCost.php:147
 msgid "With Prices"
 msgstr "Med priser"
 
-#: PricesByCost.php:130
+#: PricesByCost.php:147
 msgid "times"
 msgstr "gånger"
 
-#: PricesByCost.php:130
+#: PricesByCost.php:147
 msgid "Cost in Price List"
 msgstr "Kostnad i Prislista"
 
-#: PricesByCost.php:138 Prices_Customer.php:338 Prices.php:220
+#: PricesByCost.php:155 Prices_Customer.php:338 Prices.php:220
 #: RecurringSalesOrders.php:417 WorkOrderEntry.php:473
 msgid "Start Date"
 msgstr "Startdatum"
 
-#: PricesByCost.php:139 Prices_Customer.php:341 Prices.php:221
+#: PricesByCost.php:156 Prices_Customer.php:341 Prices.php:221
 #: SelectRecurringSalesOrder.php:82
 msgid "End Date"
 msgstr "Slutdatum"
 
-#: PricesByCost.php:142
+#: PricesByCost.php:159
 msgid "Price Proposed"
 msgstr "Föreslaget pris"
 
-#: PricesByCost.php:143
+#: PricesByCost.php:160
 msgid "List Price"
 msgstr "Pris"
 
-#: PricesByCost.php:204
+#: PricesByCost.php:221
 msgid ""
 "If the prices above do not have a commencement date as today, this will "
 "create new prices with commencement date of today at the entered figures and "
@@ -19207,27 +19207,27 @@ msgid ""
 "of yesterday. Are You Sure?"
 msgstr ""
 
-#: PricesByCost.php:208
+#: PricesByCost.php:225
 msgid "There were no prices meeting the criteria specified to review"
 msgstr "Det fanns inga priser uppfyller kriterierna för att granska"
 
-#: PricesByCost.php:212
+#: PricesByCost.php:229
 msgid "Use this report to display price list with the cost."
 msgstr "Använd den här rapporten för att visa prislista med kostnaden."
 
-#: PricesByCost.php:230
+#: PricesByCost.php:247
 msgid "Less than or equal to"
 msgstr "Mindre än eller lika med"
 
-#: PricesByCost.php:231
+#: PricesByCost.php:248
 msgid "Greater than or equal to"
 msgstr "Större än eller lika med"
 
-#: PricesByCost.php:233
+#: PricesByCost.php:250
 msgid "Average Cost"
 msgstr "Medelkostnad"
 
-#: PricesByCost.php:235 StockCostUpdate.php:158
+#: PricesByCost.php:252 StockCostUpdate.php:158
 msgid "Standard Cost"
 msgstr "Standard kostnad"
 
@@ -23149,9 +23149,9 @@ msgstr ""
 "Arbetsorderkomponetefterfrågan för denna produkt kan inte visas eftersom"
 
 #: SelectProduct.php:329 StockLocStatus.php:155 StockQuantityByDate.php:97
-#: StockReorderLevel.php:50 StockSerialItems.php:97 StockSerialItems.php:100
-#: StockSerialItems.php:103 StockSerialItems.php:108 StockSerialItems.php:112
-#: StockSerialItems.php:116 StockStatus.php:90
+#: StockReorderLevel.php:50 StockSerialItems.php:95 StockSerialItems.php:98
+#: StockSerialItems.php:101 StockSerialItems.php:106 StockSerialItems.php:110
+#: StockSerialItems.php:114 StockStatus.php:90
 msgid "Quantity On Hand"
 msgstr "Antal i lager"
 
@@ -24350,15 +24350,15 @@ msgstr "Starta igen"
 msgid "Process This Order"
 msgstr "Behanla denna order"
 
-#: StockAdjustmentsControlled.php:9
+#: StockAdjustmentsControlled.php:7
 msgid "Adjusting Controlled Items"
 msgstr "Justerar kontrollerade produkter"
 
-#: StockAdjustmentsControlled.php:16 StockAdjustmentsControlled.php:33
+#: StockAdjustmentsControlled.php:14 StockAdjustmentsControlled.php:31
 msgid "Enter A Stock Adjustment"
 msgstr "Registrera en lagerjustering"
 
-#: StockAdjustmentsControlled.php:17
+#: StockAdjustmentsControlled.php:15
 msgid ""
 "This page can only be opened if a stock adjustment for a controlled item has "
 "been entered"
@@ -24366,7 +24366,7 @@ msgstr ""
 "Denna sida kan endast öppnas om ett bestånd justering för ett föremål som "
 "har angetts"
 
-#: StockAdjustmentsControlled.php:34
+#: StockAdjustmentsControlled.php:32
 msgid ""
 "The adjusted item must be defined as controlled to require input of the "
 "batch numbers or serial numbers being adjusted"
@@ -24374,27 +24374,27 @@ msgstr ""
 "Raden måste vara definierad som kontrolleras för att man skall registrera "
 "batch- eller serienummer"
 
-#: StockAdjustmentsControlled.php:42
+#: StockAdjustmentsControlled.php:40
 msgid "Back to Adjustment Screen"
 msgstr "Tillbaka"
 
-#: StockAdjustmentsControlled.php:44
+#: StockAdjustmentsControlled.php:42
 msgid "Adjustment of controlled item"
 msgstr "Justering av kontrollerade produkter"
 
-#: StockAdjustmentsControlled.php:50
+#: StockAdjustmentsControlled.php:48
 msgid "Adding Items"
 msgstr "Lägg till produkter"
 
-#: StockAdjustmentsControlled.php:55
+#: StockAdjustmentsControlled.php:53
 msgid "Removing Items"
 msgstr "Ta bort produkter"
 
-#: StockAdjustmentsControlled.php:60
+#: StockAdjustmentsControlled.php:58
 msgid "The Adjustment Type needs to be set"
 msgstr "Den justering Type måste ställas in"
 
-#: StockAdjustmentsControlled.php:60
+#: StockAdjustmentsControlled.php:58
 msgid "Please try again"
 msgstr "Försök igen."
 
@@ -25574,15 +25574,15 @@ msgstr "Flytt ref"
 msgid "Total Move Qty"
 msgstr "Total flyttat antal"
 
-#: StockSerialItems.php:7
+#: StockSerialItems.php:5
 msgid "Stock Of Controlled Items"
 msgstr "Lager av kontrollerade produkter"
 
-#: StockSerialItems.php:15
+#: StockSerialItems.php:13
 msgid "The stock code sent to this page appears to be invalid"
 msgstr ""
 
-#: StockSerialItems.php:21
+#: StockSerialItems.php:19
 msgid ""
 "This page must be called with parameters specifying the item to show the "
 "serial references and quantities"
@@ -25590,15 +25590,15 @@ msgstr ""
 "Denna sida måste anropas med parametrar som anger objektet för att visa "
 "seriehänvisningar och kvantiteter"
 
-#: StockSerialItems.php:21
+#: StockSerialItems.php:19
 msgid "It cannot be displayed without the proper parameters being passed"
 msgstr "Det kan inte visas utan de rätta parametrarna överförs"
 
-#: StockSerialItems.php:36
+#: StockSerialItems.php:34
 msgid "Could not retrieve the requested item because"
 msgstr "Kunde inte hämta den begärda artikeln eftersom"
 
-#: StockSerialItems.php:49
+#: StockSerialItems.php:47
 msgid ""
 "This item is either a kitset or assembly or a dummy part and cannot have a "
 "stock holding"
@@ -25606,51 +25606,51 @@ msgstr ""
 "Denna punkt är antingen en kitset eller enhet eller en dummy del och kan "
 "inte ha en lagerhållning"
 
-#: StockSerialItems.php:49
+#: StockSerialItems.php:47
 msgid "This page cannot be displayed"
 msgstr "Denna sida kan inte visas"
 
-#: StockSerialItems.php:49
+#: StockSerialItems.php:47
 msgid "Only serialised or controlled items can be displayed in this page"
 msgstr ""
 "Endast serialized eller kontrollerade produkter kan visas på denna sida"
 
-#: StockSerialItems.php:58
+#: StockSerialItems.php:56
 msgid "Could not retrieve the stock location of the item because"
 msgstr "Kunde inte hämta lagerplats för artikeln eftersom"
 
-#: StockSerialItems.php:59
+#: StockSerialItems.php:57
 msgid "The SQL used to lookup the location was"
 msgstr "Den SQL som användes var"
 
-#: StockSerialItems.php:72
+#: StockSerialItems.php:70
 msgid "The serial numbers/batches held cannot be retrieved because"
 msgstr "De serienummer / partier som hölls kan inte hämtas därför"
 
-#: StockSerialItems.php:78
+#: StockSerialItems.php:76
 msgid "Serialised items in"
 msgstr "Serialiserade artiklar i"
 
-#: StockSerialItems.php:80
+#: StockSerialItems.php:78
 msgid "Controlled items in"
 msgstr "Kontrollerade produkter i"
 
-#: StockSerialItems.php:84
+#: StockSerialItems.php:82
 msgid "In units of"
 msgstr "I enheter av"
 
-#: StockSerialItems.php:96 StockSerialItems.php:99 StockSerialItems.php:102
-#: StockSerialItems.php:107 StockSerialItems.php:111 StockSerialItems.php:115
+#: StockSerialItems.php:94 StockSerialItems.php:97 StockSerialItems.php:100
+#: StockSerialItems.php:105 StockSerialItems.php:109 StockSerialItems.php:113
 msgid "Batch/Bundle Ref"
 msgstr "Batch/Lot referens"
 
-#: StockSerialItems.php:109 StockSerialItems.php:113 StockSerialItems.php:117
+#: StockSerialItems.php:107 StockSerialItems.php:111 StockSerialItems.php:115
 #: SupplierTenders.php:269 includes/InputSerialItems.php:105
 #: includes/OutputSerialItems.php:40 includes/OutputSerialItems.php:45
 msgid "Expiry Date"
 msgstr "Utgångsdatum"
 
-#: StockSerialItems.php:165
+#: StockSerialItems.php:163
 msgid "Total quantity"
 msgstr "Totalt antal"
 
@@ -34589,16 +34589,16 @@ msgstr ""
 msgid "Could not get the configuration parameters from the database because"
 msgstr "Kunde inte få konfigurationsparametrar från databasen, eftersom"
 
-#: includes/GetConfig.php:71
+#: includes/GetConfig.php:78
 msgid ""
 "An error occurred accessing the database to retrieve the company information"
 msgstr "Ett fel inträffade åt databasen för att hämta företagsinformation"
 
-#: includes/GetConfig.php:76
+#: includes/GetConfig.php:83
 msgid "The company record has not yet been set up"
 msgstr "Företaget har inte definierats komplett ännu"
 
-#: includes/GetConfig.php:76
+#: includes/GetConfig.php:83
 msgid ""
 "From the system setup tab select company maintenance to enter the company "
 "information and system preferences"
@@ -34606,7 +34606,7 @@ msgstr ""
 "Från systemet fliken väljer företaget underhåll komma in i företags-och "
 "systeminställningar"
 
-#: includes/GetConfig.php:76
+#: includes/GetConfig.php:83
 msgid "CRITICAL PROBLEM"
 msgstr "Problem vid viloläge"
 

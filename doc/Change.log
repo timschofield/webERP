@@ -1,5 +1,9 @@
 webERP Change Log
 
+31/5/11 GetConfig.php amended so that an earlier version without the emailsettings table does not choke before getting to the UpgradeDatabase.php option - reported by Brian May
+
+30/5/11 Version 4.04.2 Release
+
 30/5/11 Invoicing of serial items was not happening using includes/OutputSerialItems.php script not includes/InputSerialItems.php script
 30/5/11 StockSerialItems.php closing td> tag was missing /
 30/5/11 InputSerialItemsFile.php was looking for a hard coded reports dir now used $_SESSION['reports_dir']
