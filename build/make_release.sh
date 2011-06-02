@@ -71,7 +71,7 @@ mysql -u$MYSQL_USER  -p$MYSQL_PWD < $BASE_DIR/build/TruncateAuditTrail.sql
 
 echo "SET FOREIGN_KEY_CHECKS = 0;" > $BASE_DIR/sql/mysql/weberp-new.sql
 
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=weberpdemo.mrpsupplies  --ignore-table=weberpdemo.mrpplanedorders --ignore-table=weberpdemo.mrpparameters --ignore-table=weberpdemo.levels --ignore-table=weberpdemo.mrprequirements --ignore-table=weberpdemo.audittrail --no-data weberpdemo >> $BASE_DIR/sql/mysql/weberp-new.sql
+mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=weberpdemo.mrpsupplies  --ignore-table=weberpdemo.mrpplanedorders --ignore-table=weberpdemo.mrpparameters --ignore-table=weberpdemo.levels --ignore-table=weberpdemo.mrprequirements --ignore-table=weberpdemo.buckets --no-data weberpdemo >> $BASE_DIR/sql/mysql/weberp-new.sql
 
 mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --no-create-info weberpdemo  \
        accountgroups \

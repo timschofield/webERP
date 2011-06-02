@@ -1,21 +1,24 @@
 webERP Change Log
 
-31/5/11 GetConfig.php amended so that an earlier version without the emailsettings table does not choke before getting to the UpgradeDatabase.php option - reported by Brian May
+2/6/11 Phil: ConfirmDispatchControlled_Invoice.php type include/InputSerialItems.php
+2/6/11 Phil: modified build script to include audittrail table in weberp-new.sql and weberpdemo.sql - excluded by mistake
+2/6/11 Phil: UpgradeDatabase.php manual upgrades from 3.11.x 4.01 and 4.02 now fixed! Brian May's report
+31/5/11 Phil: GetConfig.php amended so that an earlier version without the emailsettings table does not choke before getting to the UpgradeDatabase.php option - reported by Brian May
 
 30/5/11 Version 4.04.2 Release
 
-30/5/11 Invoicing of serial items was not happening using includes/OutputSerialItems.php script not includes/InputSerialItems.php script
-30/5/11 StockSerialItems.php closing td> tag was missing /
-30/5/11 InputSerialItemsFile.php was looking for a hard coded reports dir now used $_SESSION['reports_dir']
-30/5/11 GetConfig.php checks for existence of the decimalplaces field in currencies and inserts it before attemtpting to run the company SQL...
-30/5/11 PcExpensesTypeTab.php could not delete Expenses lost TabType value fixed
-30/5/11 PriceByCost.php now only makes a new price if the price is actually changed!!
+30/5/11 Phil: Invoicing of serial items was not happening using includes/OutputSerialItems.php script not includes/InputSerialItems.php script
+30/5/11 Phil: StockSerialItems.php closing td> tag was missing /
+30/5/11 Phil: InputSerialItemsFile.php was looking for a hard coded reports dir now used $_SESSION['reports_dir']
+30/5/11 Phil: GetConfig.php checks for existence of the decimalplaces field in currencies and inserts it before attemtpting to run the company SQL...
+30/5/11 Phil: PcExpensesTypeTab.php could not delete Expenses lost TabType value fixed
+30/5/11 Phil: PriceByCost.php now only makes a new price if the price is actually changed!!
 
 29/5/11 Version 4.04.1 Release
 
-29/5/11 PricesByCost.php made it so the existing prices had end dates set as yesterday and new prices created from today
-29/5/11 TopItems.php fixed sequence and birthday to script and PDFTopItems.php script
-28/5/11 Could not set controlled item batches/serial numbers on ConfirmDispatch_Invoice.php
+29/5/11 Phil: PricesByCost.php made it so the existing prices had end dates set as yesterday and new prices created from today
+29/5/11 Phil: TopItems.php fixed sequence and birthday to script and PDFTopItems.php script
+28/5/11 Phil: Could not set controlled item batches/serial numbers on ConfirmDispatch_Invoice.php
 28/5/11 Ricard: PO_SelectOSPurchOrder.php was showing select location with gaps between locations - no slash before <option> fixed
 28/5/11 Ricard: added new field assigner to petty cash module and changes to PcTabs.php and PcAssignCashToTab.php
 28/5/11 Ricard: PcAssignCashToTab.php quoted the $Days integer parameter to the INTERVAL function incorrectly now fixed
@@ -24,37 +27,37 @@ webERP Change Log
 28/5/11 R2-G: reported alignment issue with link and button on SuppTransGLAnalysis now fixed
 28/5/11 Ricard: MRPShortages now has an option to report excesses too
 28/5/11 Ricard: Fix sql to take quotes out of literals in upgrade script. PDFPrintLabels fix sql to get current price.
-28/5/11 Reported by Daniel Brewer Fix SelectSalesOrder.php creation of PO with excluding redundant fields in purchorderdetails that were taken out.
+28/5/11 Phil: Reported by Daniel Brewer Fix SelectSalesOrder.php creation of PO with excluding redundant fields in purchorderdetails that were taken out.
 28/5/11 Exson: UpdateCurrencyRateDaily was set to 1 when the option to enable it was clicked - should have been set to today's date in SystemParameters - fixed. Now no error reported bu ConvertSQLDate function when user enables update currencies daily.
 
 
 26/5/11 Version 4.04 Release
 
 26/5/11 Ricard: require securitytoken 9 to allow user to see purchasing data in SelectProduct.php
-26/5/11 SelectProduct.php fix item image display in centre under item transactions
-25/5/11 New Sales Inquiry scripts by sales type/price list by category and top sellers
-24/5/11 Updated from launchpad translations those that had changed from 18/4/11 including Viatnamese, Albanian, Russian, Spanish
+26/5/11 Phil: SelectProduct.php fix item image display in centre under item transactions
+25/5/11 Phil: New Sales Inquiry scripts by sales type/price list by category and top sellers
+24/5/11 Phil: Updated from launchpad translations those that had changed from 18/4/11 including Viatnamese, Albanian, Russian, Spanish
 23/5/11 Tim: Remove SystemCheck.php and code standards changes(launchpad 4711-4718)
 23/5/11 Tim: Make link from SelectProduct.php to place purchase orders factor in the lead time into the delivery date in the purchase order (launchpad 4710)
 23/5/11 Exson: fix PaymentMethods could not add new - comma missing in INSERT SQL
-20/5/11 SuppAllocs.php DefineSuppAllocClass.php made display appropriate decimal places to currency of supplier
-19/5/11 SuppInvGRNs.php made display appropriate decimal places to currency of supplier invoice
-19/5/11 SuppTransGLAnalysis.php made display appropriate decimal places to currency of supplier invoice also added an edit option and fixed narrative that was not coming through into GLtrans - also modified DefineSuppTransClass.php to hold the CurrDecimalPlaces variable
-16/5/11 Bug in quantity on purchase order in SelectOrderItems.php added correct join syntax
-16/5/11 Added upgrade from 4.03.7 to UpgradeDatabase.php
-15/5/11 Z_ChangeStockCode.php modified to test if MRP tables exist before doing the updates - turned off error trapping on these queries as the error trapping is done in the script
+20/5/11 Phil: SuppAllocs.php DefineSuppAllocClass.php made display appropriate decimal places to currency of supplier
+19/5/11 Phil: SuppInvGRNs.php made display appropriate decimal places to currency of supplier invoice
+19/5/11 Phil: SuppTransGLAnalysis.php made display appropriate decimal places to currency of supplier invoice also added an edit option and fixed narrative that was not coming through into GLtrans - also modified DefineSuppTransClass.php to hold the CurrDecimalPlaces variable
+16/5/11 Phil: Bug in quantity on purchase order in SelectOrderItems.php added correct join syntax
+16/5/11 Phil: Added upgrade from 4.03.7 to UpgradeDatabase.php
+15/5/11 Phil: Z_ChangeStockCode.php modified to test if MRP tables exist before doing the updates - turned off error trapping on these queries as the error trapping is done in the script
 15/5/11 Tim: FixedAssetCategories prior to deletion of a category check for existing assets in the category failed due to typo in SQL - fixed
 14/5/11 Tim: StockTransfer now checks for negative stock before allowing transfer - launchpad changes to 4691
-14/5/11 CustomerInquiry.php now shows the currency decimal places
-3/5/11 Locations.php fix table hidden POST variable quotes mismatch - also mismatch between number of parameters in printf output
-2/5/11 Make order entry show the currency decimal places for amounts and totals also in invoicing SelectOrderItems.php and ConfirmDispatch_Invoice.php
-2/5/11 Fix PO_PDFPurchOrder.php to allow emailing but email option not to appear on printed/emailed orders
+14/5/11 Phil: CustomerInquiry.php now shows the currency decimal places
+3/5/11 Phil: Locations.php fix table hidden POST variable quotes mismatch - also mismatch between number of parameters in printf output
+2/5/11 Phil: Make order entry show the currency decimal places for amounts and totals also in invoicing SelectOrderItems.php and ConfirmDispatch_Invoice.php
+2/5/11 Phil: Fix PO_PDFPurchOrder.php to allow emailing but email option not to appear on printed/emailed orders
 1/5/11 Tim PageSecurity.php fix bug that prevented updates to Security Token for a particular script.
-1/5/11 Many scripts quoting changes single quotes for strings double quotes for xhtml variables
-1/5/11  SecuirtyTokens allow deletion of tokens if no scripts using it
+1/5/11 Phil: Many scripts quoting changes single quotes for strings double quotes for xhtml variables
+1/5/11  Phil: SecuirtyTokens allow deletion of tokens if no scripts using it
 28/4/11 Tim: add facility to select an account group to limit GL acccounts returned as options to post payments to
 28/4/11 Tim: new SecurityTokens script
-28/4/11 Fix Secunia reported vulnerability by checking for dodgy characters in CompanyNameField - then matched to a real directory on the web-server
+28/4/11 Phil: Fix Secunia reported vulnerability by checking for dodgy characters in CompanyNameField - then matched to a real directory on the web-server
 
 18/4/11 - Version 4.03.8 Release
 
