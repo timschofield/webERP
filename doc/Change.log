@@ -1,5 +1,7 @@
 webERP Change Log
 
+3/6/11 Version 4.04.3 Release
+
 2/6/11 Phil: ConfirmDispatchControlled_Invoice.php type include/InputSerialItems.php
 2/6/11 Phil: modified build script to include audittrail table in weberp-new.sql and weberpdemo.sql - excluded by mistake
 2/6/11 Phil: UpgradeDatabase.php manual upgrades from 3.11.x 4.01 and 4.02 now fixed! Brian May's report
@@ -64,6 +66,7 @@ webERP Change Log
 18/4/11 Phil: Update zh_HK.utf8, pt_BR.utf8, fa_IR.utf8 from launchpad translations
 18/4/11 Phil: Changed PurchData.php back to now have free form text entry of unit of measure - as suggested by Brian May - think it works better this way
 18/4/11 Phil: Removed redundant fields that are not used anywhere from DefinePOClass and the various function to add lines to purchase orders and to update purhcase order lines - netweight, cuft, kgs, itemno, total_quantity etc. all this data can be retrieved without duplication in purchorderdetails
+17/4/11 Phil: Reworked PrintCustTrans.php landscape invoice removing reliance on xml. No longer have the ability to use the form designer to manipulate the position of fields on the invoice. The form designer invoice could not print multiple page invoices
 16/4/11 Phil: Tim's changes in launchpad fork to 4663 - xhtml syntax fixes
 15/4/11 Phil: Copy Exson's traditional Chinese back to zh_HK.utf8
 11/4/11 Ricard: new pcAuthorizeExpenses.php that shows the current balance of the tab to the authorizer. Before the authorizer did not see this information.
@@ -88,46 +91,46 @@ webERP Change Log
 <p />
 27/3/11 - Version 4.03.5 Release
 
-27/3/11: Phil fixed SQL upgrade script to add the Z_ChangeSupplierCode.php script is added to the scripts table
-27/3/11: Phil fixed some SQL for ansi compatibility I had changed in error - would affect users running strict mode ansi
-27/3/11: Phil at Brian May's suggestion added conversion factor to item look up in PO_Items.php - also ensured quantity entry no longer trapped for commas and commas removed from numbers before committing. Also trapped for committing purchase orders with no lines
+27/3/11: Phil: fixed SQL upgrade script to add the Z_ChangeSupplierCode.php script is added to the scripts table
+27/3/11: Phil: fixed some SQL for ansi compatibility I had changed in error - would affect users running strict mode ansi
+27/3/11: Phil: at Brian May's suggestion added conversion factor to item look up in PO_Items.php - also ensured quantity entry no longer trapped for commas and commas removed from numbers before committing. Also trapped for committing purchase orders with no lines
 
 26/3/11 - Version 4.03 Release
 
-26/3/11: Phil added some error trapping to codes of pcTabTypes 
-24/3/11: Phil rework PDFStockTransfer.php remove a few round trips to DB and added facility to be able to select a transfer number to reprint - added to main menu
-24/3/11: James wertthey@yahoo.com Added snall image in middle of SelectProduct.php
-19/3/11: Phil added country to packing slips 
-18/3/11: Marcos Garcia Trejo Added Z_ChangeSupplierCode.php 
-18/3/11: Ricard add orderby transdate to DailyBankTransactions.php
-18/3/11: Phil check for Customers.php CustomerBranches.php and Stocks.php  now traps codes containing spaces - as well as other illegal characters
-15/3/11: Phil PricesByCost.php - made it update prices where there is already a price starting on today's date
-15/3/11: Phil SelectOrderItems.php customer selection now done using a hidden $_POST rather than parsing debtorno hyphen branchcode.
-15/3/11: Phil Locations.php new field for CounterSales branch code - instead of parsing it from a single field with a hyphen in it. CounterSales.php now uses the new field for customer branch
-14/3/11: Phil SelectSalesOrder.php now lists with sales order value denominated in functional currency with total of listed outstadning sales orders (or quotations) shown at the bottom of the listing
-12/3/11: Tim Now allow space in codes 
+26/3/11: Phil: added some error trapping to codes of pcTabTypes 
+24/3/11: Phil: rework PDFStockTransfer.php remove a few round trips to DB and added facility to be able to select a transfer number to reprint - added to main menu
+24/3/11: James wertthey@yahoo.com Added small image in middle of SelectProduct.php
+19/3/11: Phil: added country to packing slips 
+18/3/11: Marcos Garcia Trejo: Added Z_ChangeSupplierCode.php 
+18/3/11: Ricard: add orderby transdate to DailyBankTransactions.php
+18/3/11: Phil: check for Customers.php CustomerBranches.php and Stocks.php  now traps codes containing spaces - as well as other illegal characters
+15/3/11: Phil: PricesByCost.php - made it update prices where there is already a price starting on today's date
+15/3/11: Phil: SelectOrderItems.php customer selection now done using a hidden $_POST rather than parsing debtorno hyphen branchcode.
+15/3/11: Phil: Locations.php new field for CounterSales branch code - instead of parsing it from a single field with a hyphen in it. CounterSales.php now uses the new field for customer branch
+14/3/11: Phil: SelectSalesOrder.php now lists with sales order value denominated in functional currency with total of listed outstadning sales orders (or quotations) shown at the bottom of the listing
+12/3/11: Tim: Now allow space in codes 
 12/3/11: SelectSalesOrder.php now allows any number of sales orders to be selected and purchase orders placed for the aggregate of items on the selected sales orders
 12/3/11: SuppPriceList.php removed a round trip to DB to get currency - fixed function to get pdf to new TCPDF Output 
-12/3/11: Exson fix all htmlentities to use ENTQUOTES, 'UTF-8' option so other character sets work with it
-10/3/11: Phil fix pagination of PrintCustOrder_generic.php - second copy was not restarting page numbers
-10/3/11: Tims launchpad fixes brought in MRP.php fix for table charset utf8 so joins work correctly; typeo in PO_Header preventing purchasing data being retrieved ($result not $Result); correct sql on searching for customer in SelectCreditItems.php; StockStatus.php pricing history bug resolved (4450); StockQuantityByDate.php now allowed to show for all categories - enclosed 'All' in gettext
-8/3/11: Tim/Phil PO_Items.php in committing an order detail the assetid of 'Not an Asset' was being inserted to an integer field. Modified $_POST['AssetID'] to = 0 if it was 'Not an Asset' as advised by Tim
-8/3/11: Phil fix SalesAnalysis reports for TCPDF as reported by Joe Zhou
-5/3/11: Kovács Attila fix to Stocks.php to use ANSI GROUP BY for aggregate functions SQL
-5/3/11: Kovács Attila fix to LanguageSetup.php to use utf-8 not ISO-8859-1. Phil hardcoded UTF-8 now as no dynamic changing of character set required all translations are utf-8
+12/3/11: Exson: fix all htmlentities to use ENTQUOTES, 'UTF-8' option so other character sets work with it
+10/3/11: Phil: fix pagination of PrintCustOrder_generic.php - second copy was not restarting page numbers
+10/3/11: Tims: launchpad fixes brought in MRP.php fix for table charset utf8 so joins work correctly; typeo in PO_Header preventing purchasing data being retrieved ($result not $Result); correct sql on searching for customer in SelectCreditItems.php; StockStatus.php pricing history bug resolved (4450); StockQuantityByDate.php now allowed to show for all categories - enclosed 'All' in gettext
+8/3/11: Tim/Phil: PO_Items.php in committing an order detail the assetid of 'Not an Asset' was being inserted to an integer field. Modified $_POST['AssetID'] to = 0 if it was 'Not an Asset' as advised by Tim
+8/3/11: Phil: fix SalesAnalysis reports for TCPDF as reported by Joe Zhou
+5/3/11: Kovács Attila: fix to Stocks.php to use ANSI GROUP BY for aggregate functions SQL
+5/3/11: Kovács Attila: fix to LanguageSetup.php to use utf-8 not ISO-8859-1. Phil hardcoded UTF-8 now as no dynamic changing of character set required all translations are utf-8
 3/3/11: Exson/Baran/Phil fix to customer login to ensure that other customers orders are not displayed when searching by customer ref or order no
 3/3/11: Tim launchpad mods to revision 4441 including change to allow supplier currency to be changed if there are no transactions already against the supplier.  Ensure credit note session variable is unset before attempting to create a new credit note from the supplier form. Tim's work to add perisable expiry dates to the serial items logic - affects quite a few scripts. Headings to stock check script even if no quantity is shown. Portrait quotations. Not included change to default delivery date to the date the customer requested - left to be the current day's date. Not included Tim's unit pricing work .. yet launchpad revisions 4442-4447 inclusive
 27/2/11: Phil/Tim/Peter launchpad added category option for MRPShortages.php links with matching quotes in WorkOrderEntry
-27/2/11: Phil StockUsage.php now totals usage each month even in months where there was none - average now includes months with no usage
-27/2/11: Phil fix units deletion issue reported by Exson in UnitsOfMeasure.php script - checked for none existant units field in contracts table - removed the check
-22/2/11: Phil fix PDFTopItems.php for changed variable names - now using CamelCase tried to rework to conform
-22/2/11: Phil remove options for PDFLanguage that are not unique in WWW_Users.php - make it default to the users settings in the SESSION for UserSettings.php
+27/2/11: Phil: StockUsage.php now totals usage each month even in months where there was none - average now includes months with no usage
+27/2/11: Phil: fix units deletion issue reported by Exson in UnitsOfMeasure.php script - checked for none existant units field in contracts table - removed the check
+22/2/11: Phil: fix PDFTopItems.php for changed variable names - now using CamelCase tried to rework to conform
+22/2/11: Phil: remove options for PDFLanguage that are not unique in WWW_Users.php - make it default to the users settings in the SESSION for UserSettings.php
 18/2/11: Phil/Don Change PageSecurity array variable name to PageSecurityArray - caused problems with conflict with PageSecurity variable where register_globals = on; 
-18/2/11: PO_Items.php make number_format variables turn back into numbers for > 1000
-16/2/11: FixedAssetItems.php now checks for location before allowing additions
-16/2/11: Company preferences - changed wording of stock integration at cost removed the word standard as suggested by Exson
-16/2/11: SelectCreditItems.php formating/conventions lower case html and CreditInvoice.php
-15/2/11: Phil Make invoicing warn the user when no taxes are defined for a tax group - i.e. there is a configuration error with taxes
+18/2/11: Phil: PO_Items.php make number_format variables turn back into numbers for > 1000
+16/2/11: Phil: FixedAssetItems.php now checks for location before allowing additions
+16/2/11: Phil: Company preferences - changed wording of stock integration at cost removed the word standard as suggested by Exson
+16/2/11: Phil: SelectCreditItems.php formating/conventions lower case html and CreditInvoice.php
+15/2/11: Phil: Make invoicing warn the user when no taxes are defined for a tax group - i.e. there is a configuration error with taxes
 <p />
 15/2/11 Release 4.03RC2
 <p />
