@@ -42,7 +42,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
 			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))){
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))*doubleval(str_replace($locale_info['thousands_sep'],'',$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor));
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=round(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))*doubleval(str_replace($locale_info['thousands_sep'],'',$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor)),$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces);
 			}
 			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))){
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');

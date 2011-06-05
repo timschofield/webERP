@@ -140,16 +140,16 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 
 		//Now Display LineItem
-		echo '<td>' . $LnItm->StockID . '</td>';
-		echo '<td>' . $LnItm->ItemDescription . '</td>';
-		echo '<td class=number>' . $DisplaySupplierQtyOrd . '</td>';
-		echo '<td>' . $LnItm->SuppliersUnit . '</td>';
-		echo '<td class=number>' . $DisplaySupplierQtyRec . '</td>';
-		echo '<td class=number>' . $LnItm->ConversionFactor . '</td>';
-		echo '<td class=number>' . $DisplayQtyOrd . '</td>';
-		echo '<td>' . $LnItm->Units . '</td>';
-		echo '<td class=number>' . $DisplayQtyRec . '</td>';
-		echo '<td class=number>';
+		echo '<td>' . $LnItm->StockID . '</td>
+			<td>' . $LnItm->ItemDescription . '</td>
+			<td class=number>' . $DisplaySupplierQtyOrd . '</td>
+			<td>' . $LnItm->SuppliersUnit . '</td>
+			<td class=number>' . $DisplaySupplierQtyRec . '</td>
+			<td class=number>' . $LnItm->ConversionFactor . '</td>
+			<td class=number>' . $DisplayQtyOrd . '</td>
+			<td>' . $LnItm->Units . '</td>
+			<td class=number>' . $DisplayQtyRec . '</td>
+			<td class=number>';
 
 		if ($LnItm->Controlled == 1) {
 
@@ -346,8 +346,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			if ($OrderLine->StockID!='') { //Its a stock item line
 				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
 				$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost
-										FROM stockmaster
-										WHERE stockid='" . $OrderLine->StockID . "'";
+							FROM stockmaster
+							WHERE stockid='" . $OrderLine->StockID . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost of the item being received cannot be retrieved because');
 				$DbgMsg = _('The following SQL to retrieve the standard cost was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -377,11 +377,10 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 /*Now the SQL to do the update to the PurchOrderDetails */
 
 			if ($OrderLine->ReceiveQty >= ($OrderLine->Quantity - $OrderLine->QtyReceived)){
-				$SQL = "UPDATE purchorderdetails SET
-												quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
-												stdcostunit='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost . "',
-												completed=1
-										WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
+				$SQL = "UPDATE purchorderdetails SET quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
+													stdcostunit='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost . "',
+													completed=1
+						WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
 			} else {
 				$SQL = "UPDATE purchorderdetails SET
 												quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',

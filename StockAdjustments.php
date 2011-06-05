@@ -24,7 +24,12 @@ $NewAdjustment = false;
 if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_GET['StockID']));
 	$_SESSION['Adjustment']->StockID = trim(strtoupper($StockID));
-	$result = DB_query("SELECT description, controlled, serialised, decimalplaces FROM stockmaster WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'",$db);
+	$result = DB_query("SELECT description, 
+							controlled, 
+							serialised, 
+							decimalplaces 
+						FROM stockmaster 
+						WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'",$db);
 	$myrow = DB_fetch_array($result);
 	$_SESSION['Adjustment']->ItemDescription = $myrow['description'];
 	$_SESSION['Adjustment']->Controlled = $myrow['controlled'];
@@ -59,18 +64,24 @@ if (isset($_POST['CheckCode'])) {
 		'" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
 	if (strlen($_POST['StockText'])>0) {
-		$sql="SELECT stockid, description from stockmaster where description like '%" . $_POST['StockText'] ."%'";
+		$sql="SELECT stockid, description FROM stockmaster WHERE description " . LIKE . " '%" . $_POST['StockText'] ."%'";
 	} else {
-		$sql="SELECT stockid, description from stockmaster where stockid like '%" . $_POST['StockCode'] ."%'";
+		$sql="SELECT stockid, description FROM stockmaster WHERE stockid " . LIKE  . " '%" . $_POST['StockCode'] ."%'";
 	}
 	$ErrMsg=_('The stock information cannot be retrieved because');
 	$DbgMsg=_('The SQL to get the stock description was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<table class=selection><tr><th>'._('Stock Code').'</th><th>'._('Stock Description').'</th></tr>';
+	echo '<table class="selection">
+			<tr>
+				<th>'._('Stock Code').'</th>
+				<th>'._('Stock Description').'</th>
+			</tr>';
 	while ($myrow = DB_fetch_row($result)) {
-		echo '<tr><td>'.$myrow[0].'</td>
+		echo '<tr>
+				<td>'.$myrow[0].'</td>
 				<td>'.$myrow[1].'</td>
-				<td><a href="StockAdjustments.php?StockID='.$myrow[0].'&Description='.$myrow[1].'">'._('Adjust').'</a></tr>';
+				<td><a href="StockAdjustments.php?StockID='.$myrow[0].'&Description='.$myrow[1].'">'._('Adjust').'</a>
+			</tr>';
 	}
 	echo '</table>';
 	include('includes/footer.inc');

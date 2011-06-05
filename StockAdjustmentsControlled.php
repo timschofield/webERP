@@ -1,5 +1,7 @@
 <?php
 /* $Id$*/
+
+
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 include('includes/session.inc');

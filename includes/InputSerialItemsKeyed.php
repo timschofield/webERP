@@ -21,7 +21,9 @@ if (isset($_GET['LineNo'])){
 
 /*Display the batches already entered with quantities if not serialised */
 
-echo '<table class=selection><tr><td valign=top><table class=selection>';
+echo '<table class="selection">
+		<tr><td valign=top>
+			<table class="selection">';
 echo $tableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
@@ -80,10 +82,10 @@ echo $tableheader;
 
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" name="Ga6uF5Wa" method="post">
-      <input type=hidden name=LineNo value="' . $LineNo . '">
-      <input type=hidden name=StockID value="' . $StockID . '">
+      <input type=hidden name="LineNo" value="' . $LineNo . '">
+      <input type=hidden name="StockID" value="' . $StockID . '">
       <input type=hidden name="identifier" value="' . $identifier . '">
-      <input type=hidden name=EntryType value="KEYED">';
+      <input type=hidden name="EntryType" value="KEYED">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;

@@ -243,7 +243,7 @@ if ($InputError !=1 AND isset($_POST['BankAccount']) AND $_POST['BankAccount']!=
 		$Outstanding = $myrow['amt']- $myrow['amountcleared'];
 		if (ABS($Outstanding)<0.009){ /*the payment is cleared dont show the check box*/
 
-			pprintf('<tr bgcolor="#CCCEEE">
+			printf('<tr bgcolor="#CCCEEE">
 					<td>%s</td>
 					<td>%s</td>
 					<td class=number>%s</td>

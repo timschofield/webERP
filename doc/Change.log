@@ -1,5 +1,8 @@
 webERP Change Log
 
+6/6/11 Phil: AddSerialItems.php from Stock Adjustment was not picking up single entries because of error in for loop condition fixed
+5/6/11 Phil: BankMatching typo pprintf fixed
+
 3/6/11 Version 4.04.3 Release
 
 2/6/11 Phil: ConfirmDispatchControlled_Invoice.php type include/InputSerialItems.php
