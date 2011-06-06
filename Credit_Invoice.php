@@ -60,8 +60,6 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 								stockmoves.transno=debtortrans.transno
 								INNER JOIN locations ON
 								stockmoves.loccode = locations.loccode
-								INNER JOIN currencies ON
-								debtorsmaster.currcode=currencies.currabrev
 							WHERE debtortrans.transno = '" . $_GET['InvoiceNumber'] . "'
 								AND debtortrans.type=10
 								AND stockmoves.type=10";
