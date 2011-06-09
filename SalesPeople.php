@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 3;
-
 include('includes/session.inc');
 $title = _('Sales People Maintenance');
 include('includes/header.inc');
@@ -78,6 +76,9 @@ if (isset($_POST['submit'])) {
 	if (!isset($_POST['Breakpoint'])){
 	  $_POST['Breakpoint']=0;
 	}
+	if (!isset($_POST['Current'])){
+	  $_POST['Current']=0;
+	}
 
 	if (isset($SelectedSaleperson) AND $InputError !=1) {
 
@@ -88,7 +89,8 @@ if (isset($_POST['submit'])) {
 						smantel='" . $_POST['SManTel'] . "',
 						smanfax='" . $_POST['SManFax'] . "',
 						breakpoint='" . $_POST['Breakpoint'] . "',
-						commissionrate2='" . $_POST['CommissionRate2'] . "'
+						commissionrate2='" . $_POST['CommissionRate2'] . "',
+						current='" . $_POST['Current'] . "'
 				WHERE salesmancode = '".$SelectedSaleperson."'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
@@ -102,14 +104,16 @@ if (isset($_POST['submit'])) {
 						commissionrate2,
 						breakpoint,
 						smantel,
-						smanfax)
+						smanfax,
+						current)
 				VALUES ('" . $_POST['SalesmanCode'] . "',
 					'" . $_POST['SalesmanName'] . "',
 					'" . $_POST['CommissionRate1'] . "',
 					'" . $_POST['CommissionRate2'] . "',
 					'" . $_POST['Breakpoint'] . "',
 					'" . $_POST['SManTel'] . "',
-					'" . $_POST['SManFax'] . "'
+					'" . $_POST['SManFax'] . "',
+					'" . $_POST['Current'] . "'
 					)";
 
 		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
@@ -130,6 +134,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Breakpoint']);
 		unset($_POST['SManFax']);
 		unset($_POST['SManTel']);
+		unset($_POST['Current']);
 	}
 
 } elseif (isset($_GET['delete'])) {
@@ -176,7 +181,8 @@ or deletion of the records*/
 			smanfax,
 			commissionrate1,
 			breakpoint,
-			commissionrate2
+			commissionrate2,
+			current
 		FROM salesman";
 	$result = DB_query($sql,$db);
 
@@ -187,7 +193,8 @@ or deletion of the records*/
 		<th>' . _('Facsimile') . '</th>
 		<th>' . _('Comm Rate 1') . '</th>
 		<th>' . _('Break') . '</th>
-		<th>' . _('Comm Rate 2') . '</th></tr>';
+		<th>' . _('Comm Rate 2') . '</th>
+		<th>' . _('Current') . '</th></tr>';
 	$k=0;
 	while ($myrow=DB_fetch_row($result)) {
 
@@ -198,6 +205,7 @@ or deletion of the records*/
 		echo '<tr class="OddTableRows">';
 		$k++;
 	}
+	if ($myrow[7] == 1) $ActiveText = _("Yes"); else $ActiveText = _("No");
 
 	printf('
 		<td>%s</td>
@@ -207,6 +215,7 @@ or deletion of the records*/
 		<td class=number>%s</td>
 		<td class=number>%s</td>
 		<td class=number>%s</td>
+		<td>%s</td>
 		<td><a href="%sSelectedSaleperson=%s">'. _('Edit') . '</a></td>
 		<td><a href="%sSelectedSaleperson=%s&delete=1">' . _('Delete') . '</a></td>
 		</tr>',
@@ -217,6 +226,7 @@ or deletion of the records*/
 		$myrow[4],
 		$myrow[5],
 		$myrow[6],
+		$ActiveText,
 		$_SERVER['PHP_SELF'] . '?' . SID . '&',
 		$myrow[0],
 		$_SERVER['PHP_SELF'] . '?' . SID . '&',
@@ -244,7 +254,8 @@ if (! isset($_GET['delete'])) {
 				smanfax,
 				commissionrate1,
 				breakpoint,
-				commissionrate2
+				commissionrate2,
+				current
 			FROM salesman
 			WHERE salesmancode='".$SelectedSaleperson."'";
 
@@ -258,6 +269,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['CommissionRate1']  = $myrow['commissionrate1'];
 		$_POST['Breakpoint'] = $myrow['breakpoint'];
 		$_POST['CommissionRate2']  = $myrow['commissionrate2'];
+		$_POST['Current']  = $myrow['current'];
 
 
 		echo '<input type=hidden name="SelectedSaleperson" VALUE="' . $SelectedSaleperson . '">';
@@ -288,7 +300,9 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['Breakpoint'])){
 	  $_POST['Breakpoint']=0;
 	}
-
+	if (!isset($_POST['Current'])){
+	  $_POST['Current']=0;
+	}
 
 	echo '<tr><td>' . _('Salesperson Name') . ':</td><td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size=30 maxlength=30 VALUE="' . $_POST['SalesmanName'] . '"></td></tr>';
 	echo '<tr><td>' . _('Telephone No') . ':</td><td><input type="text" name="SManTel" size=20 maxlength=20 VALUE="' . $_POST['SManTel'] . '"></td></tr>';
@@ -296,6 +310,19 @@ if (! isset($_GET['delete'])) {
 	echo '<tr><td>' . _('Commission Rate 1') . ':</td><td><input type="text" class=number name="CommissionRate1" size=5 maxlength=5 VALUE="' . $_POST['CommissionRate1'] . '"></td></tr>';
 	echo '<tr><td>' . _('Breakpoint') . ':</td><td><input type="text" class=number name="Breakpoint" size=6 maxlength=6 VALUE="' . $_POST['Breakpoint'] . '"></td></tr>';
 	echo '<tr><td>' . _('Commission Rate 2') . ':</td><td><input type="text" class=number name="CommissionRate2" size=5 maxlength=5 VALUE="' . $_POST['CommissionRate2']. '"></td></tr>';
+
+	echo '<tr><td>' . _('Current?') . ':</td><td><select name="Current">';
+	if ($_POST['Current']==1){
+		echo '<option selected value=1>' . _('Yes') . '</option>';
+	} else {
+		echo '<option value=1>' . _('Yes') . '</option>';
+	}
+	if ($_POST['Current']==0){
+		echo '<option selected value=0>' . _('No') . '</option>';
+	} else {
+		echo '<option value=0>' . _('No') . '</option>';
+	}
+	echo '</select></td></tr>';
 
 	echo '</table>';
 

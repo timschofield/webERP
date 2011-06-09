@@ -182,7 +182,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%s?SelectedType=%s&delete=yes&SelectedTab=' . $SelectedTab . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this code and the expense it may have set up?') . '\');">' . _('Delete') . '</td>
+			<td><a href="%s?SelectedType=%s&delete=yes&SelectedTab=' . $SelectedTab . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code?') . '\');">' . _('Delete') . '</td>
 			</tr>',
 			$myrow['codeexpense'],
 			$myrow['description'],

@@ -16,7 +16,7 @@ if (!isset($_POST['DoUpgrade'])){
 	if (!isset($_SESSION['VersionNumber'])){
 		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is not actually recorded at this version'),'info');
 		echo '<table><tr><td>' . _('Select the version you are upgrading from:') . '</td>
-											<td><select name="OldVersion" >';
+				<td><select name="OldVersion" >';
 		echo '<option selected value="Manual">' . _('Apply database changes manually') . '</option>';
 		echo '<option value="3.00">' . _('Version 3.00') . '</option>';
 		echo '<option value="3.01">' . _('Version 3.01') . '</option>';
@@ -118,6 +118,8 @@ if (isset($_POST['DoUpgrade'])){
 					$SQLScripts[] = './sql/mysql/upgrade4.03-4.04.sql';
 				case '4.04':
 					$SQLScripts[] = './sql/mysql/upgrade4.04-4.04.1.sql';
+				case '4.04.1':
+					$SQLScripts[] = './sql/mysql/upgrade4.04.1-4.04.4.sql';
 					break;
 			} //end switch
 		}	
@@ -134,7 +136,7 @@ if (isset($_POST['DoUpgrade'])){
 		$sql ='';
 		$InAFunction = false;
 		echo '<br /><table>
-					<tr><th colspan=2>' . _('Applying') . ' ' . $SQLScriptFile . '</th></tr>';
+				<tr><th colspan=2>' . _('Applying') . ' ' . $SQLScriptFile . '</th></tr>';
 
 		for ($i=0; $i<=$ScriptFileEntries; $i++) {
 	

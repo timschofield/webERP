@@ -571,13 +571,19 @@ if (!isset($_GET['delete'])) {
 			$_POST['BranchCode']='';
 		}
 		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Add a Branch').'</p>';
-		echo '<table class=selection><tr><td>'._('Branch Code'). ':</td>
-			<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex=1 type="text" name="BranchCode" size=12 maxlength=10 value="' . $_POST['BranchCode'] . '"></td></tr>';
+		echo '<table class=selection>
+				<tr>
+					<td>'._('Branch Code'). ':</td>
+					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex=1 type="text" name="BranchCode" size=12 maxlength=10 value="' . $_POST['BranchCode'] . '"></td>
+				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
 
 	//SQL to poulate account selection boxes
-	$sql = "SELECT salesmanname, salesmancode FROM salesman";
+	$sql = "SELECT salesmanname, 
+					salesmancode 
+			FROM salesman 
+			WHERE current = 1";
 
 	$result = DB_query($sql,$db);
 
@@ -592,12 +598,16 @@ if (!isset($_GET['delete'])) {
 	echo '<input type=hidden name="DebtorNo" value="'. $DebtorNo . '" />';
 
 
-	echo '<tr><td>'._('Branch Name').':</td>';
+	echo '<tr>
+			<td>'._('Branch Name').':</td>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
-	echo '<td><input tabindex=2 type="text" name="BrName" size=41 maxlength=40 value="'. $_POST['BrName'].'"></td></tr>';
-	echo '<tr><td>'._('Branch Contact').':</td>';
+	echo '<td><input tabindex=2 type="text" name="BrName" size=41 maxlength=40 value="'. $_POST['BrName'].'"></td>
+		</tr>';
+	echo '<tr>
+			<td>'._('Branch Contact').':</td>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
-	echo '<td><input tabindex=3 type="text" name="ContactName" size=41 maxlength=40 value="'. $_POST['ContactName'].'"></td></tr>';
+	echo '<td><input tabindex=3 type="text" name="ContactName" size=41 maxlength=40 value="'. $_POST['ContactName'].'"></td>
+		</tr>';
 	echo '<tr><td>'._('Street Address 1 (Street)').':</td>';
 	if (!isset($_POST['BrAddress1'])) {$_POST['BrAddress1']='';}
 	echo '<td><input tabindex=4 type="text" name="BrAddress1" size=41 maxlength=40 value="'. $_POST['BrAddress1'].'"></td></tr>';
@@ -635,7 +645,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value=';
 		}
-		echo $myrow['salesmancode'] . '>' . $myrow['salesmanname'];
+		echo $myrow['salesmancode'] . '>' . $myrow['salesmanname'] . '</option>';
 
 	} //end while loop
 
@@ -643,7 +653,7 @@ if (!isset($_GET['delete'])) {
 
 	DB_data_seek($result,0);
 
-	$sql = 'SELECT areacode, areadescription FROM areas';
+	$sql = "SELECT areacode, areadescription FROM areas";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0){
 		echo '</table>';
@@ -661,7 +671,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['areacode'] . '">' . $myrow['areadescription'];
+		echo $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 
 	} //end while loop
 
@@ -705,7 +715,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['Email'])) {$_POST['Email']='';}
 	echo '<tr><td>'.(($_POST['Email']) ? '<a href="Mailto:'.$_POST['Email'].'">'._('Email').':</a>' : _('Email').':').'</td>';
       //only display email link if there is an email address
-	echo '<td><input tabindex=18 type="Text" name="Email" size=56 maxlength=55 value="'. $_POST['Email'].'"></td></tr>';
+	echo '<td><input tabindex=18 type="text" name="Email" size=56 maxlength=55 value="'. $_POST['Email'].'"></td></tr>';
 
 	echo '<tr><td>'._('Tax Group').':</td>';
 	echo '<td><select tabindex=19 name="TaxGroup">';

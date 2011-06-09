@@ -40,6 +40,11 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The sales type (price list) code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
+	} elseif( trim($_POST['Sales_Type'])==''){
+		$InputError = 1;
+		prnMsg (_('The sales type (price list) description cannot be empty'),'error');
+		$Errors[$i] = 'SalesType';
+		$i++;
 	} elseif (strlen($_POST['Sales_Type']) >40) {
 		$InputError = 1;
 		echo prnMsg(_('The sales type (price list) description must be forty characters or less long'),'error');
@@ -155,12 +160,12 @@ if (isset($_POST['submit'])) {
 			prnMsg (_('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this sales type code'));
 		} else {
 
-			$sql="DELETE FROM salestypes WHERE typeabbrev='".$SelectedType."'";
+			$sql="DELETE FROM salestypes WHERE typeabbrev='" . $SelectedType . "'";
 			$ErrMsg = _('The Sales Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Sales type') . ' / ' . _('price list') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
-			$sql ="DELETE FROM prices WHERE prices.typeabbrev='SelectedType'";
+			$sql ="DELETE FROM prices WHERE prices.typeabbrev='" . $SelectedType . "'";
 			$ErrMsg =  _('The Sales Type prices could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
