@@ -177,6 +177,13 @@ if (isset($_POST['submit'])) {
 	} //end if sales type used in debtor transactions or in customers set up
 }
 
+
+if(isset($_POST['Cancel'])){
+	unset($SelectedType);
+	unset($_POST['TypeAbbrev']);
+	unset($_POST['Sales_Type']);
+}
+
 if (!isset($SelectedType)){
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedType will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
@@ -184,7 +191,7 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT * FROM salestypes';
+	$sql = "SELECT * FROM salestypes";
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
@@ -237,7 +244,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT typeabbrev,
 			       sales_type
 		        FROM salestypes
-		        WHERE typeabbrev='$SelectedType'";
+		        WHERE typeabbrev='" . $SelectedType . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
