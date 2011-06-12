@@ -1,6 +1,10 @@
 webERP Change Log
 
-9/6/11 Phil : Prices.php now updates the end date of a price when a new default (no end date) price is added
+12/6/11 Version 4.04.4
+
+12/6/11 Phil: Customers.php included telephone and email from the first branch found - removed as could be confusing. Customer contact information is stored in CustomerContacts and custbranch table
+12/6/11 Phil: SupplierCredit.php variables containing value case consistency
+9/6/11 Phil: Prices.php now updates the end date of a price when a new default (no end date) price is added
 9/6/11 Ricard: PcExpensesTypeTab.php deletion question message fixed as does not delete any expenses set up with this expense type
 9/6/11 Daniel Richert: includes/LanguageSetup.php changed to set $Locale = setlocale (LC_MESSAGES, $_SESSION['Language']); as using LC_ALL over-rides numeric and we need decimal points as . - commas stuff things up
 9/6/11 Ricard: Added new field current to salesman table to flag if the salesman is currently still on the team or not - modified WWW_Users.php and CustomerBranches to only allow selection of current salesfolk

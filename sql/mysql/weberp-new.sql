@@ -1498,7 +1498,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1888,6 +1888,7 @@ CREATE TABLE `salesman` (
   `commissionrate1` double NOT NULL DEFAULT '0',
   `breakpoint` decimal(10,0) NOT NULL DEFAULT '0',
   `commissionrate2` double NOT NULL DEFAULT '0',
+  `current` tinyint(4) NOT NULL COMMENT 'Salesman current (1) or not (0)',
   PRIMARY KEY (`salesmancode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2795,7 +2796,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-03 21:59:24
+-- Dump completed on 2011-06-12 21:25:24
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3134,7 +3135,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-06-03 19:38:52','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-06-09 21:05:15','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
 INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b','test','','','','','','MEL',6,'2011-05-19 19:05:46','','A4','1,1,1,0,0,0,0,0,0,0,',0,50,'silverwolf','en_GB.utf8',0);
 
 --
@@ -3359,7 +3360,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.04.1');
+INSERT INTO `config` VALUES ('VersionNumber','4.04.4');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -3819,7 +3820,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-03 21:59:24
+-- Dump completed on 2011-06-12 21:25:24
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

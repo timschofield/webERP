@@ -1500,7 +1500,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1890,6 +1890,7 @@ CREATE TABLE `salesman` (
   `commissionrate1` double NOT NULL DEFAULT '0',
   `breakpoint` decimal(10,0) NOT NULL DEFAULT '0',
   `commissionrate2` double NOT NULL DEFAULT '0',
+  `current` tinyint(4) NOT NULL COMMENT 'Salesman current (1) or not (0)',
   PRIMARY KEY (`salesmancode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2797,7 +2798,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-03 21:59:24
+-- Dump completed on 2011-06-12 21:25:24
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -10359,7 +10360,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.04.1');
+INSERT INTO `config` VALUES ('VersionNumber','4.04.4');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -11603,6 +11604,7 @@ INSERT INTO `periods` VALUES (7,'2011-03-31');
 INSERT INTO `periods` VALUES (8,'2011-04-30');
 INSERT INTO `periods` VALUES (9,'2011-05-31');
 INSERT INTO `periods` VALUES (10,'2011-06-30');
+INSERT INTO `periods` VALUES (11,'2011-07-31');
 
 --
 -- Dumping data for table `pickinglistdetails`
@@ -11623,7 +11625,8 @@ INSERT INTO `prices` VALUES ('BirthdayCakeConstruc','DE','AUD','','1476.0000',''
 INSERT INTO `prices` VALUES ('BREAD','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','','246.0000','','1999-01-01','2011-05-29');
 INSERT INTO `prices` VALUES ('DR_TUMMY','DE','AUD','','250.0000','','2011-05-30','9999-12-31');
-INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','','124.5000','','1999-01-01','0000-00-00');
+INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','','124.5000','','1999-01-01','2011-06-08');
+INSERT INTO `prices` VALUES ('DVD-CASE','DE','AUD','','135.0000','','2011-06-09','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-CASE','DE','GBP','DUMBLE','52.6500','DUMBLE','1999-01-01','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-CASE','DE','USD','ANGRY','150.0000','ANGRY','2011-05-13','0000-00-00');
 INSERT INTO `prices` VALUES ('DVD-DHWV','DE','AUD','','123.0000','','1999-01-01','0000-00-00');
@@ -11682,6 +11685,8 @@ INSERT INTO `purchorderdetails` VALUES (21,14,'DVD-CASE','2011-04-18','webERP De
 INSERT INTO `purchorderdetails` VALUES (22,15,'DVD-CASE','2011-04-18','CrystalCase50 - Crystal Cases 50 Pack',1460,0,30,0,0,150,0,0,'0',0,'','CrystalCase50',0,50);
 INSERT INTO `purchorderdetails` VALUES (23,16,'DVD-CASE','2011-04-18','CrystalCase50 - Crystal Cases 50 Pack',1460,0,30,0,0,100,0,0,'0',0,'50 pack','CrystalCase50',0,50);
 INSERT INTO `purchorderdetails` VALUES (24,17,'','2011-05-19','Some rubbish or other',1800,3,60500,48560,55000,5,3,0,'',0,'each','0',0,1);
+INSERT INTO `purchorderdetails` VALUES (25,17,'DVD-CASE','2011-05-19','webERP Demo DVD Case',1460,0,0,0,0,2,0,0,'0',0,'','',0,1);
+INSERT INTO `purchorderdetails` VALUES (26,17,'DR_TUMMY','2011-05-19','Gastric exquisite diarrhea',1460,0,0,0,0,2,0,0,'0',0,'','',0,1);
 
 --
 -- Dumping data for table `purchorders`
@@ -11702,7 +11707,7 @@ INSERT INTO `purchorders` VALUES (13,'WHYNOT','','2011-04-12 00:00:00',1,NULL,0,
 INSERT INTO `purchorders` VALUES (14,'WHYNOT','','2011-04-18 00:00:00',1,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Authorised','18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
 INSERT INTO `purchorders` VALUES (15,'WHYNOT','','2011-04-18 00:00:00',1,'2011-04-18 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Printed','18/04/2011 - Printed by<a href=\"mailto:info@weberp.org\">Demonstration user</a><br />18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
 INSERT INTO `purchorders` VALUES (16,'WHYNOT','','2011-04-18 00:00:00',1,'2011-04-18 00:00:00',1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Authorised','12/05/2011 - Authorised by <a href=\"mailto:phil@logicworks.co.nz\">admin</a>\n					<br />12/05/2011 - Order set to pending status by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;18/04/2011 - Printed by&lt;a href=','20','');
-INSERT INTO `purchorders` VALUES (17,'GOTSTUFF','','2011-05-19 00:00:00',1.1,'2011-05-19 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','','Mr salesman','','Jack Roberts','1.00','2011-05-19','','1','2011-05-19','Printed','19/05/2011 - Printed by<a href=\"mailto:\">Demonstration user</a><br />19/05/2011 - Authorised by Demonstration user <br />19/05/2011 - Order Created by Demonstration user  - <br />','20','');
+INSERT INTO `purchorders` VALUES (17,'GOTSTUFF','','2011-05-19 00:00:00',1.1,'2011-05-19 00:00:00',1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','','Mr salesman','','Jack Roberts','3.00','2011-06-09','','1','2011-05-19','Authorised','19/05/2011 - Printed by<a href=\"mailto:\">Demonstration user</a><br />19/05/2011 - Authorised by Demonstration user <br />19/05/2011 - Order Created by Demonstration user  - <br />','20','');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -12720,10 +12725,10 @@ INSERT INTO `salesglpostings` VALUES (1,'AN','ANY',4900,4100,'AN');
 -- Dumping data for table `salesman`
 --
 
-INSERT INTO `salesman` VALUES ('DE','Default Sales person','','',0,'0',0);
-INSERT INTO `salesman` VALUES ('ERI','Eric Browlee','','',0,'0',0);
-INSERT INTO `salesman` VALUES ('INT','Internet Shop','','',0,'0',0);
-INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
+INSERT INTO `salesman` VALUES ('DE','Default Sales person','','',0,'0',0,1);
+INSERT INTO `salesman` VALUES ('ERI','Eric Browlee','','',0,'0',0,0);
+INSERT INTO `salesman` VALUES ('INT','Internet Shop','','',0,'0',0,1);
+INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0,1);
 
 --
 -- Dumping data for table `salesorderdetails`
@@ -13658,7 +13663,7 @@ INSERT INTO `workorders` VALUES (13,'TOR','2010-10-15','2010-08-14',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-06-03 19:38:52','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-06-09 21:05:15','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
 INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b','test','','','','','','MEL',6,'2011-05-19 19:05:46','','A4','1,1,1,0,0,0,0,0,0,0,',0,50,'silverwolf','en_GB.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -13667,5 +13672,5 @@ INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-03 21:59:24
+-- Dump completed on 2011-06-12 21:25:24
 SET FOREIGN_KEY_CHECKS = 1;
