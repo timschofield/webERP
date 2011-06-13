@@ -46,7 +46,12 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				$_POST['LinesCounter'] -= 10;
 			}
 			// Only if stock exists at this location
-			$result = DB_query("SELECT quantity FROM locstock WHERE stockid='" . $_POST['StockID' . $i] . "' and loccode='".$_POST['FromStockLocation']."'",$db);
+			$result = DB_query("SELECT quantity 
+								FROM locstock 
+								WHERE stockid='" . $_POST['StockID' . $i] . "' 
+								AND loccode='".$_POST['FromStockLocation']."'",
+								$db);
+								
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] < $_POST['StockQTY' . $i]){
 				$InputError = True;
@@ -75,7 +80,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	DB_Txn_Begin($db);
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
-		if($_POST['StockID' . $i] != ""){
+		if($_POST['StockID' . $i] != ''){
 			$DecimalsSql = "SELECT decimalplaces
 							FROM stockmaster
 							WHERE stockid='" . $_POST['StockID' . $i] . "'";
@@ -101,10 +106,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	DB_Txn_Commit($db);
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
-	echo '<p><a href="'.$rootpath.'/PDFStockLocTransfer.php?' . SID . 'TransferNo=' . $_POST['Trf_ID'] . '">'.
-		_('Print the Transfer Docket'). '</a>';
-	unset($_SESSION['DispatchingTransfer']);
-	unset($_SESSION['Transfer']);
+	echo '<p><a href="'.$rootpath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">'. _('Print the Transfer Docket'). '</a>';
 	include('includes/footer.inc');
 
 } else {
@@ -130,53 +132,57 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '?'. SID . '" method=post>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class=selection>';
-	echo '<tr><th colspan=4><input type=hidden name="Trf_ID" VALUE="' . $Trf_ID . '"><font size=3 color=blue>'.
+	echo '<table class="selection">';
+	echo '<tr><th colspan=4><input type=hidden name="Trf_ID" value="' . $Trf_ID . '"><font size=3 color=blue>'.
 			_('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</font></th></tr>';
 
-	$sql = 'SELECT loccode, locationname FROM locations';
+	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
-	echo '<tr><td>'._('From Stock Location').':</td><td><select name="FromStockLocation">';
+	echo '<tr>
+			<td>'._('From Stock Location').':</td>
+			<td><select name="FromStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['FromStockLocation'])){
 			if ($myrow['loccode'] == $_POST['FromStockLocation']){
-				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname']. '</option>';
 			} else {
-				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			$_POST['FromStockLocation']=$myrow['loccode'];
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td>';
 
 	DB_data_seek($resultStkLocs,0); //go back to the start of the locations result
-	echo '<td>'._('To Stock Location').':</td><td><select name="ToStockLocation">';
+	echo '<td>'._('To Stock Location').':</td>
+			<td><select name="ToStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['ToStockLocation'])){
 			if ($myrow['loccode'] == $_POST['ToStockLocation']){
-				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
-				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			$_POST['ToStockLocation']=$myrow['loccode'];
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select></td></tr></table><p>';
+	echo '</select></td></tr></table><p />';
 
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 
-	$tableheader = '<tr><th>'. _('Item Code'). '</th><th>'. _('Quantity'). '</th></tr>';
+	$tableheader = '<tr><th>'. _('Item Code'). '</th>
+						<th>'. _('Quantity'). '</th></tr>';
 	echo $tableheader;
 
 	$k=0; /* row counter */
@@ -188,9 +194,11 @@ if(isset($_POST['Submit']) AND $InputError==False){
 				echo $tableheader;
 				$k=0;
 			}
+			$k++;
+			
 			echo '<tr>
-				<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 value="' . $_POST['StockID' . $i] . '"></td>
-				<td><input type=text name="StockQTY' . $i .'" size=10 maxlength=10 class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
+				<td><input type=text name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '"></td>
+				<td><input type=text name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
 			</tr>';
 		}
 	}else {
@@ -214,8 +222,12 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	}
 
 	echo '</table><br /><div class="centre">
-		<input type=hidden name="LinesCounter" value='. $i .'><input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '"><input type=submit name="Submit" value="'. _('Create Transfer Shipment'). '"><br />';
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
+		<input type="hidden" name="LinesCounter" value='. $i .'>
+		<input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '">
+		<input type="submit" name="Submit" value="'. _('Create Transfer Shipment'). '"><br />';
+		
+	echo '<script type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
+	
 	echo '</form></div>';
 	include('includes/footer.inc');
 }

@@ -18,7 +18,7 @@ function display_children($parent, $level, &$BOMTree) {
 	$c_result = DB_query("SELECT parent,
 								component
 						FROM bom WHERE parent='" . $parent. "'"
-				 ,$db);
+						,$db);
 	if (DB_num_rows($c_result) > 0) {
 		
 		while ($row = DB_fetch_array($c_result)) {
@@ -143,7 +143,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				<td class=number>%s</td>
 				<td><a href="%s&Select=%s&SelectedComponent=%s">' . _('Edit') . '</a></td>
 				<td>'.$DrillText.'</a></td>
-				 <td><a href="%s&Select=%s&SelectedComponent=%s&delete=1&ReSelect=%s">' . _('Delete') . '</a></td>
+				 <td><a href="%s&Select=%s&SelectedComponent=%s&delete=1&ReSelect=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
 				 </tr>',
 				$Level1,
 				$myrow[0],
@@ -216,13 +216,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		if (!Is_Date($_POST['EffectiveAfter'])) {
 			$InputError = 1;
-			prnMsg(_('The effective after date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
+			prnMsg(_('The effective after date field must be a date in the format') . ' ' .$_SESSION['DefaultDateFormat'],'error');
 			$Errors[$i] = 'EffectiveAfter';
 			$i++;
 		}
 		if (!Is_Date($_POST['EffectiveTo'])) {
 			$InputError = 1;
-			prnMsg(_('The effective to date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
+			prnMsg(_('The effective to date field must be a date in the format')  . ' ' .$_SESSION['DefaultDateFormat'],'error');
 			$Errors[$i] = 'EffectiveTo';
 			$i++;
 		}
@@ -380,9 +380,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	//DisplayBOMItems($SelectedParent, $db);
 	$sql = "SELECT stockmaster.description,
-			stockmaster.mbflag
-		FROM stockmaster
-		WHERE stockmaster.stockid='" . $SelectedParent . "'";
+					stockmaster.mbflag
+			FROM stockmaster
+			WHERE stockmaster.stockid='" . $SelectedParent . "'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
@@ -410,16 +410,16 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			break;
 	}
 
-	echo '<br /><div class=centre><a href=' . $_SERVER['PHP_SELF'] . '?' . SID . '>' . _('Select a Different BOM') . '</a></div><br />';
+	echo '<br /><div class=centre><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Select a Different BOM') . '</a></div><br />';
 	echo '<table class="selection">';
 	// Display Manufatured Parent Items
 	$sql = "SELECT bom.parent,
-			stockmaster.description,
-			stockmaster.mbflag
-		FROM bom, stockmaster
-		WHERE bom.component='".$SelectedParent."'
-		AND stockmaster.stockid=bom.parent
-		AND stockmaster.mbflag='M'";
+				stockmaster.description,
+				stockmaster.mbflag
+			FROM bom, stockmaster
+			WHERE bom.component='".$SelectedParent."'
+			AND stockmaster.stockid=bom.parent
+			AND stockmaster.mbflag='M'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
@@ -429,7 +429,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	if( DB_num_rows($result) > 0 ) {
 	 echo '<tr><td><div class="centre">'._('Manufactured parent items').' : ';
 	 while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?Select='.$myrow['parent'].'">'.
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 } //end while loop
@@ -437,10 +437,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	 $reqnl = $ix;
 	}
 	// Display Assembly Parent Items
-	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
-		FROM bom, stockmaster
+	$sql = "SELECT bom.parent, 
+				stockmaster.description, 
+				stockmaster.mbflag
+		FROM bom INNER JOIN stockmaster
+		ON bom.parent=stockmaster.stockid 
 		WHERE bom.component='".$SelectedParent."'
-		AND stockmaster.stockid=bom.parent
 		AND stockmaster.mbflag='A'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
@@ -450,18 +452,20 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo (($reqnl)?'<br />':'').'<tr><td><div class="centre">'._('Assembly parent items').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?Select='.$myrow['parent'].'">'.
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
 	 	echo '</div></td></tr>';
 	}
 	// Display Kit Sets
-	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
-		FROM bom, stockmaster
-		WHERE bom.component='".$SelectedParent."'
-		AND stockmaster.stockid=bom.parent
-		AND stockmaster.mbflag='K'";
+	$sql = "SELECT bom.parent, 
+				stockmaster.description, 
+				stockmaster.mbflag
+			FROM bom INNER JOIN stockmaster
+			ON bom.parent=stockmaster.stockid 
+			WHERE bom.component='".$SelectedParent."'
+			AND stockmaster.mbflag='K'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
@@ -470,18 +474,20 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo (($reqnl)?'<br />':'').'<tr><td><div class="centre">'._('Kit sets').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?Select='.$myrow['parent'].'">'.
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
 	 	echo '</div></td></tr>';
 	}
 	// Display Phantom/Ghosts
-	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
-		FROM bom, stockmaster
-		WHERE bom.component='".$SelectedParent."'
-		AND stockmaster.stockid=bom.parent
-		AND stockmaster.mbflag='G'";
+	$sql = "SELECT bom.parent, 
+				stockmaster.description, 
+				stockmaster.mbflag
+			FROM bom INNER JOIN stockmaster
+			ON bom.parent=stockmaster.stockid 
+			WHERE bom.component='".$SelectedParent."'
+			AND stockmaster.mbflag='G'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
@@ -490,7 +496,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo (($reqnl)?'<br />':'').'<tr><td><div class="centre">'._('Phantom').' : ';
 	 	$ix = 0;
 	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+	 	   echo (($ix)?', ':'').'<a href="'.$_SERVER['PHP_SELF'] . '?Select='.$myrow['parent'].'">'.
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
@@ -575,44 +581,46 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '<br />
 					<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
 			echo '<input type="hidden" name="SelectedComponent" value="' . $SelectedComponent . '" />';
-			echo '<table class=selection>';
+			echo '<table class="selection">';
 			echo '<tr><th colspan=13><div class="centre"><font color=blue size=3><b>'. ('Edit Component Details') .'</font></b></th></tr>';
-			echo '<tr><td>' . _('Component') . ':</td><td><b>' . $SelectedComponent . '</b></td></tr>';
+			echo '<tr><td>' . _('Component') . ':</td>
+					<td><b>' . $SelectedComponent . '</b></td>
+				</tr>';
 
 		} else { //end of if $SelectedComponent
 
 			echo '<input type=hidden name="SelectedParent" value="' . $SelectedParent . '" />';
 			/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
 			*/
-			echo '<table class=selection>';
+			echo '<table class="selection">';
 			echo '<tr><th colspan=13><div class="centre"><font color=blue size=3><b>' . ('New Component Details') .'</font></b></th></tr>';
 			echo '<tr><td>' . _('Component code') . ':</td><td>';
 			echo '<select ' . (in_array('ComponentCode',$Errors) ?  'class="selecterror"' : '' ) .' tabindex="1" name="Component">';
 
 			if ($ParentMBflag=='A'){ /*Its an assembly */
 				$sql = "SELECT stockmaster.stockid,
-						stockmaster.description
-					FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid = stockcategory.categoryid
-					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
-					OR stockmaster.mbflag !='D')
-					AND stockmaster.mbflag !='K'
-					AND stockmaster.mbflag !='A'
-					AND stockmaster.controlled = 0
-					AND stockmaster.stockid != '".$SelectedParent."'
-					ORDER BY stockmaster.stockid";
+							stockmaster.description
+						FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid = stockcategory.categoryid
+						WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
+						OR stockmaster.mbflag !='D')
+						AND stockmaster.mbflag !='K'
+						AND stockmaster.mbflag !='A'
+						AND stockmaster.controlled = 0
+						AND stockmaster.stockid != '".$SelectedParent."'
+						ORDER BY stockmaster.stockid";
 
 			} else { /*Its either a normal manufac item, phantom, kitset - controlled items ok */
 				$sql = "SELECT stockmaster.stockid,
-						stockmaster.description
-					FROM stockmaster INNER JOIN stockcategory
-						ON stockmaster.categoryid = stockcategory.categoryid
-					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
-					OR stockmaster.mbflag !='D')
-					AND stockmaster.mbflag !='K'
-					AND stockmaster.mbflag !='A'
-					AND stockmaster.stockid != '".$SelectedParent."'
-					ORDER BY stockmaster.stockid";
+							stockmaster.description
+						FROM stockmaster INNER JOIN stockcategory
+							ON stockmaster.categoryid = stockcategory.categoryid
+						WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
+						OR stockmaster.mbflag !='D')
+						AND stockmaster.mbflag !='K'
+						AND stockmaster.mbflag !='A'
+						AND stockmaster.stockid != '".$SelectedParent."'
+						ORDER BY stockmaster.stockid";
 			}
 
 			$ErrMsg = _('Could not retrieve the list of potential components because');
@@ -789,11 +797,7 @@ if (!isset($SelectedParent)) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">' .
-	'<div class="page_help_text">'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' .
-		 _('to maintain the bill of material for using the options below') .  '<br /><font size=1>' .
-	 _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') .
-     ', ' . _('kits or assemblies to be available for construction of a bill of material') .'</div>'.
-     '</font>
+	'<div class="page_help_text">'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to maintain the bill of material for using the options below') .  '<br /><font size=1>' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') .'</div>'. '</font>
      <br />
      <table class="selection" cellpadding="3" colspan="4">
 	<tr><td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
@@ -808,7 +812,7 @@ if (!isset($SelectedParent)) {
 
 if (isset($_POST['Search']) AND isset($result) AND !isset($SelectedParent)) {
 
-	echo '<br /><table cellpadding=2 colspan=7 class=selection>';
+	echo '<br /><table cellpadding="2" colspan="7" class="selection">';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
@@ -834,13 +838,13 @@ if (isset($_POST['Search']) AND isset($result) AND !isset($SelectedParent)) {
 		}
 		$tab = $j+3;
 		printf('<td><input tabindex="' . $tab . '" type="submit" name="Select" value="%s"</td>
-		        <td>%s</td>
-			<td class=number>%s</td>
-			<td>%s</td></tr>',
-			$myrow['stockid'],
-			$myrow['description'],
-			$StockOnHand,
-			$myrow['units']);
+				<td>%s</td>
+				<td class=number>%s</td>
+				<td>%s</td></tr>',
+				$myrow['stockid'],
+				$myrow['description'],
+				$StockOnHand,
+				$myrow['units']);
 
 		$j++;
 //end of page full new headings if

@@ -170,16 +170,15 @@ if (isset($_POST['submit'])) {
 /* Always show the list of accounts */
 If (!isset($SelectedBankAccount)) {
 	$sql = "SELECT bankaccounts.accountcode,
-			bankaccounts.bankaccountcode,
-			chartmaster.accountname,
-			bankaccountname,
-			bankaccountnumber,
-			bankaddress,
-			currcode,
-			invoice
-		FROM bankaccounts,
-			chartmaster
-		WHERE bankaccounts.accountcode = chartmaster.accountcode";
+				bankaccounts.bankaccountcode,
+				chartmaster.accountname,
+				bankaccountname,
+				bankaccountnumber,
+				bankaddress,
+				currcode,
+				invoice
+			FROM bankaccounts INNER JOIN chartmaster
+			ON bankaccounts.accountcode = chartmaster.accountcode";
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $sql;
@@ -198,7 +197,7 @@ If (!isset($SelectedBankAccount)) {
 		</tr>';
 
 	$k=0; //row colour counter
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
 		$k=0;
@@ -206,33 +205,33 @@ If (!isset($SelectedBankAccount)) {
 		echo '<tr class="OddTableRows">';
 		$k++;
 	}
-	if ($myrow[7]==0) {
-		$defacc=_('No');
+	if ($myrow['invoice']==0) {
+		$DefaultBankAccount=_('No');
 	} else {
-		$defacc=_('Yes');
+		$DefaultBankAccount=_('Yes');
 	}
 	printf('<td>%s<br /><font size=2>%s</font></td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</td>
-		<td><a href="%s?SelectedBankAccount=%s&delete=1">' . _('Delete') . '</td>
-		</tr>',
-		$myrow[0],
-		$myrow[2],
-		$myrow[3],
-		$myrow[1],
-		$myrow[4],
-		$myrow[5],
-		$myrow[6],
-		$defacc,
-		$_SERVER['PHP_SELF'],
-		$myrow[0],
-		$_SERVER['PHP_SELF'],
-		$myrow[0]);
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</td>
+			<td><a href="%s?SelectedBankAccount=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this bank account?') . '\');">' . _('Delete') . '</td>
+			</tr>',
+			$myrow['accountcode'],
+			$myrow['accountname'],
+			$myrow['bankaccountname'],
+			$myrow['bankaccountcode'],
+			$myrow['bankaccountnumber'],
+			$myrow['bankaddress'],
+			$myrow['currcode'],
+			$DefaultBankAccount,
+			$_SERVER['PHP_SELF'],
+			$myrow['accountcode'],
+			$_SERVER['PHP_SELF'],
+			$myrow['accountcode']);
 
 	}
 	//END WHILE LIST LOOP
@@ -243,25 +242,25 @@ If (!isset($SelectedBankAccount)) {
 
 if (isset($SelectedBankAccount)) {
 	echo '<p>';
-	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Bank Accounts Defined') . '</a></div>';
+	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Bank Accounts Defined') . '</a></div>';
 	echo '<p>';
 }
 
-echo "<form method='post' action=" . $_SERVER['PHP_SELF'] . ">";
+echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	//editing an existing bank account  - not deleting
 
 	$sql = "SELECT accountcode,
-			bankaccountname,
-			bankaccountcode,
-			bankaccountnumber,
-			bankaddress,
-			currcode,
-			invoice
-		FROM bankaccounts
-		WHERE bankaccounts.accountcode='$SelectedBankAccount'";
+				bankaccountname,
+				bankaccountcode,
+				bankaccountnumber,
+				bankaddress,
+				currcode,
+				invoice
+			FROM bankaccounts
+			WHERE bankaccounts.accountcode='" . $SelectedBankAccount . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -274,30 +273,33 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$_POST['CurrCode'] = $myrow['currcode'];
 	$_POST['DefAccount'] = $myrow['invoice'];
 
-	echo '<input type=hidden name=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
-	echo '<input type=hidden name=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
-	echo '<table class=selection> <tr><td>' . _('Bank Account GL Code') . ':</td><td>';
-	echo $_POST['AccountCode'] . '</td></tr>';
+	echo '<input type=hidden name="SelectedBankAccount" value="' . $SelectedBankAccount . '">';
+	echo '<input type=hidden name="AccountCode" value="' . $_POST['AccountCode'] . '">';
+	echo '<table class="selection">
+			<tr><td>' . _('Bank Account GL Code') . ':</td>
+				<td>' . $_POST['AccountCode'] . '</td>
+			</tr>';
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
-	echo '<table class=selection><tr><td>' . _('Bank Account GL Code') .
-		":</td><td><Select tabindex='1' " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
+	echo '<table class="selection">
+			<tr><td>' . _('Bank Account GL Code') . ':</td>
+				<td><select tabindex="1" ' . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) .' name="AccountCode">';
 
 	$sql = "SELECT accountcode,
-			accountname
-		FROM chartmaster,
-			accountgroups
-		WHERE chartmaster.group_ = accountgroups.groupname
-		AND accountgroups.pandl = 0
-		ORDER BY accountcode";
-
+				accountname
+			FROM chartmaster,
+				accountgroups
+			WHERE chartmaster.group_ = accountgroups.groupname
+			AND accountgroups.pandl = 0
+			ORDER BY accountcode";
+	
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AccountCode']) and $myrow['accountcode']==$_POST['AccountCode']) {
-			echo '<option selected VALUE=';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE=';
+			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+		echo $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
 
 	} //end while loop
 
@@ -319,43 +321,53 @@ if (!isset($_POST['BankAddress'])) {
 }
 
 echo '<tr><td>' . _('Bank Account Name') . ': </td>
-			<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size=40 maxlength=50></td></tr>
+			<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size=40 maxlength=50></td></tr>
 		<tr><td>' . _('Bank Account Code') . ': </td>
-                        <td><input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size=40 maxlength=50></td></tr>
+                        <td><input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size=40 maxlength=50></td></tr>
 		<tr><td>' . _('Bank Account Number') . ': </td>
-			<td><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size=40 maxlength=50></td></tr>
+			<td><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size="40" maxlength="50"></td></tr>
 		<tr><td>' . _('Bank Address') . ': </td>
-			<td><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size=40 maxlength=50></td></tr>
-		<tr><td>' . _('Currency Of Account') . ': </td><td><select tabindex="5" name="CurrCode">';
+			<td><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" maxlength="50"></td></tr>
+		<tr><td>' . _('Currency Of Account') . ': </td>
+			<td><select tabindex="5" name="CurrCode">';
 
 if (!isset($_POST['CurrCode']) OR $_POST['CurrCode']==''){
 	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
-$result = DB_query('SELECT currabrev, currency FROM currencies',$db);
+$result = DB_query("SELECT currabrev, 
+							currency 
+					FROM currencies",$db);
+					
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['currabrev']==$_POST['CurrCode']) {
-		echo '<option selected VALUE=';
+		echo '<option selected value="';
 	} else {
-		echo '<option VALUE=';
+		echo '<option value="';
 	}
-	echo $myrow['currabrev'] . '>' . $myrow['currabrev'];
+	echo $myrow['currabrev'] . '">' . $myrow['currabrev'] . '</option>';
 } //end while loop
 
 echo '</select></td>';
 
-echo		'<tr><td>' . _('Default for Invoices') . ': </td><td><select tabindex="6" name="DefAccount">';
+echo '<tr><td>' . _('Default for Invoices') . ': </td>
+		<td><select tabindex="6" name="DefAccount">';
 
 if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']==''){
-        $_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
+	$_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
 if (isset($SelectedBankAccount)) {
-	$result = DB_query("SELECT invoice FROM bankaccounts where accountcode ='" . $SelectedBankAccount  ."'",$db);
+	$result = DB_query("SELECT invoice 
+						FROM bankaccounts 
+						WHERE accountcode ='" . $SelectedBankAccount  ."'",
+						$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['invoice']== 1) {
-			echo '<option selected VALUE=1>'._('Yes').'</option><option value=0>'._('No').'</option>';
+			echo '<option selected value="1">'._('Yes').'</option>
+					<option value="0">'._('No').'</option>';
 		} else {
-			echo '<option selected VALUE=0>'._('No').'</option><option value=1>'._('Yes').'</option>';
+			echo '<option selected value="0">'._('No').'</option>
+					<option value="1">'._('Yes').'</option>';
 		}
 	}//end while loop
 } else {
@@ -366,7 +378,7 @@ if (isset($SelectedBankAccount)) {
 echo '</select></td>';
 
 echo '</tr></table><br />
-		<div class="centre"><input tabindex="7" type="Submit" name="submit" value="'. _('Enter Information') .'"></div>';
+		<div class="centre"><input tabindex="7" type="submit" name="submit" value="'. _('Enter Information') .'"></div>';
 
 echo '</form>';
 include('includes/footer.inc');

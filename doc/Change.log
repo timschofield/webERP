@@ -1,5 +1,7 @@
 webERP Change Log
 
+13/6/11 Phil: Birthdays (xhtml/indenting/quoting/casing/decimalplaces) for Areas.php, BOMInquiry.php, BOMS.php, BankAccounts.php, BankMatching.php, COGSGLPosting.php, CompanyPreferences.php, ConfirmDispatch_Invoice.php StockLocTransfer.php
+
 12/6/11 Version 4.04.4
 
 12/6/11 Phil: Customers.php included telephone and email from the first branch found - removed as could be confusing. Customer contact information is stored in CustomerContacts and custbranch table

@@ -2798,7 +2798,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-12 21:25:24
+-- Dump completed on 2011-06-12 21:40:25
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -13672,5 +13672,5 @@ INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-12 21:25:24
+-- Dump completed on 2011-06-12 21:40:25
 SET FOREIGN_KEY_CHECKS = 1;

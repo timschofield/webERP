@@ -15,8 +15,7 @@ if (isset($_POST['SelectedCOGSPostingID'])){
 	$SelectedCOGSPostingID=$_GET['SelectedCOGSPostingID'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -134,45 +133,39 @@ if (!isset($SelectedCOGSPostingID)) {
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result)==0){
 			/* The required group does not seem to exist so we create it */
-			$sql = "INSERT INTO accountgroups (
-					groupname,
-					sectioninaccounts,
-					pandl,
-					sequenceintb
-				) VALUES (
-					'Sales',
-					'1',
-					'1',
-					'10')";
-
+			$sql = "INSERT INTO accountgroups (	groupname,
+												sectioninaccounts,
+												pandl,
+												sequenceintb ) 
+										VALUES ('Sales',
+												'1',
+												'1',
+												'10')";
+							
 			$result = DB_query($sql,$db);
 		}
 		$sql = "SELECT accountcode FROM chartmaster WHERE accountcode ='1'";
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result)==0){
 		/* account number 1 is not used, so insert a new account */
-			$sql = "INSERT INTO chartmaster (
-							accountcode,
-							accountname,
-							group_
-							)
-					VALUES (
-							'1',
-							'Default Sales/Discounts',
-							'Sales'
-							)";
+			$sql = "INSERT INTO chartmaster (accountcode,
+											accountname,
+											group_)
+									VALUES ('1',
+											'Default Sales/Discounts',
+											'Sales'
+											)";
 			$result = DB_query($sql,$db);
 		}
 
-		$sql = "INSERT INTO cogsglpostings (
-						area,
-						stkcat,
-						salestype,
-						glcode)
-				VALUES ('AN',
-						'ANY',
-						'AN',
-						'1')";
+		$sql = "INSERT INTO cogsglpostings (	area,
+											stkcat,
+											salestype,
+											glcode)
+									VALUES ('AN',
+											'ANY',
+											'AN',
+											'1')";
 		$result = DB_query($sql,$db);
 	}
 
@@ -205,21 +198,21 @@ if (!isset($SelectedCOGSPostingID)) {
 			}
 
 		printf('<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-			<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</td>
-			</tr>',
-			$myrow['area'],
-			$myrow['stkcat'],
-			$myrow['salestype'],
-			$myrow['salestype'],
-			$_SERVER['PHP_SELF'] . '?',
-			$myrow['id'],
-			$_SERVER['PHP_SELF'] . '?',
-			$myrow['id']);
-
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
+				<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</td>
+				</tr>',
+				$myrow['area'],
+				$myrow['stkcat'],
+				$myrow['salestype'],
+				$myrow['salestype'],
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow['id'],
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow['id']);
+	
 		}//END WHILE LIST LOOP
 		echo '</table>';
 	}
@@ -239,11 +232,11 @@ if (isset($SelectedCOGSPostingID)) {
 	//editing an existing cost of sales posting record
 
 	$sql = "SELECT stkcat,
-			glcode,
-			area,
-			salestype
-		FROM cogsglpostings
-		WHERE id='".$SelectedCOGSPostingID."'";
+				glcode,
+				area,
+				salestype
+			FROM cogsglpostings
+			WHERE id='".$SelectedCOGSPostingID."'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -285,7 +278,7 @@ $result = DB_query($sql,$db);
 echo '</select></td></tr>
 		<tr><td>' . _('Stock Category') . ':</td>
 			<td><select tabindex=2 name="StkCat">
-				<option VALUE="ANY">' . _('Any Other') . '</option>';
+				<option value="ANY">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']) {

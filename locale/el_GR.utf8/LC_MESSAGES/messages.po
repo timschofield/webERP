@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-12 21:24+1200\n"
+"POT-Creation-Date: 2011-06-12 21:39+1200\n"
 "PO-Revision-Date: 2011-02-08 10:30+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -271,8 +271,8 @@ msgstr "Μητρική Ομάδα"
 #: CompanyPreferences.php:452 CompanyPreferences.php:454
 #: CompanyPreferences.php:465 CompanyPreferences.php:467
 #: ContractCosting.php:174 CustLoginSetup.php:578 CustLoginSetup.php:580
-#: CustomerBranches.php:410 Customers.php:592 Customers.php:871
-#: Customers.php:879 Customers.php:882 DeliveryDetails.php:1064
+#: CustomerBranches.php:410 Customers.php:595 Customers.php:863
+#: Customers.php:871 Customers.php:874 DeliveryDetails.php:1064
 #: DeliveryDetails.php:1104 DeliveryDetails.php:1107 GLTransInquiry.php:69
 #: MRPCalendar.php:220 MRP.php:527 MRP.php:531 MRP.php:535 MRP.php:539
 #: PaymentMethods.php:199 PaymentMethods.php:200 PaymentMethods.php:201
@@ -308,8 +308,8 @@ msgstr "Ναί"
 #: CompanyPreferences.php:451 CompanyPreferences.php:455
 #: CompanyPreferences.php:464 CompanyPreferences.php:468
 #: ContractCosting.php:172 CustLoginSetup.php:577 CustLoginSetup.php:581
-#: CustomerBranches.php:410 Customers.php:591 Customers.php:867
-#: Customers.php:878 Customers.php:881 DeliveryDetails.php:1065
+#: CustomerBranches.php:410 Customers.php:594 Customers.php:859
+#: Customers.php:870 Customers.php:873 DeliveryDetails.php:1065
 #: DeliveryDetails.php:1105 DeliveryDetails.php:1108 GLTransInquiry.php:123
 #: MRPCalendar.php:222 MRP.php:525 MRP.php:529 MRP.php:533 MRP.php:537
 #: PaymentMethods.php:199 PaymentMethods.php:200 PaymentMethods.php:201
@@ -343,8 +343,8 @@ msgstr "Όχι"
 #: AddCustomerNotes.php:125 AddCustomerTypeNotes.php:123 Areas.php:164
 #: BankAccounts.php:221 BOMs.php:144 COGSGLPostings.php:108
 #: COGSGLPostings.php:211 CreditStatus.php:174 Currencies.php:238
-#: CustLoginSetup.php:307 CustomerBranches.php:414 Customers.php:925
-#: Customers.php:957 CustomerTypes.php:202 EDIMessageFormat.php:150
+#: CustLoginSetup.php:307 CustomerBranches.php:414 Customers.php:917
+#: Customers.php:949 CustomerTypes.php:202 EDIMessageFormat.php:150
 #: Factors.php:299 FixedAssetCategories.php:180 FixedAssetLocations.php:102
 #: FreightCosts.php:240 GeocodeSetup.php:170 GLAccounts.php:308 GLTags.php:82
 #: Labels.php:414 Locations.php:377 MRPDemands.php:303 MRPDemandTypes.php:120
@@ -353,7 +353,7 @@ msgstr "Όχι"
 #: PcTypeTabs.php:172 PO_AuthorisationLevels.php:149 Prices_Customer.php:280
 #: Prices.php:246 PurchData.php:210 SalesCategories.php:256
 #: SalesGLPostings.php:132 SalesGLPostings.php:245 SalesPeople.php:219
-#: SalesTypes.php:209 SecurityTokens.php:110 SelectCustomer.php:613
+#: SalesTypes.php:216 SecurityTokens.php:110 SelectCustomer.php:613
 #: SelectCustomer.php:630 SelectCustomer.php:654 SelectCustomer.php:671
 #: SelectCustomer.php:694 SelectCustomer.php:710 Shippers.php:144
 #: StockCategories.php:240 SupplierContacts.php:157 SupplierTypes.php:189
@@ -372,7 +372,7 @@ msgstr "Επεξεργασία"
 #: COGSGLPostings.php:212 ContractBOM.php:270 ContractOtherReqts.php:121
 #: CounterSales.php:781 Credit_Invoice.php:384 CreditStatus.php:175
 #: Currencies.php:241 CustLoginSetup.php:308 CustomerReceipt.php:863
-#: Customers.php:958 CustomerTypes.php:203 DiscountCategories.php:215
+#: Customers.php:950 CustomerTypes.php:203 DiscountCategories.php:215
 #: DiscountMatrix.php:173 EDIMessageFormat.php:151
 #: FixedAssetCategories.php:181 FixedAssetJournal.php:393 FreightCosts.php:241
 #: GeocodeSetup.php:171 GLAccounts.php:309 GLJournal.php:382 GLTags.php:83
@@ -383,7 +383,7 @@ msgstr "Επεξεργασία"
 #: PO_AuthorisationLevels.php:151 PO_Items.php:687 Prices_Customer.php:281
 #: Prices.php:247 PurchData.php:211 SalesAnalReptCols.php:294
 #: SalesAnalRepts.php:302 SalesCategories.php:257 SalesGLPostings.php:133
-#: SalesGLPostings.php:246 SalesPeople.php:220 SalesTypes.php:210
+#: SalesGLPostings.php:246 SalesPeople.php:220 SalesTypes.php:217
 #: SecurityTokens.php:111 SelectCreditItems.php:745 SelectCustomer.php:614
 #: SelectCustomer.php:631 SelectCustomer.php:655 SelectCustomer.php:672
 #: SelectCustomer.php:695 SelectCustomer.php:711 SelectOrderItems.php:1370
@@ -573,8 +573,8 @@ msgid "The contact record has been deleted"
 msgstr "Η εγγραφή επαφής έχει διαγραφεί"
 
 #: AddCustomerContacts.php:112 CompanyPreferences.php:224
-#: CustomerBranches.php:368 Customers.php:915 Customers.php:921
-#: Customers.php:986 SalesPeople.php:191 SelectCustomer.php:609
+#: CustomerBranches.php:368 Customers.php:907 Customers.php:913
+#: Customers.php:978 SalesPeople.php:191 SelectCustomer.php:609
 #: StockDispatch.php:185 StockDispatch.php:197 SupplierContacts.php:145
 #: SupplierCredit.php:441 SupplierInvoice.php:408 SuppTransGLAnalysis.php:103
 #: includes/InputSerialItemsFile.php:84 includes/InputSerialItemsFile.php:124
@@ -582,18 +582,18 @@ msgstr "Η εγγραφή επαφής έχει διαγραφεί"
 msgid "Name"
 msgstr "Όνομα"
 
-#: AddCustomerContacts.php:113 AddCustomerContacts.php:190 Customers.php:916
-#: Customers.php:922 Customers.php:988 SelectCustomer.php:610
+#: AddCustomerContacts.php:113 AddCustomerContacts.php:190 Customers.php:908
+#: Customers.php:914 Customers.php:980 SelectCustomer.php:610
 #: WWW_Access.php:107 WWW_Access.php:168
 msgid "Role"
 msgstr "Ρόλο"
 
-#: AddCustomerContacts.php:114 Customers.php:990
+#: AddCustomerContacts.php:114 Customers.php:982
 msgid "Phone no"
 msgstr "Τηλέφωνο δεν"
 
-#: AddCustomerContacts.php:115 AddCustomerContacts.php:202 Customers.php:918
-#: Customers.php:924 Customers.php:992 PcAssignCashToTab.php:220
+#: AddCustomerContacts.php:115 AddCustomerContacts.php:202 Customers.php:910
+#: Customers.php:916 Customers.php:984 PcAssignCashToTab.php:220
 #: PcAssignCashToTab.php:346 PcAuthorizeExpenses.php:91
 #: PcClaimExpensesFromTab.php:214 PcClaimExpensesFromTab.php:372
 #: PcReportTab.php:327 SelectCustomer.php:612 SystemParameters.php:319
@@ -1757,7 +1757,7 @@ msgstr ""
 "σημαντικό ότι η συναλλαγματική ισοτιμία αντανακλά πάνω από την τρέχουσα αξία "
 "του νομίσματος τραπεζικό λογαριασμό"
 
-#: BankReconciliation.php:321 CounterSales.php:781 Customers.php:1034
+#: BankReconciliation.php:321 CounterSales.php:781 Customers.php:1024
 #: SelectOrderItems.php:1381 Stocks.php:1041 WorkOrderCosting.php:517
 #: WorkOrderEntry.php:548
 msgid "Are You Sure?"
@@ -2769,7 +2769,7 @@ msgid "Stock Category"
 msgstr "Κατηγορία Αποθέματος"
 
 #: COGSGLPostings.php:90 COGSGLPostings.php:194 COGSGLPostings.php:306
-#: Customers.php:739 Customers.php:742 DiscountMatrix.php:96
+#: Customers.php:725 Customers.php:728 DiscountMatrix.php:96
 #: DiscountMatrix.php:152 PricesByCost.php:259 Prices.php:218
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:224 SalesGLPostings.php:354 SelectOrderItems.php:752
@@ -2801,7 +2801,7 @@ msgstr "Εμφάνιση όλων των εγγραφών Κόστους Πωλ�
 msgid "Any Other"
 msgstr "Οποιοδήποτε Άλλο"
 
-#: COGSGLPostings.php:306 Customers.php:742 EDIProcessOrders.php:389
+#: COGSGLPostings.php:306 Customers.php:728 EDIProcessOrders.php:389
 #: PDFCustomerList.php:332 PDFPriceList.php:17 PDFPriceList.php:121
 #: PDFPriceList.php:251 PricesBasedOnMarkUp.php:223 PricesByCost.php:259
 #: SalesGLPostings.php:354 SelectOrderItems.php:752 SuppPriceList.php:118
@@ -2924,13 +2924,13 @@ msgstr "Πόλη"
 msgid "Address Line 4"
 msgstr "Νομός"
 
-#: CompanyPreferences.php:252 Customers.php:480 Customers.php:709
-#: Customers.php:729 Factors.php:216
+#: CompanyPreferences.php:252 Customers.php:480 Customers.php:701
+#: Customers.php:715 Factors.php:216
 msgid "Address Line 5"
 msgstr "Χώρα"
 
-#: CompanyPreferences.php:256 Customers.php:482 Customers.php:710
-#: Customers.php:731 Factors.php:218
+#: CompanyPreferences.php:256 Customers.php:482 Customers.php:702
+#: Customers.php:717 Factors.php:218
 msgid "Address Line 6"
 msgstr "Άλλα στοιχεία διεύθυνσης"
 
@@ -2943,8 +2943,8 @@ msgid "Facsimile Number"
 msgstr "Φαξ"
 
 #: CompanyPreferences.php:268 CustLoginSetup.php:418 Customers.php:470
-#: Customers.php:704 Customers.php:719 Suppliers.php:676 Suppliers.php:853
-#: SuppLoginSetup.php:368 WWW_Users.php:428
+#: Suppliers.php:676 Suppliers.php:853 SuppLoginSetup.php:368
+#: WWW_Users.php:428
 msgid "Email Address"
 msgstr "Διεύθυνση Email"
 
@@ -3158,8 +3158,8 @@ msgid "Customer"
 msgstr "Πελάτης"
 
 #: ConfirmDispatch_Invoice.php:246 CustEDISetup.php:94 CustLoginSetup.php:272
-#: CustLoginSetup.php:448 Customers.php:461 Customers.php:659
-#: Customers.php:696 DeliveryDetails.php:800 OrderDetails.php:65
+#: CustLoginSetup.php:448 Customers.php:461 Customers.php:657
+#: Customers.php:691 DeliveryDetails.php:800 OrderDetails.php:65
 #: SalesAnalRepts.php:27 SalesAnalRepts.php:29 WWW_Users.php:262
 #: WWW_Users.php:466 Z_ChangeBranchCode.php:202
 #: includes/PDFStatementPageHeader.inc:112 includes/PDFTransPageHeader.inc:46
@@ -3168,8 +3168,8 @@ msgid "Customer Code"
 msgstr "Κωδικός Πελάτη"
 
 #: ConfirmDispatch_Invoice.php:247 CustEDISetup.php:96 CustomerReceipt.php:235
-#: CustomerReceipt.php:1039 Customers.php:464 Customers.php:701
-#: Customers.php:713 DeliveryDetails.php:801 OrderDetails.php:67
+#: CustomerReceipt.php:1039 Customers.php:464 Customers.php:696
+#: Customers.php:705 DeliveryDetails.php:801 OrderDetails.php:67
 #: POReport.php:494 POReport.php:1249 SalesInquiry.php:740
 #: SalesInquiry.php:750 SalesInquiry.php:774 SalesInquiry.php:918
 #: SalesInquiry.php:929 SalesInquiry.php:935 SalesInquiry.php:941
@@ -5168,7 +5168,7 @@ msgstr "Μέρος του κώδικα Υποκατάστημα Πελάτη"
 msgid "Part of the Branch Phone Number"
 msgstr "Μέρος του αριθμού τηλεφώνου Κλάδου"
 
-#: Contracts.php:767 Customers.php:607 Customers.php:1031 PO_Header.php:533
+#: Contracts.php:767 Customers.php:610 Customers.php:1021 PO_Header.php:533
 #: SelectGLAccount.php:99 SelectOrderItems.php:636
 msgid "Reset"
 msgstr "Επαναφορά"
@@ -6878,12 +6878,12 @@ msgstr "Είσοδος Χρήστη"
 msgid "Full Name"
 msgstr "Πλήρες όνομα"
 
-#: CustLoginSetup.php:270 Customers.php:466 Customers.php:702
-#: Customers.php:715 Factors.php:222 Factors.php:261 OrderDetails.php:99
-#: PrintCustTrans.php:662 PrintCustTrans.php:882 PrintCustTrans.php:929
-#: PrintCustTransPortrait.php:713 PrintCustTransPortrait.php:933
-#: PrintCustTransPortrait.php:977 SalesPeople.php:192 Suppliers.php:670
-#: Suppliers.php:849 SuppLoginSetup.php:236 WWW_Users.php:260
+#: CustLoginSetup.php:270 Customers.php:466 Factors.php:222 Factors.php:261
+#: OrderDetails.php:99 PrintCustTrans.php:662 PrintCustTrans.php:882
+#: PrintCustTrans.php:929 PrintCustTransPortrait.php:713
+#: PrintCustTransPortrait.php:933 PrintCustTransPortrait.php:977
+#: SalesPeople.php:192 Suppliers.php:670 Suppliers.php:849
+#: SuppLoginSetup.php:236 WWW_Users.php:260
 msgid "Telephone"
 msgstr "Τηλέφωνο"
 
@@ -7187,7 +7187,7 @@ msgstr "Επεξεργασία Κατανομών"
 #: PcAuthorizeExpenses.php:318 PcClaimExpensesFromTab.php:167
 #: PcClaimExpensesFromTab.php:385 PcExpenses.php:300 PcExpensesTypeTab.php:140
 #: PcExpensesTypeTab.php:228 PcTabs.php:466 PcTypeTabs.php:236
-#: SalesTypes.php:276 SelectCreditItems.php:899 Z_CheckDebtorsControl.php:69
+#: SalesTypes.php:283 SelectCreditItems.php:899 Z_CheckDebtorsControl.php:69
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -7587,7 +7587,7 @@ msgstr "Καθορίστε τις Θέσεις Αποθεμάτων"
 msgid "Draw Stock From"
 msgstr "Ανάκτηση Αποθέματος Από"
 
-#: CustomerBranches.php:707 Customers.php:917 Customers.php:923
+#: CustomerBranches.php:707 Customers.php:909 Customers.php:915
 #: SelectCustomer.php:611
 msgid "Phone Number"
 msgstr "Τηλέφωνο"
@@ -7665,14 +7665,14 @@ msgstr "Η config αξία NumberOfMonthMustBeShown δεν μπορούν να �
 msgid "Terms"
 msgstr "Όροι"
 
-#: CustomerInquiry.php:127 CustomerReceipt.php:895 Customers.php:530
-#: Customers.php:785 Customers.php:799
+#: CustomerInquiry.php:127 CustomerReceipt.php:895 Customers.php:533
+#: Customers.php:774 Customers.php:791
 msgid "Credit Limit"
 msgstr "Πιστωτικό Όριο"
 
-#: CustomerInquiry.php:128 CustomerReceipt.php:895 Customers.php:551
-#: Customers.php:827 Customers.php:831 Customers.php:847 Customers.php:866
-#: Customers.php:870 index.php:1078
+#: CustomerInquiry.php:128 CustomerReceipt.php:895 Customers.php:554
+#: Customers.php:819 Customers.php:823 Customers.php:839 Customers.php:858
+#: Customers.php:862 index.php:1078
 msgid "Credit Status"
 msgstr "Κατάσταση Πίστωσης"
 
@@ -7965,7 +7965,7 @@ msgstr "Κανένα αρχείο πελατών δεν περιέχει το ε
 msgid "please alter your search criteria and try again"
 msgstr "παρακαλώ αλλάξτε τα κριτήρια αναζήτησής σας και προσπαθήστε πάλι"
 
-#: CustomerReceipt.php:654 CustomerReceipt.php:682 Customers.php:651
+#: CustomerReceipt.php:654 CustomerReceipt.php:682 Customers.php:649
 msgid "The customer details could not be retrieved because"
 msgstr "Οι λεπτομέρειες πελατών δεν θα μπορούσαν να ανακτηθούν επειδή"
 
@@ -8041,7 +8041,7 @@ msgstr "Τύπος Απόδειξης"
 #: PcAuthorizeExpenses.php:317 PcClaimExpensesFromTab.php:167
 #: PcClaimExpensesFromTab.php:385 PcExpenses.php:300 PcExpensesTypeTab.php:139
 #: PcExpensesTypeTab.php:227 PcTabs.php:466 PcTypeTabs.php:236
-#: SalesTypes.php:276 SupplierTypes.php:246 Z_CheckDebtorsControl.php:68
+#: SalesTypes.php:283 SupplierTypes.php:246 Z_CheckDebtorsControl.php:68
 msgid "Accept"
 msgstr "Αποδοχή"
 
@@ -8325,77 +8325,76 @@ msgstr "να δημιουργήσει τύπους πελατών σας"
 msgid "Click here to continue"
 msgstr "Κάντε κλικ εδώ για να συνεχίσετε"
 
-#: Customers.php:468 Customers.php:703 Customers.php:717
-#: PrintCustTrans.php:663 PrintCustTrans.php:883 PrintCustTrans.php:930
-#: PrintCustTransPortrait.php:714 PrintCustTransPortrait.php:934
-#: PrintCustTransPortrait.php:978 SalesPeople.php:193 Suppliers.php:673
-#: Suppliers.php:851
+#: Customers.php:468 PrintCustTrans.php:663 PrintCustTrans.php:883
+#: PrintCustTrans.php:930 PrintCustTransPortrait.php:714
+#: PrintCustTransPortrait.php:934 PrintCustTransPortrait.php:978
+#: SalesPeople.php:193 Suppliers.php:673 Suppliers.php:851
 msgid "Facsimile"
 msgstr "Τηλεομοιότυπο"
 
-#: Customers.php:472 Customers.php:705 Customers.php:721 Suppliers.php:658
+#: Customers.php:472 Customers.php:697 Customers.php:707 Suppliers.php:658
 #: Suppliers.php:841
 msgid "Address Line 1 (Street)"
 msgstr "Διεύθυνση Γραμμή 1 (οδός)"
 
-#: Customers.php:474 Customers.php:706 Customers.php:723 Suppliers.php:661
+#: Customers.php:474 Customers.php:698 Customers.php:709 Suppliers.php:661
 #: Suppliers.php:843
 msgid "Address Line 2 (Suburb/City)"
 msgstr "Διεύθυνση Γραμμή 2 (Προάστειο / Πόλη)"
 
-#: Customers.php:476 Customers.php:707 Customers.php:725 Suppliers.php:664
+#: Customers.php:476 Customers.php:699 Customers.php:711 Suppliers.php:664
 #: Suppliers.php:845
 msgid "Address Line 3 (State/Province)"
 msgstr "Διεύθυνση Γραμμή 3 (Πολιτεία / Επαρχία)"
 
-#: Customers.php:478 Customers.php:708 Customers.php:727 Suppliers.php:667
+#: Customers.php:478 Customers.php:700 Customers.php:713 Suppliers.php:667
 #: Suppliers.php:847
 msgid "Address Line 4 (Postal Code)"
 msgstr "Διεύθυνση Γραμμή 4 (Τ.Κ.)"
 
-#: Customers.php:491 Customers.php:508 SelectCustomer.php:400
+#: Customers.php:491
+msgid "No sales types/price lists defined"
+msgstr "Κανένας τύπος πώλησης/τιμοκατάλογοι δεν έχουν ορισθεί"
+
+#: Customers.php:491 Customers.php:507 SelectCustomer.php:400
 #, fuzzy
 msgid "Setup Types"
 msgstr "Sup Τύπος"
 
-#: Customers.php:492
-msgid "No sales types/price lists defined"
-msgstr "Κανένας τύπος πώλησης/τιμοκατάλογοι δεν έχουν ορισθεί"
-
-#: Customers.php:494
+#: Customers.php:493
 msgid "Sales Type/Price List"
 msgstr "Τύπος Πωλήσεων/Τιμοκατάλογος"
 
-#: Customers.php:509
+#: Customers.php:508
 msgid "No Customer types/price lists defined"
 msgstr "Δεν τύπων πελατών / κατάλογοι που ορίζονται τιμών"
 
-#: Customers.php:511 Customers.php:758 Customers.php:763
+#: Customers.php:510 Customers.php:744 Customers.php:749
 msgid "Customer Type"
 msgstr "Είδος Πελάτη"
 
-#: Customers.php:522 Customers.php:777 Customers.php:791
+#: Customers.php:521 Customers.php:763 Customers.php:780
 msgid "Customer Since"
 msgstr "Πελάτης από"
 
-#: Customers.php:524 Customers.php:779 Customers.php:793
+#: Customers.php:527 Customers.php:768 Customers.php:785
 msgid "Discount Percent"
 msgstr "Ποσοστό Έκπτωσης"
 
-#: Customers.php:526 Customers.php:781 Customers.php:795
+#: Customers.php:529 Customers.php:770 Customers.php:787
 msgid "Discount Code"
 msgstr "Κωδικός Έκπτωσης"
 
-#: Customers.php:528 Customers.php:783 Customers.php:797
+#: Customers.php:531 Customers.php:772 Customers.php:789
 msgid "Payment Discount Percent"
 msgstr "Ποσοστό Έκπτωσης Πληρωμής"
 
-#: Customers.php:532 Customers.php:787 Customers.php:801 Suppliers.php:725
+#: Customers.php:535 Customers.php:776 Customers.php:793 Suppliers.php:725
 #: Suppliers.php:903
 msgid "Tax Reference"
 msgstr "Φορολογική Αναφορά"
 
-#: Customers.php:538
+#: Customers.php:541
 msgid ""
 "There are no payment terms currently defined - go to the setup tab of the "
 "main menu and set at least one up first"
@@ -8403,14 +8402,14 @@ msgstr ""
 "Δεν υπάρχει καθορισμένος κανένας όρος πληρωμής - πηγαίνετε στην καρτέλα "
 "Ρυθμίσεις του κυρίως μενού επιλογών και ρυθμίστε τουλάχιστον έναν πρώτα"
 
-#: Customers.php:541 Customers.php:808 Customers.php:811 index.php:1083
+#: Customers.php:544 Customers.php:800 Customers.php:803 index.php:1083
 #: PaymentTerms.php:13 PO_Header.php:1041 PrintCustTrans.php:370
 #: PrintCustTransPortrait.php:435 Suppliers.php:702 Suppliers.php:878
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
 msgid "Payment Terms"
 msgstr "Όροι Πληρωμής"
 
-#: Customers.php:556
+#: Customers.php:559
 msgid ""
 "There are no credit statuses currently defined - go to the setup tab of the "
 "main menu and set at least one up first"
@@ -8418,7 +8417,7 @@ msgstr ""
 "Δεν υπάρχει καθορισμένη καμμία κατάσταση πίστωσης - πηγαίνετε στην καρτέλα "
 "Ρυθμίσεις του κυρίως μενού επιλογών και ρυθμίστε τουλάχιστον μια πρώτα"
 
-#: Customers.php:568
+#: Customers.php:571
 msgid ""
 "There are no currencies currently defined - go to the setup tab of the main "
 "menu and set at least one up first"
@@ -8426,43 +8425,48 @@ msgstr ""
 "Δεν υπάρχει καθορισμένο κανένα νόμισμα - πηγαίνετε στην καρτέλα Ρυθμίσεις "
 "του κυρίως μενού επιλογών και ρυθμίστε τουλάχιστον ένα πρώτα"
 
-#: Customers.php:575
+#: Customers.php:578
 msgid "Customer Currency"
 msgstr "Νόμισμα Πελάτη"
 
-#: Customers.php:589
+#: Customers.php:592
 msgid "Customer PO Line on SO"
 msgstr "Πελάτης Line PO για SO"
 
-#: Customers.php:597 Customers.php:889 Customers.php:891 Customers.php:894
+#: Customers.php:600 Customers.php:881 Customers.php:883 Customers.php:886
 msgid "Invoice Addressing"
 msgstr "Διευθυνσιοδότηση Τιμολογίων"
 
-#: Customers.php:599 Customers.php:889 Customers.php:897 Customers.php:900
+#: Customers.php:602 Customers.php:881 Customers.php:889 Customers.php:892
 msgid "Address to HO"
 msgstr "Διεύθυνση σε Κεντρικά"
 
-#: Customers.php:600 Customers.php:891 Customers.php:898 Customers.php:901
+#: Customers.php:603 Customers.php:883 Customers.php:890 Customers.php:893
 msgid "Address to Branch"
 msgstr "Διεύθυνση σε Υποκατάστημα"
 
-#: Customers.php:607 Customers.php:1030
+#: Customers.php:610 Customers.php:1020
 msgid "Add New Customer"
 msgstr "Προσθήκη Νέου Πελάτη"
 
-#: Customers.php:851
+#: Customers.php:843
 msgid "Customers Currency"
 msgstr "Νόμισμα Πελατών"
 
-#: Customers.php:875
+#: Customers.php:867
 msgid "Require Customer PO Line on SO"
 msgstr "Απαίτηση Line PO Πελατών για SO"
 
-#: Customers.php:1033
+#: Customers.php:950
+#, fuzzy, php-format
+msgid "Are you sure you wish to delete this customer contact?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την επαφή;"
+
+#: Customers.php:1023
 msgid "Update Customer"
 msgstr "Ενημέρωση Πελάτη"
 
-#: Customers.php:1034
+#: Customers.php:1024
 msgid "Delete Customer"
 msgstr "Διαγραφή Πελάτη"
 
@@ -8635,7 +8639,7 @@ msgstr "Ο τύπος εγγραφής δεν θα μπορούσε να δια�
 msgid "Type ID"
 msgstr "Τύπος ID"
 
-#: CustomerTypes.php:186 CustomerTypes.php:258 SalesTypes.php:193
+#: CustomerTypes.php:186 CustomerTypes.php:258 SalesTypes.php:200
 #: SupplierTypes.php:173 SupplierTypes.php:242
 msgid "Type Name"
 msgstr "Πληκτρολογήστε το όνομα"
@@ -23094,11 +23098,11 @@ msgstr ""
 "καθώς και κάθε τιμών για αυτό το είδος των πωλήσεων / τιμοκατάλογο ήταν "
 "επίσης διαγραφεί"
 
-#: SalesTypes.php:192 SalesTypes.php:252 SalesTypes.php:264
+#: SalesTypes.php:199 SalesTypes.php:259 SalesTypes.php:271
 msgid "Type Code"
 msgstr "Τύπος κώδικα"
 
-#: SalesTypes.php:210
+#: SalesTypes.php:217
 #, php-format
 msgid ""
 "Are you sure you wish to delete this price list and all the prices it may "
@@ -23107,15 +23111,15 @@ msgstr ""
 "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτόν τον κατάλογο των τιμών και "
 "όλες τις τιμές που μπορεί να έχει δημιουργήσει;"
 
-#: SalesTypes.php:224
+#: SalesTypes.php:231
 msgid "Show All Sales Types Defined"
 msgstr "Εμφάνιση Όλοι οι τύποι Πωλήσεις Ορίζεται"
 
-#: SalesTypes.php:251 SalesTypes.php:263
+#: SalesTypes.php:258 SalesTypes.php:270
 msgid "Sales Type/Price List Setup"
 msgstr "Πωλήσεις Τύπος / Διαμόρφωση Τιμοκατάλογος"
 
-#: SalesTypes.php:271
+#: SalesTypes.php:278
 msgid "Sales Type Name"
 msgstr "Πωλήσεις Όνομα Τύπος"
 

@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE areas SET
 				areadescription='" . $_POST['AreaDescription'] . "'
-			WHERE areacode = '$SelectedArea'";
+			WHERE areacode = '" . $SelectedArea . "'";
 
 		$msg = _('Area code') . ' ' . $SelectedArea  . ' ' . _('has been updated');
 
@@ -172,13 +172,13 @@ if (!isset($SelectedArea)) {
 //end of ifs and buts!
 
 if (isset($SelectedArea)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Review Areas Defined') . '</a></div>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Areas Defined') . '</a></div>';
 }
 
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><br>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '"><br>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedArea)) {
@@ -187,7 +187,7 @@ if (!isset($_GET['delete'])) {
 		$sql = "SELECT areacode,
 				areadescription
 			FROM areas
-			WHERE areacode='$SelectedArea'";
+			WHERE areacode='" . $SelectedArea . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -195,8 +195,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['AreaCode'] = $myrow['areacode'];
 		$_POST['AreaDescription']  = $myrow['areadescription'];
 
-		echo '<input type=hidden name=SelectedArea VALUE=' . $SelectedArea . '>';
-		echo '<input type=hidden name=AreaCode VALUE=' .$_POST['AreaCode'] . '>';
+		echo '<input type=hidden name=SelectedArea value="' . $SelectedArea . '">';
+		echo '<input type=hidden name=AreaCode value="' .$_POST['AreaCode'] . '">';
 		echo '<table class=selection><tr><td>' . _('Area Code') . ':</td><td>' . $_POST['AreaCode'] . '</td></tr>';
 
 	} else {
@@ -206,7 +206,7 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['AreaDescription'])) {
 			$_POST['AreaDescription'] = '';
 		}
-		echo '<table class=selection>
+		echo '<table class="selection">
 			<tr>
 				<td>' . _('Area Code') . ':</td>
 				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size=3 maxlength=3></td>
@@ -217,7 +217,7 @@ if (!isset($_GET['delete'])) {
 		<td><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size=26 maxlength=25></td>
 		</tr>';
 
-	echo '<tr><td colspan=2><div class="centre"><input tabindex="3" type="Submit" name="submit" value=' . _('Enter Information') .'></div></td></tr>';
+	echo '<tr><td colspan=2><div class="centre"><input tabindex="3" type="submit" name="submit" value=' . _('Enter Information') .'></div></td></tr>';
 	echo '</table></form>';
 
  } //end if record deleted no point displaying form to add record

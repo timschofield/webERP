@@ -77,7 +77,7 @@ If (isset($_POST['PrintPDF'])
 			$SQL = "SELECT description FROM stockmaster WHERE stockmaster.stockid = '" . $BOMList['parent'] . "'";
 			$ParentResult = DB_query($SQL,$db);
 			$ParentRow = DB_fetch_row($ParentResult);
-		        $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,400-$Left_Margin,$FontSize,$BOMList['parent'] . ' - ' . $ParentRow[0],'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,400-$Left_Margin,$FontSize,$BOMList['parent'] . ' - ' . $ParentRow[0],'left');
 			$ParentPart = $BOMList['parent'];
 		}
 
