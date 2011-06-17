@@ -38,7 +38,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 if (isset($_POST['BackToHeader'])){
 	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
-	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $rootpath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -166,10 +166,9 @@ if(isset($_GET['Delete'])){
 
 if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as the part code selected */
 /* take the form entries and enter the data from the form into the PurchOrder class variable */
-	foreach ($_POST as $key => $value) {
-		if (substr($key, 0, 3)=='Qty') {
-			$ItemCode=substr($key, 3, strlen($key)-3);
-			$Quantity=$value;
+	foreach ($_POST as $ItemCode => $Quantity) {
+		if (substr($ItemCode, 0, 3)=='Qty') {
+			$ItemCode=substr($ItemCode, 3, strlen($ItemCode)-3);
 			$AlreadyOnThisBOM = 0;
 
 			if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
@@ -226,8 +225,7 @@ echo '<form name="ContractBOMForm" action="' . $_SERVER['PHP_SELF'] . '?identifi
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
-		_('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '</p>';
 
 	echo '<table cellpadding="2" class="selection">';
 
@@ -267,13 +265,18 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . $ContractComponent->ItemCost . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '&Delete=' . $ContractComponent->ComponentID . '">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 
 	$DisplayTotal = number_format($TotalCost,2);
-	echo '<tr><td colspan="6" class="number">' . _('Total Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
-	echo '<br /><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />';
+	echo '<tr>
+			<td colspan="6" class="number">' . _('Total Cost') . '</td>
+			<td class="number"><b>' . $DisplayTotal . '</b></td>
+		</tr>
+		</table>';
+	echo '<br />
+			<div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />';
 	echo '<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';
 
 } /*Only display the contract BOM lines if there are any !! */
@@ -358,19 +361,18 @@ if (isset($SearchResult)) {
 			$k=1;
 		}
 
-		$filename = $myrow['stockid'] . '.jpg';
-		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $filename) ) {
-			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $filename . '" width="50" height="50" />';
+		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg') ) {
+			$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $myrow['stockid']. '&text=&width=50&height=50">';
 		} else {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
 		echo '<td>'.$myrow['stockid'].'</td>
-				<td>'.$myrow['description'].'</td>
-				<td>'.$myrow['units'] . '</td>
-				<td>'.$ImageSource.'</td>
-				<td><input class="number" type="text" size="6" value="0" name="qty'.$myrow['stockid'].'" /></td>
-				</tr>';
+			<td>'.$myrow['description'].'</td>
+			<td>'.$myrow['units'] . '</td>
+			<td>'.$ImageSource.'</td>
+			<td><input class="number" type="text" size="6" value="0" name="Qty'.$myrow['stockid'].'" /></td>
+			</tr>';
 
 		$PartsDisplayed++;
 		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){

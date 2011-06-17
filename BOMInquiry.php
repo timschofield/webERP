@@ -13,7 +13,7 @@ if (isset($_GET['StockID'])){
 }
 
 if (!isset($_POST['StockID'])) {
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><b><br></b>'.
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><b><br /></b>'.
 	'<div class="page_help_text">'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' .
 	 _('to view the costed bill of materials') . '<br /><font size=1>' .
 	 _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') .
@@ -91,7 +91,10 @@ if (isset($_POST['Search'])){
 
 if (isset($_POST['Search']) and isset($result) AND !isset($SelectedParent)) {
 
-	echo '<br><hr><br><table class=selection cellpadding=2 colspan=7>';
+	echo '<br />
+			<hr>
+			<br />
+			<table class="selection" cellpadding="2" colspan="7">';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
@@ -129,7 +132,7 @@ if (isset($_POST['Search']) and isset($result) AND !isset($SelectedParent)) {
 	}
 //end of while loop
 
-	echo '</table><br>';
+	echo '</table><br />';
 }
 
 if (isset($StockID) and $StockID!=""){

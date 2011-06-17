@@ -9,6 +9,7 @@ $title = _('Customer Maintenance');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
 	'" alt="" />' . ' ' . _('Customer Maintenance') . '</p>';
 
@@ -411,8 +412,9 @@ if (isset($_POST['Add'])){
 	$Add = $_GET['Add'];
 }
 
-// This link is already on menu bar
-//echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a><br />';
+if(isset($_POST['AddContact']) AND (isset($_POST['AddContact'])!='')){
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/AddCustomerContacts.php?DebtorNo=' .$DebtorNo.'">';
+}
 
 if (!isset($DebtorNo)) {
 
@@ -553,7 +555,7 @@ if (!isset($DebtorNo)) {
 	}
 	echo '<tr><td>' . _('Credit Status') . ':</td><td><select tabindex=16 name="HoldReason">';
 
-	$result=DB_query('SELECT reasoncode, reasondescription FROM holdreasons',$db);
+	$result=DB_query("SELECT reasoncode, reasondescription FROM holdreasons",$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
 		echo '<tr><td colspan=2>' . prnMsg(_('There are no credit statuses currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></tr>';
@@ -599,8 +601,8 @@ if (!isset($DebtorNo)) {
 
 	echo '<tr><td>' . _('Invoice Addressing') . ':</td>
 			<td><select tabindex="19" name="AddrInvBranch">
-				<option selected VALUE=0>' . _('Address to HO') . '</option>
-				<option VALUE=1>' . _('Address to Branch') . '</option>
+				<option selected value=0>' . _('Address to HO') . '</option>
+				<option value=1>' . _('Address to Branch') . '</option>
 				</select>
 			</td>
 		</tr>';
@@ -700,7 +702,7 @@ if (!isset($DebtorNo)) {
 		echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td><td>' . $_POST['Address4'] . '</td></tr>';
 		echo '<tr><td>' . _('Address Line 5') . ':</td><td>' . $_POST['Address5'] . '</td></tr>';
 		echo '<tr><td>' . _('Address Line 6') . ':</td><td>' . $_POST['Address6'] . '</td></tr>';
-		echo '</table></td><td><table class=selection>';
+
 	} else {
 		echo '<tr><td>' . _('Customer Name') . ':</td>
 			<td><input ' . (in_array('CustName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="CustName" value="' . $_POST['CustName'] . '" size=42 maxlength=40></td></tr>';
@@ -898,7 +900,26 @@ if (!isset($DebtorNo)) {
 		</table></td></tr>';
 	echo '<tr><td colspan=2>';
 
-  	$sql = "SELECT * FROM custcontacts where debtorno='".$DebtorNo."' ORDER BY contid";
+
+	if (isset($_GET['delete'])) { //User hit delete link on customer contacts
+		/*Process this first before showing remaining contacts */
+		$resultupcc = DB_query("DELETE FROM custcontacts 
+								WHERE debtorno='".$DebtorNo."'
+								AND contid='".$ID."'",
+								$db);
+		prnMsg(_('Contact Deleted'),'success');
+	}
+
+  	$sql = "SELECT contid,
+					debtorno,
+					contactname,
+					role,
+					phoneno,
+					notes,
+					email 
+			FROM custcontacts 
+			WHERE debtorno='".$DebtorNo."' 
+			ORDER BY contid";
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
@@ -907,12 +928,14 @@ if (!isset($DebtorNo)) {
 			<th>' . _('Name') . '</th>
 			<th>' . _('Role') . '</th>
 			<th>' . _('Phone Number') . '</th>
+			<th>' . _('Email') . '</th>
 			<th>' . _('Notes') . '</th></tr>';
 	} else {
 		echo '<tr>
 			<th>' . _('Name') . '</th>
 			<th>' . _('Role') . '</th>
 			<th>' . _('Phone Number') . '</th>
+			<th>' . _('Email') . '</th>
 			<th>' . _('Notes') . '</th>
 			<th>' . _('Edit') . '</th>
 			<th colspan=2><input type="Submit" name="AddContact" value="Add Contact"></th></tr>';
@@ -932,87 +955,40 @@ if (!isset($DebtorNo)) {
 			printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td><a href=mailto:%s>%s</a></td>
 				<td>%s</td>
 				</tr>',
-				$myrow[2],
-				$myrow[3],
-				$myrow[4],
-				$myrow[5],
-				$myrow[0],
-				$myrow[1],
-				$myrow[1]);
+				$myrow['contactname'],
+				$myrow['role'],
+				$myrow['phoneno'],
+				$myrow['email'],
+				$myrow['email'],
+				$myrow['notes']);
 		} else {
 			printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td><a href=mailto:%s>%s</a></td>
 				<td>%s</td>
 				<td><a href="AddCustomerContacts.php?Id=%s&DebtorNo=%s">'. _('Edit'). '</a></td>
 				<td><a href="%sID=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">'. _('Delete'). '</a></td>
 				</tr>',
-				$myrow[2],
-				$myrow[3],
-				$myrow[4],
-				$myrow[5],
-				$myrow[0],
-				$myrow[1],
+				$myrow['contactname'],
+				$myrow['role'],
+				$myrow['phoneno'],
+				$myrow['email'],
+				$myrow['email'],
+				$myrow['notes'],
+				$myrow['contid'],
+				$myrow['debtorno'],
 				$_SERVER['PHP_SELF'] . '?',
-				$myrow[0],
-				$myrow[1]);
+				$myrow['contid'],
+				$myrow['debtorno']);
 		}
 	}//END WHILE LIST LOOP
 	echo '</table>';
 	
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo="'.$DebtorNo.'"&ID='.$ID.'&Edit'.$Edit.'">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	if (isset($Edit) and $Edit!='') {
-		$SQLcustcontacts="SELECT * from custcontacts
-							WHERE debtorno='".$DebtorNo."'
-							and contid='".$ID."'";
-		$resultcc = DB_query($SQLcustcontacts,$db);
-		$myrowcc = DB_fetch_array($resultcc);
-		$_POST['custname']=$myrowcc['contactname'];
-		$_POST['role']=$myrowcc['role'];
-		$_POST['phoneno']=$myrowcc['phoneno'];
-		$_POST['notes']=$myrowcc['notes'];
-		echo '<table class=selection>';
-		echo '<tr><td>' . _('Name') . '</td>
-				<td><input type=text name="custname" value="'.$_POST['custname'].'"></td></tr>
-			<tr><td>' . _('Role') . '</td>
-				<td><input type=text name="role" value="'.$_POST['role'].'"></td></tr>
-			<tr><td>' . _('Phone no') . '</td>
-				<td><input type="text" name="phoneno" value="'.$_POST['phoneno'].'"></td></tr>
-			<tr><td>' . _('Notes') . '</td>
-				<td><textarea name="notes">'.$_POST['notes'].'</textarea></td></tr>
-			<tr><td colspan=2><input type=submit name=update value=update></td>
-			</tr>
-			</table>';
-
-		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo='.$DebtorNo.'&ID'.$ID.'">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-
-	}
-	if (isset($_POST['update'])) {
-
-			$SQLupdatecc="UPDATE custcontacts
-							SET contactname='".$_POST['custname']."',
-							role='".$_POST['role']."',
-							phoneno='".$_POST['phoneno']."',
-							notes='".DB_escape_string($_POST['notes'])."'
-							Where debtorno='".$DebtorNo."'
-							and contid='".$Edit."'";
-			$resultupcc = DB_query($SQLupdatecc,$db);
-			echo '<br />'.$SQLupdatecc;
-			echo '<meta http-equiv="Refresh" content="0; url="' . $_SERVER['PHP_SELF'] . '?DebtorNo='.$DebtorNo.'&ID='.$ID.'">';
-		}
-	if (isset($_GET['delete'])) {
-		$SQl="DELETE FROM custcontacts where debtorno='".$DebtorNo."'
-				and contid='".$ID."'";
-		$resultupcc = DB_query($SQl,$db);
-		echo '<meta http-equiv="Refresh" content="0; url=' . $_SERVER['PHP_SELF'] . '?DebtorNo='.$DebtorNo.'">';
-		prnmsg('Contact Deleted','success');
-	}
-
+	
 
 	echo'</td></tr></table>';
 
@@ -1023,10 +999,7 @@ if (!isset($DebtorNo)) {
 		echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update Customer') . '">';
 		echo '&nbsp;<input type="Submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 	}
-	if(isset($_POST['AddContact']) AND (isset($_POST['AddContact'])!=''))
-	{
-		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/AddCustomerContacts.php?DebtorNo=' .$DebtorNo.'">';
-	}
+	
 	echo '</div>';
 } // end of main ifs
 

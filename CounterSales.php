@@ -2,7 +2,7 @@
 /* $Id: CounterSales.php 4469 2011-01-15 02:28:37Z daintree $*/
 
 include('includes/DefineCartClass.php');
-//$PageSecurity = 1;
+
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc $PageSecurity now comes from session.inc (and gets read in by GetConfig.php*/
 

@@ -149,7 +149,7 @@ echo '<tr><td class=number>' . number_format($CustomerRecord['balance'],$Custome
 
 echo '<br /><div class="centre"><form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': <input tabindex=1 type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" name="TransAfterDate" Value="' . $_POST['TransAfterDate'] . '" maxlength =10 size=12>' . '<input tabindex=2 type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '"></div>
+echo _('Show all transactions after') . ': <input tabindex=1 type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength =10 size=12>' . '<input tabindex=2 type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '"></div>
 </form>
 <br />';
 

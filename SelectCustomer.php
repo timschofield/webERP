@@ -549,7 +549,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 	}
 	// Extended Customer Info only if selected in Configuration
 	if ($_SESSION['Extended_CustomerInfo'] == 1) {
-		if ($_SESSION['CustomerID'] != "") {
+		if ($_SESSION['CustomerID'] != '') {
 			$sql = "SELECT debtortype.typeid, debtortype.typename
 						FROM debtorsmaster, debtortype
 					WHERE debtorsmaster.typeid = debtortype.typeid
@@ -609,6 +609,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 					<th>' . _('Name') . '</th>
 					<th>' . _('Role') . '</th>
 					<th>' . _('Phone Number') . '</th>
+					<th>' . _('Email') . '</th>
 					<th>' . _('Notes') . '</th>
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
@@ -626,6 +627,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != "") {
 				echo '<td>' . $myrow[2] . '</td>
 					<td>' . $myrow[3] . '</td>
 					<td>' . $myrow[4] . '</td>
+					<td><a href=mailto:' . $myrow[6] . '>' . $myrow[6] . '</a></td>
 					<td>' . $myrow[5] . '</td>
 					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
 					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&DebtorNo=' . $myrow[1] . '&delete=1">' . _('Delete') . '</a></td>

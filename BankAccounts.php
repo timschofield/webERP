@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BankTrans'
 
-	$sql= "SELECT COUNT(*) FROM banktrans WHERE banktrans.bankact='$SelectedBankAccount'";
+	$sql= "SELECT COUNT(*) FROM banktrans WHERE banktrans.bankact='" . $SelectedBankAccount . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if (!$CancelDelete) {
-		$sql="DELETE FROM bankaccounts WHERE accountcode='$SelectedBankAccount'";
+		$sql="DELETE FROM bankaccounts WHERE accountcode='" . $SelectedBankAccount . "'";
 		$result = DB_query($sql,$db);
 		prnMsg(_('Bank account deleted'),'success');
 	} //end if Delete bank account
@@ -241,9 +241,9 @@ If (!isset($SelectedBankAccount)) {
 }
 
 if (isset($SelectedBankAccount)) {
-	echo '<p>';
+	echo '<br />';
 	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Bank Accounts Defined') . '</a></div>';
-	echo '<p>';
+	echo '<br />';
 }
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
@@ -323,7 +323,7 @@ if (!isset($_POST['BankAddress'])) {
 echo '<tr><td>' . _('Bank Account Name') . ': </td>
 			<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size=40 maxlength=50></td></tr>
 		<tr><td>' . _('Bank Account Code') . ': </td>
-                        <td><input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size=40 maxlength=50></td></tr>
+			<td><input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size=40 maxlength=50></td></tr>
 		<tr><td>' . _('Bank Account Number') . ': </td>
 			<td><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size="40" maxlength="50"></td></tr>
 		<tr><td>' . _('Bank Address') . ': </td>

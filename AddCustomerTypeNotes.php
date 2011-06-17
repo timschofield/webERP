@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.3 $ */
 /* $Id$*/
-//$PageSecurity = 3;
+
 include('includes/session.inc');
 $title = _('Customer Type (Group) Notes');
 include('includes/header.inc');
@@ -17,8 +16,8 @@ if (isset($_POST['DebtorType'])){
 } elseif (isset($_GET['DebtorType'])){
 	$DebtorType = $_GET['DebtorType'];
 }
-echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID .'&DebtorType='.$DebtorType."'>" . _('Back to Select Customer') . '</a><br>';
-if ( isset($_POST['submit']) ) {
+echo '<a href="' . $rootpath . '/SelectCustomer.php?DebtorType='.$DebtorType.'">' . _('Back to Select Customer') . '</a><br />';
+if (isset($_POST['submit']) ) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -28,10 +27,10 @@ if ( isset($_POST['submit']) ) {
 	//first off validate inputs sensible
 	if (!is_long((integer)$_POST['priority'])) {
 		$InputError = 1;
-		prnMsg( _('The Contact priority must be an integer.'), 'error');
+		prnMsg(_('The Contact priority must be an integer.'), 'error');
 	} elseif (strlen($_POST['note']) >200) {
 		$InputError = 1;
-		prnMsg( _("The contact's notes must be two hundred characters or less long"), 'error');
+		prnMsg(_("The contact's notes must be two hundred characters or less long"), 'error');
 	} elseif( trim($_POST['note']) == '' ) {
 		$InputError = 1;
 		prnMsg( _("The contact's notes may not be empty"), 'error');
@@ -40,31 +39,32 @@ if ( isset($_POST['submit']) ) {
 	if ($Id AND $InputError !=1) {
 
 		$sql = "UPDATE debtortypenotes SET
-				note='" . $_POST['note'] . "',
-				date='" . $_POST['date'] . "',
-				href='" . $_POST['href'] . "',
-				priority='" . $_POST['priority'] . "'
-			WHERE typeid ='".$DebtorType."'
-			AND noteid='".$Id."'";
+					note='" . $_POST['note'] . "',
+					date='" . $_POST['date'] . "',
+					href='" . $_POST['href'] . "',
+					priority='" . $_POST['priority'] . "'
+				WHERE typeid ='".$DebtorType."'
+				AND noteid='".$Id."'";
 		$msg = _('Customer Group Notes') . ' ' . $DebtorType  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
-		$sql = "INSERT INTO debtortypenotes (typeid,href,note,date,priority)
-				VALUES (
-					'" . $DebtorType. "',
-					'" . $_POST['href'] . "',
-					'" . $_POST['note'] . "',
-					'" . $_POST['date'] . "',
-					'" . $_POST['priority'] . "'
-					)";
+		$sql = "INSERT INTO debtortypenotes (typeid,
+											href,
+											note,
+											date,
+											priority)
+				VALUES ('" . $DebtorType. "',
+						'" . $_POST['href'] . "',
+						'" . $_POST['note'] . "',
+						'" . $_POST['date'] . "',
+						'" . $_POST['priority'] . "')";
 		$msg = _('The contact group notes record has been added');
 	}
 
 	if ($InputError !=1) {
 		$result = DB_query($sql,$db);
-				//echo '<br>'.$sql;
 
-		echo '<br>';
+		echo '<br />';
 		prnMsg($msg, 'success');
 		unset($Id);
 		unset($_POST['note']);
@@ -75,12 +75,13 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql="DELETE FROM debtortypenotes WHERE noteid='".$Id."'
-			and typeid='".$DebtorType."'";
+	$sql="DELETE FROM debtortypenotes 
+			WHERE noteid='".$Id."'
+			AND typeid='".$DebtorType."'";
 				$result = DB_query($sql,$db);
-						//echo '<br>'.$sql;
+						//echo '<br />'.$sql;
 
-				echo '<br>';
+				echo '<br />';
 				prnMsg( _('The contact group note record has been deleted'), 'success');
 				unset($Id);
 				unset($_GET['delete']);
@@ -97,9 +98,8 @@ if (!isset($Id)) {
 
 	$sql = "SELECT * FROM debtortypenotes where typeid='".$DebtorType."' ORDER BY date DESC";
 	$result = DB_query($sql,$db);
-			//echo '<br>'.$sql;
 
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Date') . '</th>
 			<th>' . _('Note') . '</th>
@@ -121,15 +121,15 @@ if (!isset($Id)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sId=%s&DebtorType=%s">'. _('Edit').' </td>
-				<td><a href="%sId=%s&DebtorType=%s&delete=1">'. _('Delete'). '</td></tr>',
+				<td><a href="%sId=%s&DebtorType=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer type note?') . '\');">'. _('Delete'). '</td></tr>',
 				$myrow[4],
 				$myrow[3],
 				$myrow[2],
 				$myrow[5],
-				$_SERVER['PHP_SELF'] . "?" . SID,
+				$_SERVER['PHP_SELF'] . '?',
 				$myrow[0],
 				$myrow[1],
-				$_SERVER['PHP_SELF'] . "?" . SID,
+				$_SERVER['PHP_SELF'] . '?',
 				$myrow[0],
 				$myrow[1]);
 
@@ -145,7 +145,7 @@ if (isset($Id)) {  ?>
 <?php
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DebtorType='.$DebtorType.'">';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?DebtorType='.$DebtorType.'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
@@ -155,7 +155,6 @@ if (!isset($_GET['delete'])) {
 					and typeid='".$DebtorType."'";
 
 		$result = DB_query($sql, $db);
-				//echo '<br>'.$sql;
 
 		$myrow = DB_fetch_array($result);
 
@@ -189,7 +188,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr><td>'. _('Priority').':</td>';
 	echo '<td><input type="Text" name="priority" value="'. $_POST['priority'].'" size=1 maxlength=3></td></td>
 	</table>';
-	echo '<br><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>';
+	echo '<br /><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>';
 
 	echo '</form>';
 

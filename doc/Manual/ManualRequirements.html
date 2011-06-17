@@ -1,19 +1,19 @@
-<html><head></head><body><br><br>
+<html><head></head><body><br /><br />
 
 <a name="Requirements"><font size="+3"><b>Requirements</b></font></a>
 
-<br><br>
+<br /><br />
 
 <font size="+2"><b>Hardware Requirements</b></font>
 
-<br><br>
+<br /><br />
 
 There are many possible
 configurations that could run this application. The scale of the
 enterprise obviously will have a significant bearing on the final
 configuration.
 
-<br><br>
+<br /><br />
 
 Each client connection to the web server and database
 engine will also consume RAM so the more connections the larger the
@@ -23,7 +23,7 @@ that due to the efficiency of the components of the system the
 demands on the hardware are exceptionally light by client server
 application standards.
 
-<br><br>
+<br /><br />
 
 As a guide, an installation for up to 50 simultaneous users could 
 consist of the following: a Linux operating system, an Apache web 
@@ -32,7 +32,7 @@ network card.  This would provide more than adequate performance.
 A small NAS or SAN with disk redundancy would be preferred in larger installations. 
 With multiple servers with with SMP, load balancing, a separate database server, and large amounts of RAM the limit on database size and the number can be scaled to the most demanding businesses.
 
-<br><br>
+<br /><br />
 In practise most businesses will elect to outsource the hardware to a web-hosting company where dedicated servers can be rented for minimal cost. 
 When using the hosting facilities of a 3rd party it is important to consider the infrastructure that the host has in place:
 <ul>
@@ -45,16 +45,16 @@ When using the hosting facilities of a 3rd party it is important to consider the
 
 <font size="+2"><b>Software Requirements</b></font>
 
-<br><br>
+<br /><br />
 If the business elects to have their own on-site web-server there are many software bundles that will provide the necessary infrastructure of:
 <ul>
 <li><a href="http://www.php.net">PHP</a> a versions later than 5.1</li>
 <li><a href="http://www.mysql.com">MySQL</a> version 4.3 or above - innodb transaction compliant tables are required</li>
 </ul>
 The latest binaries can be downloaded separately for both by following the above links but in a windows environment the <a href="http://apache2triad.net/">apache2triad bundle</a> provides all the software required and comes with a convenient installer.
-<br><br>
+<br /><br />
 In a windows/linux/unix environment the <a href=http://www.apachefriends.org/en/xampp.html">XAMPP</a> also provides all the software required and is easy to install.
-<br><br>
+<br /><br />
 Installing either of the above two server software bundles will provide all you need to get going. To get the latest and greatest revisions of the individual components you need:
 <ul>
 	<li><a href="http://www.php.net/">PHP</a>
@@ -84,9 +84,9 @@ and <a href="http://www.openssl.org/">openssl</a>
 secure sockets makes sense where
 there is any data transmitted over the Internet and not just over a
 LAN.
-<br><br>
+<br /><br />
 <font size="+2"><b>Using webERP with a Wiki</b></font>
-<br><br>
+<br /><br />
 Wikis are an unfortunate name for a marvellous business tool. They are a genre of software that allow user editing of a web-site. webERP defines the names for wiki pages and provides a structure for the information held on the wiki - where users can add their experiences and information about customer, products and suppliers. webERP links to a customer page - if the page does not exist then there is a prompt to create it - it is then up to the business how they implement the wiki into their business. Possible scenarios might be that the customer page contains links to:
 <ul>
 <li>Credit control History</li>
@@ -94,17 +94,17 @@ Wikis are an unfortunate name for a marvellous business tool. They are a genre o
 <li>Sales call Log</li>
 </ul>
 If an integrated wiki is enabled from 
-<br><br>
+<br /><br />
 Setup->General->Configuration Settings
-<br><br>
+<br /><br />
 then select the wiki application to integrate with. webERP has links from the Selection menus for Items (SelectProduct.php), Customers (SelectCustomer.php) and Suppliers (SelectSupplier.php). Clicking on the link brings up the wiki if the page does not currently exist you will be able to create it - in future it will go directly to the page created.
-<br><br>
+<br /><br />
 The webERP product link to the wiki might contain details about the development of the item, links to drawings, specification, warranty, instructions, competing products and competitor product details. Some thought about how the wiki is structured is required. The more this tool is used the more indispensible and value it will provide to the business as a single integrated business knowledge base.
-<br><br>
+<br /><br />
 The <a href="http://wackowiki.org/Download">wacko wiki</a> is very lightweight and imposes minimal additional overhead on a web-server and is possibly one of the most functional and flexible wikis available.
-<br><br>
+<br /><br />
 Simply install this on the same web server as your webERP install and provide the path to the wiki in Setup->General->Configuration Settings.
-<br><br>
+<br /><br />
 You should make the wiki only visible to registered users - see the configuration pages of the wacko wiki - in particular the setting in config.inc.php for:
 <ul>
 <li>"default_read_acl" => "*" - this setting determines who can read the page by default "*" means anyone can read change this to "?" for only registered users</li>

@@ -1,8 +1,6 @@
 <?php
 
-/* $Id:  $ */
-
-//$PageSecurity = 4;
+/* $Id: ContractOtherReqts.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/DefineContractClass.php');
 
@@ -16,7 +14,7 @@ $identifier=$_GET['identifier'];
  */
 
 if (!isset($_SESSION['Contract'.$identifier])){
-	header('Location:' . $rootpath . '/Contracts.php?' . SID);
+	header('Location:' . $rootpath . '/Contracts.php');
 	exit;
 }
 include('includes/header.inc');
@@ -40,9 +38,9 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])){
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?' . SID . 'identifier='.$identifier. '" />';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
-	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?' . SID. 'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -77,10 +75,9 @@ if (isset($_POST['EnterNewRequirement'])){
 
 /* This is where the other requirement as entered/modified should be displayed reflecting any deletions or insertions*/
 
-echo '<form name="ContractReqtsForm" action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier='.$identifier. '" method="post">';
+echo '<form name="ContractReqtsForm" action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
-		_('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract'.$identifier]->CustomerName.'</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract'.$identifier]->CustomerName.'</p>';
 
 if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 
@@ -103,8 +100,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 	foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $ContractReqtID => $ContractComponent) {
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->CostPerUnit;
-
-		$DisplayLineTotal = number_format($LineTotal,2);
+		$DisplayLineTotal = number_format($LineTotal,$_SESSION['CompanyRecord']['decimalplaces']);
 
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -140,8 +136,10 @@ echo '<table class="selection">
 		<tr><th colspan="2">' . _('Enter New Requirements') . '</th></tr>
 		<tr><td>' . _('Requirement Description') . '</td>
 		<td><textarea name="RequirementDescription" cols="30" rows="3">' . $_POST['RequirementDescription'] . '</textarea></td></tr>';
-echo '<tr><td>' . _('Quantity Required') . ':</td><td><input type="text" class="number" name="Quantity" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td></tr>';
-echo '<tr><td>' . _('Cost Per Unit') . ':</td><td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td></tr>';
+echo '<tr><td>' . _('Quantity Required') . ':</td>
+		<td><input type="text" class="number" name="Quantity" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td></tr>';
+echo '<tr><td>' . _('Cost Per Unit') . ':</td>
+		<td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td></tr>';
 echo '</table>';
 
 echo '<br /><div class="centre"><input type="submit" name="EnterNewRequirement" value="' . _('Enter New Contract Requirement') . '" /></div>';

@@ -53,10 +53,10 @@ if (isset($_POST['submit'])) {
 			FROM accountgroups WHERE groupname='".$_POST['GroupName']."'";
 
     $DbgMsg = _('The SQL that was used to retrieve the information was');
-	$ErrMsg = _('Could not check whether the group exists because');
+    $ErrMsg = _('Could not check whether the group exists because');
 
     $result=DB_query($sql, $db,$ErrMsg,$DbgMsg);
-	$myrow=DB_fetch_row($result);
+    $myrow=DB_fetch_row($result);
 
 	if ($myrow[0]!=0 and $_POST['SelectedAccountGroup']=='') {
 		$InputError = 1;
@@ -362,7 +362,7 @@ if (! isset($_GET['delete'])) {
 	<td><select tabindex="3" ' . (in_array('SectionInAccounts',$Errors) ?  'class="selecterror"' : '' ) .
       '  name="SectionInAccounts">';
 
-	$sql = 'SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid';
+	$sql = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
 	$secresult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 	while( $secrow = DB_fetch_array($secresult) ) {
 		if ($_POST['SectionInAccounts']==$secrow['sectionid']) {

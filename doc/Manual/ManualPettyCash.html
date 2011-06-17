@@ -1,48 +1,48 @@
 <!-- Help Begin: Petty Cash -->
 
-<br><br>
+<br /><br />
 <a name="Petty Cash"><font size="+3"><b>Petty Cash</b></font></a>
-<br><br>
+<br /><br />
 <font size="+1"><b>Overview</b></font>
-<br><br>
+<br /><br />
 This for employees to submit expense claims directly in the system - that are then authorised by their immediate supervisor.
-<br><br>
+<br /><br />
 Allows control petty cash expenses in a friendly way, so every employee (without any accounting knowlegde) can enter their expenses, get paid for them, etc
-<br><br>
+<br /><br />
 It consists on a temporary GL table (pcashdetails), containing all info about payments and expenses done as petty cash. Once authorized by a supervisor (both cash assignments or expenses) are posted in gltrans table and flagged.
-<br><br>
+<br /><br />
 Once any transacion in the petty cash system has been posted can not be modified, edited or deleted in any way. Once posted, that's it.
-<br><br>
+<br /><br />
 <font size="+1"><b>Setup General Parameters</b></font>
-<br><br><b>Set up expenses</b>
-<br><br>Definition of expenses allowed to be used in the Petty Cash system. This table is used to isolate non-accountant users (most of workers/users of webERP) from the technical details and names used in accounting.
+<br /><br /><b>Set up expenses</b>
+<br /><br />Definition of expenses allowed to be used in the Petty Cash system. This table is used to isolate non-accountant users (most of workers/users of webERP) from the technical details and names used in accounting.
 E.g.: Code Expense: FUEL-COMMERCIAL
-<br>Description: Fuel for cars used on commercial trips to customers
-<br>Account: 12345678 - Commercial car expenses
-<br>So when the system posts a petty cash expense against gltrans table, it will be posted against the GL account code selected.
-<br><br>
+<br />Description: Fuel for cars used on commercial trips to customers
+<br />Account: 12345678 - Commercial car expenses
+<br />So when the system posts a petty cash expense against gltrans table, it will be posted against the GL account code selected.
+<br /><br />
 PcExpenses.php is used to maintain this table (pcexpenses).
-<br><br>
+<br /><br />
 <b>Set up types of tabs</b>
-<br><br>Different kinds of users have different privileges. CEO can spend petty cash money on a different way than a truck driver does (no disrespect, for any of them ;-). The system maintain these different categories of tabs of table pctypetabs.
-<br><br>
+<br /><br />Different kinds of users have different privileges. CEO can spend petty cash money on a different way than a truck driver does (no disrespect, for any of them ;-). The system maintain these different categories of tabs of table pctypetabs.
+<br /><br />
 PcTypeTabs.php is used to define this kind of different tabs.
 E.g.: Director, Office staff, Truck Driver, etc.
-<br><br>
+<br /><br />
 Set up expenses allowed for type of tab
 The link between types of tabs and expenses.
-<br><br>
+<br /><br />
 Here we need to define which expenses are allowed to a certain type of tab. This table is used to prevent users assigning expenses for expenses not allowed. as example, a user with role "member of parlament" could have a tab of a type "all allowed, including night drinks in a pub", while a user with role "hard worker" could have a tab of a type "transport to workplace" only, so the system can achieve a better control of each one's expenses.
-<br><br>
+<br /><br />
 Each company must define here the policy of petty cash pahyments.
-<br><br>
+<br /><br />
 PcExpensesTypeTab.php is the script managing this.
-<br><br>
+<br /><br />
 <b>Set up tabs</b>
-<br><br>PcTabs.php is the script used to set up petty cash tabs.
-<br><br>
+<br /><br />PcTabs.php is the script used to set up petty cash tabs.
+<br /><br />
 A petty cash tab contains:
-<br><br>
+<br /><br />
 <ul>
 <li>Tab Code</li>
 <li>User: User of the tab. Who is spending/receiving moeny for petty cash expenses. Must be a webERP user.</li>
@@ -53,14 +53,14 @@ A petty cash tab contains:
 <li>GL Account For Cash Assignment: GL account where the cash assigment comes from. It must be a bank account, so when assigning cash to a tab, the system will deduct the amount from the bank account and increase the petty cash account</li>
 <li>GL Account Petty Cash Tab. In GL we should have an account (one per currency) to reflect "amount of money distributed among employees" or "Petty Cash Account". This is the account where the money goes after a cash assigment is done or where the money comes where an expense is posted</li>
 </ul>
-<br><br>
+<br /><br />
 At this point we have the system ready to work.
-<br><br>
+<br /><br />
 <font size="+1"><b>Workflow</b></font>
-<br><br>
+<br /><br />
 <b>Assignment of cash</b>
-<br><br>The supervisor (authorizer) gives money cash to an employee to be used as petty cash. In script PcAssignCashToTab.php we record this fact.
-<br><br>
+<br /><br />The supervisor (authorizer) gives money cash to an employee to be used as petty cash. In script PcAssignCashToTab.php we record this fact.
+<br /><br />
 Supervisor can select only the tabs he/she is supervisor.
 Must specify amount, date.
 There are 2 additional fields:
@@ -68,15 +68,15 @@ There are 2 additional fields:
 <li>Notes: For any further detail needed to remember</li>
 <li>Receipt: In case the company has a physical receipt, or any proof, the code, number, etc of this receipt, to help solving disputes later on</li>
 </ul>
-<br><br>
+<br /><br />
 At this stage no tranasction is posted in gltrans table, only at pcashdetails we write down: "Supervisor gives to user X (tab really), Y dollars on date D".
-<br><br>
+<br /><br />
 Cash Assignments can be edited and deleted before are authorized. Once authorized and posted can not be modified in any way.
-<br><br>
+<br /><br />
 <b>Expense claims</b>
-<br><br>
+<br /><br />
 Employee will go out and spend money. Then will report to webERP these expenses in script PcClaimExpensesFromTab.php
-<br><br>
+<br /><br />
 Employee will select a tab (from his/her own tabs). And then records details of all expenses incurred:
 <ul>
 <li>Date</li>
@@ -85,23 +85,23 @@ Employee will select a tab (from his/her own tabs). And then records details of 
 <li>Notes: For any further detail needed to remember</li>
 <li>Receipt: In case the company has a physical receipt, or any proof, the code, number, etc of this receipt, to help solving disputes later on.</li>
 </ul>
-<br><br>
+<br /><br />
 At this stage no tranasction is posted in gltrans table, only at pcashdetails we write down: "User U reports spending X amount in concept C on date D".
-<br><br>
+<br /><br />
 Expenses reported can be edited and deleted before are authorized. Once authorized and posted can not be modified in any way.
-<br><br>
+<br /><br />
 <b>Expense authorisation</b>
-<br><br>
+<br /><br />
 Supervisor will need to authorize expenses and cash assignemnts reported.
-<br><br>
+<br /><br />
 In script PcAuthorizeExpenses.php the supervisor must select a tab he/she is supervising
-<br><br>
+<br /><br />
 If there is any assignment or expense not authorized yet, it can be checked and if correct just tick it. If incorrect or in doubt (an employee claiming 10.000.000 USD for fuel car) he can call/email/report him and sort it out. Because it's not authorized yet it can be modified (to 100 USD...)
-<br><br>
+<br /><br />
 Once the update button is pressed and there are some entried ticked, then GL posting occurs.
-<br><br>
+<br /><br />
 <b>Posting workflow</b>
-<br><br>
+<br /><br />
 If a cash assigment need to be posted then:
 In gltrans
 

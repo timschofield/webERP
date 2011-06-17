@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.13 $ */
-
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -24,78 +21,83 @@ If (isset($_POST['PrintPDF'])
       /*Now figure out the aged analysis for the Supplier range under review */
 
 	if ($_POST['All_Or_Overdues']=='All'){
-		$SQL = "SELECT suppliers.supplierid, suppliers.suppname, currencies.currency, paymentterms.terms,
-	SUM(supptrans.ovamount + supptrans.ovgst  - supptrans.alloc) as balance,
-	SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-		CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= paymentterms.daysbeforedue  THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-	ELSE
-		CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-	END) AS due,
-	Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-		CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-	ELSE
-		CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') ."), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-	END) AS overdue1,
-	Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-		CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-	ELSE
-		CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-	END) AS overdue2
-	FROM suppliers, paymentterms, currencies, supptrans WHERE suppliers.paymentterms = paymentterms.termsindicator
-	AND suppliers.currcode = currencies.currabrev
-	AND suppliers.supplierid = supptrans.supplierno
-	AND suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
-	AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
-	AND  suppliers.currcode ='" . $_POST['Currency'] . "'
-	GROUP BY suppliers.supplierid,
-		suppliers.suppname,
-		currencies.currency,
-		paymentterms.terms,
-		paymentterms.daysbeforedue,
-		paymentterms.dayinfollowingmonth
-	HAVING Sum(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) <>0";
-
+		$SQL = "SELECT suppliers.supplierid, 
+						suppliers.suppname, 
+						currencies.currency, 
+						paymentterms.terms,
+						SUM(supptrans.ovamount + supptrans.ovgst  - supptrans.alloc) as balance,
+						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= paymentterms.daysbeforedue THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						ELSE
+						CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						END) AS due,
+						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+						CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						ELSE
+						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') ."), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						END) AS overdue1,
+						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+						CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						ELSE
+						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						END) AS overdue2
+				FROM suppliers INNER JOIN paymentterms
+				ON suppliers.paymentterms = paymentterms.termsindicator
+				INNER JOIN currencies
+				ON suppliers.currcode = currencies.currabrev
+				INNER JOIN supptrans 
+				ON suppliers.supplierid = supptrans.supplierno
+				WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
+				AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
+				AND  suppliers.currcode ='" . $_POST['Currency'] . "'
+				GROUP BY suppliers.supplierid,
+						suppliers.suppname,
+						currencies.currency,
+						paymentterms.terms,
+						paymentterms.daysbeforedue,
+						paymentterms.dayinfollowingmonth
+				HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) <>0";
+				
 	} else {
 
 	      $SQL = "SELECT suppliers.supplierid,
-	      		suppliers.suppname,
-			currencies.currency,
-			paymentterms.terms,
-			SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
-			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= paymentterms.daysbeforedue  THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-			ELSE
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-			END) AS due,
-			Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-			ELSE
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-			END) AS overdue1,
-			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-			ELSE
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
-			END) AS overdue2
-			FROM suppliers,
-				paymentterms,
-				currencies,
-				supptrans
-			WHERE suppliers.paymentterms = paymentterms.termsindicator
-			AND suppliers.currcode = currencies.currabrev
-			and suppliers.supplierid = supptrans.supplierno
-			AND suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
-			AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
-			AND suppliers.currcode ='" . $_POST['Currency'] . "'
-			GROUP BY suppliers.supplierid,
-				suppliers.suppname,
-				currencies.currency,
-				paymentterms.terms,
-				paymentterms.daysbeforedue,
-				paymentterms.dayinfollowingmonth
-			HAVING Sum(IF (paymentterms.daysbeforedue > 0,
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END,
-			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END)) > 0";
+						suppliers.suppname,
+						currencies.currency,
+						paymentterms.terms,
+						SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
+						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+							CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= paymentterms.daysbeforedue  THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						ELSE
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						END) AS due,
+						Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						ELSE
+							CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						END) AS overdue1,
+						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						ELSE
+							CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						END) AS overdue2
+						FROM suppliers INNER JOIN paymentterms 
+						ON suppliers.paymentterms = paymentterms.termsindicator 
+						INNER JOIN currencies 
+						ON suppliers.currcode = currencies.currabrev 
+						INNER JOIN supptrans 
+						ON suppliers.supplierid = supptrans.supplierno
+						WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
+						AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
+						AND suppliers.currcode ='" . $_POST['Currency'] . "'
+						GROUP BY suppliers.supplierid,
+							suppliers.suppname,
+							currencies.currency,
+							paymentterms.terms,
+							paymentterms.daysbeforedue,
+							paymentterms.dayinfollowingmonth
+						HAVING Sum(IF (paymentterms.daysbeforedue > 0,
+						CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END,
+						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END)) > 0";
 
 	}
 
@@ -103,11 +105,11 @@ If (isset($_POST['PrintPDF'])
 
 	if (DB_error_no($db) !=0) {
 	  $title = _('Aged Supplier Account Analysis') . ' - ' . _('Problem Report') ;
-	  include("includes/header.inc");
+	  include('includes/header.inc');
 	  prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg($db),'error');
-	   echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		echo "<br>$SQL";
+		echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -186,10 +188,10 @@ If (isset($_POST['PrintPDF'])
 		    if (DB_error_no($db) !=0) {
 			$title = _('Aged Supplier Account Analysis - Problem Report');
 			include('includes/header.inc');
-			echo '<br>' . _('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
-			echo "<br><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
+			prnMsg(_('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-			   echo '<br>' . _('The SQL that failed was') . '<br>' . $sql;
+			   echo '<br />' . _('The SQL that failed was') . '<br />' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -250,22 +252,11 @@ If (isset($_POST['PrintPDF'])
 
 	$YPos -=$line_height;
 	$pdf->line($Page_Width-$Right_Margin, $YPos ,220, $YPos);
-/*  UldisN  : this doesn't work for TCPDF
-	$buf = $pdf->output();
-	$len = strlen($buf);
-	header('Content-type: application/pdf');
-	header("Content-Length: $len");
-	header('Content-Disposition: inline; filename=AgedSuppliers.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
 
-	$pdf->stream();
-*/
     if ($ListCount == 0) {
-        prnMsg('there are no results so the PDF is empty');
+        prnMsg('There are no results so the PDF is empty');
     } else {
-        $pdf->OutputD($_SESSION['DatabaseName'] . '_AggedSupliers_' . date('Y-m-d').'.pdf');//UldisN
+        $pdf->OutputD($_SESSION['DatabaseName'] . '_AggedSupliers_' . date('Y-m-d').'.pdf');
     }
     $pdf->__destruct();
 } else { /*The option to print PDF was not hit */
@@ -280,44 +271,45 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo "<form sction='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table>";
+		echo '<form sction="' . $_SERVER['PHP_SELF'] . '" method="post">
+			<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr><td>' . _('From Supplier Code') . ":</font></td>
-			<td><input tabindex='1' type=text maxlength=6 size=7 name=FromCriteria value='1'></td>
-		</tr>";
-		echo '<tr><td>' . _('To Supplier Code') . ":</td>
-			<td><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></td>
-		</tr>";
+		echo '<tr><td>' . _('From Supplier Code') . ':</font></td>
+			<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="1"></td>
+		</tr>';
+		echo '<tr><td>' . _('To Supplier Code') . ':</td>
+			<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" value="zzzzzz"></td>
+		</tr>';
 
-		echo '<tr><td>' . _('All balances or overdues only') . ':' . "</td>
-			<td><select tabindex='3' name='All_Or_Overdues'>";
-		echo "<option selected value='All'>" . _('All suppliers with balances');
-		echo "<option value='OverduesOnly'>" . _('Overdue accounts only');
+		echo '<tr><td>' . _('All balances or overdues only') . ':' . '</td>
+			<td><select tabindex="3" name="All_Or_Overdues">';
+		echo '<option selected value="All">' . _('All suppliers with balances') . '</option>';
+		echo '<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>';
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For suppliers trading in') . ':' . "</td>
-			<td><select tabindex='4' name='Currency'>";
+		echo '<tr><td>' . _('For suppliers trading in') . ':' . '</td>
+			<td><select tabindex="4" name="Currency">';
 
-		$sql = 'SELECT currency, currabrev FROM currencies';
+		$sql = "SELECT currency, currabrev FROM currencies";
 		$result=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($result)){
 		      if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-				echo "<option selected value='" . $myrow["currabrev"] . "'>" . $myrow['currency'];
+				echo '<option selected value="' . $myrow['currabrev'] . '">' . $myrow['currency']  . '</option>';
 		      } else {
-			      echo "<option value='" . $myrow['currabrev'] . "'>" . $myrow['currency'];
+			      echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency']  . '</option>';
 		      }
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Summary or Detailed Report') . ':' . "</td>
-			<td><select tabindex='5' name='DetailedReport'>";
-		echo "<option selected value='No'>" . _('Summary Report');
-		echo "<option value='Yes'>" . _('Detailed Report');
+		echo '<tr><td>' . _('Summary or Detailed Report') . ':' . '</td>
+			<td><select tabindex="5" name="DetailedReport">';
+		echo '<option selected value="No">' . _('Summary Report')  . '</option>';
+		echo '<option value="Yes">' . _('Detailed Report')  . '</option>';
 		echo '</select></td></tr>';
 
-		echo '</table><br><div class="centre"><input tabindex="6" type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+		echo '</table><br /><div class="centre"><input tabindex="6" type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 	}
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

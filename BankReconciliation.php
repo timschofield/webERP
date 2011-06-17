@@ -25,7 +25,8 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 	} else {
 		/* Now need to get the currency of the account and the current table ex rate */
 		$SQL = "SELECT rate, 
-						bankaccountname
+						bankaccountname,
+						decimalplaces
 				FROM bankaccounts INNER JOIN currencies
 				ON bankaccounts.currcode=currencies.currabrev
 				WHERE bankaccounts.accountcode = '" . $_POST['BankAccount']."'";
@@ -35,6 +36,7 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 		$CurrencyRow =  DB_fetch_row($CurrencyResult);
 		$ExRate = $CurrencyRow[0];
 		$BankAccountName = $CurrencyRow[1];
+		$CurrDecimalPlaces = $CurrencyRow[2];
 		$CalculatedBalance = $_POST['DoExchangeDifference'];
 
 		$ExchangeDifference = ($CalculatedBalance - $_POST['BankStatementBalance'])/$ExRate;
@@ -122,7 +124,8 @@ if (DB_num_rows($AccountsResults)==0){
 
 include ('includes/GLPostings.inc');
 
-echo '</table><p><div class="centre"><input type=submit tabindex="2" name="ShowRec" value="' . _('Show bank reconciliation statement') . '"></div><br />';
+echo '</table>
+	<p><div class="centre"><input type=submit tabindex="2" name="ShowRec" value="' . _('Show bank reconciliation statement') . '"></div></p><br />';
 
 
 if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
@@ -163,11 +166,12 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 	echo '<table class="selection">
 			<tr class="EvenTableRows"><td colspan=6><b>' . $BankAccountName . ' ' . _('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
+			
 	if ($_SESSION['CompanyRecord']['currencydefault']!=$BankCurrCode){
 		echo  ' (' . $BankCurrCode . ' @ ' . $ExRate .')';
 	}
 	echo '</b></td>
-			<td valign=bottom class="number"><b>' . number_format($Balance*$ExRate,2) . '</b></td></tr>';
+			<td valign=bottom class="number"><b>' . number_format($Balance*$ExRate,$CurrDecimalPlaces) . '</b></td></tr>';
 
 	$SQL = "SELECT amount/exrate AS amt,
 					amountcleared,
@@ -218,15 +222,15 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td class=number>%01.2f</td>
-				<td class=number>%01.2f</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
 				</tr>',
 				ConvertSQLDate($myrow['transdate']),
 				$myrow['typename'],
 				$myrow['transno'],
 				$myrow['ref'],
-				$myrow['amt'],
-				$myrow['outstanding']);
+				number_format($myrow['amt'],$CurrDecimalPlaces),
+				number_format($myrow['outstanding'],$CurrDecimalPlaces));
 
 		$TotalUnpresentedCheques +=$myrow['outstanding'];
 
@@ -238,7 +242,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	}
 	//end of while loop
 	echo '<tr></tr>
-			<tr class=EvenTableRows><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class=number>' . number_format($TotalUnpresentedCheques,2) . '</td></tr>';
+			<tr class=EvenTableRows><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class="number">' . number_format($TotalUnpresentedCheques,$CurrDecimalPlaces) . '</td></tr>';
 
 	$SQL = "SELECT amount/exrate AS amt,
 				amountcleared,
@@ -290,16 +294,15 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td class=number>%01.2f</td>
-				<td class=number>%01.2f</td>
+				<td class=number>%s</td>
+				<td class=number>%s</td>
 				</tr>',
 				ConvertSQLDate($myrow['transdate']),
 				$myrow['typename'],
 				$myrow['transno'],
 				$myrow['ref'],
-				$myrow['amt'],
-				$myrow['outstanding']
-			);
+				number_format($myrow['amt'],$CurrDecimalPlaces),
+				number_format($myrow['outstanding'],$CurrDecimalPlaces) );
 
 		$TotalUnclearedDeposits +=$myrow['outstanding'];
 
@@ -310,9 +313,16 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		}
 	}
 	//end of while loop
-	echo '<tr></tr><tr class=EvenTableRows><td colspan=6>' . _('Total of all uncleared deposits') . '</td><td class=number>' . number_format($TotalUnclearedDeposits,2) . '</td></tr>';
+	echo '<tr></tr>
+			<tr class=EvenTableRows>
+				<td colspan=6>' . _('Total of all uncleared deposits') . '</td>
+				<td class=number>' . number_format($TotalUnclearedDeposits,$CurrDecimalPlaces) . '</td>
+			</tr>';
 	$FXStatementBalance = ($Balance*$ExRate) - $TotalUnpresentedCheques -$TotalUnclearedDeposits;
-	echo '<tr></tr><tr class=EvenTableRows><td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $BankCurrCode . ')</b></td><td class=number>' . number_format($FXStatementBalance,2) . '</td></tr>';
+	echo '<tr></tr>
+			<tr class=EvenTableRows>
+				<td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $BankCurrCode . ')</b></td>
+				<td class=number>' . number_format($FXStatementBalance,$CurrDecimalPlaces) . '</td></tr>';
 
 	if (isset($_POST['DoExchangeDifference'])){
 		echo '<input type="hidden" name="DoExchangeDifference" value=' . $FXStatementBalance . '>';
@@ -335,10 +345,10 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 
 if (isset($_POST['BankAccount'])) {
-	echo '<p><div class="centre"><a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments&Account='.$_POST['BankAccount'].'">' . _('Match off cleared payments') . '</a>';
+	echo '<p><div class="centre"><a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments&Account='.$_POST['BankAccount'].'">' . _('Match off cleared payments') . '</a></p>';
 	echo '<br /><a tabindex="5" href="' . $rootpath . '/BankMatching.php?Type=Receipts&Account='.$_POST['BankAccount'].'">' . _('Match off cleared deposits') . '</a></div>';
 } else {
-	echo '<p><div class="centre"><a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments">' . _('Match off cleared payments') . '</a>';
+	echo '<p><div class="centre"><a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments">' . _('Match off cleared payments') . '</a></p>';
 	echo '<br /><a tabindex="5" href="' . $rootpath . '/BankMatching.php?Type=Receipts">' . _('Match off cleared deposits') . '</a></div>';
 }
 

@@ -53,8 +53,8 @@ if (isset($_POST['PrintPDF'])) {
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
-	$levelctr = 2;
-	// $levelctr is the level counter
+	$LevelCounter = 2;
+	// $LevelCounter is the level counter
 	$sql = "INSERT INTO tempbom (
 				parent,
 				component,
@@ -68,7 +68,7 @@ if (isset($_POST['PrintPDF'])) {
 			  SELECT bom.parent,
 					 bom.component,
 					 CONCAT(bom.parent,bom.component) AS sortpart,
-					 '$levelctr' as level,
+					 " . $LevelCounter . " AS level,
 					 bom.workcentreadded,
 					 bom.loccode,
 					 bom.effectiveafter,
@@ -80,14 +80,14 @@ if (isset($_POST['PrintPDF'])) {
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 	//echo "</br>sql is $sql</br>";
-	// This while routine finds the other levels as long as $componentctr - the
+	// This while routine finds the other levels as long as $ComponentCounter - the
 	// component counter - finds there are more components that are used as
 	// assemblies at lower levels
 
-	$componentctr = 1;
+	$ComponentCounter = 1;
 	if ($_POST['Levels'] == 'All') {
-		while ($componentctr > 0) {
-			$levelctr++;
+		while ($ComponentCounter > 0) {
+			$LevelCounter++;
 			$sql = "INSERT INTO tempbom (
 					parent,
 					component,
@@ -101,7 +101,7 @@ if (isset($_POST['PrintPDF'])) {
 				  SELECT bom.parent,
 						 bom.component,
 						 CONCAT(passbom.sortpart,bom.component) AS sortpart,
-						 $levelctr as level,
+						 $LevelCounter as level,
 						 bom.workcentreadded,
 						 bom.loccode,
 						 bom.effectiveafter,
@@ -141,9 +141,9 @@ if (isset($_POST['PrintPDF'])) {
 			$result = DB_query($sql,$db);
 
 			$myrow = DB_fetch_row($result);
-			$componentctr = $myrow[0];
+			$ComponentCounter = $myrow[0];
 
-		} // End of while $componentctr > 0
+		} // End of while $ComponentCounter > 0
 	} // End of if $_POST['Levels']
 
 	if (DB_error_no($db) !=0) {
@@ -243,11 +243,12 @@ if (isset($_POST['PrintPDF'])) {
 
 	$title=_('Indented BOM Listing');
 	include('includes/header.inc');
-        echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-			_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+        echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post">
-			<table class=selection>';
+	echo '</br>
+			</br>
+			<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Part') . ':</td>
 			<td><input type ="text" name="Part" size="20" />
@@ -268,7 +269,7 @@ if (isset($_POST['PrintPDF'])) {
 			</td>
 		</tr>';
 	echo '</table>
-			<p><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+			<p><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div></p>';
 
 	include('includes/footer.inc');
 

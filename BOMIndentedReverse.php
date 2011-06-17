@@ -16,20 +16,17 @@ if (isset($_POST['PrintPDF'])) {
 	$PageNumber=1;
 	$line_height=12;
 
-	$sql = 'DROP TABLE IF EXISTS tempbom';
-	$result = DB_query($sql,$db);
-	$sql = 'DROP TABLE IF EXISTS passbom';
-	$result = DB_query($sql,$db);
-	$sql = 'DROP TABLE IF EXISTS passbom2';
-	$result = DB_query($sql,$db);
-	$sql = 'CREATE TEMPORARY TABLE passbom (
+	$result = DB_query("DROP TABLE IF EXISTS tempbom",$db);
+	$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
+	$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
+	$sql = "CREATE TEMPORARY TABLE passbom (
 				part char(20),
-				sortpart text) DEFAULT CHARSET=utf8';
+				sortpart text) DEFAULT CHARSET=utf8";
 
 	$ErrMsg = _('The SQL to to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	$sql = 'CREATE TEMPORARY TABLE tempbom (
+	$sql = "CREATE TEMPORARY TABLE tempbom (
 				parent char(20),
 				component char(20),
 				sortpart text,
@@ -38,7 +35,7 @@ if (isset($_POST['PrintPDF'])) {
 				loccode char(5),
 				effectiveafter date,
 				effectiveto date,
-				quantity double) DEFAULT CHARSET=utf8';
+				quantity double) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
@@ -55,8 +52,8 @@ if (isset($_POST['PrintPDF'])) {
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
-	$levelctr = 2;
-	// $levelctr is the level counter
+	$LevelCounter = 2;
+	// $LevelCounter is the level counter
 	$sql = "INSERT INTO tempbom (
 				parent,
 				component,
@@ -70,7 +67,7 @@ if (isset($_POST['PrintPDF'])) {
 			  SELECT bom.parent,
 					 bom.component,
 					 CONCAT(bom.component,bom.parent) AS sortpart,
-					 '$levelctr' as level,
+					 " . $LevelCounter . " AS level,
 					 bom.workcentreadded,
 					 bom.loccode,
 					 bom.effectiveafter,
@@ -82,13 +79,13 @@ if (isset($_POST['PrintPDF'])) {
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
-	// This while routine finds the other levels as long as $componentctr - the
+	// This while routine finds the other levels as long as $ComponentCounter - the
 	// component counter finds there are more components that are used as
 	// assemblies at lower levels
 
-	$componentctr = 1;
-	while ($componentctr > 0) {
-		$levelctr++;
+	$ComponentCounter = 1;
+	while ($ComponentCounter > 0) {
+		$LevelCounter++;
 		$sql = "INSERT INTO tempbom (
 				parent,
 				component,
@@ -102,7 +99,7 @@ if (isset($_POST['PrintPDF'])) {
 			  SELECT bom.parent,
 					 bom.component,
 					 CONCAT(passbom.sortpart,bom.parent) AS sortpart,
-					 $levelctr as level,
+					 " . $LevelCounter . " AS level,
 					 bom.workcentreadded,
 					 bom.loccode,
 					 bom.effectiveafter,
@@ -114,18 +111,14 @@ if (isset($_POST['PrintPDF'])) {
 			AND bom.effectiveafter <= NOW()";
 		$result = DB_query($sql,$db);
 
-		$sql = 'DROP TABLE IF EXISTS passbom2';
-		$result = DB_query($sql,$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
 
-		$sql = 'ALTER TABLE passbom RENAME AS passbom2';
-		$result = DB_query($sql,$db);
+		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2",$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
 
-		$sql = 'DROP TABLE IF EXISTS passbom';
-		$result = DB_query($sql,$db);
-
-		$sql = 'CREATE TEMPORARY TABLE passbom (
+		$sql = "CREATE TEMPORARY TABLE passbom (
 						part char(20),
-						sortpart text) DEFAULT CHARSET=utf8';
+						sortpart text) DEFAULT CHARSET=utf8";
 		$result = DB_query($sql,$db);
 
 
@@ -137,23 +130,21 @@ if (isset($_POST['PrintPDF'])) {
 					AND bom.effectiveto >= NOW() 
 					AND bom.effectiveafter <= NOW()";
 		$result = DB_query($sql,$db);
-
-
-		$sql = 'SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part';
-		$result = DB_query($sql,$db);
+		$result = DB_query("SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part",$db);
 
 		$myrow = DB_fetch_row($result);
-		$componentctr = $myrow[0];
+		$ComponentCounter = $myrow[0];
 
-	} // End of while $componentctr > 0
+	} // End of while $ComponentCounter > 0
 
 	if (DB_error_no($db) !=0) {
 	  $title = _('Indented BOM Listing') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br />
+			<a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br>$sql";
+	      echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -169,18 +160,17 @@ if (isset($_POST['PrintPDF'])) {
 	$assembly = $_POST['Part'];
 	$assemblydesc = $myrow['description'];
 
-	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin,$assemblydesc);
+	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$assemblydesc);
 
     $Tot_Val=0;
     $fill = false;
     $pdf->SetFillColor(224,235,255);
-    $sql = 'SELECT tempbom.*,
+    $sql = "SELECT tempbom.*,
                    stockmaster.description,
                    stockmaster.mbflag
               FROM tempbom,stockmaster
               WHERE tempbom.parent = stockmaster.stockid
-              ORDER BY sortpart';
+              ORDER BY sortpart";
 	$result = DB_query($sql,$db);
 
     $ListCount = DB_num_rows($result); // UldisN
@@ -229,11 +219,11 @@ if (isset($_POST['PrintPDF'])) {
 			$title = _('Print Reverse Indented BOM Listing Error');
 			include('includes/header.inc');
 			prnMsg(_('There were no items for the selected component'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_trans_' . date('Y-m-d').'.pdf');//UldisN
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_trans_' . date('Y-m-d').'.pdf');
 		$pdf->__destruct();
 	}
 
@@ -244,15 +234,20 @@ if (isset($_POST['PrintPDF'])) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
-	echo '</br></br><form action=' . $_SERVER['PHP_SELF'] . ' method="post"><table class="selection">';
+	echo '</br>
+			</br>
+			<form action=' . $_SERVER['PHP_SELF'] . ' method="post">
+			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><td>' . _('Part') . ":</td>";
-	echo "<td><input type ='text' name='Part' size='20'>";
-	echo '<tr><td>' . _('Print Option') . ":</td><td><select name='Fill'>";
-	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines');
-	echo "<option value='no'>" . _('Plain Print');
-	echo '</select></td></tr>';
-	echo "</table><p><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo '<tr><td>' . _('Part') . ':</td>
+		<td><input type ="text" name="Part" size="20">';
+	echo '<tr><td>' . _('Print Option') . ':</td>
+			<td><select name="Fill">
+				<option selected value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
+				<option value="no">' . _('Plain Print') . '</option>
+			</select></td></tr>';
+	echo '</table>
+			<p><div class="centre"><input type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div></p>';
 
 	include('includes/footer.inc');
 

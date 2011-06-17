@@ -223,7 +223,7 @@ if (isset($SelectedCOGSPostingID)) {
 	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] .'">' . _('Show all cost of sales posting records') . '</a></div>';
 }
 
-echo '<p />';
+echo '<br />';
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

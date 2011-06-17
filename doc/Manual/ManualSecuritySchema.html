@@ -1,64 +1,64 @@
-<html><head></head><body><br><br>
-<a name="SecuritySchema"><font size="+3"><b>Security Schema</b></font></a><br>
-<br>
+<html><head></head><body><br /><br />
+<a name="SecuritySchema"><font size="+3"><b>Security Schema</b></font></a><br />
+<br />
 The webERP security scheme consists of the following parts:
 <ol><li>
-Users:<br>
-A separate account should be created for each user.<br>
-User accounts may be added or removed by an administrator at:<br>
-Main Menu > Setup > User Accounts (WWW_Users.php)<br>
-+++<br>
-Each user is assigned a 'Security Role' by selecting a choice<br>
-from the drop down list labeled 'Security Role'.<br>
-See below for a list of the default Security Roles available.<br>
-+++<br>
+Users:<br />
+A separate account should be created for each user.<br />
+User accounts may be added or removed by an administrator at:<br />
+Main Menu > Setup > User Accounts (WWW_Users.php)<br />
++++<br />
+Each user is assigned a 'Security Role' by selecting a choice<br />
+from the drop down list labeled 'Security Role'.<br />
+See below for a list of the default Security Roles available.<br />
++++<br />
 </li><li>
-Security Roles:<br>
-Security Roles may be added or removed by an administrator at:<br>
-Main Menu > Setup > Role Permissions (WWW_Access.php)<br>
-+++<br>
-Each 'Security Role' is assigned one or more 'Security Tokens'.<br>
-The 'Security Tokens' assigned to a particular 'Security Role' can be <br>
-changed at: Main Menu > Setup > Role Permissions (WWW_Access.php)<br> 
-+++<br>  
-See below for a list of the default 'Security Roles' and the <br>
-'Security Tokens' assigned to each.<br>
-<br>  
+Security Roles:<br />
+Security Roles may be added or removed by an administrator at:<br />
+Main Menu > Setup > Role Permissions (WWW_Access.php)<br />
++++<br />
+Each 'Security Role' is assigned one or more 'Security Tokens'.<br />
+The 'Security Tokens' assigned to a particular 'Security Role' can be <br />
+changed at: Main Menu > Setup > Role Permissions (WWW_Access.php)<br /> 
++++<br />  
+See below for a list of the default 'Security Roles' and the <br />
+'Security Tokens' assigned to each.<br />
+<br />  
 </li><li>
-Security Tokens:<br>
-15 'Security Token' choices are available by default.<br>
-See below for a list of the default 'Security Tokens'.<br>
-Each 'Security Token' allows access to one or more webERP pages.<br>    
-+++<br>
-There is no webERP tool to add, remove or edit 'Security Tokens'.<br>
-However, an administrator can edit the underlying table (securitytokens).<br>
-<br>  
+Security Tokens:<br />
+15 'Security Token' choices are available by default.<br />
+See below for a list of the default 'Security Tokens'.<br />
+Each 'Security Token' allows access to one or more webERP pages.<br />    
++++<br />
+There is no webERP tool to add, remove or edit 'Security Tokens'.<br />
+However, an administrator can edit the underlying table (securitytokens).<br />
+<br />  
 </li><li>
-PageSecurity values:<br>
+PageSecurity values:<br />
 Each webERP page is given a Page Security value from 1 to 15 in the table scripts. The system reads all the scripts and the PageSecurity value for each into a SESSION array - $_SESSION['PageSecurityArray'] - the key for each element is the script name and the value is the PageSecurity value for that script. The key - the script name is retrieved from the $_SERVER['SCRIPT_NAME'] variable. In this way every time a script is called, the PageSecurity is retrieved from the array.
-+++<br>
-There is a webERP tool to change PageSecurity values, for each script which is accessible from the Setup menu.<br>
-<br></ol>
++++<br />
+There is a webERP tool to change PageSecurity values, for each script which is accessible from the Setup menu.<br />
+<br /></ol>
 These parts work together as follows. The user name and password combination
 entered at log on enables the system to identify the 'Security Role' for the User.
 The User's 'Security Role' determines what 'Security Tokens' are available to
 the User.  The User is allowed access to any page with a 'PageSecurity' value
-equal to the 'Security Token' values available to that User.<br>
-<br>
-<br>
-<u>A more comprehensive description of the security scheme follows:</u><br>
-<br>
+equal to the 'Security Token' values available to that User.<br />
+<br />
+<br />
+<u>A more comprehensive description of the security scheme follows:</u><br />
+<br />
 Each webERP page (script) is assigned a specific PageSecurity value.
 This page security value is stored in the scripts table of the database and read into a SESSION array on login (from the GetConfig.php script). At the time of writing this is a number between 1 and 15.  If more levels of security
 are necessary then this can be expanded by an administrator or developer. 
-The default PageSecurity values for each page can be inspected by browsing the scripts table<br>
-<br>
+The default PageSecurity values for each page can be inspected by browsing the scripts table<br />
+<br />
 The user is allowed access to a page if the PageSecurity value of the page/script 
 is a number contained in the SESSION AllowedPageSecurityTokens array as 
 determined from the users access level (Security Role). The user access level Security Role) is an integer 
 that represents the Security Role assigned to the user in the user set up page 
-(WWW_users.php).<br>
-<br>
+(WWW_users.php).<br />
+<br />
 Access authority is checked in the session.inc script for all pages 
 (or PDF_Starter.inc for PDF pages). The variable $_SESSION['AccessLevel'] 
 is retrieved from the database when the user logs on - in session.inc. 
@@ -66,23 +66,23 @@ This variable refers to the Security Role of the user.
 The SESSION['AllowedPageSecurityTokens'] array of numbers is retrieved
 from the database based on the users AccessLevel - or Security Role. Any page
 that has a $PageSecurity value equal to any value in this array is deemed 
-to be an authorised page.<br>
-<br>
+to be an authorised page.<br />
+<br />
 If you wish to add more Security Roles then you must use the Role
 Permissions script (WWW.Access.php). You must also specify the Security
 Tokens for the new Security Role.  Users assigned to the new Security 
 Role will have access to any page where the Page Security value is equal 
 to a Security Token value assigned to the new Security Role. This mechanism 
-allows the system administrator to control who can access what.<br>
-<br>
+allows the system administrator to control who can access what.<br />
+<br />
 By changing the Security Role assigned to each users and the Security
 Tokens assigned to each Security Role the security access can
 be tailored for all users. When making these changes reference the default 
 values in the tables below. PageSecurity values must also be known.
-The value of the default settings can be modified as needed from the Page Security script accessible from the Setup module<br>
-<br>
-<u>Security Scheme Tables:</u><br>
-<br>
+The value of the default settings can be modified as needed from the Page Security script accessible from the Setup module<br />
+<br />
+<u>Security Scheme Tables:</u><br />
+<br />
 <table border="2">
 <tbody>
 <tr>
@@ -91,91 +91,91 @@ The value of the default settings can be modified as needed from the Page Securi
 <th>Comment</th>
 </tr>
 <tr>
-<td>www_user.userid<br>www_user.fullaccess</td>
-<td>demo<br>8</td>
-<td>These fields are updated by<br>WWW_Users.php.</td>
+<td>www_user.userid<br />www_user.fullaccess</td>
+<td>demo<br />8</td>
+<td>These fields are updated by<br />WWW_Users.php.</td>
 </tr>
 <tr>
-<td>securityroles.secroleid<br>securityroles.secrolename</td>
-<td>8<br>System Administrator</td>
-<td>These fields are changed when a<br>
-    'Security Role' is created or deleted<br>
+<td>securityroles.secroleid<br />securityroles.secrolename</td>
+<td>8<br />System Administrator</td>
+<td>These fields are changed when a<br />
+    'Security Role' is created or deleted<br />
     at WWW_Access.php.</td>
 </tr>
 <tr>
-<td>securitygroups.secroleid<br>securitygroups.tokenid</td>
-<td>8<br>1</td>
-<td>These fields are updated when<br>
-    'Security Tokens' are assigned or<br>
-    removed from 'Security Roles'.<br>
+<td>securitygroups.secroleid<br />securitygroups.tokenid</td>
+<td>8<br />1</td>
+<td>These fields are updated when<br />
+    'Security Tokens' are assigned or<br />
+    removed from 'Security Roles'.<br />
     at WWW_Access.php.</td>
 </tr>
 <tr>
-<td>securitytokens.tokenid<br>securitytokens.tokenname</td>
-<td>1<br>Menu and Order Entry Only</td>
-<td>15 default security tokens are defined.<br>
-    This data can not be edited using any<br>
+<td>securitytokens.tokenid<br />securitytokens.tokenname</td>
+<td>1<br />Menu and Order Entry Only</td>
+<td>15 default security tokens are defined.<br />
+    This data can not be edited using any<br />
     webERP tool.</td>
 </tr>
 <tr>
 <td>webERP page</td>
-<td>CustomerInquiry.php<br>$PageSecurity = 1;</td>
-<td>The PageSecurity value for each page<br>
-    is pre-defined and can not be edited<br>
+<td>CustomerInquiry.php<br />$PageSecurity = 1;</td>
+<td>The PageSecurity value for each page<br />
+    is pre-defined and can not be edited<br />
     using any webERP tool.</td>
 </tr>
 </tbody></table>
 
-<br>
-<br>
+<br />
+<br />
 <b>Changes in Later Versions</b>
-<br>
-<br>
+<br />
+<br />
 Below the default security roles and page security values are set out. However, be aware that all these settings are now modifiable in the database. The roles can be defined choosing which security tokens will be allowed. Also, as of version 4.0 it is now possible to change the PageSecurity of each script to allow access to be more tightly defined. The PageSecurity value for a particular script is mapped to the security token that is either available to a particular user or not. Without the security token being in the users list of allowed security tokens then the script will not be available to that user.
-<br>
-<br>
-<b>Security Roles: Defaults for webERP version 3.0.5:</b><br>
-<br>
-1 - Inquiries/Order Entry<br>
-2 - Manufac/Stock Admin<br>
-3 - Purchasing officer<br>
-4 - AP Clerk<br>
-5 - AR Clerk<br>
-6 - Accountant<br>
-7 - Customer logon only<br>
-8 - System Administrator<br>
-<br>
-<b>Security Token assignments: Defaults for webERP version 3.0.5:,</b><br>
-<br>
-1 - Inquiries/Order Entry tokens = 1, 2<br>
-2 - Manufac/Stock Admin tokens = 1, 2, 11<br>
-3 - Purchasing officer tokens = 1, 2, 3, 4, 5, 11<br>
-4 - AP Clerk tokens = 1, 2, 5<br>
-5 - AR Clerk tokens = 1, 2, 5, 11<br>
-6 - Accountant tokens = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11<br>
-7 - Customer logon only token = 1<br>
-8 - System Administrator = All the currently defined security tokens<br>
-<br>
-<b>Security Tokens: Defaults for webERP version 3.0.5:</b><br>
-<br>
-1 - Menu and order entry only<br>
-2 - Inventory, AR & AP inquiries & reports<br>
-3 - AR setup customers, areas, receipts, allocations, credit notes, salesfolk, credit status<br>
-4 - PO Entry, Purchasing data & reorder levels<br>
-5 - AP Invoice, Credit, Payment entry. Supplier maintenance<br>
-6 - Not used<br>
-7 - Bank reconciliations<br>
-8 - GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs<br>
-9 - Ledger Maintenance and Manufacturing<br>
-10 - GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs<br>
-11 - Pricing & Inventory locations, categories, receiving & adjustments<br>
-12 - No Used<br>
-13 - Not Used<br>
-14 - Not Used<br>
-15 - User management, System Admin setup & utilities<br>
-<br>
-<b>PageSecurity values: Defaults for webERP version 3.05:</b><br>
-<br>
+<br />
+<br />
+<b>Security Roles: Defaults for webERP version 3.0.5:</b><br />
+<br />
+1 - Inquiries/Order Entry<br />
+2 - Manufac/Stock Admin<br />
+3 - Purchasing officer<br />
+4 - AP Clerk<br />
+5 - AR Clerk<br />
+6 - Accountant<br />
+7 - Customer logon only<br />
+8 - System Administrator<br />
+<br />
+<b>Security Token assignments: Defaults for webERP version 3.0.5:,</b><br />
+<br />
+1 - Inquiries/Order Entry tokens = 1, 2<br />
+2 - Manufac/Stock Admin tokens = 1, 2, 11<br />
+3 - Purchasing officer tokens = 1, 2, 3, 4, 5, 11<br />
+4 - AP Clerk tokens = 1, 2, 5<br />
+5 - AR Clerk tokens = 1, 2, 5, 11<br />
+6 - Accountant tokens = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11<br />
+7 - Customer logon only token = 1<br />
+8 - System Administrator = All the currently defined security tokens<br />
+<br />
+<b>Security Tokens: Defaults for webERP version 3.0.5:</b><br />
+<br />
+1 - Menu and order entry only<br />
+2 - Inventory, AR & AP inquiries & reports<br />
+3 - AR setup customers, areas, receipts, allocations, credit notes, salesfolk, credit status<br />
+4 - PO Entry, Purchasing data & reorder levels<br />
+5 - AP Invoice, Credit, Payment entry. Supplier maintenance<br />
+6 - Not used<br />
+7 - Bank reconciliations<br />
+8 - GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs<br />
+9 - Ledger Maintenance and Manufacturing<br />
+10 - GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs<br />
+11 - Pricing & Inventory locations, categories, receiving & adjustments<br />
+12 - No Used<br />
+13 - Not Used<br />
+14 - Not Used<br />
+15 - User management, System Admin setup & utilities<br />
+<br />
+<b>PageSecurity values: Defaults for webERP version 3.05:</b><br />
+<br />
 <table border="2">
 <tbody><tr><th>Page (script) File Name
 </th><th>PageSecurity value

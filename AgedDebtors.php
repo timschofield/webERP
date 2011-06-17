@@ -80,7 +80,7 @@ if (isset($_POST['PrintPDF'])
 					AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 					AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 					AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
-					$SalesLimit
+					" . $SalesLimit . "
 				GROUP BY debtorsmaster.debtorno,
 					debtorsmaster.name,
 					currencies.currency,
@@ -154,7 +154,7 @@ if (isset($_POST['PrintPDF'])
 				AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 	      		AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 	      		AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
-				$SalesLimit
+				" . $SalesLimit . "
 			GROUP BY debtorsmaster.debtorno,
 	      			debtorsmaster.name,
 	      			currencies.currency,
@@ -243,7 +243,7 @@ if (isset($_POST['PrintPDF'])
 		AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 		AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 		AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
-		$SalesLimit
+		" . $SalesLimit . "
 		GROUP BY debtorsmaster.debtorno,
 		debtorsmaster.name,
 		currencies.currency,
@@ -269,7 +269,7 @@ if (isset($_POST['PrintPDF'])
 	if (DB_error_no($db) !=0) {
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
-		echo '<p>' . _('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db);
+		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
@@ -368,10 +368,10 @@ if (isset($_POST['PrintPDF'])
 		    if (DB_error_no($db) !=0) {
 			$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
-			echo '<br /><br />' . _('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
+			prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				echo '<br />' . _('The SQL that failed was') . '<p>' . $sql;
+				echo '<br />' . _('The SQL that failed was') . '<br />' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -483,12 +483,11 @@ if (isset($_POST['PrintPDF'])
 		$sql = "SELECT salesmancode, salesmanname FROM salesman";
 
 		$result=DB_query($sql,$db);
-		echo '<option value=""></option>';
+		echo '<option value="">' . _('All Sales people') . '</option>';
 		while ($myrow=DB_fetch_array($result)){
 				echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 		}
 		echo '</select></td></tr>';
-
 
 		echo '<tr><td>' . _('Only show customers trading in') . ':' . '</td>
 				<td><select tabindex="5" name="Currency">';

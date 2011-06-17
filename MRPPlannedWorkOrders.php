@@ -136,19 +136,18 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					$Page_Width,$Right_Margin,$_POST['Consolidation'],$ReportDate);
 
-		$Total_EXTcost=0;
-		$Partctr = 0;
+		$PartCounter = 0;
 		$fill = false;
 		$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
 		$FontSize=8;
-		$holdpart = ' ';
-		$holddescription = ' ';
-		$holdmbflag = ' ';
-		$holdcost = ' ';
-		$holddecimalplaces = 0;
-		$totalpartqty = 0;
-		$totalpartcost = 0;
-		$Total_Extcost = 0;
+		$HoldPart = ' ';
+		$HoldDescription = ' ';
+		$HoldMBFlag = ' ';
+		$HoldCost = ' ';
+		$HoldDecimalPlaces = 0;
+		$TotalPartQty = 0;
+		$TotalPartCost = 0;
+		$Total_ExtCost = 0;
 
 		while ($myrow = DB_fetch_array($result,$db)){
 				$YPos -=$line_height;
@@ -159,17 +158,17 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				}
 
 				// Print information on part break
-				if ($Partctr > 0 & $holdpart != $myrow['part']) {
-					$pdf->addTextWrap(50,$YPos,130,$FontSize,$holddescription,'',0,$fill);
+				if ($PartCounter > 0 & $HoldPart != $myrow['part']) {
+					$pdf->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$fill);
 					$pdf->addTextWrap(180,$YPos,40,$FontSize,_('Unit Cost: '),'center',0,$fill);
-					$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
-					$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($totalpartqty,
-														$holddecimalplaces),'right',0,$fill);
-					$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
+					$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($TotalPartQty,
+														$HoldDecimalPlaces),'right',0,$fill);
+					$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 					$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
-					$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
-					$totalpartcost = 0;
-					$totalpartqty = 0;
+					$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$fill);
+					$TotalPartCost = 0;
+					$TotalPartQty = 0;
 					$YPos -= (2*$line_height);
 				}
 
@@ -179,29 +178,29 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				// and False to set to transparent
 				$FormatedSupDueDate = ConvertSQLDate($myrow['duedate']);
 				$FormatedSupMRPDate = ConvertSQLDate($myrow['mrpdate']);
-				$extcost = $myrow['supplyquantity'] * $myrow['computedcost'];
+				$ExtCost = $myrow['supplyquantity'] * $myrow['computedcost'];
 				$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
 				$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
 				$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
 				$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($myrow['supplyquantity'],
 														  $myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($extcost,2),'right',0,$fill);
+				$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($ExtCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 				if ($_POST['Consolidation'] == 'None'){
 					$pdf->addTextWrap(370,$YPos,80,$FontSize,$myrow['ordertype'],'right',0,$fill);
 					$pdf->addTextWrap(450,$YPos,80,$FontSize,$myrow['orderno'],'right',0,$fill);
 				} else {
 					$pdf->addTextWrap(370,$YPos,100,$FontSize,$myrow['consolidatedcount'],'right',0,$fill);
 				};
-				$holddescription = $myrow['description'];
-				$holdpart = $myrow['part'];
-				$holdmbflag = $myrow['mbflag'];
-				$holdcost = $myrow['computedcost'];
-				$holddecimalplaces = $myrow['decimalplaces'];
-				$totalpartcost += $extcost;
-				$totalpartqty += $myrow['supplyquantity'];
+				$HoldDescription = $myrow['description'];
+				$HoldPart = $myrow['part'];
+				$HoldMBFlag = $myrow['mbflag'];
+				$HoldCost = $myrow['computedcost'];
+				$HoldDecimalPlaces = $myrow['decimalplaces'];
+				$TotalPartCost += $ExtCost;
+				$TotalPartQty += $myrow['supplyquantity'];
 
-				$Total_Extcost += $extcost;
-				$Partctr++;
+				$Total_ExtCost += $ExtCost;
+				$PartCounter++;
 
 				if ($YPos < $Bottom_Margin + $line_height){
 				   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
@@ -212,13 +211,13 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		} /*end while loop */
 		// Print summary information for last part
 		$YPos -=$line_height;
-		$pdf->addTextWrap(40,$YPos,130,$FontSize,$holddescription,'',0,$fill);
+		$pdf->addTextWrap(40,$YPos,130,$FontSize,$HoldDescription,'',0,$fill);
 		$pdf->addTextWrap(170,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-		$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
-		$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($totalpartqty,$holddecimalplaces),'right',0,$fill);
-		$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
+		$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($TotalPartQty,$HoldDecimalPlaces),'right',0,$fill);
+		$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 		$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
-		$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
+		$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$fill);
 		$FontSize =8;
 		$YPos -= (2*$line_height);
 
@@ -229,9 +228,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		}
 		/*Print out the grand totals */
 		$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');
-		$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
+		$pdf->addTextWrap(150,$YPos,30,$FontSize,$PartCounter, 'left');
 		$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
-		$DisplayTotalVal = number_format($Total_Extcost,2);
+		$DisplayTotalVal = number_format($Total_ExtCost,2);
 		$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf');
@@ -262,12 +261,12 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<th>' . _('Consolidations') . '</th>
 			</tr>';
 
-		$totalpartqty = 0;
-		$totalpartcost = 0;
-		$Total_Extcost = 0;
+		$TotalPartQty = 0;
+		$TotalPartCost = 0;
+		$Total_ExtCost = 0;
 		$j=1; //row ID
 		$k=0; //row colour counter
-		While ($myrow = DB_fetch_array($result,$db)){
+		while ($myrow = DB_fetch_array($result,$db)){
 
 			// Alternate row color
 			if ($k==1){
@@ -278,40 +277,31 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				$k++;
 			}
 
-			printf("\n <td><a href='%s/WorkOrderEntry.php?NewItem=%s&ReqQty=%s&ReqDate=%s'>%s</a></td>",
-				$rootpath,
-				$myrow['part'],
-				$myrow['supplyquantity'],
-				ConvertSQLDate($myrow['duedate']),
-				_('Convert')
-			);
-			printf("\n <td>%s <input type='hidden' name='%s_part' value='%s' /></td>", $myrow['part'], $j, $myrow['part']);
-			printf("\n <td>%s</td>", $myrow['description']);
-			printf("\n <td>%s</td>", ConvertSQLDate($myrow['mrpdate']));
-			printf("\n <td>%s</td>", ConvertSQLDate($myrow['duedate']));
-			printf("\n <td class=number>%s</td>", number_format($myrow['supplyquantity'],$myrow['decimalplaces']));
-			printf("\n <td class=number>%.2f</td>", number_format($myrow['computedcost'],2));
-			printf("\n <td class=number>%.2f</td>", number_format($myrow['supplyquantity'] * $myrow['computedcost'],2));
+			echo '<td><a href="' . $rootpath . '/WorkOrderEntry.php?NewItem=' . $myrow['part'] . '&ReqQty=' . $myrow['supplyquantity'] . '&ReqDate=' . $myrow['duedate'] . '">' . _('Convert') . '</a></td>
+				<td>' . $myrow['part'] . ' <input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
+				<td>' . $myrow['description'] . '</td>
+				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>
+				<td>' . ConvertSQLDate($myrow['duedate']) . '</td>
+				<td class=number>' . number_format($myrow['supplyquantity'],$myrow['decimalplaces']) . '</td>
+				<td class=number>' . number_format($myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($myrow['supplyquantity'] * $myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+				
 			if ($_POST['Consolidation']!='None') {
-				printf("\n <td class=number>%s</td>", $myrow['consolidatedcount']);
+				echo '<td class="number">' . $myrow['consolidatedcount'] . '</td>';
 			}
-			echo "</tr>";
+			echo '</tr>';
 
 			$j++;
-			$Total_Extcost += ( $myrow['supplyquantity'] * $myrow['computedcost'] );
+			$Total_ExtCost += ( $myrow['supplyquantity'] * $myrow['computedcost'] );
 
 		} // end while loop
 
 		// Print out the grand totals
-		printf("
-			<tr><td colspan='4' class='number'>%s %s</td>
-			<td colspan='4' class='number'>%s %s</td></tr></table>
-			",
-			_('Number of Work Orders: '),
-			$j-1,
-			_('Total Extended Cost: '),
-			number_format($Total_Extcost,2)
-		);
+		echo '<tr>
+				<td colspan="4" class="number">' . _('Number of Work Orders') .': ' . ($j-1) . '</td>
+				<td colspan="4" class="number">' . _('Total Extended Cost') . ': ' . number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			</tr>
+			</table>';
 
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
@@ -339,8 +329,10 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	echo '<option value="no">' . _('Plain Print') . '</option>';
 	echo '</select></td></tr>';
 	
-	echo '<tr><td>' . _('Cut Off Date') . ":</td><td><input type ='text' class=date alt='".$_SESSION['DefaultDateFormat'] ."' name='cutoffdate' size='10' value='".date($_SESSION['DefaultDateFormat'])."'></tr>";
-	echo "</table><p><div class='centre'><input type=submit name='Review' value='" . _('Review') . "'> <input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo '<tr><td>' . _('Cut Off Date') . ':</td>
+			<td><input type ="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="cutoffdate" size="10" value="' .date($_SESSION['DefaultDateFormat']).'"></td>
+		</tr>';
+	echo '</table><p><div class="centre"><input type="submit" name="Review" value="' . _('Review') . '"> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
 
 	include('includes/footer.inc');
 

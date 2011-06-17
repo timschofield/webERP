@@ -1,12 +1,10 @@
 <!-- Help Begin: PurchaseOrdering -->
-
-<br><br>
 <a name="Purchase Ordering"><font size="+3"><b>Purchase Orders</b></font></a>
-<br><br>
+<br /><br />
 <font size="+1"><b>Overview</b></font>
-<br><br>
+<br /><br />
 Purchase orders are the contract initiated by an organisation with it's suppliers (vendors). Since, purchase orders commit the business to expenditure it is important to ensure that the committment is not made without the proper authority. webERP forces certain procedures to be followed to ensure proper authorisation. The sequence is:
-<br><br>
+<br /><br />
 <ul>
 <li>An operator with access to the purchase order creation creates the purchase order.</li>
 <li>It is possible if this user has access to authorise the purchase order to have it authorised automatically. This requires a configuration setting to be enabled to allow this. Normally, another user with appropriate authorisation levels is required to authorise the order. Authorisation levels can be set by user and currency and by the amount of that currency. For example a user maybe able to approve purchase orders up to $1000 in USD. Orders cannot be printed and sent to a supplier until they are authorised.</li>
@@ -15,11 +13,13 @@ Purchase orders are the contract initiated by an organisation with it's supplier
 <li>Once an order is authorised it must be printed - it is not possible to receive any stock against an order that has not been printed</li>
 <li>Once printed it is now possible to receive stock against the order</li>
 </ol>
-<br>It is necessary to create purchase orders to receive stock. Stock cannot be received in without an order - except by entering a stock adjustment. The receiving of stock creates a GRN - Goods Received Note that can be printed and signed off by the person entering the receipt of stock. The system retains records of the GRNs and these must be matched off against purchase invoices to ensure that only those goods received are paid for.
-<br>
-<br>
+<br />It is necessary to create purchase orders to receive stock. Stock cannot be received in without an order - except by entering a stock adjustment. The receiving of stock creates a GRN - Goods Received Note that can be printed and signed off by the person entering the receipt of stock. The system retains records of the GRNs and these must be matched off against purchase invoices to ensure that only those goods received are paid for.
+<br />
+<br />
+<img src="images/Purchasing.jpg">
+<br /><br />
 <font size="+1"><b>Purchase Orders Status</b></font>
-<br><br>
+<br /><br />
 The order status starts off as:
 <ul>
 <li>Pending - the order has been created but not authorised</li>
@@ -29,19 +29,19 @@ The order status starts off as:
 <li>Rejected - if an authorisor disagrees with the requirement to purchase this order the status of the order is changed to rejected. In many respects this status is treated the same as cancelled</li>
 <li>Completed - the order is fully received or no more will be received on the order. webERP maintains changes the status to completed when all lines of the order are fully received - or the line is amended to have the same amount as already received.</li>
 </ul>
-<br><br>
+<br /><br />
 <font size="+1"><b>Amending Purchase Orders</b></font>
-<br><br>
+<br /><br />
 When you click the Purchase Orders, you can search for the outstanding Purchases, it is possible to search by purchase order number or the stock location where the order is set to receive into, or search for an item and then search for purchase orders that have that item on it. Searching the orders shows all the orders that match the criteria with their status and links with the options relevant to their status shown. The links allow the order to be modified, printed, received depending on the status of the order. The supplier and the amount of the order are also shown on the search screen.
-<br><br>
+<br /><br />
 If the order is pending then it is possible to modify the order and any lines on the order. If the order had been authorised or printed then whilst it is still possible to amend any aspect of the order, it will need to be reauthorised as the status is changed back to pending - this is to ensure that there is no way for someone without the necessary authorisation level of committing the business to purchase more than they should be doing!
-<br><br>
+<br /><br />
 If the order is completed, it is not possible to modify it.
-<br><br>
+<br /><br />
 If the order is rejected, it is possible to change the order to authorised - by a user with appropriate authority.
 </ul>
 <font size="+1"><b>Adding a New Purchase Order</b></font>
-<br><br>
+<br /><br />
 To add a new Purchase Order, Click on Main menu.
 <ul>
 <li>Select the Purchasing Module</li>
@@ -61,17 +61,17 @@ The purchase order date, delivery date, Requisition Ref, warehouse name, Address
 <li>Then click "Process Order"</li>
 </ul>
 A success report should display showing that you have created a purchase order.
-<br><br>
+<br /><br />
 If the configuration setting to automatically authorise the purchase order is enabled, then if your authority allows you to authorise purchase orders in the suppliers currecny and your authority level exceeds the amount of this order, then the order should automatically be authorised.
-<br><br>
+<br /><br />
 If you have authority to authorise purchase orders but the configuration setting to automatically authorise purchase orders is not set, then you will need to do another step to authorise it. There is a special screen to allow selection of pending orders for authorisation, alternatively it is possible to modify the order and change it's status manually to authorised.
-<br><br>
+<br /><br />
 If you do not have the authority to authorise purchase orders in the currency of the supplier, to the value of the order, then a duly authorised person will be required to authorise it before it is possible to print the order.
-<br><br>
+<br /><br />
 <font size="+1"><b>Authorising Purchase Orders</b></font>
-<br><br>
+<br /><br />
 Here the directors and authorising officials will log into webERP to look for purchase orders that have been raised and they will either cancel, reject, or authorise these purchase orders.
-<br><br>
+<br /><br />
 Below are the steps of authorising purchase orders
 <ul>
 <li>Click on Main menu</li>
@@ -82,7 +82,7 @@ Below are the steps of authorising purchase orders
 <li>Click update</li>
 </ul>
 This will enable the person who created purchase orders to print and receive them. In order to Receive a purchase order, it has to be printed first and sent or emailed to the supplier. (N.B this can't be done unless the purchase order is authorised)
-<br><br>
+<br /><br />
 Once a purchase order is authorised it can then be printed as follows:
 <ul>
 <li>Click on Main menu</li>
@@ -92,9 +92,9 @@ Once a purchase order is authorised it can then be printed as follows:
 <li>Click on the Print option</li>
 </ul>
 After printing this purchase order you can send it to the supplier through an email or print it out and post it. If the order is being shipped by the supplier and there are additional costs to take into account, then you should use shipment costing and add the order to a shipment. Using shipment costing ensures that the costs of shipping and transport are apportioned between all the items on the shipment. See shipment costing section of the manual.
-<br><br>
+<br /><br />
 <font size="+1"><b>Recieving Purchase Orders</b></font>
-<br><br>
+<br /><br />
 <li>When the supplier delivers the goods to the warehouse , the stock manager will log into  webERP</li>
 <li>Click main menu -> Purchasing Module</li>
 <li>Clik Purchase orders and enter criteria to select the purchase order you require</li>

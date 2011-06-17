@@ -7,7 +7,7 @@
      No style, inline style or style sheet on purpose.
      In this way the help can be easily broken into sections for online context-sensitive help.
 		 The only html used in them are:
-		 <br>
+		 <br />
 		 <div>
 		 <table>
 		 <font>
@@ -39,7 +39,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
           <input type="submit" name="Submit" value="Display Checked">
 					Click on a link below to view.  Click checkboxes then Display Checked to format for printing.
-					<br><br><br>
+					<br /><br /><br />
 <?php
   }
 ?>
@@ -54,7 +54,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
           <font size="+3"><b>Table of Contents</b></font>
-          <br><br>
+          <br /><br />
           <UL>
             <LI>
 <?php
@@ -72,7 +72,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               <UL>
                 <LI>Why Another Accounting Program?</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -92,7 +92,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Software Requirements</LI>
                 <LI>Using webERP with a Wiki</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -116,7 +116,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Themes and GUI Modification</LI>
                 <LI>Setting Up Users</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -132,7 +132,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
             </LI>
-            <br><br>
+            <br /><br />
             <LI>
 <?php
   if (!isset($_POST['Submit'])) {
@@ -157,7 +157,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Reconciling the Debtors Ledger Control Account</LI>
                 <LI>Finally</LI>
               </UL>
-              <BR>
+              <br />
 						</LI>
             <LI>
 <?php
@@ -176,7 +176,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Navigating the Menu</LI>
                 <LI>Reporting</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -242,7 +242,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Inventory Planning Report</LI>
                 <LI>Inventory Checks</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -288,7 +288,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Amending Customer Details</LI>
                 <LI>Shippers</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 
@@ -318,7 +318,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Currency</LI>
 		<LI>Remittance Advice</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -339,7 +339,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Salesperson Name, Telephone and Fax Numbers</LI>
                 <LI>Salesperson Commission Rates and Breakpoint</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -361,7 +361,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Hundredths Name</LI>
                 <LI>Exchange Rates</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 
@@ -382,7 +382,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Sales Type Code</LI>
                 <LI>Sales Type Description</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -403,7 +403,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Payment Terms Description</LI>
                 <LI>Days Before Due / Day In Following Month When Due</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -424,7 +424,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Status Description</LI>
                 <LI>Disallow Invoices</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -447,7 +447,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Sales only within one Tax Authority Example - 3 Tax Levels:</LI>
                 <LI>Sales Within Two Tax Authorities Example - 3 Tax Levels:</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -468,7 +468,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Maintaining Prices</LI>
                 <LI>Discount Matrix</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -501,7 +501,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Deposits Listing</LI>
                 <LI>Allocate Credits To A Customer's Account</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -521,7 +521,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Customer Account inquiries</LI>
                 <LI>Transaction Detail inquiries</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -543,7 +543,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Customer Transaction Listing Options</LI>
                 <LI>Printing Invoices Or Credit Notes</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -564,7 +564,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Sales Analysis Report Columns</LI>
                 <LI>Automating Sales Reports</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -592,7 +592,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 				<LI>Counter Sales - Entering Sales Directly</LI>
 				<LI>Managing Discounts by product group and customer group (Matrix)</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -614,7 +614,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Authorising Purchase Orders </LI>
                 <LI>Recieving Purchase Orders</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -636,7 +636,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Shipment Costings</LI>
                 <LI>Closing a Shipment</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -657,7 +657,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Selecting A Contract</LI>
                 <LI>Charging Against Contracts</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -680,7 +680,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Work Order Issues</LI>
                 <LI>Closing Work Orders</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -705,7 +705,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>How It Works</LI>
                 <LI>MRP Reports</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -732,7 +732,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>EDI Setup</LI>
                 <LI>Sending EDI Invoices</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
  <?php
@@ -754,7 +754,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Depreciation Run</LI>
                 <LI>Fixed Asset Schedule</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -781,7 +781,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Creating A New Report - Entering and Arranging Criteria</LI>
                 <LI>Viewing Reports</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -801,7 +801,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Setup General Parameters</LI>
 
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -823,7 +823,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Edit a Language File Header</LI>
                 <LI>Edit a Language File Module</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -845,7 +845,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Make Stock Locations</LI>
                 <LI>Repost General Ledger from Period</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -871,7 +871,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>DateFunctions.inc</LI>
                 <LI>SQL_CommonFuctions.inc</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 
@@ -891,8 +891,8 @@ if (!isset($_POST['Submit'])) {
 <?php
   }
 ?>
-              <BR>
-              <BR>
+              <br />
+              <br />
             </LI>
             <LI>
 
@@ -929,7 +929,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Accounts Payable</LI>
                 <LI>Supplier Payments</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php

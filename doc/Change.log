@@ -1,5 +1,6 @@
 webERP Change Log
 
+14/6/11 Phil: Added email to custcontacts and updated AddCustomerContacts.php SelectCustomer.php and Customers.php
 13/6/11 Phil: Birthdays (xhtml/indenting/quoting/casing/decimalplaces) for Areas.php, BOMInquiry.php, BOMS.php, BankAccounts.php, BankMatching.php, COGSGLPosting.php, CompanyPreferences.php, ConfirmDispatch_Invoice.php StockLocTransfer.php
 
 12/6/11 Version 4.04.4

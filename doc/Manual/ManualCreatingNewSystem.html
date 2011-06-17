@@ -1,31 +1,31 @@
-<br><br>
+<br /><br />
 <a name="CreatingNewSystem"><font size="+3"><b>Creating a New System</b></font></a>
-<br><br>
+<br /><br />
 <font size="+2"><b>Running the Demonstration Database</b></font>
-<br><br>
+<br /><br />
 The demonstration system has bogus data already entered so that the features of the system can be explored without creating data from scratch. If all that you wish to do is explore the features available then the demonstration data supplied is all you need. There is certain base Data that determines how the system works. This base information is defined from the System Setup tab of the main menu as well as the file config.php. To run the demonstration system it is not necessary to modify any of these, save for modifying the details for the mysql connection in config.php. The file config.php in the main scripts directory contains essentially the connection parameters for the database and the database type (currently only mysql and postgres are supported). There are also some session parameters and php warning levels that are set in this file and can be left at their defaults for most purposes. 
-<br><br>
+<br /><br />
 
 <!-- Help Begin: CompanyPreferences -->
 
 <font size="+2"><b>Setting Up A System</b></font>
-<br><br>
+<br /><br />
 <font size="+2"><b>The Company Logo</b></font>
-<br><br>
+<br /><br />
 For the company logo to appear on the each screen, it must be saved in the format of a .jpg file and be copied to the file logo.jpg in the companies/Your Company Name/ directory. webERP allows for multiple companies to be accessed using the same scripts which each company's configuration stored in the database. The name of the company database has a directory under the directory companies under the webERP root directory. The logo needs to have read permissions for the user that the web server is running as (often the user "nobody" for apache on linux). Permissions issues are of course a none issue under windows installations.
-<br><br>
+<br /><br />
 <font size="+2"><b>The Chart Of Accounts</b></font>
-<br><br>
+<br /><br />
 A default chart of accounts is set up. However, in most cases the company will wish to adopt the chart of accounts it has used traditionally. Chart of accounts maintenance - deletion of accounts and adding of new accounts is done from the General Ledger tab. This would be a starting point for data input of a new system. Where the GL integration features are to be used, setting up the chart of accounts will be a necessary first step. Once a general ledger account has a posting to it then it will not be allowed to be deleted.
-<br><br>
+<br /><br />
 In the General Ledger there is a hierarchy of Account Section > Account Group > GL Account. General ledger accounts - the chart of accounts, Account Groups and Account Sections can be added or modified from General Ledger - Maintenance. It is important to get the chart of accounts right before entries are made which make it difficult to modify the chart. You can't delete accounts with postings made to them.
-<br><br>
+<br /><br />
 <font size="+2"><b>Company Parameters</b></font>
-<br><br>
+<br /><br />
 Company parameters need to be set correctly from the company set up screen. Most of these parameters are self -explanatory. Company name, company number, postal address, physical address etc. Also, telephone numbers and the default home currency of the business. If the default currency is not already set up, then from the main menu system set up tab, the link to the currency maintenance form allows new currencies to be defined and for default rates to be updated.
-<br><br>
+<br /><br />
 The company record also provides a convenient place to store default GL codes for:
-<br><br>
+<br /><br />
 <ul>
 <li>Debtors Control GL Account:
 <li>Creditors Control GL Account:
@@ -38,28 +38,28 @@ The company record also provides a convenient place to store default GL codes fo
 <li>Purchases Exchange Variances GL Account:
 <li>Payment Discount GL Account:
 </ul>
-<br><br>
+<br /><br />
 The company record also records the GL integration set up:
-<br><br>
+<br /><br />
 <ul>
 <li>Create GL entries for accounts receivable transactions
 <li>Create GL entries for accounts payable transactions:
 <li>Create GL entries for stock transactions (at standard cost):
 </ul>
 Notice that the stock GL integration is a separate flag. If GL integration of accounts receivable is set to yes, then GL journals are created for invoices and credits to sales and debtors but not for cost of sales and stock. For the later integration this requires that the GL entries for stock transactions be set to yes also.
-<br><br>
+<br /><br />
 For GL integration at the sales level the posting codes for sales for a specific sales type, sales area and stock category need to be defined from Setup > Sales GL Interface Postings.
 For Stock GL integration then the cost of sales posting codes for a specific sales type, sales area and stock catgeory also need to be set up from Setup > COGS GL Interface Postings (COGS = Cost Of Goods Sold).
 If appropriate GL codes are not specified the system will automatically create a new GL account number 1 for the postings to be made to. If you have this account keep appearing then this is a good sign that default posting codes are not created.
-<br><br>
+<br /><br />
 <!-- Help End: CompanyPreferences -->
 
 <!-- Help Begin: SystemConfiguration -->
 
 <font size="+2"><b>System Configuration</b></font>
-<br><br>
+<br /><br />
 >From the setup tab the main system configuration parameters can be set from the link "Configuration Settings". Narrative is shown alongside each parameter to give the user an idea of where the setting is used.
-<br><br>
+<br /><br />
 <TABLE BORDER=1 WIDTH=100%><TR><TD><B>Parameter</B></TD><TD><B>Description</B></TD></TR>
 <TR>
 <TD>Default Date Format (for input and to appear on reports)</TD>
@@ -254,7 +254,7 @@ office - that's why wacko wiki is not bundled with webERP - it is simply not app
 </TR>
 
 </TABLE>
-<br><br>
+<br /><br />
 
 <!-- Help End: SystemConfiguration -->
 
@@ -262,9 +262,9 @@ office - that's why wacko wiki is not bundled with webERP - it is simply not app
 <!-- Help Begin: BaseInformation -->
 
 <font size="+2"><b>Base Data Required</b></font>
-<br><br>
+<br /><br />
 Before customers can be set up the following base information is required (all this information is set up from the system setup tab):
-<br><br>
+<br /><br />
 <ul>
 <li>Currencies - the currency of the customers account
 <li>Sales types - prices are set up at this level. The sales type combined with the currency of the customer determines the price list that is applicable to them. Each customer master record must refer to a sales type.
@@ -273,9 +273,9 @@ Before customers can be set up the following base information is required (all t
 <li>Tax groups - the groupings of tax authorities that are required to collect tax from customer sales. Each customer branch must refer to a tax group and sales to these branches will automatically calculate the tax based on where the sale is from and the tax category of the item being invoiced. The tax system offers great flexibility.
 </ul>
 Once the above information is entered then customer records can be entered.
-<br><br>
+<br /><br />
 However, accounts receivable also requires that certain branch information, relating to delivery address etc must be entered against each customer. But before customer branches can be created the following base information must be entered - the links to the forms that allow all this information to be defined are available from the main menu under system set up:
-<br><br>
+<br /><br />
 <ul>
 <li>Sales areas - these are for analysing sales by area. Also, GL integration can be set up to look at the area of the customer to determine the GL account to post sales to. Each branch of a customer's account must refer to a sales area. If sales areas are not necessary in your business a single area must be defined - called say "default area"
 <li>As many sales types as required can be set up. It should be borne in mind that prices are held against sales types (and currencies). The sales type would reflect whether the sale was a trade sale, retail, wholesale, indent, cash sale, special sale etc.
@@ -283,67 +283,67 @@ However, accounts receivable also requires that certain branch information, rela
 <li>Locations that stocks can be held in need to be set up. Each customer branch needs to refer to the stock location that it would be most freight efficient to draw stock from.
 </ul>
 Having got this base information set up then the business of setting up customer accounts and customer branches with delivery addresses can start.
-<br><br>
+<br /><br />
 Desktop databases, spreadsheets and comma separated variables (CSV) export files can also be used to import this information. Using MS Access, the process involves installing an ODBC driver for MySQL on the windows desktop machine that has MS Access on it and then attaching to the weberp database tables DebtorsMaster and CustBranch in a new blank Access database. The CSV file or the spreadsheet is imported into the Access database, then an append query is made to map the fields from the CSV table/spreadsheet into DebtorsMaster and or CustBranch. There are potentially many records in CustBranch each with a different branch code for one customer account in DebtorsMaster. This method is dangerous in the sense that it is imperative to ensure that no customer records or branch records refer to non-existent base data in the fields described above.
-<br><br>
+<br /><br />
 <font size="+1"><b>Setting Up Inventory Items</b></font>
-<br><br>
+<br /><br />
 Before stock items can be defined, again the base information is necessary.
-<br><br>
+<br /><br />
 <ul>
 <li>Inventory Categories are the broad headings under which the company's products (or services) fall. Inventorys can also include service items such as labour. Held in the stock category record is all the additional information required for stock integration to the general ledger. All stock items set up referring to a particular stock category will be posted the same way. Inventory categories are defined under the system set up tab.
 <li>All the potential units of measure appropriate to stock items can be defined from the units of measure form under the Setup tab of the main menu under Inventory setup.
 </ul>
 Inventory Items can be created for non-physical stocks such as labour time for the purposes of invoicing and analysis, these should be set to Dummy Inventory Items - using the Make Or Buy Flag.
-<br><br>
+<br /><br />
 <font size="+1"><b>Entering Inventory Balances</b></font>
-<br><br>
+<br /><br />
 Once information about stock items is all entered and by implication the base data required first (preferably all in advance), the stock balance at each stock location must be entered as stock adjustments.
-<br><br>
+<br /><br />
 The stock/general ledger interface should be disabled in the company preferences screen until the stock balance in the general ledger (which would be set up using a manual journal in the general ledger) is reconciled to the standard cost of all stock items entered into the system, per the stock valuation report. This reconciliation requires that the standard cost for each stock item entered be correct as well as the total units held in all locations.
-<br><br>
+<br /><br />
 <font size="+1"><b>Inventory Integration to General Ledger Issues</b></font>
-<br><br>
+<br /><br />
 Once the reconciliation of the stock accounts in the financials module agrees to the stock valuation report, the stock general ledger integration flag can then be re-enabled from the company preferences form. Movements in stock will then be reflected with general ledger journals. The balance of the stock accounts should then always agree to the stock valuation report provided there are no manual journals entered to these accounts.
-<br><br>
+<br /><br />
 It is important to understand the two levels of General Ledger integration available.
-<br><br>
+<br /><br />
 Firstly, sales integration allows integration of invoices, credits and receipts to sales and debtors control accounts. This level does not produce any general ledger journals for the cost of stock sold. The system has flexible configuration allowing many ways to configure the accounts to which invoices and credits are posted to the sales accounts.
-<br><br>
+<br /><br />
 Secondly, stock integration enables the automatic creation of general ledger journals for the cost of sales and the stock accounts. Also, stock movements from purchase order arrivals and sales of stock are also documented as general ledger journals.
-<br><br>
+<br /><br />
 It is not necessary to use the stock integration to the general ledger although a fully standard costing based accounting system with full general ledger integration, will arguably provide the fastest and most informative financial reporting system for manufacturers.
-<br><br>
+<br /><br />
 <font size="+1"><b>Sales Ledger - Accounts Receivable Integration to General Ledger Issues</b></font>
-<br><br>
+<br /><br />
 Some flexibility is provided in how sales transactions are posted to the general ledger. Different sales accounts can be used depending on any combination of the sales area of the customer, the sales type and the stock category of the item sold. Before entering any sales it is important to defined the posting schema under setup - Sales GL Interface Postings. The same flexibility is also afforded to the posting of cost of goods sold (COGS)- of course these journals are only created if the stock GL interface is activated. If it is then again it is critical to ensure the proper set up of the posting schema for COGS under the setup tab - COGS GL Interface posting
 
 <font size="+1"><b>Tax</b></font>
-<br><br>
+<br /><br />
 Taxes must be setup.  In Setup there are Tax Group Maintenance, Dispatch Tax Province Maintenance, Tax Categories Maintenance and Tax Authorities and Rates Maintenance.  Before you set up customer branches the tax group that relates the branch must be defined - the tax group specifies the tax authorities to which taxes must be charged on sales to the branch. The system allows any number of tax authorities to be included in a tax group. The tax category must be specified on the setup of items - some items attract tax at higher rates and these must be flagged as such. As many tax categories as necessary can be defined. There is a more detailed section in the manual for further details on tax.
 
 <font size="+1"><b>Setting Up Customers</b></font>
-<br><br>
+<br /><br />
 As many branches as required can be set up, it is recommended that branches be used liberally for all customer contacts even though the branch may not be invoiced. Thus all contacts can be kept against the customer they belong with. Each branch requires a sales area and a salesperson. Sales Areas are the areas defined for analysis purposes. Both Sales Areas and Salespeople are set up from the System Setup tab of the main menu.
-<br><br>
+<br /><br />
 <font size="+1"><b>Entering Customer Balances</b></font>
-<br><br>
+<br /><br />
 The debtors ledger is an "open item" system which needs each invoice outstanding to be entered to reconcile the account balance. This can be quite a daunting task for a business that has previously operated on balance forward debtor accounts. However, the additional information that the customer will receive together with the reduced monthly reconciliation headaches for customers who have lost track of what their balance is made up of, will more than compensate for the extra work required initially. Open item debtors also require that any money received is allocated to outstanding invoices.
-<br><br>
+<br /><br />
 Ideally, all the opening transactions should be entered immediately prior to a month end. Opening balance transactions can then be easily identified as belonging to a period when no normal business was effected. The first step is to ensure that the General ledger interface is disabled to prevent journals being created to sales and debtors control account for invoices which relate to a prior period. It is suggested that reconciliation's be prepared during the month prior to going live for all customers - if an open item system was used previously, then the statement will provide all the information necessary for input. All invoices (and credit notes) outstanding need to be entered to reconcile the balance on the customer's account, using the same exchange rate as was used when the invoice was originally created. It is recommended that the actual date of the invoice is used as per the original invoice and a reference of the old invoice number is used so that it is easy to cross reference the new invoice number to the old one.
-<br><br>
+<br /><br />
 <font size="+1"><b>Reconciling the Debtors Ledger Control Account</b></font>
-<br><br>
+<br /><br />
 It is important to check that the balance on all customers accounts from the aged listing agrees to the control account in the old system, in both local and overseas currency. The balance in the general ledger (of all customer balances) would normally be entered as a manual journal, but the amount of this journal should agree to the amount as per the customer listing. Of course balances entered in different currencies will have a different local value depending upon the rate at which they were entered. There is a facility to value all the currency balances in local currency looking at the rate at which each transaction was entered. This is the script Z_CurrencyDebtorBalances.php. A similar facility is available for suppliers balances. A double check should be done account by account before going live. Once all customer accounts are reconciled and entered (and double checked) the General Ledger interface should be re-enabled from the Company preferences screen (System Setup Tab). The system will then maintain the control account in the general ledger which should always agree to the list of balances.
-<br><br>
+<br /><br />
 <font size="+1"><b>Bank Account Balances and Other General Ledger Balances</b></font>
-<br><br>
+<br /><br />
 General ledger is the accounting hub - and an understanding of the accounting concepts is important in grasping what needs to be done to setup webERP 
 correctly. This document is not a text on general accounting but a brief introduction is necessary.
-<br><br>
+<br /><br />
 The general ledger like accounts receivable is made up of many accounts although unlike accounts receivable the balances are not related to how much 
 customers owe you - they represent the amounts that the business has:
-<br>
+<br />
 <UL>
 <LI> in stock</LI>
 <LI>in vehicles and equipment</LI>
@@ -354,25 +354,25 @@ customers owe you - they represent the amounts that the business has:
 </UL>
 When these accounts are all listed the report is called a <i>"Balance Sheet"</I> since the value of all of these items will be equal to the accumulated 
 profits net of any drawings or dividends paid to the investors.
-<br><br>
+<br /><br />
 The general ledger also keeps track of how much is spent on expenses and is charged out to customers as sales - whether or not the amounts are actually 
 paid to the supplier of the expense or the sale has been paid by the customer. It is really only interesting to look at these accounts over a period to see what the income and expenses of the business have been and produce the <i>"Profit and Loss Statement"</I>. However, in bringing a business on to webERP it is the balances that collectively represent the total worth of the business (in historical terms) that are important to record - these are called balance sheet accounts (the expense and revenue accounts are called profit and loss accounts). 
-<br><br>
+<br /><br />
 <B>Double Entry Bookkeeping</B>
-<br><br>
+<br /><br />
 When the balance of every account in the general ledger is added together the net result should always be zero - that's because every entry into the 
 general ledger is made up of two parts a debit (a positive amount) and a credit (a negative amount). eg. We spend $100 on fuel - the debit goes to 
 vehicle expenses and the credit goes to the bank account (since the bank balance has gone down by $100) and the accumulated costs of running the 
 vehicle has gone up by $100.
-<br><br>
+<br /><br />
 Literally every entry is recorded twice once with the account that increases and once with the account that is reduced. This is why when the debit 
 balances are added together with the credit balances the result should always be zero. Historically when accountants checked their manual books to ensure 
 that every entry was recorded correctly they listed all the balances and added them up on a report called a "Trial Balance" - to check that the 
 general ledger did in fact balance. Today a trial balance off the computer is a list of all the general ledger balances - with a check total at the end to 
 show that the computer has done its job recording journals correctly.
-<br><br>
+<br /><br />
 As a simple example consider a trial balance with the entries:
-<br><br>
+<br /><br />
 <TABLE>
 <TR><TD>Account</TD><TD>Amount</TD></TR>
 <TR><TD>Bank Account</TD><TD ALIGN=RIGHT>1,000.00</TD></TR>
@@ -385,16 +385,16 @@ As a simple example consider a trial balance with the entries:
 <TR><TD>Check Total</TD><TD ALIGN=RIGHT>0.00</TD></TR>
 <TR><TD></TD><TD><HR></TD></TR>
 </TABLE>
- <br><br>     
+ <br /><br />     
 The system stops the user from entering journals to general ledger accounts defined as bank accounts. The Bank Account must be defined as such first - from the setup tab - Bank Accounts.
-<br><br>
+<br /><br />
 However, under general ledger - Bank Account Receipts - it is possible to enter general ledger receipts - a button to enter "General Ledger Receipt" allows receipts to be entered without selecting a customer account. The analysis of the other side of the general ledger entries that make up the receipt can then be entered. This is how general ledger balances should be brought on. 
-<br><br>
+<br /><br />
 Create a general ledger receipt for 1,000.00 to make the opening bank account balance correct. When creating this receipt the user must select the general 
 ledger accounts that the deposit represents you can enter as many general ledger accounts with different amounts against each. In a normal situation 
 the receipt may be for example the sale of a vehicle - where the appropriate general ledger account may be the loss on fixed asset disposals and maybe 
 some of it may also be sales tax/GST/VAT. However in the case of entering the opening balances the $1,000 deposit in our example is actually
-<br><br>
+<br /><br />
 <TABLE>
 <TR><TD>Debtors Control</TD><TD ALIGN=RIGHT>5,000.00</TD></TR>
 <TR><TD>Creditors Control</TD><TD ALIGN=RIGHT>(2,000.00)</TD></TR>
@@ -404,21 +404,21 @@ some of it may also be sales tax/GST/VAT. However in the case of entering the op
 <TR><TD></TD></TR>
 <TR><TD>Total bank deposit</TD><TD ALIGN=RIGHT>$1,000</TD></TR>
 </TABLE>
-<br><br>
+<br /><br />
 So entering in the receipt the analysis as above - -5,000 Debtors control, 2,000 Creditors control, -10,000 Motor vehicles, 3,000 loan and 11,000 accumulated profits will agree then to the 1,000 received into the bank account. It is important to date the receipt in the month prior to when the new webERP system will commence activity. In this way the brought forward balances for the new period will be correct.
-<br><br>
+<br /><br />
 Where there are several bank accounts each defined with different general ledger accounts, then a receipt should be entered to each bank account with a 
 balance (or a payment if the bank account is overdrawn) - these balances can be cleared through postings to a suspense account.
-<br><br>
+<br /><br />
 It is important that the general ledger entries to the debtors control account and creditors control account tie up to the total of the functional currency 
 balances of the AR and AP respectively.
-<BR><BR>
+<br /><br />
 <font size="+1"><b>Finally</b></font>
-<br><br>
+<br /><br />
 Once all entries are made to reconcile the customers accounts with the general ledger debtors account the system should be backed up. The mysql utility mysqldump is one method that produces an sql script that will restore the system to where it was when the script was created. With users out of the system - to avoid any locking issues - and assuming mysqldump is in the system path:
-<br><br>
+<br /><br />
 >From a command prompt, using a username and password as created when mysql was installed.
-<br><br>
+<br /><br />
 #mysqldump -u username -p password --opt weberp > /home/myhomedir/weberp_backup.sql
 
 postgres has a similar utility

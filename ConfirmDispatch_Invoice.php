@@ -440,7 +440,7 @@ if(!isset($_SESSION['Items']->FreightCost)) {
 }
 
 if (isset($_POST['ChargeFreightCost']) and !is_numeric($_POST['ChargeFreightCost'])){
-	$_POST['ChargeFreightCost'] =0;
+	$_POST['ChargeFreightCost'] = 0;
 }
 
 echo '<tr>
@@ -466,8 +466,7 @@ if ($_SESSION['Items']->Any_Already_Delivered()==1 and (!isset($_SESSION['Items'
 	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . $_SESSION['Items']->FreightCost . '</td>';
 	} else {
-		echo '<td class="number"><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12"
-				name="ChargeFreightCost" value="' . $_SESSION['Items']->FreightCost . '"></td>';
+		echo '<td class="number"><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="' . $_SESSION['Items']->FreightCost . '"></td>';
 	}
 	$_POST['ChargeFreightCost'] = $_SESSION['Items']->FreightCost;
 }
