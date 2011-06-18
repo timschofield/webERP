@@ -777,19 +777,21 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 
 function CalcEarliestDispatchDate (){
 
-/*This function will need to be modified depending on the business - many businesses run 24x7
-The default assumes no delivery on Sat and Sun*/
+/*There is a system parameter that allows the number of working days to be defined $_SESSION['WorkingDaysWeek'] if this is set to 5 then the assumption is no delivery on Sat and Sun
+ * if the number of working days is 6 then it is assumed that there is no delivery on Sunday
+ * if the number of working days is 7 then there are deliveries every day
+ * */
 
 	$EarliestDispatch = time();
-	if (Date('w',$EarliestDispatch)==0 ){
+	if ((Date('w',$EarliestDispatch)==0) AND ($_SESSION['WorkingDaysWeek'] != '7')){
 
-/*if today is a sunday the dispatch date must be tomorrow (Monday) or after */
+/*if today is a sunday AND the company does NOT work 7 days a week, the dispatch date must be tomorrow (Monday) or after */
 
 		$EarliestDispatch = Mktime(0,0,0,Date('m',$EarliestDispatch),Date('d',$EarliestDispatch)+1,Date('y',$EarliestDispatch));
 
-	} elseif (Date('w',$EarliestDispatch)==6){
+	} elseif ((Date('w',$EarliestDispatch)==6) AND ($_SESSION['WorkingDaysWeek'] != '6') AND ($_SESSION['WorkingDaysWeek'] != '7')){
 
-/*if today is a saturday the dispatch date must be Monday or after */
+/*if today is a saturday AND the company does NOT work at least 6 days a week, the dispatch date must be Monday or after */
 
 		$EarliestDispatch = Mktime(0,0,0,Date('m',$EarliestDispatch),Date('d',$EarliestDispatch)+2,Date('y',$EarliestDispatch));
 
