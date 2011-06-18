@@ -338,7 +338,7 @@ CREATE TABLE `contractreqts` (
   PRIMARY KEY (`contractreqid`),
   KEY `ContractRef` (`contractref`),
   CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contractref`) REFERENCES `contracts` (`contractref`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -483,8 +483,9 @@ CREATE TABLE `custcontacts` (
   `role` varchar(40) NOT NULL,
   `phoneno` varchar(20) NOT NULL,
   `notes` varchar(255) NOT NULL,
+  `email` varchar(55) NOT NULL,
   PRIMARY KEY (`contid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -501,7 +502,7 @@ CREATE TABLE `custnotes` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -649,7 +650,7 @@ CREATE TABLE `debtortypenotes` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1166,7 +1167,7 @@ CREATE TABLE `mrpplannedorders` (
   `mrpdate` date DEFAULT NULL,
   `updateflag` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2796,7 +2797,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-12 21:40:25
+-- Dump completed on 2011-06-18 17:06:38
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3052,7 +3053,7 @@ INSERT INTO `systypes` VALUES (10,'Sales Invoice',16);
 INSERT INTO `systypes` VALUES (11,'Credit Note',7);
 INSERT INTO `systypes` VALUES (12,'Receipt',11);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',24);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',26);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',21);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',17);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
@@ -3064,12 +3065,12 @@ INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',34);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',4);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',10);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',29);
+INSERT INTO `systypes` VALUES (30,'Sales Order',30);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',19);
 INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
-INSERT INTO `systypes` VALUES (40,'Work Order',13);
+INSERT INTO `systypes` VALUES (40,'Work Order',15);
 INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
 INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
 INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
@@ -3135,8 +3136,8 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-06-09 21:05:15','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
-INSERT INTO `www_users` VALUES ('test','7c4a8d09ca3762af61e59520943dc26494f8941b','test','','','','','','MEL',6,'2011-05-19 19:05:46','','A4','1,1,1,0,0,0,0,0,0,0,',0,50,'silverwolf','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-06-18 15:30:07','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('Jerry','b196e3f0af37b2b39ab605fbca70d674e3b18f71','Jerry Mouse','DUMBLE','','','01234001001','01002000011','TOR',7,'2011-06-18 15:25:19','DUMBLE','A4','1,1,0,0,0,0,0,0',0,50,'fresh','id_ID.utf8',0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -3297,7 +3298,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-05-19');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-06-18');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -3317,7 +3318,7 @@ INSERT INTO `config` VALUES ('EDIReference','WEBERP');
 INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/weberpdemo/EDI_Incoming_Orders');
 INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberpdemo/EDI_MsgPending');
 INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberpdemo/EDI_Sent');
-INSERT INTO `config` VALUES ('Extended_CustomerInfo','0');
+INSERT INTO `config` VALUES ('Extended_CustomerInfo','1');
 INSERT INTO `config` VALUES ('Extended_SupplierInfo','0');
 INSERT INTO `config` VALUES ('FactoryManagerEmail','manager@company.com');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
@@ -3360,7 +3361,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.04.4');
+INSERT INTO `config` VALUES ('VersionNumber','4.04.5');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -3820,7 +3821,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-12 21:40:25
+-- Dump completed on 2011-06-18 17:06:38
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
