@@ -74,7 +74,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $db);
-	} else if (empty($_SESSION['DatabaseName'])) {
+	} elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;
 	} else {
 		$rc = UL_OK;
@@ -269,7 +269,7 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) 
 
 /* Nasty kludge to allow Supplier only logins as well as Customer logins */
 if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND 
-		$_SESSION['AllowedPageSecurityTokens'][0]==9 and $PageSecurity==1){
+		$_SESSION['AllowedPageSecurityTokens'][0]==9 AND $PageSecurity==1){
 			
 	$_SESSION['AllowedPageSecurityTokens'][0]=1;
 	$SupplierLogin=1;

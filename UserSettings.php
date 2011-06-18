@@ -5,6 +5,7 @@
 include('includes/session.inc');
 $title = _('User Settings');
 include('includes/header.inc');
+include('includes/LanguagesArray.php');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="' .
 	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
@@ -111,7 +112,7 @@ echo $_SESSION['UserID'] . '</td></tr>';
 
 echo '<tr><td>' . _('User Name') . ':</td><td>';
 echo $_SESSION['UsersRealName'] . '</td>
-		<input type="hidden" name="RealName" VALUE="'.$_SESSION['UsersRealName'].'"<td></tr>';
+		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'"<td></tr>';
 
 echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ':</td>
@@ -122,37 +123,32 @@ echo '<tr>
 echo '<tr>
 	<td>' . _('Language') . ':</td>
 	<td><select name="Language">';
+	
+if (!isset($_POST['Language'])){
+	$_POST['Language']=$_SESSION['Language'];
+}
 
-	$Languages = scandir('locale/', 0);
-
-	foreach ($Languages as $LanguageEntry){
-		
-		if (is_dir('locale/' . $LanguageEntry)
-				AND $LanguageEntry != '..'
-				AND $LanguageEntry != '.svn'
-				AND $LanguageEntry!='.'){
-
-			if ($_SESSION['Language'] == $LanguageEntry){
-				echo '<option selected value="' . $LanguageEntry . '">' . $LanguageEntry . '</option>';
-			} else {
-				echo '<option value="' . $LanguageEntry . '">' . $LanguageEntry . '</option>';
-			}
-		}
+foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
+	if (isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry){
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+	} elseif (!isset($_POST['Language']) AND $LanguageEntry == $DefaultLanguage) {
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+	} else {
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
 	}
-
-	echo '</select></td></tr>';
-
+}
+echo '</select></td></tr>';
 
 echo '<tr>
-	<td>' . _('Theme') . ":</td>
-	<td><select name='Theme'>";
+	<td>' . _('Theme') . ':</td>
+	<td><select name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
 
 while (false != ($ThemeName = $ThemeDirectory->read())){
 
-	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
+	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
 		if ($_SESSION['Theme'] == $ThemeName){
 			echo '<option selected value="' . $ThemeName . '">' . $ThemeName . '</option>';
@@ -169,12 +165,19 @@ if (!isset($_POST['pass'])) {
 	$_POST['pass']='';
 }
 echo '</select></td></tr>
-	<tr><td>' . _('New Password') . ":</td>
-	<td><input type='password' name='pass' size=20 value='" .  $_POST['pass'] . "'></td></tr>
-	<tr><td>" . _('Confirm Password') . ":</td>
-	<td><input type='password' name='passcheck' size=20  value='" . $_POST['passcheck'] . "'></td></tr>
-	<tr><td colspan=2 align='center'><i>" . _('If you leave the password boxes empty your password will not change') . '</i></td></tr>
-	<tr><td>' . _('Email') . ':</td>';
+	<tr>
+		<td>' . _('New Password') . ':</td>
+		<td><input type="password" name="pass" size=20 value="' .  $_POST['pass'] . '"></td>
+	</tr>
+	<tr>
+		<td>' . _('Confirm Password') . ':</td>
+		<td><input type="password" name="passcheck" size="20"  value="' . $_POST['passcheck'] . '"></td>
+	</tr>
+	<tr>
+		<td colspan=2 align="center"><i>' . _('If you leave the password boxes empty your password will not change') . '</i></td>
+	</tr>
+	<tr>
+		<td>' . _('Email') . ':</td>';
 
 $sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 $result = DB_query($sql,$db);
@@ -183,13 +186,17 @@ if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
 
-echo "<td><input type=text name='email' size=40 value='" . $_POST['email'] . "'></td></tr>";
+echo '<td><input type=text name="email" size=40 value="' . $_POST['email'] . '"></td>
+	</tr>';
 
 if (!isset($_POST['PDFLanguage'])){
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
 
-echo '<tr><td>' . _('PDF Language Support') . ': </td><td><select name="PDFLanguage">';
+echo '<tr>
+		<td>' . _('PDF Language Support') . ': </td>
+		<td><select name="PDFLanguage">';
+		
 for($i=0;$i<count($PDFLanguages);$i++){
 	if ($_POST['PDFLanguage']==$i){
 		echo '<option selected value=' . $i .'>' . $PDFLanguages[$i] . '</option>';
@@ -197,10 +204,12 @@ for($i=0;$i<count($PDFLanguages);$i++){
 		echo '<option value=' . $i .'>' . $PDFLanguages[$i]. '</option>';
 	}
 }
-echo "</select></td></tr></table>
-	<br /><div class='centre'><input type='Submit' name='Modify' value=" . _('Modify') . '></div>
+echo '</select></td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '"></div>
 	</form>';
 
 include('includes/footer.inc');
-
 ?>

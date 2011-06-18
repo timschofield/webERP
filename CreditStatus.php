@@ -17,7 +17,8 @@ if (isset($Errors)) {
 }
 $Errors = array();
 $InputError = 0;
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
+	<br />';
 
 if (isset($_POST['submit'])) {
 
@@ -80,24 +81,21 @@ if (isset($_POST['submit'])) {
 
 	/*Selected Reason is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
 
-		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']=='on'){
+		if (isset($_POST['DisallowInvoices']) AND $_POST['DisallowInvoices']=='on'){
 
-			$sql = "INSERT INTO holdreasons (
-					reasoncode,
-					reasondescription,
-					dissallowinvoices)
-					VALUES (
-					'" .$_POST['ReasonCode'] . "',
-					'".$_POST['ReasonDescription'] . "'
-					, 1)";
+			$sql = "INSERT INTO holdreasons (reasoncode,
+											reasondescription,
+											dissallowinvoices)
+									VALUES ('" .$_POST['ReasonCode'] . "',
+											'".$_POST['ReasonDescription'] . "',
+											1)";
 		} else {
-			$sql = "INSERT INTO holdreasons (
-					reasoncode,
-					reasondescription,
-					dissallowinvoices)
-					VALUES (
-					'" . $_POST['ReasonCode'] . "',
-					'" . $_POST['ReasonDescription'] ."', 0)";
+			$sql = "INSERT INTO holdreasons (reasoncode,
+											reasondescription,
+											dissallowinvoices)
+									VALUES ('" . $_POST['ReasonCode'] . "',
+											'" . $_POST['ReasonDescription'] ."', 
+											0)";
 		}
 
 		$msg = _('A new credit status record has been inserted');
@@ -122,7 +120,7 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
 		prnMsg( _('Cannot delete this credit status code because customer accounts have been created referring to it'),'warn');
-		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this credit status code');
+		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this credit status code');
 	}  else {
 		//only delete if used in neither customer or supplier accounts
 
@@ -200,10 +198,10 @@ if (!isset($_GET['delete'])) {
 		//editing an existing status code
 
 		$sql = "SELECT reasoncode,
-				reasondescription,
-				dissallowinvoices
-			FROM holdreasons
-			WHERE reasoncode='".$SelectedReason."'";
+					reasondescription,
+					dissallowinvoices
+				FROM holdreasons
+				WHERE reasoncode='".$SelectedReason."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -215,14 +213,17 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '">';
 		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '">';
 		echo '<table class="selection">
-				<tr><td>'. _('Status Code') .':</td>
-					<td>' . $_POST['ReasonCode'] . '</td></tr>';
+				<tr>
+					<td>'. _('Status Code') .':</td>
+					<td>' . $_POST['ReasonCode'] . '</td>
+				</tr>';
 
 	} else { //end of if $SelectedReason only do the else when a new record is being entered
 		if (!isset($_POST['ReasonCode'])) {
 			$_POST['ReasonCode'] = '';
 		}
-		echo '<br /><table class="selection">
+		echo '<br />
+			<table class="selection">
 			<tr>
 				<td>'. _('Status Code') .':</td>
 				<td><input ' . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) . ' tabindex=1 type="text" name="ReasonCode" value="'. $_POST['ReasonCode'] .'" size=3 maxlength=2></td>
@@ -233,17 +234,21 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription'] = '';
 	}
 	echo '<tr>
-		<td>'. _('Description') .':</td>
-		<td><input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
-		 ' tabindex=2 type="text" name="ReasonDescription" VALUE="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30">
-		</td></tr>
-		<tr><td>'. _('Disallow Invoices') . '</td>';
+			<td>'. _('Description') .':</td>
+			<td><input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
+			 ' tabindex=2 type="text" name="ReasonDescription" VALUE="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30"></td>
+		</tr>
+		<tr>
+			<td>'. _('Disallow Invoices') . '</td>';
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
 		echo '<td><input tabindex=3 type="checkbox" checked name="DisallowInvoices"></td></tr>';
 	} else {
 		echo '<td><input tabindex=3 type="checkbox" name="DisallowInvoices"></td></tr>';
 	}
-	echo '</table><br><div class="centre"><input tabindex=4 type="submit" name="submit" value="' . _('Enter Information') . '"></div></form>';
+	echo '</table>
+			<br />
+			<div class="centre"><input tabindex=4 type="submit" name="submit" value="' . _('Enter Information') . '"></div>
+			</form>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
 ?>

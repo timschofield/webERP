@@ -797,8 +797,10 @@ if (isset($_SESSION['Items'.$identifier]->SpecialInstructions) and strlen($_SESS
 	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'info');
 }
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Delivery') . '" alt="" />' . ' ' . _('Delivery Details');
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo;
-echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</p>';
+
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo . '<br />';
+echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></p>';
+
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier  . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -806,25 +808,23 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 /*Display the order with or without discount depending on access level*/
 if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
-
-	echo '<div class="centre"><b>';
-
+	
+	echo '<table cellpading=2 colspan=7>';
+	
 	if ($_SESSION['Items'.$identifier]->Quotation==1){
-		echo _('Quotation Summary');
+		echo '<tr><th colspan=7>'._('Quotation Summary').'</th></tr>';
 	} else {
-		echo _('Order Summary');
+		echo '<tr><th colspan=7>'._('Order Summary').'</th></tr>';
 	}
-	echo '</b></div>
-	<table cellpading=2 colspan=7>
-	<Tr>
-		<th>'. _('Item Code') .'</th>
-		<th>'. _('Item Description') .'</th>
-		<th>'. _('Quantity') .'</th>
-		<th>'. _('Unit') .'</th>
-		<th>'. _('Price') .'</th>
-		<th>'. _('Discount') .' %</th>
-		<th>'. _('Total') .'</th>
-	</tr>';
+	echo '<tr>
+				<th>'. _('Item Code') .'</th>
+				<th>'. _('Item Description') .'</th>
+				<th>'. _('Quantity') .'</th>
+				<th>'. _('Unit') .'</th>
+				<th>'. _('Price') .'</th>
+				<th>'. _('Discount') .' %</th>
+				<th>'. _('Total') .'</th>
+			</tr>';
 
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -834,8 +834,8 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-		$DisplayLineTotal = number_format($LineTotal,2);
-		$DisplayPrice = number_format($StockItem->Price,2);
+		$DisplayLineTotal = number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayPrice = number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		$DisplayQuantity = number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 		$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
 
@@ -872,9 +872,9 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 	echo '<br /><table><tr class="EvenTableRows">
 		<td>'. _('Total Weight') .':</td>
-		<td>'.$DisplayWeight.'</td>
+		<td class="number">'.$DisplayWeight.'</td>
 		<td>'. _('Total Volume') .':</td>
-		<td>'.$DisplayVolume.'</td>
+		<td class="number">'.$DisplayVolume.'</td>
 	</tr></table>';
 
 } else {
@@ -897,8 +897,8 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-		$DisplayLineTotal = number_format($LineTotal,2);
-		$DisplayPrice = number_format($StockItem->Price,2);
+		$DisplayLineTotal = number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayPrice = number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		$DisplayQuantity = number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 
 		if ($k==1){
@@ -921,7 +921,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	}
 
-	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
+	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 	echo '<table class=selection><tr>
 		<td>'. _('Total Weight') .':</td>
 		<td>'.$DisplayWeight .'</td>
@@ -958,11 +958,11 @@ $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
 $StkLocsResult = DB_query("SELECT locationname,loccode
 							FROM locations",$db, $ErrMsg, $DbgMsg);
 
-while ($myrow=DB_fetch_row($StkLocsResult)){
-	if ($_SESSION['Items'.$identifier]->Location==$myrow[1]){
-		echo '<option selected value="' . $myrow[1] . '">' . $myrow[0] . '</option>';
+while ($myrow=DB_fetch_array($StkLocsResult)){
+	if ($_SESSION['Items'.$identifier]->Location==$myrow['loccode']){
+		echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	} else {
-		echo '<option value="'.$myrow[1].'">'.$myrow[0] . '</option>';
+		echo '<option value="'.$myrow['loccode'].'">'.$myrow['locationname'] . '</option>';
 	}
 }
 
@@ -982,32 +982,32 @@ if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 	<td>'. _('Estimated Delivery Date') .':</td>
-	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="Text" size=15 maxlength=14 name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '"></td>
+	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '"></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
 	<td>'. _('Quote Date') .':</td>
-	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="Text" size=15 maxlength=14 name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '"></td>
+	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '"></td>
 	</tr>';
 // The date when the customer confirmed their order
 echo '<tr>
 	<td>'. _('Confirmed Order Date') .':</td>
-	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="Text" size=15 maxlength=14 name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '"></td>
+	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '"></td>
 	</tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 1') . ':</td>
-	<td><input type=text size=42 maxlength=40 name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '"></td>
+	<td><input type="text" size=42 maxlength=40 name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 2') . ':</td>
-	<td><input type=text size=42 maxlength=40 name="BrAdd2" value="' . $_SESSION['Items'.$identifier]->DelAdd2 . '"></td>
+	<td><input type="text" size=42 maxlength=40 name="BrAdd2" value="' . $_SESSION['Items'.$identifier]->DelAdd2 . '"></td>
 </tr>';
 
 echo '<tr>
 	<td>'. _('Delivery Address 3') . ':</td>
-	<td><input type=text size=42 maxlength=40 name="BrAdd3" value="' . $_SESSION['Items'.$identifier]->DelAdd3 . '"></td>
+	<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items'.$identifier]->DelAdd3 . '"></td>
 </tr>';
 
 echo '<tr>
@@ -1038,7 +1038,7 @@ echo '<tr><td>'. _('Customer Reference') .':</td>
 
 echo '<tr>
 	<td>'. _('Comments') .':</td>
-	<td><textarea name=Comments cols=31 rows=5>' . $_SESSION['Items'.$identifier]->Comments .'</textarea></td>
+	<td><textarea name="Comments" cols=31 rows=5>' . $_SESSION['Items'.$identifier]->Comments .'</textarea></td>
 </tr>';
 
 	/* This field will control whether or not to display the company logo and

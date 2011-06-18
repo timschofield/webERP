@@ -62,9 +62,8 @@ if (isset($_POST['submit'])) {
 			WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
 		$ErrMsg = _('The customer EDI setup data could not be updated because');
-	$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql,$db,$ErrMsg);
 		prnMsg(_('Customer EDI configuration updated'),'success');
-
 	} else {
 		prnMsg(_('Customer EDI configuration failed'),'error');
 	}
@@ -72,7 +71,7 @@ if (isset($_POST['submit'])) {
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br /><table class=selection>';
+echo '<br /><table class="selection">';
 
 $sql = "SELECT debtorno,
 		name,
@@ -92,11 +91,13 @@ $result = DB_query($sql, $db,$ErrMsg);
 $myrow = DB_fetch_array($result);
 
 echo '<tr><td>'._('Customer Code').':</td>
-	<td>' . $_SESSION['CustomerID'] . '</td></tr>';
+		<td>' . $_SESSION['CustomerID'] . '</td>
+		</tr>';
 echo '<tr><td>'._('Customer Name').':</td>
-	<td>' . $myrow['name'] . '</td></tr>';
+		<td>' . $myrow['name'] . '</td>
+		</tr>';
 echo '<tr><td>'._('Enable Sending of EDI Invoices').':</td>
-	<td><select tabindex=1 name="EDIInvoices">';
+		<td><select tabindex=1 name="EDIInvoices">';
 
 if ($myrow['ediinvoices']==0){
 
@@ -107,7 +108,8 @@ if ($myrow['ediinvoices']==0){
 	echo '<option selected value=1>'._('Enabled') . '</option>';
 }
 
-echo '</select><a href="' . $rootpath . '/EDIMessageFormat.php?MessageType=INVOIC&PartnerCode=' . $_SESSION['CustomerID'] . '">'._('Create') . '/' . _('Edit Invoice Message Format').'</a></td></tr>';
+echo '</select><a href="' . $rootpath . '/EDIMessageFormat.php?MessageType=INVOIC&PartnerCode=' . $_SESSION['CustomerID'] . '">'._('Create') . '/' . _('Edit Invoice Message Format').'</a></td>
+	</tr>';
 
 echo '<tr><td>'._('Enable Receiving of EDI Orders') . ':</td>
 	<td><select tabindex=2 name="EDIOrders">';
@@ -121,7 +123,8 @@ if ($myrow['ediorders']==0){
 	echo '<option selected value=1>'._('Enabled') . '</option>';
 }
 
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>';
 
 echo '<tr><td>'._('Customer EDI Reference') . ':</td>
 	<td><input ' . (in_array('EDIReference',$Errors) ?  'class="inputerror"' : '' ) .
@@ -152,7 +155,9 @@ if ($myrow['editransport']=='ftp'){
 			<td><input tabindex=7 type="text" name="EDIServerPwd" size=20 maxlength=20 value="' . $myrow['ediserverpwd'] . '"></td></tr>';
 }
 
-echo '</table><br /><div class="centre"><input tabindex=8 type="submit" name="submit" value="' ._('Update EDI Configuration'). '"></div></form>';
+echo '</table>
+		<br /><div class="centre"><input tabindex=8 type="submit" name="submit" value="' ._('Update EDI Configuration'). '"></div>
+	</form>';
 
 include('includes/footer.inc');
 ?>

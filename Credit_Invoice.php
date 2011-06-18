@@ -357,7 +357,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 				echo '<br />';
 			}
 			if (!isset($_POST['ProcessCredit'])) {
-				echo '<input type=text class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder .
+				echo '<input type="text" class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder .
 					'_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
 			}
 			$i++;
@@ -381,7 +381,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 		echo '<td class=number>' . $DisplayTaxAmount . '</td>
 			<td class=number>' . $DisplayGrossLineTotal . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $LnItm->LineNumber . '">' . _('Delete') . '</a></td></tr>';
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $LnItm->LineNumber . '"  onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the credit?') . '\');">' . _('Delete') . '</a></td></tr>';
 
 		echo '<tr' . $RowStarter . '><td colspan=12><textarea tabindex=' . $j .'  name="Narrative_' . $LnItm->LineNumber . '" cols=100% rows=1>' . $LnItm->Narrative . '</textarea><br /><hr></td></tr>';
 		$j++;
@@ -395,7 +395,7 @@ if (!isset($_POST['ChargeFreightCost']) AND !isset($_SESSION['CreditItems']->Fre
 if (!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
 		<td colspan=3 class=number>' . _('Freight cost charged on invoice') . '</td>
-		<td class=number>' . number_format($_SESSION['Old_FreightCost'],2) . '</td>
+		<td class=number>' . number_format($_SESSION['Old_FreightCost'],$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
 		<td></td>
 		<td colspan=2 class=number>' . _('Credit Freight Cost') . '</td>
 		<td><input tabindex='.$j.' type=text class="number" size=6 maxlength=6 name="ChargeFreightCost" value="' . $_SESSION['CreditItems']->FreightCost . '"></td>';
@@ -449,7 +449,7 @@ if (!isset($_POST['ProcessCredit'])) {
 		<td colspan=7 class=number>' . _('Credit Totals') . '</td>
 		<td class=number><hr><b>' . $DisplayTotal . '</b><hr></td>
 		<td colspan=2></td>
-		<td class=number><hr><b>' . number_format($TaxTotal,2) . '<hr></td>
+		<td class=number><hr><b>' . number_format($TaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '<hr></td>
 		<td class=number><hr><b>' . number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),$_SESSION['CreditItems']->CurrDecimalPlaces) . '</b><hr></td>
 		</tr></table>';
 }
@@ -507,8 +507,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 	/*Do some rounding */
 
-	$_SESSION['CreditItems']->total = round($_SESSION['CreditItems']->total,2);
-	$TaxTotal = round($TaxTotal,2);
+	$_SESSION['CreditItems']->total = round($_SESSION['CreditItems']->total,$_SESSION['CreditItems']->CurrDecimalPlaces);
+	$TaxTotal = round($TaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces);
 
 	$Allocate_amount=0;
 	$Settled =0;
@@ -623,7 +623,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	foreach ($_SESSION['CreditItems']->LineItems as $OrderLine) {
 
 		if ($OrderLine->QtyDispatched >0){
-			$LocalCurrencyPrice= round(($OrderLine->Price / $_SESSION['CurrencyRate']),2);
+			$LocalCurrencyPrice= round(($OrderLine->Price / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']);
 
 			/*Determine the type of stock item being credited */
 			$SQL = "SELECT mbflag FROM stockmaster WHERE stockid = '" . $OrderLine->StockID . "'";
@@ -1255,7 +1255,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						'" . $PeriodNo . "',
 						'" . $COGSAccount . "',
 						'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-						'" . -round($OrderLine->StandardCost * $OrderLine->QtyDispatched,2) . "'
+						'" . -round($OrderLine->StandardCost * $OrderLine->QtyDispatched,$_SESSION['CompanyRecord']['decimalplaces']) . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
@@ -1279,7 +1279,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							'" . $PeriodNo . "',
 							'" . $_POST['WriteOffGLCode'] . "',
 							'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-							'" . round($OrderLine->StandardCost * $OrderLine->QtyDispatched,2) . "')";
+							'" . round($OrderLine->StandardCost * $OrderLine->QtyDispatched,$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 				} else {
 					$StockGLCode = GetStockGLCode($OrderLine->StockID, $db);
 					$SQL = "INSERT INTO gltrans (type,
@@ -1295,7 +1295,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							'" . $PeriodNo . "',
 							'" . $StockGLCode['stockact'] . "',
 							'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-							'" . round($OrderLine->StandardCost * $OrderLine->QtyDispatched,2) . "')";
+							'" . round($OrderLine->StandardCost * $OrderLine->QtyDispatched,$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 				}
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side or write off of the cost of sales GL posting could not be inserted because');
@@ -1322,7 +1322,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						'" . $PeriodNo . "',
 						'" . $SalesGLAccounts['salesglcode'] . "',
 						'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
-						'" . round(($OrderLine->Price * $OrderLine->QtyDispatched)/$_SESSION['CurrencyRate'],2) . "'
+						'" . round(($OrderLine->Price * $OrderLine->QtyDispatched)/$_SESSION['CurrencyRate'],$_SESSION['CompanyRecord']['decimalplaces']) . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note GL posting could not be inserted because');
@@ -1344,7 +1344,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							'" . $PeriodNo . "',
 							'" . $SalesGLAccounts['discountglcode'] . "',
 							'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-							'" . -round(($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate'],2) . "'
+							'" . -round(($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate'],$_SESSION['CompanyRecord']['decimalplaces']) . "'
 							)";
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note discount GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1372,7 +1372,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						'" . $PeriodNo . "',
 						'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 						'" . $_SESSION['CreditItems']->DebtorNo . "',
-						'" . -round(($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate'],2) . "'
+						'" . -round(($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate'],$_SESSION['CompanyRecord']['decimalplaces']) . "'
 					)";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting for the credit note could not be inserted because');
@@ -1384,7 +1384,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 /*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
 
 
-		if (round($_SESSION['CreditItems']->FreightCost,2) !=0 ) {
+		if (round($_SESSION['CreditItems']->FreightCost,$_SESSION['CreditItems']->CurrDecimalPlaces) !=0 ) {
 			$SQL = "INSERT INTO gltrans (type,
 							typeno,
 							trandate,
@@ -1398,7 +1398,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['freightact'] . "',
 					'" . $_SESSION['CreditItems']->DebtorNo . "',
-					'" . round($_SESSION['CreditItems']->FreightCost/$_SESSION['CurrencyRate'],2) . "'
+					'" . round($_SESSION['CreditItems']->FreightCost/$_SESSION['CurrencyRate'],$_SESSION['CompanyRecord']['decimalplaces']) . "'
 					)";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting for this credit note could not be inserted because');

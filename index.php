@@ -25,9 +25,9 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 
 include('includes/header.inc');
 
-if (count($_SESSION['AllowedPageSecurityTokens'])==1 and $SupplierLogin==0){
+if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 
-/* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on
+/* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on 
  * need to limit the menu to show only the customer accessible stuff this is what the page looks like for customers logging in
  */
 ?>

@@ -8,6 +8,7 @@ if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 	}
 }
 include('includes/session.inc');
+include ('includes/LanguagesArray.php');
 
 $ModuleList = array(_('Orders'),
 					_('Receivables'),
@@ -28,7 +29,8 @@ $title = _('User Maintenance');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
+	<br />';
 
 // Make an array of the security roles
 $sql = "SELECT secroleid,
@@ -237,42 +239,41 @@ if (!isset($SelectedUser)) {
 
 /* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT
-			userid,
-			realname,
-			phone,
-			email,
-			customerid,
-			branchcode,
-			supplierid,
-			salesman,
-			lastvisitdate,
-			fullaccess,
-			pagesize,
-			theme,
-			language
-		FROM www_users";
+	$sql = "SELECT userid,
+					realname,
+					phone,
+					email,
+					customerid,
+					branchcode,
+					supplierid,
+					salesman,
+					lastvisitdate,
+					fullaccess,
+					pagesize,
+					theme,
+					language
+				FROM www_users";
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
 	echo '<tr><th>' . _('User Login') . '</th>
-		<th>' . _('Full Name') . '</th>
-		<th>' . _('Telephone') . '</th>
-		<th>' . _('Email') . '</th>
-		<th>' . _('Customer Code') . '</th>
-		<th>' . _('Branch Code') . '</th>
-		<th>' . _('Supplier Code') . '</th>
-		<th>' . _('Salesperson') . '</th>
-		<th>' . _('Last Visit') . '</th>
-		<th>' . _('Security Role') .'</th>
-		<th>' . _('Report Size') .'</th>
-		<th>' . _('Theme') .'</th>
-		<th>' . _('Language') .'</th>
-	</tr>';
-
+				<th>' . _('Full Name') . '</th>
+				<th>' . _('Telephone') . '</th>
+				<th>' . _('Email') . '</th>
+				<th>' . _('Customer Code') . '</th>
+				<th>' . _('Branch Code') . '</th>
+				<th>' . _('Supplier Code') . '</th>
+				<th>' . _('Salesperson') . '</th>
+				<th>' . _('Last Visit') . '</th>
+				<th>' . _('Security Role') .'</th>
+				<th>' . _('Report Size') .'</th>
+				<th>' . _('Theme') .'</th>
+				<th>' . _('Language') .'</th>
+			</tr>';
+		
 	$k=0; //row colour counter
 
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -289,7 +290,7 @@ if (!isset($SelectedUser)) {
 
 		/*The SecurityHeadings array is defined in config.php */
 
-		printf("<td>%s</td>
+		printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -302,26 +303,26 @@ if (!isset($SelectedUser)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href=\"%s&SelectedUser=%s\">" . _('Edit') . "</a></td>
-					<td><a href=\"%s&SelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
-					</tr>",
-					$myrow[0],
-					$myrow[1],
-					$myrow[2],
-					$myrow[3],
-					$myrow[4],
-					$myrow[5],
-					$myrow[6],
-					$myrow[7],
+					<td><a href="%s&SelectedUser=%s">' . _('Edit') . '</a></td>
+					<td><a href="%s&SelectedUser=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
+					</tr>',
+					$myrow['userid'],
+					$myrow['realname'],
+					$myrow['phone'],
+					$myrow['email'],
+					$myrow['customerid'],
+					$myrow['branchcode'],
+					$myrow['supplierid'],
+					$myrow['salesman'],
 					$LastVisitDate,
-					$SecurityRoles[($myrow[9])],
-					$myrow[10],
-					$myrow[11],
-					$myrow[12],
+					$SecurityRoles[($myrow['fullaccess'])],
+					$myrow['pagesize'],
+					$myrow['theme'],
+					$LanguagesArray[$myrow['language']],
 					$_SERVER['PHP_SELF']  . '?',
-					$myrow[0],
+					$myrow['userid'],
 					$_SERVER['PHP_SELF'] . '?',
-					$myrow[0]);
+					$myrow['userid']);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -494,7 +495,6 @@ while ($myrow=DB_fetch_array($result)){
 
 echo '</select></td></tr>';
 
-
 echo '<tr><td>' . _('Reports Page Size') .':</td>
 	<td><select name="PageSize">';
 
@@ -569,29 +569,16 @@ echo '<tr>
 	<td>' . _('Language') . ':</td>
 	<td><select name="UserLanguage">';
 
-$Languages = scandir('locale/', 0);
-
-foreach ($Languages as $LanguageEntry){
-	
-	if (is_dir('locale/' . $LanguageEntry)
-			AND $LanguageEntry != '..'
-			AND $LanguageEntry != '.svn'
-			AND $LanguageEntry!='.'){
-
-		if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
-			echo '<option selected value="' . $LanguageEntry . '">' . $LanguageEntry .'</option>';
-		} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
-			echo '<option selected value="' . $LanguageEntry . '">' . $LanguageEntry .'</option>';
-		} else {
-			echo '<option value="' . $LanguageEntry . '">' . $LanguageEntry .'</option>';
-		}
+foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
+	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+	} else {
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
 	}
 }
-
-
-
 echo '</select></td></tr>';
-
 
 /*Make an array out of the comma separated list of modules allowed*/
 $ModulesAllowed = explode(',',$_POST['ModulesAllowed']);
