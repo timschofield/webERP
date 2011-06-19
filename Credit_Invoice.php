@@ -981,7 +981,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					'" . $OrderLine->QtyDispatched . "',
 					'" . $OrderLine->DiscountPercent . "',
 					'" . $OrderLine->StandardCost . "',
-					'" . ($QtyOnHandPrior +$OrderLine->QtyDispatched)  . "'',
+					'" . ($QtyOnHandPrior +$OrderLine->QtyDispatched)  . "',
 					'" . $OrderLine->Narrative . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
@@ -1502,9 +1502,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 		$SQL="SELECT accountcode,
 				accountname
-				FROM chartmaster, accountgroups
-				WHERE chartmaster.group_=accountgroups.groupname
-				AND ccountgroups.pandl=1 ORDER BY chartmaster.accountcode";
+				FROM chartmaster INNER JOIN accountgroups
+				ON chartmaster.group_=accountgroups.groupname
+				WHERE accountgroups.pandl=1 ORDER BY chartmaster.accountcode";
 	
 		$Result = DB_query($SQL,$db);
 

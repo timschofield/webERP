@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/6/11 Phil: Credit_Invoice.php typos in quoting changes preventing posting credits on write offs also sql on gl account selection for write off
 18/6/11 Phil: Made up a includes/LanguagesArray.php to contain a list of languages and the translated name of the language - updated WWW_Users.php and UserSettings.php and CustLoginSetup.php to use this array - so the selection of a language uses the language name rather than the locale codes
 14/6/11 Phil: Added email to custcontacts and updated AddCustomerContacts.php SelectCustomer.php and Customers.php
 13/6/11 Phil: Birthdays (xhtml/indenting/quoting/casing/decimalplaces) for Areas.php, BOMInquiry.php, BOMS.php, BankAccounts.php, BankMatching.php, COGSGLPosting.php, CompanyPreferences.php, ConfirmDispatch_Invoice.php StockLocTransfer.php
