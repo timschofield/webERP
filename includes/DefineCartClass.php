@@ -196,13 +196,13 @@ Class Cart {
 		if ($UpdateDB=='Yes'){
 			global $db;
 			$result = DB_query("UPDATE salesorderdetails SET quantity=" . $Qty . ",
-																										unitprice=" . $Price . ",
-																										discountpercent=" . $Disc . ",
-																										narrative ='" . DB_escape_string($Narrative) . "',
-																										itemdue = '" . FormatDateForSQL($ItemDue) . "',
-																										poline = '" . DB_escape_string($POLine) . "'
-														WHERE orderno=" . $_SESSION['ExistingOrder'] . "
-														AND orderlineno=" . $UpdateLineNumber
+															unitprice=" . $Price . ",
+															discountpercent=" . $Disc . ",
+															narrative ='" . DB_escape_string($Narrative) . "',
+															itemdue = '" . FormatDateForSQL($ItemDue) . "',
+															poline = '" . DB_escape_string($POLine) . "'
+								WHERE orderno=" . $_SESSION['ExistingOrder'] . "
+								AND orderlineno=" . $UpdateLineNumber
 													, $db
 				, _('The order line number') . ' ' . $UpdateLineNumber .  ' ' . _('could not be updated'));
 		}

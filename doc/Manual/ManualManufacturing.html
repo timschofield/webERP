@@ -33,6 +33,19 @@ When the "Create GL entries for stock transactions (at standard cost)" option in
 <li>Closing the work order - compares the quantity of components issued against the bill of material at the time of the first receipt of the manufactured items - the volume differences are evaluated at the standard cost (as at the time of the first receipt of manufactured item) to come up with the usage variance posted to the debit or credit of the manufactured item's stock category record's usage variance account. Then the cost of the items issued to the work order are compared against the cost as at the time the first receipt of the manufactured item was entered - differences here are taken to the price variances account in the manufactured item's stock category record. It is the closing of the work order that ensures that the costs received from the work order in the form of manufacturing output equals the cost of the inputs - the various components and materials issued to the work order</li>
 </ul>
 <br /><br />
+<table border=1>
+<tr><th>Event</th><th>Debit</th><th>Credit</th></tr>
+<tr><td>Components issued to the work order</td><td>WIP a/ct from stock category of manufactured item</td><td>Stock account from the category of the component item</td></tr>
+<tr><td>Labour issued to the work order (identical to any other component except that labour type categories have profit and loss accounts for their stock account)</td><td>WIP a/ct from stock category of manufactured item</td><td>Labour recovery account from category of the labour type item</td></tr>
+<tr><td>A completed manufactured item is received against the work order</td><td>stock account from the category of the manufactured item</td><td>WIP from the category of the manufactured item</td></tr>
+<tr><td>Work order closed and the difference between the WIP debits and credits from the above transactions is compared and the balance is either
+<ul>
+<li>Standard costing - taken to material usage variance from the stock category of the manufactured item</li>
+<li>Weighted average costing - if some of the manufactured stock remains on hand the variance is taken to the stock account from the category of the manufactured item. The cost of the manufactured item is updated with the recalculated WAC</li>
+</ul></td>
+<td>WIP / <br />Usage variance</td><td>WIP / <br />Usage variance OR stock</td></tr>
+</table>
+<br /><br />
 <font size="+1"><b>Work Order Entry</b></font>
 <br /><br />
 The Work Order is the medium for issuing components/raw materials to. A running total of the costs issued to the work order is maintained. Work orders can be created that have any number of output items. Output items are restricted to only "manufactured" items as defined in the item entry form. The work order tracks the quantity of the output items received against the work order and checks that no more than the work order quantity originally set up, with an allowance including the over-receive proportion as defined for purchase orders, is received.
