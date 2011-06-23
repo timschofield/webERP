@@ -148,21 +148,21 @@ Class Cart {
 
 				global $db;
 				$sql = "INSERT INTO salesorderdetails (orderlineno,
-																						orderno,
-																						stkcode,
-																						quantity,
-																						unitprice,
-																						discountpercent,
-																						itemdue,
-																						poline)
-																					VALUES(" . $this->LineCounter . ",
-																						" . $_SESSION['ExistingOrder'] . ",
-																						'" . trim(strtoupper($StockID)) ."',
-																						" . $Qty . ",
-																						" . $Price . ",
-																						" . $Disc . ",'
-																						" . $ItemDue . "',
-																						" . $POLine . ")";
+														orderno,
+														stkcode,
+														quantity,
+														unitprice,
+														discountpercent,
+														itemdue,
+														poline)
+													VALUES(" . $this->LineCounter . ",
+														" . $_SESSION['ExistingOrder'] . ",
+														'" . trim(strtoupper($StockID)) ."',
+														" . $Qty . ",
+														" . $Price . ",
+														" . $Disc . ",'
+														" . $ItemDue . "',
+														" . $POLine . ")";
 				$result = DB_query($sql,
 							$db ,
 							_('The order line for') . ' ' . strtoupper($StockID) . ' ' ._('could not be inserted'));
@@ -175,14 +175,14 @@ Class Cart {
 	}
 
 	function update_cart_item( $UpdateLineNumber,
-														$Qty,
-														$Price,
-														$Disc,
-														$Narrative,
-														$UpdateDB='No',
-														$ItemDue,
-														$POLine,
-														$GPPercent){
+								$Qty,
+								$Price,
+								$Disc,
+								$Narrative,
+								$UpdateDB='No',
+								$ItemDue,
+								$POLine,
+								$GPPercent){
 
 		if ($Qty>0){
 			$this->LineItems[$UpdateLineNumber]->Quantity = $Qty;
@@ -236,6 +236,7 @@ Class Cart {
 			}
 		}
 		/* Since we need to check the LineItem above and might affect the DB, don't unset until after DB is updates occur */
+		$this->CreditAvailable +=  ($this->LineItems[$LineNumber]->Quantity*$this->LineItems[$LineNumber]->Price*(1-$this->LineItems[$LineNumber]->DiscountPercent));
 		unset($this->LineItems[$LineNumber]);
 		$this->ItemsOrdered--;
 

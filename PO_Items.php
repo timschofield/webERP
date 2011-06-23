@@ -515,7 +515,7 @@ if (isset($_POST['NewItem'])){
 					foreach ($_SESSION['PO'.$identifier]->LineItems AS $OrderItem) {
 
 					/* do a loop round the items on the order to see that the item is not already on this order */
-						if (($OrderItem->StockID == $ItemCode) and ($OrderItem->Deleted==false)) {
+						if (($OrderItem->StockID == $ItemCode) AND ($OrderItem->Deleted==false)) {
 							$AlreadyOnThisOrder = 1;
 							prnMsg( _('The item') . ' ' . $ItemCode . ' ' . _('is already on this order') . '. ' . _('The system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity ordered of the existing line if necessary'),'error');
 						}
@@ -524,12 +524,13 @@ if (isset($_POST['NewItem'])){
 			}
 			if ($AlreadyOnThisOrder!=1 AND $Quantity > 0){
 				$sql = "SELECT description,
+							longdescription,
 							stockid,
 							units,
 							decimalplaces,
 							stockact,
 							accountname
-					FROM 	stockmaster INNER JOIN stockcategory
+					FROM stockmaster INNER JOIN stockcategory
 					ON stockcategory.categoryid = stockmaster.categoryid
 					INNER JOIN chartmaster
 					ON chartmaster.accountcode = stockcategory.stockact
@@ -548,16 +549,16 @@ if (isset($_POST['NewItem'])){
 								suppliers_partno,
 								leadtime,
 								MAX(purchdata.effectivefrom) AS latesteffectivefrom
-					FROM purchdata 
-					WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-					AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
-					AND purchdata.stockid = '". $ItemCode . "'
-					GROUP BY 	purchdata.price,
-								purchdata.conversionfactor,
-								purchdata.supplierdescription,
-								purchdata.suppliersuom,
-								purchdata.suppliers_partno,
-								purchdata.leadtime";
+							FROM purchdata 
+							WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
+							AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
+							AND purchdata.stockid = '". $ItemCode . "'
+							GROUP BY purchdata.price,
+									purchdata.conversionfactor,
+									purchdata.supplierdescription,
+									purchdata.suppliersuom,
+									purchdata.suppliers_partno,
+									purchdata.leadtime";
 												
 					$ErrMsg = _('The purchasing data for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 					$DbgMsg = _('The SQL used to retrieve the purchasing data but failed was');

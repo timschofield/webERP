@@ -111,24 +111,22 @@ if ($AlreadyOnThisOrder!=1){
 
 			$WithinCreditLimit = true;
 
-			if (!isset($_SESSION['WarnOnce']) and $_SESSION['Items'.$identifier]->SpecialInstructions) {
+			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 			  	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
-		       	$WarnOnce=1;
             }
 			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn
 											and 2 for prohibit sales */
 				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
 
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
-					if (isset($_SESSION['WarnOnce']) and $_SESSION['WarnOnce'] < 2) prnMsg(_('The customer account will breach their credit limit'),'warn');
-					$_SESSION['WarnOnce']=2;
+					prnMsg(_('The customer account will breach their credit limit'),'warn');
 				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
 					$WithinCreditLimit = false;
 				}
 			}
 
-			if ($WithinCreditLimit ==true){
+			if ($WithinCreditLimit == true){
 				$_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
 															$NewItemQty,
 															$myItemRow['description'],

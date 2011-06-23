@@ -511,6 +511,7 @@ if (isset($SelectedCustomer)) {
 		  prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
+		
 			$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
 
 			if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
@@ -993,13 +994,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			 * 		and before that we need to add a disposal stock category - if not already created 
 			 * 		first off get the details about the asset being disposed of */
 			 $AssetDetailsResult = DB_query("SELECT  fixedassets.description,
-												fixedassets.longdescription,
-												fixedassets.barcode,
-												fixedassetcategories.costact,
-												fixedassets.cost-fixedassets.accumdepn AS nbv
-										FROM fixedassetcategories INNER JOIN fixedassets
-										ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
-										WHERE fixedassets.assetid='" . $_POST['AssetToDisposeOf'] . "'",$db);
+													fixedassets.longdescription,
+													fixedassets.barcode,
+													fixedassetcategories.costact,
+													fixedassets.cost-fixedassets.accumdepn AS nbv
+											FROM fixedassetcategories INNER JOIN fixedassets
+											ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
+											WHERE fixedassets.assetid='" . $_POST['AssetToDisposeOf'] . "'",$db);
 			$AssetRow = DB_fetch_array($AssetDetailsResult);
 			
 			/* Check that the stock category for disposal "ASSETS" is defined already */
@@ -1138,17 +1139,36 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							OR $OrderLine->Narrative != $Narrative
 							OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
 							OR $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
+					
+					$WithinCreditLimit = true;
+					
+					if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn
+											and 2 for prohibit sales */
+						$DifferenceInOrderValue = ($Quantity*$Price*(1-$DiscountPercentage/100)) - ($OrderLine->Quantity*$OrderLine->Price*(1-$OrderLine->DiscountPercentage));
+						
+						$_SESSION['Items'.$identifier]->CreditAvailable -= $DifferenceInOrderValue;
 
-					$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
-										$Quantity,
-										$Price,
-										($DiscountPercentage/100),
-										$Narrative,
-										'Yes', /*Update DB */
-										$_POST['ItemDue_' . $OrderLine->LineNumber],
-										$_POST['POLine_' . $OrderLine->LineNumber],
-										$_POST['GPPercent_' . $OrderLine->LineNumber]);
-				}
+						if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
+							prnMsg(_('The customer account will breach their credit limit'),'warn');
+						} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
+							prnMsg(_('This change would put the customer over their credit limit and is prohibited'),'warn');
+							$WithinCreditLimit = false;
+							$_SESSION['Items'.$identifier]->CreditAvailable += $DifferenceInOrderValue;
+						}
+					}
+					
+					if ($WithinCreditLimit){
+						$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
+																		$Quantity,
+																		$Price,
+																		($DiscountPercentage/100),
+																		$Narrative,
+																		'Yes', /*Update DB */
+																		$_POST['ItemDue_' . $OrderLine->LineNumber],
+																		$_POST['POLine_' . $OrderLine->LineNumber],
+																		$_POST['GPPercent_' . $OrderLine->LineNumber]);
+					} //within credit limit so make changes
+				} //there are changes to the order line to process
 			} //page not called from itself - POST variables not set
 		}
 	}

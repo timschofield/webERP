@@ -84,10 +84,10 @@ if (isset($_POST['submit'])) {
 			$i++;
 		} else {
 			$sql = "SELECT pandl,
-				sequenceintb,
-				sectioninaccounts
-			FROM accountgroups
-			WHERE groupname='" . $_POST['ParentGroupName'] . "'";
+						sequenceintb,
+						sectioninaccounts
+					FROM accountgroups
+					WHERE groupname='" . $_POST['ParentGroupName'] . "'";
 
             $DbgMsg = _('The SQL that was used to retrieve the information was');
             $ErrMsg = _('Could not check whether the group is recursive because');
@@ -98,6 +98,7 @@ if (isset($_POST['submit'])) {
 			$_POST['SequenceInTB'] = $ParentGroupRow['sequenceintb'];
 			$_POST['PandL'] = $ParentGroupRow['pandl'];
 			$_POST['SectionInAccounts']= $ParentGroupRow['sectioninaccounts'];
+			prnMsg(_('Since this account group is a child group, the sequence in the trial balance, the section in the accounts and whether or not the account group appears in the balance sheet or profit and loss account are all properties inherited from the parent account group. Any changes made to these fields will have no effect.'),'warn');
 		}
 	}
 	if (!is_long((int) $_POST['SectionInAccounts'])) {
