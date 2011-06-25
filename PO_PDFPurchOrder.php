@@ -245,6 +245,16 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize,$POLine['itemcode'], 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize,$Desc, 'left');
+			while (strlen($LeftOvers) > 1){
+				$YPos-=$line_height;
+				if ($YPos-$line_height <= $Bottom_Margin){
+					/* We reached the end of the page so finsih off the page and start a newy */
+					$PageNumber++;
+					$YPos=$Page_Height - $FormDesign->Data->y;
+					include ('includes/PO_PDFOrderPageHeader.inc');
+				}
+				$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize,$LeftOvers, 'left');
+			} //end if need a new page headed up
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize,$DisplayQty, 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize,$POLine['suppliersunit'], 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize,$DisplayDelDate, 'left');

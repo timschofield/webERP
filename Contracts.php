@@ -38,21 +38,21 @@ if (isset($_GET['NewContract']) AND isset($_SESSION['Contract'.$identifier])){
 }
 
 if (isset($_GET['NewContract']) AND isset($_GET['SelectedCustomer'])) {
-		/*
-		* initialize a new contract
-		*/
-		$_SESSION['ExistingContract']=0;
-		unset($_SESSION['Contract'.$identifier]->ContractBOM);
-		unset($_SESSION['Contract'.$identifier]->ContractReqts);
-		unset($_SESSION['Contract'.$identifier]);
-		/* initialize new class object */
-		$_SESSION['Contract'.$identifier] = new Contract;
+	/*
+	* initialize a new contract
+	*/
+	$_SESSION['ExistingContract']=0;
+	unset($_SESSION['Contract'.$identifier]->ContractBOM);
+	unset($_SESSION['Contract'.$identifier]->ContractReqts);
+	unset($_SESSION['Contract'.$identifier]);
+	/* initialize new class object */
+	$_SESSION['Contract'.$identifier] = new Contract;
 
-		$_POST['SelectedCustomer'] = $_GET['SelectedCustomer'];
+	$_POST['SelectedCustomer'] = $_GET['SelectedCustomer'];
 
-		/*The customer is checked for credit and the Contract Object populated
-		 * using the usual logic of when a customer is selected
-		 * */
+	/*The customer is checked for credit and the Contract Object populated
+	 * using the usual logic of when a customer is selected
+	 * */
 }
 
 if (isset($_SESSION['Contract'.$identifier]) AND
@@ -139,9 +139,9 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 if (isset($_GET['ModifyContractRef'])){
 
 	if (isset($_SESSION['Contract'.$identifier])){
-			unset ($_SESSION['Contract'.$identifier]->ContractBOM);
-			unset ($_SESSION['Contract'.$identifier]->ContractReqts);
-			unset ($_SESSION['Contract'.$identifier]);
+		unset ($_SESSION['Contract'.$identifier]->ContractBOM);
+		unset ($_SESSION['Contract'.$identifier]->ContractReqts);
+		unset ($_SESSION['Contract'.$identifier]);
 	}
 
 	$_SESSION['ExistingContract']=$_GET['ModifyContractRef'];
@@ -178,7 +178,7 @@ if (isset($_POST['CancelContract'])) {
 
 		if ($_SESSION['Contract'.$identifier]->Status==1){
 			$sql = "DELETE FROM salesorderdetails WHERE orderno='" . $_SESSION['Contract'.$identifier]->OrderNo . "'";
-			$ErrMsg = _('The quotation line for the contract could not be deleted because');
+			$ErrMsg = _('The quotation lines for the contract could not be deleted because');
 			$DelResult=DB_query($sql,$db,$ErrMsg);
 			$sql = "DELETE FROM salesorders WHERE orderno='" . $_SESSION['Contract'.$identifier]->OrderNo . "'";
 			$ErrMsg = _('The quotation for the contract could not be deleted because');
@@ -220,11 +220,11 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 	//First update the session['Contract'.$identifier] variable with all inputs from the form
 
 	$InputError = False; //assume no errors on input then test for errors
-	if (strlen($_POST['ContractRef'])<2){
+	if (strlen($_POST['ContractRef']) < 2){
 		prnMsg(_('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
-	if(ContainsIllegalCharacters($_POST['ContractRef'])){
+	if(ContainsIllegalCharacters($_POST['ContractRef']) OR strpos($_POST['ContractRef'],' ')>0){
 		prnMsg(_('The contract reference cannot contain any spaces, slashes, or inverted commas. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
@@ -807,7 +807,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 //end of page full new headings if
 		}
 //end of while loop
-		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes">';
+		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 		
 		echo '</table></form>';
 
@@ -938,7 +938,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 					<th>' . _('Quantity') . '</th>
 					<th>' . _('Unit') . '</th>
 					<th>' . _('Unit Cost') . '</th>
-					<th>' . _('Total Cost') . '</th></tr>';
+					<th>' . _('Total Cost') . '</th>
+				</tr>';
+					
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 			echo '<tr><td>' . $Component->StockID . '</td>
 					<td>' . $Component->ItemDescription . '</td>
@@ -949,22 +951,32 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				</tr>';
 			$ContractBOMCost += ($Component->ItemCost *  $Component->Quantity);
 		}
-		echo '<tr><th colspan="5"><b>' . _('Total stock cost') . '</b></th>
-					<th class="number"><b>' . number_format($ContractBOMCost,2) . '</b></th></tr>';
+		echo '<tr>
+				<th colspan="5"><b>' . _('Total stock cost') . '</b></th>
+					<th class="number"><b>' . number_format($ContractBOMCost,2) . '</b></th>
+				</tr>';
 	} else { //there are no items set up against this contract
-		echo '<tr><td colspan="6"><i>' . _('None Entered') . '</i></td></tr>';
+		echo '<tr>
+				<td colspan="6"><i>' . _('None Entered') . '</i></td>
+				</tr>';
 	}
 	echo '</table></td>'; //end of contract BOM table
 	echo '<td valign="top">
-			<table class="selection"><tr><th colspan="4">' . _('Other Requirements') . '</th></tr>';
+			<table class="selection">
+				<tr>
+				<th colspan="4">' . _('Other Requirements') . '</th>
+				</tr>';
 	$ContractReqtsCost = 0;
 	if (count($_SESSION['Contract'.$identifier]->ContractReqts)!=0){
-		echo '<tr><th>' . _('Requirement') . '</th>
-					<th>' . _('Quantity') . '</th>
-					<th>' . _('Unit Cost') . '</th>
-					<th>' . _('Total Cost') . '</th></tr>';
+		echo '<tr>
+				<th>' . _('Requirement') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Unit Cost') . '</th>
+				<th>' . _('Total Cost') . '</th>
+			</tr>';
 		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
-			echo '<tr><td>' . $Requirement->Requirement . '</td>
+			echo '<tr>
+					<td>' . $Requirement->Requirement . '</td>
 					<td class="number">' . $Requirement->Quantity . '</td>
 					<td class="number">' . $Requirement->CostPerUnit . '</td>
 					<td class="number">' . number_format(($Requirement->CostPerUnit * $Requirement->Quantity),2) . '</td>

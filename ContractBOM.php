@@ -19,8 +19,6 @@ if (!isset($_SESSION['Contract'.$identifier])){
 }
 include('includes/header.inc');
 
-$Maximum_Number_Of_Parts_To_Show=50;
-
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 	if($_SESSION['Contract'.$identifier]->Status!=2){ //dont do anything if the customer has committed to the contract
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $ContractComponent) {
@@ -201,11 +199,11 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 				if ($myrow = DB_fetch_array($result1)){
 
 					$_SESSION['Contract'.$identifier]->Add_To_ContractBOM ($ItemCode,
-																		$myrow['description'],
-																		$DefaultWorkCentre,
-																		$Quantity, /* Qty */
-																		$myrow['unitcost'],
-																		$myrow['units']);
+																			$myrow['description'],
+																			$DefaultWorkCentre,
+																			$Quantity, /* Qty */
+																			$myrow['unitcost'],
+																			$myrow['units']);
 				} else {
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
 					if ($debug==1){
@@ -375,18 +373,17 @@ if (isset($SearchResult)) {
 			</tr>';
 
 		$PartsDisplayed++;
-		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
+		if ($PartsDisplayed == $_SESSION['DisplayRecordsMax']){
 			break;
 		}
 #end of page full new headings if
 	}
 #end of while loop
 	echo '</table>';
-	if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
+	if ($PartsDisplayed == $_SESSION['DisplayRecordsMax']){
 
-	/*$Maximum_Number_Of_Parts_To_Show defined in config.php */
 
-		prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' .
+		prnMsg( _('Only the first') . ' ' . $_SESSION['DisplayRecordsMax'] . ' ' . _('can be displayed') . '. ' .
 			_('Please restrict your search to only the parts required'),'info');
 	}
 	echo '<br /><div class="centre"><input type="submit" name="NewItem" value="' . _('Add to Contract Bill Of Material') .'" /></div>';

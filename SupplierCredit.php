@@ -279,16 +279,16 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form1">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br /><table class=selection>';
-echo '<tr><td><font color=red>' . _('Supplier Credit Note Reference') . ":</font></td>
-	<td><font size=2><input type=TEXT size=20 maxlength=20 name=SuppReference value='" . $_SESSION['SuppTrans']->SuppReference . "'></td>";
+echo '<tr><td><font color=red>' . _('Supplier Credit Note Reference') . ':</font></td>
+	<td><font size=2><input type="text" size=20 maxlength=20 name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '"></td>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
 	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 }
-echo '<td><font color=red>' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ") :</font></td>
-		<td><input type=TEXT class='date' alt='".$_SESSION['DefaultDateFormat']. "' size=11 maxlength=10 name='TranDate' value=" . $_SESSION['SuppTrans']->TranDate . '></td>';
-echo '<td><font color=red>' . _('Exchange Rate') . ":</font></td>
-		<td><input type=TEXT class='number' size=11 maxlength=10 name='ExRate' value=" . $_SESSION['SuppTrans']->ExRate . '></td></tr>';
+echo '<td><font color=red>' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</font></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size=11 maxlength=10 name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '"></td>';
+echo '<td><font color=red>' . _('Exchange Rate') . ':</font></td>
+		<td><input type="text" class="number" size=11 maxlength=10 name="ExRate" value="' . $_SESSION['SuppTrans']->ExRate . '"></td></tr>';
 echo '</table>';
 
 echo '<br /><div class="centre"><input type="submit" name="GRNS" value="' . _('Purchase Orders') . '"> ';
@@ -315,7 +315,7 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 					<th>' . _('Line Total') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 				</tr>';
 	echo $TableHeader;
-	$TotalGRNvalue=0;
+	$TotalGRNValue=0;
 
 	foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
@@ -344,7 +344,7 @@ if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment char
 						<th>' . _('Amount') . '</th></tr>';
 		echo $TableHeader;
 
-	$TotalShiptvalue=0;
+	$TotalShiptValue=0;
 
 	$i=0;
 
@@ -443,7 +443,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 							<th>' . _('Narrative') . '</th></tr>';
 		echo $TableHeader;
 
-		$TotalGLvalue=0;
+		$TotalGLValue=0;
 
 		foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
@@ -467,13 +467,13 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 	}
 
 	if (!isset($TotalGRNValue)) {
-		$TotalGRNvalue=0;
+		$TotalGRNValue=0;
 	}
 	if (!isset($TotalGLValue)) {
-		$TotalGLvalue=0;
+		$TotalGLValue=0;
 	}
 	if (!isset($TotalShiptValue)) {
-		$TotalShiptvalue=0;
+		$TotalShiptValue=0;
 	}
 	if (!isset($TotalContractsValue)){
 		$TotalContractsValue = 0;
@@ -560,7 +560,7 @@ echo '<tr><td><font color=red>' . _('Credit Note Total') . '</font></td><td cols
 echo '<table class=selection><tr><td><font color=red>' . _('Comments') . '</font></td><td><textarea name=Comments cols=40 rows=2>' .
 	  $_SESSION['SuppTrans']->Comments . '</textarea></td></tr></table>';
 
-echo "<p><div class='centre'><input type=submit name='PostCreditNote' value='" . _('Enter Credit Note') . "'></div>";
+echo '<p><div class="centre"><input type=submit name="PostCreditNote" value="' . _('Enter Credit Note') . '"></div>';
 
 
 if (isset($_POST['PostCreditNote'])){

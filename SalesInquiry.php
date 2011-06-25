@@ -56,8 +56,7 @@ if (isset($_POST['submit'])) {
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$savesummarytype)
-{
+function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$savesummarytype) {
 
 	//initialize no input errors
 	$InputError = 0;
@@ -76,13 +75,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		prnMsg(_('Invalid To Date'),'error');
 	}
 
-	if ($_POST['ReportType'] == 'Summary' && $_POST['DateType'] == 'Order'  && $_POST['SummaryType'] == 'transno') {
+	if ($_POST['ReportType'] == 'Summary' AND $_POST['DateType'] == 'Order'  AND $_POST['SummaryType'] == 'transno') {
 		$InputError = 1;
 		prnMsg(_('Cannot summarize by transaction number with a date type of Order Date'),'error');
 		return;
 	}
 
-	if ($_POST['ReportType'] == 'Detail' && $_POST['DateType'] == 'Order'  && $_POST['SortBy'] == 'tempstockmoves.transno,salesorderdetails.stkcode') {
+	if ($_POST['ReportType'] == 'Detail' AND $_POST['DateType'] == 'Order'  AND $_POST['SortBy'] == 'tempstockmoves.transno,salesorderdetails.stkcode') {
 		$InputError = 1;
 		prnMsg(_('Cannot sort by transaction number with a date type of Order Date'),'error');
 		return;
@@ -99,7 +98,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	# Add more to WHERE statement, if user entered something for the part number,debtorno, name
 	// Variables that end with Op - meaning operator - are either = or LIKE
 	$WherePart = ' ';
-	if (strlen($PartNumber) > 0 && $PartNumberOp == 'LIKE') {
+	if (strlen($PartNumber) > 0 AND $PartNumberOp == 'LIKE') {
 	    $PartNumber = $PartNumber . '%';
 	} else {
 	    $PartNumberOp = '=';
@@ -119,7 +118,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	}
 
 	$WhereDebtorName = ' ';
-	if (strlen($DebtorName) > 0 && $DebtorNameOp == 'LIKE') {
+	if (strlen($DebtorName) > 0 AND $DebtorNameOp == 'LIKE') {
 	    $DebtorName = $DebtorName . '%';
 	} else {
 	    $DebtorNameOp = '=';
@@ -1105,7 +1104,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('For Sales Man') . ':</td><td><select name="Salesman">';
-	$sql='SELECT salesmancode, salesmanname FROM salesman';
+	$sql="SELECT salesmancode, salesmanname FROM salesman";
 	$SalesmanResult= DB_query($sql,$db);
 	echo '<option selected value="All">' . _('All Salesmen')  . '</option>';
 	While ($myrow = DB_fetch_array($SalesmanResult)){
@@ -1164,8 +1163,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 } // End of function display()
 
-function TempStockmoves(&$db)
-{
+function TempStockmoves(&$db) {
 // When report based on Invoice Date, use stockmoves as the main file, but credit
 // notes, which are type 11 in stockmoves, do not have the order number in the
 // reference field; instead they have "Ex Inv - " and then the transno from the

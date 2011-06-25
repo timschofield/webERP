@@ -64,11 +64,15 @@ echo _('Contract') . '<br />' . $_SESSION['Contract'.$identifier]->CustomerName 
 echo '<table class="selection">
 	<tr>
 		<th colspan="6">' . _('Original Costing') .'</th>
-		<th colspan="6">' . _('Actual Costs')  .'</th></tr>';
+		<th colspan="6">' . _('Actual Costs')  .'</th>
+	</tr>';
 
-echo '<tr><th colspan="12">'  . _('Inventory Required') . '</th></tr>';
+echo '<tr>
+		<th colspan="12">'  . _('Inventory Required') . '</th>
+	</tr>';
 
-echo '<tr><th>' . _('Item Code') . '</th>
+echo '<tr>
+		<th>' . _('Item Code') . '</th>
 		<th>' . _('Item Description') . '</th>
 		<th>' . _('Quantity') . '</th>
 		<th>' . _('Unit') . '</th>
@@ -81,56 +85,70 @@ echo '<tr><th>' . _('Item Code') . '</th>
 		<th>' . _('Unit Cost') . '</th>
 		<th>' . _('Total Cost') . '</th>
 		</tr>';
+		
 $ContractBOMBudget = 0;
 $ContractBOMActual = 0;
 foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
-	echo '<tr><td>' . $Component->StockID . '</td>
-				<td>' . $Component->ItemDescription . '</td>
-				<td class="number">' . $Component->Quantity . '</td>
-				<td>' . $Component->UOM . '</td>
-				<td class="number">' . number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+	echo '<tr>
+			<td>' . $Component->StockID . '</td>
+			<td>' . $Component->ItemDescription . '</td>
+			<td class="number">' . $Component->Quantity . '</td>
+			<td>' . $Component->UOM . '</td>
+			<td class="number">' . number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+	
 	$ContractBOMBudget += ($Component->ItemCost *  $Component->Quantity);
+	
 	if (isset($InventoryIssues[$Component->StockID])){
 		$InventoryIssues[$Component->StockID]->Matched=1;
 		echo '<td colspan="2" align="center">' . _('Actual usage') . '</td>
-					<td class="number">' . -$InventoryIssues[$Component->StockID]->Quantity . '</td>
-					<td>' . $InventoryIssues[$Component->StockID]->Units . '</td>
-					<td class="number">' . number_format($InventoryIssues[$Component->StockID]->TotalCost/$InventoryIssues[$Component->StockID]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td>' . number_format(-$InventoryIssues[$Component->StockID]->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+			<td class="number">' . -$InventoryIssues[$Component->StockID]->Quantity . '</td>
+			<td>' . $InventoryIssues[$Component->StockID]->Units . '</td>
+			<td class="number">' . number_format($InventoryIssues[$Component->StockID]->TotalCost/$InventoryIssues[$Component->StockID]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td>' . number_format(-$InventoryIssues[$Component->StockID]->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			</tr>';
 	} else {
-		echo '<td colspan="6"></td></tr>';
+		echo '<td colspan="6"></td>
+			</tr>';
 	}
 }
 
 foreach ($InventoryIssues as $Component) { //actual inventory components used
 	$ContractBOMActual -=$Component->TotalCost;
 	if ($Component->Matched == 0) { //then its a component that wasn't budget for
-		echo '<tr><td colspan="6"></td>
+		echo '<tr>
+				<td colspan="6"></td>
 				<td>' . $Component->StockID . '</td>
 				<td>' . $Component->Description . '</td>
 				<td class="number">' . -$Component->Quantity . '</td>
 				<td>' . $Component->Units . '</td>
 				<td class="number">' . number_format($Component->TotalCost/$Component->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . number_format(-$Component->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+				<td class="number">' . number_format(-$Component->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			</tr>';
 	} //end if its a component not originally budget for
 }
 
-echo '<tr><td class="number" colspan="5">' . _('Total Inventory Budgeted Cost') . ':</td>
+echo '<tr>
+		<td class="number" colspan="5">' . _('Total Inventory Budgeted Cost') . ':</td>
 		<td class="number">' . number_format($ContractBOMBudget,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
 		<td class="number" colspan="5">' . _('Total Inventory Actual Cost') . ':</td>
-		<td class="number">' . number_format($ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td></tr>';
+		<td class="number">' . number_format($ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
+	</tr>';
 
-echo '<tr><th colspan="12" align="center">'  . _('Other Costs') . '</th></tr>';
+echo '<tr>
+		<th colspan="12" align="center">'  . _('Other Costs') . '</th>
+	</tr>';
 
 $OtherReqtsBudget = 0;
 //other requirements budget sub-table
-echo '<tr><td colspan="6"><table class="selection">
-						<tr><th>' . _('Requirement') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('Unit Cost') . '</th>
-							<th>' . _('Total Cost') . '</th>
-						</tr>';
+echo '<tr>
+		<td colspan="6"><table class="selection">
+		<tr>
+			<th>' . _('Requirement') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Unit Cost') . '</th>
+			<th>' . _('Total Cost') . '</th>
+		</tr>';
 						
 foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
 	echo '<tr><td>' . $Requirement->Requirement . '</td>

@@ -70,11 +70,11 @@ if (!class_exists('Cpdf', false)) {
 			TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
 		}
 	
-		function addText($xb,$yb,$size,$text)//,$angle=0,$wordSpaceAdjust=0)
+		function addText($xb,$YPos,$size,$text)//,$angle=0,$wordSpaceAdjust=0)
 																{
 	// Javier	$text = html_entity_decode($text);
 			$this->SetFontSize($size);
-			$this->Text($xb, $this->h-$yb, $text);
+			$this->Text($xb, $this->h-$YPos, $text);
 		}
 	
 		function addInfo($label, $value) {
@@ -103,8 +103,8 @@ if (!class_exists('Cpdf', false)) {
 		}
 	
 	
-		function addJpegFromFile($img,$x,$y,$w=0,$h=0){
-			$this->Image($img, $x, $this->h-$y-$h, $w, $h);
+		function addJpegFromFile($img,$XPos,$y,$Width=0,$Height=0){
+			$this->Image($img, $XPos, $this->h-$y-$Height, $Width, $Height);
 		}
 	
 		/*
@@ -242,33 +242,35 @@ if (!class_exists('Cpdf', false)) {
 			$this->line($XPos, $YPos-$Height, $XPos, $YPos);
 		}
 	
-		function addTextWrap($x, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) {
-	
-			//$txt = html_entity_decode($txt);
-	
+		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
+
+			/* Returns the balance of the string that could not fit in the width
+			 * XPos = pdf horizontal coordinate
+			 * YPos = pdf vertical coordiante
+			*/
 			//some special characters are html encoded
 			//this code serves to make them appear human readable in pdf file
-			$txt = html_entity_decode($txt, ENT_QUOTES, 'UTF-8');
+			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');
 	
-			$this->x = $x;
-			$this->y = $this->h - $yb - $h;
+			$this->x = $XPos;
+			$this->y = $this->h - $YPos - $Height;
 	
-			switch($align) {
+			switch($Align) {
 				case 'right':
-				$align = 'R'; break;
+				$Align = 'R'; break;
 				case 'center':
-				$align = 'C'; break;
+				$Align = 'C'; break;
 				default:
-				$align = 'L';
+				$Align = 'L';
 	
 			}
-			$this->SetFontSize($h);
+			$this->SetFontSize($Height);
 			$cw=&$this->CurrentFont['cw'];
-			if($w==0) {
-				$w=$this->w-$this->rMargin-$this->x;
+			if($Width==0) {
+				$Width=$this->w-$this->rMargin-$this->x;
 			}
-			$wmax=($w-2*$this->cMargin)*1000/$this->FontSize;
-			$s=str_replace("\r",'',$txt);
+			$wmax=($Width-2*$this->cMargin)*1000/$this->FontSize;
+			$s=str_replace("\r",'',$Text);
 			$s=str_replace("\n",' ',$s);
 			$s = trim($s).' ';
 			$nb=strlen($s);
@@ -318,13 +320,13 @@ if (!class_exists('Cpdf', false)) {
 				}
 				$sep = $i;
 			} else {
-				if($align=='J') {
+				if($Align=='J') {
 					$this->ws=($ns>1) ? ($wmax-$ls)/1000*$this->FontSize/($ns-1) : 0;
 					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
 				}
 			}
 	
-			$this->Cell($w,$h,substr($s,0,$sep),$b,2,$align,$fill);
+			$this->Cell($Width,$Height,substr($s,0,$sep),$b,2,$Align,$fill);
 			$this->x=$this->lMargin;
 			return substr($s, $sep);
 		} //end function addTextWrap
