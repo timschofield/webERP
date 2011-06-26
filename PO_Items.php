@@ -33,21 +33,21 @@ if (!isset($_POST['Commit'])) {
 if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) { 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 		if ($POLine->Deleted == false) {
-			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'.$POLine->LineNo]))){
+			if (!is_numeric($_POST['ConversionFactor'.$POLine->LineNo])){
 				prnMsg(_('The conversion factor is expected to be numeric - the figure which converts from our units to the supplier units. e.g. if the supplier units is a tonne and our unit is a kilogram then the conversion factor that converts our unit to the suppliers unit is 1000'),'error');
 				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = 1;
 			} else { //a valid number for the conversion factor is entered
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'.$POLine->LineNo]));
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor = $_POST['ConversionFactor'.$POLine->LineNo];
 			}
-			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))){
+			if (!is_numeric($_POST['SuppQty'.$POLine->LineNo])){
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=round(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppQty'.$POLine->LineNo]))*doubleval(str_replace($locale_info['thousands_sep'],'',$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor)),$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces);
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity=round($_POST['SuppQty'.$POLine->LineNo]*$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor,$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces);
 			}
-			if (!is_numeric(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))){
+			if (!is_numeric($_POST['SuppPrice'.$POLine->LineNo])){
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['SuppPrice'.$POLine->LineNo]))/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor);
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=$_POST['SuppPrice'.$POLine->LineNo]/$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor;
 			}
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
 		}
@@ -680,13 +680,13 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
 				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . $POLine->ConversionFactor . '"></td>
-				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . number_format($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces) . '"></td>
+				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces) . '"></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
-				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' .number_format(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces) .'"></td>
+				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . round(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces) .'"></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>
 				<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '&Delete=' . $POLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
-			$_SESSION['PO'.$identifier]->Total = $_SESSION['PO'.$identifier]->Total + $LineTotal;
+			$_SESSION['PO'.$identifier]->Total += $LineTotal;
 		}
 	}
 

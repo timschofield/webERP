@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/6/11 Phil: Went back to no numberformating on PO_Items.php price and quantity - Brian May still reporting issues
 22/6/11 Phil: Added message to AccountGroups.php to show that child account groups cannot have changes to their account section, their profit and loss or balance sheet and sequence in TB as these properties belong only to parent account groups and are inherited by the kids
 23/6/11 Phil: SelectOrderItems.php includes/DefineCartClass.php repaired credit checks 
 19/6/11 Phil: Credit_Invoice.php typos in quoting changes preventing posting credits on write offs also sql on gl account selection for write off
