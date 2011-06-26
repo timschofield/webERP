@@ -37,36 +37,28 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 		$InputError = 1;
 		prnMsg(_('There is no stock item set up enter the stock code or select a stock item using the search page'), 'error');
 	}
-	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price'])))) {
+	if (!is_numeric($_POST['Price'])) {
 		$InputError = 1;
 		unset($_POST['Price']);
 		prnMsg(_('The price entered was not numeric and a number is expected. No changes have been made to the database'), 'error');
-	} else {
-		$_POST['Price'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price']));
 	}
 	if ($_POST['Price'] == 0) {
 		prnMsg(_('The price entered is zero') . '   ' . _('Is this intentional?'), 'warn');
 	}
-	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['LeadTime'])))) {
+	if (!is_numeric($_POST['LeadTime'])) {
 		$InputError = 1;
 		unset($_POST['LeadTime']);
 		prnMsg(_('The lead time entered was not numeric a number of days is expected no changes have been made to the database'), 'error');
-	} else {
-		$_POST['LeadTime'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['LeadTime']));
 	}
-	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['MinOrderQty'])))) {
+	if (!is_numeric($_POST['MinOrderQty'])) {
 		$InputError = 1;
 		unset($_POST['MinOrderQty']);
 		prnMsg(_('The minimum order quantity was not numeric and a number is expected no changes have been made to the database'), 'error');
-	} else {
-		$_POST['MinOrderQty'] =doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['MinOrderQty']));
-	}
-	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor'])))) {
+	} 
+	if (!is_numeric($_POST['ConversionFactor'])) {
 		$InputError = 1;
 		unset($_POST['ConversionFactor']);
 		prnMsg(_('The conversion factor entered was not numeric') . ' (' . _('a number is expected') . '). ' . _('The conversion factor is the number which the price must be divided by to get the unit price in our unit of measure') . '. <br />' . _('E.g.') . ' ' . _('The supplier sells an item by the tonne and we hold stock by the kg') . '. ' . _('The suppliers price must be divided by 1000 to get to our cost per kg') . '. ' . _('The conversion factor to enter is 1000') . '. <br /><br />' . _('No changes will be made to the database'), 'error');
-	} else {
-		$_POST['ConversionFactor'] =doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['ConversionFactor']));
 	}
     if ($InputError == 0 AND isset($_POST['AddRecord'])) {
         $sql = "INSERT INTO purchdata (supplierno,
@@ -198,36 +190,36 @@ if (!isset($_GET['Edit'])) {
                 $DisplayPreferred = _('No');
             }
             printf("<td>%s</td>
-			<td class=number>%s</td>
-			<td>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s " . _('days') . "</td>
-			<td>%s</td>
-			<td><a href='%s?StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
-			<td><a href='%s?StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
-			</tr>", 
-			$myrow['suppname'], 
-			number_format($myrow['price'], 3), 
-			$myrow['suppliersuom'],
-			$myrow['conversionfactor'],
-			number_format($myrow['price']/$myrow['conversionfactor'],2),
-			$myrow['currcode'], 
-			ConvertSQLDate($myrow['effectivefrom']), 
-			$myrow['minorderqty'], 
-			$myrow['leadtime'], 
-			$DisplayPreferred, 
-			$_SERVER['PHP_SELF'], 
-			$StockID, 
-			$myrow['supplierno'], 
-			$myrow['effectivefrom'], 
-			$_SERVER['PHP_SELF'], 
-			$StockID, 
-			$myrow['supplierno'], 
-			$myrow['effectivefrom']);
+					<td class=number>%s</td>
+					<td>%s</td>
+					<td class=number>%s</td>
+					<td class=number>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s " . _('days') . "</td>
+					<td>%s</td>
+					<td><a href='%s?StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
+					<td><a href='%s?StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
+					</tr>", 
+					$myrow['suppname'], 
+					number_format($myrow['price'], 3), 
+					$myrow['suppliersuom'],
+					$myrow['conversionfactor'],
+					number_format($myrow['price']/$myrow['conversionfactor'],2),
+					$myrow['currcode'], 
+					ConvertSQLDate($myrow['effectivefrom']), 
+					$myrow['minorderqty'], 
+					$myrow['leadtime'], 
+					$DisplayPreferred, 
+					$_SERVER['PHP_SELF'], 
+					$StockID, 
+					$myrow['supplierno'], 
+					$myrow['effectivefrom'], 
+					$_SERVER['PHP_SELF'], 
+					$StockID, 
+					$myrow['supplierno'], 
+					$myrow['effectivefrom']);
         } //end of while loop
         echo '</table><br/>';
         if ($CountPreferreds > 1) {
@@ -465,7 +457,7 @@ if (!isset($SuppliersResult)) {
     echo '<tr><td>' . _('Currency') . ':</td>
 	<td><input type=hidden name="CurrCode" . value="' . $CurrCode . '">' . $CurrCode . '</td></tr>';
     echo '<tr><td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-	<td><input type="text" class="number" name="Price" maxlength=12 size=12 value=' . number_format($_POST['Price'], $myrow['decimalplaces']) . '></td></tr>';
+	<td><input type="text" class="number" name="Price" maxlength=12 size=12 value=' . round($_POST['Price'], $myrow['decimalplaces']) . '></td></tr>';
     echo '<tr><td>' . _('Date Updated') . ':</td>
 	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength=10 size=11 value="' . $_POST['EffectiveFrom'] . '"></td></tr>';
     echo '<tr><td>' . _('Our Unit of Measure') . ':</td>';

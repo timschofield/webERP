@@ -27,16 +27,15 @@ if (!isset($_REQUEST['WO'])) {
 }
 
 
-
 $ErrMsg = _('Could not retrieve the details of the selected work order');
 $WOResult = DB_query("SELECT workorders.loccode,
 							locations.locationname,
 							workorders.requiredby,
 							workorders.startdate,
 							workorders.closed
-							FROM workorders INNER JOIN locations
-							ON workorders.loccode=locations.loccode
-							WHERE workorders.wo='" . $_POST['WO'] . "'",
+						FROM workorders INNER JOIN locations
+						ON workorders.loccode=locations.loccode
+						WHERE workorders.wo='" . $_POST['WO'] . "'",
 						$db,
 						$ErrMsg);
 
@@ -153,13 +152,15 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	echo '<td>' .  $RequirementsRow['stockid'] . '</td>
 		<td>' .  $RequirementsRow['description'] . '</td>';
 
-	$IssuesResult = DB_query("SELECT trandate,
-									qty,
-									standardcost
-								FROM stockmoves
+	$IssuesResult = DB_query("SELECT stockmoves.trandate,
+									stockmoves.qty,
+									stockmoves.standardcost,
+									stockmaster.decimalplaces,
+								FROM stockmoves INNER JOIN stockmaster
+								ON stockmoves.stockid = stockmaster.stockid
 								WHERE stockmoves.type=28
-								AND reference = '" . $_POST['WO'] . "'
-								AND stockid = '" . $RequirementsRow['stockid'] . "'",
+								AND stockmoves.reference = '" . $_POST['WO'] . "'
+								AND stockmoves.stockid = '" . $RequirementsRow['stockid'] . "'",
 								$db,
 								_('Could not retrieve the issues of the item because:'));
 	$IssueQty =0;
@@ -174,7 +175,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 			}
 			echo '<td colspan=4></td><td>' . ConvertSQLDate($IssuesRow['trandate']) . '</td>
 				<td class=number>' . number_format(-$IssuesRow['qty'],$RequirementsRow['decimalplaces']) . '</td>
-				<td class=number>' . number_format(-($IssuesRow['qty']*$IssuesRow['standardcost']),2) . '</td></tr>';
+				<td class=number>' . number_format(-($IssuesRow['qty']*$IssuesRow['standardcost']),$IssuesRow['decimalplaces']) . '</td></tr>';
 			$IssueQty -= $IssuesRow['qty'];// because qty for the stock movement will be negative
 			$IssueCost -= ($IssuesRow['qty']*$IssuesRow['standardcost']);
 
@@ -392,7 +393,7 @@ If (isset($_POST['Close'])) {
 						labourcost=0,
 						overheadcost=0,
 						lastcost='" . $WORow['currcost'] . "'
-					WHERE stockid='" . $_POST['StockID'] . "'";
+					WHERE stockid='" . $WORow['stockid'] . "'";
 
 			$ErrMsg = _('The cost details for the stock item could not be updated because');
 			$DbgMsg = _('The SQL that failed was');

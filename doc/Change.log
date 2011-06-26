@@ -1,6 +1,9 @@
 webERP Change Log
 
-26/6/11 Phil: Went back to no numberformating on PO_Items.php price and quantity - Brian May still reporting issues
+26/6/11 Phil: Fixed reference to $_POST['StockID'] in WorkOrderCosting.php when updating the new weighted average cost
+26/6/11 Phil: Went back to no number_formatting on PurchData.php
+26/6/11 Phil: Went back to no number_formatting on PO_Items.php price and quantity - Brian May still reporting issues
+25/6/11 Phil: Made PO_PDFPurchOrder.php have the description of the order item run over several lines where it exceeds the width of the space allowed for it
 22/6/11 Phil: Added message to AccountGroups.php to show that child account groups cannot have changes to their account section, their profit and loss or balance sheet and sequence in TB as these properties belong only to parent account groups and are inherited by the kids
 23/6/11 Phil: SelectOrderItems.php includes/DefineCartClass.php repaired credit checks 
 19/6/11 Phil: Credit_Invoice.php typos in quoting changes preventing posting credits on write offs also sql on gl account selection for write off
