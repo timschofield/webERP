@@ -1,6 +1,8 @@
 webERP Change Log
 
-27/6/11 Exson: MRP>php fixed modulus arithmetic that prevented suggesting production quantities where the quantity was less than 1 - the calculation using PanSize should round up to the nearest whole unit to manufacture
+28/6/11 Phil: Make assembly items explode into components on packing slips PrintCustOrder_generic.php
+28/6/11 Exson: MRPDemands.php links missing ? now fixed - script fixed for quoting variable name CamelCasing
+27/6/11 Exson: MRP.php fixed modulus arithmetic that prevented suggesting production quantities where the quantity was less than 1 - the calculation using PanSize should round up to the nearest whole unit to manufacture
 26/6/11 Phil: Fixed reference to $_POST['StockID'] in WorkOrderCosting.php when updating the new weighted average cost
 26/6/11 Phil: Went back to no number_formatting on PurchData.php
 26/6/11 Phil: Went back to no number_formatting on PO_Items.php price and quantity - Brian May still reporting issues

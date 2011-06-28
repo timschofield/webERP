@@ -103,8 +103,9 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 				$k++;
 			}
 			$tabindex=$j+4;
-			echo "<td><input tabindex='".$tabindex."' type=submit name='StockID' value='".$myrow['stockid']."'</td>
-				<td>".$myrow['description']."</td></tr>";
+			echo '<td><input tabindex="' . $tabindex . '" type=submit name="StockID" value="' . $myrow['stockid'] .'"</td>
+				<td>' . $myrow['description'] . '</td>
+				</tr>';
 			$j++;
 	}  //end of while loop
 
@@ -212,7 +213,7 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 
 		$result = DB_query($sql,$db,_('The update/addition of the MRP demand record failed because'));
 		prnMsg($msg,'success');
-		echo '<br>';
+		echo '<br />';
 		unset ($_POST['MRPDemandtype']);
 		unset ($_POST['Quantity']);
 		unset ($_POST['StockID']);
@@ -225,7 +226,7 @@ display($db,$StockID,$DemandID);
 } // End of function submit()
 
 
-function delete(&$db,$DemandID,$demandtype,$StockID) { //####DELETE_DELETE_DELETE_DELETE_DELETE_DELETE_####
+function delete(&$db,$DemandID,$DemandType,$StockID) { //####DELETE_DELETE_DELETE_DELETE_DELETE_DELETE_####
 
 // If wanted to have a Confirm routine before did actually deletion, could check if
 // deletion = "yes"; if it did, display link that redirects back to this page
@@ -234,8 +235,8 @@ function delete(&$db,$DemandID,$demandtype,$StockID) { //####DELETE_DELETE_DELET
 //  This deletes an individual record by DemandID if called from a listall that shows
 // edit/delete or deletes all of a particular demand type if press Delete Demand Type button.
 	$where = " ";
-	if ($demandtype) {
-		$where = " WHERE mrpdemandtype ='"  .  $demandtype . "'";
+	if ($DemandType) {
+		$where = " WHERE mrpdemandtype ='"  .  $DemandType . "'";
 	}
 	if ($DemandID) {
 		$where = " WHERE demandid ='"  .  $DemandID . "'";
@@ -246,7 +247,7 @@ function delete(&$db,$DemandID,$demandtype,$StockID) { //####DELETE_DELETE_DELET
 	if ($DemandID) {
 		prnMsg(_('The MRP demand record for') .' '. $StockID .' '. _('has been deleted'),'succes');
 	} else {
-		prnMsg(_('All records for demand type') .' '. $demandtype .' ' . _('have been deleted'),'succes');
+		prnMsg(_('All records for demand type') .' '. $DemandType .' ' . _('have been deleted'),'succes');
 	}
 	unset ($DemandID);
 	unset ($StockID);
@@ -255,7 +256,7 @@ function delete(&$db,$DemandID,$demandtype,$StockID) { //####DELETE_DELETE_DELET
 } // End of function delete()
 
 
-function listall(&$db,$part,$demandtype)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
+function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
 
 // List all mrpdemands records, with anchors to Edit or Delete records if hit List All anchor
 // Lists some in hit List Selection submit button, and uses part number if it is entered or
@@ -264,33 +265,34 @@ function listall(&$db,$part,$demandtype)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 	echo '<form action="' . $_SERVER['PHP_SELF']  .'" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$where = " ";
-	if ($demandtype) {
-		$where = " WHERE mrpdemandtype ='"  .  $demandtype . "'";
+	if ($DemandType) {
+		$where = " WHERE mrpdemandtype ='"  .  $DemandType . "'";
 	}
 	if ($part) {
 		$where = " WHERE mrpdemands.stockid ='"  .  $part . "'";
 	}
 	// If part is entered, it overrides demandtype
-	$sql = 'SELECT mrpdemands.demandid,
+	$sql = "SELECT mrpdemands.demandid,
 				   mrpdemands.stockid,
 				   mrpdemands.mrpdemandtype,
 				   mrpdemands.quantity,
 				   mrpdemands.duedate,
 				   stockmaster.description
-		FROM mrpdemands
-		LEFT JOIN stockmaster on mrpdemands.stockid = stockmaster.stockid' .
-		 $where	. ' ORDER BY mrpdemands.stockid, mrpdemands.duedate';
-	//echo "<br/>sql is $sql<br/>";
+			FROM mrpdemands
+			LEFT JOIN stockmaster on mrpdemands.stockid = stockmaster.stockid" .
+			 $where	. " ORDER BY mrpdemands.stockid, mrpdemands.duedate";
+	
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<table class=selection>
-		<tr bgcolor =#800000><th>" . _('Part Number') . "</th>
-							<th>" . _('Description') . "</th>
-							<th>" . _('Demand Type') . "</th>
-							<th>" . _('Quantity') . "</th>
-							<th>" . _('Due Date') . "</th>
-					</tr>";
+	echo '<table class="selection">
+		<tr bgcolor =#800000>
+			<th>' . _('Part Number') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Demand Type') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Due Date') . '</th>
+			</tr>';
 	$ctr = 0;
 	while ($myrow = DB_fetch_row($result)) {
 		$displaydate = ConvertSQLDate($myrow[4]);
@@ -300,8 +302,8 @@ function listall(&$db,$part,$demandtype)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 				<td>' . $myrow[2] . '</td>
 				<td>' . $myrow[3] . '</td>
 				<td>' . $displaydate . '</td>
-				<td><a href="' .$_SERVER['PHP_SELF'] .'DemandID=' . $myrow[0] . '&StockID=' . $myrow[1] . '">' . _('Edit') . '</td>
-				<td><a href="' . $_SERVER['PHP_SELF'] . 'DemandID=' . $myrow[0] . '&StockID=' . $myrow[1].'&delete=yes">' . _('Delete') .'</td>
+				<td><a href="' .$_SERVER['PHP_SELF'] .'?DemandID=' . $myrow[0] . '&StockID=' . $myrow[1] . '">' . _('Edit') . '</td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?DemandID=' . $myrow[0] . '&StockID=' . $myrow[1].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Delete') .'</td>
 				</tr>';
 	}
 
@@ -378,15 +380,21 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 			$_POST['Duedate']=' ';
 		}
 
-		echo '<tr><td>' . _('Quantity') . ":</td><td><input type='Text' name='Quantity' class=number size=6
-			maxlength=6 value=" . $_POST['Quantity'] . '></td></tr><tr><td>' . _('Due Date') . ":</td>
-			<td><input type='Text' class=date alt='".$_SESSION['DefaultDateFormat']."' name='Duedate' size=12
-			maxlength=12 value=" . $_POST['Duedate'] . '></td></tr>';
+		echo '<tr><td>' . _('Quantity') . ':</td>
+				<td><input type="text" name="Quantity" class="number" size="6" maxlength="6" value=' . $_POST['Quantity'] . '></td>
+			</tr>
+			<tr>
+				<td>' . _('Due Date') . ':</td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Duedate" size="12" maxlength="12" value="' . $_POST['Duedate'] . '"></td>
+			</tr>';
 		// Generate selections for Demand Type
-		echo '<tr><td>' . _('Demand Type') . "</td><td><select name='MRPDemandtype'>";
-		$sql = 'SELECT mrpdemandtype,
+		echo '<tr>
+				<td>' . _('Demand Type') . '</td>
+				<td><select name="MRPDemandtype">';
+				
+		$sql = "SELECT mrpdemandtype,
 						description
-				FROM mrpdemandtypes';
+				FROM mrpdemandtypes";
 		$result = DB_query($sql,$db);
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($_POST['MRPDemandtype']) and $myrow['mrpdemandtype']==$_POST['MRPDemandtype']) {
@@ -399,18 +407,18 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 		echo '</select></td></tr>';
 
 		echo '</table>';
-		echo '<br><div class=centre><input type="submit" name="submit" value="' . _('Enter Information') . '">&nbsp&nbsp';
+		echo '<br />
+			<div class=centre><input type="submit" name="submit" value="' . _('Enter Information') . '">&nbsp&nbsp';
 		echo '<input type="submit" name="listsome" value="' . _('List Selection') . '">&nbsp&nbsp';
-		echo '<input type="Submit" name="deletesome" value="' . _('Delete Demand Type') . '">';
+		echo '<input type="submit" name="deletesome" value="' . _('Delete Demand Type') . '">';
 		// If mrpdemand record exists, display option to delete it
 		if ((isset($DemandID)) AND (DB_num_rows($result) > 0)) {
-			echo '<br/><br/><a href=" ' . $_SERVER['PHP_SELF'] . '?&delete=yes&StockID='.$StockID.'&DemandID=' . $DemandID . '">' . _('Or Delete Record') ;
+			echo '<br/><br/><a href=" ' . $_SERVER['PHP_SELF'] . '?delete=yes&StockID='.$StockID.'&DemandID=' . $DemandID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Or Delete Record') ;
 		}
 	}
 	echo '</form>';
 
 } // End of function display()
-
 
 include('includes/footer.inc');
 ?>

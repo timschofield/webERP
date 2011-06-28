@@ -2,7 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.20 $ */
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -10,16 +9,27 @@ include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
-        $title = _('Select Order To Print');
-        include('includes/header.inc');
-        echo '<div class=centre><br /><br /><br />';
-        prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
-        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
-                <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-                </td></tr></table></div><br /><br /><br />';
-        include('includes/footer.inc');
-        exit();
+	$title = _('Select Order To Print');
+	include('includes/header.inc');
+	echo '<div class=centre><br /><br /><br />';
+	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
+	echo '<br />
+			<br />
+			<br />
+			<table class="table_index">
+			<tr>
+			<td class="menu_group_item">
+			<li><a href="'. $rootpath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
+			<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			</td>
+			</tr>
+			</table>
+			</div>
+			<br />
+			<br />
+			<br />';
+	include('includes/footer.inc');
+	exit();
 }
 
 /*retrieve the order details from the database to print */
@@ -27,50 +37,62 @@ $ErrMsg = _('There was a problem retrieving the order header details for Order N
 
 $sql = "SELECT salesorders.debtorno,
     		salesorders.customerref,
-		salesorders.comments,
-		salesorders.orddate,
-		salesorders.deliverto,
-		salesorders.deladd1,
-		salesorders.deladd2,
-		salesorders.deladd3,
-		salesorders.deladd4,
-		salesorders.deladd5,
-		salesorders.deladd6,
-		salesorders.deliverblind,
-		debtorsmaster.name,
-		debtorsmaster.address1,
-		debtorsmaster.address2,
-		debtorsmaster.address3,
-		debtorsmaster.address4,
-		debtorsmaster.address5,
-		debtorsmaster.address6,
-		shippers.shippername,
-		salesorders.printedpackingslip,
-		salesorders.datepackingslipprinted,
-		locations.locationname
-	FROM salesorders,
-		debtorsmaster,
-		shippers,
-		locations
-	WHERE salesorders.debtorno=debtorsmaster.debtorno
-	AND salesorders.shipvia=shippers.shipper_id
-	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.orderno='" . $_GET['TransNo'] . "'";
-
+			salesorders.comments,
+			salesorders.orddate,
+			salesorders.deliverto,
+			salesorders.deladd1,
+			salesorders.deladd2,
+			salesorders.deladd3,
+			salesorders.deladd4,
+			salesorders.deladd5,
+			salesorders.deladd6,
+			salesorders.deliverblind,
+			debtorsmaster.name,
+			debtorsmaster.address1,
+			debtorsmaster.address2,
+			debtorsmaster.address3,
+			debtorsmaster.address4,
+			debtorsmaster.address5,
+			debtorsmaster.address6,
+			shippers.shippername,
+			salesorders.printedpackingslip,
+			salesorders.datepackingslipprinted,
+			locations.locationname
+		FROM salesorders,
+			debtorsmaster,
+			shippers,
+			locations
+		WHERE salesorders.debtorno=debtorsmaster.debtorno
+		AND salesorders.shipvia=shippers.shipper_id
+		AND salesorders.fromstkloc=locations.loccode
+		AND salesorders.orderno='" . $_GET['TransNo'] . "'";
+	
 $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
-        $title = _('Print Packing Slip Error');
-        include('includes/header.inc');
-         echo '<div class=centre><br /><br /><br />';
-        prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-                <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-                </td></tr></table></div><br /><br /><br />';
-        include('includes/footer.inc');
-        exit();
+	$title = _('Print Packing Slip Error');
+	include('includes/header.inc');
+	echo '<div class=centre><br /><br /><br />';
+	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
+	echo '<br />
+			<br />
+			<br />
+			<table class="table_index">
+			<tr>
+			<td class="menu_group_item">
+			<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+			<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			</td>
+			</tr>
+			</table>
+			</div>
+			<br />
+			<br />
+			<br />';
+			
+	include('includes/footer.inc');
+	exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
         $myrow = DB_fetch_array($result);
@@ -90,10 +112,18 @@ if (DB_num_rows($result)==0){
 
                 echo '<br /><br /><br />';
                 echo  _('Or select another Order Number to Print');
-                echo '<table class="table_index"><tr><td class="menu_group_item">
+                echo '<table class="table_index">
+						<tr>
+						<td class="menu_group_item">
                         <li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
                         <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-                        </td></tr></table></div><br /><br /><br />';
+                        </td>
+                        </tr>
+                        </table>
+                        </div>
+                        <br />
+                        <br />
+                        <br />';
 
                 include('includes/footer.inc');
                 exit;
@@ -102,9 +132,9 @@ if (DB_num_rows($result)==0){
 
 /*retrieve the order details from the database to print */
 
-/* Then there's an order to print and its not been printed already (or its been flagged for reprinting/ge_Width=807;
-)
+/* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
 LETS GO */
+
 $PaperSize = 'A4_Landscape';
 include('includes/PDFStarter.php');
 //$pdf->selectFont('./fonts/Helvetica.afm');
@@ -119,22 +149,24 @@ $ListCount = 0;
 
 for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for office */
 	if ($i==2){
-                $PageNumber = 1;
+		$PageNumber = 1;
 		$pdf->newPage();
 	}
 	/* Now ... Has the order got any line items still outstanding to be invoiced */
-	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' .
+	$ErrMsg = _('There was a problem retrieving the order details for Order Number') . ' ' .
 		$_GET['TransNo'] . ' ' . _('from the database');
 
 	$sql = "SELECT salesorderdetails.stkcode,
-			stockmaster.description,
-			salesorderdetails.quantity,
-			salesorderdetails.qtyinvoiced,
-			salesorderdetails.unitprice,
-			salesorderdetails.narrative
-		FROM salesorderdetails INNER JOIN stockmaster
-			ON salesorderdetails.stkcode=stockmaster.stockid
-		WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
+					stockmaster.description,
+					salesorderdetails.quantity,
+					salesorderdetails.qtyinvoiced,
+					salesorderdetails.unitprice,
+					salesorderdetails.narrative,
+					stockmaster.mbflag,
+					stockmaster.decimalplaces
+				FROM salesorderdetails INNER JOIN stockmaster
+					ON salesorderdetails.stkcode=stockmaster.stockid
+				WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_num_rows($result)>0){
@@ -144,25 +176,55 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 		while ($myrow2=DB_fetch_array($result)){
 
             $ListCount ++;
-
-			$DisplayQty = number_format($myrow2['quantity'],2);
-			$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
-			$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],2);
+			
+			$DisplayQty = number_format($myrow2['quantity'],$myrow2['decimalplaces']);
+			$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+			$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode']);
 			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description']);
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
 			$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 			$LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize,$DisplayPrevDel,'right');
-
+		
 			if ($YPos-$line_height <= 50){
 			/* We reached the end of the page so finsih off the page and start a newy */
 				$PageNumber++;
 				include ('includes/PDFOrderPageHeader_generic.inc');
 			} //end if need a new page headed up
-			else{
+			else {
 				/*increment a line down for the next line item */
 				$YPos -= ($line_height);
+			}
+			if ($myrow2['mbflag']=='A'){ 
+				/*Then its an assembly item - need to explode into it's components for packing list purposes */
+				$sql = "SELECT bom.component,
+								bom.quantity,
+								stockmaster.description,
+								stockmaster.decimalplaces
+						FROM bom INNER JOIN stockmaster 
+						ON bom.component=stockmaster.stockid
+						WHERE bom.parent='" . $myrow2['stkcode'] . "'";
+				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
+				$AssemblyResult = DB_query($sql,$db,$ErrMsg);
+				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, _('Assembly Components:-'));
+				$YPos -= ($line_height);
+				/*Loop around all the components of the assembly and list the quantity supplied */
+				while ($ComponentRow=DB_fetch_array($AssemblyResult)){
+					$DisplayQtySupplied = number_format($ComponentRow['quantity']*($myrow2['quantity'] - $myrow2['qtyinvoiced']),$ComponentRow['decimalplaces']);
+					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$ComponentRow['component']);
+					$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$ComponentRow['description']);
+					$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
+					if ($YPos-$line_height <= 50){
+						/* We reached the end of the page so finsih off the page and start a newy */
+						$PageNumber++;
+						include ('includes/PDFOrderPageHeader_generic.inc');
+					} //end if need a new page headed up
+					 else{
+						/*increment a line down for the next line item */
+						$YPos -= ($line_height);
+					}
+				} //loop around all the components of the assembly
 			}
 		} //end while there are line items to print out
 
@@ -172,18 +234,21 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 } /*end for loop to print the whole lot twice */
 
-if ($ListCount == 0) {   //UldisN
-        $title = _('Print Packing Slip Error');
-        include('includes/header.inc');
-        echo '<p>'. _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
-                '<br /><a href="' . $rootpath . '/SelectSalesOrder.php">'. _('Print Another Packing Slip/Order').
-                '</a>' . '<br />'. '<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
-        include('includes/footer.inc');
+if ($ListCount == 0) {
+	$title = _('Print Packing Slip Error');
+	include('includes/header.inc');
+	echo '<p>'. _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
+			'<br /><a href="' . $rootpath . '/SelectSalesOrder.php">'. _('Print Another Packing Slip/Order').
+			'</a>
+			<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+	include('includes/footer.inc');
 	exit;
 } else {
-    	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');//UldisN
-    	$pdf->__destruct(); //UldisN
-	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno='" .$_GET['TransNo'] . "'";
+    	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');
+    	$pdf->__destruct();
+	$sql = "UPDATE salesorders SET printedpackingslip=1, 
+									datepackingslipprinted='" . Date('Y-m-d') . "' 
+				WHERE salesorders.orderno='" .$_GET['TransNo'] . "'";
 	$result = DB_query($sql,$db);
 }
 
