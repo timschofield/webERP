@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'GroupName';
 		$i++;
 	}
-	if (strlen($_POST['GroupName'])==0){
+	if (mb_strlen($_POST['GroupName'])==0){
 		$InputError = 1;
 		prnMsg( _('The account group name must be at least one character long'),'error');
 		$Errors[$i] = 'GroupName';
