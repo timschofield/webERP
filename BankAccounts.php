@@ -9,7 +9,7 @@ $title = _('Bank Accounts Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank') . '" alt="" />' . ' ' . $title . '</p>';
-echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to "yes" to print Account details on Invoices (only one account can be set to "yes").') . '.</div><br />';
+echo '<div class="page_help_text">' . _('Update Bank Account details.  Account Code is for SWIFT or BSB type Bank Codes.  Set Default for Invoices to "Currency Default"  of "Fallback Default" to print Account details on Invoices (only one account should be set to "Fall Back Default").') . '.</div><br />';
 
 if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_GET['SelectedBankAccount'];
@@ -133,6 +133,7 @@ if (isset($_POST['submit'])) {
 		echo '<br />';
 		unset($_POST['AccountCode']);
 		unset($_POST['BankAccountName']);
+		unset($_POST['BankAccountCode']);
 		unset($_POST['BankAccountNumber']);
 		unset($_POST['BankAddress']);
 		unset($_POST['CurrCode']);
@@ -207,8 +208,10 @@ If (!isset($SelectedBankAccount)) {
 	}
 	if ($myrow['invoice']==0) {
 		$DefaultBankAccount=_('No');
-	} else {
-		$DefaultBankAccount=_('Yes');
+	} elseif ($myrow['invoice']==1) {
+		$DefaultBankAccount=_('Fall Back Default');
+	} elseif ($myrow['invoice']==2) {
+		$DefaultBankAccount=_('Currency Default');
 	}
 	printf('<td>%s<br /><font size=2>%s</font></td>
 			<td>%s</td>
@@ -363,15 +366,22 @@ if (isset($SelectedBankAccount)) {
 						$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['invoice']== 1) {
-			echo '<option selected value="1">'._('Yes').'</option>
+			echo '<option selected value="1">'._('Fall Back Default').'</option>
+					<option value="2">'._('Currency Default') . '</option>
 					<option value="0">'._('No').'</option>';
+		} elseif ($myrow['invoice']== 2) {
+			echo '<option value="0">'._('No').'</option>
+					<option selected value="2">'._('Currency Default') . '</option>
+					<option value="1">'._('Fall Back Default').'</option>';
 		} else {
 			echo '<option selected value="0">'._('No').'</option>
-					<option value="1">'._('Yes').'</option>';
+					<option  value="2">'._('Currency Default') . '</option>
+					<option value="1">'._('Fall Back Default').'</option>';
 		}
 	}//end while loop
 } else {
-	echo '<option value="1">'._('Yes').'</option>
+	echo '<option value="1">'._('Fall Back Default').'</option>
+			<option  value="2">'._('Currency Default') . '</option>
 			<option value="0">'._('No').'</option>';
 }
 

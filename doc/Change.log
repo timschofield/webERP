@@ -1,5 +1,6 @@
 webERP Change Log
 
+29/6/11 Phil: Bank account to allow default for invoice in currency and also a fall back default to show on invoice where no default for the currency. Modified BankAccounts.php and PrintCustTrans.php (Landscape only) to show the pertinent bank account given the currency of the invoice
 28/6/11 Phil: Make assembly items explode into components on packing slips PrintCustOrder_generic.php
 28/6/11 Exson: MRPDemands.php links missing ? now fixed - script fixed for quoting variable name CamelCasing
 27/6/11 Exson: MRP.php fixed modulus arithmetic that prevented suggesting production quantities where the quantity was less than 1 - the calculation using PanSize should round up to the nearest whole unit to manufacture

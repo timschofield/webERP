@@ -80,121 +80,121 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 		if ($InvOrCredit=='Invoice') {
 			$sql = "SELECT debtortrans.trandate,
-					debtortrans.ovamount,
-					debtortrans.ovdiscount,
-					debtortrans.ovfreight,
-					debtortrans.ovgst,
-					debtortrans.rate,
-					debtortrans.invtext,
-					debtortrans.consignment,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					debtorsmaster.address5,
-					debtorsmaster.address6,
-					debtorsmaster.currcode,
-					debtorsmaster.invaddrbranch,
-					debtorsmaster.taxref,
-					paymentterms.terms,
-					salesorders.deliverto,
-					salesorders.deladd1,
-					salesorders.deladd2,
-					salesorders.deladd3,
-					salesorders.deladd4,
-					salesorders.deladd5,
-					salesorders.deladd6,
-					salesorders.customerref,
-					salesorders.orderno,
-					salesorders.orddate,
-					locations.locationname,
-					shippers.shippername,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.braddress2,
-					custbranch.braddress3,
-					custbranch.braddress4,
-					custbranch.braddress5,
-					custbranch.braddress6,
-					custbranch.brpostaddr1,
-					custbranch.brpostaddr2,
-					custbranch.brpostaddr3,
-					custbranch.brpostaddr4,
-					custbranch.brpostaddr5,
-					custbranch.brpostaddr6,
-					salesman.salesmanname,
-					debtortrans.debtorno,
-					debtortrans.branchcode
-				FROM debtortrans,
-					debtorsmaster,
-					custbranch,
-					salesorders,
-					shippers,
-					salesman,
-					locations,
-					paymentterms
-				WHERE debtortrans.order_ = salesorders.orderno
-				AND debtortrans.type=10
-				AND debtortrans.transno='" . $FromTransNo . "'
-				AND debtortrans.shipvia=shippers.shipper_id
-				AND debtortrans.debtorno=debtorsmaster.debtorno
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
-				AND debtortrans.debtorno=custbranch.debtorno
-				AND debtortrans.branchcode=custbranch.branchcode
-				AND custbranch.salesman=salesman.salesmancode
-				AND salesorders.fromstkloc=locations.loccode";
+							debtortrans.ovamount,
+							debtortrans.ovdiscount,
+							debtortrans.ovfreight,
+							debtortrans.ovgst,
+							debtortrans.rate,
+							debtortrans.invtext,
+							debtortrans.consignment,
+							debtorsmaster.name,
+							debtorsmaster.address1,
+							debtorsmaster.address2,
+							debtorsmaster.address3,
+							debtorsmaster.address4,
+							debtorsmaster.address5,
+							debtorsmaster.address6,
+							debtorsmaster.currcode,
+							debtorsmaster.invaddrbranch,
+							debtorsmaster.taxref,
+							paymentterms.terms,
+							salesorders.deliverto,
+							salesorders.deladd1,
+							salesorders.deladd2,
+							salesorders.deladd3,
+							salesorders.deladd4,
+							salesorders.deladd5,
+							salesorders.deladd6,
+							salesorders.customerref,
+							salesorders.orderno,
+							salesorders.orddate,
+							locations.locationname,
+							shippers.shippername,
+							custbranch.brname,
+							custbranch.braddress1,
+							custbranch.braddress2,
+							custbranch.braddress3,
+							custbranch.braddress4,
+							custbranch.braddress5,
+							custbranch.braddress6,
+							custbranch.brpostaddr1,
+							custbranch.brpostaddr2,
+							custbranch.brpostaddr3,
+							custbranch.brpostaddr4,
+							custbranch.brpostaddr5,
+							custbranch.brpostaddr6,
+							salesman.salesmanname,
+							debtortrans.debtorno,
+							debtortrans.branchcode
+						FROM debtortrans,
+							debtorsmaster,
+							custbranch,
+							salesorders,
+							shippers,
+							salesman,
+							locations,
+							paymentterms
+						WHERE debtortrans.order_ = salesorders.orderno
+						AND debtortrans.type=10
+						AND debtortrans.transno='" . $FromTransNo . "'
+						AND debtortrans.shipvia=shippers.shipper_id
+						AND debtortrans.debtorno=debtorsmaster.debtorno
+						AND debtorsmaster.paymentterms=paymentterms.termsindicator
+						AND debtortrans.debtorno=custbranch.debtorno
+						AND debtortrans.branchcode=custbranch.branchcode
+						AND custbranch.salesman=salesman.salesmancode
+						AND salesorders.fromstkloc=locations.loccode";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
 			}
 		} else {
 			$sql = "SELECT debtortrans.trandate,
-					debtortrans.ovamount,
-					debtortrans.ovdiscount,
-					debtortrans.ovfreight,
-					debtortrans.ovgst,
-					debtortrans.rate,
-					debtortrans.invtext,
-					debtorsmaster.invaddrbranch,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					debtorsmaster.address5,
-					debtorsmaster.address6,
-					debtorsmaster.currcode,
-					debtorsmaster.taxref,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.braddress2,
-					custbranch.braddress3,
-					custbranch.braddress4,
-					custbranch.braddress5,
-					custbranch.braddress6,
-					custbranch.brpostaddr1,
-					custbranch.brpostaddr2,
-					custbranch.brpostaddr3,
-					custbranch.brpostaddr4,
-					custbranch.brpostaddr5,
-					custbranch.brpostaddr6,
-					salesman.salesmanname,
-					debtortrans.debtorno,
-					debtortrans.branchcode,
-					paymentterms.terms
-				FROM debtortrans,
-					debtorsmaster,
-					custbranch,
-					salesman,
-					paymentterms
-				WHERE debtortrans.type=11
-				AND debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtortrans.transno='" . $FromTransNo . "'
-				AND debtortrans.debtorno=debtorsmaster.debtorno
-				AND debtortrans.debtorno=custbranch.debtorno
-				AND debtortrans.branchcode=custbranch.branchcode
-				AND custbranch.salesman=salesman.salesmancode";
+							debtortrans.ovamount,
+							debtortrans.ovdiscount,
+							debtortrans.ovfreight,
+							debtortrans.ovgst,
+							debtortrans.rate,
+							debtortrans.invtext,
+							debtorsmaster.invaddrbranch,
+							debtorsmaster.name,
+							debtorsmaster.address1,
+							debtorsmaster.address2,
+							debtorsmaster.address3,
+							debtorsmaster.address4,
+							debtorsmaster.address5,
+							debtorsmaster.address6,
+							debtorsmaster.currcode,
+							debtorsmaster.taxref,
+							custbranch.brname,
+							custbranch.braddress1,
+							custbranch.braddress2,
+							custbranch.braddress3,
+							custbranch.braddress4,
+							custbranch.braddress5,
+							custbranch.braddress6,
+							custbranch.brpostaddr1,
+							custbranch.brpostaddr2,
+							custbranch.brpostaddr3,
+							custbranch.brpostaddr4,
+							custbranch.brpostaddr5,
+							custbranch.brpostaddr6,
+							salesman.salesmanname,
+							debtortrans.debtorno,
+							debtortrans.branchcode,
+							paymentterms.terms
+						FROM debtortrans,
+							debtorsmaster,
+							custbranch,
+							salesman,
+							paymentterms
+						WHERE debtortrans.type=11
+						AND debtorsmaster.paymentterms = paymentterms.termsindicator
+						AND debtortrans.transno='" . $FromTransNo . "'
+						AND debtortrans.debtorno=debtorsmaster.debtorno
+						AND debtortrans.debtorno=custbranch.debtorno
+						AND debtortrans.branchcode=custbranch.branchcode
+						AND custbranch.salesman=salesman.salesmancode";
 
 			if ($_POST['PrintEDI']=='No')	{
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
@@ -219,35 +219,35 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 			if ($InvOrCredit=='Invoice') {
 
 				$sql = "SELECT stockmoves.stockid,
-						stockmaster.description,
-						-stockmoves.qty as quantity,
-						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . "* -stockmoves.qty) AS fxnet,
-						(stockmoves.price * " . $ExchRate . ") AS fxprice,
-						stockmoves.narrative,
-						stockmaster.units
-					FROM stockmoves,
-						stockmaster
-					WHERE stockmoves.stockid = stockmaster.stockid
-					AND stockmoves.type=10
-					AND stockmoves.transno=" . $FromTransNo . "
-					AND stockmoves.show_on_inv_crds=1";
+								stockmaster.description,
+								-stockmoves.qty as quantity,
+								stockmoves.discountpercent,
+								((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . "* -stockmoves.qty) AS fxnet,
+								(stockmoves.price * " . $ExchRate . ") AS fxprice,
+								stockmoves.narrative,
+								stockmaster.units
+							FROM stockmoves,
+								stockmaster
+							WHERE stockmoves.stockid = stockmaster.stockid
+							AND stockmoves.type=10
+							AND stockmoves.transno=" . $FromTransNo . "
+							AND stockmoves.show_on_inv_crds=1";
 			} else {
 		/* only credit notes to be retrieved */
 				$sql = "SELECT stockmoves.stockid,
-						stockmaster.description,
-						stockmoves.qty as quantity,
-						stockmoves.discountpercent,
-						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) AS fxnet,
-						(stockmoves.price * " . $ExchRate . ") AS fxprice,
-						stockmoves.narrative,
-						stockmaster.units
-					FROM stockmoves,
-						stockmaster
-					WHERE stockmoves.stockid = stockmaster.stockid
-					AND stockmoves.type=11
-					AND stockmoves.transno=" . $FromTransNo . "
-					AND stockmoves.show_on_inv_crds=1";
+								stockmaster.description,
+								stockmoves.qty as quantity,
+								stockmoves.discountpercent,
+								((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) AS fxnet,
+								(stockmoves.price * " . $ExchRate . ") AS fxprice,
+								stockmoves.narrative,
+								stockmaster.units
+							FROM stockmoves,
+								stockmaster
+							WHERE stockmoves.stockid = stockmaster.stockid
+							AND stockmoves.type=11
+							AND stockmoves.transno=" . $FromTransNo . "
+							AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
 			$result=DB_query($sql,$db);
@@ -407,6 +407,36 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					$YPos-=12;
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,220,$FontSize,$LeftOvers);
 				}
+				/*print out bank details */
+				/*Get currency default for the currency of the invocie */
+				$PrintBankDetails = true; //assume we print bank details by default
+				$BankResult = DB_query("SELECT bankaddress,
+												bankaccountnumber,
+												bankaccountcode 
+										FROM bankaccounts 
+										WHERE invoice=2
+										AND currcode='" . $myrow['currcode'] . "'",
+										$db);
+				if (DB_num_rows($BankResult)==0){
+					/* If no currency default check the fall back default */
+					$BankResult = DB_query("SELECT bankaddress,
+												bankaccountnumber,
+												bankaccountcode
+											FROM bankaccounts 
+											WHERE invoice=1",
+											$db);
+					if (DB_num_rows($BankResult)==0){
+						$PrintBankDetails = false;
+					}
+				}
+				if ($PrintBankDetails){
+					$BankDetailsRow = DB_fetch_array($BankResult);
+					$YPos-=4;
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,220,$FontSize,$BankDetailsRow['bankaddress']);
+					$YPos-=12;
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,220,$FontSize,$BankDetailsRow['bankaccountcode'] . ' ' . _('Account No:') . ' ' . $BankDetailsRow['bankaccountnumber']);
+				}
+				
 				/* Add Images for Visa / Mastercard / Paypal */
 				if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
 					$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);

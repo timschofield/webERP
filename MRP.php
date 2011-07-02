@@ -45,7 +45,8 @@ if (isset($_POST['submit'])) {
 	$sql = "INSERT INTO passbom (part, sortpart)
 					   SELECT bom.component AS part,
 							  CONCAT(bom.parent,'%',bom.component) AS sortpart
-							  FROM bom LEFT JOIN bom as bom2 ON bom.parent = bom2.component
+							  FROM bom LEFT JOIN bom as bom2 
+							  ON bom.parent = bom2.component
 					  WHERE bom2.component IS NULL";
 	$result = DB_query($sql,$db);
 
@@ -116,11 +117,11 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($result)) {
 			$parts = explode('%',$myrow['sortpart']);
-			$level = $myrow['level'];
+			$Level = $myrow['level'];
 			$ctr = 0;
 			foreach ($parts as $part) {
 			   $ctr++;
-			   $newlevel = $level - $ctr;
+			   $newlevel = $Level - $ctr;
 			   $sql = "INSERT INTO bomlevels (part, level) VALUES('" . $part . "','" . $newlevel . "')";
 			   $result2 = DB_query($sql,$db);
 			} // End of foreach
@@ -223,7 +224,9 @@ if (isset($_POST['submit'])) {
 											mrpdemandtype varchar(6),
 											orderno int(11),
 											directdemand smallint,
-											whererequired char(20)) DEFAULT CHARSET=utf8";
+											whererequired char(20),
+											KEY part (part)
+															) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of mrprequirements failed because'));
 
 	prnMsg(_('Loading requirements from sales orders'),'info');
@@ -314,7 +317,6 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('Loading requirements based on reorder level'),'info');
 	flush();
 
-	$result = DB_query("ALTER TABLE mrprequirements ADD INDEX part(part)",$db);
 
 	// In the following section, create mrpsupplies from open purchase orders,
 	// open work orders, and current quantity onhand from locstock
@@ -398,7 +400,7 @@ if (isset($_POST['submit'])) {
 							  FROM locstock
 							  WHERE quantity > 0 " .
 							  $WhereLocation .
-						  'GROUP BY stockid';
+						  "GROUP BY stockid";
 	$result = DB_query($sql,$db);
 
 	prnMsg(_('Loading supplies from work orders'),'info');
@@ -434,14 +436,14 @@ if (isset($_POST['submit'])) {
 	flush();
 	$result = DB_query("DROP TABLE IF EXISTS mrpplannedorders",$db);
 	$sql = "CREATE TABLE mrpplannedorders (id int(11) NOT NULL auto_increment, 
-                                              part char(20),
-					      duedate date,
-					      supplyquantity double,
-					      ordertype varchar(6),
-					      orderno int(11),
-					      mrpdate date,
-                                              updateflag smallint(6),
-                                              PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
+											part char(20),
+											duedate date,
+											supplyquantity double,
+											ordertype varchar(6),
+											orderno int(11),
+											mrpdate date,
+											updateflag smallint(6),
+											PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
 	$result = DB_query($sql,$db,_('Create of mrpplannedorders failed because'));
 
 	// Find the highest and lowest level number
@@ -449,8 +451,8 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 
 	$myrow = DB_fetch_row($result);
-	$maxlevel = $myrow[0];
-	$minlevel = $myrow[1];
+	$MaxLevel = $myrow[0];
+	$MinLevel = $myrow[1];
 
 	// At this point, have all requirements in mrprequirements and all supplies to satisfy
 	// those requirements in mrpsupplies.  Starting at the top level, will read all parts one
@@ -458,17 +460,17 @@ if (isset($_POST['submit'])) {
 	// planned orders to satisfy requirements. If there is a net requirement from a higher level
 	// part, that serves as a gross requirement for a lower level part, so will read down through
 	// the Bill of Materials to generate those requirements in function LevelNetting().
-	for ($level = $maxlevel; $level >= $minlevel; $level--) {
-		$sql = "SELECT * FROM levels WHERE level = '" . $level ."' LIMIT 50000"; //should cover most eventualities!! ... yes indeed :-)
+	for ($Level = $MaxLevel; $Level >= $MinLevel; $Level--) {
+		$sql = "SELECT * FROM levels WHERE level = '" . $Level ."' LIMIT 50000"; //should cover most eventualities!! ... yes indeed :-)
 
-		prnMsg('</br>------ ' . _('Processing level') .' ' . $level . ' ------','info');
+		prnMsg('------ ' . _('Processing level') .' ' . $Level . ' ------','info');
 		flush();
 		$result = DB_query($sql,$db);
 		while ($myrow=DB_fetch_array($result)) {
 				LevelNetting($db,$myrow['part'],$myrow['eoq'],$myrow['pansize'],$myrow['shrinkfactor']);
 		}  //end of while loop
 	} // end of for
-	echo '</br>' . _('End time') . ': ' . date('h:i:s') . '</br>';
+	echo '<br />' . _('End time') . ': ' . date('h:i:s') . '<br />';
 
 	// Create mrpparameters table
 	$sql = "DROP TABLE IF EXISTS mrpparameters";
