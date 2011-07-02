@@ -17,7 +17,7 @@
 /* Verify that the branch number is valid, and doesn't already
    exist.*/
 	function VerifyBranchNo($DebtorNumber, $BranchNumber, $i, $Errors, $db) {
-		if ((strlen($BranchNumber)<1) or (strlen($BranchNumber)>10)) {
+		if ((mb_strlen($BranchNumber)<1) or (mb_strlen($BranchNumber)>10)) {
 			$Errors[$i] = IncorrectBranchNumberLength;
 		}
 		$Searchsql = "SELECT count(debtorno)
@@ -34,7 +34,7 @@
 
 /* Verify that the branch number exists.*/
 	function VerifyBranchNoExists($DebtorNumber, $BranchNumber, $i, $Errors, $db) {
-		if ((strlen($BranchNumber)<1) or (strlen($BranchNumber)>10)) {
+		if ((mb_strlen($BranchNumber)<1) or (mb_strlen($BranchNumber)>10)) {
 			$Errors[$i] = IncorrectBranchNumberLength;
 		}
 		$Searchsql = "SELECT count(debtorno)
@@ -52,7 +52,7 @@
 
 /* Check that the name exists and is 40 characters or less long */
 	function VerifyBranchName($BranchName, $i, $Errors) {
-		if ((strlen($BranchName)<1) or (strlen($BranchName)>40)) {
+		if ((mb_strlen($BranchName)<1) or (mb_strlen($BranchName)>40)) {
 			$Errors[$i] = IncorrectBranchNameLength;
 		}
 		return $Errors;
@@ -60,7 +60,7 @@
 
 /* Check that the address lines are correct length*/
 	function VerifyBranchAddressLine($AddressLine, $length, $i, $Errors) {
-		if (strlen($AddressLine)>$length) {
+		if (mb_strlen($AddressLine)>$length) {
 			$Errors[$i] = InvalidAddressLine;
 		}
 		return $Errors;
@@ -126,7 +126,7 @@
 
 /* Check that the phone number only has 20 or fewer characters */
 	function VerifyPhoneNumber($PhoneNumber, $i, $Errors) {
-		if (strlen($PhoneNumber)>20) {
+		if (mb_strlen($PhoneNumber)>20) {
 			$Errors[$i] = InvalidPhoneNumber;
 		}
 		return $Errors;
@@ -134,7 +134,7 @@
 
 /* Check that the fax number only has 20 or fewer characters */
 	function VerifyFaxNumber($FaxNumber, $i, $Errors) {
-		if (strlen($FaxNumber)>20) {
+		if (mb_strlen($FaxNumber)>20) {
 			$Errors[$i] = InvalidFaxNumber;
 		}
 		return $Errors;
@@ -142,7 +142,7 @@
 
 /* Check that the contact name only has 30 or fewer characters */
 	function VerifyContactName($ContactName, $i, $Errors) {
-		if (strlen($ContactName)>30) {
+		if (mb_strlen($ContactName)>30) {
 			$Errors[$i] = InvalidContactName;
 		}
 		return $Errors;
@@ -158,7 +158,7 @@
 
 /* Check that the email address is in a valid format and only has 55 or fewer characters */
 	function VerifyEmailAddress($EmailAddress, $i, $Errors) {
-		if (strlen($EmailAddress)>55 and !checkEmail($EmailAddress)) {
+		if (mb_strlen($EmailAddress)>55 and !checkEmail($EmailAddress)) {
 			$Errors[$i] = InvalidEmailAddress;
 		}
 		return $Errors;
@@ -221,7 +221,7 @@
 
 /* Check that the special instructions only have 256 or fewer characters */
 	function VerifySpecialInstructions($SpecialInstructions, $i, $Errors) {
-		if (strlen($SpecialInstructions)>256) {
+		if (mb_strlen($SpecialInstructions)>256) {
 			$Errors[$i] = InvalidSpecialInstructions;
 		}
 		return $Errors;
@@ -229,7 +229,7 @@
 
 /* Check that the customer branch code only has 30 or fewer characters */
 	function VerifyCustBranchCode($CustBranchCode, $i, $Errors) {
-		if (strlen($CustBranchCode)>30) {
+		if (mb_strlen($CustBranchCode)>30) {
 			$Errors[$i] = InvalidCustBranchCode;
 		}
 		return $Errors;
