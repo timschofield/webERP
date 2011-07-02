@@ -47,11 +47,11 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ReasonCode';
 		$i++;
 	}
-	if (strlen($_POST['ReasonDescription']) > 30) {
+	if (mb_strlen($_POST['ReasonDescription']) > 30) {
 		$InputError = 1;
 		prnMsg(_('The credit status description must be thirty characters or less long'),'error');
 	}
-	if (strlen($_POST['ReasonDescription']) == 0) {
+	if (mb_strlen($_POST['ReasonDescription']) == 0) {
 		$InputError = 1;
 		prnMsg(_('The credit status description must be entered'),'error');
 		$Errors[$i] = 'ReasonDescription';

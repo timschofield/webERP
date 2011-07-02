@@ -267,9 +267,9 @@ class Numbers_Words_fr_BE extends Numbers_Words
     {
         if (is_string($num)) {
             $ret = array();
-            $strlen = strlen($num);
-            $first = substr($num, 0, $strlen%3);
-            preg_match_all('/\d{3}/', substr($num, $strlen%3, $strlen), $m);
+            $mb_strlen = mb_strlen($num);
+            $first = substr($num, 0, $mb_strlen%3);
+            preg_match_all('/\d{3}/', substr($num, $mb_strlen%3, $mb_strlen), $m);
             $ret =& $m[0];
             if ($first) array_unshift($ret, $first);
             return $ret;
@@ -381,7 +381,7 @@ class Numbers_Words_fr_BE extends Numbers_Words
         }
 
         // if the absolute value is greater than 9.99*10^302, return infinity
-        if (strlen($num)>306) {
+        if (mb_strlen($num)>306) {
             return $ret . $this->_infinity;
         }
 

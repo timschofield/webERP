@@ -319,7 +319,7 @@
 		function send_data($data){
 
 			if(is_resource($this->connection)){
-				return fwrite($this->connection, $data.CRLF, strlen($data)+2);
+				return fwrite($this->connection, $data.CRLF, mb_strlen($data)+2);
 
 			}else
 				return FALSE;

@@ -28,7 +28,7 @@ if (isset($_POST['submit']) ) {
 	if (!is_long((integer)$_POST['priority'])) {
 		$InputError = 1;
 		prnMsg(_('The Contact priority must be an integer.'), 'error');
-	} elseif (strlen($_POST['note']) >200) {
+	} elseif (mb_strlen($_POST['note']) >200) {
 		$InputError = 1;
 		prnMsg(_("The contact's notes must be two hundred characters or less long"), 'error');
 	} elseif( trim($_POST['note']) == '' ) {

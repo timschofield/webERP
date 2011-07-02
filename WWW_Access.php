@@ -24,7 +24,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 	//first off validate inputs sensible
-	if (isset($_POST['SecRoleName']) && strlen($_POST['SecRoleName'])<4){
+	if (isset($_POST['SecRoleName']) && mb_strlen($_POST['SecRoleName'])<4){
 		$InputError = 1;
 		prnMsg(_('The role description entered must be at least 4 characters long'),'error');
 	}

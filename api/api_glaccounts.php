@@ -29,7 +29,7 @@
 
 /* Check that the name is 50 characters or less long */
 	function VerifyAccountName($AccountName, $i, $Errors) {
-		if (strlen($AccountName)>50) {
+		if (mb_strlen($AccountName)>50) {
 			$Errors[$i] = IncorrectAccountNameLength;
 		}
 		return $Errors;

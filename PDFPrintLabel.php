@@ -418,7 +418,7 @@ function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $St
 		$pdf->__destruct(); //UldisN
 	} else {
 		$pdfcode = $pdf->output();
-		$len = strlen($pdfcode);
+		$len = mb_strlen($pdfcode);
 
 		if ($len<=20){
 			return false;

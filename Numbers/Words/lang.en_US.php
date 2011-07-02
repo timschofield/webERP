@@ -305,8 +305,8 @@ class Numbers_Words_en_US extends Numbers_Words
       $num = trim($num);
       $num = preg_replace('/^0+/','',$num);
         
-      if (strlen($num) > 3) {
-          $maxp = strlen($num)-1;
+      if (mb_strlen($num) > 3) {
+          $maxp = mb_strlen($num)-1;
           $curp = $maxp;
           for ($p = $maxp; $p > 0; --$p) { // power
             
@@ -335,7 +335,7 @@ class Numbers_Words_en_US extends Numbers_Words
     
       $h = $t = $d = 0;
       
-      switch(strlen($num)) {
+      switch(mb_strlen($num)) {
         case 3:
           $h = (int)substr($num,-3,1);
 

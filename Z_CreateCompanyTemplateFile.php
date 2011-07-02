@@ -7,7 +7,7 @@ include ('includes/header.inc');
 
 if (isset($_POST['CreateTemplate'])){
       $InputError = false; //assume the best - but check for the worst
-      if (strlen($_POST['TemplateName'])<=1){
+      if (mb_strlen($_POST['TemplateName'])<=1){
          prnMsg(_('The name of the template has not been entered or is just 1 character - an informative name is required e.g. Deutsche-distribution in the case of a german distribution company'),'error');
          $InputError = true;
       }

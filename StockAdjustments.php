@@ -63,7 +63,7 @@ if (isset($_POST['CheckCode'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
-	if (strlen($_POST['StockText'])>0) {
+	if (mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid, description FROM stockmaster WHERE description " . LIKE . " '%" . $_POST['StockText'] ."%'";
 	} else {
 		$sql="SELECT stockid, description FROM stockmaster WHERE stockid " . LIKE  . " '%" . $_POST['StockCode'] ."%'";
@@ -346,7 +346,7 @@ if (isset($StockID)) {
 	echo '<input type=text name="StockCode" size=21 value="" maxlength=20>';
 }
 echo '</td><td><input type=submit name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
-if (isset($_SESSION['Adjustment']) and strlen($_SESSION['Adjustment']->ItemDescription)>1){
+if (isset($_SESSION['Adjustment']) and mb_strlen($_SESSION['Adjustment']->ItemDescription)>1){
 	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Adjustment']->ItemDescription . ' ('._('In Units of').' ' .
 		$_SESSION['Adjustment']->PartUnit . ' ) - ' . _('Unit Cost').' = ' .
 			number_format($_SESSION['Adjustment']->StandardCost,4) . '</font></td></tr>';

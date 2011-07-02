@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strlen($_POST['ReportHeading']) <2) {
+	if (mb_strlen($_POST['ReportHeading']) <2) {
 		$InputError = 1;
 		prnMsg(_('The report heading must be more than two characters long') . '. ' . _('No report heading was entered'),'error',_('Heading too long'));
 	}

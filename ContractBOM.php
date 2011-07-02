@@ -166,7 +166,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 /* take the form entries and enter the data from the form into the PurchOrder class variable */
 	foreach ($_POST as $ItemCode => $Quantity) {
 		if (substr($ItemCode, 0, 3)=='Qty') {
-			$ItemCode=substr($ItemCode, 3, strlen($ItemCode)-3);
+			$ItemCode=substr($ItemCode, 3, mb_strlen($ItemCode)-3);
 			$AlreadyOnThisBOM = 0;
 
 			if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){

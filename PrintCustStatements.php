@@ -381,7 +381,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			$pdf->line($Left_Margin, $YPos,$Perforation,$YPos);
 
 
-			if (strlen($StmtHeader['lastpaiddate'])>1 && $StmtHeader['lastpaid']!=0){
+			if (mb_strlen($StmtHeader['lastpaiddate'])>1 && $StmtHeader['lastpaid']!=0){
 				$pdf->addText($Left_Margin+5, $Bottom_Margin+13, $FontSize, _('Last payment received').' ' . ConvertSQLDate($StmtHeader['lastpaiddate']) .
 					'    ' . _('Amount received was').' ' . number_format($StmtHeader['lastpaid'],2));
 
@@ -403,7 +403,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 // Here we output the actual PDF file, we have given the file a name (this could perhaps be a variable based on the Customer name), and outputted via the "I" Inline method
 /*
 	$pdfcode = $pdf->output("Customer_Statement.pdf", "I");
-	$len = strlen($pdfcode);
+	$len = mb_strlen($pdfcode);
 	header('Content-type: application/pdf');
 	header('Content-Length: ' . $len);
 	header('Content-Disposition: inline; filename=Statements.pdf');

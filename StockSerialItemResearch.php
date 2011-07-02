@@ -42,7 +42,7 @@ if ($SN!='') {
 		while(strstr($SN,'%%'))	{
 			$SN = str_replace('%%','%',$SN);
 		}
-		if (strlen($SN) < 11){
+		if (mb_strlen($SN) < 11){
 			$SN = str_replace('%','',$SN);
 			prnMsg('You can not use LIKE with short numbers. It has been removed.','warn');
 		}
@@ -68,7 +68,7 @@ if ($SN!='') {
 	if (DB_num_rows($result) == 0){
 		prnMsg( _('No History found for Serial Number'). ': <b>'.$SN.'</b>' , 'warn');
 	} else {
-		echo '<h4>'. _('Details for Serial Item').': <b>'.$SN.'</b><br>'. _('Length').'='.strlen($SN).'</h4>';
+		echo '<h4>'. _('Details for Serial Item').': <b>'.$SN.'</b><br>'. _('Length').'='.mb_strlen($SN).'</h4>';
 		echo '<table class=selection>';
 		echo "<tr><th>" . _('StockID') . "</th>
 			<th>" . _('CurInvQty') . "</th>

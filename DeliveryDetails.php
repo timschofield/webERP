@@ -53,11 +53,11 @@ if (isset($_POST['Update'])
 	or isset($_POST['MakeRecurringOrder']))   {
 
 	$InputErrors =0;
-	if (strlen($_POST['DeliverTo'])<=1){
+	if (mb_strlen($_POST['DeliverTo'])<=1){
 		$InputErrors =1;
 		prnMsg(_('You must enter the person or company to whom delivery should be made'),'error');
 	}
-	if (strlen($_POST['BrAdd1'])<=1){
+	if (mb_strlen($_POST['BrAdd1'])<=1){
 		$InputErrors =1;
 		prnMsg(_('You should enter the street address in the box provided') . '. ' . _('Orders cannot be accepted without a valid street address'),'error');
 	}
@@ -77,13 +77,13 @@ if (isset($_POST['Update'])
 		prnMsg(_('You must select the type of packlist to print'),'error');
 	}
 
-/*	If (strlen($_POST['BrAdd3'])==0 OR !isset($_POST['BrAdd3'])){
+/*	If (mb_strlen($_POST['BrAdd3'])==0 OR !isset($_POST['BrAdd3'])){
 		$InputErrors =1;
 		echo "<br />A region or city must be entered.<br />";
 	}
 
 	Maybe appropriate in some installations but not here
-	If (strlen($_POST['BrAdd2'])<=1){
+	If (mb_strlen($_POST['BrAdd2'])<=1){
 		$InputErrors =1;
 		echo "<br />You should enter the suburb in the box provided. Orders cannot be accepted without a valid suburb being entered.<br />";
 	}
@@ -793,7 +793,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 }
 
 
-if (isset($_SESSION['Items'.$identifier]->SpecialInstructions) and strlen($_SESSION['Items'.$identifier]->SpecialInstructions)>0) {
+if (isset($_SESSION['Items'.$identifier]->SpecialInstructions) and mb_strlen($_SESSION['Items'.$identifier]->SpecialInstructions)>0) {
 	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'info');
 }
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Delivery') . '" alt="" />' . ' ' . _('Delivery Details');

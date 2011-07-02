@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 	// mod to handle 3 char area codes
-	if (strlen($_POST['AreaCode']) > 3) {
+	if (mb_strlen($_POST['AreaCode']) > 3) {
 		$InputError = 1;
 		prnMsg(_('The area code must be three characters or less long'),'error');
 		$Errors[$i] = 'AreaCode';
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The area code entered already exists'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
-	} elseif (strlen($_POST['AreaDescription']) >25) {
+	} elseif (mb_strlen($_POST['AreaDescription']) >25) {
 		$InputError = 1;
 		prnMsg(_('The area description must be twenty five characters or less long'),'error');
 		$Errors[$i] = 'AreaDescription';

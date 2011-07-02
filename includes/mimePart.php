@@ -303,7 +303,7 @@ class Mail_mimePart {
 
         while(list(, $line) = each($lines)){
 
-            $linlen     = strlen($line);
+            $linlen     = mb_strlen($line);
             $newline = '';
 
             for ($i = 0; $i < $linlen; $i++) {
@@ -319,7 +319,7 @@ class Mail_mimePart {
                     $char = $escape . strtoupper(sprintf('%02s', dechex($dec)));
                 }
 
-                if ((strlen($newline) + strlen($char)) >= $line_max) {        // MAIL_MIMEPART_CRLF is not counted
+                if ((mb_strlen($newline) + mb_strlen($char)) >= $line_max) {        // MAIL_MIMEPART_CRLF is not counted
                     $output  .= $newline . $escape . $eol;                    // soft line break; " =\r\n" is okay
                     $newline  = '';
                 }
@@ -327,7 +327,7 @@ class Mail_mimePart {
             } // end of for
             $output .= $newline . $eol;
         }
-        $output = substr($output, 0, -1 * strlen($eol)); // Don't want last crlf
+        $output = substr($output, 0, -1 * mb_strlen($eol)); // Don't want last crlf
         return $output;
     }
 } // End of class

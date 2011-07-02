@@ -468,14 +468,14 @@ class Numbers_Words_ru extends Numbers_Words
         $num = substr($num, 1);
       }
 
-      while (strlen($num) % 3) $num = '0' . $num;
+      while (mb_strlen($num) % 3) $num = '0' . $num;
       if ($num == 0 || $num == '') {
         $ret .= $this->_digits[$gender][0];
       }
       
       else {
         $power = 0;
-        while ($power < strlen($num)) {
+        while ($power < mb_strlen($num)) {
             if (!$power) {
                 $groupgender = $gender;
             } elseif ($power == 3) {

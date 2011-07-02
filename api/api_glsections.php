@@ -16,7 +16,7 @@
 
 /* Check that the name is 256 characters or less long */
 	function VerifySectionName($SectionName, $i, $Errors) {
-		if (strlen($SectionName)>256) {
+		if (mb_strlen($SectionName)>256) {
 			$Errors[$i] = IncorrectSectionNameLength;
 		}
 		return $Errors;

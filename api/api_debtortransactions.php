@@ -28,7 +28,7 @@ function ConvertToSQLDate($DateEntry) {
 		$Date_Array = explode('.',$DateEntry);
 	}
 
-	if (strlen($Date_Array[2])>4) {  /*chop off the time stuff */
+	if (mb_strlen($Date_Array[2])>4) {  /*chop off the time stuff */
 		$Date_Array[2]= substr($Date_Array[2],0,2);
 	}
 
@@ -131,7 +131,7 @@ function ConvertToSQLDate($DateEntry) {
 /* Check that the transaction reference is 20 characters
  *  or less long */
 	function VerifyReference($reference, $i, $Errors) {
-		if (strlen($reference)>20) {
+		if (mb_strlen($reference)>20) {
 			$Errors[$i] = IncorrectReference;
 		}
 		return $Errors;
@@ -139,7 +139,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Check that the tpe field is 2 characters or less long */
 	function VerifyTpe($tpe, $i, $Errors) {
-		if (strlen($tpe)>2) {
+		if (mb_strlen($tpe)>2) {
 			$Errors[$i] = IncorrectTpe;
 		}
 		return $Errors;
@@ -211,7 +211,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Check that the invoice text is 256 characters or less long */
 	function VerifyInvoiceText($invtext, $i, $Errors) {
-		if (strlen($invtext)>256) {
+		if (mb_strlen($invtext)>256) {
 			$Errors[$i] = IncorrectInvoiceText;
 		}
 		return $Errors;
@@ -219,7 +219,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Check that the ship via field is 10 characters or less long */
 	function VerifyShipVia($shipvia, $i, $Errors) {
-		if (strlen($shipvia)>10) {
+		if (mb_strlen($shipvia)>10) {
 			$Errors[$i] = InvalidShipVia;
 		}
 		return $Errors;
@@ -235,7 +235,7 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Check that the consignment field is 15 characters or less long */
 	function VerifyConsignment($consignment, $i, $Errors) {
-		if (strlen($consignment)>15) {
+		if (mb_strlen($consignment)>15) {
 			$Errors[$i] = InvalidConsignment;
 		}
 		return $Errors;

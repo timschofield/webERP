@@ -180,13 +180,13 @@ if (isset($_POST['Update']) OR (isset($_GET['Add']) AND $_SESSION['Shipment']->C
 			$_SESSION['Shipment']->ETA = FormatDateForSQL($_POST['ETA']);
 		}
 
-		if (strlen($_POST['Vessel'])<2){
+		if (mb_strlen($_POST['Vessel'])<2){
 			prnMsg( _('A reference to the vessel of more than 2 characters is expected'), 'error');
 		}
-		if (strlen($_POST['VoyageRef'])<2){
+		if (mb_strlen($_POST['VoyageRef'])<2){
 			prnMsg( _('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
 		}
-	} elseif(strlen($_SESSION['Shipment']->Vessel)<2 OR strlen($_SESSION['Shipment']->VoyageRef)<2){
+	} elseif(mb_strlen($_SESSION['Shipment']->Vessel)<2 OR mb_strlen($_SESSION['Shipment']->VoyageRef)<2){
 		prnMsg(_('Cannot add purchase order lines to the shipment unless the shipment is first initiated - hit update to setup the shipment first'),'info');
 		$InputError = 1;
 	}

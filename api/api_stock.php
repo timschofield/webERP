@@ -41,7 +41,7 @@
 
 /* Check that the description is 50 characters or less long */
 	function VerifyStockDescription($StockDescription, $i, $Errors) {
-		if (strlen($StockDescription)>50) {
+		if (mb_strlen($StockDescription)>50) {
 			$Errors[$i] = IncorrectStockDescriptionLength;
 		}
 		return $Errors;
@@ -49,7 +49,7 @@
 
 /* Check that the long description is 256 characters or less long */
 	function VerifyStockLongDescription($StockLongDescription, $i, $Errors) {
-		if (strlen($StockLongDescription)>256) {
+		if (mb_strlen($StockLongDescription)>256) {
 			$Errors[$i] = IncorrectLongStockDescriptionLength;
 		}
 		return $Errors;
@@ -57,7 +57,7 @@
 
 /* Check that the units description is 20 characters or less long */
 	function VerifyUnits($units, $i, $Errors) {
-		if (strlen($units)>20) {
+		if (mb_strlen($units)>20) {
 			$Errors[$i] = IncorrectUnitsLength;
 		}
 		return $Errors;
@@ -197,7 +197,7 @@
 
 /* Check that the barcode is 50 characters or less long */
 	function VerifyBarCode($barcode, $i, $Errors) {
-		if (strlen($barcode)>50) {
+		if (mb_strlen($barcode)>50) {
 			$Errors[$i] = IncorrectBarCodeLength;
 		}
 		return $Errors;
@@ -205,7 +205,7 @@
 
 /* Check that the discount category is 2 characters or less long */
 	function VerifyDiscountCategory($discountcategory, $i, $Errors) {
-		if (strlen($discountcategory)>2) {
+		if (mb_strlen($discountcategory)>2) {
 			$Errors[$i] = IncorrectDiscountCategory;
 		}
 		return $Errors;
@@ -234,7 +234,7 @@
 
 /* Check that the appendfile is 40 characters or less long */
 	function VerifyAppendFile($appendfile, $i, $Errors) {
-		if (strlen($appendfile)>40) {
+		if (mb_strlen($appendfile)>40) {
 			$Errors[$i] = IncorrectAppendFile;
 		}
 		return $Errors;

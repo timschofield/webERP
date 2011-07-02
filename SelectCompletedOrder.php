@@ -62,13 +62,13 @@ if (isset($_POST['ResetPart'])) {
 if (isset($OrderNumber)) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales Order') .
 		'" alt="" />' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
-	if (strlen($_SESSION['UserBranch'])>1){
+	if (mb_strlen($_SESSION['UserBranch'])>1){
    	   echo _('For customer') . ': ' . $SelectedCustomer;
 	   echo '<input type="hidden" name="SelectedCustomer" value="' . $SelectedCustomer .'" />';
         }
 } elseif (isset($CustomerRef)) {
 	echo _('Customer Ref') . ' - ' . $CustomerRef;
-	if (strlen($_SESSION['UserBranch'])>1){
+	if (mb_strlen($_SESSION['UserBranch'])>1){
    	   echo ' ' . _('and for customer') . ': ' . $SelectedCustomer .' ' . _('and') . ' ';
 	   echo '<input type=hidden name="SelectedCustomer" value="' .$SelectedCustomer .'" />';
         }
@@ -203,7 +203,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 		}
 	}
 
-	if (strlen($SQL)<2){
+	if (mb_strlen($SQL)<2){
 		prnMsg(_('No selections have been made to search for parts') . ' - ' . _('choose a stock category or enter some characters of the code or description then try again'),'warn');
 	} else {
 

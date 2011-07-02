@@ -59,13 +59,13 @@ $pdf->addText($XPos, $YPos-100,$FontSize, _('Shipped by'). ' : ' . $myrow['shipp
 
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos-115,170,$FontSize,stripcslashes($myrow['comments']));
 
-if (strlen($LeftOvers)>1){
+if (mb_strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-130,170,$FontSize,$LeftOvers);
-	if (strlen($LeftOvers)>1){
+	if (mb_strlen($LeftOvers)>1){
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos-145,170,$FontSize,$LeftOvers);
-		if (strlen($LeftOvers)>1){
+		if (mb_strlen($LeftOvers)>1){
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos-160,170,$FontSize,$LeftOvers);
-			if (strlen($LeftOvers)>1){
+			if (mb_strlen($LeftOvers)>1){
 				$LeftOvers = $pdf->addTextWrap($XPos,$YPos-175,170,$FontSize,$LeftOvers);
 			}
 		}

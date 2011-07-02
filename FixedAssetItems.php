@@ -30,7 +30,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	$filename = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.jpg';
 
 	 //But check for the worst
-	if (strtoupper(substr(trim($_FILES['ItemPicture']['name']),strlen($_FILES['ItemPicture']['name'])-3))!='JPG'){
+	if (strtoupper(substr(trim($_FILES['ItemPicture']['name']),mb_strlen($_FILES['ItemPicture']['name'])-3))!='JPG'){
 		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
@@ -72,20 +72,20 @@ if (isset($_POST['submit'])) {
 	$i=1;
 
 
-	if (!isset($_POST['Description']) or strlen($_POST['Description']) > 50 OR strlen($_POST['Description'])==0) {
+	if (!isset($_POST['Description']) or mb_strlen($_POST['Description']) > 50 OR mb_strlen($_POST['Description'])==0) {
 		$InputError = 1;
 		prnMsg (_('The asset description must be entered and be fifty characters or less long. It cannot be a zero length string either, a description is required'),'error');
 		$Errors[$i] = 'Description';
 		$i++;
 	}
-	if (strlen($_POST['LongDescription'])==0) {
+	if (mb_strlen($_POST['LongDescription'])==0) {
 		$InputError = 1;
 		prnMsg (_('The asset long description cannot be a zero length string, a long description is required'),'error');
 		$Errors[$i] = 'LongDescription';
 		$i++;
 	}
 
-	if (strlen($_POST['BarCode']) >20) {
+	if (mb_strlen($_POST['BarCode']) >20) {
 		$InputError = 1;
 		prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		$Errors[$i] = 'BarCode';
@@ -272,7 +272,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('Validation failed, no updates or deletes took place'), 'error');
 	}
 
-} elseif (isset($_POST['delete']) AND strlen($_POST['delete']) >1 ) {
+} elseif (isset($_POST['delete']) AND mb_strlen($_POST['delete']) >1 ) {
 //the button to delete a selected record was clicked instead of the submit button
 
 	$CancelDelete = 0;

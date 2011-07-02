@@ -138,7 +138,7 @@ class Numbers_Words
         } else {
             $currency = explode('.', $num, 2);
             /* add leading zero */
-            if (strlen($currency[1]) == 1) {
+            if (mb_strlen($currency[1]) == 1) {
                 $currency[1] .= '0';
             }
             $ret      = trim($obj->toCurrencyWords($int_curr, $currency[0], $currency[1]));

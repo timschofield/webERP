@@ -745,7 +745,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		prnMsg( _('At least one stock description keyword or an extract of a stock code must be entered for the search'), 'info' );
 	} else {
-		if (strlen($_POST['Keywords'])>0) {
+		if (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -765,7 +765,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					stockmaster.mbflag
 				ORDER BY stockmaster.stockid";
 
-		} elseif (strlen($_POST['StockCode'])>0){
+		} elseif (mb_strlen($_POST['StockCode'])>0){
 			$sql = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,

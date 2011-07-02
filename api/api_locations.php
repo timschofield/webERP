@@ -9,7 +9,7 @@
    exist.*/
    
 	function VerifyLocationCode($LocationCode, $i, $Errors, $db) {
-		if ((strlen($LocationCode)<1) or (strlen($LocationCode)>5)) {
+		if ((mb_strlen($LocationCode)<1) or (mb_strlen($LocationCode)>5)) {
 			$Errors[$i] = IncorrectLocationCodeLength;
 		}
 		$Searchsql = "SELECT count(loccode)
@@ -38,7 +38,7 @@
 
 /* Check that the Location name is valid and is 50 characters or less long */
 	function VerifyLocationName($LocationName, $i, $Errors) {
-		if ((strlen($LocationName)<1) or (strlen($LocationName)>50)) {
+		if ((mb_strlen($LocationName)<1) or (mb_strlen($LocationName)>50)) {
 			$Errors[$i] = IncorrectLocationNameLength;
 		}
 		return $Errors;

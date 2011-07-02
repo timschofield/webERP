@@ -101,7 +101,7 @@ if (isset($_POST['AddControlledItems'])){
 	} // end Adding a number of serial numbers automatically
 	  else { //adding just an individual entry
 			$InputError = false;
-			if (strlen($_POST['Reference'])==0){
+			if (mb_strlen($_POST['Reference'])==0){
 				prnMsg(_('The batch or serial number reference has not been entered - a reference is required'),'error');
 				$InputError=true;
 			}
@@ -171,7 +171,7 @@ if (isset($_POST['UpdateItems'])){
 		$WOQuantityTotal=0;
 		for ($i=0;$i<$_POST['CountOfItems'];$i++){
 
-				if (strlen($_POST['Reference' . $i])==0){
+				if (mb_strlen($_POST['Reference' . $i])==0){
 					prnMsg($_POST['OldReference' .$i] . ': ' , _('The new batch or serial number reference has not been entered - a reference is required'),'error');
 					$InputError=true;
 				}

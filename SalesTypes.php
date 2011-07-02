@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$i=1;
 
-	if (strlen($_POST['TypeAbbrev']) > 2) {
+	if (mb_strlen($_POST['TypeAbbrev']) > 2) {
 		$InputError = 1;
 		prnMsg(_('The sales type (price list) code must be two characters or less long'),'error');
 		$Errors[$i] = 'SalesType';
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 		prnMsg (_('The sales type (price list) description cannot be empty'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
-	} elseif (strlen($_POST['Sales_Type']) >40) {
+	} elseif (mb_strlen($_POST['Sales_Type']) >40) {
 		$InputError = 1;
 		echo prnMsg(_('The sales type (price list) description must be forty characters or less long'),'error');
 		$Errors[$i] = 'SalesType';

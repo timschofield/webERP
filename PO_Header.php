@@ -293,13 +293,13 @@ if (isset($_POST['ChangeSupplier'])) {
 
 if (isset($_POST['SearchSuppliers'])){
 
-	if (strlen($_POST['Keywords'])>0 AND strlen($_SESSION['PO'.$identifier]->SupplierID)>0) {
+	if (mb_strlen($_POST['Keywords'])>0 AND mb_strlen($_SESSION['PO'.$identifier]->SupplierID)>0) {
 		prnMsg(_('Supplier name keywords have been used in preference to the supplier code extract entered'),'warn');
 	}
 	if ($_POST['Keywords']=='' AND $_POST['SuppCode']=='') {
 		prnMsg(_('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search'),'error');
 	} else {
-		if (strlen($_POST['Keywords'])>0) {
+		if (mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -316,7 +316,7 @@ if (isset($_POST['SearchSuppliers'])){
 						WHERE suppliers.suppname " . LIKE . " '". $SearchString ."'
 						ORDER BY suppliers.suppname";
 
-		} elseif (strlen($_POST['SuppCode'])>0){
+		} elseif (mb_strlen($_POST['SuppCode'])>0){
 			$SQL = "SELECT suppliers.supplierid,
 							suppliers.suppname,
 							suppliers.address1,
@@ -741,7 +741,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 			<td><input type="text" name="Requisition" size="16" maxlength="15" value="' . $_POST['Requisition'] . '" /></td></tr>';
 
 	echo '<tr><td>' . _('Date Printed') . ':</td><td>';
-	if (isset($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted) AND strlen($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted)>6){
+	if (isset($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted) AND mb_strlen($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted)>6){
 		echo ConvertSQLDate($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted);
 		$Printed = True;
 	} else {

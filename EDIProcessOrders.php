@@ -322,10 +322,10 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				break;
 			case 'ALI':
 				$ALI = explode('+',substr($LineText,4));
-				if (strlen($ALI[0])>1){
+				if (mb_strlen($ALI[0])>1){
 					$EmailText .= "\n" . _('Goods of origin') . ' ' . $ALI[0];
 				}
-				if (strlen($ALI[1])>1){
+				if (mb_strlen($ALI[1])>1){
 					$EmailText .= "\n" . _('Duty regime code') . ' ' . $ALI[1];
 				}
 				switch ($ALI[2]){
@@ -353,7 +353,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				$FTX = explode('+',substr($LineText,4));
 				/*agreed coded text is not catered for ... yet
 				only free form text */
-				if (strlen($FTX[3])>5){
+				if (mb_strlen($FTX[3])>5){
 					$FTX_C108=explode(':',$FTX[3]);
 					$Order->Comments .= $FTX_C108[0] . " " . $FTX_C108[1] . ' ' . $FTX_C108[2] . ' ' . $FTX_C108[3] . ' ' . $FTX_C108[4];
 					$EmailText .= "\n" . $FTX_C108[0] . ' ' . $FTX_C108[1] . ' ' . $FTX_C108[2] . ' ' . $FTX_C108[3] . ' ' . $FTX_C108[4] . ' ';
@@ -428,7 +428,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 							}
 							break;
 						}
-						if (strlen($NAD_C080[0])>0){
+						if (mb_strlen($NAD_C080[0])>0){
 							$Order->CustomerName = $NAD_C080[0];
 						}
 						break;
@@ -445,10 +445,10 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 						/*Delivery Party - get the address and name etc */
 
 						/*Snag here - how do I figure out what branch to charge */
-						if (strlen($NAD_C080[0])>0){
+						if (mb_strlen($NAD_C080[0])>0){
 							$Order->DeliverTo = $NAD_C080[0];
 						}
-						if (strlen($NAD_C059[0])>0){
+						if (mb_strlen($NAD_C059[0])>0){
 							$Order->DelAdd1 = $NAD_C059[0];
 							$Order->DelAdd2 = $NAD_C059[1];
 							$Order->DelAdd3 = $NAD_C059[2];
@@ -514,7 +514,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 		} /*end case  Seg Tag*/
 	} /*end while get next line of message */
 	/*Thats the end of the message or had to abort */
-	if (strlen($EmailText)>10){
+	if (mb_strlen($EmailText)>10){
 		/*Now send the email off to the appropriate person */
 		$mail = new htmlMimeMail();
 		$mail->setText($EmailText);

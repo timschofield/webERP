@@ -1072,7 +1072,7 @@ class PHPlot {
         $longest = 0;
         foreach (explode("\n", $text) as $each_line) {
             $lines[] = $line = trim($each_line);
-            $line_lens[] = $line_len = strlen($line);
+            $line_lens[] = $line_len = mb_strlen($line);
             if ($line_len > $longest) $longest = $line_len;
         }
         $n_lines = count($lines);

@@ -46,7 +46,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])){
 		prnMsg(_('The token ID is expected to be a number. Please enter a number for the token ID'),'error');
 		$InputError = 1;
 	} 
-	if (strlen($_POST['TokenDescription'])==0){
+	if (mb_strlen($_POST['TokenDescription'])==0){
 		prnMsg(_('A token description must be entered'),'error');
 		$InputError = 1;
 	}

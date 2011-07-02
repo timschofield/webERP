@@ -120,8 +120,8 @@ if (DB_num_rows($result)>0){
 
         $ListCount ++;
 
-		if ((strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75)
-			OR (strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62)
+		if ((mb_strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75)
+			OR (mb_strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
 			$PageNumber++;
@@ -168,10 +168,10 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap(330,$YPos,85,$FontSize,$DisplayTaxClass,'right');
 		$LeftOvers = $pdf->addTextWrap(410,$YPos,85,$FontSize,$DisplayTaxAmount,'center');
 		$LeftOvers = $pdf->addTextWrap(460,$YPos,90,$FontSize,$DisplayTotal,'right');
-		if (strlen($myrow2['narrative'])>1){
+		if (mb_strlen($myrow2['narrative'])>1){
 			$YPos -= 10;
 			$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$myrow2['narrative']);
-			if (strlen($LeftOvers>1)){
+			if (mb_strlen($LeftOvers>1)){
 				$YPos -= 10;
 				$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$LeftOvers);
 			}
@@ -184,8 +184,8 @@ if (DB_num_rows($result)>0){
 		$YPos -= ($line_height);
 
 	} //end while there are line items to print out
-	if ((strlen($myrow['comments']) >200 AND $YPos-$line_height <= 75)
-			OR (strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62)
+	if ((mb_strlen($myrow['comments']) >200 AND $YPos-$line_height <= 75)
+			OR (mb_strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
 			$PageNumber++;
@@ -196,16 +196,16 @@ if (DB_num_rows($result)>0){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,200,10,_('Notes:'));
 	$LeftOvers = $pdf->addText($XPos,$YPos-95,10,$myrow['comments']);
 
-	if (strlen($LeftOvers)>1){
+	if (mb_strlen($LeftOvers)>1){
 		$YPos -= 10;
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
-		if (strlen($LeftOvers)>1){
+		if (mb_strlen($LeftOvers)>1){
 			$YPos -= 10;
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
-			if (strlen($LeftOvers)>1){
+			if (mb_strlen($LeftOvers)>1){
 				$YPos -= 10;
 				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
-				if (strlen($LeftOvers)>1){
+				if (mb_strlen($LeftOvers)>1){
 					$YPos -= 10;
 					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,10,$FontSize,$LeftOvers);
 				}
@@ -226,7 +226,7 @@ if (DB_num_rows($result)>0){
 
 
 //$pdfcode = $pdf->output('PDFQuotation.pdf', 'I');
-//$len = strlen($pdfcode);
+//$len = mb_strlen($pdfcode);
 if ($ListCount == 0){
         $title = _('Print Quotation Error');
         include('includes/header.inc');

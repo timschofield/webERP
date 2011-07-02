@@ -116,7 +116,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 					} else {
 							$URL = $rootpath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
 
-							if( strlen($TransRow['narrative'])==0 ) {
+							if( mb_strlen($TransRow['narrative'])==0 ) {
 								$TransRow['narrative'] = '&nbsp';
 							}
 							if ( $TransRow['posted']==0 )	{

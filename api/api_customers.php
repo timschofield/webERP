@@ -4,7 +4,7 @@
 /* Verify that the debtor number is valid, and doesn't already
    exist.*/
 	function VerifyDebtorNo($DebtorNumber, $i, $Errors, $db) {
-		if ((strlen($DebtorNumber)<1) or (strlen($DebtorNumber)>10)) {
+		if ((mb_strlen($DebtorNumber)<1) or (mb_strlen($DebtorNumber)>10)) {
 			$Errors[$i] = IncorrectDebtorNumberLength;
 		}
 		$Searchsql = "SELECT count(debtorno)
@@ -33,7 +33,7 @@
 
 /* Check that the name exists and is 40 characters or less long */
 	function VerifyDebtorName($DebtorName, $i, $Errors) {
-		if ((strlen($DebtorName)<1) or (strlen($DebtorName)>40)) {
+		if ((mb_strlen($DebtorName)<1) or (mb_strlen($DebtorName)>40)) {
 			$Errors[$i] = IncorrectDebtorNameLength;
 		}
 		return $Errors;
@@ -41,7 +41,7 @@
 
 /* Check that the address lines are correct length*/
 	function VerifyAddressLine($AddressLine, $length, $i, $Errors) {
-		if (strlen($AddressLine)>$length) {
+		if (mb_strlen($AddressLine)>$length) {
 			$Errors[$i] = InvalidAddressLine;
 		}
 		return $Errors;
@@ -157,7 +157,7 @@
 
 /* Check that the discount code only has 1 or 2 characters */
 	function VerifyDiscountCode($DiscountCode, $i, $Errors) {
-		if (strlen($DiscountCode)>2) {
+		if (mb_strlen($DiscountCode)>2) {
 			$Errors[$i] = InvalidDiscountCode;
 		}
 		return $Errors;
@@ -180,7 +180,7 @@
 	}
 
 	function VerifyEDIReference($EDIReference, $i, $Errors) {
-		if (strlen($EDIReference)>20) {
+		if (mb_strlen($EDIReference)>20) {
 			$Errors[$i] = IvalidEDIReference;
 		}
 		return $Errors;
@@ -194,28 +194,28 @@
 	}
 
 	function VerifyEDIAddress($EDIAddress, $i, $Errors) {
-		if (strlen($EDIAddress)>50) {
+		if (mb_strlen($EDIAddress)>50) {
 			$Errors[$i] = IvalidEDIAddress;
 		}
 		return $Errors;
 	}
 
 	function VerifyEDIServerUser($EDIServerUser, $i, $Errors) {
-		if (strlen($EDIServerUser)>20) {
+		if (mb_strlen($EDIServerUser)>20) {
 			$Errors[$i] = IvalidEDIServerUser;
 		}
 		return $Errors;
 	}
 
 	function VerifyEDIServerPassword($EDIServerPassword, $i, $Errors) {
-		if (strlen($EDIServerPassword)>20) {
+		if (mb_strlen($EDIServerPassword)>20) {
 			$Errors[$i] = IvalidEDIServerPassword;
 		}
 		return $Errors;
 	}
 
 	function VerifyTaxRef($TaxRef, $i, $Errors) {
-		if (strlen($TaxRef)>20) {
+		if (mb_strlen($TaxRef)>20) {
 			$Errors[$i] = IvalidTaxRef;
 		}
 		return $Errors;

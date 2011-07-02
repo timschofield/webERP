@@ -119,7 +119,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 			} //end switch
 		} //end loop around fields from import
 
-		if (strlen($Description)==0 OR strlen($Description)>50){
+		if (mb_strlen($Description)==0 OR mb_strlen($Description)>50){
 			prnMsg('The description of the asset is expected to be more than 3 characters long and less than 50 characters long','error');
 			echo '<br />' . _('Row:') . $Row . ' - ' . _('Invalid Description:') . ' ' . $Description;
 			$InputError=true;

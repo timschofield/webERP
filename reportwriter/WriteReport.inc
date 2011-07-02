@@ -251,7 +251,7 @@ var $pageY; // y value of bottom of page less bottom margin
 		if ($CurWidth>($ColWidth*.90)) { // then it needs to be truncated
 			// for now we'll do an approximation based on averages and scale to 90% of the width to allow for variance
 			// A better aproach would be an recursive call to this function until the string just fits.
-			$NumChars = strlen($strData);
+			$NumChars = mb_strlen($strData);
 			// Reduce the string by 1-$percent and retest
 			$strData = $this->TruncData(substr($strData, 0, ($ColWidth/$CurWidth)*$NumChars*$percent), $ColWidth);
 		}
@@ -324,7 +324,7 @@ function BuildSQL($Prefs) {
 				$fildesc .= ' '.RPT_FROM.' '.$DateArray[1];
 			}
 			if ($DateArray[2]<>'') { // a value entered, check
-				if (strlen($d)>0) $d .= ' AND ';
+				if (mb_strlen($d)>0) $d .= ' AND ';
 				$d .= $df."<='".FormatDateForSQL($DateArray[2])."'";
 				$fildesc .= ' '.RPT_TO.' '.$DateArray[1];
 			}
@@ -401,7 +401,7 @@ function BuildSQL($Prefs) {
 		$Params = explode(':',$FieldValues['params']);
 		switch ($Params[1]) {
 			case RPT_RANGE:
-				if (strlen($strCrit)>0) { $strCrit .= ' AND '; $filCrit .= ' AND '; }
+				if (mb_strlen($strCrit)>0) { $strCrit .= ' AND '; $filCrit .= ' AND '; }
 				$t='';
 				$f='';
 				if (isset($Params[2])) { // a from value entered, check
@@ -409,7 +409,7 @@ function BuildSQL($Prefs) {
 					$f .= $FieldValues['displaydesc'].">=".($Params[2]);
 				}
 				if (isset($Params[3])) { // a to value entered, check
-					if (strlen($t)>0) { $t .= ' AND '; $f .= ' AND '; }
+					if (mb_strlen($t)>0) { $t .= ' AND '; $f .= ' AND '; }
 					$t .= $FieldValues['fieldname']."<='".($Params[3]."'");
 					$f .= $FieldValues['displaydesc']."<=".($Params[3]);
 				}
@@ -420,18 +420,18 @@ function BuildSQL($Prefs) {
 			case RPT_TRUE:
 			case RPT_ACTIVE:
 			case RPT_PRINTED:
-				if (strlen($strCrit)>0) $strCrit .= ' AND ';
+				if (mb_strlen($strCrit)>0) $strCrit .= ' AND ';
 				$strCrit .= $FieldValues['fieldname'].'=1';
-				if (strlen($filCrit)>0) $filCrit .= ' AND ';
+				if (mb_strlen($filCrit)>0) $filCrit .= ' AND ';
 				$filCrit .= $FieldValues['displaydesc'].'='.$Params[1];
 				break;
 			case RPT_NO:
 			case RPT_FALSE:
 			case RPT_INACTIVE:
 			case RPT_UNPRINTED:
-				if (strlen($strCrit)>0) $strCrit .= ' AND ';
+				if (mb_strlen($strCrit)>0) $strCrit .= ' AND ';
 				$strCrit .= $FieldValues['fieldname'].'=0';
-				if (strlen($filCrit)>0) $filCrit .= ' AND ';
+				if (mb_strlen($filCrit)>0) $filCrit .= ' AND ';
 				$filCrit .= $FieldValues['displaydesc'].'='.$Params[1];
 				break;
 			case RPT_STOCK: // TBD field to compare so default to nothing
@@ -568,7 +568,7 @@ function GenerateCSVFile($Data, $Prefs) {
 		$CSVOutput .= $CSVLine.chr(10);
 	}
 
-	$FileSize = strlen($CSVOutput);
+	$FileSize = mb_strlen($CSVOutput);
 	header('Content-type: application/csv');
 	header('Content-disposition: attachment; filename="'.$Prefs['reportname'].'.csv"; size='.$FileSize);
 	header('Pragma: public');
@@ -584,7 +584,7 @@ function GeneratePDFFile($Data, $Prefs) {
 	$pdf=new PDF();
 	$pdf->ReportTable($Data);
 	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
+	$len = mb_strlen($pdfcode);
 	$ReportName = ReplaceNonAllowedCharacters($Prefs['reportname']) .'.pdf';
 
 	header('Content-type: application/pdf');

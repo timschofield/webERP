@@ -33,11 +33,11 @@ $InputError = 0;
 
 if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 
-	if (strlen($_POST['FactorName']) > 40 or strlen($_POST['FactorName']) == 0 or $_POST['FactorName'] == '') {
+	if (mb_strlen($_POST['FactorName']) > 40 or mb_strlen($_POST['FactorName']) == 0 or $_POST['FactorName'] == '') {
 		$InputError = 1;
 		prnMsg(_('The factoring company name must be entered and be forty characters or less long'),'error');
 	}
-	if (strlen($_POST['Email'])>0 AND !IsEmailAddress($_POST['Email'])){
+	if (mb_strlen($_POST['Email'])>0 AND !IsEmailAddress($_POST['Email'])){
 		prnMsg(_('The email address entered does not appear to be a valid email address format'),'error');
 		$InputError = 1;
 	}

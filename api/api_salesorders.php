@@ -13,7 +13,7 @@ $SOH_DateFields = array ('orddate',
 
 /* Check that the custmerref field is 50 characters or less long */
 	function VerifyCustomerRef($customerref, $i, $Errors) {
-		if (strlen($customerref)>50) {
+		if (mb_strlen($customerref)>50) {
 			$Errors[$i] = InvalidCustomerRef;
 		}
 		return $Errors;
@@ -21,7 +21,7 @@ $SOH_DateFields = array ('orddate',
 
 /* Check that the buyername field is 50 characters or less long */
 	function VerifyBuyerName($buyername, $i, $Errors) {
-		if (strlen($buyername)>50) {
+		if (mb_strlen($buyername)>50) {
 			$Errors[$i] = InvalidBuyerName;
 		}
 		return $Errors;
@@ -29,7 +29,7 @@ $SOH_DateFields = array ('orddate',
 
 /* Check that the comments field is 256 characters or less long */
 	function VerifyComments($comments, $i, $Errors) {
-		if (strlen($comments)>256) {
+		if (mb_strlen($comments)>256) {
 			$Errors[$i] = InvalidComments;
 		}
 		return $Errors;
@@ -86,7 +86,7 @@ $SOH_DateFields = array ('orddate',
 
 /* Check that the delivery name field is 40 characters or less long */
 	function VerifyDeliverTo($delverto, $i, $Errors) {
-		if (strlen($delverto)>40) {
+		if (mb_strlen($delverto)>40) {
 			$Errors[$i] = InvalidDeliverTo;
 		}
 		return $Errors;
@@ -209,7 +209,7 @@ $SOH_DateFields = array ('orddate',
 
 /* Check that the narrative field is 256 characters or less long */
 	function VerifyNarrative($narrative, $i, $Errors) {
-		if (strlen($narrative)>256) {
+		if (mb_strlen($narrative)>256) {
 			$Errors[$i] = InvalidNarrative;
 		}
 		return $Errors;
@@ -217,7 +217,7 @@ $SOH_DateFields = array ('orddate',
 
 /* Check that the poline field is 10 characters or less long */
 	function VerifyPOLine($poline, $i, $Errors) {
-		if (strlen($poline)>10) {
+		if (mb_strlen($poline)>10) {
 			$Errors[$i] = InvalidPOLine;
 		}
 		return $Errors;

@@ -58,7 +58,7 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 	if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		$msg=_('At least one stock description keyword or an extract of a stock code must be entered for the search');
 	} else {
-		if (strlen($_POST['Keywords'])>0) {
+		if (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -68,7 +68,7 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 				WHERE  stockmaster.description " . LIKE . " '" . $SearchString ."'
 				ORDER BY stockmaster.stockid";
 
-		} elseif (strlen($_POST['StockCode'])>0){
+		} elseif (mb_strlen($_POST['StockCode'])>0){
 			$sql = "SELECT stockmaster.stockid,
 					stockmaster.description
 				FROM stockmaster

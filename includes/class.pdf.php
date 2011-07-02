@@ -273,7 +273,7 @@ if (!class_exists('Cpdf', false)) {
 			$s=str_replace("\r",'',$Text);
 			$s=str_replace("\n",' ',$s);
 			$s = trim($s).' ';
-			$nb=strlen($s);
+			$nb=mb_strlen($s);
 			$b=0;
 			if ($border) {
 				if ($border==1) {

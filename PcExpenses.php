@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 		echo '<br />';
 		$Errors[$i] = 'CodeExpense';
 		$i++;
-	} elseif (strlen($_POST['CodeExpense']) >20) {
+	} elseif (mb_strlen($_POST['CodeExpense']) >20) {
 		$InputError = 1;
 		prnMsg(_('The Expense code must be twenty characters or less long'),'error');
 		echo '<br />';
@@ -64,14 +64,14 @@ if (isset($_POST['submit'])) {
 		echo '<br />';
 		$Errors[$i] = 'Description';
 		$i++;
-	} elseif (strlen($_POST['Description']) >50) {
+	} elseif (mb_strlen($_POST['Description']) >50) {
 		$InputError = 1;
 		prnMsg(_('The tab code must be Fifty characters or less long'),'error');
 		echo '<br />';
 		echo '<br />';
 		$Errors[$i] = 'Description';
 		$i++;
-	} elseif (strlen($_POST['Description'])==0) {
+	} elseif (mb_strlen($_POST['Description'])==0) {
 		$InputError = 1;
 		echo prnMsg(_('The tab code description must be entered'),'error');
 		echo '<br />';

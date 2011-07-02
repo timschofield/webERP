@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 	$InputError = 0;
 
 	//first off validate inputs sensible
-	if (strlen($_POST['Destination'])<2){
+	if (mb_strlen($_POST['Destination'])<2){
 		$InputError=1;
 		prnMsg(_('The entry for the destination must be at least two characters long') . '. ' . _('These entries are matched against the town names entered for customer delivery addresses'),'warn');
 	}

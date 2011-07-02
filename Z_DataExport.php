@@ -121,7 +121,7 @@ if ( isset($_POST['pricelist']) ) {
 			);
 	}
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=PriceList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -196,7 +196,7 @@ if ( isset($_POST['pricelist']) ) {
 	While ($CustList = DB_fetch_array($CustResult,$db)){
 
 		$CreditLimit = $CustList['creditlimit'];
-		if ( strlen($CustList['braddress1']) <= 3 ) {
+		if ( mb_strlen($CustList['braddress1']) <= 3 ) {
 			$Address1 = $CustList['address1'];
 			$Address2 = $CustList['address2'];
 			$Address3 = $CustList['address3'];
@@ -232,7 +232,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma($CustList['disabletrans']) . "\n");
 	}
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=CustList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -288,7 +288,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma($CommissionRate2) . "\n");
 	}
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=SalesmanList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -326,7 +326,7 @@ if ( isset($_POST['pricelist']) ) {
 	}
 
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=ImageList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -362,7 +362,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma($SecTokenList['tokenname']) . "\n");
 	}
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=SecTokenList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -398,7 +398,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma($SecRoleList['secrolename']) . "\n");
 	}
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=SecRoleList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -434,7 +434,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma($SecGroupList['tokenid']) . "\n");
 	}
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=SecGroupList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -518,7 +518,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma($SecUserList['swipecard']) . "\n");
 	}
 	header('Content-type: application/csv');
-	header('Content-Length: ' . strlen($CSVContent));
+	header('Content-Length: ' . mb_strlen($CSVContent));
 	header('Content-Disposition: inline; filename=SecUserList.csv');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

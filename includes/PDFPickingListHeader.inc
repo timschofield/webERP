@@ -53,13 +53,13 @@ $pdf->addText($FormDesign->ShipperCode->x,$Page_Height - $FormDesign->ShipperCod
 
 $LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x,$Page_Height - $FormDesign->Comments->y, $FormDesign->Comments->Length, $FormDesign->Comments->FontSize,stripcslashes($OrdersToPick[$i]['comments']));
 
-if (strlen($LeftOvers)>1){
+if (mb_strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x,$Page_Height - $FormDesign->Comments->y-14, $FormDesign->Comments->Length, $FormDesign->Comments->FontSize,$LeftOvers);
-	if (strlen($LeftOvers)>1){
+	if (mb_strlen($LeftOvers)>1){
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x,$Page_Height - $FormDesign->Comments->y-28, $FormDesign->Comments->Length, $FormDesign->Comments->FontSize,$LeftOvers);
-		if (strlen($LeftOvers)>1){
+		if (mb_strlen($LeftOvers)>1){
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x,$Page_Height - $FormDesign->Comments->y-42, $FormDesign->Comments->Length, $FormDesign->Comments->FontSize,$LeftOvers);
-			if (strlen($LeftOvers)>1){
+			if (mb_strlen($LeftOvers)>1){
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x,$Page_Height - $FormDesign->Comments->y-56, $FormDesign->Comments->Length, $FormDesign->Comments->FontSize,$LeftOvers);
 			}
 		}

@@ -542,7 +542,7 @@ if (isset($_POST['Search'])){
 	if ($_POST['Keywords']=="" AND $_POST['CustCode']=="" AND $_POST['CustInvNo']=="") {
 		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
 	} else {
-		if (strlen($_POST['Keywords'])>0) {
+		if (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -552,13 +552,13 @@ if (isset($_POST['Search'])){
 				WHERE debtorsmaster.name " . LIKE . " '". $SearchString . "'
 				AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
 
-		} elseif (strlen($_POST['CustCode'])>0){
+		} elseif (mb_strlen($_POST['CustCode'])>0){
 			$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name
 				FROM debtorsmaster
 				WHERE debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
 				AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
-		} elseif (strlen($_POST['CustInvNo'])>0){
+		} elseif (mb_strlen($_POST['CustInvNo'])>0){
 			$SQL = "SELECT debtortrans.debtorno,
 					debtorsmaster.name
 				FROM debtorsmaster LEFT JOIN debtortrans

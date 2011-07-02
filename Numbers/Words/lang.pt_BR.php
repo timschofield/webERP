@@ -228,7 +228,7 @@ class Numbers_Words_pt_BR extends Numbers_Words
         $num = trim($num);
         $num = preg_replace('/^0+/','',$num);
 
-        while (strlen($num) % 3 != 0) {
+        while (mb_strlen($num) % 3 != 0) {
             $num = "0" . $num;
         }
 

@@ -46,7 +46,7 @@ if ($_GET['Action'] == 'Enter'){
 			$StockID = 'StockID_' . $i;
 			$Reference = 'Ref_' . $i;
 
-			if (strlen($_POST[$StockID])>0){
+			if (mb_strlen($_POST[$StockID])>0){
 				if (!is_numeric($_POST[$Quantity])){
 					prnMsg(_('The quantity entered for line') . ' ' . $i . ' ' . _('is not numeric') . ' - ' . _('this line was for the part code') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'),'warn');
 					$InputError=True;

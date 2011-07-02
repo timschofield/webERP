@@ -57,16 +57,16 @@ class StringReader {
   function read($bytes) {
     $data = substr($this->_str, $this->_pos, $bytes);
     $this->_pos += $bytes;
-    if (strlen($this->_str)<$this->_pos)
-      $this->_pos = strlen($this->_str);
+    if (mb_strlen($this->_str)<$this->_pos)
+      $this->_pos = mb_strlen($this->_str);
 
     return $data;
   }
 
   function seekto($pos) {
     $this->_pos = $pos;
-    if (strlen($this->_str)<$this->_pos)
-      $this->_pos = strlen($this->_str);
+    if (mb_strlen($this->_str)<$this->_pos)
+      $this->_pos = mb_strlen($this->_str);
     return $this->_pos;
   }
 
@@ -75,7 +75,7 @@ class StringReader {
   }
 
   function length() {
-    return strlen($this->_str);
+    return mb_strlen($this->_str);
   }
 
 };
@@ -112,7 +112,7 @@ class FileReader {
       while ($bytes > 0) {
         $chunk  = fread($this->_fd, $bytes);
         $data  .= $chunk;
-        $bytes -= strlen($chunk);
+        $bytes -= mb_strlen($chunk);
       }
       $this->_pos = ftell($this->_fd);
 

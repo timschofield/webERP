@@ -6,9 +6,9 @@ include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])
 	and isset($_POST['FromCriteria'])
-	and strlen($_POST['FromCriteria'])>=1
+	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])
-	and strlen($_POST['ToCriteria'])>=1) {
+	and mb_strlen($_POST['ToCriteria'])>=1) {
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Aged Customer Balance Listing'));

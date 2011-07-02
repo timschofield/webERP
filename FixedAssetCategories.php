@@ -29,13 +29,13 @@ if (isset($_POST['submit'])) {
 
 	$_POST['CategoryID'] = strtoupper($_POST['CategoryID']);
 
-	if (strlen($_POST['CategoryID']) > 6) {
+	if (mb_strlen($_POST['CategoryID']) > 6) {
 		$InputError = 1;
 		prnMsg(_('The Fixed Asset Category code must be six characters or less long'),'error');
-	} elseif (strlen($_POST['CategoryID'])==0) {
+	} elseif (mb_strlen($_POST['CategoryID'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Fixed Asset Category code must be at least 1 character but less than six characters long'),'error');
-	} elseif (strlen($_POST['CategoryDescription']) >20) {
+	} elseif (mb_strlen($_POST['CategoryDescription']) >20) {
 		$InputError = 1;
 		prnMsg(_('The Fixed Asset Category description must be twenty characters or less long'),'error');
 	}

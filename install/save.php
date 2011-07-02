@@ -135,17 +135,17 @@ if (!isset($_POST['ba_url']) || $_POST['ba_url'] == '') {
 }
 
 // Remove any slashes at the end of the URL
-if(substr($ba_url, strlen($ba_url) - 1, 1) == "/") {
-	$ba_url = substr($ba_url, 0, strlen($ba_url) - 1);
+if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "/") {
+	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
-if(substr($ba_url, strlen($ba_url) - 1, 1) == "\\") {
-	$ba_url = substr($ba_url, 0, strlen($ba_url) - 1);
+if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "\\") {
+	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
-if(substr($ba_url, strlen($ba_url) - 1, 1) == "/") {
-	$ba_url = substr($ba_url, 0, strlen($ba_url) - 1);
+if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "/") {
+	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
-if(substr($ba_url, strlen($ba_url) - 1, 1) == "\\") {
-	$ba_url = substr($ba_url, 0, strlen($ba_url) - 1);
+if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "\\") {
+	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
 // End path
 
@@ -349,7 +349,7 @@ if($_POST['install_tables'] == true){
 		//ignore lines that start with -- or USE or /*
 		if (substr($SQLScriptFile[$i], 0, 2) != '--'
 			AND strstr($SQLScriptFile[$i],'/*')==FALSE
-			AND strlen($SQLScriptFile[$i])>1){
+			AND mb_strlen($SQLScriptFile[$i])>1){
 
 			$SQL .= ' ' . $SQLScriptFile[$i];
 
@@ -365,7 +365,7 @@ if($_POST['install_tables'] == true){
 				// Database created above with correct name.
 				if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
 				    AND strncasecmp($SQL, ' USE ', 5)){
-					$SQL = substr($SQL,0,strlen($SQL)-1);
+					$SQL = substr($SQL,0,mb_strlen($SQL)-1);
 					$result = mysqli_query($db,$SQL);
 				    }
 				    $SQL = '';

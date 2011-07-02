@@ -135,7 +135,7 @@ class Numbers_Words_it_IT extends Numbers_Words
         // strip excessive zero signs
         $num = preg_replace('/^0+/','',$num);
 
-        if (strlen($num) > 6)
+        if (mb_strlen($num) > 6)
         {
             $current_power = 6;
             // check for highest power
@@ -156,10 +156,10 @@ class Numbers_Words_it_IT extends Numbers_Words
         }
         elseif ($num == 0 || $num == '') {
             return(' '.$this->_digits[0].' ');
-            $current_power = strlen($num);
+            $current_power = mb_strlen($num);
         }
         else {
-            $current_power = strlen($num);
+            $current_power = mb_strlen($num);
         }
 
         // See if we need "thousands"

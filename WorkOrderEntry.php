@@ -61,7 +61,7 @@ if (isset($_POST['Search'])){
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'),'warn');
 	}
-	If (strlen($_POST['Keywords'])>0) {
+	If (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -92,7 +92,7 @@ if (isset($_POST['Search'])){
 					ORDER BY stockmaster.stockid";
 		}
 
-	} elseif (strlen($_POST['StockCode'])>0){
+	} elseif (mb_strlen($_POST['StockCode'])>0){
 
 		$_POST['StockCode'] = strtoupper($_POST['StockCode']);
 		$SearchString = '%' . $_POST['StockCode'] . '%';

@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Abbreviation';
 		$i++;
 	}
-	if (strlen($_POST['Abbreviation']) > 3) {
+	if (mb_strlen($_POST['Abbreviation']) > 3) {
 		$InputError = 1;
 		prnMsg(_('The currency abbreviation must be 3 characters or less long and for automated currency updates to work correctly be one of the ISO4217 currency codes'),'error');
 		$Errors[$i] = 'Abbreviation';
@@ -78,19 +78,19 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
 	}
-	if (strlen($_POST['CurrencyName']) > 20) {
+	if (mb_strlen($_POST['CurrencyName']) > 20) {
 		$InputError = 1;
 		prnMsg(_('The currency name must be 20 characters or less long'),'error');
 		$Errors[$i] = 'CurrencyName';
 		$i++;
 	}
-	if (strlen($_POST['Country']) > 50) {
+	if (mb_strlen($_POST['Country']) > 50) {
 		$InputError = 1;
 		prnMsg(_('The currency country must be 50 characters or less long'),'error');
 		$Errors[$i] = 'Country';
 		$i++;
 	}
-	if (strlen($_POST['HundredsName']) > 15) {
+	if (mb_strlen($_POST['HundredsName']) > 15) {
 		$InputError = 1;
 		prnMsg(_('The hundredths name must be 15 characters or less long'),'error');
 		$Errors[$i] = 'HundredsName';

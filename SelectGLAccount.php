@@ -28,13 +28,13 @@ if (isset($_POST['Select'])) {
 
 } elseif (isset($_POST['Search'])){
 
-	if (strlen($_POST['Keywords']>0) AND strlen($_POST['GLCode'])>0) {
+	if (mb_strlen($_POST['Keywords']>0) AND mb_strlen($_POST['GLCode'])>0) {
 		$msg=_('Account name keywords have been used in preference to the account code extract entered');
 	}
 	if ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
 		$msg=_('At least one Account Name keyword OR an extract of an Account Code must be entered for the search');
 	} else {
-		If (strlen($_POST['Keywords'])>0) {
+		If (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -51,7 +51,7 @@ if (isset($_POST['Select'])) {
 				ORDER BY accountgroups.sequenceintb,
 					chartmaster.accountcode";
 
-		} elseif (strlen($_POST['GLCode'])>0 AND is_numeric($_POST['GLCode'])){
+		} elseif (mb_strlen($_POST['GLCode'])>0 AND is_numeric($_POST['GLCode'])){
 
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
@@ -81,7 +81,7 @@ if (!isset($AccountID)) {
 	echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(strlen($msg)>1){
+	if(mb_strlen($msg)>1){
 		prnMsg($msg,'info');
 	}
 

@@ -110,9 +110,9 @@ if (isset($_POST['module'])) {
 			if (substr($LangFile[$i], 0, 2) == '#:') {		/* it's a module reference */
 				$AlsoIn[$j] .= str_replace(' ','<br>', substr($LangFile[$i],3)) . '<br>';
 			} elseif (substr($LangFile[$i], 0 , 5) == 'msgid') {
-				$DefaultText[$j] = substr($LangFile[$i], 7, strlen($LangFile[$i])-9);
+				$DefaultText[$j] = substr($LangFile[$i], 7, mb_strlen($LangFile[$i])-9);
 			} elseif (substr($LangFile[$i], 0 , 6) == 'msgstr') {
-				$ModuleText[$j] = substr($LangFile[$i], 8, strlen($LangFile[$i])-10);
+				$ModuleText[$j] = substr($LangFile[$i], 8, mb_strlen($LangFile[$i])-10);
 				$msgstr[$j] = $i;
 				$j++;
 			}

@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'BranchCode';
 		$i++;
 	}
-	if (strlen($_POST['BranchCode'])==0) {
+	if (mb_strlen($_POST['BranchCode'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Branch code must be at least one character long'),'error');
 		$Errors[$i] = 'BranchCode';

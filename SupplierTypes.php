@@ -32,14 +32,14 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$i=1;
-	if (strlen($_POST['TypeName']) >100) {
+	if (mb_strlen($_POST['TypeName']) >100) {
 		$InputError = 1;
 		echo prnMsg(_('The supplier type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'SupplierType';
 		$i++;
 	}
 
-	if (strlen($_POST['TypeName'])==0) {
+	if (mb_strlen($_POST['TypeName'])==0) {
 		$InputError = 1;
 		echo prnMsg(_('The supplier type name description must contain at least one character'),'error');
 		$Errors[$i] = 'SupplierType';

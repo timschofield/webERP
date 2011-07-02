@@ -277,7 +277,7 @@ class PDF extends PDF_Language {
 		if ($CurWidth>($ColWidth*.90)) { // then it needs to be truncated
 			// for now we'll do an approximation based on averages and scale to 90% of the width to allow for variance
 			// A better aproach would be an recursive call to this function until the string just fits.
-			$NumChars = strlen($strData);
+			$NumChars = mb_strlen($strData);
 			// Reduce the string by 1-$percent and retest
 			$strData = $this->TruncData(substr($strData, 0, ($ColWidth/$CurWidth)*$NumChars*$percent), $ColWidth);
 		}
@@ -362,7 +362,7 @@ function BuildPDF($ReportID, $Prefs) {
 			$d='';
 			if ($DateArray[1]<>'') $d .= $df.">='".FormatDateForSQL($DateArray[1])."'";
 			if ($DateArray[2]<>'') { // a value entered, check
-				if (strlen($d)>0) $d .= ' AND ';
+				if (mb_strlen($d)>0) $d .= ' AND ';
 				$d .= $df."<='".FormatDateForSQL($DateArray[2])."'";
 			}
 			break;
@@ -416,13 +416,13 @@ function BuildPDF($ReportID, $Prefs) {
 		$Params = explode(':',$FieldValues['params']);
 		switch ($Params[1]) {
 			case RPT_RANGE:
-				if (strlen($strCrit)>0) $strCrit .= ' AND ';
+				if (mb_strlen($strCrit)>0) $strCrit .= ' AND ';
 				$t='';
 				if (isset($Params[2])) { // a from value entered, check
 					$t .= $FieldValues['fieldname'].">='".($Params[2]."'");
 				}
 				if (isset($Params[3])) { // a to value entered, check
-					if (strlen($t)>0) $t .= ' AND ';
+					if (mb_strlen($t)>0) $t .= ' AND ';
 					$t .= $FieldValues['fieldname']."<='".($Params[3]."'");
 				}
 				$strCrit .= $t;
@@ -431,14 +431,14 @@ function BuildPDF($ReportID, $Prefs) {
 			case RPT_TRUE:
 			case RPT_ACTIVE:
 			case RPT_PRINTED:
-				if (strlen($strCrit)>0) $strCrit .= ' AND ';
+				if (mb_strlen($strCrit)>0) $strCrit .= ' AND ';
 				$strCrit .= $FieldValues['fieldname'].'=1';
 				break;
 			case RPT_NO:
 			case RPT_FALSE:
 			case RPT_INACTIVE:
 			case RPT_UNPRINTED:
-				if (strlen($strCrit)>0) $strCrit .= ' AND ';
+				if (mb_strlen($strCrit)>0) $strCrit .= ' AND ';
 				$strCrit .= $FieldValues['fieldname'].'=0';
 				break;
 			case RPT_STOCK: // TBD field to compare so default to nothing

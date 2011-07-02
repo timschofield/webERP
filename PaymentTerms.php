@@ -35,13 +35,13 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs are sensible
 
-	if (strlen($_POST['TermsIndicator']) < 1) {
+	if (mb_strlen($_POST['TermsIndicator']) < 1) {
 		$InputError = 1;
 		prnMsg(_('The payment terms name must exist'),'error');
 		$Errors[$i] = 'TermsIndicator';
 		$i++;
 	}
-	if (strlen($_POST['TermsIndicator']) > 2) {
+	if (mb_strlen($_POST['TermsIndicator']) > 2) {
 		$InputError = 1;
 		prnMsg(_('The payment terms name must be two characters or less long'),'error');
 		$Errors[$i] = 'TermsIndicator';
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DayNumber';
 		$i++;
 	}
-	if (empty($_POST['Terms']) OR strlen($_POST['Terms']) > 40) {
+	if (empty($_POST['Terms']) OR mb_strlen($_POST['Terms']) > 40) {
 		$InputError = 1;
 		prnMsg( _('The terms description must be forty characters or less long') ,'error');
 		$Errors[$i] = 'Terms';

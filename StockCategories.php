@@ -38,13 +38,13 @@ if (isset($_POST['submit'])) {
 
 	$_POST['CategoryID'] = strtoupper($_POST['CategoryID']);
 
-	if (strlen($_POST['CategoryID']) > 6) {
+	if (mb_strlen($_POST['CategoryID']) > 6) {
 		$InputError = 1;
 		prnMsg(_('The Inventory Category code must be six characters or less long'),'error');
-	} elseif (strlen($_POST['CategoryID'])==0) {
+	} elseif (mb_strlen($_POST['CategoryID'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Inventory category code must be at least 1 character but less than six characters long'),'error');
-	} elseif (strlen($_POST['CategoryDescription']) >20) {
+	} elseif (mb_strlen($_POST['CategoryDescription']) >20) {
 		$InputError = 1;
 		prnMsg(_('The Sales category description must be twenty characters or less long'),'error');
 	} elseif ($_POST['StockType'] !='D' AND $_POST['StockType'] !='L' AND $_POST['StockType'] !='F' AND $_POST['StockType'] !='M') {
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
         	} else {
         			$_POST['PropNumeric' .$i] =0;
         	}
-        	if ($_POST['PropID' .$i] =='NewProperty' AND strlen($_POST['PropLabel'.$i])>0){
+        	if ($_POST['PropID' .$i] =='NewProperty' AND mb_strlen($_POST['PropLabel'.$i])>0){
         		$sql = "INSERT INTO stockcatproperties (categoryid,
         												label,
         												controltype,

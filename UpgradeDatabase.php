@@ -147,7 +147,7 @@ if (isset($_POST['DoUpgrade'])){
 			if (substr($SQLEntries[$i], 0, 2) != '--'
 				AND substr($SQLEntries[$i], 0, 3) != 'USE'
 				AND strstr($SQLEntries[$i],'/*')==FALSE
-				AND strlen($SQLEntries[$i])>1){
+				AND mb_strlen($SQLEntries[$i])>1){
 	
 				$sql .= ' ' . $SQLEntries[$i];
 	
@@ -160,7 +160,7 @@ if (isset($_POST['DoUpgrade'])){
 					$InAFunction = false;
 				}
 				if (strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
-					$sql = substr($sql,0,strlen($sql)-1);
+					$sql = substr($sql,0,mb_strlen($sql)-1);
 					$result = DB_query($sql, $db, '','', false, false);
 					echo '<tr><td>' . $sql . '</td>';
 					switch (DB_error_no($db)) {

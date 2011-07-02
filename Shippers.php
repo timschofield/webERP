@@ -30,7 +30,7 @@ if ( isset($_POST['submit']) ) {
 	//first off validate inputs sensible
 	$i=1;
 
-	if (strlen($_POST['ShipperName']) >40) {
+	if (mb_strlen($_POST['ShipperName']) >40) {
 		$InputError = 1;
 		prnMsg( _("The shipper's name must be forty characters or less long"), 'error');
 		$Errors[$i] = 'ShipperName';

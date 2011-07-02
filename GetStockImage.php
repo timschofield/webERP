@@ -22,26 +22,26 @@ bevel - if specified draws a drop down bevel
 // Color decode function
 function DecodeBgColor( $colorstr ) {
 	if ( $colorstr[0] == '#' ) {
-		$colorstr = substr($colorstr,1,strlen($colorstr));
+		$colorstr = substr($colorstr,1,mb_strlen($colorstr));
 	}
 	$red = 0;
-	if(strlen($colorstr) > 1) {
+	if(mb_strlen($colorstr) > 1) {
 		$red = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
+		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
 	}
 	$green = 0;
-	if(strlen($colorstr) > 1) {
+	if(mb_strlen($colorstr) > 1) {
 		$green = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
+		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
 	}
 	$blue = 0;
-	if(strlen($colorstr) > 1) {
+	if(mb_strlen($colorstr) > 1) {
 		$blue = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
+		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
 	}
-	if(strlen($colorstr) > 1) {
+	if(mb_strlen($colorstr) > 1) {
 		$alpha = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
+		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
 	}
 	if ( isset($alpha) )
 		return array('red' => $red, 'green' => $green, 'blue' => $blue, 'alpha' => $alpha );
@@ -120,7 +120,7 @@ $i = strrpos($stockid,'.');
 if( $i === false )
   	$type = 'png';
 else {
-	$type   = strtolower(substr($stockid,$i+1,strlen($stockid)));
+	$type   = strtolower(substr($stockid,$i+1,mb_strlen($stockid)));
 	$stockid = substr($stockid,0,$i);
 	if($blanktext && !isset($text))
 		$text = '';
@@ -224,12 +224,12 @@ if( $automake && !isset($filename) || $useblank ) {
 
 	if(!isset($text))
 		$text = $stockid;
-	if(strlen($text) > 0 ) {
+	if(mb_strlen($text) > 0 ) {
 		$fw = imagefontwidth($fontsize);
 		$fh = imagefontheight($fontsize);
 		$fy = (imagesy($im) - ($fh)) / 2;
 		$fyh = $fy + $fh - 1;
-		$textwidth = $fw * strlen($text);
+		$textwidth = $fw * mb_strlen($text);
 		$px = (imagesx($im) - $textwidth) / 2;
 		if (!$notextbg)
 			imagefilledrectangle($im,$px,$fy,imagesx($im)-($px+1),$fyh, $ixtextbgcolor );
@@ -323,12 +323,12 @@ if( $automake && !isset($filename) || $useblank ) {
 //		0,0,0,0);
 	if(!isset($text))
 		$text = $stockid;
-	if(strlen($text) > 0 ) {
+	if(mb_strlen($text) > 0 ) {
 		$fw = imagefontwidth($fontsize);
 		$fh = imagefontheight($fontsize);
 		$fy = imagesy($im) - ($fh);
 		$fyh = imagesy($im) - 1;
-		$textwidth = $fw * strlen($text);
+		$textwidth = $fw * mb_strlen($text);
 		$px = (imagesx($im) - $textwidth) / 2;
 		if (!$notextbg)
 			imagefilledrectangle($im,$px,$fy,imagesx($im)-($px+1),$fyh, $ixtextbgcolor );

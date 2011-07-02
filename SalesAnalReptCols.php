@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input
 	first off validate inputs sensible */
 
-	if (strlen($_POST['ReportHeading']) >70) {
+	if (mb_strlen($_POST['ReportHeading']) >70) {
 		$InputError = 1;
 		prnMsg(_('The report heading must be 70 characters or less long'),'error');
 	}

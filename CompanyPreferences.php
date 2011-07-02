@@ -25,67 +25,67 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strlen($_POST['CoyName']) > 40 OR strlen($_POST['CoyName'])==0) {
+	if (mb_strlen($_POST['CoyName']) > 40 OR mb_strlen($_POST['CoyName'])==0) {
 		$InputError = 1;
 		prnMsg(_('The company name must be entered and be fifty characters or less long'), 'error');
 		$Errors[$i] = 'CoyName';
 		$i++;
 	}
-	if (strlen($_POST['RegOffice1']) >40) {
+	if (mb_strlen($_POST['RegOffice1']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 1 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice1';
 		$i++;
 	}
-	if (strlen($_POST['RegOffice2']) >40) {
+	if (mb_strlen($_POST['RegOffice2']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 2 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice2';
 		$i++;
 	}
-	if (strlen($_POST['RegOffice3']) >40) {
+	if (mb_strlen($_POST['RegOffice3']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 3 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice3';
 		$i++;
 	}
-	if (strlen($_POST['RegOffice4']) >40) {
+	if (mb_strlen($_POST['RegOffice4']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 4 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice4';
 		$i++;
 	}
-	if (strlen($_POST['RegOffice5']) >20) {
+	if (mb_strlen($_POST['RegOffice5']) >20) {
 		$InputError = 1;
 		prnMsg(_('The Line 5 of the address must be twenty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice5';
 		$i++;
 	}
-	if (strlen($_POST['RegOffice6']) >15) {
+	if (mb_strlen($_POST['RegOffice6']) >15) {
 		$InputError = 1;
 		prnMsg(_('The Line 6 of the address must be fifteen characters or less long'),'error');
 		$Errors[$i] = 'RegOffice6';
 		$i++;
 	}
-	if (strlen($_POST['Telephone']) >25) {
+	if (mb_strlen($_POST['Telephone']) >25) {
 		$InputError = 1;
 		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
 		$Errors[$i] = 'Telephone';
 		$i++;
 	}
-	if (strlen($_POST['Fax']) >25) {
+	if (mb_strlen($_POST['Fax']) >25) {
 		$InputError = 1;
 		prnMsg(_('The fax number must be 25 characters or less long'),'error');
 		$Errors[$i] = 'Fax';
 		$i++;
 	}
-	if (strlen($_POST['Email']) >55) {
+	if (mb_strlen($_POST['Email']) >55) {
 		$InputError = 1;
 		prnMsg(_('The email address must be 55 characters or less long'),'error');
 		$Errors[$i] = 'Email';
 		$i++;
 	}
-	if (strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
+	if (mb_strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
 		$InputError = 1;
 		prnMsg(_('The email address is not correctly formed'),'error');
 		$Errors[$i] = 'Email';

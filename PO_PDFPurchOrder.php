@@ -245,7 +245,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize,$POLine['itemcode'], 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize,$Desc, 'left');
-			while (strlen($LeftOvers) > 1){
+			while (mb_strlen($LeftOvers) > 1){
 				$YPos-=$line_height;
 				if ($YPos-$line_height <= $Bottom_Margin){
 					/* We reached the end of the page so finsih off the page and start a newy */
@@ -260,7 +260,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize,$DisplayDelDate, 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize,$DisplayPrice, 'right');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize,$DisplayLineTotal, 'right');
-			if (strlen($LeftOvers)>1){
+			if (mb_strlen($LeftOvers)>1){
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+1+94,$YPos-$line_height,270,$FontSize,$LeftOvers, 'left');
 				$YPos-=$line_height;
 			}
@@ -385,7 +385,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		if (DB_num_rows($ContactsResult)>0){
 			echo '<tr><td>'. _('Email to') .':</td><td><select name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)){
-				if (strlen($ContactDetails['email'])>2 AND strpos($ContactDetails['email'],'@')>0){
+				if (mb_strlen($ContactDetails['email'])>2 AND strpos($ContactDetails['email'],'@')>0){
 					if ($_POST['EmailTo']==$ContactDetails['email']){
 						echo '<option selected value="' . $ContactDetails['email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['email'] . '</option>';
 					} else {

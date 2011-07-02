@@ -80,7 +80,7 @@ function GetAPIErrorMessages( $errcodes )
 	if (isset ($ErrorDescription[$errnum]) ) {
 	    if ($errnum == DatabaseUpdateFailed &&
 			isset ($_SESSION['db_err_msg']) &&
-			strlen ($_SESSION['db_err_msg']) > 0 )
+			mb_strlen ($_SESSION['db_err_msg']) > 0 )
 		$rm[] = $ErrorDescription[$errnum] . ":\n" . $_SESSION['db_err_msg'];
 	    else
 		$rm[] = $ErrorDescription[$errnum];

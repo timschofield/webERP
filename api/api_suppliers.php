@@ -4,7 +4,7 @@
 /* Verify that the supplier number is valid, and doesn't already
    exist.*/
 	function VerifySupplierNo($SupplierNumber, $i, $Errors, $db) {
-		if ((strlen($SupplierNumber)<1) or (strlen($SupplierNumber)>10)) {
+		if ((mb_strlen($SupplierNumber)<1) or (mb_strlen($SupplierNumber)>10)) {
 			$Errors[$i] = IncorrectDebtorNumberLength;
 		}
 		$Searchsql = "SELECT count(supplierid)
@@ -21,7 +21,7 @@
 /* Verify that the supplier number is valid, and already
    exists.*/
 	function VerifySupplierNoExists($SupplierNumber, $i, $Errors, $db) {
-		if ((strlen($SupplierNumber)<1) or (strlen($SupplierNumber)>10)) {
+		if ((mb_strlen($SupplierNumber)<1) or (mb_strlen($SupplierNumber)>10)) {
 			$Errors[$i] = IncorrectDebtorNumberLength;
 		}
 		$Searchsql = "SELECT count(supplierid)
@@ -37,7 +37,7 @@
 
 /* Check that the name exists and is 40 characters or less long */
 	function VerifySupplierName($SupplierName, $i, $Errors) {
-		if ((strlen($SupplierName)<1) or (strlen($SupplierName)>40)) {
+		if ((mb_strlen($SupplierName)<1) or (mb_strlen($SupplierName)>40)) {
 			$Errors[$i] = IncorrectSupplierNameLength;
 		}
 		return $Errors;
@@ -80,21 +80,21 @@
 	}
 
 	function VerifyBankAccount($BankAccount, $i, $Errors) {
-		if (strlen($BankAccount)>30) {
+		if (mb_strlen($BankAccount)>30) {
 			$Errors[$i] = InvalidBankAccount;
 		}
 		return $Errors;
 	}
 
 	function VerifyBankRef($BankRef, $i, $Errors) {
-		if (strlen($BankRef)>12) {
+		if (mb_strlen($BankRef)>12) {
 			$Errors[$i] = InvalidBankReference;
 		}
 		return $Errors;
 	}
 
 	function VerifyBankPartics($BankPartics, $i, $Errors) {
-		if (strlen($BankPartics)>12) {
+		if (mb_strlen($BankPartics)>12) {
 			$Errors[$i] = InvalidBankPartics;
 		}
 		return $Errors;

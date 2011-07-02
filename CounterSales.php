@@ -221,7 +221,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 	} else if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 	}
-	if (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
+	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -254,7 +254,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 				ORDER BY stockmaster.stockid";
 		}
 
-	} else if (strlen($_POST['StockCode'])>0){
+	} else if (mb_strlen($_POST['StockCode'])>0){
 
 		$_POST['StockCode'] = strtoupper($_POST['StockCode']);
 		$SearchString = '%' . $_POST['StockCode'] . '%';

@@ -26,7 +26,7 @@ if (isset($_POST['CheckCode'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . _('Select Item to Transfer') . '</p>';
 
-	if (strlen($_POST['StockText'])>0) {
+	if (mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid, description from stockmaster where description " . LIKE . " '%" . $_POST['StockText'] . "%'";
 	} else {
 		$sql="SELECT stockid, description from stockmaster where stockid " . LIKE . " '%" . $_POST['StockCode']."%'";
@@ -457,7 +457,7 @@ if (isset($_POST['StockID'])) {
 }
 echo '</td><td><input type=submit name="CheckCode" value="'._('Check Part').'"></td></tr>';
 
-if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) and strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
+if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) and mb_strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
 	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</font></td></tr>';
 }
 

@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
 	}
 
-	if ((isset($_POST['Editing']) and $_POST['Editing']=='Yes') AND strlen($Item)>1 AND $InputError !=1) {
+	if ((isset($_POST['Editing']) and $_POST['Editing']=='Yes') AND mb_strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
 

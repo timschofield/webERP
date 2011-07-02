@@ -60,7 +60,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  *Is the delivery information all entered
  */
 	$InputError=0; /*Start off assuming the best */
-	if ($_SESSION['PO'.$identifier]->DelAdd1=='' or strlen($_SESSION['PO'.$identifier]->DelAdd1)<3){
+	if ($_SESSION['PO'.$identifier]->DelAdd1=='' or mb_strlen($_SESSION['PO'.$identifier]->DelAdd1)<3){
 		prnMsg( _('The purchase order cannot be committed to the database because there is no delivery street address specified'),'error');
 		$InputError=1;
 	} elseif ($_SESSION['PO'.$identifier]->Location=='' or ! isset($_SESSION['PO'.$identifier]->Location)){
@@ -458,7 +458,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 	  else {
 		  $_POST['AssetID'] = 0; // cannot commit a string to an integer field so make it 0 if AssetID = 'Not an Asset'
 	}
-	if (strlen($_POST['ItemDescription'])<=3){
+	if (mb_strlen($_POST['ItemDescription'])<=3){
 		$AllowUpdate = false;
 		prnMsg(_('Cannot enter this order line') . ':<br />' . _('The description of the item being purchased is required where a non-stock item is being ordered'),'warn');
 	}
@@ -506,7 +506,7 @@ if (isset($_POST['NewItem'])){
 
 		if (substr($FormVariableName, 0, 6)=='NewQty') { //if the form variable represents a Qty to add to the order
 
-			$ItemCode = substr($FormVariableName, 6, strlen($FormVariableName)-6);
+			$ItemCode = substr($FormVariableName, 6, mb_strlen($FormVariableName)-6);
 			$AlreadyOnThisOrder = 0;
 
 			if ($_SESSION['PO_AllowSameItemMultipleTimes'] ==false){
@@ -568,7 +568,7 @@ if (isset($_POST['NewItem'])){
 						$PurchPrice = $PurchRow['price']/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
 						$SupplierDescription = $PurchRow['suppliers_partno'] .' - ';
-						if (strlen($PurchRow['supplierdescription'])>2){
+						if (mb_strlen($PurchRow['supplierdescription'])>2){
 							$SupplierDescription .= $PurchRow['supplierdescription'];
 						} else {
 							$SupplierDescription .= $ItemRow['description'];

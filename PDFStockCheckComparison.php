@@ -308,7 +308,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$YPos -= (2*$line_height);
 /*
  	$pdfcode = $pdf->output();
-	$len = strlen($pdfcode);
+	$len = mb_strlen($pdfcode);
 
       if ($len<=20){
 		$title = _('Print Stock check comparison Error');

@@ -28,7 +28,7 @@ if (! is_writeable('./companies/')){
 
 if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 
-	if(strlen($_POST['NewCompany'])>32
+	if(mb_strlen($_POST['NewCompany'])>32
 		OR ContainsIllegalCharacters($_POST['NewCompany'])){
 		prnMsg(_('Company abbreviations must not contain spaces, \& or " or \''),'error');
 	} else {
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			$filename = './companies/' . $_POST['NewCompany'] . '/logo.jpg';
 
 			//But check for the worst
-			if (strtoupper(substr(trim($_FILES['LogoFile']['name']),strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
+			if (strtoupper(substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
 				prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 				$UploadTheLogo ='No';
 			} elseif ( $_FILES['LogoFile']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
@@ -106,7 +106,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 					if (substr($SQLScriptFile[$i], 0, 2) != '--'
 						AND substr($SQLScriptFile[$i], 0, 3) != 'USE'
 						AND strstr($SQLScriptFile[$i],'/*')==FALSE
-						AND strlen($SQLScriptFile[$i])>1){
+						AND mb_strlen($SQLScriptFile[$i])>1){
 
 						$SQL .= ' ' . $SQLScriptFile[$i];
 
@@ -119,7 +119,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 							$InAFunction = false;
 						}
 						if (strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
-							$SQL = substr($SQL,0,strlen($SQL)-1);
+							$SQL = substr($SQL,0,mb_strlen($SQL)-1);
 							$result = DB_query($SQL, $db, $ErrMsg);
 							$SQL='';
 						}

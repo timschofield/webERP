@@ -22,11 +22,11 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strlen($_POST['Code']) < 2) {
+	if (mb_strlen($_POST['Code']) < 2) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre code must be at least 2 characters long'),'error');
 	}
-	if (strlen($_POST['Description'])<3) {
+	if (mb_strlen($_POST['Description'])<3) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
 	}

@@ -32,14 +32,14 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$i=1;
-	if (strlen($_POST['typename']) >100) {
+	if (mb_strlen($_POST['typename']) >100) {
 		$InputError = 1;
 		prnMsg(_('The customer type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'CustomerType';
 		$i++;
 	}
 
-	if (strlen($_POST['typename'])==0) {
+	if (mb_strlen($_POST['typename'])==0) {
 		$InputError = 1;
 		echo '<br />';
 		prnMsg(_('The customer type name description must contain at least one character'),'error');

@@ -530,7 +530,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			$uomresult=DB_query($uomsql, $db);
 			if (DB_num_rows($uomresult)>0) {
 				$uomrow=DB_fetch_array($uomresult);
-				if (strlen($uomrow['suppliersuom'])>0) {
+				if (mb_strlen($uomrow['suppliersuom'])>0) {
 					$uom=$uomrow['unitname'];
 				} else {
 					$uom=$myrow['units'];

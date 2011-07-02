@@ -32,11 +32,11 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The Demand Type is reserved for the system'),'error');
 	}
 
-	if (strlen($_POST['MRPDemandType']) < 1) {
+	if (mb_strlen($_POST['MRPDemandType']) < 1) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type code must be at least 1 character long'),'error');
 	}
-	if (strlen($_POST['Description'])<3) {
+	if (mb_strlen($_POST['Description'])<3) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type description must be at least 3 characters long'),'error');
 	}

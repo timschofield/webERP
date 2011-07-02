@@ -560,7 +560,7 @@ then do the updates and inserts to process the invoice entered */
 	
 		prnMsg(_('The invoice as entered will be processed but be warned the amount of the invoice is  zero!') . '. ' . _('Invoices are normally expected to have a positive charge'),'warn');
 	
-	} elseif (strlen( $_SESSION['SuppTrans']->SuppReference)<1){
+	} elseif (mb_strlen( $_SESSION['SuppTrans']->SuppReference)<1){
 		
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
@@ -762,7 +762,7 @@ then do the updates and inserts to process the invoice entered */
 
 			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-				if (strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){
+				if (mb_strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){
 				/*so its not a GRN shipment item
 				  enter the GL entry to reverse the GRN suspense entry created on delivery
 				  * at standard cost/or weighted average cost used on delivery */
@@ -798,7 +798,7 @@ then do the updates and inserts to process the invoice entered */
 					account specified in the purchase order detail record */
 
 					if ($PurchPriceVar !=0){ /* don't bother with this lot if there is no difference ! */
-						if (strlen($EnteredGRN->ItemCode)>0 OR $EnteredGRN->ItemCode != ''){ /*so it is a stock item */
+						if (mb_strlen($EnteredGRN->ItemCode)>0 OR $EnteredGRN->ItemCode != ''){ /*so it is a stock item */
 
 							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
 							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode,$db);
@@ -1122,7 +1122,7 @@ then do the updates and inserts to process the invoice entered */
 			$DbgMsg = _('The following SQL to update the GRN quantity invoiced was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
-			if (strlen($EnteredGRN->ShiptRef)>0 AND $EnteredGRN->ShiptRef != '0'){
+			if (mb_strlen($EnteredGRN->ShiptRef)>0 AND $EnteredGRN->ShiptRef != '0'){
 				/* insert the shipment charge records */
 				$SQL = "INSERT INTO shipmentcharges (shiptref,
 													transtype,

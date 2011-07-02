@@ -140,8 +140,8 @@ class Numbers_Words_id extends Numbers_Words
       $num = trim($num);
       $num = preg_replace('/^0+/','',$num);
         
-      if (strlen($num) > 4) {
-          $maxp = strlen($num)-1;
+      if (mb_strlen($num) > 4) {
+          $maxp = mb_strlen($num)-1;
           $curp = $maxp;
           for ($p = $maxp; $p > 0; --$p) { // power
             
@@ -170,7 +170,7 @@ class Numbers_Words_id extends Numbers_Words
     
       $h = $t = $d = $th = 0;
       
-      switch(strlen($num)) {
+      switch(mb_strlen($num)) {
         case 4:
           $th = (int)substr($num,-4,1);
 

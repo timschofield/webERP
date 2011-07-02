@@ -179,7 +179,7 @@ If(isset($_POST['EnterLine'])){
 
 /*Add the header info to the session variable in any event */
 
-	if (strlen($_POST['QuotationRef'])<3){
+	if (mb_strlen($_POST['QuotationRef'])<3){
 		prnMsg(_('The reference for this order is less than 3 characters') . ' - ' . _('a reference more than 3 characters is required before the order can be added'),'warn');
 	}
 	if ($_POST['Initiator']==""){
@@ -250,7 +250,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 	} elseif ($_SESSION['SPL']->LinesOnOrder <=0){
 		$InputError=1;
 	     prnMsg(_('The purchase order can not be committed to the database because there are no lines entered on this order'),'error');
-	}elseif (strlen($_POST['QuotationRef'])<3){
+	}elseif (mb_strlen($_POST['QuotationRef'])<3){
 		$InputError=1;
 		prnMsg( _('The reference for this order is less than 3 characters') . ' - ' . _('a reference more than 3 characters is required before the order can be added'),'error');
 	}elseif ($_POST['Initiator']==""){
@@ -331,7 +331,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				$PartCount = DB_fetch_row($PartCountResult);
 				if ($PartCount[0]!=0){
 					$PartAlreadyExists =True;
-					if (strlen($PartCode)==20){
+					if (mb_strlen($PartCode)==20){
 						$PartCode = "*" . strtoupper(substr($_SESSION['SPL']->PurchOrderNo,0,13)) . "_" . $SPLLine->LineNo;
 					}
 					$PartCode = $PartCode . $Counter;

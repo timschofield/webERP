@@ -66,7 +66,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 	 if ($_POST['Keywords']=='' AND $_POST['CustCode']=='') {
 		  prnMsg( _('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search'), 'info' );
 	 } else {
-		  If (strlen($_POST['Keywords'])>0) {
+		  If (mb_strlen($_POST['Keywords'])>0) {
 		  //insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -81,7 +81,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 				WHERE custbranch.brname ' . LIKE  . " '" . $SearchString . "'
 				AND custbranch.disabletrans='0'";
 
-		  } elseif (strlen($_POST['CustCode'])>0){
+		  } elseif (mb_strlen($_POST['CustCode'])>0){
 
 			   $SQL = 'SELECT
 			   		custbranch.debtorno,
@@ -400,12 +400,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			  $QuickEntryCode = 'part_' . $i;
 			  $QuickEntryQty = 'qty_' . $i;
 			  $i++;
-		   } while (!is_numeric($_POST[$QuickEntryQty]) AND $_POST[$QuickEntryQty] <=0 AND strlen($_POST[$QuickEntryCode])!=0 AND $i<=$QuickEntires);
+		   } while (!is_numeric($_POST[$QuickEntryQty]) AND $_POST[$QuickEntryQty] <=0 AND mb_strlen($_POST[$QuickEntryCode])!=0 AND $i<=$QuickEntires);
 
 		   $_POST['NewItem'] = trim($_POST[$QuickEntryCode]);
 		   $NewItemQty = trim($_POST[$QuickEntryQty]);
 
-		   if (strlen($_POST['NewItem'])==0){
+		   if (mb_strlen($_POST['NewItem'])==0){
 			     break;	 /* break out of the loop if nothing in the quick entry fields*/
 		   }
 

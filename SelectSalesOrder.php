@@ -20,7 +20,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 			}
 		}
 	}
-	if (strlen($OrdersToPlacePOFor)==''){
+	if (mb_strlen($OrdersToPlacePOFor)==''){
 		prnMsg(_('There were no sales orders checked to place purchase orders for. No purchase orders will be created.'),'info');
 	} else {
    /*  Now build SQL of items to purchase with purchasing data and preferred suppliers - sorted by preferred supplier */

@@ -7,9 +7,9 @@ include('includes/session.inc');
 
 If ((isset($_POST['PrintPDF']))
 			AND isset($_POST['FromCriteria'])
-			AND strlen($_POST['FromCriteria'])>=1
+			AND mb_strlen($_POST['FromCriteria'])>=1
 			AND isset($_POST['ToCriteria'])
-			AND strlen($_POST['ToCriteria'])>=1)	{
+			AND mb_strlen($_POST['ToCriteria'])>=1)	{
 	/*Now figure out the invoice less credits due for the Supplier range under review */
 
 	$sql = "SELECT suppliers.supplierid,
@@ -125,12 +125,12 @@ If ((isset($_POST['PrintPDF']))
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (!isset($_POST['FromCriteria']) or strlen($_POST['FromCriteria'])<1){
+	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
 	} else {
 		$DefaultFromCriteria = $_POST['FromCriteria'];
 	}
-	if (!isset($_POST['ToCriteria']) or strlen($_POST['ToCriteria'])<1){
+	if (!isset($_POST['ToCriteria']) or mb_strlen($_POST['ToCriteria'])<1){
 		$DefaultToCriteria = 'zzzzzzz';
 	} else {
 		$DefaultToCriteria = $_POST['ToCriteria'];

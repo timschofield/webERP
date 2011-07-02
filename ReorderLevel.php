@@ -140,7 +140,7 @@ if (isset($_POST['PrintPDF'])) {
 /*Print out the grand totals */
 
 	//$pdfcode = $pdf->output();
-	//$len = strlen($pdfcode);
+	//$len = mb_strlen($pdfcode);
 
 	if ($ListCount == 0){
 			$title = _('Print Reorder Level Report');

@@ -73,7 +73,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 /*User hit the button to enter line items -
   then meta refresh to Contract_Items.php*/
 	$InputError = false;
-	if(strlen($_SESSION['Contract'.$identifier]->ContractRef)<2){
+	if(mb_strlen($_SESSION['Contract'.$identifier]->ContractRef)<2){
 		prnMsg(_('The contract reference must be entered (and be longer than 2 characters) before the requirements of the contract can be setup'),'warn');
 		$InputError = true;
 	}
@@ -107,7 +107,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.jpg';
 
 	 //But check for the worst
-	if (strtoupper(substr(trim($_FILES['Drawing']['name']),strlen($_FILES['Drawing']['name'])-3))!='JPG'){
+	if (strtoupper(substr(trim($_FILES['Drawing']['name']),mb_strlen($_FILES['Drawing']['name'])-3))!='JPG'){
 		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['Drawing']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
@@ -220,7 +220,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 	//First update the session['Contract'.$identifier] variable with all inputs from the form
 
 	$InputError = False; //assume no errors on input then test for errors
-	if (strlen($_POST['ContractRef']) < 2){
+	if (mb_strlen($_POST['ContractRef']) < 2){
 		prnMsg(_('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
@@ -235,7 +235,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		prnMsg(_('The contract reference cannot be the same as a previously created stock item. Please modify the contract reference before continuing'),'error');
 		$InputError=true;
 	}
-	if (strlen($_POST['ContractDescription'])<10){
+	if (mb_strlen($_POST['ContractDescription'])<10){
 		prnMsg(_('The contract description is expected to be more than 10 characters long. Please alter the contract description in full before proceeding.'),'error');
 		$InputError = true;
 	}
@@ -609,7 +609,7 @@ if (isset($_POST['SearchCustomers'])){
 	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
 		prnMsg(_('At least one Customer Branch Name keyword OR an extract of a Customer Branch Code or Branch Phone Number must be entered for the search'), 'warn');
 	} else {
-		if (strlen($_POST['CustKeywords'])>0) {
+		if (mb_strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
 			$_POST['CustKeywords'] = strtoupper(trim($_POST['CustKeywords']));
 			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
@@ -628,7 +628,7 @@ if (isset($_POST['SearchCustomers'])){
 						AND custbranch.disabletrans=0
 						ORDER BY custbranch.debtorno, custbranch.branchcode";
 
-		} elseif (strlen($_POST['CustCode'])>0){
+		} elseif (mb_strlen($_POST['CustCode'])>0){
 
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 
@@ -646,7 +646,7 @@ if (isset($_POST['SearchCustomers'])){
 						AND custbranch.disabletrans=0
 						ORDER BY custbranch.debtorno";
 
-		} elseif (strlen($_POST['CustPhone'])>0){
+		} elseif (mb_strlen($_POST['CustPhone'])>0){
 			$SQL = "SELECT custbranch.brname,
 							custbranch.contactname,
 							custbranch.phoneno,

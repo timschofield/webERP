@@ -69,8 +69,8 @@ function IsEmailAddress($Email){
 	//  Check component length limits
 	$Domain = substr ($Email, $AtIndex+1);
 	$Local= substr ($Email, 0, $AtIndex);
-	$LocalLen = strlen ($Local);
-	$DomainLen = strlen ($Domain);
+	$LocalLen = mb_strlen ($Local);
+	$DomainLen = mb_strlen ($Domain);
 	if ($LocalLen < 1 || $LocalLen > 64){
 	    // local part length exceeded
 	    return  false;

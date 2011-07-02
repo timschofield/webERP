@@ -86,7 +86,7 @@ do {
 } while ($TransferRow = DB_fetch_array($result));
 /*
 $pdfcode = $pdf->output();
-$len = strlen($pdfcode);
+$len = mb_strlen($pdfcode);
 
 
 if ($len<=20){

@@ -204,7 +204,7 @@ class Numbers_Words_es_AR extends Numbers_Words
         $num = $num_tmp[0];
         $dec = (@$num_tmp[1]) ? $num_tmp[1] : '';
 
-        if (strlen($num) > 6)
+        if (mb_strlen($num) > 6)
         {
             $current_power = 6;
             // check for highest power
@@ -225,10 +225,10 @@ class Numbers_Words_es_AR extends Numbers_Words
         }
         elseif ($num == 0 || $num == '') {
             return(' '.$this->_digits[0]);
-            $current_power = strlen($num);
+            $current_power = mb_strlen($num);
         }
         else {
-            $current_power = strlen($num);
+            $current_power = mb_strlen($num);
         }
 
         // See if we need "thousands"

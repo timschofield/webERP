@@ -98,12 +98,12 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	# Add more to WHERE statement, if user entered something for the part number,debtorno, name
 	// Variables that end with Op - meaning operator - are either = or LIKE
 	$WherePart = ' ';
-	if (strlen($PartNumber) > 0 AND $PartNumberOp == 'LIKE') {
+	if (mb_strlen($PartNumber) > 0 AND $PartNumberOp == 'LIKE') {
 	    $PartNumber = $PartNumber . '%';
 	} else {
 	    $PartNumberOp = '=';
 	}
-	if (strlen($PartNumber) > 0) {
+	if (mb_strlen($PartNumber) > 0) {
 	    $WherePart = " AND salesorderdetails.stkcode " . $PartNumberOp . " '" . $PartNumber . "'  ";
 	}
 
@@ -113,20 +113,20 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	} else {
 	    $DebtorNoOp = '=';
 	}
-	if (strlen($DebtorNo) > 0) {
+	if (mb_strlen($DebtorNo) > 0) {
 	    $WhereDebtorNo = " AND salesorders.debtorno " . $DebtorNoOp . " '" . $DebtorNo . "'  ";
 	}
 
 	$WhereDebtorName = ' ';
-	if (strlen($DebtorName) > 0 AND $DebtorNameOp == 'LIKE') {
+	if (mb_strlen($DebtorName) > 0 AND $DebtorNameOp == 'LIKE') {
 	    $DebtorName = $DebtorName . '%';
 	} else {
 	    $DebtorNameOp = '=';
 	}
-	if (strlen($DebtorName) > 0) {
+	if (mb_strlen($DebtorName) > 0) {
 	    $WhereDebtorName = " AND debtorsmaster.name " . $DebtorNameOp . " '" . $DebtorName . "'  ";
 	}
-	if (strlen($_POST['OrderNo']) > 0) {
+	if (mb_strlen($_POST['OrderNo']) > 0) {
 	    $WhereOrderNo = " AND salesorderdetails.orderno = " . " '" . $_POST['OrderNo'] . "'  ";
 	}
 
@@ -763,13 +763,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		}
 		echo '  ' . _('Date Type') . ' - ' . $_POST['DateType'] . '<br/>';
 		echo '  ' . _('Date Range') . ' - ' . $_POST['FromDate'] . _(' To ') .  $_POST['ToDate'] . '<br/>';
-		if (strlen(trim($PartNumber)) > 0) {
+		if (mb_strlen(trim($PartNumber)) > 0) {
 			echo '  ' . _('Part Number') . ' - ' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '<br/>';
 		}
-		if (strlen(trim($_POST['DebtorNo'])) > 0) {
+		if (mb_strlen(trim($_POST['DebtorNo'])) > 0) {
 			echo '  ' . _('Customer Number') . ' - ' . $_POST['DebtorNoOp'] . ' ' . $_POST['DebtorNo'] . '<br/>';
 		}
-		if (strlen(trim($_POST['DebtorName'])) > 0) {
+		if (mb_strlen(trim($_POST['DebtorName'])) > 0) {
 			echo '  ' . _('Customer Name') . ' - ' . $_POST['DebtorNameOp'] . ' ' . $_POST['DebtorName'] . '<br/>';
 		}
 		echo '  ' . _('Line Item Status') . '  - ' . $_POST['LineStatus'] . '<br/>';

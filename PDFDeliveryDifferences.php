@@ -259,7 +259,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' '
 
 /* UldisN
 $pdfcode = $pdf->output();
-$len = strlen($pdfcode);
+$len = mb_strlen($pdfcode);
 header('Content-type: application/pdf');
 header('Content-Length: ' . $len);
 header('Content-Disposition: inline; filename=DeliveryDifferences.pdf');

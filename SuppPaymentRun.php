@@ -19,9 +19,9 @@ include('includes/GetPaymentMethods.php');
 
 If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	AND isset($_POST['FromCriteria'])
-	AND strlen($_POST['FromCriteria'])>=1
+	AND mb_strlen($_POST['FromCriteria'])>=1
 	AND isset($_POST['ToCriteria'])
-	AND strlen($_POST['ToCriteria'])>=1
+	AND mb_strlen($_POST['ToCriteria'])>=1
 	AND is_numeric($_POST['ExRate'])){
 
 /*then print the report */
@@ -246,12 +246,12 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST"><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (!isset($_POST['FromCriteria']) or strlen($_POST['FromCriteria'])<1){
+	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
 	} else {
 		$DefaultFromCriteria = $_POST['FromCriteria'];
 	}
-	if (!isset($_POST['ToCriteria']) or strlen($_POST['ToCriteria'])<1){
+	if (!isset($_POST['ToCriteria']) or mb_strlen($_POST['ToCriteria'])<1){
 		$DefaultToCriteria = 'zzzzzzz';
 	} else {
 		$DefaultToCriteria = $_POST['ToCriteria'];

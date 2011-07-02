@@ -78,14 +78,14 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 						$QuantityReceived ++;
 					}
 				} else { //not predefined serial numbers
-					if (strlen($_POST['SerialNo' . $i])>0){
+					if (mb_strlen($_POST['SerialNo' . $i])>0){
 						$QuantityReceived ++;
 					}
 				}
 			}
 		} else { //controlled but not serialised - just lot/batch control
 			for ($i=0;$i<15;$i++){
-				if (strlen($_POST['BatchRef' . $i])>0){
+				if (mb_strlen($_POST['BatchRef' . $i])>0){
 					$QuantityReceived += $_POST['Qty' .$i];
 				}
 			}
@@ -770,7 +770,7 @@ echo '</select></td></tr>
 echo '<table class="selection">';
 
 if($WORow['controlled']==1){ //controlled
-	$LotSNRefLength =strlen($WORow['nextlotsnref']);
+	$LotSNRefLength =mb_strlen($WORow['nextlotsnref']);
 	$EndOfTextPartPointer = 0;
 	if (is_numeric($WORow['nextlotsnref'])){
 		$LotSNRefNumeric =$WORow['nextlotsnref'];

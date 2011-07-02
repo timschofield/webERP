@@ -428,7 +428,7 @@ function ValidateField($ReportID, $FieldName, $Description) {
 	// This function checks the fieldname and field reference and validates that it is good.
 	// first check if a form (fieldname is not provided unless it's the form page break field)
 	if ($Type=='frm' AND $Description<>'TestField') { // then check for non-zero description unless a fieldname is present
-		if (strlen($Description)<1) return false; else return true;
+		if (mb_strlen($Description)<1) return false; else return true;
 	}
 	// fetch the table values to build sql
 	$sql = "SELECT table1,
@@ -441,7 +441,7 @@ function ValidateField($ReportID, $FieldName, $Description) {
 	$Result=DB_query($sql,$db,'','',false,true);
 	$Prefs = DB_fetch_assoc($Result);
 	// Check for a non-blank entry in the field description or fieldname
-	if (strlen($FieldName)<1 OR strlen($Description)<1) return false;
+	if (mb_strlen($FieldName)<1 OR mb_strlen($Description)<1) return false;
 	// Build the table to search, then test inputs to see if they are valid
 	$strTable = $Prefs['table1'];
 	if ($Prefs['table2']) $strTable .= ' INNER JOIN '.$Prefs['table2']. ' ON '.$Prefs['table2criteria'];
@@ -601,7 +601,7 @@ function ExportReport($ReportID) {
 	$CSVOutput .= $crlf;
 	$CSVOutput .= '/* End of Export File */'.$crlf;
 	// export the file
-	$FileSize = strlen($CSVOutput);
+	$FileSize = mb_strlen($CSVOutput);
 	header("Content-type: application/txt");
 	header("Content-disposition: attachment; filename=".preg_replace('/ /','',$ReportName).".rpt.txt; size=".$FileSize);
 	// These next two lines are needed for MSIE

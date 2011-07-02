@@ -39,13 +39,13 @@ if ( isset($_POST['submit']) ) {
 	if (isset($_POST['Con_ID']) and !is_long((integer)$_POST['Con_ID'])) {
 		$InputError = 1;
 		prnMsg( _('The Contact ID must be an integer.'), 'error');
-	} elseif (strlen($_POST['ContactName']) >40) {
+	} elseif (mb_strlen($_POST['ContactName']) >40) {
 		$InputError = 1;
 		prnMsg( _('The contact name must be forty characters or less long'), 'error');
 	} elseif( trim($_POST['ContactName']) == '' ) {
 		$InputError = 1;
 		prnMsg( _('The contact name may not be empty'), 'error');
-	}elseif (!IsEmailAddress($_POST['ContactEmail']) AND strlen($_POST['ContactEmail'])>0){
+	}elseif (!IsEmailAddress($_POST['ContactEmail']) AND mb_strlen($_POST['ContactEmail'])>0){
 		$InputError = 1;
 		prnMsg( _('The contact email address is not a valid email address'), 'error');
 	}

@@ -108,15 +108,15 @@ if ($_FILES['userfile']['name']) { //start file processing
 		}
 
 		//next validate inputs are sensible
-		if (!$myrow[1] or strlen($myrow[1]) > 50 OR strlen($myrow[1])==0) {
+		if (!$myrow[1] or mb_strlen($myrow[1]) > 50 OR mb_strlen($myrow[1])==0) {
 			$InputError = 1;
 			prnMsg (_('The stock item description must be entered and be fifty characters or less long') . '. ' . _('It cannot be a zero length string either') . ' - ' . _('a description is required'). ' ("'. implode('","',$myrow). $stockid. '") ','error');
 		}
-		if (strlen($myrow[2])==0) {
+		if (mb_strlen($myrow[2])==0) {
 			$InputError = 1;
 			prnMsg (_('The stock item description cannot be a zero length string') . ' - ' . _('a long description is required'),'error');
 		}
-		if (strlen($StockID) ==0) {
+		if (mb_strlen($StockID) ==0) {
 			$InputError = 1;
 			prnMsg (_('The Stock Item code cannot be empty'),'error');
 		}
@@ -125,11 +125,11 @@ if ($_FILES['userfile']['name']) { //start file processing
 			prnMsg(_('The stock item code cannot contain any of the following characters') . " ' & + \" \\ " . _('or a space'). " (". $StockID. ")",'error');
 			$StockID='';
 		}
-		if (strlen($myrow[4]) >20) {
+		if (mb_strlen($myrow[4]) >20) {
 			$InputError = 1;
 			prnMsg(_('The unit of measure must be 20 characters or less long'),'error');
 		}
-		if (strlen($myrow[13]) >20) {
+		if (mb_strlen($myrow[13]) >20) {
 			$InputError = 1;
 			prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		}

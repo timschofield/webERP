@@ -135,7 +135,7 @@ $MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
 										$myrow['deliverto'] . "</td></tr>";
 $MailMessage = $MailMessage . "<tr><td colspan='4'> <b>" .
 										$myrow['deladd1'] . "</td></tr>";
-If(strlen(trim($myrow['deladd2'])))
+If(mb_strlen(trim($myrow['deladd2'])))
 {
       $MailMessage = $MailMessage . "<tr><td> <b>" . $myrow['deladd2'] . "</td></tr>";
       $MailMessage = $MailMessage . "<tr><td> <b>" . $myrow['deladd3'] .

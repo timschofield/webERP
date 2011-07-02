@@ -138,7 +138,7 @@
 	}
 
 	function VerifyLotSerialNumber($nextlotsnref, $i, $Errors) {
-		if (strlen($nextlotsnref)>20) {
+		if (mb_strlen($nextlotsnref)>20) {
 			$Errors[$i] = IncorrectSerialNumber;
 		}
 		return $Errors;

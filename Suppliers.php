@@ -11,7 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 Function Is_ValidAccount ($ActNo) {
 
-	if (StrLen($ActNo) < 16) {
+	if (mb_strlen($ActNo) < 16) {
 	echo _('NZ account numbers must have 16 numeric characters in it');
 	return False;
 	}
@@ -214,7 +214,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 4;
 		} elseif ($BankPrefix == '09') {
 			If (($DigitVal * 5) > 9) {
-				$CheckSum = $CheckSum + (int) Substr((string)($DigitVal * 5),0,1) + (int) Substr((string)($DigitVal * 5),strlen((string)($DigitVal *5))-1, 1);
+				$CheckSum = $CheckSum + (int) Substr((string)($DigitVal * 5),0,1) + (int) Substr((string)($DigitVal * 5),mb_strlen((string)($DigitVal *5))-1, 1);
 			} else {
 				$CheckSum = $CheckSum + $DigitVal * 5;
 			}
@@ -230,7 +230,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 3;
 		} elseif ($BankPrefix == '09'){
 			if (($DigitVal * 4) > 9) {
-				$CheckSum = $CheckSum + (int) substr(($DigitVal * 4),0,1) + (int)Substr(($DigitVal * 4),strlen($DigitVal * 4)-1, 1);
+				$CheckSum = $CheckSum + (int) substr(($DigitVal * 4),0,1) + (int)Substr(($DigitVal * 4),mb_strlen($DigitVal * 4)-1, 1);
 			} else {
 				$CheckSum = $CheckSum + $DigitVal * 4;
 			}
@@ -246,7 +246,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 3;
 		} elseif ($BankPrefix == '09') {
 			if (($DigitVal * 3) > 9) {
-				$CheckSum = $CheckSum + (int) Substr(($DigitVal * 3),0,1) + (int) Substr(($DigitVal * 3),strlen($DigitVal * 3)-1, 1);
+				$CheckSum = $CheckSum + (int) Substr(($DigitVal * 3),0,1) + (int) Substr(($DigitVal * 3),mb_strlen($DigitVal * 3)-1, 1);
 			} else {
 				$CheckSum = $CheckSum + $DigitVal * 3;
 			}
@@ -258,7 +258,7 @@ Function Is_ValidAccount ($ActNo) {
 	case 13:
 		if ($BankPrefix == '09') {
 			If (($DigitVal * 2) > 9) {
-				$CheckSum = $CheckSum + (int) Substr(($DigitVal * 2),0,1) + (int) Substr(($DigitVal * 2),strlen($DigitVal * 2)-1, 1);
+				$CheckSum = $CheckSum + (int) Substr(($DigitVal * 2),0,1) + (int) Substr(($DigitVal * 2),mb_strlen($DigitVal * 2)-1, 1);
 			} else {
 				$CheckSum = $CheckSum + $DigitVal * 2;
 			}
@@ -324,13 +324,13 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ID';
 		$i++;
 	}
-	if (strlen($_POST['SuppName']) > 40 or strlen($_POST['SuppName']) == 0 or $_POST['SuppName'] == '') {
+	if (mb_strlen($_POST['SuppName']) > 40 or mb_strlen($_POST['SuppName']) == 0 or $_POST['SuppName'] == '') {
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
 		$Errors[$i]='Name';
 		$i++;
 	}
-	if (strlen($SupplierID) == 0) {
+	if (mb_strlen($SupplierID) == 0) {
 		$InputError = 1;
 		prnMsg(_('The Supplier Code cannot be empty'),'error');
 		$Errors[$i]='ID';
@@ -342,31 +342,31 @@ if (isset($_POST['submit'])) {
 		$Errors[$i]='ID';
 		$i++;
 	}
-	if (strlen($_POST['Phone']) >25) {
+	if (mb_strlen($_POST['Phone']) >25) {
 		$InputError = 1;
 		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
 		$Errors[$i] = 'Telephone';
 		$i++;
 	}
-	if (strlen($_POST['Fax']) >25) {
+	if (mb_strlen($_POST['Fax']) >25) {
 		$InputError = 1;
 		prnMsg(_('The fax number must be 25 characters or less long'),'error');
 		$Errors[$i] = 'Fax';
 		$i++;
 	}
-	if (strlen($_POST['Email']) >55) {
+	if (mb_strlen($_POST['Email']) >55) {
 		$InputError = 1;
 		prnMsg(_('The email address must be 55 characters or less long'),'error');
 		$Errors[$i] = 'Email';
 		$i++;
 	}
-	if (strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
+	if (mb_strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
 		$InputError = 1;
 		prnMsg(_('The email address is not correctly formed'),'error');
 		$Errors[$i] = 'Email';
 		$i++;
 	}
-	if (strlen($_POST['BankRef']) > 12) {
+	if (mb_strlen($_POST['BankRef']) > 12) {
 		$InputError = 1;
 		prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
 		$Errors[$i]='BankRef';
@@ -380,7 +380,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	/*
-	elseif (strlen($_POST['BankAct']) > 1 ) {
+	elseif (mb_strlen($_POST['BankAct']) > 1 ) {
 		if (!Is_ValidAccount($_POST['BankAct'])) {
 			prnMsg(_('The bank account entry is not a valid New Zealand bank account number. This is (of course) no concern if the business operates outside of New Zealand'),'warn');
 		}

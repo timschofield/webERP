@@ -89,7 +89,7 @@ $LeftOvers = $pdf->addTextWrap(250,$YPos,75,$FontSize,$_GET['ChequeNum'], 'left'
 $LeftOvers = $pdf->addTextWrap(350,$YPos,75,$FontSize,number_format(round($_SESSION['PaymentDetail']->Amount,2),2), 'left');
 /* UldisN
 $pdfcode = $pdf->output();
-$len = strlen($pdfcode);
+$len = mb_strlen($pdfcode);
 
 if ($len<=1){
 	$title = _('Print Check Error');

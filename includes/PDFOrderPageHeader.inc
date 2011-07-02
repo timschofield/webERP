@@ -64,13 +64,13 @@ $XPos=609;
 $YPos=96;
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,170,$FontSize,stripcslashes($myrow['comments']));
 
-if (strlen($LeftOvers)>1){
+if (mb_strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-14,170,$FontSize,$LeftOvers);
-	if (strlen($LeftOvers)>1){
+	if (mb_strlen($LeftOvers)>1){
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos-28,170,$FontSize,$LeftOvers);
-		if (strlen($LeftOvers)>1){
+		if (mb_strlen($LeftOvers)>1){
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos-42,170,$FontSize,$LeftOvers);
-			if (strlen($LeftOvers)>1){
+			if (mb_strlen($LeftOvers)>1){
 				$LeftOvers = $pdf->addTextWrap($XPos,$YPos-56,170,$FontSize,$LeftOvers);
 			}
 		}

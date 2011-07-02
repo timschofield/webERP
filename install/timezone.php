@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-if (isset($_SESSION['timezone']) && strlen($_SESSION['timezone']) > 0 ) {
+if (isset($_SESSION['timezone']) && mb_strlen($_SESSION['timezone']) > 0 ) {
     $ltz = $_SESSION['timezone'];
 } else {
     $ltz = date_default_timezone_get();

@@ -9,7 +9,7 @@
 if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 	
 	for ($i=0;$i < 10;$i++){
-		if(isset($_POST['SerialNo' . $i]) AND strlen($_POST['SerialNo' . $i])>0){
+		if(isset($_POST['SerialNo' . $i]) AND mb_strlen($_POST['SerialNo' . $i])>0){
 			if ($ItemMustExist){
 				$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
 				if ($ExistingBundleQty >0 OR ($ExistingBundleQty==1 and $IsCredit=true)){
@@ -136,7 +136,7 @@ if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST[
 		//OR a comma delimited file w/ the serial no FIRST
 			if(trim($pieces[0]) != ""){
 				$valid=false;
-				if (strlen($pieces[0]) <= 0 ){
+				if (mb_strlen($pieces[0]) <= 0 ){
 					$valid=false;
 				} else {
 					$valid=true;
@@ -233,7 +233,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 		if ($OrigLineItem->Serialised == 1){
 			if(trim($Item->BundleRef) != ""){
 				$valid=false;
-				if (strlen($Item->BundleRef) <= 0 ){
+				if (mb_strlen($Item->BundleRef) <= 0 ){
 					$valid=false;
 				} else {
 					$valid=true;

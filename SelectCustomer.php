@@ -89,12 +89,12 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 	if (isset($_POST['Search'])) {
 		$_POST['PageOffset'] = 1;
 	}
-	if (strlen($_POST['Keywords'])>0) {
+	if (mb_strlen($_POST['Keywords'])>0) {
 		$msg = _('Search Result: Customer Name has been used in search') . '<br />';
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
-	} elseif (strlen($_POST['CustCode'])>0) {
+	} elseif (mb_strlen($_POST['CustCode'])>0) {
 		$msg = _('Search Result: Customer Code has been used in search') . '<br />';
-	} elseif (strlen($_POST['CustPhone'])>0) {
+	} elseif (mb_strlen($_POST['CustPhone'])>0) {
 		$msg = _('Search Result: Customer Phone has been used in search') . '<br />';
 	}elseif (($_POST['CustAdd'])) {
 		$msg = _('Search Result: Customer Address has been used in search') . '<br />';
@@ -122,7 +122,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 			INNER JOIN debtortype
 			ON debtorsmaster.typeid = debtortype.typeid";
 	} else {
-		if (strlen($_POST['Keywords']) > 0) {
+		if (mb_strlen($_POST['Keywords']) > 0) {
 			//using the customer name
 			$_POST['Keywords'] = strtoupper(trim($_POST['Keywords']));
 			//insert wildcard characters in spaces
@@ -143,7 +143,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 					WHERE debtorsmaster.name " . LIKE . " '" . $SearchString . "'
 					AND debtorsmaster.typeid = debtortype.typeid";
-		} elseif (strlen($_POST['CustCode']) > 0) {
+		} elseif (mb_strlen($_POST['CustCode']) > 0) {
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 			$SQL = "SELECT debtorsmaster.debtorno,
 						debtorsmaster.name,
@@ -161,7 +161,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 					WHERE debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
 					AND debtorsmaster.typeid = debtortype.typeid";
-		} elseif (strlen($_POST['CustPhone']) > 0) {
+		} elseif (mb_strlen($_POST['CustPhone']) > 0) {
 			$SQL = "SELECT debtorsmaster.debtorno,
 						debtorsmaster.name,
 						debtorsmaster.address1,
@@ -180,7 +180,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 					AND debtorsmaster.typeid = debtortype.typeid";
 			// Added an option to search by address. I tried having it search address1, address2, address3, and address4, but my knowledge of MYSQL is limited.  This will work okay if you select the CSV Format then you can search though the address1 field. I would like to extend this to all 4 address fields. Gilles Deacur
 
-		} elseif (strlen($_POST['CustAdd']) > 0) {
+		} elseif (mb_strlen($_POST['CustAdd']) > 0) {
 			$SQL = "SELECT debtorsmaster.debtorno,
 							debtorsmaster.name,
 							debtorsmaster.address1,
@@ -202,7 +202,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 						AND debtorsmaster.typeid = debtortype.typeid";
 			// End added search feature. Gilles Deacur
 
-		} elseif (strlen($_POST['CustType']) > 0 AND $_POST['CustType']!='ALL') {
+		} elseif (mb_strlen($_POST['CustType']) > 0 AND $_POST['CustType']!='ALL') {
 			$SQL = "SELECT debtorsmaster.debtorno,
 								debtorsmaster.name,
 								debtorsmaster.address1,
@@ -219,7 +219,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 								ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 						WHERE debtorsmaster.typeid LIKE debtortype.typeid
 						AND debtortype.typename = '" . $_POST['CustType'] . "'";
-		} elseif (strlen($_POST['Area']) > 0 AND $_POST['Area']!='ALL') {
+		} elseif (mb_strlen($_POST['Area']) > 0 AND $_POST['Area']!='ALL') {
 			$SQL = "SELECT debtorsmaster.debtorno,
 								debtorsmaster.name,
 								debtorsmaster.address1,
@@ -317,7 +317,7 @@ if ($_POST['Select'] != '' OR ($_SESSION['CustomerID'] != '' AND !isset($_POST['
 }
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-if (strlen($msg)>1){
+if (mb_strlen($msg)>1){
 	prnMsg($msg,'info');
 }
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Customers').'</p>';

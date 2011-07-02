@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
-	if (strlen($_POST['SectionName'])==0) {
+	if (mb_strlen($_POST['SectionName'])==0) {
 		$InputError = 1;
 		prnMsg( _('The account section name must contain at least one character') ,'error');
 		$Errors[$i] = 'SectionName';

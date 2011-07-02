@@ -9,7 +9,7 @@
 	}
 
 	function VerifySuppliersUOM($suppliersuom, $i, $Errors) {
-		if (strlen($suppliersuom)>50) {
+		if (mb_strlen($suppliersuom)>50) {
 			$Errors[$i] = InvalidSuppliersUOM;
 		}
 		return $Errors;
@@ -24,7 +24,7 @@
 	}
 
 	function VerifySupplierDescription($supplierdescription, $i, $Errors) {
-		if (strlen($supplierdescription)>50) {
+		if (mb_strlen($supplierdescription)>50) {
 			$Errors[$i] = InvalidSupplierDescription;
 		}
 		return $Errors;

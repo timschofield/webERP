@@ -2,7 +2,7 @@
 /* $Id$*/
 
 	function VerifyCategoryID($CategoryID, $i, $Errors) {
-		if (strlen($CategoryID)>6 or $CategoryID=='') {
+		if (mb_strlen($CategoryID)>6 or $CategoryID=='') {
 			$Errors[$i] = InvalidCategoryID;
 		}
 		return $Errors;
@@ -22,14 +22,14 @@
 	}
 
 	function VerifyCategoryDescription($CategoryDescription, $i, $Errors) {
-		if (strlen($CategoryDescription)>20 or $CategoryDescription=='') {
+		if (mb_strlen($CategoryDescription)>20 or $CategoryDescription=='') {
 			$Errors[$i] = InvalidCategoryDescription;
 		}
 		return $Errors;
 	}
 
 	function VerifyStockType($StockType, $i, $Errors) {
-		if (strlen($StockType)>1 or $StockType=='') {
+		if (mb_strlen($StockType)>1 or $StockType=='') {
 			$Errors[$i] = InvalidStockType;
 		}
 		if ($StockType!='F' and $StockType!='M' and $StockType!='D' and $StockType!='L') {
