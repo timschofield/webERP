@@ -1,4 +1,3 @@
-USE saveurpacific;
 SET FOREIGN_KEY_CHECKS=0;
   ALTER TABLE accountgroups ADD CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY (`sectioninaccounts`) REFERENCES `accountsection` (`sectionid`);
   ALTER TABLE audittrail ADD CONSTRAINT `audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`);
