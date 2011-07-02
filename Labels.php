@@ -27,7 +27,7 @@ $allLabels =				 //!< The variable $allLabels is the global variable that contai
 								 //!<  installation or an empty XML labels file it holds a NULL value.
 
 if ($debug) {
-	echo "<br>" ;
+	echo "<br />" ;
 	echo "<pre>";
 	print_r($_POST);
 	echo "</pre>";
@@ -272,7 +272,7 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $msg.'</p>';
 
-	echo '<br>
+	echo '<br />
 	<form action="'.$_SERVER['PHP_SELF'].'" method="POST">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<div class="centre">

@@ -162,7 +162,7 @@ or deletion of the records*/
 	echo '</table><p>';
 	if (DB_num_rows($result)==0){
 		echo '<div class="centre"><input tabindex=1 type=submit name="NewEDIInvMsg" value="' .
-			_('Create New EDI Invoice Message From Default Template') . '"></div><br>';
+			_('Create New EDI Invoice Message From Default Template') . '"></div><br />';
 	}
 } //end of ifs SelectedLine is not set
 
@@ -240,7 +240,7 @@ echo '<tr><td>' .  _('Line Text') . ':' .'</td>';
 echo '<td>';
 echo '<input tabindex=4 type="Text" name="LineText" size=50 maxlength=50 VALUE='.$_POST['LineText'] .'>';
 echo '</td></tr>';
-echo '</table><br>';
+echo '</table><br />';
 if (isset($_GET['SelectedMessageLine'])) {
 	echo '<div class="centre"><input tabindex=5 type="submit" name="update" value="'.  _('Update Information'). '"></div>';
 } else {

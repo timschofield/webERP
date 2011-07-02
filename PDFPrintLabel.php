@@ -235,7 +235,7 @@ function tableItems($CategoryID, &$ok) {
 	}
 
 	$txt=array(
-		_('Code'), _('Description'), _('Price').'<br>('.$_POST['Currency'].')',
+		_('Code'), _('Description'), _('Price').'<br />('.$_POST['Currency'].')',
 		_('All')
 	);
 	$ix=0;
@@ -445,7 +445,7 @@ function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $St
  */
 function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) {
 	global $pdf, $DecimalPlaces;
-//echo $row.':'.$col.'<br>';
+//echo $row.':'.$col.'<br />';
 	// Calculate the bottom left corner position
 	$iX = $labelDim['Lm'] + $col * $labelDim['Cw'];
 	$iY = $labelDim['Sh'] - ($labelDim['Tm'] + ($row+1) * $labelDim['Rh']);

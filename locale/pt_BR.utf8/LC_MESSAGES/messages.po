@@ -33961,7 +33961,7 @@ msgid "Horiz. pos."
 msgstr ""
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
+msgid "Max text<br />length"
 msgstr ""
 
 #: includes/DefineLabelClass.php:41
@@ -38278,7 +38278,7 @@ msgstr ""
 #~ "Uncheck all boxes for date independent reports; leave Date Fieldname empty"
 #~ msgstr "Desmarcar todos para sair sem referencia de data"
 
-#~ msgid "Date Field List<br>(check all that apply)"
+#~ msgid "Date Field List<br />(check all that apply)"
 #~ msgstr "Lista de Campos"
 
 #~ msgid "Header Information / Formatting"

@@ -15577,7 +15577,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Përdoreni këtë ekran për të hyrë në pagesat nga llogaria juaj bankare. <br> "
+"Përdoreni këtë ekran për të hyrë në pagesat nga llogaria juaj bankare. <br /> "
 "Shënim: Për të hyrë në një pagesë nga një furnizues, së pari zgjidhni "
 "Furnizuesi, kliko Enter një Pagesa për të, ose pranimin nga Furnizuesi, dhe "
 "të përdorin një shumë negative Pagesa në këtë formë."
@@ -35286,8 +35286,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "text Max <br> gjatësi"
+msgid "Max text<br />length"
+msgstr "text Max <br /> gjatësi"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

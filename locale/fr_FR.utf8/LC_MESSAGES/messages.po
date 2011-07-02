@@ -15704,7 +15704,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Utilisez cet écran pour entrer les paiements de votre compte bancaire. <br> "
+"Utilisez cet écran pour entrer les paiements de votre compte bancaire. <br /> "
 "Note: Pour saisir un paiement provenant d'un fournisseur, d'abord "
 "sélectionner le fournisseur, cliquez sur Entrer une rémunération ou un reçu "
 "du fournisseur, et l'utilisation d'un montant négatif de paiement sur ce "
@@ -35643,8 +35643,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max texte <br> longueur"
+msgid "Max text<br />length"
+msgstr "Max texte <br /> longueur"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

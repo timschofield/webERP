@@ -15,9 +15,9 @@ include('includes/header.inc');
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
 
-echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
-echo '<br><br>&nbsp;' . _('Utility to edit a language file header');
-echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
+echo "<br />&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br /><br />&nbsp;' . _('Utility to edit a language file header');
+echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
@@ -30,13 +30,13 @@ for ($i=1; $i<=17; $i++){	/* message.po header is 17 lines long - this is easily
 
 if (isset($_POST['submit'])) {
 
-	echo '<br><table><tr><td>';
+	echo '<br /><table><tr><td>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /* write the new header then the rest of the language file to a new file */
 
-	prnMsg (_('Writing the language file header') . '.....<br>', 'info', ' ');
+	prnMsg (_('Writing the language file header') . '.....<br />', 'info', ' ');
 
 	$fpOut = fopen($PathToNewLanguage, 'w');
 
@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 		$Result = fputs($fpOut, stripslashes(html_entity_decode($_POST['Header_'.$i]))."\n");
 	}
 
-	prnMsg (_('Writing the rest of the language file') . '.....<br>', 'info', ' ');
+	prnMsg (_('Writing the rest of the language file') . '.....<br />', 'info', ' ');
 
 	while (!feof($fpIn)) {
 		$FileContents = fgets($fpIn);
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 			$Result = unlink($PathToLanguage . '.bak');
 		}
 
-	prnMsg (_('Done') . '<br>', 'info', ' ');
+	prnMsg (_('Done') . '<br />', 'info', ' ');
 
 	echo '</form>';
 	echo '</td></tr></table>';
@@ -80,14 +80,14 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 }
 else
 {
-  echo '<br><br>&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
-  echo '<br>&nbsp;' . _('Make sure you have selected the correct language to translate!');
-  echo '<br>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
+  echo '<br /><br />&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
+  echo '<br />&nbsp;' . _('Make sure you have selected the correct language to translate!');
+  echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
 	echo '<div class="centre">';
-	echo '<br>';
-	prnMsg (_('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br><br>' .
+	echo '<br />';
+	prnMsg (_('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br /><br />' .
 				_('Make sure you know what you are doing BEFORE you edit the header'), 'info', _('PLEASE NOTE'));
-	echo '<br></div>';
+	echo '<br /></div>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -103,7 +103,7 @@ else
 	}
 
 	echo '</table>';
-	echo '<br><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
+	echo '<br /><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
 	echo '<input type="hidden" name="language" VALUE="' . $_POST['language'] . '"></div>';
 	echo '</form>';
 }

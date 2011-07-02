@@ -154,7 +154,7 @@ if (empty($_POST['preview'])) {
 	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
 }
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Form Design') . '" alt="">' . ' ' . _('Form Design').'<br />'. $FormDesign['name'] . '';
-echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.') .'<br /> '. _('All measurements are in millimetres') . '.</div><br>';
+echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.') .'<br /> '. _('All measurements are in millimetres') . '.</div><br />';
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A3_Landscape', 'A3_Portrait', 'letter_Portrait', 'letter_Landscape', 'legal_Portrait', 'legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

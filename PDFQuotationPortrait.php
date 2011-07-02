@@ -10,11 +10,11 @@ include('includes/SQL_CommonFunctions.inc');
 If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
         $title = _('Select Quotation To Print');
         include('includes/header.inc');
-        echo '<div class="centre"><br><br><br>';
+        echo '<div class="centre"><br /><br /><br />';
         prnMsg( _('Select a Quotation to Print before calling this page') , 'error');
-        echo '<br><br><br><table class="table_index"><tr><td class="menu_group_item">
+        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
                 <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'&Quotations=Quotes_Only">' . _('Quotations') . '</a></li>
-                </td></tr></table></div><br><br><br>';
+                </td></tr></table></div><br /><br /><br />';
         include('includes/footer.inc');
         exit();
 }
@@ -61,11 +61,11 @@ $result=DB_query($sql,$db, $ErrMsg);
 if (DB_num_rows($result)==0){
         $title = _('Print Quotation Error');
         include('includes/header.inc');
-         echo '<div class="centre"><br><br><br>';
+         echo '<div class="centre"><br /><br /><br />';
         prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
-        echo '<br><br><br><table class="table_index"><tr><td class="menu_group_item">
+        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
                 <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'&Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li>
-                </td></tr></table></div><br><br><br>';
+                </td></tr></table></div><br /><br /><br />';
         include('includes/footer.inc');
         exit;
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
@@ -231,8 +231,8 @@ if ($ListCount == 0){
         $title = _('Print Quotation Error');
         include('includes/header.inc');
         echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
-                '<br><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&Quotation=Quotes_only">'. _('Print Another Quotation').
-                '</a>' . '<br>'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+                '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&Quotation=Quotes_only">'. _('Print Another Quotation').
+                '</a>' . '<br />'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
         include('includes/footer.inc');
 	exit;
 } else {

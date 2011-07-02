@@ -288,7 +288,7 @@ class Numbers_Words_lt extends Numbers_Words
         if (!isset($lev) || !is_array($lev))
           return null;
 
-		//echo " $t $d  <br>";
+		//echo " $t $d  <br />";
 		
 		if ( $t == 1 || ( $t > 0 && $d == 0 ) )
 	        $ret .= $this->_sep . $lev[2];

@@ -7761,7 +7761,7 @@ msgstr ""
 
 #: DeliveryNote.php:229
 #, fuzzy
-msgid "Total Volume<br>"
+msgid "Total Volume<br />"
 msgstr "TOPLAM m3"
 
 #: DeliveryNote.php:230

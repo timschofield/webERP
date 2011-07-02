@@ -56,7 +56,7 @@ if (isset($_POST['update'])) {
 			} else {
 				echo '<tr '.$FailureStyle.'><td>'.$ItemDetails['stockid'].'</td><td>'.'Failure'.'</td><td>';
 				for ($i=0; $i<sizeof($answer); $i++) {
-					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]].'<br>';
+					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]].'<br />';
 				}
 				echo '</td></tr>';
 				$failures++;
@@ -74,7 +74,7 @@ if (isset($_POST['update'])) {
 	if (DB_num_rows($result)==0) {
 		prnMsg( _('No locations have been set up. At least one location should be set up first'), "error");
 	} else {
-		prnMsg( _('Select a csv file containing the details of the parts that you wish to import into webERP. '). '<br>' .
+		prnMsg( _('Select a csv file containing the details of the parts that you wish to import into webERP. '). '<br />' .
 			 _('The first line must contain the field names that you wish to import. ').
 			 '<a href ="Z_DescribeTable.php?table=stockmaster">' . _('The field names can be found here'). '</a>', 'info');
 		echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'">';

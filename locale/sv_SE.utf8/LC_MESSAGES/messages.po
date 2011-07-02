@@ -15219,7 +15219,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Använd denna skärm för att ange betalningar från ditt bankkonto. <br> OBS: "
+"Använd denna skärm för att ange betalningar från ditt bankkonto. <br /> OBS: "
 "För att registrera en betalningsorder från en leverantör, först välja "
 "leverantör, klicka på Ange en betalning till eller mottagande från "
 "leverantören, och använd en negativ Betalningsbelopp på denna blankett."
@@ -34470,8 +34470,8 @@ msgid "Horiz. pos."
 msgstr "Horisontalplanet. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max text <br> längd"
+msgid "Max text<br />length"
+msgstr "Max text <br /> längd"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

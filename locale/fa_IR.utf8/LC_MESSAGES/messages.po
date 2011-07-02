@@ -15338,7 +15338,7 @@ msgid ""
 "on this form."
 msgstr ""
 "با استفاده از این صفحه نمایش را وارد کنید پرداختی ها را از حساب بانکی شما. "
-"<br> توجه : برای وارد شدن به پرداخت از تامین کنندگان ، تامین کننده اول را "
+"<br /> توجه : برای وارد شدن به پرداخت از تامین کنندگان ، تامین کننده اول را "
 "انتخاب کنید ، کلیک کنید را وارد کنید به پرداخت ، یا رسید را از تامین کنندگان "
 "، و استفاده از مقدار پرداخت شده در این فرم منفی."
 
@@ -34530,8 +34530,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. اعتباری."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "متن مکس <br> طول"
+msgid "Max text<br />length"
+msgstr "متن مکس <br /> طول"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

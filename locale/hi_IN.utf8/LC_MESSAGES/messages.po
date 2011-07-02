@@ -15216,7 +15216,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"इस के लिए आपके बैंक खाते से भुगतान प्रवेश स्क्रीन का प्रयोग करें. <br> ध्यान दें: एक एक "
+"इस के लिए आपके बैंक खाते से भुगतान प्रवेश स्क्रीन का प्रयोग करें. <br /> ध्यान दें: एक एक "
 "सप्लायर से भुगतान में प्रवेश करने के लिए, पहले प्रदायक चयन करने के लिए भुगतान करें क्लिक करें, "
 "या प्रदायक से रसीद, और इस फार्म पर एक नकारात्मक भुगतान राशि का उपयोग करें."
 
@@ -34202,8 +34202,8 @@ msgid "Horiz. pos."
 msgstr "_ आड़े. स्थिति."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "अधिकतम पाठ <br> लंबाई"
+msgid "Max text<br />length"
+msgstr "अधिकतम पाठ <br /> लंबाई"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

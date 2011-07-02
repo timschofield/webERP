@@ -141,7 +141,7 @@ while ($myrow=DB_fetch_array($Result)){
 		include('includes/header.inc');
    		prnMsg(_('An error occurred getting the GL transactions'),'error');
 		if ($debug==1){
-				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br>' . $sql, 'error');
+				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br />' . $sql, 'error');
 		}
 		include('includes/footer.inc');
   		exit;

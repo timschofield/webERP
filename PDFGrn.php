@@ -120,7 +120,7 @@ if ($NoOfGRNs >0){
 	$title = _('GRN Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no GRNs to print'),'warn');
-	echo '<br><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
+	echo '<br /><a href="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 	include('includes/footer.inc');
 }
 ?>

@@ -12,12 +12,12 @@ include('includes/SQL_CommonFunctions.inc');
 If (!isset($_GET['TransNo']) || $_GET['TransNo']==""){
 	$title = _('Select Order To Print');
 	include('includes/header.inc');
-	echo '<div class=centre><br><br><br>';
+	echo '<div class=centre><br /><br /><br />';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
-	echo '<br><br><br><table class="table_index"><tr><td class="menu_group_item">
+	echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
 		<li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
 		<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
-		</td></tr></table></div><br><br><br>';
+		</td></tr></table></div><br /><br /><br />';
 	include('includes/footer.inc');
 	exit;
 }
@@ -65,12 +65,12 @@ if (DB_num_rows($result)==0){
 
 	$title = _('Print Packing Slip Error');
         include('includes/header.inc');
-        echo '<div class=centre><br><br><br>';
+        echo '<div class=centre><br /><br /><br />';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-        echo '<br><br><br><table class="table_index"><tr><td class="menu_group_item">
+        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
                 <LI><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></LI>
                 <LI><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></LI>
-                </td></tr></table></div><br><br><br>';
+                </td></tr></table></div><br /><br /><br />';
         include('includes/footer.inc');
         exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
@@ -84,17 +84,17 @@ if (DB_num_rows($result)==0){
 		echo '<p>';
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
 			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
-			'<br>' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
+			'<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 	      echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
 		. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
 		'<a href="' . $rootpath. '/PrintCustOrder_generic.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
 
-		echo '<br><br><br>';
+		echo '<br /><br /><br />';
 		echo  _('Or select another Order Number to Print');
 	        echo '<table class="table_index"><tr><td class="menu_group_item">
         	        <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
                 	<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
-	                </td></tr></table></div><br><br><br>';
+	                </td></tr></table></div><br /><br /><br />';
 
       		include('includes/footer.inc');
 		exit;
@@ -194,8 +194,8 @@ if (DB_num_rows($result)>0){
 	$title = _('Print Packing Slip Error');
 	include('includes/header.inc');
 	echo '<p>'. _('There were no outstanding items on the order to deliver. A dispatch note cannot be printed').
-		'<br><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Print Another Packing Slip/Order').
-		'</a>' . '<br>'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+		'<br /><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Print Another Packing Slip/Order').
+		'</a>' . '<br />'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit;
 } /*end if there are order details to show on the order*/

@@ -81,7 +81,7 @@ while ($row = @mysql_fetch_assoc($result)) {
       // failure to geocode
       $geocode_pending = false;
       echo '<p>' . _('Customer Branch Code:') . $id . ', Address: ' . $address . _('failed to geocode.');
-      echo 'Received status ' . $status . '<br>';
+      echo 'Received status ' . $status . '<br />';
     }
     usleep($delay);
   }
@@ -125,13 +125,13 @@ while ($row2 = @mysql_fetch_assoc($result2)) {
       // failure to geocode
       $geocode_pending = false;
       echo '<p>' . _('Supplier Code: ') . $id . ', Address: ' . $address . ' failed to geocode.';
-      echo 'Received status ' . $status . '<br>';
+      echo 'Received status ' . $status . '<br />';
     }
     usleep($delay);
   }
 }
 echo '</p>';
 
-echo '<br><div class="centre"><a href="' . $rootpath . '/GeocodeSetup.php">' . _('Go back to Geocode Setup') . '</a></div>';
+echo '<br /><div class="centre"><a href="' . $rootpath . '/GeocodeSetup.php">' . _('Go back to Geocode Setup') . '</a></div>';
 include ('includes/footer.inc');
 ?>

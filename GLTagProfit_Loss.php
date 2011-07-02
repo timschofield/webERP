@@ -104,10 +104,10 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		echo '<option selected VALUE="Detailed">'._('All Accounts') . '</option>';
 	echo '</select></td></tr>';
 
-	echo '</table><br>';
+	echo '</table><br />';
 
-	echo "<div class='centre'><input type=submit Name='ShowPL' Value='"._('Show Statement of Income and Expenditure')."'><br>";
-	echo "<br><input type=submit Name='PrintPDF' Value='"._('PrintPDF')."'></div>";
+	echo "<div class='centre'><input type=submit Name='ShowPL' Value='"._('Show Statement of Income and Expenditure')."'><br />";
+	echo "<br /><input type=submit Name='PrintPDF' Value='"._('PrintPDF')."'></div>";
 
 	/*Now do the posting while the user is thinking about the period to select */
 
@@ -172,9 +172,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		$title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		if ($debug == 1){
-			echo '<br>'. $SQL;
+			echo '<br />'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -184,7 +184,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified'),'info');
-		echo '<br><a href="'. $rootpath.'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $rootpath.'/index.php">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}

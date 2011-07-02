@@ -17,7 +17,7 @@ if (empty($_POST['DoUpgrade'])){
 
 if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 
-	echo '<br>';
+	echo '<br />';
 	prnMsg(_('If there are any failures then please check with your system administrator').
 		'. '._('Please read all notes carefully to ensure they are expected'),'info');
 
@@ -27,7 +27,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	$ErrMsg = _('The script to upgrade the database failed because');
 	$sql ='';
 	$InAFunction = false;
-	echo '<br><table>';
+	echo '<br /><table>';
 	for ($i=0; $i<=$ScriptFileEntries; $i++) {
 
 		$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);

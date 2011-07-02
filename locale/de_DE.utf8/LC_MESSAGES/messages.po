@@ -13089,15 +13089,15 @@ msgstr "Inventurauswertung"
 
 #: index.php:692
 msgid "All Inventory Movements By Location/Date"
-msgstr "Bestandsveränderungen<br>je Betriebsstätte/Datum"
+msgstr "Bestandsveränderungen<br />je Betriebsstätte/Datum"
 
 #: index.php:697
 msgid "List Inventory Status By Location/Category"
-msgstr "Bestands-/Bedarfsliste<br>je Lagerort und Warengruppe"
+msgstr "Bestands-/Bedarfsliste<br />je Lagerort und Warengruppe"
 
 #: index.php:702
 msgid "Historical Stock Quantity By Location/Category"
-msgstr "Historische Lagermengen<br>je Lagerort und Warengruppe"
+msgstr "Historische Lagermengen<br />je Lagerort und Warengruppe"
 
 #: index.php:707
 msgid "List Negative Stocks"
@@ -15540,7 +15540,7 @@ msgid ""
 "on this form."
 msgstr ""
 "Verwenden Sie dieses Bild, um Zahlungen VON Ihrem Bankkonto zu erfassen. "
-"<BR>Hinweis: Wenn Sie eine Zahlung VON einem Lieferanten erfassen wollen, "
+"<br />Hinweis: Wenn Sie eine Zahlung VON einem Lieferanten erfassen wollen, "
 "wählen Sie zuerst den Lieferanten aus, klicken auf &quot;Kreditoren-"
 "Zahlungsausgang / Rückzahlung erfassen&quot; und verwenden einen negativen "
 "Zahlbetrag in diesem Formular."
@@ -25173,7 +25173,7 @@ msgstr "Die Warengruppe"
 
 #: StockCategories.php:216
 msgid "Stock GL"
-msgstr "Sachkonto<br>Bestand"
+msgstr "Sachkonto<br />Bestand"
 
 #: StockCategories.php:217
 msgid "Adjts GL"
@@ -25181,15 +25181,15 @@ msgstr "Aufwandskonto<br/>Wertberichtigung"
 
 #: StockCategories.php:218
 msgid "Price Var GL"
-msgstr "Aufandskonto<br>Einkaufsabweichungen"
+msgstr "Aufandskonto<br />Einkaufsabweichungen"
 
 #: StockCategories.php:219
 msgid "Usage Var GL"
-msgstr "Aufwandskonto<br>Verbrauchsabweichungen"
+msgstr "Aufwandskonto<br />Verbrauchsabweichungen"
 
 #: StockCategories.php:220
 msgid "WIP GL"
-msgstr "Bestandskonto<br>Ware in Arbeit"
+msgstr "Bestandskonto<br />Ware in Arbeit"
 
 #: StockCategories.php:241
 #, php-format
@@ -35231,7 +35231,7 @@ msgid "Horiz. pos."
 msgstr "Horiz. Pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
+msgid "Max text<br />length"
 msgstr "Maximale</br>Textlänge"
 
 #: includes/DefineLabelClass.php:41
@@ -39953,8 +39953,8 @@ msgstr "Rückgabewert"
 #~ "Demarkieren Sie alle Kästchen für Berichte, die nicht zeitabhäng sind und "
 #~ "lassen Sie den Namen des Datumsfeldes leer."
 
-#~ msgid "Date Field List<br>(check all that apply)"
-#~ msgstr "Datumsauswahl<br>(alle zutreffenden markieren)"
+#~ msgid "Date Field List<br />(check all that apply)"
+#~ msgstr "Datumsauswahl<br />(alle zutreffenden markieren)"
 
 #~ msgid "Default Reports"
 #~ msgstr "Standardberichte"
@@ -39996,10 +39996,10 @@ msgstr "Rückgabewert"
 #~ msgstr "Linienstärke (pt)"
 
 #~ msgid ""
-#~ "Link Equation (SQL Syntax)<br>example: tablename1.fieldname1=tablename2."
+#~ "Link Equation (SQL Syntax)<br />example: tablename1.fieldname1=tablename2."
 #~ "fieldname2"
 #~ msgstr ""
-#~ "Verknüpfungsausdruck (SQL Syntax)<br>Beispiel: tabellenname1."
+#~ "Verknüpfungsausdruck (SQL Syntax)<br />Beispiel: tabellenname1."
 #~ "feldname1=tabellenname2.feldname2"
 
 #~ msgid "My Reports"

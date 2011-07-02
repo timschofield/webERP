@@ -31,10 +31,10 @@ if (DB_num_rows($result)==0){
 while ($myrow = DB_fetch_array($result)){
 	$AllocToID = $myrow['id'];
 
-	echo '<br>' . _('Allocations made against') . ' ' . $myrow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $myrow['transno'];
-	echo '<br>' . _('Original Invoice Total') . ': '. $myrow['totamt'];
-	echo '<br>' . _('Total amount recorded as allocated against it') . ': ' . $myrow['alloc'];
-	echo '<br>' . _('Total of allocation records') . ': ' . $myrow['totalalloc'];
+	echo '<br />' . _('Allocations made against') . ' ' . $myrow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $myrow['transno'];
+	echo '<br />' . _('Original Invoice Total') . ': '. $myrow['totamt'];
+	echo '<br />' . _('Total amount recorded as allocated against it') . ': ' . $myrow['alloc'];
+	echo '<br />' . _('Total of allocation records') . ': ' . $myrow['totalalloc'];
 
 	$sql = "SELECT type,
 			transno,

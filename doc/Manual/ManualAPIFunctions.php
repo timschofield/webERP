@@ -50,7 +50,7 @@ for ($i=0; $i<sizeof($answer); $i++) {
 
 	$response = $client->send($msg);
 	$signature = php_xmlrpc_decode($response->value());
-	echo $signature.'<br>';
+	echo $signature.'<br />';
 }
 
 echo '</body>';

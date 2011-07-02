@@ -252,7 +252,7 @@ function display(&$db,&$ChangeDate)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><br /><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<br><table class="selection">';
+	echo '<br /><table class="selection">';
 
 	echo '<tr>
 		<td>' . _('From Date') . ':</td>
@@ -291,7 +291,7 @@ function display(&$db,&$ChangeDate)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 		<td>' . _('Friday') . ':</td>
 		<td><input type="checkbox" name="Friday" value="Friday"></td>
 	</tr>
-	</table><br>
+	</table><br />
 	<div class=centre><input type="submit" name="submit" value="' . _('Create Calendar') . '">
 	<input type="submit" name="listall" value="' . _('List Date Range') . '"></div>';
 
@@ -299,7 +299,7 @@ if (!isset($_POST['ChangeDate'])) {
 	$_POST['ChangeDate']=date($_SESSION['DefaultDateFormat']);
 }
 
-echo '<br><table class=selection>';
+echo '<br /><table class=selection>';
 echo '<tr>
 		<td>' . _('Change Date Status') . ':</td>
 		<td><input type="text" name="ChangeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] .

@@ -106,9 +106,9 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$title = _('Payment Run - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				echo '<br>' . _('The SQL that failed was') . ' ' . $sql;
+				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -117,7 +117,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$title = _('Payment Run -Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('There are no outstanding supplier invoices to pay'),'info');
-			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -181,9 +181,9 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					$title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
 					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db),'error');
-					echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+					echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 					if ($debug==1){
-						echo '<br>' . _('The SQL that failed was') . $SQL;
+						echo '<br />' . _('The SQL that failed was') . $SQL;
 					}
 					$ProcessResult = DB_Txn_Rollback($db);
 					include('includes/footer.inc');
@@ -211,9 +211,9 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				prnMsg(_('The SQL that failed was') . '<br>' . $SQL,'error');
+				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
 			$ProcessResult = DB_Txn_Rollback($db);
 			include('includes/footer.inc');
@@ -238,7 +238,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		. '" alt="" />' . $title . '</p>';
 
 	if (isset($_POST['Currency']) AND !is_numeric($_POST['ExRate'])){
-		echo '<br>' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . _('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
+		echo '<br />' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . _('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
 	}
 
 	/* show form to allow input	*/
@@ -297,9 +297,9 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$AccountsResults = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		 echo '<br>' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
 		 if ($debug==1){
-			echo '<br>' . _('The SQL used to retrieve the bank accounts was') . ':<br>' . $SQL;
+			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
 		 }
 		 exit;
 	}

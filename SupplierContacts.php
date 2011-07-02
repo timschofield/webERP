@@ -13,7 +13,7 @@ if (isset($_GET['SupplierID'])){
 	$SupplierID = $_POST['SupplierID'];
 }
 
-echo '<a href="' . $rootpath . '/SelectSupplier.php">' . _('Back to Suppliers') . '</a><br>';
+echo '<a href="' . $rootpath . '/SelectSupplier.php">' . _('Back to Suppliers') . '</a><br />';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
 	_('Supplier Allocations') . '" alt="" />' . ' ' . $title . '</p>';

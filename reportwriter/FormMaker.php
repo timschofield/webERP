@@ -156,8 +156,8 @@ function BuildFormList($GroupID) {
 					$WriteOnce = true;
 					foreach ($FormList as $Entry) {
 						if ($Entry['groupname']==$index) { // then it's part of this listing
-							if ($WriteOnce) { $OutputString .= $value.'<br>'; $WriteOnce=false; }
-							$OutputString .= '&nbsp;&nbsp;<input type="radio" name="ReportID" value="'.$Entry['id'].'">'.$Entry['reportname'].'<br>';
+							if ($WriteOnce) { $OutputString .= $value.'<br />'; $WriteOnce=false; }
+							$OutputString .= '&nbsp;&nbsp;<input type="radio" name="ReportID" value="'.$Entry['id'].'">'.$Entry['reportname'].'<br />';
 						}
 					}
 				}
@@ -173,7 +173,7 @@ function BuildFormList($GroupID) {
 		$Result=DB_query($sql,$db,'','',false,true);
 		$OutputString .= '<tr><td colspan="3" width="250" valign="top">';
 		while ($Forms = DB_fetch_array($Result)) {
-			$OutputString .= '<input type="radio" name="ReportID" value="'.$Forms['id'].'">'.$Forms['reportname'].'<br>';
+			$OutputString .= '<input type="radio" name="ReportID" value="'.$Forms['id'].'">'.$Forms['reportname'].'<br />';
 		}
 		$OutputString .= '</td></tr>';
 	}

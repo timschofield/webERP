@@ -58,7 +58,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
  while (false !== ($OrderFile=readdir($dirhandle))){ /*there are files in the incoming orders dir */
 
 	$TryNextFile = False;
-	echo "<br>$OrderFile";
+	echo "<br />$OrderFile";
 
 	/*Counter that keeps track of the array pointer for the 1st seg in the current seg group */
 	$FirstSegInGrp =0;
@@ -79,7 +79,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 	while ($LineText = fgets($fp) AND $TryNextFile != True){ /* get each line of the order file */
 
 		$LineText = StripTrailingComma($LineText);
-		echo "<br>".$LineText;
+		echo "<br />".$LineText;
 
 		if ($SegTag != substr($LineText,0,3)){
 			$SegCounter=1;
@@ -87,7 +87,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 		} else {
 			$SegCounter++;
 			if ($SegCounter > $Seg[$SegID]['MaxOccur']){
-				$EmailText = $EmailText . "\n" . _('The EANCOM Standard only allows for') . ' ' . $Seg[$SegID]['MaxOccur'] . ' ' ._('occurrences of the segment') . ' ' . $Seg[$SegID]['SegTag'] . ' ' . _('this is the') . ' ' . $SegCounter . ' ' . _('occurrence') .  '<br>' . _('The segment line read as follows') . ':<br>' . $LineText;
+				$EmailText = $EmailText . "\n" . _('The EANCOM Standard only allows for') . ' ' . $Seg[$SegID]['MaxOccur'] . ' ' ._('occurrences of the segment') . ' ' . $Seg[$SegID]['SegTag'] . ' ' . _('this is the') . ' ' . $SegCounter . ' ' . _('occurrence') .  '<br />' . _('The segment line read as follows') . ':<br />' . $LineText;
 			}
 		}
 
@@ -114,12 +114,12 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 
 		if ($SegTag != $Seg[$SegID]['SegTag']){
 
-			$EmailText .= "\n" . _('ERROR') . ': ' . _('Unable to identify segment tag') . ' ' . $SegTag . ' ' . _('from the message line') . '<br>' . $LineText . '<br><font color=RED><b>' . _('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
+			$EmailText .= "\n" . _('ERROR') . ': ' . _('Unable to identify segment tag') . ' ' . $SegTag . ' ' . _('from the message line') . '<br />' . $LineText . '<br /><font color=RED><b>' . _('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
 
 			$TryNextFile = True;
 		}
 
-		echo '<br>' . _('The segment tag') . ' ' . $SegTag . ' ' . _('is being processed');
+		echo '<br />' . _('The segment tag') . ' ' . $SegTag . ' ' . _('is being processed');
 		switch ($SegTag){
 			case 'UNH':
 				$UNH_elements = explode ('+',substr($LineText,4));
@@ -181,13 +181,13 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 
 				} /*end switch for type of order */
 				if (isset($BGM_elements[1])){
-					echo '<br>echo BGM_elements[1] ' .$BGM_elements[1];
+					echo '<br />echo BGM_elements[1] ' .$BGM_elements[1];
 					$BGM_C106 = explode(':',$BGM_elements[1]);
 					$Order->CustRef = $BGM_C106[0];
 					$EmailText .= "\n" . _('Customers order ref') . ': ' . $BGM_C106[0];
 				}
 				if (isset($BGM_elements[2])){
-					echo "<br>echo BGM_elements[2] " .$BGM_elements[2];
+					echo "<br />echo BGM_elements[2] " .$BGM_elements[2];
 					$BGM_1225 = explode(':',$BGM_elements[2]);
 					$MsgFunction = $BGM_1225[0];
 
@@ -222,7 +222,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 
 					if (isset($BGM_1225[1])){
 						$ResponseCode = $BGM_1225[1];
-						echo '<br>' . _('Response Code') . ': ' . $ResponseCode;
+						echo '<br />' . _('Response Code') . ': ' . $ResponseCode;
 						switch ($ResponseCode) {
 							case 'AC':
 								$EmailText .= "\n" . _('Please acknowledge to customer with detail and changes made to the order');

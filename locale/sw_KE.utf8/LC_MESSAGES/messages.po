@@ -15409,7 +15409,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Kutumia screen kuingia malipo kutoka benki akaunti yako. <br> Kumbuka: Ili "
+"Kutumia screen kuingia malipo kutoka benki akaunti yako. <br /> Kumbuka: Ili "
 "kuingia malipo ya FROM muuzaji, kwanza chagua Supplier, bonyeza Ingiza "
 "Malipo na, au risiti kutoka Supplier, na matumizi hasi Malipo ya kiasi "
 "katika fomu hii."
@@ -34792,8 +34792,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max asilia <br> urefu"
+msgid "Max text<br />length"
+msgstr "Max asilia <br /> urefu"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

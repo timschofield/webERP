@@ -143,8 +143,8 @@ if (!isset($SelectedTaxAuthID)) {
 	echo '<tr>
 		<th>' . _('ID') . '</th>
 		<th>' . _('Description') . '</th>
-		<th>' . _('Input Tax') . '<br>' . _('GL Account') . '</th>
-		<th>' . _('Output Tax') . '<br>' . _('GL Account') . '</th>
+		<th>' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
+		<th>' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
 		<th>' . _('Bank') . '</th>
 		<th>' . _('Bank Account') . '</th>
 		<th>' . _('Bank Act Type') . '</th>

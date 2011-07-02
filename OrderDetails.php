@@ -13,8 +13,8 @@ if (isset($_GET['OrderNumber'])) {
 	$title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
 	include('includes/header.inc');
-	echo '<br><br><br>';
-	prnMsg(_('This page must be called with a sales order number to review') . '.<br>' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br>' . _('Click on back') . '.','error');
+	echo '<br /><br /><br />';
+	prnMsg(_('This page must be called with a sales order number to review') . '.<br />' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . _('Click on back') . '.','error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -147,7 +147,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		$OrderTotalVolume = 0;
 		$OrderTotalWeight = 0;
 
-		echo '<br><table cellpadding=2 colspan=9 class=selection>';
+		echo '<br /><table cellpadding=2 colspan=9 class=selection>';
 		echo '<tr><th colspan=9><font color=blue>'._('Order Line Details For Order No').' '.$_GET['OrderNumber'].'</font></th></tr>';
 		echo '<tr>
 			<th>' . _('Item Code') . '</th>
@@ -203,7 +203,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			</tr>
 		</table>';
 
-		echo '<br><table class=selection>
+		echo '<br /><table class=selection>
 			<tr>
 				<td>' . _('Total Weight') . ':</td>
 				<td>' . $DisplayWeight . '</td>

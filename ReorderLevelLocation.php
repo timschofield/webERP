@@ -53,10 +53,10 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '<table>';
 	echo '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
-						<th>' . _('Total Invoiced').'<br>'._('At All Locations') . '</th>
-						<th>' . _('Total Invoiced').'<br>'._('At Location') . '</th>
-						<th>' . _('On Hand') .'<br>'._('At All Locations') . '</th>
-						<th>' . _('On Hand') .'<br>' ._('At Location') . '</th>
+						<th>' . _('Total Invoiced').'<br />'._('At All Locations') . '</th>
+						<th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
+						<th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
+						<th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
 						<th>' . _('Reorder Level') . '</th>
 					<tr>';
 
@@ -160,7 +160,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 } else { /*The option to submit was not hit so display form */
 
 
-	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br>';
+	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
 
 	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

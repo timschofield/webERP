@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 				auth='".$_POST['auth']."'";
 	$result=DB_query($sql, $db);
 	prnMsg(_('The settings for the SMTP server have been successfully updated'), 'success');
-	echo '<br>';
+	echo '<br />';
 }
 
 $sql='SELECT id,

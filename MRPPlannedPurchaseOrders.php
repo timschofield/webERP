@@ -14,7 +14,7 @@ if (DB_num_rows($result)==0) {
 	$title=_('MRP error');
 	include('includes/header.inc');
 	echo '<br />';
-	prnMsg( _('The MRP calculation must be run before you can run this report').'<br>'.
+	prnMsg( _('The MRP calculation must be run before you can run this report').'<br />'.
 			_('To run the MRP calculation click').' '.'<a href='.$rootpath .'/MRP.php>'._('here').'</a>', 'error');
 	include('includes/footer.inc');
 	exit;
@@ -114,7 +114,7 @@ if (isset($_POST['PrintPDF'])) {
 	  $title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }

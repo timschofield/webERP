@@ -37,7 +37,7 @@ If ((isset($_POST['PrintPDF']))
 		$title = _('Print Remittance Advices Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'),'warn');
-		echo '<br><a href="'.$_SERVER['PHP_SELF'] .'?' . SID . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.$_SERVER['PHP_SELF'] .'?' . SID . '">'. _('Back').'</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -81,9 +81,9 @@ If ((isset($_POST['PrintPDF']))
 			$title = _('Remittance Advice Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				echo '<br>' . _('The SQL that failed was') . ' ' . $sql;
+				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;

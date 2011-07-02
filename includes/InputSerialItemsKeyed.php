@@ -138,7 +138,7 @@ for ($i=0;$i < 10;$i++){
 }
 
 echo '</table>';
-echo '<br><div class=centre><input type=submit name="AddBatches" value="'. _('Enter'). '"></div>';
+echo '<br /><div class=centre><input type=submit name="AddBatches" value="'. _('Enter'). '"></div>';
 echo '</form></td><td valign=top>';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');

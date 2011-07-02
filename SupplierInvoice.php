@@ -17,7 +17,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 //this is available from the menu on this page already
-//echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br>';
+//echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br />';
 
 if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$sql="SELECT suppname FROM suppliers WHERE supplierid='" . $_GET['SupplierID'] . "'";
@@ -117,7 +117,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 } elseif (!isset( $_SESSION['SuppTrans'])){
 
 	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen'),'warn');
-	echo '<br><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Invoice For') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Invoice For') . '</a>';
 	include('includes/footer.inc');
 	exit;
 
@@ -188,7 +188,7 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppInvGRNs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			'<a href="' . $rootpath . '/SuppInvGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '</div><br>';
+			'<a href="' . $rootpath . '/SuppInvGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '</div><br />';
 		exit;
 	}
 	if (isset($_POST['Shipts']) AND $_POST['Shipts'] == _('Shipments')){
@@ -196,7 +196,7 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppShiptChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br>';
+			'<a href="' . $rootpath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
 		exit;
 	}
 	if (isset($_POST['GL']) AND $_POST['GL'] == _('General Ledger')){
@@ -204,7 +204,7 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppTransGLAnalysis.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br>';
+			'<a href="' . $rootpath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
 		exit;
 	}
 	if (isset($_POST['Contracts']) AND $_POST['Contracts'] == _('Contracts')){
@@ -212,7 +212,7 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppContractChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against contracts page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br>';
+			'<a href="' . $rootpath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
 		exit;
 	}
 	if (isset($_POST['FixedAssets']) AND $_POST['FixedAssets'] == _('Fixed Assets')){
@@ -220,7 +220,7 @@ if (!isset($_POST['PostInvoice'])){
 		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppFixedAssetChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoice amounts against fixed assets page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</DIV><br>';
+			'<a href="' . $rootpath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</DIV><br />';
 		exit;
 	}
 	/* everything below here only do if a Supplier is selected
@@ -240,7 +240,7 @@ if (!isset($_POST['PostInvoice'])){
 		</tr>
 		</table>';
 
-	echo '<br><form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form1" />';
+	echo '<br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form1" />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<br /><table class="selection">';
@@ -258,7 +258,7 @@ if (!isset($_POST['PostInvoice'])){
 			<td><input type="text" class="number" size="11" maxlength="10" name="ExRate" VALUE="' . $_SESSION['SuppTrans']->ExRate . '"></td></tr>';
 	echo '</table>';
 
-	echo '<br><div class="centre"><input type="submit" name="GRNS" value="' . _('Purchase Orders') . '"> ';
+	echo '<br /><div class="centre"><input type="submit" name="GRNS" value="' . _('Purchase Orders') . '"> ';
 
 	echo '<input type="submit" name="Shipts" VALUE="' . _('Shipments') . '"> ';
 	echo '<input type="submit" name="Contracts" VALUE="' . _('Contracts') . '"> ';
@@ -406,7 +406,7 @@ if (!isset($_POST['PostInvoice'])){
 					<tr><th colspan="5">' . _('General Ledger Analysis') . '</th></tr>';
 			$TableHeader = '<tr><th>' . _('Account') . '</th>
 								<th>' . _('Name') .     '</th>
-								<th>' . _('Amount') . '<br>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+								<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 								<th>' . _('Narrative') . '</th></tr>';
 			echo $TableHeader;
 
@@ -1273,7 +1273,7 @@ then do the updates and inserts to process the invoice entered */
 		$Result = DB_Txn_Commit($db);
 
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
-		echo '<br><div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Invoice for this Supplier') . '</a></div>';
+		echo '<br /><div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Invoice for this Supplier') . '</a></div>';
 		unset( $_SESSION['SuppTrans']->GRNs);
 		unset( $_SESSION['SuppTrans']->Shipts);
 		unset( $_SESSION['SuppTrans']->GLCodes);

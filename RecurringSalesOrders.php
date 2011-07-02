@@ -367,7 +367,7 @@ echo '<tr>
 	<td class=number>$DisplayTotal</td>
 </tr></table>';
 
-echo '<br><table class=selection>';
+echo '<br /><table class=selection>';
 echo '<tr><th colspan=7><font size=2 color=navy><b>'._('Order Header Details').'</b></font></th></tr>';
 
 echo '<tr>
@@ -491,7 +491,7 @@ if ($_SESSION['Items'.$identifier]->AllDummyLineItems()==true){
 
 echo '</table>';
 
-echo '<br><div class="centre">';
+echo '<br /><div class="centre">';
 if ($NewRecurringOrder=='Yes'){
 	echo '<input type="hidden" name="NewRecurringOrder" value="Yes">';
 	echo '<input type="submit" name="Process" value="' . _('Create Recurring Order') . '">';
@@ -501,7 +501,7 @@ if ($NewRecurringOrder=='Yes'){
 
 	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '">';
 	echo '<hr>';
-	echo '<br><br><input type=submit name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');">';
+	echo '<br /><br /><input type=submit name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');">';
 }
 
 echo '</form></div>';

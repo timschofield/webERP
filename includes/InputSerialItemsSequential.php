@@ -45,7 +45,7 @@ echo '<tr><td valign="top">'. _('End:') . '</td><td> <input type="text" name="En
 
 
 echo '</table>';
-echo '<br><center><input type="submit" name="AddSequence" value="'. _('Enter'). '"></center><br>';
+echo '<br /><center><input type="submit" name="AddSequence" value="'. _('Enter'). '"></center><br />';
 echo '</form></td><td valign="top">';
 //echo '</td></tr></table>'; /*end of nested table */
 ?>

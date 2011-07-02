@@ -165,7 +165,7 @@ class Numbers_Words_cs extends Numbers_Words
      * @since  PHP 4.2.3
      */
     function toWords($num, $power = 0, $powsuffix = '') {
-//    print "<br>$num,$power,$powsuffix<br>";
+//    print "<br />$num,$power,$powsuffix<br />";
       $ret = '';        
         
       // add a minus sign

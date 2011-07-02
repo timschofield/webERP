@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this tax category because inventory items have been created using this tax category'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this tax category') . '</font>';
+			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this tax category') . '</font>';
 		} else {
 			$sql = "DELETE FROM taxauthrates WHERE taxcatid  = '" . $SelectedTaxCategory . "'";
 			$result = DB_query($sql,$db);

@@ -20,7 +20,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');
-	echo "<br><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</a>';
+	echo "<br /><a href='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</a>';
 	exit;
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -101,9 +101,9 @@ echo '<tr>
 </table>';
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<br><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a><hr>';
+	echo '<br /><a href="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' . _('Back to Invoice Entry') . '</a><hr>';
 } else {
-	echo '<br><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a><hr>';
+	echo '<br /><a href="' . $rootpath . '/SupplierCredit.php?' . SID . '">' . _('Back to Credit Note Entry') . '</a><hr>';
 }
 
 /*Set up a form to allow input of new Contract charges */
@@ -116,7 +116,7 @@ if (!isset($_POST['ContractRef'])) {
 echo '<table>';
 echo '<tr><td>' . _('Contract Reference') . ':</td>
 	<td><input type="Text" name="ContractRef" size=22 maxlength=20 VALUE="' .  $_POST['ContractRef'] . '"></td></tr>';
-echo '<tr><td>' . _('Contract Selection') . ':<br><font size=1>' . _('If you know the code enter it above') . '<br>' . _('otherwise select the contract from the list') . '</font></td><td><select name="ContractSelection">';
+echo '<tr><td>' . _('Contract Selection') . ':<br /><font size=1>' . _('If you know the code enter it above') . '<br />' . _('otherwise select the contract from the list') . '</font></td><td><select name="ContractSelection">';
 
 $sql = "SELECT contractref, name
 						FROM contracts INNER JOIN debtorsmaster

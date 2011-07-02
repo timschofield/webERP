@@ -155,7 +155,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 }
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
-echo '<br><br><table class=selection><tr><td>';
+echo '<br /><br /><table class=selection><tr><td>';
 echo '<font size=1>' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</font>';
 echo '<tr><td><font size=1>' . _('Select a stock category') . ':</font><select name="StockCat">';
 while ($myrow1 = DB_fetch_array($result1)) {
@@ -171,13 +171,13 @@ echo '<td><font size=3><b>' . _('OR') . ' </b></font><font size=1>' . _('Enter e
 echo '<td><input type="text" name="StockCode" size=15 maxlength=18></td></tr>';
 echo '<tr><td colspan=3><div class=centre><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
 echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></div></td></tr>';
-echo '</table><br><br>';
+echo '</table><br /><br />';
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding=2 colspan=7 class=selection>';
 	$TableHeader = '<tr><td class="tableheader">' . _('Code') . '</td>
 				<td class="tableheader">' . _('Description') . '</td>
 				<td class="tableheader">' . _('On Hand') . '</td>
-				<td class="tableheader">' . _('Orders') . '<br>' . _('Outstanding') . '</td>
+				<td class="tableheader">' . _('Orders') . '<br />' . _('Outstanding') . '</td>
 				<td class="tableheader">' . _('Units') . '</td>
 			</tr>';
 	echo $TableHeader;

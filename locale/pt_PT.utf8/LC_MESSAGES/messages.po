@@ -15621,7 +15621,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Use esta tela para inserir os pagamentos de sua conta bancária. <br> Nota: "
+"Use esta tela para inserir os pagamentos de sua conta bancária. <br /> Nota: "
 "Para introduzir um pagamento de um fornecedor, primeiro selecione o "
 "Fornecedor, clique em Inserir um pagamento, ou recibo do fornecedor, e usar "
 "um valor de pagamento negativo neste formulário."
@@ -35427,8 +35427,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "texto de Max <br> comprimento"
+msgid "Max text<br />length"
+msgstr "texto de Max <br /> comprimento"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"
@@ -40763,7 +40763,7 @@ msgstr "Valor de retorno"
 #~ "campo Data vazio"
 
 # reportwriter/languages/en_US/reports.php:
-#~ msgid "Date Field List<br>(check all that apply)"
+#~ msgid "Date Field List<br />(check all that apply)"
 #~ msgstr "Lista de Campos Data"
 
 # reportwriter/languages/en_US/reports.php:

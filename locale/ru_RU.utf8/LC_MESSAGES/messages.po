@@ -15467,7 +15467,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Используйте этот экран для ввода платежей с вашего банковского счета. <br> "
+"Используйте этот экран для ввода платежей с вашего банковского счета. <br /> "
 "Примечание: Для ввода оплаты от поставщиков, сначала выберите поставщика, "
 "нажмите Enter, чтобы оплата, или получение от поставщиков, и использовать "
 "отрицательная сумма оплаты в этой форме."
@@ -34980,8 +34980,8 @@ msgid "Horiz. pos."
 msgstr "Гориз. позиция"
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Максимальная длина<br>текста"
+msgid "Max text<br />length"
+msgstr "Максимальная длина<br />текста"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

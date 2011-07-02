@@ -1,12 +1,12 @@
-<br><br>
+<br /><br />
 <a name="SecuritySchema"><font size="+3"><b>Sicherheitskonzept</b></font></a>
-<br><br>
+<br /><br />
 Die mit der Anmeldung eingegebene Kombination Benutzername/Passwort erlaubt es dem System die für den Benutzer gültigen Rechte zu bestimmen. Es kann festgelegt werden, auf welche Seiten ein Benutzer Zugriff haben darf. Jeder Benutzer wird beim Anlegen des Stammsatzes einer Rolle zugeordnet, und die Rolle bestimmt, auf welche Seiten er zugreifen kann.
 <!-- The user name and password combination entered at logon enables the system to identify the permissions appropriate to the user. It is possible to determine and restrict which pages a user should be able to access. Each user is allocated to a Role at the time of the user set up and the role determines which pages they can access. --> 
-<br><br>
+<br /><br />
 Die Rollen werden im Hauptmenü unter Einstellungen -> Allgemeines -> Rollen und Berechtigungen eingerichtet. Diese Seite ermöglicht es,
 <!-- The Role is set up under the Setup tab, General, Role Permissions - this page allows a user to  -->
-<br><br>
+<br /><br />
 <ul>
 <li>Vorhandene Rollen zu bearbeiten und zu löschen sowie neue Rollen hinzuzufügen</li>
 <!-- <li>Add, Edit or delete an existing role</li> -->
@@ -15,77 +15,77 @@ Die Rollen werden im Hauptmenü unter Einstellungen -> Allgemeines -> Rollen und 
 </ul>
 Jedes Programmskript ist einem bestimmten Sicherheitsniveau zugeordnet. Diese Festlegung ist einzeln innerhalb jedes Skriptes fest vorgenommen. Gegenwärtig ist das eine Zahl zwischen 1 und 15, wenn mehr Sicherheitsniveaus benötigt werden, kann das erweitert werden. Die aktuellen Einstellungen für die Sicherheitsniveaus sind in der Tabelle unten angegeben.
 <!-- Each script is defined as having a specific PageSecurity level - this page security level is hard coded inside each script. At the time of writing this is a number between 1 and 15 - if more levels of security are necessary then this can be expanded. The current PageSecurity settings applicable for each page are set out in the table below. -->
-<br><br>
+<br /><br />
 Wenn das Sicherheitsniveau eine Zahl in der Liste der an den Benutzer vergebenen Berechtigungen enthalten ist (Berechtigungen der Benutzerrolle), erhält der Benutzer Zugriff auf die jeweilige Seite.
 <!-- If the PageSecurity setting of the page is a number contained in the SESSION AllowedPageSecurityTokens array as determined from the users access level then the user will be allowed access to the page. The user access level is an integer that represents the role given to the user in the user set up page. -->
-<br><br>
+<br /><br />
 Die Berechtigungen werden im Script session.inc für alle Seiten (bzw. PDF_Starter.inc für alle PDF-Berichte) geprüft. Die Variable $_SESSION['AccessLevel'] wird aus der Datenbank abgerufen, wenn sich der Benutzer anmeldet. Diese Variable verweist auf die Benutzerrolle. Die Liste der Berechtigungen in $_SESSION['AllowedPageSecurityTokens'] wird auf der Grundlage der Zugriffsebene/Rolle des Benutzers aus der Datenbank abgerufen. Jede Seite, deren Wert des Sicherheitsniveaus $PageSecurity in der Liste enthalten ist, wird als eine zulässige Seite betrachtet.
 <!-- Access authority is checked in session.inc script for all pages (or PDF_Starter.inc for PDF pages). The variable $_SESSION['AccessLevel'] is retrieved from the database when the user logs in - in session.inc. This variable refers to the role of the user. The SESSION['AllowedPageSecurityTokens'] array of numbers is retrieved from the database based on the users AccessLevel - or Role. Any page that has a $PageSecurity equal to any value in this array is deemed to be an authorised page. -->
-<br><br>
+<br /><br />
 Wenn Sie weitere Rollen wünschen, müssen Sie diese im Bild Zugriffsberechtigungen pflegen zuerst anlegen und dann die gewünschtenBerechtigungen zuordnen. Dieses Vorgehen erlaubt dem Systemverwalter eine genaue und sorgfältige Überwachung, was wer darf.
 <!-- If you wish to add more roles then you must add a new role using the Role Permissions script and add the allowed PageSecurity tokens to this role to allow users with this role to have access to these pages. This mechanism allows the system administrator to closely and accurately control who can access what. -->
-<br><br>
+<br /><br />
 Wenn Berechtigungen einer Rolle verändert werden, so wirkt sich das auf alle Benutzer aus, die auf diese Rolle im Benutzerstamm verweisen. Wenn die Berechtigungen zur Rolle vergeben werden, ist der Bezug auf die untenstehenden Sicherheitsniveau-Werte erfordelich.
 <!-- By changing the numbers in each array the security access can be tailored for all users referring to the array being modified. When setting the numbers in the array, reference to the index of PageSecurity values below will be necessary. Of course the value of the default settings can easily be modified. -->
-<br><br>
+<br /><br />
 Standardmäßig sind die folgenden Rollen definiert:
 <!-- The roles defined by default are as follows: -->
-<br><br>
+<br /><br />
 Index Rolle
-<br><br>
+<br /><br />
 1 Abfragen und Auftragserfassung (Inquiries Only)
-<br>
+<br />
 
 2 Lagerverwaltung (Manufacturing/Inventory Admin)
-<br>
+<br />
 
 3 Einkäufer (Purchasing officer)
-<br>
+<br />
 
 4 Kreditorenbuchhalter (AP Clerk)
-<br>
+<br />
 
 5 Debitorenbuchhalter (AR Clerk)
-<br>
+<br />
 
 6 Buchhalter (Accountant)
-<br>
+<br />
 
 7 Kundenlogin nur eigene Aufträge (Customer logon)
-<br>
+<br />
 
 8 Systemverwalter (System Administrator)
-<br><br>
+<br /><br />
 Die obenstehenden Rollen besitzen die folgenden Berechtigungen:
 <!-- The roles above have access to pages with PageSecurity tokens a follows: -->
-<br><br>
+<br /><br />
 
 1 Abfragen und Auftragserfassung (Inquiries Only) Berechtigungen 1 und 2 
-<br>
+<br />
 
 2 Lagerverwaltung (Manufacturing/Inventory Admin) Berechtigungen 1,2 und 11
-<br>
+<br />
 
 3 Einkäufer (Purchasing officer) Berechtigungen Berechtigungen 1,2 und 4
-<br>
+<br />
 
 4 Kreditorenbuchhalter (AP Clerk) Berechtigungen 1,2 and 5
-<br>
+<br />
 
 5 Debitorenbuchhalter (AR Clerk) Berechtigungen 1,2 and 3 
-<br>
+<br />
 
 6 Buchhalter (Accountant) Berechtigungen 1,2,3,4,5,6,7,8,9,10 und 11
-<br>
+<br />
 
 7 Kundenlogin nur eigene Aufträge (Customer logon) nur Berechtigung 1 
-<br>
+<br />
 
 8 Systemverwalter (System Administrator) 1,2,3,4,5,6,7,8,9,10,11,12,13,14 und 15 - oder alle der momentan definierten Berechtigungen
-<br><br>
+<br /><br />
 
 <!-- The system continues to evolve and the information set out below may be different in the current version. By default, each page has the variable $PageSecurity token defined as follows: -->
-<br><br>
+<br /><br />
 <table border="2">
 <th>Programmskript-Name
 <th>Sicherheitsniveau

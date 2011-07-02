@@ -15698,7 +15698,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Utilizaţi acest ecran pentru a introduce plăţi din contul dvs. bancar. <br> "
+"Utilizaţi acest ecran pentru a introduce plăţi din contul dvs. bancar. <br /> "
 "Notă: Pentru a introduce o plată de la un furnizor, mai întâi selectaţi "
 "Furnizorul, faceţi clic pe Introduceţi un Plata la, sau primirea de la "
 "furnizor, şi de a folosi o sumă de plată negativ pe acest formular."
@@ -35561,8 +35561,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max text <br> lungime"
+msgid "Max text<br />length"
+msgstr "Max text <br /> lungime"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

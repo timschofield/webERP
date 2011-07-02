@@ -18,13 +18,13 @@ if (isset($_POST['Select'])) {
 	$myrow = DB_fetch_row($result);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 
-	echo '<div class="page_help_text">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.</div>';
+	echo '<div class="page_help_text">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br />' . _('Select one of the links below to operate using this Account') . '.</div>';
 	$AccountID = $_POST['Select'];
 	$_POST['Select'] = NULL;
 
-	echo '<br><div class="centre"><a href="' . $rootpath . '/GLAccounts.php?' . SID . '&SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
-	echo '<br><a href="' . $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
-	echo '<br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .  '">' . _('New Search') . '</a></div>';
+	echo '<br /><div class="centre"><a href="' . $rootpath . '/GLAccounts.php?' . SID . '&SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
+	echo '<br /><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .  '">' . _('New Search') . '</a></div>';
 
 } elseif (isset($_POST['Search'])){
 
@@ -78,7 +78,7 @@ if (!isset($AccountID)) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
-	echo "<br><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
+	echo "<br /><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(mb_strlen($msg)>1){
@@ -93,7 +93,7 @@ if (!isset($AccountID)) {
 		<td><font size=1>" . _('Enter Account No. to search from') . ":</font></td>
 		<td><input type='Text' name='GLCode' size=15 maxlength=18 class=number ></td>
 		</tr>
-		</table><br>";
+		</table><br />";
 
 	echo '<div class="centre"><input type=submit name="Search" value=' . _('Search Now') . '">
 		<input type=submit action=reset value="' . _('Reset') .'"></div>';

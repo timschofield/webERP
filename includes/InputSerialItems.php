@@ -84,10 +84,10 @@ echo '</form>';
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
-$EditLink =  '<br><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&EditControlled=true&StockID=' . $LineItem->StockID .
+$EditLink =  '<br /><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&EditControlled=true&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
 $RemoveLink = '<a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br></div>';
+	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br /></div>';
 $sql="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";

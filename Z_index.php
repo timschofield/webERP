@@ -27,7 +27,7 @@
 	echo '<p><a href="' .$rootpath . '/Z_CreateCompanyTemplateFile.php">' . _('Create new company template SQL file and submit to webERP') . '</a>';
 
 
-	echo '<br><br><hr><br>' . _('The stuff below is really quite dangerous!');
+	echo '<br /><br /><hr><br />' . _('The stuff below is really quite dangerous!');
 
 	echo '<p>' . _('To delete a credit note call') . ' ' . $rootpath . '/Z_DeleteCreditNote.php?' . ' ' ._('and the credit note number to delete');
 	echo '<p>' . _('To delete an invoice call') . ' ' . $rootpath . '/Z_DeleteInvoice.php?' . _('and the invoice number to delete');

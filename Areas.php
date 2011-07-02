@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg( _('Cannot delete this area because customer branches have been created using this area'),'warn');
-		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches using this area code');
+		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches using this area code');
 
 	} else {
 		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.area ='$SelectedArea'";
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
 			prnMsg( _('Cannot delete this area because sales analysis records exist that use this area'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records referring this area code');
+			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records referring this area code');
 		}
 	}
 
@@ -178,7 +178,7 @@ if (isset($SelectedArea)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '"><br>';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '"><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedArea)) {

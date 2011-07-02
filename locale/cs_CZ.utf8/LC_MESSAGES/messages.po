@@ -15326,7 +15326,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Tato obrazovka slouží k zadání platby z vašeho bankovního účtu. <br> "
+"Tato obrazovka slouží k zadání platby z vašeho bankovního účtu. <br /> "
 "Poznámka: Chcete-li zadat platbu od dodavatele, nejprve vyberte dodavatele, "
 "klepněte na tlačítko Enter platby, nebo příjem od dodavatele, a použít "
 "zápornou Částka platby na tomto formuláři."
@@ -34557,8 +34557,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max text <br> Délka"
+msgid "Max text<br />length"
+msgstr "Max text <br /> Délka"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

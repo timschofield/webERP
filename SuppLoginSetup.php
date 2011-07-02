@@ -18,7 +18,7 @@ $ModuleList = array(_('Orders'),
 					_('Petty Cash'),
 					_('Setup'));
 
-echo '<a href="' . $rootpath . '/SelectSupplier.php?">' . _('Back to Suppliers') . '</a><br>';
+echo '<a href="' . $rootpath . '/SelectSupplier.php?">' . _('Back to Suppliers') . '</a><br />';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
 
@@ -273,12 +273,12 @@ if (!isset($SelectedUser)) {
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><br>';
+	echo '</table><br />';
 } //end of ifs and buts!
 
 
 if (isset($SelectedUser)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] .'?">' . _('Review Existing Users') . '</a></div><br>';
+	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] .'?">' . _('Review Existing Users') . '</a></div><br />';
 }
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
@@ -525,7 +525,7 @@ if ($_POST['Blocked']==0){
 echo '</select></td></tr>';
 
 
-echo "</table><br>
+echo "</table><br />
 	<div class='centre'><input type='submit' name='submit' value='" . _('Enter Information') . "'></div></form>";
 
 if (isset($_GET['SelectedUser'])) {

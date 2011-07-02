@@ -152,7 +152,7 @@ while ($myrow=DB_fetch_array($Result)) {
 		</tr>';
 }
 
-echo '</table><br><br>';
+echo '</table><br /><br />';
 
 if (!isset($_GET['Edit'])) {
 	$UserID=$_SESSION['UserID'];
@@ -239,9 +239,9 @@ echo '<td><input type=input name="AuthLevel" size=11 class="number" value="'  . 
 echo '</table>';
 
 if (isset($_GET['Edit'])) {
-	echo '<br><div class="centre"><input type=submit name="Update" value="'._('Update Information').'"></div></form>';
+	echo '<br /><div class="centre"><input type=submit name="Update" value="'._('Update Information').'"></div></form>';
 } else {
-	echo '<br><div class="centre"><input type=submit name="Submit" value="'._('Enter Information').'"></div></form>';
+	echo '<br /><div class="centre"><input type=submit name="Submit" value="'._('Enter Information').'"></div></form>';
 }
 include('includes/footer.inc');
 ?>

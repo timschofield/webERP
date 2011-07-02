@@ -321,7 +321,7 @@ echo '<p><div class="centre">';
 if (isset($_REQUEST['OrderNumber']) AND $_REQUEST['OrderNumber']!='') {
 	$_REQUEST['OrderNumber'] = trim($_REQUEST['OrderNumber']);
 	if (!is_numeric($_REQUEST['OrderNumber'])){
-		echo '<br><b>' . _('The Order Number entered MUST be numeric') . '</b><br>';
+		echo '<br /><b>' . _('The Order Number entered MUST be numeric') . '</b><br />';
 		unset ($_REQUEST['OrderNumber']);
 		include('includes/footer.inc');
 		exit;

@@ -118,9 +118,9 @@ if (isset($_POST['PrintPDF'])) {
 		$title = _('Price List') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-		echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+		echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			echo "<br>$sql";
+			echo "<br />$sql";
 		}
 		include('includes/footer.inc');
 		exit;
@@ -188,7 +188,7 @@ if (isset($_POST['PrintPDF'])) {
 	$title=_('Supplier Price List');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '</p>';
-	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br>';
+	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br />';
 
 	echo '<br/><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

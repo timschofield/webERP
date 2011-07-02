@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
 
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this sale type because customer transactions have been created using this sales type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions using this sales type code'),'error');
+		prnMsg(_('Cannot delete this sale type because customer transactions have been created using this sales type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions using this sales type code'),'error');
 
 	} else {
 
@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg (_('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this sales type code'));
+			prnMsg (_('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this sales type code'));
 		} else {
 
 			$sql="DELETE FROM salestypes WHERE typeabbrev='" . $SelectedType . "'";

@@ -34821,7 +34821,7 @@ msgid "Horiz. pos."
 msgstr ""
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
+msgid "Max text<br />length"
 msgstr ""
 
 #: includes/DefineLabelClass.php:41
@@ -38943,7 +38943,7 @@ msgstr "税別価格"
 #~ msgstr "販売受注に戻る"
 
 #, fuzzy
-#~ msgid "Total Volume<br>"
+#~ msgid "Total Volume<br />"
 #~ msgstr "合計容量"
 
 #, fuzzy

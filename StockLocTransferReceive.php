@@ -124,7 +124,7 @@ if(isset($_POST['ProcessTransfer'])){
 							AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'
 							AND serialno='" . $Item->BundleRef . "'";
 
-						$Result = DB_query($SQL,$db,'<br>' . _('Could not determine if the serial item exists') );
+						$Result = DB_query($SQL,$db,'<br />' . _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
 						if ($SerialItemExistsRow[0]==1){
@@ -238,7 +238,7 @@ if(isset($_POST['ProcessTransfer'])){
 							AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'
 							AND serialno='" . $Item->BundleRef . "'";
 
-						$Result = DB_query($SQL,$db,'<br>'. _('Could not determine if the serial item exists') );
+						$Result = DB_query($SQL,$db,'<br />'. _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
 
@@ -421,7 +421,7 @@ if (isset($_SESSION['Transfer'])){
 
 	$i = 0; //Line Item Array pointer
 
-	echo "<br><table class=selection>";
+	echo "<br /><table class=selection>";
 	echo '<tr><th colspan=7><font size=3 color=blue>' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID .
 			' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' .
 				$_SESSION['Transfer']->StockLocationToName . '</font></th></tr>';

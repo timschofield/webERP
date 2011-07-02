@@ -76,7 +76,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
-		echo '<br><table width=80% cellspacing="1" class=selection><tr>';
+		echo '<br /><table width=80% cellspacing="1" class=selection><tr>';
 		echo '<th>' . _('Asset ID') . '</th>';
 		echo '<th>' . _('Description') . '</th>';
 		echo '<th>' . _('Serial Number') . '</th>';
@@ -164,13 +164,13 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				echo '<tr><td style="vertical-align:top">' . $myrow['assetid'] . '</td>';
 				echo '<td style="vertical-align:top">' . $myrow['longdescription'] . '</td>';
 				echo '<td style="vertical-align:top">' . $myrow['serialno'] . '</td>';
-				echo '<td>' . $myrow['locationdescription'] . '<br>';
+				echo '<td>' . $myrow['locationdescription'] . '<br />';
 			/*	Not reworked yet
 			 * for ($i = 1;$i < sizeOf($Ancestors) - 1;$i++) {
 					for ($j = 0;$j < $i;$j++) {
 						echo '&nbsp;&nbsp;&nbsp;&nbsp;';
 					}
-					echo '|_' . $Ancestors[$i] . '<br>';
+					echo '|_' . $Ancestors[$i] . '<br />';
 				}
 			*/
 				echo '</td><td style="vertical-align:top">' . ConvertSQLDate($myrow['datepurchased']) . '</td>';
@@ -230,7 +230,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		echo '<th style="text-align:right">' . number_format($TotalNBV, 2) . '</th>';
 		echo '<th style="text-align:right">' . number_format($TotalDisposals, 2) . '</th></tr>';
 		echo '</table>';
-		echo '<br><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
+		echo '<br /><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
 		echo '<input type="Submit" name="csv" value="' . _('Print as CSV') . '"></div></form>';
 	}
 } else {
@@ -289,7 +289,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	echo '<tr><th>' . _('To Date ') . "</th><td><input type='text' class='date' alt='" . $_SESSION['DefaultDateFormat'] . "' name='ToDate' maxlength=10 size=11 value='" . $_POST['ToDate'] . "'></td>";
 	echo '</tr>';
 
-	echo '</table><br>';
+	echo '</table><br />';
 	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
 	echo '<input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
 	echo '<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '"></div>';

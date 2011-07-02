@@ -38,7 +38,7 @@ $result = DB_query("SELECT debtorsmaster.name,
 $myrow = DB_fetch_row($result);
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . _('Special Customer Prices').'</p><br />';
-echo '<font color=BLUE><b>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<br>' . ' ' . _('for') . ' ';
+echo '<font color=BLUE><b>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<br />' . ' ' . _('for') . ' ';
 
 $CurrCode = $myrow[1];
 $SalesType = $myrow[2];
@@ -347,7 +347,7 @@ echo '<tr><td>' . _('Price') . ':</td>
 			</tr></table>';
 
 
-echo '<br><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
+echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
 echo '</form>';
 include('includes/footer.inc');

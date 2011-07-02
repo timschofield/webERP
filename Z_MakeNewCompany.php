@@ -128,7 +128,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				} //end of for loop around the lines of the sql script
 			} //end if CreateDB was checked
 
-			prnMsg (_('Attempting to create the new company directories') . '.....<br>', 'info');
+			prnMsg (_('Attempting to create the new company directories') . '.....<br />', 'info');
 			$Result = mkdir('./companies/' . $_POST['NewCompany']);
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/part_pics');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Incoming_Orders');
@@ -205,10 +205,10 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 
 
 echo '<div class="centre">';
-echo '<br>';
-prnMsg (_('This utility will create a new company') . '<br><br>' .
+echo '<br />';
+prnMsg (_('This utility will create a new company') . '<br /><br />' .
 		_('If the company name already exists then you cannot recreate it'), 'info', _('PLEASE NOTE'));
-echo '<br>';
+echo '<br />';
 echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' enctype="multipart/form-data">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -219,7 +219,7 @@ echo '<td>' . _('Enter up to 32 character lower case character abbreviation for 
 	<tr><td>' . _('Create Database?') . '</td><td><input type="CHECKBOX" name="CreateDB"></td></tr>
 	</table>';
 
-echo '<br><input type="SUBMIT" name="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;&nbsp;&nbsp;';
+echo '<br /><input type="SUBMIT" name="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;&nbsp;&nbsp;';
 echo '</form>';
 echo '</div>';
 

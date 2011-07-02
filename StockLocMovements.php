@@ -43,8 +43,8 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 }
 echo ' ' . _('Show Movements before') . ': <input type="text" name="BeforeDate" size=12 maxlength=12 Value="' . $_POST['BeforeDate'] . '">';
 echo ' ' . _('But after') . ': <input type=TEXT name="AfterDate" size=12 maxlength=12 Value="' . $_POST['AfterDate'] . '">';
-echo '</td></tr></table><br>';
-echo '<div class=centre><input type=submit name="ShowMoves" VALUE="' . _('Show Stock Movements') . '"></div><br>';
+echo '</td></tr></table><br />';
+echo '<div class=centre><input type=submit name="ShowMoves" VALUE="' . _('Show Stock Movements') . '"></div><br />';
 
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);

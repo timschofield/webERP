@@ -50,14 +50,14 @@
     </tr>
     <tr>
 		<?php if ($Params['Line']=='1') $selected=' checked'; else $selected=''; ?>
-      <td><input name="Line" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br>
+      <td><input name="Line" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
 		<div align="center"><select name="BrdrColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Params['BrdrColor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Line']=='2') $selected=' checked'; else $selected=''; ?>
-      <td nowrap><input name="Line" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br>
+      <td nowrap><input name="Line" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br />
 		<div align="center">
 		<?php echo RPT_RED; ?> <input name="BrdrRed" type="text" value="<?php echo $Params['BrdrRed']; ?>" size="4" maxlength="3">
     	<?php echo RPT_GREEN; ?> <input name="BrdrGreen" type="text" value="<?php echo $Params['BrdrGreen']; ?>" size="4" maxlength="3">
@@ -81,14 +81,14 @@
     </tr>
     <tr>
 		<?php if ($Params['Fill']=='1') $selected=' checked'; else $selected=''; ?>
-      <td><input name="Fill" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br>
+      <td><input name="Fill" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
 		<div align="center"><select name="FillColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($Params['FillColor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Fill']=='2') $selected=' checked'; else $selected=''; ?>
-      <td nowrap><input name="Fill" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br>
+      <td nowrap><input name="Fill" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br />
 		<div align="center">
 		<?php echo RPT_RED; ?> <input name="FillRed" type="text" value="<?php echo $Params['FillRed']; ?>" size="4" maxlength="3">
     	<?php echo RPT_GREEN; ?> <input name="FillGreen" type="text" value="<?php echo $Params['FillGreen']; ?>" size="4" maxlength="3">

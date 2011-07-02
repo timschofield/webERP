@@ -146,14 +146,14 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches that refer to this salesperson'),'error');
+		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches that refer to this salesperson'),'error');
 
 	} else {
 		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='".$SelectedSaleperson."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
+			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
 		} else {
 
 			$sql="DELETE FROM salesman WHERE salesmancode='".$SelectedSaleperson."'";

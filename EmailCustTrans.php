@@ -64,7 +64,7 @@ echo '<tr><td>' . _('Email') . ' ' . $_GET['InvOrCredit'] . ' ' . _('number') . 
 	<td><input type="text" name="EmailAddr" maxlength=60 size=60 value="' . $EmailAddress . '"></td>
 	</table>';
 
-echo '<br><div class="centre"><input type=submit name="DoIt" value="' . _('OK') . '">';
+echo '<br /><div class="centre"><input type=submit name="DoIt" value="' . _('OK') . '">';
 echo '</div></form>';
 include ('includes/footer.inc');
 ?>

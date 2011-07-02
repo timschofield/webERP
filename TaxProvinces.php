@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this tax province because at least one stock location is defined to be inside this province'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock locations that refer to this tax province') . '</font>';
+			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock locations that refer to this tax province') . '</font>';
 		} else {
 			$sql = "DELETE FROM taxauthrates WHERE dispatchtaxprovince = '" . $SelectedTaxProvince . "'";
 			$result = DB_query($sql,$db);
@@ -231,9 +231,9 @@ if (! isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 echo '<div class="centre">';
-echo '<br><a href="' . $rootpath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>';
-echo '<br><a href="' . $rootpath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>';
-echo '<br><a href="' . $rootpath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>';
+echo '<br /><a href="' . $rootpath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>';
+echo '<br /><a href="' . $rootpath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>';
+echo '<br /><a href="' . $rootpath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>';
 echo '</div>';
 
 include('includes/footer.inc');

@@ -88,8 +88,8 @@
 //============================================================+
 
 /**
- * This is a PHP class for generating PDF documents without requiring external extensions.<br>
- * TCPDF project (http://www.tcpdf.org) was originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
+ * This is a PHP class for generating PDF documents without requiring external extensions.<br />
+ * TCPDF project (http://www.tcpdf.org) was originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br />
  * <h3>TCPDF main features are:</h3>
  * <ul>
  * <li>no external libraries are required for the basic functions;</li>
@@ -148,8 +148,8 @@ if (!class_exists('TCPDF', false)) {
 	define('PDF_PRODUCER', 'TCPDF 4.9.014 (http://www.tcpdf.org)');
 
 	/**
-	* This is a PHP class for generating PDF documents without requiring external extensions.<br>
-	* TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
+	* This is a PHP class for generating PDF documents without requiring external extensions.<br />
+	* TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br />
 	* @name TCPDF
 	* @package com.tecnick.tcpdf
 	* @version 4.9.014
@@ -3135,7 +3135,7 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Returns the length of a string in user unit. A font must be selected.<br>
+		 * Returns the length of a string in user unit. A font must be selected.<br />
 		 * @param string $s The string whose length is to be computed
 		 * @param string $fontname Family font. It can be either a name defined by AddFont() or one of the standard families. It is also possible to pass an empty string, in that case, the current family is retained.
 		 * @param string $fontstyle Font style. Possible values are (case insensitive):<ul><li>empty string: regular</li><li>B: bold</li><li>I: italic</li><li>U: underline</li><li>D: line trough</li></ul> or any combination. The default value is regular.
@@ -3151,7 +3151,7 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Returns the string length of an array of chars in user unit or an array of characters widths. A font must be selected.<br>
+		 * Returns the string length of an array of chars in user unit or an array of characters widths. A font must be selected.<br />
 		 * @param string $sa The array of chars whose total length is to be computed
 		 * @param string $fontname Family font. It can be either a name defined by AddFont() or one of the standard families. It is also possible to pass an empty string, in that case, the current family is retained.
 		 * @param string $fontstyle Font style. Possible values are (case insensitive):<ul><li>empty string: regular</li><li>B: bold</li><li>I: italic</li><li>U: underline</li><li>D: line trough</li></ul> or any combination. The default value is regular.
@@ -6965,7 +6965,7 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Adds unicode fonts.<br>
+		 * Adds unicode fonts.<br />
 		 * Based on PDF Reference 1.3 (section 5)
 		 * @parameter array $font font data
 		 * @return int font object ID
@@ -7879,8 +7879,8 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Converts UTF-8 strings to codepoints array.<br>
-		 * Invalid byte sequences will be replaced with 0xFFFD (replacement character)<br>
+		 * Converts UTF-8 strings to codepoints array.<br />
+		 * Invalid byte sequences will be replaced with 0xFFFD (replacement character)<br />
 		 * Based on: http://www.faqs.org/rfcs/rfc3629.html
 		 * <pre>
 		 * 	  Char. number range  |        UTF-8 octet sequence
@@ -7994,7 +7994,7 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Converts UTF-8 strings to UTF16-BE.<br>
+		 * Converts UTF-8 strings to UTF16-BE.<br />
 		 * @param string $str string to process.
 		 * @param boolean $setbom if true set the Byte Order Mark (BOM = 0xFEFF)
 		 * @return string
@@ -8012,7 +8012,7 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Converts UTF-8 strings to Latin1 when using the standard 14 core fonts.<br>
+		 * Converts UTF-8 strings to Latin1 when using the standard 14 core fonts.<br />
 		 * @param string $str string to process.
 		 * @return string
 		 * @author Andrew Whitehead, Nicola Asuni
@@ -8042,7 +8042,7 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Converts UTF-8 characters array to array of Latin1 characters<br>
+		 * Converts UTF-8 characters array to array of Latin1 characters<br />
 		 * @param array $unicode array containing UTF-8 unicode values
 		 * @return array
 		 * @author Nicola Asuni
@@ -8071,7 +8071,7 @@ if (!class_exists('TCPDF', false)) {
 		}
 
 		/**
-		 * Converts array of UTF-8 characters to UTF16-BE string.<br>
+		 * Converts array of UTF-8 characters to UTF16-BE string.<br />
 		 * Based on: http://www.faqs.org/rfcs/rfc2781.html
 	 	 * <pre>
 		 *   Encoding UTF-16:
@@ -13342,7 +13342,7 @@ if (!class_exists('TCPDF', false)) {
 			// define block tags
 			$blocktags = array('blockquote','br','dd','dl','div','dt','h1','h2','h3','h4','h5','h6','hr','li','ol','p','pre','ul','tcpdf','table','tr','td');
 			// remove all unsupported tags (the line below lists all supported tags)
-			$html = strip_tags($html, '<marker/><a><b><blockquote><body><br><br/><dd><del><div><dl><dt><em><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><label><li><ol><option><p><pre><select><small><span><strong><sub><sup><table><tablehead><tcpdf><td><textarea><th><thead><tr><tt><u><ul>');
+			$html = strip_tags($html, '<marker/><a><b><blockquote><body><br /><br/><dd><del><div><dl><dt><em><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><label><li><ol><option><p><pre><select><small><span><strong><sub><sup><table><tablehead><tcpdf><td><textarea><th><thead><tr><tt><u><ul>');
 			//replace some blank characters
 			$html = preg_replace('/<pre/', '<xre', $html); // preserve pre tag
 			$html = preg_replace('/<(table|tr|td|th|tcpdf|blockquote|dd|div|dl|dt|form|h1|h2|h3|h4|h5|h6|br|hr|li|ol|ul|p)([^\>]*)>[\n\r\t]+/', '<\\1\\2>', $html);

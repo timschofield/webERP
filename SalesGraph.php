@@ -165,20 +165,20 @@
 		$_POST['ValueTo']='';
 	}
 	echo '<tr><td>' . _('Graph On:') . '</td><td>
-			<input type="RADIO" name="GraphOn" VALUE="All" CHECKED>' . _('All') . '<br>
-			<input type="RADIO" name="GraphOn" VALUE="Customer">' . _('Customer') . '<br>
+			<input type="RADIO" name="GraphOn" VALUE="All" CHECKED>' . _('All') . '<br />
+			<input type="RADIO" name="GraphOn" VALUE="Customer">' . _('Customer') . '<br />
 			<input type="RADIO" name="GraphOn" VALUE="StockID">' . _('Item Code') . '</td></tr>';
 	echo '<tr><td>' . _('From:') . ' <input type=TEXT name="ValueFrom" VALUE=' . $_POST['ValueFrom'] . '></td>
 	 		<td>' . _('To:') . ' <input type=TEXT name="ValueTo" VALUE=' . $_POST['ValueTo'] . '></td></tr>';
 
 	echo '<tr><td>' . _('Graph Value:') . '</td><td>
-			<input type="RADIO" name="GraphValue" VALUE="Net" CHECKED>' . _('Net Sales Value') . '<br>
-			<input type="RADIO" name="GraphValue" VALUE="GP">' . _('Gross Profit') . '<br>
+			<input type="RADIO" name="GraphValue" VALUE="Net" CHECKED>' . _('Net Sales Value') . '<br />
+			<input type="RADIO" name="GraphValue" VALUE="GP">' . _('Gross Profit') . '<br />
 			<input type="RADIO" name="GraphValue" VALUE="Quantity">' . _('Quantity') . '</td></tr>';
 
 	echo '</table>';
 
-	echo '<br><div class="centre"><input type=submit Name="ShowGraph" Value="' . _('Show Sales Graph') .'"></div>';
+	echo '<br /><div class="centre"><input type=submit Name="ShowGraph" Value="' . _('Show Sales Graph') .'"></div>';
 	include('includes/footer.inc');
 } else {
 

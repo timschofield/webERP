@@ -327,7 +327,7 @@ if (!isset($_SESSION['Adjustment'])) {
 	$_SESSION['Adjustment']->PartUnit=$myrow['units'];
 	$_SESSION['Adjustment']->StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
 }
-echo '<br><table class=selection>';
+echo '<br /><table class=selection>';
 echo '<tr><th colspan=4><font color=blue size=3>'._('Adjustment Details').'</font></th></tr>';
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
@@ -414,17 +414,17 @@ while ($myrow=DB_fetch_array($result)){
 echo '</select></td>';
 // End select tag
 
-echo '</table><div class="centre"><br><input type=submit name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '"><br>';
+echo '</table><div class="centre"><br /><input type=submit name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '"><br />';
 
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation']='';
 }
 
-echo '<br><a href="'. $rootpath. '/StockStatus.php?StockID='. $StockID . '">'._('Show Stock Status').'</a>';
-echo '<br><a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
-echo '<br><a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</a>';
-echo '<br><a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</a>';
-echo '<br><a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</a>';
+echo '<br /><a href="'. $rootpath. '/StockStatus.php?StockID='. $StockID . '">'._('Show Stock Status').'</a>';
+echo '<br /><a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
+echo '<br /><a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</a>';
+echo '<br /><a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</a>';
+echo '<br /><a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</a>';
 
 echo '</div></form>';
 include('includes/footer.inc');

@@ -16,7 +16,7 @@ if (isset($_POST['Period'])){
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
-echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br>';
+echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
 echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -258,7 +258,7 @@ if (isset($_POST['MakeCSV'])){
 
 	} /*end for each SelectedAccount */
 	fclose($fp);
-	echo '<p><a href="' .  $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '<br>';
+	echo '<p><a href="' .  $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '<br />';
 } /* end of if CreateCSV button hit */
 
 include('includes/footer.inc');

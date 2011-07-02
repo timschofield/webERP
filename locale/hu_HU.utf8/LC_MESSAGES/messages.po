@@ -15207,7 +15207,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Használja ezt a képernyőt, hogy adja kifizetések a bankszámlájáról. <br> "
+"Használja ezt a képernyőt, hogy adja kifizetések a bankszámlájáról. <br /> "
 "Megjegyzés: Ha meg a kifizetés a szállító, először válassza ki a Szállító, "
 "kattintson Adja meg a kifizetés, illetve átvétele a Szállító, és használja a "
 "negatív Befizetés összege ezen az űrlapon."
@@ -34475,8 +34475,8 @@ msgid "Horiz. pos."
 msgstr "Vízszintes. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max szöveg <br> hossz"
+msgid "Max text<br />length"
+msgstr "Max szöveg <br /> hossz"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"
@@ -38889,7 +38889,7 @@ msgstr "Alapértelmezett csomagjegyzék"
 #~ msgid "Select a sales order to deliver"
 #~ msgstr "Válasszon megrendelőt a számlázáshoz"
 
-#~ msgid "Total Volume<br>"
+#~ msgid "Total Volume<br />"
 #~ msgstr "Össz térfogat"
 
 #~ msgid "Total for this Delivery"

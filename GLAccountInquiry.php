@@ -23,7 +23,7 @@ if (isset($_POST['Period'])){
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
 
-echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br>';
+echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
 
 echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -145,7 +145,7 @@ if (isset($_POST['Show'])){
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$db,$ErrMsg);
 
-	echo '<br><table class=selection>';
+	echo '<br /><table class=selection>';
 
 	echo '<tr><th colspan=8><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
 	$TableHeader = '<tr>
@@ -233,7 +233,7 @@ if (isset($_POST['Show'])){
 						<td colspan=2></td>
 						</tr>';
 				}
-				$IntegrityReport .= '<br>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['actual'],3);
+				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['actual'],3);
 
 				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01){
 					$ShowIntegrityReport = True;

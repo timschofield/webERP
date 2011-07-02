@@ -20,11 +20,11 @@ include('includes/header.inc');
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
-echo "<br>&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
-echo '<br><br>&nbsp;' . _('Utility to edit a language file module');
-echo '<br>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
-echo '<br><br>&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
-echo '<br>&nbsp;' . _('Make sure you have selected the correct language to translate!');
+echo "<br />&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
+echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
+echo '<br /><br />&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
+echo '<br />&nbsp;' . _('Make sure you have selected the correct language to translate!');
 
 if (isset($_POST['ReMergePO'])){
 
@@ -59,13 +59,13 @@ if (isset($_POST['module'])) {
 	if (isset($_POST['submit'])) {
     // save the modifications
 
-		echo '<br><table><tr><td>';
+		echo '<br /><table><tr><td>';
 		echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
-		prnMsg (_('Writing the language file') . '.....<br>', 'info', ' ');
+		prnMsg (_('Writing the language file') . '.....<br />', 'info', ' ');
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
@@ -94,7 +94,7 @@ if (isset($_POST['module'])) {
 		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($msgfmtCommand);
 
-		prnMsg (_('Done') . '<br>', 'info', ' ');
+		prnMsg (_('Done') . '<br />', 'info', ' ');
 
 		echo '</form>';
 		echo '</td></tr></table>';
@@ -108,7 +108,7 @@ if (isset($_POST['module'])) {
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {			/* start at line 18 to skip the header */
 			if (substr($LangFile[$i], 0, 2) == '#:') {		/* it's a module reference */
-				$AlsoIn[$j] .= str_replace(' ','<br>', substr($LangFile[$i],3)) . '<br>';
+				$AlsoIn[$j] .= str_replace(' ','<br />', substr($LangFile[$i],3)) . '<br />';
 			} elseif (substr($LangFile[$i], 0 , 5) == 'msgid') {
 				$DefaultText[$j] = substr($LangFile[$i], 7, mb_strlen($LangFile[$i])-9);
 			} elseif (substr($LangFile[$i], 0 , 6) == 'msgstr') {
@@ -121,11 +121,11 @@ if (isset($_POST['module'])) {
 
 /* stick it on the screen */
 
-    echo '<br>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
+    echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
-		echo '<br>';
-		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br>', 'info', _('PLEASE NOTE'));
-		echo '<br>';
+		echo '<br />';
+		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
+		echo '<br />';
 		echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '</div';
@@ -164,7 +164,7 @@ if (isset($_POST['module'])) {
 
 		echo '</td></tr>';
 		echo '</table>';
-		echo '<br><div class="centre">';
+		echo '<br /><div class="centre">';
 		echo '<input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
 		echo '<input type="hidden" name="module" VALUE="' . $_POST['module'] . '">';
 
@@ -213,7 +213,7 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 }
 else
 {
-	echo '<br><table><tr><td>';
+	echo '<br /><table><tr><td>';
 	echo '<form method="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -227,10 +227,10 @@ else
 	echo '</select></td>';
 
 	echo '</tr></table>';
-	echo '<br>';
+	echo '<br />';
 	echo '<div class="centre">';
 	echo '<input type="Submit" name="proceed" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo '<br><br><input type="Submit" name="ReMergePO" VALUE="' . _('Refresh messages with latest strings') . '">';
+	echo '<br /><br /><input type="Submit" name="ReMergePO" VALUE="' . _('Refresh messages with latest strings') . '">';
 	echo '</div>';
 	echo '</form>';
 	echo '</td></tr></table>';

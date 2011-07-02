@@ -455,7 +455,7 @@ function BuildSQL($Prefs) {
 	$usrMsg['level'] = 'success';
 	$usrMsg['data'] = $sql;
 	$usrMsg['filterdesc'] = $Prefs['filterdesc'];
-//echo '<br>sql='.$sql.'<br><br>'; exit();
+//echo '<br />sql='.$sql.'<br /><br />'; exit();
 	return $usrMsg;
 }
 

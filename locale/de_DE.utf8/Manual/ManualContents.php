@@ -6,7 +6,7 @@
      No style, inline style or style sheet on purpose.
      In this way the help can be easily broken into sections for online context-sensitive help.
 		 The only html used in them are:
-		 <br>
+		 <br />
 		 <div>
 		 <table>
 		 <font>
@@ -35,7 +35,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>  
           <input type="submit" name="Submit" value="Markierte anzeigen"><br/>
 					Klicken Sie auf einen Titel, um den Anschnitt anzuzeigen.  Markieren Sie Auswahlkästchen und drücken Sie dann auf "Markierte anzeigen", wenn Sie eine druckfähige Ausgabe erzeugen möchten. 
-					<br><br><br> 
+					<br /><br /><br /> 
 <?php
   }
 ?>
@@ -50,7 +50,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
           <font size="+3"><b>Inhaltsverzeichnis</b></font>
-          <br><br>
+          <br /><br />
           <UL>
             <LI>
 <?php
@@ -68,7 +68,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               <UL>
                 <LI>Warum noch ein Buchhaltungsprogramm?</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -87,7 +87,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Hardware-Anforderungen </LI>
                 <LI>Software-Anforderungen</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -111,7 +111,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Layouts und GUI-Anpassungen</LI>
                 <LI>Benutzer einrichten</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -127,7 +127,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
             </LI>
-            <br><br>
+            <br /><br />
             <LI>
 <?php
   if (!isset($_POST['Submit'])) {
@@ -152,7 +152,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Das Sammelkonto für Debitorenforderungen</LI>
                 <LI>Zum Schluss</LI>
               </UL>
-              <BR>
+              <br />
 						</LI>	
             <LI>
 <?php
@@ -171,7 +171,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Navigation im Menü</LI>
                 <LI>Berichtswesen</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -235,7 +235,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Bericht Bestandsplanung</LI>
                 <LI>Inventur</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -281,7 +281,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Änderungen an den Kundendaten</LI>
                 <LI>Versandarten</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 
@@ -311,7 +311,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Lieferantenwährung</LI>
 		<LI>Zahlungsmitteilung</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -332,7 +332,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Kommunikationsdaten</LI>
                 <LI>Provisionssätze und Grenzbetrag</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -351,7 +351,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Umsatzart-ID</LI>
                 <LI>Umsatzart-Bezeichnung</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -371,7 +371,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Beschreibung der Zahlungsbedingung</LI>
                 <LI>Fällig nach Anzahl Tage / Tage oder Tag im Folgemonat</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -392,7 +392,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Beschreibung</LI>
                 <LI>Fakturasperre</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -415,7 +415,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Beispiel 2: Verkauf innerhalb eines Steuerstandortes - drei Steuersätze</LI>
                 <LI>Beispiel 3: Verkauf zwischen zwei Steuerstandorten - drei Steuersätze</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -436,7 +436,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Preise pflegen</LI>
                 <LI>Rabattstaffel</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -469,7 +469,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Liste der Zahlungseingänge</LI>
                 <LI>Habenbeträge dem Debitorenkonto zuordnen</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -489,7 +489,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Auswertung des Debitorenkontos</LI>
                 <LI>Beleganzeige</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -511,7 +511,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Auswertung der Kundenvorgänge</LI>
                 <LI>Rechnungen und Gutschriften drucken</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -532,7 +532,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Spalten der Ergebnisberichte</LI>
                 <LI>Automatisierung der Ergebnisberichte</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -558,7 +558,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 		<LI>Angebote</LI>
 		<LI>Daueraufträge</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -580,7 +580,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Transportkalkulation</LI>
                 <LI>Abrechnung eines Transportes</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -603,7 +603,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Entnahmen zum Fertigungsauftrag</LI>
                 <LI>Fertigungsaufträge abschließen</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -630,7 +630,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>EDI einrichten</LI>
                 <LI>Versenden von EDI-Rechnungen</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -657,7 +657,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Creating A New Report - Entering and Arranging Criteria</LI>
                 <LI>Viewing Reports</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -679,7 +679,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Sprachdatei-Kopf bearbeiten</LI>
                 <LI>Sprachdatei-Module bearbeiten</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -701,7 +701,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Bestandsdatensätze erzeugen</LI>
                 <LI>Hauptbuchsalden nachbuchen</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -727,7 +727,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>DateFunctions.inc</LI>
                 <LI>SQL_CommonFuctions.inc</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -758,7 +758,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>Kreditoren</LI>
                 <LI>Kreditorenzahlungen</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php

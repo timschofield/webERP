@@ -419,8 +419,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	} else {
 		$title = _('Print Statements') . ' - ' . _('No Statements Found');
 		include('includes/header.inc');
-		echo '<br><br><br>' . prnMsg( _('There were no statements to print') );
-	        echo '<br><br><br>';
+		echo '<br /><br /><br />' . prnMsg( _('There were no statements to print') );
+	        echo '<br /><br /><br />';
 	        include('includes/footer.inc');
 	}
 
@@ -440,12 +440,12 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			</td><td><input Type=text max=6 size=7 name=FromCust value="1"></td></tr>
 			<tr><td>'. _('Ending Customer statement to print (Customer code)').'</td><td>
 				<input Type=text max=6 size=7 name=ToCust value="zzzzzz"></td></tr></table>
-				<br><div class="centre">
+				<br /><div class="centre">
 				<input type=Submit Name="PrintPDF" Value="' .
 				_('Print All Statements in the Range Selected').'">
 			</div>';
 	}
-	echo '<br><br><br>';
+	echo '<br /><br /><br />';
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */

@@ -144,7 +144,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		$CategoryText = _('all Categories');
 	} /*end of else Category */
 
-	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br><br>';
+	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
 
 	if ($numrow > 0) { //the number of prices returned from the main prices query is
 		echo '<table class=selection>';
@@ -226,7 +226,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Back') . '<a/></div><p>';
 	}
 } else { /*The option to submit was not hit so display form */
-	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br>';
+	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br />';
 	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

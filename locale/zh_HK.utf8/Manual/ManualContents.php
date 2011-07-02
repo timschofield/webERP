@@ -7,7 +7,7 @@
      No style, inline style or style sheet on purpose.
      In this way the help can be easily broken into sections for online context-sensitive help.
 		 The only html used in them are:
-		 <br>
+		 <br />
 		 <div>
 		 <table>
 		 <font>
@@ -39,7 +39,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
           <input type="submit" name="Submit" value="显示选取">
 					点击下面的链接查看。点击核取框，然后会显示要打印的格式
-					<br><br><br>
+					<br /><br /><br />
 <?php
   }
 ?>
@@ -54,7 +54,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
           <font size="+3"><b>内容</b></font>
-          <br><br>
+          <br /><br />
           <UL>
             <LI>
 <?php
@@ -72,7 +72,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               <UL>
                 <LI>为什么要选另一款会计软件?</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -92,7 +92,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>软件要求</LI>
                 <LI>将webERP与维基整合</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -116,7 +116,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>皮肤和用户画面变更</LI>
                 <LI>设置用户</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -132,7 +132,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
             </LI>
-            <br><br>
+            <br /><br />
             <LI>
 <?php
   if (!isset($_POST['Submit'])) {
@@ -157,7 +157,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>应收账款核对</LI>
                 <LI>结尾</LI>
               </UL>
-              <BR>
+              <br />
 						</LI>
             <LI>
 <?php
@@ -176,7 +176,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>菜单导航</LI>
                 <LI>报告</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
 						<LI>
 <?php
@@ -242,7 +242,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>库存计划报告</LI>
                 <LI>库存盘点</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -288,7 +288,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>修改顾客细节</LI>
                 <LI>承运人</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 
@@ -318,7 +318,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>货币</LI>
 		<LI>汇款通知</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -339,7 +339,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>销售人员名称，电话，和传真</LI>
                 <LI>销售人员佣金率和折扣点</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -361,7 +361,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>货币百分单位名称</LI>
                 <LI>汇率</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 
@@ -382,7 +382,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>销售类型代码</LI>
                 <LI>销售类型描述</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -403,7 +403,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>付款条件描述</LI>
                 <LI>到期天数/下个月某天到期</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -424,7 +424,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>状况描述</LI>
                 <LI>禁止开发票</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -447,7 +447,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>一个税务机关内销售的例子--3个税收水平:</LI>
                 <LI>两个税务机关内销售的例子--3个税收水平:</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -468,7 +468,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>维护价格</LI>
                 <LI>折扣矩阵</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -501,7 +501,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>存款列表</LI>
                 <LI>分配红字款项给顾客</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -521,7 +521,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>顾客账户查询</LI>
                 <LI>交易细节查询</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -543,7 +543,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>顾客交易列表选项</LI>
                 <LI>打印发票或红字发票</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -564,7 +564,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>销售分析报告栏</LI>
                 <LI>自动销售报告</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -592,7 +592,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 				<LI>柜台销售 - 直接输入销售</LI>
 				<LI>根据产品组或者顾客组（矩阵）管理折扣</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -614,7 +614,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>采购订单授权 </LI>
                 <LI>采购订单收货</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -636,7 +636,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>运输成本</LI>
                 <LI>关闭运输</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -657,7 +657,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>选择合同</LI>
                 <LI>合同付费</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -680,7 +680,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>工单发料</LI>
                 <LI>关闭工单</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -705,7 +705,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>工作原理</LI>
                 <LI>MRP 报告</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -732,7 +732,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>EDI设置</LI>
                 <LI>发送 EDI 发票</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
  <?php
@@ -754,7 +754,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>运行折旧</LI>
                 <LI>固定资产计划</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -781,7 +781,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>创建新报告 - 输入和安排条件</LI>
                 <LI>查看报告</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -801,7 +801,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>设置基本参数</LI>
 
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -823,7 +823,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>编辑语言文件头</LI>
                 <LI>编辑语言文件模块</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -845,7 +845,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>创建库存地点</LI>
                 <LI>重新过账指定账期总帐</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php
@@ -871,7 +871,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>DateFunctions.inc</LI>
                 <LI>SQL_CommonFuctions.inc</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 
@@ -891,8 +891,8 @@ if (!isset($_POST['Submit'])) {
 <?php
   }
 ?>
-              <BR>
-              <BR>
+              <br />
+              <br />
             </LI>
             <LI>
 
@@ -929,7 +929,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>应付账户</LI>
                 <LI>供应商付款</LI>
               </UL>
-              <BR>
+              <br />
             </LI>
             <LI>
 <?php

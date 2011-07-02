@@ -57,7 +57,7 @@ if (isset($_POST['update'])) {
 			} else {
 				echo '<tr '.$FailureStyle.'><td>'.$AccountDetails['accountcode'].'</td><td>'.'Failure'.'</td><td>';
 				for ($i=0; $i<sizeof($answer); $i++) {
-					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]].'<br>';
+					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]].'<br />';
 				}
 				echo '</td></tr>';
 				$failures++;
@@ -70,7 +70,7 @@ if (isset($_POST['update'])) {
 	echo '</table>';
 	fclose ($fp);
 } else {
-	prnMsg( _('Select a csv file containing the details of the account codes that you wish to import into webERP. '). '<br>' .
+	prnMsg( _('Select a csv file containing the details of the account codes that you wish to import into webERP. '). '<br />' .
 		 _('The first line must contain the field names that you wish to import. ').
 		 '<a href ="Z_DescribeTable.php?table=chartmaster">' . _('The field names can be found here'). '</a>', 'info');
 	echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'">';

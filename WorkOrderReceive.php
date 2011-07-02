@@ -6,8 +6,8 @@ $title = _('Receive Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br>';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
+echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br />';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $title.'</p>';

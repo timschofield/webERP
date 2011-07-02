@@ -382,12 +382,12 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 	$TableHeader = '<tr>
 			<th>'. _('Order'). '</th>
 			<th>'. _('Item'). '</th>
-			<th>'. _('Quantity'). '<br>'. _('Ordered'). '</th>
+			<th>'. _('Quantity'). '<br />'. _('Ordered'). '</th>
 			<th>'. _('Units'). '</th>
-			<th>'. _('Quantity').'<br>'. _('Received'). '</th>
-			<th>'. _('Quantity').'<br>'. _('Invoiced'). '</th>
+			<th>'. _('Quantity').'<br />'. _('Received'). '</th>
+			<th>'. _('Quantity').'<br />'. _('Invoiced'). '</th>
 			<th>'. $_SESSION['Shipment']->CurrCode .' '. _('Price') . '</th>
-			<th>'. _('Current'). '<br>'. _('Std Cost'). '</th></tr>';
+			<th>'. _('Current'). '<br />'. _('Std Cost'). '</th></tr>';
 
 	echo  $TableHeader;
 
@@ -426,7 +426,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 echo '</table>';
 }//there are lines on the shipment
 
-echo '<br><div class="centre"><input type=submit name="Update" Value="'. _('Update Shipment Details') . '"></div><p>';
+echo '<br /><div class="centre"><input type=submit name="Update" Value="'. _('Update Shipment Details') . '"></div><p>';
 
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation'] =$_SESSION['Shipment']->StockLocation;
@@ -460,10 +460,10 @@ if (DB_num_rows($result)>0){
 	$TableHeader = '<tr>
 			<th>'. _('Order').'</th>
 			<th>'. _('Item').'</th>
-			<th>'. _('Quantity').'<br>'. _('Ordered').'</th>
+			<th>'. _('Quantity').'<br />'. _('Ordered').'</th>
 			<th>'. _('Units').'</th>
-			<th>'. _('Quantity').'<br>'. _('Received').'</th>
-			<th>'. _('Delivery').'<br>'. _('Date').'</th>
+			<th>'. _('Quantity').'<br />'. _('Received').'</th>
+			<th>'. _('Delivery').'<br />'. _('Date').'</th>
 			</tr>';
 
 	echo  $TableHeader;

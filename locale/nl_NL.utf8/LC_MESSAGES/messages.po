@@ -15536,7 +15536,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"Gebruik dit scherm om betalingen van uw bankrekening in te voeren. <br> "
+"Gebruik dit scherm om betalingen van uw bankrekening in te voeren. <br /> "
 "Opmerking: Om een betaling bij een leverancier eerst in, selecteer de "
 "leverancier, klikt u op Voer een uitkering aan of ontvangen van de "
 "leverancier, en gebruik een negatieve Betaling bedrag op dit formulier."
@@ -35116,8 +35116,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max tekst <br> lengte"
+msgid "Max text<br />length"
+msgstr "Max tekst <br /> lengte"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"
@@ -39463,7 +39463,7 @@ msgstr "Return waarde"
 #~ msgid "(sq metres)"
 #~ msgstr "(m2)"
 
-#~ msgid "Total Volume<br>"
+#~ msgid "Total Volume<br />"
 #~ msgstr "Totale Volume"
 
 #~ msgid "(KGs)"

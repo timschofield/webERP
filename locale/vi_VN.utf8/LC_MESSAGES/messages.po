@@ -15196,7 +15196,7 @@ msgid ""
 "on this form."
 msgstr ""
 "S? d?ng màn hình này d? nh?p các thanh toán t? tài kho?n ngân hàng c?a b?n. "
-"<br> Luu ý: Ð? nh?p thanh toán T? m?t nhà cung c?p, tru?c tiên ch?n Nhà Cung "
+"<br /> Luu ý: Ð? nh?p thanh toán T? m?t nhà cung c?p, tru?c tiên ch?n Nhà Cung "
 "C?p, nh?n vào Nh?p Thanh toán cho, ho?c Hóa Ðon T? Nhà Cung C?p, và s? d?ng "
 "s? ti?n thanh toán âm trên m?u này"
 
@@ -33565,7 +33565,7 @@ msgid "Horiz. pos."
 msgstr ""
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
+msgid "Max text<br />length"
 msgstr ""
 
 #: includes/DefineLabelClass.php:41

@@ -14906,7 +14906,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"使用此界面输入付款：从您的银行户口。<br>注意： 输入付款给供应商，首先选择供应"
+"使用此界面输入付款：从您的银行户口。<br />注意： 输入付款给供应商，首先选择供应"
 "商，点击输入付款给，或者供应商收款凭证，在此表中使用负数的付款金额。"
 
 #: Payments.php:69
@@ -33277,8 +33277,8 @@ msgid "Horiz. pos."
 msgstr "水平位置"
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "最大的文字<br>长度"
+msgid "Max text<br />length"
+msgstr "最大的文字<br />长度"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"
@@ -37773,8 +37773,8 @@ msgstr "返回值"
 #~ "Uncheck all boxes for date independent reports; leave Date Fieldname empty"
 #~ msgstr "对于与日期不相关的报告，取消所有的核取方框；将日期字段留空"
 
-#~ msgid "Date Field List<br>(check all that apply)"
-#~ msgstr "日期字段列表<br>(选取全部适用的)"
+#~ msgid "Date Field List<br />(check all that apply)"
+#~ msgstr "日期字段列表<br />(选取全部适用的)"
 
 #~ msgid "End Position (mm)"
 #~ msgstr "结束位置(mm)"
@@ -37813,9 +37813,9 @@ msgstr "返回值"
 #~ msgstr "线宽"
 
 #~ msgid ""
-#~ "Link Equation (SQL Syntax)<br>example: tablename1.fieldname1=tablename2."
+#~ "Link Equation (SQL Syntax)<br />example: tablename1.fieldname1=tablename2."
 #~ "fieldname2"
-#~ msgstr "连接方程式(SQL语法)<br>例如：表名称1.字段名称1=表名称2.字段名称2"
+#~ msgstr "连接方程式(SQL语法)<br />例如：表名称1.字段名称1=表名称2.字段名称2"
 
 #~ msgid "My Reports"
 #~ msgstr "我的报告"

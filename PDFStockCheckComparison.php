@@ -34,11 +34,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		if (DB_error_no($db) !=0) {
 			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
-			echo '<br>';
+			echo '<br />';
 			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
-			echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
+			echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 			if ($debug==1){
-	      			echo '<br>' . $sql;
+	      			echo '<br />' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -60,11 +60,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			if (DB_error_no($db) !=0) {
 				$title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
-				echo '<br>';
+				echo '<br />';
 				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg($db). 'error');
-				echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
+				echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu').'</a>';
 				if ($debug==1){
-					echo '<br>'. $sql;
+					echo '<br />'. $sql;
 				}
 				include('includes/footer.inc');
 				exit;
@@ -261,11 +261,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		if (DB_error_no($db) !=0) {
 	 		$title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
-	   		echo '<br>';
+	   		echo '<br />';
 			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
-	   		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+	   		echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 	   		if ($debug==1){
-	      			echo '<br>'. $SQL;
+	      			echo '<br />'. $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -315,7 +315,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no Inventory Comparison sheets to print out'), 'error');
-		echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
       } else {
@@ -376,7 +376,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		echo '<option selected VALUE="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	}
 
-	echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF'). '"></div>';
+	echo '</table><br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF'). '"></div>';
 
 	include('includes/footer.inc');
 

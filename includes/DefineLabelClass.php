@@ -37,7 +37,7 @@ $DimensionTags = array(
 $DataTags =  array(
     'row'=>array('desc'=>_('Vert. pos.'),'type'=>'n','sz'=>5,'maxsz'=>8),
     'pos'=>array('desc'=>_('Horiz. pos.'),'type'=>'n','sz'=>5,'maxsz'=>8),
-    'max'=> array('desc'=>_('Max text<br>length'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'max'=> array('desc'=>_('Max text<br />length'),'type'=>'n','sz'=>5,'maxsz'=>8),
     'font'=>array('desc'=>_('Font size'),'type'=>'n','sz'=>5,'maxsz'=>8),
     'dat'=>array('desc'=>_('Data to display'),'type'=>'s',
         'values'=>array(
@@ -68,7 +68,7 @@ function getXMLFile($file) {
             prnMsg(_('Failed loading XML file').' '. $file.':');
             foreach(libxml_get_errors() as $error) {
                 echo "
-                <br>", $error->message;
+                <br />", $error->message;
             }
             exit(_('Report this problem'));
         }

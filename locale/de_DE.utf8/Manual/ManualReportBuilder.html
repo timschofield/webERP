@@ -3,20 +3,20 @@
 <h2>Table of Contents</h2>
 
 <p>
-<a href="#RB_RevHist">Revision History</a><br>
-<a href="#RB_Intro">Introduction</a><br>
-<a href="#RB_RptBldr">What is Report Builder - Reports</a><br>
-<a href="#RB_FrmBldr">What is Report Builder - Forms</a><br>
-<a href="#RB_Admin">Administrator Page</a><br>
-<a href="#RB_ImpExp">Importing and Exporting</a><br>
-<a href="#RB_EdtCopy">Editing, Copying, Renaming and Deleting Reports/Forms</a><br>
-<a href="#RB_NewRpt">How Do I Create a New Report?</a><br>
-<a href="#RB_NewFrm">How Do I Create a New Form?</a><br>
-<a href="#RB_ViewRpt">Viewing your report/form</a><br>
+<a href="#RB_RevHist">Revision History</a><br />
+<a href="#RB_Intro">Introduction</a><br />
+<a href="#RB_RptBldr">What is Report Builder - Reports</a><br />
+<a href="#RB_FrmBldr">What is Report Builder - Forms</a><br />
+<a href="#RB_Admin">Administrator Page</a><br />
+<a href="#RB_ImpExp">Importing and Exporting</a><br />
+<a href="#RB_EdtCopy">Editing, Copying, Renaming and Deleting Reports/Forms</a><br />
+<a href="#RB_NewRpt">How Do I Create a New Report?</a><br />
+<a href="#RB_NewFrm">How Do I Create a New Form?</a><br />
+<a href="#RB_ViewRpt">Viewing your report/form</a><br />
 <a href="#RB_FrmParam">Passing Parameters to Forms</a></p>
 <h2><a name="RB_RevHist">Revision History</a></h2>
-Revision History<br>
-  Rev 1.0 - 2005-11-03 - Original release, written by D. Premo<br>
+Revision History<br />
+  Rev 1.0 - 2005-11-03 - Original release, written by D. Premo<br />
   Rev 1.1 - 2005-12-12 - Included Form Builder information, D. Premo
 <h2><a name="RB_Intro">Introduction</a></h2>
 <p> The report builder tool provides administrators with the ability to create, 
@@ -123,46 +123,46 @@ Revision History<br>
       be edited with any text editor. Only modify the descriptions between the single 
       quotes and leave the remaining portions of the file untouched. A translation 
 section example is shown below:</p>
-<p> /* Language Fields. */<br> /* Only modify the language portion between the single quotes after the colon. 
-*/<br>
-<br> 
-/* Report Name and Title Information: */<br> ReportName:'Invoice' <br>Title1Desc:'%reportname%'<br>Title2Desc:'report generated %date%'<br>
-<br>/* Report Field Description Information: */<br> FieldDesc0:'Branch ID' <br>FieldDesc1:'Order Number' <br>FieldDesc2:'Quotation' <br>
+<p> /* Language Fields. */<br /> /* Only modify the language portion between the single quotes after the colon. 
+*/<br />
+<br /> 
+/* Report Name and Title Information: */<br /> ReportName:'Invoice' <br />Title1Desc:'%reportname%'<br />Title2Desc:'report generated %date%'<br />
+<br />/* Report Field Description Information: */<br /> FieldDesc0:'Branch ID' <br />FieldDesc1:'Order Number' <br />FieldDesc2:'Quotation' <br />
 FieldDesc4:'Order Number'
-        <br>
+        <br />
   FieldDesc5:'Order Date'
-  <br>
+  <br />
   FieldDesc6:'Branch ID'
-  <br>
+  <br />
   FieldDesc7:'Customer Reference'
-  <br>
+  <br />
   FieldDesc8:'Deliver To Name'
-  <br>
-  FieldDesc9:'Quantity'<br>
+  <br />
+  FieldDesc9:'Quantity'<br />
   FieldDesc10:'Part Number'
-  <br>
+  <br />
   FieldDesc11:'Unit Price'
-  <br>
+  <br />
   FieldDesc12:'Customer Name'
-  <br>
+  <br />
   FieldDesc13:'Address 1'
-  <br>
+  <br />
   FieldDesc14:'Address 2'
-  <br>
-  FieldDesc15:'City'<br>
-  FieldDesc16:'State'<br>
-  FieldDesc17:'Postal Code'<br>
-  FieldDesc18:'Country'<br>
+  <br />
+  FieldDesc15:'City'<br />
+  FieldDesc16:'State'<br />
+  FieldDesc17:'Postal Code'<br />
+  FieldDesc18:'Country'<br />
   FieldDesc19:'Delivery Date
-  <br>
+  <br />
   '
   FieldDesc20:'Customer Branch ID'
-  <br>
+  <br />
   FieldDesc21:'Order Date'
-  <br>
-  FieldDesc22:'Order Number'<br>
-  FieldDesc23:'Customer Name'<br>
-  FieldDesc24:'Order Number'<br>
+  <br />
+  FieldDesc22:'Order Number'<br />
+  FieldDesc23:'Customer Name'<br />
+  FieldDesc24:'Order Number'<br />
 /* End of language fields. */</p>
 <p> In this example, the report name is ‘Invoice’. To change the report name to 
         Invoice Register, simply change the word ‘Invoice’ with ‘Invoice Register’. 
@@ -522,7 +522,7 @@ edit, re-sequence, or delete a row. Your form should like something like this:</
                                 long and you want to avoid column wraps of the text. Checking this box truncates 
                                 any field that will exceed the column width to keep it to one line. This feature 
                                 also truncates the column headings.</p>
-<p><strong>Grouping Fields</strong>:<br> 
+<p><strong>Grouping Fields</strong>:<br /> 
   <strong>Sorting Fields</strong>: Grouping Fields and Sorting Fields are similar. The main 
                                 difference being the grouping is specified earlier in the ORDER BY portion of 
                                 the sql string and subtotaling is calculated and displayed on the report. If no 
@@ -543,7 +543,7 @@ selection form.</p>
                                 displayed.</p>
 <p>Let’s fill in our report with the following data:</p>
 <p>1. Check all the date boxes except the ‘to-date’ boxes. This will give the user 
-more than enough choices. <br>2. Enter salesorders.orddate in the Date Fieldname text box. <br>3. Check No in Truncate Long Descriptions. We can change it later if necessary.<br> 4. Enter the Grouping as follows:      </p>
+more than enough choices. <br />2. Enter salesorders.orddate in the Date Fieldname text box. <br />3. Check No in Truncate Long Descriptions. We can change it later if necessary.<br /> 4. Enter the Grouping as follows:      </p>
 <table align="center"  border="2" cellspacing="1" cellpadding="1">
   <tr>
     <td><div align="center">Sequence</div></td>
@@ -697,10 +697,10 @@ more than enough choices. <br>2. Enter salesorders.orddate in the Date Fieldname
 <p align="center"><img src="images/RBFrmDtaLine.gif"> </p>
 <h3> Data Block</h3>
 <p>Data Blocks are a special case of data lines that concatenate several fields from the database with a separator value. Data blocks are ideal candidates for addresses where fields need to be near each other but vary in length and how they are separated from each other. The example below is for an en_US address where address3-5 are city, state and postal code, respectively and address 6 is the country. The output will be displayed as follows:</p>
-<p>Widgets International (name) <br>
-  1234 Main Street (address1)<br>
-  Suite #3 (address2)<br>
-  Anytown, CA  90019(address3), (address4) (address5)<br>
+<p>Widgets International (name) <br />
+  1234 Main Street (address1)<br />
+  Suite #3 (address2)<br />
+  Anytown, CA  90019(address3), (address4) (address5)<br />
   US (address6)
 </p>
 <p align="center"><img src="images/RBFrmDtaBlk.gif"> </p>
@@ -758,29 +758,29 @@ more than enough choices. <br>2. Enter salesorders.orddate in the Date Fieldname
 <p>Forms may be called directly from scripts by passing an id and criteria parameters. the parameters are assigned the variables cr[x] where [x] is replaced by the parameter to be assigned. Parameter 0 (zero) is reserved for the date field. Parameters 1-9 correspond to the order in which the criteria are ordered in the form. An example href tag might look like: </p>
 <p>&lt;a href=&quot;reportwriter/FormMaker.php?id=prch:po&amp;cr0=a&amp;cr1=Range:3:3&quot;&gt;</p>
 <p><strong>Variable 'id'</strong>: The id definitions correspond to the index value of the variable $FormGroups in the file /reportwriter/admin/defaults.php. the current definition codes are:</p>
-<p> gl:chk = Bank Checks <br>
-ar:col = Collection Letters<br>
-ar:cust = Customer Statements<br>
-gl:deps = Bank Deposit Slips<br>
-ar:inv = Invoices/Packing Slips<br>
-ar:lblc = Customer Labels<br>
-prch:lblv = Vendor Labels<br>
-prch:po = Purchase Orders<br>
-ord:quot = Customer Quotes<br>
-ar:rcpt = Sales Records<br>
-ord:so = Sales Orders<br>
+<p> gl:chk = Bank Checks <br />
+ar:col = Collection Letters<br />
+ar:cust = Customer Statements<br />
+gl:deps = Bank Deposit Slips<br />
+ar:inv = Invoices/Packing Slips<br />
+ar:lblc = Customer Labels<br />
+prch:lblv = Vendor Labels<br />
+prch:po = Purchase Orders<br />
+ord:quot = Customer Quotes<br />
+ar:rcpt = Sales Records<br />
+ord:so = Sales Orders<br />
 misc:misc = Miscellaneous </p>
 <p><strong>Variable cr0</strong>: The possible values for cr0 are the letters a-k as defined below (also found as  the indexes of the variable $DateChoices in the file /reportwriter/admin/defaults.php):</p>
-<p> 	a = All<br>
-b = Range<br>
-c =&gt; Today<br>
-d =&gt; This Week <br>
-e =&gt; This Week to Date <br>
-f =&gt; This Month<br>
-g =&gt; This Month to Date<br>
-h =&gt; This Quarter<br>
-i =&gt; This Quarter to Date<br>
-j =&gt; This Year<br>
+<p> 	a = All<br />
+b = Range<br />
+c =&gt; Today<br />
+d =&gt; This Week <br />
+e =&gt; This Week to Date <br />
+f =&gt; This Month<br />
+g =&gt; This Month to Date<br />
+h =&gt; This Quarter<br />
+i =&gt; This Quarter to Date<br />
+j =&gt; This Year<br />
 k =&gt; This Year to Date</p>
 <p><strong>Variable cr1 through cr9</strong>: Variables cr1-cr9 need to correspond to the sequence of the field as specified in the form criteria. There are three parts to the value passed. The first is the text label which must match <u>exactly</u> to a label from the criteria dropdown list for the associated field. The second and third are the >From and To values for label of the criteria if they require them (such as the labels Range and Equal To). The three values are separated by semi-colons. If the second or third parameter is not required, it may be left out (such as in the case Yes, No, Printed, Unprinted, etc.). </p>
 <p>From our example above:</p>

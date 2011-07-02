@@ -39,14 +39,14 @@ if (isset($_POST['ResetPart'])){
 
 if (isset($OrderNumber) AND $OrderNumber!='') {
 	if (!is_numeric($OrderNumber)){
-		echo '<br><b>' . _('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric') . '.</b><br>';
+		echo '<br /><b>' . _('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric') . '.</b><br />';
 		unset ($OrderNumber);
 	} else {
 		echo _('Order Number') . ' - ' . $OrderNumber;
 	}
 } else {
 	if (isset($SelectedSupplier)) {
-		echo '<br><div class="page_help_text">' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
+		echo '<br /><div class="page_help_text">' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
 		echo '<input type=hidden name="SelectedSupplier" value="' . $SelectedSupplier . '"></div>';
 	}
 	if (isset($SelectedStockItem)) {
@@ -198,7 +198,7 @@ echo '</select>';
 echo '<td><font size=1>' . _('Enter text extracts in the') . '<b>' . _('description') . '</b>:</font></td>';
 echo '<td><input type="Text" name="Keywords" size=20 maxlength=25></td></tr><tr><td></td>';
 echo '<td><font size<b>' . _('OR') . '</b></font><font size=1>' .  _('Enter extract of the') .  '<b>' .  _('Stock Code') . '</b>:</font></td>';
-echo '<td><input type="Text" name="StockCode" size=15 maxlength=18></td></tr></table><br>';
+echo '<td><input type="Text" name="StockCode" size=15 maxlength=18></td></tr></table><br />';
 echo '<table><tr><td><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
 echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></td></tr></table>';
 
@@ -210,7 +210,7 @@ if (isset($StockItemsResult)) {
 	$TableHeader = 	'<tr><th>' . _('Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('On Hand') . '</th>
-			<th>' . _('Orders') . '<br>' . _('Outstanding') . '</th>
+			<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
 			<th>' . _('Units') . '</th>
 			</tr>';
 	echo $TableHeader;

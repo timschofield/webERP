@@ -15813,7 +15813,7 @@ msgid ""
 "on this form."
 msgstr ""
 "Utilizzare questa schermata per inserire i pagamenti dal tuo conto bancario. "
-"<br> Nota: Per inserire un pagamento da un fornitore, prima selezionare il "
+"<br /> Nota: Per inserire un pagamento da un fornitore, prima selezionare il "
 "fornitore, fare clic su Immettere un pagamento, o ricevuta dal fornitore, e "
 "utilizzare un importo negativo su questa forma di pagamento."
 
@@ -35641,8 +35641,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max testo <br> lunghezza"
+msgid "Max text<br />length"
+msgstr "Max testo <br /> lunghezza"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

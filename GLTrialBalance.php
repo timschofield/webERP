@@ -92,7 +92,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			echo '<option value ="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
-	echo '</select></td></tr></table><br>';
+	echo '</select></td></tr></table><br />';
 
 	echo '<div class="centre"><input type=submit Name="ShowTB" Value="' . _('Show Trial Balance') .'">';
 	echo '<input type=submit Name="PrintPDF" Value="'._('PrintPDF').'"></div>';
@@ -151,9 +151,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		if ($debug==1){
-			echo '<br>'. $SQL;
+			echo '<br />'. $SQL;
 		}
 		include('includes/footer.inc');
 		exit;
@@ -163,7 +163,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -710,7 +710,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		number_format($CheckPeriodActual,2),
 		number_format($CheckPeriodBudget,2));
 
-	echo '</table><br>';
+	echo '</table><br />';
 	echo '<div class="centre"><input type=submit Name="SelectADifferentPeriod" Value="' . _('Select A Different Period') . '"></div>';
 }
 echo '</form>';

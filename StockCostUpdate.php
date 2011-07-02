@@ -15,7 +15,7 @@ if (isset($_GET['StockID'])){
 	$StockID =trim(strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br>';
+echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
 	_('Inventory Adjustment') . '" alt="" />' . ' ' . $title . '</p>';
@@ -128,11 +128,11 @@ if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
 							OR $myrow['mbflag']=='K'){
     echo '</form>'; // Close the form
    if ($myrow['mbflag']=='D'){
-        echo '<br>' . $StockID .' ' . _('is a service item');
+        echo '<br />' . $StockID .' ' . _('is a service item');
    } else if ($myrow['mbflag']=='A'){
-        echo '<br>' . $StockID  .' '  . _('is an assembly part');
+        echo '<br />' . $StockID  .' '  . _('is an assembly part');
    } else if ($myrow['mbflag']=='K'){
-        echo '<br>' . $StockID . ' ' . _('is a kit set part');
+        echo '<br />' . $StockID . ' ' . _('is a kit set part');
    }
    prnMsg(_('Cost information cannot be modified for kits assemblies or service items') . '. ' . _('Please select a different part'),'warn');
    include('includes/footer.inc');
@@ -164,10 +164,10 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 }
 if ($myrow['mbflag']!='D'){
 	echo '<div class="centre"><a href="' . $rootpath . '/StockStatus.php?StockID=' . $StockID . '>' . _('Show Stock Status') . '</a>';
-	echo '<br><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
-	echo '<br><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage')  .'</a>';
-	echo '<br><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-	echo '<br><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
+	echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage')  .'</a>';
+	echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
 }
 echo '</form></div>';
 include('includes/footer.inc');

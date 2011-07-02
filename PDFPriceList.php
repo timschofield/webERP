@@ -25,9 +25,9 @@ If (isset($_POST['PrintPDF'])
 		if ($_SESSION['CustomerID']==''){
 			$title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
-			echo '<br>';
+			echo '<br />';
 			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
-			echo '<br><br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '</a>';
+			echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -35,7 +35,7 @@ If (isset($_POST['PrintPDF'])
 			$title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
 			prnMsg(_('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-			echo '<br><br><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '</a>';
+			echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -121,7 +121,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
@@ -132,7 +132,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
-		echo '<br><a href="'.$_SERVER['PHP_SELF'] .'?' . SID . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.$_SERVER['PHP_SELF'] .'?' . SID . '">'. _('Back').'</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -298,7 +298,7 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<tr><td>' . _('Effective As At') . ':</td><td><input type="text" size=11 class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '">';
 
-		echo '</table><br><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
+		echo '</table><br /><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
 	}
 	include('includes/footer.inc');
 

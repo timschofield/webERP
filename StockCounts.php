@@ -143,7 +143,7 @@ if ($_GET['Action'] == 'Enter'){
 			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength=20 size=20></td></tr>";
 
 	}
-	echo "</table><br><div class=centre><input type=submit name='SubmitChanges' VALUE='" . _('Save Changes') . "'></div>";
+	echo "</table><br /><div class=centre><input type=submit name='SubmitChanges' VALUE='" . _('Save Changes') . "'></div>";
 
 //END OF action=VIEW
 }

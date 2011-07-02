@@ -89,9 +89,9 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('Stock Dispatch - Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo "<br>$sql";
+		  echo "<br />$sql";
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -101,7 +101,7 @@ If (isset($_POST['PrintPDF'])) {
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
-		echo "<br><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+		echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -266,7 +266,7 @@ If (isset($_POST['PrintPDF'])) {
 			</table>
 			<p>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-		echo '<br><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		include ('includes/footer.inc');
 		exit;
 	}

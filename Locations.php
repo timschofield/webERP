@@ -249,7 +249,7 @@ if (isset($_POST['submit'])) {
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
 			prnMsg( _('Cannot delete this location because stock movements have been created using this location'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
+			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
 
 		} else {
 			$sql= "SELECT COUNT(*) FROM locstock WHERE locstock.loccode='". $SelectedLocation . "' AND locstock.quantity !=0";
@@ -258,7 +258,7 @@ if (isset($_POST['submit'])) {
 			if ($myrow[0]>0) {
 				$CancelDelete = 1;
 				prnMsg(_('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
-				echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock items with stock on hand at this location code');
+				echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock items with stock on hand at this location code');
 			} else {
 				$sql= "SELECT COUNT(*) FROM www_users WHERE www_users.defaultlocation='" . $SelectedLocation . "'";
 				$result = DB_query($sql,$db);
@@ -266,7 +266,7 @@ if (isset($_POST['submit'])) {
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
 					prnMsg(_('Cannot delete this location because it is the default location for a user') . '. ' . _('The user record must be modified first'),'warn');
-					echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('users using this location as their default location');
+					echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('users using this location as their default location');
 				} else {
 					$sql= "SELECT COUNT(*) FROM bom WHERE bom.loccode='" . $SelectedLocation . "'";
 					$result = DB_query($sql,$db);
@@ -274,7 +274,7 @@ if (isset($_POST['submit'])) {
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
 						prnMsg(_('Cannot delete this location because it is the default location for a bill of material') . '. ' . _('The bill of materials must be modified first'),'warn');
-						echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bom components using this location');
+						echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bom components using this location');
 					} else {
 						$sql= "SELECT COUNT(*) FROM workcentres WHERE workcentres.location='" . $SelectedLocation . "'";
 						$result = DB_query($sql,$db);
@@ -282,7 +282,7 @@ if (isset($_POST['submit'])) {
 						if ($myrow[0]>0) {
 							$CancelDelete = 1;
 							prnMsg( _('Cannot delete this location because it is used by some work centre records'),'warn');
-							echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
+							echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
 						} else {
 							$sql= "SELECT COUNT(*) FROM workorders WHERE workorders.loccode='" . $SelectedLocation . "'";
 							$result = DB_query($sql,$db);
@@ -290,7 +290,7 @@ if (isset($_POST['submit'])) {
 							if ($myrow[0]>0) {
 								$CancelDelete = 1;
 								prnMsg( _('Cannot delete this location because it is used by some work order records'),'warn');
-								echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('work orders using this location');
+								echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('work orders using this location');
 							}else {
 								$sql= "SELECT COUNT(*) FROM custbranch WHERE custbranch.defaultlocation='" . $SelectedLocation . "'";
 								$result = DB_query($sql,$db);
@@ -298,7 +298,7 @@ if (isset($_POST['submit'])) {
 								if ($myrow[0]>0) {
 									$CancelDelete = 1;
 									prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
-									echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
+									echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
 								}
 							}
 						}
@@ -556,7 +556,7 @@ if (!isset($_GET['delete'])) {
 	<tr><td><?php echo _('Enable Warehouse Management') . ':'; ?></td>
 	<td><input type='checkbox' name='Managed'<?php if($_POST['Managed'] == 1) echo ' checked';?>></td></tr>
 	*/
-	echo '</table><br>';
+	echo '</table><br />';
 
 	echo '<div class="centre"><input type="Submit" name="submit" value="' .  _('Enter Information') . '"></div>';
 

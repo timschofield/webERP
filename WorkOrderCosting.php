@@ -6,7 +6,7 @@ $title = _('Work Order Costing');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br>';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $title . '</p>';

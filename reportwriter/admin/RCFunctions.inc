@@ -63,13 +63,13 @@ function RetrieveReports() {
 			WHERE defaultreport='1' AND reporttype='rpt' AND groupname='".$key."'
 			ORDER BY reportname";
 		$Result=DB_query($sql,$db,'','',false,true);
-		while ($Temp = DB_fetch_array($Result)) $OutputString .= '<input type="radio" name="ReportID" value="'.$Temp['id'].'">'.$Temp['reportname'].'<br>';
+		while ($Temp = DB_fetch_array($Result)) $OutputString .= '<input type="radio" name="ReportID" value="'.$Temp['id'].'">'.$Temp['reportname'].'<br />';
 		$sql= "SELECT id, reportname FROM ".DBReports."
 			WHERE defaultreport='0' AND reporttype='rpt' AND groupname='".$key."'
 			ORDER BY reportname";
 		$Result=DB_query($sql,$db,'','',false,true);
-		if (DB_num_rows($Result)>0) $OutputString .= '<u>'.RPT_CUSTRPT.'</u><br>';
-		while ($Temp = DB_fetch_array($Result)) $OutputString .= '<input type="radio" name="ReportID" value="'.$Temp['id'].'">'.$Temp['reportname'].'<br>';
+		if (DB_num_rows($Result)>0) $OutputString .= '<u>'.RPT_CUSTRPT.'</u><br />';
+		while ($Temp = DB_fetch_array($Result)) $OutputString .= '<input type="radio" name="ReportID" value="'.$Temp['id'].'">'.$Temp['reportname'].'<br />';
 		$OutputString .= '</td>'.chr(10).'<td width="250" valign="top">';
 		$sql= "SELECT id, groupname, reportname FROM ".DBReports."
 			WHERE defaultreport='1' AND reporttype='frm'
@@ -83,8 +83,8 @@ function RetrieveReports() {
 				$WriteOnce = true;
 				foreach ($FormList as $Entry) {
 					if ($Entry['groupname']==$index) { // then it's part of this listing
-						if ($WriteOnce) { $OutputString .= $value.'<br>'; $WriteOnce=false; }
-						$OutputString .= '&nbsp;&nbsp;<input type="radio" name="ReportID" value="'.$Entry['id'].'">'.$Entry['reportname'].'<br>';
+						if ($WriteOnce) { $OutputString .= $value.'<br />'; $WriteOnce=false; }
+						$OutputString .= '&nbsp;&nbsp;<input type="radio" name="ReportID" value="'.$Entry['id'].'">'.$Entry['reportname'].'<br />';
 					}
 				}
 			}

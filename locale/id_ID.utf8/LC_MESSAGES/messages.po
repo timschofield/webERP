@@ -15426,7 +15426,7 @@ msgid ""
 "on this form."
 msgstr ""
 "Gunakan menu ini untuk memasukkan pembayaran DARI rekening bank Anda. "
-"<br>Catatan: Untuk memasukkan pembayaran DARI supplier, pilih dulu Supplier "
+"<br />Catatan: Untuk memasukkan pembayaran DARI supplier, pilih dulu Supplier "
 "tersebut, klik Masukkan Pembayaran ke, atau Penerimaan dari Supplier, dan "
 "gunakan jumlah Pembayaran negatif di formulir ini."
 
@@ -34836,8 +34836,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max teks <br> panjang"
+msgid "Max text<br />length"
+msgstr "Max teks <br /> panjang"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

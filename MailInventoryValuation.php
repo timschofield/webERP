@@ -115,9 +115,9 @@ if (DB_error_no($db) !=0) {
 	$title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include('includes/header.inc');
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	echo '<br><a href="' .$rootpath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	if ($debug==1){
-		echo '<br>' . $SQL;
+		echo '<br />' . $SQL;
 	}
 
 include('includes/footer.inc');
@@ -211,7 +211,7 @@ if ($ListCount == 0) {
 	$title = _('Print Inventory Valuation Error');
 	include('includes/header.inc');
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
-	echo '<br><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit; // Javier: needs check
 } else {

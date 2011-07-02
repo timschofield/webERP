@@ -75,7 +75,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 			$CFwd = $myrow['bfwd'] + $myrow['actual'];
 			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
 
-			echo '<br>' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
+			echo '<br />' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
 
 			$sql = "UPDATE chartdetails SET bfwd='" . $CFwd . "', 
 										bfwdbudget='" . $CFwdBudget . "' 

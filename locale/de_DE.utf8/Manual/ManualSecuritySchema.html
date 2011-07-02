@@ -1,54 +1,54 @@
-<html><head></head><body><br><br>
+<html><head></head><body><br /><br />
 <a name="SecuritySchema"><font size="+3">
-<b>Sicherheitskonzept</b></font></a><br>
-<br>
+<b>Sicherheitskonzept</b></font></a><br />
+<br />
 Das Sicherheitskonzept von webERP besteht aus den folgenden Elementen:
-<li><b>Benutzerkonto</b><br>
-Für jeden Anwender von webERP sollte ein persönliches Benutzerkonto eingerichtet werden.<br>
-Benutzerkonten können von Administratoren über: <i> Hauptmenü -> Einstellungen -> Benutzerstammsätze </i> (WWW_Users.php) angelegt werden.<br>
-Jeder Benutzer wird einer durch Auswählen aus der Drop-Down-Liste einer 'Rolle' zugeordnet.<br>
-Unten finden Sie eine Liste der standardmäßigen Rollen.<br>
+<li><b>Benutzerkonto</b><br />
+Für jeden Anwender von webERP sollte ein persönliches Benutzerkonto eingerichtet werden.<br />
+Benutzerkonten können von Administratoren über: <i> Hauptmenü -> Einstellungen -> Benutzerstammsätze </i> (WWW_Users.php) angelegt werden.<br />
+Jeder Benutzer wird einer durch Auswählen aus der Drop-Down-Liste einer 'Rolle' zugeordnet.<br />
+Unten finden Sie eine Liste der standardmäßigen Rollen.<br />
 </li> 
-<li><b>Rolle</b><br>
+<li><b>Rolle</b><br />
 Rollen können von einem Administrator über <i>Hauptmenü -> Einstellungen -> Rollen und Berechtigungen</I> (WWW_Access.php)
-hinzugefügt oder entfernt werden.<br>
+hinzugefügt oder entfernt werden.<br />
 Jeder 'Rolle' sind eine oder mehrere 'Berechtigungen' zugeordnet. Die zu einer 'Rolle' zugeordneten 'Berechtigungen' können über: <i>
-Hauptmenü -> Einstellungen -> Rollen und Berechtigungen </i> (WWW_Access.php) geändert werden.<br>
-Unten finden Sie eine Liste der zu den standardmäßigen 'Rollen' jeweils zugeordneten Berechtigungen.<br></li>
+Hauptmenü -> Einstellungen -> Rollen und Berechtigungen </i> (WWW_Access.php) geändert werden.<br />
+Unten finden Sie eine Liste der zu den standardmäßigen 'Rollen' jeweils zugeordneten Berechtigungen.<br /></li>
 
-<li><b>Berechtigungen</b><br>
-Standardmäßig stehen 15 'Berechtigungen' zur Auswahl. Jede 'Berechtigung' erlaubt den Zugriff auf eine oder mehrere webERP-Seiten.<br>
-Unten finden Sie eine Liste der standardmäßigen Berechtigungen.<br>
-Es gibt kein webERP-Werkzeug, um 'Berechtigungen' hinzuzufügen, zu entfernen oder zu bearbeiten. Bei Bedarf kann ein Administrator die Datenbanktabelle (securitytokens) bearbeiten.<br>
-<br>  
+<li><b>Berechtigungen</b><br />
+Standardmäßig stehen 15 'Berechtigungen' zur Auswahl. Jede 'Berechtigung' erlaubt den Zugriff auf eine oder mehrere webERP-Seiten.<br />
+Unten finden Sie eine Liste der standardmäßigen Berechtigungen.<br />
+Es gibt kein webERP-Werkzeug, um 'Berechtigungen' hinzuzufügen, zu entfernen oder zu bearbeiten. Bei Bedarf kann ein Administrator die Datenbanktabelle (securitytokens) bearbeiten.<br />
+<br />  
 </li>
-<li><b>Sicherheitsniveau</b><br>
-Jede webERP-Seite besitzt ein Sicherheitsiveau im Wertebereich von 1 bis 15.<br>
-Dies ist für jede Seite im Quelltext fest kodiert, zum Beispiel durch die Angabe <code> $PageSecurity = 1;</code><br>
-Für den Benutzerzugriff muss die 'Berechtigung' das Seiten-Sicherheitsniveau entsprechen.<br>
+<li><b>Sicherheitsniveau</b><br />
+Jede webERP-Seite besitzt ein Sicherheitsiveau im Wertebereich von 1 bis 15.<br />
+Dies ist für jede Seite im Quelltext fest kodiert, zum Beispiel durch die Angabe <code> $PageSecurity = 1;</code><br />
+Für den Benutzerzugriff muss die 'Berechtigung' das Seiten-Sicherheitsniveau entsprechen.<br />
 Es gibt kein webERP-Werkzeug, um die Seiten-Sicherheitsniveaus zu ändern. Ein Administrator oder Entwickler kann die Seiten gegebenenfalls direkt bearbeiten.
-<br></li></ol>
+<br /></li></ol>
 Diese Elemente wirken wie folgt zusammen: Mit der eingegebenen Kombination von Benutzerkonto und Passwort kann das System bei der Anmeldung die Rolle
 ermitteln. Die Rolle des Benutzers bestimmt, welche Berechtigungen der Benutzer besitzt. Dadurch darf der Benutzer auf alle die webERP-Seiten zugreifen,
-deren Sicherheitsniveau einer der Berechtigungen aus seiner Rolle entspricht.<br>
-<br>
-<br>
+deren Sicherheitsniveau einer der Berechtigungen aus seiner Rolle entspricht.<br />
+<br />
+<br />
 <u>
-Eine umfangreichere Beschreibung des Sicherheitskonzeptes folgt:</u><br>
-<br>
+Eine umfangreichere Beschreibung des Sicherheitskonzeptes folgt:</u><br />
+<br />
 Jede webERP-Seite (php-Skript) hat einen bestimmtes Niveau der Sicherheit zugeordnet. Dieses Sicherheitsniveau ist in jedem Skript fest eingetragen. Zum Zeitpunkt der
-Erstellung dieser Dokumentation ist dies eine Zahl zwischen 1 und 15.  Wenn weitere Sicherheitsniveaus erforderlich werden, so kann das durch einen Administrator oder Entwickler erweitert werden. Die vorgegebenen Sicherheitsniveaus für jede Seite finden Sie in der Tabelle unten.<br>
-<br>
-Der Benutzer erhält den Zugriff auf eine Seite, wenn das Sicherheitsniveau dieser Seite einer Berechtigung im Array SESSION AllowedPageSecurityTokens entspricht, die wiederum durch die Rolle des Benutzers bestimmt werden. Die Rolle selbst ist eine Ganzzahl, die dem Anwender in den Benutzerstammsatz über die Seite Benutzer pflegen (WWW_users.php) zugeordnet wird.<br>
-<br>
-Die Zugriffsberechtigung für die jeweilige Seite wird im Include session.inc (bzw. PDF_Starter.inc für PDF-Seiten) geprüft. Die Variable $_SESSION['AccessLevel'] wird im Moment der Anmeldung des Benutzers aus der Datenbank abgerufen. Diese Variable verweist auf die Rolle des Benutzers. Das Array SESSION[AllowedPageSecurityTokens'] wird auf der Grundlage der Rolle (AccessLevel) mit den Berechtigungen aus der Datenbank gefüllt. Jede Seite mit einem Sicherheitsniveau $PageSecurity gleich einem Wert in dem ganannten Array wird als eine berechtigt Seite angesehen.<br>
-<br>
-Wenn Sie zusätzliche Rollen anlegen wollen, müssen Sie dazu das Skript "Rollen und Berechtigungen" (WWW.Access.php) anwenden. Sie müssen ebenso die Berechtigungen für die neue Rolle zuordnen.  Benutzer, die diese neue Rolle zugeordnet bekommen, werden den Zugriff auf jede Seite erhalten, deren Sicherheitsnivau einem Wert einer Berechtigung in dieser neuen Rolle entspricht. Dieser Mechanismus erlaubt es dem Systemadmiistrator zu steuern, wer worauf zugreifen darf.<br>
-<br>
-Durch Änderungen der Rollen, die den einzelnen Benutzern zugeordnet sind und das Ändern der Berechtigngen, die den einzelnen Rollen zugeordnet sind, können die Zugriffsberectigungen für alle Benutzer auf die einzelnen Seiten maßgeschneidert werden. Wenn Sie Änderungen vornehmen, beziehen Sie sich auf die Standardwerte in den untenstehenden Tabellen. Die Sicherheitsniveaus der einzelnen Seiten müssen ebenfalls bekannt sein. Die Werte der Standardeinstellungen können wie benötigt abgeändert werden.<br>
-<br>
-<u><!--Security Scheme Tables:-->Tabellen des Sicherheitskonzeptes</u><br>
-<br>
+Erstellung dieser Dokumentation ist dies eine Zahl zwischen 1 und 15.  Wenn weitere Sicherheitsniveaus erforderlich werden, so kann das durch einen Administrator oder Entwickler erweitert werden. Die vorgegebenen Sicherheitsniveaus für jede Seite finden Sie in der Tabelle unten.<br />
+<br />
+Der Benutzer erhält den Zugriff auf eine Seite, wenn das Sicherheitsniveau dieser Seite einer Berechtigung im Array SESSION AllowedPageSecurityTokens entspricht, die wiederum durch die Rolle des Benutzers bestimmt werden. Die Rolle selbst ist eine Ganzzahl, die dem Anwender in den Benutzerstammsatz über die Seite Benutzer pflegen (WWW_users.php) zugeordnet wird.<br />
+<br />
+Die Zugriffsberechtigung für die jeweilige Seite wird im Include session.inc (bzw. PDF_Starter.inc für PDF-Seiten) geprüft. Die Variable $_SESSION['AccessLevel'] wird im Moment der Anmeldung des Benutzers aus der Datenbank abgerufen. Diese Variable verweist auf die Rolle des Benutzers. Das Array SESSION[AllowedPageSecurityTokens'] wird auf der Grundlage der Rolle (AccessLevel) mit den Berechtigungen aus der Datenbank gefüllt. Jede Seite mit einem Sicherheitsniveau $PageSecurity gleich einem Wert in dem ganannten Array wird als eine berechtigt Seite angesehen.<br />
+<br />
+Wenn Sie zusätzliche Rollen anlegen wollen, müssen Sie dazu das Skript "Rollen und Berechtigungen" (WWW.Access.php) anwenden. Sie müssen ebenso die Berechtigungen für die neue Rolle zuordnen.  Benutzer, die diese neue Rolle zugeordnet bekommen, werden den Zugriff auf jede Seite erhalten, deren Sicherheitsnivau einem Wert einer Berechtigung in dieser neuen Rolle entspricht. Dieser Mechanismus erlaubt es dem Systemadmiistrator zu steuern, wer worauf zugreifen darf.<br />
+<br />
+Durch Änderungen der Rollen, die den einzelnen Benutzern zugeordnet sind und das Ändern der Berechtigngen, die den einzelnen Rollen zugeordnet sind, können die Zugriffsberectigungen für alle Benutzer auf die einzelnen Seiten maßgeschneidert werden. Wenn Sie Änderungen vornehmen, beziehen Sie sich auf die Standardwerte in den untenstehenden Tabellen. Die Sicherheitsniveaus der einzelnen Seiten müssen ebenfalls bekannt sein. Die Werte der Standardeinstellungen können wie benötigt abgeändert werden.<br />
+<br />
+<u><!--Security Scheme Tables:-->Tabellen des Sicherheitskonzeptes</u><br />
+<br />
 <table border="2">
 <tbody>
 <tr>
@@ -57,85 +57,85 @@ Durch Änderungen der Rollen, die den einzelnen Benutzern zugeordnet sind und das
 <th>Bemerkung</th>
 </tr>
 <tr>
-<td>www_user.userid<br>www_user.fullaccess</td>
-<td>demo<br>8</td>
-<td>Diese Felder werden durch das Skript<br>WWW_Users.php geändert.</td>
+<td>www_user.userid<br />www_user.fullaccess</td>
+<td>demo<br />8</td>
+<td>Diese Felder werden durch das Skript<br />WWW_Users.php geändert.</td>
 </tr>
 <tr>
-<td>securityroles.secroleid<br>securityroles.secrolename</td>
-<td>8<br>System Administrator</td>
-<td>Diese Felder werden durch WWW_Access.php<br>
-    geändert, wenn eine Rolle angelegt oder<br>
+<td>securityroles.secroleid<br />securityroles.secrolename</td>
+<td>8<br />System Administrator</td>
+<td>Diese Felder werden durch WWW_Access.php<br />
+    geändert, wenn eine Rolle angelegt oder<br />
     gelöscht wird.</td>
 </tr>
 <tr>
-<td>securitygroups.secroleid<br>securitygroups.tokenid</td>
-<td>8<br>1</td>
-<td>Diese Felder werden durch WWW_Access.php<br>
-    geändert, wenn Sie einer Rolle eine Berechtigung<br>
-    zuordnen oder aus einer Rolle eine Berechtigung<br>
+<td>securitygroups.secroleid<br />securitygroups.tokenid</td>
+<td>8<br />1</td>
+<td>Diese Felder werden durch WWW_Access.php<br />
+    geändert, wenn Sie einer Rolle eine Berechtigung<br />
+    zuordnen oder aus einer Rolle eine Berechtigung<br />
     entfernen.</td>
 </tr>
 <tr>
-<td>securitytokens.tokenid<br>securitytokens.tokenname</td>
-<td>1<br>Auftragseingabe - Kundenzugriff</td>
-<td>Es sind standardmäßig 15 Berechtigungen definiert.<br>
-    Diese Daten können mit keinem webERP-Werkzeug<br>
+<td>securitytokens.tokenid<br />securitytokens.tokenname</td>
+<td>1<br />Auftragseingabe - Kundenzugriff</td>
+<td>Es sind standardmäßig 15 Berechtigungen definiert.<br />
+    Diese Daten können mit keinem webERP-Werkzeug<br />
     bearbeitet werden.</td>
 </tr>
 <tr>
 <td>webERP-Seite</td>
-<td>CustomerInquiry.php<br>$PageSecurity = 1;</td>
-<td>Das Sicherheitsniveau für jede Seite<br>
-    ist vordefiniert und kann nicht mit<br>
+<td>CustomerInquiry.php<br />$PageSecurity = 1;</td>
+<td>Das Sicherheitsniveau für jede Seite<br />
+    ist vordefiniert und kann nicht mit<br />
     webERP-Mitteln geändert werden.</td>
 </tr>
 </tbody></table></body></html>
 
-<br>
-<br>
-<b>Rollen: Standardwerte für webERP version 3.08:</b><br>
-<br>
-1 - Inquiries/Order Entry (Auswertungen/Auftragserfassung)<br>
-2 - Manufac/Stock Admin (Fertigung/Bestandsführung)<br>
-3 - Purchasing officer (Einkaufsverantwortlicher)<br>
-4 - AP Clerk (Kreditorenbuchhalter)<br>
-5 - AR Clerk (Debitorenbuchhalter)<br>
-6 - Accountant (Bilanzbuchhalter)<br>
-7 - Customer logon only (Nur Kundenzugriff)<br>
-8 - System Administrator (Systemverwalter)<br>
-<br>
-<b>Berechtigungszuordnungen: Standardwerte für webERP version 3.071:,</b><br>
-<br>
-1 - Inquiries/Order Entry (Auswertungen/Auftragserfassung)  = 1, 2<br>
-2 - Manufac/Stock Admin (Fertigung/Bestandsführung) = 1, 2, 11<br>
-3 - Purchasing officer (Einkaufsverantwortlicher) = 1, 2, 3, 4, 5, 11<br>
-4 - AP Clerk (Kreditorenbuchhalter) = 1, 2, 5<br>
-5 - AR Clerk (Debitorenbuchhalter) = 1, 2, 5, 11<br>
-6 - Accountant (Bilanzbuchhalter) = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11<br>
-7 - Customer logon only (Nur Kundenzugriff) = 1<br>
-8 - System Administrator (Systemverwalter) = alle aktuellen Berechtigungen<br>
-<br>
-<b>Berechtigungen: Standardwerte für webERP Version 3.08:</b><br>
-<br>
- 1 - Order Entry/Inquiries customer access only (Auftragseingabe und -abfrage nur für den Kundenzugriff)<br>
- 2 - Basic Reports and Inquiries with selection options (Grundlegende Berichte und Auswertungen mit Auswahlmöglichkeiten)<br>
- 3 - Credit notes and AR management (Gutschriften und Debitoren-Verwaltung)<br>
- 4 - Purchasing data/PO Entry/Reorder Levels (Einkaufsdaten / Bestellerfassung / Bestellpunkte)<br>
- 5 - Accounts Payable (Kreditoren)<br>
- 6 - Not used<br>
- 7 - Bank Reconciliations (Bankkonten-Abstimmungen)<br>
- 8 - General ledger reports/inquiries (Hauptbuchberichte und -auswertungen)<br>
- 9 - Not used<br>
-10 - General Ledger Maintenance, stock valuation & Configuration (Hauptbuchabwicklung, Bestandsbewertung und Konfiguration)<br>
-11 - Inventory Management and Pricing (Bestandsverwaltung und Preisbildung)<br>
-12 - Unknown<br>
-13 - Unknown<br>
-14 - Unknown<br>
-15 - User Management and System Administration (Benutzer- und Systemverwaltung)<br>
-<br>
-<b>Sicherheitsniveau: Standardwerte für webERP Version 3.08:</b><br>
-<br>
+<br />
+<br />
+<b>Rollen: Standardwerte für webERP version 3.08:</b><br />
+<br />
+1 - Inquiries/Order Entry (Auswertungen/Auftragserfassung)<br />
+2 - Manufac/Stock Admin (Fertigung/Bestandsführung)<br />
+3 - Purchasing officer (Einkaufsverantwortlicher)<br />
+4 - AP Clerk (Kreditorenbuchhalter)<br />
+5 - AR Clerk (Debitorenbuchhalter)<br />
+6 - Accountant (Bilanzbuchhalter)<br />
+7 - Customer logon only (Nur Kundenzugriff)<br />
+8 - System Administrator (Systemverwalter)<br />
+<br />
+<b>Berechtigungszuordnungen: Standardwerte für webERP version 3.071:,</b><br />
+<br />
+1 - Inquiries/Order Entry (Auswertungen/Auftragserfassung)  = 1, 2<br />
+2 - Manufac/Stock Admin (Fertigung/Bestandsführung) = 1, 2, 11<br />
+3 - Purchasing officer (Einkaufsverantwortlicher) = 1, 2, 3, 4, 5, 11<br />
+4 - AP Clerk (Kreditorenbuchhalter) = 1, 2, 5<br />
+5 - AR Clerk (Debitorenbuchhalter) = 1, 2, 5, 11<br />
+6 - Accountant (Bilanzbuchhalter) = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11<br />
+7 - Customer logon only (Nur Kundenzugriff) = 1<br />
+8 - System Administrator (Systemverwalter) = alle aktuellen Berechtigungen<br />
+<br />
+<b>Berechtigungen: Standardwerte für webERP Version 3.08:</b><br />
+<br />
+ 1 - Order Entry/Inquiries customer access only (Auftragseingabe und -abfrage nur für den Kundenzugriff)<br />
+ 2 - Basic Reports and Inquiries with selection options (Grundlegende Berichte und Auswertungen mit Auswahlmöglichkeiten)<br />
+ 3 - Credit notes and AR management (Gutschriften und Debitoren-Verwaltung)<br />
+ 4 - Purchasing data/PO Entry/Reorder Levels (Einkaufsdaten / Bestellerfassung / Bestellpunkte)<br />
+ 5 - Accounts Payable (Kreditoren)<br />
+ 6 - Not used<br />
+ 7 - Bank Reconciliations (Bankkonten-Abstimmungen)<br />
+ 8 - General ledger reports/inquiries (Hauptbuchberichte und -auswertungen)<br />
+ 9 - Not used<br />
+10 - General Ledger Maintenance, stock valuation & Configuration (Hauptbuchabwicklung, Bestandsbewertung und Konfiguration)<br />
+11 - Inventory Management and Pricing (Bestandsverwaltung und Preisbildung)<br />
+12 - Unknown<br />
+13 - Unknown<br />
+14 - Unknown<br />
+15 - User Management and System Administration (Benutzer- und Systemverwaltung)<br />
+<br />
+<b>Sicherheitsniveau: Standardwerte für webERP Version 3.08:</b><br />
+<br />
 <!-- <th>Page (script) File Name</th><th>PageSecurity value </th> -->
 <table border="2"><tbody><tr><th>Seite Dateiname</th><th>Sicherheitsniveau</th></tr>
 <tr><td>AccountGroups.php</td><td>10</td></tr>

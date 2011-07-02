@@ -12,7 +12,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 /*First check the customer code exists */
 	$result=DB_query("SELECT debtorno FROM debtorsmaster WHERE debtorno='" . $_POST['OldDebtorNo'] . "'",$db);
 	if (DB_num_rows($result)==0){
-		prnMsg ('<br><br>' . _('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . _('does not currently exist as a customer code in the system'),'error');
+		prnMsg ('<br /><br />' . _('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . _('does not currently exist as a customer code in the system'),'error');
 		include('includes/footer.inc');
 		exit;
 	}

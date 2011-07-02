@@ -86,13 +86,13 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
+		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
 	}  else {
 		$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
+			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
 		} else {
 			$sql="DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
 			$result = DB_query($sql,$db);
@@ -258,7 +258,7 @@ echo '<tr><td>' . _('Overhead Per Hour') . ':</td>
 
 echo '</td></tr></table>';
 
-echo '<br><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
+echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
 if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
 	echo "<script>defaultControl(document.forms[0].Code);</script>";

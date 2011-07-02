@@ -50,7 +50,7 @@ if (DB_error_no($db) !=0) {
 	include ('includes/header.inc');
 	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
 	if ($debug==1){
-	echo '<br>' . _('The SQL that failed was') . $sql;
+	echo '<br />' . _('The SQL that failed was') . $sql;
 	}
 	include('includes/footer.inc');
 	exit;

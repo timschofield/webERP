@@ -93,7 +93,7 @@ if ($len<=20){
 	include('includes/header.inc');
 	echo '<p>';
 	prnMsg( _('There was no stock location transfer to print out'), 'warn');
-	echo '<br><a href="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+	echo '<br /><a href="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 	include('includes/footer.inc');
 	exit;
 } else {

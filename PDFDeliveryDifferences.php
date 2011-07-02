@@ -62,7 +62,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	 echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
 	 echo "<option selected value='No'>" . _('No');
 	 echo "<option value='Yes'>" . _('Yes');
-	 echo "</select></td></tr></table><br><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
+	 echo "</select></td></tr></table><br /><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');
@@ -156,7 +156,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');
 	if ($debug==1){
-		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . "<br>$SQL",'error');
+		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . "<br />$SQL",'error');
 	}
 	include ('includes/footer.inc');
 	exit;
@@ -165,7 +165,7 @@ if (DB_error_no($db)!=0){
   	include('includes/header.inc');
 	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'info');
 	if ($debug==1) {
-		prnMsg( _('The SQL that returned no rows was') . '<br>' . $sql,'error');
+		prnMsg( _('The SQL that returned no rows was') . '<br />' . $sql,'error');
 	}
 	include('includes/footer.inc');
 	exit;

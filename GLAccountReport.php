@@ -226,7 +226,7 @@ if (isset($_POST['RunReport'])){
 			$title = _('Print GL Accounts Report Error');
 			include('includes/header.inc');
 			prnMsg (_('There were no accounts to print out'),'error');
-			echo "<br><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+			echo "<br /><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	      } else {
@@ -251,7 +251,7 @@ if (isset($_POST['RunReport'])){
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
-	echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br>';
+	echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
 	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?'  . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

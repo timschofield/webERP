@@ -571,7 +571,7 @@ if (isset($_POST['Search'])){
 		if (DB_error_no($db) !=0) {
 			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			if ($debug==1){
-				prnMsg(_('SQL used to retrieve the customer details was') . '<br>' . $sql,'error');
+				prnMsg(_('SQL used to retrieve the customer details was') . '<br />' . $sql,'error');
 			}
 		} elseif (DB_num_rows($CustomerSearchResult)==1){
 			$myrow=DB_fetch_array($CustomerSearchResult);
@@ -723,7 +723,7 @@ if (isset($_POST['GLEntry'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="">' . ' ' . _('Enter Customer Receipt') . '</p>';
 	echo '<div class="page_help_text">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</div>';
 }
-echo '<br><table class=selection><tr><td>' . _('Bank Account') . ':</td>
+echo '<br /><table class=selection><tr><td>' . _('Bank Account') . ':</td>
 				 <td><select tabindex=1 name="BankAccount" onChange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults)==0){
@@ -895,7 +895,7 @@ if (isset($_SESSION['CustomerRecord'])
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . $_SESSION['CustomerRecord']['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': ' . number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord']['reasondescription'];
 
 	if ($_SESSION['CustomerRecord']['dissallowinvoices']!=0){
-	   echo '<br><font color=red size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br/>';
+	   echo '<br /><font color=red size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br/>';
 	}
 
 	echo '<table width="90%" class=selection>
@@ -914,7 +914,7 @@ if (isset($_SESSION['CustomerRecord'])
 		<td class=number>' . number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,2) . '</td>
 		<td class=number>' . number_format($_SESSION['CustomerRecord']['overdue2'],2) . '</td>
 		</tr>
-		</table><br>';
+		</table><br />';
 
 	echo '<table class="selection">';
 
@@ -1009,7 +1009,7 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<td>' . _('Narrative') . ':</td>';
 	echo '<td><textarea name="Narrative"  cols=40 rows=1></textarea></td>';
 	echo '</table>';
-	echo '<br><div class="centre"><input tabindex=14 type="submit" name="Process" value="' . _('Accept') . '">';
+	echo '<br /><div class="centre"><input tabindex=14 type="submit" name="Process" value="' . _('Accept') . '">';
 	echo '<input tabindex=14 type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 } elseif (isset($_SESSION['ReceiptBatch']) AND !isset($_POST['GLEntry'])){
@@ -1028,7 +1028,7 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<td>' . _('Customer invoice number') . ':</td>';
 	echo '<td><input tabindex=11 type="text" name="CustInvNo" size=8 maxlength=8></td>';
 	echo '</tr></table>';
-	echo '<div class="centre"><br>';
+	echo '<div class="centre"><br />';
 	echo '<input tabindex=11 type=submit name="Search" value="' . _('Search Now') . '">';
 	echo '<br/><br/><input tabindex=12 type=submit name="GLEntry" value="' . _('Enter A GL Receipt') . '"><br /></div>';
 

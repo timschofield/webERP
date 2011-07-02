@@ -32915,7 +32915,7 @@ msgid "Horiz. pos."
 msgstr ""
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
+msgid "Max text<br />length"
 msgstr ""
 
 #: includes/DefineLabelClass.php:41

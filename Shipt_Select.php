@@ -36,7 +36,7 @@ If (isset($_POST['ResetPart'])) {
 
 If (isset($ShiptRef) && $ShiptRef!="") {
 	if (!is_numeric($ShiptRef)){
-		  echo '<br>';
+		  echo '<br />';
 		  prnMsg( _('The Shipment Number entered MUST be numeric') );
 		  unset ($ShiptRef);
 	} else {
@@ -44,7 +44,7 @@ If (isset($ShiptRef) && $ShiptRef!="") {
 	}
 } else {
 	if (isset($SelectedSupplier)) {
-		echo '<br>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
+		echo '<br />' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
 		echo '<input type=hidden name="SelectedSupplier" value="'. $SelectedSupplier. '">';
 	}
 	If (isset($SelectedStockItem)) {
@@ -56,7 +56,7 @@ If (isset($ShiptRef) && $ShiptRef!="") {
 if (isset($_POST['SearchParts'])) {
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
-		echo '<br>';
+		echo '<br />';
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
 	}
 	$SQL = "SELECT stockmaster.stockid,
@@ -179,7 +179,7 @@ if (isset($StockItemsResult)) {
 			<th>'. _('Code').'</th>
 			<th>'. _('Description').'</th>
 			<th>'. _('On Hand').'</th>
-			<th>'. _('Orders') . '<br>' . _('Outstanding').'</th>
+			<th>'. _('Orders') . '<br />' . _('Outstanding').'</th>
 			<th>'. _('Units').'</th>
 			</tr>';
 

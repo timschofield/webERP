@@ -15223,7 +15223,7 @@ msgid ""
 "Payment to, or Receipt from the Supplier, and use a negative Payment amount "
 "on this form."
 msgstr ""
-"ödemeler FROM banka hesabınıza girmek için bu ekranı kullanın. <br> Not: "
+"ödemeler FROM banka hesabınıza girmek için bu ekranı kullanın. <br /> Not: "
 "Tedarikçi seçin ve ilk bir ödeme FROM bir tedarikçi girmek için bir ödeme "
 "girin tıklatın veya Makbuz Tedarikçi ve bu form üzerinde olumsuz Ödeme "
 "tutarı kullanın."
@@ -34245,8 +34245,8 @@ msgid "Horiz. pos."
 msgstr "Horiz. pos."
 
 #: includes/DefineLabelClass.php:40
-msgid "Max text<br>length"
-msgstr "Max metin <br> uzunluk"
+msgid "Max text<br />length"
+msgstr "Max metin <br /> uzunluk"
 
 #: includes/DefineLabelClass.php:41
 msgid "Font size"

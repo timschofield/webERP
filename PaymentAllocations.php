@@ -32,9 +32,9 @@ $InvID = $_GET['InvID'];
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payments') . '" alt="" />' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID . '</p>';
 
-echo '<div class="page_help_text">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&SupplierID=' . $SuppID . '"><br> ' . _('Back to supplier inquiry') . '</a></div><br>';
+echo '<div class="page_help_text">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&SupplierID=' . $SuppID . '"><br /> ' . _('Back to supplier inquiry') . '</a></div><br />';
 
-//echo "<br><font size=4 color=BLUE>Payment Allocation for Supplier: '$SuppID' and Invoice: '$InvID'</font>";
+//echo "<br /><font size=4 color=BLUE>Payment Allocation for Supplier: '$SuppID' and Invoice: '$InvID'</font>";
 
 //	$_SESSION['SuppID'] = new SupplierID;
 //	$_SESSION['InvID'] = new InvoiceID;
@@ -65,17 +65,17 @@ $SQL= "SELECT supptrans.supplierno,
 $Result = DB_query($SQL, $db);
 if (DB_num_rows($Result) == 0){
 	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
-	echo '<br><a HREF ="javascript:history.back()">' . _('Go back') . '</a>';
+	echo '<br /><a HREF ="javascript:history.back()">' . _('Go back') . '</a>';
 	include('includes/foooter.inc');
 	exit;
 }
 
 echo '<table cellpadding=2 colspan=7 width=80% class=selection>';
 $TableHeader = "<tr>
-<th>" . _('Supplier Number') . '<br>' . _('Reference') . "</th>
-<th>" . _('Payment') .'<br>' . _('Reference') . "</th>
-<th>" . _('Payment') . '<br>' . _('Date') . "</th>
-<th>" . _('Total Payment') . '<br>' . _('Amount') .	'</th></tr>';
+<th>" . _('Supplier Number') . '<br />' . _('Reference') . "</th>
+<th>" . _('Payment') .'<br />' . _('Reference') . "</th>
+<th>" . _('Payment') . '<br />' . _('Date') . "</th>
+<th>" . _('Total Payment') . '<br />' . _('Amount') .	'</th></tr>';
 
 echo $TableHeader;
 

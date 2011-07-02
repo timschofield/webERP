@@ -149,7 +149,7 @@ if (isset($_POST['submit'])) {
 
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this petty cash expense because it is used in some tab types') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('tab types using this expense code'),'error');
+		prnMsg(_('Cannot delete this petty cash expense because it is used in some tab types') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('tab types using this expense code'),'error');
 
 	} else {
 

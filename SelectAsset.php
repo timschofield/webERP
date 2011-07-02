@@ -34,8 +34,8 @@ $SQL = 'SELECT categoryid,
 			ORDER BY categorydescription';
 $result = DB_query($SQL, $db);
 if (DB_num_rows($result) == 0) {
-	echo '<p><font size=4 color=red>' . _('Problem Report') . ':</font><br>' . _('There are no asset categories currently defined please use the link below to set them up');
-	echo '<br><a href="' . $rootpath . '/FixedAssetCategories.php">' . _('Define Asset Categories') . '</a>';
+	echo '<p><font size=4 color=red>' . _('Problem Report') . ':</font><br />' . _('There are no asset categories currently defined please use the link below to set them up');
+	echo '<br /><a href="' . $rootpath . '/FixedAssetCategories.php">' . _('Define Asset Categories') . '</a>';
 	exit;
 }
 // end of showing search facilities
@@ -98,8 +98,8 @@ if (isset($_POST['AssetCode'])) {
 } else {
 	echo '<input type="text" name="AssetCode" size=15 maxlength=13>';
 }
-echo '</td></tr></table><br>';
-echo '<div class="centre"><input type=submit name="Search" value="' . _('Search Now') . '"></div><br></form>';
+echo '</td></tr></table><br />';
+echo '<div class="centre"><input type=submit name="Search" value="' . _('Search Now') . '"></div><br /></form>';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 echo '</form>';
 // query for list of record(s)

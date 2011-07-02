@@ -14,7 +14,7 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
-echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br>';
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br />';
  echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
 if (isset($StockID)){
 	$result = DB_query("SELECT description,

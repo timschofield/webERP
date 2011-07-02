@@ -72,7 +72,7 @@ if (!isset($_POST['FromDate'])){
 	}
 	echo '</select></td></tr>';
 
-	echo '</table><br><div class="centre"><input type=submit name="Go" value="' . _('Create PDF') . '"></div>';
+	echo '</table><br /><div class="centre"><input type=submit name="Go" value="' . _('Create PDF') . '"></div>';
 
 	 include('includes/footer.inc');
 	 exit;
@@ -133,7 +133,7 @@ if (DB_error_no($db)!=0){
 } elseif (DB_num_rows($result) == 0){
 	$title = _('Transaction Listing');
 	include('includes/header.inc');
-	echo '<br>';
+	echo '<br />';
 	prnMsg (_('There were no transactions found in the database between the dates') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' '. $_POST['ToDate'] .'<br />' ._('Please try again selecting a different date'), 'info');
 	include('includes/footer.inc');
   	exit;

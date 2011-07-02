@@ -28,12 +28,12 @@ if (isset($_GET['FromGRNNo'])){
 
 	$orderRow = DB_fetch_row($orderResult);
 	$_GET['OrderNo'] = $orderRow[0];
-	echo '<br><font size=4 color=BLUE>' . _('Order Number') . ' ' . $_GET['OrderNo'] . '</font>';
+	echo '<br /><font size=4 color=BLUE>' . _('Order Number') . ' ' . $_GET['OrderNo'] . '</font>';
 }
 
 if (!isset($_GET['OrderNo'])) {
 
-	echo '<br><br>';
+	echo '<br /><br />';
 	prnMsg( _('This page must be called with a purchase order number to review'), 'error');
 
 	echo '<table class="table_index">
@@ -63,7 +63,7 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 
 if (DB_num_rows($GetOrdHdrResult)!=1) {
-	echo '<br><br>';
+	echo '<br /><br />';
 	if (DB_num_rows($GetOrdHdrResult) == 0){
 		prnMsg ( _('Unable to locate this PO Number') . ' '. $_GET['OrderNo'] . '. ' . _('Please look up another one') . '. ' . _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either 0 or several purchase orders'), 'error');
 	} else {
@@ -127,7 +127,7 @@ echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td colspan=3>' .
 echo '</table>';
 
 
-echo '<br>';
+echo '<br />';
 /*Now get the line items */
 $ErrMsg = _('The line items of the purchase order could not be retrieved');
 $LineItemsSQL = "SELECT purchorderdetails.* FROM purchorderdetails
@@ -194,7 +194,7 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 
 }
 
-echo '<tr><td><br></td>
+echo '<tr><td><br /></td>
 	</tr>
 	<tr><td colspan=4 class=number>' . _('Total Order Value Excluding Tax') .'</td>
 	<td colspan=2 class=number>' . number_format($OrderTotal,2) . '</td></tr>';
@@ -203,7 +203,7 @@ echo '<tr>
 	<td colspan=2 class=number>' . number_format($RecdTotal,2) . '</td></tr>';
 echo '</table>';
 
-echo '<br>';
+echo '<br />';
 
 include ('includes/footer.inc');
 ?>

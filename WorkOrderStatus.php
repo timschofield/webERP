@@ -34,8 +34,8 @@ include('includes/header.inc');
 	}
 	$WORow = DB_fetch_array($WOResult);
 
-	echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br>';
-    echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br>';
+	echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
+    echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a><br />';
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $title.'</p>';
