@@ -20,11 +20,11 @@ function ConvertToSQLDate($DateEntry) {
 //for MySQL dates are in the format YYYY-mm-dd
 
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	}
 
@@ -53,9 +53,9 @@ function ConvertToSQLDate($DateEntry) {
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		if (strpos($TranDate,'/')>0) {
+		if (mb_strpos($TranDate,'/')>0) {
 			$DateArray = explode('/',$TranDate);
-		} elseif (strpos($TranDate,'.')>0) {
+		} elseif (mb_strpos($TranDate,'.')>0) {
 			$DateArray = explode('.',$TranDate);
 		}
 		if ($DateFormat=='d/m/Y') {

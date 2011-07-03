@@ -127,9 +127,9 @@ if (isset($_POST['TaxAuthority']) AND
 
 	/*Now do the inputs from SuppTrans */
 	/*Only have dates in SuppTrans no periods so need to get the starting date */
-	if (strpos($PeriodEnd,'/')) {
+	if (mb_strpos($PeriodEnd,'/')) {
 		$Date_Array = explode('/',$PeriodEnd);
-	} elseif (strpos($PeriodEnd,'.')) {
+	} elseif (mb_strpos($PeriodEnd,'.')) {
 		$Date_Array = explode('.',$PeriodEnd);
 	}
 	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){

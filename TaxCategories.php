@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strpos($_POST['TaxCategoryName'],'&')>0 OR strpos($_POST['TaxCategoryName'],"'")>0) {
+	if (mb_strpos($_POST['TaxCategoryName'],'&')>0 OR mb_strpos($_POST['TaxCategoryName'],"'")>0) {
 		$InputError = 1;
 		prnMsg( _('The tax category name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
 	}

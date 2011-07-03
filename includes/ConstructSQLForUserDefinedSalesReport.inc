@@ -257,7 +257,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	The first 6 Columns are defined by the group by fields so for eg the first col
 	defined will be col 7 and so on - thats why need to add 6 to the col defined as */
 
-	$length_ColNum = strpos($SQLSelectCls, 'AS col' . ($Cols['colnumerator'] + 8) , 7);
+	$length_ColNum = mb_strpos($SQLSelectCls, 'AS col' . ($Cols['colnumerator'] + 8) , 7);
 
 
 	 If ($length_ColNum == 0) {
@@ -274,9 +274,9 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	/*find the comma just before the Select Cls statement for the numerator column */
 
 	do {
-	     $strt_ColNum = strpos( $SQLSelectCls, ',', $strt_ColNum + 1) + 1;
+	     $strt_ColNum = mb_strpos( $SQLSelectCls, ',', $strt_ColNum + 1) + 1;
 
-	} while (strpos($SQLSelectCls, ',', $strt_ColNum) < $length_ColNum && strpos($SQLSelectCls, ',' , $strt_ColNum)!=0);
+	} while (mb_strpos($SQLSelectCls, ',', $strt_ColNum) < $length_ColNum && mb_strpos($SQLSelectCls, ',' , $strt_ColNum)!=0);
 
 
 /*The length of the element in the select clause defining the column will be from the comma to the
@@ -288,7 +288,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 
 	/*The denominator column is also required if the constant is not used so do the same again for the denominator */
 
-	$length_ColDen = strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
+	$length_ColDen = mb_strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
 	 If ($length_ColDen == 0){
 	     prnMsg (_('Calculated fields must use columns defined in the report specification') . '. ' . _('The denominator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Denominator'));
 	     Exit;
@@ -299,9 +299,9 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	/*find the comma just before the Select Cls statement for the denominator column */
 
 	do {
-	     $strt_ColDen = strpos( $SQLSelectCls, ',', $strt_ColDen +1)+1;
+	     $strt_ColDen = mb_strpos( $SQLSelectCls, ',', $strt_ColDen +1)+1;
 
-	} while (strpos($SQLSelectCls, ',', $strt_ColDen) < $length_ColDen && strpos($SQLSelectCls, ',' , $strt_ColDen)!=0);
+	} while (mb_strpos($SQLSelectCls, ',', $strt_ColDen) < $length_ColDen && mb_strpos($SQLSelectCls, ',' , $strt_ColDen)!=0);
 
 	 $length_ColDen = $length_ColDen - $strt_ColDen - 1;
 

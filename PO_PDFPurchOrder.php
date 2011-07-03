@@ -385,7 +385,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		if (DB_num_rows($ContactsResult)>0){
 			echo '<tr><td>'. _('Email to') .':</td><td><select name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)){
-				if (mb_strlen($ContactDetails['email'])>2 AND strpos($ContactDetails['email'],'@')>0){
+				if (mb_strlen($ContactDetails['email'])>2 AND mb_strpos($ContactDetails['email'],'@')>0){
 					if ($_POST['EmailTo']==$ContactDetails['email']){
 						echo '<option selected value="' . $ContactDetails['email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['email'] . '</option>';
 					} else {

@@ -25,7 +25,7 @@ if (isset($_POST['Submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strpos($_POST['MeasureName'],'&')>0 OR strpos($_POST['MeasureName'],"'")>0) {
+	if (mb_strpos($_POST['MeasureName'],'&')>0 OR mb_strpos($_POST['MeasureName'],"'")>0) {
 		$InputError = 1;
 		prnMsg( _('The unit of measure cannot contain the character') . " '&' " . _('or the character') ." '",'error');
 	}

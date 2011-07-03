@@ -544,7 +544,7 @@ function GenerateCSVFile($Data, $Prefs) {
 	$CSVOutput = '';
 	// Write the column headings
 	foreach ($Heading as $mycolumn) { // check for embedded commas and enclose in quotes
-		if (strpos($mycolumn,',')===false) $CSVOutput .= $mycolumn.','; else $CSVOutput .= '"'.$mycolumn.'",';
+		if (mb_strpos($mycolumn,',')===false) $CSVOutput .= $mycolumn.','; else $CSVOutput .= '"'.$mycolumn.'",';
 	}
 	$CSVOutput = substr($CSVOutput,0,-1).chr(10); // Strip the last comma off and add line feed
 	// Now write each data line and totals
@@ -561,7 +561,7 @@ function GenerateCSVFile($Data, $Prefs) {
 			default:
 				$CSVLine = '';
 				foreach ($myrow as $mycolumn) { // check for embedded commas and enclose in quotes
-					if (strpos($mycolumn,',')===false) $CSVLine .= $mycolumn.','; else $CSVLine .= '"'.$mycolumn.'",';
+					if (mb_strpos($mycolumn,',')===false) $CSVLine .= $mycolumn.','; else $CSVLine .= '"'.$mycolumn.'",';
 				}
 				$CSVLine = substr($CSVLine,0,-1); // Strip the last comma off
 		}
@@ -607,8 +607,8 @@ function ReplaceNonAllowedCharacters ($String) {
 		$ContainsDodgyCharacters = false; //assume all dodgy characters are replaced on the last pass
 
 		foreach ($DodgyCharactersArray as $DodgyCharacter){
-			if (strpos($String,$DodgyCharacter,0)){
-				$StrPointer = strpos($String,$DodgyCharacter,0);
+			if (mb_strpos($String,$DodgyCharacter,0)){
+				$StrPointer = mb_strpos($String,$DodgyCharacter,0);
 				$String = substr($String,0,$StrPointer) . '_' . substr($String,$StrPointer+1);
 				$ContainsDodgyCharacters=true;
 			}

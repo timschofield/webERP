@@ -159,7 +159,7 @@ if (isset($_POST['DoUpgrade'])){
 				if (substr($SQLEntries[$i],0,8) == 'LANGUAGE'){
 					$InAFunction = false;
 				}
-				if (strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
+				if (mb_strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
 					$sql = substr($sql,0,mb_strlen($sql)-1);
 					$result = DB_query($sql, $db, '','', false, false);
 					echo '<tr><td>' . $sql . '</td>';

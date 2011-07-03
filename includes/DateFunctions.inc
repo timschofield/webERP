@@ -21,11 +21,11 @@ function Is_date($DateEntry) {
 
 	//echo '<BR>The date entered is ' . $DateEntry;
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	} elseif (mb_strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
@@ -83,11 +83,11 @@ function Is_date($DateEntry) {
 function MonthAndYearFromSQLDate($DateEntry) {
 
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	}
 
@@ -101,11 +101,11 @@ function MonthAndYearFromSQLDate($DateEntry) {
 
 function DayOfWeekFromSQLDate($DateEntry) {
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	}
 
@@ -119,11 +119,11 @@ function DayOfWeekFromSQLDate($DateEntry) {
 
 function DayOfMonthFromSQLDate($DateEntry) {
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	}
 
@@ -154,11 +154,11 @@ function ConvertSQLDate($DateEntry) {
 //for MySQL dates are in the format YYYY-mm-dd
 
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	} else {
 		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
@@ -199,11 +199,11 @@ function SQLDateToEDI($DateEntry) {
 //for MySQL dates are in the format YYYY-mm-dd
 //EDI format 102 dates are in the format CCYYMMDD - just need to lose the seperator
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	}
 
@@ -223,11 +223,11 @@ and converts to a yyyymmdd - EANCOM format 102*/
 
 	$DateEntry = trim($DateEntry);
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	} elseif (mb_strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
@@ -332,11 +332,11 @@ function Format_Date($DateEntry) {
 
 	$DateEntry =trim($DateEntry);
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	} elseif (mb_strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
@@ -388,11 +388,11 @@ and converts to a yyyy/mm/dd format */
 
 	$DateEntry = trim($DateEntry);
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	} elseif (mb_strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
@@ -455,11 +455,11 @@ function LastDayOfMonth ( $DateEntry) {
 	
 	$DateEntry = trim($DateEntry);
 
-	if (strpos($DateEntry,'/')) {
+	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
-	} elseif (strpos ($DateEntry,'-')) {
+	} elseif (mb_strpos ($DateEntry,'-')) {
 		$Date_Array = explode('-',$DateEntry);
-	} elseif (strpos ($DateEntry,'.')) {
+	} elseif (mb_strpos ($DateEntry,'.')) {
 		$Date_Array = explode('.',$DateEntry);
 	} elseif (mb_strlen($DateEntry)==6) {
 		$Date_Array[0]= substr($DateEntry,0,2);
@@ -581,11 +581,11 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 
 	$TranDate = trim($TranDate);
 
-	if (strpos($TranDate,'/')) {
+	if (mb_strpos($TranDate,'/')) {
 		$Date_Array = explode('/',$TranDate);
-	} elseif (strpos ($TranDate,'-')) {
+	} elseif (mb_strpos ($TranDate,'-')) {
 		$Date_Array = explode('-',$TranDate);
-	} elseif (strpos ($TranDate,'.')) {
+	} elseif (mb_strpos ($TranDate,'.')) {
 		$Date_Array = explode('.',$TranDate);
   }
 
@@ -648,11 +648,11 @@ function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 
   $DateToAddTo = trim($DateToAddTo);
 
-	if (strpos($DateToAddTo,'/')) {
+	if (mb_strpos($DateToAddTo,'/')) {
 		$Date_Array = explode('/',$DateToAddTo);
-	} elseif (strpos ($DateToAddTo,'-')) {
+	} elseif (mb_strpos ($DateToAddTo,'-')) {
 		$Date_Array = explode('-',$DateToAddTo);
-	} elseif (strpos ($DateToAddTo,'.')) {
+	} elseif (mb_strpos ($DateToAddTo,'.')) {
 		$Date_Array = explode('.',$DateToAddTo);
   }
 
@@ -723,18 +723,18 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 	$Date1 = trim($Date1);
 	$Date2 = trim($Date2);
 
-	if (strpos($Date1,'/')) {
+	if (mb_strpos($Date1,'/')) {
 		$Date1_array = explode('/',$Date1);
-	} elseif (strpos ($Date1,'-')) {
+	} elseif (mb_strpos ($Date1,'-')) {
 		$Date1_array = explode('-',$Date1);
-	} elseif (strpos ($Date1,'.')) {
+	} elseif (mb_strpos ($Date1,'.')) {
 		$Date1_array = explode('.',$Date1);
   }
-	if (strpos($Date2,'/')) {
+	if (mb_strpos($Date2,'/')) {
 		$Date2_array = explode('/',$Date2);
-	} elseif (strpos ($Date2,'-')) {
+	} elseif (mb_strpos ($Date2,'-')) {
 		$Date2_array = explode('-',$Date2);
-	} elseif (strpos ($Date2,'.')) {
+	} elseif (mb_strpos ($Date2,'.')) {
 		$Date2_array = explode('.',$Date2);
   }
 
@@ -850,11 +850,11 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 
 	/* Convert the transaction date into a unix time stamp.*/
 
-	if (strpos($TransDate,'/')) {
+	if (mb_strpos($TransDate,'/')) {
 		$Date_Array = explode('/',$TransDate);
-	} elseif (strpos ($TransDate,'-')) {
+	} elseif (mb_strpos ($TransDate,'-')) {
 		$Date_Array = explode('-',$TransDate);
-	} elseif (strpos ($TransDate,'.')) {
+	} elseif (mb_strpos ($TransDate,'.')) {
 		$Date_Array = explode('.',$TransDate);
 	}
 	if (($_SESSION['DefaultDateFormat']=='d/m/Y') or ($_SESSION['DefaultDateFormat']=='d.m.Y')){

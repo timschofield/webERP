@@ -1850,7 +1850,7 @@ class PHPlot {
         $asked = strtolower(trim($which_opt));
 
         # Look for the supplied value in a comma/space separated list.
-        if (strpos(", $which_acc,", ", $asked,") !== False)
+        if (mb_strpos(", $which_acc,", ", $asked,") !== False)
             return $asked;
 
         $this->PrintError("$which_func(): '$which_opt' not in available choices: '$which_acc'.");
@@ -1889,7 +1889,7 @@ class PHPlot {
      */
     protected function CheckDataType($valid_types)
     {
-        if (strpos(", $valid_types,", ", $this->data_type,") !== False)
+        if (mb_strpos(", $valid_types,", ", $this->data_type,") !== False)
             return TRUE;
 
         $this->PrintError("Data type '$this->data_type' is not valid for '$this->plot_type' plots."

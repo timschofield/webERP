@@ -59,11 +59,11 @@ echo '</tr>
 echo '</form></div>';
 echo '<br />';
 /*Now get and display the sales data returned */
-if (strpos($EndDateSQL,'/')) {
+if (mb_strpos($EndDateSQL,'/')) {
 	$Date_Array = explode('/',$EndDateSQL);
-} elseif (strpos ($EndDateSQL,'-')) {
+} elseif (mb_strpos ($EndDateSQL,'-')) {
 	$Date_Array = explode('-',$EndDateSQL);
-} elseif (strpos ($EndDateSQL,'.')) {
+} elseif (mb_strpos ($EndDateSQL,'.')) {
 	$Date_Array = explode('.',$EndDateSQL);
 }
 

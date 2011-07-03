@@ -224,7 +224,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		prnMsg(_('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
-	if(ContainsIllegalCharacters($_POST['ContractRef']) OR strpos($_POST['ContractRef'],' ')>0){
+	if(ContainsIllegalCharacters($_POST['ContractRef']) OR mb_strpos($_POST['ContractRef'],' ')>0){
 		prnMsg(_('The contract reference cannot contain any spaces, slashes, or inverted commas. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}

@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The debtor code cannot be empty'),'error');
 		$Errors[$i] = 'DebtorNo';
 		$i++;
-	} elseif ($_SESSION['AutoDebtorNo']==0 AND (ContainsIllegalCharacters($_POST['DebtorNo']) OR strpos($_POST['DebtorNo'], ' '))) {
+	} elseif ($_SESSION['AutoDebtorNo']==0 AND (ContainsIllegalCharacters($_POST['DebtorNo']) OR mb_strpos($_POST['DebtorNo'], ' '))) {
 		$InputError = 1;
 		prnMsg( _('The customer code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
 		$Errors[$i] = 'DebtorNo';

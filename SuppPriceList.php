@@ -138,11 +138,11 @@ if (isset($_POST['PrintPDF'])) {
 		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 		// and False to set to transparent
 
-		if (strpos($myrow[3],'-')) {
+		if (mb_strpos($myrow[3],'-')) {
 			$DateArray=explode('-', $myrow[3]);
-		} else if (strpos($myrow[3],'/')) {
+		} else if (mb_strpos($myrow[3],'/')) {
 			$DateArray=explode('/', $myrow[3]);
-		} else if (strpos($myrow[3],'.')) {
+		} else if (mb_strpos($myrow[3],'.')) {
 			$DateArray=explode('.', $myrow[3]);
 		}
 		$dateprice=date($_SESSION['DefaultDateFormat'], mktime(0,0,0,$DateArray[1],$DateArray[2],$DateArray[0]));

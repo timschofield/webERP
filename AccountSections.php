@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'SectionID';
 		$i++;
 	}
-	if (isset($_POST['SectionID']) and strpos($_POST['SectionID'],".")>0) {
+	if (isset($_POST['SectionID']) and mb_strpos($_POST['SectionID'],".")>0) {
 		$InputError = 1;
 		prnMsg( _('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';

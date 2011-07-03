@@ -38,7 +38,7 @@
 			if (!isset($DateArray[1])) $DateArray[1]='';
 			if (!isset($DateArray[2])) $DateArray[2]='';
 			foreach($DateChoices as $key=>$value) {
-			if (strpos($Prefs['DateListings']['displaydesc'],$key)!==false) {
+			if (mb_strpos($Prefs['DateListings']['displaydesc'],$key)!==false) {
 				if ($DateArray[0]==$key) $Selected = ' selected'; else $Selected = '';
 				echo '<option value="'.$key.'"'.$Selected.'>'.$value.'</option>';
 			}

@@ -61,7 +61,7 @@ if (isset($_POST['Update'])
 		$InputErrors =1;
 		prnMsg(_('You should enter the street address in the box provided') . '. ' . _('Orders cannot be accepted without a valid street address'),'error');
 	}
-//	if (strpos($_POST['BrAdd1'],_('Box'))>0){
+//	if (mb_strpos($_POST['BrAdd1'],_('Box'))>0){
 //		prnMsg(_('You have entered the word') . ' "' . _('Box') . '" ' . _('in the street address') . '. ' . _('Items cannot be delivered to') . ' ' ._('box') . ' ' . _('addresses'),'warn');
 //	}
 	if (!is_numeric($_POST['FreightCost'])){

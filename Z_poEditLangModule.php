@@ -144,7 +144,7 @@ if (isset($_POST['module'])) {
 
 		for ($i=1; $i<=$TotalLines; $i++) {
 
-			$b = strpos($AlsoIn[$i], $_POST['module']);
+			$b = mb_strpos($AlsoIn[$i], $_POST['module']);
 
 			if ($b === False) {
 /* skip it */

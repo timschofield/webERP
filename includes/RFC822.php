@@ -211,7 +211,7 @@ class Mail_RFC822
             // brackets/quotes etc then something's fubar.
 
             // First check there's a colon at all:
-            if (strpos($string, ':') === false) {
+            if (mb_strpos($string, ':') === false) {
                 $this->error = 'Invalid address: ' . $string;
                 return false;
             }
@@ -579,7 +579,7 @@ class Mail_RFC822
                 $comments[] = $comment;
 
                 // +1 is for the trailing )
-                $_mailbox   = substr($_mailbox, strpos($_mailbox, $comment)+mb_strlen($comment)+1);
+                $_mailbox   = substr($_mailbox, mb_strpos($_mailbox, $comment)+mb_strlen($comment)+1);
             } else {
                 break;
             }
@@ -647,7 +647,7 @@ class Mail_RFC822
     function _validateRouteAddr($route_addr)
     {
         // Check for colon.
-        if (strpos($route_addr, ':') !== false) {
+        if (mb_strpos($route_addr, ':') !== false) {
             $parts = explode(':', $route_addr);
             $route = $this->_splitCheck($parts, ':');
         } else {
@@ -784,7 +784,7 @@ class Mail_RFC822
         $addr_spec = trim($addr_spec);
 
         // Split on @ sign if there is one.
-        if (strpos($addr_spec, '@') !== false) {
+        if (mb_strpos($addr_spec, '@') !== false) {
             $parts      = explode('@', $addr_spec);
             $local_part = $this->_splitCheck($parts, '@');
             $domain     = substr($addr_spec, mb_strlen($local_part . '@'));

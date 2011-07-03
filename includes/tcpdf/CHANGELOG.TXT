@@ -798,7 +798,7 @@
 	- The following Unicode to CID-0 tables were added on fonts folder: uni2cid_ak12.php, uni2cid_aj16.php, uni2cid_ag15.php, uni2cid_ac15.php.
 
 4.0.024 (2008-09-12)
-	- "stripos" function was replaced with "strpos + strtolower" for backward compatibility with PHP4.
+	- "stripos" function was replaced with "mb_strpos + strtolower" for backward compatibility with PHP4.
 	- support for Spot Colors were added. Check the new example n. 37 and the following new functions:
 		AddSpotColor()
 		SetDrawSpotColor()

@@ -361,7 +361,7 @@ if($_POST['install_tables'] == true){
 			if (substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
 				$InAFunction = false;
 			}
-			if (strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
+			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				// Database created above with correct name.
 				if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
 				    AND strncasecmp($SQL, ' USE ', 5)){

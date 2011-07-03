@@ -58,14 +58,14 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 	$PoistionPointer = 0;
 	$NewLineText ='';
 	/* now get each occurence of [ in the line */
-	while (strpos ($LineDetails['linetext'],'[',$PoistionPointer)!=False){
+	while (mb_strpos ($LineDetails['linetext'],'[',$PoistionPointer)!=False){
 		$LastPositionPointer = $PoistionPointer;
-		$PositionPointer = strpos ($LineDetails['linetext'],'[',$PoistionPointer);
+		$PositionPointer = mb_strpos ($LineDetails['linetext'],'[',$PoistionPointer);
 
 		$NewLineText = $NewLineText .  substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
 		$LastPositionPointer = $PoistionPointer;
-		$PositionPointer = strpos ($LineDetails['linetext'],']',$PoistionPointer);
+		$PositionPointer = mb_strpos ($LineDetails['linetext'],']',$PoistionPointer);
 
 		$VariableName = substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 

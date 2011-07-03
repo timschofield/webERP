@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		echo prnMsg(_('The tab code must be twenty characters or less long'),'error');
 		$Errors[$i] = 'TypeTabCode';
 		$i++;
-	}elseif (ContainsIllegalCharacters($_POST['TypeTabCode']) OR strpos($_POST['TypeTabCode'],' ')>0){
+	}elseif (ContainsIllegalCharacters($_POST['TypeTabCode']) OR mb_strpos($_POST['TypeTabCode'],' ')>0){
 		$InputError = 1;
 		prnMsg(_('The petty cash tab type code cannot contain any of the illegal characters'),'error');
 	} elseif (mb_strlen($_POST['TypeTabDescription']) >50) {

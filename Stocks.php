@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'StockID';
 		$i++;
 	}
-	if (ContainsIllegalCharacters($StockID) OR strpos($StockID,' ')) {
+	if (ContainsIllegalCharacters($StockID) OR mb_strpos($StockID,' ')) {
 		$InputError = 1;
 		prnMsg(_('The stock item code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 		$Errors[$i] = 'StockID';

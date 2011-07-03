@@ -948,7 +948,7 @@ class TCPDFBarcode {
 		$sum = $startid;
 		$clen = mb_strlen($code);
 		for ($i = 0; $i < $clen; ++$i) {
-			$sum +=  (strpos($keys, $code{$i}) * ($i+1));
+			$sum +=  (mb_strpos($keys, $code{$i}) * ($i+1));
 		}
 		$check = ($sum % 103);
 		// add start, check and stop codes
@@ -957,7 +957,7 @@ class TCPDFBarcode {
 		$k = 0;
 		$len = mb_strlen($code);
 		for ($i = 0; $i < $len; ++$i) {
-			$ck = strpos($keys, $code{$i});
+			$ck = mb_strpos($keys, $code{$i});
 			if (($i == 0) OR ($i > ($len-4))) {
 				$char_num = ord($code{$i});
 				$seq = $chr[$char_num];

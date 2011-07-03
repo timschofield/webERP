@@ -3277,23 +3277,23 @@ if (!class_exists('TCPDF', false)) {
 			$tempstyle = strtoupper($style);
 			$style = '';
 			// underline
-			if (strpos($tempstyle, 'U') !== false) {
+			if (mb_strpos($tempstyle, 'U') !== false) {
 				$this->underline = true;
 			} else {
 				$this->underline = false;
 			}
 			// line through (deleted)
-			if (strpos($tempstyle, 'D') !== false) {
+			if (mb_strpos($tempstyle, 'D') !== false) {
 				$this->linethrough = true;
 			} else {
 				$this->linethrough = false;
 			}
 			// bold
-			if (strpos($tempstyle, 'B') !== false) {
+			if (mb_strpos($tempstyle, 'B') !== false) {
 				$style .= 'B';
 			}
 			// oblique
-			if (strpos($tempstyle, 'I') !== false) {
+			if (mb_strpos($tempstyle, 'I') !== false) {
 				$style .= 'I';
 			}
 			$bistyle = $style;
@@ -3392,7 +3392,7 @@ if (!class_exists('TCPDF', false)) {
 				$styles = array('' => '', 'B' => ',Bold', 'I' => ',Italic', 'BI' => ',BoldItalic');
 				$sname = $name.$styles[$bistyle];
 				// artificial bold
-				if (strpos($bistyle, 'B') !== false) {
+				if (mb_strpos($bistyle, 'B') !== false) {
 					if (isset($desc['StemV'])) {
 						$desc['StemV'] *= 2;
 					} else {
@@ -3400,7 +3400,7 @@ if (!class_exists('TCPDF', false)) {
 					}
 				}
 				// artificial italic
-				if (strpos($bistyle, 'I') !== false) {
+				if (mb_strpos($bistyle, 'I') !== false) {
 					if (isset($desc['ItalicAngle'])) {
 						$desc['ItalicAngle'] -= 11;
 					} else {
@@ -4022,7 +4022,7 @@ if (!class_exists('TCPDF', false)) {
 			}
 			if (is_string($border)) {
 				$lm = ($this->LineWidth / 2);
-				if (strpos($border,'L') !== false) {
+				if (mb_strpos($border,'L') !== false) {
 					if ($this->rtl) {
 						$xk = ($x - $w) * $k;
 					} else {
@@ -4030,7 +4030,7 @@ if (!class_exists('TCPDF', false)) {
 					}
 					$s .= sprintf('%.2F %.2F m %.2F %.2F l S ', $xk, (($this->h - $y + $lm) * $k), $xk, (($this->h - ($y + $h + $lm)) * $k));
 				}
-				if (strpos($border,'T') !== false) {
+				if (mb_strpos($border,'T') !== false) {
 					if ($this->rtl) {
 						$xk = ($x - $w + $lm) * $k;
 						$xwk = ($x - $lm) * $k;
@@ -4040,7 +4040,7 @@ if (!class_exists('TCPDF', false)) {
 					}
 					$s .= sprintf('%.2F %.2F m %.2F %.2F l S ', $xk, (($this->h - $y) * $k), $xwk, (($this->h - $y) * $k));
 				}
-				if (strpos($border,'R') !== false) {
+				if (mb_strpos($border,'R') !== false) {
 					if ($this->rtl) {
 						$xk = $x * $k;
 					} else {
@@ -4048,7 +4048,7 @@ if (!class_exists('TCPDF', false)) {
 					}
 					$s .= sprintf('%.2F %.2F m %.2F %.2F l S ', $xk, (($this->h - $y + $lm) * $k), $xk, (($this->h - ($y + $h + $lm))* $k));
 				}
-				if (strpos($border,'B') !== false) {
+				if (mb_strpos($border,'B') !== false) {
 					if ($this->rtl) {
 						$xk = ($x - $w + $lm) * $k;
 						$xwk = ($x - $lm) * $k;
@@ -4459,16 +4459,16 @@ if (!class_exists('TCPDF', false)) {
 					if ($border == 1) {
 						$cborder = 'LTR';
 					} else {
-						if (!(false === strpos($border, 'L'))) {
+						if (!(false === mb_strpos($border, 'L'))) {
 							$cborder .= 'L';
 						}
-						if (!(false === strpos($border, 'T'))) {
+						if (!(false === mb_strpos($border, 'T'))) {
 							$cborder .= 'T';
 						}
-						if (!(false === strpos($border, 'R'))) {
+						if (!(false === mb_strpos($border, 'R'))) {
 							$cborder .= 'R';
 						}
-						if ((!$this->opencell) AND (!(false === strpos($border, 'B')))) {
+						if ((!$this->opencell) AND (!(false === mb_strpos($border, 'B')))) {
 							$cborder .= 'B';
 						}
 					}
@@ -4478,16 +4478,16 @@ if (!class_exists('TCPDF', false)) {
 					if ($border == 1) {
 						$cborder = 'LR';
 					} else {
-						if (!(false === strpos($border, 'L'))) {
+						if (!(false === mb_strpos($border, 'L'))) {
 							$cborder .= 'L';
 						}
-						if ((!$this->opencell) AND (!(false === strpos($border, 'T')))) {
+						if ((!$this->opencell) AND (!(false === mb_strpos($border, 'T')))) {
 							$cborder .= 'T';
 						}
-						if (!(false === strpos($border, 'R'))) {
+						if (!(false === mb_strpos($border, 'R'))) {
 							$cborder .= 'R';
 						}
-						if ((!$this->opencell) AND (!(false === strpos($border, 'B')))) {
+						if ((!$this->opencell) AND (!(false === mb_strpos($border, 'B')))) {
 							$cborder .= 'B';
 						}
 					}
@@ -4497,16 +4497,16 @@ if (!class_exists('TCPDF', false)) {
 					if ($border == 1) {
 						$cborder = 'LRB';
 					} else {
-						if (!(false === strpos($border, 'L'))) {
+						if (!(false === mb_strpos($border, 'L'))) {
 							$cborder .= 'L';
 						}
-						if ((!$this->opencell) AND (!(false === strpos($border, 'T')))) {
+						if ((!$this->opencell) AND (!(false === mb_strpos($border, 'T')))) {
 							$cborder .= 'T';
 						}
-						if (!(false === strpos($border, 'R'))) {
+						if (!(false === mb_strpos($border, 'R'))) {
 							$cborder .= 'R';
 						}
-						if (!(false === strpos($border, 'B'))) {
+						if (!(false === mb_strpos($border, 'B'))) {
 							$cborder .= 'B';
 						}
 					}
@@ -5441,7 +5441,7 @@ if (!class_exists('TCPDF', false)) {
 					} elseif ($ct == 2) {
 						$trns = array(ord(substr($t, 1, 1)), ord(substr($t, 3, 1)), ord(substr($t, 5, 1)));
 					} else {
-						$pos = strpos($t, chr(0));
+						$pos = mb_strpos($t, chr(0));
 						if ($pos !== false) {
 							$trns = array($pos);
 						}
@@ -5743,7 +5743,7 @@ if (!class_exists('TCPDF', false)) {
 				// define the ByteRange
 				$byte_range = array();
 				$byte_range[0] = 0;
-				$byte_range[1] = strpos($pdfdoc, $this->byterange_string) + $byterange_string_len + 10;
+				$byte_range[1] = mb_strpos($pdfdoc, $this->byterange_string) + $byterange_string_len + 10;
 				$byte_range[2] = $byte_range[1] + $this->signature_max_length + 2;
 				$byte_range[3] = mb_strlen($pdfdoc) - $byte_range[2];
 				$pdfdoc = substr($pdfdoc, 0, $byte_range[1]).substr($pdfdoc, $byte_range[2]);
@@ -5772,7 +5772,7 @@ if (!class_exists('TCPDF', false)) {
 				$signature = file_get_contents($tempsign, false, null, $pdfdoc_length);
 				unlink($tempsign);
 				// extract signature
-				$signature = substr($signature, (strpos($signature, "%%EOF\n\n------") + 13));
+				$signature = substr($signature, (mb_strpos($signature, "%%EOF\n\n------") + 13));
 				$tmparr = explode("\n\n", $signature);
 				$signature = $tmparr[1];
 				unset($tmparr);
@@ -8249,7 +8249,7 @@ if (!class_exists('TCPDF', false)) {
 			$returncolor = false;
 			$color = preg_replace('/[\s]*/', '', $color); // remove extra spaces
 			$color = strtolower($color);
-			if (($dotpos = strpos($color, '.')) !== false) {
+			if (($dotpos = mb_strpos($color, '.')) !== false) {
 				// remove class parent (i.e.: color.red)
 				$color = substr($color, ($dotpos + 1));
 			}
@@ -9016,7 +9016,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @see SetLineStyle()
 		 */
 		public function Rect($x, $y, $w, $h, $style='', $border_style=array(), $fill_color=array()) {
-			if (!(false === strpos($style, 'F')) AND isset($fill_color)) {
+			if (!(false === mb_strpos($style, 'F')) AND isset($fill_color)) {
 				$this->SetFillColorArray($fill_color);
 			}
 			switch ($style) {
@@ -9114,7 +9114,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @since 2.1.000 (2008-01-08)
 		 */
 		public function Curve($x0, $y0, $x1, $y1, $x2, $y2, $x3, $y3, $style='', $line_style=array(), $fill_color=array()) {
-			if (!(false === strpos($style, 'F')) AND isset($fill_color)) {
+			if (!(false === mb_strpos($style, 'F')) AND isset($fill_color)) {
 				$this->SetFillColorArray($fill_color);
 			}
 			switch ($style) {
@@ -9171,7 +9171,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @since 3.0008 (2008-05-12)
 		 */
 		public function Polycurve($x0, $y0, $segments, $style='', $line_style=array(), $fill_color=array()) {
-			if (!(false === strpos($style, 'F')) AND isset($fill_color)) {
+			if (!(false === mb_strpos($style, 'F')) AND isset($fill_color)) {
 				$this->SetFillColorArray($fill_color);
 			}
 			switch ($style) {
@@ -9243,7 +9243,7 @@ if (!class_exists('TCPDF', false)) {
 				return;
 			}
 			if ($rx) {
-				if (!(false === strpos($style, 'F')) AND isset($fill_color)) {
+				if (!(false === mb_strpos($style, 'F')) AND isset($fill_color)) {
 					$this->SetFillColorArray($fill_color);
 				}
 				switch ($style) {
@@ -9404,7 +9404,7 @@ if (!class_exists('TCPDF', false)) {
 				}
 				$nc += 4;
 			}
-			if (!(false === strpos($style, 'F')) AND isset($fill_color)) {
+			if (!(false === mb_strpos($style, 'F')) AND isset($fill_color)) {
 				$this->SetFillColorArray($fill_color);
 			}
 			switch ($style) {
@@ -9623,7 +9623,7 @@ if (!class_exists('TCPDF', false)) {
 			if ('0000' == $round_corner) { // Not rounded
 				$this->Rect($x, $y, $w, $h, $style, $border_style, $fill_color);
 			} else { // Rounded
-				if (!(false === strpos($style, 'F')) AND isset($fill_color)) {
+				if (!(false === mb_strpos($style, 'F')) AND isset($fill_color)) {
 					$this->SetFillColorArray($fill_color);
 				}
 				switch ($style) {
@@ -10495,7 +10495,7 @@ if (!class_exists('TCPDF', false)) {
 			if (empty($this->javascript) AND empty($this->js_objects)) {
 				return;
 			}
-			if (strpos($this->javascript, 'this.addField') > 0) {
+			if (mb_strpos($this->javascript, 'this.addField') > 0) {
 				if (!$this->ur) {
 					//$this->setUserRights();
 				}
@@ -12542,7 +12542,7 @@ if (!class_exists('TCPDF', false)) {
 			preg_match("/%%Creator:([^\r\n]+)/", $data, $regs); # find Creator
 			if (count($regs) > 1) {
 				$version_str = trim($regs[1]); # e.g. "Adobe Illustrator(R) 8.0"
-				if (strpos($version_str, 'Adobe Illustrator') !== false) {
+				if (mb_strpos($version_str, 'Adobe Illustrator') !== false) {
 					$versexp = explode(' ', $version_str);
 					$version = (float)array_pop($versexp);
 					if ($version >= 9) {
@@ -12551,7 +12551,7 @@ if (!class_exists('TCPDF', false)) {
 				}
 			}
 			// strip binary bytes in front of PS-header
-			$start = strpos($data, '%!PS-Adobe');
+			$start = mb_strpos($data, '%!PS-Adobe');
 			if ($start > 0) {
 				$data = substr($data, $start);
 			}
@@ -12562,17 +12562,17 @@ if (!class_exists('TCPDF', false)) {
 			} else {
 				$this->Error('No BoundingBox found in EPS file: '.$file);
 			}
-			$start = strpos($data, '%%EndSetup');
+			$start = mb_strpos($data, '%%EndSetup');
 			if ($start === false) {
-				$start = strpos($data, '%%EndProlog');
+				$start = mb_strpos($data, '%%EndProlog');
 			}
 			if ($start === false) {
-				$start = strpos($data, '%%BoundingBox');
+				$start = mb_strpos($data, '%%BoundingBox');
 			}
 			$data = substr($data, $start);
-			$end = strpos($data, '%%PageTrailer');
+			$end = mb_strpos($data, '%%PageTrailer');
 			if ($end===false) {
-				$end = strpos($data, 'showpage');
+				$end = mb_strpos($data, 'showpage');
 			}
 			if ($end) {
 				$data = substr($data, 0, $end);
@@ -13350,7 +13350,7 @@ if (!class_exists('TCPDF', false)) {
 			$repTable = array("\t" => ' ', "\0" => ' ', "\x0B" => ' ', "\\" => "\\\\");
 			$html = strtr($html, $repTable);
 			$offset = 0;
-			while (($offset < mb_strlen($html)) AND ($pos = strpos($html, '</pre>', $offset)) !== false) {
+			while (($offset < mb_strlen($html)) AND ($pos = mb_strpos($html, '</pre>', $offset)) !== false) {
 				$html_a = substr($html, 0, $offset);
 				$html_b = substr($html, $offset, ($pos - $offset + 6));
 				while (preg_match("'<xre([^\>]*)>(.*?)\n(.*?)</pre>'si", $html_b)) {
@@ -13361,7 +13361,7 @@ if (!class_exists('TCPDF', false)) {
 				$offset = mb_strlen($html_a.$html_b);
 			}
 			$offset = 0;
-			while (($offset < mb_strlen($html)) AND ($pos = strpos($html, '</textarea>', $offset)) !== false) {
+			while (($offset < mb_strlen($html)) AND ($pos = mb_strpos($html, '</textarea>', $offset)) !== false) {
 				$html_a = substr($html, 0, $offset);
 				$html_b = substr($html, $offset, ($pos - $offset + 11));
 				while (preg_match("'<textarea([^\>]*)>(.*?)\n(.*?)</textarea>'si", $html_b)) {
@@ -13375,7 +13375,7 @@ if (!class_exists('TCPDF', false)) {
 			$html = preg_replace("'([\s]*)<option'si", "<option", $html);
 			$html = preg_replace("'</option>([\s]*)'si", "</option>", $html);
 			$offset = 0;
-			while (($offset < mb_strlen($html)) AND ($pos = strpos($html, '</option>', $offset)) !== false) {
+			while (($offset < mb_strlen($html)) AND ($pos = mb_strpos($html, '</option>', $offset)) !== false) {
 				$html_a = substr($html, 0, $offset);
 				$html_b = substr($html, $offset, ($pos - $offset + 9));
 				while (preg_match("'<option([^\>]*)>(.*?)</option>'si", $html_b)) {
@@ -14300,7 +14300,7 @@ if (!class_exists('TCPDF', false)) {
 								}
 							} elseif (($plalign == 'R') AND (!$this->rtl)) {
 								// right alignment on LTR document
-								if (intval($this->revstrpos($pmid, ')]')) == (intval($this->revstrpos($pmid, ' )]')) + 1)) {
+								if (intval($this->revmb_strpos($pmid, ')]')) == (intval($this->revmb_strpos($pmid, ' )]')) + 1)) {
 									// remove last space (if any)
 									$linew -= $one_space_width;
 									$mdiff = abs($tw - $linew);
@@ -14308,11 +14308,11 @@ if (!class_exists('TCPDF', false)) {
 								$t_x = $mdiff;
 							} elseif (($plalign == 'L') AND ($this->rtl)) {
 								// left alignment on RTL document
-								if ((intval($this->revstrpos($pmid, '[( ')) == intval($this->revstrpos($pmid, '[('))) OR (intval($this->revstrpos($pmid, '[('.chr(0).chr(32))) == intval($this->revstrpos($pmid, '[(')))) {
+								if ((intval($this->revmb_strpos($pmid, '[( ')) == intval($this->revmb_strpos($pmid, '[('))) OR (intval($this->revmb_strpos($pmid, '[('.chr(0).chr(32))) == intval($this->revmb_strpos($pmid, '[(')))) {
 									// remove first space (if any)
 									$linew -= $one_space_width;
 								}
-								if (intval(strpos($pmid, '[(')) == (intval($this->revstrpos($pmid, '[(')))) {
+								if (intval(mb_strpos($pmid, '[(')) == (intval($this->revmb_strpos($pmid, '[(')))) {
 									// remove last space (if any)
 									$linew -= $one_space_width;
 									if (($this->CurrentFont['type'] == 'TrueTypeUnicode') OR ($this->CurrentFont['type'] == 'cidfont0')) {
@@ -14378,12 +14378,12 @@ if (!class_exists('TCPDF', false)) {
 									global $spacew;
 									while (preg_match('/([0-9\.\+\-]*)[\s](Td|cm|m|l|c|re)[\s]/x', $pmid, $strpiece, PREG_OFFSET_CAPTURE, $offset) == 1) {
 										// check if we are inside a string section '[( ... )]'
-										$stroffset = strpos($pmid, '[(', $offset);
+										$stroffset = mb_strpos($pmid, '[(', $offset);
 										if (($stroffset !== false) AND ($stroffset <= $strpiece[2][1])) {
 											// set offset to the end of string section
-											$offset = strpos($pmid, ')]', $stroffset);
+											$offset = mb_strpos($pmid, ')]', $stroffset);
 											while (($offset !== false) AND ($pmid{($offset - 1)} == '\\')) {
-												$offset = strpos($pmid, ')]', ($offset + 1));
+												$offset = mb_strpos($pmid, ')]', ($offset + 1));
 											}
 											if ($offset === false) {
 												$this->Error('HTML Justification: malformed PDF code.');
@@ -14396,13 +14396,13 @@ if (!class_exists('TCPDF', false)) {
 											$spacew = ($spacewidth * $ns);
 										}
 										$offset = $strpiece[2][1] + mb_strlen($strpiece[2][0]);
-										$epsposbeg = strpos($pmid, 'q'.$this->epsmarker, $offset);
-										$epsposend = strpos($pmid, $this->epsmarker.'Q', $offset) + mb_strlen($this->epsmarker.'Q');
+										$epsposbeg = mb_strpos($pmid, 'q'.$this->epsmarker, $offset);
+										$epsposend = mb_strpos($pmid, $this->epsmarker.'Q', $offset) + mb_strlen($this->epsmarker.'Q');
 										if ((($epsposbeg > 0) AND ($epsposend > 0) AND ($offset > $epsposbeg) AND ($offset < $epsposend))
 											OR (($epsposbeg === false) AND ($epsposend > 0) AND ($offset < $epsposend))) {
 											// shift EPS images
 											$trx = sprintf('1 0 0 1 %.3F 0 cm', $spacew);
-											$epsposbeg = strpos($pmid, 'q'.$this->epsmarker, ($prev_epsposbeg - 6));
+											$epsposbeg = mb_strpos($pmid, 'q'.$this->epsmarker, ($prev_epsposbeg - 6));
 											$pmid_b = substr($pmid, 0, $epsposbeg);
 											$pmid_m = substr($pmid, $epsposbeg, ($epsposend - $epsposbeg));
 											$pmid_e = substr($pmid, $epsposend);
@@ -14971,7 +14971,7 @@ if (!class_exists('TCPDF', false)) {
 						}
 					} elseif (($plalign == 'R') AND (!$this->rtl)) {
 						// right alignment on LTR document
-						if (intval($this->revstrpos($pmid, ')]')) == (intval($this->revstrpos($pmid, ' )]')) + 1)) {
+						if (intval($this->revmb_strpos($pmid, ')]')) == (intval($this->revmb_strpos($pmid, ' )]')) + 1)) {
 							// remove last space (if any)
 							$linew -= $one_space_width;
 							$mdiff = abs($tw - $linew);
@@ -14979,11 +14979,11 @@ if (!class_exists('TCPDF', false)) {
 						$t_x = $mdiff;
 					} elseif (($plalign == 'L') AND ($this->rtl)) {
 						// left alignment on RTL document
-						if ((intval($this->revstrpos($pmid, '[( ')) == intval($this->revstrpos($pmid, '[('))) OR (intval($this->revstrpos($pmid, '[('.chr(0).chr(32))) == intval($this->revstrpos($pmid, '[(')))) {
+						if ((intval($this->revmb_strpos($pmid, '[( ')) == intval($this->revmb_strpos($pmid, '[('))) OR (intval($this->revmb_strpos($pmid, '[('.chr(0).chr(32))) == intval($this->revmb_strpos($pmid, '[(')))) {
 							// remove first space (if any)
 							$linew -= $one_space_width;
 						}
-						if (intval(strpos($pmid, '[(')) == (intval($this->revstrpos($pmid, '[(')))) {
+						if (intval(mb_strpos($pmid, '[(')) == (intval($this->revmb_strpos($pmid, '[(')))) {
 							// remove last space (if any)
 							$linew -= $one_space_width;
 							if (($this->CurrentFont['type'] == 'TrueTypeUnicode') OR ($this->CurrentFont['type'] == 'cidfont0')) {
@@ -15574,7 +15574,7 @@ if (!class_exists('TCPDF', false)) {
 						$options = explode ("\r", $tag['attribute']['opt']);
 						$values = array();
 						foreach ($options as $val) {
-							if (strpos($val, "\t") !== false) {
+							if (mb_strpos($val, "\t") !== false) {
 								$opts = explode("\t", $val);
 								$values[] = $opts;
 								$w = max($w, $this->GetStringWidth($opts[1]));
@@ -17276,10 +17276,10 @@ if (!class_exists('TCPDF', false)) {
 		 * @access public
 		 * @since 4.8.038 (2010-03-13)
 		 */
-		public function revstrpos($haystack, $needle, $offset = 0) {
+		public function revmb_strpos($haystack, $needle, $offset = 0) {
 			$length = mb_strlen($haystack);
 			$offset = ($offset > 0)?($length - $offset):abs($offset);
-			$pos = strpos(strrev($haystack), strrev($needle), $offset);
+			$pos = mb_strpos(strrev($haystack), strrev($needle), $offset);
 			return ($pos === false)?false:($length - $pos - mb_strlen($needle));
 		}
 
