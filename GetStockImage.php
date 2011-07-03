@@ -68,7 +68,7 @@ if ( $_SERVER['PATH_TRANSLATED'][0] == '/' OR $_SERVER['PATH_TRANSLATED'][0]==''
 }
 $filepath =  $_SESSION['part_pics_dir'] . $pathsep;
 
-$stockid = trim(strtoupper($_GET['StockID']));
+$stockid = trim(mb_strtoupper($_GET['StockID']));
 if( isset($_GET['bgcolor']) )
 	$bgcolor = $_GET['bgcolor'];
 if( isset($_GET['textcolor']) )

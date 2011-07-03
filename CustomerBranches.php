@@ -7,9 +7,9 @@ $title = _('Customer Branches');
 include('includes/header.inc');
 
 if (isset($_GET['DebtorNo'])) {
-	$DebtorNo = strtoupper($_GET['DebtorNo']);
+	$DebtorNo = mb_strtoupper($_GET['DebtorNo']);
 } else if (isset($_POST['DebtorNo'])){
-	$DebtorNo = strtoupper($_POST['DebtorNo']);
+	$DebtorNo = mb_strtoupper($_POST['DebtorNo']);
 }
 
 if (!isset($DebtorNo)) {
@@ -22,9 +22,9 @@ if (!isset($DebtorNo)) {
 
 
 if (isset($_GET['SelectedBranch'])){
-	$SelectedBranch = strtoupper($_GET['SelectedBranch']);
+	$SelectedBranch = mb_strtoupper($_GET['SelectedBranch']);
 } else if (isset($_POST['SelectedBranch'])){
-	$SelectedBranch = strtoupper($_POST['SelectedBranch']);
+	$SelectedBranch = mb_strtoupper($_POST['SelectedBranch']);
 }
 
 if (isset($Errors)) {
@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	$_POST['BranchCode'] = strtoupper($_POST['BranchCode']);
+	$_POST['BranchCode'] = mb_strtoupper($_POST['BranchCode']);
 
 	if (ContainsIllegalCharacters($_POST['BranchCode']) OR strstr($_POST['BranchCode'],' ')) {
 		$InputError = 1;

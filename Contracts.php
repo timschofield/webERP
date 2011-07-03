@@ -107,7 +107,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.jpg';
 
 	 //But check for the worst
-	if (strtoupper(mb_substr(trim($_FILES['Drawing']['name']),mb_strlen($_FILES['Drawing']['name'])-3))!='JPG'){
+	if (mb_strtoupper(mb_substr(trim($_FILES['Drawing']['name']),mb_strlen($_FILES['Drawing']['name'])-3))!='JPG'){
 		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['Drawing']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
@@ -611,7 +611,7 @@ if (isset($_POST['SearchCustomers'])){
 	} else {
 		if (mb_strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
-			$_POST['CustKeywords'] = strtoupper(trim($_POST['CustKeywords']));
+			$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
 			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
 
 			$SQL = "SELECT custbranch.brname,
@@ -630,7 +630,7 @@ if (isset($_POST['SearchCustomers'])){
 
 		} elseif (mb_strlen($_POST['CustCode'])>0){
 
-			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
+			$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
 
 			$SQL = "SELECT custbranch.brname,
 							custbranch.contactname,

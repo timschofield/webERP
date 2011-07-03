@@ -316,7 +316,7 @@ class Mail_mimePart {
                 } elseif($dec == 9) {
                     ; // Do nothing if a tab.
                 } elseif(($dec == 61) OR ($dec < 32 ) OR ($dec > 126)) {
-                    $char = $escape . strtoupper(sprintf('%02s', dechex($dec)));
+                    $char = $escape . mb_strtoupper(sprintf('%02s', dechex($dec)));
                 }
 
                 if ((mb_strlen($newline) + mb_strlen($char)) >= $line_max) {        // MAIL_MIMEPART_CRLF is not counted

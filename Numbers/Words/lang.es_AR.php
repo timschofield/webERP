@@ -430,7 +430,7 @@ class Numbers_Words_es_AR extends Numbers_Words
      * @author Martin Marrese
      */
     function toCurrencyWords($int_curr, $decimal, $fraction = false, $convert_fraction = true) {
-        $int_curr = strtoupper($int_curr);
+        $int_curr = mb_strtoupper($int_curr);
         if (!isset($this->_currency_names[$int_curr])) {
             $int_curr = $this->def_currency;
         }

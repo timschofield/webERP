@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
-	$_POST['LocCode']=strtoupper($_POST['LocCode']);
+	$_POST['LocCode']=mb_strtoupper($_POST['LocCode']);
 	if( trim($_POST['LocCode']) == '' ) {
 		$InputError = 1;
 		prnMsg( _('The location code may not be empty'), 'error');

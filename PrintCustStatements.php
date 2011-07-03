@@ -33,12 +33,12 @@ if (isset($_GET['ToCust'])) {
 }
 
 If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']!=''){
-	$_POST['FromCust'] = strtoupper($_POST['FromCust']);
+	$_POST['FromCust'] = mb_strtoupper($_POST['FromCust']);
 
 	If (!isset($_POST['ToCust'])){
 	      $_POST['ToCust'] = $_POST['FromCust'];
 	} else {
-		$_POST['ToCust'] = strtoupper($_POST['ToCust']);
+		$_POST['ToCust'] = mb_strtoupper($_POST['ToCust']);
 	}
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title', _('Customer Statements') );

@@ -13,7 +13,7 @@ if (isset($_POST['ProcessStockChange'])){
 	
 	$InputError =0;
 	
-	$_POST['NewStockID'] = strtoupper($_POST['NewStockID']);
+	$_POST['NewStockID'] = mb_strtoupper($_POST['NewStockID']);
 
 /*First check the stock code exists */
 	$result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'",$db);

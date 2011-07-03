@@ -237,7 +237,7 @@ or deletion of the records*/
 			$k++;
 		}
 		// Lets show the country flag
-		$ImageFile = 'flags/' . strtoupper($myrow[1]) . '.gif';
+		$ImageFile = 'flags/' . mb_strtoupper($myrow[1]) . '.gif';
 
 		if(!file_exists($ImageFile)){
 			$ImageFile =  'flags/blank.gif';

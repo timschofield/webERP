@@ -9,13 +9,13 @@ include('includes/SQL_CommonFunctions.inc');
 
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
-$result = DB_query('SELECT periods.lastdate_in_period,
+$result = DB_query("SELECT periods.lastdate_in_period,
 							max(fixedassettrans.periodno)
 					FROM fixedassettrans INNER JOIN periods
 					ON fixedassettrans.periodno=periods.periodno
 					WHERE transtype=44
 					GROUP BY periods.lastdate_in_period
-					ORDER BY periods.lastdate_in_period DESC',$db);
+					ORDER BY periods.lastdate_in_period DESC",$db);
 
 $LastDepnRun = DB_fetch_row($result);
 
@@ -65,7 +65,7 @@ $sql="SELECT fixedassets.assetid,
 			fixedassetcategories.accumdepnact,
 			fixedassetcategories.depnact,
 			fixedassetcategories.categorydescription
-ORDER BY assetcategoryid, assetid";
+		ORDER BY assetcategoryid, assetid";
 $AssetsResult=DB_query($sql, $db);
 
 $InputError = false; //always hope for the best
@@ -104,11 +104,11 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] OR $AssetCategoryDescription =='0'){
 		if ($AssetCategoryDescription !='0'){ //then print totals
 			echo '<tr><th colspan=3 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-					<th class="number">' . number_format($TotalCategoryCost,2) . '</th>
-					<th class="number">' . number_format($TotalCategoryAccumDepn,2) . '</th>
-					<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),2) . '</th>
+					<th class="number">' . number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th colspan=2></th>
-					<th class="number">' . number_format($TotalCategoryDepn,2) . '</th>
+					<th class="number">' . number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 		}
 		echo '<tr><th colspan=9 align="left">' . $AssetRow['categorydescription']  . '</th></tr>';
@@ -147,12 +147,12 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	echo '<td>' . $AssetRow['assetid'] . '</td>
 		<td>' . $AssetRow['description'] . '</td>
 		<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
-		<td class="number">' . number_format($AssetRow['costtotal'],2) . '</td>
-		<td class="number">' . number_format($AssetRow['depnbfwd'],2) . '</td>
-		<td class="number">' . number_format($AssetRow['costtotal']-$AssetRow['depnbfwd'],2) . '</td>
+		<td class="number">' . number_format($AssetRow['costtotal'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . number_format($AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . number_format($AssetRow['costtotal']-$AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td align="center">' . $DepreciationType . '</td>
 		<td class="number">' . $AssetRow['depnrate']  . '</td>
-		<td class="number">' . number_format($NewDepreciation ,2) . '</td>
+		<td class="number">' . number_format($NewDepreciation ,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
 	$TotalCategoryCost +=$AssetRow['costtotal'];
 	$TotalCategoryAccumDepn +=$AssetRow['depnbfwd'];
@@ -227,18 +227,18 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
 echo '<tr><th colspan=3 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-					<th class="number">' . number_format($TotalCategoryCost,2) . '</th>
-					<th class="number">' . number_format($TotalCategoryAccumDepn,2) . '</th>
-					<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),2) . '</th>
+					<th class="number">' . number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th colspan=2></th>
-					<th class="number">' . number_format($TotalCategoryDepn,2) . '</th>
+					<th class="number">' . number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 echo '<tr><th colspan=3 align="right">' . _('GRAND Total') . ' </th>
-					<th class="number">' . number_format($TotalCost,2) . '</th>
-					<th class="number">' . number_format($TotalAccumDepn,2) . '</th>
-					<th class="number">' . number_format(($TotalCost-$TotalAccumDepn),2) . '</th>
+					<th class="number">' . number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th colspan=2></th>
-					<th class="number">' . number_format($TotalDepn,2) . '</th>
+					<th class="number">' . number_format($TotalDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 
 echo '</table><hr><p></p>';
@@ -247,11 +247,11 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$result = DB_Txn_Commit($db);
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
-	echo '<br /><a href="index.php' . '?' . SID . '">' ._('Return to main menu').'</a>';
+	echo '<br /><a href="index.php">' ._('Return to main menu').'</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 } else {
-	echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="form">';
+	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method=post name="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p></p>';
 	echo '<table class=selection width=30%><tr></tr><tr>';

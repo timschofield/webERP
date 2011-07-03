@@ -14,9 +14,9 @@ $InputError = 0;
 
 
 if (isset($_GET['Item'])){
-	$Item = trim(strtoupper($_GET['Item']));
+	$Item = trim(mb_strtoupper($_GET['Item']));
 }elseif (isset($_POST['Item'])){
-	$Item = trim(strtoupper($_POST['Item']));
+	$Item = trim(mb_strtoupper($_POST['Item']));
 }
 
 if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']==''){

@@ -1748,7 +1748,7 @@ if (!class_exists('TCPDF', false)) {
 			if (is_string($format)) {
 				// Page formats (45 standard ISO paper formats and 4 american common formats).
 				// Paper cordinates are calculated in this way: (inches * 72) where (1 inch = 2.54 cm)
-				switch (strtoupper($format)) {
+				switch (mb_strtoupper($format)) {
 					case '4A0': {$format = array(4767.87,6740.79); break;}
 					case '2A0': {$format = array(3370.39,4767.87); break;}
 					case 'A0': {$format = array(2383.94,3370.39); break;}
@@ -1817,7 +1817,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @since 3.0.015 (2008-06-06)
 		 */
 		public function setPageOrientation($orientation, $autopagebreak='', $bottommargin='') {
-			$orientation = strtoupper($orientation);
+			$orientation = mb_strtoupper($orientation);
 			if (($orientation == 'P') OR ($orientation == 'PORTRAIT')) {
 				$this->CurOrientation = 'P';
 				$this->wPt = $this->fwPt;
@@ -3274,7 +3274,7 @@ if (!class_exists('TCPDF', false)) {
 			if (($family == 'symbol') OR ($family == 'zapfdingbats')) {
 				$style = '';
 			}
-			$tempstyle = strtoupper($style);
+			$tempstyle = mb_strtoupper($style);
 			$style = '';
 			// underline
 			if (mb_strpos($tempstyle, 'U') !== false) {
@@ -5721,7 +5721,7 @@ if (!class_exists('TCPDF', false)) {
 			if (is_bool($dest)) {
 				$dest = $dest ? 'D' : 'F';
 			}
-			$dest = strtoupper($dest);
+			$dest = mb_strtoupper($dest);
 			if ($dest != 'F') {
 				$name = preg_replace('/[\s]+/', '_', $name);
 				$name = preg_replace('/[^a-zA-Z0-9_\.-]/', '', $name);
@@ -6213,7 +6213,7 @@ if (!class_exists('TCPDF', false)) {
 							if (is_array($pl['opt']['ap'])) {
 								foreach ($pl['opt']['ap'] as $apmode => $apdef) {
 									// $apmode can be: n = normal; r = rollover; d = down;
-									$annots .= ' /'.strtoupper($apmode);
+									$annots .= ' /'.mb_strtoupper($apmode);
 									if (is_array($apdef)) {
 										$annots .= ' <<';
 										foreach ($apdef as $apstate => $stream) {
@@ -13692,7 +13692,7 @@ if (!class_exists('TCPDF', false)) {
 							}
 							// check for text alignment
 							if (isset($dom[$key]['style']['text-align'])) {
-								$dom[$key]['align'] = strtoupper($dom[$key]['style']['text-align']{0});
+								$dom[$key]['align'] = mb_strtoupper($dom[$key]['style']['text-align']{0});
 							}
 							// check for border attribute
 							if (isset($dom[$key]['style']['border'])) {
@@ -13832,7 +13832,7 @@ if (!class_exists('TCPDF', false)) {
 						}
 						// check for text alignment
 						if (isset($dom[$key]['attribute']['align']) AND (!$this->empty_string($dom[$key]['attribute']['align'])) AND ($dom[$key]['value'] !== 'img')) {
-							$dom[$key]['align'] = strtoupper($dom[$key]['attribute']['align']{0});
+							$dom[$key]['align'] = mb_strtoupper($dom[$key]['attribute']['align']{0});
 						}
 						// check for text rendering mode (the following attributes do not exist in HTML)
 						if (isset($dom[$key]['attribute']['stroke'])) {

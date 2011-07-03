@@ -21,18 +21,18 @@ if (!isset($_POST['ToDate'])){
 
 if (isset($_POST['submit']) or isset($_POST['submitcsv'])) {
 	if (isset($_POST['PartNumber'])){
-		$PartNumber = trim(strtoupper($_POST['PartNumber']));
+		$PartNumber = trim(mb_strtoupper($_POST['PartNumber']));
 	} elseif (isset($_GET['PartNumber'])){
-		$PartNumber = trim(strtoupper($_GET['PartNumber']));
+		$PartNumber = trim(mb_strtoupper($_GET['PartNumber']));
 	}
 
 	# Part Number operator - either LIKE or =
 	$PartNumberOp = $_POST['PartNumberOp'];
 
 	if (isset($_POST['SupplierId'])){
-		$SupplierId = trim(strtoupper($_POST['SupplierId']));
+		$SupplierId = trim(mb_strtoupper($_POST['SupplierId']));
 	} elseif (isset($_GET['SupplierId'])){
-		$SupplierId = trim(strtoupper($_GET['SupplierId']));
+		$SupplierId = trim(mb_strtoupper($_GET['SupplierId']));
 	}
 
 	$SupplierIdOp = $_POST['SupplierIdOp'];
@@ -45,9 +45,9 @@ if (isset($_POST['submit']) or isset($_POST['submitcsv'])) {
 }
 
 if (isset($_POST['SupplierName'])){
-	$SupplierName = trim(strtoupper($_POST['SupplierName']));
+	$SupplierName = trim(mb_strtoupper($_POST['SupplierName']));
 } elseif (isset($_GET['SupplierName'])){
-	$SupplierName = trim(strtoupper($_GET['SupplierName']));
+	$SupplierName = trim(mb_strtoupper($_GET['SupplierName']));
 }
 
 // Had to add supplierid to SummaryType when do summary by name because there could be several accounts

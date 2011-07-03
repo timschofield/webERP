@@ -54,8 +54,8 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	//test header row field name and sequence
 	$i = 0;
 	foreach ($HeaderRow as $FieldName) {
-		if ( strtoupper($FieldName) != strtoupper($FieldNames[$i]) ) {
-			prnMsg (_('The selected file contains fields in the incorrect order ('. strtoupper($FieldName). ' != '. strtoupper($FieldNames[$i]). _('. Download a template and ensuer that fields are in the same sequence as the template.')),'error');
+		if ( mb_strtoupper($FieldName) != mb_strtoupper($FieldNames[$i]) ) {
+			prnMsg (_('The selected file contains fields in the incorrect order ('. mb_strtoupper($FieldName). ' != '. mb_strtoupper($FieldNames[$i]). _('. Download a template and ensuer that fields are in the same sequence as the template.')),'error');
 			fclose($FileHandle);
 			include('includes/footer.inc');
 			exit;
@@ -108,7 +108,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 					$AccumDepn = $myrow[$i];
 					break;
 				case 8:
-					$DepnType = strtoupper($myrow[$i]);
+					$DepnType = mb_strtoupper($myrow[$i]);
 					break;
 				case 9:
 					$DepnRate= $myrow[$i];

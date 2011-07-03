@@ -380,7 +380,7 @@ class Numbers_Words_en_GB extends Numbers_Words
      * @since  Numbers_Words 0.13.1
      */
     function toCurrencyWords($int_curr, $decimal, $fraction = false, $convert_fraction = true) {
-        $int_curr = strtoupper($int_curr);
+        $int_curr = mb_strtoupper($int_curr);
         if (!isset($this->_currency_names[$int_curr])) {
             $int_curr = $this->def_currency;
         }

@@ -18,9 +18,9 @@ if (isset($_POST['DemandID'])){
 }
 
 if (isset($_POST['StockID'])){
-	$StockID =trim(strtoupper($_POST['StockID']));
+	$StockID =trim(mb_strtoupper($_POST['StockID']));
 } elseif (isset($_GET['StockID'])){
-	$StockID =trim(strtoupper($_GET['StockID']));
+	$StockID =trim(mb_strtoupper($_GET['StockID']));
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
@@ -191,7 +191,7 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 		if ($myrow[0]>0) {
 			//If $myrow[0] > 0, it means this is an edit, so do an update
 			$sql = "UPDATE mrpdemands SET quantity = '" . $_POST['Quantity'] . "',
-							mrpdemandtype = '" . trim(strtoupper($_POST['MRPDemandtype'])) . "',
+							mrpdemandtype = '" . trim(mb_strtoupper($_POST['MRPDemandtype'])) . "',
 							duedate = '" . $FormatedDuedate . "'
 					WHERE demandid = '" . $DemandID . "'";
 			$msg = _("The MRP demand record has been updated for").' '.$StockID;
@@ -203,7 +203,7 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 							quantity,
 							duedate)
 						VALUES ('" . $StockID . "',
-							'" . trim(strtoupper($_POST['MRPDemandtype'])) . "',
+							'" . trim(mb_strtoupper($_POST['MRPDemandtype'])) . "',
 							'" . $_POST['Quantity'] . "',
 							'" . $FormatedDuedate . "'
 						)";

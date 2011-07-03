@@ -20,26 +20,26 @@ if (!isset($_POST['ToDate'])){
 }
 
 if (isset($_POST['PartNumber'])){
-	$PartNumber = trim(strtoupper($_POST['PartNumber']));
+	$PartNumber = trim(mb_strtoupper($_POST['PartNumber']));
 } elseif (isset($_GET['PartNumber'])){
-	$PartNumber = trim(strtoupper($_GET['PartNumber']));
+	$PartNumber = trim(mb_strtoupper($_GET['PartNumber']));
 }
 
 # Part Number operator - either LIKE or =
 $PartNumberOp = $_POST['PartNumberOp'];
 
 if (isset($_POST['DebtorNo'])){
-	$DebtorNo = trim(strtoupper($_POST['DebtorNo']));
+	$DebtorNo = trim(mb_strtoupper($_POST['DebtorNo']));
 } elseif (isset($_GET['DebtorNo'])){
-	$DebtorNo = trim(strtoupper($_GET['DebtorNo']));
+	$DebtorNo = trim(mb_strtoupper($_GET['DebtorNo']));
 }
 
 $DebtorNoOp = $_POST['DebtorNoOp'];
 
 if (isset($_POST['DebtorName'])){
-	$DebtorName = trim(strtoupper($_POST['DebtorName']));
+	$DebtorName = trim(mb_strtoupper($_POST['DebtorName']));
 } elseif (isset($_GET['DebtorName'])){
-	$DebtorName = trim(strtoupper($_GET['DebtorName']));
+	$DebtorName = trim(mb_strtoupper($_GET['DebtorName']));
 }
 
 $DebtorNameOp = $_POST['DebtorNameOp'];

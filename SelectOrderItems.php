@@ -305,7 +305,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 	} else {
 		if (mb_strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
-			$_POST['CustKeywords'] = strtoupper(trim($_POST['CustKeywords']));
+			$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
 			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
 
 			$SQL = "SELECT custbranch.brname,
@@ -328,7 +328,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 
 		} elseif (mb_strlen($_POST['CustCode'])>0){
 
-			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
+			$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
 
 			$SQL = "SELECT custbranch.brname,
 							custbranch.contactname,
@@ -766,7 +766,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
-			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
+			$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 			if ($_POST['StockCat']=='All'){
@@ -797,7 +797,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		} elseif (mb_strlen($_POST['StockCode'])>0){
 
-			$_POST['StockCode'] = strtoupper($_POST['StockCode']);
+			$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
 			$SearchString = '%' . $_POST['StockCode'] . '%';
 
 			if ($_POST['StockCat']=='All'){
@@ -918,7 +918,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$i++;
 
 			if (isset($_POST[$QuickEntryCode])) {
-				$NewItem = strtoupper($_POST[$QuickEntryCode]);
+				$NewItem = mb_strtoupper($_POST[$QuickEntryCode]);
 			}
 			if (isset($_POST[$QuickEntryQty])) {
 				$NewItemQty = $_POST[$QuickEntryQty];

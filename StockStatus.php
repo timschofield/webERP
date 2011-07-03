@@ -11,9 +11,9 @@ $title = _('Stock Status');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
-	$StockID = trim(strtoupper($_GET['StockID']));
+	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	$StockID = trim(strtoupper($_POST['StockID']));
+	$StockID = trim(mb_strtoupper($_POST['StockID']));
 } else {
 	$StockID = '';
 }
@@ -245,9 +245,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 echo '</table>';
 
 if (isset($_GET['DebtorNo'])){
-	$DebtorNo = trim(strtoupper($_GET['DebtorNo']));
+	$DebtorNo = trim(mb_strtoupper($_GET['DebtorNo']));
 } elseif (isset($_POST['DebtorNo'])){
-	$DebtorNo = trim(strtoupper($_POST['DebtorNo']));
+	$DebtorNo = trim(mb_strtoupper($_POST['DebtorNo']));
 } elseif (isset($_SESSION['CustomerID'])){
 	$DebtorNo=$_SESSION['CustomerID'];
 }

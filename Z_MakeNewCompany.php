@@ -46,7 +46,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			$filename = './companies/' . $_POST['NewCompany'] . '/logo.jpg';
 
 			//But check for the worst
-			if (strtoupper(mb_substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
+			if (mb_strtoupper(mb_substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
 				prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 				$UploadTheLogo ='No';
 			} elseif ( $_FILES['LogoFile']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check

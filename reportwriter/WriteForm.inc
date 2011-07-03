@@ -286,7 +286,7 @@ class PDF extends PDF_Language {
 
 	function ProcessData($strData, $Process) {
 		switch ($Process) {
-			case "uc": return strtoupper($strData);
+			case "uc": return mb_strtoupper($strData);
 			case "lc": return strtolower($strData);
 			case "neg": return -$strData;
 			case "rnd2d": return number_format($strData, 2);

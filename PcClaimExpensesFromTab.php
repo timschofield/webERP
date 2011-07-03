@@ -8,9 +8,9 @@ include('includes/header.inc');
 
 
 if (isset($_POST['SelectedTabs'])){
-	$SelectedTabs = strtoupper($_POST['SelectedTabs']);
+	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
 } elseif (isset($_GET['SelectedTabs'])){
-	$SelectedTabs = strtoupper($_GET['SelectedTabs']);
+	$SelectedTabs = mb_strtoupper($_GET['SelectedTabs']);
 }
 
 if (isset($_POST['SelectedIndex'])){

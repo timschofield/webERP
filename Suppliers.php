@@ -292,9 +292,9 @@ Function Is_ValidAccount ($ActNo) {
 
 
 if (isset($_GET['SupplierID'])){
-	$SupplierID = strtoupper($_GET['SupplierID']);
+	$SupplierID = mb_strtoupper($_GET['SupplierID']);
 } elseif (isset($_POST['SupplierID'])){
-	$SupplierID = strtoupper($_POST['SupplierID']);
+	$SupplierID = mb_strtoupper($_POST['SupplierID']);
 } else {
 	unset($SupplierID);
 }

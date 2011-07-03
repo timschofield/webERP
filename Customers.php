@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	$_POST['DebtorNo'] = strtoupper($_POST['DebtorNo']);
+	$_POST['DebtorNo'] = mb_strtoupper($_POST['DebtorNo']);
 
 	$sql="SELECT COUNT(debtorno) FROM debtorsmaster WHERE debtorno='".$_POST['DebtorNo']."'";
 	$result=DB_query($sql,$db);

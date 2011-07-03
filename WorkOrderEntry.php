@@ -63,7 +63,7 @@ if (isset($_POST['Search'])){
 	}
 	If (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
-		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
+		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		if ($_POST['StockCat']=='All'){
@@ -94,7 +94,7 @@ if (isset($_POST['Search'])){
 
 	} elseif (mb_strlen($_POST['StockCode'])>0){
 
-		$_POST['StockCode'] = strtoupper($_POST['StockCode']);
+		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
 		$SearchString = '%' . $_POST['StockCode'] . '%';
 
 		if ($_POST['StockCat']=='All'){

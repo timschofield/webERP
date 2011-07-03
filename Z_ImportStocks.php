@@ -67,8 +67,8 @@ if ($_FILES['userfile']['name']) { //start file processing
 	//test header row field name and sequence
 	$head = 0;
 	foreach ($headRow as $headField) {
-		if ( strtoupper($headField) != strtoupper($headers[$head]) ) {
-			prnMsg (_('File contains incorrect headers ('. strtoupper($headField). ' != '. strtoupper($header[$head]). '. Try downloading a new template.'),'error');
+		if ( mb_strtoupper($headField) != mb_strtoupper($headers[$head]) ) {
+			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($headField). ' != '. mb_strtoupper($header[$head]). '. Try downloading a new template.'),'error');
 			fclose($handle);
 			include('includes/footer.inc');
 			exit;
@@ -93,7 +93,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		$StockID = strtoupper($myrow[0]);
+		$StockID = mb_strtoupper($myrow[0]);
 		foreach ($myrow as &$value) {
 			$value = trim($value);
 		}

@@ -100,7 +100,7 @@ class TCPDFBarcode {
  	 * @return array
 	 */
 	public function setBarcode($code, $type) {
-		switch (strtoupper($type)) {
+		switch (mb_strtoupper($type)) {
 			case 'C39': { // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
 				$arrcode = $this->barcode_code39($code, false, false);
 				break;
@@ -280,7 +280,7 @@ class TCPDFBarcode {
 		$chr['%'] = '111212121';
 		$chr['*'] = '121121211';
 		
-		$code = strtoupper($code);
+		$code = mb_strtoupper($code);
 		if ($extended) {
 			// extended mode
 			$code = $this->encode_code39_ext($code);
@@ -452,7 +452,7 @@ class TCPDFBarcode {
 		$chr[130] = '122211'; // (+)
 		$chr[131] = '312111'; // (%)
 		$chr['*'] = '111141';
-		$code = strtoupper($code);
+		$code = mb_strtoupper($code);
 		$encode = array(
 			chr(0) => chr(131).'U', chr(1) => chr(128).'A', chr(2) => chr(128).'B', chr(3) => chr(128).'C',
 			chr(4) => chr(128).'D', chr(5) => chr(128).'E', chr(6) => chr(128).'F', chr(7) => chr(128).'G',
@@ -908,7 +908,7 @@ class TCPDFBarcode {
 			'200000'  /* END */
 		);
 		$keys = '';
-		switch(strtoupper($type)) {
+		switch(mb_strtoupper($type)) {
 			case 'A': {
 				$startid = 103;
 				$keys = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_';
@@ -1378,7 +1378,7 @@ class TCPDFBarcode {
 			'Y' => array(2,1,4,3),
 			'Z' => array(2,2,3,3)		
 		);
-		$code = strtoupper($code);
+		$code = mb_strtoupper($code);
 		$len = mb_strlen($code);
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 3, 'bcode' => array());
 		if ($notkix) {
@@ -1511,7 +1511,7 @@ class TCPDFBarcode {
 		$k = 0;
 		$w = 0;
 		$seq = '';
-		$code = 'A'.strtoupper($code).'A';
+		$code = 'A'.mb_strtoupper($code).'A';
 		$len = mb_strlen($code);
 		for ($i = 0; $i < $len; ++$i) {
 			if (!isset($chr[$code{$i}])) {
@@ -1855,7 +1855,7 @@ class TCPDFBarcode {
 			if($number == 0) {
 				array_push($hex, '0');
 			} else {
-				array_push($hex, strtoupper(dechex(bcmod($number, '16'))));
+				array_push($hex, mb_strtoupper(dechex(bcmod($number, '16'))));
 				$number = bcdiv($number, '16', 0);
 			}
 		}

@@ -26,7 +26,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$ErrorMessage='';
 	for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
 		if (isset($_POST['StockID' . $i]) and $_POST['StockID' . $i]!=''){
-			$_POST['StockID' . $i]=trim(strtoupper($_POST['StockID' . $i]));
+			$_POST['StockID' . $i]=trim(mb_strtoupper($_POST['StockID' . $i]));
 			$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]==0){

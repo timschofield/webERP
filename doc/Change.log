@@ -1,5 +1,8 @@
 webERP Change Log
 
+3/7/11 Phil: changed all strpos to mb_strpos
+3/7/11 Phil: changed all strtoupper to mb_strtoupper
+3/7/11 Phil: changed all substr to mb_substr
 3/7/11 Phil: changed all <br> to <br />
 3/7/11 Phil: changed all strlen to mb_strlen to resolve the issue with multi-byte strlen issues as UTF-8 is a multi-byte character encoding system
 3/7/11 Pablo Martin: WorkOrderCosting.php extra comma in SQL after decimalplaces field - now removed
@@ -2308,7 +2311,7 @@ Version 3.05
     - SelectCompletedOrder.php : Allow search by Customer Reference
     - SelectCreditItems.php :
         + Ln284: frist -> first ,
-        + Ln441,596: getting real strict on checking equalities, even after all the strtouppers.
+        + Ln441,596: getting real strict on checking equalities, even after all the mb_strtouppers.
         + Ln472,626: basically same reason as 441
         + Ln968: fix to stop reports of missing images in webserver error logs
     - SelectOrderItems.php
@@ -2330,7 +2333,7 @@ Version 3.05
     - Several DB_escapes_string()s
         + ConfirmDispatch_Invoice.php, CustomerReceipt.php, StockAdjustments.php
 
-    - Several trim()s & strtoupper()s on StockIds, Order #, PO #, & various Search Parameters
+    - Several trim()s & mb_strtoupper()s on StockIds, Order #, PO #, & various Search Parameters
         + BOMInquiry.php, includes/DefineCartClass.php, DiscountCategories.php, GetStockImage.php, POItems.php, PO_SelectOSPurchOrder.php, PrintCustTrans.php, SelectCreditItems.php, SelectCustomers.php
         + SelectOrderItems.php, SelectProduct.php, SelectSalesOrder, StockAdjustments.php, StockCostUpdate.php, StockLockStatus.php, StockReorderLevel.php, StockSerialItems.php, StockTransfers.php
         + StockUsageGraph.php, WhereUsedInquiry.php

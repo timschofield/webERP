@@ -11,9 +11,9 @@ include('includes/header.inc');
 
 
 if (isset($_POST['ChangeDate'])){
-	$ChangeDate =trim(strtoupper($_POST['ChangeDate']));
+	$ChangeDate =trim(mb_strtoupper($_POST['ChangeDate']));
 } elseif (isset($_GET['ChangeDate'])){
-	$ChangeDate =trim(strtoupper($_GET['ChangeDate']));
+	$ChangeDate =trim(mb_strtoupper($_GET['ChangeDate']));
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .

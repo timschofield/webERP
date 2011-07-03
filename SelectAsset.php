@@ -25,7 +25,7 @@ if (!isset($_POST['PageOffset'])) {
 	}
 }
 if (isset($_POST['AssetCode'])) {
-	$_POST['AssetCode'] = trim(strtoupper($_POST['AssetCode']));
+	$_POST['AssetCode'] = trim(mb_strtoupper($_POST['AssetCode']));
 }
 // Always show the search facilities
 $SQL = 'SELECT categoryid,
@@ -123,7 +123,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
-		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
+		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 		if ($_POST['AssetCategory'] == 'ALL') {
 			if ($_POST['AssetLocation']=='ALL'){

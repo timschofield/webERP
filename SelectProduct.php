@@ -10,8 +10,8 @@ include ('includes/header.inc');
 
 if (isset($_GET['StockID'])) {
 	//The page is called with a StockID
-	$_GET['StockID'] = trim(strtoupper($_GET['StockID']));
-	$_POST['Select'] = trim(strtoupper($_GET['StockID']));
+	$_GET['StockID'] = trim(mb_strtoupper($_GET['StockID']));
+	$_POST['Select'] = trim(mb_strtoupper($_GET['StockID']));
 }
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory Items') . '" alt="" />' . ' ' . _('Inventory Items') . '</p>';
 if (isset($_GET['NewSearch']) or isset($_POST['Next']) or isset($_POST['Previous']) or isset($_POST['Go'])) {
@@ -27,7 +27,7 @@ if (!isset($_POST['PageOffset'])) {
 	}
 }
 if (isset($_POST['StockCode'])) {
-	$_POST['StockCode'] = trim(strtoupper($_POST['StockCode']));
+	$_POST['StockCode'] = trim(mb_strtoupper($_POST['StockCode']));
 }
 // Always show the search facilities
 $SQL = "SELECT categoryid,
@@ -534,7 +534,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
-		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
+		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
@@ -575,7 +575,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						ORDER BY stockmaster.stockid";
 		}
 	} elseif (isset($_POST['StockCode'])) {
-		$_POST['StockCode'] = strtoupper($_POST['StockCode']);
+		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,

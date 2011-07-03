@@ -2,7 +2,7 @@
 /* $Id$*/
 //$PageSecurity = 2;
 include('includes/session.inc');
-$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(strtoupper($_GET['StockID'])) . "'",$db);
+$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'",$db);
 $myrow = DB_fetch_row($result);
 
 include('includes/phplot/phplot.php');
@@ -26,7 +26,7 @@ if($_GET['StockLocation']=='All'){
 			ON stockmoves.prd=periods.periodno
 		WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28)
 		AND stockmoves.hidemovt=0
-		AND stockmoves.stockid = '" . trim(strtoupper($_GET['StockID'])) . "'
+		AND stockmoves.stockid = '" . trim(mb_strtoupper($_GET['StockID'])) . "'
 		GROUP BY periods.periodno,
 			periods.lastdate_in_period
 		ORDER BY periodno  LIMIT 24";
@@ -39,7 +39,7 @@ if($_GET['StockLocation']=='All'){
 		WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
 		AND stockmoves.hidemovt=0
 		AND stockmoves.loccode='" . $_GET['StockLocation'] . "'
-		AND stockmoves.stockid = '" . trim(strtoupper($_GET['StockID'])) . "'
+		AND stockmoves.stockid = '" . trim(mb_strtoupper($_GET['StockID'])) . "'
 		GROUP BY periods.periodno,
 			periods.lastdate_in_period
 		ORDER BY periodno  LIMIT 24";

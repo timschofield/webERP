@@ -10,9 +10,9 @@ include('includes/header.inc');
 
 
 if (isset($_GET['SelectedArea'])){
-	$SelectedArea = strtoupper($_GET['SelectedArea']);
+	$SelectedArea = mb_strtoupper($_GET['SelectedArea']);
 } elseif (isset($_POST['SelectedArea'])){
-	$SelectedArea = strtoupper($_POST['SelectedArea']);
+	$SelectedArea = mb_strtoupper($_POST['SelectedArea']);
 }
 
 if (isset($Errors)) {
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	$_POST['AreaCode'] = strtoupper($_POST['AreaCode']);
+	$_POST['AreaCode'] = mb_strtoupper($_POST['AreaCode']);
 	$sql = "SELECT count(areacode) from areas WHERE areacode='".$_POST['AreaCode']."'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);

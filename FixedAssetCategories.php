@@ -12,9 +12,9 @@ echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css
 		_('Fixed Asset Categories') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_GET['SelectedCategory'])){
-	$SelectedCategory = strtoupper($_GET['SelectedCategory']);
+	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
 } else if (isset($_POST['SelectedCategory'])){
-	$SelectedCategory = strtoupper($_POST['SelectedCategory']);
+	$SelectedCategory = mb_strtoupper($_POST['SelectedCategory']);
 }
 
 if (isset($_POST['submit'])) {
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	$_POST['CategoryID'] = strtoupper($_POST['CategoryID']);
+	$_POST['CategoryID'] = mb_strtoupper($_POST['CategoryID']);
 
 	if (mb_strlen($_POST['CategoryID']) > 6) {
 		$InputError = 1;
@@ -96,13 +96,12 @@ if (isset($_POST['submit'])) {
 											depnact,
 											disposalact,
 											accumdepnact)
-											VALUES (
-											'" . $_POST['CategoryID'] . "',
-											'" . $_POST['CategoryDescription'] . "',
-											'" . $_POST['CostAct'] . "',
-											'" . $_POST['DepnAct'] . "',
-											'" . $_POST['DisposalAct'] . "',
-											'" . $_POST['AccumDepnAct'] . "')";
+								VALUES ('" . $_POST['CategoryID'] . "',
+										'" . $_POST['CategoryDescription'] . "',
+										'" . $_POST['CostAct'] . "',
+										'" . $_POST['DepnAct'] . "',
+										'" . $_POST['DisposalAct'] . "',
+										'" . $_POST['AccumDepnAct'] . "')";
 		$ErrMsg = _('Could not insert the new fixed asset category') . $_POST['CategoryDescription'] . _('because');
 		$result = DB_query($sql,$db,$ErrMsg);
 		prnMsg(_('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
@@ -144,22 +143,25 @@ then none of the above are true and the list of stock categorys will be displaye
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT categoryid,
+	$sql = "SELECT categoryid,
 				categorydescription,
 				costact,
 				depnact,
 				disposalact,
 				accumdepnact
-				FROM fixedassetcategories';
+			FROM fixedassetcategories";
 	$result = DB_query($sql,$db);
 
-	echo '<br /><table class=selection>';
-	echo '<tr><th>' . _('Cat Code') . '</th>
+	echo '<br />
+			<table class="selection">';
+	echo '<tr>
+			<th>' . _('Cat Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Cost GL') . '</th>
 			<th>' . _('P & L Depn GL') . '</th>
 			<th>' . _('Disposal GL') . '</th>
-			<th>' . _('Accum Depn GL') . '</th></tr>';
+			<th>' . _('Accum Depn GL') . '</th>
+		  </tr>';
 
 	$k=0; //row colour counter
 
@@ -178,7 +180,7 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</td>
-					<td><a href="%sSelectedCategory=%s&delete=yes" onclick="return confirm("' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '");">' . _('Delete') . '</td>
+					<td><a href="%sSelectedCategory=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</td>
 					</tr>',
 					$myrow['categoryid'],
 					$myrow['categorydescription'],
@@ -186,9 +188,9 @@ or deletion of the records*/
 					$myrow['depnact'],
 					$myrow['disposalact'],
 					$myrow['accumdepnact'],
-					$_SERVER['PHP_SELF'] . '?' . SID,
+					$_SERVER['PHP_SELF'] . '?',
 					$myrow['categoryid'],
-					$_SERVER['PHP_SELF'] . '?' . SID,
+					$_SERVER['PHP_SELF'] . '?',
 					$myrow['categoryid']);
 	}
 	//END WHILE LIST LOOP
@@ -201,7 +203,7 @@ if (isset($SelectedCategory)) {
 	echo '<br /><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
 }
 
-echo '<form name="CategoryForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+echo '<form name="CategoryForm" method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory) and !isset($_POST['submit'])) {
@@ -238,23 +240,21 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 }
 
 //SQL to poulate account selection boxes
-$sql = 'SELECT accountcode,
+$sql = "SELECT accountcode,
 				 accountname
-				 FROM chartmaster,
-					  accountgroups
-				 WHERE chartmaster.group_=accountgroups.groupname and
-					   accountgroups.pandl=0
-				 ORDER BY accountcode';
+		FROM chartmaster INNER JOIN accountgroups
+		ON chartmaster.group_=accountgroups.groupname 
+		WHERE accountgroups.pandl=0
+		ORDER BY accountcode";
 
 $BSAccountsResult = DB_query($sql,$db);
 
-$sql = 'SELECT accountcode,
+$sql = "SELECT accountcode,
 				 accountname
-				 FROM chartmaster,
-					  accountgroups
-				 WHERE chartmaster.group_=accountgroups.groupname and
-					   accountgroups.pandl!=0
-				 ORDER BY accountcode';
+		FROM chartmaster INNER JOIN accountgroups
+		ON chartmaster.group_=accountgroups.groupname 
+		WHERE accountgroups.pandl!=0
+		ORDER BY accountcode";
 
 $PnLAccountsResult = DB_query($sql,$db);
 

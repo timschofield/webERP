@@ -42,7 +42,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 
 		/*Make sure the language characters are in upper case*/
 
-		$_POST['NewLanguage'] = mb_substr($_POST['NewLanguage'],0,3) . strtoupper(mb_substr($_POST['NewLanguage'],3,2));
+		$_POST['NewLanguage'] = mb_substr($_POST['NewLanguage'],0,3) . mb_strtoupper(mb_substr($_POST['NewLanguage'],3,2));
 
 		echo '<div class="centre">';
 		echo '<br />';

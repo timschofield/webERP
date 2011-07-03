@@ -62,7 +62,7 @@ if (isset($_GET['NewTransfer'])){
 
 if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additional inputs */
 
-	$_POST['StockID'] = trim(strtoupper($_GET['StockID']));
+	$_POST['StockID'] = trim(mb_strtoupper($_GET['StockID']));
 
 } elseif (isset($_POST['StockID'])){	/* initiate a new transfer only if the StockID is different to the previous entry */
 
@@ -90,14 +90,14 @@ if ($NewTransfer){
 							perishable,
 							decimalplaces
 						FROM stockmaster
-						WHERE stockid='" . trim(strtoupper($_POST['StockID'])) . "'",
+						WHERE stockid='" . trim(mb_strtoupper($_POST['StockID'])) . "'",
 						$db);
 	
 	if (DB_num_rows($result) == 0){
-		prnMsg( _('Unable to locate Stock Code').' '.strtoupper($_POST['StockID']), 'error' );
+		prnMsg( _('Unable to locate Stock Code').' '.mb_strtoupper($_POST['StockID']), 'error' );
 	} elseif (DB_num_rows($result)>0){
 		$myrow = DB_fetch_row($result);
-		$_SESSION['Transfer']->TransferItem[0] = new LineItem (	trim(strtoupper($_POST['StockID'])),
+		$_SESSION['Transfer']->TransferItem[0] = new LineItem (	trim(mb_strtoupper($_POST['StockID'])),
 															$myrow['description'],
 						 									$_POST['Quantity'],
 															$myrow['units'],

@@ -6,9 +6,9 @@ $title = _('Sales People Maintenance');
 include('includes/header.inc');
 
 if (isset($_GET['SelectedSaleperson'])){
-	$SelectedSaleperson =strtoupper($_GET['SelectedSaleperson']);
+	$SelectedSaleperson =mb_strtoupper($_GET['SelectedSaleperson']);
 } elseif(isset($_POST['SelectedSaleperson'])){
-	$SelectedSaleperson =strtoupper($_POST['SelectedSaleperson']);
+	$SelectedSaleperson =mb_strtoupper($_POST['SelectedSaleperson']);
 }
 
 if (isset($Errors)) {

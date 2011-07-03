@@ -8,9 +8,9 @@ include('includes/header.inc');
 
 //SelectedDT is the Selected MRPDemandType
 if (isset($_POST['SelectedDT'])){
-	$SelectedDT = trim(strtoupper($_POST['SelectedDT']));
+	$SelectedDT = trim(mb_strtoupper($_POST['SelectedDT']));
 } elseif (isset($_GET['SelectedDT'])){
-	$SelectedDT = trim(strtoupper($_GET['SelectedDT']));
+	$SelectedDT = trim(mb_strtoupper($_GET['SelectedDT']));
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
@@ -26,8 +26,8 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (trim(strtoupper($_POST['MRPDemandType']) == 'WO') or
-	   trim(strtoupper($_POST['MRPDemandType']) == 'SO')) {
+	if (trim(mb_strtoupper($_POST['MRPDemandType']) == 'WO') or
+	   trim(mb_strtoupper($_POST['MRPDemandType']) == 'SO')) {
 		$InputError = 1;
 		prnMsg(_('The Demand Type is reserved for the system'),'error');
 	}
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "INSERT INTO mrpdemandtypes (mrpdemandtype,
 						description)
-					VALUES ('" . trim(strtoupper($_POST['MRPDemandType'])) . "',
+					VALUES ('" . trim(mb_strtoupper($_POST['MRPDemandType'])) . "',
 						'" . $_POST['Description'] . "'
 						)";
 		$msg = _('The new demand type has been added to the database');

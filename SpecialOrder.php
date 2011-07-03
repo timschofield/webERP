@@ -332,7 +332,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				if ($PartCount[0]!=0){
 					$PartAlreadyExists =True;
 					if (mb_strlen($PartCode)==20){
-						$PartCode = "*" . strtoupper(mb_substr($_SESSION['SPL']->PurchOrderNo,0,13)) . "_" . $SPLLine->LineNo;
+						$PartCode = "*" . mb_strtoupper(mb_substr($_SESSION['SPL']->PurchOrderNo,0,13)) . "_" . $SPLLine->LineNo;
 					}
 					$PartCode = $PartCode . $Counter;
 					$Counter++;

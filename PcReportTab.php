@@ -8,9 +8,9 @@ include ('includes/SQL_CommonFunctions.inc');
 $title = _('Petty Cash Management Report');
 
 if (isset($_POST['SelectedTabs'])){
-	$SelectedTabs = strtoupper($_POST['SelectedTabs']);
+	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
 } elseif (isset($_GET['SelectedTabs'])){
-	$SelectedTabs = strtoupper($_GET['SelectedTabs']);
+	$SelectedTabs = mb_strtoupper($_GET['SelectedTabs']);
 }
 
 if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST['SelectDifferentDate'])){

@@ -97,7 +97,7 @@ class TCPDF2DBarcode {
 	 */
 	public function setBarcode($code, $type) {
 		$mode = explode(',', $type);
-		switch (strtoupper($mode[0])) {
+		switch (mb_strtoupper($mode[0])) {
 			case 'TEST': { // TEST MODE
 				$this->barcode_array['num_rows'] = 5;
 				$this->barcode_array['num_cols'] = 15;
@@ -115,7 +115,7 @@ class TCPDF2DBarcode {
 				if (!isset($mode[1]) OR (!in_array($mode[1],array('L','M','Q','H')))) {
 					$mode[1] = 'L'; // Ddefault: Low error correction
 				}
-				$qrcode = new QRcode($code, strtoupper($mode[1]));
+				$qrcode = new QRcode($code, mb_strtoupper($mode[1]));
 				$this->barcode_array = $qrcode->getBarcodeArray();
 				break;
 			}

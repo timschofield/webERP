@@ -9,10 +9,10 @@ $title = _('Factor Company Maintenance');
 include('includes/header.inc');
 
 if (isset($_GET['FactorID'])){
-	$FactorID = strtoupper($_GET['FactorID']);
+	$FactorID = mb_strtoupper($_GET['FactorID']);
 	$_POST['Amend']=True;
 } elseif (isset($_POST['FactorID'])){
-	$FactorID = strtoupper($_POST['FactorID']);
+	$FactorID = mb_strtoupper($_POST['FactorID']);
 } else {
 	unset($FactorID);
 }

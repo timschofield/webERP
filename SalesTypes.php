@@ -6,9 +6,9 @@ $title = _('Sales Types') . ' / ' . _('Price List Maintenance');
 include('includes/header.inc');
 
 if (isset($_POST['SelectedType'])){
-	$SelectedType = strtoupper($_POST['SelectedType']);
+	$SelectedType = mb_strtoupper($_POST['SelectedType']);
 } elseif (isset($_GET['SelectedType'])){
-	$SelectedType = strtoupper($_GET['SelectedType']);
+	$SelectedType = mb_strtoupper($_GET['SelectedType']);
 }
 
 if (isset($Errors)) {

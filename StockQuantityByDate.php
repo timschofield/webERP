@@ -130,16 +130,16 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>',
-					'StockID=' . strtoupper($myrows['stockid']),
-					strtoupper($myrows['stockid']),
+					'StockID=' . mb_strtoupper($myrows['stockid']),
+					mb_strtoupper($myrows['stockid']),
 					$myrows['description'],
 					0);
 			} else {
 				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</td>
 					<td>%s</td>
 					<td class=number>%s</td>',
-					'StockID=' . strtoupper($myrows['stockid']),
-					strtoupper($myrows['stockid']),
+					'StockID=' . mb_strtoupper($myrows['stockid']),
+					mb_strtoupper($myrows['stockid']),
 					$myrows['description'],
 					number_format($LocQtyRow['newqoh'],$myrows['decimalplaces']));
 

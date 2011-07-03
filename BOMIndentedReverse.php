@@ -291,7 +291,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos =$YPos - $line_height;
 
 	$pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,_('Component:'),'',0);
-	$pdf->addTextWrap(100,$YPos,100,$FontSize,strtoupper($_POST['Part']),'',0);
+	$pdf->addTextWrap(100,$YPos,100,$FontSize,mb_strtoupper($_POST['Part']),'',0);
 	$pdf->addTextWrap(200,$YPos,150,$FontSize,$assemblydesc,'',0);
 	$YPos -=(2*$line_height);
 	$Xpos = $Left_Margin+5;

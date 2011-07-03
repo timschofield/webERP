@@ -10,9 +10,9 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 	. '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['SelectedExpense'])){
-	$SelectedExpense = strtoupper($_POST['SelectedExpense']);
+	$SelectedExpense = mb_strtoupper($_POST['SelectedExpense']);
 } elseif (isset($_GET['SelectedExpense'])){
-	$SelectedExpense = strtoupper($_GET['SelectedExpense']);
+	$SelectedExpense = mb_strtoupper($_GET['SelectedExpense']);
 }
 
 if (isset($_POST['Cancel'])) {

@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 						FROM stockmaster
 						WHERE mbflag <>'K'
 						AND mbflag<>'D'
-						AND stockid='" . strtoupper($_POST['StockID']) . "'",$db);
+						AND stockid='" . mb_strtoupper($_POST['StockID']) . "'",$db);
 	if (DB_num_rows($result)==0){
 		$InputError = 1;
 		prnMsg(_('The stock item entered must be set up as either a manufactured or purchased or assembly item'),'warn');
@@ -40,9 +40,9 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1) {
 
 		$sql = "UPDATE stockmaster SET discountcategory='" . $_POST['DiscountCategory'] . "'
-				WHERE stockid='" . strtoupper($_POST['StockID']) . "'";
+				WHERE stockid='" . mb_strtoupper($_POST['StockID']) . "'";
 
-		$result = DB_query($sql,$db, _('The discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('record for') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('could not be updated because'));
+		$result = DB_query($sql,$db, _('The discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('record for') . ' ' . mb_strtoupper($_POST['StockID']) . ' ' . _('could not be updated because'));
 
 		prnMsg(_('The stock master has been updated with this discount category'),'success');
 		unset($_POST['DiscountCategory']);
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['Delete']) and $_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
-	$sql="UPDATE stockmaster SET discountcategory='' WHERE stockid='" . trim(strtoupper($_GET['StockID'])) ."'";
+	$sql="UPDATE stockmaster SET discountcategory='' WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) ."'";
 	$result = DB_query($sql,$db);
 	prnMsg( _('The stock master record has been updated to no discount category'),'success');
 	echo '<br />';
