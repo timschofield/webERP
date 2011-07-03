@@ -463,9 +463,9 @@ class Numbers_Words_ru extends Numbers_Words
       $num = trim($num);
       
       $sign = "";
-      if (substr($num, 0, 1) == '-') {
+      if (mb_substr($num, 0, 1) == '-') {
         $sign = $this->_minus . $this->_sep;
-        $num = substr($num, 1);
+        $num = mb_substr($num, 1);
       }
 
       while (mb_strlen($num) % 3) $num = '0' . $num;
@@ -483,7 +483,7 @@ class Numbers_Words_ru extends Numbers_Words
             } else {
                 $groupgender = 1;
             }
-            $group = $this->_groupToWords(substr($num,-$power-3,3),$groupgender,$_case);
+            $group = $this->_groupToWords(mb_substr($num,-$power-3,3),$groupgender,$_case);
             if (!$power) {
                 $case = $_case;
             }
@@ -547,7 +547,7 @@ class Numbers_Words_ru extends Numbers_Words
           $hundreds = (int)$num{0};
           if ($hundreds) {
               $ret = $this->_hundreds[$hundreds];
-              if (substr($num,1) != '00') {
+              if (mb_substr($num,1) != '00') {
                   $ret .= $this->_sep;
               }
               $case = 3;

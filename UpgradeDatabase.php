@@ -144,23 +144,23 @@ if (isset($_POST['DoUpgrade'])){
 	
 			$SQLEntries[$i] = trim($SQLEntries[$i]);
 
-			if (substr($SQLEntries[$i], 0, 2) != '--'
-				AND substr($SQLEntries[$i], 0, 3) != 'USE'
+			if (mb_substr($SQLEntries[$i], 0, 2) != '--'
+				AND mb_substr($SQLEntries[$i], 0, 3) != 'USE'
 				AND strstr($SQLEntries[$i],'/*')==FALSE
 				AND mb_strlen($SQLEntries[$i])>1){
 	
 				$sql .= ' ' . $SQLEntries[$i];
 	
 				//check if this line kicks off a function definition - pg chokes otherwise
-				if (substr($SQLEntries[$i],0,15) == 'CREATE FUNCTION'){
+				if (mb_substr($SQLEntries[$i],0,15) == 'CREATE FUNCTION'){
 					$InAFunction = true;
 				}
 				//check if this line completes a function definition - pg chokes otherwise
-				if (substr($SQLEntries[$i],0,8) == 'LANGUAGE'){
+				if (mb_substr($SQLEntries[$i],0,8) == 'LANGUAGE'){
 					$InAFunction = false;
 				}
 				if (mb_strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
-					$sql = substr($sql,0,mb_strlen($sql)-1);
+					$sql = mb_substr($sql,0,mb_strlen($sql)-1);
 					$result = DB_query($sql, $db, '','', false, false);
 					echo '<tr><td>' . $sql . '</td>';
 					switch (DB_error_no($db)) {

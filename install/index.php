@@ -108,7 +108,7 @@ function change_data(type) {
 			<td width="140" style="color: #666666;">PHP Version > 5.1.0</td>
 			<td width="35">
 				<?php
-				$phpversion = substr(PHP_VERSION, 0, 6);
+				$phpversion = mb_substr(PHP_VERSION, 0, 6);
 				if($phpversion > 5.1) {
 					?><font class="good">Yes</font><?php
 				} else {

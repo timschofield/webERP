@@ -62,19 +62,19 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 		$LastPositionPointer = $PoistionPointer;
 		$PositionPointer = mb_strpos ($LineDetails['linetext'],'[',$PoistionPointer);
 
-		$NewLineText = $NewLineText .  substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
+		$NewLineText = $NewLineText .  mb_substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
 		$LastPositionPointer = $PoistionPointer;
 		$PositionPointer = mb_strpos ($LineDetails['linetext'],']',$PoistionPointer);
 
-		$VariableName = substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
+		$VariableName = mb_substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
 		$NewLineText = $NewLineText . $$VariableName;
 
 	}
 	/* now add the text from the last ] to the end of the line */
 	$LastPositionPointer = $PoistionPointer;
-	$NewLineText = $NewLineText .  substr($LineDetails['linetext'],$LastPositionPointer);
+	$NewLineText = $NewLineText .  mb_substr($LineDetails['linetext'],$LastPositionPointer);
 
 	echo "<BR>$NewLineText";
 

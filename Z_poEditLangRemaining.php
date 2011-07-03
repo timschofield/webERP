@@ -25,7 +25,7 @@ echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 
-	$PathToLanguage_mo = substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
+	$PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
   /* now read in the language file */
 
@@ -82,12 +82,12 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 		$j = 1;
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {			/* start at line 18 to skip the header */
-			if (substr($LangFile[$i], 0, 2) == '#:') {		/* it's a module reference */
-				$AlsoIn[$j] .= str_replace(' ','<br />', substr($LangFile[$i],3)) . '<br />';
-			} elseif (substr($LangFile[$i], 0 , 5) == 'msgid') {
-				$DefaultText[$j] = substr($LangFile[$i], 7, mb_strlen($LangFile[$i])-9);
-			} elseif (substr($LangFile[$i], 0 , 6) == 'msgstr') {
-				$ModuleText[$j] = substr($LangFile[$i], 8, mb_strlen($LangFile[$i])-10);
+			if (mb_substr($LangFile[$i], 0, 2) == '#:') {		/* it's a module reference */
+				$AlsoIn[$j] .= str_replace(' ','<br />', mb_substr($LangFile[$i],3)) . '<br />';
+			} elseif (mb_substr($LangFile[$i], 0 , 5) == 'msgid') {
+				$DefaultText[$j] = mb_substr($LangFile[$i], 7, mb_strlen($LangFile[$i])-9);
+			} elseif (mb_substr($LangFile[$i], 0 , 6) == 'msgstr') {
+				$ModuleText[$j] = mb_substr($LangFile[$i], 8, mb_strlen($LangFile[$i])-10);
 				$msgstr[$j] = $i;
 				$j++;
 			}

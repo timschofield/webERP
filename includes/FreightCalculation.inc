@@ -30,7 +30,7 @@ Function CalcFreightCost ($TotalValue,
 		$sql = $sql . ' destination ' . LIKE . " '" . ucwords($City) . "%' OR";
 
 	}
-	$sql = substr($sql, 0, strrpos($sql,' OR')) . ')';
+	$sql = mb_substr($sql, 0, strrpos($sql,' OR')) . ')';
 
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {

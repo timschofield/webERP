@@ -107,7 +107,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.jpg';
 
 	 //But check for the worst
-	if (strtoupper(substr(trim($_FILES['Drawing']['name']),mb_strlen($_FILES['Drawing']['name'])-3))!='JPG'){
+	if (strtoupper(mb_substr(trim($_FILES['Drawing']['name']),mb_strlen($_FILES['Drawing']['name'])-3))!='JPG'){
 		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['Drawing']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check

@@ -344,8 +344,8 @@ $SOH_DateFields = array ('orddate',
 			    $value = FormatDateforSQL($value);	// Fix dates
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO salesorders ('.substr($FieldNames,0,-2).") 
-					VALUES ('" . substr($FieldValues,0,-2). "')";
+		$sql = 'INSERT INTO salesorders ('.mb_substr($FieldNames,0,-2).") 
+					VALUES ('" . mb_substr($FieldValues,0,-2). "')";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -440,7 +440,7 @@ $SOH_DateFields = array ('orddate',
 			    $value = FormatDateforSQL($value);	// Fix dates
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
+		$sql = mb_substr($sql,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			echo DB_error_no($db);
@@ -499,8 +499,8 @@ $SOH_DateFields = array ('orddate',
 			    $value = FormatDateForSQL($value);
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO salesorderdetails (' . substr($FieldNames,0,-2) . ") 
-			VALUES ('" . substr($FieldValues,0,-2) . "')";
+		$sql = 'INSERT INTO salesorderdetails (' . mb_substr($FieldNames,0,-2) . ") 
+			VALUES ('" . mb_substr($FieldValues,0,-2) . "')";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -556,9 +556,9 @@ $SOH_DateFields = array ('orddate',
 			    $value = FormatDateForSQL($value);
 			$sql .= $key.'="'.$value.'", ';
 		}
-		//$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
+		//$sql = mb_substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
 			//	" orderlineno='.$OrderLine['orderlineno'];
-		$sql = substr($sql,0,-2)." WHERE orderno='" . $OrderLine['orderno']."' AND stkcode='" . $OrderLine['stkcode']."'";
+		$sql = mb_substr($sql,0,-2)." WHERE orderno='" . $OrderLine['orderno']."' AND stkcode='" . $OrderLine['stkcode']."'";
 				//echo $sql;
 				//exit;
 		if (sizeof($Errors)==0) {

@@ -29,7 +29,7 @@ function test($count, $maxlabels)
     }
     $status = ($non_blank <= $maxlabels) ? 'PASS' : 'FAIL';
     echo "$status: $count rows, maxlabels=$maxlabels => $non_blank labels\n";
-    echo substr($line, 0, 80) . "\n";  # Only show first 80 chars.
+    echo mb_substr($line, 0, 80) . "\n";  # Only show first 80 chars.
 }
 
 /* Test cases for prune_labels */

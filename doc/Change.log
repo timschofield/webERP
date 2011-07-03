@@ -623,7 +623,7 @@ Version 4.0RC1
 07/06/10 Tim: Various changes to correctly deal with suppliers uom plus layout changes to puirchase orders and goods received notes
 06/06/10 Zhiguo Yuan: WorkOrderReceive.php - Change to make rollup costs change when more labour or overheadcosts change
 03/06/10 Phil: Added a bit of error trapping to ensure customer/branch set up when going into CounterSales.php
-03/06/10 Otandeka: Locations.php used explode function rather than substr function to split the cashsalecustomer to get Branch and Debtorno codes - also changed format to just a hypen between debtorno and branchcode
+03/06/10 Otandeka: Locations.php used explode function rather than mb_substr function to split the cashsalecustomer to get Branch and Debtorno codes - also changed format to just a hypen between debtorno and branchcode
 03/06/10 Otandeka: CounterSales php changed to use explode to get branch and debtorno from cashsalecustomer - and changed format to debtorno-branchcode and rather than debtorno - branchcode (spaces removed)
 31/05/10 Phil: BankMatching script took out double quotes reformated indenting - a hard one to read - my bad!
 31/05/10 Phil: New script CounterSales.php to allow entry of sale and payment over the counter as a half way step to POS - the customer account is defaulted based on the users default stock location. The locations table now has a default cash sales account - see below

@@ -29,7 +29,7 @@ function ConvertToSQLDate($DateEntry) {
 	}
 
 	if (mb_strlen($Date_Array[2])>4) {  /*chop off the time stuff */
-		$Date_Array[2]= substr($Date_Array[2],0,2);
+		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
 	}
 
 
@@ -347,8 +347,8 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		if (sizeof($Errors)==0) {
 			$result = DB_Txn_Begin($db);
-			$sql = "INSERT INTO debtortrans (" . substr($FieldNames,0,-2) .") 
-									VALUES ('" . substr($FieldValues,0,-2) ."') ";
+			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .") 
+									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_Query($sql, $db);
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10, $db) . "' WHERE typeid=10";
 			$result = DB_Query($sql, $db);
@@ -474,8 +474,8 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		if (sizeof($Errors)==0) {
 			$result = DB_Txn_Begin($db);
-			$sql = "INSERT INTO debtortrans (" . substr($FieldNames,0,-2) . ") 
-						VALUES ('".substr($FieldValues,0,-2) ."') ";
+			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ") 
+						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_Query($sql, $db);
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11, $db) ."' WHERE typeid=10";
 			$result = DB_Query($sql, $db);

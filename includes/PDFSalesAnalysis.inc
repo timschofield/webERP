@@ -68,7 +68,7 @@ While ($myrow = DB_fetch_array($result)){
 		if ($myrow['col5']!=$GrpData3 && $myrow['col5']!='0' && $myrow['col7']!='0'){
 			/*Totals only relevant to GrpByLevel 3 if GrpByLevel 4 also used */
 			if ($Counter > 0){ /*Dont want to print totals if this is the first record */
-				$TotalText = substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
+				$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
 				$LeftOvers = $pdf->addTextWrap(40,$Ypos,180,$FontSize,$TotalText);
 
 				DB_data_seek($ColsResult,0);
@@ -122,7 +122,7 @@ While ($myrow = DB_fetch_array($result)){
 		if ($myrow['col3']!=$GrpData2 && $myrow['col3']!='0' && $myrow['col5']!='0'){
 		/*Totals only relevant to GrpByLevel 2 if GrpByLevel 3 also used */
 			if ($Counter > 0){ /*Dont want to print totals if this is the first record */
-				$TotalText = substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,43);
+				$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,43);
 				$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
 				DB_data_seek($ColsResult,0);
 				while ($Cols = DB_fetch_array($ColsResult)){
@@ -175,7 +175,7 @@ While ($myrow = DB_fetch_array($result)){
 		if ($myrow['col1']!=$GrpData1  && $myrow['col3']!='0'){
 			/*Totals only relevant to GrpByLevel 1 if GrpByLevel 2 also used */
 			if ($Counter > 0){ /*Dont want to print totals if this is the first record */
-				$TotalText = substr(_('TOTAL') . ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,46);
+				$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,46);
 				$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$TotalText);
 				DB_data_seek($ColsResult,0);
 				while ($Cols = DB_fetch_array($ColsResult)){
@@ -233,7 +233,7 @@ While ($myrow = DB_fetch_array($result)){
 			if ($ReportSpec['newpageafter1']==1){
 				include ('includes/PDFSalesAnalPageHeader.inc');
 			}
-			$GroupHeadingText = substr($myrow['col1'] . ' - ' . $myrow['col2'],0,50);
+			$GroupHeadingText = mb_substr($myrow['col1'] . ' - ' . $myrow['col2'],0,50);
 			$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$GroupHeadingText);
 
 			if ($myrow['col3']!='0'){
@@ -247,7 +247,7 @@ While ($myrow = DB_fetch_array($result)){
 			if ($ReportSpec['newpageafter2']==1){
 				include ('includes/PDFSalesAnalPageHeader.inc');
 			}
-			$GroupHeadingText = substr($myrow['col3'] . ' - ' . $myrow['col4'],0,46);
+			$GroupHeadingText = mb_substr($myrow['col3'] . ' - ' . $myrow['col4'],0,46);
 			$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$GroupHeadingText);
 
 			if ($myrow['col5']!='0'){
@@ -260,7 +260,7 @@ While ($myrow = DB_fetch_array($result)){
 			if ($ReportSpec['newpageafter3']==1){
 				include ('includes/PDFSalesAnalPageHeader.inc');
 			}
-			$GroupHeadingText = substr($myrow['col5'] . ' - ' . $myrow['col6'],0,46);
+			$GroupHeadingText = mb_substr($myrow['col5'] . ' - ' . $myrow['col6'],0,46);
 			$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$GroupHeadingText);
 
 			if ($myrow['col7']!='0'){
@@ -270,7 +270,7 @@ While ($myrow = DB_fetch_array($result)){
 
 		if ($myrow['col7']!='0'){
 			/*show titles */
-			$GroupHeadingText = substr($myrow['col7'] . ' - ' . $myrow['col8'], 0, 40);
+			$GroupHeadingText = mb_substr($myrow['col7'] . ' - ' . $myrow['col8'], 0, 40);
 			$LeftOvers = $pdf->addTextWrap(55,$Ypos,135,$FontSize,$GroupHeadingText);
 
 		}
@@ -309,7 +309,7 @@ While ($myrow = DB_fetch_array($result)){
 if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 /* if GrpBY3 and GrpBy4 are both set need to show totals for GrpBy3 */
 if ($Counter>0){ /*Dont want to print totals if this is the first record */
-	$TotalText = substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
+	$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
 	$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
 
 	DB_data_seek($ColsResult,0);
@@ -361,7 +361,7 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 if ($LastLine['col3']!='0' && $LastLine['col5']!='0'){
 /* if GrpBY2 and GrpBy3 are both set need to show totals for GrpBy2 */
 if ($Counter>0){ /*Dont want to print totals if this is the first record */
-	$TotalText = substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,33);
+	$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,33);
 	$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
 	DB_data_seek($ColsResult,0);
 	while ($Cols = DB_fetch_array($ColsResult)){
@@ -411,7 +411,7 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 if ($LastLine['col3']!='0'){
 /* GrpBY1 must always be set but if GrpBy2 is also set need to show totals for GrpBy2 */
 if ($Counter>1){ /*Dont want to print totals if this is the first record */
-	$TotalText = substr(_('TOTAL') .  ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,30);
+	$TotalText = mb_substr(_('TOTAL') .  ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,30);
 	$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$TotalText);
 	DB_data_seek($ColsResult,0);
 	while ($Cols = DB_fetch_array($ColsResult)){

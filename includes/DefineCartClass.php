@@ -251,7 +251,7 @@ Class Cart {
 			$StockID_List .= ",'" . $StockItem->StockID . "'";
 		}
 
-		return substr($StockID_List, 1);
+		return mb_substr($StockID_List, 1);
 
 	}
 

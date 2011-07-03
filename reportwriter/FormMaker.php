@@ -82,7 +82,7 @@ switch ($_POST['todo']) {
 			$i=1;
 			while (isset($_POST['defcritsel'.$i])) { // then there is at least one criteria
 				// Build the criteria default string
-				$Prefs['CritListings'][$i-1]['params'] = substr($Prefs['CritListings'][$i-1]['params'],0,1);
+				$Prefs['CritListings'][$i-1]['params'] = mb_substr($Prefs['CritListings'][$i-1]['params'],0,1);
 				$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['defcritsel'.$i];
 				$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['fromvalue'.$i];
 				$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['tovalue'.$i];

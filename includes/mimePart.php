@@ -307,7 +307,7 @@ class Mail_mimePart {
             $newline = '';
 
             for ($i = 0; $i < $linlen; $i++) {
-                $char = substr($line, $i, 1);
+                $char = mb_substr($line, $i, 1);
                 $dec  = ord($char);
 
                 if (($dec == 32) AND ($i == ($linlen - 1))){    // convert space at eol only
@@ -327,7 +327,7 @@ class Mail_mimePart {
             } // end of for
             $output .= $newline . $eol;
         }
-        $output = substr($output, 0, -1 * mb_strlen($eol)); // Don't want last crlf
+        $output = mb_substr($output, 0, -1 * mb_strlen($eol)); // Don't want last crlf
         return $output;
     }
 } // End of class

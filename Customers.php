@@ -280,7 +280,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('This customer could not be added because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-			$BranchCode = substr($_POST['DebtorNo'],0,4);
+			$BranchCode = mb_substr($_POST['DebtorNo'],0,4);
 
 			echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath .'/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo'] . '">';
 

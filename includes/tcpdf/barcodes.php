@@ -1035,23 +1035,23 @@ class TCPDFBarcode {
 		}
 		if ($upce) {
 			// convert UPC-A to UPC-E
-			$tmp = substr($code, 4, 3);
+			$tmp = mb_substr($code, 4, 3);
 			if (($tmp == '000') OR ($tmp == '100') OR ($tmp == '200')) {
 				// manufacturer code ends in 000, 100, or 200
-				$upce_code = substr($code, 2, 2).substr($code, 9, 3).substr($code, 4, 1);
+				$upce_code = mb_substr($code, 2, 2).mb_substr($code, 9, 3).mb_substr($code, 4, 1);
 			} else {
-				$tmp = substr($code, 5, 2);
+				$tmp = mb_substr($code, 5, 2);
 				if ($tmp == '00') {
 					// manufacturer code ends in 00
-					$upce_code = substr($code, 2, 3).substr($code, 10, 2).'3';
+					$upce_code = mb_substr($code, 2, 3).mb_substr($code, 10, 2).'3';
 				} else {
-					$tmp = substr($code, 6, 1);
+					$tmp = mb_substr($code, 6, 1);
 					if ($tmp == '0') {
 						// manufacturer code ends in 0
-						$upce_code = substr($code, 2, 4).substr($code, 11, 1).'4';
+						$upce_code = mb_substr($code, 2, 4).mb_substr($code, 11, 1).'4';
 					} else {
 						// manufacturer code does not end in zero
-						$upce_code = substr($code, 2, 5).substr($code, 11, 1);
+						$upce_code = mb_substr($code, 2, 5).mb_substr($code, 11, 1);
 					}
 				}
 			}
@@ -1645,7 +1645,7 @@ class TCPDFBarcode {
 			}
 			$code /= 2;
 		}
-		$seq = substr($seq, 0, -2);
+		$seq = mb_substr($seq, 0, -2);
 		$seq = strrev($seq);
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		return $this->binseq_to_array($seq, $bararray);
@@ -1760,20 +1760,20 @@ class TCPDFBarcode {
 		$binary_code = bcadd($binary_code, $tracking_number{0});
 		$binary_code = bcmul($binary_code, 5);
 		$binary_code = bcadd($binary_code, $tracking_number{1});
-		$binary_code .= substr($tracking_number, 2, 18);
+		$binary_code .= mb_substr($tracking_number, 2, 18);
 		// convert to hexadecimal
 		$binary_code = $this->dec_to_hex($binary_code);
 		// pad to get 13 bytes
 		$binary_code = str_pad($binary_code, 26, '0', STR_PAD_LEFT);
 		// convert string to array of bytes
 		$binary_code_arr = chunk_split($binary_code, 2, "\r");
-		$binary_code_arr = substr($binary_code_arr, 0, -1);
+		$binary_code_arr = mb_substr($binary_code_arr, 0, -1);
 		$binary_code_arr = explode("\r", $binary_code_arr);
 		// calculate frame check sequence
 		$fcs = $this->imb_crc11fcs($binary_code_arr);
 		// exclude first 2 bits from first byte
 		$first_byte = sprintf('%2s', dechex((hexdec($binary_code_arr[0]) << 2) >> 2));
-		$binary_code_102bit = $first_byte.substr($binary_code, 2);
+		$binary_code_102bit = $first_byte.mb_substr($binary_code, 2);
 		// convert binary data to codewords
 		$codewords = array();
 		$data = $this->hex_to_dec($binary_code_102bit);

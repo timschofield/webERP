@@ -466,9 +466,9 @@ function ReadDefReports() {
 			foreach ($FileLines as $OneLine) { // find the main reports sql statement, language and execute it
 				if (mb_strpos($OneLine,'ReportData:')===0) { // then it's the line we'er after with reportname and groupname
 					$GrpPos = mb_strpos($OneLine,"groupname='")+11;
-					$GrpName = substr($OneLine, $GrpPos, mb_strpos($OneLine, "',", $GrpPos)-$GrpPos);
+					$GrpName = mb_substr($OneLine, $GrpPos, mb_strpos($OneLine, "',", $GrpPos)-$GrpPos);
 					$RptPos = mb_strpos($OneLine,"reportname='")+12;
-					$RptName = substr($OneLine, $RptPos, mb_strpos($OneLine, "',", $RptPos)-$RptPos);
+					$RptName = mb_substr($OneLine, $RptPos, mb_strpos($OneLine, "',", $RptPos)-$RptPos);
 					$ReportList[$i]['GrpName'] = $GrpName;
 					$ReportList[$i]['RptName'] = $RptName;
 					$ReportList[$i]['FileName'] = $pinfo[basename];
@@ -584,7 +584,7 @@ function ExportReport($ReportID) {
 		foreach ($FieldRows as $key=>$value) {
 			if ($key<>'id' AND $key<>'reportid') $sql .= $key."='".DB_escape_string($value)."', ";
 		}
-		$sql = substr($sql,0,-2).";"; // Strip the last comma and space and add a semicolon
+		$sql = mb_substr($sql,0,-2).";"; // Strip the last comma and space and add a semicolon
 		$FieldData[$i] = $sql;
 		$i++;
 	}
@@ -594,7 +594,7 @@ function ExportReport($ReportID) {
 	// Build the report sql string
 	$RptData = 'ReportData:';
 	foreach ($myrow as $key=>$value) if ($key<>'id') $RptData .= $key."='".DB_escape_string($value)."', ";
-	$RptData = substr($RptData,0,-2).";"; // Strip the last comma and space and add a semicolon
+	$RptData = mb_substr($RptData,0,-2).";"; // Strip the last comma and space and add a semicolon
 	$CSVOutput .= $RptData.$crlf.$crlf;
 	$CSVOutput .= '/* SQL field data. */'.$crlf;
 	for ($i=0; $i<count($FieldData); $i++) $CSVOutput .= $FieldData[$i].$crlf;
@@ -641,9 +641,9 @@ function ImportReport($RptName) {
 	$Title1Desc = ''; // Initialize to null, not used for forms
 	$Title2Desc = '';
 	foreach ($arrSQL as $sql) { // find the report translated reportname and title information
-		if (mb_strpos($sql,'ReportName:')===0) $ReportName = substr(trim($sql),12,-1);
-		if (mb_strpos($sql,'Title1Desc:')===0) $Title1Desc = substr(trim($sql),12,-1);
-		if (mb_strpos($sql,'Title2Desc:')===0) $Title2Desc = substr(trim($sql),12,-1);
+		if (mb_strpos($sql,'ReportName:')===0) $ReportName = mb_substr(trim($sql),12,-1);
+		if (mb_strpos($sql,'Title1Desc:')===0) $Title1Desc = mb_substr(trim($sql),12,-1);
+		if (mb_strpos($sql,'Title2Desc:')===0) $Title2Desc = mb_substr(trim($sql),12,-1);
 	}
 	// check for valid file, duplicate report name
 	if ($RptName=='') $RptName = $ReportName; // then no report was entered use reportname from file
@@ -658,7 +658,7 @@ function ImportReport($RptName) {
 	$ValidReportSQL = false;
 	foreach ($arrSQL as $sql) { // find the main reports sql statement, language and execute it
 		if (mb_strpos($sql,'ReportData:')===0) {
-			$sql="INSERT INTO ".DBReports." SET ".substr(trim($sql),11);
+			$sql="INSERT INTO ".DBReports." SET ".mb_substr(trim($sql),11);
 			$Result=DB_query($sql,$db,'','',false,true);
 			$ValidReportSQL = true;
 		}
@@ -680,15 +680,15 @@ function ImportReport($RptName) {
 	foreach ($arrSQL as $sql) { // fetch the translations for the field descriptions
 		if (mb_strpos($sql,'FieldDesc')===0) { // then it's a field description, find the index and save
 			$sql = trim($sql);
-			$FldIndex = substr($sql,9,mb_strpos($sql,':')-9);
-			$Language[$FldIndex] = substr($sql,mb_strpos($sql,':')+2,-1);
+			$FldIndex = mb_substr($sql,9,mb_strpos($sql,':')-9);
+			$Language[$FldIndex] = mb_substr($sql,mb_strpos($sql,':')+2,-1);
 		}
 	}
 	foreach ($arrSQL as $sql) {
 		if (mb_strpos($sql,'FieldData')===0) { // a valid field, write it
 			$sql = trim($sql);
-			$FldIndex = substr($sql,9,mb_strpos($sql,':')-9);
-			$sql="INSERT INTO ".DBRptFields." SET ".substr($sql,mb_strpos($sql,':')+1);
+			$FldIndex = mb_substr($sql,9,mb_strpos($sql,':')-9);
+			$sql="INSERT INTO ".DBRptFields." SET ".mb_substr($sql,mb_strpos($sql,':')+1);
 			$Result=DB_query($sql,$db,'','',false,true);
 			$FieldID = DB_Last_Insert_ID($db,DBRptFields, 'id');
 			if ($FieldID<>0) { // A field was successfully written update the report id

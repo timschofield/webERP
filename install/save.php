@@ -87,7 +87,7 @@ function default_file_mode($temp_dir) {
 		$handle = fopen($filename, 'w');
 		fwrite($handle, 'This file is to get the default file permissions');
 		fclose($handle);
-		$default_file_mode = '0'.substr(sprintf('%o', fileperms($filename)), -3);
+		$default_file_mode = '0'.mb_substr(sprintf('%o', fileperms($filename)), -3);
 		unlink($filename);
 	} else {
 		$default_file_mode = '0777';
@@ -102,7 +102,7 @@ function default_dir_mode($temp_dir) {
 	if ($v > 41 && is_writable($temp_dir)) {
 		$dirname = $temp_dir.'/test_permissions/';
 		mkdir($dirname);
-		$default_dir_mode = '0'.substr(sprintf('%o', fileperms($dirname)), -3);
+		$default_dir_mode = '0'.mb_substr(sprintf('%o', fileperms($dirname)), -3);
 		rmdir($dirname);
 	} else {
 		$default_dir_mode = '0777';
@@ -135,17 +135,17 @@ if (!isset($_POST['ba_url']) || $_POST['ba_url'] == '') {
 }
 
 // Remove any slashes at the end of the URL
-if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "/") {
-	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
+if(mb_substr($ba_url, mb_strlen($ba_url) - 1, 1) == "/") {
+	$ba_url = mb_substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
-if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "\\") {
-	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
+if(mb_substr($ba_url, mb_strlen($ba_url) - 1, 1) == "\\") {
+	$ba_url = mb_substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
-if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "/") {
-	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
+if(mb_substr($ba_url, mb_strlen($ba_url) - 1, 1) == "/") {
+	$ba_url = mb_substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
-if(substr($ba_url, mb_strlen($ba_url) - 1, 1) == "\\") {
-	$ba_url = substr($ba_url, 0, mb_strlen($ba_url) - 1);
+if(mb_substr($ba_url, mb_strlen($ba_url) - 1, 1) == "\\") {
+	$ba_url = mb_substr($ba_url, 0, mb_strlen($ba_url) - 1);
 }
 // End path
 
@@ -301,7 +301,7 @@ $msg .= "\$DefaultClock = 12;\n";
 $msg .= "\$rootpath = dirname(\$_SERVER['PHP_SELF']);\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-$msg .= "\$rootpath = substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";
+$msg .= "\$rootpath = mb_substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";
 $msg .= "} }\n";
 
 $msg .= "if (\$rootpath == '/' OR \$rootpath == '\\\') {;\n";
@@ -347,25 +347,25 @@ if($_POST['install_tables'] == true){
 
 		$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
 		//ignore lines that start with -- or USE or /*
-		if (substr($SQLScriptFile[$i], 0, 2) != '--'
+		if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
 			AND strstr($SQLScriptFile[$i],'/*')==FALSE
 			AND mb_strlen($SQLScriptFile[$i])>1){
 
 			$SQL .= ' ' . $SQLScriptFile[$i];
 
 			//check if this line kicks off a function definition - pg chokes otherwise
-			if (substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
+			if (mb_substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
 				$InAFunction = true;
 			}
 			//check if this line completes a function definition - pg chokes otherwise
-			if (substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
+			if (mb_substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
 				$InAFunction = false;
 			}
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				// Database created above with correct name.
 				if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
 				    AND strncasecmp($SQL, ' USE ', 5)){
-					$SQL = substr($SQL,0,mb_strlen($SQL)-1);
+					$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 					$result = mysqli_query($db,$SQL);
 				    }
 				    $SQL = '';

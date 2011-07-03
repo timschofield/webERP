@@ -504,9 +504,9 @@ if (isset($_POST['NewItem'])){
 
 	foreach ($_POST as $FormVariableName => $Quantity) {
 
-		if (substr($FormVariableName, 0, 6)=='NewQty') { //if the form variable represents a Qty to add to the order
+		if (mb_substr($FormVariableName, 0, 6)=='NewQty') { //if the form variable represents a Qty to add to the order
 
-			$ItemCode = substr($FormVariableName, 6, mb_strlen($FormVariableName)-6);
+			$ItemCode = mb_substr($FormVariableName, 6, mb_strlen($FormVariableName)-6);
 			$AlreadyOnThisOrder = 0;
 
 			if ($_SESSION['PO_AllowSameItemMultipleTimes'] ==false){

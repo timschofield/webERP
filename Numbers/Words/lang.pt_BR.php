@@ -219,9 +219,9 @@ class Numbers_Words_pt_BR extends Numbers_Words
 
         $num = trim($num);
 
-        if (substr($num, 0, 1) == '-') {
+        if (mb_substr($num, 0, 1) == '-') {
             $ret = $this->_sep . $this->_minus;
-            $num = substr($num, 1);
+            $num = mb_substr($num, 1);
         }
 
         // strip excessive zero signs and spaces

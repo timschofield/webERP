@@ -149,8 +149,8 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = "INSERT INTO locations (" . substr($FieldNames,0,-2) . ") 
-						VALUES ('" . substr($FieldValues,0,-2) . "') ";
+			$sql = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ") 
+						VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 				
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -212,7 +212,7 @@
 		foreach ($Location as $key => $value) {
 			$sql .= $key."='" . $value."', ";
 		}
-		$sql = substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
+		$sql = mb_substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {

@@ -22,26 +22,26 @@ bevel - if specified draws a drop down bevel
 // Color decode function
 function DecodeBgColor( $colorstr ) {
 	if ( $colorstr[0] == '#' ) {
-		$colorstr = substr($colorstr,1,mb_strlen($colorstr));
+		$colorstr = mb_substr($colorstr,1,mb_strlen($colorstr));
 	}
 	$red = 0;
 	if(mb_strlen($colorstr) > 1) {
-		$red = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
+		$red = hexdec(mb_substr($colorstr,0,2));
+		$colorstr = mb_substr($colorstr,2,mb_strlen($colorstr));
 	}
 	$green = 0;
 	if(mb_strlen($colorstr) > 1) {
-		$green = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
+		$green = hexdec(mb_substr($colorstr,0,2));
+		$colorstr = mb_substr($colorstr,2,mb_strlen($colorstr));
 	}
 	$blue = 0;
 	if(mb_strlen($colorstr) > 1) {
-		$blue = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
+		$blue = hexdec(mb_substr($colorstr,0,2));
+		$colorstr = mb_substr($colorstr,2,mb_strlen($colorstr));
 	}
 	if(mb_strlen($colorstr) > 1) {
-		$alpha = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,mb_strlen($colorstr));
+		$alpha = hexdec(mb_substr($colorstr,0,2));
+		$colorstr = mb_substr($colorstr,2,mb_strlen($colorstr));
 	}
 	if ( isset($alpha) )
 		return array('red' => $red, 'green' => $green, 'blue' => $blue, 'alpha' => $alpha );
@@ -120,8 +120,8 @@ $i = strrpos($stockid,'.');
 if( $i === false )
   	$type = 'png';
 else {
-	$type   = strtolower(substr($stockid,$i+1,mb_strlen($stockid)));
-	$stockid = substr($stockid,0,$i);
+	$type   = strtolower(mb_substr($stockid,$i+1,mb_strlen($stockid)));
+	$stockid = mb_substr($stockid,0,$i);
 	if($blanktext && !isset($text))
 		$text = '';
 }

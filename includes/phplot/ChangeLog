@@ -643,7 +643,7 @@ The project home page is http://sourceforge.net/projects/phplot/
 2007-11-22
     * Fix bug 1836528 "Insufficient checking of parameter values":
       Rewrote CheckOption to correctly validate option choices.
-      (It previously accepted substrings and other incorrect values.)
+      (It previously accepted mb_substrings and other incorrect values.)
       PHPlot methods that use CheckOption now must be called with valid option
       values. Empty strings are also no longer accepted.
 

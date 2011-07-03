@@ -253,7 +253,7 @@ var $pageY; // y value of bottom of page less bottom margin
 			// A better aproach would be an recursive call to this function until the string just fits.
 			$NumChars = mb_strlen($strData);
 			// Reduce the string by 1-$percent and retest
-			$strData = $this->TruncData(substr($strData, 0, ($ColWidth/$CurWidth)*$NumChars*$percent), $ColWidth);
+			$strData = $this->TruncData(mb_substr($strData, 0, ($ColWidth/$CurWidth)*$NumChars*$percent), $ColWidth);
 		}
 		return $strData;
 	}
@@ -276,7 +276,7 @@ function BuildSQL($Prefs) {
 		$usrMsg['level'] = 'error';
 		return $usrMsg;
 	}
-	$strField = substr($strField,0,-2); // strip the last comma
+	$strField = mb_substr($strField,0,-2); // strip the last comma
 
 	$Prefs['filterdesc'] = RPT_RPTFILTER; // Initialize the filter display string
 	//fetch the groupings and build first level of SORT BY string (for sub totals)
@@ -300,9 +300,9 @@ function BuildSQL($Prefs) {
 	// fetch date filter info
 	$df = $Prefs['DateListings']['fieldname'];
 	$Today = date('Y-m-d', time());
-	$ThisDay = substr($Today,8,2);
-	$ThisMonth = substr($Today,5,2);
-	$ThisYear = substr($Today,0,4);
+	$ThisDay = mb_substr($Today,8,2);
+	$ThisMonth = mb_substr($Today,5,2);
+	$ThisYear = mb_substr($Today,0,4);
 	// find total number of days in this month
 	if ($ThisMonth==04 OR $ThisMonth==06 OR $ThisMonth==09 OR $ThisMonth==11) { $TotalDays=30; }
 	elseif ($ThisMonth==02 AND date('L', $t)) { $TotalDays=29; } // Leap year
@@ -546,7 +546,7 @@ function GenerateCSVFile($Data, $Prefs) {
 	foreach ($Heading as $mycolumn) { // check for embedded commas and enclose in quotes
 		if (mb_strpos($mycolumn,',')===false) $CSVOutput .= $mycolumn.','; else $CSVOutput .= '"'.$mycolumn.'",';
 	}
-	$CSVOutput = substr($CSVOutput,0,-1).chr(10); // Strip the last comma off and add line feed
+	$CSVOutput = mb_substr($CSVOutput,0,-1).chr(10); // Strip the last comma off and add line feed
 	// Now write each data line and totals
 	foreach ($Data as $myrow) {
 		$Action = array_shift($myrow);
@@ -563,7 +563,7 @@ function GenerateCSVFile($Data, $Prefs) {
 				foreach ($myrow as $mycolumn) { // check for embedded commas and enclose in quotes
 					if (mb_strpos($mycolumn,',')===false) $CSVLine .= $mycolumn.','; else $CSVLine .= '"'.$mycolumn.'",';
 				}
-				$CSVLine = substr($CSVLine,0,-1); // Strip the last comma off
+				$CSVLine = mb_substr($CSVLine,0,-1); // Strip the last comma off
 		}
 		$CSVOutput .= $CSVLine.chr(10);
 	}
@@ -609,7 +609,7 @@ function ReplaceNonAllowedCharacters ($String) {
 		foreach ($DodgyCharactersArray as $DodgyCharacter){
 			if (mb_strpos($String,$DodgyCharacter,0)){
 				$StrPointer = mb_strpos($String,$DodgyCharacter,0);
-				$String = substr($String,0,$StrPointer) . '_' . substr($String,$StrPointer+1);
+				$String = mb_substr($String,0,$StrPointer) . '_' . mb_substr($String,$StrPointer+1);
 				$ContainsDodgyCharacters=true;
 			}
 		}

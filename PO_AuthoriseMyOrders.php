@@ -17,8 +17,8 @@ $EmailRow=DB_fetch_array($EmailResult);
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $value) {
-		if (substr($key,0,6)=='status') {
-			$OrderNo=substr($key,6);
+		if (mb_substr($key,0,6)=='status') {
+			$OrderNo=mb_substr($key,6);
 			$Status=$_POST['status'.$OrderNo];
 			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' '.'<a href="mailto:' . $EmailRow['email'].'">'.$_SESSION['UserID'].'</a>
 					<br />' . $_POST['comment'];

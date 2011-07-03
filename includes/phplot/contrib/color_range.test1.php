@@ -16,9 +16,9 @@ Each color is of the form rrggbb with 2 digit hex color components.
 # Split color "rrggbb" into separate components. Code is from PHPlot.
 function rgb($color)
 {
-  return array(hexdec(substr($color, 1, 2)),
-               hexdec(substr($color, 3, 2)),
-               hexdec(substr($color, 5, 2)));
+  return array(hexdec(mb_substr($color, 1, 2)),
+               hexdec(mb_substr($color, 3, 2)),
+               hexdec(mb_substr($color, 5, 2)));
 }
 
 if ($_SERVER['argc'] != 4) usage();

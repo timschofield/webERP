@@ -233,13 +233,13 @@ class Mail_RFC822
 
         // Remove the now stored address from the initial line, the +1
         // is to account for the explode character.
-        $address = trim(substr($address, mb_strlen($string) + 1));
+        $address = trim(mb_substr($address, mb_strlen($string) + 1));
 
         // If the next char is a comma and this was a group, then
         // there are more addresses, otherwise, if there are any more
         // chars, then there is another address.
-        if ($is_group && substr($address, 0, 1) == ','){
-            $address = trim(substr($address, 1));
+        if ($is_group && mb_substr($address, 0, 1) == ','){
+            $address = trim(mb_substr($address, 1));
             return $address;
 
         } elseif (mb_strlen($address) > 0) {
@@ -294,7 +294,7 @@ class Mail_RFC822
                 || $this->_hasUnclosedBrackets($string, '<>')
                 || $this->_hasUnclosedBrackets($string, '[]')
                 || $this->_hasUnclosedBrackets($string, '()')
-                || substr($string, -1) == '\\') {
+                || mb_substr($string, -1) == '\\') {
                 if (isset($parts[$i + 1])) {
                     $string = $string . $char . $parts[$i + 1];
                 } else {
@@ -323,7 +323,7 @@ class Mail_RFC822
         $string_cnt = count($string);
 
         for ($i = 0; $i < (count($string) - 1); $i++)
-            if (substr($string[$i], -1) == '\\')
+            if (mb_substr($string[$i], -1) == '\\')
                 $string_cnt--;
 
         return ($string_cnt % 2 === 0);
@@ -340,8 +340,8 @@ class Mail_RFC822
      */
     function _hasUnclosedBrackets($string, $chars)
     {
-        $num_angle_start = substr_count($string, $chars[0]);
-        $num_angle_end   = substr_count($string, $chars[1]);
+        $num_angle_start = mb_substr_count($string, $chars[0]);
+        $num_angle_end   = mb_substr_count($string, $chars[1]);
 
         $this->_hasUnclosedBracketsSub($string, $num_angle_start, $chars[0]);
         $this->_hasUnclosedBracketsSub($string, $num_angle_end, $chars[1]);
@@ -367,7 +367,7 @@ class Mail_RFC822
     {
         $parts = explode($char, $string);
         for ($i = 0; $i < count($parts); $i++){
-            if (substr($parts[$i], -1) == '\\' || $this->_hasUnclosedQuotes($parts[$i]))
+            if (mb_substr($parts[$i], -1) == '\\' || $this->_hasUnclosedQuotes($parts[$i]))
                 $num--;
             if (isset($parts[$i + 1]))
                 $parts[$i + 1] = $parts[$i] . $char . $parts[$i + 1];
@@ -408,7 +408,7 @@ class Mail_RFC822
                 }
             }
 
-            $address['address'] = ltrim(substr($address['address'], mb_strlen($groupname . ':')));
+            $address['address'] = ltrim(mb_substr($address['address'], mb_strlen($groupname . ':')));
         }
 
         // If a group then split on comma and put into an array.
@@ -417,7 +417,7 @@ class Mail_RFC822
             while (mb_strlen($address['address']) > 0) {
                 $parts       = explode(',', $address['address']);
                 $addresses[] = $this->_splitCheck($parts, ',');
-                $address['address'] = trim(substr($address['address'], mb_strlen(end($addresses) . ',')));
+                $address['address'] = trim(mb_substr($address['address'], mb_strlen(end($addresses) . ',')));
             }
         } else {
             $addresses[] = $address['address'];
@@ -483,7 +483,7 @@ class Mail_RFC822
 
         for ($i = 0; $i < count($phrase_parts); $i++) {
             // If quoted string:
-            if (substr($phrase_parts[$i], 0, 1) == '"') {
+            if (mb_substr($phrase_parts[$i], 0, 1) == '"') {
                 if (!$this->_validateQuotedString($phrase_parts[$i]))
                     return false;
                 continue;
@@ -545,7 +545,7 @@ class Mail_RFC822
     function _validateQuotedString($qstring)
     {
         // Leading and trailing "
-        $qstring = substr($qstring, 1, -1);
+        $qstring = mb_substr($qstring, 1, -1);
 
         // Perform check.
         return !(preg_match('/(.)[\x0D\\\\"]/', $qstring, $matches) && $matches[1] != '\\');
@@ -573,13 +573,13 @@ class Mail_RFC822
             $before_comment = $this->_splitCheck($parts, '(');
             if ($before_comment != $_mailbox) {
                 // First char should be a (
-                $comment    = substr(str_replace($before_comment, '', $_mailbox), 1);
+                $comment    = mb_substr(str_replace($before_comment, '', $_mailbox), 1);
                 $parts      = explode(')', $comment);
                 $comment    = $this->_splitCheck($parts, ')');
                 $comments[] = $comment;
 
                 // +1 is for the trailing )
-                $_mailbox   = substr($_mailbox, mb_strpos($_mailbox, $comment)+mb_strlen($comment)+1);
+                $_mailbox   = mb_substr($_mailbox, mb_strpos($_mailbox, $comment)+mb_strlen($comment)+1);
             } else {
                 break;
             }
@@ -591,12 +591,12 @@ class Mail_RFC822
         $mailbox = trim($mailbox);
 
         // Check for name + route-addr
-        if (substr($mailbox, -1) == '>' && substr($mailbox, 0, 1) != '<') {
+        if (mb_substr($mailbox, -1) == '>' && mb_substr($mailbox, 0, 1) != '<') {
             $parts  = explode('<', $mailbox);
             $name   = $this->_splitCheck($parts, '<');
 
             $phrase     = trim($name);
-            $route_addr = trim(substr($mailbox, mb_strlen($name.'<'), -1));
+            $route_addr = trim(mb_substr($mailbox, mb_strlen($name.'<'), -1));
 
             if ($this->_validatePhrase($phrase) === false || ($route_addr = $this->_validateRouteAddr($route_addr)) === false)
                 return false;
@@ -604,8 +604,8 @@ class Mail_RFC822
         // Only got addr-spec
         } else {
             // First snip angle brackets if present.
-            if (substr($mailbox,0,1) == '<' && substr($mailbox,-1) == '>')
-                $addr_spec = substr($mailbox,1,-1);
+            if (mb_substr($mailbox,0,1) == '<' && mb_substr($mailbox,-1) == '>')
+                $addr_spec = mb_substr($mailbox,1,-1);
             else
                 $addr_spec = $mailbox;
 
@@ -668,7 +668,7 @@ class Mail_RFC822
                 return false;
             }
 
-            $addr_spec = substr($route_addr, mb_strlen($route . ':'));
+            $addr_spec = mb_substr($route_addr, mb_strlen($route . ':'));
 
             // Validate addr-spec part.
             if (($addr_spec = $this->_validateAddrSpec($addr_spec)) === false) {
@@ -787,7 +787,7 @@ class Mail_RFC822
         if (mb_strpos($addr_spec, '@') !== false) {
             $parts      = explode('@', $addr_spec);
             $local_part = $this->_splitCheck($parts, '@');
-            $domain     = substr($addr_spec, mb_strlen($local_part . '@'));
+            $domain     = mb_substr($addr_spec, mb_strlen($local_part . '@'));
 
         // No @ sign so assume the default domain.
         } else {

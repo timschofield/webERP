@@ -63,8 +63,8 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = "INSERT INTO stockcategory ('" . substr($FieldNames,0,-2) . "') 
-				VALUES ('" . substr($FieldValues,0,-2) . "') ";
+		$sql = "INSERT INTO stockcategory ('" . mb_substr($FieldNames,0,-2) . "') 
+				VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -105,7 +105,7 @@
 		foreach ($CategoryDetails as $key => $value) {
 			$sql .= $key . "='" .$value. "', ";
 		}
-		$sql = substr($sql,0,-2)." WHERE categoryid='" . $CategoryDetails['categoryid'] . "'";
+		$sql = mb_substr($sql,0,-2)." WHERE categoryid='" . $CategoryDetails['categoryid'] . "'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			echo DB_error_no($db);

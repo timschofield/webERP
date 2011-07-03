@@ -364,8 +364,8 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$stocksql = 'INSERT INTO stockmaster ('.substr($FieldNames,0,-2).') '.
-		  		'VALUES ('.substr($FieldValues,0,-2).') ';
+			$stocksql = 'INSERT INTO stockmaster ('.mb_substr($FieldNames,0,-2).') '.
+		  		'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 			$locsql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "' FROM locations";
 			DB_Txn_Begin($db);
@@ -481,7 +481,7 @@
 		foreach ($StockItemDetails as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
+		$sql = mb_substr($sql,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			echo DB_error_no($db);

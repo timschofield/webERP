@@ -9,12 +9,12 @@
 		$LastPositionPointer = $PositionPointer;
 		$PositionPointer = mb_strpos ($MsgLineText,'[',$PositionPointer);
 
-		$NewLineText = $NewLineText .  substr($MsgLineText,$LastPositionPointer,$PositionPointer-$LastPositionPointer);
+		$NewLineText = $NewLineText .  mb_substr($MsgLineText,$LastPositionPointer,$PositionPointer-$LastPositionPointer);
 
 		$LastPositionPointer = $PositionPointer;
 		$PositionPointer = mb_strpos ($MsgLineText,']',$PositionPointer);
 
-		$VariableName = substr($MsgLineText,$LastPositionPointer+1,$PositionPointer-$LastPositionPointer-1);
+		$VariableName = mb_substr($MsgLineText,$LastPositionPointer+1,$PositionPointer-$LastPositionPointer-1);
 
 		$PositionPointer++;
 
@@ -25,7 +25,7 @@
 	}
 	/* now add the text from the last ] to the end of the line */
 	$LastPositionPointer = $PositionPointer;
-	$NewLineText = $NewLineText .  substr($MsgLineText,$LastPositionPointer);
+	$NewLineText = $NewLineText .  mb_substr($MsgLineText,$LastPositionPointer);
 
 	echo "<BR>$NewLineText";
 

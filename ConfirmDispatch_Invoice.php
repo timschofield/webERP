@@ -577,7 +577,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL,$db,$ErrMsg);
 			$CheckNegRow = DB_fetch_array($Result);
-			if (($CheckNegRow['mbflag']=='B' OR $CheckNegRow['mbflag']=='M') AND substr($OrderLine->StockID,0,4)!='ASSET'){
+			if (($CheckNegRow['mbflag']=='B' OR $CheckNegRow['mbflag']=='M') AND mb_substr($OrderLine->StockID,0,4)!='ASSET'){
 				if ($CheckNegRow['quantity'] < $OrderLine->QtyDispatched){
 					prnMsg( _('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'),'error',$OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
 					$NegativesFound = true;
@@ -798,13 +798,13 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 
 		/*Test to see if the item being sold is an asset */
-		if (substr($OrderLine->StockID,0,6)=='ASSET-'){
+		if (mb_substr($OrderLine->StockID,0,6)=='ASSET-'){
 			$IsAsset = true;
 			$HyphenOccursAt = mb_strpos($OrderLine->StockID,'-',6);
 			if ($HyphenOccursAt == false){
-				$AssetNumber =   intval(substr($OrderLine->StockID,6));
+				$AssetNumber =   intval(mb_substr($OrderLine->StockID,6));
 			} else {
-				$AssetNumber =   intval(substr($OrderLine->StockID,6,mb_strlen($OrderLine->StockID)-$HyphenOccursAt-1));
+				$AssetNumber =   intval(mb_substr($OrderLine->StockID,6,mb_strlen($OrderLine->StockID)-$HyphenOccursAt-1));
 			}
 			prnMsg (_('The asset number beind disposed of is:') . ' ' . $AssetNumber, 'info');
 		} else {

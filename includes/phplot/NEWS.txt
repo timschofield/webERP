@@ -539,7 +539,7 @@ should also get logged, or written to the standard error stream, depending
 on the SAPI in use.  You can now establish an error handler to catch most
 PHPlot errors and do some cleanup before exit.
 
-+ PHPlot no longer accepts some invalid option values (such as a substring
++ PHPlot no longer accepts some invalid option values (such as a mb_substring
 of a valid value, or empty strings) passed to functions. If your
 application aborts in CheckOption with PHPlot-5.0.5 but 'worked' with
 previous releases, them you were probably using an invalid option value.

@@ -345,8 +345,8 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO custbranch ('.substr($FieldNames,0,-2).') '.
-		  'VALUES ('.substr($FieldValues,0,-2).') ';
+		$sql = 'INSERT INTO custbranch ('.mb_substr($FieldNames,0,-2).') '.
+		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -468,7 +468,7 @@
 		foreach ($BranchDetails as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."' 
+		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."' 
                                    AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);

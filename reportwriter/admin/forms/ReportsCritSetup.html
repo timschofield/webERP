@@ -254,7 +254,7 @@
       <td>
 		<select name="Params">
 		<?php foreach($CritChoices as $key=>$value) {
-			$value=substr($value,2);
+			$value=mb_substr($value,2);
 			if ($CritListings['defaults']['params']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?>
@@ -282,7 +282,7 @@
 	  <td align = "center"><?php echo $FieldDetails['seqnum']; ?></td>
       <td><?php echo $FieldDetails['fieldname']; ?></td>
       <td><?php echo $FieldDetails['displaydesc']; ?></td>
-      <td align = "center"><?php echo substr($CritChoices[$FieldDetails['params']],2); ?></td>
+      <td align = "center"><?php echo mb_substr($CritChoices[$FieldDetails['params']],2); ?></td>
       <td>
 		<INPUT type=image name="up" value="up" src="../images/upicon.png" border="0">
 		<INPUT type=image name="dn" value="down" src="../images/downicon.png" border="0">

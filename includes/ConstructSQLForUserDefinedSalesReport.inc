@@ -305,14 +305,14 @@ while ($Cols = DB_fetch_array($ColsResult)){
 
 	 $length_ColDen = $length_ColDen - $strt_ColDen - 1;
 
-	 $SQLSelectCls = $SQLSelectCls . ', ' . substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . $Cols['calcoperator'] . substr($SQLSelectCls, $strt_ColDen, $length_ColDen) . ' AS col' . ($Cols['colno'] + 8);
+	 $SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . $Cols['calcoperator'] . mb_substr($SQLSelectCls, $strt_ColDen, $length_ColDen) . ' AS col' . ($Cols['colno'] + 8);
 
 	} elseif ($Cols['calcoperator']=='C') {  /* its a calculation divided by Constant */
 
-		$SQLSelectCls = $SQLSelectCls . ', ' . substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . '/' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
+		$SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . '/' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
 
 	} elseif ($Cols['calcoperator']=='*') {  /* its a calculation multiplied by constant */
-		$SQLSelectCls = $SQLSelectCls . ', ' . substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . '*' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
+		$SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . '*' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
 
 	}
 

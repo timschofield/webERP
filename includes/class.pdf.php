@@ -326,9 +326,9 @@ if (!class_exists('Cpdf', false)) {
 				}
 			}
 	
-			$this->Cell($Width,$Height,substr($s,0,$sep),$b,2,$Align,$fill);
+			$this->Cell($Width,$Height,mb_substr($s,0,$sep),$b,2,$Align,$fill);
 			$this->x=$this->lMargin;
-			return substr($s, $sep);
+			return mb_substr($s, $sep);
 		} //end function addTextWrap
 	
 	} // end of class

@@ -196,7 +196,7 @@ function _setlocale($category, $locale) {
 function _bindtextdomain($domain, $path) {
     global $text_domains;
     // ensure $path ends with a slash ('/' should work for both, but lets still play nice)
-    if (substr(php_uname(), 0, 7) == "Windows") {
+    if (mb_substr(php_uname(), 0, 7) == "Windows") {
       if ($path[mb_strlen($path)-1] != '\\' and $path[mb_strlen($path)-1] != '/')
         $path .= '\\';
     } else {

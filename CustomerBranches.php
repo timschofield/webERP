@@ -443,7 +443,7 @@ if (!isset($SelectedBranch)){
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		echo '<div class="page_help_text">'._('No Branches are defined for').' - '.$myrow[0]. '. ' . _('You must have a minimum of one branch for each Customer. Please add a branch now.') .'</div>';
-		$_POST['BranchCode'] = substr($DebtorNo,0,10);
+		$_POST['BranchCode'] = mb_substr($DebtorNo,0,10);
 		$_POST['BrName'] = $myrow[0];
 		$_POST['BrAddress1'] = $myrow[1];
 		$_POST['BrAddress2'] = $myrow[2];

@@ -776,11 +776,11 @@ if($WORow['controlled']==1){ //controlled
 		$LotSNRefNumeric =$WORow['nextlotsnref'];
 		$StringBitOfLotSNRef ='';
 	} else { //try to determine if the serial ref is an amalgamation of a text part and a numerical part and increment the numerical part only
-		while (is_numeric(substr($WORow['nextlotsnref'],$LotSNRefLength-$EndOfTextPartPointer-1)) AND
-			substr($WORow['nextlotsnref'],$LotSNRefLength-$EndOfTextPartPointer-1,1)!='-'){
+		while (is_numeric(mb_substr($WORow['nextlotsnref'],$LotSNRefLength-$EndOfTextPartPointer-1)) AND
+			mb_substr($WORow['nextlotsnref'],$LotSNRefLength-$EndOfTextPartPointer-1,1)!='-'){
 			$EndOfTextPartPointer++;
-			$LotSNRefNumeric = substr($WORow['nextlotsnref'],$LotSNRefLength-$EndOfTextPartPointer);
-			$StringBitOfLotSNRef = substr($WORow['nextlotsnref'],0,$LotSNRefLength-$EndOfTextPartPointer);
+			$LotSNRefNumeric = mb_substr($WORow['nextlotsnref'],$LotSNRefLength-$EndOfTextPartPointer);
+			$StringBitOfLotSNRef = mb_substr($WORow['nextlotsnref'],0,$LotSNRefLength-$EndOfTextPartPointer);
 		}
 	}
 

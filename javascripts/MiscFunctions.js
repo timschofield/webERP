@@ -136,8 +136,8 @@ return "<button onClick='drawCalendar(\""+mD+"\","+nY+","+nM+","+1+",\""+dF+"\")
 function formatDate(dV,dF){
 	ds=String(dV.getDate());
 	ms=String(dV.getMonth()+1);
-	d=("0"+dV.getDate()).substring(ds.length-1,ds.length+1);
-	m=("0"+(dV.getMonth()+1)).substring(ms.length-1,ms.length+1);
+	d=("0"+dV.getDate()).mb_substring(ds.length-1,ds.length+1);
+	m=("0"+(dV.getMonth()+1)).mb_substring(ms.length-1,ms.length+1);
 	y=dV.getFullYear();
 	switch (dF) {
 		case "d/m/Y":

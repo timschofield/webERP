@@ -134,8 +134,8 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	$rejects=array();
 	$defers=array();
 	foreach ($_POST as $key => $value) {
-		if(substr($key,0,6)=='action') {
-			$OfferID=substr($key,6);
+		if(mb_substr($key,0,6)=='action') {
+			$OfferID=mb_substr($key,6);
 			switch ($value) {
 				case 1:
 					$accepts[]=$OfferID;

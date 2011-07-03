@@ -46,7 +46,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			$filename = './companies/' . $_POST['NewCompany'] . '/logo.jpg';
 
 			//But check for the worst
-			if (strtoupper(substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
+			if (strtoupper(mb_substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
 				prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 				$UploadTheLogo ='No';
 			} elseif ( $_FILES['LogoFile']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
@@ -103,23 +103,23 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 
 					$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
 
-					if (substr($SQLScriptFile[$i], 0, 2) != '--'
-						AND substr($SQLScriptFile[$i], 0, 3) != 'USE'
+					if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
+						AND mb_substr($SQLScriptFile[$i], 0, 3) != 'USE'
 						AND strstr($SQLScriptFile[$i],'/*')==FALSE
 						AND mb_strlen($SQLScriptFile[$i])>1){
 
 						$SQL .= ' ' . $SQLScriptFile[$i];
 
 						//check if this line kicks off a function definition - pg chokes otherwise
-						if (substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
+						if (mb_substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
 							$InAFunction = true;
 						}
 						//check if this line completes a function definition - pg chokes otherwise
-						if (substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
+						if (mb_substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
 							$InAFunction = false;
 						}
 						if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
-							$SQL = substr($SQL,0,mb_strlen($SQL)-1);
+							$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 							$result = DB_query($SQL, $db, $ErrMsg);
 							$SQL='';
 						}

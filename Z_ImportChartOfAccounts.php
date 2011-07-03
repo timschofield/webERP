@@ -33,10 +33,10 @@ if (isset($_POST['update'])) {
     	$FieldValues = explode(',', $buffer);
     	if ($FieldValues[0]!='') {
     		for ($i=0; $i<sizeof($FieldValues); $i++) {
-    			if (substr($FieldNames[$i],0,6)=='group_' or $FieldNames[$i]=='group_') {
-    				$FieldNames[$i] = substr($FieldNames[$i],0,6);
-    				$FieldValues[$i] = substr($FieldValues[$i], 0, mb_strlen($FieldValues[$i])-1);
-    				$FieldValues[$i] = substr($FieldValues[$i], 0, 30);
+    			if (mb_substr($FieldNames[$i],0,6)=='group_' or $FieldNames[$i]=='group_') {
+    				$FieldNames[$i] = mb_substr($FieldNames[$i],0,6);
+    				$FieldValues[$i] = mb_substr($FieldValues[$i], 0, mb_strlen($FieldValues[$i])-1);
+    				$FieldValues[$i] = mb_substr($FieldValues[$i], 0, 30);
     			}
     			$AccountDetails[$FieldNames[$i]]=$FieldValues[$i];
     		}

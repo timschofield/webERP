@@ -189,10 +189,10 @@ class Numbers_Words_es_AR extends Numbers_Words
         $ret = '';
 
         // add a the word for the minus sign if necessary
-        if (substr($num, 0, 1) == '-')
+        if (mb_substr($num, 0, 1) == '-')
         {
             $ret = $this->_sep . $this->_minus;
-            $num = substr($num, 1);
+            $num = mb_substr($num, 1);
         }
 
 
@@ -212,13 +212,13 @@ class Numbers_Words_es_AR extends Numbers_Words
             {
                 // convert the number above the first 6 digits
                 // with it's corresponding $power.
-                $snum = substr($num, 0, -6);
+                $snum = mb_substr($num, 0, -6);
                 $snum = preg_replace('/^0+/','',$snum);
                 if ($snum !== '') {
                     $ret .= $this->toWords($snum, $power + 6);
                 }
             }
-            $num = substr($num, -6);
+            $num = mb_substr($num, -6);
             if ($num == 0) {
                 return $ret;
             }

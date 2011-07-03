@@ -65,10 +65,10 @@ class Numbers_Words
 		if (!file_exists('Numbers/Words/lang.' . $locale . '.php')){
         	//try to drop off the .utf8 suffix then recheck
         	if (mb_strpos($locale,'.utf8')){
-				$locale = substr($locale, 0,mb_strpos($locale,'.utf8'));
+				$locale = mb_substr($locale, 0,mb_strpos($locale,'.utf8'));
 			}
 			if (!file_exists('Numbers/Words/lang.' . $locale . '.php')){
-				$locale = substr($locale,0,2);
+				$locale = mb_substr($locale,0,2);
 			}
 			if (!file_exists('Numbers/Words/lang.' . $locale . '.php')){
 				$locale = 'en_US';

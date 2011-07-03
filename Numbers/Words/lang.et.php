@@ -235,9 +235,9 @@ class Numbers_Words_et extends Numbers_Words
     function toWords($num, $power = 0, $powsuffix = '') {
       $ret = '';        
       
-      if (substr($num, 0, 1) == '-') {
+      if (mb_substr($num, 0, 1) == '-') {
         $ret = $this->_sep . $this->_minus;
-        $num = substr($num, 1);
+        $num = mb_substr($num, 1);
       }
         
       $num = trim($num);
@@ -248,7 +248,7 @@ class Numbers_Words_et extends Numbers_Words
           $curp = $maxp;
           for ($p = $maxp; $p > 0; --$p) { // power
             if (isset($this->_exponent[$p])) {
-              $snum = substr($num, $maxp - $curp, $curp - $p + 1);
+              $snum = mb_substr($num, $maxp - $curp, $curp - $p + 1);
               $snum = preg_replace('/^0+/','',$snum);
               if ($snum !== '') {
                   $cursuffix = $this->_exponent[$power][count($this->_exponent[$power])-1];
@@ -260,7 +260,7 @@ class Numbers_Words_et extends Numbers_Words
               continue;
             }
           }
-          $num = substr($num, $maxp - $curp, $curp - $p + 1);
+          $num = mb_substr($num, $maxp - $curp, $curp - $p + 1);
           if ($num == 0) {
               return $ret;
           }
@@ -272,13 +272,13 @@ class Numbers_Words_et extends Numbers_Words
       
       switch(mb_strlen($num)) {
         case 3:
-          $h = (int)substr($num,-3,1);
+          $h = (int)mb_substr($num,-3,1);
 
         case 2:
-          $t = (int)substr($num,-2,1);
+          $t = (int)mb_substr($num,-2,1);
 
         case 1:
-          $d = (int)substr($num,-1,1);
+          $d = (int)mb_substr($num,-1,1);
           break;
 
         case 0:

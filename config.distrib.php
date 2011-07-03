@@ -79,7 +79,7 @@ eg. if the files are under the webserver root directory then rootpath =''; if th
 $rootpath = dirname($_SERVER['PHP_SELF']);
 if (isset($DirectoryLevelsDeep)){
 	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
-		$rootpath = substr($rootpath,0, strrpos($rootpath,'/'));
+		$rootpath = mb_substr($rootpath,0, strrpos($rootpath,'/'));
 	}
 }
 

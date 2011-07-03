@@ -116,8 +116,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 /*will only be true if page called from customer selection form
 parse the $Select string into customer code and branch code */
 
-	 $_SESSION['CreditItems']->Branch = substr($_POST['Select'],mb_strpos($_POST['Select'],' - ')+3);
-	 $_POST['Select'] = substr($_POST['Select'],0,mb_strpos($_POST['Select'],' - '));
+	 $_SESSION['CreditItems']->Branch = mb_substr($_POST['Select'],mb_strpos($_POST['Select'],' - ')+3);
+	 $_POST['Select'] = mb_substr($_POST['Select'],0,mb_strpos($_POST['Select'],' - '));
 
 /*Now retrieve customer information - name, salestype, currency, terms etc */
 

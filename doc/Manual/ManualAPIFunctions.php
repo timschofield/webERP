@@ -26,7 +26,7 @@ $myrow=DB_fetch_array($result);
 $weberppassword = $myrow[0];
 
 $ServerString = $_SERVER['HTTP_HOST'].$rootpath;
-$FirstBitOfURL = substr($ServerString,0,mb_strpos($ServerString,'/doc/Manual'));
+$FirstBitOfURL = mb_substr($ServerString,0,mb_strpos($ServerString,'/doc/Manual'));
 
 
 $ServerURL = "http://".  $FirstBitOfURL ."/api/api_xml-rpc.php";

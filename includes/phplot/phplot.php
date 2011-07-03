@@ -724,7 +724,7 @@ class PHPlot {
             $t++;
         }
         // Remove trailing comma and add closing parenthesis
-        $this->default_dashed_style = substr($this->default_dashed_style, 0, -1);
+        $this->default_dashed_style = mb_substr($this->default_dashed_style, 0, -1);
         $this->default_dashed_style .= ')';
 
         return TRUE;

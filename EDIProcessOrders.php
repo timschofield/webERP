@@ -78,9 +78,9 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 		$LineText = StripTrailingComma($LineText);
 		echo "<br />".$LineText;
 
-		if ($SegTag != substr($LineText,0,3)){
+		if ($SegTag != mb_substr($LineText,0,3)){
 			$SegCounter=1;
-			$SegTag = substr($LineText,0,3);
+			$SegTag = mb_substr($LineText,0,3);
 		} else {
 			$SegCounter++;
 			if ($SegCounter > $Seg[$SegID]['MaxOccur']){
@@ -119,17 +119,17 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 		echo '<br />' . _('The segment tag') . ' ' . $SegTag . ' ' . _('is being processed');
 		switch ($SegTag){
 			case 'UNH':
-				$UNH_elements = explode ('+',substr($LineText,4));
+				$UNH_elements = explode ('+',mb_substr($LineText,4));
 				$Order->Comments .= _('Customer EDI Ref') . ': ' . $UNH_elements[0];
 				$EmailText .= "\n" . _('EDI Message Ref') . ': ' . $UNH_elements[0];
-				if (substr($UNH_elements[1],0,6)!='ORDERS'){
+				if (mb_substr($UNH_elements[1],0,6)!='ORDERS'){
 					$EmailText .= "\n" . _('This message is not an order');
 					$TryNextFile = True;
 				}
 
 				break;
 			case 'BGM':
-				$BGM_elements = explode('+',substr($LineText,4));
+				$BGM_elements = explode('+',mb_substr($LineText,4));
 				$BGM_C002 = explode(':',$BGM_elements[0]);
 				switch ($BGM_C002[0]){
 					case '220':
@@ -239,7 +239,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				break;
 			case 'DTM':
 				/*explode into an arrage all items delimited by the : - only after the + */
-				$DTM_C507 = explode(':',substr($LineText,4));
+				$DTM_C507 = explode(':',mb_substr($LineText,4));
 				$LocalFormatDate = ConvertEDIDate($DTM_C507[1],$DTM_C507[2]);
 
 				switch ($DTM_C507[0]){
@@ -294,7 +294,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				break;
 			case 'PAI':
 				/*explode into an array all items delimited by the : - only after the + */
-				$PAI_C534 = explode(':',substr($LineText,4));
+				$PAI_C534 = explode(':',mb_substr($LineText,4));
 				if ($PAI_C534[0]=='1'){
 					$EmailText .= "\n" . _('Payment will be effected by a direct payment for this order');
 				} elseif($PAI_C534[0]=='OA'){
@@ -318,7 +318,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				}
 				break;
 			case 'ALI':
-				$ALI = explode('+',substr($LineText,4));
+				$ALI = explode('+',mb_substr($LineText,4));
 				if (mb_strlen($ALI[0])>1){
 					$EmailText .= "\n" . _('Goods of origin') . ' ' . $ALI[0];
 				}
@@ -347,7 +347,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				}
 				break;
 			case 'FTX':
-				$FTX = explode('+',substr($LineText,4));
+				$FTX = explode('+',mb_substr($LineText,4));
 				/*agreed coded text is not catered for ... yet
 				only free form text */
 				if (mb_strlen($FTX[3])>5){
@@ -357,7 +357,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				}
 				break;
 			case 'RFF':
-				$RFF = explode(':',substr($LineText,4));
+				$RFF = explode(':',mb_substr($LineText,4));
 				switch ($RFF[0]){
 					case 'AE':
 						$MsgText = "\n" . _('Authorisation for expense no') . ' ' . $RFF[1];
@@ -404,7 +404,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 				$EmailText .= $MsgText;
 				break;
 			case 'NAD':
-				$NAD = explode('+',substr($LineText,4));
+				$NAD = explode('+',mb_substr($LineText,4));
 				$NAD_C082 = explode(':', $NAD[1]);
 				$NAD_C058 = explode(':', $NAD[2]); /*Not used according to MIG */
 				$NAD_C080 = explode(':', $NAD[3]);
@@ -561,7 +561,7 @@ include ('includes/footer.inc');
 function StripTrailingComma ($StringToStrip){
 
 	if (strrpos($StringToStrip,"'")){
-		Return substr($StringToStrip,0,strrpos($StringToStrip,"'"));
+		Return mb_substr($StringToStrip,0,strrpos($StringToStrip,"'"));
 	} else {
 		Return $StringToStrip;
 	}

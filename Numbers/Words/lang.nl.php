@@ -166,9 +166,9 @@ class Numbers_Words_nl extends Numbers_Words
       $ret = '';
 
       // add a minus sign
-      if (substr($num, 0, 1) == '-') {
+      if (mb_substr($num, 0, 1) == '-') {
         $ret = $this->_sep . $this->_minus;
-        $num = substr($num, 1);
+        $num = mb_substr($num, 1);
       }
 
       // strip excessive zero signs and spaces
@@ -182,8 +182,8 @@ class Numbers_Words_nl extends Numbers_Words
 
             // check for highest power
             if (isset($this->_exponent[$p])) {
-              // send substr from $curp to $p
-              $snum = substr($num, $maxp - $curp, $curp - $p + 1);
+              // send mb_substr from $curp to $p
+              $snum = mb_substr($num, $maxp - $curp, $curp - $p + 1);
               $snum = preg_replace('/^0+/','',$snum);
               if ($snum !== '') {
                   $cursuffix = $this->_exponent[$power][count($this->_exponent[$power])-1];
@@ -195,7 +195,7 @@ class Numbers_Words_nl extends Numbers_Words
               continue;
             }
           }
-          $num = substr($num, $maxp - $curp, $curp - $p + 1);
+          $num = mb_substr($num, $maxp - $curp, $curp - $p + 1);
           if ($num == 0) {
               return $ret;
           }
@@ -207,13 +207,13 @@ class Numbers_Words_nl extends Numbers_Words
 
       switch(mb_strlen($num)) {
         case 3:
-          $h = (int)substr($num,-3,1);
+          $h = (int)mb_substr($num,-3,1);
 
         case 2:
-          $t = (int)substr($num,-2,1);
+          $t = (int)mb_substr($num,-2,1);
 
         case 1:
-          $d = (int)substr($num,-1,1);
+          $d = (int)mb_substr($num,-1,1);
           break;
 
         case 0:

@@ -130,12 +130,12 @@ if (isset($_POST['ExRate'])){
 	$_SESSION['SuppTrans']->Comments = $_POST['Comments'];
 	$_SESSION['SuppTrans']->TranDate = $_POST['TranDate'];
 
-	if (substr( $_SESSION['SuppTrans']->Terms,0,1)=='1') { /*Its a day in the following month when due */
-		$DayInFollowingMonth = (int) substr( $_SESSION['SuppTrans']->Terms,1);
+	if (mb_substr( $_SESSION['SuppTrans']->Terms,0,1)=='1') { /*Its a day in the following month when due */
+		$DayInFollowingMonth = (int) mb_substr( $_SESSION['SuppTrans']->Terms,1);
 		$DaysBeforeDue = 0;
 	} else { /*Use the Days Before Due to add to the invoice date */
 		$DayInFollowingMonth = 0;
-		$DaysBeforeDue = (int) substr( $_SESSION['SuppTrans']->Terms,1);
+		$DaysBeforeDue = (int) mb_substr( $_SESSION['SuppTrans']->Terms,1);
 	}
 
 	$_SESSION['SuppTrans']->DueDate = CalcDueDate($_SESSION['SuppTrans']->TranDate, $DayInFollowingMonth, $DaysBeforeDue);

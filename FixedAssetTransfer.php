@@ -9,8 +9,8 @@ $title = _('Change Asset Location');
 include('includes/header.inc');
 
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
-	if (substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off
-		$AssetID=substr($AssetToMove,4);
+	if (mb_substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off
+		$AssetID=mb_substr($AssetToMove,4);
 		$sql="UPDATE fixedassets
 					SET assetlocation='".$_POST['Location'.$AssetID] ."'
 					WHERE assetid='". $AssetID . "'";
