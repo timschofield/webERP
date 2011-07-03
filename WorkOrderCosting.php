@@ -155,7 +155,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	$IssuesResult = DB_query("SELECT stockmoves.trandate,
 									stockmoves.qty,
 									stockmoves.standardcost,
-									stockmaster.decimalplaces,
+									stockmaster.decimalplaces
 								FROM stockmoves INNER JOIN stockmaster
 								ON stockmoves.stockid = stockmaster.stockid
 								WHERE stockmoves.type=28

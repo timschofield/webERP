@@ -84,7 +84,7 @@ $pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
 $FontSize=12;
 $PageNumber = 1;
 $line_height=15;
-// $pdf->selectFont('./fonts/Helvetica.afm');
+
 
 /* Now ... Has the order got any line items still outstanding to be invoiced */
 
@@ -224,28 +224,16 @@ if (DB_num_rows($result)>0){
 } /*end if there are line details to show on the quotation*/
 
 
-//$pdfcode = $pdf->output('PDFQuotation.pdf', 'I');
-//$len = mb_strlen($pdfcode);
 if ($ListCount == 0){
-        $title = _('Print Quotation Error');
-        include('includes/header.inc');
-        echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
-                '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&Quotation=Quotes_only">'. _('Print Another Quotation').
-                '</a>' . '<br />'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
-        include('includes/footer.inc');
+	$title = _('Print Quotation Error');
+	include('includes/header.inc');
+	echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
+			'<br /><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&Quotation=Quotes_only">'. _('Print Another Quotation').
+			'</a>' . '<br />'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	include('includes/footer.inc');
 	exit;
 } else {
-/*
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=Quotation.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-//echo 'here';
-	$pdf->Output('PDFQuotation.pdf', 'I');
-*/
-    $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
+    $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');
+    $pdf->__destruct();
 }
 ?>

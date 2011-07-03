@@ -30,7 +30,8 @@ if (!isset($_POST['Show'])) {
 			<td><select name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults)==0){
-		echo '</select></td></tr></table><p>';
+		echo '</select></td>
+				</tr></table>';
 		prnMsg( _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'),'warn');
 		include('includes/footer.inc');
 		exit;
@@ -41,9 +42,9 @@ if (!isset($_POST['Show'])) {
 				$_POST['BankAccount']=$myrow['accountcode'];
 			}
 			if ($_POST['BankAccount']==$myrow['accountcode']){
-				echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'];
+				echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'];
+				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
 			}
 		}
 		echo '</select></td></tr>';
@@ -95,9 +96,9 @@ if (!isset($_POST['Show'])) {
 	} else {
 		$BankDetailRow = DB_fetch_array($BankResult);
 		echo '<table class=selection>
-						<tr>
-							<th colspan=7><font size=3 color=blue>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</font></th>
-						</tr>';
+				<tr>
+					<th colspan=7><font size=3 color=blue>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</font></th>
+				</tr>';
 		echo '<tr>
 				<th>' . ('Date') . '</th>
 				<th>'._('Transaction type').'</th>

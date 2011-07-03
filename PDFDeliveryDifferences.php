@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.15 $ */
-
-//$PageSecurity = 3;
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -27,42 +24,51 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
 		. _('Delivery Differences Report') . '</p>';
 
-	 echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . '?' . sid . "'>";
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	 echo '<table class=selection><tr><td>' . _('Enter the date from which variances between orders and deliveries are to be listed') .
-	 	":</td><td><input type=text class=date alt='".$_SESSION['DefaultDateFormat'].
-	 	"' name='FromDate' maxlength=10 size=10 value='" .
-	 	Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></td></tr>";
-	 echo '<tr><td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</td><td><input type=text class=date alt='".$_SESSION['DefaultDateFormat']."'  name='ToDate' maxlength=10 size=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></td></tr>";
+	echo '<table class=selection>
+			<tr>
+			<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
+			<td><input type=text class="date" alt="' . $_SESSION['DefaultDateFormat']. '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '"></td>
+			</tr>';
+	 echo '<tr>
+			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat']. '"  name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+			</tr>';
 	 echo '<tr><td>' . _('Inventory Category') . '</td><td>';
 
 	 $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	 $result = DB_query($sql,$db);
 
 
-	 echo "<select name='CategoryID'>";
-	 echo "<option selected value='All'>" . _('Over All Categories');
+	 echo '<select name="CategoryID">';
+	 echo '<option selected value="All">' . _('Over All Categories') . '</option>';
 
-	 while ($myrow=DB_fetch_array($result)){
-	echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
-	 }
-
+	while ($myrow=DB_fetch_array($result)){
+		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription']  . '</option>';
+	}
 
 	 echo '</select></td></tr>';
 
-	 echo '<tr><td>' . _('Inventory Location') . ":</td><td><select name='Location'>";
-	 echo "<option selected value='All'>" . _('All Locations');
+	 echo '<tr><td>' . _('Inventory Location') . ':</td>
+			<td><select name="Location">
+				<option selected value="All">' . _('All Locations')  . '</option>';
 
-	 $result= DB_query('SELECT loccode, locationname FROM locations',$db);
-	 while ($myrow=DB_fetch_array($result)){
-	echo "<option value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
-	 }
+	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
+	while ($myrow=DB_fetch_array($result)){
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+	}
 	 echo '</select></td></tr>';
 
-	 echo '<tr><td>' . _('Email the report off') . ":</td><td><select name='Email'>";
-	 echo "<option selected value='No'>" . _('No');
-	 echo "<option value='Yes'>" . _('Yes');
-	 echo "</select></td></tr></table><br /><div class='centre'><input type=submit name='Go' VALUE='" . _('Create PDF') . "'></div>";
+	 echo '<tr><td>' . _('Email the report off') . ':</td>
+				<td><select name="Email">
+					<option selected value="No">' . _('No')  . '</option>
+					<option value="Yes">' . _('Yes')  . '</option>
+					</select>
+				</td>
+			</tr>
+			</table>
+			<br />
+			<div class="centre"><input type="submit" name="Go" value="' . _('Create PDF') . '"></div>';
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');
@@ -257,20 +263,8 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number 
 $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . '%', 'left');
 
-/* UldisN
-$pdfcode = $pdf->output();
-$len = mb_strlen($pdfcode);
-header('Content-type: application/pdf');
-header('Content-Length: ' . $len);
-header('Content-Disposition: inline; filename=DeliveryDifferences.pdf');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
-$pdf->stream();
-*/
 $ReportFileName = $_SESSION['DatabaseName'] . '_DeliveryDifferences_' . date('Y-m-d').'.pdf';
-$pdf->OutputD($ReportFileName);//UldisN
+$pdf->OutputD($ReportFileName);
 
 if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){

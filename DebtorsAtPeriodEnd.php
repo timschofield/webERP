@@ -27,28 +27,29 @@ if (isset($_POST['PrintPDF'])
 	  /*Now figure out the aged analysis for the customer range under review */
 
 	$SQL = "SELECT debtorsmaster.debtorno,
-			debtorsmaster.name,
-  			currencies.currency,
-			SUM((debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)/debtortrans.rate) AS balance,
-			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
-			SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
-			(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
-			SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "'
-				AND (debtortrans.type=11 OR debtortrans.type=12) THEN
-				debtortrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
-			SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
-			debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount ELSE 0 END
-			) AS fxafterdatetrans
-			FROM debtorsmaster,
-				currencies,
-				debtortrans
-			WHERE debtorsmaster.currcode = currencies.currabrev
-			AND debtorsmaster.debtorno = debtortrans.debtorno
-			AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
+					debtorsmaster.name,
+		  			currencies.currency,
+		  			currencies.decimalplaces,
+					SUM((debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)/debtortrans.rate) AS balance,
+					SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
+					SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
+					(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
+					SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "'
+						AND (debtortrans.type=11 OR debtortrans.type=12) THEN
+						debtortrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
+					SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
+					debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount ELSE 0 END
+					) AS fxafterdatetrans
+			FROM debtorsmaster INNER JOIN currencies
+			ON debtorsmaster.currcode = currencies.currabrev
+			INNER JOIN debtortrans 
+			ON debtorsmaster.debtorno = debtortrans.debtorno 
+			WHERE debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 			AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY debtorsmaster.debtorno,
 				debtorsmaster.name,
-				currencies.currency";
+				currencies.currency,
+				currencies.decimalplaces";
 
 	$CustomerResult = DB_query($SQL,$db,'','',false,false);
 
@@ -84,8 +85,8 @@ if (isset($_POST['PrintPDF'])
 
 		if (abs($Balance)>0.009 OR ABS($FXBalance)>0.009) {
 
-			$DisplayBalance = number_format($DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'],2);
-			$DisplayFXBalance = number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],2);
+			$DisplayBalance = number_format($DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'],$DebtorBalances['decimalplaces']);
+			$DisplayFXBalance = number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],$DebtorBalances['decimalplaces']);
 
 			$TotBal += $Balance;
 
@@ -109,7 +110,7 @@ if (isset($_POST['PrintPDF'])
 		include('includes/PDFDebtorBalsPageHeader.inc');
 	}
 
-	$DisplayTotBalance = number_format($TotBal,2);
+	$DisplayTotBalance = number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
 
 	$LeftOvers = $pdf->addTextWrap(50,$YPos,160,$FontSize,_('Total balances'),'left');
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');

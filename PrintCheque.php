@@ -2,10 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.5 $ */
-
-//$PageSecurity = 5;
-
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
 include('Numbers/Words.php');
@@ -58,8 +54,6 @@ $LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize, $AmountWords, 'left');
 $LeftOvers = $pdf->addTextWrap(375,$YPos,100,$FontSize, number_format($_SESSION['PaymentDetail']->Amount,2), 'right');
 
 
-
-
 // remittance advice 1
 $YPos -= 14*$line_height;
 $LeftOvers = $pdf->addTextWrap(0,$YPos,$Page_Width,$FontSize,_('Remittance Advice'), 'center');
@@ -87,26 +81,7 @@ $LeftOvers = $pdf->addTextWrap(25,$YPos,75,$FontSize,$_SESSION['PaymentDetail']-
 $LeftOvers = $pdf->addTextWrap(100,$YPos,100,$FontSize,$_SESSION['PaymentDetail']->SupplierID, 'left');
 $LeftOvers = $pdf->addTextWrap(250,$YPos,75,$FontSize,$_GET['ChequeNum'], 'left');
 $LeftOvers = $pdf->addTextWrap(350,$YPos,75,$FontSize,number_format(round($_SESSION['PaymentDetail']->Amount,2),2), 'left');
-/* UldisN
-$pdfcode = $pdf->output();
-$len = mb_strlen($pdfcode);
 
-if ($len<=1){
-	$title = _('Print Check Error');
-	include('includes/header.inc');
-	prnMsg(_('Could not print the cheque'),'warn');
-	include('includes/footer.inc');
-	exit;
-} else {
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=Cheque.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-	$pdf->Output('PrintCheque.pdf', 'I');
-}
-*/
-$pdf->OutputD($_SESSION['DatabaseName'] . '_Cheque_' . date('Y-m-d') . '_ChequeNum_' . $_GET['ChequeNum'] . '.pdf');//UldisN
-$pdf->__destruct(); //UldisN
+$pdf->OutputD($_SESSION['DatabaseName'] . '_Cheque_' . date('Y-m-d') . '_ChequeNum_' . $_GET['ChequeNum'] . '.pdf');
+$pdf->__destruct();
 ?>

@@ -40,7 +40,7 @@ $EarliestDispatch = CalcEarliestDispatchDate();
 if (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 	/*need to check for input errors in any case before order processed */
-	$_POST['Update']='Yes rerun the validation checks';
+	$_POST['Update']='Yes rerun the validation checks'; //no need for gettext!
 
 	/*store the old freight cost before it is recalculated to ensure that there has been no change - test for change after freight recalculated and get user to re-confirm if changed */
 
@@ -126,22 +126,22 @@ if (isset($_POST['Update'])
 			}
 		}
 		$sql = "SELECT custbranch.brname,
-				custbranch.braddress1,
-				custbranch.braddress2,
-				custbranch.braddress3,
-				custbranch.braddress4,
-				custbranch.braddress5,
-				custbranch.braddress6,
-				custbranch.phoneno,
-				custbranch.email,
-				custbranch.defaultlocation,
-				custbranch.defaultshipvia,
-				custbranch.deliverblind,
-				custbranch.specialinstructions,
-				custbranch.estdeliverydays
-			FROM custbranch
-			WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-			AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
+					custbranch.phoneno,
+					custbranch.email,
+					custbranch.defaultlocation,
+					custbranch.defaultshipvia,
+					custbranch.deliverblind,
+					custbranch.specialinstructions,
+					custbranch.estdeliverydays
+				FROM custbranch
+				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
+				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
@@ -256,7 +256,7 @@ if (isset($_POST['Update'])
 if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
 
 	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/RecurringSalesOrders.php?identifier='.$identifier   .  '&NewRecurringOrder=Yes">';
-	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' ."<a href='" . $rootpath . '/RecurringOrders.php?identifier='.$identifier  . "&NewRecurringOrder=Yes'>". _('click here') .'</a> '. _('to continue'),'info');
+	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $rootpath . '/RecurringOrders.php?identifier='.$identifier  . '&NewRecurringOrder=Yes">'. _('click here') .'</a> '. _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -569,7 +569,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
 
-			echo '<br /><table class=selection>
+			echo '<br /><table class="selection">
 					<tr>
 						<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt=""></td>
 						<td>' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a></td>
@@ -591,13 +591,13 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			echo '<br /><table class=selection>
 					<tr>
 						<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
-						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Landscape)') .'</a></td>
+						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Landscape)') .'</a></td>
 					</tr>
 					</table>';
 			echo '<br /><table class=selection>
 					<tr>
 						<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
-						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?' . SID .'identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Portrait)') .'</a></td>
+						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Portrait)') .'</a></td>
 					</tr>
 					</table>';
 		}
@@ -639,7 +639,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			$ErrMsg = _('Could not update the contract status');
 			$DbgMsg = _('The SQL that failed to update the contract status was');
 			$UpdContractResult=DB_query("UPDATE contracts SET status=2,
-																wo='" . $WONo . "'
+															wo='" . $WONo . "'
 										WHERE orderno='" .$_SESSION['ExistingOrder'] . "'", $db,$ErrMsg,$DbgMsg,true);
 			$ErrMsg = _('Could not insert the contract bill of materials');
 			$InsContractBOM = DB_query("INSERT INTO bom (parent,
@@ -653,7 +653,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 													workcentreadded,
 												'" . $_SESSION['Items'.$identifier]->Location ."',
 												'" . Date('Y-m-d') . "',
-												'2037-12-31'
+												'2099-12-31'
 											FROM contractbom
 											WHERE contractref='" . $ContractRow['contractref'] . "'",$db,$ErrMsg,$DbgMsg);
 
@@ -707,31 +707,30 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	} //end test to see if the order was a contract quotation being changed to an order
 
 
-	$HeaderSQL = "UPDATE salesorders
-			SET debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-				branchcode = '" . $_SESSION['Items'.$identifier]->Branch . "',
-				customerref = '". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
-				comments = '". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."',
-				ordertype = '" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
-				shipvia = '" . $_POST['ShipVia'] . "',
-				deliverydate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->DeliveryDate)) . "',
-				quotedate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->QuoteDate)) . "',
-				confirmeddate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->ConfirmedDate)) . "',
-				deliverto = '" . DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
-				deladd1 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd1) . "',
-				deladd2 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd2) . "',
-				deladd3 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd3) . "',
-				deladd4 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd4) . "',
-				deladd5 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd5) . "',
-				deladd6 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "',
-				contactphone = '" . $_SESSION['Items'.$identifier]->PhoneNo . "',
-				contactemail = '" . $_SESSION['Items'.$identifier]->Email . "',
-				freightcost = '" . $_SESSION['Items'.$identifier]->FreightCost ."',
-				fromstkloc = '" . $_SESSION['Items'.$identifier]->Location ."',
-				printedpackingslip = '" . $_POST['ReprintPackingSlip'] . "',
-				quotation = '" . $_SESSION['Items'.$identifier]->Quotation . "',
-				deliverblind = '" . $_SESSION['Items'.$identifier]->DeliverBlind . "'
-			WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'] ."'";
+	$HeaderSQL = "UPDATE salesorders SET debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+										branchcode = '" . $_SESSION['Items'.$identifier]->Branch . "',
+										customerref = '". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
+										comments = '". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."',
+										ordertype = '" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
+										shipvia = '" . $_POST['ShipVia'] . "',
+										deliverydate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->DeliveryDate)) . "',
+										quotedate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->QuoteDate)) . "',
+										confirmeddate = '" . FormatDateForSQL(DB_escape_string($_SESSION['Items'.$identifier]->ConfirmedDate)) . "',
+										deliverto = '" . DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
+										deladd1 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd1) . "',
+										deladd2 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd2) . "',
+										deladd3 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd3) . "',
+										deladd4 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd4) . "',
+										deladd5 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd5) . "',
+										deladd6 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "',
+										contactphone = '" . $_SESSION['Items'.$identifier]->PhoneNo . "',
+										contactemail = '" . $_SESSION['Items'.$identifier]->Email . "',
+										freightcost = '" . $_SESSION['Items'.$identifier]->FreightCost ."',
+										fromstkloc = '" . $_SESSION['Items'.$identifier]->Location ."',
+										printedpackingslip = '" . $_POST['ReprintPackingSlip'] . "',
+										quotation = '" . $_SESSION['Items'.$identifier]->Quotation . "',
+										deliverblind = '" . $_SESSION['Items'.$identifier]->DeliverBlind . "'
+						WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'] ."'";
 
 	$DbgMsg = _('The SQL that was used to update the order and failed was');
 	$ErrMsg = _('The order cannot be updated because');

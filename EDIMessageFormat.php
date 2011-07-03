@@ -31,13 +31,13 @@ if (isset($_POST['NewEDIInvMsg'])){
 						sequenceno,
 						section,
 						linetext)
-		SELECT '".$PartnerCode."',
-			'INVOIC',
-			sequenceno,
-			section,
-			linetext
-		FROM edimessageformat
-		WHERE partnercode='DEFAULT'
+			SELECT '".$PartnerCode."',
+				'INVOIC',
+				sequenceno,
+				section,
+				linetext
+			FROM edimessageformat
+			WHERE partnercode='DEFAULT'
 			AND messagetype='INVOIC'";
 
 	$ErrMsg = _('There was an error inserting the default template invoice message records for') . ' ' . $PartnerCode . ' ' . _('because');
@@ -113,23 +113,23 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 	$sql = "SELECT id,
-			section,
-			sequenceno,
-			linetext
-		FROM edimessageformat
-		WHERE partnercode='" . $PartnerCode . "'
-		AND messagetype='" . $MessageType . "'
-		ORDER BY sequenceno";
+				section,
+				sequenceno,
+				linetext
+			FROM edimessageformat
+			WHERE partnercode='" . $PartnerCode . "'
+			AND messagetype='" . $MessageType . "'
+			ORDER BY sequenceno";
 
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>';
 	echo '<tr><th colspan=5><font size=3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode.'</font></th></tr>';
 	$TableHeader = '<tr>
-			<th>' . _('Section') . '</th>
-			<th>' . _('Sequence') . '</th>
-			<th>' . _('Format String') . '</th>
-			</tr>';
+					<th>' . _('Section') . '</th>
+					<th>' . _('Sequence') . '</th>
+					<th>' . _('Format String') . '</th>
+					</tr>';
 	echo $TableHeader;
 
 	$k=0; //row colour counter
@@ -145,18 +145,18 @@ or deletion of the records*/
 
 
 		printf('<td>%s</td>
-			<td class=number>%s</td>
-			<td>%s</td>
-			<td><a href="%s&SelectedMessageLine=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&delete=%s">' . _('Delete') . '</a></td>
-			</tr>',
-			$myrow[1],
-			$myrow[2],
-			$myrow[3],
-			$_SERVER['PHP_SELF'] . '?' . SID,
-			$myrow[0],
-			$_SERVER['PHP_SELF'] . '?' . SID,
-			$myrow[0]);
+				<td class=number>%s</td>
+				<td>%s</td>
+				<td><a href="%s&SelectedMessageLine=%s">' . _('Edit') . '</a></td>
+				<td><a href="%s&delete=%s">' . _('Delete') . '</a></td>
+				</tr>',
+				$myrow[1],
+				$myrow[2],
+				$myrow[3],
+				$_SERVER['PHP_SELF'] . '?' . SID,
+				$myrow[0],
+				$_SERVER['PHP_SELF'] . '?' . SID,
+				$myrow[0]);
 
 	} //END WHILE LIST LOOP
 	echo '</table><p>';

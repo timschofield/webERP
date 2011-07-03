@@ -2,10 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.19 $ */
-
-//$PageSecurity = 2;
-
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -15,6 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 if (isset($_POST['PrintPDF'])) {
 	$PaperSize='A4_Landscape';
 }
+
 if (isset($_GET['PrintPDF'])) {
 	$FromCust = $_GET['FromCust'];
 	$ToCust = $_GET['ToCust'];
@@ -25,17 +22,15 @@ if (isset($_GET['PrintPDF'])) {
 	$PaperSize='A4_Landscape';
 }
 
-
-
 if (isset($_GET['FromCust'])) {
 	$getFrom = $_GET['FromCust'];
 	$_POST['FromCust'] = $getFrom;
 }
+
 if (isset($_GET['ToCust'])) {
 	$getTo = $_GET['ToCust'];
 	$_POST['ToCust'] = $getTo;
 }
-
 
 If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']!=''){
 	$_POST['FromCust'] = strtoupper($_POST['FromCust']);
@@ -57,30 +52,30 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	$ErrMsg = _('There was a problem settling the old transactions.');
 	$DbgMsg = _('The SQL used to settle outstanding transactions was');
 	$sql = "UPDATE debtortrans SET settled=1
-		WHERE ABS(debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc)<0.009";
+			WHERE ABS(debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc)<0.009";
 	$SettleAsNec = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 /*Figure out who all the customers in this range are */
 	$ErrMsg= _('There was a problem retrieving the customer information for the statements from the database');
 	$sql = "SELECT debtorsmaster.debtorno,
-			debtorsmaster.name,
-			debtorsmaster.address1,
-			debtorsmaster.address2,
-			debtorsmaster.address3,
-			debtorsmaster.address4,
-			debtorsmaster.address5,
-			debtorsmaster.address6,
-			debtorsmaster.lastpaid,
-			debtorsmaster.lastpaiddate,
-			currencies.currency,
-			paymentterms.terms
-		FROM debtorsmaster INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
-		INNER JOIN paymentterms
-			ON debtorsmaster.paymentterms=paymentterms.termsindicator
-		WHERE debtorsmaster.debtorno >='" . $_POST['FromCust'] ."'
-		AND debtorsmaster.debtorno <='" . $_POST['ToCust'] ."'
-		ORDER BY debtorsmaster.debtorno";
+				debtorsmaster.name,
+				debtorsmaster.address1,
+				debtorsmaster.address2,
+				debtorsmaster.address3,
+				debtorsmaster.address4,
+				debtorsmaster.address5,
+				debtorsmaster.address6,
+				debtorsmaster.lastpaid,
+				debtorsmaster.lastpaiddate,
+				currencies.currency,
+				paymentterms.terms
+			FROM debtorsmaster INNER JOIN currencies
+				ON debtorsmaster.currcode=currencies.currabrev
+			INNER JOIN paymentterms
+				ON debtorsmaster.paymentterms=paymentterms.termsindicator
+			WHERE debtorsmaster.debtorno >='" . $_POST['FromCust'] ."'
+			AND debtorsmaster.debtorno <='" . $_POST['ToCust'] ."'
+			ORDER BY debtorsmaster.debtorno";
 	$StatementResults=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_Num_Rows($StatementResults) == 0){
@@ -99,16 +94,16 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	/*now get all the outstanding transaction ie Settled=0 */
 		$ErrMsg =  _('There was a problem retrieving the outstanding transactions for') . ' ' .	$StmtHeader['name'] . ' '. _('from the database') . '.';
 		$sql = "SELECT systypes.typename,
-				debtortrans.transno,
-				debtortrans.trandate,
-				debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst as total,
-				debtortrans.alloc,
-				debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc as ostdg
-			FROM debtortrans INNER JOIN systypes
-				ON debtortrans.type=systypes.typeid
-			WHERE debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
-			AND debtortrans.settled=0
-			ORDER BY debtortrans.id";
+					debtortrans.transno,
+					debtortrans.trandate,
+					debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst as total,
+					debtortrans.alloc,
+					debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc as ostdg
+				FROM debtortrans INNER JOIN systypes
+					ON debtortrans.type=systypes.typeid
+				WHERE debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
+				AND debtortrans.settled=0
+				ORDER BY debtortrans.id";
 
 		$OstdgTrans=DB_query($sql,$db, $ErrMsg);
 
@@ -118,22 +113,22 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 		$ErrMsg = _('There was a problem retrieving the transactions that were settled over the course of the last month for'). ' ' . $StmtHeader['name'] . ' ' . _('from the database');
 	   	if ($_SESSION['Show_Settled_LastMonth']==1){
 	   		$sql = "SELECT DISTINCT debtortrans.id,
-						systypes.typename,
-						debtortrans.transno,
-						debtortrans.trandate,
-						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst AS total,
-						debtortrans.alloc,
-						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc AS ostdg
-				FROM debtortrans INNER JOIN systypes
-					ON debtortrans.type=systypes.typeid
-				INNER JOIN custallocns
-					ON (debtortrans.id=custallocns.transid_allocfrom
-						OR debtortrans.id=custallocns.transid_allocto)
-				WHERE custallocns.datealloc >='" .
-					Date('Y-m-d',Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
-				AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
-				AND debtortrans.settled=1
-				ORDER BY debtortrans.id";
+								systypes.typename,
+								debtortrans.transno,
+								debtortrans.trandate,
+								debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst AS total,
+								debtortrans.alloc,
+								debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc AS ostdg
+						FROM debtortrans INNER JOIN systypes
+							ON debtortrans.type=systypes.typeid
+						INNER JOIN custallocns
+							ON (debtortrans.id=custallocns.transid_allocfrom
+								OR debtortrans.id=custallocns.transid_allocto)
+						WHERE custallocns.datealloc >='" .
+							Date('Y-m-d',Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
+						AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
+						AND debtortrans.settled=1
+						ORDER BY debtortrans.id";
 
 			$SetldTrans=DB_query($sql,$db, $ErrMsg);
 			$NumberOfRecordsReturned += DB_num_rows($SetldTrans);
@@ -273,72 +268,72 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			/*Now figure out the aged analysis for the customer under review */
 
 		$SQL = "SELECT debtorsmaster.name,
-				currencies.currency,
-				paymentterms.terms,
-				debtorsmaster.creditlimit,
-				holdreasons.dissallowinvoices,
-				holdreasons.reasondescription,
-				SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc) AS balance,
-				SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >=
-					paymentterms.daysbeforedue
-					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-					debtortrans.ovdiscount - debtortrans.alloc
-					ELSE 0 END
-				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1', 'MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
-					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-					debtortrans.ovdiscount - debtortrans.alloc
-					ELSE 0 END
-				END) AS due,
-				Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
-					AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >=
-					(paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-					debtortrans.ovdiscount - debtortrans.alloc
-					ELSE 0 END
-				ELSE
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') .")) >= " . $_SESSION['PastDueDays1'] . ")
-					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-					debtortrans.ovdiscount - debtortrans.alloc
-					ELSE 0 END
-				END) AS overdue1,
-				Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
-					AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue +
-					" . $_SESSION['PastDueDays2'] . ")
-					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-					debtortrans.ovdiscount - debtortrans.alloc
-					ELSE 0 END
-				ELSE
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
-					interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
-					>= " . $_SESSION['PastDueDays2'] . ")
-					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-					debtortrans.ovdiscount - debtortrans.alloc
-					ELSE 0 END
-				END) AS overdue2
-			FROM debtorsmaster INNER JOIN paymentterms
-				ON debtorsmaster.paymentterms = paymentterms.termsindicator
-			INNER JOIN currencies
-				ON debtorsmaster.currcode = currencies.currabrev
-			INNER JOIN holdreasons
-				ON debtorsmaster.holdreason = holdreasons.reasoncode
-			INNER JOIN debtortrans
-				ON debtorsmaster.debtorno = debtortrans.debtorno
-			WHERE
-				debtorsmaster.debtorno = '" . $StmtHeader['debtorno'] . "'
-			GROUP BY
-				debtorsmaster.name,
-				currencies.currency,
-				paymentterms.terms,
-				paymentterms.daysbeforedue,
-				paymentterms.dayinfollowingmonth,
-				debtorsmaster.creditlimit,
-				holdreasons.dissallowinvoices,
-				holdreasons.reasondescription";
+						currencies.currency,
+						paymentterms.terms,
+						debtorsmaster.creditlimit,
+						holdreasons.dissallowinvoices,
+						holdreasons.reasondescription,
+						SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+						debtortrans.ovdiscount - debtortrans.alloc) AS balance,
+						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+							CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >=
+							paymentterms.daysbeforedue
+							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+							debtortrans.ovdiscount - debtortrans.alloc
+							ELSE 0 END
+						ELSE
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1', 'MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
+							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+							debtortrans.ovdiscount - debtortrans.alloc
+							ELSE 0 END
+						END) AS due,
+						Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+							AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >=
+							(paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
+							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+							debtortrans.ovdiscount - debtortrans.alloc
+							ELSE 0 END
+						ELSE
+							CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') .")) >= " . $_SESSION['PastDueDays1'] . ")
+							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+							debtortrans.ovdiscount - debtortrans.alloc
+							ELSE 0 END
+						END) AS overdue1,
+						Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+							AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue +
+							" . $_SESSION['PastDueDays2'] . ")
+							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+							debtortrans.ovdiscount - debtortrans.alloc
+							ELSE 0 END
+						ELSE
+							CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
+							interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
+							>= " . $_SESSION['PastDueDays2'] . ")
+							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+							debtortrans.ovdiscount - debtortrans.alloc
+							ELSE 0 END
+						END) AS overdue2
+					FROM debtorsmaster INNER JOIN paymentterms
+						ON debtorsmaster.paymentterms = paymentterms.termsindicator
+					INNER JOIN currencies
+						ON debtorsmaster.currcode = currencies.currabrev
+					INNER JOIN holdreasons
+						ON debtorsmaster.holdreason = holdreasons.reasoncode
+					INNER JOIN debtortrans
+						ON debtorsmaster.debtorno = debtortrans.debtorno
+					WHERE
+						debtorsmaster.debtorno = '" . $StmtHeader['debtorno'] . "'
+					GROUP BY
+						debtorsmaster.name,
+						currencies.currency,
+						paymentterms.terms,
+						paymentterms.daysbeforedue,
+						paymentterms.dayinfollowingmonth,
+						debtorsmaster.creditlimit,
+						holdreasons.dissallowinvoices,
+						holdreasons.reasondescription";
 
 			$ErrMsg = 'The customer details could not be retrieved by the SQL because';
 			$CustomerResult = DB_query($SQL,$db);
@@ -400,21 +395,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 
 	if (isset($pdf)){
 
-// Here we output the actual PDF file, we have given the file a name (this could perhaps be a variable based on the Customer name), and outputted via the "I" Inline method
-/*
-	$pdfcode = $pdf->output("Customer_Statement.pdf", "I");
-	$len = mb_strlen($pdfcode);
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=Statements.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-    $pdf->Output('CustStatements.pdf', 'I');
-*/
-
-        $pdf->OutputI($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');//UldisN
-        $pdf->__destruct(); //UldisN
+        $pdf->OutputI($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
+        $pdf->__destruct();
 
 	} else {
 		$title = _('Print Statements') . ' - ' . _('No Statements Found');

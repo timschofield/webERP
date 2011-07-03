@@ -136,23 +136,25 @@ echo '</table><br />';
 echo '<div class="centre"><input tabindex=5 type="submit" name="submit" value="' . _('Enter Information') . '"></div><br />';
 
 $sql = "SELECT sales_type,
-		salestype,
-		discountcategory,
-		quantitybreak,
-		discountrate
-	FROM discountmatrix INNER JOIN salestypes
-		ON discountmatrix.salestype=salestypes.typeabbrev
-	ORDER BY salestype,
-		discountcategory,
-		quantitybreak";
+			salestype,
+			discountcategory,
+			quantitybreak,
+			discountrate
+		FROM discountmatrix INNER JOIN salestypes
+			ON discountmatrix.salestype=salestypes.typeabbrev
+		ORDER BY salestype,
+			discountcategory,
+			quantitybreak";
 
 $result = DB_query($sql,$db);
 
 echo '<table class=selection>';
-echo '<tr><th>' . _('Sales Type') . '</th>
+echo '<tr>
+		<th>' . _('Sales Type') . '</th>
 		<th>' . _('Discount Category') . '</th>
 		<th>' . _('Quantity Break') . '</th>
-		<th>' . _('Discount Rate') . ' %' . '</th></tr>';
+		<th>' . _('Discount Rate') . ' %' . '</th>
+	</tr>';
 
 $k=0; //row colour counter
 
@@ -170,7 +172,7 @@ while ($myrow = DB_fetch_array($result)) {
 		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
-		<td><a href="%s">' . _('Delete') . '</td>
+		<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</td>
 		</tr>',
 		$myrow['sales_type'],
 		$myrow['discountcategory'],

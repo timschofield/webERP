@@ -1,5 +1,8 @@
 webERP Change Log
 
+3/7/11 Phil: changed all <br> to <br />
+3/7/11 Phil: changed all strlen to mb_strlen to resolve the issue with multi-byte strlen issues as UTF-8 is a multi-byte character encoding system
+3/7/11 Pablo Martin: WorkOrderCosting.php extra comma in SQL after decimalplaces field - now removed
 29/6/11 Phil: Bank account to allow default for invoice in currency and also a fall back default to show on invoice where no default for the currency. Modified BankAccounts.php and PrintCustTrans.php (Landscape only) to show the pertinent bank account given the currency of the invoice
 28/6/11 Phil: Make assembly items explode into components on packing slips PrintCustOrder_generic.php
 28/6/11 Exson: MRPDemands.php links missing ? now fixed - script fixed for quoting variable name CamelCasing

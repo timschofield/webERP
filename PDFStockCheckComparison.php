@@ -2,9 +2,6 @@
 
 /* $Id$*/
 
-/* $Revision: 1.18 $ */
-
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
@@ -254,7 +251,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		$LeftOvers = $pdf->addTextWrap(135,$YPos,180,$FontSize,$CheckItemRow['description'], 'left');
 		$LeftOvers = $pdf->addTextWrap(315,$YPos,60,$FontSize,$CheckItemRow['qoh'], 'right');
 
-		$SQL = "SELECT qtycounted, reference FROM stockcounts WHERE loccode ='" . $Location . "' AND stockid = '" . $CheckItemRow['stockid'] . "'";
+		$SQL = "SELECT qtycounted, 
+						reference 
+				FROM stockcounts 
+				WHERE loccode ='" . $Location . "' 
+				AND stockid = '" . $CheckItemRow['stockid'] . "'";
 
 		$Counts = DB_query($SQL,$db,'','',false,false);
 
@@ -306,32 +307,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	} /*end STOCK comparison while loop */
 
 	$YPos -= (2*$line_height);
-/*
- 	$pdfcode = $pdf->output();
-	$len = mb_strlen($pdfcode);
 
-      if ($len<=20){
-		$title = _('Print Stock check comparison Error');
-		include('includes/header.inc');
-		echo '<p>';
-		prnMsg( _('There were no Inventory Comparison sheets to print out'), 'error');
-		echo '<br /><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
-		include('includes/footer.inc');
-		exit;
-      } else {
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=StockComparison.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-
-		$pdf->Output('StockCheckComparison.pdf', 'I');
-
-	}
-*/
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
+    $pdf->__destruct(); 
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		//need to print the report first before this but don't risk re-adjusting all the stock!!

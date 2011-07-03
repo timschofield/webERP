@@ -1,9 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
 /* $Id$*/
-
-//$PageSecurity =11;
 
 include ('includes/session.inc');
 
@@ -40,7 +37,7 @@ If the order processed ok then move the file to processed and go on to next file
 /*Read in the EANCOM Order Segments for the current seg group from the segments table */
 
 
-$sql = 'SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs';
+$sql = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
 $OrderSeg = DB_query($sql,$db);
 $i=0;
 $Seg = array();
@@ -58,7 +55,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
  while (false !== ($OrderFile=readdir($dirhandle))){ /*there are files in the incoming orders dir */
 
 	$TryNextFile = False;
-	echo "<br />$OrderFile";
+	echo '<br />' . $OrderFile;
 
 	/*Counter that keeps track of the array pointer for the 1st seg in the current seg group */
 	$FirstSegInGrp =0;
@@ -541,7 +538,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 		} else {
 
 			$mail->setSubject(_('EDI Order Message') . ' ' . $Order->CustRef);
-			$EDICustServPerson ="'phil' <phil@localhost>";
+			$EDICustServPerson = $_SESSION['PurchasingManagerEmail'];
 			$Recipients = array($EDICustServPerson);
 		}
 
@@ -553,7 +550,6 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 	} /* nothing in the email text to send - the message file is a complete dud - maybe directory */
 
 	/*Now create the order from the $Order object  and commit to the DB*/
-
 
 
 

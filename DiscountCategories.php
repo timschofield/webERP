@@ -28,10 +28,10 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 
 	$result = DB_query("SELECT stockid
-				FROM stockmaster
-				WHERE mbflag <>'K'
-				AND mbflag<>'D'
-				AND stockid='" . strtoupper($_POST['StockID']) . "'",$db);
+						FROM stockmaster
+						WHERE mbflag <>'K'
+						AND mbflag<>'D'
+						AND stockid='" . strtoupper($_POST['StockID']) . "'",$db);
 	if (DB_num_rows($result)==0){
 		$InputError = 1;
 		prnMsg(_('The stock item entered must be set up as either a manufactured or purchased or assembly item'),'warn');
@@ -59,8 +59,8 @@ if (isset($_POST['submit'])) {
 	echo '<br />';
 } elseif (isset($_POST['SubmitCategory'])) {
 	$sql="UPDATE stockmaster
-		SET discountcategory='".$_POST['DiscountCategory']."'
-		WHERE categoryid='".$_POST['stockcategory']."'";
+			SET discountcategory='".$_POST['DiscountCategory']."'
+			WHERE categoryid='".$_POST['stockcategory']."'";
 	$result=DB_query($sql, $db);
 }
 
@@ -85,7 +85,10 @@ if (isset($_POST['selectchoice'])) {
 		}
 
 		echo '</select></td>';
-		echo '<td><input type="submit" name="select" value="'._('Select').'"></td></tr></table><br />';
+		echo '<td><input type="submit" name="select" value="'._('Select').'"></td>
+			</tr>
+			</table>
+			<br />';
 	}
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
@@ -125,7 +128,8 @@ if (isset($_POST['selectchoice'])) {
 				<td><input type="text" name="PartID" size=10 maxlength=10 value="' . $_POST['PartID'] . '"></td>
 				<td>' . _('Partial description') . ':</td>
 				<td><input type="text" name="PartDesc" size=10 value="' . $_POST['PartDesc'] .'" maxlength=10></td>
-				<td><input type="submit" name="search" value="' . _('Search') .'"></td></tr>';
+				<td><input type="submit" name="search" value="' . _('Search') .'"></td>
+			</tr>';
 
 		echo '</table>';
 
@@ -212,7 +216,7 @@ if (isset($_POST['selectchoice'])) {
 
 			printf('<td>%s</td>
 					<td>%s - %s</td>
-					<td><a href="%s">'. _('Delete') .'</td>
+					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">'. _('Delete') .'</td>
 					</tr>',
 					$myrow['discountcategory'],
 					$myrow['stockid'],

@@ -52,7 +52,10 @@ while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
 }
 echo '</select></td>';
 
-echo '</tr></table><br /><div class="centre"><input tabindex=4 type=submit name="ShowResults" VALUE="' . _('Show Daily Sales For The Selected Month') . '">';
+echo '</tr>
+	</table>
+	<br />
+	<div class="centre"><input tabindex=4 type=submit name="ShowResults" value="' . _('Show Daily Sales For The Selected Month') . '">';
 echo '</form></div>';
 echo '<br />';
 /*Now get and display the sales data returned */
@@ -92,13 +95,14 @@ $SalesResult = DB_query($sql, $db,$ErrMsg);
 echo '<table cellpadding=2 class=selection>';
 
 echo'<tr>
-	<th>' . _('Sunday') . '</th>
-	<th>' . _('Monday') . '</th>
-	<th>' . _('Tuesday') . '</th>
-	<th>' . _('Wednesday') . '</th>
-	<th>' . _('Thursday') . '</th>
-	<th>' . _('Friday') . '</th>
-	<th>' . _('Saturday') . '</th></tr>';
+		<th>' . _('Sunday') . '</th>
+		<th>' . _('Monday') . '</th>
+		<th>' . _('Tuesday') . '</th>
+		<th>' . _('Wednesday') . '</th>
+		<th>' . _('Thursday') . '</th>
+		<th>' . _('Friday') . '</th>
+		<th>' . _('Saturday') . '</th>
+	</tr>';
 
 $CumulativeTotalSales = 0;
 $CumulativeTotalCost = 0;

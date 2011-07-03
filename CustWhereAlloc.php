@@ -12,7 +12,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
 	_('Customer Where Allocated'). '" alt="" />' . $title . '</p>';
 
-echo '<table class=selection cellpadding=2><tr>';
+echo '<table class="selection" cellpadding=2>
+		<tr>';
 
 echo '<td>' . _('Type') . ':</td>
 	<td><select tabindex=1 name="TransType"> ';
@@ -36,7 +37,9 @@ if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<td>'._('Transaction Number').':</td>
 	<td><input tabindex=2 type="text" name="TransNo" maxlength=10 size=10 value="'. $_POST['TransNo'] . '"></td>';
 
-echo '</tr></table><br />
+echo '</tr>
+	</table>
+	<br />
 	<div class="centre"><input tabindex=3 type="submit" name="ShowResults" value="' . _('Show How Allocated') . '"></div>';
 
 if (isset($_POST['ShowResults']) AND  $_POST['TransNo']==''){
@@ -49,9 +52,9 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 
 /*First off get the DebtorTransID of the transaction (invoice normally) selected */
 	$sql = "SELECT id,
-			ovamount+ovgst AS totamt
-		FROM debtortrans
-		WHERE type='" . $_POST['TransType'] . "' AND transno = '" . $_POST['TransNo']."'";
+				ovamount+ovgst AS totamt
+			FROM debtortrans
+			WHERE type='" . $_POST['TransType'] . "' AND transno = '" . $_POST['TransNo']."'";
 
 	$result = DB_query($sql , $db);
 
@@ -60,25 +63,26 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 		$AllocToID = $myrow['id'];
 
 		$sql = "SELECT type,
-			transno,
-			trandate,
-			debtortrans.debtorno,
-			reference,
-			rate,
-			ovamount+ovgst+ovfreight+ovdiscount as totalamt,
-			custallocns.amt
-		FROM debtortrans
-			INNER JOIN custallocns ON debtortrans.id=custallocns.transid_allocfrom
-		WHERE custallocns.transid_allocto='". $AllocToID."'";
+					transno,
+					trandate,
+					debtortrans.debtorno,
+					reference,
+					rate,
+					ovamount+ovgst+ovfreight+ovdiscount as totalamt,
+					custallocns.amt
+				FROM debtortrans
+				INNER JOIN custallocns 
+				ON debtortrans.id=custallocns.transid_allocfrom
+				WHERE custallocns.transid_allocto='". $AllocToID."'";
 
 		$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
-
 		$TransResult = DB_query($sql, $db, $ErrMsg);
 
 	if (DB_num_rows($TransResult)==0){
 		prnMsg(_('There are no allocations made against this transaction'),'info');
 	} else {
-		echo '<br /><table cellpadding=2 class=selection>';
+		echo '<br />
+			<table cellpadding=2 class="selection">';
 
 		echo '<tr>
 				<th colspan=6><div class="centre"><font size=3 color=blue><b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. number_format($myrow['totamt'],2) . '</font></b></div></th>
@@ -91,7 +95,7 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 						<th>' . _('Ex Rate') . '</th>
 						<th>' . _('Amount') . '</th>
 						<th>' . _('Alloc') . '</th>
-					</tr>';
+						</tr>';
 		echo $tableheader;
 
 		$RowCounter = 1;
