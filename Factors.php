@@ -151,19 +151,19 @@ if (isset($_POST['Delete'])) {
 if (isset($FactorID) and isset($_POST['Amend'])) {
 
 	$sql = "SELECT id,
-			coyname,
-			address1,
-			address2,
-			address3,
-			address4,
-			address5,
-			address6,
-			contact,
-			telephone,
-			fax,
-			email
-		FROM factorcompanies
-		WHERE id = '".$FactorID."'";
+					coyname,
+					address1,
+					address2,
+					address3,
+					address4,
+					address5,
+					address6,
+					contact,
+					telephone,
+					fax,
+					email
+			FROM factorcompanies
+			WHERE id = '".$FactorID."'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -208,7 +208,6 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 			<td><input tabindex=2 type="text" name="Address1" size=42 maxlength=40 value="' . $_POST['Address1'] .'"></td></tr>';
 	echo '<tr><td>' . _('Address Line 2') . ':</td>
 			<td><input tabindex=3 type="text" name="Address2" size=42 maxlength=40 value="' . $_POST['Address2'] .'"></td></tr>';
-			
 	echo '<tr><td>' . _('Address Line 3') . ':</td>
 			<td><input tabindex=4 type="text" name="Address3" size=42 maxlength=40 value="' .$_POST['Address3'] .'"></td></tr>';
 	echo '<tr><td>' . _('Address Line 4') . ':</td>
@@ -248,32 +247,34 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="No">';
-	echo '<table class=selection><tr>
-							<th>' . _('ID') . '</th>
-							<th>' . _('Company Name').'</th>
-							<th>' . _('Address 1').'</th>
-							<th>' . _('Address 2').'</th>
-							<th>' . _('Address 3').'</th>
-							<th>' . _('Address 4').'</th>
-							<th>' . _('Address 5').'</th>
-							<th>' . _('Address 6').'</th>
-							<th>' . _('Contact').'</th>
-							<th>' . _('Telephone').'</th>
-							<th>' . _('Fax Number').'</th>
-							<th>' . _('Email').'</th></tr>';
+	echo '<table class=selection>
+			<tr>
+				<th>' . _('ID') . '</th>
+				<th>' . _('Company Name').'</th>
+				<th>' . _('Address 1').'</th>
+				<th>' . _('Address 2').'</th>
+				<th>' . _('Address 3').'</th>
+				<th>' . _('Address 4').'</th>
+				<th>' . _('Address 5').'</th>
+				<th>' . _('Address 6').'</th>
+				<th>' . _('Contact').'</th>
+				<th>' . _('Telephone').'</th>
+				<th>' . _('Fax Number').'</th>
+				<th>' . _('Email').'</th>
+			</tr>';
 	$sql = "SELECT id,
-			coyname,
-			address1,
-			address2,
-			address3,
-			address4,
-			address5,
-			address6,
-			contact,
-			telephone,
-			fax,
-			email
-		FROM factorcompanies";
+					coyname,
+					address1,
+					address2,
+					address3,
+					address4,
+					address5,
+					address6,
+					contact,
+					telephone,
+					fax,
+					email
+			FROM factorcompanies";
 	$result=DB_query($sql, $db);
 	$j=1;
 	while ($myrow = DB_fetch_array($result)) {
@@ -306,7 +307,6 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 	exit;
 
 }
-
 
 include('includes/footer.inc');
 ?>

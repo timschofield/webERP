@@ -92,6 +92,8 @@ $pdf->addText(520, 790-30,$FontSize,  ConvertSQLDate($myrow['orddate']));
 $pdf->addText(490, 790-45,$FontSize,  _('Page'). ':');
 $pdf->addText(520, 790-45,$FontSize,  $PageNumber);
 
+$pdf->addText($Page_Width/2-10, $YPos+15, $FontSize, _('All amounts stated in') . ' - ' . $myrow['currcode']);
+
 $YPos -= 45;
 $XPos = 40;
 

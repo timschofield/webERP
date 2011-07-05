@@ -1,5 +1,5 @@
 <?php
-//$PageSecurity = 11;
+
 include ('includes/session.inc');
 $title = _('Fixed Asset Register');
 $csv_output = '';
@@ -15,36 +15,36 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
 	$DateTo = FormatDateForSQL($_POST['ToDate']);
 	$sql = "SELECT fixedassets.assetid,
-								fixedassets.description,
-								fixedassets.longdescription,
-								fixedassets.assetcategoryid,
-								fixedassets.serialno,
-								fixedassetlocations.locationdescription,
-								fixedassets.datepurchased,
-								fixedassetlocations.parentlocationid,
-								fixedassets.assetlocation,
-								fixedassets.disposaldate,
-								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS costbfwd,
-								SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='depn') THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd,
-								SUM(CASE WHEN (fixedassettrans.transdate >='" . $DateFrom ."'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS periodadditions,
-								SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='depn' THEN fixedassettrans.amount ELSE 0 END) AS perioddepn,
-								SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='disposal' THEN fixedassettrans.amount ELSE 0 END) AS perioddisposal
-					FROM fixedassets
-					INNER JOIN fixedassetcategories ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-					INNER JOIN fixedassetlocations ON fixedassets.assetlocation=fixedassetlocations.locationid
-					INNER JOIN fixedassettrans ON fixedassets.assetid=fixedassettrans.assetid
-					WHERE fixedassets.assetcategoryid " . LIKE . "'" . $_POST['AssetCategory'] . "'
-					AND fixedassets.assetid " . LIKE . "'" . $_POST['AssetID'] . "'
-					AND fixedassets.assetlocation " . LIKE . "'" . $_POST['AssetLocation'] . "'
-					GROUP BY fixedassets.assetid,
-										fixedassets.description,
-										fixedassets.longdescription,
-										fixedassets.assetcategoryid,
-										fixedassets.serialno,
-										fixedassetlocations.locationdescription,
-										fixedassets.datepurchased,
-										fixedassetlocations.parentlocationid,
-										fixedassets.assetlocation";
+					fixedassets.description,
+					fixedassets.longdescription,
+					fixedassets.assetcategoryid,
+					fixedassets.serialno,
+					fixedassetlocations.locationdescription,
+					fixedassets.datepurchased,
+					fixedassetlocations.parentlocationid,
+					fixedassets.assetlocation,
+					fixedassets.disposaldate,
+					SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS costbfwd,
+					SUM(CASE WHEN (fixedassettrans.transdate <'" . $DateFrom . "' AND fixedassettrans.fixedassettranstype='depn') THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd,
+					SUM(CASE WHEN (fixedassettrans.transdate >='" . $DateFrom ."'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='cost') THEN fixedassettrans.amount ELSE 0 END) AS periodadditions,
+					SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='depn' THEN fixedassettrans.amount ELSE 0 END) AS perioddepn,
+					SUM(CASE WHEN fixedassettrans.transdate >='" . $DateFrom . "'  AND fixedassettrans.transdate <='" . $DateTo . "' AND fixedassettrans.fixedassettranstype='disposal' THEN fixedassettrans.amount ELSE 0 END) AS perioddisposal
+			FROM fixedassets
+			INNER JOIN fixedassetcategories ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+			INNER JOIN fixedassetlocations ON fixedassets.assetlocation=fixedassetlocations.locationid
+			INNER JOIN fixedassettrans ON fixedassets.assetid=fixedassettrans.assetid
+			WHERE fixedassets.assetcategoryid " . LIKE . "'" . $_POST['AssetCategory'] . "'
+			AND fixedassets.assetid " . LIKE . "'" . $_POST['AssetID'] . "'
+			AND fixedassets.assetlocation " . LIKE . "'" . $_POST['AssetLocation'] . "'
+			GROUP BY fixedassets.assetid,
+					fixedassets.description,
+					fixedassets.longdescription,
+					fixedassets.assetcategoryid,
+					fixedassets.serialno,
+					fixedassetlocations.locationdescription,
+					fixedassets.datepurchased,
+					fixedassetlocations.parentlocationid,
+					fixedassets.assetlocation";
 	$result = DB_query($sql, $db);
 	if (isset($_POST['pdf'])) {
 		$FontSize = 10;
@@ -116,8 +116,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 			$Ancestors[$i] = $ParentRow['locationdescription'];
 		}
 		*/
-		if (Date1GreaterThanDate2(ConvertSQLDate($myrow['disposaldate']),$_POST['FromDate']) 
-																										OR $myrow['disposaldate']='0000-00-00'){
+		if (Date1GreaterThanDate2(ConvertSQLDate($myrow['disposaldate']),$_POST['FromDate']) OR $myrow['disposaldate']='0000-00-00') {
 
 			if ($myrow['disposaldate']!='0000-00-00' AND Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($myrow['disposaldate']))){
 				/*The asset was disposed during the period */
@@ -221,14 +220,14 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		echo '<input type=hidden name=AssetLocation value=' . $_POST['AssetLocation'] . '>';
 		//Total Values
 		echo '<tr><th style="vertical-align:top" colspan="5">' . _('TOTAL') . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalCostBfwd, 2) . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalDepnBfwd, 2) . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalAdditions, 2) . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalDepn, 2) . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalCostCfwd, 2) . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalDepnCfwd, 2) . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalNBV, 2) . '</th>';
-		echo '<th style="text-align:right">' . number_format($TotalDisposals, 2) . '</th></tr>';
+		echo '<th style="text-align:right">' . number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalAdditions, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalCostCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDisposals, $_SESSION['CompanyRecord']['decimalplaces']) . '</th></tr>';
 		echo '</table>';
 		echo '<br /><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
 		echo '<input type="Submit" name="csv" value="' . _('Print as CSV') . '"></div></form>';
@@ -238,7 +237,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories', $db);
-	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class="selection">';
+	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><th>' . _('Asset Category') . '</th>';
 	echo '<td><select name=AssetCategory>';
@@ -251,7 +250,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		}
 	}
 	echo '</select></td></tr>';
-	$sql = 'SELECT  locationid, locationdescription FROM fixedassetlocations';
+	$sql = "SELECT  locationid, locationdescription FROM fixedassetlocations";
 	$result = DB_query($sql, $db);
 	echo '<tr><th>' . _('Asset Location') . '</th>';
 	echo '<td><select name=AssetLocation>';
@@ -264,7 +263,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		}
 	}
 	echo '</select></td></tr>';
-	$sql = 'SELECT assetid, description FROM fixedassets';
+	$sql = "SELECT assetid, description FROM fixedassets";
 	$result = DB_query($sql, $db);
 	echo '<tr><th>' . _('Asset') . '</th>';
 	echo '<td><select name="AssetID">';
@@ -278,18 +277,19 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	}
 	echo '</select></td></tr>';
 	if (empty($_POST['FromDate'])) {
-		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date("m"), date("d"), date("Y") - 1));
+		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), date('d'), date('Y') - 1));
 	}
 	if (empty($_POST['ToDate'])) {
 		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
-	echo '<tr><th>' . _(' From Date') . "</th><td><input type='text' class='date' alt='" . $_SESSION['DefaultDateFormat'] . "' name='FromDate' maxlength=10 size=11 value='" . $_POST['FromDate'] . "'></td>";
+	echo '<tr><th>' . _(' From Date') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=11 value="' . $_POST['FromDate'] . '"></td>';
 	echo '</tr>';
-	echo '<tr><th>' . _('To Date ') . "</th><td><input type='text' class='date' alt='" . $_SESSION['DefaultDateFormat'] . "' name='ToDate' maxlength=10 size=11 value='" . $_POST['ToDate'] . "'></td>";
-	echo '</tr>';
-
-	echo '</table><br />';
+	echo '<tr><th>' . _('To Date ') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '"></td>
+	</tr>
+	</table>
+	<br />';
+	
 	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
 	echo '<input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
 	echo '<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '"></div>';

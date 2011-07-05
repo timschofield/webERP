@@ -4134,7 +4134,7 @@ if (!class_exists('TCPDF', false)) {
 				// rendering mode
 				$s .= sprintf('BT %d Tr %.2F w ET ', $this->textrendermode, $this->textstrokewidth);
 				// count number of spaces
-				$ns = mb_substr_count($txt, ' ');
+				$ns = substr_count($txt, ' ');
 				// Justification
 				$spacewidth = 0;
 				if (($align == 'J') AND ($ns > 0)) {
@@ -7786,7 +7786,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @since 4.6.028 (2009-08-25)
 		 */
 		protected function _datestring() {
-			$current_time = mb_substr_replace(date('YmdHisO'), '\'', (0 - 2), 0).'\'';
+			$current_time = substr_replace(date('YmdHisO'), '\'', (0 - 2), 0).'\'';
 			return $this->_datastring('D:'.$current_time);
 		}
 
@@ -14350,8 +14350,8 @@ if (!class_exists('TCPDF', false)) {
 											$tvalue = $lnstring[1][$kk];
 										}
 										// store number of spaces on the strings
-										$lnstring[2][$kk] = mb_substr_count($lnstring[1][$kk], $spacestr);
-										$lnstring[3][$kk] = mb_substr_count($tvalue, $spacestr);
+										$lnstring[2][$kk] = substr_count($lnstring[1][$kk], $spacestr);
+										$lnstring[3][$kk] = substr_count($tvalue, $spacestr);
 										// count total spaces on line
 										$no += $lnstring[2][$kk];
 										$ns += $lnstring[3][$kk];
@@ -14433,7 +14433,7 @@ if (!class_exists('TCPDF', false)) {
 													} else {
 														$tvalue = $lnstring[1][$strcount];
 													}
-													$ns += mb_substr_count($tvalue, $spacestr);
+													$ns += substr_count($tvalue, $spacestr);
 													++$strcount;
 												}
 												if ($this->isRTLTextDir()) {

@@ -340,8 +340,8 @@ class Mail_RFC822
      */
     function _hasUnclosedBrackets($string, $chars)
     {
-        $num_angle_start = mb_substr_count($string, $chars[0]);
-        $num_angle_end   = mb_substr_count($string, $chars[1]);
+        $num_angle_start = substr_count($string, $chars[0]);
+        $num_angle_end   = substr_count($string, $chars[1]);
 
         $this->_hasUnclosedBracketsSub($string, $num_angle_start, $chars[0]);
         $this->_hasUnclosedBracketsSub($string, $num_angle_end, $chars[1]);

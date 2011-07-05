@@ -83,6 +83,7 @@ $pdf->partEllipse($XPos+225, $YPos,270,360,10,10);
 /*Finally join up to the top right corner where started */
 $pdf->line($XPos+235, $YPos,$XPos+235, $YPos+60);
 
+$pdf->addText($Page_Width/2-60, $YPos-5, $FontSize, _('All amounts stated in') . ' - ' . $myrow['currcode']);
 
 $pdf->addText(620, 560,$FontSize, _('Number'). ':');
 $pdf->addText(700, 560,$FontSize, $_GET['QuotationNo']);

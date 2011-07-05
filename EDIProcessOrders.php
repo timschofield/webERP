@@ -76,7 +76,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 	while ($LineText = fgets($fp) AND $TryNextFile != True){ /* get each line of the order file */
 
 		$LineText = StripTrailingComma($LineText);
-		echo "<br />".$LineText;
+		echo '<br />' . $LineText;
 
 		if ($SegTag != mb_substr($LineText,0,3)){
 			$SegCounter=1;
@@ -140,7 +140,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 						$Order->Comments .= "\n" . _('blanket order');
 						break;
 					case '224':
-						$EmailText .= "\n\n" . _('This order is URGENT') . "</font>";
+						$EmailText .= "\n\n" . _('This order is URGENT') . '</font>';
 						$Order->Comments .= "\n" . _('URGENT ORDER');
 						break;
 					case '226':
@@ -184,7 +184,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 					$EmailText .= "\n" . _('Customers order ref') . ': ' . $BGM_C106[0];
 				}
 				if (isset($BGM_elements[2])){
-					echo "<br />echo BGM_elements[2] " .$BGM_elements[2];
+					echo '<br />echo BGM_elements[2] ' .$BGM_elements[2];
 					$BGM_1225 = explode(':',$BGM_elements[2]);
 					$MsgFunction = $BGM_1225[0];
 
@@ -457,22 +457,23 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 					case 'SN':
 						/*Store Number - get the branch details from the store number - snag here too cos need to ensure got the Customer detail first before try looking up its branches */
 						$BranchResult = DB_query("SELECT branchcode,
-										brname,
-										braddress1,
-										braddress2,
-										braddress3,
-										braddress4,
-										braddress5,
-										braddress6,
-										contactname,
-										defaultlocation,
-										phoneno,
-										email
-									FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1",$db);
+														brname,
+														braddress1,
+														braddress2,
+														braddress3,
+														braddress4,
+														braddress5,
+														braddress6,
+														contactname,
+														defaultlocation,
+														phoneno,
+														email
+												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1",$db);
 						if (DB_num_rows($BranchResult)!=1){
 							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' ._('or several that match this store number') . '. ' . _('This order could not be processed further');
 							$TryNextFile = True; /* Look for other EDI msgs */
-							$CreateOrder = False; /*Dont create order in system */						} else {
+							$CreateOrder = False; /*Dont create order in system */
+						} else {
 							$BranchRow = DB_fetch_array($BranchResult);
 							$Order->BranchCode = $BranchRow['branchcode'];
 							$Order->DeliverTo = $BranchRow['brname'];

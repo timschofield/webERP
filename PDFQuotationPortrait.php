@@ -9,11 +9,26 @@ include('includes/SQL_CommonFunctions.inc');
 If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
         $title = _('Select Quotation To Print');
         include('includes/header.inc');
-        echo '<div class="centre"><br /><br /><br />';
+        echo '<div class="centre">
+				<br />
+				<br />
+				<br />';
         prnMsg( _('Select a Quotation to Print before calling this page') , 'error');
-        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'&Quotations=Quotes_Only">' . _('Quotations') . '</a></li>
-                </td></tr></table></div><br /><br /><br />';
+        echo '<br />
+				<br />
+				<br />
+				<table class="table_index">
+				<tr>
+					<td class="menu_group_item">
+						<ul><li><a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Quotations') . '</a></li>
+						</ul>
+					</td>
+				</tr>
+				</table>
+				</div>
+				<br />
+				<br />
+				<br />';
         include('includes/footer.inc');
         exit();
 }
@@ -22,37 +37,37 @@ If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 $ErrMsg = _('There was a problem retrieving the quotation header details for Order Number') . ' ' . $_GET['QuotationNo'] . ' ' . _('from the database');
 
 $sql = "SELECT salesorders.customerref,
-		salesorders.comments,
-		salesorders.orddate,
-		salesorders.deliverto,
-		salesorders.deladd1,
-		salesorders.deladd2,
-		salesorders.deladd3,
-		salesorders.deladd4,
-		salesorders.deladd5,
-		salesorders.deladd6,
-		debtorsmaster.name,
-		debtorsmaster.address1,
-		debtorsmaster.address2,
-		debtorsmaster.address3,
-		debtorsmaster.address4,
-		debtorsmaster.address5,
-		debtorsmaster.address6,
-		shippers.shippername,
-		salesorders.printedpackingslip,
-		salesorders.datepackingslipprinted,
-		salesorders.branchcode,
-		locations.taxprovinceid,
-		locations.locationname
-	FROM salesorders,
-		debtorsmaster,
-		shippers,
-		locations
-	WHERE salesorders.debtorno=debtorsmaster.debtorno
-	AND salesorders.shipvia=shippers.shipper_id
-	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.quotation=1
-	AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
+				salesorders.comments,
+				salesorders.orddate,
+				salesorders.deliverto,
+				salesorders.deladd1,
+				salesorders.deladd2,
+				salesorders.deladd3,
+				salesorders.deladd4,
+				salesorders.deladd5,
+				salesorders.deladd6,
+				debtorsmaster.name,
+				debtorsmaster.currcode,
+				debtorsmaster.address1,
+				debtorsmaster.address2,
+				debtorsmaster.address3,
+				debtorsmaster.address4,
+				debtorsmaster.address5,
+				debtorsmaster.address6,
+				shippers.shippername,
+				salesorders.printedpackingslip,
+				salesorders.datepackingslipprinted,
+				salesorders.branchcode,
+				locations.taxprovinceid,
+				locations.locationname
+			FROM salesorders INNER JOIN debtorsmaster
+			ON salesorders.debtorno=debtorsmaster.debtorno
+			INNER JOIN shippers 
+			ON salesorders.shipvia=shippers.shipper_id
+			INNER JOIN locations 
+			ON salesorders.fromstkloc=locations.loccode
+			WHERE salesorders.quotation=1
+			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -60,11 +75,25 @@ $result=DB_query($sql,$db, $ErrMsg);
 if (DB_num_rows($result)==0){
 	$title = _('Print Quotation Error');
 	include('includes/header.inc');
-	 echo '<div class="centre"><br /><br /><br />';
+	 echo '<div class="centre">
+			<br />
+			<br />
+			<br />';
 	prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
-	echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
-			<li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'&Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li>
-			</td></tr></table></div><br /><br /><br />';
+	echo '<br />
+			<br />
+			<br />
+			<table class="table_index">
+			<tr>
+				<td class="menu_group_item">
+					<ul><li><a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li></ul>
+				</td>
+			</tr>
+			</table>
+			</div>
+			<br />
+			<br />
+			<br />';
 	include('includes/footer.inc');
 	exit;
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */

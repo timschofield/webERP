@@ -624,8 +624,8 @@ if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to c
 		if ($_SESSION['WeightedAverageCosting']==0){
 		/* We are standard costing - so show the option to update costs - under W. Avg cost updates are implicit */
 			echo _('Update Standard Costs') .':<select name="UpdateCost">
-			<option selected VALUE="Yes">'. _('Yes') . '</option>
-			<option VALUE="No">'. _('No') . '</option>
+			<option selected value="Yes">'. _('Yes') . '</option>
+			<option value="No">'. _('No') . '</option>
 			</select>';
 		}
 	echo '<br /><br /><input type=submit name="Close" VALUE="'. _('Confirm OK to Close'). '">';

@@ -22,37 +22,37 @@ If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 $ErrMsg = _('There was a problem retrieving the quotation header details for Order Number') . ' ' . $_GET['QuotationNo'] . ' ' . _('from the database');
 
 $sql = "SELECT salesorders.customerref,
-		salesorders.comments,
-		salesorders.orddate,
-		salesorders.deliverto,
-		salesorders.deladd1,
-		salesorders.deladd2,
-		salesorders.deladd3,
-		salesorders.deladd4,
-		salesorders.deladd5,
-		salesorders.deladd6,
-		debtorsmaster.name,
-		debtorsmaster.address1,
-		debtorsmaster.address2,
-		debtorsmaster.address3,
-		debtorsmaster.address4,
-		debtorsmaster.address5,
-		debtorsmaster.address6,
-		shippers.shippername,
-		salesorders.printedpackingslip,
-		salesorders.datepackingslipprinted,
-		salesorders.branchcode,
-		locations.taxprovinceid,
-		locations.locationname
-	FROM salesorders,
-		debtorsmaster,
-		shippers,
-		locations
-	WHERE salesorders.debtorno=debtorsmaster.debtorno
-	AND salesorders.shipvia=shippers.shipper_id
-	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.quotation=1
-	AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
+				salesorders.comments,
+				salesorders.orddate,
+				salesorders.deliverto,
+				salesorders.deladd1,
+				salesorders.deladd2,
+				salesorders.deladd3,
+				salesorders.deladd4,
+				salesorders.deladd5,
+				salesorders.deladd6,
+				debtorsmaster.name,
+				debtorsmaster.currcode,
+				debtorsmaster.address1,
+				debtorsmaster.address2,
+				debtorsmaster.address3,
+				debtorsmaster.address4,
+				debtorsmaster.address5,
+				debtorsmaster.address6,
+				shippers.shippername,
+				salesorders.printedpackingslip,
+				salesorders.datepackingslipprinted,
+				salesorders.branchcode,
+				locations.taxprovinceid,
+				locations.locationname
+			FROM salesorders INNER JOIN debtorsmaster
+			ON salesorders.debtorno=debtorsmaster.debtorno
+			INNER JOIN shippers 
+			ON salesorders.shipvia=shippers.shipper_id
+			INNER JOIN locations 
+			ON salesorders.fromstkloc=locations.loccode
+			WHERE salesorders.quotation=1
+			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -62,9 +62,20 @@ if (DB_num_rows($result)==0){
         include('includes/header.inc');
          echo '<div class="centre"><br /><br /><br />';
         prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
-        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'&Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li>
-                </td></tr></table></div><br /><br /><br />';
+        echo '<br />
+				<br />
+				<br />
+				<table class="table_index">
+				<tr>
+					<td class="menu_group_item">
+						<ul><li><a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li></ul>
+					</td>
+				</tr>
+				</table>
+				</div>
+				<br />
+				<br />
+				<br />';
         include('includes/footer.inc');
         exit;
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
@@ -105,7 +116,7 @@ $sql = "SELECT salesorderdetails.stkcode,
 
 $result=DB_query($sql,$db, $ErrMsg);
 
-$ListCount = 0; // UldisN
+$ListCount = 0; 
 
 if (DB_num_rows($result)>0){
 	/*Yes there are line items to start the ball rolling with a page header */
@@ -136,13 +147,19 @@ if (DB_num_rows($result)>0){
 		$TaxProv = $myrow['taxprovinceid'];
 		$TaxCat = $myrow2['taxcatid'];
 		$Branch = $myrow['branchcode'];
-		$sql3 = " select taxgrouptaxes.taxauthid from taxgrouptaxes INNER JOIN custbranch ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid WHERE custbranch.branchcode='" .$Branch ."'";
+		$sql3 = "SELECT taxgrouptaxes.taxauthid 
+					FROM taxgrouptaxes INNER JOIN custbranch 
+					ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid 
+					WHERE custbranch.branchcode='" .$Branch ."'";
 		$result3=DB_query($sql3,$db, $ErrMsg);
 		while ($myrow3=DB_fetch_array($result3)){
 			$TaxAuth = $myrow3['taxauthid'];
 		}
 
-		$sql4 = "SELECT * FROM taxauthrates WHERE dispatchtaxprovince='" .$TaxProv ."' AND taxcatid='" .$TaxCat ."' AND taxauthority='" .$TaxAuth ."'";
+		$sql4 = "SELECT * FROM taxauthrates 
+					WHERE dispatchtaxprovince='" .$TaxProv ."' 
+					AND taxcatid='" .$TaxCat ."' 
+					AND taxauthority='" .$TaxAuth ."'";
 		$result4=DB_query($sql4,$db, $ErrMsg);
 		while ($myrow4=DB_fetch_array($result4)){
 			$TaxClass = 100 * $myrow4['taxrate'];
@@ -227,9 +244,9 @@ if (DB_num_rows($result)>0){
 if ($ListCount == 0){
 	$title = _('Print Quotation Error');
 	include('includes/header.inc');
-	echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
-			'<br /><a href="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&Quotation=Quotes_only">'. _('Print Another Quotation').
-			'</a>' . '<br />'. '<a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	prnMsg(_('There were no items on the quotation') . '. ' . _('The quotation cannot be printed'),'info');
+	echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation'). '</a>
+			<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit;
 } else {
