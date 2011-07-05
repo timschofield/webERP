@@ -162,7 +162,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
 
-	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
+	echo '<br /><br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 				   locationname
@@ -203,7 +203,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '<option value="2">'. _('Code') . '</option>';
 
 	echo '</select></td></tr>';
-	echo '</table></br><p><div class="centre"><input type=submit name="submit" value="' . _('Submit') . '"></div></p>';
+	echo '</table><br /><p><div class="centre"><input type=submit name="submit" value="' . _('Submit') . '"></div></p>';
 
 } /*end of else not submit */
 include('includes/footer.inc');

@@ -227,7 +227,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	}
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br />';
-	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class=selection>';
+	echo '<br /><br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class=selection>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$SQL = "SELECT categoryid, categorydescription
@@ -280,7 +280,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '</table>
-		</br><p><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '"></div></p>';
+		<br /><p><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '"></div></p>';
 } /*end of else not submit */
 include ('includes/footer.inc');
 ?>

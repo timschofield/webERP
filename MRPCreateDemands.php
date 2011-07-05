@@ -61,7 +61,7 @@ $sql= "SELECT salesorderdetails.stkcode,
 			" . $WhereLocation . "  
 			" . $WhereCategory . " 
 			GROUP BY salesorderdetails.stkcode";
-//echo "</br>$sql</br>";
+//echo "<br />$sql<br />";
 $result = DB_query($sql,$db);
 // To get the quantity per period, get the whole number amount of the total quantity divided
 // by the number of periods and also get the remainder from that calculation. Put the whole

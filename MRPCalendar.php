@@ -210,7 +210,7 @@ function listall(&$db)  //####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LI
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo '</br><table class="selection">
+	echo '<br /><table class="selection">
 		<tr bgcolor ="#800000">
 			<th>' . _('Date') . '</th>
 			<th>' . _('Manufacturing Date') . '</th>
@@ -231,7 +231,7 @@ function listall(&$db)  //####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LI
 	} //END WHILE LIST LOOP
 
 	echo '</table>';
-	echo '</br></br>';
+	echo '<br /><br />';
 	unset ($ChangeDate);
 	display($db,$ChangeDate);
 

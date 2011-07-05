@@ -146,7 +146,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/i
 echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
 
 
-	echo '</br></br><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
+	echo '<br /><br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection"><tr><td>';
 	echo '<tr><td>' . _('Selection') . ':</td><td><select name="Selection">';

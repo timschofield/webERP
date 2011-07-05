@@ -30,7 +30,7 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="selectacco
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table>';
 
-echo '</br><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount'
+echo '<br /><tr><td>'.  _('Select GL Account').  ":</td><td><select name='SelectedAccount'
 		onChange='ReloadForm(selectaccount.Select)'>";
 
 $SQL = "SELECT accountcode,
@@ -68,7 +68,7 @@ echo '</table>';
 echo '<br /><table><tr><td><input type="submit" name="Previous" value="' . _('Prev Account') . '"></td>';
 echo '<td><input type="submit" name="Select" value="' . _('Select Account') . '"></td>';
 echo '<td><input type="submit" name="Next" value="' . _('Next Account') . '"></td></tr>';
-echo '</table></br>';
+echo '</table><br />';
 echo '</form>';
 
 // End of account selection
@@ -213,7 +213,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<input type="hidden" name="SelectedAccount" value='.$SelectedAccount.'>';
 
 	echo '<script>defaultControl(document.form.1next);</script>';
-	echo '</br><div class="centre"><input type="submit" name=update value="' . _('Update') . '"></div></form>';
+	echo '<br /><div class="centre"><input type="submit" name=update value="' . _('Update') . '"></div></form>';
 
 	$SQL="SELECT MIN(periodno) FROM periods";
 	$result=DB_query($SQL,$db);
