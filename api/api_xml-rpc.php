@@ -1043,7 +1043,7 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
-
+	$ReturnValue = _('Return Value Descriptions go here');
 	$Description = _('This function is used to insert a new Sales Credit to the webERP database.');
 	$Parameter[0]['name'] = _('Credit Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the credit.  All values must be negative.');
@@ -1212,7 +1212,8 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
-
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
 	$Parameter[0]['name'] = _('Account Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the GL Account and fields to set.');
 	$Parameter[1]['name'] = _('User name');
@@ -1241,6 +1242,9 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
+
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
 
 	$Parameter[0]['name'] = _('Account Section Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the account section to insert.');
@@ -1271,6 +1275,9 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
+
 	$Parameter[0]['name'] = _('Account Group Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the account group to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -1299,7 +1306,7 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
-
+	
 	$Description = _('This function returns a list of stock location ids.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -1507,6 +1514,9 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
+
 	$Parameter[0]['name'] = _('Sales Area Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the sales area to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -1625,6 +1635,9 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
+
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
 
 	$Parameter[0]['name'] = _('Salesman Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the salesman to insert.');
@@ -1773,6 +1786,9 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
+
 	$Parameter[0]['name'] = _('Category Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the stock category to insert.');
 	$Parameter[1]['name'] = _('User name');
@@ -1801,6 +1817,9 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
+
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
 
 	$Parameter[0]['name'] = _('Category Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the stock category to modify.');
@@ -1889,6 +1908,9 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
+
 	$Parameter[0]['name'] = _('Field Name');
 	$Parameter[0]['description'] = _('The field name to search on.');
 	$Parameter[1]['name'] = _('Match Criteria');
@@ -1921,6 +1943,9 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
+
+	$ReturnValue = _('Return Value Descriptions go here');
+	$Description = _('Function Description go here');
 
 	$Parameter[0]['name'] = _('Label Name');
 	$Parameter[0]['description'] = _('The category label to search on.');

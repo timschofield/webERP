@@ -88,13 +88,12 @@ include('includes/header.inc');
 		$GLOpening = $invTotal = $RecTotal = $GLClosing = $CalcTotal = $DiffTotal = 0;
 		$j=0;
 
-		while ( $CurPeriod <= $_POST['ToPeriod'] )
-		{
+		while ( $CurPeriod <= $_POST['ToPeriod'] ) {
 			$SQL = "SELECT bfwd,
-						actual
-					FROM chartdetails
-					WHERE period = " . $CurPeriod . "
-					AND accountcode=" . $_SESSION['CompanyRecord']['debtorsact'];
+					actual
+				FROM chartdetails
+				WHERE period = " . $CurPeriod . "
+				AND accountcode=" . $_SESSION['CompanyRecord']['debtorsact'];
 			$dtResult = DB_query($SQL,$db);
 			$dtRow = DB_fetch_array($dtResult);
 			DB_free_result($dtResult);
@@ -165,7 +164,6 @@ include('includes/header.inc');
 		echo '</table></form>';
 	}
 
-echo '</td></tr></table>'; // end Page Border
 include('includes/footer.inc');
 
 ?>

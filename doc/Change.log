@@ -1,5 +1,6 @@
 webERP Change Log
 
+5/7/11 Phil: Amend menu to use PDFStockLocTransfer.php to reprint transfer list - as reported by Ron Wong
 3/7/11 Phil: changed all strpos to mb_strpos
 3/7/11 Phil: changed all strtoupper to mb_strtoupper
 3/7/11 Phil: changed all substr to mb_substr

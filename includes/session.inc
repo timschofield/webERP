@@ -291,7 +291,8 @@ if (!isset($AllowAnyone)){
 		echo '</td>
 					</tr>
 					</table>
-					</td>';
+					</td>
+					</tr>';
 
 		include($PathPrefix . 'includes/footer.inc');
 		exit;

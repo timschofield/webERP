@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$*/
-//$PageSecurity = 3;
+
 $title = _('Geocoded Supplier Report');
 
 include ('includes/session.inc');
@@ -13,14 +13,14 @@ $ErrMsg = _('An error occurred in retrieving the currency information');;
 $result = DB_query($sql, $db, $ErrMsg);
 $myrow = DB_fetch_array($result);
 
-$api_key = $myrow['geocode_key'];
-$center_long = $myrow['center_long'];
-$center_lat = $myrow['center_lat'];
-$map_height = $myrow['map_height'];
-$map_width = $myrow['map_width'];
-$map_host = $myrow['map_host'];
+$Api_Key = $myrow['geocode_key'];
+$Center_Long = $myrow['center_long'];
+$Center_Lat = $myrow['center_lat'];
+$Map_Height = $myrow['map_height'];
+$Map_Width = $myrow['map_width'];
+$Map_Host = $myrow['map_host'];
 
-echo '<script src="http://' . $map_host . '/maps?file=api&v=2&key=' . $api_key . '"';
+echo '<script src="http://' . $Map_Host . '/maps?file=api&v=2&key=' . $Api_Key . '"';
 echo ' type="text/javascript"></script>';
 echo ' <script type="text/javascript">';
 echo "    //<![CDATA[ "; ?>
@@ -51,7 +51,7 @@ var iconRed = new GIcon();
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
 
-<? echo 'map.setCenter(new GLatLng(' . $center_lat . ', ' . $center_long . '), 10);'; ?>
+<? echo 'map.setCenter(new GLatLng(' . $Center_Lat . ', ' . $Center_Long . '), 10);'; ?>
 
         GDownloadUrl("geocode_genxml_suppliers.php", function(data) {
           var xml = GXml.parse(data);
@@ -83,7 +83,7 @@ var iconRed = new GIcon();
 
   <body onload="load()" onunload="GUnload()">
 <p>
-<? echo '<div class="centre" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div>'; ?>
+<? echo '<div class="centre" id="map" style="width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
 </p>
   </body>
 <?

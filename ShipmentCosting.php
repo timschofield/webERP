@@ -25,15 +25,15 @@ if (!isset($_GET['SelectedShipment'])){
 }
 
 $ShipmentHeaderSQL = "SELECT shipments.supplierid,
-				suppliers.suppname,
-				shipments.eta,
-				suppliers.currcode,
-				shipments.vessel,
-				shipments.voyageref,
-				shipments.closed
-			FROM shipments INNER JOIN suppliers
-				ON shipments.supplierid = suppliers.supplierid
-			WHERE shipments.shiptref = '" . $_GET['SelectedShipment'] . "'";
+							suppliers.suppname,
+							shipments.eta,
+							suppliers.currcode,
+							shipments.vessel,
+							shipments.voyageref,
+							shipments.closed
+						FROM shipments INNER JOIN suppliers
+							ON shipments.supplierid = suppliers.supplierid
+						WHERE shipments.shiptref = '" . $_GET['SelectedShipment'] . "'";
 
 $ErrMsg = _('Shipment').' '. $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred');
 $GetShiptHdrResult = DB_query($ShipmentHeaderSQL,$db, $ErrMsg);
@@ -46,7 +46,7 @@ if (DB_num_rows($GetShiptHdrResult)==0) {
 
 $HeaderData = DB_fetch_array($GetShiptHdrResult);
 echo '<br />';
-echo '<table class=selection>';
+echo '<table class="selection">';
 echo '<tr><th colspan=4><font size=3 color=navy>'._('Shipment Details').'</font></th></tr>';
 echo '<tr>
 		<td><b>'. _('Shipment') .': </td>
@@ -140,15 +140,17 @@ if (db_num_rows($LineItemsResult) > 0) {
 		echo '<br /><table cellpadding=2 colspan=7 class=selection>';
 		echo '<tr><th colspan=9><font color=navy size=3>' . _('Items on shipment'). '</font></th></tr>';
 
-	$TableHeader = '<tr>	<th>'. _('Item'). '</th>
-				<th>'. _('Quantity'). '<br />'. _('Invoiced'). '</th>
-				<th>'. _('Quantity'). '<br />'. _('Received'). '</th>
-				<th>'. _('Invoiced'). '<br />'. _('Charges'). '</th>
-				<th>'. _('Shipment'). '<br />'. _('Charges'). '</th>
-				<th>'. _('Shipment'). '<br />'. _('Cost'). '</th>
-				<th>'. _('Standard'). '<br />'. _('Cost'). '</th>
-				<th>'. _('Variance'). '</th>
-				<th>%</th></tr>';
+	$TableHeader = '<tr>
+						<th>'. _('Item'). '</th>
+						<th>'. _('Quantity'). '<br />'. _('Invoiced'). '</th>
+						<th>'. _('Quantity'). '<br />'. _('Received'). '</th>
+						<th>'. _('Invoiced'). '<br />'. _('Charges'). '</th>
+						<th>'. _('Shipment'). '<br />'. _('Charges'). '</th>
+						<th>'. _('Shipment'). '<br />'. _('Cost'). '</th>
+						<th>'. _('Standard'). '<br />'. _('Cost'). '</th>
+						<th>'. _('Variance'). '</th>
+						<th>%</th>
+					</tr>';
 	echo  $TableHeader;
 
 	/*show the line items on the shipment with the value invoiced and shipt cost */
@@ -618,17 +620,18 @@ echo '</td></tr></table>'; //major table close
 if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to close */
 
 // if the page was called with Close=Yes then show options to confirm OK to c
-	echo '<div class+"centre"><form method="POST" action="' . $_SERVER['PHP_SELF'] .'?SelectedShipment=' . $_GET['SelectedShipment'] . '">';
+	echo '<div class="centre">
+			<form method="POST" action="' . $_SERVER['PHP_SELF'] .'?SelectedShipment=' . $_GET['SelectedShipment'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		if ($_SESSION['WeightedAverageCosting']==0){
 		/* We are standard costing - so show the option to update costs - under W. Avg cost updates are implicit */
 			echo _('Update Standard Costs') .':<select name="UpdateCost">
-			<option selected value="Yes">'. _('Yes') . '</option>
-			<option value="No">'. _('No') . '</option>
+				<option selected value="Yes">'. _('Yes') . '</option>
+				<option value="No">'. _('No') . '</option>
 			</select>';
 		}
-	echo '<br /><br /><input type=submit name="Close" VALUE="'. _('Confirm OK to Close'). '">';
+	echo '<br /><br /><input type=submit name="Close" value="'. _('Confirm OK to Close'). '">';
 	echo '</form></div>';
 }
 
