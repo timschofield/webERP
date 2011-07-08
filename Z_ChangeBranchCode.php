@@ -26,7 +26,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 		include('includes/footer.inc');
 		exit;
 	}
-	if (strstr($_POST['NewBranchCode'],".")>0 OR  strstr($_POST['NewBranchCode'],"&") OR strstr($_POST['NewBranchCode'],"-") OR strstr($_POST['NewBranchCode']," ")){
+	if (mb_strstr($_POST['NewBranchCode'],".")>0 OR  mb_strstr($_POST['NewBranchCode'],"&") OR mb_strstr($_POST['NewBranchCode'],"-") OR mb_strstr($_POST['NewBranchCode']," ")){
 		prnMsg(_('The new customer branch code cannot contain') . ' - & . ' . _('or a space'),'error');
 		include('includes/footer.inc');
 		exit;

@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The functional currency cannot be modified or deleted'),'error');
 	}
-	if (strstr($_POST['Abbreviation'],"'") OR strstr($_POST['Abbreviation'],'+') OR strstr($_POST['Abbreviation'],"\"") OR strstr($_POST['Abbreviation'],'&') OR strstr($_POST['Abbreviation'],' ') OR strstr($_POST['Abbreviation'],"\\") OR strstr($_POST['Abbreviation'],'.') OR strstr($_POST['Abbreviation'],'"')) {
+	if (mb_strstr($_POST['Abbreviation'],"'") OR mb_strstr($_POST['Abbreviation'],'+') OR mb_strstr($_POST['Abbreviation'],"\"") OR mb_strstr($_POST['Abbreviation'],'&') OR mb_strstr($_POST['Abbreviation'],' ') OR mb_strstr($_POST['Abbreviation'],"\\") OR mb_strstr($_POST['Abbreviation'],'.') OR mb_strstr($_POST['Abbreviation'],'"')) {
 		$InputError = 1;
 		prnMsg( _('The currency code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
 		$Errors[$i] = 'Abbreviation';

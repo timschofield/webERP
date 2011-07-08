@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strlen($_POST['X_DefaultCreditLimit']) > 12 || !is_numeric($_POST['X_DefaultCreditLimit']) ) {
 		$InputError = 1;
 		prnMsg(_('Default Credit Limit must be a number'),'error');
-	} elseif (strstr($_POST['X_RomalpaClause'], "'") || mb_strlen($_POST['X_RomalpaClause']) > 5000) {
+	} elseif (mb_strstr($_POST['X_RomalpaClause'], "'") || mb_strlen($_POST['X_RomalpaClause']) > 5000) {
 		$InputError = 1;
 		prnMsg(_('The Romalpa Clause may not contain single quotes and may not be longer than 5000 chars'),'error');
 	} elseif (mb_strlen($_POST['X_QuickEntries']) > 2 || !is_numeric($_POST['X_QuickEntries']) ||

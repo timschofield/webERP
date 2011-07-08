@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 
 	$_POST['BranchCode'] = mb_strtoupper($_POST['BranchCode']);
 
-	if (ContainsIllegalCharacters($_POST['BranchCode']) OR strstr($_POST['BranchCode'],' ')) {
+	if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ')) {
 		$InputError = 1;
 		prnMsg(_('The Branch code cannot contain any of the following characters')." -  & \'",'error');
 		$Errors[$i] = 'BranchCode';

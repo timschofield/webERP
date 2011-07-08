@@ -51,9 +51,9 @@
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		if (strstr('/',$PeriodEnd)) {
+		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
-		} elseif (strstr('.',$PeriodEnd)) {
+		} elseif (mb_strstr('.',$PeriodEnd)) {
 			$Date_Array = explode('.',$PeriodEnd);
 		}
 		if ($DateFormat=='d/m/Y') {

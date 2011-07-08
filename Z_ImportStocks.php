@@ -120,7 +120,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 			$InputError = 1;
 			prnMsg (_('The Stock Item code cannot be empty'),'error');
 		}
-		if (strstr($StockID,' ') OR strstr($StockID,"'") OR strstr($StockID,'+') OR strstr($StockID,"\\") OR strstr($StockID,"\"") OR strstr($StockID,'&') OR strstr($StockID,'"')) {
+		if (mb_strstr($StockID,' ') OR mb_strstr($StockID,"'") OR mb_strstr($StockID,'+') OR mb_strstr($StockID,"\\") OR mb_strstr($StockID,"\"") OR mb_strstr($StockID,'&') OR mb_strstr($StockID,'"')) {
 			$InputError = 1;
 			prnMsg(_('The stock item code cannot contain any of the following characters') . " ' & + \" \\ " . _('or a space'). " (". $StockID. ")",'error');
 			$StockID='';

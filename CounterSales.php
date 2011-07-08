@@ -35,7 +35,7 @@ if (isset($_POST['QuickEntry'])){
 
 if (isset($_POST['OrderItems'])){
 	foreach ($_POST as $key => $value) {
-		if (strstr($key,'itm')) {
+		if (mb_strstr($key,'itm')) {
 			$NewItemArray[mb_substr($key,3)] = trim($value);
 		}
 	}

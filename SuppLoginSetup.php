@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg(_('The password entered must be at least 5 characters long'),'error');
 		}
-	} elseif (strstr($_POST['Password'],$_POST['UserID'])!= False){
+	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
 	}

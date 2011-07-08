@@ -1,5 +1,6 @@
 webERP Change Log
 
+8/7/11 Phil: Change all strstr occurrences to use multi-byte function mb_strstr
 8/7/11 Phil: Trap codes with decimal point "." in them in the IllegalCharacters function
 8/7/11 Phil: Fix discount matrix calculations on order entry and amendment
 5/7/11 Phil: Amend menu to use PDFStockLocTransfer.php to reprint transfer list - as reported by Ron Wong

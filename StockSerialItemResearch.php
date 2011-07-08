@@ -38,8 +38,8 @@ document.getElementById('serialno').focus();
 
 if ($SN!='') {
 	//the point here is to allow a semi fuzzy search, but still keep someone from killing the db server
-	if (strstr($SN,'%')){
-		while(strstr($SN,'%%'))	{
+	if (mb_strstr($SN,'%')){
+		while(mb_strstr($SN,'%%'))	{
 			$SN = str_replace('%%','%',$SN);
 		}
 		if (mb_strlen($SN) < 11){

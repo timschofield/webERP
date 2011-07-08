@@ -43,9 +43,9 @@ $SOH_DateFields = array ('orddate',
 		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		if (strstr($orddate,"/")) {
+		if (mb_strstr($orddate,"/")) {
 			$DateArray = explode('/',$orddate);
-		} elseif (strstr($orddate,".")) {
+		} elseif (mb_strstr($orddate,".")) {
 			$DateArray = explode('.',$orddate);
 		}
 		if ($DateFormat=='d/m/Y') {
@@ -121,9 +121,9 @@ $SOH_DateFields = array ('orddate',
 		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		if (strstr($deliverydate,'/')) {
+		if (mb_strstr($deliverydate,'/')) {
 			$DateArray = explode('/',$deliverydate);
-		} elseif (strstr($PeriodEnd,'.')) {
+		} elseif (mb_strstr($PeriodEnd,'.')) {
 			$DateArray = explode('.',$deliverydate);
 		}
 		if ($DateFormat=='d/m/Y') {
@@ -231,9 +231,9 @@ $SOH_DateFields = array ('orddate',
 		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		if (strstr($itemdue,'/')) {
+		if (mb_strstr($itemdue,'/')) {
 			$DateArray = explode('/',$itemdue);
-		} elseif (strstr($itemdue,'.')) {
+		} elseif (mb_strstr($itemdue,'.')) {
 			$DateArray = explode('.',$itemdue);
 		}
 		if ($DateFormat=='d/m/Y') {

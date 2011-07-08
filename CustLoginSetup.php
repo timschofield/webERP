@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen($_POST['UserID'])<3){
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
-	} elseif (ContainsIllegalCharacters($_POST['UserID']) OR strstr($_POST['UserID'],' ')) {
+	} elseif (ContainsIllegalCharacters($_POST['UserID']) OR mb_strstr($_POST['UserID'],' ')) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 	} elseif (mb_strlen($_POST['Password'])<5){
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg(_('The password entered must be at least 5 characters long'),'error');
 		}
-	} elseif (strstr($_POST['Password'],$_POST['UserID'])!= False){
+	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
 	} elseif ((mb_strlen($_POST['Cust'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {

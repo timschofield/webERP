@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
 	}
-	if (strstr($_POST['Code'],' ') OR ContainsIllegalCharacters($_POST['Code']) ) {
+	if (mb_strstr($_POST['Code'],' ') OR ContainsIllegalCharacters($_POST['Code']) ) {
 		$InputError = 1;
 		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 	}

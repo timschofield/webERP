@@ -36,7 +36,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 
 		if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
 			AND mb_substr($SQLScriptFile[$i], 0, 3) != 'USE'
-			AND strstr($SQLScriptFile[$i],'/*')==FALSE
+			AND mb_strstr($SQLScriptFile[$i],'/*')==FALSE
 			AND mb_strlen($SQLScriptFile[$i])>1){
 
 			$SQL .= ' ' . $SQLScriptFile[$i];
