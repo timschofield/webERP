@@ -89,7 +89,7 @@ if ($AlreadyOnThisOrder!=1){
 				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
 			}
 
-			if (isset($StockItem) and $myItemRow['discountcategory'] != "" ){
+			if (isset($StockItem) and $myItemRow['discountcategory'] != '' ){
 				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
 				$QuantityOfDiscCat =0;
 				$result = DB_query("SELECT MAX(discountrate) AS discount
@@ -114,15 +114,17 @@ if ($AlreadyOnThisOrder!=1){
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 			  	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
             }
-			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn
+			if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  /*Check credit limits is 1 for warn
 											and 2 for prohibit sales */
 				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
 
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					prnMsg(_('The customer account will breach their credit limit'),'warn');
+					$AlreadyWarnedAboutCredit = true;
 				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
 					$WithinCreditLimit = false;
+					$AlreadyWarnedAboutCredit = true;
 				}
 			}
 

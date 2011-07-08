@@ -897,6 +897,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$ExRate = 1;
 	}
 
+	
 	/*Process Quick Entry */
 	/* If enter is pressed on the quick entry screen, the default button may be Recalculate */
 	 if (isset($_POST['order_items'])
@@ -906,8 +907,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 /* get the item details from the database and hold them in the cart object */
 
 		 /*Discount can only be set later on  -- after quick entry -- so default discount to 0 in the first place */
-		 $Discount = 0;
-
+		$Discount = 0;
+		$AlreadyWarnedAboutCredit = false;
 		 $i=1;
 		  while ($i<=$_SESSION['QuickEntries'] and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
 			$QuickEntryCode = 'part_' . $i;
@@ -1053,14 +1054,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																				taxcatid,
 																				materialcost)
 										VALUES ('" . $AssetStockID . "',
-														'" . $AssetRow['description'] . "',
-														'" . $AssetRow['longdescription'] . "',
-														'ASSETS',
-														'D',
-														'0',
-														'0',
-														'" . $_SESSION['DefaultTaxCategory'] . "',
-														'". $NBV . "')" , $db);
+												'" . $AssetRow['description'] . "',
+												'" . $AssetRow['longdescription'] . "',
+												'ASSETS',
+												'D',
+												'0',
+												'0',
+												'" . $_SESSION['DefaultTaxCategory'] . "',
+												'". $NBV . "')" , $db);
 			/*not forgetting the location records too */
 			$InsertStkLocRecsResult = DB_query("INSERT INTO locstock (loccode,
 																	stockid)
@@ -1091,7 +1092,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items'.$identifier]->LineItems[$_GET['Delete']]->Quantity = $QuantityAlreadyDelivered;
 			}
 		}
-
+		
+		$AlreadyWarnedAboutCredit = false;
+		
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
@@ -1142,18 +1145,20 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					
 					$WithinCreditLimit = true;
 					
-					if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn
-											and 2 for prohibit sales */
+					if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  /*Check credit limits is 1 for warn
+									breach their credit limit		and 2 for prohibit sales */
 						$DifferenceInOrderValue = ($Quantity*$Price*(1-$DiscountPercentage/100)) - ($OrderLine->Quantity*$OrderLine->Price*(1-$OrderLine->DiscountPercentage));
 						
 						$_SESSION['Items'.$identifier]->CreditAvailable -= $DifferenceInOrderValue;
 
 						if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 							prnMsg(_('The customer account will breach their credit limit'),'warn');
+							$AlreadyWarnedAboutCredit = true;
 						} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 							prnMsg(_('This change would put the customer over their credit limit and is prohibited'),'warn');
 							$WithinCreditLimit = false;
 							$_SESSION['Items'.$identifier]->CreditAvailable += $DifferenceInOrderValue;
+							$AlreadyWarnedAboutCredit = true;
 						}
 					}
 					
@@ -1170,8 +1175,39 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					} //within credit limit so make changes
 				} //there are changes to the order line to process
 			} //page not called from itself - POST variables not set
-		}
-	}
+		} // Loop around all items on the order
+		
+		
+		/* Now Run through each line of the order again to work out the appropriate discount from the discount matrix */
+		$DiscCatsDone = array();
+		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+	
+			if ($OrderLine->DiscCat !='' AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
+				$DiscCatsDone[]=$OrderLine->DiscCat;
+				$QuantityOfDiscCat = 0;
+	
+				foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
+					/* add up total quantity of all lines of this DiscCat */
+					if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
+						$QuantityOfDiscCat += $OrderLine_2->Quantity;
+					}
+				}
+				$result = DB_query("SELECT MAX(discountrate) AS discount
+									FROM discountmatrix
+									WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
+									AND discountcategory ='" . $OrderLine->DiscCat . "'
+									AND quantitybreak <" . $QuantityOfDiscCat,$db);
+				$myrow = DB_fetch_row($result);
+				if ($myrow[0]!=0){ /* need to update the lines affected */
+					foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
+						if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
+							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $myrow[0];
+						}
+					}
+				}//a none zero discount percentage was returned
+			}
+		} /* end of discount matrix lookup code */
+	} // the order session is started or there is a new item being added
 	if (isset($_POST['DeliveryDetails'])){
 		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">';
 		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('if this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
@@ -1229,6 +1265,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	if (isset($NewItem_array) AND isset($_POST['order_items'])){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
+		$AlreadyWarnedAboutCredit = false;
 		foreach($NewItem_array as $NewItem => $NewItemQty) {
 				if($NewItemQty > 0)	{
 					$sql = "SELECT stockmaster.mbflag
@@ -1245,11 +1282,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					if ($myrow=DB_fetch_array($KitResult)){
 						if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 							$sql = "SELECT bom.component,
-														bom.quantity
-											FROM bom
-											WHERE bom.parent='" . $NewItem . "'
-											AND bom.effectiveto > '" . Date('Y-m-d') . "'
-											AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+											bom.quantity
+										FROM bom
+										WHERE bom.parent='" . $NewItem . "'
+										AND bom.effectiveto > '" . Date('Y-m-d') . "'
+										AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 							$ErrMsg = _('Could not retrieve kitset components from the database because');
 							$KitResult = DB_query($sql,$db,$ErrMsg);
@@ -1300,8 +1337,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]!=0){ /* need to update the lines affected */
 				foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
-					/* add up total quantity of all lines of this DiscCat */
-					if ($StkItems_2->DiscCat==$OrderLine->DiscCat AND $StkItems_2->DiscountPercent == 0){
+					if ($StkItems_2->DiscCat==$OrderLine->DiscCat){
 						$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $myrow[0];
 					}
 				}
@@ -1415,12 +1451,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
-			$ColSpanNumber = 3;
+			$ColSpanNumber = 2;
 		} else {
 			$ColSpanNumber = 1;
 		}
-		echo '<tr class="EvenTableRows"><td class="number" colspan=7><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-							<td colspan="' . $ColSpanNumber . '" class=number>' . $DisplayTotal . '</td></tr></table>';
+		echo '<tr class="EvenTableRows">
+				<td class="number" colspan=7><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+				<td colspan="' . $ColSpanNumber . '" class=number>' . $DisplayTotal . '</td></tr></table>';
 
 		$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 		$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
@@ -1431,8 +1468,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					   </tr></table>';
 
 
-		echo '<br /><div class="centre"><input type=submit name="Recalculate" Value="' . _('Re-Calculate') . '">
-				<input type=submit name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '"></div><hr>';
+		echo '<br />
+				<div class="centre">
+				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '">
+				<input type="submit" name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '"></div><hr />';
 	} # end of if lines
 
 /* Now show the stock item selection search stuff below */

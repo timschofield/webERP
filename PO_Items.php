@@ -159,39 +159,38 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 											deliverydate,
 											paymentterms,
 											allowprint)
-										VALUES(	'" . $_SESSION['PO'.$identifier]->OrderNo . "',
-												'" . $_SESSION['PO'.$identifier]->SupplierID . "',
-												'" . $_SESSION['PO'.$identifier]->Comments . "',
-												'" . Date('Y-m-d') . "',
-												'" . $_SESSION['PO'.$identifier]->ExRate . "',
-												'" . $_SESSION['PO'.$identifier]->Initiator . "',
-												'" . $_SESSION['PO'.$identifier]->RequisitionNo . "',
-												'" . $_SESSION['PO'.$identifier]->Location . "',
-												'" . $_SESSION['PO'.$identifier]->DelAdd1 . "',
-												'" . $_SESSION['PO'.$identifier]->DelAdd2 . "',
-												'" . $_SESSION['PO'.$identifier]->DelAdd3 . "',
-												'" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
-												'" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
-												'" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
-												'" . $_SESSION['PO'.$identifier]->Tel . "',
-												'" . $_SESSION['PO'.$identifier]->SuppDelAdd1 . "',
-												'" . $_SESSION['PO'.$identifier]->SuppDelAdd2 . "',
-												'" . $_SESSION['PO'.$identifier]->SuppDelAdd3 . "',
-												'" . $_SESSION['PO'.$identifier]->SuppDelAdd4 . "',
-												'" . $_SESSION['PO'.$identifier]->SuppDelAdd5 . "',
-												'" . $_SESSION['PO'.$identifier]->SuppDelAdd6 . "',
-												'" . $_SESSION['PO'.$identifier]->SupplierContact . "',
-												'" . $_SESSION['PO'.$identifier]->SuppTel. "',
-												'" . $_SESSION['PO'.$identifier]->Contact . "',
-												'" . $_SESSION['PO'.$identifier]->Version . "',
-												'" . Date('Y-m-d') . "',
-												'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
-												'" . $_SESSION['PO'.$identifier]->Status . "',
-												'" . $StatusComment . "',
-												'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
-												'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
-												'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "'
-											)";
+							VALUES(	'" . $_SESSION['PO'.$identifier]->OrderNo . "',
+									'" . $_SESSION['PO'.$identifier]->SupplierID . "',
+									'" . $_SESSION['PO'.$identifier]->Comments . "',
+									'" . Date('Y-m-d') . "',
+									'" . $_SESSION['PO'.$identifier]->ExRate . "',
+									'" . $_SESSION['PO'.$identifier]->Initiator . "',
+									'" . $_SESSION['PO'.$identifier]->RequisitionNo . "',
+									'" . $_SESSION['PO'.$identifier]->Location . "',
+									'" . $_SESSION['PO'.$identifier]->DelAdd1 . "',
+									'" . $_SESSION['PO'.$identifier]->DelAdd2 . "',
+									'" . $_SESSION['PO'.$identifier]->DelAdd3 . "',
+									'" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
+									'" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
+									'" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
+									'" . $_SESSION['PO'.$identifier]->Tel . "',
+									'" . $_SESSION['PO'.$identifier]->SuppDelAdd1 . "',
+									'" . $_SESSION['PO'.$identifier]->SuppDelAdd2 . "',
+									'" . $_SESSION['PO'.$identifier]->SuppDelAdd3 . "',
+									'" . $_SESSION['PO'.$identifier]->SuppDelAdd4 . "',
+									'" . $_SESSION['PO'.$identifier]->SuppDelAdd5 . "',
+									'" . $_SESSION['PO'.$identifier]->SuppDelAdd6 . "',
+									'" . $_SESSION['PO'.$identifier]->SupplierContact . "',
+									'" . $_SESSION['PO'.$identifier]->SuppTel. "',
+									'" . $_SESSION['PO'.$identifier]->Contact . "',
+									'" . $_SESSION['PO'.$identifier]->Version . "',
+									'" . Date('Y-m-d') . "',
+									'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
+									'" . $_SESSION['PO'.$identifier]->Status . "',
+									'" . $StatusComment . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
+									'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
+									'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "' )";
 	
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
 			$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
@@ -213,20 +212,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 														suppliers_partno,
 														assetid,
 														conversionfactor )
-												VALUES (
-														'" . $_SESSION['PO'.$identifier]->OrderNo . "',
-														'" . $POLine->StockID . "',
-														'" . FormatDateForSQL($POLine->ReqDelDate) . "',
-														'" . $POLine->ItemDescription . "',
-														'" . $POLine->GLCode . "',
-														'" . $POLine->Price . "',
-														'" . $POLine->Quantity . "',
-														'" . $POLine->ShiptRef . "',
-														'" . $POLine->JobRef . "',
-														'" . $POLine->SuppliersUnit . "',
-														'" . $POLine->Suppliers_PartNo . "',
-														'" . $POLine->AssetID . "',
-														'" . $POLine->ConversionFactor . "')";
+									VALUES ('" . $_SESSION['PO'.$identifier]->OrderNo . "',
+											'" . $POLine->StockID . "',
+											'" . FormatDateForSQL($POLine->ReqDelDate) . "',
+											'" . $POLine->ItemDescription . "',
+											'" . $POLine->GLCode . "',
+											'" . $POLine->Price . "',
+											'" . $POLine->Quantity . "',
+											'" . $POLine->ShiptRef . "',
+											'" . $POLine->JobRef . "',
+											'" . $POLine->SuppliersUnit . "',
+											'" . $POLine->Suppliers_PartNo . "',
+											'" . $POLine->AssetID . "',
+											'" . $POLine->ConversionFactor . "')";
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 					
@@ -386,7 +384,7 @@ if(isset($_GET['Delete'])){
 if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecting a stock item from the search */
 
 	$AllowUpdate = true; /*always assume the best */
-	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Qty'])))){
+	if (!is_numeric($_POST['Qty'])){
 		$AllowUpdate = false;
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The quantity of the order item must be numeric'),'error');
 	}
@@ -394,7 +392,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$AllowUpdate = false;
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The quantity of the ordered item entered must be a positive amount'),'error');
 	}
-	if (!is_numeric(doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price'])))){
+	if (!is_numeric($_POST['Price'])){
 		$AllowUpdate = false;
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The price entered must be numeric'),'error');
 	}
@@ -465,8 +463,6 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 	if ($AllowUpdate == true){
 	//adding the non-stock item
-		$_POST['Price'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Price']));
-		$_POST['Qty'] = doubleval(str_replace($locale_info['thousands_sep'],'',$_POST['Qty']));
 		
 		$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 												'',
@@ -505,10 +501,10 @@ if (isset($_POST['NewItem'])){
 	foreach ($_POST as $FormVariableName => $Quantity) {
 
 		if (mb_substr($FormVariableName, 0, 6)=='NewQty') { //if the form variable represents a Qty to add to the order
-
+			
 			$ItemCode = mb_substr($FormVariableName, 6, mb_strlen($FormVariableName)-6);
 			$AlreadyOnThisOrder = 0;
-
+			
 			if ($_SESSION['PO_AllowSameItemMultipleTimes'] ==false){
 				if (count($_SESSION['PO'.$identifier]->LineItems)!=0){
 
@@ -530,11 +526,11 @@ if (isset($_POST['NewItem'])){
 							decimalplaces,
 							stockact,
 							accountname
-					FROM stockmaster INNER JOIN stockcategory
-					ON stockcategory.categoryid = stockmaster.categoryid
-					INNER JOIN chartmaster
-					ON chartmaster.accountcode = stockcategory.stockact
-					WHERE  stockmaster.stockid = '". $ItemCode . "'";
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockcategory.categoryid = stockmaster.categoryid
+						INNER JOIN chartmaster
+						ON chartmaster.accountcode = stockcategory.stockact
+						WHERE  stockmaster.stockid = '". $ItemCode . "'";
 
 				$ErrMsg = _('The item details for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
@@ -661,9 +657,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
 			// This should help display where item-price is a fraction
 			if ($POLine->Price > 1) {
-				$DisplayPrice = number_format($POLine->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces,'.','');
+				$DisplayPrice = number_format($POLine->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			} else {
-				$DisplayPrice = number_format($POLine->Price,4,'.','');
+				$DisplayPrice = number_format($POLine->Price,4);
 			}
 
 			if ($k==1){
@@ -705,7 +701,7 @@ if (isset($_POST['NonStockOrder'])) {
 
 	echo '<br /><table class="selection"><tr>
 				<td>' . _('Item Description') . '</td>';
-	echo '<td><input type=text name=ItemDescription size=40></td></tr>';
+	echo '<td><input type="text" name="ItemDescription" size="40" /></td></tr>';
 	echo '<tr><td>' . _('General Ledger Code') . '</td>';
 	echo '<td><select name="GLCode">';
 	$sql="SELECT accountcode,
@@ -759,29 +755,29 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag<>'D'
-				AND stockmaster.mbflag<>'K'
-				AND stockmaster.mbflag<>'G'
-				AND stockmaster.discontinued<>1
-				AND stockmaster.description " . LIKE . " '" . $SearchString ."'
-				ORDER BY stockmaster.stockid
-				LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'K'
+					AND stockmaster.mbflag<>'G'
+					AND stockmaster.discontinued<>1
+					AND stockmaster.description " . LIKE . " '" . $SearchString ."'
+					ORDER BY stockmaster.stockid
+					LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag<>'D'
-				AND stockmaster.mbflag<>'K'
-				AND stockmaster.mbflag<>'G'
-				AND stockmaster.discontinued<>1
-				AND stockmaster.description " . LIKE . " '". $SearchString ."'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid
-				LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'K'
+					AND stockmaster.mbflag<>'G'
+					AND stockmaster.discontinued<>1
+					AND stockmaster.description " . LIKE . " '". $SearchString ."'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid
+					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
 		}
 
 	} elseif ($_POST['StockCode']){
@@ -792,29 +788,29 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag<>'D'
-				AND stockmaster.mbflag<>'K'
-				AND stockmaster.mbflag<>'G'
-				AND stockmaster.discontinued<>1
-				AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-				ORDER BY stockmaster.stockid
-				LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'K'
+					AND stockmaster.mbflag<>'G'
+					AND stockmaster.discontinued<>1
+					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					ORDER BY stockmaster.stockid
+					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag<>'D'
-				AND stockmaster.mbflag<>'K'
-				AND stockmaster.mbflag<>'G'
-				and stockmaster.discontinued<>1
-				AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid
-				LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'K'
+					AND stockmaster.mbflag<>'G'
+					and stockmaster.discontinued<>1
+					AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid
+					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
 		}
 
 	} else {
@@ -822,27 +818,27 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag<>'D'
-				AND stockmaster.mbflag<>'K'
-				AND stockmaster.mbflag<>'G'
-				AND stockmaster.discontinued<>1
-				ORDER BY stockmaster.stockid
-				LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'K'
+					AND stockmaster.mbflag<>'G'
+					AND stockmaster.discontinued<>1
+					ORDER BY stockmaster.stockid
+					LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag<>'D'
-				AND stockmaster.mbflag<>'K'
-				AND stockmaster.mbflag<>'G'
-				AND stockmaster.discontinued<>1
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid
-				LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'K'
+					AND stockmaster.mbflag<>'G'
+					AND stockmaster.discontinued<>1
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid
+					LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
 		}
 	}
 
@@ -865,10 +861,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 if (!isset($_GET['Edit'])) {
 	$sql="SELECT categoryid,
 				categorydescription
-		FROM stockcategory
-		WHERE stocktype<>'L'
-		AND stocktype<>'D'
-		ORDER BY categorydescription";
+			FROM stockcategory
+			WHERE stocktype<>'L'
+			AND stocktype<>'D'
+			ORDER BY categorydescription";
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -926,13 +922,13 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1" colspan="7" class="selection">';
 
 	$TableHeader = '<tr>
-				<th>' . _('Code')  . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Our Units') . '</th>
-				<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
-				<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>
-				<th colspan=2><a href="#end">'._('Go to end of list').'</a></th>
-				</tr>';
+						<th>' . _('Code')  . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Our Units') . '</th>
+						<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
+						<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>
+						<th colspan=2><a href="#end">'._('Go to end of list').'</a></th>
+					</tr>';
 	echo $TableHeader;
 
 	$j = 1;
