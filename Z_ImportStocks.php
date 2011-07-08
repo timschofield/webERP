@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
-/* Script to make stock locations for all parts that do not have stock location records set up*/
 
-//$PageSecurity = 15;
 include('includes/session.inc');
 $title = _('Import Items');
 include('includes/header.inc');
@@ -120,7 +118,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 			$InputError = 1;
 			prnMsg (_('The Stock Item code cannot be empty'),'error');
 		}
-		if (mb_strstr($StockID,' ') OR mb_strstr($StockID,"'") OR mb_strstr($StockID,'+') OR mb_strstr($StockID,"\\") OR mb_strstr($StockID,"\"") OR mb_strstr($StockID,'&') OR mb_strstr($StockID,'"')) {
+		if (ContainsIllegalCharacters($StockID) OR mb_strstr($StockID,' ')) {
 			$InputError = 1;
 			prnMsg(_('The stock item code cannot contain any of the following characters') . " ' & + \" \\ " . _('or a space'). " (". $StockID. ")",'error');
 			$StockID='';
