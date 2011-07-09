@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE chartmaster SET accountname='" . $_POST['AccountName'] . "',
 						group_='" . $_POST['Group'] . "'
-					WHERE accountcode ='" . $SelectedAccount . "'";
+				WHERE accountcode ='" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not update the account because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -52,8 +52,7 @@ if (isset($_POST['submit'])) {
 						group_)
 					VALUES ('" . $_POST['AccountCode'] . "',
 							'" . $_POST['AccountName'] . "',
-							'" . $_POST['Group'] . "'
-						)";
+							'" . $_POST['Group'] . "')";
 		$result = DB_query($sql,$db,$ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
@@ -69,9 +68,10 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartDetails'
 
-
-
-	$sql= "SELECT COUNT(*) FROM chartdetails WHERE chartdetails.accountcode ='" . $SelectedAccount . "' AND chartdetails.actual <>0";
+	$sql= "SELECT COUNT(*) 
+			FROM chartdetails 
+			WHERE chartdetails.accountcode ='" . $SelectedAccount . "' 
+			AND chartdetails.actual <>0";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -81,7 +81,9 @@ if (isset($_POST['submit'])) {
 
 	} else {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'GLTrans'
-		$sql= "SELECT COUNT(*) FROM gltrans WHERE gltrans.account ='" . $SelectedAccount . "'";
+		$sql= "SELECT COUNT(*) 
+				FROM gltrans 
+				WHERE gltrans.account ='" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not test for existing transactions because');
 
@@ -96,14 +98,14 @@ if (isset($_POST['submit'])) {
 		} else {
 			//PREVENT DELETES IF Company default accounts set up to this account
 			$sql= "SELECT COUNT(*) FROM companies
-				WHERE debtorsact='" . $SelectedAccount ."'
-				OR pytdiscountact='" . $SelectedAccount ."'
-				OR creditorsact='" . $SelectedAccount ."'
-				OR payrollact='" . $SelectedAccount ."'
-				OR grnact='" . $SelectedAccount ."'
-				OR exchangediffact='" . $SelectedAccount ."'
-				OR purchasesexchangediffact='" . $SelectedAccount ."'
-				OR retainedearnings='" . $SelectedAccount ."'";
+					WHERE debtorsact='" . $SelectedAccount ."'
+					OR pytdiscountact='" . $SelectedAccount ."'
+					OR creditorsact='" . $SelectedAccount ."'
+					OR payrollact='" . $SelectedAccount ."'
+					OR grnact='" . $SelectedAccount ."'
+					OR exchangediffact='" . $SelectedAccount ."'
+					OR purchasesexchangediffact='" . $SelectedAccount ."'
+					OR retainedearnings='" . $SelectedAccount ."'";
 
 
 			$ErrMsg = _('Could not test for default company GL codes because');
@@ -144,7 +146,9 @@ if (isset($_POST['submit'])) {
 						prnMsg( _('Cannot delete this account because it is used by one of the sales GL posting interface records'),'warn');
 					} else {
 //PREVENT DELETES IF COGS POSTINGS USE THE GL ACCOUNT
-						$sql= "SELECT COUNT(*) FROM cogsglpostings WHERE glcode='" . $SelectedAccount ."'";
+						$sql= "SELECT COUNT(*) 
+								FROM cogsglpostings 
+								WHERE glcode='" . $SelectedAccount ."'";
 
 						$ErrMsg = _('Could not test for existing cost of sales interface codes because');
 
@@ -158,11 +162,11 @@ if (isset($_POST['submit'])) {
 						} else {
 //PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
 							$sql= "SELECT COUNT(*) FROM stockcategory
-								WHERE stockact='" . $SelectedAccount ."'
-								OR adjglact='" . $SelectedAccount ."'
-								OR purchpricevaract='" . $SelectedAccount ."'
-								OR materialuseagevarac='" . $SelectedAccount ."'
-								OR wipact='" . $SelectedAccount ."'";
+									WHERE stockact='" . $SelectedAccount ."'
+									OR adjglact='" . $SelectedAccount ."'
+									OR purchpricevaract='" . $SelectedAccount ."'
+									OR materialuseagevarac='" . $SelectedAccount ."'
+									OR wipact='" . $SelectedAccount ."'";
 
 							$Errmsg = _('Could not test for existing stock GL codes because');
 

@@ -1,6 +1,7 @@
 webERP Change Log
 
-8/7/11 Phil: Remove duplication of checking for illegal characters - use the same function in MiscFunctions.php ContainsIllegalCharacters in Currencies and the utility scripts
+9/7/11 Phil/Beth Lesko: Comments not wrapping correctly on quotations - fixed landscape quotation
+8/7/11 Phil: Remove duplication of checking for illegal characters - use the same function in MiscFunctions.php ContainsIllegalCharacters in Currencies and the utility scripts Z_ChangeBranchCode.php and Z_ImportStockCodes.php
 8/7/11 Phil: Change all strstr occurrences to use multi-byte function mb_strstr
 8/7/11 Phil: Trap codes with decimal point "." in them in the IllegalCharacters function
 8/7/11 Phil: Fix discount matrix calculations on order entry and amendment

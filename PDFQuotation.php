@@ -186,10 +186,10 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,$DisplayTotal,'right');
 		if (mb_strlen($myrow2['narrative'])>1){
 			$YPos -= ($line_height);
-			$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,800,$FontSize,$myrow2['narrative']);
+			$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,870,$FontSize,$myrow2['narrative']);
 			if (mb_strlen($LeftOvers) >1){
 				$YPos -= 11;
-				$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,800,$FontSize,$LeftOvers);
+				$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,870,$FontSize,$LeftOvers);
 			}
 		}
 		$QuotationTotal +=$LineTotal;
@@ -209,25 +209,6 @@ if (DB_num_rows($result)>0){
 			include ('includes/PDFQuotationPageHeader.inc');
 	} //end if need a new page headed up
 
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,200,10,_('Notes:'));
-	$LeftOvers = $pdf->addText($XPos,$YPos-95,10,$myrow['comments']);
-
-	if (mb_strlen($LeftOvers)>1){
-		$YPos -= 10;
-		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
-		if (mb_strlen($LeftOvers)>1){
-			$YPos -= 10;
-			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
-			if (mb_strlen($LeftOvers)>1){
-				$YPos -= 10;
-				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
-				if (mb_strlen($LeftOvers)>1){
-					$YPos -= 10;
-					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,10,$FontSize,$LeftOvers);
-				}
-			}
-		}
-	}
 	$YPos -= ($line_height);
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Total Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($TaxTotal,2),'right');
@@ -237,7 +218,27 @@ if (DB_num_rows($result)>0){
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Including Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($QuotationTotal,2),'right');
-
+	
+	$YPos -= ($line_height);
+	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,20,10,_('Notes:'));
+	$LeftOvers = $pdf->addTextWrap($XPos+28,$YPos,800,10,$myrow['comments']);
+	
+	if (mb_strlen($LeftOvers)>1){
+		$YPos -= 10;
+		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,850,10,$LeftOvers);
+		if (mb_strlen($LeftOvers)>1){
+			$YPos -= 10;
+			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,850,10,$LeftOvers);
+			if (mb_strlen($LeftOvers)>1){
+				$YPos -= 10;
+				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,850,10,$LeftOvers);
+				if (mb_strlen($LeftOvers)>1){
+					$YPos -= 10;
+					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,850,10,$LeftOvers);
+				}
+			}
+		}
+	}
 } /*end if there are line details to show on the quotation*/
 
 
