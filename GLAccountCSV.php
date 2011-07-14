@@ -43,7 +43,7 @@ while ($myrow=DB_fetch_array($AccountsResult,$db)){
 echo '</select></td>';
 
 echo '<td>'._('For Period range').':</td>
-		<td><select Name=Period[] multiple>';
+		<td><select name="Period[]" multiple>';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql,$db);
 $id=0;
@@ -139,30 +139,30 @@ if (isset($_POST['MakeCSV'])){
 				      gltrans.periodno,
 				      gltrans.tag
 				FROM gltrans, systypes
-				WHERE gltrans.account = '$SelectedAccount'
+				WHERE gltrans.account = '" . $SelectedAccount . "'
 				AND systypes.typeid=gltrans.type
 				AND posted=1
-				AND periodno>='$FirstPeriodSelected'
-				AND periodno<='$LastPeriodSelected'
+				AND periodno>='" . $FirstPeriodSelected . "'
+				AND periodno<='" . $LastPeriodSelected . "'
 				ORDER BY periodno, gltrans.trandate, counterindex";
 
 		} else {
 	 		$sql= "SELECT gltrans.type,
-                                      gltrans.typename,
-				      gltrans.typeno,
-				      gltrans.trandate,
-				      gltrans.narrative,
-          			      gltrans.amount,
-				      gltrans.periodno,
-				      gltrans.tag
-				FROM gltrans, systypes
-				WHERE gltrans.account = '$SelectedAccount'
-				AND systypes.typeid=gltrans.type
-				AND posted=1
-				AND periodno>='$FirstPeriodSelected'
-				AND periodno<='$LastPeriodSelected'
-                                AND tag='".$_POST['tag']."'
-                                ORDER BY periodno, gltrans.trandate, counterindex";
+						gltrans.typename,
+						gltrans.typeno,
+						gltrans.trandate,
+						gltrans.narrative,
+						gltrans.amount,
+						gltrans.periodno,
+						gltrans.tag
+					FROM gltrans, systypes
+					WHERE gltrans.account = '" . $SelectedAccount . "'
+					AND systypes.typeid=gltrans.type
+					AND posted=1
+					AND periodno>='" . $FirstPeriodSelected . "'
+					AND periodno<='" . $LastPeriodSelected . "'
+					AND tag='".$_POST['tag']."'
+					ORDER BY periodno, gltrans.trandate, counterindex";
 		}
 
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
@@ -176,7 +176,7 @@ if (isset($_POST['MakeCSV'])){
 					actual,
 					period
 				FROM chartdetails
-				WHERE chartdetails.accountcode= '$SelectedAccount'
+				WHERE chartdetails.accountcode= '" . $SelectedAccount . "'
 				AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
@@ -202,11 +202,11 @@ if (isset($_POST['MakeCSV'])){
 				if ($PeriodNo!=-9999){ //ie its not the first time around
 					/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 					$sql = "SELECT bfwd,
-							actual,
-							period
-						FROM chartdetails
-						WHERE chartdetails.accountcode= '$SelectedAccount'
-						AND chartdetails.period='" . $PeriodNo . "'";
+									actual,
+									period
+							FROM chartdetails
+							WHERE chartdetails.accountcode= '" . $SelectedAccount . "'
+							AND chartdetails.period='" . $PeriodNo . "'";
 
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);

@@ -1,9 +1,6 @@
 <?php
+/* $Id: GLAccountReport.php 4618 2011-07-02 23:04:59Z daintree $*/
 
-/* $Id: $*/
-/* $Revision: 1.00 $ */
-
-//$PageSecurity = 8;
 include ('includes/session.inc');
 
 if (isset($_POST['Period'])){
@@ -39,10 +36,10 @@ if (isset($_POST['RunReport'])){
 	foreach ($_POST['Account'] as $SelectedAccount){
 		/*Is the account a balance sheet or a profit and loss account */
 		$result = DB_query("SELECT chartmaster.accountname,
-							accountgroups.pandl
-     					    FROM accountgroups
-						    INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-				    		WHERE chartmaster.accountcode=$SelectedAccount",$db);
+								accountgroups.pandl
+							FROM accountgroups
+							INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
+							WHERE chartmaster.accountcode='" . $SelectedAccount . "'",$db);
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[0];
 		if ($AccountDetailRow[1]==1){
@@ -56,38 +53,42 @@ if (isset($_POST['RunReport'])){
 
 		if ($_POST['tag']==0) {
 	 		$sql= "SELECT type,
-				      typename,
-				      gltrans.typeno,
-				      gltrans.trandate,
-				      gltrans.narrative,
-          			      gltrans.amount,
-				      gltrans.periodno,
-				      gltrans.tag
-				FROM gltrans, systypes
-				WHERE gltrans.account = $SelectedAccount
-				AND systypes.typeid=gltrans.type
-				AND posted=1
-				AND periodno>=$FirstPeriodSelected
-				AND periodno<=$LastPeriodSelected
-				ORDER BY periodno, gltrans.trandate, counterindex";
+						typename,
+						gltrans.typeno,
+						gltrans.trandate,
+						gltrans.narrative,
+						gltrans.amount,
+						gltrans.periodno,
+						gltrans.tag
+					FROM gltrans INNER JOIN systypes
+					ON gltrans.type=systypes.typeid
+					WHERE gltrans.account = '" . $SelectedAccount . "'
+					AND posted=1
+					AND periodno>='" . $FirstPeriodSelected . "' 
+					AND periodno<='" . $LastPeriodSelected . "' 
+					ORDER BY periodno, 
+						gltrans.trandate, 
+						counterindex";
 
 		} else {
 	 		$sql= "SELECT gltrans.type,
-                                      gltrans.typename,
-				      gltrans.typeno,
-				      gltrans.trandate,
-				      gltrans.narrative,
-          			      gltrans.amount,
-				      gltrans.periodno,
-				      gltrans.tag
-				FROM gltrans, systypes
-				WHERE gltrans.account = $SelectedAccount
-				AND systypes.typeid=gltrans.type
-				AND posted=1
-				AND periodno>=$FirstPeriodSelected
-				AND periodno<=$LastPeriodSelected
-                AND tag='".$_POST['tag']."'
-                ORDER BY periodno, gltrans.trandate, counterindex";
+						gltrans.typename,
+						gltrans.typeno,
+						gltrans.trandate,
+						gltrans.narrative,
+						gltrans.amount,
+						gltrans.periodno,
+						gltrans.tag
+					FROM gltrans INNER JOIN systypes
+					ON gltrans.type=systypes.typeid
+					WHERE gltrans.account = '" . $SelectedAccount . "'
+					AND posted=1
+					AND periodno>='" . $FirstPeriodSelected . "'
+					AND periodno<='" . $LastPeriodSelected . "'
+	                AND tag='" . $_POST['tag'] . "'
+	                ORDER BY periodno, 
+							gltrans.trandate, 
+							counterindex";
 		}
 
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
@@ -105,11 +106,11 @@ if (isset($_POST['RunReport'])){
 			$RunningTotal = 0;
 		} else {
 			$sql = "SELECT bfwd,
-					actual,
-					period
-				FROM chartdetails
-				WHERE chartdetails.accountcode='" .  $SelectedAccount .
-				"' AND chartdetails.period='" . $FirstPeriodSelected . "'";
+						actual,
+						period
+					FROM chartdetails
+					WHERE chartdetails.accountcode='" .  $SelectedAccount . "' 
+					AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 			$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
@@ -137,11 +138,11 @@ if (isset($_POST['RunReport'])){
 				if ($PeriodNo!=-9999){ //ie its not the first time around
 					/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 					$sql = "SELECT bfwd,
-							actual,
-							period
-						FROM chartdetails
-						WHERE chartdetails.accountcode='" . $SelectedAccount .
-						"' AND chartdetails.period='" . $PeriodNo . "'";
+								actual,
+								period
+							FROM chartdetails
+							WHERE chartdetails.accountcode='" . $SelectedAccount . "' 
+							AND chartdetails.period='" . $PeriodNo . "'";
 
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
@@ -149,9 +150,9 @@ if (isset($_POST['RunReport'])){
            			$YPos -=$line_height;
                 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Period Total'));
 					if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
-	                   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, number_format(-$PeriodTotal,2) , 'right');
+	                   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
                     } else { //its a debit balance b/fwd
-                       $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, number_format($PeriodTotal,2) , 'right');
+                       $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					}
 				}
 				$PeriodNo = $myrow['periodno'];
@@ -162,10 +163,10 @@ if (isset($_POST['RunReport'])){
 			$PeriodTotal += $myrow['amount'];
 
 			if($myrow['amount']>=0){
-				$DebitAmount = number_format($myrow['amount'],2);
+				$DebitAmount = number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 				$CreditAmount = '';
 			} elseif ($myrow['amount']<0){
-				$CreditAmount = number_format(-$myrow['amount'],2);
+				$CreditAmount = number_format(-$myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 				$DebitAmount = '';
 			}
 
@@ -201,9 +202,9 @@ if (isset($_POST['RunReport'])){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Balance C/Fwd'));
 		}
 		if ($RunningTotal < 0){
-		   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, number_format(-$RunningTotal,2) , 'right');
+		   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 		} else { //its a debit balance b/fwd
-           $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, number_format($RunningTotal,2) , 'right');
+           $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
         }
        	$YPos -=$line_height;
        	//draw a line under each account printed
@@ -218,28 +219,6 @@ if (isset($_POST['RunReport'])){
 
 	} else { //print the report
 
-	/*
-		$pdfcode = $pdf->output();
-		$len = mb_strlen($pdfcode);
-
-	      if ($len<=20){
-			$title = _('Print GL Accounts Report Error');
-			include('includes/header.inc');
-			prnMsg (_('There were no accounts to print out'),'error');
-			echo "<br /><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
-			include('includes/footer.inc');
-			exit;
-	      } else {
-			header('Content-type: application/pdf');
-			header('Content-Length: ' . $len);
-			header('Content-Disposition: inline; filename=GL_Accounts_' . date('Y-m-d') . '.pdf');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Pragma: public');
-
-			$pdf->Output('GL_Accounts_' . date('Y-m-d') . '.pdf', 'I');
-		}
-	*/
 	    $pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Accounts_' . date('Y-m-d') . '.pdf');
 	    $pdf->__destruct();
 	} //end if the report has some output
@@ -253,7 +232,7 @@ if (isset($_POST['RunReport'])){
 
 	echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
-	echo "<form method='POST' action=" . $_SERVER['PHP_SELF'] . '?'  . SID . '>';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	/*Dates in SQL format for the last day of last month*/
@@ -269,10 +248,10 @@ if (isset($_POST['RunReport'])){
 	$i=0;
 	while ($myrow=DB_fetch_array($AccountsResult,$db)){
 		if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
-			echo '<option selected VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+			echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname'] . '</option>';
 			$i++;
 		} else {
-			echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname']  . '</option>';
 		}
 	}
 	echo '</select></td>';
@@ -285,29 +264,31 @@ if (isset($_POST['RunReport'])){
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
-			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+			echo '<option selected value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 			$id++;
 		} else {
-			echo '<option VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+			echo '<option value=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 
 	//Select the tag
-	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
+	echo '<tr>
+			<td>' . _('Select Tag') . ':</td>
+			<td><select name="tag">';
 
 	$SQL = "SELECT tagref,
-		       tagdescription
-		FROM tags
-		ORDER BY tagref";
+					tagdescription
+				FROM tags
+				ORDER BY tagref";
 
 	$result=DB_query($SQL,$db);
-	echo '<option value=0>0 - '._('All tags');
+	echo '<option value=0>0 - '._('All tags') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
-		   echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+		   echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription']  . '</option>';
 		} else {
-		   echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+		   echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription']  . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -315,13 +296,12 @@ if (isset($_POST['RunReport'])){
 
 	echo '</table><p>
 		<div class="centre">
-			<input type=submit name="RunReport" VALUE="' ._('Run Report'). '"></div>
+			<input type=submit name="RunReport" value="' ._('Run Report'). '"></div>
 			</form>';
 
 	include ('includes/footer.inc');
 	exit;
 }
-
 
 
 function NewPageHeader () {

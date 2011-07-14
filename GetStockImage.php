@@ -156,19 +156,6 @@ if( !$automake && !isset($FileName) ) {
 		exit;
 }
 
-/*
-	$title = _('Stock Image Retrieval ....');
-	include('includes/header.inc');
-	echo 'The image ' . $FileName . ' using functype ' . $functype
-	 	. '<br /> The tmpFileName = ' . $tmpFileName . '<br /> The temppath = ' . $FilePath . '<br />The stockid = ' . $StockID . '<br /> filepath . stockid .jpg = ' . $FilePath . $StockID .'.jpg<br /> The result of file_exists($FilePath . $StockID .jpg) =' . file_exists($FilePath . $StockID .'.jpg')
-		. '<br />filepath = ' . $FilePath
-		. '<br />rootpath = ' . $rootpath;
-	include('includes/footer.inc');
-	exit;
-*/
-
-
-
 // See if we need to automake this image
 if( $automake && !isset($FileName) || $useblank ) {
 	// Have we got height and width specs

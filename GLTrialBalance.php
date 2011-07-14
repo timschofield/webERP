@@ -1,14 +1,11 @@
 <?php
 
-/* $Revision: 1.21 $ */
 /* $Id$*/
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
 while the user is selecting the criteria the system is posting any unposted transactions */
 
-
-//$PageSecurity = 8;
 
 include ('includes/session.inc');
 $title = _('Trial Balance');
@@ -24,9 +21,8 @@ if (isset($_POST['FromPeriod']) and isset($_POST['ToPeriod']) and $_POST['FromPe
 if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
 	include  ('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
-		_('Trial Balance') . '" alt="" />' . ' ' . $title . '</p>';
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -40,12 +36,15 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$period=GetPeriod($FromDate, $db);
 
 	/*Show a form to allow input of criteria for TB to show */
-	echo '<table class=selection><tr><td>' . _('Select Period From:') . '</td><td><select Name="FromPeriod">';
-	$nextYear = date("Y-m-d",strtotime("+1 Year"));
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Select Period From:') . '</td>
+				<td><select Name="FromPeriod">';
+	$NextYear = date('Y-m-d',strtotime('+1 Year'));
 	$sql = "SELECT periodno,
 					lastdate_in_period
 				FROM periods
-				WHERE lastdate_in_period < '" . $nextYear . "'
+				WHERE lastdate_in_period < '" . $NextYear . "'
 				ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);
 
@@ -53,15 +52,15 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
 			if( $_POST['FromPeriod']== $myrow['periodno']){
-				echo '<option selected VALUE="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option selected value="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option VALUE="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			}
 		} else {
 			if($myrow['lastdate_in_period']==$DefaultFromDate){
-				echo '<option selected VALUE="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option selected value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option VALUE="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			}
 		}
 	}
@@ -80,7 +79,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
 
-	echo '<tr><td>' . _('Select Period To:') .'</td><td><select Name="ToPeriod">';
+	echo '<tr>
+			<td>' . _('Select Period To:') .'</td>
+			<td><select Name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
 
@@ -92,10 +93,13 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			echo '<option value ="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
-	echo '</select></td></tr></table><br />';
+	echo '</select></td>
+		</tr>
+		</table>
+		<br />';
 
 	echo '<div class="centre"><input type=submit Name="ShowTB" Value="' . _('Show Trial Balance') .'">';
-	echo '<input type=submit Name="PrintPDF" Value="'._('PrintPDF').'"></div>';
+	echo '<input type="submit" name="PrintPDF" value="'._('PrintPDF').'"></div>';
 
 /*Now do the posting while the user is thinking about the period to select */
 
@@ -151,7 +155,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />'. $SQL;
 		}
@@ -163,7 +167,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br /><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $rootpath.'/index.php">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -208,10 +212,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					$pdf->setFont('','B');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 					$YPos -= (2 * $line_height);
 					$pdf->setFont('','');
@@ -228,10 +232,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 						$YPos -= (2 * $line_height);
 						$pdf->setFont('','');
@@ -249,10 +253,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60, $YPos, 190, $FontSize, $ParentGroups[$Level]);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 						$YPos -= (2 * $line_height);
 						$pdf->setFont('','');
@@ -329,10 +333,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		// Print total for each account
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['accountcode']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$myrow['accountname']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($myrow['monthactual'],2),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($myrow['monthbudget'],2),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($AccountPeriodActual,2),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($AccountPeriodBudget,2),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$YPos -= $line_height;
 
 	}  //end of while loop
@@ -345,10 +349,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$pdf->setFont('','B');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 		$YPos -= (2 * $line_height);
 		$ParentGroups[$Level]='';
@@ -363,20 +367,12 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$YPos -= (2 * $line_height);
 	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Check Totals'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($CheckMonth,2),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($CheckBudgetMonth,2),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($CheckPeriodActual,2),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($CheckPeriodBudget,2),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);
 
-	/*
-		header('Content-type: application/pdf');
-		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=CustomerList.pdf');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-*/
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Trial_Balance_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 	exit;
@@ -385,7 +381,8 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	include('includes/header.inc');
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type=hidden name="FromPeriod" VALUE="' . $_POST['FromPeriod'] . '"><input type=hidden name="ToPeriod" VALUE="' . $_POST['ToPeriod'] . '">';
+	echo '<input type=hidden name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
+			<input type=hidden name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
@@ -434,17 +431,17 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
-	echo '<table cellpadding=2 class=selection>';
+	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan=6><font size=3 color=blue><b>'. _('Trial Balance for the month of ') . $PeriodToDate .
 		_(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></font></th></tr>';
 	$TableHeader = '<tr>
-			<th>' . _('Account') . '</th>
-			<th>' . _('Account Name') . '</th>
-			<th>' . _('Month Actual') . '</th>
-			<th>' . _('Month Budget') . '</th>
-			<th>' . _('Period Actual') . '</th>
-			<th>' . _('Period Budget') .'</th>
-			</tr>';
+					<th>' . _('Account') . '</th>
+					<th>' . _('Account Name') . '</th>
+					<th>' . _('Month Actual') . '</th>
+					<th>' . _('Month Budget') . '</th>
+					<th>' . _('Period Actual') . '</th>
+					<th>' . _('Period Budget') .'</th>
+					</tr>';
 
 	$j = 1;
 	$k=0; //row colour counter
@@ -488,10 +485,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						<td class=number><I>%s</I></td>
 						</tr>',
 						$ParentGroups[$Level],
-						number_format($GrpActual[$Level],2),
-						number_format($GrpBudget[$Level],2),
-						number_format($GrpPrdActual[$Level],2),
-						number_format($GrpPrdBudget[$Level],2));
+						number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 					$GrpActual[$Level] =0;
 					$GrpBudget[$Level] =0;
@@ -508,10 +505,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 							<td class=number><I>%s</I></td>
 							</tr>',
 							$ParentGroups[$Level],
-							number_format($GrpActual[$Level],2),
-							number_format($GrpBudget[$Level],2),
-							number_format($GrpPrdActual[$Level],2),
-							number_format($GrpPrdBudget[$Level],2));
+							number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
@@ -532,10 +529,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						<td class=number><I>%s</I></td>
 						</tr>',
 						$ParentGroups[$Level],
-						number_format($GrpActual[$Level],2),
-						number_format($GrpBudget[$Level],2),
-						number_format($GrpPrdActual[$Level],2),
-						number_format($GrpPrdBudget[$Level],2));
+						number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
@@ -588,10 +585,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 		}
 
-		if (!isset($GrpActual[$Level])) {$GrpActual[$Level]=0;}
-		if (!isset($GrpBudget[$Level])) {$GrpBudget[$Level]=0;}
-		if (!isset($GrpPrdActual[$Level])) {$GrpPrdActual[$Level]=0;}
-		if (!isset($GrpPrdBudget[$Level])) {$GrpPrdBudget[$Level]=0;}
+		if (!isset($GrpActual[$Level])) {
+			$GrpActual[$Level]=0;
+		}
+		if (!isset($GrpBudget[$Level])) {
+			$GrpBudget[$Level]=0;
+		}
+		if (!isset($GrpPrdActual[$Level])) {
+			$GrpPrdActual[$Level]=0;
+		}
+		if (!isset($GrpPrdBudget[$Level])) {
+			$GrpPrdBudget[$Level]=0;
+		}
 		$GrpActual[$Level] +=$myrow['monthactual'];
 		$GrpBudget[$Level] +=$myrow['monthbudget'];
 		$GrpPrdActual[$Level] +=$AccountPeriodActual;
@@ -602,7 +607,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$CheckPeriodActual += $AccountPeriodActual;
 		$CheckPeriodBudget += $AccountPeriodBudget;
 
-		$ActEnquiryURL = '<a href="'. $rootpath . '/GLAccountInquiry.php?' . SID . 'Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . '&Show=Yes">' . $myrow['accountcode'] . '<a>';
+		$ActEnquiryURL = '<a href="'. $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . '&Show=Yes">' . $myrow['accountcode'] . '<a>';
 
 		printf('<td>%s</td>
 			<td>%s</td>
@@ -613,10 +618,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			</tr>',
 			$ActEnquiryURL,
 			$myrow['accountname'],
-			number_format($myrow['monthactual'],2),
-			number_format($myrow['monthbudget'],2),
-			number_format($AccountPeriodActual,2),
-			number_format($AccountPeriodBudget,2));
+			number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),
+			number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
+			number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
+			number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 		$j++;
 	}
@@ -636,10 +641,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				<td class=number><I>%s</I></td>
 				</tr>',
 				$ParentGroups[$Level],
-				number_format($GrpActual[$Level],2),
-				number_format($GrpBudget[$Level],2),
-				number_format($GrpPrdActual[$Level],2),
-				number_format($GrpPrdBudget[$Level],2));
+				number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 			$GrpActual[$Level] =0;
 			$GrpBudget[$Level] =0;
@@ -656,10 +661,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					<td class=number><I>%s</I></td>
 					</tr>',
 					$ParentGroups[$Level],
-					number_format($GrpActual[$Level],2),
-					number_format($GrpBudget[$Level],2),
-					number_format($GrpPrdActual[$Level],2),
-					number_format($GrpPrdBudget[$Level],2));
+					number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
@@ -680,10 +685,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				<td class=number><I>%s</I></td>
 				</tr>',
 				$ParentGroups[$Level],
-				number_format($GrpActual[$Level],2),
-				number_format($GrpBudget[$Level],2),
-				number_format($GrpPrdActual[$Level],2),
-				number_format($GrpPrdBudget[$Level],2));
+				number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
@@ -705,14 +710,15 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			<td class=number>%s</td>
 			<td class=number>%s</td>
 		</tr>',
-		number_format($CheckMonth,2),
-		number_format($CheckBudgetMonth,2),
-		number_format($CheckPeriodActual,2),
-		number_format($CheckPeriodBudget,2));
+		number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),
+		number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),
+		number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
+		number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 	echo '</table><br />';
-	echo '<div class="centre"><input type=submit Name="SelectADifferentPeriod" Value="' . _('Select A Different Period') . '"></div>';
+	echo '<div class="centre"><input type=submit Name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
+
 echo '</form>';
 include('includes/footer.inc');
 

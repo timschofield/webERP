@@ -31,7 +31,7 @@ if (isset($_POST['New'])) {
 	$New=$_POST['New'];
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Back to Items') . '</a><br />' . "\n";
+echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />' . "\n";
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
 		. _('Stock') . '" alt="" />' . ' ' . $title . '</p>';
@@ -219,7 +219,10 @@ if (isset($_POST['submit'])) {
 			$OldControlled = $myrow[1];
 			$OldSerialised = $myrow[2];
 
-			$sql = "SELECT SUM(locstock.quantity) FROM locstock WHERE stockid='".$StockID."' GROUP BY stockid";
+			$sql = "SELECT SUM(locstock.quantity) 
+					FROM locstock 
+					WHERE stockid='".$StockID."' 
+					GROUP BY stockid";
 			$result = DB_query($sql,$db);
 			$stkqtychk = DB_fetch_row($result);
 
@@ -239,9 +242,9 @@ if (isset($_POST['submit'])) {
 				/*now check that if the item is being changed to a kitset, there are no items on sales orders or purchase orders*/
 				if ($_POST['MBFlag']=='K') {
 					$sql = "SELECT quantity-qtyinvoiced
-						FROM salesorderdetails
-						WHERE stkcode = '".$StockID."'
-						AND completed=0";
+							FROM salesorderdetails
+							WHERE stkcode = '".$StockID."'
+							AND completed=0";
 
 					$result = DB_query($sql,$db);
 					$ChkSalesOrds = DB_fetch_row($result);
@@ -254,9 +257,9 @@ if (isset($_POST['submit'])) {
 				if ($_POST['MBFlag']=='K' OR $_POST['MBFlag']=='A' OR $_POST['MBFlag']=='D') {
 
 					$sql = "SELECT quantityord-quantityrecd
-						FROM purchorderdetails
-						WHERE itemcode = '".$StockID."'
-						AND completed=0";
+							FROM purchorderdetails
+							WHERE itemcode = '".$StockID."'
+							AND completed=0";
 
 					$result = DB_query($sql,$db);
 					$ChkPurchOrds = DB_fetch_row($result);
@@ -268,7 +271,10 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was a Manufactured, Kitset, Phantom or Assembly and is being changed to a purchased or dummy - that no BOM exists */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='K' OR $OldMBFlag=='A' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='B' OR $_POST['MBFlag']=='D')) {
-					$sql = "SELECT COUNT(*) FROM bom WHERE parent = '".$StockID."' GROUP BY parent";
+					$sql = "SELECT COUNT(*) 
+							FROM bom 
+							WHERE parent = '".$StockID."' 
+							GROUP BY parent";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
@@ -331,7 +337,7 @@ if (isset($_POST['submit'])) {
 
 				//delete any properties for the item no longer relevant with the change of category
 				$result = DB_query("DELETE FROM stockitemproperties
-										WHERE stockid ='" . $StockID . "'",
+									WHERE stockid ='" . $StockID . "'",
 									$db);
 
 				//now insert any item properties
@@ -345,8 +351,8 @@ if (isset($_POST['submit'])) {
 						}
 					}
 					$result = DB_query("INSERT INTO stockitemproperties (stockid,
-																			stkcatpropid,
-																			value)
+																		stkcatpropid,
+																		value)
 														VALUES ('" . $StockID . "',
 																'" . $_POST['PropID' . $i] . "',
 																'" . $_POST['PropValue' . $i] . "')",
@@ -358,53 +364,53 @@ if (isset($_POST['submit'])) {
 
 		} else { //it is a NEW part
 			//but lets be really sure here
-			$result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $StockID ."'",$db);
+			$result = DB_query("SELECT stockid 
+								FROM stockmaster 
+								WHERE stockid='" . $StockID ."'",$db);
 			if (DB_num_rows($result)==1){
 				prnMsg(_('The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
 				exit;
 			} else {
-				$sql = "INSERT INTO stockmaster (
-							stockid,
-							description,
-							longdescription,
-							categoryid,
-							units,
-							mbflag,
-							eoq,
-							discontinued,
-							controlled,
-							serialised,
-							perishable,
-							volume,
-							kgs,
-							barcode,
-							discountcategory,
-							taxcatid,
-							decimalplaces,
-							appendfile,
-							shrinkfactor,
-							pansize)
-						VALUES ('".$StockID."',
-							'" . $_POST['Description'] . "',
-							'" . $_POST['LongDescription'] . "',
-							'" . $_POST['CategoryID'] . "',
-							'" . $_POST['Units'] . "',
-							'" . $_POST['MBFlag'] . "',
-							'" . $_POST['EOQ'] . "',
-							'" . $_POST['Discontinued'] . "',
-							'" . $_POST['Controlled'] . "',
-							'" . $_POST['Serialised']. "',
-							'" . $_POST['Perishable']. "',
-							'" . $_POST['Volume'] . "',
-							'" . $_POST['KGS'] . "',
-							'" . $_POST['BarCode'] . "',
-							'" . $_POST['DiscountCategory'] . "',
-							'" . $_POST['TaxCat'] . "',
-							'" . $_POST['DecimalPlaces']. "',
-							'" . $_POST['ItemPDF']. "',
-							'" . $_POST['ShrinkFactor'] . "',
-							'" . $_POST['Pansize'] . "'
-							)";
+				$sql = "INSERT INTO stockmaster (stockid,
+												description,
+												longdescription,
+												categoryid,
+												units,
+												mbflag,
+												eoq,
+												discontinued,
+												controlled,
+												serialised,
+												perishable,
+												volume,
+												kgs,
+												barcode,
+												discountcategory,
+												taxcatid,
+												decimalplaces,
+												appendfile,
+												shrinkfactor,
+												pansize)
+							VALUES ('".$StockID."',
+								'" . $_POST['Description'] . "',
+								'" . $_POST['LongDescription'] . "',
+								'" . $_POST['CategoryID'] . "',
+								'" . $_POST['Units'] . "',
+								'" . $_POST['MBFlag'] . "',
+								'" . $_POST['EOQ'] . "',
+								'" . $_POST['Discontinued'] . "',
+								'" . $_POST['Controlled'] . "',
+								'" . $_POST['Serialised']. "',
+								'" . $_POST['Perishable']. "',
+								'" . $_POST['Volume'] . "',
+								'" . $_POST['KGS'] . "',
+								'" . $_POST['BarCode'] . "',
+								'" . $_POST['DiscountCategory'] . "',
+								'" . $_POST['TaxCat'] . "',
+								'" . $_POST['DecimalPlaces']. "',
+								'" . $_POST['ItemPDF']. "',
+								'" . $_POST['ShrinkFactor'] . "',
+								'" . $_POST['Pansize'] . "')";
 
 				$ErrMsg =  _('The item could not be added because');
 				$DbgMsg = _('The SQL that was used to add the item failed was');
@@ -567,18 +573,18 @@ if (isset($_POST['submit'])) {
 		unset($_POST['ItemPDF']);
 		unset($_SESSION['SelectedStockItem']);
 		unset($StockID);
-		//echo "<meta http-equiv='Refresh' content='0; url=" . $rootpath . '/SelectProduct.php?' . SID  ."'>";
-
+		
 		$New=1;
 	} //end if Delete Part
 }
 
 
-echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><table class=selection>
-	<tr><td>'. "\n"; // Nested table
+echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '">
+	<table class="selection">
+	<tr><td>'; // Nested table
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<input type="hidden" name="New" value="'.$New.'">'. "\n";
+echo '<input type="hidden" name="New" value="'.$New.'">';
 
 if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 
@@ -588,13 +594,15 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 	if ($New==1) {
 		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text"
-			value="'.$StockID.'" name="StockID" size=21 maxlength=20 /></td></tr>'. "\n";
+			value="'.$StockID.'" name="StockID" size=21 maxlength=20 /></td></tr>';
 	} else {
-		echo '<tr><td>'. _('Item Code'). ':</td><td>'.$StockID.'</td></tr>'. "\n";
+		echo '<tr><td>'. _('Item Code'). ':</td>
+					<td>'.$StockID.'</td>
+				</tr>';
 		echo '<input type="hidden" name ="StockID" value="'.$StockID.'" />';
 	}
 
-} elseif (!isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
+} elseif (!isset($_POST['UpdateCategories']) AND $InputError!=1) { // Must be modifying an existing item and no changes made yet
 
 	$sql = "SELECT stockid,
 					description,
@@ -615,9 +623,9 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 					decimalplaces,
 					appendfile,
 					nextserialno
-		FROM stockmaster
-		WHERE stockid = '".$StockID."'";
-
+			FROM stockmaster
+			WHERE stockid = '".$StockID."'";
+	
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
@@ -640,12 +648,14 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['ItemPDF']  = $myrow['appendfile'];
 	$_POST['NextSerialNo'] = $myrow['nextserialno'];
 
-	echo '<tr><td>' . _('Item Code') . ':</td><td>'.$StockID.'</td></tr>'. "\n";
-	echo '<input type="Hidden" name="StockID" value='.$StockID.'>'. "\n";
+	echo '<tr><td>' . _('Item Code') . ':</td>
+			<td>'.$StockID.'</td>
+			</tr>';
+	echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
 	echo '<tr><td>' . _('Item Code') . ':</td><td>'.$StockID.'</td></tr>';
-	echo "<input type='Hidden' name='StockID' value='$StockID'>";
+	echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 }
 
 if (isset($_POST['Description'])) {
@@ -653,14 +663,14 @@ if (isset($_POST['Description'])) {
 } else {
 	$Description ='';
 }
-echo '<tr><td>' . _('Part Description') . ' (' . _('short') . '):</td><td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" size=52 maxlength=50 value="' . $Description . '"></td></tr>'."\n";
+echo '<tr><td>' . _('Part Description') . ' (' . _('short') . '):</td><td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" size=52 maxlength=50 value="' . $Description . '"></td></tr>';
 
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
 } else {
 	$LongDescription ='';
 }
-echo '<tr><td>' . _('Part Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>'."\n";
+echo '<tr><td>' . _('Part Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>';
 
 // Generate selection drop down from pdf_append directory - by emdx,
 // developed with examples from http://au2.php.net/manual/en/function.opendir.php
@@ -671,24 +681,23 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		chmod($dir, 0777);
 	}
 	if ($handle = opendir($dir)) {
-		$mydir = "<select name=".$select_name.">\n";
-		$mydir .= '<option value=0>none';
+		$mydir = '<select name="' . $select_name . '">';
+		$mydir .= '<option value=0>' . _('none') . '</option>';
 		if (isset($_POST['ItemPDF'])) {
 			$curr_val = $_POST['ItemPDF'];
 		} else {
-			$curr_val .=  'none';
+			$curr_val .=  _('none');
 		}
-		while (false !== ($file = readdir($handle)))
-		{
+		while (false !== ($file = readdir($handle)))	{
 			$files[] = $file;
 		}
 		closedir($handle);
 		sort($files);
 		foreach ($files as $val) {
 			if (is_file($dir.$val)) {
-				$mydir .= '<option value='.$val;
+				$mydir .= '<option value="' . $val . '"';
 				$mydir .= ($val == $curr_val) ? ' selected>' : '>';
-				$mydir .= $val."\n";
+				$mydir .= $val . '</option>';
 				$teller++;
 			}
 		}
@@ -699,13 +708,14 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 if (!isset($_POST['ItemPDF'])) {
 	$_POST['ItemPDF'] = '';
 }
-echo '<tr><td>' . _('PDF attachment (.pdf)') . ':' . "\n</td><td>" . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append//','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td></tr>'. "\n";
+echo '<tr><td>' . _('PDF attachment (.pdf)') . ':' . '</td>
+		<td>' . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append/','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td></tr>';
 
 // Add image upload for New Item  - by Ori
 echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
 
  if (function_exists('imagecreatefromjpg')){
-	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
+	$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
 		'&StockID='.urlencode($StockID).
 		'&text='.
 		'&width=64'.
@@ -745,7 +755,7 @@ if (!isset($_POST['CategoryID'])) {
 	$_POST['CategoryID']=$Category;
 }
 
-echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Stock Categories') . '</a></td></tr>';
+echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php">' . _('Add or Modify Stock Categories') . '</a></td></tr>';
 
 if (!isset($_POST['EOQ']) or $_POST['EOQ']==''){
 	$_POST['EOQ']=0;
@@ -937,11 +947,11 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Pan Size') . ':</td>
-		<td><input type="Text" class="number" name="Pansize" size="6" maxlength="6" value=' . $_POST['Pansize'] . '></td>
+		<td><input type="Text" class="number" name="Pansize" size="6" maxlength="6" value="' . $_POST['Pansize'] . '"></td>
 	</tr>
 	 <tr>
 		<td>' . _('Shrinkage Factor') . ':</td>
-		<td><input type="Text" class="number" name="ShrinkFactor" size="6" maxlength="6" value=' . $_POST['ShrinkFactor'] . '></td>
+		<td><input type="Text" class="number" name="ShrinkFactor" size="6" maxlength="6" value="' . $_POST['ShrinkFactor'] . '"></td>
 	</tr>';
 
 echo '</table><div class="centre">';
@@ -966,7 +976,7 @@ $PropertiesResult = DB_query($sql,$db);
 $PropertyCounter = 0;
 $PropertyWidth = array();
 
-echo '<br /><table class=selection>';
+echo '<br /><table class="selection">';
 if (DB_num_rows($PropertiesResult)>0) {
 	echo '<tr><th colspan="2">' . _('Item Category Properties') . '</th></tr>';
 }
@@ -984,7 +994,7 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	} else {
 		$PropertyValue =  '';
 	}
-	echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value=' .$PropertyRow['stkcatpropid'] .'>';
+	echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="' .$PropertyRow['stkcatpropid'] .'" />';
 
 	echo '<tr><td>' . $PropertyRow['label'] . '</td>
 				<td>';
@@ -1024,18 +1034,18 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 } //end loop round properties for the item category
 unset($StockID);
 echo '</table><br />';
-echo '<input type="hidden" name="PropertyCounter" value=' . $PropertyCounter . '>';
+echo '<input type="hidden" name="PropertyCounter" value="' . $PropertyCounter . '" />';
 
 if ($New==1) {
-	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';
-	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '">';
+	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '" />';
+	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
 
 } else {
 
 	// Now the form to enter the item properties
 
-	echo '<input type="submit" name="submit" value="' . _('Update') . '">';
-	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '">';
+	echo '<input type="submit" name="submit" value="' . _('Update') . '" />';
+	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
 	echo '<p>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') .  _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist'), 'warn', _('WARNING'));
 	echo '<p><input type="Submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';

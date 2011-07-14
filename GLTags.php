@@ -55,13 +55,13 @@ echo '<br />
 
 
 echo '<td>'. _('Description') . '</td>
-	<td><input type="text" size=30 maxlength=30 name="Description" value="'.$Description.'"></td><td>
-	<input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'">';
+	<td><input type="text" size=30 maxlength=30 name="Description" value="'.$Description.'"></td>
+	<td><input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'">';
 
 if (isset($_GET['Action']) AND $_GET['Action']=='edit') {
-	echo '<input type="submit" name=update value=' . _('Update') . '>';
+	echo '<input type="submit" name="update" value="' . _('Update') . '" />';
 } else {
-	echo '<input type="submit" name=submit value=' . _('Insert') . '>';
+	echo '<input type="submit" name="submit" value="' . _('Insert') . '" />';
 }
 
 echo '</td></tr></table><p></p>';
@@ -69,22 +69,23 @@ echo '</td></tr></table><p></p>';
 echo '</form>';
 
 echo '<table class="selection">';
-echo '<tr><th>'. _('Tag ID') .'</th>
-	<th>'. _('Description'). '</th>
-	</tr>';
+echo '<tr>
+		<th>'. _('Tag ID') .'</th>
+		<th>'. _('Description'). '</th>
+	  </tr>';
 
 $sql="SELECT tagref, tagdescription FROM tags order by tagref";
 $result= DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($result,$db)){
 	echo '<tr><td>' . $myrow['tagref'].'</td>
-		<td>' . $myrow['tagdescription'].'</td>
-		<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTag=' . $myrow['tagref'] . '&Action=edit">' . _('Edit') . '</a></td>
-		<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTag=' . $myrow['tagref'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
+			<td>' . $myrow['tagdescription'].'</td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTag=' . $myrow['tagref'] . '&Action=edit">' . _('Edit') . '</a></td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTag=' . $myrow['tagref'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 
-echo '</table><p></p>';
+echo '</table>';
 
 echo '<script>defaultControl(document.form.Description);</script>';
 

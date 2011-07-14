@@ -322,7 +322,7 @@ function CryptPass( $Password ) {
  }
 
 
-if (sizeof($_POST) > 0) {
+if (sizeof($_POST) > 0 AND ! $AllowAnyone) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$title = _('Error in form verificationm');
