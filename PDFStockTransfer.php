@@ -24,7 +24,7 @@ if (!isset($_GET['TransferNo'])){
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection"><tr>';
 		echo '<td>'._('Print Stock Transfer Note').' : '.'</td>';
-		echo '<td><input type=text class="number"  name="TransferNo" maxlength=10 size=11 /></td></tr>';
+		echo '<td><input type="text" class="number"  name="TransferNo" maxlength=10 size=11 /></td></tr>';
 		echo '</table>';
 		echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Print Transfer Note') . '"></div></form>';
 		include('includes/footer.inc');

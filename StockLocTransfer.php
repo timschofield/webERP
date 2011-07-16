@@ -197,8 +197,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$k++;
 			
 			echo '<tr>
-				<td><input type=text name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '"></td>
-				<td><input type=text name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
+				<td><input type="text" name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '"></td>
+				<td><input type="text" name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
 			</tr>';
 		}
 	}else {
@@ -215,8 +215,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$_POST['StockQTY' . $i]=0;
 		}
 		echo '<tr>
-			<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 value="' . $_POST['StockID' . $i] . '"></td>
-			<td><input type=text name="StockQTY' . $i .'" size=10 maxlength=10 class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
+			<td><input type="text" name="StockID' . $i .'" size=21  maxlength=20 value="' . $_POST['StockID' . $i] . '"></td>
+			<td><input type="text" name="StockQTY' . $i .'" size=10 maxlength=10 class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
 		</tr>';
 		$i++;
 	}

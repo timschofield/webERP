@@ -444,16 +444,16 @@ if (!isset($_GET['Description'])) {
 }
 echo '<table class=selection><tr><td>'. _('Stock Code'). ':</td><td>';
 if (isset($_POST['StockID'])) {
-	echo '<input type=text name="StockID" size=21 value="' . $_POST['StockID'] . '" maxlength=20></td></tr>';
+	echo '<input type="text" name="StockID" size=21 value="' . $_POST['StockID'] . '" maxlength=20></td></tr>';
 } else {
-	echo '<input type=text name="StockID" size=21 value="" maxlength=20></td></tr>';
+	echo '<input type="text" name="StockID" size=21 value="" maxlength=20></td></tr>';
 }
-echo '<tr><td>'. _('Partial Description'). ':</td><td><input type=text name="StockText" size=21 value="' .
+echo '<tr><td>'. _('Partial Description'). ':</td><td><input type="text" name="StockText" size=21 value="' .
 	$_GET['Description'] .'"></td><td>'._('Partial Stock Code'). ':</td><td>';
 if (isset($_POST['StockID'])) {
-	echo '<input type=text name="StockCode" size=21 value="' . $_POST['StockID'] .'" maxlength=20>';
+	echo '<input type="text" name="StockCode" size=21 value="' . $_POST['StockID'] .'" maxlength=20>';
 } else {
-	echo '<input type=text name="StockCode" size=21 value="" maxlength=20>';
+	echo '<input type="text" name="StockCode" size=21 value="" maxlength=20>';
 }
 echo '</td><td><input type=submit name="CheckCode" value="'._('Check Part').'"></td></tr>';
 
@@ -510,9 +510,9 @@ if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled) AND $_SESSION['Tra
 	echo '<td class=number><input type=hidden name="Quantity" value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity .
 		'><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
 } elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)){
-	echo '<td><input type=text class="number" name="Quantity" size=12 maxlength=12 value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '></td></tr>';
+	echo '<td><input type="text" class="number" name="Quantity" size=12 maxlength=12 value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '></td></tr>';
 } else {
-	echo '<td><input type=text class="number" name="Quantity" size=12 maxlength=12 Value="0"></td></tr>';
+	echo '<td><input type="text" class="number" name="Quantity" size=12 maxlength=12 Value="0"></td></tr>';
 }
 
 echo '</table><div class="centre"><br /><input type="submit" name="EnterTransfer" value="' . _('Enter Stock Transfer') . '"><br />';

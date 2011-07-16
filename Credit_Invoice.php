@@ -326,8 +326,8 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 		$DisplayLineTotal = number_format($LineTotal,$_SESSION['CreditItems']->CurrDecimalPlaces);
 
 		$j++;
-		echo '<td><input tabindex=' . $j . ' type=text class=number name="Price_' . $LnItm->LineNumber . '" maxlength=12 size=6 value=' . $LnItm->Price . '></td>
-		<td><input tabindex=' . $j . ' type=text class="number" name="Discount_' . $LnItm->LineNumber . '" maxlength=3 size=3 value=' . ($LnItm->DiscountPercent * 100) . '></td>
+		echo '<td><input tabindex=' . $j . ' type="text" class=number name="Price_' . $LnItm->LineNumber . '" maxlength=12 size=6 value=' . $LnItm->Price . '></td>
+		<td><input tabindex=' . $j . ' type="text" class="number" name="Discount_' . $LnItm->LineNumber . '" maxlength=3 size=3 value=' . ($LnItm->DiscountPercent * 100) . '></td>
 		<td class=number>' . $DisplayLineTotal . '</td>';
 
 		/*Need to list the taxes applicable to this line */
@@ -398,7 +398,7 @@ if (!isset($_POST['ProcessCredit'])) {
 		<td class=number>' . number_format($_SESSION['Old_FreightCost'],$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
 		<td></td>
 		<td colspan=2 class=number>' . _('Credit Freight Cost') . '</td>
-		<td><input tabindex='.$j.' type=text class="number" size=6 maxlength=6 name="ChargeFreightCost" value="' . $_SESSION['CreditItems']->FreightCost . '"></td>';
+		<td><input tabindex='.$j.' type="text" class="number" size=6 maxlength=6 name="ChargeFreightCost" value="' . $_SESSION['CreditItems']->FreightCost . '"></td>';
 
 	echo '<td>';
 	echo '</td><td>';
@@ -421,7 +421,7 @@ foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
 	}
 
 	if (!isset($_POST['ProcessCredit'])) {
-		echo  '<input type=text class=number name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 value=' . $FreightTaxLine->TaxRate * 100 . '>';
+		echo  '<input type="text" class=number name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 value=' . $FreightTaxLine->TaxRate * 100 . '>';
 	}
 	if ($FreightTaxLine->TaxOnTax ==1){
 		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems']->FreightCost + $FreightTaxTotal));

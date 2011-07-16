@@ -106,7 +106,7 @@ if (!isset($StockID)) {
 		if (isset($_REQUEST['SelectedStockItem'])) {
 			echo _('For the item') . ': ' . $_REQUEST['SelectedStockItem'] . ' ' . _('and') . " <input type=hidden name='SelectedStockItem' value='" . $_REQUEST['SelectedStockItem'] . "'>";
 		}
-		echo _('Work Order number') . ": <input type=text name='WO' MAXLENGTH =8 size=9>&nbsp " . _('Processing at') . ":<select name='StockLocation'> ";
+		echo _('Work Order number') . ": <input type="text" name='WO' MAXLENGTH =8 size=9>&nbsp " . _('Processing at') . ":<select name='StockLocation'> ";
 
 		$sql = 'SELECT loccode, locationname FROM locations';
 

@@ -471,18 +471,18 @@ if (!isset($SuppliersResult)) {
         $_POST['ConversionFactor'] = 1;
     }
     echo '<tr><td>' . _('Conversion Factor (to our UOM)') . ':</td>
-	<td><input type=text class=number name="ConversionFactor" maxlength=12 size=12 value=' . $_POST['ConversionFactor'] . '></td></tr>';
+	<td><input type="text" class=number name="ConversionFactor" maxlength=12 size=12 value=' . $_POST['ConversionFactor'] . '></td></tr>';
     echo '<tr><td>' . _('Supplier Stock Code') . ':</td>
-	<td><input type=text name="SupplierCode" maxlength=15 size=15 value="' . $_POST['SupplierCode'] . '"></td></tr>';
+	<td><input type="text" name="SupplierCode" maxlength=15 size=15 value="' . $_POST['SupplierCode'] . '"></td></tr>';
     echo '<tr><td>' . _('MinOrderQty') . ':</td>
-	<td><input type=text class=number name="MinOrderQty" maxlength=15 size=15 value="' . $_POST['MinOrderQty'] . '"></td></tr>';
+	<td><input type="text" class=number name="MinOrderQty" maxlength=15 size=15 value="' . $_POST['MinOrderQty'] . '"></td></tr>';
     echo '<tr><td>' . _('Supplier Stock Description') . ':</td>
-	<td><input type=text name="SupplierDescription" maxlength=50 size=51 value="' . $_POST['SupplierDescription'] . '"></td></tr>';
+	<td><input type="text" name="SupplierDescription" maxlength=50 size=51 value="' . $_POST['SupplierDescription'] . '"></td></tr>';
     if (!isset($_POST['LeadTime']) OR $_POST['LeadTime'] == "") {
         $_POST['LeadTime'] = 1;
     }
     echo '<tr><td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-	<td><input type=text class=number name="LeadTime" maxlength=4 size=5 value=' . $_POST['LeadTime'] . '></td></tr>';
+	<td><input type="text" class=number name="LeadTime" maxlength=4 size=5 value=' . $_POST['LeadTime'] . '></td></tr>';
     echo '<tr><td>' . _('Preferred Supplier') . ':</td>
 	<td><select name="Preferred">';
     if ($_POST['Preferred'] == 1) {

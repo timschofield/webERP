@@ -686,16 +686,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							<td>' . $LineItem->ItemDescription . '</td>';
 
 			   if ($LineItem->Controlled==0){
-			   	echo '<td><input type=TEXT class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength=6 size=6 VALUE=' . $LineItem->Quantity . '></td>';
+			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength=6 size=6 VALUE=' . $LineItem->Quantity . '></td>';
 			   } else {
 				echo '<td class=number><a href="' . $rootpath . '/CreditItemsControlled.php?' . SID . '&LineNo=' . $LineItem->LineNumber . '">' . $LineItem->Quantity . '</a>
               <input type=hidden name="Quantity_' . $LineItem->LineNumber . '" value=' . $LineItem->Quantity . '></td>';
 			   }
 
 			echo '<td>' . $LineItem->Units . '</td>
-			<td><input type=TEXT class="number" name="Price_' . $LineItem->LineNumber . '" size=10 maxlength=12 VALUE=' . $LineItem->Price . '></td>
+			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size=10 maxlength=12 VALUE=' . $LineItem->Price . '></td>
 			<td><input type="CheckBox" name="Gross" VALUE=False></td>
-			<td><input type=TEXT class="number" name="Discount_' . $LineItem->LineNumber . '" size=3 maxlength=3 VALUE=' . ($LineItem->DiscountPercent * 100) . '>%</td>
+			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size=3 maxlength=3 VALUE=' . ($LineItem->DiscountPercent * 100) . '>%</td>
 			<td class=number>' . $DisplayLineTotal . '</td>';
 
 
@@ -722,7 +722,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if ($i>0){
 					echo '<br />';
 				}
-				echo '<input type=text class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
+				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
 				$i++;
 				if ($Tax->TaxOnTax ==1){
 					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
@@ -763,7 +763,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 
 		echo '<td colspan=2 class=number>'. _('Credit Freight').'</td>
-			<td><input type=TEXT class="number" size=6 maxlength=6 name=ChargeFreightCost VALUE=' . $_SESSION['CreditItems']->FreightCost . '></td>';
+			<td><input type="text" class="number" size=6 maxlength=6 name=ChargeFreightCost VALUE=' . $_SESSION['CreditItems']->FreightCost . '></td>';
 
 		$FreightTaxTotal =0; //initialise tax total
 
@@ -786,7 +786,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<br />';
 			}
 
-			echo  '<input type=TEXT class="number" name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $FreightTaxLine->TaxRate * 100 . '>';
+			echo  '<input type="text" class="number" name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength=4 size=4 VALUE=' . $FreightTaxLine->TaxRate * 100 . '>';
 
 			if ($FreightTaxLine->TaxOnTax ==1){
 				$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems']->FreightCost + $FreightTaxTotal));

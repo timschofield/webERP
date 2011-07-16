@@ -816,7 +816,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		echo '</select></td></tr>';
 	
 		echo '<tr><td>' . _('Status Comment') . ':</td>
-					<td><input type=text name="StatusComments" size=50></td></tr>
+					<td><input type="text" name="StatusComments" size=50></td></tr>
 					<tr><td colspan=2><b>' . $_SESSION['PO'.$identifier]->StatusComments .'</b></td></tr>';
 		
 		echo '<input type="hidden" name="StatusCommentsComplete" value="' . htmlentities($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'" />';
@@ -1063,7 +1063,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 	if ($_SESSION['PO'.$identifier]->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
 		echo '<tr><td>'. _('Exchange Rate').':'.'</td>
-				<td><input type=text name="ExRate" value='.$_POST['ExRate'].' class="number" size=11></td>
+				<td><input type="text" name="ExRate" value='.$_POST['ExRate'].' class="number" size=11></td>
 			</tr>';
 	} else {
 		echo '<input type=hidden name="ExRate" value="1">';

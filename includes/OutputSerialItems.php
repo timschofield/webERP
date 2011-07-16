@@ -141,7 +141,7 @@ $StartAddingAt = 0;
 if ($EditControlled){
 	foreach ($LineItem->SerialItems as $Bundle){
 
-		echo '<tr><td valign=top><input type=text name="SerialNo'. $StartAddingAt .'"
+		echo '<tr><td valign=top><input type="text" name="SerialNo'. $StartAddingAt .'"
 			value="'.$Bundle->BundleRef.'" size=21  maxlength=20></td>';
 
 		/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
@@ -150,10 +150,10 @@ if ($EditControlled){
 		if ($LineItem->Serialised==1){
 			echo '<input type=hidden name="Qty' . $StartAddingAt .'" Value=1></TR>';
 		} else if ($LineItem->Serialised==0 and $Perishable==1) {
-			echo '<td><input type=text class="number" name="Qty' . $StartAddingAt .'" size=11
+			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
 				value="'. number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
 		} else {
-			echo '<td><input type=text class="number" name="Qty' . $StartAddingAt .'" size=11
+			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
 				value="'. number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
 		}
 
@@ -191,11 +191,11 @@ while ($myrow=DB_fetch_array($result)){
 		} else {
 			echo '<td class=number>'.number_format($myrow['quantity'],$LineItem->DecimalPlaces).'</td>';
 		}
-		echo '<td><input type=text class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11 value="0" maxlength=10></td>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11 value="0" maxlength=10></td>';
 		echo '<td><input type=hidden class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size=11
 		 value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength=10>'.ConvertSQLDate($myrow['expirationdate']).'</td></tr>';
 	} else {
-		echo '<td><input type=text class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11  value="'.$myrow['quantity'].'"  maxlength=10></tr>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11  value="'.$myrow['quantity'].'"  maxlength=10></tr>';
 	}
 	$RowNumber++;
 }

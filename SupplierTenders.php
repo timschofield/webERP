@@ -283,11 +283,11 @@ if (isset($_SESSION['offer']) and $_SESSION['offer']->LinesOnOffer>0 or isset($_
 			}
 			echo '<td>'.$LineItems->StockID.'</td>';
 			echo '<td>'.$LineItems->ItemDescription.'</td>';
-			echo '<td><input type=text class=number name="qty'.$LineItems->LineNo.'" value='.number_format($LineItems->Quantity,$LineItems->DecimalPlaces).'></td>';
+			echo '<td><input type="text" class=number name="qty'.$LineItems->LineNo.'" value='.number_format($LineItems->Quantity,$LineItems->DecimalPlaces).'></td>';
 			echo '<td>'.$LineItems->Units.'</td>';
-			echo '<td><input type=text class=number name="price'.$LineItems->LineNo.'" value='.number_format($LineItems->Price,2,'.','').'></td>';
+			echo '<td><input type="text" class=number name="price'.$LineItems->LineNo.'" value='.number_format($LineItems->Price,2,'.','').'></td>';
 			echo '<td class=number>'.number_format($LineItems->Price*$LineItems->Quantity,2).'</td>';
-			echo '<td><input type=text size=11 class=date alt='.$_SESSION['DefaultDateFormat'].' name="expirydate'.$LineItems->LineNo.'" value='.$LineItems->ExpiryDate.'></td>';
+			echo '<td><input type="text" size=11 class=date alt='.$_SESSION['DefaultDateFormat'].' name="expirydate'.$LineItems->LineNo.'" value='.$LineItems->ExpiryDate.'></td>';
 			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td></tr>';
 			echo '</tr>';
 		}

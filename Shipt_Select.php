@@ -103,7 +103,7 @@ if (isset($_POST['SearchParts'])) {
 
 if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '<table class=selection><tr><td>';
-	echo _('Shipment Number'). ': <input type=text name="ShiptRef" MAXLENGTH =10 size=10> '.
+	echo _('Shipment Number'). ': <input type="text" name="ShiptRef" MAXLENGTH =10 size=10> '.
 		_('Into Stock Location').' :<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);

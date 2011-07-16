@@ -152,8 +152,8 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	if ($myrow['mbflag']=='M'){
 		echo '<input type=hidden name="MaterialCost" VALUE=' . $myrow['materialcost'] . '>';
 		echo '<tr><td>' . _('Standard Material Cost Per Unit') .':</td><td class=number>' . number_format($myrow['materialcost'],4) . '</td></tr>';
-		echo '<tr><td>' . _('Standard Labour Cost Per Unit') . ':</td><td class=number><input type=text class="number" name="LabourCost" value=' . $myrow['labourcost'] . '></td></tr>';
-		echo '<tr><td>' . _('Standard Overhead Cost Per Unit') . ':</td><td class=number><input type=text class="number" name="OverheadCost" value=' . $myrow['overheadcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Labour Cost Per Unit') . ':</td><td class=number><input type="text" class="number" name="LabourCost" value=' . $myrow['labourcost'] . '></td></tr>';
+		echo '<tr><td>' . _('Standard Overhead Cost Per Unit') . ':</td><td class=number><input type="text" class="number" name="OverheadCost" value=' . $myrow['overheadcost'] . '></td></tr>';
 	} elseif ($myrow['mbflag']=='B' OR  $myrow['mbflag']=='D') {
 		echo '<tr><td>' . _('Standard Cost') .':</td><td class=number><input type="text" class="number" name="MaterialCost" value=' . $myrow['materialcost'] . '></td></tr>';
 	} else 	{

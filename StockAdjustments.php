@@ -334,16 +334,16 @@ if (!isset($_GET['Description'])) {
 }
 echo '<tr><td>'. _('Stock Code'). ':</td><td>';
 if (isset($StockID)) {
-	echo '<input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20></td></tr>';
+	echo '<input type="text" name="StockID" size=21 value="' . $StockID . '" maxlength=20></td></tr>';
 } else {
-	echo '<input type=text name="StockID" size=21 value="" maxlength=20></td></tr>';
+	echo '<input type="text" name="StockID" size=21 value="" maxlength=20></td></tr>';
 }
-echo '<tr><td>'. _('Partial Description'). ':</td><td><input type=text name="StockText" size=21 value="' .
+echo '<tr><td>'. _('Partial Description'). ':</td><td><input type="text" name="StockText" size=21 value="' .
 	$_GET['Description'] .'">&nbsp; &nbsp;'._('Partial Stock Code'). ':</td><td>';
 if (isset($StockID)) {
-	echo '<input type=text name="StockCode" size=21 value="' . $StockID .'" maxlength=20>';
+	echo '<input type="text" name="StockCode" size=21 value="' . $StockID .'" maxlength=20>';
 } else {
-	echo '<input type=text name="StockCode" size=21 value="" maxlength=20>';
+	echo '<input type="text" name="StockCode" size=21 value="" maxlength=20>';
 }
 echo '</td><td><input type=submit name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
 if (isset($_SESSION['Adjustment']) and mb_strlen($_SESSION['Adjustment']->ItemDescription)>1){
@@ -377,7 +377,7 @@ if (isset($_SESSION['Adjustment']) and !isset($_SESSION['Adjustment']->Narrative
 }
 
 echo '<tr><td>'. _('Comments On Why').':</td>
-	<td><input type=text name="Narrative" size=32 maxlength=30 value="' . $_SESSION['Adjustment']->Narrative . '"></td></tr>';
+	<td><input type="text" name="Narrative" size=32 maxlength=30 value="' . $_SESSION['Adjustment']->Narrative . '"></td></tr>';
 
 echo '<tr><td>'._('Adjustment Quantity').':</td>';
 
@@ -391,7 +391,7 @@ if ($Controlled==1){
 				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&' . SID . '">'._('Remove').'</a>]
 				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD&' . SID . '">'._('Add').'</a>]';
 } else {
-	echo '<input type=TEXT class="number" name="Quantity" size=12 maxlength=12 Value="' . $Quantity . '">';
+	echo '<input type="text" class="number" name="Quantity" size=12 maxlength=12 Value="' . $Quantity . '">';
 }
 echo '</td></tr>';
 	//Select the tag

@@ -211,7 +211,7 @@ if ($InputError ==0){
 		echo '<table class=selection>';
 		echo '<tr><th colspan=7><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo _('Pricing for part') . ':<input type=text name="Item" maxsizee=22 value="' . $Item . '" maxlength=20><input type=submit name="NewPart" value="' . _('Review Prices') . '">';
+		echo _('Pricing for part') . ':<input type="text" name="Item" maxsizee=22 value="' . $Item . '" maxlength=20><input type=submit name="NewPart" value="' . _('Review Prices') . '">';
 		echo '</th></tr></form>';
 
 		echo '<tr><th>' . _('Currency') . '</th>

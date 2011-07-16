@@ -542,7 +542,7 @@ echo '<table cellpadding=2 class=selection>
 		<td colspan="2">' . $WORow['units'] . '</td></tr>
 	<tr><td colspan=4></td></tr>
 	 <tr><td class="label">' . _('Date Material Issued') . ':</td>
-		<td><input type=text name=issuedate value=' . Date($_SESSION['DefaultDateFormat']) . ' class=date size=10 alt="'.$_SESSION['DefaultDateFormat'].'" ></td>
+		<td><input type="text" name=issuedate value=' . Date($_SESSION['DefaultDateFormat']) . ' class=date size=10 alt="'.$_SESSION['DefaultDateFormat'].'" ></td>
 		<td class="label">' . _('Issued From') . ':</td><td>';
 
 if (!isset($_POST['IssueItem'])){

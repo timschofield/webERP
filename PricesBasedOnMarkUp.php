@@ -148,20 +148,20 @@ if (!isset($_POST['PriceEndDate'])) {
 }
 
 echo '<tr><td>' . _('Rounding Factor') . ':</td>
-                <td><input type=text class=number name="RoundingFactor" size="6" maxlength="6" value=' . $_POST['RoundingFactor'] . '></td></tr>';
+                <td><input type="text" class=number name="RoundingFactor" size="6" maxlength="6" value=' . $_POST['RoundingFactor'] . '></td></tr>';
 
 echo '<tr><td>' . _('New Price To Be Effective From') . ':</td>
-                <td><input type=text class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" maxlength="10" value="' . $_POST['PriceStartDate'] . '"></td></tr>';
+                <td><input type="text" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" maxlength="10" value="' . $_POST['PriceStartDate'] . '"></td></tr>';
 
 echo '<tr><td>' . _('New Price To Be Effective To (Blank = No End Date)') . ':</td>
-                <td><input type=text class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" maxlength="10" value="' . $_POST['PriceEndDate'] . '"></td></tr>';
+                <td><input type="text" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" maxlength="10" value="' . $_POST['PriceEndDate'] . '"></td></tr>';
 
 if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;
 }
 
 echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . '</td>
-                <td><input type=text name="IncreasePercent" class=number size=4 maxlength=4 VALUE="' . $_POST['IncreasePercent'] . '"></td></tr></table>';
+                <td><input type="text" name="IncreasePercent" class=number size=4 maxlength=4 VALUE="' . $_POST['IncreasePercent'] . '"></td></tr></table>';
 
 
 echo '<p><div class="centre"><input type=submit name="UpdatePrices" VALUE="' . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');"></div>';
