@@ -79,52 +79,52 @@ if (isset($_GET['ModifyOrderNumber'])
 /*read in all the guff from the selected order into the Items cart  */
 
 	$OrderHeaderSQL = "SELECT salesorders.debtorno,
- 				  debtorsmaster.name,
-				  salesorders.branchcode,
-				  salesorders.customerref,
-				  salesorders.comments,
-				  salesorders.orddate,
-				  salesorders.ordertype,
-				  salestypes.sales_type,
-				  salesorders.shipvia,
-				  salesorders.deliverto,
-				  salesorders.deladd1,
-				  salesorders.deladd2,
-				  salesorders.deladd3,
-				  salesorders.deladd4,
-				  salesorders.deladd5,
-				  salesorders.deladd6,
-				  salesorders.contactphone,
-				  salesorders.contactemail,
-				  salesorders.freightcost,
-				  salesorders.deliverydate,
-				  debtorsmaster.currcode,
-				  currencies.decimalplaces,
-				  paymentterms.terms,
-				  salesorders.fromstkloc,
-				  salesorders.printedpackingslip,
-				  salesorders.datepackingslipprinted,
-				  salesorders.quotation,
-				  salesorders.deliverblind,
-				  debtorsmaster.customerpoline,
-				  locations.locationname,
-				  custbranch.estdeliverydays,
-				  custbranch.salesman
-				FROM salesorders 
-				INNER JOIN debtorsmaster 
-				ON salesorders.debtorno = debtorsmaster.debtorno
-				 INNER JOIN salestypes 
-				 ON salesorders.ordertype=salestypes.typeabbrev
-				 INNER JOIN custbranch 
-				 ON salesorders.debtorno = custbranch.debtorno 
-				 AND salesorders.branchcode = custbranch.branchcode
-				 INNER JOIN paymentterms
-				 ON debtorsmaster.paymentterms=paymentterms.termsindicator 
-				 INNER JOIN locations  
-				 ON locations.loccode=salesorders.fromstkloc 
-				 INNER JOIN currencies
-				 ON debtorsmaster.currcode=currencies.currabrev 
-				WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
+			 				  debtorsmaster.name,
+							  salesorders.branchcode,
+							  salesorders.customerref,
+							  salesorders.comments,
+							  salesorders.orddate,
+							  salesorders.ordertype,
+							  salestypes.sales_type,
+							  salesorders.shipvia,
+							  salesorders.deliverto,
+							  salesorders.deladd1,
+							  salesorders.deladd2,
+							  salesorders.deladd3,
+							  salesorders.deladd4,
+							  salesorders.deladd5,
+							  salesorders.deladd6,
+							  salesorders.contactphone,
+							  salesorders.contactemail,
+							  salesorders.freightcost,
+							  salesorders.deliverydate,
+							  debtorsmaster.currcode,
+							  currencies.decimalplaces,
+							  paymentterms.terms,
+							  salesorders.fromstkloc,
+							  salesorders.printedpackingslip,
+							  salesorders.datepackingslipprinted,
+							  salesorders.quotation,
+							  salesorders.deliverblind,
+							  debtorsmaster.customerpoline,
+							  locations.locationname,
+							  custbranch.estdeliverydays,
+							  custbranch.salesman
+						FROM salesorders 
+						INNER JOIN debtorsmaster 
+						ON salesorders.debtorno = debtorsmaster.debtorno
+						INNER JOIN salestypes 
+						ON salesorders.ordertype=salestypes.typeabbrev
+						INNER JOIN custbranch 
+						ON salesorders.debtorno = custbranch.debtorno 
+						AND salesorders.branchcode = custbranch.branchcode
+						INNER JOIN paymentterms
+						ON debtorsmaster.paymentterms=paymentterms.termsindicator 
+						INNER JOIN locations  
+						ON locations.loccode=salesorders.fromstkloc 
+						INNER JOIN currencies
+						ON debtorsmaster.currcode=currencies.currabrev 
+						WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -224,32 +224,32 @@ if (isset($_GET['ModifyOrderNumber'])
 			while ($myrow=db_fetch_array($LineItemsResult)) {
 					if ($myrow['completed']==0){
 						$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
-														$myrow['quantity'],
-														$myrow['description'],
-														$myrow['unitprice'],
-														$myrow['discountpercent'],
-														$myrow['units'],
-														$myrow['volume'],
-														$myrow['kgs'],
-														$myrow['qohatloc'],
-														$myrow['mbflag'],
-														$myrow['actualdispatchdate'],
-														$myrow['qtyinvoiced'],
-														$myrow['discountcategory'],
-														0,	/*Controlled*/
-														$myrow['serialised'],
-														$myrow['decimalplaces'],
-														$myrow['narrative'],
-														'No', /* Update DB */
-														$myrow['orderlineno'],
-														0,
-														'',
-														ConvertSQLDate($myrow['itemdue']),
-														$myrow['poline'],
-														$myrow['standardcost'],
-														$myrow['eoq'],
-														$myrow['nextserialno'],
-														$ExRate );
+																	$myrow['quantity'],
+																	$myrow['description'],
+																	$myrow['unitprice'],
+																	$myrow['discountpercent'],
+																	$myrow['units'],
+																	$myrow['volume'],
+																	$myrow['kgs'],
+																	$myrow['qohatloc'],
+																	$myrow['mbflag'],
+																	$myrow['actualdispatchdate'],
+																	$myrow['qtyinvoiced'],
+																	$myrow['discountcategory'],
+																	0,	/*Controlled*/
+																	$myrow['serialised'],
+																	$myrow['decimalplaces'],
+																	$myrow['narrative'],
+																	'No', /* Update DB */
+																	$myrow['orderlineno'],
+																	0,
+																	'',
+																	ConvertSQLDate($myrow['itemdue']),
+																	$myrow['poline'],
+																	$myrow['standardcost'],
+																	$myrow['eoq'],
+																	$myrow['nextserialno'],
+																	$ExRate );
 
 				/*Just populating with existing order - no DBUpdates */
 					}
@@ -374,7 +374,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 		if (DB_num_rows($result_CustSelect)==1){
 			$myrow=DB_fetch_array($result_CustSelect);
 			$SelectedCustomer = $myrow['debtorno'];
-                        $SelectedBranch = $myrow['branchcode'];
+			$SelectedBranch = $myrow['branchcode'];
 		} elseif (DB_num_rows($result_CustSelect)==0){
 			prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
 		}
@@ -947,8 +947,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 			/*Now figure out if the item is a kit set - the field MBFlag='K'*/
 			$sql = "SELECT stockmaster.mbflag
-							FROM stockmaster
-							WHERE stockmaster.stockid='". $NewItem ."'";
+					FROM stockmaster
+					WHERE stockmaster.stockid='". $NewItem ."'";
 
 			$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 			$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
@@ -1267,52 +1267,48 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		$AlreadyWarnedAboutCredit = false;
 		foreach($NewItem_array as $NewItem => $NewItemQty) {
-				if($NewItemQty > 0)	{
-					$sql = "SELECT stockmaster.mbflag
-									FROM stockmaster
-									WHERE stockmaster.stockid='". $NewItem ."'";
+			if($NewItemQty > 0)	{
+				$sql = "SELECT stockmaster.mbflag
+						FROM stockmaster
+						WHERE stockmaster.stockid='". $NewItem ."'";
 
-					$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
+				$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
-					$KitResult = DB_query($sql, $db,$ErrMsg);
+				$KitResult = DB_query($sql, $db,$ErrMsg);
 
-					//$NewItemQty = 1; /*By Default */
-					$Discount = 0; /*By default - can change later or discount category override */
+				//$NewItemQty = 1; /*By Default */
+				$Discount = 0; /*By default - can change later or discount category override */
 
-					if ($myrow=DB_fetch_array($KitResult)){
-						if ($myrow['mbflag']=='K'){	/*It is a kit set item */
-							$sql = "SELECT bom.component,
-											bom.quantity
-										FROM bom
-										WHERE bom.parent='" . $NewItem . "'
-										AND bom.effectiveto > '" . Date('Y-m-d') . "'
-										AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+				if ($myrow=DB_fetch_array($KitResult)){
+					if ($myrow['mbflag']=='K'){	/*It is a kit set item */
+						$sql = "SELECT bom.component,
+										bom.quantity
+								FROM bom
+								WHERE bom.parent='" . $NewItem . "'
+								AND bom.effectiveto > '" . Date('Y-m-d') . "'
+								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
-							$ErrMsg = _('Could not retrieve kitset components from the database because');
-							$KitResult = DB_query($sql,$db,$ErrMsg);
+						$ErrMsg = _('Could not retrieve kitset components from the database because');
+						$KitResult = DB_query($sql,$db,$ErrMsg);
 
-							$ParentQty = $NewItemQty;
-							while ($KitParts = DB_fetch_array($KitResult,$db)){
-								$NewItem = $KitParts['component'];
-								$NewItemQty = $KitParts['quantity'] * $ParentQty;
-								$NewItemDue = date($_SESSION['DefaultDateFormat']);
-								$NewPOLine = 0;
-								include('includes/SelectOrderItems_IntoCart.inc');
-							}
-
-						} else { /*Its not a kit set item*/
+						$ParentQty = $NewItemQty;
+						while ($KitParts = DB_fetch_array($KitResult,$db)){
+							$NewItem = $KitParts['component'];
+							$NewItemQty = $KitParts['quantity'] * $ParentQty;
 							$NewItemDue = date($_SESSION['DefaultDateFormat']);
 							$NewPOLine = 0;
 							include('includes/SelectOrderItems_IntoCart.inc');
 						}
 
-					} /* end of if its a new item */
-
-				} /*end of if its a new item */
-
-		}
-
-	}
+					} else { /*Its not a kit set item*/
+						$NewItemDue = date($_SESSION['DefaultDateFormat']);
+						$NewPOLine = 0;
+						include('includes/SelectOrderItems_IntoCart.inc');
+					}
+				} /* end of if its a new item */
+			} /*end of if its a new item */
+		}/* loop through NewItem array */
+	} /* if the NewItem_array is set */
 
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
