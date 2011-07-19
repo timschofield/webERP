@@ -63,17 +63,17 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description
-				FROM stockmaster
-				WHERE  stockmaster.description " . LIKE . " '" . $SearchString ."'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description
+					FROM stockmaster
+					WHERE  stockmaster.description " . LIKE . " '" . $SearchString ."'
+					ORDER BY stockmaster.stockid";
 
 		} elseif (mb_strlen($_POST['StockCode'])>0){
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description
-				FROM stockmaster
-				WHERE  stockmaster.stockid " . LIKE  . "'%" . $_POST['StockCode'] . "%'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description
+					FROM stockmaster
+					WHERE  stockmaster.stockid " . LIKE  . "'%" . $_POST['StockCode'] . "%'
+					ORDER BY stockmaster.stockid";
 
 		}
 
@@ -86,7 +86,7 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 	if (DB_num_rows($result) > 0) {
 		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table cellpadding=2 colspan=7 class=selection>';
+		echo '<table cellpadding=2 colspan=7 class="selection">';
 		$TableHeader = '<tr><th>' . _('Code') . '</th>
 							<th>' . _('Description') . '</th>
 						</tr>';
@@ -103,7 +103,7 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 				$k++;
 			}
 			$tabindex=$j+4;
-			echo '<td><input tabindex="' . $tabindex . '" type=submit name="StockID" value="' . $myrow['stockid'] .'"</td>
+			echo '<td><input tabindex="' . $tabindex . '" type="submit" name="StockID" value="' . $myrow['stockid'] .'"</td>
 				<td>' . $myrow['description'] . '</td>
 				</tr>';
 			$j++;
@@ -171,9 +171,9 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 // Check if part number/demand type/due date combination already exists
 	$sql = "SELECT * FROM mrpdemands
 			WHERE stockid='" . $StockID . "'
-				AND mrpdemandtype='" . $_POST['MRPDemandtype'] . "'
-				AND duedate='" . $FormatedDuedate . "'
-				AND demandid <> '" . $DemandID . "'";
+			AND mrpdemandtype='" . $_POST['MRPDemandtype'] . "'
+			AND duedate='" . $FormatedDuedate . "'
+			AND demandid <> '" . $DemandID . "'";
 	$result = DB_query($sql, $db);
 
 	if (DB_num_rows($result) > 0){
@@ -222,7 +222,7 @@ function submit(&$db,&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SU
 		unset ($DemandID);
 	} // End of else where DB_num_rows showed there was a valid stockmaster record
 
-display($db,$StockID,$DemandID);
+	display($db,$StockID,$DemandID);
 } // End of function submit()
 
 
@@ -331,7 +331,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 			<td><input tabindex="1" type="Text" name="Keywords" size="20" maxlength="25"></td>
 			<td><font size=3><b>' . _('OR') . '</b></font></td>
 			<td><font size=1>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</font></td>
-			<td><input tabindex="2" type="Text" name="StockCode" size="15" maxlength="20"></td>
+			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20"></td>
 			<td><font size=3><b>' . _('OR') . '</b></font></td>
 			<td><a href="'. $_SERVER['PHP_SELF'] . '?listall=yes"><font size=3>' . _('List All Demands') .'</font></a></td></tr>
 			<tr><td colspan=7><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') .
@@ -408,9 +408,9 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 
 		echo '</table>';
 		echo '<br />
-			<div class=centre><input type="submit" name="submit" value="' . _('Enter Information') . '">&nbsp&nbsp';
-		echo '<input type="submit" name="listsome" value="' . _('List Selection') . '">&nbsp&nbsp';
-		echo '<input type="submit" name="deletesome" value="' . _('Delete Demand Type') . '">';
+			<div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" />&nbsp&nbsp';
+		echo '<input type="submit" name="listsome" value="' . _('List Selection') . '" />&nbsp&nbsp';
+		echo '<input type="submit" name="deletesome" value="' . _('Delete Demand Type') . '" />';
 		// If mrpdemand record exists, display option to delete it
 		if ((isset($DemandID)) AND (DB_num_rows($result) > 0)) {
 			echo '<br/><br/><a href=" ' . $_SERVER['PHP_SELF'] . '?delete=yes&StockID='.$StockID.'&DemandID=' . $DemandID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Or Delete Record') ;

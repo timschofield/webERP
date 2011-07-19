@@ -129,12 +129,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/CounterSales.php?' .sid . '">' . _('Enter Counter Sales') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/CounterSales.php">' . _('Enter Counter Sales') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFPickingList.php?' .sid . '">' . _('Print Picking Lists') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFPickingList.php">' . _('Print Picking Lists') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -149,12 +149,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectRecurringSalesOrder.php?' .sid . '">' . _('Recurring Order Template') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectRecurringSalesOrder.php">' . _('Recurring Order Template') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/RecurringSalesOrdersProcess.php?' .sid . '">' . _('Process Recurring Orders') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/RecurringSalesOrdersProcess.php">' . _('Process Recurring Orders') . '</a></p>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -415,7 +415,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . "/SupplierAllocations.php?" . SID . '">' . _('Supplier Allocations') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SupplierAllocations.php">' . _('Supplier Allocations') . '</a></p>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -506,7 +506,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/PO_Header.php?&NewOrder=Yes' . SID . '">' . _('Add Purchase Order') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PO_Header.php?&NewOrder=Yes">' . _('Add Purchase Order') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -585,7 +585,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/StockLocTransfer.php' . SID . '">' . _('Bulk Inventory Transfer') . ' - ' . _('Dispatch') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/StockLocTransfer.php">' . _('Bulk Inventory Transfer') . ' - ' . _('Dispatch') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -1344,7 +1344,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetDepreciation.php' . SID . '">' . _('Depreciation Journal') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/FixedAssetDepreciation.php">' . _('Depreciation Journal') . '</a></p>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -1404,7 +1404,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcClaimExpensesFromTab.php' . SID . '">' . _('Claim Expenses From PC Tab') . '</a></p>'; ?>
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/PcClaimExpensesFromTab.php">' . _('Claim Expenses From PC Tab') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -1530,13 +1530,13 @@ be generated, one for standard reports and the other for custom reports.
 	$Title= array(_('Custom Reports'), _('Standard Reports and Forms'));
 
 	$sql= "SELECT id,
-								reporttype,
-								defaultreport,
-								groupname,
-								reportname
-				FROM reports
-				ORDER BY groupname,
-									reportname";
+				reporttype,
+				defaultreport,
+				groupname,
+				reportname
+			FROM reports
+			ORDER BY groupname,
+				reportname";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$ReportList = '';
 	while ($Temp = DB_fetch_array($Result)) $ReportList[] = $Temp;

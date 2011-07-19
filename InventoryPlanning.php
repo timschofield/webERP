@@ -2,7 +2,6 @@
 
 /* $Id$ */
 
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])
@@ -53,26 +52,26 @@ if (isset($_POST['PrintPDF'])
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
 	if ($_POST['Location']=='All'){
 		$SQL = "SELECT stockmaster.categoryid,
-										stockmaster.description,
-										stockcategory.categorydescription,
-										locstock.stockid,
-										SUM(locstock.quantity) AS qoh
-									FROM locstock,
-										stockmaster,
-										stockcategory
-									WHERE locstock.stockid=stockmaster.stockid
-									AND stockmaster.discontinued = 0
-									AND stockmaster.categoryid=stockcategory.categoryid
-									AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
-									AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-									AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-									GROUP BY stockmaster.categoryid,
-										stockmaster.description,
-										stockcategory.categorydescription,
-										locstock.stockid,
-										stockmaster.stockid
-									ORDER BY stockmaster.categoryid,
-										stockmaster.stockid";
+						stockmaster.description,
+						stockcategory.categorydescription,
+						locstock.stockid,
+						SUM(locstock.quantity) AS qoh
+					FROM locstock,
+						stockmaster,
+						stockcategory
+					WHERE locstock.stockid=stockmaster.stockid
+					AND stockmaster.discontinued = 0
+					AND stockmaster.categoryid=stockcategory.categoryid
+					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+					AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+					AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+					GROUP BY stockmaster.categoryid,
+						stockmaster.description,
+						stockcategory.categorydescription,
+						locstock.stockid,
+						stockmaster.stockid
+					ORDER BY stockmaster.categoryid,
+						stockmaster.stockid";
 	} else {
 		$SQL = "SELECT stockmaster.categoryid,
 					locstock.stockid,
@@ -99,9 +98,9 @@ if (isset($_POST['PrintPDF'])
 	  $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-	      echo "<br />$SQL";
+	      echo '<br />'.$SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -145,27 +144,27 @@ if (isset($_POST['PrintPDF'])
 
 		if ($_POST['Location']=='All'){
    		   $SQL = "SELECT SUM(CASE WHEN prd='" . $CurrentPeriod . "' THEN -qty ELSE 0 END) AS prd0,
-		   		SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
-				SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
-				SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
-				SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4,
-				SUM(CASE WHEN prd='" . $Period_5 . "' THEN -qty ELSE 0 END) AS prd5
-			FROM stockmoves
-			WHERE stockid='" . $InventoryPlan['stockid'] . "'
-			AND (type=10 OR type=11)
-			AND stockmoves.hidemovt=0";
+				   		SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
+						SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
+						SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
+						SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4,
+						SUM(CASE WHEN prd='" . $Period_5 . "' THEN -qty ELSE 0 END) AS prd5
+					FROM stockmoves
+					WHERE stockid='" . $InventoryPlan['stockid'] . "'
+					AND (type=10 OR type=11)
+					AND stockmoves.hidemovt=0";
 		} else {
   		   $SQL = "SELECT SUM(CASE WHEN prd='" . $CurrentPeriod . "' THEN -qty ELSE 0 END) AS prd0,
-		   		SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
-				SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
-				SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
-				SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4,
-				SUM(CASE WHEN prd='" . $Period_5 . "' THEN -qty ELSE 0 END) AS prd5
-			FROM stockmoves
-			WHERE stockid='" . $InventoryPlan['stockid'] . "'
-			AND stockmoves.loccode ='" . $_POST['Location'] . "'
-			AND (stockmoves.type=10 OR stockmoves.type=11)
-			AND stockmoves.hidemovt=0";
+				   		SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
+						SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
+						SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
+						SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4,
+						SUM(CASE WHEN prd='" . $Period_5 . "' THEN -qty ELSE 0 END) AS prd5
+					FROM stockmoves
+					WHERE stockid='" . $InventoryPlan['stockid'] . "'
+					AND stockmoves.loccode ='" . $_POST['Location'] . "'
+					AND (stockmoves.type=10 OR stockmoves.type=11)
+					AND stockmoves.hidemovt=0";
 		}
 
 		$SalesResult = DB_query($SQL,$db,'','', false, false);
@@ -174,9 +173,9 @@ if (isset($_POST['PrintPDF'])
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      		echo "<br />$SQL";
+	      		echo '<br />' .$SQL;
 	   		}
 
 	   		include('includes/footer.inc');
@@ -209,9 +208,9 @@ if (isset($_POST['PrintPDF'])
 	 		$title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br /><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<br />$SQL";
+	      			echo '<br />'.$SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -257,9 +256,9 @@ if (isset($_POST['PrintPDF'])
 	 		$title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br /><a href='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-	      			echo "<br />$SQL";
+	      			echo '<br />'.$SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -267,23 +266,23 @@ if (isset($_POST['PrintPDF'])
 
 		if ($_POST['Location']=='All'){
 			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-							FROM purchorderdetails INNER JOIN purchorders
-							ON purchorderdetails.orderno = purchorders.orderno
-							WHERE  purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-							AND purchorderdetails.completed = 0
-							AND purchorders.status <> 'Cancelled'
-							AND purchorders.status <> 'Rejected'
-							AND purchorders.status <> 'Pending'";
+						FROM purchorderdetails INNER JOIN purchorders
+						ON purchorderdetails.orderno = purchorders.orderno
+						WHERE  purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+						AND purchorderdetails.completed = 0
+						AND purchorders.status <> 'Cancelled'
+						AND purchorders.status <> 'Rejected'
+						AND purchorders.status <> 'Pending'";
 		} else {
 			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-							FROM purchorderdetails INNER JOIN purchorders
-							ON purchorderdetails.orderno = purchorders.orderno
-							WHERE purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
-							AND purchorderdetails.completed = 0
-							AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'
-							AND purchorders.status <> 'Cancelled'
-							AND purchorders.status <> 'Rejected'
-							AND purchorders.status <> 'Pending'";
+						FROM purchorderdetails INNER JOIN purchorders
+						ON purchorderdetails.orderno = purchorders.orderno
+						WHERE purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+						AND purchorderdetails.completed = 0
+						AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'
+						AND purchorders.status <> 'Cancelled'
+						AND purchorders.status <> 'Rejected'
+						AND purchorders.status <> 'Pending'";
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);
@@ -295,7 +294,7 @@ if (isset($_POST['PrintPDF'])
 	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
 	   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   		echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
 	      			echo '<br />' . $SQL;
 	   		}
@@ -358,7 +357,7 @@ if (isset($_POST['PrintPDF'])
 		$title = _('Print Inventory Planning Report Empty');
 		include('includes/header.inc');
 		prnMsg( _('There were no items in the range and location specified'), 'error');
-		echo "<br /><a href='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -377,7 +376,8 @@ if (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo "<form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method='POST'><table class='selection'>";
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+				<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr>

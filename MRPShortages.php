@@ -185,12 +185,12 @@ if (isset($_POST['PrintPDF'])) {
 	while ($myrow = DB_fetch_array($result,$db)){
 	
 	if ($_POST['ReportType'] == 'Shortage'){
-		$lineToPrint = ($myrow['demand'] > $myrow['supply']);
+		$LineToPrint = ($myrow['demand'] > $myrow['supply']);
 	}else{
-		$lineToPrint = ($myrow['demand'] <= $myrow['supply']);
+		$LineToPrint = ($myrow['demand'] <= $myrow['supply']);
 	}
 	
-	if ($lineToPrint) {
+	if ($LineToPrint) {
 			$YPos -=$line_height;
 			$FontSize=8;
 
@@ -266,28 +266,41 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Inventory Category') . ':</td><td><select name="CategoryID">';
 	echo '<option selected value="All">' . _('All Stock Categories') .'</option>';
-	$sql = 'SELECT categoryid,
+	$sql = "SELECT categoryid,
 			categorydescription
-		FROM stockcategory";
+			FROM stockcategory";
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' .$myrow['categorydescription'] . '</option>';
 	} //end while loop
-	echo '<tr><td>' . _('Sort') . ":</td><td><select name='Sort'>";
-	echo "<option selected value='extcost'>" . _('Extended Shortage Dollars').'</option>';
-	echo "<option value='stockid'>" . _('Part Number').'</option>';
-	echo '</select></td></tr>';
+	echo '<tr><td>' . _('Sort') . ':</td>
+			<td><select name="Sort">
+				<option selected value="extcost">' . _('Extended Shortage Dollars').'</option>
+				<option value="stockid">' . _('Part Number').'</option>
+				</select>
+			</td>
+		</tr>';
 	
-	echo '<tr><td>' . _('Shortage-Excess Option') . ":</td><td><select name='ReportType'>";
-	echo "<option selected value='Shortage'>" . _('Report MRP Shortages').'</option>';
-	echo "<option value='Excess'>" . _('Report MRP Excesses').'</option>';
-	echo '</select></td></tr>';
+	echo '<tr><td>' . _('Shortage-Excess Option') . ':</td>
+			<td><select name="ReportType">
+				<option selected value="Shortage">' . _('Report MRP Shortages').'</option>
+				<option value="Excess">' . _('Report MRP Excesses').'</option>
+				</select>
+			</td>
+		</tr>';
 	
-	echo '<tr><td>' . _('Print Option') . ":</td><td><select name='Fill'>";
-	echo "<option selected value='yes'>" . _('Print With Alternating Highlighted Lines').'</option>';
-	echo "<option value='no'>" . _('Plain Print').'</option>';
-	echo '</select></td></tr>';
-	echo "</table><br /><div class='centre'><input type=submit name='PrintPDF' value='" . _('Print PDF') . "'></div>";
+	echo '<tr><td>' . _('Print Option') . ':</td>
+			<td><select name="Fill">
+				<option selected value="yes">' . _('Print With Alternating Highlighted Lines').'</option>
+				<option value="no">' . _('Plain Print').'</option>
+				</select>
+			</td>
+		</tr>';
+	echo '</table>
+		<br />
+		<div class="centre">
+			<input type=submit name="PrintPDF" value="' . _('Print PDF') . '">
+		</div>';
 
 	include('includes/footer.inc');
 

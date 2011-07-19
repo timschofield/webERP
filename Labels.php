@@ -1,7 +1,7 @@
 <?php
 /**
  *  <b>Labels XML file Managment</b>
- *	This programa maintains the XML file containing the label defintions
+ *	This program maintains the XML file containing the label defintions
  *	used to print the products prices tickets
  * @author  Marcos R Garcia <addsmgt at gmail dot com>
  * @version 1.1
@@ -9,10 +9,8 @@
  *
 **/
 
-/* $Revision= 1.1; $ */
 $Version_adds= 1.1;
 
-//$PageSecurity=15;
 /** Error reporting */
 
 include('includes/session.inc');
@@ -27,10 +25,10 @@ $allLabels =				 //!< The variable $allLabels is the global variable that contai
 								 //!<  installation or an empty XML labels file it holds a NULL value.
 
 if ($debug) {
-	echo "<br />" ;
-	echo "<pre>";
+	echo '<br />' ;
+	echo '<pre>';
 	print_r($_POST);
-	echo "</pre>";
+	echo '</pre>';
 //exit();
 }
 
@@ -143,7 +141,7 @@ function validData($data, $new) {
 		if (empty($data['id']))
 			$errors[]=_('Id required');
 		elseif ($allLabels!=null AND $allLabels->findLabel($data['id'])!==false)
-			$errors[]=_('This id exist in previous list');
+			$errors[]=_('This id exists in previous list');
 	}
 	if (empty($data['description']))
 		$errors=_('the description is required');
@@ -230,8 +228,7 @@ function validData($data, $new) {
 				break;
 			case 'max':
 				if ((float)$dd+$posD >= (float)$data['Wi']) {
-					$errors[]= _('The position and lenght of the string leads the text to get out of the label').
-						" ($jRow)";
+					$errors[]= _('The position and lenght of the string leads the text to get out of the label'). " ($jRow)";
 				}
 				break;
 			}
@@ -258,10 +255,10 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 	if ($label==null)
 		$label = newLabel();
 	if  ($readonly) {
-		$name = "Update";
+		$name = 'Update';
 		$value = _('Update');
 	} else {
-		$name = "Save";
+		$name = 'Save';
 		$value = _('Save');
 	}
 
@@ -321,8 +318,8 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $readonly=fa
 		} else {
 			$ro='';
 			if ($readonly AND $specialTag==$iTag)
-				$ro="readonly ";
-			$input = '<INPUT type="text" name="'. $iTag .'" value="'. $vDat .'"
+				$ro='readonly ';
+			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'"
 				size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'"'. $ro .'>';
 		}
 		if (!$iCol++)  // when zero begins a line
@@ -428,13 +425,13 @@ function showLabelsList($list) {
 			}
 		}
 	</script>
-	<form action="'.$_SERVER["PHP_SELF"].'" method="POST" id="form1" target="_self">
+	<form action="'.$_SERVER['PHP_SELF'].'" method="POST" id="form1" target="_self">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<input type="hidden" name="action" id="action" value="">
-		<input type="hidden" name="labelID" id="labelID" value="">
+		<input type="hidden" name="action" id="action" value="" />
+		<input type="hidden" name="labelID" id="labelID" value="" />
 	</form>
 	<div class="centre">
-	<table class=selection>
+	<table class="selection">
 		<thead>
 			<tr>
 				<th>'.$txt[0].'</th>
@@ -446,7 +443,7 @@ function showLabelsList($list) {
 		</thead>
 		<tbody>';
 	foreach ($list as $label) {
-		$dim = (string)$label->dimensions->Rows. " x ". (string)$label->dimensions->Cols;
+		$dim = (string)$label->dimensions->Rows. ' x '. (string)$label->dimensions->Cols;
 		echo '
 			<tr><td>'. $label->id . '</td>
 				<td>'. $label->description . '</td>

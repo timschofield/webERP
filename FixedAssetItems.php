@@ -123,28 +123,35 @@ if (isset($_POST['submit'])) {
 			$result = DB_Txn_Begin($db);
 
 			/*Need to check if changing the balance sheet codes - as will need to do journals for the cost and accum depn of the asset to the new category */
-			$result = DB_query("SELECT assetcategoryid,  cost, accumdepn, costact, accumdepnact FROM fixedassets INNER JOIN fixedassetcategories WHERE assetid='" . $AssetID . "'",$db);
+			$result = DB_query("SELECT assetcategoryid,  
+										cost, 
+										accumdepn, 
+										costact, 
+										accumdepnact 
+								FROM fixedassets INNER JOIN fixedassetcategories 
+								ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+								WHERE assetid='" . $AssetID . "'",$db);
 			$OldDetails = DB_fetch_array($result);
 			if ($OldDetails['assetcategoryid'] !=$_POST['AssetCategoryID']  AND $OldDetails['cost']!=0){
 
 				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
 				/* Get the new account codes for the new asset category */
 				$result = DB_query("SELECT costact, 
-							accumdepnact 
-							FROM fixedassetcategories 
-							WHERE categoryid='" . $_POST['AssetCategoryID'] . "'",$db);
+											accumdepnact 
+									FROM fixedassetcategories 
+									WHERE categoryid='" . $_POST['AssetCategoryID'] . "'",$db);
 				$NewAccounts = DB_fetch_array($result);
 
 				$TransNo = GetNextTransNo( 42, $db); /* transaction type is asset category change */
 
 				//credit cost for the old category
 				$SQL = "INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount) 
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount) 
 							VALUES ('42',
 								'" . $TransNo . "',
 								'" . Date('Y-m-d') . "',
@@ -159,12 +166,12 @@ if (isset($_POST['submit'])) {
 
 				//debit cost for the new category
 				$SQL = "INSERT INTO gltrans (type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount) 
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount) 
 							VALUES ('42',
 								'" . $TransNo . "',
 								'" . Date('Y-m-d') . "',
@@ -179,12 +186,12 @@ if (isset($_POST['submit'])) {
 				if ($OldDetails['accumdepn']!=0) {
 					//debit accumdepn for the old category
 					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount)
 								VALUES ('42',
 									'" . $TransNo . "',
 									'" . Date('Y-m-d') . "',
@@ -199,12 +206,12 @@ if (isset($_POST['submit'])) {
 
 					//credit accum depn for the new category
 					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount) 
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount) 
 								VALUES ('42',
 									'" . $TransNo . "',
 									'" . Date('Y-m-d') . "',
@@ -237,13 +244,13 @@ if (isset($_POST['submit'])) {
 			echo '<br />';
 		} else { //it is a NEW part
 			$sql = "INSERT INTO fixedassets (description,
-							longdescription,
-							assetcategoryid,
-							assetlocation,
-							depntype,
-							depnrate,
-							barcode,
-							serialno)
+											longdescription,
+											assetcategoryid,
+											assetlocation,
+											depntype,
+											depnrate,
+											barcode,
+											serialno)
 						VALUES (
 							'" . $_POST['Description'] . "',
 							'" . $_POST['LongDescription'] . "',
@@ -278,12 +285,12 @@ if (isset($_POST['submit'])) {
 	$CancelDelete = 0;
 	//what validation is required before allowing deletion of assets ....  maybe there should be no deletion option?
 	$result = DB_query("SELECT cost,
-				accumdepn,
-				accumdepnact,
-				costact
-				FROM fixedassets INNER JOIN fixedassetcategories
-				ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-				WHERE assetid='" . $AssetID . "'", $db);
+								accumdepn,
+								accumdepnact,
+								costact
+						FROM fixedassets INNER JOIN fixedassetcategories
+						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+						WHERE assetid='" . $AssetID . "'", $db);
 	$AssetRow = DB_fetch_array($result);
 	$NBV = $AssetRow['cost'] -$AssetRow['accumdepn'];
 	if ($NBV!=0) {
@@ -309,12 +316,12 @@ if (isset($_POST['submit'])) {
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted
 			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount) 
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount) 
 						VALUES ('43',
 							'" . $TransNo . "',
 							'" . Date('Y-m-d') . "',
@@ -329,12 +336,12 @@ if (isset($_POST['submit'])) {
 
 			//debit accumdepn for the depreciation removed on deletion of this asset
 			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount) 
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount) 
 						VALUES ('43',
 							'" . $TransNo . "',
 							'" . Date('Y-m-d') . "',
@@ -394,19 +401,19 @@ if (!isset($AssetID) or $AssetID=='') {
 } elseif ($InputError!=1) { // Must be modifying an existing item and no changes made yet - need to lookup the details
 
 	$sql = "SELECT assetid,
-			description,
-			longdescription,
-			assetcategoryid,
-			serialno,
-			assetlocation,
-			datepurchased,
-			depntype,
-			depnrate,
-			cost,
-			accumdepn,
-			barcode
-		FROM fixedassets
-		WHERE assetid ='" . $AssetID . "'";
+				description,
+				longdescription,
+				assetcategoryid,
+				serialno,
+				assetlocation,
+				datepurchased,
+				depntype,
+				depnrate,
+				cost,
+				accumdepn,
+				barcode
+			FROM fixedassets
+			WHERE assetid ='" . $AssetID . "'";
 
 	$result = DB_query($sql, $db);
 	$AssetRow = DB_fetch_array($result);
@@ -441,14 +448,14 @@ if (isset($_POST['LongDescription'])) {
 } else {
 	$LongDescription ='';
 }
-echo '<tr><td>' . _('Asset Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>'."\n";
+echo '<tr><td>' . _('Asset Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>';
 
 if (!isset($New) ) { //ie not new at all!
 	
 	echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
 
 	if (function_exists('imagecreatefromjpg')){
-		$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
+		$AssetImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
 			'&AssetID='.urlencode($AssetID).
 			'&text='.
 			'&width=64'.
@@ -473,16 +480,16 @@ if (!isset($New) ) { //ie not new at all!
 
 echo '<tr><td>' . _('Asset Category') . ':</td><td><select name="AssetCategoryID">';
 
-$sql = 'SELECT categoryid, categorydescription FROM fixedassetcategories';
+$sql = "SELECT categoryid, categorydescription FROM fixedassetcategories";
 $ErrMsg = _('The asset categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (!isset($_POST['AssetCategoryID']) or $myrow['categoryid']==$_POST['AssetCategoryID']){
-		echo '<option selected VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		echo '<option selected value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	} else {
-		echo '<option VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription']. '</option>';
+		echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription']. '</option>';
 	}
 	$category=$myrow['categoryid'];
 }
@@ -495,7 +502,7 @@ if (isset($AssetRow) AND ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow
 	echo '<tr><td>' . _('Date Purchased') . ':</td><td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td></tr>';
 }
 
-$sql = 'SELECT locationid, locationdescription FROM fixedassetlocations';
+$sql = "SELECT locationid, locationdescription FROM fixedassetlocations";
 $ErrMsg = _('The asset locations could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve asset locations and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -536,17 +543,17 @@ echo '</table>';
 /*Get the last period depreciation (depn is transtype =44) was posted for */
 echo '<table><tr><th colspan=2>' . _('Asset Financial Summary') . '</th></tr>';
 
-echo '<tr><td>' . _('Accumulated Costs') . ':</td><td class="number">' . number_format($AssetRow['cost'],2) . '</td></tr>';
-echo '<tr><td>' . _('Accumulated Depreciation') . ':</td><td class="number">' . number_format($AssetRow['accumdepn'],2) . '</td></tr>';
-echo '<tr><td>' . _('Net Book Value') . ':</td><td class="number">' . number_format($AssetRow['cost']-$AssetRow['accumdepn'],2) . '</td></tr>';
+echo '<tr><td>' . _('Accumulated Costs') . ':</td><td class="number">' . number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+echo '<tr><td>' . _('Accumulated Depreciation') . ':</td><td class="number">' . number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+echo '<tr><td>' . _('Net Book Value') . ':</td><td class="number">' . number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
-$result = DB_query('SELECT periods.lastdate_in_period, 
+$result = DB_query("SELECT periods.lastdate_in_period, 
 								max(fixedassettrans.periodno) 
 					FROM fixedassettrans INNER JOIN periods 
 					ON fixedassettrans.periodno=periods.periodno 
 					WHERE transtype=44 
 					GROUP BY periods.lastdate_in_period
-					ORDER BY periods.lastdate_in_period DESC',$db);
+					ORDER BY periods.lastdate_in_period DESC",$db);
 									
 $LastDepnRun = DB_fetch_row($result);
 if(DB_num_rows($result)==0){
@@ -559,13 +566,13 @@ echo '<tr><td>' . _('Depreciation last run') . ':</td><td>' . $LastRunDate . '</
 
 
 if (isset($New)) {
-	echo '<div class=centre><br /><input type="Submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
+	echo '<div class="centre"><br /><input type="submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
 
 } else {
 
-	echo '<br /><div class=centre><input type="submit" name="submit" value="' . _('Update') . '"></div>';
+	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '"></div>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
-	echo '<br /><div class=centre><input type="Submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');"></div>';
+	echo '<br /><div class="centre"><input type="submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');"></div>';
 }
 
 echo '</form></div>';

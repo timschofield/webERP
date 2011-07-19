@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+
 /* $Id$*/
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 

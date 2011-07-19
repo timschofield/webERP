@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+
 /* $Id$*/
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
@@ -14,7 +14,7 @@ and an array of the receipients */
 /*The Sales report to send */
 $_GET['ReportID'] = 2;
 /*The company database to use */
-$DatabaseName = 'weberp';
+$DatabaseName = 'weberpdemo';
 /*The people to receive the emailed report */
 $Recipients = array('"Root" <root@localhost>','"' . _('someone else') . '" <someoneelese@sowhere.com>');
 

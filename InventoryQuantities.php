@@ -16,11 +16,14 @@ If (isset($_POST['PrintPDF'])) {
 	$line_height=12;
 
 	$Xpos = $Left_Margin+1;
-	$WhereCategory = " ";
-	$CatDescription = " ";
+	$WhereCategory = ' ';
+	$CatDescription = ' ';
 	if ($_POST['StockCat'] != 'All') {
 	    $WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
-		$sql= "SELECT categoryid, categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StockCat'] . "' ";
+		$sql= "SELECT categoryid, 
+					categorydescription 
+				FROM stockcategory 
+				WHERE categoryid='" . $_POST['StockCat'] . "' ";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		$CatDescription = $myrow[1];
@@ -36,16 +39,15 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock,
-					stockmaster
-			LEFT JOIN stockcategory
-			ON stockmaster.categoryid=stockcategory.categoryid,
-					locations
-				WHERE locstock.stockid=stockmaster.stockid
-				AND locstock.loccode=locations.loccode
-				AND locstock.quantity <> 0
+				FROM locstock INNER JOIN stockmaster 
+				locstock.stockid=stockmaster.stockid 
+				INNER JOIN locations 
+				ON locstock.loccode=locations.loccode
+				WHERE locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$WhereCategory . " ORDER BY locstock.stockid,locstock.loccode";
+				$WhereCategory . " 
+				ORDER BY locstock.stockid,
+						locstock.loccode";
 	} else {
 		// sql to only select parts in more than one location
 		// The SELECT statement at the beginning of the WHERE clause limits the selection to
@@ -59,19 +61,20 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock,
-					stockmaster,
-					locations
+				FROM locstock INNER JOIN stockmaster 
+				locstock.stockid=stockmaster.stockid 
+				INNER JOIN locations 
+				ON locstock.loccode=locations.loccode 
 				WHERE (SELECT count(*)
 					  FROM locstock
 					  WHERE stockmaster.stockid = locstock.stockid
 					  AND locstock.quantity <> 0
 					  GROUP BY locstock.stockid) > 1
-				AND locstock.stockid=stockmaster.stockid
-				AND locstock.loccode=locations.loccode
 				AND locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$WhereCategory . " ORDER BY locstock.stockid,locstock.loccode";
+				$WhereCategory . " 
+				ORDER BY locstock.stockid,
+						locstock.loccode";
 	}
 
 
@@ -97,8 +100,15 @@ If (isset($_POST['PrintPDF'])) {
 			exit;
 	}
 
-	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-	            $Page_Width,$Right_Margin,$CatDescription);
+	PrintHeader($pdf,
+				$YPos,
+				$PageNumber,
+				$Page_Height,
+				$Top_Margin,
+				$Left_Margin,
+				$Page_Width,
+				$Right_Margin,
+				$CatDescription);
 
     $FontSize=8;
 
@@ -154,7 +164,10 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 	echo '<option value="Multiple">' . _('Only Parts With Multiple Locations') . '</option>';
 	echo '</select></td></tr>';
 
-	$SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
+	$SQL="SELECT categoryid, 
+				categorydescription 
+			FROM stockcategory 
+			ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
 		echo '</table></td></tr>
@@ -184,7 +197,11 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 		}
 	}
 	echo '</select></td></tr>';
-	echo '</table><p><div class="centre"><input type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+	echo '</table>
+			<br />
+			<div class="centre">
+				<input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+			</div>';
 
 	include('includes/footer.inc');
 
@@ -227,7 +244,6 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 
 
 	$FontSize=8;
-//	$YPos =$YPos - (2*$line_height);
 	$PageNumber++;
 } // End of PrintHeader() function
 ?>

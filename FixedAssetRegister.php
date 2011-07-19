@@ -73,10 +73,10 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	} elseif (isset($_POST['csv'])) {
 		$csv_output = "'Asset ID','Description','Serial Number','Location','Date Acquired','Cost B/Fwd','Period Additions','Depn B/Fwd','Period Depreciation','Cost C/Fwd', 'Accum Depn C/Fwd','NBV','Disposal Value'\n";
 	} else {
-		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
+		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
-		echo '<br /><table width=80% cellspacing="1" class=selection><tr>';
+		echo '<br /><table width=80% cellspacing="1" class="selection"><tr>';
 		echo '<th>' . _('Asset ID') . '</th>';
 		echo '<th>' . _('Description') . '</th>';
 		echo '<th>' . _('Serial Number') . '</th>';
@@ -196,13 +196,13 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 
 	if (isset($_POST['pdf'])) {
 		$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 300 - $Left_Margin, $FontSize, _('TOTAL'));
-		$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, number_format($TotalCostBfwd, 0), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, number_format($TotalDepnBfwd, 0), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, number_format($TotalAdditions, 0), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, number_format($TotalDepn, 0), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($TotalCostCfwd, 0), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($TotalDepnCfwd, 0), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($TotalNBV, 0), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, number_format($TotalAdditions, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($TotalCostCfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($TotalDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 		$pdf->Output($_SESSION['DatabaseName'] . '_Asset Register_' . date('Y-m-d') . '.pdf', 'I');
 		exit;
@@ -213,11 +213,11 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		header('Location: ' .$_SESSION['reports_dir'] . '/FixedAssetRegister_' . Date('Y-m-d') .'.csv');
 
 	} else {
-		echo '<input type=hidden name=FromDate value="' . $_POST['FromDate'] . '">';
-		echo '<input type=hidden name=ToDate value=' . $_POST['ToDate'] . '>';
-		echo '<input type=hidden name=AssetCategory value=' . $_POST['AssetCategory'] . '>';
-		echo '<input type=hidden name=AssetID value=' . $_POST['AssetID'] . '>';
-		echo '<input type=hidden name=AssetLocation value=' . $_POST['AssetLocation'] . '>';
+		echo '<input type=hidden name="FromDate" value="' . $_POST['FromDate'] . '">';
+		echo '<input type=hidden name="ToDate" value=' . $_POST['ToDate'] . '>';
+		echo '<input type=hidden name="AssetCategory" value=' . $_POST['AssetCategory'] . '>';
+		echo '<input type=hidden name="AssetID" value=' . $_POST['AssetID'] . '>';
+		echo '<input type=hidden name="AssetLocation" value=' . $_POST['AssetLocation'] . '>';
 		//Total Values
 		echo '<tr><th style="vertical-align:top" colspan="5">' . _('TOTAL') . '</th>';
 		echo '<th style="text-align:right">' . number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
@@ -253,7 +253,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$sql = "SELECT  locationid, locationdescription FROM fixedassetlocations";
 	$result = DB_query($sql, $db);
 	echo '<tr><th>' . _('Asset Location') . '</th>';
-	echo '<td><select name=AssetLocation>';
+	echo '<td><select name="AssetLocation">';
 	echo '<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetLocation']) AND $myrow['locationid'] == $_POST['AssetLocation']) {
@@ -290,7 +290,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	</table>
 	<br />';
 	
-	echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
+	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
 	echo '<input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
 	echo '<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '"></div>';
 	echo '</form>';

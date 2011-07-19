@@ -102,24 +102,24 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 //links to delete or edit each. These will call the same page again and allow update/input
 //or deletion of the records
 
-	$sql = 'SELECT mrpdemandtype,
-	        description
-		FROM mrpdemandtypes';
+	$sql = "SELECT mrpdemandtype,
+					description
+			FROM mrpdemandtypes";
 
 	$result = DB_query($sql,$db);
 
 	echo '<table class=selection>
-		<tr BGCOLOR =#800000><th>' . _('Demand Type') . '</th>
+			<tr><th>' . _('Demand Type') . '</th>
 				<th>' . _('Description') . '</th>
-		</tr></font>';
+			</tr>';
 
 	while ($myrow = DB_fetch_row($result)) {
 
-		printf("<tr><td>%s</td>
+		printf('<tr><td>%s</td>
 				<td>%s</td>
-				<td><a href=\"%sSelectedDT=%s\">" . _('Edit') . "</td>
-				<td><a href=\"%sSelectedDT=%s&delete=yes\">" . _('Delete') ."</td>
-				</tr>",
+				<td><a href="%sSelectedDT=%s">' . _('Edit') . '</td>
+				<td><a href="%sSelectedDT=%s&delete=yes">' . _('Delete') .'</td>
+				</tr>',
 				$myrow[0],
 				$myrow[1],
 				$_SERVER['PHP_SELF'] . '?',
@@ -154,30 +154,35 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	$_POST['MRPDemandType'] = $myrow['mrpdemandtype'];
 	$_POST['Description'] = $myrow['description'];
 
-	echo '<input type=hidden name=SelectedDT value=' . $SelectedDT . '>';
-	echo "<input type=hidden name=MRPDemandType value='" . $_POST['MRPDemandType'] . "'>";
-	echo '<table class=selection><tr><td>' ._('Demand Type') . ':</td><td>' . $_POST['MRPDemandType'] . '</td></tr>';
+	echo '<input type="hidden" name="SelectedDT" value="' . $SelectedDT . '" />';
+	echo '<input type="hidden" name="MRPDemandType" value="' . $_POST['MRPDemandType'] . '" />';
+	echo '<table class="selection">
+			<tr>
+				<td>' ._('Demand Type') . ':</td>
+				<td>' . $_POST['MRPDemandType'] . '</td>
+			</tr>';
 
 } else { //end of if $SelectedDT only do the else when a new record is being entered
 	if (!isset($_POST['MRPDemandType'])) {
 		$_POST['MRPDemandType'] = '';
 	}
-	echo '<table class=selection><tr>
-			<td>' . _('Demand Type') . ":</td>
-			<td><input type='Text' name='MRPDemandType' size=6 maxlength=5 value='" . $_POST['MRPDemandType'] . "'></td>
-			</tr>" ;
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Demand Type') . ':</td>
+				<td><input type="text" name="MRPDemandType" size="6" maxlength="5" value="' . $_POST['MRPDemandType'] . '"></td>
+			</tr>' ;
 }
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
 
-echo '<tr><td>' . _('Demand Type Description') . ":</td>
-	<td><input type='Text' name='Description' size=31 maxlength=30 value='" . $_POST['Description'] . "'></td>
-	</tr>
-	</table>";
+echo '<tr><td>' . _('Demand Type Description') . ':</td>
+			<td><input type="text" name="Description" size="31" maxlength="30" value="' . $_POST['Description'] . '"></td>
+		</tr>
+		</table>';
 
-echo "<br /><div class='centre'><input type='Submit' name='submit' value='" . _('Enter Information') . "'></div>";
+echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
 
 echo '</form>';
 include('includes/footer.inc');

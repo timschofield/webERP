@@ -555,9 +555,9 @@ if (isset($_POST['submit'])) {
 	}
 	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF']  . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	// Generate selections for Location
-	echo '<tr><th colspan=3><font color=blue size=3>'._('This Run Details').'</font></th></tr>';
+	echo '<tr><th colspan="3"><font color=blue size=3>'._('This Run Details').'</font></th></tr>';
 	echo '<tr>
 	 <td>' . _('Location') . '</td>
 	 <td><select name="location[]" multiple>
@@ -612,59 +612,59 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
 			$i++;
 	}  //end of while loop
 
-	// Load mrpsupplies into $supplies array
+	// Load mrpsupplies into $Supplies array
 	$sql = "SELECT * FROM mrpsupplies WHERE part = '" .$part. "' ORDER BY duedate";
 	$result = DB_query($sql,$db);
-	$supplies = array();
+	$Supplies = array();
 	$i = 0;
 	while ($myrow=DB_fetch_array($result)) {
-			array_push($supplies,$myrow);
+			array_push($Supplies,$myrow);
 			$i++;
 	}  //end of while loop
 
 	// Go through all requirements and check if have supplies to cover them
-	$Requirementcount = count($Requirements);
-	$supplycount = count($supplies);
+	$RequirementCount = count($Requirements);
+	$SupplyCount = count($Supplies);
 	$reqi = 0; //Index for requirements
 	$supi = 0; // index for supplies
-	$totalrequirement = 0;
-	$totalsupply = 0;
+	$TotalRequirement = 0;
+	$TotalSupply = 0;
 
-	if ($Requirementcount > 0 && $supplycount > 0) {
-		$totalrequirement += $Requirements[$reqi]['quantity'];
-		$totalsupply += $supplies[$supi]['supplyquantity'];
-		while ($totalrequirement > 0 && $totalsupply > 0) {
-				$supplies[$supi]['updateflag'] = 1;
+	if ($RequirementCount > 0 && $SupplyCount > 0) {
+		$TotalRequirement += $Requirements[$reqi]['quantity'];
+		$TotalSupply += $Supplies[$supi]['supplyquantity'];
+		while ($TotalRequirement > 0 && $TotalSupply > 0) {
+				$Supplies[$supi]['updateflag'] = 1;
 				// ******** Put leeway calculation in here ********
-				$duedate = ConvertSQLDate($supplies[$supi]['duedate']);
-				$reqdate = ConvertSQLDate($Requirements[$reqi]['daterequired']);
-				$datediff = DateDiff($duedate,$reqdate,'d');
-				//if ($supplies[$supi]['duedate'] > $Requirements[$reqi]['daterequired']) {
-				if ($datediff > abs($_POST['Leeway'])) {
+				$DueDate = ConvertSQLDate($Supplies[$supi]['duedate']);
+				$ReqDate = ConvertSQLDate($Requirements[$reqi]['daterequired']);
+				$DateDiff = DateDiff($DueDate,$ReqDate,'d');
+				//if ($Supplies[$supi]['duedate'] > $Requirements[$reqi]['daterequired']) {
+				if ($DateDiff > abs($_POST['Leeway'])) {
 					$sql = "UPDATE mrpsupplies SET mrpdate = '" . $Requirements[$reqi]['daterequired'] .
-					   "' WHERE id = '" . $supplies[$supi]['id'] . "' AND duedate = mrpdate";
+					   "' WHERE id = '" . $Supplies[$supi]['id'] . "' AND duedate = mrpdate";
 					$result = DB_query($sql,$db);
 				}
 
-			   if ($totalrequirement > $totalsupply) {
-				   $totalrequirement -= $totalsupply;
-				   $Requirements[$reqi]['quantity'] -= $totalsupply;
-				   $totalsupply = 0;
-				   $supplies[$supi]['supplyquantity'] = 0;
+			   if ($TotalRequirement > $TotalSupply) {
+				   $TotalRequirement -= $TotalSupply;
+				   $Requirements[$reqi]['quantity'] -= $TotalSupply;
+				   $TotalSupply = 0;
+				   $Supplies[$supi]['supplyquantity'] = 0;
 				   $supi++;
-				   if ($supplycount > $supi) {
-					   $totalsupply += $supplies[$supi]['supplyquantity'];
+				   if ($SupplyCount > $supi) {
+					   $TotalSupply += $Supplies[$supi]['supplyquantity'];
 				   }
 			   } else {
-				   $totalsupply -= $totalrequirement;
-				   $supplies[$supi]['supplyquantity'] -= $totalrequirement;
-				   $totalrequirement = 0;
+				   $TotalSupply -= $TotalRequirement;
+				   $Supplies[$supi]['supplyquantity'] -= $TotalRequirement;
+				   $TotalRequirement = 0;
 				   $Requirements[$reqi]['quantity'] = 0;
 				   $reqi++;
-				   if ($Requirementcount > $reqi) {
-					   $totalrequirement += $Requirements[$reqi]['quantity'];
+				   if ($RequirementCount > $reqi) {
+					   $TotalRequirement += $Requirements[$reqi]['quantity'];
 				   }
-			  } // End of if $totalrequirement > $totalsupply
+			  } // End of if $TotalRequirement > $TotalSupply
 	   } // End of while
 	} // End of if
 
@@ -677,7 +677,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
 	// quantity. For instance, if the first requirement was for 2 and the eoq was 5, there
 	// would be an excess of 3; if there was another requirement for 3 or less, the excess
 	// would cover it, so no planned order would have to be created for the second requirement.
-	$excessqty = 0;
+	$ExcessQty = 0;
 	foreach ($Requirements as $key => $row) {
 			 $DateRequired[$key] = $row['daterequired'];
 	}
@@ -691,16 +691,16 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
 			$Requirement['quantity'] = ($Requirement['quantity'] * 100) / (100 - $ShrinkFactor);
 			$Requirement['quantity'] = round($Requirement['quantity'],$DecimalPlaces);
 		}
-		if ($excessqty >= $Requirement['quantity']) {
+		if ($ExcessQty >= $Requirement['quantity']) {
 			$PlannedQty = 0;
-			$excessqty -= $Requirement['quantity'];
+			$ExcessQty -= $Requirement['quantity'];
 		} else {
-			$PlannedQty = $Requirement['quantity'] - $excessqty;
-			$excessqty = 0;
+			$PlannedQty = $Requirement['quantity'] - $ExcessQty;
+			$ExcessQty = 0;
 		}
 		if ($PlannedQty > 0) {
 			if ($_POST['eoqflag'] == 'y' AND $eoq > $PlannedQty) {
-				$excessqty = $eoq - $PlannedQty;
+				$ExcessQty = $eoq - $PlannedQty;
 				$PlannedQty = $eoq;
 			}
 			// Pansize calculation here
@@ -746,7 +746,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
    // If there are any supplies not used and updateflag is zero, those supplies are not
 	// necessary, so change date
 
-	foreach($supplies as $supply) {
+	foreach($Supplies as $supply) {
 		if ($supply['supplyquantity'] > 0  && $supply['updateflag'] == 0) {
 			$id = $supply['id'];
 			$sql = "UPDATE mrpsupplies SET mrpdate ='2050-12-31' WHERE id = '".$id."'
@@ -806,7 +806,7 @@ function CreateLowerLevelRequirement(&$db,
 		$Component = $myrow['component'];
 		$ExtendedQuantity = $myrow['quantity'] * $topquantity;
 // Commented out the following lines 8/15/09 because the eoq should be considered in the
-// LevelNetting() function where $excessqty is calculated
+// LevelNetting() function where $ExcessQty is calculated
 //		 if ($myrow['eoq'] > $ExtendedQuantity) {
 //			 $ExtendedQuantity = $myrow['eoq'];
 //		 }

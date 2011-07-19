@@ -2,7 +2,6 @@
 
 /* $Id$ */
 
-//$PageSecurity = 1;
 $AllowAnyone = true;
 
 $FromCriteria ='1'; /*Category From */
@@ -115,7 +114,7 @@ if (DB_error_no($db) !=0) {
 	$title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include('includes/header.inc');
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	if ($debug==1){
 		echo '<br />' . $SQL;
 	}
@@ -188,7 +187,7 @@ if ($_POST['DetailedReport']=='Yes'){
 }
 
 $DisplayCatTotVal = number_format($CatTot_Val,2);
-$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
+$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
 
 If ($_POST['DetailedReport']=='Yes'){
 	/*draw a line under the CATEGORY TOTAL*/
@@ -211,7 +210,7 @@ if ($ListCount == 0) {
 	$title = _('Print Inventory Valuation Error');
 	include('includes/header.inc');
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
-	echo '<br /><a href="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit; // Javier: needs check
 } else {
@@ -225,8 +224,7 @@ if ($ListCount == 0) {
 	$mail->setText(_('Please find herewith the stock valuation report'));
 	$mail->setSubject(_('Inventory Valuation Report'));
 	$mail->addAttachment($attachment, 'InventoryReport.pdf', 'application/pdf');
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
+	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 	$result = $mail->send($Recipients);
-
 }
 ?>

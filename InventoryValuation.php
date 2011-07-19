@@ -22,55 +22,55 @@ if (isset($_POST['PrintPDF'])
 	/*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['Location']=='All'){
 		$SQL = "SELECT stockmaster.categoryid,
-				stockcategory.categorydescription,
-				stockmaster.stockid,
-				stockmaster.description,
-				stockmaster.decimalplaces,
-				SUM(locstock.quantity) AS qtyonhand,
-				stockmaster.units,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-				SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
-			FROM stockmaster,
-				stockcategory,
-				locstock
-			WHERE stockmaster.stockid=locstock.stockid
-			AND stockmaster.categoryid=stockcategory.categoryid
-			GROUP BY stockmaster.categoryid,
-				stockcategory.categorydescription,
-				unitcost,
-				stockmaster.units,
-				stockmaster.decimalplaces,
-				stockmaster.materialcost,
-				stockmaster.labourcost,
-				stockmaster.overheadcost,
-				stockmaster.stockid,
-				stockmaster.description
-			HAVING SUM(locstock.quantity)!=0
-			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-			ORDER BY stockmaster.categoryid,
-				stockmaster.stockid";
+					stockcategory.categorydescription,
+					stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.decimalplaces,
+					SUM(locstock.quantity) AS qtyonhand,
+					stockmaster.units,
+					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
+					SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+				FROM stockmaster,
+					stockcategory,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				AND stockmaster.categoryid=stockcategory.categoryid
+				GROUP BY stockmaster.categoryid,
+					stockcategory.categorydescription,
+					unitcost,
+					stockmaster.units,
+					stockmaster.decimalplaces,
+					stockmaster.materialcost,
+					stockmaster.labourcost,
+					stockmaster.overheadcost,
+					stockmaster.stockid,
+					stockmaster.description
+				HAVING SUM(locstock.quantity)!=0
+				AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+				ORDER BY stockmaster.categoryid,
+					stockmaster.stockid";
 	} else {
 		$SQL = "SELECT stockmaster.categoryid,
-				stockcategory.categorydescription,
-				stockmaster.stockid,
-				stockmaster.description,
-				stockmaster.units,
-				stockmaster.decimalplaces,
-				locstock.quantity AS qtyonhand,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-				locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
-			FROM stockmaster,
-				stockcategory,
-				locstock
-			WHERE stockmaster.stockid=locstock.stockid
-			AND stockmaster.categoryid=stockcategory.categoryid
-			AND locstock.quantity!=0
-			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-			AND locstock.loccode = '" . $_POST['Location'] . "'
-			ORDER BY stockmaster.categoryid,
-				stockmaster.stockid";
+					stockcategory.categorydescription,
+					stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.decimalplaces,
+					locstock.quantity AS qtyonhand,
+					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
+					locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+				FROM stockmaster,
+					stockcategory,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				AND stockmaster.categoryid=stockcategory.categoryid
+				AND locstock.quantity!=0
+				AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+				AND locstock.loccode = '" . $_POST['Location'] . "'
+				ORDER BY stockmaster.categoryid,
+					stockmaster.stockid";
 	}
 	$InventoryResult = DB_query($SQL,$db,'','',false,true);
 
@@ -143,7 +143,7 @@ if (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(170,$YPos,220,$FontSize,$InventoryValn['description']);
 			$DisplayUnitCost = number_format($InventoryValn['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
 			$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],$InventoryValn['decimalplaces']);
-			$DisplayItemTotal = number_format($InventoryValn['itemtotal'],2);
+			$DisplayItemTotal = number_format($InventoryValn['itemtotal'],$_SESSION['CompanyRecord']['decimalplaces']);
 
 			$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
 			$LeftOvers = $pdf->addTextWrap(423,$YPos,15,$FontSize,$InventoryValn['units'],'left');
@@ -188,7 +188,7 @@ if (isset($_POST['PrintPDF'])
 	}
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
-	$DisplayTotalVal = number_format($Tot_Val,2);
+	$DisplayTotalVal = number_format($Tot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Valuation_' . Date('Y-m-d') . '.pdf');
@@ -243,12 +243,17 @@ if (isset($_POST['PrintPDF'])
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Summary or Detailed Report') . ':</td>
-					<td><select name="DetailedReport">';
-		echo '<option selected Value="No">' . _('Summary Report') . '</option>';
-		echo '<option Value="Yes">' . _('Detailed Report') . '</option>';
-		echo '</select></td></tr>';
+					<td><select name="DetailedReport">
+						<option selected value="No">' . _('Summary Report') . '</option>
+						<option Value="Yes">' . _('Detailed Report') . '</option>
+						</select></td>
+				</tr>';
 
-		echo '</table><br /><div class="centre"><input type="Submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+		echo '</table>
+				<br />
+				<div class="centre">
+					<input type="Submit" name="PrintPDF" value="' . _('Print PDF') . '">
+				</div>';
 	}
 	include('includes/footer.inc');
 

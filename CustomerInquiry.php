@@ -103,7 +103,7 @@ if (DB_num_rows($CustomerResult)==0){
 			INNER JOIN holdreasons
 			ON debtorsmaster.holdreason = holdreasons.reasoncode 
 			INNER JOIN currencies 
-			debtorsmaster.currcode = currencies.currabrev
+			ON debtorsmaster.currcode = currencies.currabrev
 			WHERE debtorsmaster.debtorno = '" . $CustomerID . "'";
 		
 	$ErrMsg =_('The customer details could not be retrieved by the SQL because');
