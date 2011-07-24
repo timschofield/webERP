@@ -35,7 +35,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection><tr><td>' . _('Enter the date from which orders are to be listed') . ':</td><td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '"></td></tr>';
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Enter the date from which orders are to be listed') . ':</td>
+				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '"></td>
+			</tr>';
 	echo '<tr><td>' . _('Enter the date to which orders are to be listed') . ':</td>
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td></tr>';
 	echo '<tr><td>' . _('Inventory Category') . '</td><td>';
@@ -55,7 +59,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select name="Location">';
 	echo '<option selected value="All">' . _('All Locations') . '</option>';
 
-	$result= DB_query('SELECT loccode, locationname FROM locations',$db);
+	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -108,16 +112,16 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				 ON salesorders.fromstkloc=locations.loccode
 			 WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-		 GROUP BY salesorders.orderno,
-				salesorders.debtorno,
-				salesorders.branchcode,
-				salesorders.customerref,
-				salesorders.orddate,
-				salesorders.fromstkloc,
-				salesorderdetails.stkcode,
-				stockmaster.description,
-				stockmaster.units,
-				stockmaster.decimalplaces";
+			 GROUP BY salesorders.orderno,
+					salesorders.debtorno,
+					salesorders.branchcode,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.fromstkloc,
+					salesorderdetails.stkcode,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.decimalplaces";
 
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
@@ -153,17 +157,17 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			 WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
 				  AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-		 GROUP BY salesorders.orderno,
-				salesorders.debtorno,
-				salesorders.branchcode,
-				salesorders.customerref,
-				salesorders.orddate,
-				salesorders.fromstkloc,
-				salesorderdetails.stkcode,
-				stockmaster.description,
-				stockmaster.units,
-				stockmaster.decimalplaces";
-
+			 GROUP BY salesorders.orderno,
+					salesorders.debtorno,
+					salesorders.branchcode,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.fromstkloc,
+					salesorderdetails.stkcode,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.decimalplaces";
+	
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 	$sql= "SELECT salesorders.orderno,
 				  salesorders.debtorno,
@@ -227,7 +231,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
 				 INNER JOIN locations
 				 ON salesorders.fromstkloc=locations.loccode
-			 FROM salesorders
+			FROM salesorders
 				 INNER JOIN salesorderdetails
 				 ON salesorders.orderno = salesorderdetails.orderno
 				 INNER JOIN stockmaster
@@ -237,20 +241,20 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				 INNER JOIN custbranch
 				 ON custbranch.debtorno=salesorders.debtorno
 				 AND custbranch.branchcode=salesorders.branchcode
-			 WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
+			WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
 				  AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
 				  AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				  AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-		  GROUP BY salesorders.orderno,
-				salesorders.debtorno,
-				salesorders.branchcode,
-				salesorders.customerref,
-				salesorders.orddate,
-				salesorders.fromstkloc,
-				salesorderdetails.stkcode,
-				stockmaster.description,
-				stockmaster.units,
-				stockmaster.decimalplaces";
+			GROUP BY salesorders.orderno,
+					salesorders.debtorno,
+					salesorders.branchcode,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.fromstkloc,
+					salesorderdetails.stkcode,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.decimalplaces";
 }
 
 $sql .= " ORDER BY salesorders.orderno";

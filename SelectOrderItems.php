@@ -1196,15 +1196,20 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 									FROM discountmatrix
 									WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 									AND discountcategory ='" . $OrderLine->DiscCat . "'
-									AND quantitybreak <" . $QuantityOfDiscCat,$db);
+									AND quantitybreak <= '" . $QuantityOfDiscCat ."'",$db);
 				$myrow = DB_fetch_row($result);
+				if ($myrow[0]==NULL){
+					$DiscountMatrixRate = 0;
+				} else {
+					$DiscountMatrixRate = $myrow[0];
+				}
 				if ($myrow[0]!=0){ /* need to update the lines affected */
 					foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
 						if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
-							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $myrow[0];
+							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
 						}
 					}
-				}//a none zero discount percentage was returned
+				}
 			}
 		} /* end of discount matrix lookup code */
 	} // the order session is started or there is a new item being added
@@ -1329,13 +1334,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								FROM discountmatrix
 								WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 								AND discountcategory ='" . $OrderLine->DiscCat . "'
-								AND quantitybreak <" . $QuantityOfDiscCat,$db);
+								AND quantitybreak <= '" . $QuantityOfDiscCat . "'",$db);
 			$myrow = DB_fetch_row($result);
-			if ($myrow[0]!=0){ /* need to update the lines affected */
-				foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
-					if ($StkItems_2->DiscCat==$OrderLine->DiscCat){
-						$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $myrow[0];
-					}
+			if ($myrow[0] == NULL){
+				$DiscountMatrixRate = 0;
+			} else {
+				$DiscountMatrixRate = $myrow[0];
+			}
+			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
+				if ($StkItems_2->DiscCat==$OrderLine->DiscCat){
+					$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
 				}
 			}
 		}
@@ -1453,7 +1461,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		echo '<tr class="EvenTableRows">
 				<td class="number" colspan=7><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-				<td colspan="' . $ColSpanNumber . '" class=number>' . $DisplayTotal . '</td></tr></table>';
+				<td colspan="' . $ColSpanNumber . '" class=number>' . $DisplayTotal . '</td>
+			</tr>
+			</table>';
 
 		$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 		$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
@@ -1461,13 +1471,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						 <td>' . $DisplayWeight . '</td>
 						 <td>' . _('Total Volume') . ':</td>
 						 <td>' . $DisplayVolume . '</td>
-					   </tr></table>';
+					</tr>
+				</table>';
 
 
 		echo '<br />
 				<div class="centre">
 				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '">
-				<input type="submit" name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '"></div><hr />';
+				<input type="submit" name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '">
+				</div>
+				<hr />';
 	} # end of if lines
 
 /* Now show the stock item selection search stuff below */
@@ -1499,14 +1512,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo _('Frequently Ordered Items') . '</p><br />';
 			echo '<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br />';
 			echo '<table class="table1">';
-			$TableHeader = '<tr><th>' . _('Code') . '</th>
+			$TableHeader = '<tr>
+								<th>' . _('Code') . '</th>
 								<th>' . _('Description') . '</th>
 								<th>' . _('Units') . '</th>
 								<th>' . _('On Hand') . '</th>
 								<th>' . _('On Demand') . '</th>
 								<th>' . _('On Order') . '</th>
 								<th>' . _('Available') . '</th>
-								<th>' . _('Quantity') . '</th></tr>';
+								<th>' . _('Quantity') . '</th>
+							</tr>';
 			echo $TableHeader;
 			$j = 1;
 			$k=0; //row colour counter
@@ -1679,14 +1694,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+8).' type="submit" name="Prev" value="'._('Prev').'"></td>';
 			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+9).' type="submit" value="'._('Add to Sales Order').'"></td>';
 			echo '<td colspan=><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+10).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
-			$TableHeader = '<tr><th>' . _('Code') . '</th>
+			$TableHeader = '<tr>
+								<th>' . _('Code') . '</th>
 					   			<th>' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
 					   			<th>' . _('On Hand') . '</th>
 					   			<th>' . _('On Demand') . '</th>
 					   			<th>' . _('On Order') . '</th>
 					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th></tr>';
+					   			<th>' . _('Quantity') . '</th>
+					   		</tr>';
 			echo $TableHeader;
 			$ImageSource = _('No Image');
 			

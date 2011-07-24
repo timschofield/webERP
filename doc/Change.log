@@ -1,5 +1,9 @@
 webERP Change Log
 
+23/7/11 Phil: CustLoginSetup.php and SuppLoginSetup can no longer edit user accounts - only add 
+23/7/11 Phil: Updated Hungarian/German/Portuguese/Japanese translations from launchpad.
+22/7/11 Phil: Make link from SelectCustomer.php to CounterSales.php so that sales together with payment can be entered directly against a selected customer.
+22/7/11 Phil: Change SelectCreditItems.php and SelectCustomer.php to select customer and branch using form variables in the same way as SelectOrderItems.php to avoid difficulties with spaces and hyphens - and to be consistent.
 17/7/11 Phil: error in taxes GL posting SelectCreditItems.php
 9/7/11 Phil/Beth Lesko: Comments not wrapping correctly on quotations - fixed landscape quotation
 8/7/11 Phil: Remove duplication of checking for illegal characters - use the same function in MiscFunctions.php ContainsIllegalCharacters in Currencies and the utility scripts Z_ChangeBranchCode.php and Z_ImportStockCodes.php

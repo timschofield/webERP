@@ -41,35 +41,35 @@ if ($GRNNo == 'Preview'){
 } else { //NOT PREVIEW
 		
 	$sql="SELECT grns.itemcode,
-			grns.grnno,
-			grns.deliverydate,
-			grns.itemdescription,
-			grns.qtyrecd,
-			grns.supplierid,
-			purchorderdetails.suppliersunit,
-			purchorderdetails.conversionfactor,
-			stockmaster.units,
-			stockmaster.decimalplaces
-		FROM grns INNER JOIN purchorderdetails
-		ON grns.podetailitem=purchorderdetails.podetailitem
-		LEFT JOIN stockmaster
-		ON grns.itemcode=stockmaster.stockid
-		WHERE grnbatch='".$GRNNo."'";
+				grns.grnno,
+				grns.deliverydate,
+				grns.itemdescription,
+				grns.qtyrecd,
+				grns.supplierid,
+				purchorderdetails.suppliersunit,
+				purchorderdetails.conversionfactor,
+				stockmaster.units,
+				stockmaster.decimalplaces
+			FROM grns INNER JOIN purchorderdetails
+			ON grns.podetailitem=purchorderdetails.podetailitem
+			LEFT JOIN stockmaster
+			ON grns.itemcode=stockmaster.stockid
+			WHERE grnbatch='".$GRNNo."'";
 	
 	$GRNResult=DB_query($sql, $db);
 	$NoOfGRNs = DB_num_rows($GRNResult);
 	if($NoOfGRNs>0) { //there are GRNs to print
 		
 		$sql = "SELECT suppliers.suppname,
-			suppliers.address1,
-			suppliers.address2 ,
-			suppliers.address3,
-			suppliers.address4,
-			suppliers.address5,
-			suppliers.address6
-		FROM grns INNER JOIN suppliers
-		ON grns.supplierid=suppliers.supplierid
-		WHERE grnbatch='".$GRNNo."'";
+						suppliers.address1,
+						suppliers.address2 ,
+						suppliers.address3,
+						suppliers.address4,
+						suppliers.address5,
+						suppliers.address6
+				FROM grns INNER JOIN suppliers
+				ON grns.supplierid=suppliers.supplierid
+				WHERE grnbatch='".$GRNNo."'";
 		$SuppResult = DB_query($sql,$db,_('Could not get the supplier of the selected GRN'));
 		$SuppRow = DB_fetch_array($SuppResult);
 	}

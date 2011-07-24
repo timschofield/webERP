@@ -12,6 +12,7 @@ Class Payment {
 	var $ExRate; /*Exchange rate between the payment and the account currency*/
 	var $FunctionalExRate; /*Ex rate between the account currency and functional currency */
 	var $Currency; /*Currency being Paid - defaulted to bank account currency */
+	var $CurrDecimalPlaces;
 	var $SupplierID; /* supplier code */
 	var $SuppName;
 	var $Address1;

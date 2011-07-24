@@ -28,27 +28,26 @@ if (isset($_POST['PrintPDF'])) {
 
 	  /*Now figure out the data to report for the category range under review */
 	$SQL = "SELECT stockmaster.categoryid,
-						stockmaster.stockid,
-						stockmoves.transno,
-						stockmoves.trandate,
-						systypes.typename,
-						stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost as unitcost,
-						stockmoves.qty,
-						stockmoves.debtorno,
-						stockmoves.branchcode,
-						stockmoves.price*(1-stockmoves.discountpercent) as sellingprice,
-						(stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS gp,
-						debtorsmaster.name
-				FROM stockmaster,
-						stockmoves,
-						systypes,
-						debtorsmaster
-				WHERE stockmoves.type=systypes.typeid
-				AND stockmaster.stockid=stockmoves.stockid
-				AND stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
+					stockmaster.stockid,
+					stockmoves.transno,
+					stockmoves.trandate,
+					systypes.typename,
+					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost as unitcost,
+					stockmoves.qty,
+					stockmoves.debtorno,
+					stockmoves.branchcode,
+					stockmoves.price*(1-stockmoves.discountpercent) as sellingprice,
+					(stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS gp,
+					debtorsmaster.name
+				FROM stockmaster INNER JOIN stockmoves
+					ON stockmaster.stockid=stockmoves.stockid
+				INNER JOIN systypes 
+					ON stockmoves.type=systypes.typeid
+				INNER JOIN debtorsmaster 
+					ON stockmoves.debtorno=debtorsmaster.debtorno
+				WHERE stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
 				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . ($_POST['GPMin']/100) . "
-				AND stockmoves.debtorno=debtorsmaster.debtorno
 				ORDER BY stockmaster.stockid";
 
 	$LowGPSalesResult = DB_query($SQL,$db,'','',false,false);
@@ -90,9 +89,9 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap(100,$YPos,30,$FontSize,$LowGPItems['transno']);
 		$LeftOvers = $pdf->addTextWrap(130,$YPos,50,$FontSize,$LowGPItems['stockid']);
 		$LeftOvers = $pdf->addTextWrap(220,$YPos,50,$FontSize,$LowGPItems['name']);
-		$DisplayUnitCost = number_format($LowGPItems['unitcost'],2);
-		$DisplaySellingPrice = number_format($LowGPItems['sellingprice'],2);
-		$DisplayGP = number_format($LowGPItems['gp'],2);
+		$DisplayUnitCost = number_format($LowGPItems['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplaySellingPrice = number_format($LowGPItems['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayGP = number_format($LowGPItems['gp'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$DisplayGPPercent = number_format(($LowGPItems['gp']*100)/$LowGPItems['sellingprice'],1);
 
 		$LeftOvers = $pdf->addTextWrap(330,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
@@ -138,11 +137,14 @@ if (isset($_POST['PrintPDF'])) {
 			</tr>';
 
 		echo '<tr><td>' . _('Show sales with GP') . '%' . _('below') . ':</td>
-								<td><input type="text" class="number" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '"></td>
-						</tr>';
+				<td><input type="text" class="number" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '"></td>
+			</tr>';
 
 		echo '</table>
-				<br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+				<br />
+				<div class="centre">
+					<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '">
+				</div>';
 	}
 	include('includes/footer.inc');
 

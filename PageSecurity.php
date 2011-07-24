@@ -53,7 +53,11 @@ while ($myrow=DB_fetch_array($result)) {
 
 echo '</table><br />';
 
-echo '<div class="centre"><input type="submit" name="Update" value="'._('Update Security Levels').'" /></div><br /></form>';
+echo '<div class="centre">
+			<input type="submit" name="Update" value="'._('Update Security Levels').'" />
+	</div>
+	<br />
+	</form>';
 
 include('includes/footer.inc');
 ?>

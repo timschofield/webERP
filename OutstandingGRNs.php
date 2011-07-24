@@ -30,13 +30,18 @@ If (isset($_POST['PrintPDF'])
 					quantityinv,
 					grns.stdcostunit,
 					actprice,
-					unitprice
-				FROM grns,
-					purchorderdetails,
-					suppliers
-				WHERE grns.supplierid=suppliers.supplierid
-				AND grns.podetailitem = purchorderdetails.podetailitem
-				AND qtyrecd-quantityinv>0
+					unitprice,
+					currencies.decimalplaces as currdecimalplaces,
+					stockmaster.decimalplaces as itemdecimalplaces
+				FROM grns INNER JOIN purchorderdetails
+				ON grns.podetailitem = purchorderdetails.podetailitem
+				INNER JOIN suppliers 
+				ON grns.supplierid=suppliers.supplierid 
+				INNER JOIN currencies
+				ON suppliers.currcode=currencies.currabrev
+				LEFT JOIN stockmaster
+				ON grns.itemcode=stockmaster.stockid
+				WHERE qtyrecd-quantityinv>0
 				AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
 				AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
 				ORDER BY supplierid,
@@ -81,7 +86,7 @@ If (isset($_POST['PrintPDF'])
 				/* need to print the total of previous supplier */
 				$YPos -= (2*$line_height);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
-				$DisplaySuppTotVal = number_format($SuppTot_Val,2);
+				$DisplaySuppTotVal = number_format($SuppTot_Val,$GRNs['decimalplaces']);
 				$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
 				$YPos -=$line_height;
 				$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
@@ -93,16 +98,21 @@ If (isset($_POST['PrintPDF'])
 			$SupplierName = $GRNs['suppname'];
 		}
 		$YPos -=$line_height;
-
+		
+		if ($GRNs['itemdecimalplaces']==null){
+			$ItemDecimalPlaces = 2;
+		} else {
+			$ItemDecimalPlaces = $GRNs['itemdecimalplaces'];
+		}
 		$LeftOvers = $pdf->addTextWrap(32,$YPos,40,$FontSize,$GRNs['grnno']);
 		$LeftOvers = $pdf->addTextWrap(70,$YPos,40,$FontSize,$GRNs['orderno']);
 		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$GRNs['itemcode'] . ' - ' . $GRNs['itemdescription']);
-		$DisplayStdCost = number_format($GRNs['stdcostunit'],2);
-		$DisplayQtyRecd = number_format($GRNs['qtyrecd'],2);
-		$DisplayQtyInv = number_format($GRNs['quantityinv'],2);
-		$DisplayQtyOstg = number_format($GRNs['qtyrecd']- $GRNs['quantityinv'],2);
+		$DisplayStdCost = number_format($GRNs['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayQtyRecd = number_format($GRNs['qtyrecd'],$ItemDecimalPlaces);
+		$DisplayQtyInv = number_format($GRNs['quantityinv'],$ItemDecimalPlaces);
+		$DisplayQtyOstg = number_format($GRNs['qtyrecd']- $GRNs['quantityinv'],$ItemDecimalPlaces);
 		$LineValue = ($GRNs['qtyrecd']- $GRNs['quantityinv'])*$GRNs['stdcostunit'];
-		$DisplayValue = number_format($LineValue,2);
+		$DisplayValue = number_format($LineValue,$_SESSION['CompanyRecord']['decimalplaces']);
 
 		$LeftOvers = $pdf->addTextWrap(310,$YPos,50,$FontSize,$DisplayQtyRecd,'right');
 		$LeftOvers = $pdf->addTextWrap(360,$YPos,50,$FontSize,$DisplayQtyInv, 'right');

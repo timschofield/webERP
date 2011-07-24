@@ -8,6 +8,16 @@
 <br /><br />
 Prices are held by Sales Type and Currency. When setting up a customer account the sales type applicable to the customer is defined as is the currency applicable to invoices to the customer. There is no limit to the number of sales types that can be defined and therefore no limit to the number of different price lists that can be maintained. Further flexibility is available in that where necessary prices specific to a customer can also be defined, normally pricing will be specific to a customer but the system also has the capability of making prices specific to a particular branch of a customer. If a price is flagged as specific to a branch it will not be used for all other sales of the item to the customer, the default price of the item will be used. Further flexibility in discounting is available through the discount matrix (see below). If an item has an additional discount this can be entered at the time of order. The user also has the ability to change the price manually at the time of order. Sales analysis records allow reporting on sales types, so the analysis will report the volume of business done under each set of special pricing arrangements. 
 <br /><br />
+<font size="+1"><b>Logic Outline</b></font>
+<br /><br />
+The sequence of the search for the price follows the logic below. If a price is returned from any of the checks then subsequent checks are not performed.
+<ul>
+	<li>Check if there is a current (i.e. within the current date range using the effectivity dates of the price) special price for the customer and branch for the item in the currency of the customer</li>
+	<li>Check if there is a current special price for the customer (ignoring the customer branch selling to) for the item in the currency of the customer</li>
+	<li>Check if there is a current price set up against the customer's sales type (price list) - for the item in the currency of the customer</li>
+	<li>Check if there is a current price set up against the default sales type (price list) for the item in the currency of the customer</li>
+	<li>If no success getting a price from any of the above then report no prices set up for the item</li>
+</ul>
 <font size="+1"><b>Prices Effectivity Dates</b></font>
 <br /><br />
 In many businesses a change in price has to come into effect at some later date and be published to customers in advance of the price being effective. This functionality was introduced in 2010. The date that a price is to be effective from must be specified at the time of entry. If the price is expected to continue indefinitely then it is not necessary to specify an end date. Any subsequent prices entered without an end date will superseed previous entries with starting dates prior.  
@@ -50,7 +60,7 @@ From the main menu Inventory -> View Or Update Prices Based On Costs. You can se
 <br /><br />
 The discount matrix allows discounts to be set for quantity breaks across a range of products. Eg a business selling pens may have red, blue, black etc but offer a discount for orders greater than 100 irrespective of colour - even though these are separate items.
 <br /><br />
-Items to have such discounting must be specified in the stock item details screen as belonging to the same Discount Category - this is a 2 character field in the stock master table. In the example above the item codes for blue, red and black pens should all be set to the same 2 character code.
+Items to have such discounting must be specified in the stock item details screen as belonging to the same Discount Category - this is a 2 character field in the stock master table. In the example above the item codes for blue, red and black pens should all be set to the same 2 character code. Be warned that if an item is set up as belonging to a discount category then any discounts calculated by the matrix will over-ride manually entered discounts.
 <br /><br />
 Customers to whom the discount structure should apply are specified by the sales type (the price list) field. The entry in the Discount Matrix table should refer to the sales type and the 2 character DiscountCategory of parts, the quantity above which the discount is to apply and the rate of discount applicable. Several entries in the discount matrix can be made at increasing discounts and volumes, for the same Discount Category and Sales Type.
 <br /><br />

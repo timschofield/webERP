@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.25 $ */
-/* $Id$*/
 
-//$PageSecurity = 2;
+/* $Id$*/
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
@@ -21,34 +19,33 @@ if (isset($_GET['OrderNumber'])) {
 
 include('includes/header.inc');
 
-$OrderHeaderSQL = "SELECT
-			salesorders.debtorno,
-			debtorsmaster.name,
-			salesorders.branchcode,
-			salesorders.customerref,
-			salesorders.comments,
-			salesorders.orddate,
-			salesorders.ordertype,
-			salesorders.shipvia,
-			salesorders.deliverto,
-			salesorders.deladd1,
-			salesorders.deladd2,
-			salesorders.deladd3,
-			salesorders.deladd4,
-			salesorders.deladd5,
-			salesorders.deladd6,
-			salesorders.contactphone,
-			salesorders.contactemail,
-			salesorders.freightcost,
-			salesorders.deliverydate,
-			debtorsmaster.currcode,
-			salesorders.fromstkloc
-		FROM
-			salesorders,
-			debtorsmaster
-		WHERE
-			salesorders.debtorno = debtorsmaster.debtorno
-		AND salesorders.orderno = '" . $_GET['OrderNumber'] . "'";
+$OrderHeaderSQL = "SELECT salesorders.debtorno,
+							debtorsmaster.name,
+							salesorders.branchcode,
+							salesorders.customerref,
+							salesorders.comments,
+							salesorders.orddate,
+							salesorders.ordertype,
+							salesorders.shipvia,
+							salesorders.deliverto,
+							salesorders.deladd1,
+							salesorders.deladd2,
+							salesorders.deladd3,
+							salesorders.deladd4,
+							salesorders.deladd5,
+							salesorders.deladd6,
+							salesorders.contactphone,
+							salesorders.contactemail,
+							salesorders.freightcost,
+							salesorders.deliverydate,
+							debtorsmaster.currcode,
+							salesorders.fromstkloc,
+							currencies.decimalplaces
+					FROM salesorders INNER JOIN 	debtorsmaster
+					ON salesorders.debtorno = debtorsmaster.debtorno
+					INNER JOIN currencies 
+					ON debtorsmaster.currcode=currencies.currabrev 
+					WHERE salesorders.orderno = '" . $_GET['OrderNumber'] . "'";
 
 $ErrMsg =  _('The order cannot be retrieved because');
 $DbgMsg = _('The SQL that failed to get the order header was');
@@ -59,7 +56,9 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		_('Order Details') . '" alt="" />' . ' ' . $title . '</p>';
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
-	echo '<table class=selection>';
+	$CurrDecimalPlaces = $myrow['decimalplaces'];
+	
+	echo '<table class="selection">';
 	echo '<tr><th colspan=4><font color=blue>'._('Order Header Details For Order No').' '.$_GET['OrderNumber'].'</font></th></tr>';
 	echo '<tr>
 		<th style="text-align: left">' . _('Customer Code') . ':</th>
@@ -118,24 +117,24 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 /*Now get the line items */
 
-	$LineItemsSQL = "SELECT
-				stkcode,
-				stockmaster.description,
-				stockmaster.volume,
-				stockmaster.kgs,
-				stockmaster.decimalplaces,
-				stockmaster.mbflag,
-				stockmaster.units,
-				stockmaster.discountcategory,
-				stockmaster.controlled,
-				stockmaster.serialised,
-				unitprice,
-				quantity,
-				discountpercent,
-				actualdispatchdate,
-				qtyinvoiced
-			FROM salesorderdetails, stockmaster
-			WHERE salesorderdetails.stkcode = stockmaster.stockid AND orderno ='" . $_GET['OrderNumber'] . "'";
+	$LineItemsSQL = "SELECT stkcode,
+							stockmaster.description,
+							stockmaster.volume,
+							stockmaster.kgs,
+							stockmaster.decimalplaces,
+							stockmaster.mbflag,
+							stockmaster.units,
+							stockmaster.discountcategory,
+							stockmaster.controlled,
+							stockmaster.serialised,
+							unitprice,
+							quantity,
+							discountpercent,
+							actualdispatchdate,
+							qtyinvoiced
+						FROM salesorderdetails INNER JOIN stockmaster
+						ON salesorderdetails.stkcode = stockmaster.stockid 
+						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
 
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
 	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
@@ -150,15 +149,15 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		echo '<br /><table cellpadding=2 colspan=9 class=selection>';
 		echo '<tr><th colspan=9><font color=blue>'._('Order Line Details For Order No').' '.$_GET['OrderNumber'].'</font></th></tr>';
 		echo '<tr>
-			<th>' . _('Item Code') . '</th>
-			<th>' . _('Item Description') . '</th>
-			<th>' . _('Quantity') . '</th>
-			<th>' . _('Unit') . '</th>
-			<th>' . _('Price') . '</th>
-			<th>' . _('Discount') . '</th>
-			<th>' . _('Total') . '</th>
-			<th>' . _('Qty Del') . '</th>
-			<th>' . _('Last Del') . '</th>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Item Description') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Unit') . '</th>
+				<th>' . _('Price') . '</th>
+				<th>' . _('Discount') . '</th>
+				<th>' . _('Total') . '</th>
+				<th>' . _('Qty Del') . '</th>
+				<th>' . _('Last Del') . '</th>
 			</tr>';
 		$k=0;
 		while ($myrow=db_fetch_array($LineItemsResult)) {
@@ -181,10 +180,10 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<td>' . $myrow['description'] . '</td>
 				<td class=number>' . $myrow['quantity'] . '</td>
 				<td>' . $myrow['units'] . '</td>
-				<td class=number>' . number_format($myrow['unitprice'],2) . '</td>
+				<td class=number>' . number_format($myrow['unitprice'],$CurrDecimalPlaces) . '</td>
 				<td class=number>' . number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
-				<td class=number>' . number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),2) . '</td>
-				<td class=number>' . number_format($myrow['qtyinvoiced'],2) . '</td>
+				<td class=number>' . number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),$CurrDecimalPlaces) . '</td>
+				<td class=number>' . number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
 				<td>' . $DisplayActualDeliveryDate . '</td>
 			</tr>';
 
@@ -193,7 +192,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			$OrderTotalWeight = $OrderTotalWeight + $myrow['quantity'] * $myrow['kgs'];
 
 		}
-		$DisplayTotal = number_format($OrderTotal,2);
+		$DisplayTotal = number_format($OrderTotal,$CurrDecimalPlaces);
 		$DisplayVolume = number_format($OrderTotalVolume,2);
 		$DisplayWeight = number_format($OrderTotalWeight,2);
 

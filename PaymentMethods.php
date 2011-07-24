@@ -62,17 +62,17 @@ if (isset($_POST['submit'])) {
 			// Get the old name and check that the record still exists need to be very careful here
 
 			$sql = "SELECT paymentname FROM paymentmethods
-				WHERE paymentid = '" . $SelectedPaymentID . "'";
+					WHERE paymentid = '" . $SelectedPaymentID . "'";
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
 				$myrow = DB_fetch_row($result);
 				$OldName = $myrow[0];
 				$sql = "UPDATE paymentmethods
-					SET paymentname='" . $_POST['MethodName'] . "',
-						paymenttype = '" . $_POST['ForPayment'] . "',
-						receipttype = '" . $_POST['ForReceipt'] . "',
-						usepreprintedstationery = '" . $_POST['UsePrePrintedStationery']. "'
-					WHERE paymentname " . LIKE . " '".$OldName."'";
+						SET paymentname='" . $_POST['MethodName'] . "',
+							paymenttype = '" . $_POST['ForPayment'] . "',
+							receipttype = '" . $_POST['ForReceipt'] . "',
+							usepreprintedstationery = '" . $_POST['UsePrePrintedStationery']. "'
+						WHERE paymentname " . LIKE . " '".$OldName."'";
 
 			} else {
 				$InputError = 1;
@@ -91,17 +91,14 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg( _('The payment method can not be created because another with the same name already exists.'),'error');
 		} else {
-			$sql = "INSERT INTO paymentmethods (
-						paymentname,
-						paymenttype,
-						receipttype,
-						usepreprintedstationery)
-				VALUES (
-					'" . $_POST['MethodName'] ."',
-					'" . $_POST['ForPayment'] ."',
-					'" . $_POST['ForReceipt'] ."',
-					'" . $_POST['UsePrePrintedStationery'] ."'
-					)";
+			$sql = "INSERT INTO paymentmethods (	paymentname,
+												paymenttype,
+												receipttype,
+												usepreprintedstationery)
+								VALUES ('" . $_POST['MethodName'] ."',
+										'" . $_POST['ForPayment'] ."',
+										'" . $_POST['ForReceipt'] ."',
+										'" . $_POST['UsePrePrintedStationery'] ."')";
 		}
 		$msg = _('Record inserted');
 		$ErrMsg = _('Could not insert payment method');
@@ -110,7 +107,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError!=1){
 		$result = DB_query($sql,$db, $ErrMsg);
 		prnMsg($msg,'success');
-		echo '<p>';
+		echo '<br />';
 	}
 	unset ($SelectedPaymentID);
 	unset ($_POST['SelectedPaymentID']);
@@ -124,7 +121,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the payment method the ID is just a secure way to find the payment method
 	$sql = "SELECT paymentname FROM paymentmethods
-		WHERE paymentid = '" . $SelectedPaymentID . "'";
+			WHERE paymentid = '" . $SelectedPaymentID . "'";
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
@@ -132,7 +129,8 @@ if (isset($_POST['submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldMeasureName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM banktrans WHERE banktranstype LIKE '" . $OldMeasureName . "'";
+		$sql= "SELECT COUNT(*) FROM banktrans 
+				WHERE banktranstype LIKE '" . $OldMeasureName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -166,22 +164,22 @@ if (isset($_POST['submit'])) {
   or deletion of the records*/
 
 	$sql = "SELECT paymentid,
-			paymentname,
-			paymenttype,
-			receipttype,
-			usepreprintedstationery
+					paymentname,
+					paymenttype,
+					receipttype,
+					usepreprintedstationery
 			FROM paymentmethods
 			ORDER BY paymentid";
 
 	$ErrMsg = _('Could not get payment methods because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo '<table class=selection>
+	echo '<table class="selection">
 		<tr>
-		<th>' . _('Payment Method') . '</th>
-		<th>' . _('For Payments') . '</th>
-		<th>' . _('For Receipts') . '</th>
-		<th>' . _('Use Pre-printed') .'<br />' . _('Stationery') . '</th>
+			<th>' . _('Payment Method') . '</th>
+			<th>' . _('For Payments') . '</th>
+			<th>' . _('For Receipts') . '</th>
+			<th>' . _('Use Pre-printed') .'<br />' . _('Stationery') . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -223,10 +221,10 @@ if (! isset($_GET['delete'])) {
 		//editing an existing section
 
 		$sql = "SELECT paymentid,
-				paymentname,
-				paymenttype,
-				receipttype,
-				usepreprintedstationery
+						paymentname,
+						paymenttype,
+						receipttype,
+						usepreprintedstationery
 				FROM paymentmethods
 				WHERE paymentid='" . $SelectedPaymentID . "'";
 
@@ -255,8 +253,8 @@ if (! isset($_GET['delete'])) {
 		echo '<table class=selection>';
 	}
 	echo '<tr>
-		<td>' . _('Payment Method') . ':' . '</td>
-		<td><input type="Text" '. (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) .' name="MethodName" size="30" maxlength="30" value="' . $_POST['MethodName'] . '"></td>
+			<td>' . _('Payment Method') . ':' . '</td>
+			<td><input type="Text" '. (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) .' name="MethodName" size="30" maxlength="30" value="' . $_POST['MethodName'] . '"></td>
 		</tr>';
 	echo '<tr>
 		<td>' . _('Use For Payments') . ':' . '</td>
@@ -265,21 +263,23 @@ if (! isset($_GET['delete'])) {
 			<option' . ($_POST['ForPayment'] ? '' : ' selected') .' value="0">' . _('No') . '</select></td>
 		</tr>';
 	echo '<tr>
-		<td>' . _('Use For Receipts') . ':' . '</td>
-		<td><select name="ForReceipt">
-			<option' . ($_POST['ForReceipt'] ? ' selected' : '') .' value="1">' . _('Yes') . '</option>
-			<option' . ($_POST['ForReceipt'] ? '' : ' selected') .' value="0">' . _('No') . '</option>
-		</select></td></tr>';
+			<td>' . _('Use For Receipts') . ':' . '</td>
+			<td><select name="ForReceipt">
+				<option' . ($_POST['ForReceipt'] ? ' selected' : '') .' value="1">' . _('Yes') . '</option>
+				<option' . ($_POST['ForReceipt'] ? '' : ' selected') .' value="0">' . _('No') . '</option>
+			</select></td>
+		</tr>';
 	echo '<tr>
-		<td>' . _('Use Pre-printed Stationery') . ':' . '</td>
-		<td><select name="UsePrePrintedStationery">
-			<option' . ($_POST['UsePrePrintedStationery'] ? ' selected': '' ) .' value="1">' . _('Yes') . '</option>
-			<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected' ) .' value="0">' . _('No') . '</option>
-			</select></td></tr>';
-
+			<td>' . _('Use Pre-printed Stationery') . ':' . '</td>
+			<td><select name="UsePrePrintedStationery">
+				<option' . ($_POST['UsePrePrintedStationery'] ? ' selected': '' ) .' value="1">' . _('Yes') . '</option>
+				<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected' ) .' value="0">' . _('No') . '</option>
+				</select></td>
+		</tr>';
+	
 	echo '</table>';
 
-	echo '<br /><div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
+	echo '<br /><div class="centre"><input type="submit" name="submit" value=' . _('Enter Information') . '></div>';
 
 	echo '</form>';
 

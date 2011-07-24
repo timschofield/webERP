@@ -1,7 +1,6 @@
 <?php
 /* $Id: PDFPeriodStockTransListing.php 4307 2010-12-22 16:06:03Z tim_schofield $*/
 
-
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.inc');
 
@@ -17,8 +16,9 @@ if (!isset($_POST['FromDate'])){
 	 $title = _('Stock Transaction Listing');
 	 include ('includes/header.inc');
 
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' '
-		. _('Stock Transaction Listing').'</img></p></div>';
+	echo '<div class="centre">
+			<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' '. _('Stock Transaction Listing').'</img></p>
+		</div>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
@@ -26,8 +26,8 @@ if (!isset($_POST['FromDate'])){
 
 	 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	 echo '<table class=selection>';
-	 echo '<tr>
+	echo '<table class="selection">';
+	echo '<tr>
 				<td>' . _('Enter the date from which the transactions are to be listed') . ':</td>
 				<td><input type="text" name="FromDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
 			</tr>';
@@ -55,24 +55,28 @@ if (!isset($_POST['FromDate'])){
 
 	echo '<tr><td>' . _('For Stock Location') . ':</td>
 		<td><select name="StockLocation">';
-	echo '<option VALUE="All">' . _('All') . '</option>';
+	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-				echo '<option selected VALUE="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
-				echo '<option VALUE="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected VALUE="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			$_POST['StockLocation']=$myrow['loccode'];
 		} else {
-			echo '<option VALUE="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 
-	echo '</table><br /><div class="centre"><input type=submit name="Go" value="' . _('Create PDF') . '"></div>';
+	echo '</table>
+			<br />
+			<div class="centre">
+				<input type=submit name="Go" value="' . _('Create PDF') . '" />
+			</div>';
 
 	 include('includes/footer.inc');
 	 exit;
@@ -84,43 +88,43 @@ if (!isset($_POST['FromDate'])){
 
 if ($_POST['StockLocation']=='All') {
 	$sql= "SELECT stockmoves.type,
-		stockmoves.stockid,
-		stockmaster.description,
-		stockmaster.decimalplaces,
-		stockmoves.transno,
-		stockmoves.trandate,
-		stockmoves.qty,
-		stockmoves.reference,
-		stockmoves.narrative,
-		locations.locationname
-	FROM stockmoves
-	LEFT JOIN stockmaster
-	ON stockmoves.stockid=stockmaster.stockid
-	LEFT JOIN locations
-	ON stockmoves.loccode=locations.loccode
-	WHERE type='" . $_POST['TransType'] . "'
-	AND date_format(trandate, '%Y-%m-%d')>='".FormatDateForSQL($_POST['FromDate'])."'
-	AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'";
+				stockmoves.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				stockmoves.transno,
+				stockmoves.trandate,
+				stockmoves.qty,
+				stockmoves.reference,
+				stockmoves.narrative,
+				locations.locationname
+			FROM stockmoves
+			LEFT JOIN stockmaster
+			ON stockmoves.stockid=stockmaster.stockid
+			LEFT JOIN locations
+			ON stockmoves.loccode=locations.loccode
+			WHERE type='" . $_POST['TransType'] . "'
+			AND date_format(trandate, '%Y-%m-%d')>='".FormatDateForSQL($_POST['FromDate'])."'
+			AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'";
 } else {
 	$sql= "SELECT stockmoves.type,
-		stockmoves.stockid,
-		stockmaster.description,
-		stockmaster.decimalplaces,
-		stockmoves.transno,
-		stockmoves.trandate,
-		stockmoves.qty,
-		stockmoves.reference,
-		stockmoves.narrative,
-		locations.locationname
-	FROM stockmoves
-	LEFT JOIN stockmaster
-	ON stockmoves.stockid=stockmaster.stockid
-	LEFT JOIN locations
-	ON stockmoves.loccode=locations.loccode
-	WHERE type='" . $_POST['TransType'] . "'
-	AND date_format(trandate, '%Y-%m-%d')>='".FormatDateForSQL($_POST['FromDate'])."'
-	AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'
-	AND stockmoves.loccode='" . $_POST['StockLocation'] . "'";
+				stockmoves.stockid,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				stockmoves.transno,
+				stockmoves.trandate,
+				stockmoves.qty,
+				stockmoves.reference,
+				stockmoves.narrative,
+				locations.locationname
+			FROM stockmoves
+			LEFT JOIN stockmaster
+			ON stockmoves.stockid=stockmaster.stockid
+			LEFT JOIN locations
+			ON stockmoves.loccode=locations.loccode
+			WHERE type='" . $_POST['TransType'] . "'
+			AND date_format(trandate, '%Y-%m-%d')>='".FormatDateForSQL($_POST['FromDate'])."'
+			AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'
+			AND stockmoves.loccode='" . $_POST['StockLocation'] . "'";
 }
 $result=DB_query($sql,$db,'','',false,false);
 

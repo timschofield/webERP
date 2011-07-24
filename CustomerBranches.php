@@ -431,14 +431,14 @@ if (!isset($SelectedBranch)){
 		echo '<b>'.($TotalEnable+$TotalDisable). '</b> ' . _('Total Branches') . '</div></td></tr></table>';
 	} else {
 		$sql = "SELECT debtorsmaster.name,
-				address1,
-				address2,
-				address3,
-				address4,
-				address5,
-				address6
-			FROM debtorsmaster
-			WHERE debtorno = '".$DebtorNo."'";
+						address1,
+						address2,
+						address3,
+						address4,
+						address5,
+						address6
+					FROM debtorsmaster
+					WHERE debtorno = '".$DebtorNo."'";
 
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -463,35 +463,35 @@ if (!isset($_GET['delete'])) {
 		//editing an existing branch
 
 		$sql = "SELECT branchcode,
-				brname,
-				braddress1,
-				braddress2,
-				braddress3,
-				braddress4,
-				braddress5,
-				braddress6,
-				specialinstructions,
-				estdeliverydays,
-				fwddate,
-				salesman,
-				area,
-				phoneno,
-				faxno,
-				contactname,
-				email,
-				taxgroupid,
-				defaultlocation,
-				brpostaddr1,
-				brpostaddr2,
-				brpostaddr3,
-				brpostaddr4,
-				disabletrans,
-				defaultshipvia,
-				custbranchcode,
-				deliverblind
-			FROM custbranch
-			WHERE branchcode='".$SelectedBranch."'
-			AND debtorno='".$DebtorNo."'";
+						brname,
+						braddress1,
+						braddress2,
+						braddress3,
+						braddress4,
+						braddress5,
+						braddress6,
+						specialinstructions,
+						estdeliverydays,
+						fwddate,
+						salesman,
+						area,
+						phoneno,
+						faxno,
+						contactname,
+						email,
+						taxgroupid,
+						defaultlocation,
+						brpostaddr1,
+						brpostaddr2,
+						brpostaddr3,
+						brpostaddr4,
+						disabletrans,
+						defaultshipvia,
+						custbranchcode,
+						deliverblind
+					FROM custbranch
+					WHERE branchcode='".$SelectedBranch."'
+					AND debtorno='".$DebtorNo."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -547,12 +547,12 @@ if (!isset($_GET['delete'])) {
 	*/
 		if (isset($_GET['BranchCode'])){
 			$sql="SELECT name,
-					address1,
-					address2,
-					address3,
-					address4,
-					address5,
-					address6
+						address1,
+						address2,
+						address3,
+						address4,
+						address5,
+						address6
 					FROM
 					debtorsmaster
 					WHERE debtorno='".$_GET['BranchCode']."'";
@@ -579,21 +579,6 @@ if (!isset($_GET['delete'])) {
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
 
-	//SQL to poulate account selection boxes
-	$sql = "SELECT salesmanname, 
-					salesmancode 
-			FROM salesman 
-			WHERE current = 1";
-
-	$result = DB_query($sql,$db);
-
-	if (DB_num_rows($result)==0){
-		echo '</table>';
-		prnMsg(_('There are no sales people defined as yet') . ' - ' . _('customer branches must be allocated to a sales person') . '. ' . _('Please use the link below to define at least one sales person'),'error');
-		echo '<p align="center"><a href="' . $rootpath . '/SalesPeople.php">'._('Define Sales People') . '</a>';
-		include('includes/footer.inc');
-		exit;
-	}
 
 	echo '<input type=hidden name="DebtorNo" value="'. $DebtorNo . '" />';
 
@@ -635,6 +620,23 @@ if (!isset($_GET['delete'])) {
 	echo '<tr><td>'._('Forward Date After (day in month)').':</td>';
 	if (!isset($_POST['FwdDate'])) {$_POST['FwdDate']=0;}
 	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex=12 type="text" class=number name="FwdDate" size=4 maxlength=2 value='. $_POST['FwdDate'].'></td></tr>';
+
+
+	//SQL to poulate account selection boxes
+	$sql = "SELECT salesmanname, 
+					salesmancode 
+			FROM salesman 
+			WHERE current = 1";
+
+	$result = DB_query($sql,$db);
+
+	if (DB_num_rows($result)==0){
+		echo '</table>';
+		prnMsg(_('There are no sales people defined as yet') . ' - ' . _('customer branches must be allocated to a sales person') . '. ' . _('Please use the link below to define at least one sales person'),'error');
+		echo '<p align="center"><a href="' . $rootpath . '/SalesPeople.php">'._('Define Sales People') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
 
 	echo '<tr><td>'._('Salesperson').':</td>';
 	echo '<td><select tabindex=13 name="Salesman">';
@@ -717,15 +719,22 @@ if (!isset($_GET['delete'])) {
       //only display email link if there is an email address
 	echo '<td><input tabindex=18 type="text" name="Email" size=56 maxlength=55 value="'. $_POST['Email'].'"></td></tr>';
 
-	echo '<tr><td>'._('Tax Group').':</td>';
-	echo '<td><select tabindex=19 name="TaxGroup">';
 
 	DB_data_seek($result,0);
 
 	$sql = "SELECT taxgroupid, taxgroupdescription FROM taxgroups";
-	$result = DB_query($sql,$db);
-
-	while ($myrow = DB_fetch_array($result)) {
+	$TaxGroupResults = DB_query($sql,$db);
+	if (DB_num_rows($TaxGroupResults)==0){
+		echo '</table>';
+		prnMsg(_('There are no tax groups defined - these must be set up first before any branches can be set up') . '
+				<br /><a href="' . $rootpath . '/TaxGroups.php">' . _('Define Tax Groups') . '</a>','error');
+		include('includes/footer.inc');
+		exit;
+	}
+	echo '<tr><td>'._('Tax Group').':</td>
+			<td><select tabindex=19 name="TaxGroup">';
+			
+	while ($myrow = DB_fetch_array($TaxGroupResults)) {
 		if (isset($_POST['TaxGroup']) and $myrow['taxgroupid']==$_POST['TaxGroup']) {
 			echo '<option selected value="';
 		} else {
@@ -748,10 +757,18 @@ if (!isset($_GET['delete'])) {
 
 	echo '	</select></td></tr>';
 
-	echo '<tr><td>'._('Default freight/shipper method') . ':</td>
-			<td><select tabindex=21 name="DefaultShipVia">';
+	
 	$SQL = "SELECT shipper_id, shippername FROM shippers";
 	$ShipperResults = DB_query($SQL,$db);
+	if (DB_num_rows($ShipperResults)==0){
+		echo '</table>';
+		prnMsg(_('There are no shippers defined - these must be set up first before any branches can be set up') . '
+				<br /><a href="' . $rootpath . '/Shippers.php">' . _('Define Shippers') . '</a>','error');
+		include('includes/footer.inc');
+		exit;
+	}
+	echo '<tr><td>'._('Default freight/shipper method') . ':</td>
+			<td><select tabindex=21 name="DefaultShipVia">';
 	while ($myrow=DB_fetch_array($ShipperResults)){
 		if (isset($_POST['DefaultShipVia'])and $myrow['shipper_id']==$_POST['DefaultShipVia']){
 			echo '<option selected value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
