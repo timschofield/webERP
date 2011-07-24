@@ -264,7 +264,6 @@ if ($_POST['DemoData']==false){
 
 //$msg holds the text of the new config.php file
 $msg = "<?php\n\n";
-$msg .= "/* \$Revision: 1.7 $ */\n";
 $msg .= "// User configurable variables\n";
 $msg .= "//---------------------------------------------------\n\n";
 $msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";

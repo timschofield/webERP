@@ -9,7 +9,7 @@ include('includes/header.inc');
 
 if (!isset($_POST['DoUpgrade'])){
 	
-	prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts'),'info');	
+	prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('You should do a backup now before proceeding!'),'info');	
 	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	
