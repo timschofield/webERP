@@ -1,5 +1,8 @@
 webERP Change Log
 
+
+26/7/11 SalesCategories.php fixed display of active categories - this script is not used by webERP - only by Mo Kelly's joomla cart application
+
 24/7/11 Version 4.04.5
 
 24/7/11 Phil: CustomerBranches.php check for existance of Shippers and TaxGroups

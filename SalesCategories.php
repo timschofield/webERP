@@ -21,7 +21,7 @@ if (isset($_GET['ParentCategory'])){
 } else if (isset($_POST['ParentCategory'])){
 	$ParentCategory = mb_strtoupper($_POST['ParentCategory']);
 }
-if( isset($ParentCategory) AND $ParentCategory == 0 ) {
+if(isset($ParentCategory) AND $ParentCategory == 0 ) {
 	unset($ParentCategory);
 }
 
@@ -112,7 +112,7 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 	unset($_POST['SalesCatName']);
 	unset($EditName);
 
-} elseif (isset($_GET['delete']) && $EditName == 1) {
+} elseif (isset($_GET['delete']) AND $EditName == 1) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMaster'
@@ -121,16 +121,14 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this sales category because stock items have been added to this category') .
-			'<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('items under to this category'),'warn');
+		prnMsg(_('Cannot delete this sales category because stock items have been added to this category') . '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('items under to this category'),'warn');
 
 	} else {
 		$sql = "SELECT COUNT(*) FROM salescat WHERE parentcatid='".$SelectedCategory."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this sales category because sub categories have been added to this category') .
-			'<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('sub categories'),'warn');
+		prnMsg(_('Cannot delete this sales category because sub categories have been added to this category') . '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('sub categories'),'warn');
 		} else {
 			$sql="DELETE FROM salescat WHERE salescatid='".$SelectedCategory."'";
 			$result = DB_query($sql,$db);
@@ -142,13 +140,10 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 	unset($_GET['delete']);
 	unset($EditName);
 } elseif( isset($_POST['submit'])  && isset($_POST['AddStockID']) ) {
-	$sql = "INSERT INTO salescatprod (
-				stockid,
-				salescatid
-			) VALUES (
-				'". $_POST['AddStockID']."',
-				'".(isset($ParentCategory)?($ParentCategory):('NULL'))."'
-			)";
+	$sql = "INSERT INTO salescatprod (stockid,
+										salescatid
+							) VALUES ('". $_POST['AddStockID']."',
+										'".(isset($ParentCategory)?($ParentCategory):('NULL'))."')";
 	$result = DB_query($sql,$db);
 	prnMsg(_('Stock item') . ' ' . $_POST['AddStockID'] . ' ' . _('has been added') .
 		' !','success');
@@ -166,17 +161,20 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 
 // ----------------------------------------------------------------------------------------
 // Calculate Path for navigation
-$CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?ParentCategory=NULL">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
+$CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?ParentCategory=0">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
 
 $TempPath = '';
+if ($ParentCategory == null){
+	$ParentCategory =0;
+}
 if (isset($ParentCategory)) {
 	$TmpParentID = $ParentCategory;
 }
 
 $LastParentName = '';
-for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
+for($Buzy = (isset($TmpParentID) AND ($TmpParentID != 0));
 	$Buzy == true;
-	$Buzy = (isset($TmpParentID) && ($TmpParentID <> '')) ) {
+	$Buzy = (isset($TmpParentID) AND ($TmpParentID != 0)) ) {
 	$sql = "SELECT parentcatid, salescatname FROM salescat WHERE salescatid='".$TmpParentID."'";
 	$result = DB_query($sql,$db);
 	if( $result ) {
@@ -209,10 +207,10 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 $sql = "SELECT salescatid,
-		salescatname
-	FROM salescat
-	WHERE parentcatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . "
-	ORDER BY salescatname";
+				salescatname
+			FROM salescat
+			WHERE parentcatid". (isset($ParentCategory)?('='.$ParentCategory):' =0') . "
+			ORDER BY salescatname";
 $result = DB_query($sql,$db);
 
 
@@ -220,7 +218,7 @@ echo '<p>';
 if (DB_num_rows($result) == 0) {
 	prnMsg(_('There are no categories defined at this level.'));
 } else {
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	echo '<tr><th>' . _('Sub Category') . '</th></tr>';
 
 	$k=0; //row colour counter
@@ -257,16 +255,16 @@ if (DB_num_rows($result) == 0) {
 				<td><a href="%sSelectedCategory=%s&delete=yes&EditName=1&ParentCategory=%s">' . _('Delete') . '</td>
 				<td>%s</td>
 				</tr>',
-	            		$myrow['salescatname'],
-	            		$_SERVER['PHP_SELF'] . '?',
-	            		$myrow['salescatid'],
-	            		$_SERVER['PHP_SELF'] . '?',
-	            		$myrow['salescatid'],
-	            		$ParentCategory,
-	            		$_SERVER['PHP_SELF'] . '?',
-	            		$myrow['salescatid'],
-	            		$ParentCategory,
-	            		$CatImgLink);
+				$myrow['salescatname'],
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow['salescatid'],
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow['salescatid'],
+				$ParentCategory,
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow['salescatid'],
+				$ParentCategory,
+				$CatImgLink);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';

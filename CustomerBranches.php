@@ -580,7 +580,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 
-	echo '<input type=hidden name="DebtorNo" value="'. $DebtorNo . '" />';
+	echo '<input type="hidden" name="DebtorNo" value="'. $DebtorNo . '" />';
 
 
 	echo '<tr>
