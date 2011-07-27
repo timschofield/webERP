@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WEBERP3.05 VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-24 12:24+1200\n"
+"POT-Creation-Date: 2011-07-27 19:08+1200\n"
 "PO-Revision-Date: 2011-01-29 15:12+0000\n"
 "Last-Translator: Exson qu <hexinfans@gmail.com>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -142,7 +142,7 @@ msgstr "不能删除，已创建了属于这个科目组的会计科目"
 #: Locations.php:256 Locations.php:265 Locations.php:274 Locations.php:283
 #: Locations.php:292 Locations.php:301 MRPDemandTypes.php:87
 #: PaymentMethods.php:138 PaymentTerms.php:144 PaymentTerms.php:151
-#: PcExpenses.php:152 SalesCategories.php:125 SalesCategories.php:133
+#: PcExpenses.php:152 SalesCategories.php:124 SalesCategories.php:131
 #: SalesPeople.php:149 SalesPeople.php:156 SalesTypes.php:150
 #: SalesTypes.php:160 Shippers.php:82 Shippers.php:94 StockCategories.php:179
 #: Stocks.php:481 Stocks.php:490 Stocks.php:498 Stocks.php:506 Stocks.php:514
@@ -337,7 +337,7 @@ msgstr "否"
 #: PaymentMethods.php:200 PaymentTerms.php:201 PcAssignCashToTab.php:255
 #: PcClaimExpensesFromTab.php:252 PcExpenses.php:208 PcTabs.php:234
 #: PcTypeTabs.php:172 PO_AuthorisationLevels.php:149 Prices_Customer.php:280
-#: Prices.php:246 PurchData.php:202 SalesCategories.php:256
+#: Prices.php:246 PurchData.php:202 SalesCategories.php:254
 #: SalesGLPostings.php:132 SalesGLPostings.php:245 SalesPeople.php:219
 #: SalesTypes.php:216 SecurityTokens.php:110 SelectCustomer.php:668
 #: SelectCustomer.php:686 SelectCustomer.php:710 SelectCustomer.php:727
@@ -371,7 +371,7 @@ msgstr "确认要删除此客户分公司么"
 #: PcExpensesTypeTab.php:185 PcTabs.php:235 PcTypeTabs.php:173
 #: PO_AuthorisationLevels.php:151 PO_Items.php:684 Prices_Customer.php:281
 #: Prices.php:247 PurchData.php:203 SalesAnalReptCols.php:294
-#: SalesAnalRepts.php:302 SalesCategories.php:257 SalesGLPostings.php:133
+#: SalesAnalRepts.php:302 SalesCategories.php:255 SalesGLPostings.php:133
 #: SalesGLPostings.php:246 SalesPeople.php:220 SalesTypes.php:217
 #: SecurityTokens.php:111 SelectCreditItems.php:754 SelectCustomer.php:669
 #: SelectCustomer.php:687 SelectCustomer.php:711 SelectCustomer.php:728
@@ -685,9 +685,9 @@ msgid "Date"
 msgstr "日期"
 
 #: AddCustomerNotes.php:114 AddCustomerTypeNotes.php:105 PcReportTab.php:173
-#: Stocks.php:892 UpgradeDatabase.php:171 UpgradeDatabase.php:174
-#: UpgradeDatabase.php:177 UpgradeDatabase.php:180 UpgradeDatabase.php:183
-#: UpgradeDatabase.php:186 UpgradeDatabase.php:189 UpgradeDatabase.php:192
+#: Stocks.php:892 UpgradeDatabase.php:175 UpgradeDatabase.php:178
+#: UpgradeDatabase.php:181 UpgradeDatabase.php:184 UpgradeDatabase.php:187
+#: UpgradeDatabase.php:190 UpgradeDatabase.php:193 UpgradeDatabase.php:196
 #: Z_Upgrade_3.10-3.11.php:62 Z_Upgrade_3.10-3.11.php:66
 #: Z_Upgrade_3.10-3.11.php:70 Z_Upgrade_3.10-3.11.php:74
 #: Z_Upgrade_3.10-3.11.php:78 Z_Upgrade_3.11-4.00.php:62
@@ -831,15 +831,15 @@ msgstr "客户明细资料无法从SQL取得, 因为"
 #: PDFRemittanceAdvice.php:84 PDFStockCheckComparison.php:36
 #: PDFStockCheckComparison.php:62 PDFStockCheckComparison.php:267
 #: PO_PDFPurchOrder.php:31 PO_PDFPurchOrder.php:149
-#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198 ReorderLevel.php:60
-#: ReorderLevel.php:149 SalesAnalysis_UserDefined.php:28
-#: SelectCreditItems.php:23 StockCheck.php:47 StockCheck.php:68
-#: StockCheck.php:98 StockCheck.php:142 StockCheck.php:153 StockCheck.php:195
-#: StockDispatch.php:92 StockDispatch.php:104 SupplierBalsAtPeriodEnd.php:56
-#: SupplierBalsAtPeriodEnd.php:67 SuppPaymentRun.php:109
-#: SuppPaymentRun.php:120 SuppPaymentRun.php:184 SuppPaymentRun.php:214
-#: SuppPriceList.php:121 Tax.php:63 Tax.php:168 Tax.php:277
-#: Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
+#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198
+#: PrintSalesOrder_generic.php:183 ReorderLevel.php:60 ReorderLevel.php:149
+#: SalesAnalysis_UserDefined.php:28 SelectCreditItems.php:23 StockCheck.php:47
+#: StockCheck.php:68 StockCheck.php:98 StockCheck.php:142 StockCheck.php:153
+#: StockCheck.php:195 StockDispatch.php:92 StockDispatch.php:104
+#: SupplierBalsAtPeriodEnd.php:56 SupplierBalsAtPeriodEnd.php:67
+#: SuppPaymentRun.php:109 SuppPaymentRun.php:120 SuppPaymentRun.php:184
+#: SuppPaymentRun.php:214 SuppPriceList.php:121 Tax.php:63 Tax.php:168
+#: Tax.php:277 Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
 #: Z_DataExport.php:308 Z_DataExport.php:347 Z_DataExport.php:383
 #: Z_DataExport.php:419 Z_DataExport.php:471 Z_poRebuildDefault.php:38
 #: includes/PDFPaymentRun_PymtFooter.php:57
@@ -1083,7 +1083,7 @@ msgstr "区域编号"
 #: FixedAssetCategories.php:134 GLAccounts.php:197 Locations.php:328
 #: MRPDemands.php:248 PcAssignCashToTab.php:135 PcClaimExpensesFromTab.php:126
 #: PcExpenses.php:160 PcExpensesTypeTab.php:101 PcTabs.php:166
-#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:137
+#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:135
 #: SalesTypes.php:166 StockCategories.php:196 Suppliers.php:635
 #: SupplierTypes.php:151 Z_DeleteInvoice.php:146
 msgid "has been deleted"
@@ -1150,7 +1150,8 @@ msgstr "用户 ID"
 #: SystemParameters.php:943 SystemParameters.php:949 SystemParameters.php:955
 #: SystemParameters.php:961 TopItems.php:23 TopItems.php:36
 #: WorkOrderEntry.php:562 WorkOrderEntry.php:565 WorkOrderIssue.php:626
-#: WorkOrderIssue.php:629
+#: WorkOrderIssue.php:629 includes/PDFAssetRegisterHeader.inc:15
+#: includes/PDFAssetRegisterHeader.inc:24
 msgid "All"
 msgstr "全部"
 
@@ -1705,6 +1706,8 @@ msgstr "编号"
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
 #: includes/PDFPeriodStockTransListingPageHeader.inc:52
 #: includes/PDFStockComparisonPageHeader.inc:36
+#: includes/PDFStockTransListingPageHeader.inc:68
+#: includes/PDFStockTransListingPageHeader.inc:72
 #: includes/PDFSuppTransListingPageHeader.inc:49
 msgid "Reference"
 msgstr "摘要"
@@ -1857,9 +1860,10 @@ msgstr "部件"
 #: includes/PDFSalesOrder_generic.inc:95
 #: includes/PDFStockCheckPageHeader.inc:44
 #: includes/PDFStockNegativesHeader.inc:33
-#: includes/PDFStockTransferHeader.inc:39 includes/PDFTransPageHeader.inc:209
-#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2260
-#: api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
+#: includes/PDFStockTransferHeader.inc:39
+#: includes/PDFStockTransListingPageHeader.inc:70
+#: includes/PDFTransPageHeader.inc:209 includes/PO_PDFOrderPageHeader.inc:78
+#: api/api_xml-rpc.php:2260 api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
 msgid "Quantity"
 msgstr "数量"
 
@@ -1917,7 +1921,7 @@ msgstr ""
 #: includes/PDFOrderPageHeader_generic.inc:79
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
-#: includes/PDFPickingListHeader.inc:48
+#: includes/PDFPickingListHeader.inc:48 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:27
 #: includes/PDFSalesAnalPageHeader.inc:15
 #: includes/PDFSalesOrder_generic.inc:81
@@ -1945,6 +1949,7 @@ msgstr "打印日期"
 #: PrintCustTransPortrait.php:998 ReorderLevel.php:240 StockDispatch.php:337
 #: SuppPriceList.php:255 Tax.php:243 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
+#: includes/PDFAssetRegisterHeader.inc:38
 #: includes/PDFBalanceSheetPageHeader.inc:26
 #: includes/PDFBankingSummaryPageHeader.inc:23
 #: includes/PDFBOMListingPageHeader.inc:26
@@ -1964,7 +1969,7 @@ msgstr "打印日期"
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
 #: includes/PDFPeriodStockTransListingPageHeader.inc:25
-#: includes/PDFPickingListHeader.inc:69
+#: includes/PDFPickingListHeader.inc:69 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:28
 #: includes/PDFQuotationPageHeader.inc:94
 #: includes/PDFQuotationPortraitPageHeader.inc:92
@@ -1977,6 +1982,7 @@ msgstr "打印日期"
 #: includes/PDFStockLocTransferHeader.inc:12
 #: includes/PDFStockNegativesHeader.inc:12
 #: includes/PDFStockTransferHeader.inc:16
+#: includes/PDFStockTransListingPageHeader.inc:45
 #: includes/PDFSupplierBalsPageHeader.inc:20
 #: includes/PDFSuppTransListingPageHeader.inc:32
 #: includes/PDFTabReportHeader.inc:15
@@ -2088,7 +2094,7 @@ msgstr "一层"
 #: PDFOrderStatus.php:319 PDFPrintLabel.php:238 PO_Items.php:637
 #: PO_Items.php:926 PO_SelectOSPurchOrder.php:211 PO_SelectPurchOrder.php:178
 #: PricesByCost.php:152 ReorderLevelLocation.php:55 ReorderLevel.php:254
-#: ReverseGRN.php:377 SalesCategories.php:423 SecurityTokens.php:86
+#: ReverseGRN.php:377 SalesCategories.php:421 SecurityTokens.php:86
 #: SecurityTokens.php:92 SecurityTokens.php:102 SelectAsset.php:243
 #: SelectCompletedOrder.php:536 SelectContract.php:153
 #: SelectCreditItems.php:976 SelectOrderItems.php:1517
@@ -2103,8 +2109,8 @@ msgstr "一层"
 #: TaxAuthorities.php:145 TopItems.php:163 WorkCentres.php:124
 #: WorkOrderCosting.php:81 WorkOrderCosting.php:111 WorkOrderEntry.php:598
 #: WorkOrderIssue.php:668 includes/DefineLabelClass.php:12
-#: includes/DefineLabelClass.php:45 includes/PDFGrnHeader.inc:29
-#: includes/PDFInventoryPlanPageHeader.inc:51
+#: includes/DefineLabelClass.php:45 includes/PDFAssetRegisterHeader.inc:62
+#: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
 #: includes/PDFStockLocTransferHeader.inc:49
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
@@ -2214,7 +2220,7 @@ msgstr "输入"
 
 #: BOMInquiry.php:26 BOMs.php:806 EmailConfirmation.php:191 MRPDemands.php:333
 #: MRPReport.php:542 PO_SelectOSPurchOrder.php:200 PO_SelectPurchOrder.php:170
-#: SalesCategories.php:422 SelectProduct.php:512 Shipt_Select.php:166
+#: SalesCategories.php:420 SelectProduct.php:512 Shipt_Select.php:166
 #: StockAdjustments.php:76 StockAdjustments.php:335 StockCounts.php:97
 #: StockCounts.php:132 StockMovements.php:31 StockReorderLevel.php:44
 #: StockStatus.php:61 StockTransfers.php:38 StockTransfers.php:445
@@ -2605,8 +2611,10 @@ msgstr "层"
 #: StockCounts.php:133 StockReorderLevel.php:49 StockSerialItemResearch.php:78
 #: StockStatus.php:84 StockStatus.php:89 WhereUsedInquiry.php:67
 #: WorkCentres.php:125 WorkCentres.php:210
+#: includes/PDFAssetRegisterHeader.inc:64
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
-#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2258
+#: includes/PDFStockNegativesHeader.inc:31
+#: includes/PDFStockTransListingPageHeader.inc:71 api/api_xml-rpc.php:2258
 #: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
 msgid "Location"
 msgstr "仓库"
@@ -2949,7 +2957,7 @@ msgstr "为库存账生成总帐凭证"
 #: PO_AuthoriseMyOrders.php:132 PricesByCost.php:221 PurchData.php:497
 #: ReorderLevelLocation.php:156 SecurityTokens.php:89
 #: SelectCreditItems.php:911 SMTPServer.php:64 StockCostUpdate.php:163
-#: StockReorderLevel.php:94 Stocks.php:1047 SystemParameters.php:1018
+#: StockReorderLevel.php:95 Stocks.php:1047 SystemParameters.php:1018
 #: TaxAuthorityRates.php:79 WorkOrderEntry.php:546 WOSerialNos.php:315
 msgid "Update"
 msgstr "更新"
@@ -3187,6 +3195,7 @@ msgstr "本次发出"
 #: StockMovements.php:97 StockStatus.php:313 SuppCreditGRNs.php:229
 #: SuppCreditGRNs.php:230 SupplierTenders.php:267 SupplierTenders.php:494
 #: SuppPriceList.php:274 includes/DefineLabelClass.php:49
+#: includes/PDFPriceListPageHeader.inc:46
 #: includes/PDFQuotationPageHeader.inc:104
 #: includes/PDFQuotationPortraitPageHeader.inc:104
 #: includes/PDFTransPageHeaderPortrait.inc:265
@@ -3768,8 +3777,8 @@ msgstr "找不到BOM组件信息"
 #: FixedAssetCategories.php:86 FixedAssetCategories.php:105
 #: PricesBasedOnMarkUp.php:337 PricesBasedOnMarkUp.php:353
 #: SelectCreditItems.php:1395 SpecialOrder.php:423 StockCategories.php:21
-#: StockCategories.php:82 StockCategories.php:153 Z_ReApplyCostToSA.php:62
-#: Z_ReApplyCostToSA.php:74
+#: StockCategories.php:82 StockCategories.php:153 Z_PriceChanges.php:137
+#: Z_ReApplyCostToSA.php:62 Z_ReApplyCostToSA.php:74
 msgid "because"
 msgstr "因为"
 
@@ -4251,7 +4260,7 @@ msgid "Image"
 msgstr "图像"
 
 #: ContractBOM.php:365 CounterSales.php:2013 FixedAssetItems.php:468
-#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:249
+#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:247
 #: SelectCreditItems.php:1005 SelectOrderItems.php:1531
 #: SelectOrderItems.php:1708 Stocks.php:728 Stocks.php:732
 #: SupplierTenders.php:518 WorkOrderEntry.php:617 WorkOrderIssue.php:684
@@ -4926,7 +4935,7 @@ msgstr "清空"
 #: StockSerialItemResearch.php:81
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
 #: includes/PDFDIFOTPageHeader.inc:44 includes/PDFOrderPageHeader.inc:50
-#: includes/PDFTransPageHeader.inc:47
+#: includes/PDFPriceListPageHeader.inc:42 includes/PDFTransPageHeader.inc:47
 #: includes/PDFTransPageHeaderPortrait.inc:56
 msgid "Branch"
 msgstr "客户分公司"
@@ -4970,18 +4979,19 @@ msgstr "合同编号"
 #: ReorderLevel.php:242 SalesCategoryPeriodInquiry.php:162
 #: SalesTopItemsInquiry.php:218 SpecialOrder.php:606 StockDispatch.php:344
 #: Stocks.php:738 SuppPriceList.php:211 SuppPriceList.php:261
-#: includes/PDFInventoryValnPageHeader.inc:32
+#: Z_PriceChanges.php:37 includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 msgid "Category"
 msgstr "物料组"
 
 #: Contracts.php:849 PricesBasedOnMarkUp.php:111 SpecialOrder.php:610
-#: Stocks.php:741
+#: Stocks.php:741 Z_PriceChanges.php:42
 msgid "The stock categories could not be retrieved because"
 msgstr "找不到物料组, 因为"
 
 #: Contracts.php:850 FixedAssetItems.php:485 PricesBasedOnMarkUp.php:112
-#: SpecialOrder.php:611 Stocks.php:742
+#: SpecialOrder.php:611 Stocks.php:742 Z_PriceChanges.php:43
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "用于查找物料组失败的SQL是"
 
@@ -5487,7 +5497,8 @@ msgstr "新工作单号码"
 #: CounterSales.php:1193 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:204 Prices_Customer.php:41
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:332 SpecialOrder.php:111
-#: SpecialOrder.php:113
+#: SpecialOrder.php:113 includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 msgid "for"
 msgstr "："
 
@@ -6443,7 +6454,8 @@ msgid "Reports Page Size"
 msgstr "默认报表纸型"
 
 #: CustLoginSetup.php:174 CustLoginSetup.php:176 EmailConfirmation.php:119
-#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90 SuppLoginSetup.php:202
+#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:90 SuppLoginSetup.php:202
 #: SuppLoginSetup.php:204 WWW_Users.php:502 WWW_Users.php:504
 msgid "A4"
 msgstr "A4"
@@ -6458,10 +6470,11 @@ msgstr "A3"
 #: CustLoginSetup.php:186 CustLoginSetup.php:188 CustLoginSetup.php:198
 #: CustLoginSetup.php:200 CustLoginSetup.php:209 CustLoginSetup.php:211
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90 SuppLoginSetup.php:214 SuppLoginSetup.php:216
-#: SuppLoginSetup.php:226 SuppLoginSetup.php:228 SuppLoginSetup.php:237
-#: SuppLoginSetup.php:239 WWW_Users.php:514 WWW_Users.php:516
-#: WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537 WWW_Users.php:539
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90 SuppLoginSetup.php:214
+#: SuppLoginSetup.php:216 SuppLoginSetup.php:226 SuppLoginSetup.php:228
+#: SuppLoginSetup.php:237 SuppLoginSetup.php:239 WWW_Users.php:514
+#: WWW_Users.php:516 WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537
+#: WWW_Users.php:539
 msgid "landscape"
 msgstr "纵向"
 
@@ -6545,11 +6558,11 @@ msgstr "总计"
 msgid "was"
 msgstr "金额"
 
-#: CustomerAllocations.php:324
+#: CustomerAllocations.php:323
 msgid "Allocate Receipt"
 msgstr "分配收款"
 
-#: CustomerAllocations.php:324 CustomerReceipt.php:529
+#: CustomerAllocations.php:323 CustomerReceipt.php:529
 msgid "Allocate Receipts"
 msgstr "分配收款"
 
@@ -8150,13 +8163,16 @@ msgstr ""
 #: includes/PDFLowGPPageHeader.inc:15 includes/PDFOstdgGRNsPageHeader.inc:15
 #: includes/PDFPaymentRunPageHeader.inc:18
 #: includes/PDFPaymentRunPageHeader.inc:21
+#: includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 #: includes/PDFStockCheckPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "and"
 msgstr "到"
 
 #: DailyBankTransactions.php:104 PDFCustTransListing.php:35
-#: PDFPeriodStockTransListing.php:39 PDFSuppTransListing.php:35
+#: PDFPeriodStockTransListing.php:39 PDFStockTransListing.php:38
+#: PDFSuppTransListing.php:35
 msgid "Transaction type"
 msgstr "交易类型"
 
@@ -8620,6 +8636,15 @@ msgstr "产生循环订单"
 msgid "Commit Order Changes"
 msgstr "接受订单修改"
 
+#: DemandWorkOrders.php:9
+msgid "Demand Work Orders"
+msgstr "需求工作单"
+
+#: DemandWorkOrders.php:46 SelectProduct.php:282
+msgid ""
+"The quantity on work orders for this product cannot be retrieved because"
+msgstr "此产品在工作单上的数量无法查到，因为"
+
 #: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
 msgstr "折扣类别"
@@ -8655,7 +8680,7 @@ msgid "Discount Category Code"
 msgstr "折扣类别编码"
 
 #: DiscountCategories.php:88 DiscountCategories.php:248 PO_Header.php:855
-#: SalesCategories.php:255 SuppInvGRNs.php:277 SupplierTenders.php:55
+#: SalesCategories.php:253 SuppInvGRNs.php:277 SupplierTenders.php:55
 #, php-format
 msgid "Select"
 msgstr "选择"
@@ -8706,6 +8731,7 @@ msgstr "折扣类别"
 #: includes/PDFInventoryPlanPageHeader.inc:50
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFLowGPPageHeader.inc:45 includes/PDFOstdgGRNsPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 #: includes/PDFStockCheckPageHeader.inc:33
 #: includes/PDFStockComparisonPageHeader.inc:33
 msgid "Item"
@@ -9078,7 +9104,7 @@ msgid "Order date"
 msgstr "订单日期"
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
-#: SupplierAllocations.php:436
+#: SupplierAllocations.php:436 includes/PDFStockTransListingPageHeader.inc:41
 msgid "dated"
 msgstr "日期"
 
@@ -9332,11 +9358,12 @@ msgid ""
 msgstr "未能产生 EDI 讯息, 因为没有设定 EDI 发票讯息范本"
 
 #: EmailConfirmation.php:9 PrintCustOrder_generic.php:12 PrintCustOrder.php:13
+#: PrintSalesOrder_generic.php:14
 msgid "Select Order To Print"
 msgstr "选取要打印的订单"
 
 #: EmailConfirmation.php:15 PrintCustOrder_generic.php:15
-#: PrintCustOrder.php:16
+#: PrintCustOrder.php:16 PrintSalesOrder_generic.php:17
 msgid "Select an Order Number to Print before calling this page"
 msgstr "先选择一个要打印的的销售订单才能进入此页面"
 
@@ -9344,19 +9371,22 @@ msgstr "先选择一个要打印的的销售订单才能进入此页面"
 #: PO_OrderDetails.php:74 PrintCustOrder_generic.php:22
 #: PrintCustOrder_generic.php:84 PrintCustOrder_generic.php:118
 #: PrintCustOrder.php:18 PrintCustOrder.php:71 PrintCustOrder.php:95
-#: SelectSalesOrder.php:309
+#: PrintSalesOrder_generic.php:19 PrintSalesOrder_generic.php:70
+#: PrintSalesOrder_generic.php:95 SelectSalesOrder.php:309
 msgid "Outstanding Sales Orders"
 msgstr "未完成销售订单"
 
 #: EmailConfirmation.php:24 EmailConfirmation.php:96 EmailConfirmation.php:128
 #: PrintCustOrder_generic.php:23 PrintCustOrder_generic.php:85
 #: PrintCustOrder_generic.php:119 PrintCustOrder.php:19 PrintCustOrder.php:72
-#: PrintCustOrder.php:96
+#: PrintCustOrder.php:96 PrintSalesOrder_generic.php:20
+#: PrintSalesOrder_generic.php:71 PrintSalesOrder_generic.php:96
 msgid "Completed Sales Orders"
 msgstr "已完成的销售订单"
 
 #: EmailConfirmation.php:42 FTP_RadioBeacon.php:178
 #: PrintCustOrder_generic.php:36 PrintCustOrder.php:26
+#: PrintSalesOrder_generic.php:27 PrintSalesOrder_generic.php:129
 msgid ""
 "There was a problem retrieving the order header details for Order Number"
 msgstr "取得此订单编号的订单抬头时发生错误"
@@ -9370,39 +9400,43 @@ msgstr "取得此订单编号的订单抬头时发生错误"
 #: PrintCustTrans.php:213 PrintCustTrans.php:263 PrintCustTrans.php:668
 #: PrintCustTrans.php:837 PrintCustTransPortrait.php:235
 #: PrintCustTransPortrait.php:288 PrintCustTransPortrait.php:689
-#: PrintCustTransPortrait.php:858
+#: PrintCustTransPortrait.php:858 PrintSalesOrder_generic.php:27
+#: PrintSalesOrder_generic.php:130
 msgid "from the database"
 msgstr "从数据库"
 
 #: EmailConfirmation.php:81 EmailConfirmation.php:115
 #: PrintCustOrder_generic.php:74 PrintCustOrder_generic.php:103
 #: PrintCustOrder_generic.php:238 PrintCustOrder.php:66 PrintCustOrder.php:82
-#: PrintCustOrder.php:194
+#: PrintCustOrder.php:194 PrintSalesOrder_generic.php:65
+#: PrintSalesOrder_generic.php:82 PrintSalesOrder_generic.php:179
 msgid "Print Packing Slip Error"
 msgstr "打印装箱单错误"
 
 #: EmailConfirmation.php:87 PrintCustOrder_generic.php:77
-#: PrintCustOrder.php:69
+#: PrintCustOrder.php:69 PrintSalesOrder_generic.php:68
 msgid "Unable to Locate Order Number"
 msgstr "未能找到订单编号"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:106
-#: PrintCustOrder.php:85
+#: PrintCustOrder.php:85 PrintSalesOrder_generic.php:85
 msgid "The packing slip for order number"
 msgstr "装箱单对应销售订单编号"
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "has previously been printed"
 msgstr "上次已打印"
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "It was printed on"
 msgstr "打印日期"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:108
-#: PrintCustOrder.php:87
+#: PrintCustOrder.php:87 PrintSalesOrder_generic.php:87
 msgid ""
 "This check is there to ensure that duplicate packing slips are not produced "
 "and dispatched more than once to the customer"
@@ -9410,26 +9444,28 @@ msgstr "打印次数检查的目的是避免重复打印装箱单发给客户"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Do a Re-Print"
 msgstr "重新打印"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
-#: PrintCustOrder.php:89
+#: PrintCustOrder.php:89 PrintSalesOrder_generic.php:89
 msgid "On Pre-Printed Stationery"
 msgstr "套打"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Even Though Previously Printed"
 msgstr "装箱单"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90
 msgid "Plain paper"
 msgstr "空白打印纸"
 
 #: EmailConfirmation.php:124 PrintCustOrder_generic.php:114
-#: PrintCustOrder.php:93
+#: PrintCustOrder.php:93 PrintSalesOrder_generic.php:93
 msgid "Or select another Order Number to Print"
 msgstr "或选取其他要打印装箱单的订单编号"
 
@@ -9818,6 +9854,7 @@ msgstr ""
 #: FixedAssetDepreciation.php:83 FixedAssetRegister.php:80
 #: FixedAssetRegister.php:331 FixedAssetTransfer.php:109
 #: SuppFixedAssetChgs.php:72 SupplierCredit.php:372 SupplierInvoice.php:342
+#: includes/PDFAssetRegisterHeader.inc:60
 msgid "Asset ID"
 msgstr "资产 ID"
 
@@ -9828,6 +9865,8 @@ msgstr "采购日期"
 #: FixedAssetDepreciation.php:86 PricesByCost.php:157 SalesAnalReptCols.php:38
 #: SalesAnalReptCols.php:40 SelectProduct.php:186 SelectProduct.php:343
 #: ShipmentCosting.php:149 ShipmentCosting.php:150 StockCostUpdate.php:149
+#: includes/PDFAssetRegisterHeader.inc:66
+#: includes/PDFAssetRegisterHeader.inc:69
 #: includes/PDFInventoryValnPageHeader.inc:35
 #: includes/PDFInventoryValnPageHeader.inc:39
 #: includes/PDFLowGPPageHeader.inc:48
@@ -10084,7 +10123,7 @@ msgstr "短"
 msgid "long"
 msgstr "长"
 
-#: FixedAssetItems.php:455 SalesCategories.php:326 Stocks.php:715
+#: FixedAssetItems.php:455 SalesCategories.php:324 Stocks.php:715
 msgid "Image File (.jpg)"
 msgstr "图像文件 (.JPG)"
 
@@ -10231,7 +10270,7 @@ msgstr "删除此仓库"
 msgid "Fixed Asset Register"
 msgstr "固定资产账簿"
 
-#: FixedAssetRegister.php:84
+#: FixedAssetRegister.php:84 includes/PDFAssetRegisterHeader.inc:65
 msgid "Date Acquired"
 msgstr "购置日期"
 
@@ -10247,7 +10286,8 @@ msgstr "折旧结转"
 msgid "Additions"
 msgstr "追加"
 
-#: FixedAssetRegister.php:88
+#: FixedAssetRegister.php:88 includes/PDFAssetRegisterHeader.inc:67
+#: includes/PDFAssetRegisterHeader.inc:70
 msgid "Depn"
 msgstr "折旧"
 
@@ -10259,7 +10299,8 @@ msgstr "结转成本"
 msgid "Depn C/fwd"
 msgstr "折旧结转下期"
 
-#: FixedAssetRegister.php:91
+#: FixedAssetRegister.php:91 includes/PDFAssetRegisterHeader.inc:68
+#: includes/PDFAssetRegisterHeader.inc:71
 msgid "NBV"
 msgstr "净面值"
 
@@ -10300,15 +10341,15 @@ msgstr "到日期 "
 msgid "Show Assets"
 msgstr "显示资产"
 
-#: FixedAssetRegister.php:329
+#: FixedAssetRegister.php:329 includes/PDFAssetRegisterHeader.inc:33
 msgid "Asset Category "
 msgstr "资产种类 "
 
-#: FixedAssetRegister.php:330
+#: FixedAssetRegister.php:330 includes/PDFAssetRegisterHeader.inc:34
 msgid "Asset Location "
 msgstr "资产仓库 "
 
-#: FixedAssetRegister.php:356
+#: FixedAssetRegister.php:356 includes/PDFAssetRegisterHeader.inc:63
 msgid "Serial No."
 msgstr "序列号"
 
@@ -14598,6 +14639,7 @@ msgstr "报盘 ID"
 
 #: OffersReceived.php:94 PurchData.php:323 Stocks.php:361
 #: includes/PDFPeriodStockTransListingPageHeader.inc:47
+#: includes/PDFStockTransListingPageHeader.inc:67
 msgid "Stock Item"
 msgstr "物料"
 
@@ -16011,7 +16053,7 @@ msgstr "收款"
 #: PDFBankingSummary.php:36 PDFChequeListing.php:66 PDFCustTransListing.php:47
 #: PDFDeliveryDifferences.php:71 PDFDIFOT.php:81 PDFOrdersInvoiced.php:70
 #: PDFOrderStatus.php:73 PDFPeriodStockTransListing.php:78
-#: PDFSuppTransListing.php:47
+#: PDFStockTransListing.php:52 PDFSuppTransListing.php:47
 msgid "Create PDF"
 msgstr "产生PDF"
 
@@ -16212,7 +16254,7 @@ msgid "Activity Since"
 msgstr "开始交易日"
 
 #: PDFCustTransListing.php:10 PDFPeriodStockTransListing.php:9
-#: PDFSuppTransListing.php:10
+#: PDFStockTransListing.php:13 PDFSuppTransListing.php:10
 msgid "The date must be specified in the format"
 msgstr "日期格式必须是"
 
@@ -16221,7 +16263,8 @@ msgstr "日期格式必须是"
 msgid "Customer Transaction Listing"
 msgstr "客户交易列表"
 
-#: PDFCustTransListing.php:31 PDFSuppTransListing.php:31
+#: PDFCustTransListing.php:31 PDFStockTransListing.php:34
+#: PDFSuppTransListing.php:31
 msgid "Enter the date for which the transactions are to be listed"
 msgstr "输入要查询的交易发生日期"
 
@@ -16239,6 +16282,7 @@ msgid "Credit Notes"
 msgstr "红字发票"
 
 #: PDFCustTransListing.php:77 PDFPeriodStockTransListing.php:134
+#: PDFStockTransListing.php:85
 msgid "An error occurred getting the transactions"
 msgstr "取得交易时出错"
 
@@ -16246,12 +16290,13 @@ msgstr "取得交易时出错"
 msgid "The SQL used to get the transaction information that failed was"
 msgstr "取得交易信息失败的SQL是"
 
-#: PDFCustTransListing.php:87 PDFSuppTransListing.php:82
+#: PDFCustTransListing.php:87 PDFStockTransListing.php:92
+#: PDFSuppTransListing.php:82
 msgid "There were no transactions found in the database for the date"
 msgstr "没有此日期内的交易"
 
 #: PDFCustTransListing.php:87 PDFPeriodStockTransListing.php:141
-#: PDFSuppTransListing.php:82
+#: PDFStockTransListing.php:92 PDFSuppTransListing.php:82
 msgid "Please try again selecting a different date"
 msgstr "请选取其他的日期"
 
@@ -16512,7 +16557,8 @@ msgid "Not yet printed"
 msgstr "未打印"
 
 #: PDFPeriodStockTransListing.php:16 PDFPeriodStockTransListing.php:20
-#: PDFPeriodStockTransListing.php:150
+#: PDFPeriodStockTransListing.php:150 PDFStockTransListing.php:20
+#: PDFStockTransListing.php:24 PDFStockTransListing.php:101
 msgid "Stock Transaction Listing"
 msgstr "库存交易列表"
 
@@ -16526,33 +16572,33 @@ msgstr "输入要查询的交易发生日期"
 msgid "Enter the date to which the transactions are to be listed"
 msgstr "输入要查询的交易发生日期"
 
-#: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:59
-#: PrintCustTransPortrait.php:57 SalesInquiry.php:1054
+#: PDFPeriodStockTransListing.php:43 PDFStockTransListing.php:42
+#: PrintCustTrans.php:59 PrintCustTransPortrait.php:57 SalesInquiry.php:1054
 msgid "Sales Invoice"
 msgstr "销售发票"
 
-#: PDFPeriodStockTransListing.php:44 PrintCustTrans.php:62
-#: PrintCustTransPortrait.php:60
+#: PDFPeriodStockTransListing.php:44 PDFStockTransListing.php:43
+#: PrintCustTrans.php:62 PrintCustTransPortrait.php:60
 msgid "Sales Credit Note"
 msgstr "销售红字发票"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 PDFStockTransListing.php:44
 msgid "Location Transfer"
 msgstr "移库"
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 PDFStockTransListing.php:45
 msgid "Stock Adjustment"
 msgstr "存货调整"
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 PDFStockTransListing.php:46
 msgid "Purchase Order Delivery"
 msgstr "采购订单付运"
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 PDFStockTransListing.php:47
 msgid "Work Order Receipt"
 msgstr "工作单收货"
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 PDFStockTransListing.php:48
 msgid "Work Order Issue"
 msgstr "工作单发料"
 
@@ -16561,6 +16607,7 @@ msgid "For Stock Location"
 msgstr "仓库"
 
 #: PDFPeriodStockTransListing.php:132 PDFPeriodStockTransListing.php:138
+#: PDFStockTransListing.php:83 PDFStockTransListing.php:89
 msgid "Transaction Listing"
 msgstr "交易列表"
 
@@ -16569,37 +16616,44 @@ msgstr "交易列表"
 msgid "There were no transactions found in the database between the dates"
 msgstr "没有此日期内的交易"
 
-#: PDFPeriodStockTransListing.php:151
+#: PDFPeriodStockTransListing.php:151 PDFStockTransListing.php:102
 msgid "Stock transaction listing from"
 msgstr "存货交易列表自"
 
 #: PDFPeriodStockTransListing.php:158
 #: includes/PDFCustTransListingPageHeader.inc:15
+#: includes/PDFStockTransListingPageHeader.inc:15
 msgid "Customer Invoices"
 msgstr "客户发票"
 
 #: PDFPeriodStockTransListing.php:161
 #: includes/PDFCustTransListingPageHeader.inc:18
+#: includes/PDFStockTransListingPageHeader.inc:18
 msgid "Customer Credit Notes"
 msgstr "客户红字发票"
 
 #: PDFPeriodStockTransListing.php:164 SelectProduct.php:417
+#: includes/PDFStockTransListingPageHeader.inc:21
 msgid "Location Transfers"
 msgstr "物料移动"
 
 #: PDFPeriodStockTransListing.php:167 StockAdjustments.php:8
+#: includes/PDFStockTransListingPageHeader.inc:24
 msgid "Stock Adjustments"
 msgstr "存货调整"
 
 #: PDFPeriodStockTransListing.php:170
+#: includes/PDFStockTransListingPageHeader.inc:27
 msgid "Purchase Order Deliveries"
 msgstr "采购订单交付"
 
 #: PDFPeriodStockTransListing.php:173
+#: includes/PDFStockTransListingPageHeader.inc:30
 msgid "Work Order Receipts"
 msgstr "工作单收货"
 
 #: PDFPeriodStockTransListing.php:176
+#: includes/PDFStockTransListingPageHeader.inc:33
 msgid "Work Order Issues"
 msgstr "工作单发料"
 
@@ -16659,7 +16713,8 @@ msgid "Price Listing Report"
 msgstr "物料价格表"
 
 #: PDFPriceList.php:23 PDFPriceList.php:295 PDFPriceList.php:335
-#: PDFPriceList.php:355
+#: PDFPriceList.php:355 includes/PDFPriceListPageHeader.inc:16
+#: includes/PDFPriceListPageHeader.inc:40
 msgid "Customer Special Prices Only"
 msgstr "只要客户特殊价格"
 
@@ -16772,7 +16827,7 @@ msgid "Effective Date Range"
 msgstr "有效日期范围"
 
 #: PDFPriceList.php:362 includes/PDFLowGPPageHeader.inc:49
-#: includes/PDFLowGPPageHeader.inc:50
+#: includes/PDFLowGPPageHeader.inc:50 includes/PDFPriceListPageHeader.inc:49
 msgid "GP"
 msgstr "毛利"
 
@@ -16812,7 +16867,7 @@ msgstr "选择标签类型"
 msgid "Number of labels per item"
 msgstr "每个商品的标签数量"
 
-#: PDFPrintLabel.php:93
+#: PDFPrintLabel.php:93 Z_PriceChanges.php:94
 msgid "Price list"
 msgstr "价目表"
 
@@ -18534,7 +18589,7 @@ msgstr "待审批和已授权"
 msgid "Requisition"
 msgstr "采购数量"
 
-#: PricesBasedOnMarkUp.php:8
+#: PricesBasedOnMarkUp.php:8 Z_PriceChanges.php:7
 msgid "Update Pricing"
 msgstr "更新价目"
 
@@ -18558,7 +18613,7 @@ msgstr ""
 msgid "Select the Price List to update"
 msgstr "选取要更新的价目表"
 
-#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94
+#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94 Z_PriceChanges.php:28
 msgid "No Price List Selected"
 msgstr "没有价目清单被选取"
 
@@ -18616,11 +18671,11 @@ msgstr "新价格生效日期自"
 msgid "New Price To Be Effective To (Blank = No End Date)"
 msgstr "新价格生效日期 (空白 = 无结束日期)"
 
-#: PricesBasedOnMarkUp.php:163
+#: PricesBasedOnMarkUp.php:163 Z_PriceChanges.php:67
 msgid "Percentage Increase (positive) or decrease (negative)"
 msgstr "上升 (正数) 和下降 (负数) 百份比"
 
-#: PricesBasedOnMarkUp.php:167
+#: PricesBasedOnMarkUp.php:167 Z_PriceChanges.php:71
 msgid "Update Prices"
 msgstr "更新价目"
 
@@ -18694,7 +18749,7 @@ msgid ""
 "For a log of all the prices changed this page should be printed with CTRL+P"
 msgstr "使用CRTL+P打印此页来得到所有变化价格的日志"
 
-#: PricesBasedOnMarkUp.php:214
+#: PricesBasedOnMarkUp.php:214 Z_PriceChanges.php:77
 msgid "So we are using a price list/sales type of"
 msgstr "所以我们使用的价目表/价格表"
 
@@ -18714,7 +18769,7 @@ msgstr "我们运用一个涨价百分比"
 msgid "against"
 msgstr "对应"
 
-#: PricesBasedOnMarkUp.php:229
+#: PricesBasedOnMarkUp.php:229 Z_PriceChanges.php:82
 msgid "The price list/sales type to be updated must be selected first"
 msgstr "请先选取要更新的价目表/价格表"
 
@@ -18762,7 +18817,7 @@ msgstr ""
 "此物料的成本没有设定或者设置为小于或等于0-0成本的物料不会有任何价格变更。相关"
 "的物料是："
 
-#: PricesBasedOnMarkUp.php:337
+#: PricesBasedOnMarkUp.php:337 Z_PriceChanges.php:137
 msgid "Error updating prices for"
 msgstr "更新价目错误"
 
@@ -19067,11 +19122,11 @@ msgstr "供应商编号"
 msgid "Cheque No."
 msgstr "支票编号"
 
-#: PrintCustOrder_generic.php:141
+#: PrintCustOrder_generic.php:141 PrintSalesOrder_generic.php:111
 msgid "Customer Laser Packing Slip"
 msgstr "装箱单（客户联）"
 
-#: PrintCustOrder_generic.php:142
+#: PrintCustOrder_generic.php:142 PrintSalesOrder_generic.php:112
 msgid "Laser Packing slip for order"
 msgstr "装箱单（订单联）"
 
@@ -19099,6 +19154,7 @@ msgid "A packing slip cannot be printed"
 msgstr "装箱单无法打印"
 
 #: PrintCustOrder_generic.php:241 PrintCustOrder.php:197
+#: PrintSalesOrder_generic.php:182
 msgid "Print Another Packing Slip/Order"
 msgstr "打印其他销售订单的装箱单"
 
@@ -19437,6 +19493,12 @@ msgstr "打印发票或红字发票（竖排模式）"
 msgid "Print Preview"
 msgstr "打印预览"
 
+#: PrintSalesOrder_generic.php:181
+msgid ""
+"There were no outstanding items on the order to deliver. A packing slip "
+"cannot be printed"
+msgstr "没有订单未完成物料要交货, 送货单未能列印"
+
 #: PurchData.php:6
 msgid "Supplier Purchasing Data"
 msgstr "供应商供货信息"
@@ -19729,20 +19791,20 @@ msgid "Show Stock Status"
 msgstr "显示物料库存"
 
 #: PurchData.php:505 SelectProduct.php:393 StockCostUpdate.php:167
-#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:95
+#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:96
 #: StockUsage.php:182
 msgid "Show Stock Movements"
 msgstr "显示物料移动"
 
 #: PurchData.php:506 SelectProduct.php:398 SelectSalesOrder.php:6
 #: StockAdjustments.php:426 StockCostUpdate.php:169 StockMovements.php:202
-#: StockReorderLevel.php:97 StockStatus.php:357 StockTransfers.php:532
+#: StockReorderLevel.php:98 StockStatus.php:357 StockTransfers.php:532
 #: StockUsage.php:183
 msgid "Search Outstanding Sales Orders"
 msgstr "搜索未完成销售订单"
 
 #: PurchData.php:507 SelectProduct.php:399 StockAdjustments.php:427
-#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:98
+#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:99
 #: StockStatus.php:358 StockTransfers.php:533 StockUsage.php:184
 msgid "Search Completed Sales Orders"
 msgstr "搜索已完成销售订单"
@@ -20990,96 +21052,96 @@ msgid ""
 "this category"
 msgstr "未能删除商品分类, 因为已有物料新增到这个分类"
 
-#: SalesCategories.php:125
+#: SalesCategories.php:124
 msgid "items under to this category"
 msgstr "个这个分类的物料"
 
-#: SalesCategories.php:132
+#: SalesCategories.php:131
 msgid ""
 "Cannot delete this sales category because sub categories have been added to "
 "this category"
 msgstr "未能删除商品分类, 因为已有子分类新增到这个分类"
 
-#: SalesCategories.php:133
+#: SalesCategories.php:131
 msgid "sub categories"
 msgstr "子分类"
 
-#: SalesCategories.php:137
+#: SalesCategories.php:135
 msgid "The sales category"
 msgstr "商品分类"
 
-#: SalesCategories.php:153 SalesCategories.php:161
+#: SalesCategories.php:148 SalesCategories.php:156
 msgid "Stock item"
 msgstr "物料"
 
-#: SalesCategories.php:153
+#: SalesCategories.php:148
 msgid "has been added"
 msgstr "已新增"
 
-#: SalesCategories.php:161
+#: SalesCategories.php:156
 msgid "has been removed"
 msgstr "已移除"
 
-#: SalesCategories.php:169
+#: SalesCategories.php:164
 msgid "Main"
 msgstr "主要"
 
-#: SalesCategories.php:197
+#: SalesCategories.php:195
 msgid "Selected Sales Category Path"
 msgstr "已选取的商品类别目录"
 
-#: SalesCategories.php:221
+#: SalesCategories.php:219
 msgid "There are no categories defined at this level."
 msgstr "此层次没有定义商品分类"
 
-#: SalesCategories.php:224
+#: SalesCategories.php:222
 msgid "Sub Category"
 msgstr "子分类"
 
-#: SalesCategories.php:307
+#: SalesCategories.php:305
 msgid "Edit Sub Category"
 msgstr "编辑子分类"
 
-#: SalesCategories.php:316
+#: SalesCategories.php:314
 msgid "New Sub Category"
 msgstr "新建子分类"
 
-#: SalesCategories.php:321
+#: SalesCategories.php:319
 msgid "Category Name"
 msgstr "商品分类名称"
 
-#: SalesCategories.php:331
+#: SalesCategories.php:329
 msgid "Submit Information"
 msgstr "提交"
 
-#: SalesCategories.php:381
+#: SalesCategories.php:379
 msgid "Add Inventory to this category."
 msgstr "新增物料到此分类"
 
-#: SalesCategories.php:382
+#: SalesCategories.php:380
 msgid "Select Inv. Item"
 msgstr "选择物料"
 
-#: SalesCategories.php:394
+#: SalesCategories.php:392
 msgid "Add Inventory Item"
 msgstr "新增物料"
 
-#: SalesCategories.php:399
+#: SalesCategories.php:397
 #, fuzzy
 msgid "No more Inventory items to add"
 msgstr "没有物料可新增"
 
-#: SalesCategories.php:421
+#: SalesCategories.php:419
 msgid "Inventory items in this category."
 msgstr "此分类的物料"
 
-#: SalesCategories.php:438 StockAdjustments.php:391 SupplierTenders.php:291
+#: SalesCategories.php:436 StockAdjustments.php:391 SupplierTenders.php:291
 #: TaxGroups.php:354 WWW_Access.php:212
 #, php-format
 msgid "Remove"
 msgstr "移除"
 
-#: SalesCategories.php:442
+#: SalesCategories.php:440
 #, fuzzy
 msgid "No Inventory items in this category"
 msgstr "此分类没有物料"
@@ -22609,11 +22671,6 @@ msgstr "销售单价"
 msgid "No Default Price Set in Home Currency"
 msgstr "没有以本币表示的默认定价"
 
-#: SelectProduct.php:282
-msgid ""
-"The quantity on work orders for this product cannot be retrieved because"
-msgstr "此产品在工作单上的数量无法查到，因为"
-
 #: SelectProduct.php:323
 msgid ""
 "The workorder component demand for this product cannot be retrieved because"
@@ -22659,7 +22716,7 @@ msgid "Item Maintenance"
 msgstr "物料维护"
 
 #: SelectProduct.php:396 StockAdjustments.php:425 StockCostUpdate.php:168
-#: StockMovements.php:201 StockReorderLevel.php:96 StockTransfers.php:531
+#: StockMovements.php:201 StockReorderLevel.php:97 StockTransfers.php:531
 #: StockUsage.php:87
 msgid "Show Stock Usage"
 msgstr "显示物料用量"
@@ -27362,11 +27419,12 @@ msgstr "您已经收到下列报盘，他们来自"
 msgid "Items to offer from"
 msgstr "商品报盘来自"
 
-#: SupplierTenders.php:263 api/api_xml-rpc.php:696 api/api_xml-rpc.php:764
-#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:826 api/api_xml-rpc.php:865
-#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
-#: api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302
-#: api/api_xml-rpc.php:2498 api/api_xml-rpc.php:2662
+#: SupplierTenders.php:263 includes/PDFAssetRegisterHeader.inc:61
+#: api/api_xml-rpc.php:696 api/api_xml-rpc.php:764 api/api_xml-rpc.php:795
+#: api/api_xml-rpc.php:826 api/api_xml-rpc.php:865 api/api_xml-rpc.php:896
+#: api/api_xml-rpc.php:927 api/api_xml-rpc.php:970 api/api_xml-rpc.php:2220
+#: api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302 api/api_xml-rpc.php:2498
+#: api/api_xml-rpc.php:2662
 msgid "Stock ID"
 msgstr "存货ID"
 
@@ -29507,67 +29565,67 @@ msgid ""
 msgstr ""
 "如果有任何失败，请与您的系统管理员联系。请仔细阅读所有备注保证他们按需要"
 
-#: UpgradeDatabase.php:129
+#: UpgradeDatabase.php:133
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr "目前为止仅有mysql是无缝更新。您的数据库需要手动更新"
 
-#: UpgradeDatabase.php:141
+#: UpgradeDatabase.php:145
 msgid "Applying"
 msgstr "运行"
 
-#: UpgradeDatabase.php:168 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:172 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "成功"
 
-#: UpgradeDatabase.php:171 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:175 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "表已经创建"
 
-#: UpgradeDatabase.php:174
+#: UpgradeDatabase.php:178
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "列已经被创建"
 
-#: UpgradeDatabase.php:177 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:181 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "列已经被创建"
 
-#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "索引已经存在"
 
-#: UpgradeDatabase.php:183 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:187 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "分录已经完成"
 
-#: UpgradeDatabase.php:186
+#: UpgradeDatabase.php:190
 msgid "SQL syntax error. The SQL error message is"
 msgstr "SQL语法错误。SQL错误信息是"
 
-#: UpgradeDatabase.php:189 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:193 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "主键（Primary Key)已存在"
 
-#: UpgradeDatabase.php:192
+#: UpgradeDatabase.php:196
 msgid "Index already dropped previously"
 msgstr "索引已经删除"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "失败"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "错误代码"
@@ -31945,6 +32003,36 @@ msgstr "字段可以为空吗？"
 msgid "Default"
 msgstr "默认"
 
+#: Z_FixedAssetCostAccumDepnFix.php:8
+#, fuzzy
+msgid "Fixed Fixed Asset Records"
+msgstr "固定资产冲销"
+
+#: Z_FixedAssetCostAccumDepnFix.php:12
+msgid "This script repairs the fixedasset table cost and accum depn"
+msgstr ""
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "Updated asset"
+msgstr "更新税率"
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "to have a cost of"
+msgstr "标准成本"
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "and accum depn of"
+msgstr "累计折旧总帐"
+
+#: Z_FixedAssetCostAccumDepnFix.php:22
+msgid ""
+"Asset cost and accumulated depreciation has now been fixed to the "
+"transaction cost and depreciation"
+msgstr ""
+
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:5
 #: Z_ImportGLAccountSections.php:5
 msgid "Import Chart of Accounts"
@@ -32743,6 +32831,103 @@ msgstr ""
 #: Z_poRebuildDefault.php:49
 msgid "Existing languages are not affected."
 msgstr "现有的语言档不受影响"
+
+#: Z_PriceChanges.php:11
+msgid ""
+"This page updates already existing prices for a specified sales type (price "
+"list)"
+msgstr "这页更新特殊销售种料 (价目表) 中已存在价目"
+
+#: Z_PriceChanges.php:11
+msgid ""
+"Choose between updating only customer special prices where the customer is "
+"set up under the price list selected, or all prices under the sales type or "
+"just specific prices for a customer for the stock category selected"
+msgstr ""
+"选取, 只更新选取客户的价目表的客户特殊价目, 或, 价格表的全部价目, 或指定客户"
+"的物料组的特殊价目"
+
+#: Z_PriceChanges.php:13
+msgid ""
+"This script takes no account of start and end dates of prices and updates "
+"all historical prices as well as current prices - better to use new scripts "
+"under Inventory -> Maintenance"
+msgstr ""
+"此脚本无论价格的开始和结束日期会更新所有的历史价格和当前价格最好使用新的脚"
+"本，它位于库存->维护"
+
+#: Z_PriceChanges.php:24
+msgid "Select the Price List to update the costs for"
+msgstr "选取要更新成本的价目表"
+
+#: Z_PriceChanges.php:55
+msgid "Which Prices to update"
+msgstr "哪个价目要更新"
+
+#: Z_PriceChanges.php:57
+msgid "Only Non-customer special prices"
+msgstr "只要非客户特殊价目"
+
+#: Z_PriceChanges.php:58
+msgid "Only customer special prices"
+msgstr "只要客户特殊价目"
+
+#: Z_PriceChanges.php:59
+msgid "Both customer special prices and non-customer special prices"
+msgstr "连同客户和非客户的特殊价目"
+
+#: Z_PriceChanges.php:60
+msgid "customer special prices only"
+msgstr "只要客户特殊价目"
+
+#: Z_PriceChanges.php:71
+msgid ""
+"Are you sure you wish to update all the prices according to the criteria "
+"selected?"
+msgstr "您确定您希望根据选择的条件更新所有的价格吗？"
+
+#: Z_PriceChanges.php:78
+msgid "and a stock category code of"
+msgstr "及物料组编码"
+
+#: Z_PriceChanges.php:79
+msgid "and a increase percent of"
+msgstr "及要上升的百分比"
+
+#: Z_PriceChanges.php:89
+msgid ""
+"The increase or decrease to be applied is expected to be an integer between "
+"1 and 40 it is not necessary to enter the"
+msgstr "适用的增加或者减少值期望是个1到40之间的整数，不需要输入"
+
+#: Z_PriceChanges.php:89
+#, fuzzy
+msgid "sign"
+msgstr "设计"
+
+#: Z_PriceChanges.php:89
+msgid "the amount is assumed to be a percentage"
+msgstr "数值应该是百份比"
+
+#: Z_PriceChanges.php:94
+msgid "prices for"
+msgstr "价目"
+
+#: Z_PriceChanges.php:94
+msgid "for the stock category"
+msgstr "的存货目录"
+
+#: Z_PriceChanges.php:94
+msgid "will been incremented by"
+msgstr "将会被增加由"
+
+#: Z_PriceChanges.php:94
+msgid "percent"
+msgstr "百分比"
+
+#: Z_PriceChanges.php:138
+msgid "Updating prices for"
+msgstr "更新价目"
 
 #: Z_ReApplyCostToSA.php:6
 msgid "Apply Current Cost to Sales Analysis"
@@ -34162,6 +34347,28 @@ msgstr "天"
 msgid "Aged Supplier Balances For Suppliers from"
 msgstr "供应商编号：从"
 
+#: includes/PDFAssetRegisterHeader.inc:35
+msgid "Asset Type"
+msgstr "资产种类"
+
+#: includes/PDFAssetRegisterHeader.inc:36
+#, fuzzy
+msgid "Acquired After"
+msgstr "要求日期"
+
+#: includes/PDFAssetRegisterHeader.inc:37
+#, fuzzy
+msgid "and Before"
+msgstr "销售员"
+
+#: includes/PDFAssetRegisterHeader.inc:57
+msgid "<--------------External Depreciation-------------->"
+msgstr ""
+
+#: includes/PDFAssetRegisterHeader.inc:58
+msgid "<--------------Internal Depreciation-------------->"
+msgstr ""
+
 #: includes/PDFBankingSummaryPageHeader.inc:19
 msgid "for Receipt Batch"
 msgstr "收款编号"
@@ -34257,6 +34464,7 @@ msgstr "输入日期"
 
 #: includes/PDFCustTransListingPageHeader.inc:50
 #: includes/PDFPeriodStockTransListingPageHeader.inc:49
+#: includes/PDFStockTransListingPageHeader.inc:69
 #: includes/PDFSuppTransListingPageHeader.inc:50
 msgid "Trans Date"
 msgstr "交易日"
@@ -34484,6 +34692,14 @@ msgstr "电话"
 #: includes/PDFPickingListHeader.inc:77
 msgid "Actual Picked"
 msgstr "实际装箱"
+
+#: includes/PDFPriceListPageHeader.inc:18
+msgid "Special Prices for Inventory Categories between"
+msgstr "客户的特殊价格-物料组从"
+
+#: includes/PDFPriceListPageHeader.inc:21
+msgid "Price List for Inventory Categories between"
+msgstr "价格表-物料组从"
 
 #: includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -36874,130 +37090,11 @@ msgstr "返回值"
 #~ msgid "The customer record of the customer selected"
 #~ msgstr "所选客户"
 
-#~ msgid "Demand Work Orders"
-#~ msgstr "需求工作单"
-
 #~ msgid "Annual Depreciation Percentage"
 #~ msgstr "年折旧百分比"
 
 #~ msgid "Update Journal"
 #~ msgstr "更新日记账"
-
-#~ msgid ""
-#~ "There were no outstanding items on the order to deliver. A packing slip "
-#~ "cannot be printed"
-#~ msgstr "没有订单未完成物料要交货, 送货单未能列印"
-
-#, fuzzy
-#~ msgid "Fixed Fixed Asset Records"
-#~ msgstr "固定资产冲销"
-
-#, fuzzy
-#~ msgid "Updated asset"
-#~ msgstr "更新税率"
-
-#, fuzzy
-#~ msgid "to have a cost of"
-#~ msgstr "标准成本"
-
-#, fuzzy
-#~ msgid "and accum depn of"
-#~ msgstr "累计折旧总帐"
-
-#~ msgid ""
-#~ "This page updates already existing prices for a specified sales type "
-#~ "(price list)"
-#~ msgstr "这页更新特殊销售种料 (价目表) 中已存在价目"
-
-#~ msgid ""
-#~ "Choose between updating only customer special prices where the customer "
-#~ "is set up under the price list selected, or all prices under the sales "
-#~ "type or just specific prices for a customer for the stock category "
-#~ "selected"
-#~ msgstr ""
-#~ "选取, 只更新选取客户的价目表的客户特殊价目, 或, 价格表的全部价目, 或指定客"
-#~ "户的物料组的特殊价目"
-
-#~ msgid ""
-#~ "This script takes no account of start and end dates of prices and updates "
-#~ "all historical prices as well as current prices - better to use new "
-#~ "scripts under Inventory -> Maintenance"
-#~ msgstr ""
-#~ "此脚本无论价格的开始和结束日期会更新所有的历史价格和当前价格最好使用新的脚"
-#~ "本，它位于库存->维护"
-
-#~ msgid "Select the Price List to update the costs for"
-#~ msgstr "选取要更新成本的价目表"
-
-#~ msgid "Which Prices to update"
-#~ msgstr "哪个价目要更新"
-
-#~ msgid "Only Non-customer special prices"
-#~ msgstr "只要非客户特殊价目"
-
-#~ msgid "Only customer special prices"
-#~ msgstr "只要客户特殊价目"
-
-#~ msgid "Both customer special prices and non-customer special prices"
-#~ msgstr "连同客户和非客户的特殊价目"
-
-#~ msgid "customer special prices only"
-#~ msgstr "只要客户特殊价目"
-
-#~ msgid ""
-#~ "Are you sure you wish to update all the prices according to the criteria "
-#~ "selected?"
-#~ msgstr "您确定您希望根据选择的条件更新所有的价格吗？"
-
-#~ msgid "and a stock category code of"
-#~ msgstr "及物料组编码"
-
-#~ msgid "and a increase percent of"
-#~ msgstr "及要上升的百分比"
-
-#~ msgid ""
-#~ "The increase or decrease to be applied is expected to be an integer "
-#~ "between 1 and 40 it is not necessary to enter the"
-#~ msgstr "适用的增加或者减少值期望是个1到40之间的整数，不需要输入"
-
-#, fuzzy
-#~ msgid "sign"
-#~ msgstr "设计"
-
-#~ msgid "the amount is assumed to be a percentage"
-#~ msgstr "数值应该是百份比"
-
-#~ msgid "prices for"
-#~ msgstr "价目"
-
-#~ msgid "for the stock category"
-#~ msgstr "的存货目录"
-
-#~ msgid "will been incremented by"
-#~ msgstr "将会被增加由"
-
-#~ msgid "percent"
-#~ msgstr "百分比"
-
-#~ msgid "Updating prices for"
-#~ msgstr "更新价目"
-
-#~ msgid "Asset Type"
-#~ msgstr "资产种类"
-
-#, fuzzy
-#~ msgid "Acquired After"
-#~ msgstr "要求日期"
-
-#, fuzzy
-#~ msgid "and Before"
-#~ msgstr "销售员"
-
-#~ msgid "Special Prices for Inventory Categories between"
-#~ msgstr "客户的特殊价格-物料组从"
-
-#~ msgid "Price List for Inventory Categories between"
-#~ msgstr "价格表-物料组从"
 
 #~ msgid ""
 #~ "The effective after date field must be a date in the format dd/mm/yy or "

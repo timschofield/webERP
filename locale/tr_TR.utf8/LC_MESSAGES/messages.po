@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebERP 3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-24 12:24+1200\n"
+"POT-Creation-Date: 2011-07-27 19:08+1200\n"
 "PO-Revision-Date: 2011-02-01 13:12+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -149,7 +149,7 @@ msgstr "HESAP GRUBU SILINEMIYOR, BAGLI MUH.HESAPLARI VAR."
 #: Locations.php:256 Locations.php:265 Locations.php:274 Locations.php:283
 #: Locations.php:292 Locations.php:301 MRPDemandTypes.php:87
 #: PaymentMethods.php:138 PaymentTerms.php:144 PaymentTerms.php:151
-#: PcExpenses.php:152 SalesCategories.php:125 SalesCategories.php:133
+#: PcExpenses.php:152 SalesCategories.php:124 SalesCategories.php:131
 #: SalesPeople.php:149 SalesPeople.php:156 SalesTypes.php:150
 #: SalesTypes.php:160 Shippers.php:82 Shippers.php:94 StockCategories.php:179
 #: Stocks.php:481 Stocks.php:490 Stocks.php:498 Stocks.php:506 Stocks.php:514
@@ -345,7 +345,7 @@ msgstr "HAYIR"
 #: PaymentMethods.php:200 PaymentTerms.php:201 PcAssignCashToTab.php:255
 #: PcClaimExpensesFromTab.php:252 PcExpenses.php:208 PcTabs.php:234
 #: PcTypeTabs.php:172 PO_AuthorisationLevels.php:149 Prices_Customer.php:280
-#: Prices.php:246 PurchData.php:202 SalesCategories.php:256
+#: Prices.php:246 PurchData.php:202 SalesCategories.php:254
 #: SalesGLPostings.php:132 SalesGLPostings.php:245 SalesPeople.php:219
 #: SalesTypes.php:216 SecurityTokens.php:110 SelectCustomer.php:668
 #: SelectCustomer.php:686 SelectCustomer.php:710 SelectCustomer.php:727
@@ -379,7 +379,7 @@ msgstr "BU SUBEYI SILMEK ISTEDIGINIZE EMIN MISINIZ?"
 #: PcExpensesTypeTab.php:185 PcTabs.php:235 PcTypeTabs.php:173
 #: PO_AuthorisationLevels.php:151 PO_Items.php:684 Prices_Customer.php:281
 #: Prices.php:247 PurchData.php:203 SalesAnalReptCols.php:294
-#: SalesAnalRepts.php:302 SalesCategories.php:257 SalesGLPostings.php:133
+#: SalesAnalRepts.php:302 SalesCategories.php:255 SalesGLPostings.php:133
 #: SalesGLPostings.php:246 SalesPeople.php:220 SalesTypes.php:217
 #: SecurityTokens.php:111 SelectCreditItems.php:754 SelectCustomer.php:669
 #: SelectCustomer.php:687 SelectCustomer.php:711 SelectCustomer.php:728
@@ -695,9 +695,9 @@ msgid "Date"
 msgstr "TARIH"
 
 #: AddCustomerNotes.php:114 AddCustomerTypeNotes.php:105 PcReportTab.php:173
-#: Stocks.php:892 UpgradeDatabase.php:171 UpgradeDatabase.php:174
-#: UpgradeDatabase.php:177 UpgradeDatabase.php:180 UpgradeDatabase.php:183
-#: UpgradeDatabase.php:186 UpgradeDatabase.php:189 UpgradeDatabase.php:192
+#: Stocks.php:892 UpgradeDatabase.php:175 UpgradeDatabase.php:178
+#: UpgradeDatabase.php:181 UpgradeDatabase.php:184 UpgradeDatabase.php:187
+#: UpgradeDatabase.php:190 UpgradeDatabase.php:193 UpgradeDatabase.php:196
 #: Z_Upgrade_3.10-3.11.php:62 Z_Upgrade_3.10-3.11.php:66
 #: Z_Upgrade_3.10-3.11.php:70 Z_Upgrade_3.10-3.11.php:74
 #: Z_Upgrade_3.10-3.11.php:78 Z_Upgrade_3.11-4.00.php:62
@@ -841,15 +841,15 @@ msgstr "MÜSTERI DETAYLARI ALINAMADI:"
 #: PDFRemittanceAdvice.php:84 PDFStockCheckComparison.php:36
 #: PDFStockCheckComparison.php:62 PDFStockCheckComparison.php:267
 #: PO_PDFPurchOrder.php:31 PO_PDFPurchOrder.php:149
-#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198 ReorderLevel.php:60
-#: ReorderLevel.php:149 SalesAnalysis_UserDefined.php:28
-#: SelectCreditItems.php:23 StockCheck.php:47 StockCheck.php:68
-#: StockCheck.php:98 StockCheck.php:142 StockCheck.php:153 StockCheck.php:195
-#: StockDispatch.php:92 StockDispatch.php:104 SupplierBalsAtPeriodEnd.php:56
-#: SupplierBalsAtPeriodEnd.php:67 SuppPaymentRun.php:109
-#: SuppPaymentRun.php:120 SuppPaymentRun.php:184 SuppPaymentRun.php:214
-#: SuppPriceList.php:121 Tax.php:63 Tax.php:168 Tax.php:277
-#: Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
+#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198
+#: PrintSalesOrder_generic.php:183 ReorderLevel.php:60 ReorderLevel.php:149
+#: SalesAnalysis_UserDefined.php:28 SelectCreditItems.php:23 StockCheck.php:47
+#: StockCheck.php:68 StockCheck.php:98 StockCheck.php:142 StockCheck.php:153
+#: StockCheck.php:195 StockDispatch.php:92 StockDispatch.php:104
+#: SupplierBalsAtPeriodEnd.php:56 SupplierBalsAtPeriodEnd.php:67
+#: SuppPaymentRun.php:109 SuppPaymentRun.php:120 SuppPaymentRun.php:184
+#: SuppPaymentRun.php:214 SuppPriceList.php:121 Tax.php:63 Tax.php:168
+#: Tax.php:277 Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
 #: Z_DataExport.php:308 Z_DataExport.php:347 Z_DataExport.php:383
 #: Z_DataExport.php:419 Z_DataExport.php:471 Z_poRebuildDefault.php:38
 #: includes/PDFPaymentRun_PymtFooter.php:57
@@ -1095,7 +1095,7 @@ msgstr "BÖLGE KODU"
 #: FixedAssetCategories.php:134 GLAccounts.php:197 Locations.php:328
 #: MRPDemands.php:248 PcAssignCashToTab.php:135 PcClaimExpensesFromTab.php:126
 #: PcExpenses.php:160 PcExpensesTypeTab.php:101 PcTabs.php:166
-#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:137
+#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:135
 #: SalesTypes.php:166 StockCategories.php:196 Suppliers.php:635
 #: SupplierTypes.php:151 Z_DeleteInvoice.php:146
 msgid "has been deleted"
@@ -1162,7 +1162,8 @@ msgstr "KULLANICI ADI"
 #: SystemParameters.php:943 SystemParameters.php:949 SystemParameters.php:955
 #: SystemParameters.php:961 TopItems.php:23 TopItems.php:36
 #: WorkOrderEntry.php:562 WorkOrderEntry.php:565 WorkOrderIssue.php:626
-#: WorkOrderIssue.php:629
+#: WorkOrderIssue.php:629 includes/PDFAssetRegisterHeader.inc:15
+#: includes/PDFAssetRegisterHeader.inc:24
 msgid "All"
 msgstr "HEPSI"
 
@@ -1721,6 +1722,8 @@ msgstr "NUMARA"
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
 #: includes/PDFPeriodStockTransListingPageHeader.inc:52
 #: includes/PDFStockComparisonPageHeader.inc:36
+#: includes/PDFStockTransListingPageHeader.inc:68
+#: includes/PDFStockTransListingPageHeader.inc:72
 #: includes/PDFSuppTransListingPageHeader.inc:49
 msgid "Reference"
 msgstr "REFERANS"
@@ -1875,9 +1878,10 @@ msgstr "Bölüm"
 #: includes/PDFSalesOrder_generic.inc:95
 #: includes/PDFStockCheckPageHeader.inc:44
 #: includes/PDFStockNegativesHeader.inc:33
-#: includes/PDFStockTransferHeader.inc:39 includes/PDFTransPageHeader.inc:209
-#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2260
-#: api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
+#: includes/PDFStockTransferHeader.inc:39
+#: includes/PDFStockTransListingPageHeader.inc:70
+#: includes/PDFTransPageHeader.inc:209 includes/PO_PDFOrderPageHeader.inc:78
+#: api/api_xml-rpc.php:2260 api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
 msgid "Quantity"
 msgstr "MIKTAR"
 
@@ -1934,7 +1938,7 @@ msgstr "Genişletilmiş Miktar BOM Listeleme için       "
 #: includes/PDFOrderPageHeader_generic.inc:79
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
-#: includes/PDFPickingListHeader.inc:48
+#: includes/PDFPickingListHeader.inc:48 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:27
 #: includes/PDFSalesAnalPageHeader.inc:15
 #: includes/PDFSalesOrder_generic.inc:81
@@ -1962,6 +1966,7 @@ msgstr "TARIH"
 #: PrintCustTransPortrait.php:998 ReorderLevel.php:240 StockDispatch.php:337
 #: SuppPriceList.php:255 Tax.php:243 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
+#: includes/PDFAssetRegisterHeader.inc:38
 #: includes/PDFBalanceSheetPageHeader.inc:26
 #: includes/PDFBankingSummaryPageHeader.inc:23
 #: includes/PDFBOMListingPageHeader.inc:26
@@ -1981,7 +1986,7 @@ msgstr "TARIH"
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
 #: includes/PDFPeriodStockTransListingPageHeader.inc:25
-#: includes/PDFPickingListHeader.inc:69
+#: includes/PDFPickingListHeader.inc:69 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:28
 #: includes/PDFQuotationPageHeader.inc:94
 #: includes/PDFQuotationPortraitPageHeader.inc:92
@@ -1994,6 +1999,7 @@ msgstr "TARIH"
 #: includes/PDFStockLocTransferHeader.inc:12
 #: includes/PDFStockNegativesHeader.inc:12
 #: includes/PDFStockTransferHeader.inc:16
+#: includes/PDFStockTransListingPageHeader.inc:45
 #: includes/PDFSupplierBalsPageHeader.inc:20
 #: includes/PDFSuppTransListingPageHeader.inc:32
 #: includes/PDFTabReportHeader.inc:15
@@ -2105,7 +2111,7 @@ msgstr "Bir Düzey"
 #: PDFOrderStatus.php:319 PDFPrintLabel.php:238 PO_Items.php:637
 #: PO_Items.php:926 PO_SelectOSPurchOrder.php:211 PO_SelectPurchOrder.php:178
 #: PricesByCost.php:152 ReorderLevelLocation.php:55 ReorderLevel.php:254
-#: ReverseGRN.php:377 SalesCategories.php:423 SecurityTokens.php:86
+#: ReverseGRN.php:377 SalesCategories.php:421 SecurityTokens.php:86
 #: SecurityTokens.php:92 SecurityTokens.php:102 SelectAsset.php:243
 #: SelectCompletedOrder.php:536 SelectContract.php:153
 #: SelectCreditItems.php:976 SelectOrderItems.php:1517
@@ -2120,8 +2126,8 @@ msgstr "Bir Düzey"
 #: TaxAuthorities.php:145 TopItems.php:163 WorkCentres.php:124
 #: WorkOrderCosting.php:81 WorkOrderCosting.php:111 WorkOrderEntry.php:598
 #: WorkOrderIssue.php:668 includes/DefineLabelClass.php:12
-#: includes/DefineLabelClass.php:45 includes/PDFGrnHeader.inc:29
-#: includes/PDFInventoryPlanPageHeader.inc:51
+#: includes/DefineLabelClass.php:45 includes/PDFAssetRegisterHeader.inc:62
+#: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
 #: includes/PDFStockLocTransferHeader.inc:49
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
@@ -2233,7 +2239,7 @@ msgstr "ARANACAK >>"
 
 #: BOMInquiry.php:26 BOMs.php:806 EmailConfirmation.php:191 MRPDemands.php:333
 #: MRPReport.php:542 PO_SelectOSPurchOrder.php:200 PO_SelectPurchOrder.php:170
-#: SalesCategories.php:422 SelectProduct.php:512 Shipt_Select.php:166
+#: SalesCategories.php:420 SelectProduct.php:512 Shipt_Select.php:166
 #: StockAdjustments.php:76 StockAdjustments.php:335 StockCounts.php:97
 #: StockCounts.php:132 StockMovements.php:31 StockReorderLevel.php:44
 #: StockStatus.php:61 StockTransfers.php:38 StockTransfers.php:445
@@ -2631,8 +2637,10 @@ msgstr "Düzeyi"
 #: StockCounts.php:133 StockReorderLevel.php:49 StockSerialItemResearch.php:78
 #: StockStatus.php:84 StockStatus.php:89 WhereUsedInquiry.php:67
 #: WorkCentres.php:125 WorkCentres.php:210
+#: includes/PDFAssetRegisterHeader.inc:64
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
-#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2258
+#: includes/PDFStockNegativesHeader.inc:31
+#: includes/PDFStockTransListingPageHeader.inc:71 api/api_xml-rpc.php:2258
 #: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
 msgid "Location"
 msgstr "DEPO"
@@ -2977,7 +2985,7 @@ msgstr "STOK ISLEMLERI IÇIN MUHASEBE GIRISLERI YARATILSIN MI?"
 #: PO_AuthoriseMyOrders.php:132 PricesByCost.php:221 PurchData.php:497
 #: ReorderLevelLocation.php:156 SecurityTokens.php:89
 #: SelectCreditItems.php:911 SMTPServer.php:64 StockCostUpdate.php:163
-#: StockReorderLevel.php:94 Stocks.php:1047 SystemParameters.php:1018
+#: StockReorderLevel.php:95 Stocks.php:1047 SystemParameters.php:1018
 #: TaxAuthorityRates.php:79 WorkOrderEntry.php:546 WOSerialNos.php:315
 msgid "Update"
 msgstr "GÜNCELLE"
@@ -3223,6 +3231,7 @@ msgstr "BU GÖNDERI"
 #: StockMovements.php:97 StockStatus.php:313 SuppCreditGRNs.php:229
 #: SuppCreditGRNs.php:230 SupplierTenders.php:267 SupplierTenders.php:494
 #: SuppPriceList.php:274 includes/DefineLabelClass.php:49
+#: includes/PDFPriceListPageHeader.inc:46
 #: includes/PDFQuotationPageHeader.inc:104
 #: includes/PDFQuotationPortraitPageHeader.inc:104
 #: includes/PDFTransPageHeaderPortrait.inc:265
@@ -3816,8 +3825,8 @@ msgstr "veritabanı için gelen montaj parçaları alınamadı"
 #: FixedAssetCategories.php:86 FixedAssetCategories.php:105
 #: PricesBasedOnMarkUp.php:337 PricesBasedOnMarkUp.php:353
 #: SelectCreditItems.php:1395 SpecialOrder.php:423 StockCategories.php:21
-#: StockCategories.php:82 StockCategories.php:153 Z_ReApplyCostToSA.php:62
-#: Z_ReApplyCostToSA.php:74
+#: StockCategories.php:82 StockCategories.php:153 Z_PriceChanges.php:137
+#: Z_ReApplyCostToSA.php:62 Z_ReApplyCostToSA.php:74
 msgid "because"
 msgstr "ÇÜNKÜ"
 
@@ -4302,7 +4311,7 @@ msgid "Image"
 msgstr "FOTOGRAF"
 
 #: ContractBOM.php:365 CounterSales.php:2013 FixedAssetItems.php:468
-#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:249
+#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:247
 #: SelectCreditItems.php:1005 SelectOrderItems.php:1531
 #: SelectOrderItems.php:1708 Stocks.php:728 Stocks.php:732
 #: SupplierTenders.php:518 WorkOrderEntry.php:617 WorkOrderIssue.php:684
@@ -5009,7 +5018,7 @@ msgstr "TEMIZLE"
 #: StockSerialItemResearch.php:81
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
 #: includes/PDFDIFOTPageHeader.inc:44 includes/PDFOrderPageHeader.inc:50
-#: includes/PDFTransPageHeader.inc:47
+#: includes/PDFPriceListPageHeader.inc:42 includes/PDFTransPageHeader.inc:47
 #: includes/PDFTransPageHeaderPortrait.inc:56
 msgid "Branch"
 msgstr "SUBE"
@@ -5053,18 +5062,19 @@ msgstr "Sözleşme Referans"
 #: ReorderLevel.php:242 SalesCategoryPeriodInquiry.php:162
 #: SalesTopItemsInquiry.php:218 SpecialOrder.php:606 StockDispatch.php:344
 #: Stocks.php:738 SuppPriceList.php:211 SuppPriceList.php:261
-#: includes/PDFInventoryValnPageHeader.inc:32
+#: Z_PriceChanges.php:37 includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 msgid "Category"
 msgstr "STOK KATEGORISI"
 
 #: Contracts.php:849 PricesBasedOnMarkUp.php:111 SpecialOrder.php:610
-#: Stocks.php:741
+#: Stocks.php:741 Z_PriceChanges.php:42
 msgid "The stock categories could not be retrieved because"
 msgstr "STOK KATEGORILERI GÖRÜNTÜLENEMIYOR:"
 
 #: Contracts.php:850 FixedAssetItems.php:485 PricesBasedOnMarkUp.php:112
-#: SpecialOrder.php:611 Stocks.php:742
+#: SpecialOrder.php:611 Stocks.php:742 Z_PriceChanges.php:43
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "SQL stok kategoriler almak için kullanılan ve başarısız oldu"
 
@@ -5586,7 +5596,8 @@ msgstr "Yeni İş Emri Numarası"
 #: CounterSales.php:1193 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:204 Prices_Customer.php:41
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:332 SpecialOrder.php:111
-#: SpecialOrder.php:113
+#: SpecialOrder.php:113 includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 msgid "for"
 msgstr "için"
 
@@ -6561,7 +6572,8 @@ msgid "Reports Page Size"
 msgstr "RAPOR SAYFA BOYUTU"
 
 #: CustLoginSetup.php:174 CustLoginSetup.php:176 EmailConfirmation.php:119
-#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90 SuppLoginSetup.php:202
+#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:90 SuppLoginSetup.php:202
 #: SuppLoginSetup.php:204 WWW_Users.php:502 WWW_Users.php:504
 msgid "A4"
 msgstr "A4"
@@ -6576,10 +6588,11 @@ msgstr "A3"
 #: CustLoginSetup.php:186 CustLoginSetup.php:188 CustLoginSetup.php:198
 #: CustLoginSetup.php:200 CustLoginSetup.php:209 CustLoginSetup.php:211
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90 SuppLoginSetup.php:214 SuppLoginSetup.php:216
-#: SuppLoginSetup.php:226 SuppLoginSetup.php:228 SuppLoginSetup.php:237
-#: SuppLoginSetup.php:239 WWW_Users.php:514 WWW_Users.php:516
-#: WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537 WWW_Users.php:539
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90 SuppLoginSetup.php:214
+#: SuppLoginSetup.php:216 SuppLoginSetup.php:226 SuppLoginSetup.php:228
+#: SuppLoginSetup.php:237 SuppLoginSetup.php:239 WWW_Users.php:514
+#: WWW_Users.php:516 WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537
+#: WWW_Users.php:539
 msgid "landscape"
 msgstr "YATAY"
 
@@ -6663,11 +6676,11 @@ msgstr "TOPLAM MIKTAR:"
 msgid "was"
 msgstr "oldu"
 
-#: CustomerAllocations.php:324
+#: CustomerAllocations.php:323
 msgid "Allocate Receipt"
 msgstr "Tahsis Alındı"
 
-#: CustomerAllocations.php:324 CustomerReceipt.php:529
+#: CustomerAllocations.php:323 CustomerReceipt.php:529
 msgid "Allocate Receipts"
 msgstr "Tahsis Makbuzlar"
 
@@ -8296,13 +8309,16 @@ msgstr ""
 #: includes/PDFLowGPPageHeader.inc:15 includes/PDFOstdgGRNsPageHeader.inc:15
 #: includes/PDFPaymentRunPageHeader.inc:18
 #: includes/PDFPaymentRunPageHeader.inc:21
+#: includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 #: includes/PDFStockCheckPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "and"
 msgstr "-"
 
 #: DailyBankTransactions.php:104 PDFCustTransListing.php:35
-#: PDFPeriodStockTransListing.php:39 PDFSuppTransListing.php:35
+#: PDFPeriodStockTransListing.php:39 PDFStockTransListing.php:38
+#: PDFSuppTransListing.php:35
 msgid "Transaction type"
 msgstr "Işlem tipi"
 
@@ -8772,6 +8788,16 @@ msgstr "Oluşturmak Sipariş Yinelenen"
 msgid "Commit Order Changes"
 msgstr "SIPARIS DEGISIKLIKLERINI ISLE"
 
+#: DemandWorkOrders.php:9
+#, fuzzy
+msgid "Demand Work Orders"
+msgstr "Arama İş Emirleri"
+
+#: DemandWorkOrders.php:46 SelectProduct.php:282
+msgid ""
+"The quantity on work orders for this product cannot be retrieved because"
+msgstr "Bu ürün için iş emri miktarı nedeniyle alınamaz"
+
 #: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
 msgstr "ISKONTO KATEGORILERI YÖNETIMI"
@@ -8807,7 +8833,7 @@ msgid "Discount Category Code"
 msgstr "ISKONTO KATEGORI KODU"
 
 #: DiscountCategories.php:88 DiscountCategories.php:248 PO_Header.php:855
-#: SalesCategories.php:255 SuppInvGRNs.php:277 SupplierTenders.php:55
+#: SalesCategories.php:253 SuppInvGRNs.php:277 SupplierTenders.php:55
 #, php-format
 msgid "Select"
 msgstr "SEÇINIZ"
@@ -8858,6 +8884,7 @@ msgstr "ISKONTO KATEGORISI"
 #: includes/PDFInventoryPlanPageHeader.inc:50
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFLowGPPageHeader.inc:45 includes/PDFOstdgGRNsPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 #: includes/PDFStockCheckPageHeader.inc:33
 #: includes/PDFStockComparisonPageHeader.inc:33
 msgid "Item"
@@ -9234,7 +9261,7 @@ msgid "Order date"
 msgstr "SIPARIS TARIHI"
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
-#: SupplierAllocations.php:436
+#: SupplierAllocations.php:436 includes/PDFStockTransListingPageHeader.inc:41
 msgid "dated"
 msgstr "tarihli"
 
@@ -9500,11 +9527,12 @@ msgstr ""
 "oluşturulamıyor"
 
 #: EmailConfirmation.php:9 PrintCustOrder_generic.php:12 PrintCustOrder.php:13
+#: PrintSalesOrder_generic.php:14
 msgid "Select Order To Print"
 msgstr "YAZDIRILACAK SIPARISI SEÇIN"
 
 #: EmailConfirmation.php:15 PrintCustOrder_generic.php:15
-#: PrintCustOrder.php:16
+#: PrintCustOrder.php:16 PrintSalesOrder_generic.php:17
 msgid "Select an Order Number to Print before calling this page"
 msgstr "BU SAYFAYI ÇAGIRMADAN ÖNCE YAZDIRILACAK SIPARIS NO.YU SEÇIN"
 
@@ -9512,19 +9540,22 @@ msgstr "BU SAYFAYI ÇAGIRMADAN ÖNCE YAZDIRILACAK SIPARIS NO.YU SEÇIN"
 #: PO_OrderDetails.php:74 PrintCustOrder_generic.php:22
 #: PrintCustOrder_generic.php:84 PrintCustOrder_generic.php:118
 #: PrintCustOrder.php:18 PrintCustOrder.php:71 PrintCustOrder.php:95
-#: SelectSalesOrder.php:309
+#: PrintSalesOrder_generic.php:19 PrintSalesOrder_generic.php:70
+#: PrintSalesOrder_generic.php:95 SelectSalesOrder.php:309
 msgid "Outstanding Sales Orders"
 msgstr "TAMAMLANMAMIS SATIS SIPARISLERI"
 
 #: EmailConfirmation.php:24 EmailConfirmation.php:96 EmailConfirmation.php:128
 #: PrintCustOrder_generic.php:23 PrintCustOrder_generic.php:85
 #: PrintCustOrder_generic.php:119 PrintCustOrder.php:19 PrintCustOrder.php:72
-#: PrintCustOrder.php:96
+#: PrintCustOrder.php:96 PrintSalesOrder_generic.php:20
+#: PrintSalesOrder_generic.php:71 PrintSalesOrder_generic.php:96
 msgid "Completed Sales Orders"
 msgstr "TAMAMLANMIS SATIS SIPARISLERI"
 
 #: EmailConfirmation.php:42 FTP_RadioBeacon.php:178
 #: PrintCustOrder_generic.php:36 PrintCustOrder.php:26
+#: PrintSalesOrder_generic.php:27 PrintSalesOrder_generic.php:129
 msgid ""
 "There was a problem retrieving the order header details for Order Number"
 msgstr ""
@@ -9539,39 +9570,43 @@ msgstr ""
 #: PrintCustTrans.php:213 PrintCustTrans.php:263 PrintCustTrans.php:668
 #: PrintCustTrans.php:837 PrintCustTransPortrait.php:235
 #: PrintCustTransPortrait.php:288 PrintCustTransPortrait.php:689
-#: PrintCustTransPortrait.php:858
+#: PrintCustTransPortrait.php:858 PrintSalesOrder_generic.php:27
+#: PrintSalesOrder_generic.php:130
 msgid "from the database"
 msgstr "VERITABANINDAN"
 
 #: EmailConfirmation.php:81 EmailConfirmation.php:115
 #: PrintCustOrder_generic.php:74 PrintCustOrder_generic.php:103
 #: PrintCustOrder_generic.php:238 PrintCustOrder.php:66 PrintCustOrder.php:82
-#: PrintCustOrder.php:194
+#: PrintCustOrder.php:194 PrintSalesOrder_generic.php:65
+#: PrintSalesOrder_generic.php:82 PrintSalesOrder_generic.php:179
 msgid "Print Packing Slip Error"
 msgstr "PAKETLEME FÖYÜ YAZDIRMA HATASI"
 
 #: EmailConfirmation.php:87 PrintCustOrder_generic.php:77
-#: PrintCustOrder.php:69
+#: PrintCustOrder.php:69 PrintSalesOrder_generic.php:68
 msgid "Unable to Locate Order Number"
 msgstr "SIPARIS NO.YA ERISILEMIYOR"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:106
-#: PrintCustOrder.php:85
+#: PrintCustOrder.php:85 PrintSalesOrder_generic.php:85
 msgid "The packing slip for order number"
 msgstr "PAKETLEME FÖYÜ -SIPARIS NO"
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "has previously been printed"
 msgstr "ÖNCEDEN YAZDIRILMIS"
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "It was printed on"
 msgstr "Tarih:"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:108
-#: PrintCustOrder.php:87
+#: PrintCustOrder.php:87 PrintSalesOrder_generic.php:87
 msgid ""
 "This check is there to ensure that duplicate packing slips are not produced "
 "and dispatched more than once to the customer"
@@ -9581,26 +9616,28 @@ msgstr ""
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Do a Re-Print"
 msgstr "TEKRAR YAZDIR"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
-#: PrintCustOrder.php:89
+#: PrintCustOrder.php:89 PrintSalesOrder_generic.php:89
 msgid "On Pre-Printed Stationery"
 msgstr "MATBU KAGIDA YAZDIR"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Even Though Previously Printed"
 msgstr "Bile olsa Önceden Baskılı"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90
 msgid "Plain paper"
 msgstr "NORMAL KAGIT"
 
 #: EmailConfirmation.php:124 PrintCustOrder_generic.php:114
-#: PrintCustOrder.php:93
+#: PrintCustOrder.php:93 PrintSalesOrder_generic.php:93
 msgid "Or select another Order Number to Print"
 msgstr "VEYA YAZDIRMAK IÇIN BASKA BIR SIPARIS NO SEÇIN"
 
@@ -10011,6 +10048,7 @@ msgstr ""
 #: FixedAssetDepreciation.php:83 FixedAssetRegister.php:80
 #: FixedAssetRegister.php:331 FixedAssetTransfer.php:109
 #: SuppFixedAssetChgs.php:72 SupplierCredit.php:372 SupplierInvoice.php:342
+#: includes/PDFAssetRegisterHeader.inc:60
 msgid "Asset ID"
 msgstr "Varlık kimliği"
 
@@ -10021,6 +10059,8 @@ msgstr "Tarih Satın"
 #: FixedAssetDepreciation.php:86 PricesByCost.php:157 SalesAnalReptCols.php:38
 #: SalesAnalReptCols.php:40 SelectProduct.php:186 SelectProduct.php:343
 #: ShipmentCosting.php:149 ShipmentCosting.php:150 StockCostUpdate.php:149
+#: includes/PDFAssetRegisterHeader.inc:66
+#: includes/PDFAssetRegisterHeader.inc:69
 #: includes/PDFInventoryValnPageHeader.inc:35
 #: includes/PDFInventoryValnPageHeader.inc:39
 #: includes/PDFLowGPPageHeader.inc:48
@@ -10299,7 +10339,7 @@ msgstr "KISA"
 msgid "long"
 msgstr "UZUN"
 
-#: FixedAssetItems.php:455 SalesCategories.php:326 Stocks.php:715
+#: FixedAssetItems.php:455 SalesCategories.php:324 Stocks.php:715
 msgid "Image File (.jpg)"
 msgstr "RESIM FORMATI (.jpg)"
 
@@ -10449,7 +10489,7 @@ msgstr "Sil Bu Yer"
 msgid "Fixed Asset Register"
 msgstr "Demirbaş Kayıt"
 
-#: FixedAssetRegister.php:84
+#: FixedAssetRegister.php:84 includes/PDFAssetRegisterHeader.inc:65
 msgid "Date Acquired"
 msgstr "Tarih Edinilmiş"
 
@@ -10465,7 +10505,8 @@ msgstr "Depn B / fwd"
 msgid "Additions"
 msgstr "Yüklenenler"
 
-#: FixedAssetRegister.php:88
+#: FixedAssetRegister.php:88 includes/PDFAssetRegisterHeader.inc:67
+#: includes/PDFAssetRegisterHeader.inc:70
 msgid "Depn"
 msgstr "Depn"
 
@@ -10477,7 +10518,8 @@ msgstr "Maliyet C / fwd"
 msgid "Depn C/fwd"
 msgstr "Depn C / fwd"
 
-#: FixedAssetRegister.php:91
+#: FixedAssetRegister.php:91 includes/PDFAssetRegisterHeader.inc:68
+#: includes/PDFAssetRegisterHeader.inc:71
 msgid "NBV"
 msgstr "NBV"
 
@@ -10518,15 +10560,15 @@ msgstr "Bugüne kadar "
 msgid "Show Assets"
 msgstr "Göstermek Varlıklar"
 
-#: FixedAssetRegister.php:329
+#: FixedAssetRegister.php:329 includes/PDFAssetRegisterHeader.inc:33
 msgid "Asset Category "
 msgstr "Varlık Kategori "
 
-#: FixedAssetRegister.php:330
+#: FixedAssetRegister.php:330 includes/PDFAssetRegisterHeader.inc:34
 msgid "Asset Location "
 msgstr "Varlık Yer "
 
-#: FixedAssetRegister.php:356
+#: FixedAssetRegister.php:356 includes/PDFAssetRegisterHeader.inc:63
 msgid "Serial No."
 msgstr "Seri No"
 
@@ -14913,6 +14955,7 @@ msgstr "Teklif Kimliği"
 
 #: OffersReceived.php:94 PurchData.php:323 Stocks.php:361
 #: includes/PDFPeriodStockTransListingPageHeader.inc:47
+#: includes/PDFStockTransListingPageHeader.inc:67
 msgid "Stock Item"
 msgstr "ÜRÜN"
 
@@ -16358,7 +16401,7 @@ msgstr "Yığın"
 #: PDFBankingSummary.php:36 PDFChequeListing.php:66 PDFCustTransListing.php:47
 #: PDFDeliveryDifferences.php:71 PDFDIFOT.php:81 PDFOrdersInvoiced.php:70
 #: PDFOrderStatus.php:73 PDFPeriodStockTransListing.php:78
-#: PDFSuppTransListing.php:47
+#: PDFStockTransListing.php:52 PDFSuppTransListing.php:47
 msgid "Create PDF"
 msgstr "( PDF )"
 
@@ -16561,7 +16604,7 @@ msgid "Activity Since"
 msgstr "Activity Since"
 
 #: PDFCustTransListing.php:10 PDFPeriodStockTransListing.php:9
-#: PDFSuppTransListing.php:10
+#: PDFStockTransListing.php:13 PDFSuppTransListing.php:10
 msgid "The date must be specified in the format"
 msgstr "Tarih biçiminde belirtilmelidir"
 
@@ -16570,7 +16613,8 @@ msgstr "Tarih biçiminde belirtilmelidir"
 msgid "Customer Transaction Listing"
 msgstr "Müşteri İşlem Listeleme"
 
-#: PDFCustTransListing.php:31 PDFSuppTransListing.php:31
+#: PDFCustTransListing.php:31 PDFStockTransListing.php:34
+#: PDFSuppTransListing.php:31
 msgid "Enter the date for which the transactions are to be listed"
 msgstr "işlemler listelenmek hangi için tarihi girin"
 
@@ -16588,6 +16632,7 @@ msgid "Credit Notes"
 msgstr "Kredi Notlar"
 
 #: PDFCustTransListing.php:77 PDFPeriodStockTransListing.php:134
+#: PDFStockTransListing.php:85
 msgid "An error occurred getting the transactions"
 msgstr "Bir hata işlemler alıyorum oluştu"
 
@@ -16595,12 +16640,13 @@ msgstr "Bir hata işlemler alıyorum oluştu"
 msgid "The SQL used to get the transaction information that failed was"
 msgstr "SQL oldu başarısız işlem bilgileri almak için kullanılır"
 
-#: PDFCustTransListing.php:87 PDFSuppTransListing.php:82
+#: PDFCustTransListing.php:87 PDFStockTransListing.php:92
+#: PDFSuppTransListing.php:82
 msgid "There were no transactions found in the database for the date"
 msgstr "tarih için veritabanında bulunan hiçbir işlem vardı"
 
 #: PDFCustTransListing.php:87 PDFPeriodStockTransListing.php:141
-#: PDFSuppTransListing.php:82
+#: PDFStockTransListing.php:92 PDFSuppTransListing.php:82
 msgid "Please try again selecting a different date"
 msgstr "yine farklı bir tarih seçerek deneyin"
 
@@ -16864,7 +16910,8 @@ msgid "Not yet printed"
 msgstr "HENÜZ YAZDIRILMADI"
 
 #: PDFPeriodStockTransListing.php:16 PDFPeriodStockTransListing.php:20
-#: PDFPeriodStockTransListing.php:150
+#: PDFPeriodStockTransListing.php:150 PDFStockTransListing.php:20
+#: PDFStockTransListing.php:24 PDFStockTransListing.php:101
 msgid "Stock Transaction Listing"
 msgstr "Hisse senedi işlem Listeleme"
 
@@ -16878,33 +16925,33 @@ msgstr "işlemler listelenmek hangi için tarihi girin"
 msgid "Enter the date to which the transactions are to be listed"
 msgstr "işlemler listelenmek hangi için tarihi girin"
 
-#: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:59
-#: PrintCustTransPortrait.php:57 SalesInquiry.php:1054
+#: PDFPeriodStockTransListing.php:43 PDFStockTransListing.php:42
+#: PrintCustTrans.php:59 PrintCustTransPortrait.php:57 SalesInquiry.php:1054
 msgid "Sales Invoice"
 msgstr "SATIS FATURASI"
 
-#: PDFPeriodStockTransListing.php:44 PrintCustTrans.php:62
-#: PrintCustTransPortrait.php:60
+#: PDFPeriodStockTransListing.php:44 PDFStockTransListing.php:43
+#: PrintCustTrans.php:62 PrintCustTransPortrait.php:60
 msgid "Sales Credit Note"
 msgstr "Satış Kredi Notu"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 PDFStockTransListing.php:44
 msgid "Location Transfer"
 msgstr "Yeri Transfer"
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 PDFStockTransListing.php:45
 msgid "Stock Adjustment"
 msgstr "Stok Ayarı"
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 PDFStockTransListing.php:46
 msgid "Purchase Order Delivery"
 msgstr "Sipariş Teslimat"
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 PDFStockTransListing.php:47
 msgid "Work Order Receipt"
 msgstr "İş Emri Alındı"
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 PDFStockTransListing.php:48
 msgid "Work Order Issue"
 msgstr "İş Emri Sayı"
 
@@ -16913,6 +16960,7 @@ msgid "For Stock Location"
 msgstr "DEPO/LOKASYON"
 
 #: PDFPeriodStockTransListing.php:132 PDFPeriodStockTransListing.php:138
+#: PDFStockTransListing.php:83 PDFStockTransListing.php:89
 msgid "Transaction Listing"
 msgstr "Işlem Listeleme"
 
@@ -16921,37 +16969,44 @@ msgstr "Işlem Listeleme"
 msgid "There were no transactions found in the database between the dates"
 msgstr "tarih için veritabanında bulunan hiçbir işlem vardı"
 
-#: PDFPeriodStockTransListing.php:151
+#: PDFPeriodStockTransListing.php:151 PDFStockTransListing.php:102
 msgid "Stock transaction listing from"
 msgstr "Hisse senedi işlem listeden"
 
 #: PDFPeriodStockTransListing.php:158
 #: includes/PDFCustTransListingPageHeader.inc:15
+#: includes/PDFStockTransListingPageHeader.inc:15
 msgid "Customer Invoices"
 msgstr "Müşteri Faturalar"
 
 #: PDFPeriodStockTransListing.php:161
 #: includes/PDFCustTransListingPageHeader.inc:18
+#: includes/PDFStockTransListingPageHeader.inc:18
 msgid "Customer Credit Notes"
 msgstr "Müşteri Kredi Notları"
 
 #: PDFPeriodStockTransListing.php:164 SelectProduct.php:417
+#: includes/PDFStockTransListingPageHeader.inc:21
 msgid "Location Transfers"
 msgstr "DEPO TRANSFERLERI"
 
 #: PDFPeriodStockTransListing.php:167 StockAdjustments.php:8
+#: includes/PDFStockTransListingPageHeader.inc:24
 msgid "Stock Adjustments"
 msgstr "STOK AYARLAMALARI"
 
 #: PDFPeriodStockTransListing.php:170
+#: includes/PDFStockTransListingPageHeader.inc:27
 msgid "Purchase Order Deliveries"
 msgstr "Sipariş Teslimatlar"
 
 #: PDFPeriodStockTransListing.php:173
+#: includes/PDFStockTransListingPageHeader.inc:30
 msgid "Work Order Receipts"
 msgstr "Iş siparişler"
 
 #: PDFPeriodStockTransListing.php:176
+#: includes/PDFStockTransListingPageHeader.inc:33
 msgid "Work Order Issues"
 msgstr "İş Emri Sorunlar"
 
@@ -17013,7 +17068,8 @@ msgid "Price Listing Report"
 msgstr "FIYAT LISTESI RAPORU"
 
 #: PDFPriceList.php:23 PDFPriceList.php:295 PDFPriceList.php:335
-#: PDFPriceList.php:355
+#: PDFPriceList.php:355 includes/PDFPriceListPageHeader.inc:16
+#: includes/PDFPriceListPageHeader.inc:40
 msgid "Customer Special Prices Only"
 msgstr "SADECE ÖZEL MÜSTERI FIYATLARI"
 
@@ -17127,7 +17183,7 @@ msgid "Effective Date Range"
 msgstr "Etkili Tarih Aralığı"
 
 #: PDFPriceList.php:362 includes/PDFLowGPPageHeader.inc:49
-#: includes/PDFLowGPPageHeader.inc:50
+#: includes/PDFLowGPPageHeader.inc:50 includes/PDFPriceListPageHeader.inc:49
 msgid "GP"
 msgstr "BRÜT KAR"
 
@@ -17167,7 +17223,7 @@ msgstr "Seçmek etiket türü"
 msgid "Number of labels per item"
 msgstr "parça başına etiket sayısı"
 
-#: PDFPrintLabel.php:93
+#: PDFPrintLabel.php:93 Z_PriceChanges.php:94
 msgid "Price list"
 msgstr "FIYAT LISTESI"
 
@@ -18926,7 +18982,7 @@ msgstr "Bekleyen ve Yetkili"
 msgid "Requisition"
 msgstr "TALEP"
 
-#: PricesBasedOnMarkUp.php:8
+#: PricesBasedOnMarkUp.php:8 Z_PriceChanges.php:7
 msgid "Update Pricing"
 msgstr "FIYAT GÜNCELLENIYOR"
 
@@ -18953,7 +19009,7 @@ msgstr ""
 msgid "Select the Price List to update"
 msgstr "güncellemek için Fiyat Listesi seçin"
 
-#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94
+#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94 Z_PriceChanges.php:28
 msgid "No Price List Selected"
 msgstr "FIYAT LISTESI SEÇILMEMIS"
 
@@ -19011,11 +19067,11 @@ msgstr "Yeni Fiyatı Etkili Olmak"
 msgid "New Price To Be Effective To (Blank = No End Date)"
 msgstr "Yeni Fiyat (Boş = Hayır Bitiş Tarihi) için Etkili Olmak"
 
-#: PricesBasedOnMarkUp.php:163
+#: PricesBasedOnMarkUp.php:163 Z_PriceChanges.php:67
 msgid "Percentage Increase (positive) or decrease (negative)"
 msgstr "ORAN ARTTIR (+) veya DÜSÜR (-)"
 
-#: PricesBasedOnMarkUp.php:167
+#: PricesBasedOnMarkUp.php:167 Z_PriceChanges.php:71
 msgid "Update Prices"
 msgstr "FIYATLARI GÜNCELLE"
 
@@ -19103,7 +19159,7 @@ msgid ""
 msgstr ""
 "Tüm fiyatlar bir log için bu sayfada CTRL + P ile basılmış olmalıdır değişti"
 
-#: PricesBasedOnMarkUp.php:214
+#: PricesBasedOnMarkUp.php:214 Z_PriceChanges.php:77
 msgid "So we are using a price list/sales type of"
 msgstr "KULLANILAN FIYAT LISTESI/SATIS TÜRÜ:"
 
@@ -19123,7 +19179,7 @@ msgstr "ve biz bir biçimlendirme yüzde başvuruyor"
 msgid "against"
 msgstr "karşı"
 
-#: PricesBasedOnMarkUp.php:229
+#: PricesBasedOnMarkUp.php:229 Z_PriceChanges.php:82
 msgid "The price list/sales type to be updated must be selected first"
 msgstr "GÜNCELLEME YAPMAK IÇIN ÖNCE BIR FIYAT LISTESI/SATIS TÜRÜ SEÇMELISINIZ"
 
@@ -19174,7 +19230,7 @@ msgstr ""
 "- hayır fiyat değişiklikleri sıfır maliyet kalemleri göre yapılacaktır. "
 "ilgili öğe:"
 
-#: PricesBasedOnMarkUp.php:337
+#: PricesBasedOnMarkUp.php:337 Z_PriceChanges.php:137
 msgid "Error updating prices for"
 msgstr "FIYAT GÜNCELLEME HATASI:"
 
@@ -19483,11 +19539,11 @@ msgstr "Satıcı No"
 msgid "Cheque No."
 msgstr "Çek No"
 
-#: PrintCustOrder_generic.php:141
+#: PrintCustOrder_generic.php:141 PrintSalesOrder_generic.php:111
 msgid "Customer Laser Packing Slip"
 msgstr "Müşteri Lazer Ambalaj Slip"
 
-#: PrintCustOrder_generic.php:142
+#: PrintCustOrder_generic.php:142 PrintSalesOrder_generic.php:112
 msgid "Laser Packing slip for order"
 msgstr "sipariş için lazer Ambalaj kayma"
 
@@ -19515,6 +19571,7 @@ msgid "A packing slip cannot be printed"
 msgstr "Bir paket fişi basılamaz"
 
 #: PrintCustOrder_generic.php:241 PrintCustOrder.php:197
+#: PrintSalesOrder_generic.php:182
 msgid "Print Another Packing Slip/Order"
 msgstr "BASKA SEVK/PAKET FÖYÜ YAZDIRIN"
 
@@ -19871,6 +19928,14 @@ msgstr "Baskı Faturalar veya Kredi Notları (Portre Modu)"
 msgid "Print Preview"
 msgstr "Baskı Önizleme"
 
+#: PrintSalesOrder_generic.php:181
+msgid ""
+"There were no outstanding items on the order to deliver. A packing slip "
+"cannot be printed"
+msgstr ""
+"teslim etmek amacıyla herhangi bir olağanüstü öğe vardı. Bir paket fişi "
+"basılamaz"
+
 #: PurchData.php:6
 msgid "Supplier Purchasing Data"
 msgstr "TEDARIKÇI SATINALMA VERILERI"
@@ -20183,20 +20248,20 @@ msgid "Show Stock Status"
 msgstr "STOK DURUMUNU GÖSTER"
 
 #: PurchData.php:505 SelectProduct.php:393 StockCostUpdate.php:167
-#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:95
+#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:96
 #: StockUsage.php:182
 msgid "Show Stock Movements"
 msgstr "STOK HAREKETLERINI GÖSTER"
 
 #: PurchData.php:506 SelectProduct.php:398 SelectSalesOrder.php:6
 #: StockAdjustments.php:426 StockCostUpdate.php:169 StockMovements.php:202
-#: StockReorderLevel.php:97 StockStatus.php:357 StockTransfers.php:532
+#: StockReorderLevel.php:98 StockStatus.php:357 StockTransfers.php:532
 #: StockUsage.php:183
 msgid "Search Outstanding Sales Orders"
 msgstr "TAMAMLANMAMIS SATIS SIPARISLERINI ARA"
 
 #: PurchData.php:507 SelectProduct.php:399 StockAdjustments.php:427
-#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:98
+#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:99
 #: StockStatus.php:358 StockTransfers.php:533 StockUsage.php:184
 msgid "Search Completed Sales Orders"
 msgstr "TAMAMLANMIS SATIS SIPARISLERINI GÖSTER"
@@ -21486,96 +21551,96 @@ msgid ""
 "this category"
 msgstr "BU SATIS KATEGORISI SILINEMIYOR, BAGLI ÜRÜNLER VAR"
 
-#: SalesCategories.php:125
+#: SalesCategories.php:124
 msgid "items under to this category"
 msgstr "BU KATEGORI ALTINDAKI ÜRÜNLER"
 
-#: SalesCategories.php:132
+#: SalesCategories.php:131
 msgid ""
 "Cannot delete this sales category because sub categories have been added to "
 "this category"
 msgstr "BU SATIS KATEGORISI SILINEMIYOR, ONA ALT KATEGORILER EKLENMIS"
 
-#: SalesCategories.php:133
+#: SalesCategories.php:131
 msgid "sub categories"
 msgstr "ALT-KATEGORILER"
 
-#: SalesCategories.php:137
+#: SalesCategories.php:135
 msgid "The sales category"
 msgstr "SATIS KATEGORILERI"
 
-#: SalesCategories.php:153 SalesCategories.php:161
+#: SalesCategories.php:148 SalesCategories.php:156
 msgid "Stock item"
 msgstr "ÜRÜN"
 
-#: SalesCategories.php:153
+#: SalesCategories.php:148
 msgid "has been added"
 msgstr "EKLENDI"
 
-#: SalesCategories.php:161
+#: SalesCategories.php:156
 msgid "has been removed"
 msgstr "KALDIRILDI"
 
-#: SalesCategories.php:169
+#: SalesCategories.php:164
 msgid "Main"
 msgstr "ANA"
 
-#: SalesCategories.php:197
+#: SalesCategories.php:195
 msgid "Selected Sales Category Path"
 msgstr "SATIS KATEGORI AGACI"
 
-#: SalesCategories.php:221
+#: SalesCategories.php:219
 msgid "There are no categories defined at this level."
 msgstr "BU SEVIYEDE TANIMLANMIS BIR KATEGORI YOK."
 
-#: SalesCategories.php:224
+#: SalesCategories.php:222
 msgid "Sub Category"
 msgstr "ALT KATEGORI"
 
-#: SalesCategories.php:307
+#: SalesCategories.php:305
 msgid "Edit Sub Category"
 msgstr "ALT KATEGORI DÜZENLE"
 
-#: SalesCategories.php:316
+#: SalesCategories.php:314
 msgid "New Sub Category"
 msgstr "YENI ALT-KATEGORI"
 
-#: SalesCategories.php:321
+#: SalesCategories.php:319
 msgid "Category Name"
 msgstr "KATEGORI ADI"
 
-#: SalesCategories.php:331
+#: SalesCategories.php:329
 msgid "Submit Information"
 msgstr "TAMAM"
 
-#: SalesCategories.php:381
+#: SalesCategories.php:379
 msgid "Add Inventory to this category."
 msgstr "BU KATEGORIYE STOK EKLE"
 
-#: SalesCategories.php:382
+#: SalesCategories.php:380
 msgid "Select Inv. Item"
 msgstr "ÜRÜN SEÇ"
 
-#: SalesCategories.php:394
+#: SalesCategories.php:392
 msgid "Add Inventory Item"
 msgstr "ÜRÜN EKLE"
 
-#: SalesCategories.php:399
+#: SalesCategories.php:397
 #, fuzzy
 msgid "No more Inventory items to add"
 msgstr "EKLENECEK BASKA ÜRÜN KALMADI"
 
-#: SalesCategories.php:421
+#: SalesCategories.php:419
 msgid "Inventory items in this category."
 msgstr "BU KATEGORIDEKI ÜRÜNLER"
 
-#: SalesCategories.php:438 StockAdjustments.php:391 SupplierTenders.php:291
+#: SalesCategories.php:436 StockAdjustments.php:391 SupplierTenders.php:291
 #: TaxGroups.php:354 WWW_Access.php:212
 #, php-format
 msgid "Remove"
 msgstr "KALDIR"
 
-#: SalesCategories.php:442
+#: SalesCategories.php:440
 #, fuzzy
 msgid "No Inventory items in this category"
 msgstr "BU KATEGORIDE ÜRÜN YOK"
@@ -23164,11 +23229,6 @@ msgstr "SATIS FIYATI"
 msgid "No Default Price Set in Home Currency"
 msgstr "Evde Para Set Hayır Varsayılan Fiyatı"
 
-#: SelectProduct.php:282
-msgid ""
-"The quantity on work orders for this product cannot be retrieved because"
-msgstr "Bu ürün için iş emri miktarı nedeniyle alınamaz"
-
 #: SelectProduct.php:323
 msgid ""
 "The workorder component demand for this product cannot be retrieved because"
@@ -23214,7 +23274,7 @@ msgid "Item Maintenance"
 msgstr "ÜRÜN YÖNETIMI"
 
 #: SelectProduct.php:396 StockAdjustments.php:425 StockCostUpdate.php:168
-#: StockMovements.php:201 StockReorderLevel.php:96 StockTransfers.php:531
+#: StockMovements.php:201 StockReorderLevel.php:97 StockTransfers.php:531
 #: StockUsage.php:87
 msgid "Show Stock Usage"
 msgstr "STOK KULLANIMI"
@@ -28098,11 +28158,12 @@ msgstr "Aşağıdaki teklif aldık"
 msgid "Items to offer from"
 msgstr "Kalemleri için teklif"
 
-#: SupplierTenders.php:263 api/api_xml-rpc.php:696 api/api_xml-rpc.php:764
-#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:826 api/api_xml-rpc.php:865
-#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
-#: api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302
-#: api/api_xml-rpc.php:2498 api/api_xml-rpc.php:2662
+#: SupplierTenders.php:263 includes/PDFAssetRegisterHeader.inc:61
+#: api/api_xml-rpc.php:696 api/api_xml-rpc.php:764 api/api_xml-rpc.php:795
+#: api/api_xml-rpc.php:826 api/api_xml-rpc.php:865 api/api_xml-rpc.php:896
+#: api/api_xml-rpc.php:927 api/api_xml-rpc.php:970 api/api_xml-rpc.php:2220
+#: api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302 api/api_xml-rpc.php:2498
+#: api/api_xml-rpc.php:2662
 msgid "Stock ID"
 msgstr "Stok numarası"
 
@@ -30355,67 +30416,67 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:129
+#: UpgradeDatabase.php:133
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:141
+#: UpgradeDatabase.php:145
 msgid "Applying"
 msgstr "Uygulayarak"
 
-#: UpgradeDatabase.php:168 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:172 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Başarı"
 
-#: UpgradeDatabase.php:171 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:175 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tablo zaten yaratıldı"
 
-#: UpgradeDatabase.php:174
+#: UpgradeDatabase.php:178
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Sütun zaten yaratıldı"
 
-#: UpgradeDatabase.php:177 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:181 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Sütun zaten yaratıldı"
 
-#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Endeks zaten var"
 
-#: UpgradeDatabase.php:183 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:187 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Girdisi zaten yapıldı"
 
-#: UpgradeDatabase.php:186
+#: UpgradeDatabase.php:190
 msgid "SQL syntax error. The SQL error message is"
 msgstr "SQL sözdizimi hatası. SQL hata mesajı"
 
-#: UpgradeDatabase.php:189 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:193 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "Birincil anahtar zaten var"
 
-#: UpgradeDatabase.php:192
+#: UpgradeDatabase.php:196
 msgid "Index already dropped previously"
 msgstr "Endeks zaten önceden düştü"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Başarısızlık"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Hata numarası"
@@ -32869,6 +32930,36 @@ msgstr "alan boş olabilir"
 msgid "Default"
 msgstr "Varsayılan"
 
+#: Z_FixedAssetCostAccumDepnFix.php:8
+#, fuzzy
+msgid "Fixed Fixed Asset Records"
+msgstr "Sabit Kıymet Kredisi"
+
+#: Z_FixedAssetCostAccumDepnFix.php:12
+msgid "This script repairs the fixedasset table cost and accum depn"
+msgstr ""
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "Updated asset"
+msgstr "ORANLARI GÜNCELLE"
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "to have a cost of"
+msgstr "STANDARD MALIYET:"
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "and accum depn of"
+msgstr "Accum Depn GL"
+
+#: Z_FixedAssetCostAccumDepnFix.php:22
+msgid ""
+"Asset cost and accumulated depreciation has now been fixed to the "
+"transaction cost and depreciation"
+msgstr ""
+
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:5
 #: Z_ImportGLAccountSections.php:5
 msgid "Import Chart of Accounts"
@@ -33703,6 +33794,111 @@ msgstr ""
 #: Z_poRebuildDefault.php:49
 msgid "Existing languages are not affected."
 msgstr "MEVCUT LISANLAR ETKILENMEDI."
+
+#: Z_PriceChanges.php:11
+msgid ""
+"This page updates already existing prices for a specified sales type (price "
+"list)"
+msgstr ""
+"Bu sayfa güncelleştirmeleri zaten belirli bir satış türü (fiyat listesi) "
+"için fiyat mevcut"
+
+#: Z_PriceChanges.php:11
+msgid ""
+"Choose between updating only customer special prices where the customer is "
+"set up under the price list selected, or all prices under the sales type or "
+"just specific prices for a customer for the stock category selected"
+msgstr ""
+"müşteri seçilen stok kategori için bir müşteri için sadece özel fiyatlar "
+"veya satış türü altında tüm fiyatlar veya seçilen fiyat listesi altında "
+"ayarlandı sadece müşteri özel fiyat güncelleme arasında seçim"
+
+#: Z_PriceChanges.php:13
+msgid ""
+"This script takes no account of start and end dates of prices and updates "
+"all historical prices as well as current prices - better to use new scripts "
+"under Inventory -> Maintenance"
+msgstr ""
+"Bu script fiyatlar ve güncellemeler tüm tarihsel fiyatları yanı sıra cari "
+"fiyatlarla başlangıç ve bitiş tarihlerinin herhangi bir dikkate alan - daha "
+"iyi Envanter altında yeni scriptleri kullanmak -&gt; Bakım"
+
+#: Z_PriceChanges.php:24
+msgid "Select the Price List to update the costs for"
+msgstr "MALIYETI GÜNCELLENECEK FIYAT LISTESI SEÇIN"
+
+#: Z_PriceChanges.php:55
+msgid "Which Prices to update"
+msgstr "GÜNCELLENECEK FIYATLAR"
+
+#: Z_PriceChanges.php:57
+msgid "Only Non-customer special prices"
+msgstr "SADECE MÜSTERI HARICI ÖZEL FIYATLAR"
+
+#: Z_PriceChanges.php:58
+msgid "Only customer special prices"
+msgstr "SADECE MÜSTERI ÖZEL FIYATLARI"
+
+#: Z_PriceChanges.php:59
+msgid "Both customer special prices and non-customer special prices"
+msgstr "HEPSI"
+
+#: Z_PriceChanges.php:60
+msgid "customer special prices only"
+msgstr "SADECE MÜSTERI ÖZEL FIYATLARI"
+
+#: Z_PriceChanges.php:71
+msgid ""
+"Are you sure you wish to update all the prices according to the criteria "
+"selected?"
+msgstr ""
+"SEÇTIGINIZ KRITERLERE GÖRE TÜM FIYATLARI GÜNCELLEMEK ISTEDIGINIZE EMİN "
+"MISINIZ?"
+
+#: Z_PriceChanges.php:78
+msgid "and a stock category code of"
+msgstr "STOK KATEGORI KODU:"
+
+#: Z_PriceChanges.php:79
+msgid "and a increase percent of"
+msgstr "DEGISIM ORANI:"
+
+#: Z_PriceChanges.php:89
+msgid ""
+"The increase or decrease to be applied is expected to be an integer between "
+"1 and 40 it is not necessary to enter the"
+msgstr ""
+"Artırmak veya azaltmak uygulanacak onu girmek için gerekli değildir 1 ile 40 "
+"arasında bir tamsayı olması bekleniyor"
+
+#: Z_PriceChanges.php:89
+#, fuzzy
+msgid "sign"
+msgstr "TASARIM"
+
+#: Z_PriceChanges.php:89
+msgid "the amount is assumed to be a percentage"
+msgstr "TUTAR IÇIN YÜZDE KULLANMALISINIZ"
+
+#: Z_PriceChanges.php:94
+msgid "prices for"
+msgstr "FIYATLAR"
+
+#: Z_PriceChanges.php:94
+msgid "for the stock category"
+msgstr "STOK KATEGORISI"
+
+#: Z_PriceChanges.php:94
+msgid "will been incremented by"
+msgstr "ARTIS"
+
+#: Z_PriceChanges.php:94
+msgid "percent"
+msgstr "YÜZDE"
+
+#: Z_PriceChanges.php:138
+msgid "Updating prices for"
+msgstr "GÜNCELLENEN FIYATLAR"
 
 #: Z_ReApplyCostToSA.php:6
 msgid "Apply Current Cost to Sales Analysis"
@@ -35144,6 +35340,28 @@ msgstr "VADESI GEÇMIS"
 msgid "Aged Supplier Balances For Suppliers from"
 msgstr "YASLANDIRILMIS TEDARIKÇI BILANCOSU"
 
+#: includes/PDFAssetRegisterHeader.inc:35
+msgid "Asset Type"
+msgstr "Varlık Türü"
+
+#: includes/PDFAssetRegisterHeader.inc:36
+#, fuzzy
+msgid "Acquired After"
+msgstr "Gerekli Tarihi"
+
+#: includes/PDFAssetRegisterHeader.inc:37
+#, fuzzy
+msgid "and Before"
+msgstr "ve"
+
+#: includes/PDFAssetRegisterHeader.inc:57
+msgid "<--------------External Depreciation-------------->"
+msgstr ""
+
+#: includes/PDFAssetRegisterHeader.inc:58
+msgid "<--------------Internal Depreciation-------------->"
+msgstr ""
+
 #: includes/PDFBankingSummaryPageHeader.inc:19
 msgid "for Receipt Batch"
 msgstr "Makbuz Parti için"
@@ -35239,6 +35457,7 @@ msgstr "girişi"
 
 #: includes/PDFCustTransListingPageHeader.inc:50
 #: includes/PDFPeriodStockTransListingPageHeader.inc:49
+#: includes/PDFStockTransListingPageHeader.inc:69
 #: includes/PDFSuppTransListingPageHeader.inc:50
 msgid "Trans Date"
 msgstr "Trans Tarihi"
@@ -35466,6 +35685,15 @@ msgstr "Tel"
 #: includes/PDFPickingListHeader.inc:77
 msgid "Actual Picked"
 msgstr "Gerçek Picked"
+
+#: includes/PDFPriceListPageHeader.inc:18
+#, fuzzy
+msgid "Special Prices for Inventory Categories between"
+msgstr "[FIYAT LISTESI]  -  STOK KATEGORILERI:"
+
+#: includes/PDFPriceListPageHeader.inc:21
+msgid "Price List for Inventory Categories between"
+msgstr "[FIYAT LISTESI]  -  STOK KATEGORILERI:"
 
 #: includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -38030,143 +38258,12 @@ msgstr "Dönüş oranı"
 #~ msgstr "SEÇILMIS MÜSTERININ KAYDI"
 
 #, fuzzy
-#~ msgid "Demand Work Orders"
-#~ msgstr "Arama İş Emirleri"
-
-#, fuzzy
 #~ msgid "Annual Depreciation Percentage"
 #~ msgstr "Geçersiz Amortisman Oranı:"
 
 #, fuzzy
 #~ msgid "Update Journal"
 #~ msgstr "Güncelleme Faktörü"
-
-#~ msgid ""
-#~ "There were no outstanding items on the order to deliver. A packing slip "
-#~ "cannot be printed"
-#~ msgstr ""
-#~ "teslim etmek amacıyla herhangi bir olağanüstü öğe vardı. Bir paket fişi "
-#~ "basılamaz"
-
-#, fuzzy
-#~ msgid "Fixed Fixed Asset Records"
-#~ msgstr "Sabit Kıymet Kredisi"
-
-#, fuzzy
-#~ msgid "Updated asset"
-#~ msgstr "ORANLARI GÜNCELLE"
-
-#, fuzzy
-#~ msgid "to have a cost of"
-#~ msgstr "STANDARD MALIYET:"
-
-#, fuzzy
-#~ msgid "and accum depn of"
-#~ msgstr "Accum Depn GL"
-
-#~ msgid ""
-#~ "This page updates already existing prices for a specified sales type "
-#~ "(price list)"
-#~ msgstr ""
-#~ "Bu sayfa güncelleştirmeleri zaten belirli bir satış türü (fiyat listesi) "
-#~ "için fiyat mevcut"
-
-#~ msgid ""
-#~ "Choose between updating only customer special prices where the customer "
-#~ "is set up under the price list selected, or all prices under the sales "
-#~ "type or just specific prices for a customer for the stock category "
-#~ "selected"
-#~ msgstr ""
-#~ "müşteri seçilen stok kategori için bir müşteri için sadece özel fiyatlar "
-#~ "veya satış türü altında tüm fiyatlar veya seçilen fiyat listesi altında "
-#~ "ayarlandı sadece müşteri özel fiyat güncelleme arasında seçim"
-
-#~ msgid ""
-#~ "This script takes no account of start and end dates of prices and updates "
-#~ "all historical prices as well as current prices - better to use new "
-#~ "scripts under Inventory -> Maintenance"
-#~ msgstr ""
-#~ "Bu script fiyatlar ve güncellemeler tüm tarihsel fiyatları yanı sıra cari "
-#~ "fiyatlarla başlangıç ve bitiş tarihlerinin herhangi bir dikkate alan - "
-#~ "daha iyi Envanter altında yeni scriptleri kullanmak -&gt; Bakım"
-
-#~ msgid "Select the Price List to update the costs for"
-#~ msgstr "MALIYETI GÜNCELLENECEK FIYAT LISTESI SEÇIN"
-
-#~ msgid "Which Prices to update"
-#~ msgstr "GÜNCELLENECEK FIYATLAR"
-
-#~ msgid "Only Non-customer special prices"
-#~ msgstr "SADECE MÜSTERI HARICI ÖZEL FIYATLAR"
-
-#~ msgid "Only customer special prices"
-#~ msgstr "SADECE MÜSTERI ÖZEL FIYATLARI"
-
-#~ msgid "Both customer special prices and non-customer special prices"
-#~ msgstr "HEPSI"
-
-#~ msgid "customer special prices only"
-#~ msgstr "SADECE MÜSTERI ÖZEL FIYATLARI"
-
-#~ msgid ""
-#~ "Are you sure you wish to update all the prices according to the criteria "
-#~ "selected?"
-#~ msgstr ""
-#~ "SEÇTIGINIZ KRITERLERE GÖRE TÜM FIYATLARI GÜNCELLEMEK ISTEDIGINIZE EMİN "
-#~ "MISINIZ?"
-
-#~ msgid "and a stock category code of"
-#~ msgstr "STOK KATEGORI KODU:"
-
-#~ msgid "and a increase percent of"
-#~ msgstr "DEGISIM ORANI:"
-
-#~ msgid ""
-#~ "The increase or decrease to be applied is expected to be an integer "
-#~ "between 1 and 40 it is not necessary to enter the"
-#~ msgstr ""
-#~ "Artırmak veya azaltmak uygulanacak onu girmek için gerekli değildir 1 ile "
-#~ "40 arasında bir tamsayı olması bekleniyor"
-
-#, fuzzy
-#~ msgid "sign"
-#~ msgstr "TASARIM"
-
-#~ msgid "the amount is assumed to be a percentage"
-#~ msgstr "TUTAR IÇIN YÜZDE KULLANMALISINIZ"
-
-#~ msgid "prices for"
-#~ msgstr "FIYATLAR"
-
-#~ msgid "for the stock category"
-#~ msgstr "STOK KATEGORISI"
-
-#~ msgid "will been incremented by"
-#~ msgstr "ARTIS"
-
-#~ msgid "percent"
-#~ msgstr "YÜZDE"
-
-#~ msgid "Updating prices for"
-#~ msgstr "GÜNCELLENEN FIYATLAR"
-
-#~ msgid "Asset Type"
-#~ msgstr "Varlık Türü"
-
-#, fuzzy
-#~ msgid "Acquired After"
-#~ msgstr "Gerekli Tarihi"
-
-#, fuzzy
-#~ msgid "and Before"
-#~ msgstr "ve"
-
-#, fuzzy
-#~ msgid "Special Prices for Inventory Categories between"
-#~ msgstr "[FIYAT LISTESI]  -  STOK KATEGORILERI:"
-
-#~ msgid "Price List for Inventory Categories between"
-#~ msgstr "[FIYAT LISTESI]  -  STOK KATEGORILERI:"
 
 #~ msgid ""
 #~ "The effective after date field must be a date in the format dd/mm/yy or "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-24 12:24+1200\n"
+"POT-Creation-Date: 2011-07-27 19:08+1200\n"
 "PO-Revision-Date: 2011-04-28 13:56+0000\n"
 "Last-Translator: Skender Mustafi <contact@skendermustafi.ch>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -146,7 +146,7 @@ msgstr ""
 #: Locations.php:256 Locations.php:265 Locations.php:274 Locations.php:283
 #: Locations.php:292 Locations.php:301 MRPDemandTypes.php:87
 #: PaymentMethods.php:138 PaymentTerms.php:144 PaymentTerms.php:151
-#: PcExpenses.php:152 SalesCategories.php:125 SalesCategories.php:133
+#: PcExpenses.php:152 SalesCategories.php:124 SalesCategories.php:131
 #: SalesPeople.php:149 SalesPeople.php:156 SalesTypes.php:150
 #: SalesTypes.php:160 Shippers.php:82 Shippers.php:94 StockCategories.php:179
 #: Stocks.php:481 Stocks.php:490 Stocks.php:498 Stocks.php:506 Stocks.php:514
@@ -343,7 +343,7 @@ msgstr "Jo"
 #: PaymentMethods.php:200 PaymentTerms.php:201 PcAssignCashToTab.php:255
 #: PcClaimExpensesFromTab.php:252 PcExpenses.php:208 PcTabs.php:234
 #: PcTypeTabs.php:172 PO_AuthorisationLevels.php:149 Prices_Customer.php:280
-#: Prices.php:246 PurchData.php:202 SalesCategories.php:256
+#: Prices.php:246 PurchData.php:202 SalesCategories.php:254
 #: SalesGLPostings.php:132 SalesGLPostings.php:245 SalesPeople.php:219
 #: SalesTypes.php:216 SecurityTokens.php:110 SelectCustomer.php:668
 #: SelectCustomer.php:686 SelectCustomer.php:710 SelectCustomer.php:727
@@ -377,7 +377,7 @@ msgstr "A jeni i sigurt se doni të fshini këtë degë?"
 #: PcExpensesTypeTab.php:185 PcTabs.php:235 PcTypeTabs.php:173
 #: PO_AuthorisationLevels.php:151 PO_Items.php:684 Prices_Customer.php:281
 #: Prices.php:247 PurchData.php:203 SalesAnalReptCols.php:294
-#: SalesAnalRepts.php:302 SalesCategories.php:257 SalesGLPostings.php:133
+#: SalesAnalRepts.php:302 SalesCategories.php:255 SalesGLPostings.php:133
 #: SalesGLPostings.php:246 SalesPeople.php:220 SalesTypes.php:217
 #: SecurityTokens.php:111 SelectCreditItems.php:754 SelectCustomer.php:669
 #: SelectCustomer.php:687 SelectCustomer.php:711 SelectCustomer.php:728
@@ -699,9 +699,9 @@ msgid "Date"
 msgstr "Data"
 
 #: AddCustomerNotes.php:114 AddCustomerTypeNotes.php:105 PcReportTab.php:173
-#: Stocks.php:892 UpgradeDatabase.php:171 UpgradeDatabase.php:174
-#: UpgradeDatabase.php:177 UpgradeDatabase.php:180 UpgradeDatabase.php:183
-#: UpgradeDatabase.php:186 UpgradeDatabase.php:189 UpgradeDatabase.php:192
+#: Stocks.php:892 UpgradeDatabase.php:175 UpgradeDatabase.php:178
+#: UpgradeDatabase.php:181 UpgradeDatabase.php:184 UpgradeDatabase.php:187
+#: UpgradeDatabase.php:190 UpgradeDatabase.php:193 UpgradeDatabase.php:196
 #: Z_Upgrade_3.10-3.11.php:62 Z_Upgrade_3.10-3.11.php:66
 #: Z_Upgrade_3.10-3.11.php:70 Z_Upgrade_3.10-3.11.php:74
 #: Z_Upgrade_3.10-3.11.php:78 Z_Upgrade_3.11-4.00.php:62
@@ -845,15 +845,15 @@ msgstr "Detajet e konsumatorit nuk mund të shikohet nga SQL sepse"
 #: PDFRemittanceAdvice.php:84 PDFStockCheckComparison.php:36
 #: PDFStockCheckComparison.php:62 PDFStockCheckComparison.php:267
 #: PO_PDFPurchOrder.php:31 PO_PDFPurchOrder.php:149
-#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198 ReorderLevel.php:60
-#: ReorderLevel.php:149 SalesAnalysis_UserDefined.php:28
-#: SelectCreditItems.php:23 StockCheck.php:47 StockCheck.php:68
-#: StockCheck.php:98 StockCheck.php:142 StockCheck.php:153 StockCheck.php:195
-#: StockDispatch.php:92 StockDispatch.php:104 SupplierBalsAtPeriodEnd.php:56
-#: SupplierBalsAtPeriodEnd.php:67 SuppPaymentRun.php:109
-#: SuppPaymentRun.php:120 SuppPaymentRun.php:184 SuppPaymentRun.php:214
-#: SuppPriceList.php:121 Tax.php:63 Tax.php:168 Tax.php:277
-#: Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
+#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198
+#: PrintSalesOrder_generic.php:183 ReorderLevel.php:60 ReorderLevel.php:149
+#: SalesAnalysis_UserDefined.php:28 SelectCreditItems.php:23 StockCheck.php:47
+#: StockCheck.php:68 StockCheck.php:98 StockCheck.php:142 StockCheck.php:153
+#: StockCheck.php:195 StockDispatch.php:92 StockDispatch.php:104
+#: SupplierBalsAtPeriodEnd.php:56 SupplierBalsAtPeriodEnd.php:67
+#: SuppPaymentRun.php:109 SuppPaymentRun.php:120 SuppPaymentRun.php:184
+#: SuppPaymentRun.php:214 SuppPriceList.php:121 Tax.php:63 Tax.php:168
+#: Tax.php:277 Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
 #: Z_DataExport.php:308 Z_DataExport.php:347 Z_DataExport.php:383
 #: Z_DataExport.php:419 Z_DataExport.php:471 Z_poRebuildDefault.php:38
 #: includes/PDFPaymentRun_PymtFooter.php:57
@@ -1101,7 +1101,7 @@ msgstr "Zona Kodi"
 #: FixedAssetCategories.php:134 GLAccounts.php:197 Locations.php:328
 #: MRPDemands.php:248 PcAssignCashToTab.php:135 PcClaimExpensesFromTab.php:126
 #: PcExpenses.php:160 PcExpensesTypeTab.php:101 PcTabs.php:166
-#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:137
+#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:135
 #: SalesTypes.php:166 StockCategories.php:196 Suppliers.php:635
 #: SupplierTypes.php:151 Z_DeleteInvoice.php:146
 msgid "has been deleted"
@@ -1168,7 +1168,8 @@ msgstr "User ID"
 #: SystemParameters.php:943 SystemParameters.php:949 SystemParameters.php:955
 #: SystemParameters.php:961 TopItems.php:23 TopItems.php:36
 #: WorkOrderEntry.php:562 WorkOrderEntry.php:565 WorkOrderIssue.php:626
-#: WorkOrderIssue.php:629
+#: WorkOrderIssue.php:629 includes/PDFAssetRegisterHeader.inc:15
+#: includes/PDFAssetRegisterHeader.inc:24
 msgid "All"
 msgstr "Të gjitha"
 
@@ -1737,6 +1738,8 @@ msgstr "Numri"
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
 #: includes/PDFPeriodStockTransListingPageHeader.inc:52
 #: includes/PDFStockComparisonPageHeader.inc:36
+#: includes/PDFStockTransListingPageHeader.inc:68
+#: includes/PDFStockTransListingPageHeader.inc:72
 #: includes/PDFSuppTransListingPageHeader.inc:49
 msgid "Reference"
 msgstr "Referim"
@@ -1894,9 +1897,10 @@ msgstr "Pjesa"
 #: includes/PDFSalesOrder_generic.inc:95
 #: includes/PDFStockCheckPageHeader.inc:44
 #: includes/PDFStockNegativesHeader.inc:33
-#: includes/PDFStockTransferHeader.inc:39 includes/PDFTransPageHeader.inc:209
-#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2260
-#: api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
+#: includes/PDFStockTransferHeader.inc:39
+#: includes/PDFStockTransListingPageHeader.inc:70
+#: includes/PDFTransPageHeader.inc:209 includes/PO_PDFOrderPageHeader.inc:78
+#: api/api_xml-rpc.php:2260 api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
 msgid "Quantity"
 msgstr "Sasi"
 
@@ -1953,7 +1957,7 @@ msgstr "Bom Extended Sasia Listing Për       "
 #: includes/PDFOrderPageHeader_generic.inc:79
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
-#: includes/PDFPickingListHeader.inc:48
+#: includes/PDFPickingListHeader.inc:48 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:27
 #: includes/PDFSalesAnalPageHeader.inc:15
 #: includes/PDFSalesOrder_generic.inc:81
@@ -1981,6 +1985,7 @@ msgstr "Shtypur"
 #: PrintCustTransPortrait.php:998 ReorderLevel.php:240 StockDispatch.php:337
 #: SuppPriceList.php:255 Tax.php:243 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
+#: includes/PDFAssetRegisterHeader.inc:38
 #: includes/PDFBalanceSheetPageHeader.inc:26
 #: includes/PDFBankingSummaryPageHeader.inc:23
 #: includes/PDFBOMListingPageHeader.inc:26
@@ -2000,7 +2005,7 @@ msgstr "Shtypur"
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
 #: includes/PDFPeriodStockTransListingPageHeader.inc:25
-#: includes/PDFPickingListHeader.inc:69
+#: includes/PDFPickingListHeader.inc:69 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:28
 #: includes/PDFQuotationPageHeader.inc:94
 #: includes/PDFQuotationPortraitPageHeader.inc:92
@@ -2013,6 +2018,7 @@ msgstr "Shtypur"
 #: includes/PDFStockLocTransferHeader.inc:12
 #: includes/PDFStockNegativesHeader.inc:12
 #: includes/PDFStockTransferHeader.inc:16
+#: includes/PDFStockTransListingPageHeader.inc:45
 #: includes/PDFSupplierBalsPageHeader.inc:20
 #: includes/PDFSuppTransListingPageHeader.inc:32
 #: includes/PDFTabReportHeader.inc:15
@@ -2124,7 +2130,7 @@ msgstr "Një nivel"
 #: PDFOrderStatus.php:319 PDFPrintLabel.php:238 PO_Items.php:637
 #: PO_Items.php:926 PO_SelectOSPurchOrder.php:211 PO_SelectPurchOrder.php:178
 #: PricesByCost.php:152 ReorderLevelLocation.php:55 ReorderLevel.php:254
-#: ReverseGRN.php:377 SalesCategories.php:423 SecurityTokens.php:86
+#: ReverseGRN.php:377 SalesCategories.php:421 SecurityTokens.php:86
 #: SecurityTokens.php:92 SecurityTokens.php:102 SelectAsset.php:243
 #: SelectCompletedOrder.php:536 SelectContract.php:153
 #: SelectCreditItems.php:976 SelectOrderItems.php:1517
@@ -2139,8 +2145,8 @@ msgstr "Një nivel"
 #: TaxAuthorities.php:145 TopItems.php:163 WorkCentres.php:124
 #: WorkOrderCosting.php:81 WorkOrderCosting.php:111 WorkOrderEntry.php:598
 #: WorkOrderIssue.php:668 includes/DefineLabelClass.php:12
-#: includes/DefineLabelClass.php:45 includes/PDFGrnHeader.inc:29
-#: includes/PDFInventoryPlanPageHeader.inc:51
+#: includes/DefineLabelClass.php:45 includes/PDFAssetRegisterHeader.inc:62
+#: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
 #: includes/PDFStockLocTransferHeader.inc:49
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
@@ -2252,7 +2258,7 @@ msgstr "Enter ekstrakt i"
 
 #: BOMInquiry.php:26 BOMs.php:806 EmailConfirmation.php:191 MRPDemands.php:333
 #: MRPReport.php:542 PO_SelectOSPurchOrder.php:200 PO_SelectPurchOrder.php:170
-#: SalesCategories.php:422 SelectProduct.php:512 Shipt_Select.php:166
+#: SalesCategories.php:420 SelectProduct.php:512 Shipt_Select.php:166
 #: StockAdjustments.php:76 StockAdjustments.php:335 StockCounts.php:97
 #: StockCounts.php:132 StockMovements.php:31 StockReorderLevel.php:44
 #: StockStatus.php:61 StockTransfers.php:38 StockTransfers.php:445
@@ -2660,8 +2666,10 @@ msgstr "Nivel"
 #: StockCounts.php:133 StockReorderLevel.php:49 StockSerialItemResearch.php:78
 #: StockStatus.php:84 StockStatus.php:89 WhereUsedInquiry.php:67
 #: WorkCentres.php:125 WorkCentres.php:210
+#: includes/PDFAssetRegisterHeader.inc:64
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
-#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2258
+#: includes/PDFStockNegativesHeader.inc:31
+#: includes/PDFStockTransListingPageHeader.inc:71 api/api_xml-rpc.php:2258
 #: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
 msgid "Location"
 msgstr "Vendndodhja"
@@ -3011,7 +3019,7 @@ msgstr "Krijo entries GL për transaksionet e aksioneve"
 #: PO_AuthoriseMyOrders.php:132 PricesByCost.php:221 PurchData.php:497
 #: ReorderLevelLocation.php:156 SecurityTokens.php:89
 #: SelectCreditItems.php:911 SMTPServer.php:64 StockCostUpdate.php:163
-#: StockReorderLevel.php:94 Stocks.php:1047 SystemParameters.php:1018
+#: StockReorderLevel.php:95 Stocks.php:1047 SystemParameters.php:1018
 #: TaxAuthorityRates.php:79 WorkOrderEntry.php:546 WOSerialNos.php:315
 msgid "Update"
 msgstr "Update"
@@ -3261,6 +3269,7 @@ msgstr "Kjo Dërgimi"
 #: StockMovements.php:97 StockStatus.php:313 SuppCreditGRNs.php:229
 #: SuppCreditGRNs.php:230 SupplierTenders.php:267 SupplierTenders.php:494
 #: SuppPriceList.php:274 includes/DefineLabelClass.php:49
+#: includes/PDFPriceListPageHeader.inc:46
 #: includes/PDFQuotationPageHeader.inc:104
 #: includes/PDFQuotationPortraitPageHeader.inc:104
 #: includes/PDFTransPageHeaderPortrait.inc:265
@@ -3867,8 +3876,8 @@ msgstr "Nuk mund të rifitoj komponente kuvendit nga baza e të dhënave për"
 #: FixedAssetCategories.php:86 FixedAssetCategories.php:105
 #: PricesBasedOnMarkUp.php:337 PricesBasedOnMarkUp.php:353
 #: SelectCreditItems.php:1395 SpecialOrder.php:423 StockCategories.php:21
-#: StockCategories.php:82 StockCategories.php:153 Z_ReApplyCostToSA.php:62
-#: Z_ReApplyCostToSA.php:74
+#: StockCategories.php:82 StockCategories.php:153 Z_PriceChanges.php:137
+#: Z_ReApplyCostToSA.php:62 Z_ReApplyCostToSA.php:74
 msgid "because"
 msgstr "sepse"
 
@@ -4386,7 +4395,7 @@ msgid "Image"
 msgstr "Imazh"
 
 #: ContractBOM.php:365 CounterSales.php:2013 FixedAssetItems.php:468
-#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:249
+#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:247
 #: SelectCreditItems.php:1005 SelectOrderItems.php:1531
 #: SelectOrderItems.php:1708 Stocks.php:728 Stocks.php:732
 #: SupplierTenders.php:518 WorkOrderEntry.php:617 WorkOrderIssue.php:684
@@ -5116,7 +5125,7 @@ msgstr "Reset"
 #: StockSerialItemResearch.php:81
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
 #: includes/PDFDIFOTPageHeader.inc:44 includes/PDFOrderPageHeader.inc:50
-#: includes/PDFTransPageHeader.inc:47
+#: includes/PDFPriceListPageHeader.inc:42 includes/PDFTransPageHeader.inc:47
 #: includes/PDFTransPageHeaderPortrait.inc:56
 msgid "Branch"
 msgstr "Degë"
@@ -5160,18 +5169,19 @@ msgstr "Kontratës Reference"
 #: ReorderLevel.php:242 SalesCategoryPeriodInquiry.php:162
 #: SalesTopItemsInquiry.php:218 SpecialOrder.php:606 StockDispatch.php:344
 #: Stocks.php:738 SuppPriceList.php:211 SuppPriceList.php:261
-#: includes/PDFInventoryValnPageHeader.inc:32
+#: Z_PriceChanges.php:37 includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 msgid "Category"
 msgstr "Kategoria"
 
 #: Contracts.php:849 PricesBasedOnMarkUp.php:111 SpecialOrder.php:610
-#: Stocks.php:741
+#: Stocks.php:741 Z_PriceChanges.php:42
 msgid "The stock categories could not be retrieved because"
 msgstr "Kategoritë e aksioneve nuk mund të shikohet, sepse"
 
 #: Contracts.php:850 FixedAssetItems.php:485 PricesBasedOnMarkUp.php:112
-#: SpecialOrder.php:611 Stocks.php:742
+#: SpecialOrder.php:611 Stocks.php:742 Z_PriceChanges.php:43
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "SQL përdorur për të marrë kategoritë e aksioneve dhe nuk ishte"
 
@@ -5711,7 +5721,8 @@ msgstr "Rendi i ri Puna Numri"
 #: CounterSales.php:1193 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:204 Prices_Customer.php:41
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:332 SpecialOrder.php:111
-#: SpecialOrder.php:113
+#: SpecialOrder.php:113 includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 msgid "for"
 msgstr "për"
 
@@ -6751,7 +6762,8 @@ msgid "Reports Page Size"
 msgstr "Size Raportet Page"
 
 #: CustLoginSetup.php:174 CustLoginSetup.php:176 EmailConfirmation.php:119
-#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90 SuppLoginSetup.php:202
+#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:90 SuppLoginSetup.php:202
 #: SuppLoginSetup.php:204 WWW_Users.php:502 WWW_Users.php:504
 msgid "A4"
 msgstr "A4"
@@ -6766,10 +6778,11 @@ msgstr "A3"
 #: CustLoginSetup.php:186 CustLoginSetup.php:188 CustLoginSetup.php:198
 #: CustLoginSetup.php:200 CustLoginSetup.php:209 CustLoginSetup.php:211
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90 SuppLoginSetup.php:214 SuppLoginSetup.php:216
-#: SuppLoginSetup.php:226 SuppLoginSetup.php:228 SuppLoginSetup.php:237
-#: SuppLoginSetup.php:239 WWW_Users.php:514 WWW_Users.php:516
-#: WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537 WWW_Users.php:539
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90 SuppLoginSetup.php:214
+#: SuppLoginSetup.php:216 SuppLoginSetup.php:226 SuppLoginSetup.php:228
+#: SuppLoginSetup.php:237 SuppLoginSetup.php:239 WWW_Users.php:514
+#: WWW_Users.php:516 WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537
+#: WWW_Users.php:539
 msgid "landscape"
 msgstr "peizazh"
 
@@ -6857,11 +6870,11 @@ msgstr "dhe shuma e përgjithshme e"
 msgid "was"
 msgstr "u"
 
-#: CustomerAllocations.php:324
+#: CustomerAllocations.php:323
 msgid "Allocate Receipt"
 msgstr "Alokimi i Marrjes"
 
-#: CustomerAllocations.php:324 CustomerReceipt.php:529
+#: CustomerAllocations.php:323 CustomerReceipt.php:529
 msgid "Allocate Receipts"
 msgstr "Alokimi Pranimet"
 
@@ -8555,13 +8568,16 @@ msgstr ""
 #: includes/PDFLowGPPageHeader.inc:15 includes/PDFOstdgGRNsPageHeader.inc:15
 #: includes/PDFPaymentRunPageHeader.inc:18
 #: includes/PDFPaymentRunPageHeader.inc:21
+#: includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 #: includes/PDFStockCheckPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "and"
 msgstr "dhe"
 
 #: DailyBankTransactions.php:104 PDFCustTransListing.php:35
-#: PDFPeriodStockTransListing.php:39 PDFSuppTransListing.php:35
+#: PDFPeriodStockTransListing.php:39 PDFStockTransListing.php:38
+#: PDFSuppTransListing.php:35
 msgid "Transaction type"
 msgstr "Lloji i transaksionit"
 
@@ -9037,6 +9053,17 @@ msgstr "Krijo Recurring Rendit"
 msgid "Commit Order Changes"
 msgstr "Rendit Ndryshimet Commit"
 
+#: DemandWorkOrders.php:9
+#, fuzzy
+msgid "Demand Work Orders"
+msgstr "Urdhërat Search Puna"
+
+#: DemandWorkOrders.php:46 SelectProduct.php:282
+msgid ""
+"The quantity on work orders for this product cannot be retrieved because"
+msgstr ""
+"Sasia e urdhëresave të punës për këtë produkt nuk mund të shikohet, sepse"
+
 #: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
 msgstr "Discount Kategoritë Mirëmbajtja"
@@ -9075,7 +9102,7 @@ msgid "Discount Category Code"
 msgstr "Kodi Discount Category"
 
 #: DiscountCategories.php:88 DiscountCategories.php:248 PO_Header.php:855
-#: SalesCategories.php:255 SuppInvGRNs.php:277 SupplierTenders.php:55
+#: SalesCategories.php:253 SuppInvGRNs.php:277 SupplierTenders.php:55
 #, php-format
 msgid "Select"
 msgstr "Zgjidh"
@@ -9126,6 +9153,7 @@ msgstr "Discount Category"
 #: includes/PDFInventoryPlanPageHeader.inc:50
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFLowGPPageHeader.inc:45 includes/PDFOstdgGRNsPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 #: includes/PDFStockCheckPageHeader.inc:33
 #: includes/PDFStockComparisonPageHeader.inc:33
 msgid "Item"
@@ -9506,7 +9534,7 @@ msgid "Order date"
 msgstr "Data Rendit"
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
-#: SupplierAllocations.php:436
+#: SupplierAllocations.php:436 includes/PDFStockTransListingPageHeader.inc:41
 msgid "dated"
 msgstr "datë"
 
@@ -9775,11 +9803,12 @@ msgstr ""
 "ngritur për"
 
 #: EmailConfirmation.php:9 PrintCustOrder_generic.php:12 PrintCustOrder.php:13
+#: PrintSalesOrder_generic.php:14
 msgid "Select Order To Print"
 msgstr "Rendit Zgjidhni Për Print"
 
 #: EmailConfirmation.php:15 PrintCustOrder_generic.php:15
-#: PrintCustOrder.php:16
+#: PrintCustOrder.php:16 PrintSalesOrder_generic.php:17
 msgid "Select an Order Number to Print before calling this page"
 msgstr "Zgjidh një Numri Rendit për të shtypur para se të quajtur këtë faqe"
 
@@ -9787,19 +9816,22 @@ msgstr "Zgjidh një Numri Rendit për të shtypur para se të quajtur këtë faq
 #: PO_OrderDetails.php:74 PrintCustOrder_generic.php:22
 #: PrintCustOrder_generic.php:84 PrintCustOrder_generic.php:118
 #: PrintCustOrder.php:18 PrintCustOrder.php:71 PrintCustOrder.php:95
-#: SelectSalesOrder.php:309
+#: PrintSalesOrder_generic.php:19 PrintSalesOrder_generic.php:70
+#: PrintSalesOrder_generic.php:95 SelectSalesOrder.php:309
 msgid "Outstanding Sales Orders"
 msgstr "Sales Outstanding urdhëron"
 
 #: EmailConfirmation.php:24 EmailConfirmation.php:96 EmailConfirmation.php:128
 #: PrintCustOrder_generic.php:23 PrintCustOrder_generic.php:85
 #: PrintCustOrder_generic.php:119 PrintCustOrder.php:19 PrintCustOrder.php:72
-#: PrintCustOrder.php:96
+#: PrintCustOrder.php:96 PrintSalesOrder_generic.php:20
+#: PrintSalesOrder_generic.php:71 PrintSalesOrder_generic.php:96
 msgid "Completed Sales Orders"
 msgstr "Sales Kompletuar urdhëron"
 
 #: EmailConfirmation.php:42 FTP_RadioBeacon.php:178
 #: PrintCustOrder_generic.php:36 PrintCustOrder.php:26
+#: PrintSalesOrder_generic.php:27 PrintSalesOrder_generic.php:129
 msgid ""
 "There was a problem retrieving the order header details for Order Number"
 msgstr ""
@@ -9814,39 +9846,43 @@ msgstr ""
 #: PrintCustTrans.php:213 PrintCustTrans.php:263 PrintCustTrans.php:668
 #: PrintCustTrans.php:837 PrintCustTransPortrait.php:235
 #: PrintCustTransPortrait.php:288 PrintCustTransPortrait.php:689
-#: PrintCustTransPortrait.php:858
+#: PrintCustTransPortrait.php:858 PrintSalesOrder_generic.php:27
+#: PrintSalesOrder_generic.php:130
 msgid "from the database"
 msgstr "nga baza e të dhënave"
 
 #: EmailConfirmation.php:81 EmailConfirmation.php:115
 #: PrintCustOrder_generic.php:74 PrintCustOrder_generic.php:103
 #: PrintCustOrder_generic.php:238 PrintCustOrder.php:66 PrintCustOrder.php:82
-#: PrintCustOrder.php:194
+#: PrintCustOrder.php:194 PrintSalesOrder_generic.php:65
+#: PrintSalesOrder_generic.php:82 PrintSalesOrder_generic.php:179
 msgid "Print Packing Slip Error"
 msgstr "Print Shqip Paketimi Gabim"
 
 #: EmailConfirmation.php:87 PrintCustOrder_generic.php:77
-#: PrintCustOrder.php:69
+#: PrintCustOrder.php:69 PrintSalesOrder_generic.php:68
 msgid "Unable to Locate Order Number"
 msgstr "Në pamundësi për të gjetur Numri Rendit"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:106
-#: PrintCustOrder.php:85
+#: PrintCustOrder.php:85 PrintSalesOrder_generic.php:85
 msgid "The packing slip for order number"
 msgstr "Shqip paketim për numrin e rendit"
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "has previously been printed"
 msgstr "ka qenë më parë shtypur"
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "It was printed on"
 msgstr "Ajo ishte e shtypur në"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:108
-#: PrintCustOrder.php:87
+#: PrintCustOrder.php:87 PrintSalesOrder_generic.php:87
 msgid ""
 "This check is there to ensure that duplicate packing slips are not produced "
 "and dispatched more than once to the customer"
@@ -9856,26 +9892,28 @@ msgstr ""
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Do a Re-Print"
 msgstr "A e një-Print Re"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
-#: PrintCustOrder.php:89
+#: PrintCustOrder.php:89 PrintSalesOrder_generic.php:89
 msgid "On Pre-Printed Stationery"
 msgstr "Më Pre-Shtypur Stationery"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Even Though Previously Printed"
 msgstr "Edhe pse më parë Shtypur"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90
 msgid "Plain paper"
 msgstr "Letër e zakonshme"
 
 #: EmailConfirmation.php:124 PrintCustOrder_generic.php:114
-#: PrintCustOrder.php:93
+#: PrintCustOrder.php:93 PrintSalesOrder_generic.php:93
 msgid "Or select another Order Number to Print"
 msgstr "Ose zgjidhni një tjetër Numri Rendit të Printo"
 
@@ -10289,6 +10327,7 @@ msgstr ""
 #: FixedAssetDepreciation.php:83 FixedAssetRegister.php:80
 #: FixedAssetRegister.php:331 FixedAssetTransfer.php:109
 #: SuppFixedAssetChgs.php:72 SupplierCredit.php:372 SupplierInvoice.php:342
+#: includes/PDFAssetRegisterHeader.inc:60
 msgid "Asset ID"
 msgstr "ID aktiv"
 
@@ -10299,6 +10338,8 @@ msgstr "Data e blera"
 #: FixedAssetDepreciation.php:86 PricesByCost.php:157 SalesAnalReptCols.php:38
 #: SalesAnalReptCols.php:40 SelectProduct.php:186 SelectProduct.php:343
 #: ShipmentCosting.php:149 ShipmentCosting.php:150 StockCostUpdate.php:149
+#: includes/PDFAssetRegisterHeader.inc:66
+#: includes/PDFAssetRegisterHeader.inc:69
 #: includes/PDFInventoryValnPageHeader.inc:35
 #: includes/PDFInventoryValnPageHeader.inc:39
 #: includes/PDFLowGPPageHeader.inc:48
@@ -10581,7 +10622,7 @@ msgstr "shkurtër"
 msgid "long"
 msgstr "të gjatë"
 
-#: FixedAssetItems.php:455 SalesCategories.php:326 Stocks.php:715
+#: FixedAssetItems.php:455 SalesCategories.php:324 Stocks.php:715
 msgid "Image File (.jpg)"
 msgstr "File Image (. Jpg)"
 
@@ -10732,7 +10773,7 @@ msgstr "Fshije Kjo Vendndodhja"
 msgid "Fixed Asset Register"
 msgstr "Aseteve fikse Regjistrohu"
 
-#: FixedAssetRegister.php:84
+#: FixedAssetRegister.php:84 includes/PDFAssetRegisterHeader.inc:65
 msgid "Date Acquired"
 msgstr "Data e fituara"
 
@@ -10748,7 +10789,8 @@ msgstr "Depn B / dergoni"
 msgid "Additions"
 msgstr "Futjet më të"
 
-#: FixedAssetRegister.php:88
+#: FixedAssetRegister.php:88 includes/PDFAssetRegisterHeader.inc:67
+#: includes/PDFAssetRegisterHeader.inc:70
 msgid "Depn"
 msgstr "Depn"
 
@@ -10760,7 +10802,8 @@ msgstr "C Kosto / dergoni"
 msgid "Depn C/fwd"
 msgstr "Depn C / dergoni"
 
-#: FixedAssetRegister.php:91
+#: FixedAssetRegister.php:91 includes/PDFAssetRegisterHeader.inc:68
+#: includes/PDFAssetRegisterHeader.inc:71
 msgid "NBV"
 msgstr "NBV"
 
@@ -10801,15 +10844,15 @@ msgstr "Për Data "
 msgid "Show Assets"
 msgstr "Show Aktivet"
 
-#: FixedAssetRegister.php:329
+#: FixedAssetRegister.php:329 includes/PDFAssetRegisterHeader.inc:33
 msgid "Asset Category "
 msgstr "Kategoria aktiv "
 
-#: FixedAssetRegister.php:330
+#: FixedAssetRegister.php:330 includes/PDFAssetRegisterHeader.inc:34
 msgid "Asset Location "
 msgstr "Vendndodhja aktiv "
 
-#: FixedAssetRegister.php:356
+#: FixedAssetRegister.php:356 includes/PDFAssetRegisterHeader.inc:63
 msgid "Serial No."
 msgstr "Nr Serial"
 
@@ -15257,6 +15300,7 @@ msgstr "ID Oferta"
 
 #: OffersReceived.php:94 PurchData.php:323 Stocks.php:361
 #: includes/PDFPeriodStockTransListingPageHeader.inc:47
+#: includes/PDFStockTransListingPageHeader.inc:67
 msgid "Stock Item"
 msgstr "Stock Item"
 
@@ -16745,7 +16789,7 @@ msgstr "Grumbull"
 #: PDFBankingSummary.php:36 PDFChequeListing.php:66 PDFCustTransListing.php:47
 #: PDFDeliveryDifferences.php:71 PDFDIFOT.php:81 PDFOrdersInvoiced.php:70
 #: PDFOrderStatus.php:73 PDFPeriodStockTransListing.php:78
-#: PDFSuppTransListing.php:47
+#: PDFStockTransListing.php:52 PDFSuppTransListing.php:47
 msgid "Create PDF"
 msgstr "Krijo PDF"
 
@@ -16957,7 +17001,7 @@ msgid "Activity Since"
 msgstr "Aktiviteti Që"
 
 #: PDFCustTransListing.php:10 PDFPeriodStockTransListing.php:9
-#: PDFSuppTransListing.php:10
+#: PDFStockTransListing.php:13 PDFSuppTransListing.php:10
 msgid "The date must be specified in the format"
 msgstr "Data duhet të specifikohet në formatin"
 
@@ -16966,7 +17010,8 @@ msgstr "Data duhet të specifikohet në formatin"
 msgid "Customer Transaction Listing"
 msgstr "Listing Customer Transaction"
 
-#: PDFCustTransListing.php:31 PDFSuppTransListing.php:31
+#: PDFCustTransListing.php:31 PDFStockTransListing.php:34
+#: PDFSuppTransListing.php:31
 msgid "Enter the date for which the transactions are to be listed"
 msgstr "Futeni datën për të cilën transaksionet janë të jetë e shënuar"
 
@@ -16984,6 +17029,7 @@ msgid "Credit Notes"
 msgstr "Shënime kredi"
 
 #: PDFCustTransListing.php:77 PDFPeriodStockTransListing.php:134
+#: PDFStockTransListing.php:85
 msgid "An error occurred getting the transactions"
 msgstr "Ka ndodhur një gabim duke marrë transaksionet e"
 
@@ -16991,12 +17037,13 @@ msgstr "Ka ndodhur një gabim duke marrë transaksionet e"
 msgid "The SQL used to get the transaction information that failed was"
 msgstr "SQL të përdorura për të marrë informacion transaksion që nuk ishte"
 
-#: PDFCustTransListing.php:87 PDFSuppTransListing.php:82
+#: PDFCustTransListing.php:87 PDFStockTransListing.php:92
+#: PDFSuppTransListing.php:82
 msgid "There were no transactions found in the database for the date"
 msgstr "Nuk ka pasur transaksione që gjenden në bazën e të dhënave për datën e"
 
 #: PDFCustTransListing.php:87 PDFPeriodStockTransListing.php:141
-#: PDFSuppTransListing.php:82
+#: PDFStockTransListing.php:92 PDFSuppTransListing.php:82
 msgid "Please try again selecting a different date"
 msgstr "Ju lutemi provoni përsëri zgjedhjen e një date të ndryshme"
 
@@ -17270,7 +17317,8 @@ msgid "Not yet printed"
 msgstr "Nuk shtypur ende"
 
 #: PDFPeriodStockTransListing.php:16 PDFPeriodStockTransListing.php:20
-#: PDFPeriodStockTransListing.php:150
+#: PDFPeriodStockTransListing.php:150 PDFStockTransListing.php:20
+#: PDFStockTransListing.php:24 PDFStockTransListing.php:101
 msgid "Stock Transaction Listing"
 msgstr "Listing Stock Transaction"
 
@@ -17284,33 +17332,33 @@ msgstr "Futeni datën për të cilën transaksionet janë të jetë e shënuar"
 msgid "Enter the date to which the transactions are to be listed"
 msgstr "Futeni datën për të cilën transaksionet janë të jetë e shënuar"
 
-#: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:59
-#: PrintCustTransPortrait.php:57 SalesInquiry.php:1054
+#: PDFPeriodStockTransListing.php:43 PDFStockTransListing.php:42
+#: PrintCustTrans.php:59 PrintCustTransPortrait.php:57 SalesInquiry.php:1054
 msgid "Sales Invoice"
 msgstr "Fatura e shitjes"
 
-#: PDFPeriodStockTransListing.php:44 PrintCustTrans.php:62
-#: PrintCustTransPortrait.php:60
+#: PDFPeriodStockTransListing.php:44 PDFStockTransListing.php:43
+#: PrintCustTrans.php:62 PrintCustTransPortrait.php:60
 msgid "Sales Credit Note"
 msgstr "Sales Nota e Kreditit"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 PDFStockTransListing.php:44
 msgid "Location Transfer"
 msgstr "Vendndodhja Transfer"
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 PDFStockTransListing.php:45
 msgid "Stock Adjustment"
 msgstr "Stock Rregullimit"
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 PDFStockTransListing.php:46
 msgid "Purchase Order Delivery"
 msgstr "Ofrimin e Urdhër blerjes"
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 PDFStockTransListing.php:47
 msgid "Work Order Receipt"
 msgstr "Marrjes Puna Rendit"
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 PDFStockTransListing.php:48
 msgid "Work Order Issue"
 msgstr "Çështje Puna Rendit"
 
@@ -17319,6 +17367,7 @@ msgid "For Stock Location"
 msgstr "Për Vendndodhja Stock"
 
 #: PDFPeriodStockTransListing.php:132 PDFPeriodStockTransListing.php:138
+#: PDFStockTransListing.php:83 PDFStockTransListing.php:89
 msgid "Transaction Listing"
 msgstr "Transaksion Listing"
 
@@ -17327,37 +17376,44 @@ msgstr "Transaksion Listing"
 msgid "There were no transactions found in the database between the dates"
 msgstr "Nuk ka pasur transaksione që gjenden në bazën e të dhënave për datën e"
 
-#: PDFPeriodStockTransListing.php:151
+#: PDFPeriodStockTransListing.php:151 PDFStockTransListing.php:102
 msgid "Stock transaction listing from"
 msgstr "listë Stock transaksion nga"
 
 #: PDFPeriodStockTransListing.php:158
 #: includes/PDFCustTransListingPageHeader.inc:15
+#: includes/PDFStockTransListingPageHeader.inc:15
 msgid "Customer Invoices"
 msgstr "Customer Faturat"
 
 #: PDFPeriodStockTransListing.php:161
 #: includes/PDFCustTransListingPageHeader.inc:18
+#: includes/PDFStockTransListingPageHeader.inc:18
 msgid "Customer Credit Notes"
 msgstr "Credit Shënime Customer"
 
 #: PDFPeriodStockTransListing.php:164 SelectProduct.php:417
+#: includes/PDFStockTransListingPageHeader.inc:21
 msgid "Location Transfers"
 msgstr "Vendndodhja Transferet"
 
 #: PDFPeriodStockTransListing.php:167 StockAdjustments.php:8
+#: includes/PDFStockTransListingPageHeader.inc:24
 msgid "Stock Adjustments"
 msgstr "Stock Rregullimet"
 
 #: PDFPeriodStockTransListing.php:170
+#: includes/PDFStockTransListingPageHeader.inc:27
 msgid "Purchase Order Deliveries"
 msgstr "Rendit Dërgesat Blerje"
 
 #: PDFPeriodStockTransListing.php:173
+#: includes/PDFStockTransListingPageHeader.inc:30
 msgid "Work Order Receipts"
 msgstr "Rendit Pranimet Puna"
 
 #: PDFPeriodStockTransListing.php:176
+#: includes/PDFStockTransListingPageHeader.inc:33
 msgid "Work Order Issues"
 msgstr "Rendit Çështjet e punës"
 
@@ -17423,7 +17479,8 @@ msgid "Price Listing Report"
 msgstr "Raporti Çmimi Listing"
 
 #: PDFPriceList.php:23 PDFPriceList.php:295 PDFPriceList.php:335
-#: PDFPriceList.php:355
+#: PDFPriceList.php:355 includes/PDFPriceListPageHeader.inc:16
+#: includes/PDFPriceListPageHeader.inc:40
 msgid "Customer Special Prices Only"
 msgstr "Çmimet Customer Special i Thjeshtë"
 
@@ -17538,7 +17595,7 @@ msgid "Effective Date Range"
 msgstr "Range Hyrja në fuqi"
 
 #: PDFPriceList.php:362 includes/PDFLowGPPageHeader.inc:49
-#: includes/PDFLowGPPageHeader.inc:50
+#: includes/PDFLowGPPageHeader.inc:50 includes/PDFPriceListPageHeader.inc:49
 msgid "GP"
 msgstr "GP"
 
@@ -17578,7 +17635,7 @@ msgstr "Lloji Zgjidhni etiketë"
 msgid "Number of labels per item"
 msgstr "Numri i etiketave për artikull"
 
-#: PDFPrintLabel.php:93
+#: PDFPrintLabel.php:93 Z_PriceChanges.php:94
 msgid "Price list"
 msgstr "Lista e çmimeve"
 
@@ -19380,7 +19437,7 @@ msgstr "Në pritje dhe autorizuar"
 msgid "Requisition"
 msgstr "Kërkesë me shkrim"
 
-#: PricesBasedOnMarkUp.php:8
+#: PricesBasedOnMarkUp.php:8 Z_PriceChanges.php:7
 msgid "Update Pricing"
 msgstr "Çmimi Update"
 
@@ -19407,7 +19464,7 @@ msgstr ""
 msgid "Select the Price List to update"
 msgstr "Zgjidhni Lista e Çmimeve për të rinovuar"
 
-#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94
+#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94 Z_PriceChanges.php:28
 msgid "No Price List Selected"
 msgstr "Nuk ka zgjedhur Lista e Çmimeve"
 
@@ -19465,11 +19522,11 @@ msgstr "Çmimeve të reja për të qenë efektive nga"
 msgid "New Price To Be Effective To (Blank = No End Date)"
 msgstr "Çmimeve të reja të jenë efektive për të (Blank = Data No End)"
 
-#: PricesBasedOnMarkUp.php:163
+#: PricesBasedOnMarkUp.php:163 Z_PriceChanges.php:67
 msgid "Percentage Increase (positive) or decrease (negative)"
 msgstr "Rritja e përqindjes (pozitiv) apo ulje (negativ)"
 
-#: PricesBasedOnMarkUp.php:167
+#: PricesBasedOnMarkUp.php:167 Z_PriceChanges.php:71
 msgid "Update Prices"
 msgstr "Çmimet Update"
 
@@ -19561,7 +19618,7 @@ msgstr ""
 "Për një regjistër të të gjitha çmimeve të ndryshuar këtë faqe duhet të jenë "
 "të shtypura me Ctrl + P"
 
-#: PricesBasedOnMarkUp.php:214
+#: PricesBasedOnMarkUp.php:214 Z_PriceChanges.php:77
 msgid "So we are using a price list/sales type of"
 msgstr "Pra, ne jemi duke përdorur një listë të çmimeve / shitjes lloji i"
 
@@ -19581,7 +19638,7 @@ msgstr "dhe ne jemi duke aplikuar një për qind Markup të"
 msgid "against"
 msgstr "kundër"
 
-#: PricesBasedOnMarkUp.php:229
+#: PricesBasedOnMarkUp.php:229 Z_PriceChanges.php:82
 msgid "The price list/sales type to be updated must be selected first"
 msgstr ""
 "Lista e çmimeve / shitjet e tipit për të përditësuar duhet të zgjidhen së "
@@ -19637,7 +19694,7 @@ msgstr ""
 "ose e barabartë me zero - asnjë ndryshim të çmimeve do të bëhen në bazë të "
 "kostos zero artikujve. Pika në fjalë është:"
 
-#: PricesBasedOnMarkUp.php:337
+#: PricesBasedOnMarkUp.php:337 Z_PriceChanges.php:137
 msgid "Error updating prices for"
 msgstr "Gabim përditësimin çmimet për"
 
@@ -19951,11 +20008,11 @@ msgstr "Nr Vendor"
 msgid "Cheque No."
 msgstr "Çek Nr"
 
-#: PrintCustOrder_generic.php:141
+#: PrintCustOrder_generic.php:141 PrintSalesOrder_generic.php:111
 msgid "Customer Laser Packing Slip"
 msgstr "Paketim Customer Laser Shqip"
 
-#: PrintCustOrder_generic.php:142
+#: PrintCustOrder_generic.php:142 PrintSalesOrder_generic.php:112
 msgid "Laser Packing slip for order"
 msgstr "Laser shqip Paketimi për qëllim"
 
@@ -19985,6 +20042,7 @@ msgid "A packing slip cannot be printed"
 msgstr "Një gabim paketim nuk mund të jenë të shtypura"
 
 #: PrintCustOrder_generic.php:241 PrintCustOrder.php:197
+#: PrintSalesOrder_generic.php:182
 msgid "Print Another Packing Slip/Order"
 msgstr "Print Një tjetër Shqip Paketimi / Rendit"
 
@@ -20349,6 +20407,14 @@ msgstr "Faturat Print apo në shënimet e kredisë (Mode Portret)"
 msgid "Print Preview"
 msgstr "Print Preview"
 
+#: PrintSalesOrder_generic.php:181
+msgid ""
+"There were no outstanding items on the order to deliver. A packing slip "
+"cannot be printed"
+msgstr ""
+"Nuk ka pasur artikuj të shquar në mënyrë që të japë. Një gabim paketim nuk "
+"mund të jenë të shtypura"
+
 #: PurchData.php:6
 msgid "Supplier Purchasing Data"
 msgstr "Blerja e të dhënave Furnizuesi"
@@ -20669,20 +20735,20 @@ msgid "Show Stock Status"
 msgstr "Statusit Show Stock"
 
 #: PurchData.php:505 SelectProduct.php:393 StockCostUpdate.php:167
-#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:95
+#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:96
 #: StockUsage.php:182
 msgid "Show Stock Movements"
 msgstr "Stock Lëvizjet Show"
 
 #: PurchData.php:506 SelectProduct.php:398 SelectSalesOrder.php:6
 #: StockAdjustments.php:426 StockCostUpdate.php:169 StockMovements.php:202
-#: StockReorderLevel.php:97 StockStatus.php:357 StockTransfers.php:532
+#: StockReorderLevel.php:98 StockStatus.php:357 StockTransfers.php:532
 #: StockUsage.php:183
 msgid "Search Outstanding Sales Orders"
 msgstr "Search Sales Outstanding urdhëron"
 
 #: PurchData.php:507 SelectProduct.php:399 StockAdjustments.php:427
-#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:98
+#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:99
 #: StockStatus.php:358 StockTransfers.php:533 StockUsage.php:184
 msgid "Search Completed Sales Orders"
 msgstr "Search Kompletuar Sales Urdhërat"
@@ -22023,11 +22089,11 @@ msgstr ""
 "Nuk mund të fshini kete kategori shitjes, sepse artikuj të aksioneve kanë "
 "qenë të shtuar në këtë kategori"
 
-#: SalesCategories.php:125
+#: SalesCategories.php:124
 msgid "items under to this category"
 msgstr "artikuj nën këtë kategori të"
 
-#: SalesCategories.php:132
+#: SalesCategories.php:131
 msgid ""
 "Cannot delete this sales category because sub categories have been added to "
 "this category"
@@ -22035,86 +22101,86 @@ msgstr ""
 "Nuk mund të fshini kete kategori shitjes, sepse nën kategoritë janë shtuar "
 "në këtë kategori"
 
-#: SalesCategories.php:133
+#: SalesCategories.php:131
 msgid "sub categories"
 msgstr "nënkategoritë"
 
-#: SalesCategories.php:137
+#: SalesCategories.php:135
 msgid "The sales category"
 msgstr "Kategoria e shitjes"
 
-#: SalesCategories.php:153 SalesCategories.php:161
+#: SalesCategories.php:148 SalesCategories.php:156
 msgid "Stock item"
 msgstr "pika Stock"
 
-#: SalesCategories.php:153
+#: SalesCategories.php:148
 msgid "has been added"
 msgstr "ka qenë i shtuar"
 
-#: SalesCategories.php:161
+#: SalesCategories.php:156
 msgid "has been removed"
 msgstr "është hequr"
 
-#: SalesCategories.php:169
+#: SalesCategories.php:164
 msgid "Main"
 msgstr "Kryesore"
 
-#: SalesCategories.php:197
+#: SalesCategories.php:195
 msgid "Selected Sales Category Path"
 msgstr "Shitjet e zgjedhur rruga Category"
 
-#: SalesCategories.php:221
+#: SalesCategories.php:219
 msgid "There are no categories defined at this level."
 msgstr "Nuk ka kategori të përcaktuara në këtë nivel."
 
-#: SalesCategories.php:224
+#: SalesCategories.php:222
 msgid "Sub Category"
 msgstr "Sub Category"
 
-#: SalesCategories.php:307
+#: SalesCategories.php:305
 msgid "Edit Sub Category"
 msgstr "Edit Sub Category"
 
-#: SalesCategories.php:316
+#: SalesCategories.php:314
 msgid "New Sub Category"
 msgstr "Ri Sub Category"
 
-#: SalesCategories.php:321
+#: SalesCategories.php:319
 msgid "Category Name"
 msgstr "Emri Category"
 
-#: SalesCategories.php:331
+#: SalesCategories.php:329
 msgid "Submit Information"
 msgstr "Submit Informacione"
 
-#: SalesCategories.php:381
+#: SalesCategories.php:379
 msgid "Add Inventory to this category."
 msgstr "Add Inventari për këtë kategori."
 
-#: SalesCategories.php:382
+#: SalesCategories.php:380
 msgid "Select Inv. Item"
 msgstr "Zgjidh inv. Artikull"
 
-#: SalesCategories.php:394
+#: SalesCategories.php:392
 msgid "Add Inventory Item"
 msgstr "Add Item Inventari"
 
-#: SalesCategories.php:399
+#: SalesCategories.php:397
 #, fuzzy
 msgid "No more Inventory items to add"
 msgstr "Jo më shumë artikuj Inventari për të shtuar."
 
-#: SalesCategories.php:421
+#: SalesCategories.php:419
 msgid "Inventory items in this category."
 msgstr "Inventari artikuj në këtë kategori."
 
-#: SalesCategories.php:438 StockAdjustments.php:391 SupplierTenders.php:291
+#: SalesCategories.php:436 StockAdjustments.php:391 SupplierTenders.php:291
 #: TaxGroups.php:354 WWW_Access.php:212
 #, php-format
 msgid "Remove"
 msgstr "Heq"
 
-#: SalesCategories.php:442
+#: SalesCategories.php:440
 #, fuzzy
 msgid "No Inventory items in this category"
 msgstr "Nuk ka artikuj të inventarit në këtë kategori."
@@ -23762,12 +23828,6 @@ msgstr "Shes Çmimi"
 msgid "No Default Price Set in Home Currency"
 msgstr "Nuk ka Çmimi Default Set në Currency Home"
 
-#: SelectProduct.php:282
-msgid ""
-"The quantity on work orders for this product cannot be retrieved because"
-msgstr ""
-"Sasia e urdhëresave të punës për këtë produkt nuk mund të shikohet, sepse"
-
 #: SelectProduct.php:323
 msgid ""
 "The workorder component demand for this product cannot be retrieved because"
@@ -23814,7 +23874,7 @@ msgid "Item Maintenance"
 msgstr "Item Mirëmbajtja"
 
 #: SelectProduct.php:396 StockAdjustments.php:425 StockCostUpdate.php:168
-#: StockMovements.php:201 StockReorderLevel.php:96 StockTransfers.php:531
+#: StockMovements.php:201 StockReorderLevel.php:97 StockTransfers.php:531
 #: StockUsage.php:87
 msgid "Show Stock Usage"
 msgstr "Perdorimi Show Stock"
@@ -28885,11 +28945,12 @@ msgstr "Ju keni pranuar ofertën e mëposhtme nga"
 msgid "Items to offer from"
 msgstr "Artikuj për të ofruar nga"
 
-#: SupplierTenders.php:263 api/api_xml-rpc.php:696 api/api_xml-rpc.php:764
-#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:826 api/api_xml-rpc.php:865
-#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
-#: api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302
-#: api/api_xml-rpc.php:2498 api/api_xml-rpc.php:2662
+#: SupplierTenders.php:263 includes/PDFAssetRegisterHeader.inc:61
+#: api/api_xml-rpc.php:696 api/api_xml-rpc.php:764 api/api_xml-rpc.php:795
+#: api/api_xml-rpc.php:826 api/api_xml-rpc.php:865 api/api_xml-rpc.php:896
+#: api/api_xml-rpc.php:927 api/api_xml-rpc.php:970 api/api_xml-rpc.php:2220
+#: api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302 api/api_xml-rpc.php:2498
+#: api/api_xml-rpc.php:2662
 msgid "Stock ID"
 msgstr "Stock ID"
 
@@ -31240,7 +31301,7 @@ msgstr ""
 "sistemit tuaj. Ju lutemi lexoni të gjitha shënimet me kujdes për të siguruar "
 "se ata janë pritur"
 
-#: UpgradeDatabase.php:129
+#: UpgradeDatabase.php:133
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
@@ -31248,61 +31309,61 @@ msgstr ""
 "Vetëm përmirësimet mysql janë kryer seamlessly në këtë kohë. bazës së të "
 "dhënave juaj do të duhet të jetë i përditësuar me dorë"
 
-#: UpgradeDatabase.php:141
+#: UpgradeDatabase.php:145
 msgid "Applying"
 msgstr "Aplikimi"
 
-#: UpgradeDatabase.php:168 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:172 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Sukses"
 
-#: UpgradeDatabase.php:171 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:175 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tabela tashmë është krijuar"
 
-#: UpgradeDatabase.php:174
+#: UpgradeDatabase.php:178
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Kolona tashmë është krijuar"
 
-#: UpgradeDatabase.php:177 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:181 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Kolona tashmë është krijuar"
 
-#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Index tashmë ekziston"
 
-#: UpgradeDatabase.php:183 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:187 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Hyrja tashmë është bërë"
 
-#: UpgradeDatabase.php:186
+#: UpgradeDatabase.php:190
 msgid "SQL syntax error. The SQL error message is"
 msgstr "Gabim sintakse SQL. Mesazh gabimi SQL është"
 
-#: UpgradeDatabase.php:189 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:193 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "kyç primar tashmë ekziston"
 
-#: UpgradeDatabase.php:192
+#: UpgradeDatabase.php:196
 msgid "Index already dropped previously"
 msgstr "Indeksi i tashmë ka rënë më parë"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Dështim"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Numri Gabim"
@@ -33863,6 +33924,36 @@ msgstr "Fushë mund të jetë e pavlefshme"
 msgid "Default"
 msgstr "Default"
 
+#: Z_FixedAssetCostAccumDepnFix.php:8
+#, fuzzy
+msgid "Fixed Fixed Asset Records"
+msgstr "Kredite aseteve fikse"
+
+#: Z_FixedAssetCostAccumDepnFix.php:12
+msgid "This script repairs the fixedasset table cost and accum depn"
+msgstr ""
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "Updated asset"
+msgstr "Update Çmimet"
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "to have a cost of"
+msgstr "kosto std e"
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "and accum depn of"
+msgstr "GL Accum Depn"
+
+#: Z_FixedAssetCostAccumDepnFix.php:22
+msgid ""
+"Asset cost and accumulated depreciation has now been fixed to the "
+"transaction cost and depreciation"
+msgstr ""
+
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:5
 #: Z_ImportGLAccountSections.php:5
 msgid "Import Chart of Accounts"
@@ -34716,6 +34807,113 @@ msgstr ""
 #: Z_poRebuildDefault.php:49
 msgid "Existing languages are not affected."
 msgstr "Gjuhët ekzistuese nuk janë prekur."
+
+#: Z_PriceChanges.php:11
+msgid ""
+"This page updates already existing prices for a specified sales type (price "
+"list)"
+msgstr ""
+"Kjo faqe më të reja tashmë ekzistuese çmimet për një lloj të caktuar të "
+"shitjes (lista e çmimeve)"
+
+#: Z_PriceChanges.php:11
+msgid ""
+"Choose between updating only customer special prices where the customer is "
+"set up under the price list selected, or all prices under the sales type or "
+"just specific prices for a customer for the stock category selected"
+msgstr ""
+"Zgjidhni mes përditësimin çmimet e vetëm të konsumatorëve të veçantë ku "
+"konsumatori është ngritur në listën e çmimeve të zgjedhura, ose të gjitha "
+"çmimet në bazë të llojit të shitjes ose vetëm çmimet e veçanta për një "
+"klient për kategorinë e aksioneve të zgjedhura"
+
+#: Z_PriceChanges.php:13
+msgid ""
+"This script takes no account of start and end dates of prices and updates "
+"all historical prices as well as current prices - better to use new scripts "
+"under Inventory -> Maintenance"
+msgstr ""
+"Ky skenar nuk merr parasysh të fillojë dhe në fund datat e çmimeve dhe të "
+"rejat e të gjitha çmimet e historike, si dhe çmimet e tanishme - më mirë të "
+"përdorni Scripts reja nën Inventari -&gt; Maintenance"
+
+#: Z_PriceChanges.php:24
+msgid "Select the Price List to update the costs for"
+msgstr "Zgjidhni Lista e Çmimeve për të rinovuar e shpenzimeve për"
+
+#: Z_PriceChanges.php:55
+msgid "Which Prices to update"
+msgstr "Çmimet e cila për të rinovuar"
+
+#: Z_PriceChanges.php:57
+msgid "Only Non-customer special prices"
+msgstr "Vetëm Jo-klient çmimet speciale"
+
+#: Z_PriceChanges.php:58
+msgid "Only customer special prices"
+msgstr "Vetëm të konsumatorëve çmimet speciale"
+
+#: Z_PriceChanges.php:59
+msgid "Both customer special prices and non-customer special prices"
+msgstr ""
+"Të dy çmimet e konsumatorëve të veçantë dhe jo-të konsumatorëve çmimet "
+"speciale"
+
+#: Z_PriceChanges.php:60
+msgid "customer special prices only"
+msgstr "çmimet e konsumatorëve të veçantë vetëm"
+
+#: Z_PriceChanges.php:71
+msgid ""
+"Are you sure you wish to update all the prices according to the criteria "
+"selected?"
+msgstr ""
+"A jeni i sigurt se doni të rinovuar të gjitha çmimet në bazë të kritereve të "
+"zgjedhura?"
+
+#: Z_PriceChanges.php:78
+msgid "and a stock category code of"
+msgstr "dhe një kategori të aksioneve kod"
+
+#: Z_PriceChanges.php:79
+msgid "and a increase percent of"
+msgstr "dhe një për qind rritje të"
+
+#: Z_PriceChanges.php:89
+msgid ""
+"The increase or decrease to be applied is expected to be an integer between "
+"1 and 40 it is not necessary to enter the"
+msgstr ""
+"Rritje apo ulje të zbatohen pritet të jetë një numër të plotë në mes të 1 "
+"dhe 40 nuk është e nevojshme për të hyrë në"
+
+#: Z_PriceChanges.php:89
+msgid "sign"
+msgstr "shenjë"
+
+#: Z_PriceChanges.php:89
+msgid "the amount is assumed to be a percentage"
+msgstr "shuma është supozuar të jetë një përqindje"
+
+#: Z_PriceChanges.php:94
+msgid "prices for"
+msgstr "çmimet për"
+
+#: Z_PriceChanges.php:94
+msgid "for the stock category"
+msgstr "për kategorinë e aksioneve"
+
+#: Z_PriceChanges.php:94
+msgid "will been incremented by"
+msgstr "do ishte incremented nga"
+
+#: Z_PriceChanges.php:94
+msgid "percent"
+msgstr "për qind"
+
+#: Z_PriceChanges.php:138
+msgid "Updating prices for"
+msgstr "Përditësimi çmimet për"
 
 #: Z_ReApplyCostToSA.php:6
 msgid "Apply Current Cost to Sales Analysis"
@@ -36221,6 +36419,26 @@ msgstr "Ditët Mbi"
 msgid "Aged Supplier Balances For Suppliers from"
 msgstr "Aged Furnizuesi Bilancet Për Furnizuesit nga"
 
+#: includes/PDFAssetRegisterHeader.inc:35
+msgid "Asset Type"
+msgstr "Lloji i Aseteve"
+
+#: includes/PDFAssetRegisterHeader.inc:36
+msgid "Acquired After"
+msgstr "E fituara Pas"
+
+#: includes/PDFAssetRegisterHeader.inc:37
+msgid "and Before"
+msgstr "dhe Para"
+
+#: includes/PDFAssetRegisterHeader.inc:57
+msgid "<--------------External Depreciation-------------->"
+msgstr ""
+
+#: includes/PDFAssetRegisterHeader.inc:58
+msgid "<--------------Internal Depreciation-------------->"
+msgstr ""
+
 #: includes/PDFBankingSummaryPageHeader.inc:19
 msgid "for Receipt Batch"
 msgstr "për pranimin Batch"
@@ -36316,6 +36534,7 @@ msgstr "të dhëna mbi"
 
 #: includes/PDFCustTransListingPageHeader.inc:50
 #: includes/PDFPeriodStockTransListingPageHeader.inc:49
+#: includes/PDFStockTransListingPageHeader.inc:69
 #: includes/PDFSuppTransListingPageHeader.inc:50
 msgid "Trans Date"
 msgstr "Trans Data"
@@ -36543,6 +36762,16 @@ msgstr "Tel"
 #: includes/PDFPickingListHeader.inc:77
 msgid "Actual Picked"
 msgstr "Kap Aktuale"
+
+#: includes/PDFPriceListPageHeader.inc:18
+#, fuzzy
+msgid "Special Prices for Inventory Categories between"
+msgstr "Check Sheets për Kategoritë ndërmjet"
+
+#: includes/PDFPriceListPageHeader.inc:21
+#, fuzzy
+msgid "Price List for Inventory Categories between"
+msgstr "Check Sheets për Kategoritë ndërmjet"
 
 #: includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -39148,143 +39377,11 @@ msgstr "Vlera e kthimit"
 #~ msgid "The customer record of the customer selected"
 #~ msgstr "Të dhënat e konsumatorëve e konsumatorit të zgjedhura"
 
-#, fuzzy
-#~ msgid "Demand Work Orders"
-#~ msgstr "Urdhërat Search Puna"
-
 #~ msgid "Annual Depreciation Percentage"
 #~ msgstr "Përqindja vjetore e zhvlerësimit"
 
 #~ msgid "Update Journal"
 #~ msgstr "Update Journal"
-
-#~ msgid ""
-#~ "There were no outstanding items on the order to deliver. A packing slip "
-#~ "cannot be printed"
-#~ msgstr ""
-#~ "Nuk ka pasur artikuj të shquar në mënyrë që të japë. Një gabim paketim "
-#~ "nuk mund të jenë të shtypura"
-
-#, fuzzy
-#~ msgid "Fixed Fixed Asset Records"
-#~ msgstr "Kredite aseteve fikse"
-
-#, fuzzy
-#~ msgid "Updated asset"
-#~ msgstr "Update Çmimet"
-
-#, fuzzy
-#~ msgid "to have a cost of"
-#~ msgstr "kosto std e"
-
-#, fuzzy
-#~ msgid "and accum depn of"
-#~ msgstr "GL Accum Depn"
-
-#~ msgid ""
-#~ "This page updates already existing prices for a specified sales type "
-#~ "(price list)"
-#~ msgstr ""
-#~ "Kjo faqe më të reja tashmë ekzistuese çmimet për një lloj të caktuar të "
-#~ "shitjes (lista e çmimeve)"
-
-#~ msgid ""
-#~ "Choose between updating only customer special prices where the customer "
-#~ "is set up under the price list selected, or all prices under the sales "
-#~ "type or just specific prices for a customer for the stock category "
-#~ "selected"
-#~ msgstr ""
-#~ "Zgjidhni mes përditësimin çmimet e vetëm të konsumatorëve të veçantë ku "
-#~ "konsumatori është ngritur në listën e çmimeve të zgjedhura, ose të gjitha "
-#~ "çmimet në bazë të llojit të shitjes ose vetëm çmimet e veçanta për një "
-#~ "klient për kategorinë e aksioneve të zgjedhura"
-
-#~ msgid ""
-#~ "This script takes no account of start and end dates of prices and updates "
-#~ "all historical prices as well as current prices - better to use new "
-#~ "scripts under Inventory -> Maintenance"
-#~ msgstr ""
-#~ "Ky skenar nuk merr parasysh të fillojë dhe në fund datat e çmimeve dhe të "
-#~ "rejat e të gjitha çmimet e historike, si dhe çmimet e tanishme - më mirë "
-#~ "të përdorni Scripts reja nën Inventari -&gt; Maintenance"
-
-#~ msgid "Select the Price List to update the costs for"
-#~ msgstr "Zgjidhni Lista e Çmimeve për të rinovuar e shpenzimeve për"
-
-#~ msgid "Which Prices to update"
-#~ msgstr "Çmimet e cila për të rinovuar"
-
-#~ msgid "Only Non-customer special prices"
-#~ msgstr "Vetëm Jo-klient çmimet speciale"
-
-#~ msgid "Only customer special prices"
-#~ msgstr "Vetëm të konsumatorëve çmimet speciale"
-
-#~ msgid "Both customer special prices and non-customer special prices"
-#~ msgstr ""
-#~ "Të dy çmimet e konsumatorëve të veçantë dhe jo-të konsumatorëve çmimet "
-#~ "speciale"
-
-#~ msgid "customer special prices only"
-#~ msgstr "çmimet e konsumatorëve të veçantë vetëm"
-
-#~ msgid ""
-#~ "Are you sure you wish to update all the prices according to the criteria "
-#~ "selected?"
-#~ msgstr ""
-#~ "A jeni i sigurt se doni të rinovuar të gjitha çmimet në bazë të kritereve "
-#~ "të zgjedhura?"
-
-#~ msgid "and a stock category code of"
-#~ msgstr "dhe një kategori të aksioneve kod"
-
-#~ msgid "and a increase percent of"
-#~ msgstr "dhe një për qind rritje të"
-
-#~ msgid ""
-#~ "The increase or decrease to be applied is expected to be an integer "
-#~ "between 1 and 40 it is not necessary to enter the"
-#~ msgstr ""
-#~ "Rritje apo ulje të zbatohen pritet të jetë një numër të plotë në mes të 1 "
-#~ "dhe 40 nuk është e nevojshme për të hyrë në"
-
-#~ msgid "sign"
-#~ msgstr "shenjë"
-
-#~ msgid "the amount is assumed to be a percentage"
-#~ msgstr "shuma është supozuar të jetë një përqindje"
-
-#~ msgid "prices for"
-#~ msgstr "çmimet për"
-
-#~ msgid "for the stock category"
-#~ msgstr "për kategorinë e aksioneve"
-
-#~ msgid "will been incremented by"
-#~ msgstr "do ishte incremented nga"
-
-#~ msgid "percent"
-#~ msgstr "për qind"
-
-#~ msgid "Updating prices for"
-#~ msgstr "Përditësimi çmimet për"
-
-#~ msgid "Asset Type"
-#~ msgstr "Lloji i Aseteve"
-
-#~ msgid "Acquired After"
-#~ msgstr "E fituara Pas"
-
-#~ msgid "and Before"
-#~ msgstr "dhe Para"
-
-#, fuzzy
-#~ msgid "Special Prices for Inventory Categories between"
-#~ msgstr "Check Sheets për Kategoritë ndërmjet"
-
-#, fuzzy
-#~ msgid "Price List for Inventory Categories between"
-#~ msgstr "Check Sheets për Kategoritë ndërmjet"
 
 #~ msgid ""
 #~ "The effective after date field must be a date in the format dd/mm/yy or "

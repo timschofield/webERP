@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.071\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-24 12:24+1200\n"
+"POT-Creation-Date: 2011-07-27 19:08+1200\n"
 "PO-Revision-Date: 2011-02-27 06:32+0000\n"
 "Last-Translator: Maris Nelsons <Unknown>\n"
 "Language-Team: WebERP Translation <web-erp-translation@lists.sourceforge."
@@ -140,7 +140,7 @@ msgstr ""
 #: Locations.php:256 Locations.php:265 Locations.php:274 Locations.php:283
 #: Locations.php:292 Locations.php:301 MRPDemandTypes.php:87
 #: PaymentMethods.php:138 PaymentTerms.php:144 PaymentTerms.php:151
-#: PcExpenses.php:152 SalesCategories.php:125 SalesCategories.php:133
+#: PcExpenses.php:152 SalesCategories.php:124 SalesCategories.php:131
 #: SalesPeople.php:149 SalesPeople.php:156 SalesTypes.php:150
 #: SalesTypes.php:160 Shippers.php:82 Shippers.php:94 StockCategories.php:179
 #: Stocks.php:481 Stocks.php:490 Stocks.php:498 Stocks.php:506 Stocks.php:514
@@ -335,7 +335,7 @@ msgstr "Nē"
 #: PaymentMethods.php:200 PaymentTerms.php:201 PcAssignCashToTab.php:255
 #: PcClaimExpensesFromTab.php:252 PcExpenses.php:208 PcTabs.php:234
 #: PcTypeTabs.php:172 PO_AuthorisationLevels.php:149 Prices_Customer.php:280
-#: Prices.php:246 PurchData.php:202 SalesCategories.php:256
+#: Prices.php:246 PurchData.php:202 SalesCategories.php:254
 #: SalesGLPostings.php:132 SalesGLPostings.php:245 SalesPeople.php:219
 #: SalesTypes.php:216 SecurityTokens.php:110 SelectCustomer.php:668
 #: SelectCustomer.php:686 SelectCustomer.php:710 SelectCustomer.php:727
@@ -369,7 +369,7 @@ msgstr "Vai tie&#353;am vēlaties dzēst &#353;o filiāli?"
 #: PcExpensesTypeTab.php:185 PcTabs.php:235 PcTypeTabs.php:173
 #: PO_AuthorisationLevels.php:151 PO_Items.php:684 Prices_Customer.php:281
 #: Prices.php:247 PurchData.php:203 SalesAnalReptCols.php:294
-#: SalesAnalRepts.php:302 SalesCategories.php:257 SalesGLPostings.php:133
+#: SalesAnalRepts.php:302 SalesCategories.php:255 SalesGLPostings.php:133
 #: SalesGLPostings.php:246 SalesPeople.php:220 SalesTypes.php:217
 #: SecurityTokens.php:111 SelectCreditItems.php:754 SelectCustomer.php:669
 #: SelectCustomer.php:687 SelectCustomer.php:711 SelectCustomer.php:728
@@ -684,9 +684,9 @@ msgid "Date"
 msgstr "Datums"
 
 #: AddCustomerNotes.php:114 AddCustomerTypeNotes.php:105 PcReportTab.php:173
-#: Stocks.php:892 UpgradeDatabase.php:171 UpgradeDatabase.php:174
-#: UpgradeDatabase.php:177 UpgradeDatabase.php:180 UpgradeDatabase.php:183
-#: UpgradeDatabase.php:186 UpgradeDatabase.php:189 UpgradeDatabase.php:192
+#: Stocks.php:892 UpgradeDatabase.php:175 UpgradeDatabase.php:178
+#: UpgradeDatabase.php:181 UpgradeDatabase.php:184 UpgradeDatabase.php:187
+#: UpgradeDatabase.php:190 UpgradeDatabase.php:193 UpgradeDatabase.php:196
 #: Z_Upgrade_3.10-3.11.php:62 Z_Upgrade_3.10-3.11.php:66
 #: Z_Upgrade_3.10-3.11.php:70 Z_Upgrade_3.10-3.11.php:74
 #: Z_Upgrade_3.10-3.11.php:78 Z_Upgrade_3.11-4.00.php:62
@@ -830,15 +830,15 @@ msgstr "Klienta aprakstu nevar iegūt, jo SQL"
 #: PDFRemittanceAdvice.php:84 PDFStockCheckComparison.php:36
 #: PDFStockCheckComparison.php:62 PDFStockCheckComparison.php:267
 #: PO_PDFPurchOrder.php:31 PO_PDFPurchOrder.php:149
-#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198 ReorderLevel.php:60
-#: ReorderLevel.php:149 SalesAnalysis_UserDefined.php:28
-#: SelectCreditItems.php:23 StockCheck.php:47 StockCheck.php:68
-#: StockCheck.php:98 StockCheck.php:142 StockCheck.php:153 StockCheck.php:195
-#: StockDispatch.php:92 StockDispatch.php:104 SupplierBalsAtPeriodEnd.php:56
-#: SupplierBalsAtPeriodEnd.php:67 SuppPaymentRun.php:109
-#: SuppPaymentRun.php:120 SuppPaymentRun.php:184 SuppPaymentRun.php:214
-#: SuppPriceList.php:121 Tax.php:63 Tax.php:168 Tax.php:277
-#: Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
+#: PrintCustOrder_generic.php:243 PrintCustOrder.php:198
+#: PrintSalesOrder_generic.php:183 ReorderLevel.php:60 ReorderLevel.php:149
+#: SalesAnalysis_UserDefined.php:28 SelectCreditItems.php:23 StockCheck.php:47
+#: StockCheck.php:68 StockCheck.php:98 StockCheck.php:142 StockCheck.php:153
+#: StockCheck.php:195 StockDispatch.php:92 StockDispatch.php:104
+#: SupplierBalsAtPeriodEnd.php:56 SupplierBalsAtPeriodEnd.php:67
+#: SuppPaymentRun.php:109 SuppPaymentRun.php:120 SuppPaymentRun.php:184
+#: SuppPaymentRun.php:214 SuppPriceList.php:121 Tax.php:63 Tax.php:168
+#: Tax.php:277 Z_DataExport.php:72 Z_DataExport.php:168 Z_DataExport.php:259
 #: Z_DataExport.php:308 Z_DataExport.php:347 Z_DataExport.php:383
 #: Z_DataExport.php:419 Z_DataExport.php:471 Z_poRebuildDefault.php:38
 #: includes/PDFPaymentRun_PymtFooter.php:57
@@ -1084,7 +1084,7 @@ msgstr "Reģiona kods"
 #: FixedAssetCategories.php:134 GLAccounts.php:197 Locations.php:328
 #: MRPDemands.php:248 PcAssignCashToTab.php:135 PcClaimExpensesFromTab.php:126
 #: PcExpenses.php:160 PcExpensesTypeTab.php:101 PcTabs.php:166
-#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:137
+#: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:135
 #: SalesTypes.php:166 StockCategories.php:196 Suppliers.php:635
 #: SupplierTypes.php:151 Z_DeleteInvoice.php:146
 msgid "has been deleted"
@@ -1151,7 +1151,8 @@ msgstr "Lietotāja ID"
 #: SystemParameters.php:943 SystemParameters.php:949 SystemParameters.php:955
 #: SystemParameters.php:961 TopItems.php:23 TopItems.php:36
 #: WorkOrderEntry.php:562 WorkOrderEntry.php:565 WorkOrderIssue.php:626
-#: WorkOrderIssue.php:629
+#: WorkOrderIssue.php:629 includes/PDFAssetRegisterHeader.inc:15
+#: includes/PDFAssetRegisterHeader.inc:24
 msgid "All"
 msgstr "Viss"
 
@@ -1703,6 +1704,8 @@ msgstr "Nr."
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
 #: includes/PDFPeriodStockTransListingPageHeader.inc:52
 #: includes/PDFStockComparisonPageHeader.inc:36
+#: includes/PDFStockTransListingPageHeader.inc:68
+#: includes/PDFStockTransListingPageHeader.inc:72
 #: includes/PDFSuppTransListingPageHeader.inc:49
 msgid "Reference"
 msgstr "Reference"
@@ -1848,9 +1851,10 @@ msgstr "Drukāt"
 #: includes/PDFSalesOrder_generic.inc:95
 #: includes/PDFStockCheckPageHeader.inc:44
 #: includes/PDFStockNegativesHeader.inc:33
-#: includes/PDFStockTransferHeader.inc:39 includes/PDFTransPageHeader.inc:209
-#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2260
-#: api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
+#: includes/PDFStockTransferHeader.inc:39
+#: includes/PDFStockTransListingPageHeader.inc:70
+#: includes/PDFTransPageHeader.inc:209 includes/PO_PDFOrderPageHeader.inc:78
+#: api/api_xml-rpc.php:2260 api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
 msgid "Quantity"
 msgstr "Daudzums"
 
@@ -1907,7 +1911,7 @@ msgstr ""
 #: includes/PDFOrderPageHeader_generic.inc:79
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
-#: includes/PDFPickingListHeader.inc:48
+#: includes/PDFPickingListHeader.inc:48 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:27
 #: includes/PDFSalesAnalPageHeader.inc:15
 #: includes/PDFSalesOrder_generic.inc:81
@@ -1935,6 +1939,7 @@ msgstr "Sagatavots"
 #: PrintCustTransPortrait.php:998 ReorderLevel.php:240 StockDispatch.php:337
 #: SuppPriceList.php:255 Tax.php:243 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
+#: includes/PDFAssetRegisterHeader.inc:38
 #: includes/PDFBalanceSheetPageHeader.inc:26
 #: includes/PDFBankingSummaryPageHeader.inc:23
 #: includes/PDFBOMListingPageHeader.inc:26
@@ -1954,7 +1959,7 @@ msgstr "Sagatavots"
 #: includes/PDFOstdgGRNsPageHeader.inc:16
 #: includes/PDFPaymentRunPageHeader.inc:11
 #: includes/PDFPeriodStockTransListingPageHeader.inc:25
-#: includes/PDFPickingListHeader.inc:69
+#: includes/PDFPickingListHeader.inc:69 includes/PDFPriceListPageHeader.inc:12
 #: includes/PDFProfitAndLossPageHeader.inc:28
 #: includes/PDFQuotationPageHeader.inc:94
 #: includes/PDFQuotationPortraitPageHeader.inc:92
@@ -1967,6 +1972,7 @@ msgstr "Sagatavots"
 #: includes/PDFStockLocTransferHeader.inc:12
 #: includes/PDFStockNegativesHeader.inc:12
 #: includes/PDFStockTransferHeader.inc:16
+#: includes/PDFStockTransListingPageHeader.inc:45
 #: includes/PDFSupplierBalsPageHeader.inc:20
 #: includes/PDFSuppTransListingPageHeader.inc:32
 #: includes/PDFTabReportHeader.inc:15
@@ -2078,7 +2084,7 @@ msgstr "Līmenis"
 #: PDFOrderStatus.php:319 PDFPrintLabel.php:238 PO_Items.php:637
 #: PO_Items.php:926 PO_SelectOSPurchOrder.php:211 PO_SelectPurchOrder.php:178
 #: PricesByCost.php:152 ReorderLevelLocation.php:55 ReorderLevel.php:254
-#: ReverseGRN.php:377 SalesCategories.php:423 SecurityTokens.php:86
+#: ReverseGRN.php:377 SalesCategories.php:421 SecurityTokens.php:86
 #: SecurityTokens.php:92 SecurityTokens.php:102 SelectAsset.php:243
 #: SelectCompletedOrder.php:536 SelectContract.php:153
 #: SelectCreditItems.php:976 SelectOrderItems.php:1517
@@ -2093,8 +2099,8 @@ msgstr "Līmenis"
 #: TaxAuthorities.php:145 TopItems.php:163 WorkCentres.php:124
 #: WorkOrderCosting.php:81 WorkOrderCosting.php:111 WorkOrderEntry.php:598
 #: WorkOrderIssue.php:668 includes/DefineLabelClass.php:12
-#: includes/DefineLabelClass.php:45 includes/PDFGrnHeader.inc:29
-#: includes/PDFInventoryPlanPageHeader.inc:51
+#: includes/DefineLabelClass.php:45 includes/PDFAssetRegisterHeader.inc:62
+#: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
 #: includes/PDFStockLocTransferHeader.inc:49
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
@@ -2204,7 +2210,7 @@ msgstr "Ievadiet fragmentu no"
 
 #: BOMInquiry.php:26 BOMs.php:806 EmailConfirmation.php:191 MRPDemands.php:333
 #: MRPReport.php:542 PO_SelectOSPurchOrder.php:200 PO_SelectPurchOrder.php:170
-#: SalesCategories.php:422 SelectProduct.php:512 Shipt_Select.php:166
+#: SalesCategories.php:420 SelectProduct.php:512 Shipt_Select.php:166
 #: StockAdjustments.php:76 StockAdjustments.php:335 StockCounts.php:97
 #: StockCounts.php:132 StockMovements.php:31 StockReorderLevel.php:44
 #: StockStatus.php:61 StockTransfers.php:38 StockTransfers.php:445
@@ -2591,8 +2597,10 @@ msgstr "Līmenis"
 #: StockCounts.php:133 StockReorderLevel.php:49 StockSerialItemResearch.php:78
 #: StockStatus.php:84 StockStatus.php:89 WhereUsedInquiry.php:67
 #: WorkCentres.php:125 WorkCentres.php:210
+#: includes/PDFAssetRegisterHeader.inc:64
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
-#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2258
+#: includes/PDFStockNegativesHeader.inc:31
+#: includes/PDFStockTransListingPageHeader.inc:71 api/api_xml-rpc.php:2258
 #: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
 msgid "Location"
 msgstr "Noliktava"
@@ -2947,7 +2955,7 @@ msgstr "Veidot ierakstus virsgrāmatā par preču kustību"
 #: PO_AuthoriseMyOrders.php:132 PricesByCost.php:221 PurchData.php:497
 #: ReorderLevelLocation.php:156 SecurityTokens.php:89
 #: SelectCreditItems.php:911 SMTPServer.php:64 StockCostUpdate.php:163
-#: StockReorderLevel.php:94 Stocks.php:1047 SystemParameters.php:1018
+#: StockReorderLevel.php:95 Stocks.php:1047 SystemParameters.php:1018
 #: TaxAuthorityRates.php:79 WorkOrderEntry.php:546 WOSerialNos.php:315
 msgid "Update"
 msgstr "Labot"
@@ -3193,6 +3201,7 @@ msgstr "Šajā sūtijumā"
 #: StockMovements.php:97 StockStatus.php:313 SuppCreditGRNs.php:229
 #: SuppCreditGRNs.php:230 SupplierTenders.php:267 SupplierTenders.php:494
 #: SuppPriceList.php:274 includes/DefineLabelClass.php:49
+#: includes/PDFPriceListPageHeader.inc:46
 #: includes/PDFQuotationPageHeader.inc:104
 #: includes/PDFQuotationPortraitPageHeader.inc:104
 #: includes/PDFTransPageHeaderPortrait.inc:265
@@ -3772,8 +3781,8 @@ msgstr ""
 #: FixedAssetCategories.php:86 FixedAssetCategories.php:105
 #: PricesBasedOnMarkUp.php:337 PricesBasedOnMarkUp.php:353
 #: SelectCreditItems.php:1395 SpecialOrder.php:423 StockCategories.php:21
-#: StockCategories.php:82 StockCategories.php:153 Z_ReApplyCostToSA.php:62
-#: Z_ReApplyCostToSA.php:74
+#: StockCategories.php:82 StockCategories.php:153 Z_PriceChanges.php:137
+#: Z_ReApplyCostToSA.php:62 Z_ReApplyCostToSA.php:74
 msgid "because"
 msgstr ", jo"
 
@@ -4253,7 +4262,7 @@ msgid "Image"
 msgstr "Atēls"
 
 #: ContractBOM.php:365 CounterSales.php:2013 FixedAssetItems.php:468
-#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:249
+#: FixedAssetItems.php:472 PO_Items.php:951 SalesCategories.php:247
 #: SelectCreditItems.php:1005 SelectOrderItems.php:1531
 #: SelectOrderItems.php:1708 Stocks.php:728 Stocks.php:732
 #: SupplierTenders.php:518 WorkOrderEntry.php:617 WorkOrderIssue.php:684
@@ -4925,7 +4934,7 @@ msgstr "Atcelt"
 #: StockSerialItemResearch.php:81
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
 #: includes/PDFDIFOTPageHeader.inc:44 includes/PDFOrderPageHeader.inc:50
-#: includes/PDFTransPageHeader.inc:47
+#: includes/PDFPriceListPageHeader.inc:42 includes/PDFTransPageHeader.inc:47
 #: includes/PDFTransPageHeaderPortrait.inc:56
 msgid "Branch"
 msgstr "Filiāle"
@@ -4969,18 +4978,19 @@ msgstr ""
 #: ReorderLevel.php:242 SalesCategoryPeriodInquiry.php:162
 #: SalesTopItemsInquiry.php:218 SpecialOrder.php:606 StockDispatch.php:344
 #: Stocks.php:738 SuppPriceList.php:211 SuppPriceList.php:261
-#: includes/PDFInventoryValnPageHeader.inc:32
+#: Z_PriceChanges.php:37 includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 msgid "Category"
 msgstr "Kategorija"
 
 #: Contracts.php:849 PricesBasedOnMarkUp.php:111 SpecialOrder.php:610
-#: Stocks.php:741
+#: Stocks.php:741 Z_PriceChanges.php:42
 msgid "The stock categories could not be retrieved because"
 msgstr "Preces kategoriju nevar iegūt, jo"
 
 #: Contracts.php:850 FixedAssetItems.php:485 PricesBasedOnMarkUp.php:112
-#: SpecialOrder.php:611 Stocks.php:742
+#: SpecialOrder.php:611 Stocks.php:742 Z_PriceChanges.php:43
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "SQL kļūda pieprasot preces kategoriju,"
 
@@ -5471,7 +5481,8 @@ msgstr "Pasūtījuma nr."
 #: CounterSales.php:1193 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:204 Prices_Customer.php:41
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:332 SpecialOrder.php:111
-#: SpecialOrder.php:113
+#: SpecialOrder.php:113 includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 msgid "for"
 msgstr "priekš"
 
@@ -6430,7 +6441,8 @@ msgid "Reports Page Size"
 msgstr "Atskaites lapas izmērs"
 
 #: CustLoginSetup.php:174 CustLoginSetup.php:176 EmailConfirmation.php:119
-#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90 SuppLoginSetup.php:202
+#: PrintCustOrder_generic.php:111 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:90 SuppLoginSetup.php:202
 #: SuppLoginSetup.php:204 WWW_Users.php:502 WWW_Users.php:504
 msgid "A4"
 msgstr "A4"
@@ -6445,10 +6457,11 @@ msgstr "A3"
 #: CustLoginSetup.php:186 CustLoginSetup.php:188 CustLoginSetup.php:198
 #: CustLoginSetup.php:200 CustLoginSetup.php:209 CustLoginSetup.php:211
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90 SuppLoginSetup.php:214 SuppLoginSetup.php:216
-#: SuppLoginSetup.php:226 SuppLoginSetup.php:228 SuppLoginSetup.php:237
-#: SuppLoginSetup.php:239 WWW_Users.php:514 WWW_Users.php:516
-#: WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537 WWW_Users.php:539
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90 SuppLoginSetup.php:214
+#: SuppLoginSetup.php:216 SuppLoginSetup.php:226 SuppLoginSetup.php:228
+#: SuppLoginSetup.php:237 SuppLoginSetup.php:239 WWW_Users.php:514
+#: WWW_Users.php:516 WWW_Users.php:526 WWW_Users.php:528 WWW_Users.php:537
+#: WWW_Users.php:539
 msgid "landscape"
 msgstr "horizontāli"
 
@@ -6535,11 +6548,11 @@ msgstr "un kopējā summa"
 msgid "was"
 msgstr "bija"
 
-#: CustomerAllocations.php:324
+#: CustomerAllocations.php:323
 msgid "Allocate Receipt"
 msgstr ""
 
-#: CustomerAllocations.php:324 CustomerReceipt.php:529
+#: CustomerAllocations.php:323 CustomerReceipt.php:529
 msgid "Allocate Receipts"
 msgstr "Alocēt ienāko&#353;ās summas"
 
@@ -8154,13 +8167,16 @@ msgstr ""
 #: includes/PDFLowGPPageHeader.inc:15 includes/PDFOstdgGRNsPageHeader.inc:15
 #: includes/PDFPaymentRunPageHeader.inc:18
 #: includes/PDFPaymentRunPageHeader.inc:21
+#: includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 #: includes/PDFStockCheckPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "and"
 msgstr "un"
 
 #: DailyBankTransactions.php:104 PDFCustTransListing.php:35
-#: PDFPeriodStockTransListing.php:39 PDFSuppTransListing.php:35
+#: PDFPeriodStockTransListing.php:39 PDFStockTransListing.php:38
+#: PDFSuppTransListing.php:35
 msgid "Transaction type"
 msgstr ""
 
@@ -8628,6 +8644,16 @@ msgstr "Izveidot regulāro pārdošanas rīkojumu"
 msgid "Commit Order Changes"
 msgstr "Veikt rīkojuma izmaiņas"
 
+#: DemandWorkOrders.php:9
+#, fuzzy
+msgid "Demand Work Orders"
+msgstr "Izvēlēties daba rīkojumu"
+
+#: DemandWorkOrders.php:46 SelectProduct.php:282
+msgid ""
+"The quantity on work orders for this product cannot be retrieved because"
+msgstr ""
+
 #: DiscountCategories.php:7
 msgid "Discount Categories Maintenance"
 msgstr "Atlaižu kategoriju uzturē&#353;ana"
@@ -8663,7 +8689,7 @@ msgid "Discount Category Code"
 msgstr "Atlaižu kategorijas kods"
 
 #: DiscountCategories.php:88 DiscountCategories.php:248 PO_Header.php:855
-#: SalesCategories.php:255 SuppInvGRNs.php:277 SupplierTenders.php:55
+#: SalesCategories.php:253 SuppInvGRNs.php:277 SupplierTenders.php:55
 #, php-format
 msgid "Select"
 msgstr "Izvēlēties"
@@ -8714,6 +8740,7 @@ msgstr "Atlāižu kategorija"
 #: includes/PDFInventoryPlanPageHeader.inc:50
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFLowGPPageHeader.inc:45 includes/PDFOstdgGRNsPageHeader.inc:38
+#: includes/PDFPriceListPageHeader.inc:38
 #: includes/PDFStockCheckPageHeader.inc:33
 #: includes/PDFStockComparisonPageHeader.inc:33
 msgid "Item"
@@ -9085,7 +9112,7 @@ msgid "Order date"
 msgstr ""
 
 #: EDIProcessOrders.php:275 EDIProcessOrders.php:277
-#: SupplierAllocations.php:436
+#: SupplierAllocations.php:436 includes/PDFStockTransListingPageHeader.inc:41
 msgid "dated"
 msgstr ""
 
@@ -9339,11 +9366,12 @@ msgid ""
 msgstr ""
 
 #: EmailConfirmation.php:9 PrintCustOrder_generic.php:12 PrintCustOrder.php:13
+#: PrintSalesOrder_generic.php:14
 msgid "Select Order To Print"
 msgstr "Izvēlaties rīkojumu izdrukai"
 
 #: EmailConfirmation.php:15 PrintCustOrder_generic.php:15
-#: PrintCustOrder.php:16
+#: PrintCustOrder.php:16 PrintSalesOrder_generic.php:17
 msgid "Select an Order Number to Print before calling this page"
 msgstr ""
 
@@ -9351,19 +9379,22 @@ msgstr ""
 #: PO_OrderDetails.php:74 PrintCustOrder_generic.php:22
 #: PrintCustOrder_generic.php:84 PrintCustOrder_generic.php:118
 #: PrintCustOrder.php:18 PrintCustOrder.php:71 PrintCustOrder.php:95
-#: SelectSalesOrder.php:309
+#: PrintSalesOrder_generic.php:19 PrintSalesOrder_generic.php:70
+#: PrintSalesOrder_generic.php:95 SelectSalesOrder.php:309
 msgid "Outstanding Sales Orders"
 msgstr "Nepabeigtie pasūtījumi"
 
 #: EmailConfirmation.php:24 EmailConfirmation.php:96 EmailConfirmation.php:128
 #: PrintCustOrder_generic.php:23 PrintCustOrder_generic.php:85
 #: PrintCustOrder_generic.php:119 PrintCustOrder.php:19 PrintCustOrder.php:72
-#: PrintCustOrder.php:96
+#: PrintCustOrder.php:96 PrintSalesOrder_generic.php:20
+#: PrintSalesOrder_generic.php:71 PrintSalesOrder_generic.php:96
 msgid "Completed Sales Orders"
 msgstr "Pabeigtie pārdo&#353;anas rīkojumi"
 
 #: EmailConfirmation.php:42 FTP_RadioBeacon.php:178
 #: PrintCustOrder_generic.php:36 PrintCustOrder.php:26
+#: PrintSalesOrder_generic.php:27 PrintSalesOrder_generic.php:129
 msgid ""
 "There was a problem retrieving the order header details for Order Number"
 msgstr ""
@@ -9377,39 +9408,43 @@ msgstr ""
 #: PrintCustTrans.php:213 PrintCustTrans.php:263 PrintCustTrans.php:668
 #: PrintCustTrans.php:837 PrintCustTransPortrait.php:235
 #: PrintCustTransPortrait.php:288 PrintCustTransPortrait.php:689
-#: PrintCustTransPortrait.php:858
+#: PrintCustTransPortrait.php:858 PrintSalesOrder_generic.php:27
+#: PrintSalesOrder_generic.php:130
 msgid "from the database"
 msgstr "no datu bāzes"
 
 #: EmailConfirmation.php:81 EmailConfirmation.php:115
 #: PrintCustOrder_generic.php:74 PrintCustOrder_generic.php:103
 #: PrintCustOrder_generic.php:238 PrintCustOrder.php:66 PrintCustOrder.php:82
-#: PrintCustOrder.php:194
+#: PrintCustOrder.php:194 PrintSalesOrder_generic.php:65
+#: PrintSalesOrder_generic.php:82 PrintSalesOrder_generic.php:179
 msgid "Print Packing Slip Error"
 msgstr ""
 
 #: EmailConfirmation.php:87 PrintCustOrder_generic.php:77
-#: PrintCustOrder.php:69
+#: PrintCustOrder.php:69 PrintSalesOrder_generic.php:68
 msgid "Unable to Locate Order Number"
 msgstr "Nevar atrast rīkojuma numuru"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:106
-#: PrintCustOrder.php:85
+#: PrintCustOrder.php:85 PrintSalesOrder_generic.php:85
 msgid "The packing slip for order number"
 msgstr ""
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "has previously been printed"
 msgstr "Iepriek&#353; jau tika izdrukats"
 
 #: EmailConfirmation.php:117 PO_PDFPurchOrder.php:137
 #: PrintCustOrder_generic.php:107 PrintCustOrder.php:86
+#: PrintSalesOrder_generic.php:86
 msgid "It was printed on"
 msgstr "Tas tika izdrukāts"
 
 #: EmailConfirmation.php:117 PrintCustOrder_generic.php:108
-#: PrintCustOrder.php:87
+#: PrintCustOrder.php:87 PrintSalesOrder_generic.php:87
 msgid ""
 "This check is there to ensure that duplicate packing slips are not produced "
 "and dispatched more than once to the customer"
@@ -9417,26 +9452,28 @@ msgstr ""
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Do a Re-Print"
 msgstr "Drukāt vēlreiz"
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
-#: PrintCustOrder.php:89
+#: PrintCustOrder.php:89 PrintSalesOrder_generic.php:89
 msgid "On Pre-Printed Stationery"
 msgstr ""
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:110
 #: PrintCustOrder_generic.php:111 PrintCustOrder.php:89 PrintCustOrder.php:90
+#: PrintSalesOrder_generic.php:89 PrintSalesOrder_generic.php:90
 msgid "Even Though Previously Printed"
 msgstr ""
 
 #: EmailConfirmation.php:119 PrintCustOrder_generic.php:111
-#: PrintCustOrder.php:90
+#: PrintCustOrder.php:90 PrintSalesOrder_generic.php:90
 msgid "Plain paper"
 msgstr ""
 
 #: EmailConfirmation.php:124 PrintCustOrder_generic.php:114
-#: PrintCustOrder.php:93
+#: PrintCustOrder.php:93 PrintSalesOrder_generic.php:93
 msgid "Or select another Order Number to Print"
 msgstr ""
 
@@ -9812,6 +9849,7 @@ msgstr ""
 #: FixedAssetDepreciation.php:83 FixedAssetRegister.php:80
 #: FixedAssetRegister.php:331 FixedAssetTransfer.php:109
 #: SuppFixedAssetChgs.php:72 SupplierCredit.php:372 SupplierInvoice.php:342
+#: includes/PDFAssetRegisterHeader.inc:60
 msgid "Asset ID"
 msgstr ""
 
@@ -9822,6 +9860,8 @@ msgstr ""
 #: FixedAssetDepreciation.php:86 PricesByCost.php:157 SalesAnalReptCols.php:38
 #: SalesAnalReptCols.php:40 SelectProduct.php:186 SelectProduct.php:343
 #: ShipmentCosting.php:149 ShipmentCosting.php:150 StockCostUpdate.php:149
+#: includes/PDFAssetRegisterHeader.inc:66
+#: includes/PDFAssetRegisterHeader.inc:69
 #: includes/PDFInventoryValnPageHeader.inc:35
 #: includes/PDFInventoryValnPageHeader.inc:39
 #: includes/PDFLowGPPageHeader.inc:48
@@ -10076,7 +10116,7 @@ msgstr "īss"
 msgid "long"
 msgstr "gar&#353;s"
 
-#: FixedAssetItems.php:455 SalesCategories.php:326 Stocks.php:715
+#: FixedAssetItems.php:455 SalesCategories.php:324 Stocks.php:715
 msgid "Image File (.jpg)"
 msgstr "Atēla fails (.jpg)"
 
@@ -10223,7 +10263,7 @@ msgstr ""
 msgid "Fixed Asset Register"
 msgstr ""
 
-#: FixedAssetRegister.php:84
+#: FixedAssetRegister.php:84 includes/PDFAssetRegisterHeader.inc:65
 msgid "Date Acquired"
 msgstr ""
 
@@ -10239,7 +10279,8 @@ msgstr ""
 msgid "Additions"
 msgstr ""
 
-#: FixedAssetRegister.php:88
+#: FixedAssetRegister.php:88 includes/PDFAssetRegisterHeader.inc:67
+#: includes/PDFAssetRegisterHeader.inc:70
 msgid "Depn"
 msgstr ""
 
@@ -10251,7 +10292,8 @@ msgstr ""
 msgid "Depn C/fwd"
 msgstr ""
 
-#: FixedAssetRegister.php:91
+#: FixedAssetRegister.php:91 includes/PDFAssetRegisterHeader.inc:68
+#: includes/PDFAssetRegisterHeader.inc:71
 msgid "NBV"
 msgstr ""
 
@@ -10292,15 +10334,15 @@ msgstr ""
 msgid "Show Assets"
 msgstr ""
 
-#: FixedAssetRegister.php:329
+#: FixedAssetRegister.php:329 includes/PDFAssetRegisterHeader.inc:33
 msgid "Asset Category "
 msgstr ""
 
-#: FixedAssetRegister.php:330
+#: FixedAssetRegister.php:330 includes/PDFAssetRegisterHeader.inc:34
 msgid "Asset Location "
 msgstr ""
 
-#: FixedAssetRegister.php:356
+#: FixedAssetRegister.php:356 includes/PDFAssetRegisterHeader.inc:63
 msgid "Serial No."
 msgstr ""
 
@@ -14562,6 +14604,7 @@ msgstr ""
 
 #: OffersReceived.php:94 PurchData.php:323 Stocks.php:361
 #: includes/PDFPeriodStockTransListingPageHeader.inc:47
+#: includes/PDFStockTransListingPageHeader.inc:67
 msgid "Stock Item"
 msgstr "Preču vienības"
 
@@ -15959,7 +16002,7 @@ msgstr ""
 #: PDFBankingSummary.php:36 PDFChequeListing.php:66 PDFCustTransListing.php:47
 #: PDFDeliveryDifferences.php:71 PDFDIFOT.php:81 PDFOrdersInvoiced.php:70
 #: PDFOrderStatus.php:73 PDFPeriodStockTransListing.php:78
-#: PDFSuppTransListing.php:47
+#: PDFStockTransListing.php:52 PDFSuppTransListing.php:47
 msgid "Create PDF"
 msgstr "Izveidot PDF"
 
@@ -16160,7 +16203,7 @@ msgid "Activity Since"
 msgstr ""
 
 #: PDFCustTransListing.php:10 PDFPeriodStockTransListing.php:9
-#: PDFSuppTransListing.php:10
+#: PDFStockTransListing.php:13 PDFSuppTransListing.php:10
 msgid "The date must be specified in the format"
 msgstr ""
 
@@ -16169,7 +16212,8 @@ msgstr ""
 msgid "Customer Transaction Listing"
 msgstr ""
 
-#: PDFCustTransListing.php:31 PDFSuppTransListing.php:31
+#: PDFCustTransListing.php:31 PDFStockTransListing.php:34
+#: PDFSuppTransListing.php:31
 msgid "Enter the date for which the transactions are to be listed"
 msgstr ""
 
@@ -16187,6 +16231,7 @@ msgid "Credit Notes"
 msgstr ""
 
 #: PDFCustTransListing.php:77 PDFPeriodStockTransListing.php:134
+#: PDFStockTransListing.php:85
 msgid "An error occurred getting the transactions"
 msgstr ""
 
@@ -16194,12 +16239,13 @@ msgstr ""
 msgid "The SQL used to get the transaction information that failed was"
 msgstr ""
 
-#: PDFCustTransListing.php:87 PDFSuppTransListing.php:82
+#: PDFCustTransListing.php:87 PDFStockTransListing.php:92
+#: PDFSuppTransListing.php:82
 msgid "There were no transactions found in the database for the date"
 msgstr ""
 
 #: PDFCustTransListing.php:87 PDFPeriodStockTransListing.php:141
-#: PDFSuppTransListing.php:82
+#: PDFStockTransListing.php:92 PDFSuppTransListing.php:82
 msgid "Please try again selecting a different date"
 msgstr ""
 
@@ -16456,7 +16502,8 @@ msgid "Not yet printed"
 msgstr "Vēl nav drukāts"
 
 #: PDFPeriodStockTransListing.php:16 PDFPeriodStockTransListing.php:20
-#: PDFPeriodStockTransListing.php:150
+#: PDFPeriodStockTransListing.php:150 PDFStockTransListing.php:20
+#: PDFStockTransListing.php:24 PDFStockTransListing.php:101
 msgid "Stock Transaction Listing"
 msgstr ""
 
@@ -16468,33 +16515,33 @@ msgstr ""
 msgid "Enter the date to which the transactions are to be listed"
 msgstr ""
 
-#: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:59
-#: PrintCustTransPortrait.php:57 SalesInquiry.php:1054
+#: PDFPeriodStockTransListing.php:43 PDFStockTransListing.php:42
+#: PrintCustTrans.php:59 PrintCustTransPortrait.php:57 SalesInquiry.php:1054
 msgid "Sales Invoice"
 msgstr "Rēķins"
 
-#: PDFPeriodStockTransListing.php:44 PrintCustTrans.php:62
-#: PrintCustTransPortrait.php:60
+#: PDFPeriodStockTransListing.php:44 PDFStockTransListing.php:43
+#: PrintCustTrans.php:62 PrintCustTransPortrait.php:60
 msgid "Sales Credit Note"
 msgstr "Kredītrēķins"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 PDFStockTransListing.php:44
 msgid "Location Transfer"
 msgstr ""
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 PDFStockTransListing.php:45
 msgid "Stock Adjustment"
 msgstr ""
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 PDFStockTransListing.php:46
 msgid "Purchase Order Delivery"
 msgstr ""
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 PDFStockTransListing.php:47
 msgid "Work Order Receipt"
 msgstr ""
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 PDFStockTransListing.php:48
 msgid "Work Order Issue"
 msgstr ""
 
@@ -16503,6 +16550,7 @@ msgid "For Stock Location"
 msgstr "Preču noliktavai"
 
 #: PDFPeriodStockTransListing.php:132 PDFPeriodStockTransListing.php:138
+#: PDFStockTransListing.php:83 PDFStockTransListing.php:89
 msgid "Transaction Listing"
 msgstr ""
 
@@ -16511,37 +16559,44 @@ msgstr ""
 msgid "There were no transactions found in the database between the dates"
 msgstr "Nav veiktas transakcijas pēc"
 
-#: PDFPeriodStockTransListing.php:151
+#: PDFPeriodStockTransListing.php:151 PDFStockTransListing.php:102
 msgid "Stock transaction listing from"
 msgstr ""
 
 #: PDFPeriodStockTransListing.php:158
 #: includes/PDFCustTransListingPageHeader.inc:15
+#: includes/PDFStockTransListingPageHeader.inc:15
 msgid "Customer Invoices"
 msgstr ""
 
 #: PDFPeriodStockTransListing.php:161
 #: includes/PDFCustTransListingPageHeader.inc:18
+#: includes/PDFStockTransListingPageHeader.inc:18
 msgid "Customer Credit Notes"
 msgstr ""
 
 #: PDFPeriodStockTransListing.php:164 SelectProduct.php:417
+#: includes/PDFStockTransListingPageHeader.inc:21
 msgid "Location Transfers"
 msgstr "Pārvieto&#353;ana starp noliktavām"
 
 #: PDFPeriodStockTransListing.php:167 StockAdjustments.php:8
+#: includes/PDFStockTransListingPageHeader.inc:24
 msgid "Stock Adjustments"
 msgstr "Preču skaita labojumi"
 
 #: PDFPeriodStockTransListing.php:170
+#: includes/PDFStockTransListingPageHeader.inc:27
 msgid "Purchase Order Deliveries"
 msgstr ""
 
 #: PDFPeriodStockTransListing.php:173
+#: includes/PDFStockTransListingPageHeader.inc:30
 msgid "Work Order Receipts"
 msgstr ""
 
 #: PDFPeriodStockTransListing.php:176
+#: includes/PDFStockTransListingPageHeader.inc:33
 msgid "Work Order Issues"
 msgstr ""
 
@@ -16601,7 +16656,8 @@ msgid "Price Listing Report"
 msgstr ""
 
 #: PDFPriceList.php:23 PDFPriceList.php:295 PDFPriceList.php:335
-#: PDFPriceList.php:355
+#: PDFPriceList.php:355 includes/PDFPriceListPageHeader.inc:16
+#: includes/PDFPriceListPageHeader.inc:40
 msgid "Customer Special Prices Only"
 msgstr "Tikai klientu īpa&#353;ās cenas"
 
@@ -16714,7 +16770,7 @@ msgid "Effective Date Range"
 msgstr ""
 
 #: PDFPriceList.php:362 includes/PDFLowGPPageHeader.inc:49
-#: includes/PDFLowGPPageHeader.inc:50
+#: includes/PDFLowGPPageHeader.inc:50 includes/PDFPriceListPageHeader.inc:49
 msgid "GP"
 msgstr ""
 
@@ -16754,7 +16810,7 @@ msgstr ""
 msgid "Number of labels per item"
 msgstr ""
 
-#: PDFPrintLabel.php:93
+#: PDFPrintLabel.php:93 Z_PriceChanges.php:94
 msgid "Price list"
 msgstr ""
 
@@ -18476,7 +18532,7 @@ msgstr ""
 msgid "Requisition"
 msgstr ""
 
-#: PricesBasedOnMarkUp.php:8
+#: PricesBasedOnMarkUp.php:8 Z_PriceChanges.php:7
 msgid "Update Pricing"
 msgstr ""
 
@@ -18495,7 +18551,7 @@ msgstr ""
 msgid "Select the Price List to update"
 msgstr "Izvēlietie darumu"
 
-#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94
+#: PricesBasedOnMarkUp.php:29 PricesBasedOnMarkUp.php:94 Z_PriceChanges.php:28
 msgid "No Price List Selected"
 msgstr ""
 
@@ -18553,11 +18609,11 @@ msgstr ""
 msgid "New Price To Be Effective To (Blank = No End Date)"
 msgstr ""
 
-#: PricesBasedOnMarkUp.php:163
+#: PricesBasedOnMarkUp.php:163 Z_PriceChanges.php:67
 msgid "Percentage Increase (positive) or decrease (negative)"
 msgstr ""
 
-#: PricesBasedOnMarkUp.php:167
+#: PricesBasedOnMarkUp.php:167 Z_PriceChanges.php:71
 msgid "Update Prices"
 msgstr ""
 
@@ -18627,7 +18683,7 @@ msgid ""
 "For a log of all the prices changed this page should be printed with CTRL+P"
 msgstr ""
 
-#: PricesBasedOnMarkUp.php:214
+#: PricesBasedOnMarkUp.php:214 Z_PriceChanges.php:77
 msgid "So we are using a price list/sales type of"
 msgstr ""
 
@@ -18647,7 +18703,7 @@ msgstr ""
 msgid "against"
 msgstr ""
 
-#: PricesBasedOnMarkUp.php:229
+#: PricesBasedOnMarkUp.php:229 Z_PriceChanges.php:82
 msgid "The price list/sales type to be updated must be selected first"
 msgstr ""
 
@@ -18693,7 +18749,7 @@ msgid ""
 "concerned is:"
 msgstr ""
 
-#: PricesBasedOnMarkUp.php:337
+#: PricesBasedOnMarkUp.php:337 Z_PriceChanges.php:137
 msgid "Error updating prices for"
 msgstr ""
 
@@ -18998,11 +19054,11 @@ msgstr ""
 msgid "Cheque No."
 msgstr ""
 
-#: PrintCustOrder_generic.php:141
+#: PrintCustOrder_generic.php:141 PrintSalesOrder_generic.php:111
 msgid "Customer Laser Packing Slip"
 msgstr ""
 
-#: PrintCustOrder_generic.php:142
+#: PrintCustOrder_generic.php:142 PrintSalesOrder_generic.php:112
 msgid "Laser Packing slip for order"
 msgstr ""
 
@@ -19030,6 +19086,7 @@ msgid "A packing slip cannot be printed"
 msgstr ""
 
 #: PrintCustOrder_generic.php:241 PrintCustOrder.php:197
+#: PrintSalesOrder_generic.php:182
 msgid "Print Another Packing Slip/Order"
 msgstr ""
 
@@ -19368,6 +19425,13 @@ msgstr "Rēķinu un kredītrēķinu drukā&#353;ana"
 msgid "Print Preview"
 msgstr "Parādīt"
 
+#: PrintSalesOrder_generic.php:181
+#, fuzzy
+msgid ""
+"There were no outstanding items on the order to deliver. A packing slip "
+"cannot be printed"
+msgstr "Nav ievadīta neviena prece piedāvājumā"
+
 #: PurchData.php:6
 msgid "Supplier Purchasing Data"
 msgstr "Vendor Purchasing Data"
@@ -19662,20 +19726,20 @@ msgid "Show Stock Status"
 msgstr "Rādīt preces statusu"
 
 #: PurchData.php:505 SelectProduct.php:393 StockCostUpdate.php:167
-#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:95
+#: StockLocMovements.php:47 StockMovements.php:56 StockReorderLevel.php:96
 #: StockUsage.php:182
 msgid "Show Stock Movements"
 msgstr "Rādīt preces kustību"
 
 #: PurchData.php:506 SelectProduct.php:398 SelectSalesOrder.php:6
 #: StockAdjustments.php:426 StockCostUpdate.php:169 StockMovements.php:202
-#: StockReorderLevel.php:97 StockStatus.php:357 StockTransfers.php:532
+#: StockReorderLevel.php:98 StockStatus.php:357 StockTransfers.php:532
 #: StockUsage.php:183
 msgid "Search Outstanding Sales Orders"
 msgstr "Parādīt nepabeigtos pārdo&#353;anas rīkojumus"
 
 #: PurchData.php:507 SelectProduct.php:399 StockAdjustments.php:427
-#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:98
+#: StockCostUpdate.php:170 StockMovements.php:203 StockReorderLevel.php:99
 #: StockStatus.php:358 StockTransfers.php:533 StockUsage.php:184
 msgid "Search Completed Sales Orders"
 msgstr "Mēklēt pabeigtos pārdo&#353;anas rīkojumus"
@@ -20928,11 +20992,11 @@ msgid ""
 msgstr ""
 "Nevar izdzēst, tapēc ka ir preces, kuras attiecas uz &#353;o kategoriju"
 
-#: SalesCategories.php:125
+#: SalesCategories.php:124
 msgid "items under to this category"
 msgstr "prece &#353;ajā kategorijā"
 
-#: SalesCategories.php:132
+#: SalesCategories.php:131
 msgid ""
 "Cannot delete this sales category because sub categories have been added to "
 "this category"
@@ -20940,86 +21004,86 @@ msgstr ""
 "Nevar izdzēst pārdo&#353;anas kategoriju, tapēc ka subkategorija atodas "
 "&#353;ajā kategorijā"
 
-#: SalesCategories.php:133
+#: SalesCategories.php:131
 msgid "sub categories"
 msgstr "subkategorija"
 
-#: SalesCategories.php:137
+#: SalesCategories.php:135
 msgid "The sales category"
 msgstr "Pārdo&#353;anas kategorija"
 
-#: SalesCategories.php:153 SalesCategories.php:161
+#: SalesCategories.php:148 SalesCategories.php:156
 msgid "Stock item"
 msgstr "Prece"
 
-#: SalesCategories.php:153
+#: SalesCategories.php:148
 msgid "has been added"
 msgstr "tika pievienota"
 
-#: SalesCategories.php:161
+#: SalesCategories.php:156
 msgid "has been removed"
 msgstr "tika dzēsta"
 
-#: SalesCategories.php:169
+#: SalesCategories.php:164
 msgid "Main"
 msgstr "Galvenais"
 
-#: SalesCategories.php:197
+#: SalesCategories.php:195
 msgid "Selected Sales Category Path"
 msgstr "Izvēlēties pardo&#353;anas kategorijas ceļu"
 
-#: SalesCategories.php:221
+#: SalesCategories.php:219
 msgid "There are no categories defined at this level."
 msgstr "Šajā līmenī kategorijas nav izveidotas"
 
-#: SalesCategories.php:224
+#: SalesCategories.php:222
 msgid "Sub Category"
 msgstr "Subkategorija"
 
-#: SalesCategories.php:307
+#: SalesCategories.php:305
 msgid "Edit Sub Category"
 msgstr "Labot subkategoriju"
 
-#: SalesCategories.php:316
+#: SalesCategories.php:314
 msgid "New Sub Category"
 msgstr "Jauna Subkategorija"
 
-#: SalesCategories.php:321
+#: SalesCategories.php:319
 msgid "Category Name"
 msgstr "Kategorijas nosaukums"
 
-#: SalesCategories.php:331
+#: SalesCategories.php:329
 msgid "Submit Information"
 msgstr "Ievadīt informÄ�ciju"
 
-#: SalesCategories.php:381
+#: SalesCategories.php:379
 msgid "Add Inventory to this category."
 msgstr "Pievienot preci &#353;ai kategorijai"
 
-#: SalesCategories.php:382
+#: SalesCategories.php:380
 msgid "Select Inv. Item"
 msgstr "Izvēlēties preci"
 
-#: SalesCategories.php:394
+#: SalesCategories.php:392
 msgid "Add Inventory Item"
 msgstr "Pievienot preci"
 
-#: SalesCategories.php:399
+#: SalesCategories.php:397
 #, fuzzy
 msgid "No more Inventory items to add"
 msgstr "Nav preces ko pievienot"
 
-#: SalesCategories.php:421
+#: SalesCategories.php:419
 msgid "Inventory items in this category."
 msgstr "Preces &#353;ajÄ� kategorijÄ�"
 
-#: SalesCategories.php:438 StockAdjustments.php:391 SupplierTenders.php:291
+#: SalesCategories.php:436 StockAdjustments.php:391 SupplierTenders.php:291
 #: TaxGroups.php:354 WWW_Access.php:212
 #, php-format
 msgid "Remove"
 msgstr "Dzēst"
 
-#: SalesCategories.php:442
+#: SalesCategories.php:440
 #, fuzzy
 msgid "No Inventory items in this category"
 msgstr "Nav preces ājā kategorijā"
@@ -22556,11 +22620,6 @@ msgstr "Pārdo&#353;anas cena"
 msgid "No Default Price Set in Home Currency"
 msgstr ""
 
-#: SelectProduct.php:282
-msgid ""
-"The quantity on work orders for this product cannot be retrieved because"
-msgstr ""
-
 #: SelectProduct.php:323
 msgid ""
 "The workorder component demand for this product cannot be retrieved because"
@@ -22606,7 +22665,7 @@ msgid "Item Maintenance"
 msgstr "Preces"
 
 #: SelectProduct.php:396 StockAdjustments.php:425 StockCostUpdate.php:168
-#: StockMovements.php:201 StockReorderLevel.php:96 StockTransfers.php:531
+#: StockMovements.php:201 StockReorderLevel.php:97 StockTransfers.php:531
 #: StockUsage.php:87
 msgid "Show Stock Usage"
 msgstr "Rādīt prežu izlietojumu"
@@ -27306,11 +27365,12 @@ msgstr ""
 msgid "Items to offer from"
 msgstr ""
 
-#: SupplierTenders.php:263 api/api_xml-rpc.php:696 api/api_xml-rpc.php:764
-#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:826 api/api_xml-rpc.php:865
-#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
-#: api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302
-#: api/api_xml-rpc.php:2498 api/api_xml-rpc.php:2662
+#: SupplierTenders.php:263 includes/PDFAssetRegisterHeader.inc:61
+#: api/api_xml-rpc.php:696 api/api_xml-rpc.php:764 api/api_xml-rpc.php:795
+#: api/api_xml-rpc.php:826 api/api_xml-rpc.php:865 api/api_xml-rpc.php:896
+#: api/api_xml-rpc.php:927 api/api_xml-rpc.php:970 api/api_xml-rpc.php:2220
+#: api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302 api/api_xml-rpc.php:2498
+#: api/api_xml-rpc.php:2662
 msgid "Stock ID"
 msgstr "Preču vienības"
 
@@ -29424,67 +29484,67 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:129
+#: UpgradeDatabase.php:133
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:141
+#: UpgradeDatabase.php:145
 msgid "Applying"
 msgstr ""
 
-#: UpgradeDatabase.php:168 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:172 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr ""
 
-#: UpgradeDatabase.php:171 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:175 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr ""
 
-#: UpgradeDatabase.php:174
+#: UpgradeDatabase.php:178
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "jau ir pārdots"
 
-#: UpgradeDatabase.php:177 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:181 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr ""
 
-#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr ""
 
-#: UpgradeDatabase.php:183 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:187 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr ""
 
-#: UpgradeDatabase.php:186
+#: UpgradeDatabase.php:190
 msgid "SQL syntax error. The SQL error message is"
 msgstr ""
 
-#: UpgradeDatabase.php:189 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:193 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr ""
 
-#: UpgradeDatabase.php:192
+#: UpgradeDatabase.php:196
 msgid "Index already dropped previously"
 msgstr ""
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr ""
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr ""
@@ -31833,6 +31893,34 @@ msgstr ""
 msgid "Default"
 msgstr "Default Shipping-Method"
 
+#: Z_FixedAssetCostAccumDepnFix.php:8
+#, fuzzy
+msgid "Fixed Fixed Asset Records"
+msgstr "Pārdo&#353;anas kategorija"
+
+#: Z_FixedAssetCostAccumDepnFix.php:12
+msgid "This script repairs the fixedasset table cost and accum depn"
+msgstr ""
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+#, fuzzy
+msgid "Updated asset"
+msgstr "Labot likmes"
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+msgid "to have a cost of"
+msgstr ""
+
+#: Z_FixedAssetCostAccumDepnFix.php:18
+msgid "and accum depn of"
+msgstr ""
+
+#: Z_FixedAssetCostAccumDepnFix.php:22
+msgid ""
+"Asset cost and accumulated depreciation has now been fixed to the "
+"transaction cost and depreciation"
+msgstr ""
+
 #: Z_ImportChartOfAccounts.php:7 Z_ImportGLAccountGroups.php:5
 #: Z_ImportGLAccountSections.php:5
 msgid "Import Chart of Accounts"
@@ -32623,6 +32711,112 @@ msgstr ""
 #: Z_poRebuildDefault.php:49
 msgid "Existing languages are not affected."
 msgstr ""
+
+#: Z_PriceChanges.php:11
+msgid ""
+"This page updates already existing prices for a specified sales type (price "
+"list)"
+msgstr ""
+
+#: Z_PriceChanges.php:11
+msgid ""
+"Choose between updating only customer special prices where the customer is "
+"set up under the price list selected, or all prices under the sales type or "
+"just specific prices for a customer for the stock category selected"
+msgstr ""
+
+#: Z_PriceChanges.php:13
+msgid ""
+"This script takes no account of start and end dates of prices and updates "
+"all historical prices as well as current prices - better to use new scripts "
+"under Inventory -> Maintenance"
+msgstr ""
+
+#: Z_PriceChanges.php:24
+#, fuzzy
+msgid "Select the Price List to update the costs for"
+msgstr "Izvēlietie darumu"
+
+#: Z_PriceChanges.php:55
+#, fuzzy
+msgid "Which Prices to update"
+msgstr "Izvēlietie darumu"
+
+#: Z_PriceChanges.php:57
+#, fuzzy
+msgid "Only Non-customer special prices"
+msgstr "Tikai klientu īpa&#353;ās cenas"
+
+#: Z_PriceChanges.php:58
+#, fuzzy
+msgid "Only customer special prices"
+msgstr "Tikai klientu īpa&#353;ās cenas"
+
+#: Z_PriceChanges.php:59
+#, fuzzy
+msgid "Both customer special prices and non-customer special prices"
+msgstr "Tikai klientu īpa&#353;ās cenas"
+
+#: Z_PriceChanges.php:60
+#, fuzzy
+msgid "customer special prices only"
+msgstr "Tikai klientu īpa&#353;ās cenas"
+
+#: Z_PriceChanges.php:71
+#, fuzzy
+msgid ""
+"Are you sure you wish to update all the prices according to the criteria "
+"selected?"
+msgstr "Vai tie&#353;ām vēlaties dzēst regulāro pārdo&#353;anas rīkojumu"
+
+#: Z_PriceChanges.php:78
+#, fuzzy
+msgid "and a stock category code of"
+msgstr "Labot preču kategorijas rekvizītus"
+
+#: Z_PriceChanges.php:79
+msgid "and a increase percent of"
+msgstr ""
+
+#: Z_PriceChanges.php:89
+msgid ""
+"The increase or decrease to be applied is expected to be an integer between "
+"1 and 40 it is not necessary to enter the"
+msgstr ""
+
+#: Z_PriceChanges.php:89
+#, fuzzy
+msgid "sign"
+msgstr "Izskats"
+
+#: Z_PriceChanges.php:89
+msgid "the amount is assumed to be a percentage"
+msgstr ""
+
+#: Z_PriceChanges.php:94
+#, fuzzy
+msgid "prices for"
+msgstr "Ipa&#353;as canas"
+
+#: Z_PriceChanges.php:94
+#, fuzzy
+msgid "for the stock category"
+msgstr "Preces kategorija"
+
+#: Z_PriceChanges.php:94
+#, fuzzy
+msgid "will been incremented by"
+msgstr "tika izveidots"
+
+#: Z_PriceChanges.php:94
+#, fuzzy
+msgid "percent"
+msgstr "jo"
+
+#: Z_PriceChanges.php:138
+#, fuzzy
+msgid "Updating prices for"
+msgstr "Ievadīt jaunu piegādātāju"
 
 #: Z_ReApplyCostToSA.php:6
 msgid "Apply Current Cost to Sales Analysis"
@@ -34016,6 +34210,29 @@ msgstr "kavētas dienas"
 msgid "Aged Supplier Balances For Suppliers from"
 msgstr ""
 
+#: includes/PDFAssetRegisterHeader.inc:35
+#, fuzzy
+msgid "Asset Type"
+msgstr "Tips"
+
+#: includes/PDFAssetRegisterHeader.inc:36
+#, fuzzy
+msgid "Acquired After"
+msgstr "Darbojas pēc"
+
+#: includes/PDFAssetRegisterHeader.inc:37
+#, fuzzy
+msgid "and Before"
+msgstr "un par"
+
+#: includes/PDFAssetRegisterHeader.inc:57
+msgid "<--------------External Depreciation-------------->"
+msgstr ""
+
+#: includes/PDFAssetRegisterHeader.inc:58
+msgid "<--------------Internal Depreciation-------------->"
+msgstr ""
+
 #: includes/PDFBankingSummaryPageHeader.inc:19
 msgid "for Receipt Batch"
 msgstr ""
@@ -34111,6 +34328,7 @@ msgstr ""
 
 #: includes/PDFCustTransListingPageHeader.inc:50
 #: includes/PDFPeriodStockTransListingPageHeader.inc:49
+#: includes/PDFStockTransListingPageHeader.inc:69
 #: includes/PDFSuppTransListingPageHeader.inc:50
 msgid "Trans Date"
 msgstr ""
@@ -34338,6 +34556,16 @@ msgstr ""
 #: includes/PDFPickingListHeader.inc:77
 msgid "Actual Picked"
 msgstr ""
+
+#: includes/PDFPriceListPageHeader.inc:18
+#, fuzzy
+msgid "Special Prices for Inventory Categories between"
+msgstr "Meklēt preci:"
+
+#: includes/PDFPriceListPageHeader.inc:21
+#, fuzzy
+msgid "Price List for Inventory Categories between"
+msgstr "Preču kategorijas"
 
 #: includes/PDFProfitAndLossPageHeader.inc:21
 #: includes/PDFTagProfitAndLossPageHeader.inc:21
@@ -36688,104 +36916,12 @@ msgstr "Maksājumu termiņi"
 msgid "Return Value"
 msgstr "Rindas vērtība"
 
-#, fuzzy
-#~ msgid "Demand Work Orders"
-#~ msgstr "Izvēlēties daba rīkojumu"
-
 #~ msgid "Annual Depreciation Percentage"
 #~ msgstr "Gada amortizācijs likme"
 
 #, fuzzy
 #~ msgid "Update Journal"
 #~ msgstr "Žurnāls"
-
-#, fuzzy
-#~ msgid ""
-#~ "There were no outstanding items on the order to deliver. A packing slip "
-#~ "cannot be printed"
-#~ msgstr "Nav ievadīta neviena prece piedāvājumā"
-
-#, fuzzy
-#~ msgid "Fixed Fixed Asset Records"
-#~ msgstr "Pārdo&#353;anas kategorija"
-
-#, fuzzy
-#~ msgid "Updated asset"
-#~ msgstr "Labot likmes"
-
-#, fuzzy
-#~ msgid "Select the Price List to update the costs for"
-#~ msgstr "Izvēlietie darumu"
-
-#, fuzzy
-#~ msgid "Which Prices to update"
-#~ msgstr "Izvēlietie darumu"
-
-#, fuzzy
-#~ msgid "Only Non-customer special prices"
-#~ msgstr "Tikai klientu īpa&#353;ās cenas"
-
-#, fuzzy
-#~ msgid "Only customer special prices"
-#~ msgstr "Tikai klientu īpa&#353;ās cenas"
-
-#, fuzzy
-#~ msgid "customer special prices only"
-#~ msgstr "Tikai klientu īpa&#353;ās cenas"
-
-#, fuzzy
-#~ msgid ""
-#~ "Are you sure you wish to update all the prices according to the criteria "
-#~ "selected?"
-#~ msgstr "Vai tie&#353;ām vēlaties dzēst regulāro pārdo&#353;anas rīkojumu"
-
-#, fuzzy
-#~ msgid "and a stock category code of"
-#~ msgstr "Labot preču kategorijas rekvizītus"
-
-#, fuzzy
-#~ msgid "sign"
-#~ msgstr "Izskats"
-
-#, fuzzy
-#~ msgid "prices for"
-#~ msgstr "Ipa&#353;as canas"
-
-#, fuzzy
-#~ msgid "for the stock category"
-#~ msgstr "Preces kategorija"
-
-#, fuzzy
-#~ msgid "will been incremented by"
-#~ msgstr "tika izveidots"
-
-#, fuzzy
-#~ msgid "percent"
-#~ msgstr "jo"
-
-#, fuzzy
-#~ msgid "Updating prices for"
-#~ msgstr "Ievadīt jaunu piegādātāju"
-
-#, fuzzy
-#~ msgid "Asset Type"
-#~ msgstr "Tips"
-
-#, fuzzy
-#~ msgid "Acquired After"
-#~ msgstr "Darbojas pēc"
-
-#, fuzzy
-#~ msgid "and Before"
-#~ msgstr "un par"
-
-#, fuzzy
-#~ msgid "Special Prices for Inventory Categories between"
-#~ msgstr "Meklēt preci:"
-
-#, fuzzy
-#~ msgid "Price List for Inventory Categories between"
-#~ msgstr "Preču kategorijas"
 
 #, fuzzy
 #~ msgid "Supplier Wise Report"

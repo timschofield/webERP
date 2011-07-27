@@ -1,6 +1,9 @@
 webERP Change Log
 
+27/7/11 Version 4.05
 
+27/7/11 includes/LanguageSetup.php now checks for existence of LC_MESSAGES (it doesn't exist on windows servers) and uses LC_ALL as the fall back only
+27/7/11 Fixed quoting in PDFSuppTransListing.php, StockReorderLevel.php WhereUsedInquiry.php Z_ReverseSuppPaymentRun.php
 26/7/11 SalesCategories.php fixed display of active categories - this script is not used by webERP - only by Mo Kelly's joomla cart application
 
 24/7/11 Version 4.04.5
