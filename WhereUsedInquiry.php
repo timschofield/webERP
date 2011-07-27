@@ -35,9 +35,9 @@ echo "<form action='" . $_SERVER['PHP_SELF'] . '?'. SID ."' method=post><div cla
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($StockID)) {
-	echo _('Enter an Item Code') . ": <input type="text" name='StockID' size=21 maxlength=20 value='$StockID' >";
+	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
 } else {
-	echo _('Enter an Item Code') . ": <input type="text" name='StockID' size=21 maxlength=20>";
+	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" maxlength="20" />';
 }
 
 echo "<input type=submit name='ShowWhereUsed' value='" . _('Show Where Used') . "'>";
@@ -62,12 +62,12 @@ if (isset($StockID)) {
 
     		echo '<table width=97% class=selection>';
 
-    		$tableheader = "<tr><th>" . _('Used By') . "</th>
-					<th>" . _('Work Centre') . "</th>
-					<th>" . _('Location') . "</th>
-					<th>" . _('Quantity Required') . "</th>
-					<th>" . _('Effective After') . "</th>
-					<th>" . _('Effective To') . '</th></tr>';
+    		$tableheader = '<tr><th>' . _('Used By') . '</th>
+					<th>' . _('Work Centre') . '</th>
+					<th>' . _('Location') . '</th>
+					<th>' . _('Quantity Required') . '</th>
+					<th>' . _('Effective After') . '</th>
+					<th>' . _('Effective To') . '</th></tr>';
     		echo $tableheader;
 			$k=0;
     		while ($myrow=DB_fetch_array($result)) {
@@ -80,7 +80,7 @@ if (isset($StockID)) {
     				$k=1;
     			}
 
-    			echo "<td><a target='_blank' href='" . $rootpath . "/BOMInquiry.php?" . SID . "&StockID=" . $myrow['parent'] . "' alt='" . _('Show Bill Of Material') . "'>" . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>';
+    			echo '<td><a target="_blank" href="' . $rootpath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>';
     			echo '<td>' . $myrow['workcentreadded']. '</td>';
     			echo '<td>' . $myrow['loccode']. '</td>';
     			echo '<td>' . $myrow['quantity']. '</td>';

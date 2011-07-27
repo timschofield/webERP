@@ -27,22 +27,22 @@ If (isset($_POST['Language'])) {
 
 if (function_exists('gettext')){
   
-	//$Locale = setlocale (LC_ALL, $_SESSION['Language']);
-	
-	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
+	if (defined('LC_MESSAGES')) {
+		$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']); // Linux
+	} else {  
+		$Locale = setlocale (LC_ALL, $_SESSION['Language']); // windows
+	}
 	
 	//Turkish seems to be a special case
 	if ($_SESSION['Language']=='tr_TR.utf8') {
 		$Locale = setlocale(LC_CTYPE, 'C');
 	}
-	//$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
-	//$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
+
 	$Locale = setlocale (LC_NUMERIC, 'en_US'); //currently need all decimal points etc to be as expected on webserver
 
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);
-  //putenv('LANG=$Language_Country');
 	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
 	bind_textdomain_codeset('messages', 'UTF-8'); 
