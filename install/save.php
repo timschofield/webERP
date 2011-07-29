@@ -1,8 +1,8 @@
 <?php
 /* $Id$*/
-error_reporting(E_ALL);
-ini_set('display_errors', "On");
-ini_set('max_execution_time', "180");
+error_reporting(E_ALL && ~E_NOTICE);
+ini_set('display_errors', 'On');
+ini_set('max_execution_time', '180');
 
 require_once('../includes/MiscFunctions.php');
 // Start a session
@@ -79,7 +79,7 @@ function set_error($message) {
 
 // Function to workout what the default permissions are for files created by the webserver
 function default_file_mode($temp_dir) {
-	$v = explode(".",PHP_VERSION);
+	$v = explode('.',PHP_VERSION);
 	$v = $v[0].$v[1];
 
 	if($v > 41 && is_writable($temp_dir)) {
@@ -97,7 +97,7 @@ function default_file_mode($temp_dir) {
 
 // Function to workout what the default permissions are for directories created by the webserver
 function default_dir_mode($temp_dir) {
-	$v = explode(".",PHP_VERSION);
+	$v = explode('.',PHP_VERSION);
 	$v = $v[0].$v[1];
 	if ($v > 41 && is_writable($temp_dir)) {
 		$dirname = $temp_dir.'/test_permissions/';
@@ -237,11 +237,10 @@ if ($_POST['DemoData']==false){
 	$Result = mkdir($CompanyDir . '/reportwriter');
 	$Result = mkdir($CompanyDir . '/pdf_append');
 	$Result = mkdir($CompanyDir . '/FormDesigns');
-        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
-        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
-        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
-        copy ($path_to_root . '/companies/weberpdemo/FormDesigns/SalesInvoice.xml', $CompanyDir . '/FormDesigns/SalesInvoice.xml');
-        
+	copy ($path_to_root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
+	copy ($path_to_root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
+	copy ($path_to_root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
+
 	// Now have a destination to place the logo image.
 	if (isset($_FILES['LogoFile'])) {
 	    if ($_FILES['LogoFile']['error'] == UPLOAD_ERR_OK) {
@@ -249,12 +248,12 @@ if ($_POST['DemoData']==false){
 						    $CompanyDir . '/logo.jpg');
 	    } elseif ($_FILES['LogoFile']['error'] == UPLOAD_ERR_INI_SIZE ||
 		      $_FILES['LogoFile']['error'] == UPLOAD_ERR_FORM_SIZE) {
-			set_error( "Logo file is too big - Limit: " . $_SESSION['MaxLogoSize'] );
+			set_error( 'Logo file is too big - Limit: ' . $_SESSION['MaxLogoSize'] );
 	    } elseif ($_FILES['LogoFile']['error'] == UPLOAD_ERR_NO_FILE ) {
 		//  No logo file, so use the default.
 		copy( $path_to_root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
 	    } else {
-		set_error( "Error uploading logo file" );
+		set_error( 'Error uploading logo file' );
 	    }
 	} else {
 		//  No logo file, so use the default.
