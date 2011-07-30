@@ -1,7 +1,7 @@
 <?php
 
 /* $Id$ */
-/* R&OS PHP-pdf class code to head up a new page */
+
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
 	$pdf->newPage();
@@ -244,7 +244,9 @@ $pdf->line($Left_Margin+358, $YPos+$LineHeight,$Left_Margin+358, $YPos-$LineHeig
 $pdf->addText($Left_Margin+360, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, _('Sales Person') . ':');
 $LineCount += 1;
 $pdf->addText($Left_Margin+12, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['taxref']);
-$pdf->addText($Left_Margin+190, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['customerref']);
+if ($InvOrCredit=='Invoice'){
+	$pdf->addText($Left_Margin+190, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['customerref']);
+}
 $pdf->addText($Left_Margin+370, ($YPos+$LineHeight)-$LineCount*$LineHeight, $FontSize, $myrow['salesmanname']);
 
 $YPos -= 20;

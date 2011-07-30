@@ -69,7 +69,7 @@ if (isset($_SESSION['DatabaseName'])){
 include($PathPrefix . 'includes/LanguageSetup.php');
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
-
+	
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
@@ -322,7 +322,7 @@ function CryptPass( $Password ) {
  }
 
 
-if (sizeof($_POST) > 0 AND ! $AllowAnyone) {
+if (sizeof($_POST) > 0 AND !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$title = _('Error in form verificationm');

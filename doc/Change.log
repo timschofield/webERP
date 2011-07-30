@@ -1,5 +1,8 @@
 webERP Change Log
 
+30/7/11 Phil: SelectCreditItems.php made it so if several sessions creating a credit note they no longer over-write each other.
+30/7/11 Ricard: POItems.php now checks for return of more than 1 purchasing data from the supplier and takes the newest record
+
 27/7/11 Version 4.05
 
 27/7/11 includes/LanguageSetup.php now checks for existence of LC_MESSAGES (it doesn't exist on windows servers) and uses LC_ALL as the fall back only

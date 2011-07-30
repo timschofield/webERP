@@ -554,12 +554,13 @@ if (isset($_POST['NewItem'])){
 									purchdata.supplierdescription,
 									purchdata.suppliersuom,
 									purchdata.suppliers_partno,
-									purchdata.leadtime";
+									purchdata.leadtime
+							ORDER BY latesteffectivefrom DESC";
 												
 					$ErrMsg = _('The purchasing data for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 					$DbgMsg = _('The SQL used to retrieve the purchasing data but failed was');
 					$PurchDataResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-					if (DB_num_rows($PurchDataResult)==1){ //the purchasing data is set up
+					if (DB_num_rows($PurchDataResult)>0){ //the purchasing data is set up
 						$PurchRow = DB_fetch_array($PurchDataResult);
 						$PurchPrice = $PurchRow['price']/$PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];

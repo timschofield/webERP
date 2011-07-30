@@ -185,10 +185,10 @@ $pdf->addText($Left_Margin+80, $YPos, $FontSize, $myrow['taxref']);
 
 /*Print a vertical line */
 $pdf->line($Left_Margin+248, $YPos-10+$line_height+3,$Left_Margin+248, $YPos - 18);
-
-$pdf->addText($Left_Margin + 252, $YPos, $FontSize, _('Customer Order Ref.') . ':');
-$pdf->addText($Left_Margin+340, $YPos, $FontSize, $myrow['customerref']);
-
+if ($InvOrCredit=='Invoice'){
+	$pdf->addText($Left_Margin + 252, $YPos, $FontSize, _('Customer Order Ref.') . ':');
+	$pdf->addText($Left_Margin+340, $YPos, $FontSize, $myrow['customerref']);
+}
 /*Print a vertical line */
 $pdf->line($Left_Margin+450, $YPos+$line_height-7,$Left_Margin+450,$YPos-18);
 
