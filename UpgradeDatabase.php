@@ -9,7 +9,6 @@ include('includes/header.inc');
 
 if (!isset($_POST['DoUpgrade'])){
 	
-	prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('You should do a backup now before proceeding!'),'info');	
 	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	
@@ -35,37 +34,22 @@ if (!isset($_POST['DoUpgrade'])){
 		if ($_SESSION['VersionNumber']=='4.00RC1'){
 			$_SESSION['VersionNumber']='3.12';
 		}
-		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'],'info');
-		echo '<input type="hidden" name="OldVersion" value="' . $_SESSION['VersionNumber'] . '" />';
+		if ( $_SESSION['VersionNumber'] == $Version){
+			prnMsg(_('The database is up to date, there are no upgrades to perform'),'info');
+		} else {
+			prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $rootpath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
+				
+			echo '<input type="hidden" name="OldVersion" value="' . $_SESSION['VersionNumber'] . '" />';
+			echo '<div class="centre"><input type="submit" name="DoUpgrade" value="' . _('Perform Database Upgrade') . '" /></div>';
+		}
 	}
-
-	echo '<div class="centre"><input type="submit" name="DoUpgrade" value="' . _('Perform Database Upgrade') . '" /></div>';
+	
 	echo '</form>';
 }
 
 if (isset($_POST['DoUpgrade'])){
 	
 	if ($dbType=='mysql' OR $dbType =='mysqli'){
-		
-		/* First do a backup 
-		$BackupFile =  $PathPrefix . './companies/' . $_SESSION['DatabaseName']  .'/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
-		$Command = 'mysqldump --opt -h' . $host . ' -u' . $dbuser . ' -p' . $dbpassword  . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' . $BackupFile;
-		system($Command);
-		
-		//this could be a weighty file attachment!! 
-		include('includes/htmlMimeMail.php');
-		$mail = new htmlMimeMail();
-		$attachment = $mail->getFile( $BackupFile);
-		$mail->setText(_('webERP backup file attached'));
-		$mail->addAttachment($attachment, $BackupFile, 'application/gz');
-		$mail->setSubject(_('Database Backup'));
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$result = $mail->send(array('"' . $_SESSION['UsersRealName'] . '" <' . $_SESSION['UserEmail'] . '>'));
-		
-		prnMsg(_('A backup of the database has been taken and emailed to you'), 'info');
-		unlink($BackupFile); // would be a security issue to leave it there for all to download/see
-		
-		*/
 		
 		$SQLScripts = array();
 		
