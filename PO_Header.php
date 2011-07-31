@@ -184,7 +184,7 @@ if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['Select
 
 }
 
-if (isset($_POST['EnterLines'])){
+if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])){
 /*User hit the button to enter line items -
  *  ensure session variables updated then meta refresh to PO_Items.php*/
 
@@ -216,7 +216,7 @@ if (isset($_POST['EnterLines'])){
 	$_SESSION['PO'.$identifier]->Tel = $_POST['Tel'];
 	$_SESSION['PO'.$identifier]->Port = $_POST['Port'];
 
-	if (isset($_POST['RePrint']) and $_POST['RePrint']==1){
+	if (isset($_POST['RePrint']) AND $_POST['RePrint']==1){
 
 		$_SESSION['PO'.$identifier]->AllowPrintPO=1;
 
@@ -229,14 +229,15 @@ if (isset($_POST['EnterLines'])){
 	} else {
 		$_POST['RePrint'] = 0;
 	}
-
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PO_Items.php?identifier='.$identifier. '">';
-	echo '<p>';
-	prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' .
-		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
-		'<a href="' . $rootpath . '/PO_Items.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+	if (!isset($_POST['AllowRePrint'])){ // user only hit update not "Enter Lines"
+		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/PO_Items.php?identifier='.$identifier. '">';
+		echo '<p>';
+		prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' .
+			_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
+			'<a href="' . $rootpath . '/PO_Items.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.inc');
 		exit;
+	}
 } /* end of if isset _POST'EnterLines' */
 
 echo '<span style="float:left"><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?identifier='.$identifier.'">'. _('Back to Purchase Orders'). '</a></span>';
