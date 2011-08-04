@@ -1,6 +1,7 @@
 webERP Change Log
 
 4/8/11 Phil: Fix GP Percent reported when discounts updated by discount matrix
+4/8/11 Phil: Make PO_SelectOSPurchOrder.php behave similarly to SelectPurchOrder.php (for inquiries) where the order number is the link that takes you to the order
 4/8/11 Ricard: SalesInquiry.php now shows net sales after discounts
 31/7/11 Phil: PO_Header.php - was not updating when update hit as reported by Klaus(opto)
 31/7/11 Phil: BackupDatabase.php script

@@ -91,7 +91,7 @@ if (isset($_POST['PrintPDF'])
 			$TotBal += $Balance;
 
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+3,$YPos,220-$Left_Margin,$FontSize,$DebtorBalances['debtorno'] .
-				' - ' . html_entity_decode($DebtorBalances['name']),'left');
+				' - ' . html_entity_decode($DebtorBalances['name'],ENT_QUOTES,'UTF-8'),'left');
 			$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$DebtorBalances['currency'],'left');

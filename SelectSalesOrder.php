@@ -816,8 +816,8 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 			        				<td>%s</td>
 			        				<td>%s</td>
 			        				<td>%s</td>
-			        				<td class=number>%s</td>
-			        				<td><input type=checkbox name="PlacePO_%s" value><input type="hidden" name="OrderNo_PO_%s" value="%s"></td>
+			        				<td class="number">%s</td>
+			        				<td><input type="checkbox" name="PlacePO_%s" value /><input type="hidden" name="OrderNo_PO_%s" value="%s" /></td>
 			        				</tr>',
 			        				$ModifyPage,
 			        				$myrow['orderno'],
@@ -828,7 +828,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 			        				$myrow['customerref'],
 			        				$FormatedOrderDate,
 			        				$FormatedDelDate,
-			        				html_entity_decode($myrow['deliverto'],ENT_QUOTES,UTF-8),
+			        				html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
 			        				$FormatedOrderValue,
 			                        $i,
 			                        $i,
@@ -843,7 +843,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 										<td>%s</td>
 										<td>%s</td>
 										<td>%s</td>
-										<td class=number>%s</td>
+										<td class="number">%s</td>
 										</tr>',
 										$ModifyPage,
 										$myrow['orderno'],
@@ -854,7 +854,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 										$myrow['customerref'],
 										$FormatedOrderDate,
 										$FormatedDelDate,
-										html_entity_decode($myrow['deliverto'],ENT_QUOTES,UTF-8),
+										html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
 										$FormatedOrderValue);
 	                        }
 	
@@ -867,7 +867,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
 						</tr>',
 						$ModifyPage,
 						$myrow['orderno'],
@@ -877,7 +877,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 						$myrow['customerref'],
 						$FormatedOrderDate,
 						$FormatedDelDate,
-						html_entity_decode($myrow['deliverto'],ENT_QUOTES,UTF-8),
+						html_entity_decode($myrow['deliverto'],ENT_QUOTES,'UTF-8'),
 						$FormatedOrderValue);
 			}
 			$i++;
@@ -898,15 +898,14 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 		} else {
 			echo '<b>' . _('Total Quotation(s) Value in');
 		}
-		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . number_format($OrdersTotal,2) . '</b></td></tr>
+		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>
 			</table>';
 	} //end if there are some orders to show  
 }
 
-?>
-</form>
+echo '</form>';
 
-<?php } //end StockID already selected
+} //end StockID already selected
 
 include('includes/footer.inc');
 ?>
