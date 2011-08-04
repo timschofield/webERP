@@ -1,5 +1,6 @@
 webERP Change Log
 
+4/8/11 Ricard: SalesInquiry.php now shows net sales after discounts
 31/7/11 Phil: PO_Header.php - was not updating when update hit as reported by Klaus(opto)
 31/7/11 Phil: BackupDatabase.php script
 30/7/11 Phil: SelectCreditItems.php made it so if several sessions creating a credit note they no longer over-write each other.
