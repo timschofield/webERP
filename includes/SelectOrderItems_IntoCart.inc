@@ -98,7 +98,7 @@ if ($AlreadyOnThisOrder!=1){
 										AND discountcategory ='" . $myrow['discountcategory'] . "'
 										AND quantitybreak <" . $NewItemQty,$db);
 				$DiscCatRow = DB_fetch_row($result);
-				if ($DiscCatRow[0] != "" && $DiscCatRow[0] > 0) {
+				if ($DiscCatRow[0] != '' AND $DiscCatRow[0] > 0) {
 					$Discount = $DiscCatRow[0];
 				} else {
 					$Discount = 0;

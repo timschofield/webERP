@@ -246,7 +246,7 @@ Class Cart {
 		/* Makes a comma seperated list of the stock items ordered
 		for use in SQL expressions */
 
-		$StockID_List="";
+		$StockID_List='';
 		foreach ($this->LineItems as $StockItem) {
 			$StockID_List .= ",'" . $StockItem->StockID . "'";
 		}

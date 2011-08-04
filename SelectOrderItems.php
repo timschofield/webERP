@@ -1207,6 +1207,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
 						if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
 							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
+							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->GPPercent = (($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price*(1-($DiscountMatrixRate/100))) - $_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->StandardCost*$ExRate)/($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price *(1-$DiscountMatrixRate)/100);
 						}
 					}
 				}
@@ -1214,9 +1215,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} /* end of discount matrix lookup code */
 	} // the order session is started or there is a new item being added
 	if (isset($_POST['DeliveryDetails'])){
-		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">';
+		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/DeliveryDetails.php?identifier='.$identifier . '">';
 		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('if this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
-		   '<a href="' . $rootpath . '/DeliveryDetails.php?' . SID .'identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
+		   '<a href="' . $rootpath . '/DeliveryDetails.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
 	   	exit;
 	}
 
