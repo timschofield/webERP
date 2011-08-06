@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedTerms could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		if (isset($_POST['DaysOrFoll']) and $_POST['DaysOrFoll']=='on') {
+		if (isset($_POST['DaysOrFoll']) AND $_POST['DaysOrFoll']=='on') {
 			$sql = "UPDATE paymentterms SET
 					terms='" . $_POST['Terms'] . "',
 					dayinfollowingmonth=0,
@@ -271,7 +271,7 @@ if (!isset($_GET['delete'])) {
 		<tr>
 			<td>'._('Due After A Given No. Of Days').':</td>
 			<td><input type="checkbox" name="DaysOrFoll" ';
-	if ( isset($DayInFollowingMonth) && !$DayInFollowingMonth) {
+	if (isset($DayInFollowingMonth) AND !$DayInFollowingMonth) {
 		 echo 'checked'; 
 	}
 	echo ' ></td>

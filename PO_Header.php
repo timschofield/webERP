@@ -157,7 +157,9 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 }
 
 /*New order initiated by user clicking on supplier purchasing data from items page */
-if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['SelectedSupplier'])) {
+if (isset($_GET['NewOrder']) 
+	AND isset($_GET['StockID']) 
+	AND isset($_GET['SelectedSupplier'])) {
 		/*
 		* initialise a new order
 		*/
@@ -173,10 +175,10 @@ if (isset($_GET['NewOrder']) AND isset($_GET['StockID']) AND isset($_GET['Select
 		/* set the SupplierID we got */
 		$_SESSION['PO'.$identifier]->SupplierID = $_GET['SelectedSupplier'];
 		$_SESSION['PO'.$identifier]->DeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']), 'd', $_GET['LeadTime']);
+		
 		$_SESSION['RequireSupplierSelection'] = 0;
 		$_POST['Select'] = $_GET['SelectedSupplier'];
 		
-
 		/*
 		* the item (it's item code) that should be purchased
 		*/
@@ -210,7 +212,9 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])){
 	$_SESSION['PO'.$identifier]->ExRate = $_POST['ExRate'];
 	$_SESSION['PO'.$identifier]->Comments = $_POST['Comments'];
 	$_SESSION['PO'.$identifier]->DeliveryBy = $_POST['DeliveryBy'];
-	$_SESSION['PO'.$identifier]->StatusMessage = $_POST['StatusComments'];
+	if (isset($_POST['StatusComments'])){
+		$_SESSION['PO'.$identifier]->StatusComments = $_POST['StatusComments'];
+	}
 	$_SESSION['PO'.$identifier]->PaymentTerms = $_POST['PaymentTerms'];
 	$_SESSION['PO'.$identifier]->Contact = $_POST['Contact'];
 	$_SESSION['PO'.$identifier]->Tel = $_POST['Tel'];
@@ -519,25 +523,29 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		_('Purchase Order') . '" alt="">' . ' ' . _('Purchase Order: Select Supplier') . '';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method="post" name="choosesupplier">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="SuppliersReturned" value="' . $SuppliersReturned .'" />';
+	if (isset($SuppliersReturned)){
+		echo '<input type="hidden" name="SuppliersReturned" value="' . $SuppliersReturned .'" />';
+	}
 
-	echo '<table cellpadding=3 colspan=4 class=selection>
+	echo '<table cellpadding="3" colspan="4" class="selection">
 	<tr>
 	<td><font size=1>' . _('Enter text in the supplier name') . ':</font></td>
-	<td><input type="Text" name="Keywords" size="20" maxlength="25"></td>
+	<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 	<td><font size=3><b>' . _('OR') . '</b></font></td>
 	<td><font size=1>' . _('Enter text extract in the supplier code') . ':</font></td>
-	<td><input type="text" name="SuppCode" size="15"	maxlength="18"></td>
+	<td><input type="text" name="SuppCode" size="15"	maxlength="18" /></td>
 	</tr>
-	</table><br /><div class="centre">
-	<input type="submit" name="SearchSuppliers" value="' . _('Search Now') . '">
-	<input type="submit" action="reset" value="' . _('Reset') . '"></div>';
+	</table>
+	<br />
+	<div class="centre">
+	<input type="submit" name="SearchSuppliers" value="' . _('Search Now') . '" />
+	<input type="submit" action="reset" value="' . _('Reset') . '" /></div>';
 
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
 	if (isset($result_SuppSelect)) {
 
-		echo '<br /><table cellpadding=3 colspan=7 class=selection>';
+		echo '<br /><table cellpadding="3" colspan="7" class="selection">';
 
 		$tableheader = '<tr>
 						<th>' . _('Code') . '</th>
@@ -606,7 +614,11 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		/* the link */
 		echo '<li><a href="'.$rootpath.'/PO_Items.php?NewItem=' . $Purch_Item . '&identifier=' . $identifier . '">' . 	_('Enter Line Item to this purchase order') . '</a></li>';
 
-		echo '</td></tr></table></div><br />';
+		echo '</td>
+			</tr>
+			</table>
+			</div>
+			<br />';
 
 		if (isset($_GET['Quantity'])) {
 			$Qty=$_GET['Quantity'];

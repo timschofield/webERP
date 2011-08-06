@@ -376,7 +376,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 			echo '<td class="select">' . _('No') . '</td>';
 		}
 		echo '<td class="select"><a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&SelectedSupplier=' .
-			$SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$SuppRow['minorderqty'].'">' . _('Order') . ' </a></td>';
+			$SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$SuppRow['minorderqty'].'&LeadTime='.$SuppRow['leadtime'] . '">' . _('Order') . ' </a></td>';
 		echo '</tr>';
 	}
 	echo '</table></td>';

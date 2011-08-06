@@ -225,7 +225,9 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$POLine['itemdescription']=str_pad('',50,'x');
 				$POLine['unitprice']=9999.99;
 				$POLine['units']=str_pad('',4,'x');
-				$POLine['quantityord']=999.99;
+				$POLine['suppliersunit']=str_pad('',4,'x');
+				$POLine['quantityord']=9999.99;
+				$POLine['conversionfactor']=1;
 				$POLine['decimalplaces']=2;
 			}
 			$DisplayQty = number_format($POLine['quantityord']/$POLine['conversionfactor'],$POLine['decimalplaces']);
@@ -275,8 +277,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			/* If we are previewing we want to stop showing order
 			 * lines after the first one */
 			if ($OrderNo=='Preview') {
-//				unlink(sys_get_temp_dir().'/PurchaseOrder.xml');
-				unset($OrderNo);
+				$OrderNo='Preview_PurchaseOrder';
 			}
 		} //end while there are line items to print out
 		if ($YPos-$line_height <= $Bottom_Margin){ // need to ensure space for totals
@@ -308,7 +309,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$mail->setText( _('Please find herewith our purchase order number').' ' . $OrderNo);
 		$mail->setSubject( _('Purchase Order Number').' ' . $OrderNo);
 		$mail->addAttachment($attachment, $PdfFileName, 'application/pdf');
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] .">");
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] .'>');
 		$Success = $mail->send(array($_POST['EmailTo']));
 		if ($Success==1){
 			$title = _('Email a Purchase Order');
@@ -350,14 +351,14 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$_POST['PrintOrEmail'] = 'Print';
 	}
 	if ($ViewingOnly!=0){
-		echo '<option selected value="Print">'. _('Print');
+		echo '<option selected value="Print">'. _('Print') . '</option>';
 	} else {
 		if ($_POST['PrintOrEmail']=='Print'){
-			echo '<option selected value="Print">'. _('Print');
-			echo '<option value="Email">' . _('Email');
+			echo '<option selected value="Print">'. _('Print') . '</option>';
+			echo '<option value="Email">' . _('Email') . '</option>';
 		} else {
-			echo '<option value="Print">'. _('Print');
-			echo '<option selected value="Email">'. _('Email');
+			echo '<option value="Print">'. _('Print') . '</option>';
+			echo '<option selected value="Email">'. _('Email') . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -367,11 +368,11 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$_POST['ShowAmounts'] = 'Yes';
 	}
 	if ($_POST['ShowAmounts']=='Yes'){
-		echo '<option selected value="Yes">'. _('Yes');
-		echo '<option value="No">' . _('No');
+		echo '<option selected value="Yes">'. _('Yes') . '</option>';
+		echo '<option value="No">' . _('No') . '</option>';
 	} else {
-		echo '<option value="Yes">'. _('Yes');
-		echo '<option selected value="No">'. _('No');
+		echo '<option value="Yes">'. _('Yes') . '</option>';
+		echo '<option selected value="No">'. _('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	if ($_POST['PrintOrEmail']=='Email'){

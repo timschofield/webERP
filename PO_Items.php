@@ -93,7 +93,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$AuthRow=DB_fetch_array($AuthResult);
 			
 			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $_SESSION['PO'.$identifier]->Order_Value()) { //user has authority to authrorise as well as create the order
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . '<br />'.$_SESSION['PO'.$identifier]->StatusComments.'<br />';
 				$_SESSION['PO'.$identifier]->AllowPrintPO=1;
 				$_SESSION['PO'.$identifier]->Status = 'Authorised';
 			} else { // no authority to authorise this order
@@ -110,18 +110,16 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					_('The order will be created with a status of pending and will require authorisation'), 'warn');
 					
 				$_SESSION['PO'.$identifier]->AllowPrintPO=0;
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . '<br />'.$_SESSION['PO'.$identifier]->StatusComments.'<br />';
 				$_SESSION['PO'.$identifier]->Status = 'Pending';
 			}
 		} else { //auto authorise is set to off
 			$_SESSION['PO'.$identifier]->AllowPrintPO=0;
-			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusMessage.'<br />';
+			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . ' - '.$_SESSION['PO'.$identifier]->StatusComments.'<br />';
 			$_SESSION['PO'.$identifier]->Status = 'Pending';
 		}
 
 		if ($_SESSION['ExistingOrder']==0){ /*its a new order to be inserted */
-
-//Do we need to check authorisation to create - no because already trapped when new PO session started
 			
 			/*Get the order number */
 			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18, $db);
@@ -284,7 +282,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 					}
 				} else if ($POLine->PODetailRec=='') {
-
+						/*When the purchase order line is an existing record the auto-increment
+						 * field PODetailRec is given to the session for that POLine 
+						 * So it will only be a new POLine if PODetailRec is empty 
+						*/
 					$sql = "INSERT INTO purchorderdetails ( orderno,
 														itemcode,
 														deliverydate,
@@ -328,7 +329,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 															completed=1,
 															assetid='" . $POLine->AssetID . "',
 															conversionfactor = '" . $POLine->ConversionFactor . "' 
-						WHERE podetailitem='" . $POLine->PODetailRec . "'";
+								WHERE podetailitem='" . $POLine->PODetailRec . "'";
 					} else {
 						$sql = "UPDATE purchorderdetails SET itemcode='" . $POLine->StockID . "',
 															deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
@@ -354,7 +355,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('has been updated'),'success');
 			if ($_SESSION['PO'.$identifier]->AllowPrintPO==1 
 					AND ($_SESSION['PO'.$identifier]->Status=='Authorised'
-								OR $_SESSION['PO'.$identifier]->Status=='Printed')){
+					OR $_SESSION['PO'.$identifier]->Status=='Printed')){
 				echo '<br /><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a>';
 			}
 		} /*end of if its a new order or an existing one */
@@ -409,8 +410,8 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 	if ($_SESSION['PO'.$identifier]->GLLink==1){
 
 		$sql = "SELECT accountname
-						FROM chartmaster
-						WHERE accountcode ='" . (int) $_POST['GLCode'] . "'";
+				FROM chartmaster
+				WHERE accountcode ='" . $_POST['GLCode'] . "'";
 		$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
 		$DbgMsg =  _('The SQL used to retrieve the details of the account, but failed was');
 		$GLValidResult = DB_query($sql,$db,$ErrMsg,$DbgMsg,false,false);
@@ -438,10 +439,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$ValidAssetResult = DB_query("SELECT assetid,
 											description,
 											costact
-								FROM fixedassets
-								INNER JOIN fixedassetcategories
-								ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-								WHERE assetid='" . $_POST['AssetID'] . "'",$db);
+										FROM fixedassets
+										INNER JOIN fixedassetcategories
+										ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+										WHERE assetid='" . $_POST['AssetID'] . "'",$db);
 		if (DB_num_rows($ValidAssetResult)==0){ // then the asset id entered doesn't exist
 			$AllowUpdate = false;
 			prnMsg(_('An asset code was entered but it does not yet exist. Only pre-existing asset ids can be entered when ordering a fixed asset'),'error');
@@ -494,9 +495,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 if (isset($_POST['NewItem'])){ 
 	/* NewItem is set from the part selection list as the part code selected 
 	* take the form entries and enter the data from the form into the PurchOrder class variable 
-	* A series of form variables of the format "Qty" with the ItemCode concatenated are created on the search for adding new 
-	* items for each of these form variables need to parse out the items and look up the details to add them to the purchase
-	* order  $_POST is of course the global array of all posted form variables */
+	* A series of form variables of the format "NewQty" with the ItemCode concatenated are created on the search for adding new 
+	* items for each of these form variables need to parse out the item code and look up the details to add them to the purchase
+	* order  $_POST is of course the global array of all posted form variables 
+	*/
 
 	foreach ($_POST as $FormVariableName => $Quantity) {
 
@@ -632,7 +634,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 		echo  ' ' . _('Purchase Order') .' '. $_SESSION['PO'.$identifier]->OrderNo ;
 	}
 	echo '<br /><b>'._(' Order Summary') . '</b>';
-	echo '<table cellpadding=2 colspan=7 class=selection>';
+	echo '<table cellpadding="2" colspan="7" class="selection">';
 	echo '<tr>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Description') . '</th>
@@ -688,12 +690,15 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
-	echo '<tr><td colspan="10" class=number>' . _('TOTAL') . _(' excluding Tax') . '</td>
-						<td class=number><b>' . $DisplayTotal . '</b></td>
+	echo '<tr><td colspan="10" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
+						<td class="number"><b>' . $DisplayTotal . '</b></td>
 			</tr></table>';
-	echo '<br /><div class="centre"><input type="submit" name="UpdateLines" value="Update Order Lines">';
+	echo '<br />
+			<div class="centre">
+			<input type="submit" name="UpdateLines" value="Update Order Lines" />';
 	
-	echo '&nbsp;<input type="submit" name="Commit" value="Process Order"></div>';
+	echo '&nbsp;<input type="submit" name="Commit" value="Process Order" />
+			</div>';
 	
 } /*Only display the order line items if there are any !! */
 
@@ -716,7 +721,7 @@ if (isset($_POST['NonStockOrder'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>'._('OR Asset ID'). '</td>
-						<td><select name="AssetID">';
+			<td><select name="AssetID">';
 	$AssetsResult = DB_query("SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC",$db);
 	echo '<option selected value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)){
@@ -738,7 +743,9 @@ if (isset($_POST['NonStockOrder'])) {
 				<tr><td>'._('Delivery Date').'</td>
 						<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size=11 value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'"></td></tr>';
 	echo '</table>';
-	echo '<div class=centre><input type=submit name="EnterLine" value="Enter Item"></div>';
+	echo '<div class="centre">
+			<input type=submit name="EnterLine" value="Enter Item" />
+		</div>';
 }
 
 /* Now show the stock item selection search stuff below */
@@ -752,8 +759,25 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		if ($_POST['StockCat']=='All'){
-
-			$sql = "SELECT stockmaster.stockid,
+			if ($_POST['SupplierItemsOnly']=='on'){
+				$sql = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid 
+						INNER JOIN purchdata 
+						ON stockmaster.stockid=purchdata.stockid
+						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'G'
+						AND stockmaster.discontinued<>1
+						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
+						AND stockmaster.description " . LIKE . " '" . $SearchString ."'
+						ORDER BY stockmaster.stockid
+						LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
+			} else { // not just supplier purchdata items
+					
+				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -765,28 +789,65 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.description " . LIKE . " '" . $SearchString ."'
 					ORDER BY stockmaster.stockid
 					LIMIT " .$_SESSION['DefaultDisplayRecordsMax'];
-		} else {
-			$sql = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.units
-					FROM stockmaster INNER JOIN stockcategory
-					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag<>'D'
-					AND stockmaster.mbflag<>'K'
-					AND stockmaster.mbflag<>'G'
-					AND stockmaster.discontinued<>1
-					AND stockmaster.description " . LIKE . " '". $SearchString ."'
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid
-					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+			}
+		} else { //for a specific stock category
+			if ($_POST['SupplierItemsOnly']=='on'){
+				$sql = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						INNER JOIN purchdata 
+						ON stockmaster.stockid=purchdata.stockid
+						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'G'
+						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
+						AND stockmaster.discontinued<>1
+						AND stockmaster.description " . LIKE . " '". $SearchString ."'
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						ORDER BY stockmaster.stockid
+						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+			} else {
+				$sql = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'G'
+						AND stockmaster.discontinued<>1
+						AND stockmaster.description " . LIKE . " '". $SearchString ."'
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						ORDER BY stockmaster.stockid
+						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+			}
 		}
 
 	} elseif ($_POST['StockCode']){
 
 		$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
-
+		
 		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
+			if ($_POST['SupplierItemsOnly']=='on'){
+				$sql = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid 
+						INNER JOIN purchdata 
+						ON stockmaster.stockid=purchdata.stockid
+						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'G' 
+						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
+						AND stockmaster.discontinued<>1
+						AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+						ORDER BY stockmaster.stockid
+						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+			} else {
+				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -798,8 +859,27 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					ORDER BY stockmaster.stockid
 					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
-		} else {
-			$sql = "SELECT stockmaster.stockid,
+			}
+		} else { //for a specific stock category and LIKE stock code
+			if ($_POST['SupplierItemsOnly']=='on'){
+				$sql = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid 
+						INNER JOIN purchdata 
+						ON stockmaster.stockid=purchdata.stockid
+						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'G' 
+						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
+						and stockmaster.discontinued<>1
+						AND stockmaster.stockid " . LIKE  . " '" . $_POST['StockCode'] . "'
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						ORDER BY stockmaster.stockid
+						LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+			} else {
+				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -812,11 +892,28 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid
 					LIMIT ".$_SESSION['DefaultDisplayRecordsMax'];
+			}
 		}
 
 	} else {
 		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
+			if ($_POST['SupplierItemsOnly']=='on'){
+				$sql = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid 
+						INNER JOIN purchdata 
+						ON stockmaster.stockid=purchdata.stockid
+						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'G'
+						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
+						AND stockmaster.discontinued<>1
+						ORDER BY stockmaster.stockid
+						LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+			} else {
+				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -827,8 +924,26 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.discontinued<>1
 					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
-		} else {
-			$sql = "SELECT stockmaster.stockid,
+			}
+		} else { // for a specific stock category
+			if ($_POST['SupplierItemsOnly']=='on'){
+				$sql = "SELECT stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.units
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						INNER JOIN purchdata 
+						ON stockmaster.stockid=purchdata.stockid
+						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'K'
+						AND stockmaster.mbflag<>'G'
+						AND purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
+						AND stockmaster.discontinued<>1
+						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						ORDER BY stockmaster.stockid
+						LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+			} else {
+				$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -840,6 +955,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DefaultDisplayRecordsMax'];
+			}
 		}
 	}
 
@@ -870,13 +986,13 @@ if (!isset($_GET['Edit'])) {
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<table class=selection>
+	echo '<table class="selection">
 			<tr>
 				<th colspan=3><font size=3 color=blue>'. _('Search For Stock Items') . '</th>';
 
 	echo ':</font>
 			</tr>
-			<tr><td><select name="StockCat">';
+			<tr><td>' . _('Item Category') . ': <select name="StockCat">';
 
 	echo '<option selected value="All">' . _('All') . '</option>';
 	
@@ -902,7 +1018,11 @@ if (!isset($_GET['Edit'])) {
 	echo '</select></td>
 		<td>' . _('Enter text extracts in the description') . ':</td>
 		<td><input type="text" name="Keywords" size=20 maxlength=25 value="' . $_POST['Keywords'] . '"></td></tr>
-		<tr><td></td>
+		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" name="SupplierItemsOnly" ';
+	if (isset($_POST['SupplierItemsOnly']) AND $_POST['SupplierItemsOnly']=='on'){
+		echo 'checked';
+	}
+	echo ' /></td>
 		<td><font size=3><b>' . _('OR') . ' </b></font>' . _('Enter extract of the Stock Code') . ':</td>
 		<td><input type="text" name="StockCode" size=15 maxlength=18 value="' . $_POST['StockCode'] . '"></td>
 		</tr>
