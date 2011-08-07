@@ -1,5 +1,6 @@
 webERP Change Log
 
+7/8/11 Phil: SelectProduct.php now disables transactions on items flagged as obsolete (discontinued). Also obsolete items are shown as such in the selection list - suggested by Klaus (opto)
 7/8/11 Ricard: Corrected INNER JOIN ON clause in sql used in InventoryQuantities.php script
 7/8/11 Klaus: Added docuwiki links to WikiLinks function in MiscFunctions.php and allow Docuwiki option in SystemParameters.php
 6/8/11 Ricard: SalesInquiry.php fix wording of labels to be more consistent with the rest of webERP

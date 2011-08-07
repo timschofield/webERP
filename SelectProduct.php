@@ -70,7 +70,12 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$Its_A_Dummy = false;
 	$Its_A_Kitset = false;
 	$Its_A_Labour_Item = false;
-	echo '<table width="90%"><tr><th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b></th></tr>';
+	if ($myrow['discontinued']==1){
+		$ItemStatus = '<font class="bad">' ._('Obsolete') . '</font>';
+	} else {
+		$ItemStatus = '';
+	}
+	echo '<table width="90%"><tr><th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' ' . $ItemStatus . '</b></th></tr>';
 	
 	echo '<tr><td width="40%" valign="top">
 			<table align="left">'; //nested table
@@ -412,14 +417,16 @@ if ($Its_A_Labour_Item == True) {
 wikiLink('Product', $StockID);
 echo '</td><td valign="top" class="select">';
 /* Stock Transactions */
-if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+if ($Its_A_Kitset_Assembly_Or_Dummy == false AND $myrow['discontinued']==0) {
 	echo '<a href="' . $rootpath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded
 	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		echo '<div class="centre"><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120">';
 	}
-	if (($myrow['mbflag'] == 'B') AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
+	if (($myrow['mbflag'] == 'B') 
+		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))
+		AND $myrow['discontinued']==0){
 		echo '<br />';
 		$SuppResult = DB_query("SELECT suppliers.suppname,
 										suppliers.supplierid,
@@ -542,6 +549,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							SUM(locstock.quantity) AS qoh,
 							stockmaster.units,
 							stockmaster.mbflag,
+							stockmaster.discontinued,
 							stockmaster.decimalplaces
 						FROM stockmaster
 						LEFT JOIN stockcategory
@@ -553,6 +561,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.description,
 							stockmaster.units,
 							stockmaster.mbflag,
+							stockmaster.discontinued,
 							stockmaster.decimalplaces
 						ORDER BY stockmaster.stockid";
 		} else {
@@ -561,6 +570,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							SUM(locstock.quantity) AS qoh,
 							stockmaster.units,
 							stockmaster.mbflag,
+							stockmaster.discontinued,
 							stockmaster.decimalplaces
 						FROM stockmaster,
 							locstock
@@ -571,6 +581,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.description,
 							stockmaster.units,
 							stockmaster.mbflag,
+							stockmaster.discontinued,
 							stockmaster.decimalplaces
 						ORDER BY stockmaster.stockid";
 		}
@@ -580,6 +591,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.mbflag,
+							stockmaster.discontinued,
 							SUM(locstock.quantity) AS qoh,
 							stockmaster.units,
 							stockmaster.decimalplaces
@@ -593,12 +605,14 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.description,
 							stockmaster.units,
 							stockmaster.mbflag,
+							stockmaster.discontinued,
 							stockmaster.decimalplaces
 						ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.mbflag,
+						stockmaster.discontinued,
 						sum(locstock.quantity) as qoh,
 						stockmaster.units,
 						stockmaster.decimalplaces
@@ -611,6 +625,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						stockmaster.description,
 						stockmaster.units,
 						stockmaster.mbflag,
+						stockmaster.discontinued,
 						stockmaster.decimalplaces
 					ORDER BY stockmaster.stockid";
 		}
@@ -619,6 +634,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.mbflag,
+						stockmaster.discontinued,
 						SUM(locstock.quantity) AS qoh,
 						stockmaster.units,
 						stockmaster.decimalplaces
@@ -631,12 +647,14 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						stockmaster.description,
 						stockmaster.units,
 						stockmaster.mbflag,
+						stockmaster.discontinued,
 						stockmaster.decimalplaces
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.mbflag,
+						stockmaster.discontinued,
 						SUM(locstock.quantity) AS qoh,
 						stockmaster.units,
 						stockmaster.decimalplaces
@@ -648,6 +666,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						stockmaster.description,
 						stockmaster.units,
 						stockmaster.mbflag,
+						stockmaster.discontinued,
 						stockmaster.decimalplaces
 					ORDER BY stockmaster.stockid";
 		}
@@ -732,11 +751,18 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			} else {
 				$qoh = number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
+			if ($myrow['discontinued']==1){
+				$ItemStatus = '<font class="bad">' . _('Obsolete') . '</font>';
+			} else {
+				$ItemStatus ='';
+			}
+			
 			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
 				<td>'.$myrow['description'].'</td>
 				<td class="number">' . $qoh . '</td>
 				<td>' . $myrow['units'] . '</td>
 				<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
+				<td>' . $ItemStatus . '</td>
 				</tr>';
 			$j++;
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
