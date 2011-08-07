@@ -1,5 +1,8 @@
 webERP Change Log
 
+7/8/11 Ricard: Corrected INNER JOIN ON clause in sql used in InventoryQuantities.php script
+7/8/11 Klaus: Added docuwiki links to WikiLinks function in MiscFunctions.php and allow Docuwiki option in SystemParameters.php
+6/8/11 Ricard: SalesInquiry.php fix wording of labels to be more consistent with the rest of webERP
 6/8/11 Phil: PO_Items.php now has checkbox to select items that have purchasing data entered for the supplier ordering from - as per Klaus's (opto) suggestion
 6/8/11 Exson: Added leadtime to the link from SelectProduct.php so that delivery dates used when creating purchase orders make sense
 4/8/11 Phil: Fix GP Percent reported when discounts updated by discount matrix

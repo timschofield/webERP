@@ -228,12 +228,15 @@ function AddCarriageReturns($str) {
 function wikiLink($type, $id) {
 
 	if ($_SESSION['WikiApp']==_('WackoWiki')){
-		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/' . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
+		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/' . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
 	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
-		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/index.php/' . $type . '/' .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</A><BR>';
+		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/index.php/' . $type . '/' .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
+	} elseif ($_SESSION['WikiApp']==_('DokuWiki')){
+		echo ' ../' . $_SESSION['WikiPath'] . '/doku.php?id=' . $type . ':' . $id . ' ' . _('Wiki ' . $type . ' Knowlege Base') . ' <br />';
 	}
 
 }//wikiLink
+
 
 
 //  Lindsay debug stuff

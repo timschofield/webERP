@@ -159,9 +159,9 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
     }
 
 // Only used for Invoice Date type where tempstockmoves is the main table
- 	 $wheretype = " AND (tempstockmoves.type='10' OR tempstockmoves.type='11')";
+ 	 $WhereType = " AND (tempstockmoves.type='10' OR tempstockmoves.type='11')";
     if ($_POST['InvoiceType'] != 'All') {
-        $wheretype = " AND tempstockmoves.type = '" . $_POST['InvoiceType'] . "'";
+        $WhereType = " AND tempstockmoves.type = '" . $_POST['InvoiceType'] . "'";
     }
     if ($inputError !=1) {
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
@@ -239,7 +239,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 						 AND tempstockmoves.hidemovt=0
 						 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 						$WherePart
-						$wheretype
+						$WhereType
 						$WhereOrderNo
 						$WhereDebtorNo
 						$WhereDebtorName
@@ -498,7 +498,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 							$WherePart
-							$wheretype
+							$WhereType
 							$WhereOrderNo
 							$WhereDebtorNo
 							$WhereDebtorName
@@ -533,7 +533,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 							$WherePart
-							$wheretype
+							$WhereType
 							$WhereOrderNo
 							$WhereDebtorNo
 							$WhereDebtorName
@@ -571,7 +571,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 							$WherePart
-							$wheretype
+							$WhereType
 							$WhereOrderNo
 							$WhereDebtorNo
 							$WhereDebtorName
@@ -605,7 +605,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 							$WherePart
-							$wheretype
+							$WhereType
 							$WhereOrderNo
 							$WhereDebtorNo
 							$WhereDebtorName
@@ -639,7 +639,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 							$WherePart
-							$wheretype
+							$WhereType
 							$WhereOrderNo
 							$WhereDebtorNo
 							$WhereDebtorName
@@ -673,7 +673,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 							$WherePart
-							$wheretype
+							$WhereType
 							$WhereOrderNo
 							$WhereDebtorNo
 							$WhereDebtorName
@@ -707,7 +707,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'
 							$WherePart
-							$wheretype
+							$WhereType
 							$WhereOrderNo
 							$WhereDebtorNo
 							$WhereDebtorName
@@ -726,45 +726,45 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		$result = DB_query($sql,$db,$ErrMsg);
 		$ctr = 0;
 		echo '<pre>';
-		$totalqty = 0;
-		$totalextcost = 0;
-		$totalextprice = 0;
-		$totalinvqty = 0;
+		$TotalQty = 0;
+		$TotalExtCost = 0;
+		$TotalExtPrice = 0;
+		$TotalInvQty = 0;
 
 	// Create array for summary type to display in header. Access it with $savesummarytype
-	$summary_array['orderno'] =  _('Order Number');
-	$summary_array['stkcode'] =  _('Part Number');
-	$summary_array['extprice'] =  _('Extended Price');
-	$summary_array['debtorno'] =  _('Customer Number');
-	$summary_array['name'] =  _('Customer Name');
-	$summary_array['month'] =  _('Month');
-	$summary_array['categoryid'] =  _('Stock Category');
-	$summary_array['salesman'] =  _('Salesman');
-	$summary_array['area'] = _('Sales Area');
-	$summary_array['transno'] = _('Transaction Number');
+	$Summary_Array['orderno'] =  _('Order Number');
+	$Summary_Array['stkcode'] =  _('Stock Code');
+	$Summary_Array['extprice'] =  _('Extended Price');
+	$Summary_Array['debtorno'] =  _('Customer Number');
+	$Summary_Array['name'] =  _('Customer Name');
+	$Summary_Array['month'] =  _('Month');
+	$Summary_Array['categoryid'] =  _('Stock Category');
+	$Summary_Array['salesman'] =  _('Salesman');
+	$Summary_Array['area'] = _('Sales Area');
+	$Summary_Array['transno'] = _('Transaction Number');
     // Create array for sort for detail report to display in header
-    $detail_array['salesorderdetails.orderno'] = _('Order Number');
-	$detail_array['salesorderdetails.stkcode'] = _('Part Number');
-	$detail_array['debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Number');
-	$detail_array['debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Name');
-	$detail_array['tempstockmoves.transno,salesorderdetails.stkcode'] = _('Transaction Number');
+    $Detail_Array['salesorderdetails.orderno'] = _('Order Number');
+	$Detail_Array['salesorderdetails.stkcode'] = _('Stock Code');
+	$Detail_Array['debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Number');
+	$Detail_Array['debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Name');
+	$Detail_Array['tempstockmoves.transno,salesorderdetails.stkcode'] = _('Transaction Number');
 
 		// Display Header info
 		if ($_POST['ReportType'] == 'Summary') {
-		    $sortby_display = $summary_array[$savesummarytype];
+		    $SortBy_Display = $Summary_Array[$savesummarytype];
 		} else {
-		    $sortby_display = $detail_array[$_POST['SortBy']];
+		    $SortBy_Display = $Detail_Array[$_POST['SortBy']];
 		}
-		echo '  ' . _('Sales Inquiry') . ' - ' . $_POST['ReportType'] . " By $sortby_display <br/>";
+		echo '  ' . _('Sales Inquiry') . ' - ' . $_POST['ReportType'] . ' ' . _('By') . ' ' . $SortBy_Display . '<br/>';
 		if ($_POST['OrderType'] == '0') {
 		    echo '  ' . _('Order Type - Sales Orders') . '<br/>';
 		} else {
 		    echo '  ' . _('Order Type - Quotations') . '<br/>';
 		}
 		echo '  ' . _('Date Type') . ' - ' . $_POST['DateType'] . '<br/>';
-		echo '  ' . _('Date Range') . ' - ' . $_POST['FromDate'] . _(' To ') .  $_POST['ToDate'] . '<br/>';
+		echo '  ' . _('Date Range') . ' - ' . $_POST['FromDate'] . ' ' . _('To') . ' ' .  $_POST['ToDate'] . '<br/>';
 		if (mb_strlen(trim($PartNumber)) > 0) {
-			echo '  ' . _('Part Number') . ' - ' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '<br/>';
+			echo '  ' . _('Stock Code') . ' - ' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '<br/>';
 		}
 		if (mb_strlen(trim($_POST['DebtorNo'])) > 0) {
 			echo '  ' . _('Customer Number') . ' - ' . $_POST['DebtorNoOp'] . ' ' . $_POST['DebtorNo'] . '<br/>';
@@ -790,7 +790,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		    if ($_POST['DateType'] == 'Order') {
 				printf('%10s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %14s | %12s | %-10s | %-10s | %-10s | %-40s ',
 					 _('Order No'),
-					 _('Part Number'),
+					 _('Stock Code'),
 					 _('Order Date'),
 					 _('Debtor No'),
 					 _('Debtor Name'),
@@ -803,13 +803,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					 _('Item Due'),
 					 _('Salesman'),
 					 _('Area'),
-					 _('Part Description'));
+					 _('Item Description'));
 			} else {
 			    // Headings for Invoiced Date
 				printf('%10s | %14s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %12s | %-10s | %-10s | %-10s | %-40s ',
 					 _('Order No'),
 					 _('Trans. No'),
-					 _('Part Number'),
+					 _('Stock Code'),
 					 _('Order Date'),
 					 _('Debtor No'),
 					 _('Debtor Name'),
@@ -821,7 +821,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					 _('Invoiced'),
 					 _('Salesman'),
 					 _('Area'),
-					 _('Part Description'));
+					 _('Item Description'));
 			}
 				print '<br/><br/>';
 				$linectr = 0;
@@ -845,7 +845,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$myrow['area'],
 					$myrow['description']);
 					print '<br/>';
-					$totalqty += $myrow['quantity'];
+					$TotalQty += $myrow['quantity'];
 				} else {
 				    // Detail for Invoiced Date
 					printf('%10s | %14s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %12s | %-10s | %-10s | %-10s | %-40s ',
@@ -865,12 +865,12 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					$myrow['area'],
 					$myrow['description']);
 					print '<br/>';
-					$totalqty += $myrow['qty'];
+					$TotalQty += $myrow['qty'];
 				}
 				$lastdecimalplaces = $myrow['decimalplaces'];
-				$totalextcost += $myrow['extcost'];
-				$totalextprice += $myrow['extprice'];
-				$totalinvqty += $myrow['qtyinvoiced'];
+				$TotalExtCost += $myrow['extcost'];
+				$TotalExtPrice += $myrow['extprice'];
+				$TotalInvQty += $myrow['qtyinvoiced'];
 			} //END WHILE LIST LOOP
 			// Print totals
 			if ($_POST['DateType'] == 'Order') {
@@ -881,10 +881,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					' ',
 					' ',
 					' ',
-					number_format($totalqty,2),
-					number_format($totalextcost,2),
-					number_format($totalextprice,2),
-					number_format($totalinvqty,2),
+					number_format($TotalQty,2),
+					number_format($TotalExtCost,2),
+					number_format($TotalExtPrice,2),
+					number_format($TotalInvQty,2),
 					' ',
 					' ',
 					' ');
@@ -898,9 +898,9 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					' ',
 					' ',
 					' ',
-					number_format($totalqty,2),
-					number_format($totalextcost,2),
-					number_format($totalextprice,2),
+					number_format($TotalQty,2),
+					number_format($TotalExtCost,2),
+					number_format($TotalExtPrice,2),
 					' ',
 					' ',
 					' ');
@@ -908,60 +908,60 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 			echo '</pre>';
 		} else {
 		  // Print summary stuff
-			$summarytype = $_POST['SummaryType'];
+			$SummaryType = $_POST['SummaryType'];
 			$columnheader7 = ' ';
 			// Set up description based on the Summary Type
-			if ($summarytype == 'name') {
-				$summarytype = 'name';
-				$description = 'debtorno';
-				$summaryheader = _('Customer Name');
-				$descriptionheader =  _('Customer Number');
+			if ($SummaryType == 'name') {
+				$SummaryType = 'name';
+				$Description = 'debtorno';
+				$SummaryHeader = _('Customer Name');
+				$Descriptionheader =  _('Customer Number');
 			}
-			if ($summarytype == 'stkcode' || $summarytype == 'extprice') {
-				$description = 'description';
-				$summaryheader =  _('Part Number');
-				$descriptionheader =  _('Part Description');
+			if ($SummaryType == 'stkcode' OR $SummaryType == 'extprice') {
+				$Description = 'description';
+				$SummaryHeader =  _('Stock Code');
+				$Descriptionheader =  _('Item Description');
 			}
-			if ($summarytype == 'transno') {
-				$description = 'name';
-				$summaryheader =  _('Transaction Number');
-				$descriptionheader =  _('Customer Name');
+			if ($SummaryType == 'transno') {
+				$Description = 'name';
+				$SummaryHeader =  _('Transaction Number');
+				$Descriptionheader =  _('Customer Name');
 				$columnheader7 =  _('Order Number');
 			}
-			if ($summarytype == 'debtorno') {
-				$description = 'name';
-				$summaryheader =  _('Customer Number');
-				$descriptionheader =  _('Customer Name');
+			if ($SummaryType == 'debtorno') {
+				$Description = 'name';
+				$SummaryHeader =  _('Customer Number');
+				$Descriptionheader =  _('Customer Name');
 			}
-			if ($summarytype == 'orderno') {
-				$description = 'debtorno';
-				$summaryheader =  _('Order Number');
-				$descriptionheader =  _('Customer Number');
+			if ($SummaryType == 'orderno') {
+				$Description = 'debtorno';
+				$SummaryHeader =  _('Order Number');
+				$Descriptionheader =  _('Customer Number');
 				$columnheader7 =  _('Customer Name');
 			}
-			if ($summarytype == 'categoryid') {
-				$description = 'categorydescription';
-				$summaryheader =  _('Stock Category');
-				$descriptionheader =  _('Category Description');
+			if ($SummaryType == 'categoryid') {
+				$Description = 'categorydescription';
+				$SummaryHeader =  _('Stock Category');
+				$Descriptionheader =  _('Category Description');
 			}
-			if ($summarytype == 'salesman') {
-				$description = 'salesmanname';
-				$summaryheader =  _('Salesman Code');
-				$descriptionheader =  _('Salesman Name');
+			if ($SummaryType == 'salesman') {
+				$Description = 'salesmanname';
+				$SummaryHeader =  _('Salesman Code');
+				$Descriptionheader =  _('Salesman Name');
 			}
-			if ($summarytype == 'area') {
-				$description = 'areadescription';
-				$summaryheader =  _('Sales Area');
-				$descriptionheader =  _('Area Description');
+			if ($SummaryType == 'area') {
+				$Description = 'areadescription';
+				$SummaryHeader =  _('Sales Area');
+				$Descriptionheader =  _('Area Description');
 			}
-			if ($summarytype == 'month') {
-				$description = 'monthname';
-				$summaryheader =  _('Month');
-				$descriptionheader =  _('Month');
+			if ($SummaryType == 'month') {
+				$Description = 'monthname';
+				$SummaryHeader =  _('Month');
+				$Descriptionheader =  _('Month');
 			}
 			printf('    %-30s | %-40s | %12s | %14s | %14s | %14s | %-15s',
-				 _($summaryheader),
-				 _($descriptionheader),
+				 _($SummaryHeader),
+				 _($Descriptionheader),
 				 _('Quantity'),
 				 _('Extended Cost'),
 				 _('Extended Price'),
@@ -973,42 +973,42 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				$linectr = 0;
 			while ($myrow = DB_fetch_array($result)) {
 			    $linectr++;
-				if ($summarytype == 'orderno') {
+				if ($SummaryType == 'orderno') {
 				    $column7 = $myrow['name'];
 				}
-				if ($summarytype == 'transno') {
+				if ($SummaryType == 'transno') {
 				    $column7 =  $myrow['orderno'];
 				}
 				if ($_POST['DateType'] == 'Order') {
 				    // quantity is from salesorderdetails
-				    $displayqty = $myrow['quantity'];
+				    $DisplayQty = $myrow['quantity'];
 				} else {
 				    // qty is from stockmoves
-				    $displayqty = $myrow['qty'];
+				    $DisplayQty = $myrow['qty'];
 				}
 				printf('    %-30s | %-40s | %12s | %14s | %14s | %14s |  %-40s',
-				$myrow[$summarytype],
-				$myrow[$description],
-				number_format($displayqty,2),
+				$myrow[$SummaryType],
+				$myrow[$Description],
+				number_format($DisplayQty,2),
 				number_format($myrow['extcost'],2),
 				number_format($myrow['extprice'],2),
 				number_format($myrow['qtyinvoiced'],2),
 				$column7);
 
 				print '<br/>';
-				$totalqty += $displayqty;
-				$totalextcost += $myrow['extcost'];
-				$totalextprice += $myrow['extprice'];
-				$totalinvqty += $myrow['qtyinvoiced'];
+				$TotalQty += $DisplayQty;
+				$TotalExtCost += $myrow['extcost'];
+				$TotalExtPrice += $myrow['extprice'];
+				$TotalInvQty += $myrow['qtyinvoiced'];
 			} //END WHILE LIST LOOP
 			// Print totals
 				printf('    %-30s | %-40s | %12s | %14s | %14s | %14s',
 				_('Totals'),
 				_('Lines - ') . $linectr,
-				number_format($totalqty,2),
-				number_format($totalextcost,2),
-				number_format($totalextprice,2),
-				number_format($totalinvqty,2),
+				number_format($TotalQty,2),
+				number_format($TotalExtCost,2),
+				number_format($TotalExtPrice,2),
+				number_format($TotalInvQty,2),
 				' ');
 			echo '</pre>';
 		} // End of if ($_POST['ReportType']
@@ -1062,7 +1062,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	    <td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size=10 maxlength=10 value="' . $_POST['ToDate'] . '"></td>
 	</tr>';
 
-	echo '<tr><td>' . _('Part Number') . ':</td>';
+	echo '<tr><td>' . _('Stock Code') . ':</td>';
 	echo '<td><select name="PartNumberOp">';
 	echo '<option selected value="Equals">' . _('Equals') . '</option>';
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
@@ -1125,7 +1125,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
     echo '<tr><td>' . _('Sort By') . ':</td>';
     echo '<td><select name="SortBy">';
 	echo '<option selected value="salesorderdetails.orderno">' . _('Order Number') . '</option>';
-	echo '<option value="salesorderdetails.stkcode">' . _('Part Number') . '</option>';
+	echo '<option value="salesorderdetails.stkcode">' . _('Stock Code') . '</option>';
 	echo '<option value="debtorsmaster.debtorno,salesorderdetails.orderno">' . _('Customer Number') . '</option>';
 	echo '<option value="debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno">' . _('Customer Name') . '</option>';
 	echo '<option value="tempstockmoves.transno,salesorderdetails.stkcode">' . _('Transaction Number') . '</option>';
@@ -1140,7 +1140,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
     echo '<td><select name="SummaryType">';
 	echo '<option selected value="orderno">' . _('Order Number') . '</option>';
 	echo '<option value="transno">' . _('Transaction Number') . '</option>';
-	echo '<option value="stkcode">' . _('Part Number') . '</option>';
+	echo '<option value="stkcode">' . _('Stock Code') . '</option>';
 	echo '<option value="extprice">' . _('Extended Price') . '</option>';
 	echo '<option value="debtorno">' . _('Customer Number') . '</option>';
 	echo '<option value="name">' . _('Customer Name') . '</option>';

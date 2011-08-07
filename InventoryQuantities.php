@@ -40,7 +40,7 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.serialised,
 					stockmaster.controlled
 				FROM locstock INNER JOIN stockmaster 
-				locstock.stockid=stockmaster.stockid 
+				ON locstock.stockid=stockmaster.stockid 
 				INNER JOIN locations 
 				ON locstock.loccode=locations.loccode
 				WHERE locstock.quantity <> 0
@@ -62,7 +62,7 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.serialised,
 					stockmaster.controlled
 				FROM locstock INNER JOIN stockmaster 
-				locstock.stockid=stockmaster.stockid 
+				ON locstock.stockid=stockmaster.stockid 
 				INNER JOIN locations 
 				ON locstock.loccode=locations.loccode 
 				WHERE (SELECT count(*)

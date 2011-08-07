@@ -807,8 +807,9 @@ echo '<tr style="outline: 1px solid"><td>' . _('Perform Database Maintenance At 
 	</tr>';
 
 $WikiApplications = array( _('Disabled'),
-					_('WackoWiki'),
-					_('MediaWiki') );
+ 					_('WackoWiki'),
+ 					_('MediaWiki'),
+					_('DokuWiki') );
 
 echo '<tr style="outline: 1px solid"><td>' . _('Wiki application') . ':</td>
 	<td><select name="X_WikiApp">';
