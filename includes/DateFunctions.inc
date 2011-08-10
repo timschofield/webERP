@@ -875,7 +875,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		}
 	}
 	/* Find the unix timestamp of the last period end date in periods table */
-	$sql = 'SELECT MAX(lastdate_in_period), MAX(periodno) from periods';
+	$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 	if (is_null($myrow[0])){
@@ -889,7 +889,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$LastPeriod = $myrow[1];
 	}
 	/* Find the unix timestamp of the first period end date in periods table */
-	$sql = 'SELECT MIN(lastdate_in_period), MIN(periodno) from periods';
+	$sql = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 	$Date_Array = explode('-', $myrow[0]);
@@ -929,7 +929,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		}
 	} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)), $db)) {
 		/* Make sure the following months period exists */
-		$sql = 'SELECT MAX(lastdate_in_period), MAX(periodno) from periods';
+		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 		$result = DB_query($sql, $db);
 		$myrow=DB_fetch_row($result);
 		$Date_Array = explode('-', $myrow[0]);
@@ -941,8 +941,10 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	/* Now return the period number of the transaction */
 
 	$MonthAfterTransDate = Mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate));
-	$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" .
-	Date('Y-m-d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
+	$GetPrdSQL = "SELECT periodno 
+					FROM periods 
+					WHERE lastdate_in_period < '" . Date('Y-m-d', $MonthAfterTransDate) . "' 
+					AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
 	$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);

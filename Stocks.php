@@ -211,27 +211,43 @@ if (isset($_POST['submit'])) {
 			*/
 			$sql = "SELECT mbflag,
 							controlled,
-							serialised
-					FROM stockmaster WHERE stockid = '".$StockID."'";
+							serialised,
+							materialcost+labourcost+overheadcost AS itemcost,
+							stockcategory.stockact
+					FROM stockmaster 
+					INNER JOIN stockcategory 
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockid = '".$StockID."'";
 			$MBFlagResult = DB_query($sql,$db);
 			$myrow = DB_fetch_row($MBFlagResult);
 			$OldMBFlag = $myrow[0];
 			$OldControlled = $myrow[1];
 			$OldSerialised = $myrow[2];
+			$UnitCost = $myrow[3];
+			$OldStockAccount = $myrow[4];
 
 			$sql = "SELECT SUM(locstock.quantity) 
 					FROM locstock 
 					WHERE stockid='".$StockID."' 
 					GROUP BY stockid";
 			$result = DB_query($sql,$db);
-			$stkqtychk = DB_fetch_row($result);
+			$StockQtyRow = DB_fetch_row($result);
 
+			/*Now check the GL account of the new category to see if it is different to the old stock gl account */
+			
+			$result = DB_query("SELECT stockact 
+								FROM stockcategory 
+								WHERE categoryid='" . $_POST['CategoryID'] . "'",
+								$db);
+			$NewStockActRow = DB_fetch_array($result);
+			$NewStockAct = $NewStockActRow['stockact'];
+			
 			if ($OldMBFlag != $_POST['MBFlag']){
 				if (($OldMBFlag == 'M' OR $OldMBFlag=='B') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D' OR $_POST['MBFlag']=='G')){ /*then need to check that there is no stock holding first */
 					/* stock holding OK for phantom (ghost) items */
-					if ($stkqtychk[0]!=0 AND $OldMBFlag!='G'){
+					if ($StockQtyRow[0]!=0 AND $OldMBFlag!='G'){
 						$InputError=1;
-						prnMsg( _('The make or buy flag cannot be changed from') . ' ' . $OldMBFlag . ' ' . _('to') . ' ' . $_POST['MBFlag'] . ' ' . _('where there is a quantity of stock on hand at any location') . '. ' . _('Currently there are') . ' ' . $stkqtychk[0] .  ' ' . _('on hand') , 'errror');
+						prnMsg( _('The make or buy flag cannot be changed from') . ' ' . $OldMBFlag . ' ' . _('to') . ' ' . $_POST['MBFlag'] . ' ' . _('where there is a quantity of stock on hand at any location') . '. ' . _('Currently there are') . ' ' . $StockQtyRow[0] .  ' ' . _('on hand') , 'errror');
 					}
 					/* don't allow controlled/serialized  */
 					if ($_POST['Controlled']==1){
@@ -296,18 +312,21 @@ if (isset($_POST['submit'])) {
 			}
 
 			/* Do some checks for changes in the Serial & Controlled setups */
-			if ($OldControlled != $_POST['Controlled'] AND $stkqtychk[0]!=0){
+			if ($OldControlled != $_POST['Controlled'] AND $StockQtyRow[0]!=0){
 				$InputError=1;
 				prnMsg( _('You can not change a Non-Controlled Item to Controlled (or back from Controlled to non-controlled when there is currently stock on hand for the item') , 'error');
 
 			}
-			if ($OldSerialised != $_POST['Serialised'] AND $stkqtychk[0]!=0){
+			if ($OldSerialised != $_POST['Serialised'] AND $StockQtyRow[0]!=0){
 				$InputError=1;
 				prnMsg( _('You can not change a Serialised Item to Non-Serialised (or vice-versa) when there is a quantity on hand for the item') , 'error');
 			}
 
 
 			if ($InputError == 0){
+				
+				DB_Txn_Begin($db);
+				
 				$sql = "UPDATE stockmaster
 						SET longdescription='" . $_POST['LongDescription'] . "',
 							description='" . $_POST['Description'] . "',
@@ -333,12 +352,12 @@ if (isset($_POST['submit'])) {
 
 				$ErrMsg = _('The stock item could not be updated because');
 				$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 				//delete any properties for the item no longer relevant with the change of category
 				$result = DB_query("DELETE FROM stockitemproperties
 									WHERE stockid ='" . $StockID . "'",
-									$db);
+									$db,$ErrMsg,$DbgMsg,true);
 
 				//now insert any item properties
 				for ($i=0;$i<$_POST['PropertyCounter'];$i++){
@@ -356,8 +375,47 @@ if (isset($_POST['submit'])) {
 														VALUES ('" . $StockID . "',
 																'" . $_POST['PropID' . $i] . "',
 																'" . $_POST['PropValue' . $i] . "')",
-										$db);
+										$db,$ErrMsg,$DbgMsg,true);
 				} //end of loop around properties defined for the category
+				
+				if ($OldStockAccount != $NewStockAct AND $_SESSION['CompanyRecord']['gllinkstock']==1) {
+				/*Then we need to make a journal to transfer the cost to the new stock account */
+					$JournalNo = GetNextTransNo(0,$db); //enter as a journal
+					$SQL = "INSERT INTO gltrans (type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount)
+										VALUES ( 0,
+												'" . $JournalNo . "',
+												'" . Date('Y-m-d') . "',
+												'" . GetPeriodNo(Date('Y-m-d'),true) . "',
+												'" . $NewStockAccount . "',
+												'" . $StockID . ' ' . _('Change stock category') . "',
+												'" . ($UnitCost* $StockQtyRow[0]) . "'";
+					$ErrMsg =  _('The stock cost journal could not be inserted because');
+					$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
+					$result = DB_query($sql,$db, $ErrMsg, $DbgMsg,true);
+					$SQL = "INSERT INTO gltrans (type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount)
+										VALUES ( 0,
+												'" . $JournalNo . "',
+												'" . Date('Y-m-d') . "',
+												'" . GetPeriodNo(Date('Y-m-d'),true) . "',
+												'" . $OldStockAccount . "',
+												'" . $StockID . ' ' . _('Change stock category') . "',
+												'" . (-$UnitCost* $StockQtyRow[0]) . "'";
+					$result = DB_query($sql,$db, $ErrMsg, $DbgMsg,true);
+				
+				} /* end if the stock category changed and forced a change in stock cost account */
+				DB_Txn_Commit($db);
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 				echo '<br />';
 			}

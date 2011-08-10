@@ -72,9 +72,9 @@ if (isset($_POST['submit'])) {
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType)
-{
+function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType) {
 
+	global $rootpath;
 	//initialize no input errors
 	$InputError = 0;
 
@@ -502,7 +502,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		$Detail_Array['suppliers.suppname,suppliers.supplierid,purchorderdetails.orderno'] = _('Supplier Name');
 
 		// Display Header info
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		if ($_POST['ReportType'] == 'Summary') {
 			$SortBy_Display = $Summary_Array[$SaveSummaryType];
 		} else {
@@ -533,7 +533,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 				<td>' . $_POST['Category'] . '</td></tr></table>';
 
 		if ($_POST['ReportType'] == 'Detail') {
-			echo '<br /><table class=selection width=98%>';
+			echo '<br /><table class="selection" width=98%>';
 			if ($_POST['DateType'] == 'Order') {
 				echo '<tr><th>' . _('Order No') . '</th>
 						<th>' . _('Part Number') . '</th>
@@ -561,7 +561,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 					}
 					$linectr++;
 				   // Detail for both DateType of Order
-					printf('<td>%s</td>
+					printf('<td><a href="'. $rootpath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -574,6 +574,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							<td>%s</td>
 							<td>%s</td>
 							</tr>',
+							$myrow['orderno'],
 							$myrow['orderno'],
 							$myrow['itemcode'],
 							ConvertSQLDate($myrow['orddate']),

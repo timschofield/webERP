@@ -193,8 +193,8 @@ if (isset($StockItemsResult)) {
 		}
 		echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
 			<td>' . $myrow['description'] . '</td>
-			<td class=number>' . $myrow['qoh'] . '</td>
-			<td class=number>' . $myrow['qord'] . '</td>
+			<td class="number">' . $myrow['qoh'] . '</td>
+			<td class="number">' . $myrow['qord'] . '</td>
 			<td>' . $myrow['units'] . '</td>
 			</tr>';
 		$j++;
@@ -229,6 +229,7 @@ else {
 		$SQL = "SELECT purchorders.orderno,
 						suppliers.suppname,
 						purchorders.orddate,
+						purchorders.deliverydate,
 						purchorders.initiator,
 						purchorders.requisitionno,
 						purchorders.allowprint,
@@ -263,6 +264,7 @@ else {
 				$SQL = "SELECT purchorders.orderno,
 								suppliers.suppname,
 								purchorders.orddate,
+								purchorders.deliverydate,
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
@@ -293,6 +295,7 @@ else {
 				$SQL = "SELECT purchorders.orderno,
 								suppliers.suppname,
 								purchorders.orddate,
+								purchorders.deliverydate,
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
@@ -324,6 +327,7 @@ else {
 				$SQL = "SELECT purchorders.orderno,
 								suppliers.suppname,
 								purchorders.orddate,
+								purchorders.deliverydate,
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
@@ -353,6 +357,7 @@ else {
 				$SQL = "SELECT purchorders.orderno,
 								suppliers.suppname,
 								purchorders.orddate,
+								purchorders.deliverydate,
 								purchorders.initiator,
 								purchorders.requisitionno,
 								purchorders.allowprint,
@@ -386,13 +391,14 @@ else {
 	
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
-		echo '<table cellpadding=2 colspan=7 width=90% class=selection>';
+		echo '<table cellpadding="2" colspan="7" width="90%" class="selection">';
 		$TableHeader = '<tr>
 						<th>' . _('View') . '</th>
 						<th>' . _('Supplier') . '</th>
 						<th>' . _('Currency') . '</th>
 						<th>' . _('Requisition') . '</th>
 						<th>' . _('Order Date') . '</th>
+						<th>' . _('Delivery Date') . '</th>
 						<th>' . _('Initiator') . '</th>
 						<th>' . _('Order Total') . '</th>
 						<th>' . _('Status') . '</th>
@@ -410,6 +416,7 @@ else {
 			}
 			$ViewPurchOrder = $rootpath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
+			$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 			$FormatedOrderValue = number_format($myrow['ordervalue'], $myrow['decimalplaces']);
 			/*  View	   Supplier	Currency	Requisition	 Order Date		 Initiator	Order Total
 			ModifyPage, $myrow["orderno"],		  $myrow["suppname"],			$myrow["currcode"],		 $myrow["requisitionno"]		$FormatedOrderDate,			 $myrow["initiator"]			 $FormatedOrderValue 			Order Status*/
@@ -418,8 +425,9 @@ else {
 					<td>' . $myrow['currcode'] . '</td>
 					<td>' . $myrow['requisitionno'] . '</td>
 					<td>' . $FormatedOrderDate . '</td>
+					<td>' . $FormatedDeliveryDate . '</td>
 					<td>' . $myrow['initiator'] . '</td>
-					<td class=number>' . $FormatedOrderValue . '</td>
+					<td class="number">' . $FormatedOrderValue . '</td>
 					<td>' . _($myrow['status']) .  '</td> 
 					</tr>';
 				//$myrow['status'] is a string which has gettext translations from PO_Header.php script

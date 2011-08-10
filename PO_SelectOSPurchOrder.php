@@ -282,6 +282,7 @@ else {
 		$SQL = "SELECT purchorders.orderno,
 				suppliers.suppname,
 				purchorders.orddate,
+				purchorders.deliverydate,
 				purchorders.initiator,
 				purchorders.status,
 				purchorders.requisitionno,
@@ -317,6 +318,7 @@ else {
 							purchorders.orderno,
 							suppliers.suppname,
 							purchorders.orddate,
+							purchorders.deliverydate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -346,6 +348,7 @@ else {
 							purchorders.orderno,
 							suppliers.suppname,
 							purchorders.orddate,
+							purchorders.deliverydate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -377,6 +380,7 @@ else {
 							purchorders.orderno,
 							suppliers.suppname,
 							purchorders.orddate,
+							purchorders.deliverydate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -405,6 +409,7 @@ else {
 							purchorders.orderno,
 							suppliers.suppname,
 							purchorders.orddate,
+							purchorders.deliverydate,
 							purchorders.status,
 							purchorders.initiator,
 							purchorders.requisitionno,
@@ -437,13 +442,13 @@ else {
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding=2 colspan=7 width=97% class=selection>';
+	echo '<table cellpadding="2" colspan="7 width="97%" class="selection">';
 
-//				   '</td><td class="tableheader">' . _('Receive') .
 
 	echo '<tr>
 			<th>' . _('Order #') . '</th>
 			<th>' . _('Order Date') . '</th>
+			<th>' . _('Delivery Date') . '</th>
 			<th>' . _('Initiated by') . '</th>
 			<th>' . _('Supplier') . '</th>
 			<th>' . _('Currency') . '</th>';
@@ -469,8 +474,7 @@ else {
 
 		$ModifyPage = $rootpath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'];
 		if ($myrow['status'] == 'Printed') {
-			$ReceiveOrder = '<a href="'.$rootpath . '/GoodsReceived.php?PONumber=' . $myrow['orderno'].'">'.
-				_('Receive').'</a>';
+			$ReceiveOrder = '<a href="'.$rootpath . '/GoodsReceived.php?PONumber=' . $myrow['orderno'].'">'. _('Receive') . '</a>';
 		} else {
 			$ReceiveOrder = '';
 		}
@@ -487,15 +491,17 @@ else {
 
 		
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
+		$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
 		echo '<td><a href="'.$ModifyPage.'">' . $myrow['orderno'] . '</a></td>
 					<td>' . $FormatedOrderDate . '</td>
+					<td>' . $FormatedDeliveryDate . '</td>
 					<td>' . $myrow['initiator'] . '</td>
 					<td>' . $myrow['suppname'] . '</td>
 					<td>' . $myrow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
-			echo '<td class=number>'.$FormatedOrderValue . '</td>';
+			echo '<td class="number">'.$FormatedOrderValue . '</td>';
 		}
 			echo '<td>' . _($myrow['status']) . '</td>
 					<td>' . $PrintPurchOrder  . '</td>
