@@ -93,7 +93,7 @@ Class PurchOrder {
 													$GLCode,
 													$ReqDelDate,
 													$ShiptRef,
-													0,
+													$Completed,
 													$JobRef,
 													$QtyInv,
 													$QtyRecd,
@@ -276,7 +276,8 @@ Class LineDetails {
 		$this->Deleted = false;
 		$this->SerialItems = array(); /*if Controlled then need to populate this later */
 		$this->SerialItemsValid=false;
-		$this->AssetID= $AssetID;
+		$this->AssetID = $AssetID;
+
 	}
 }
 ?>

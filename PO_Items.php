@@ -83,7 +83,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		} else {
 			$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
 		}
-		if ($_SESSION['AutoAuthorisePO']==1) { //if the user has authority to authorise the PO then it will automatically be authorised
+		if ($_SESSION['AutoAuthorisePO']==1) { 
+			//if the user has authority to authorise the PO then it will automatically be authorised
 			$AuthSQL ="SELECT authlevel
 						FROM purchorderauth
 						WHERE userid='".$_SESSION['UserID']."'
@@ -233,7 +234,23 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('on') . ' ' .
 		     	$_SESSION['PO'.$identifier]->SupplierName . ' ' . _('has been created'),'success');
 		} else { /*its an existing order need to update the old order info */
-
+			/*Check to see if there are any incomplete lines on the order */
+			$Completed = true; //assume it is completed i.e. all lines are flagged as completed
+			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
+				if ($POLine->Completed==0){
+					$Completed = false;
+					break;
+				}
+			}
+			if ($Completed){
+				$_SESSION['PO'.$identifier]->Status = 'Completed';
+				if (IsEmailAddress($_SESSION['UserEmail'])){
+					$UserChangedStatus = ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
+				} else {
+					$UserChangedStatus = ' ' . $_SESSION['UsersRealName'] . ' ';
+				}
+				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Order completed by') . $UserChangedStatus  . '<br />' .$_SESSION['PO'.$identifier]->StatusComments;
+			}
 		     /*Update the purchase order header with any changes */
 
 			$sql = "UPDATE purchorders SET supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "' ,
@@ -264,13 +281,14 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										contact='" . $_SESSION['PO'.$identifier]->Contact . "',
 										paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
 										allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
-										status = '" . $_SESSION['PO'.$identifier]->Status . "'
+										status = '" . $_SESSION['PO'.$identifier]->Status . "',
+										stat_comment = '" . $_SESSION['PO'.$identifier]->StatusComments . "' 
 										WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 			$ErrMsg =  _('The purchase order could not be updated because');
 			$DbgMsg = _('The SQL statement used to update the purchase order header record, that failed was');
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-
+			
 			/*Now Update the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 				$result=DB_query($sql,$db,'','',true);
@@ -382,6 +400,9 @@ if(isset($_GET['Delete'])){
 	}
 }
 
+if(isset($_GET['Complete'])){
+	$_SESSION['PO'.$identifier]->LineItems[$_GET['Complete']]->Completed=1;
+}
 if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecting a stock item from the search */
 
 	$AllowUpdate = true; /*always assume the best */
@@ -683,8 +704,13 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . round(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces) .'"></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>
-				<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier. '&Delete=' . $POLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
+				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>';
+			if ($POLine->QtyReceived !=0 AND $POLine->Completed!=1){
+				echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier .'&Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
+			} elseif ($POLine->QtyReceived ==0) {
+				echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier .'&Delete=' . $POLine->LineNo . '">' . _('Delete'). '</a></td>';
+			}
+			echo '</tr>';
 			$_SESSION['PO'.$identifier]->Total += $LineTotal;
 		}
 	}

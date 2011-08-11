@@ -1,5 +1,7 @@
 webERP Change Log
 
+11/8/11 Phil: GoodsReceived.php now has checkbox to flag the order line as complete - even though the quantity delivered might be short of the order quantity.
+11/8/11 Phil: PO_Items.php link to complete uncompleted lines - status of order is changed to complete is all lines are completed
 10/8/11 Phil: POReport.php added link to detail purchase order inquiry
 10/8/11 Phil: PO_SelectPurchOrder.php and outstanding purchase order searches now show the delivery date (from the purchase order header) line items may have different delivery dates.
 10/8/11 Phil: Stocks.php changing the stock category to one with a different stock account now creates a journal (if stock is linked to GL) to move the cost of the stock from the old GL account to the new GL account

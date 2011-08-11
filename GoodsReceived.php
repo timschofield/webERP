@@ -47,6 +47,11 @@ if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO'.
 			$RecvQty = 0;
 		}
 		$_SESSION['PO'.$identifier]->LineItems[$Line->LineNo]->ReceiveQty = $RecvQty;
+		if (isset($_POST['Complete_' . $Line->LineNo])){
+			$_SESSION['PO'.$identifier]->LineItems[$Line->LineNo]->Completed = 1;
+		} else {
+			$_SESSION['PO'.$identifier]->LineItems[$Line->LineNo]->Completed = 0;
+		}
 	}
 }
 
@@ -75,7 +80,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>'. _('Date Goods/Service Received'). ':</td>
-				<td><input type="text" class=date alt="'. $_SESSION['DefaultDateFormat'] .'" maxlength=10 size=10 onChange="return isDate(this, this.value, '."'".
+				<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'] .'" maxlength=10 size=10 onChange="return isDate(this, this.value, '."'".
 			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_POST['DefaultReceivedDate'] . '"></td>
 			</tr>
 		</table>
@@ -96,7 +101,8 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
 				<th>' . _('Units') . '</th>
 				<th>' . _('Already') . '<br />' . _('Received') . '</th>
-				<th>' . _('This Delivery') . '<br />' . _('Quantity') . '</th>';
+				<th>' . _('This Delivery') . '<br />' . _('Quantity') . '</th>
+				<th>' . _('Completed') . '</th>';
 
 	if ($_SESSION['ShowValueOnGRN']==1) {
 		echo '<th>' . _('Price') . '</th>
@@ -147,23 +153,28 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 		//Now Display LineItem
 		echo '<td>' . $LnItm->StockID . '</td>
 			<td>' . $LnItm->ItemDescription . '</td>
-			<td class=number>' . $DisplaySupplierQtyOrd . '</td>
+			<td class="number">' . $DisplaySupplierQtyOrd . '</td>
 			<td>' . $LnItm->SuppliersUnit . '</td>
-			<td class=number>' . $DisplaySupplierQtyRec . '</td>
-			<td class=number>' . $LnItm->ConversionFactor . '</td>
-			<td class=number>' . $DisplayQtyOrd . '</td>
+			<td class="number">' . $DisplaySupplierQtyRec . '</td>
+			<td class="number">' . $LnItm->ConversionFactor . '</td>
+			<td class="number">' . $DisplayQtyOrd . '</td>
 			<td>' . $LnItm->Units . '</td>
-			<td class=number>' . $DisplayQtyRec . '</td>
-			<td class=number>';
+			<td class="number">' . $DisplayQtyRec . '</td>
+			<td class="number">';
 
 		if ($LnItm->Controlled == 1) {
 
 			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&LineNo=' . $LnItm->LineNo . '">' . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
-			echo '<input type="text" class=number name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 size=10 value="' . $LnItm->ReceiveQty . '"></td>';
+			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 size=10 value="' . $LnItm->ReceiveQty . '"></td>';
 		}
-
+		echo '<td><input type="checkbox" name="Complete_'. $LnItm->LineNo . '"';
+		if ($LnItm->Completed ==1){
+			echo ' checked';
+		} 
+		echo ' /></td>';
+		
 		if ($_SESSION['ShowValueOnGRN']==1) {
 			echo '<td class="number">' . $DisplayPrice . '</td>';
 			echo '<td class="number">' . $DisplayLineTotal . '</td>';
@@ -341,9 +352,11 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	$PeriodNo = GetPeriod($_POST['DefaultReceivedDate'], $db);
 	$_POST['DefaultReceivedDate'] = FormatDateForSQL($_POST['DefaultReceivedDate']);
-
+	$OrderCompleted = true; //assume all received and completed - now test in case not
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $OrderLine) {
-
+		if ($OrderLine->Completed ==0){
+			$OrderCompleted = false;
+		}
 		if ($OrderLine->ReceiveQty !=0 AND $OrderLine->ReceiveQty!='' AND isset($OrderLine->ReceiveQty)) {
 
 			$LocalCurrencyPrice = ($OrderLine->Price / $_SESSION['PO'.$identifier]->ExRate);
@@ -390,7 +403,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 				$SQL = "UPDATE purchorderdetails SET
 												quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
 												stdcostunit='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost . "',
-												completed=0
+												completed='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->Completed . "'
 										WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
 			}
 
@@ -670,10 +683,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		} /*Quantity received is != 0 */
 	} /*end of OrderLine loop */
 	
-	
-	
-	if ($_SESSION['PO'.$identifier]->AllLinesReceived()==1) { //all lines on the purchase order are now completed
-		$StatusComment=date($_SESSION['DefaultDateFormat']) .' - ' . _('Order Completed') .'<br />' . $_SESSION['PO'.$identifier]->StatusComments;
+	if ($_SESSION['PO'.$identifier]->AllLinesReceived()==1 OR $OrderCompleted) { //all lines on the purchase order are now completed
+		$StatusComment=date($_SESSION['DefaultDateFormat']) .' - ' . _('Order Completed on entry of GRN') .'<br />' . $_SESSION['PO'.$identifier]->StatusComments;
 		$sql="UPDATE purchorders
 				SET status='Completed',
 				stat_comment='" . $StatusComment . "'
