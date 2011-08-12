@@ -303,17 +303,17 @@ $DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.q
 $DemRow = DB_fetch_row($DemResult);
 $Demand = $DemRow[0];
 $DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-										FROM salesorderdetails,
-											salesorders,
-											bom,
-											stockmaster
-										WHERE salesorderdetails.stkcode=bom.parent
-										AND salesorders.orderno = salesorderdetails.orderno
-										AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-										AND bom.component='" . $StockID . "'
-										AND stockmaster.stockid=bom.parent
-										AND stockmaster.mbflag='A'
-										AND salesorders.quotation=0", $db);
+									FROM salesorderdetails,
+										salesorders,
+										bom,
+										stockmaster
+									WHERE salesorderdetails.stkcode=bom.parent
+									AND salesorders.orderno = salesorderdetails.orderno
+									AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+									AND bom.component='" . $StockID . "'
+									AND stockmaster.stockid=bom.parent
+									AND stockmaster.mbflag='A'
+									AND salesorders.quotation=0", $db);
 $DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
 $Demand+= $DemAsComponentRow[0];
 //Also the demand for the item as a component of works orders
@@ -417,7 +417,7 @@ if ($Its_A_Labour_Item == True) {
 wikiLink('Product', $StockID);
 echo '</td><td valign="top" class="select">';
 /* Stock Transactions */
-if ($Its_A_Kitset_Assembly_Or_Dummy == false AND $myrow['discontinued']==0) {
+if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $rootpath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded

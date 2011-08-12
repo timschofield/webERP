@@ -665,37 +665,42 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 }
 
 
-/* Run through each line of the order and work out the appropriate discount from the discount matrix */
+/* Now Run through each line of the order again to work out the appropriate discount from the discount matrix */
 $DiscCatsDone = array();
-$counter =0;
 foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 	if ($OrderLine->DiscCat !='' AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
-		$DiscCatsDone[$counter]=$OrderLine->DiscCat;
-		$QuantityOfDiscCat =0;
+		$DiscCatsDone[]=$OrderLine->DiscCat;
+		$QuantityOfDiscCat = 0;
 
-		foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
+		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
 			/* add up total quantity of all lines of this DiscCat */
-			if ($StkItems_2->DiscCat==$OrderLine->DiscCat){
-				$QuantityOfDiscCat += $StkItems_2->Quantity;
+			if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
+				$QuantityOfDiscCat += $OrderLine_2->Quantity;
 			}
 		}
 		$result = DB_query("SELECT MAX(discountrate) AS discount
 							FROM discountmatrix
 							WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 							AND discountcategory ='" . $OrderLine->DiscCat . "'
-							AND quantitybreak <'" . $QuantityOfDiscCat . "'",$db);
+							AND quantitybreak <= '" . $QuantityOfDiscCat ."'",$db);
 		$myrow = DB_fetch_row($result);
+		if ($myrow[0]==NULL){
+			$DiscountMatrixRate = 0;
+		} else {
+			$DiscountMatrixRate = $myrow[0];
+		}
 		if ($myrow[0]!=0){ /* need to update the lines affected */
-			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
-				/* add up total quantity of all lines of this DiscCat */
-				if ($StkItems_2->DiscCat==$OrderLine->DiscCat AND $StkItems_2->DiscountPercent == 0){
-					$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $myrow[0];
+			foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
+				if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
+					$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
+					$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->GPPercent = (($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price*(1-$DiscountMatrixRate)) - $_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->StandardCost*$ExRate)/($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price *(1-$DiscountMatrixRate)/100);
 				}
 			}
 		}
 	}
 } /* end of discount matrix lookup code */
+
 
 if (count($_SESSION['Items'.$identifier]->LineItems)>0 
 	AND !isset($_POST['ProcessSale'])){ /*only show order lines if there are any */
@@ -877,7 +882,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
  * Invoice Processing Here
  * **********************************
  * */
-if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
+if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ''){
 
 	$InputError = false; //always assume the best
 	//but check for the worst
@@ -952,7 +957,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	/* Now Get the area where the sale is to from the branches table */
 
 		$SQL = "SELECT 	area,
-										defaultshipvia
+						defaultshipvia
 				FROM custbranch
 				WHERE custbranch.debtorno ='". $_SESSION['Items'.$identifier]->DebtorNo . "'
 				AND custbranch.branchcode = '" . $_SESSION['Items'.$identifier]->Branch . "'";
@@ -1358,35 +1363,33 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 					if (empty($AssParts['standard'])) {
 						$AssParts['standard']=0;
 					}
-					$SQL = "INSERT INTO stockmoves (
-															stockid,
-															type,
-															transno,
-															loccode,
-															trandate,
-															debtorno,
-															branchcode,
-															prd,
-															reference,
-															qty,
-															standardcost,
-															show_on_inv_crds,
-															newqoh
-								) VALUES (
-															'" . $AssParts['component'] . "',
-															 10,
-															'" . $InvoiceNo . "',
-															'" . $_SESSION['Items'.$identifier]->Location . "',
-															'" . $DefaultDispatchDate . "',
-															'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-															'" . $_SESSION['Items'.$identifier]->Branch . "',
-															'" . $PeriodNo . "',
-															'" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $OrderNo . "',
-															'" . -$AssParts['quantity'] * $OrderLine->Quantity . "',
-															'" . $AssParts['standard'] . "',
-															0,
-															newqoh-" . ($AssParts['quantity'] * $OrderLine->Quantity) . "
-								)";
+					$SQL = "INSERT INTO stockmoves (stockid,
+													type,
+													transno,
+													loccode,
+													trandate,
+													debtorno,
+													branchcode,
+													prd,
+													reference,
+													qty,
+													standardcost,
+													show_on_inv_crds,
+													newqoh
+						) VALUES (
+													'" . $AssParts['component'] . "',
+													 10,
+													'" . $InvoiceNo . "',
+													'" . $_SESSION['Items'.$identifier]->Location . "',
+													'" . $DefaultDispatchDate . "',
+													'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+													'" . $_SESSION['Items'.$identifier]->Branch . "',
+													'" . $PeriodNo . "',
+													'" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $OrderNo . "',
+													'" . -$AssParts['quantity'] * $OrderLine->Quantity . "',
+													'" . $AssParts['standard'] . "',
+													0,
+													newqoh-" . ($AssParts['quantity'] * $OrderLine->Quantity) . " )";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records for the assembly components of'). ' '. $OrderLine->StockID . ' ' . _('could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the assembly components stock movement records was used');
@@ -1451,35 +1454,34 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				if (empty($OrderLine->StandardCost)) {
 					$OrderLine->StandardCost = 0;
 				}
-				$SQL = "INSERT INTO stockmoves (
-														stockid,
-														type,
-														transno,
-														loccode,
-														trandate,
-														debtorno,
-														branchcode,
-														price,
-														prd,
-														reference,
-														qty,
-														discountpercent,
-														standardcost,
-														narrative )
-								VALUES ('" . $OrderLine->StockID . "',
-												10,
-												'" . $InvoiceNo . "',
-												'" . $_SESSION['Items'.$identifier]->Location . "',
-												'" . $DefaultDispatchDate . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-												'" . $_SESSION['Items'.$identifier]->Branch . "',
-												'" . $LocalCurrencyPrice . "',
-												'" . $PeriodNo . "',
-												'" . $OrderNo . "',
-												'" . -$OrderLine->Quantity . "',
-												'" . $OrderLine->DiscountPercent . "',
-												'" . $OrderLine->StandardCost . "',
-												'" . DB_escape_string($OrderLine->Narrative) . "')";
+				$SQL = "INSERT INTO stockmoves (stockid,
+												type,
+												transno,
+												loccode,
+												trandate,
+												debtorno,
+												branchcode,
+												price,
+												prd,
+												reference,
+												qty,
+												discountpercent,
+												standardcost,
+												narrative )
+						VALUES ('" . $OrderLine->StockID . "',
+										10,
+										'" . $InvoiceNo . "',
+										'" . $_SESSION['Items'.$identifier]->Location . "',
+										'" . $DefaultDispatchDate . "',
+										'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+										'" . $_SESSION['Items'.$identifier]->Branch . "',
+										'" . $LocalCurrencyPrice . "',
+										'" . $PeriodNo . "',
+										'" . $OrderNo . "',
+										'" . -$OrderLine->Quantity . "',
+										'" . $OrderLine->DiscountPercent . "',
+										'" . $OrderLine->StandardCost . "',
+										'" . DB_escape_string($OrderLine->Narrative) . "')";
 			}
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');

@@ -1,5 +1,7 @@
 webERP Change Log
 
+12/8/11 Phil: Backed out changes on 7/8 that prevented SelectProduct.php transaction links - now only purchase order links blocked if an item is obsolete
+12/8/11 Phil: CounterSales.php apply discountmatrix fixes
 11/8/11 Phil: GoodsReceived.php now has checkbox to flag the order line as complete - even though the quantity delivered might be short of the order quantity.
 11/8/11 Phil: PO_Items.php link to complete uncompleted lines - status of order is changed to complete is all lines are completed
 10/8/11 Phil: POReport.php added link to detail purchase order inquiry
