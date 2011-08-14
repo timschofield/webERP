@@ -326,7 +326,7 @@ echo $TableHeader;
 
 // DefaultDateFormat
 echo '<tr style="outline: 1px solid"><td>' . _('Default Date Format') . ':</td>
-	<td><select Name="X_DefaultDateFormat">
+	<td><select name="X_DefaultDateFormat">
 	<option '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'selected ':'').'Value="d/m/Y">d/m/Y</option>
 	<option '.(($_SESSION['DefaultDateFormat']=='d.m.Y')?'selected ':'').'Value="d.m.Y">d.m.Y</option>
 	<option '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'selected ':'').'Value="m/d/Y">m/d/Y</option>
@@ -336,7 +336,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Default Date Format') . ':</td>
 
 // DefaultTheme
 echo '<tr style="outline: 1px solid"><td>' . _('New Users Default Theme') . ':</td>
-	 <td><select Name="X_DefaultTheme">';
+	 <td><select name="X_DefaultTheme">';
 $ThemeDirectory = dir('css/');
 while (false != ($ThemeName = $ThemeDirectory->read())){
 	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
@@ -354,23 +354,23 @@ echo '<tr><th colspan=3>' . _('Accounts Receivable/Payable Settings') . '</th></
 
 // PastDueDays1
 echo '<tr style="outline: 1px solid"><td>' . _('First Overdue Deadline in (days)') . ':</td>
-	<td><input type="Text" class="number" Name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" size=3 maxlength=3></td>
+	<td><input type="text" class="number" name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" size=3 maxlength=3></td>
 	<td>' . _('Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings') . '</td></tr>';
 
 // PastDueDays2
 echo '<tr style="outline: 1px solid"><td>' . _('Second Overdue Deadline in (days)') . ':</td>
-	<td><input type="Text" class="number" Name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" size=3 maxlength=3></td>
+	<td><input type="text" class="number" name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" size=3 maxlength=3></td>
 	<td>' . _('As above but the next level of overdue') . '</td></tr>';
 
 
 // DefaultCreditLimit
 echo '<tr style="outline: 1px solid"><td>' . _('Default Credit Limit') . ':</td>
-	<td><input type="Text" class="number" Name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" size=12 maxlength=12></td>
+	<td><input type="text" class="number" name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" size=12 maxlength=12></td>
 	<td>' . _('The default used in new customer set up') . '</td></tr>';
 
 // Check Credit Limits
 echo '<tr style="outline: 1px solid"><td>' . _('Check Credit Limits') . ':</td>
-	<td><select Name="X_CheckCreditLimits">
+	<td><select name="X_CheckCreditLimits">
 	<option '.($_SESSION['CheckCreditLimits']==0?'selected ':'').'value="0">'._('Do not check').'</option> 
 	<option '.($_SESSION['CheckCreditLimits']==1?'selected ':'').'value="1">'._('Warn on breach').'</option>
 	<option '.($_SESSION['CheckCreditLimits']==2?'selected ':'').'value="2">'._('Prohibit Sales').'</option>
@@ -379,7 +379,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Check Credit Limits') . ':</td>
 
 // Show_Settled_LastMonth
 echo '<tr style="outline: 1px solid"><td>' . _('Show Settled Last Month') . ':</td>
-	<td><select Name="X_Show_Settled_LastMonth">
+	<td><select name="X_Show_Settled_LastMonth">
 	<option '.($_SESSION['Show_Settled_LastMonth']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['Show_Settled_LastMonth']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -387,29 +387,29 @@ echo '<tr style="outline: 1px solid"><td>' . _('Show Settled Last Month') . ':</
 
 //RomalpaClause
 echo '<tr style="outline: 1px solid"><td>' . _('Romalpa Clause') . ':</td>
-	<td><textarea Name="X_RomalpaClause" rows=3 cols=40>' . $_SESSION['RomalpaClause'] . '</textarea></td>
+	<td><textarea name="X_RomalpaClause" rows=3 cols=40>' . $_SESSION['RomalpaClause'] . '</textarea></td>
 	<td>' . _('This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company rights to collect goods which have not been paid for - to give some protection for bad debts.') . '</td></tr>';
 
 // QuickEntries
 echo '<tr style="outline: 1px solid"><td>' . _('Quick Entries') . ':</td>
-	<td><input type="Text" class="number" Name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size=3 maxlength=2></td>
+	<td><input type="text" class="number" name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size=3 maxlength=2></td>
 	<td>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</td></tr>';
 
 // Frequently Ordered Items
 echo '<tr style="outline: 1px solid"><td>' . _('Frequently Ordered Items') . ':</td>
-	<td><input type="Text" class="number" Name="X_FrequentlyOrderedItems" value="' . $_SESSION['FrequentlyOrderedItems'] . '" size=3 maxlength=2></td>
+	<td><input type="text" class="number" name="X_FrequentlyOrderedItems" value="' . $_SESSION['FrequentlyOrderedItems'] . '" size=3 maxlength=2></td>
 	<td>' . _('To show the most frequently ordered items enter the number of frequently ordered items you wish to display from 1 to 99. If you do not wish to display the frequently ordered item list enter 0.') . '</td></tr>';
 
 // SO_AllowSameItemMultipleTimes
 echo '<tr style="outline: 1px solid"><td>' . _('Sales Order Allows Same Item Multiple Times') . ':</td>
-	<td><select Name="X_SO_AllowSameItemMultipleTimes">
+	<td><select name="X_SO_AllowSameItemMultipleTimes">
 	<option '.($_SESSION['SO_AllowSameItemMultipleTimes']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['SO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td><td>&nbsp;</td></tr>';
 
 //'AllowOrderLineItemNarrative'
 echo '<tr style="outline: 1px solid"><td>' . _('Order Entry allows Line Item Narrative') . ':</td>
-	<td><select Name="X_AllowOrderLineItemNarrative">
+	<td><select name="X_AllowOrderLineItemNarrative">
 	<option '.($_SESSION['AllowOrderLineItemNarrative']=='1'?'selected ':'').'value="1">'._('Allow Narrative Entry').'</option>
 	<option '.($_SESSION['AllowOrderLineItemNarrative']=='0'?'selected ':'').'value="0">'._('No Narrative Line').'</option>
 	</select></td>
@@ -418,7 +418,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Order Entry allows Line Item Nar
 
 //'RequirePickingNote'
 echo '<tr style="outline: 1px solid"><td>' . _('A picking note must be produced before an order can be delivered') . ':</td>
-	<td><select Name="X_RequirePickingNote">
+	<td><select name="X_RequirePickingNote">
 	<option '.($_SESSION['RequirePickingNote']=='1'?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.($_SESSION['RequirePickingNote']=='0'?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -427,7 +427,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('A picking note must be produced 
 
 //UpdateCurrencyRatesDaily
 echo '<tr style="outline: 1px solid"><td>' . _('Auto Update Exchange Rates Daily') . ':</td>
-	<td><select Name="X_UpdateCurrencyRatesDaily">
+	<td><select name="X_UpdateCurrencyRatesDaily">
 	<option '.($_SESSION['UpdateCurrencyRatesDaily']!='1'?'selected ':'').'value="1">'._('Automatic').'</option>
 	<option '.($_SESSION['UpdateCurrencyRatesDaily']=='0'?'selected ':'').'value="0">'._('Manual').'</option>
 	</select></td>
@@ -436,7 +436,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Auto Update Exchange Rates Daily
 
 //Default Packing Note Format
 echo '<tr style="outline: 1px solid"><td>' . _('Format of Packing Slips') . ':</td>
-	<td><select Name="X_PackNoteFormat">
+	<td><select name="X_PackNoteFormat">
 	<option '.($_SESSION['PackNoteFormat']=='1'?'selected ':'').'value="1">'._('Laser Printed').'</option>
 	<option '.($_SESSION['PackNoteFormat']=='2'?'selected ':'').'value="2">'._('Special Stationery').'</option>
 	</select></td>
@@ -445,7 +445,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Format of Packing Slips') . ':</
 
 //Default Invoice Format
 echo '<tr style="outline: 1px solid"><td>' . _('Invoice Orientation') . ':</td>
-	<td><select Name="X_InvoicePortraitFormat">
+	<td><select name="X_InvoicePortraitFormat">
 	<option '.($_SESSION['InvoicePortraitFormat']=='0'?'selected ':'').'value="0">'._('Landscape').'</option>
 	<option '.($_SESSION['InvoicePortraitFormat']=='1'?'selected ':'').'value="1">'._('Portrait').'</option>
 	</select></td>
@@ -454,7 +454,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Invoice Orientation') . ':</td>
 
 //Blind packing note
 echo '<tr style="outline: 1px solid"><td>' . _('Show company details on packing slips') . ':</td>
-	<td><select Name="X_DefaultBlindPackNote">
+	<td><select name="X_DefaultBlindPackNote">
 	<option '.($_SESSION['DefaultBlindPackNote']=='1'?'selected ':'').'value="1">'._('Show Company Details').'</option> 
 	<option '.($_SESSION['DefaultBlindPackNote']=='2'?'selected ':'').'value="2">'._('Hide Company Details').'</option> 
 	</select></td>
@@ -463,7 +463,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Show company details on packing 
 
 // Working days on a week
 echo '<tr style="outline: 1px solid"><td>' . _('Working Days on a Week') . ':</td>
-	<td><select Name="X_WorkingDaysWeek">
+	<td><select name="X_WorkingDaysWeek">
 	<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected ':'').'value="7">7 '._('working days').'</option> 
 	<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected ':'').'value="6">6 '._('working days').'</option> 
 	<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected ':'').'value="5">5 '._('working days').'</option> 
@@ -473,7 +473,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Working Days on a Week') . ':</t
 
 // DispatchCutOffTime
 echo '<tr style="outline: 1px solid"><td>' . _('Dispatch Cut-Off Time') . ':</td>
-	<td><select Name="X_DispatchCutOffTime">';
+	<td><select name="X_DispatchCutOffTime">';
 for ($i=0; $i < 24; $i++ )
 	echo '<option '.($_SESSION['DispatchCutOffTime'] == $i?'selected ':'').'value="'.$i.'">'.$i;
 echo '</select></td>
@@ -481,7 +481,7 @@ echo '</select></td>
 
 // AllowSalesOfZeroCostItems
 echo '<tr style="outline: 1px solid"><td>' . _('Allow Sales Of Zero Cost Items') . ':</td>
-	<td><select Name="X_AllowSalesOfZeroCostItems">
+	<td><select name="X_AllowSalesOfZeroCostItems">
 	<option '.($_SESSION['AllowSalesOfZeroCostItems']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['AllowSalesOfZeroCostItems']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -489,7 +489,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Allow Sales Of Zero Cost Items')
 
 // CreditingControlledItems_MustExist
 echo '<tr style="outline: 1px solid"><td>' . _('Controlled Items Must Exist For Crediting') . ':</td>
-	<td><select Name="X_CreditingControlledItems_MustExist">
+	<td><select name="X_CreditingControlledItems_MustExist">
 	<option '.($_SESSION['CreditingControlledItems_MustExist']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['CreditingControlledItems_MustExist']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -500,7 +500,7 @@ $sql = "SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type";
 $ErrMsg = _('Could not load price lists');
 $result = DB_query($sql,$db,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Price List') . ':</td>';
-echo '<td><select Name="X_DefaultPriceList">';
+echo '<td><select name="X_DefaultPriceList">';
 if( DB_num_rows($result) == 0 ) {
 	echo '<option selected value="">'._('Unavailable');
 } else {
@@ -516,7 +516,7 @@ $sql = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 $ErrMsg = _('Could not load shippers');
 $result = DB_query($sql,$db,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Shipper') . ':</td>';
-echo '<td><select Name="X_Default_Shipper">';
+echo '<td><select name="X_Default_Shipper">';
 if( DB_num_rows($result) == 0 ) {
 	echo '<option selected value="">'._('Unavailable') . '</option>';
 } else {
@@ -529,7 +529,7 @@ echo '</select></td>
 
 // DoFreightCalc
 echo '<tr style="outline: 1px solid"><td>' . _('Do Freight Calculation') . ':</td>
-	<td><select Name="X_DoFreightCalc">
+	<td><select name="X_DoFreightCalc">
 	<option '.($_SESSION['DoFreightCalc']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['DoFreightCalc']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -537,13 +537,13 @@ echo '<tr style="outline: 1px solid"><td>' . _('Do Freight Calculation') . ':</t
 
 //FreightChargeAppliesIfLessThan
 echo '<tr style="outline: 1px solid"><td>' . _('Apply freight charges if an order is less than') . ':</td>
-	<td><input type="Text" class="number" Name="X_FreightChargeAppliesIfLessThan" size=12 maxlength=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></td>
+	<td><input type="text" class="number" name="X_FreightChargeAppliesIfLessThan" size=12 maxlength=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></td>
 	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</td></tr>';
 
 
 // AutoDebtorNo
 echo '<tr style="outline: 1px solid"><td>' . _('Create Debtor Codes Automatically') . ':</td>
-	<td><select Name="X_AutoDebtorNo">';
+	<td><select name="X_AutoDebtorNo">';
 
 if ($_SESSION['AutoDebtorNo']==0) {
 	echo '<option selected value=0>' . _('Manual Entry') . '</option>';
@@ -560,7 +560,7 @@ $sql = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $ErrMsg = _('Could not load tax categories table');
 $result = DB_query($sql,$db,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Tax Category') . ':</td>';
-echo '<td><select Name="X_DefaultTaxCategory">';
+echo '<td><select name="X_DefaultTaxCategory">';
 if( DB_num_rows($result) == 0 ) {
 	echo '<option selected value="">'._('Unavailable') . '</option>';
 } else {
@@ -573,8 +573,8 @@ echo '</select></td>
 
 
 //TaxAuthorityReferenceName
-echo '<tr style="outline: 1px solid"><td>' . _('TaxAuthorityReferenceName') . ':</td>
-	<td><input type="Text" Name="X_TaxAuthotaxcatid, taxcatname FROM taxcategoriesrityReferenceName" size=16 maxlength=25 value="' . $_SESSION['TaxAuthorityReferenceName'] . '"></td>
+echo '<tr style="outline: 1px solid"><td>' . _('Tax Authority Reference Name') . ':</td>
+	<td><input type="text" name="X_TaxAuthorityReferenceName" size="16" maxlength="25" value="' . $_SESSION['TaxAuthorityReferenceName'] . '"></td>
 	<td>' . _('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No') .'</td></tr>';
 
 // CountryOfOperation
@@ -595,14 +595,14 @@ echo '</select></td>
 
 // NumberOfPeriodsOfStockUsage
 echo '<tr style="outline: 1px solid"><td>' . _('Number Of Periods Of StockUsage') . ':</td>
-	<td><select Name="X_NumberOfPeriodsOfStockUsage">';
+	<td><select name="X_NumberOfPeriodsOfStockUsage">';
 for ($i=1; $i <= 12; $i++ )
 	echo '<option '.($_SESSION['NumberOfPeriodsOfStockUsage'] == $i?'selected ':'').'value="'.$i.'">'.$i;
 echo '</select></td><td>' . _('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods') .'</td></tr>';
 
 //Show values on GRN
 echo '<tr style="outline: 1px solid"><td>' . _('Show order values on GRN') . ':</td>
-	<td><select Name="X_ShowValueOnGRN">
+	<td><select name="X_ShowValueOnGRN">
 	<option '.($_SESSION['ShowValueOnGRN']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['ShowValueOnGRN']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -611,7 +611,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Show order values on GRN') . ':<
 
 // Check_Qty_Charged_vs_Del_Qty
 echo '<tr style="outline: 1px solid"><td>' . _('Check Quantity Charged vs Deliver Qty') . ':</td>
-	<td><select Name="X_Check_Qty_Charged_vs_Del_Qty">
+	<td><select name="X_Check_Qty_Charged_vs_Del_Qty">
 	<option '.($_SESSION['Check_Qty_Charged_vs_Del_Qty']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['Check_Qty_Charged_vs_Del_Qty']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -619,7 +619,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Check Quantity Charged vs Delive
 
 // Check_Price_Charged_vs_Order_Price
 echo '<tr style="outline: 1px solid"><td>' . _('Check Price Charged vs Order Price') . ':</td>
-	<td><select Name="X_Check_Price_Charged_vs_Order_Price">
+	<td><select name="X_Check_Price_Charged_vs_Order_Price">
 	<option '.($_SESSION['Check_Price_Charged_vs_Order_Price']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['Check_Price_Charged_vs_Order_Price']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -627,24 +627,24 @@ echo '<tr style="outline: 1px solid"><td>' . _('Check Price Charged vs Order Pri
 
 // OverChargeProportion
 echo '<tr style="outline: 1px solid"><td>' . _('Allowed Over Charge Proportion') . ':</td>
-	<td><input type="Text" class="number" Name="X_OverChargeProportion" size=4 maxlength=3 value="' . $_SESSION['OverChargeProportion'] . '"></td>
+	<td><input type="text" class="number" name="X_OverChargeProportion" size=4 maxlength=3 value="' . $_SESSION['OverChargeProportion'] . '"></td>
 	<td>' . _('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price') .'</td></tr>';
 
 // OverReceiveProportion
 echo '<tr style="outline: 1px solid"><td>' . _('Allowed Over Receive Proportion') . ':</td>
-	<td><input type="Text" class="number" Name="X_OverReceiveProportion" size=4 maxlength=3 value="' . $_SESSION['OverReceiveProportion'] . '"></td>
+	<td><input type="text" class="number" name="X_OverReceiveProportion" size=4 maxlength=3 value="' . $_SESSION['OverReceiveProportion'] . '"></td>
 	<td>' . _('If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery') .'</td></tr>';
 
 // PO_AllowSameItemMultipleTimes
 echo '<tr style="outline: 1px solid"><td>' . _('Purchase Order Allows Same Item Multiple Times') . ':</td>
-	<td><select Name="X_PO_AllowSameItemMultipleTimes">
+	<td><select name="X_PO_AllowSameItemMultipleTimes">
 	<option '.($_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="1">'._('Yes') . '</option>
 	<option '.(!$_SESSION['PO_AllowSameItemMultipleTimes']?'selected ':'').'value="0">'._('No') . '</option>
 	</select></td><td>' . _('If a purchase order can have the same item on the order several times this parameter should be set to yes') . '</td></tr>';
 
 // AutoAuthorisePO
 echo '<tr style="outline: 1px solid"><td>' . _('Automatically authorise purchase orders if user has authority') . ':</td>
-	<td><select Name="X_AutoAuthorisePO">
+	<td><select name="X_AutoAuthorisePO">
 	<option '.($_SESSION['AutoAuthorisePO'] ?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['AutoAuthorisePO'] ?'selected ':'').'value="0">'._('No').'</option>
 	</select></td><td>' . _('If the user changing an existing purchase order or adding a new puchase order is set up to authorise purchase orders and the order is within their limit, then the purchase order status is automatically set to authorised') . '</td></tr>';
@@ -667,7 +667,7 @@ $MonthNames = array( 1=>_('January'),
 			11=>_('November'),
 			12=>_('December') );
 echo '<tr style="outline: 1px solid"><td>' . _('Financial Year Ends On') . ':</td>
-	<td><select Name="X_YearEnd">';
+	<td><select name="X_YearEnd">';
 for ($i=1; $i <= sizeof($MonthNames); $i++ )
 	echo '<option '.($_SESSION['YearEnd'] == $i ? 'selected ' : '').'value="'.$i.'">'.$MonthNames[$i] . '</option>';
 echo '</select></td>
@@ -872,11 +872,14 @@ echo '</select></td><td>' . _('Setting this to prohibited prevents accidentally 
 
 
 echo '<tr style="outline: 1px solid"><td>' . _('Prohibit GL Journals to Periods Prior To') . ':</td>
-	<td><select Name="X_ProhibitPostingsBefore">';
+	<td><select name="X_ProhibitPostingsBefore">';
 
 $sql = "SELECT lastdate_in_period FROM periods ORDER BY periodno DESC";
 $ErrMsg = _('Could not load periods table');
 $result = DB_query($sql,$db,$ErrMsg);
+if ($_SESSION['ProhibitPostingsBefore']=='' OR $_SESSION['ProhibitPostingsBefore']=='1900-01-01' OR !isset($_SESSION['ProhibitPostingsBefore'])){
+	echo '<option selected value="1900-01-01">' . ConvertSQLDate('1900-01-01') . '</option>';
+}
 while ($PeriodRow = DB_fetch_row($result)){
 	if ($_SESSION['ProhibitPostingsBefore']==$PeriodRow[0]){
 		echo  '<option selected value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
@@ -971,7 +974,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Path to log files') . ':</td>
 
 //DefineControlledOnWOEntry
 echo '<tr style="outline: 1px solid"><td>' . _('Controlled Items Defined At Work Order Entry') . ':</td>
-	<td><select Name="X_DefineControlledOnWOEntry">
+	<td><select name="X_DefineControlledOnWOEntry">
 	<option '.($_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="1">'._('Yes').'</option>
 	<option '.(!$_SESSION['DefineControlledOnWOEntry']?'selected ':'').'value="0">'._('No').'</option>
 	</select></td>
@@ -992,7 +995,7 @@ if ($_SESSION['AutoCreateWOs']==0) {
 echo '</select></td><td>' . _('Setting this parameter to Yes will ensure that when a sales order is placed if there is insufficient stock then a new work order is created at the default factory location') . '</td></tr>' ;
 
 echo '<tr style="outline: 1px solid"><td>' . _('Default Factory Location') . ':</td>
-	<td><select Name="X_DefaultFactoryLocation">';
+	<td><select name="X_DefaultFactoryLocation">';
 
 $sql = "SELECT loccode,locationname FROM locations";
 $ErrMsg = _('Could not load locations table');
@@ -1016,7 +1019,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Purchasing Manager Email Address
 
 
 echo '</table>
-		<br /><div class="centre"><input type="Submit" Name="submit" value="' . _('Update') . '"></div>
+		<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Update') . '"></div>
 	</form>';
 
 include('includes/footer.inc');
