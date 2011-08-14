@@ -1,5 +1,6 @@
 webERP Change Log
 
+14/8/11 Phil: Stocks.php now does a journal for any work in progress on a change of category where the new category has a different GL account for WIP - and bug fixes as per Ricard
 12/8/11 Phil: Backed out changes on 7/8 that prevented SelectProduct.php transaction links - now only purchase order links blocked if an item is obsolete
 12/8/11 Phil: CounterSales.php apply discountmatrix fixes
 11/8/11 Phil: GoodsReceived.php now has checkbox to flag the order line as complete - even though the quantity delivered might be short of the order quantity.

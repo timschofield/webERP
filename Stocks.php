@@ -5,6 +5,7 @@
 include('includes/session.inc');
 $title = _('Item Maintenance');
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
@@ -213,7 +214,8 @@ if (isset($_POST['submit'])) {
 							controlled,
 							serialised,
 							materialcost+labourcost+overheadcost AS itemcost,
-							stockcategory.stockact
+							stockcategory.stockact,
+							stockcategory.wipact
 					FROM stockmaster 
 					INNER JOIN stockcategory 
 					ON stockmaster.categoryid=stockcategory.categoryid
@@ -225,6 +227,8 @@ if (isset($_POST['submit'])) {
 			$OldSerialised = $myrow[2];
 			$UnitCost = $myrow[3];
 			$OldStockAccount = $myrow[4];
+			$OldWIPAccount = $myrow[5];
+			
 
 			$sql = "SELECT SUM(locstock.quantity) 
 					FROM locstock 
@@ -235,12 +239,14 @@ if (isset($_POST['submit'])) {
 
 			/*Now check the GL account of the new category to see if it is different to the old stock gl account */
 			
-			$result = DB_query("SELECT stockact 
+			$result = DB_query("SELECT stockact,
+										wipact
 								FROM stockcategory 
 								WHERE categoryid='" . $_POST['CategoryID'] . "'",
 								$db);
 			$NewStockActRow = DB_fetch_array($result);
 			$NewStockAct = $NewStockActRow['stockact'];
+			$NewWIPAct = $NewStockActRow['wipact'];
 			
 			if ($OldMBFlag != $_POST['MBFlag']){
 				if (($OldMBFlag == 'M' OR $OldMBFlag=='B') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D' OR $_POST['MBFlag']=='G')){ /*then need to check that there is no stock holding first */
@@ -378,7 +384,7 @@ if (isset($_POST['submit'])) {
 										$db,$ErrMsg,$DbgMsg,true);
 				} //end of loop around properties defined for the category
 				
-				if ($OldStockAccount != $NewStockAct AND $_SESSION['CompanyRecord']['gllinkstock']==1) {
+				if ($OldStockAccount != $NewStockAct AND $_SESSION['CompanyRecord']['gllink_stock']==1) {
 				/*Then we need to make a journal to transfer the cost to the new stock account */
 					$JournalNo = GetNextTransNo(0,$db); //enter as a journal
 					$SQL = "INSERT INTO gltrans (type,
@@ -391,13 +397,13 @@ if (isset($_POST['submit'])) {
 										VALUES ( 0,
 												'" . $JournalNo . "',
 												'" . Date('Y-m-d') . "',
-												'" . GetPeriodNo(Date('Y-m-d'),true) . "',
+												'" . GetPeriod(Date('Y-m-d'),$db,true) . "',
 												'" . $NewStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
 												'" . ($UnitCost* $StockQtyRow[0]) . "'";
 					$ErrMsg =  _('The stock cost journal could not be inserted because');
 					$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
-					$result = DB_query($sql,$db, $ErrMsg, $DbgMsg,true);
+					$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,
 												trandate,
@@ -408,13 +414,68 @@ if (isset($_POST['submit'])) {
 										VALUES ( 0,
 												'" . $JournalNo . "',
 												'" . Date('Y-m-d') . "',
-												'" . GetPeriodNo(Date('Y-m-d'),true) . "',
+												'" . GetPeriod(Date('Y-m-d'),$db,true) . "',
 												'" . $OldStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
 												'" . (-$UnitCost* $StockQtyRow[0]) . "'";
-					$result = DB_query($sql,$db, $ErrMsg, $DbgMsg,true);
+					$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 				
 				} /* end if the stock category changed and forced a change in stock cost account */
+				if ($OldWIPAccount != $NewWIPAct AND $_SESSION['CompanyRecord']['gllink_stock']==1) {
+				/*Then we need to make a journal to transfer the cost  of WIP to the new WIP account */
+				/*First get the total cost of WIP for this category */
+				
+					$WOCostsResult = DB_query("SELECT workorders.costissued,
+													SUM(woitems.qtyreqd * woitems.stdcost) AS costrecd
+												FROM woitems INNER JOIN workorders
+												ON woitems.wo = workorders.wo
+												INNER JOIN stockmaster
+												ON woitems.stockid=stockmaster.stockid
+												WHERE stockmaster.stockid='". $StockID . "' 
+												AND workorders.closed=0 
+												GROUP BY workorders.costissued",
+												$db,
+												_('Error retrieving value of finished goods received and cost issued against work orders for this item'));
+					$WIPValue = 0;
+					while ($WIPRow=DB_fetch_array($WOCostsResult)){
+						$WIPValue += ($WIPRow['costissued']-$WIPRow['costrecd']);
+					}
+					if ($WIPValue !=0){			
+						$JournalNo = GetNextTransNo(0,$db); //enter as a journal
+						$SQL = "INSERT INTO gltrans (type,
+													typeno,
+													trandate,
+													periodno,
+													account,
+													narrative,
+													amount)
+											VALUES ( 0,
+													'" . $JournalNo . "',
+													'" . Date('Y-m-d') . "',
+													'" . GetPeriod(Date('Y-m-d'),$db,true) . "',
+													'" . $NewWIPAct . "',
+													'" . $StockID . ' ' . _('Change stock category') . "',
+													'" . $WIPValue . "'";
+						$ErrMsg =  _('The WIP cost journal could not be inserted because');
+						$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
+						$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
+						$SQL = "INSERT INTO gltrans (type,
+													typeno,
+													trandate,
+													periodno,
+													account,
+													narrative,
+													amount)
+											VALUES ( 0,
+													'" . $JournalNo . "',
+													'" . Date('Y-m-d') . "',
+													'" . GetPeriod(Date('Y-m-d'),true) . "',
+													'" . $OldWIPAccount . "',
+													'" . $StockID . ' ' . _('Change stock category') . "',
+													'" . (-$WIPValue) . "'";
+						$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
+					}
+				} /* end if the stock category changed and forced a change in WIP account */
 				DB_Txn_Commit($db);
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 				echo '<br />';
@@ -512,11 +573,12 @@ if (isset($_POST['submit'])) {
 						unset($_POST['ShrinkFactor']);
 						unset($_POST['Pansize']);
 						unset($StockID);
+						$New=1;
 					}//ALL WORKED SO RESET THE FORM VARIABLES
 				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO
 			}//END CHECK FOR ALREADY EXISTING ITEM OF THE SAME CODE
 		}
-		$New=1;
+		
 
 	} else {
 		echo '<br />'. "\n";
