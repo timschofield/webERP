@@ -243,8 +243,8 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 	}
 	$SQL.= " ORDER BY debtorsmaster.name";
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
-	
-	
+
+
 	$result = DB_query($SQL, $db, $ErrMsg);
 	if (DB_num_rows($result) == 1) {
 		$myrow = DB_fetch_array($result);
@@ -259,7 +259,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 
 if (isset($_POST['JustSelectedACustomer'])){
 	/*Need to figure out the number of the form variable that the user clicked on */
-	for ($i=1; $i< count($_POST); $i++){ //loop through the returned customers
+	for ($i=0; $i< count($_POST); $i++){ //loop through the returned customers
 		if(isset($_POST['SubmitCustomerSelection'.$i])){
 			break;
 		}
@@ -273,13 +273,13 @@ if (isset($_POST['JustSelectedACustomer'])){
 }
 //AND !isset($_POST['Keywords']) AND !isset($_POST['CustCode']) AND !isset($_POST['CustType']) AND !isset($_POST['CustPhone'])
 if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST['CSV'])) {
-	$SQL = "SELECT debtorsmaster.name, 
-					custbranch.phoneno 
-			FROM debtorsmaster INNER JOIN custbranch 
+	$SQL = "SELECT debtorsmaster.name,
+					custbranch.phoneno
+			FROM debtorsmaster INNER JOIN custbranch
 			ON debtorsmaster.debtorno=custbranch.debtorno
-			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "' 
+			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
 			AND custbranch.branchcode='" . $_SESSION['BranchCode'] . "'";
-	
+
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
 	$result = DB_query($SQL, $db, $ErrMsg);
 	if ($myrow = DB_fetch_array($result)) {
@@ -287,7 +287,7 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 		$PhoneNo = $myrow['phoneno'];
 	}
 	unset($result);
-	
+
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $PhoneNo . _(' has been selected') . '</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br />';
 
@@ -599,9 +599,9 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			$DataResult = DB_query($SQL, $db);
 			$myrow = DB_fetch_array($DataResult);
 			// Select some more data about the customer
-			$SQL = "SELECT sum(ovamount+ovgst) as total 
-					FROM debtortrans 
-					WHERE debtorno = '" . $_SESSION['CustomerID'] . "' 
+			$SQL = "SELECT sum(ovamount+ovgst) as total
+					FROM debtortrans
+					WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
 					AND type !=12";
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
@@ -652,8 +652,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		}
 		// Customer Contacts
 		echo '<tr><td colspan="2">';
-		$sql = "SELECT * FROM custcontacts 
-				WHERE debtorno='" . $_SESSION['CustomerID'] . "' 
+		$sql = "SELECT * FROM custcontacts
+				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY contid";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
@@ -695,8 +695,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		}
 		// Customer Notes
 		echo '<tr><td colspan="2">';
-		$sql = "SELECT * FROM custnotes 
-				WHERE debtorno='" . $_SESSION['CustomerID'] . "' 
+		$sql = "SELECT * FROM custnotes
+				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
@@ -736,8 +736,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		}
 		// Custome Type Notes
 		echo '<tr><td colspan="2">';
-		$sql = "SELECT * FROM debtortypenotes 
-				WHERE typeid='" . $CustomerType . "' 
+		$sql = "SELECT * FROM debtortypenotes
+				WHERE typeid='" . $CustomerType . "'
 				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
