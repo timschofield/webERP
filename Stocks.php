@@ -64,7 +64,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading a file');
+		$message = ($result)?_('File url') .'<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
 	}
 }
 
@@ -307,7 +307,10 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was Manufac, Phantom or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='B' OR $OldMBFlag=='D' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K')) {
-					$sql = "SELECT COUNT(*) FROM bom WHERE component = '".$StockID."' GROUP BY component";
+					$sql = "SELECT COUNT(*) 
+							FROM bom 
+							WHERE component = '".$StockID."' 
+							GROUP BY component";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
@@ -397,7 +400,7 @@ if (isset($_POST['submit'])) {
 										VALUES ( 0,
 												'" . $JournalNo . "',
 												'" . Date('Y-m-d') . "',
-												'" . GetPeriod(Date('Y-m-d'),$db,true) . "',
+												'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 												'" . $NewStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
 												'" . ($UnitCost* $StockQtyRow[0]) . "'";
@@ -414,7 +417,7 @@ if (isset($_POST['submit'])) {
 										VALUES ( 0,
 												'" . $JournalNo . "',
 												'" . Date('Y-m-d') . "',
-												'" . GetPeriod(Date('Y-m-d'),$db,true) . "',
+												'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 												'" . $OldStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
 												'" . (-$UnitCost* $StockQtyRow[0]) . "'";
@@ -452,7 +455,7 @@ if (isset($_POST['submit'])) {
 											VALUES ( 0,
 													'" . $JournalNo . "',
 													'" . Date('Y-m-d') . "',
-													'" . GetPeriod(Date('Y-m-d'),$db,true) . "',
+													'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 													'" . $NewWIPAct . "',
 													'" . $StockID . ' ' . _('Change stock category') . "',
 													'" . $WIPValue . "'";
@@ -469,7 +472,7 @@ if (isset($_POST['submit'])) {
 											VALUES ( 0,
 													'" . $JournalNo . "',
 													'" . Date('Y-m-d') . "',
-													'" . GetPeriod(Date('Y-m-d'),true) . "',
+													'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 													'" . $OldWIPAccount . "',
 													'" . $StockID . ' ' . _('Change stock category') . "',
 													'" . (-$WIPValue) . "'";

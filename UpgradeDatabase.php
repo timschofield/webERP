@@ -34,7 +34,7 @@ if (!isset($_POST['DoUpgrade'])){
 		if ($_SESSION['VersionNumber']=='4.00RC1'){
 			$_SESSION['VersionNumber']='3.12';
 		}
-		if ( $_SESSION['VersionNumber'] == $Version){
+		if (strcmp($Version,$_SESSION['VersionNumber'])==0){
 			prnMsg(_('The database is up to date, there are no upgrades to perform'),'info');
 		} else {
 			prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $rootpath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
@@ -111,6 +111,9 @@ if (isset($_POST['DoUpgrade'])){
 				case '4.04.5':
 					$SQLScripts[] = './sql/mysql/upgrade4.04.5-4.05.sql';
 				case '4.05':
+				case '4.05.1':
+					$SQLScripts[] = './sql/mysql/upgrade4.05-4.06.sql';
+				case '4.06':
 					break;
 			} //end switch
 		}	

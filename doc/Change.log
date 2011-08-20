@@ -1,5 +1,8 @@
 webERP Change Log
 
+19/8/11 Phil: Fixed bug in Stocks.php should have used Date($_SESSION['DefaultDateFormat']) instead of Date('Y-m-d') inside GetPeriod function as pointed out by Ricard
+16/8/11 Tim: SelectCustomer.php fixed selection of customer where the first one was selected needed to kick off count at 0.
+19/8/11 Phil: Remove redundant field stockmaster.lastcurcostdate
 19/8/11 Ricard: Fine tuning formatting PDFStockNegatives.php
 19/8/11 Carlos Urbieta Cabrera: security.png image was missing now added
 14/8/11 Phil: SystemParameters.php default ProhibitPostingsBefore to 1900-01-01 when no default is currently set - can cause errors at the moment as defaults to the latest period if not previously set.
