@@ -8,8 +8,27 @@ $title = _('Backup webERP Database');
 include('includes/header.inc');
 
 if (isset($_GET['BackupFile'])){
-	unlink($_SERVER['DOCUMENT_ROOT'] . $_GET['BackupFile']);
-	prnMsg(_('The backup file has been deleted'),'success');
+	$BackupFiles = scandir('companies/' . $_SESSION['DatabaseName'], 0);
+	$DeletedFiles = false;
+	foreach ($BackupFiles as $BackupFile){
+	
+		if (mb_substr($BackupFile,0,6)=='Backup'){
+			
+			$DeleteResult = unlink('companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
+						
+			if ($DeleteResult==true){
+				prnMsg(_('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile,'info');
+				$DeletedFiles = true;
+			} else {
+				prnMsg(_('Unable to delete'). ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile,'warn');
+			}
+		}
+	}
+	if ($DeletedFiles){
+		prnMsg(_('All backup files on the server have been deleted'),'success');
+	} else {
+		prnMsg(_('No backup files on the server were deleted'),'info');
+	}
 } else {
 	
 	$BackupFile =   $rootpath . '/companies/' . $_SESSION['DatabaseName']  .'/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';

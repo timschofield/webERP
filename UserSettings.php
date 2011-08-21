@@ -107,12 +107,16 @@ If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
 
 }
 
-echo '<table class=selection><tr><td>' . _('User ID') . ':</td><td>';
-echo $_SESSION['UserID'] . '</td></tr>';
+echo '<table class="selection">
+		<tr>
+			<td>' . _('User ID') . ':</td>
+			<td>' . $_SESSION['UserID'] . '</td>
+		</tr>';
 
-echo '<tr><td>' . _('User Name') . ':</td><td>';
-echo $_SESSION['UsersRealName'] . '</td>
-		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'"<td></tr>';
+echo '<tr>
+		<td>' . _('User Name') . ':</td>
+		<td>' . $_SESSION['UsersRealName'] . '</td>
+		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></tr>';
 
 echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ':</td>

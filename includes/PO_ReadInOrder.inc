@@ -150,21 +150,21 @@
 									purchorderdetails.suppliersunit,
 									purchorderdetails.suppliers_partno
 									FROM purchorderdetails
-										LEFT JOIN stockmaster
-										ON purchorderdetails.itemcode=stockmaster.stockid
-										INNER JOIN purchorders
-										ON purchorders.orderno=purchorderdetails.orderno
-										LEFT JOIN chartmaster
-										ON purchorderdetails.glcode=chartmaster.accountcode
+									LEFT JOIN stockmaster
+									ON purchorderdetails.itemcode=stockmaster.stockid
+									INNER JOIN purchorders
+									ON purchorders.orderno=purchorderdetails.orderno
+									LEFT JOIN chartmaster
+									ON purchorderdetails.glcode=chartmaster.accountcode
 									WHERE purchorderdetails.completed=0
-										AND purchorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
+									AND purchorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
 									ORDER BY podetailitem";
 
 			$ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
 			$DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
 			$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
 
-		  if (db_num_rows($LineItemsResult) > 0) {
+		  if (DB_num_rows($LineItemsResult) > 0) {
 
 				while ($myrow=db_fetch_array($LineItemsResult)) {
 

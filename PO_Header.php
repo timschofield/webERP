@@ -42,7 +42,7 @@ if (isset($_GET['NewOrder']) and isset($_SESSION['PO'.$identifier])){
 	$_SESSION['ExistingOrder']=0;
 }
 
-if (isset($_POST['Select']) and empty($_POST['SupplierContact'])) {
+if (isset($_POST['Select']) AND empty($_POST['SupplierContact'])) {
 	$sql = "SELECT contact
 				FROM suppliercontacts
 				WHERE supplierid='". $_POST['Select'] ."'";
@@ -706,8 +706,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 	echo '<br /><table colspan=1 width=80%>
 		<tr>
-			<th><font color=blue size=4><b>' . _('Order Initiation Details') . '</b></font></th>
-			<th><font color=blue size=4><b>' . _('Order Status') . '</b></font></th>
+			<th><font color="blue" size="4"><b>' . _('Order Initiation Details') . '</b></font></th>
+			<th><font color="blue" size="4"><b>' . _('Order Status') . '</b></font></th>
 		</tr>		
 		<tr><td style="width:50%">';
 //sub table starts

@@ -291,12 +291,12 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			
 			/*Now Update the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
-				$result=DB_query($sql,$db,'','',true);
+
 				if ($POLine->Deleted==true) {
 					if ($POLine->PODetailRec!='') {
 						$sql="DELETE FROM purchorderdetails WHERE podetailitem='" . $POLine->PODetailRec . "'";
-						$ErrMsg =  _('The purchase order could not be deleted because');
-						$DbgMsg = _('The SQL statement used to delete the purchase order header record, that failed was');
+						$ErrMsg =  _('The purchase order detail line could not be deleted because');
+						$DbgMsg = _('The SQL statement used to delete the purchase order detail record, that failed was');
 						$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 					}
 				} else if ($POLine->PODetailRec=='') {
@@ -368,6 +368,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				$ErrMsg = _('One of the purchase order detail records could not be updated because');
 				$DbgMsg = _('The SQL statement used to update the purchase order detail record that failed was');
 				$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+
 			} /* end of the loop round the detail line items on the order */
 			echo '<br /><br />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('has been updated'),'success');
@@ -381,7 +382,6 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		$Result = DB_Txn_Commit($db);
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
-		echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Return To PO List') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	} /*end if there were no input errors trapped */
@@ -403,6 +403,7 @@ if(isset($_GET['Delete'])){
 if(isset($_GET['Complete'])){
 	$_SESSION['PO'.$identifier]->LineItems[$_GET['Complete']]->Completed=1;
 }
+
 if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecting a stock item from the search */
 
 	$AllowUpdate = true; /*always assume the best */
@@ -486,7 +487,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 	if ($AllowUpdate == true){
 	//adding the non-stock item
 		
-		$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
+		$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 												'',
 												0, /*Serialised */
 												0, /*Controlled */
@@ -514,6 +515,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 
 if (isset($_POST['NewItem'])){ 
+	
 	/* NewItem is set from the part selection list as the part code selected 
 	* take the form entries and enter the data from the form into the PurchOrder class variable 
 	* A series of form variables of the format "NewQty" with the ItemCode concatenated are created on the search for adding new 
@@ -523,8 +525,8 @@ if (isset($_POST['NewItem'])){
 
 	foreach ($_POST as $FormVariableName => $Quantity) {
 
-		if (mb_substr($FormVariableName, 0, 6)=='NewQty') { //if the form variable represents a Qty to add to the order
-			
+		if (mb_substr($FormVariableName, 0, 6)=='NewQty' AND $Quantity!=0) { //if the form variable represents a Qty to add to the order
+
 			$ItemCode = mb_substr($FormVariableName, 6, mb_strlen($FormVariableName)-6);
 			$AlreadyOnThisOrder = 0;
 			
@@ -600,7 +602,7 @@ if (isset($_POST['NewItem'])){
 						$PurchPrice = 0; 
 						$ConversionFactor = 1;
 						$SupplierDescription = 	$ItemRow['description'];
-						$SuppliersUnitOfMeasure = $ItemRow['unitname'];
+						$SuppliersUnitOfMeasure = $ItemRow['units'];
 						$SuppliersPartNo = '';
 						$LeadTime = 1;
 					}
@@ -620,7 +622,7 @@ if (isset($_POST['NewItem'])){
 															0,
 															0,
 															0,
-															$Itemrow['accountname'],
+															$ItemRow['accountname'],
 															$ItemRow['decimalplaces'],
 															$SuppliersUnitOfMeasure,
 															$ConversionFactor,
@@ -716,7 +718,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
-	echo '<tr><td colspan="10" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
+	echo '<tr><td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
 						<td class="number"><b>' . $DisplayTotal . '</b></td>
 			</tr></table>';
 	echo '<br />
@@ -923,7 +925,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	} else {
 		if ($_POST['StockCat']=='All'){
-			if ($_POST['SupplierItemsOnly']=='on'){
+			if (isset($_POST['SupplierItemsOnly'])){
 				$sql = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
@@ -1014,7 +1016,7 @@ if (!isset($_GET['Edit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan=3><font size=3 color=blue>'. _('Search For Stock Items') . '</th>';
+				<th colspan="3"><font size="3" color="blue">'. _('Search For Stock Items') . '</th>';
 
 	echo ':</font>
 			</tr>
@@ -1049,7 +1051,7 @@ if (!isset($_GET['Edit'])) {
 		echo 'checked';
 	}
 	echo ' /></td>
-		<td><font size=3><b>' . _('OR') . ' </b></font>' . _('Enter extract of the Stock Code') . ':</td>
+		<td><font size="3"><b>' . _('OR') . ' </b></font>' . _('Enter extract of the Stock Code') . ':</td>
 		<td><input type="text" name="StockCode" size=15 maxlength=18 value="' . $_POST['StockCode'] . '"></td>
 		</tr>
 		<tr><td></td>
