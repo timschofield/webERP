@@ -57,7 +57,9 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
 					intval($_POST['QtyByItem']),
 					$_POST['Currency'],
 					$_POST['SalesType'],
-					$_POST['StockID']);
+					$_POST['StockID'],
+					FormatDateForSQL($_POST['EffectiveDate'])
+					);
 
 			if ($ok)
 				exit(); // the print was success
@@ -90,8 +92,11 @@ function showLabelOptions() {
 		_('Label Sticker Printing'),
 		_('Select label type'),
 		_('Number of labels per item'),
-		_('Price list'), _('Currency'),
-		_('Category'), _('Update values')
+		_('Price list'),
+		_('Currency'),
+		_('Category'), 
+		_('Effective Date'), 
+		_('Update values')
 	);
 	if (!isset($_POST['LabelID']))
 		$_POST['LabelID']=(string)$AllLabels->label[0]->id;
@@ -114,6 +119,9 @@ function showLabelOptions() {
 
 	$TableItems = tableItems($_POST['Category'], $okItems);
 
+	if (!isset($_POST['EffectiveDate'])){
+		$_POST['EffectiveDate']=Date($_SESSION['DefaultDateFormat']);
+	}
 	$SendButton = '<br /><div class=centre><input type="submit" name="PrintPDF" value="'. _('Print labels') .'">&nbsp;&nbsp;&nbsp;
 		<input type="submit" name="PDFTest" value="'. _('Print labels with borders') .'"></div>';
 	$iTxt=0;
@@ -161,6 +169,8 @@ function showLabelOptions() {
 					'.$OptionsCategory.'
 					</select> </td>
 			</tr>';
+	echo '<tr><td class="number">'.$txt[$iTxt++].':</td>
+			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EffectiveDate" size="11" maxlength="10" value=' . $_POST['EffectiveDate'] . '></td></tr>';
 	echo '<tr>
 				<th colspan="2">
 				<input type="submit" name="refresh" value="Refresh options">
@@ -170,7 +180,6 @@ function showLabelOptions() {
 					'.$TableItems.'
 				</td>
 			</tr>';
-
 	echo '</tbody>
 		</table>
 		'.$SendButton.'
@@ -228,7 +237,7 @@ function tableItems($CategoryID, &$ok) {
 		$ok=false;
 		return noneButton( _('Select a Category') );
 	}
-	$result = getStockItems($CategoryID, $_POST['Currency'], $_POST['SalesType']);
+	$result = getStockItems($CategoryID, $_POST['Currency'], $_POST['SalesType'], FormatDateForSQL($_POST['EffectiveDate']));
 	if (!DB_num_rows($result)) {
 		$ok=false;
 		return noneButton( _('This category has no items to show') );
@@ -290,13 +299,16 @@ function noneButton($msg) {
  *  The routine works in two contexts: when only the category is given
  *  it looks for all the items
  */
-function getStockItems($CategoryID, $CurrCode, $SalesType, $StockID=false) {
+function getStockItems($CategoryID, $CurrCode, $SalesType, $EffectiveDate, $StockID=false) {
 	global $db, $Today;
+
 	if ($StockID!==false) {
 		$WhereClause = "stockmaster.stockid='$StockID' LIMIT 1";
 	} else {
 		$WhereClause = "stockmaster.categoryid='$CategoryID' ORDER BY stockmaster.stockid";
 	}
+	
+	$WhereClause = " stockmaster.discontinued!=1 AND " . $WhereClause;
 
 	$sql="SELECT stockmaster.stockid, 
 				stockmaster.description, 
@@ -307,20 +319,16 @@ function getStockItems($CategoryID, $CurrCode, $SalesType, $StockID=false) {
 			ON stockmaster.stockid=prices.stockid 
 			AND prices.currabrev = '" . $CurrCode . "' 
 			AND prices.typeabbrev= '" . $SalesType . "'
-			AND prices.startdate <= '" . Date('Y-m-d') . "'
-			AND (prices.enddate >= '" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00') 
+			AND prices.startdate <= '" . $EffectiveDate . "'
+			AND (prices.enddate >= '" . $EffectiveDate . "' OR prices.enddate='0000-00-00') 
 			AND prices.debtorno=''
 			WHERE " . $WhereClause;
-
-// if current prices are those with enddate = 0000-00-00 the following line was wrong			
-//			"AND ('$Today' BETWEEN pr.startdate AND prices.enddate) " .
-			
-			
+		
 	return DB_query($sql, $db);
 }
 
-function getStockData($StockID, $Currency, $salesType) {
-	$result = getStockItems(null, $Currency, $salesType, $StockID);
+function getStockData($StockID, $Currency, $salesType, $EffectiveDate) {
+	$result = getStockItems(null, $Currency, $salesType, $EffectiveDate, $StockID);
 	return DB_fetch_array($result);
 }
 
@@ -389,14 +397,14 @@ function getPageDimensions($dimensions) {
 	);
 }
 
-function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $StockIDList) {
+function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $StockIDList, $EffectiveDate) {
 	global $pdf, $DecimalPlaces, $Version;
 	$row = $col = 0;
 
 	$DecimalPlaces=getDecimalPlaces($Currency);
 
 	foreach ($StockIDList as $StockID=>$on) {  // At least there is one item
-		$itemData = getStockData($StockID, $Currency, $salesType);
+		$itemData = getStockData($StockID, $Currency, $salesType, $EffectiveDate);
 		$num=$qtyByItem;
 		while ($num-- > 0) {	// Print $num labels per item
 			printStockid($itemData, $dimensions, $lines, $Currency, $row, $col);

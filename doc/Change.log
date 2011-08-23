@@ -1,5 +1,6 @@
 webERP Change Log
 
+23/8/11 Ricard: PDFPrintLabel Does Not display discontinued items and now allows printing of future price labels
 21/8/11 Phil: Fixed bug that duplicated purchase order items when more than one item was added to an existing purchase order
 21/8/11 Phil: BackupDatabase.php Delete link now deletes any backup files in the company directory in case any were left there before - as this is a serious security issue if files are left on the web-server
 19/8/11 Phil: Fixed bug in Stocks.php should have used Date($_SESSION['DefaultDateFormat']) instead of Date('Y-m-d') inside GetPeriod function as pointed out by Ricard
@@ -16,7 +17,7 @@ webERP Change Log
 10/8/11 Phil: POReport.php added link to detail purchase order inquiry
 10/8/11 Phil: PO_SelectPurchOrder.php and outstanding purchase order searches now show the delivery date (from the purchase order header) line items may have different delivery dates.
 10/8/11 Phil: Stocks.php changing the stock category to one with a different stock account now creates a journal (if stock is linked to GL) to move the cost of the stock from the old GL account to the new GL account
-7/8/11 Phil: SelectProduct.php now disables transactions on items flagged as obsolete (discontinued). Also obsolete items are shown as such in the selection list - suggested by Klaus (opto)
+7/8/11 Phil: SelectProduct.php now disables transactions on items flagged as obsolete (discontinued). /Also obsolete items are shown as such in the selection list - suggested by Klaus (opto)
 7/8/11 Ricard: Corrected INNER JOIN ON clause in sql used in InventoryQuantities.php script
 7/8/11 Klaus: Added docuwiki links to WikiLinks function in MiscFunctions.php and allow Docuwiki option in SystemParameters.php
 6/8/11 Ricard: SalesInquiry.php fix wording of labels to be more consistent with the rest of webERP
