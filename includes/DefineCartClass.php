@@ -59,6 +59,7 @@ Class Cart {
 	Var $DeliveryDays;
 	var $TaxTotals;
 	var $TaxGLCodes;
+	var $BuyerName;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
