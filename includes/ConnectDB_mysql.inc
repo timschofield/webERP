@@ -214,10 +214,10 @@ function DB_Txn_Rollback($Conn){
 }
 
 function DB_IgnoreForeignKeys($Conn){
-	msql_query("SET FOREIGN_KEY_CHECKS=0",$Conn);
+	mysql_query("SET FOREIGN_KEY_CHECKS=0",$Conn);
 }
 function DB_ReinstateForeignKeys($Conn){
-	msql_query("SET FOREIGN_KEY_CHECKS=1",$Conn);
+	mysql_query("SET FOREIGN_KEY_CHECKS=1",$Conn);
 }
 
 ?>

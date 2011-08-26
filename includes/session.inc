@@ -5,6 +5,7 @@ if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
 
+
 if (!file_exists($PathPrefix . 'config.php')){
 	$rootpath = dirname($_SERVER['PHP_SELF']);
 	if ($rootpath == '/' OR $rootpath == "\\") {

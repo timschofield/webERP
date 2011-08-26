@@ -103,8 +103,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 	$IssueItemRow = DB_fetch_array($Result);
 
 	if ($IssueItemRow['cost']==0){
-		prnMsg(_('The item being issued has a zero cost. Zero cost items cannot be issued to work orders'),'error');
-		$InputError=1;
+		prnMsg(_('The item being issued has a zero cost. The issue will still be processed '),'warn');
 	}
 
 	if ($_SESSION['ProhibitNegativeStock']==1

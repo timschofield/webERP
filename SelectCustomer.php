@@ -259,7 +259,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 
 if (isset($_POST['JustSelectedACustomer'])){
 	/*Need to figure out the number of the form variable that the user clicked on */
-	for ($i=0; $i< count($_POST); $i++){ //loop through the returned customers
+	for ($i=0; $i==count($_POST); $i++){ //loop through the returned customers
 		if(isset($_POST['SubmitCustomerSelection'.$i])){
 			break;
 		}
@@ -514,7 +514,7 @@ if (isset($result)) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			echo '<td><font size=1><input type="submit" name="SubmitCustomerSelection' . $i .'" value="' . htmlentities($myrow['debtorno'].' '.$myrow['branchcode'],ENT_QUOTES,'UTF-8') . '" /></font></td>
+			echo '<td><font size="1"><input type="submit" name="SubmitCustomerSelection' . $i .'" value="' . htmlentities($myrow['debtorno'].' '.$myrow['branchcode'],ENT_QUOTES,'UTF-8') . '" /></font></td>
 				<input type="hidden" name="SelectedCustomer' . $i .'" value="'.$myrow['debtorno'].'">
 				<input type="hidden" name="SelectedBranch' . $i .'" value="'. $myrow['branchcode'].'" />
 				<td><font size=1>' . $myrow['name'] . '</font></td>
