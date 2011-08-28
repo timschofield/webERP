@@ -19,24 +19,21 @@ If (isset($_POST['PrintPDF'])
 
       /*Now figure out the bills to report for the part range under review */
 	$SQL = "SELECT bom.parent,
-			bom.component,
-			stockmaster.description as compdescription,
-			stockmaster.decimalplaces,
-			bom.quantity,
-			bom.loccode,
-			bom.workcentreadded,
-			bom.effectiveto AS eff_to,
-			bom.effectiveafter AS eff_frm
-		FROM
-			stockmaster,
-			bom
-		WHERE stockmaster.stockid=bom.component
-		AND bom.parent >= '" . $_POST['FromCriteria'] . "'
-		AND bom.parent <= '" . $_POST['ToCriteria'] . "'
-		AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()
-		ORDER BY
-			bom.parent,
-			bom.component";
+				bom.component,
+				stockmaster.description as compdescription,
+				stockmaster.decimalplaces,
+				bom.quantity,
+				bom.loccode,
+				bom.workcentreadded,
+				bom.effectiveto AS eff_to,
+				bom.effectiveafter AS eff_frm
+			FROM stockmaster INNER JOIN bom
+			ON stockmaster.stockid=bom.component
+			WHERE bom.parent >= '" . $_POST['FromCriteria'] . "'
+			AND bom.parent <= '" . $_POST['ToCriteria'] . "'
+			AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()
+			ORDER BY bom.parent,
+					bom.component";
 
 	$BOMResult = DB_query($SQL,$db,'','',false,false); //dont do error trapping inside DB_query
 
