@@ -259,7 +259,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 
 if (isset($_POST['JustSelectedACustomer'])){
 	/*Need to figure out the number of the form variable that the user clicked on */
-	for ($i=0; $i==count($_POST); $i++){ //loop through the returned customers
+	for ($i=0; $i<count($_POST); $i++){ //loop through the returned customers
 		if(isset($_POST['SubmitCustomerSelection'.$i])){
 			break;
 		}
