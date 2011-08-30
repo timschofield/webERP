@@ -133,19 +133,19 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	if ($_SESSION['ProhibitNegativeStock']==1){
 		/*Now look for autoissue components that would go negative */
-				$SQL = "SELECT worequirements.stockid,
-							   stockmaster.description,
-							   locstock.quantity-(" . $QuantityReceived  . "*worequirements.qtypu) AS qtyleft
-						  FROM worequirements
-						  INNER JOIN stockmaster
-							ON worequirements.stockid=stockmaster.stockid
-						  INNER JOIN locstock
-							ON worequirements.stockid=locstock.stockid
-						  WHERE worequirements.wo='" . $_POST['WO'] . "'
-						  AND worequirements.parentstockid='" .$_POST['StockID'] . "'
-						  AND locstock.loccode='" . $WORow['loccode'] . "'
-						  AND stockmaster.mbflag <>'D'
-						  AND worequirements.autoissue=1";
+		$SQL = "SELECT worequirements.stockid,
+					   stockmaster.description,
+					   locstock.quantity-(" . $QuantityReceived  . "*worequirements.qtypu) AS qtyleft
+				  FROM worequirements
+				  INNER JOIN stockmaster
+					ON worequirements.stockid=stockmaster.stockid
+				  INNER JOIN locstock
+					ON worequirements.stockid=locstock.stockid
+				  WHERE worequirements.wo='" . $_POST['WO'] . "'
+				  AND worequirements.parentstockid='" .$_POST['StockID'] . "'
+				  AND locstock.loccode='" . $WORow['loccode'] . "'
+				  AND stockmaster.mbflag <>'D'
+				  AND worequirements.autoissue=1";
 
 		$ErrMsg = _('Could not retrieve the component quantity left at the location once the component items are issued to the work order (for the purposes of checking that stock will not go negative) because');
 		$Result = DB_query($SQL,$db,$ErrMsg);
@@ -260,6 +260,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				}
 
 				$SQL = "UPDATE stockmaster SET
+							lastcostupdate='" . Date('Y-m-d') . "',
 							materialcost='" . $Cost . "',
 							labourcost='" . $ItemCostRow['labourcost'] . "',
 							overheadcost='" . $ItemCostRow['overheadcost'] . "',

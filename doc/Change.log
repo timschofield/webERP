@@ -1,5 +1,7 @@
 webERP Change Log
 
+29/8/11 Ricard: Updated lastcostupdate in StockCostUpdate.php
+29/8/11 Phil: Reinstated stockmaster.lastcostupdate field - added update to lastcostupdate in WorkOrderReceive.php
 27/8/11 Phil: WorkOrderIssue.php now allows issue of 0 cost items to the work order - in the event that customer supplied product needs to be included in a work order and the quantities maintained for accountability to the customer
 26/8/11 Pablo Martin: Fixed bugs in ConnectDB_mysql.inc in DB_Txn_Commit and DB_Txn_Begin was using msql functions not mysql functions!!
 23/8/11 Phil: Added BuyerName to Delivery Details and the cart class
