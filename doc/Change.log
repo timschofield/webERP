@@ -1,5 +1,6 @@
 webERP Change Log
 
+31/8/11 Ricard: StockAdjustments.php now sends an email to the inventory manager on the creation of manual stock adjustments. The inventory manager email is defined in SystemParameters.php - leaving the email address blank will stop any emails from being created.
 29/8/11 Ricard: Updated lastcostupdate in StockCostUpdate.php
 29/8/11 Phil: Reinstated stockmaster.lastcostupdate field - added update to lastcostupdate in WorkOrderReceive.php
 27/8/11 Phil: WorkOrderIssue.php now allows issue of 0 cost items to the work order - in the event that customer supplied product needs to be included in a work order and the quantities maintained for accountability to the customer

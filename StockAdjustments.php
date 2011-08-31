@@ -64,9 +64,15 @@ if (isset($_POST['CheckCode'])) {
 		'" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
-		$sql="SELECT stockid, description FROM stockmaster WHERE description " . LIKE . " '%" . $_POST['StockText'] ."%'";
+		$sql="SELECT stockid, 
+					description 
+				FROM stockmaster 
+				WHERE description " . LIKE . " '%" . $_POST['StockText'] ."%'";
 	} else {
-		$sql="SELECT stockid, description FROM stockmaster WHERE stockid " . LIKE  . " '%" . $_POST['StockCode'] ."%'";
+		$sql="SELECT stockid, 
+					description 
+				FROM stockmaster 
+				WHERE stockid " . LIKE  . " '%" . $_POST['StockCode'] ."%'";
 	}
 	$ErrMsg=_('The stock information cannot be retrieved because');
 	$DbgMsg=_('The SQL to get the stock description was');
@@ -302,8 +308,15 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 
 		$Result = DB_Txn_Commit($db);
 
-		prnMsg( _('A stock adjustment for'). ' ' . $_SESSION['Adjustment']->StockID . ' -  ' . $_SESSION['Adjustment']->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment']->StockLocation .' '. _('for a quantity of') . ' ' . $_SESSION['Adjustment']->Quantity,'success');
+		$ConfirmationText = _('A stock adjustment for'). ' ' . $_SESSION['Adjustment']->StockID . ' -  ' . $_SESSION['Adjustment']->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment']->StockLocation .' '. _('for a quantity of') . ' ' . $_SESSION['Adjustment']->Quantity ;
+		prnMsg( $ConfirmationText,'success');
 
+		if ($_SESSION['InventoryManagerEmail']!=''){
+			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
+			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment']->StockID;
+			mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+		}
+		
 		unset ($_SESSION['Adjustment']);
 	} /* end if there was no input error */
 
@@ -352,9 +365,10 @@ if (isset($_SESSION['Adjustment']) and mb_strlen($_SESSION['Adjustment']->ItemDe
 			number_format($_SESSION['Adjustment']->StandardCost,4) . '</font></td></tr>';
 }
 
-echo '<tr><td>'. _('Adjustment to Stock At Location').':</td><td><select name="StockLocation"> ';
+echo '<tr><td>'. _('Adjustment to Stock At Location').':</td>
+		<td><select name="StockLocation"> ';
 
-$sql = 'SELECT loccode, locationname FROM locations';
+$sql = "SELECT loccode, locationname FROM locations";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Adjustment']->StockLocation)){
