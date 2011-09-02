@@ -150,7 +150,7 @@ if (isset($_POST['PrintPDF'])) {
 		//if item has more than 1 price, write only price, date and supplier code for the old ones
 		if ($code==$myrow['stockid']){
 
-			$pdf->addTextWrap(350,$YPos,50,$FontSize,number_format($myrow['price'],2),'right');
+			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($myrow['price'],2),'right');
 			$pdf->addTextWrap(430,$YPos,50,$FontSize,$dateprice,'left');
 			$pdf->addTextWrap(510,$YPos,40,$FontSize,$myrow['suppliers_partno'],'left');
 			$code=$myrow['stockid'];
@@ -158,7 +158,7 @@ if (isset($_POST['PrintPDF'])) {
 			$code=$myrow['stockid'];
 			$pdf->addTextWrap(50,$YPos,90,$FontSize,$myrow['stockid'],'left');
 			$pdf->addTextWrap(145,$YPos,215,$FontSize,$myrow['description'],'left');
-			$pdf->addTextWrap(350,$YPos,50,$FontSize,number_format($myrow['price'],2),'right');
+			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($myrow['price'],2),'right');
 			$pdf->addTextWrap(430,$YPos,50,$FontSize,$dateprice,'left');
 			$pdf->addTextWrap(510,$YPos,40,$FontSize,$myrow['suppliers_partno'],'left');
 		}

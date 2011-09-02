@@ -82,14 +82,12 @@ if (function_exists('gettext')){
 			return $text;
 		}
 	}
-	//if (mb_substr($_SESSION['Language'],0,2) == 'en'){
-	$locale_info['thousands_sep'] = ',';
-	$locale_info['decimal_point'] = '.';
-	/*
-	} else {
-		$locale_info['thousands_sep'] = '.';
-		$locale_info['decimal_point'] = ',';
+}
+
+if (!function_exists('locale_number_format')){
+	function locale_number_format($Number, $DecimalPlaces) {
+		$LocaleInfo = localeconv();
+		return locale_number_format($Number, $DecimalPlaces, $LocaleInfo['decimal_point'], $LocaleInfo['thousands_sep']);
 	}
-	*/
 }
 ?>

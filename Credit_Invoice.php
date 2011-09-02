@@ -310,7 +310,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 		echo '<tr '.$RowStarter.'><td>' . $LnItm->StockID . '</td>
 			<td>' . $LnItm->ItemDescription . '</td>
-			<td class=number>' . number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
+			<td class=number>' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
 			<td>' . $LnItm->Units . '</td>';
 
 		if ($LnItm->Controlled==1){
@@ -323,7 +323,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 		}
 
-		$DisplayLineTotal = number_format($LineTotal,$_SESSION['CreditItems']->CurrDecimalPlaces);
+		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CreditItems']->CurrDecimalPlaces);
 
 		$j++;
 		echo '<td><input tabindex=' . $j . ' type="text" class=number name="Price_' . $LnItm->LineNumber . '" maxlength=12 size=6 value=' . $LnItm->Price . '></td>
@@ -370,8 +370,8 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	}
 	$TaxTotal += $TaxLineTotal;
 
-	$DisplayTaxAmount = number_format($TaxLineTotal ,$_SESSION['CreditItems']->CurrDecimalPlaces);
-	$DisplayGrossLineTotal = number_format($LineTotal+ $TaxLineTotal,$_SESSION['CreditItems']->CurrDecimalPlaces);
+	$DisplayTaxAmount = locale_number_format($TaxLineTotal ,$_SESSION['CreditItems']->CurrDecimalPlaces);
+	$DisplayGrossLineTotal = locale_number_format($LineTotal+ $TaxLineTotal,$_SESSION['CreditItems']->CurrDecimalPlaces);
 
 	if (!isset($_POST['ProcessCredit'])) {
 		echo '</td>';
@@ -392,7 +392,7 @@ if (!isset($_POST['ChargeFreightCost']) AND !isset($_SESSION['CreditItems']->Fre
 if (!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
 		<td colspan=3 class=number>' . _('Freight cost charged on invoice') . '</td>
-		<td class=number>' . number_format($_SESSION['Old_FreightCost'],$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
+		<td class=number>' . locale_number_format($_SESSION['Old_FreightCost'],$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
 		<td></td>
 		<td colspan=2 class=number>' . _('Credit Freight Cost') . '</td>
 		<td><input tabindex='.$j.' type="text" class="number" size=6 maxlength=6 name="ChargeFreightCost" value="' . $_SESSION['CreditItems']->FreightCost . '"></td>';
@@ -433,21 +433,21 @@ foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
 if (!isset($_POST['ProcessCredit'])) {
 	echo '</td>';
 
-	echo '<td class="number">' . number_format($FreightTaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
-		<td class="number">' . number_format($FreightTaxTotal+ $_SESSION['CreditItems']->FreightCost,$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
+	echo '<td class="number">' . locale_number_format($FreightTaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
+		<td class="number">' . locale_number_format($FreightTaxTotal+ $_SESSION['CreditItems']->FreightCost,$_SESSION['CreditItems']->CurrDecimalPlaces) . '</td>
 		</tr>';
 }
 
 $TaxTotal += $FreightTaxTotal;
-$DisplayTotal = number_format($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost,$_SESSION['CreditItems']->CurrDecimalPlaces);
+$DisplayTotal = locale_number_format($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost,$_SESSION['CreditItems']->CurrDecimalPlaces);
 
 if (!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
 		<td colspan=7 class=number>' . _('Credit Totals') . '</td>
 		<td class=number><hr><b>' . $DisplayTotal . '</b><hr></td>
 		<td colspan=2></td>
-		<td class=number><hr><b>' . number_format($TaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '<hr></td>
-		<td class=number><hr><b>' . number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),$_SESSION['CreditItems']->CurrDecimalPlaces) . '</b><hr></td>
+		<td class=number><hr><b>' . locale_number_format($TaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '<hr></td>
+		<td class=number><hr><b>' . locale_number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),$_SESSION['CreditItems']->CurrDecimalPlaces) . '</b><hr></td>
 		</tr></table>';
 }
 $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);

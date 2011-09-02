@@ -295,7 +295,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				'" . $GRN['deliverydate'] . "',
 				'" . $PeriodNo . "',
 				'" . $GRN['glcode'] . "',
-				'" . _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . number_format($GRN['stdcostunit'],2) . "',
+				'" . _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],2) . "',
 				'" . -($GRN['stdcostunit'] * $QtyToReverse) . "'
 				)";
 
@@ -317,7 +317,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 								'" . $GRN['deliverydate'] . "',
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['grnact'] . "', '"
-								. _('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . number_format($GRN['stdcostunit'],2) . "',
+								. _('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],2) . "',
 								'" . $GRN['stdcostunit'] * $QtyToReverse . "'
 								)";
 
@@ -395,9 +395,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 					$k=1;
 				}
 
-				$DisplayQtyRecd = number_format($myrow['qtyrecd'],2);
-				$DisplayQtyInv = number_format($myrow['quantityinv'],2);
-				$DisplayQtyRev = number_format($myrow['qtytoreverse'],2);
+				$DisplayQtyRecd = locale_number_format($myrow['qtyrecd'],2);
+				$DisplayQtyInv = locale_number_format($myrow['quantityinv'],2);
+				$DisplayQtyRev = locale_number_format($myrow['qtytoreverse'],2);
 				$DisplayDateDel = ConvertSQLDate($myrow['deliverydate']);
 				$LinkToRevGRN = '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
 

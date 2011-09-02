@@ -117,11 +117,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '</td><th class="number">' . _('Units') . ':</th>
 			<td class="select">' . $myrow['units'] . '</td></tr>';
 	echo '<tr><th class="number">' . _('Volume') . ':</th>
-			<td class="select" colspan="2">' . number_format($myrow['volume'], 3) . '</td>
+			<td class="select" colspan="2">' . locale_number_format($myrow['volume'], 3) . '</td>
 			<th class="number">' . _('Weight') . ':</th>
-			<td class="select">' . number_format($myrow['kgs'], 3) . '</td>
+			<td class="select">' . locale_number_format($myrow['kgs'], 3) . '</td>
 			<th class="number">' . _('EOQ') . ':</th>
-			<td class="select">' . number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td></tr>';
+			<td class="select">' . locale_number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td></tr>';
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
 				<td class="select">';
@@ -150,11 +150,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
 			$Price = $PriceRow[1];
-			echo $PriceRow[0] . '</td><td class="select">' . number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			echo $PriceRow[0] . '</td><td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<th class="number">' . _('Gross Profit') . '</th>
 				<td class="select">';
 			if ($Price > 0) {
-				$GP = number_format(($Price - $Cost) * 100 / $Price, 1);
+				$GP = locale_number_format(($Price - $Cost) * 100 / $Price, 1);
 			} else {
 				$GP = _('N/A');
 			}
@@ -163,11 +163,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				$Price = $PriceRow[1];
 				echo '<tr><td></td>
 						<th>' . $PriceRow[0] . '</th>
-						<td class="select">' . number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<th class="number">' . _('Gross Profit') . '</th>
 						<td class="select">';
 				if ($Price > 0) {
-					$GP = number_format(($Price - $Cost) * 100 / $Price, 1);
+					$GP = locale_number_format(($Price - $Cost) * 100 / $Price, 1);
 				} else {
 					$GP = _('N/A');
 				}
@@ -189,7 +189,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Cost = $myrow['cost'];
 		}
 		echo '<th class="number">' . _('Cost') . '</th>
-			<td class="select">' . number_format($Cost, 3) . '</td>';
+			<td class="select">' . locale_number_format($Cost, 3) . '</td>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
@@ -262,7 +262,7 @@ switch ($myrow['mbflag']) {
 						FROM locstock
 						WHERE stockid = '" . $StockID . "'", $db);
 		$QOHRow = DB_fetch_row($QOHResult);
-		$QOH = number_format($QOHRow[0], $myrow['decimalplaces']);
+		$QOH = locale_number_format($QOHRow[0], $myrow['decimalplaces']);
 		$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
 					FROM purchorders INNER JOIN purchorderdetails
 					ON purchorders.orderno=purchorderdetails.orderno
@@ -290,7 +290,7 @@ switch ($myrow['mbflag']) {
 			$QOORow = DB_fetch_row($QOOResult);
 			$QOO+= $QOORow[0];
 		}
-		$QOO = number_format($QOO, $myrow['decimalplaces']);
+		$QOO = locale_number_format($QOO, $myrow['decimalplaces']);
 	break;
 }
 $Demand = 0;
@@ -334,7 +334,7 @@ if (DB_num_rows($DemandResult) == 1) {
 echo '<tr><th class="number" width="15%">' . _('Quantity On Hand') . ':</th>
 		<td width="17%" class="select">' . $QOH . '</td></tr>';
 echo '<tr><th class="number" width="15%">' . _('Quantity Demand') . ':</th>
-		<td width="17%" class="select">' . number_format($Demand, $myrow['decimalplaces']) . '</td></tr>';
+		<td width="17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td></tr>';
 echo '<tr><th class="number" width="15%">' . _('Quantity On Order') . ':</th>
 		<td width="17%" class="select">' . $QOO . '</td></tr>
 				</table>'; //end of nested table
@@ -369,7 +369,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC", $db);
 	while ($SuppRow = DB_fetch_array($SuppResult)) {
 		echo '<tr><td class="select">' . $SuppRow['suppname'] . '</td>
-					<td class="select">' . number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
+					<td class="select">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
 					<td class="select">' . $SuppRow['currcode'] . '</td>
 					<td class="select">' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
 					<td class="select">' . $SuppRow['leadtime'] . '</td>
@@ -421,8 +421,11 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $rootpath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded
-	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		echo '<div class="centre"><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120">';
+	if (file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg')){
+		echo ' picture exists alright!';
+	}
+	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+		echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120">';
 	}
 	if (($myrow['mbflag'] == 'B') 
 		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))
@@ -749,7 +752,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			if ($myrow['mbflag'] == 'D') {
 				$qoh = _('N/A');
 			} else {
-				$qoh = number_format($myrow['qoh'], $myrow['decimalplaces']);
+				$qoh = locale_number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
 			if ($myrow['discontinued']==1){
 				$ItemStatus = '<font class="bad">' . _('Obsolete') . '</font>';

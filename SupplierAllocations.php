@@ -438,7 +438,7 @@ if (isset($_POST['AllocTrans'])){
 
         if ($_SESSION['Alloc']->TransExRate != 1){
 	     	  echo '<br />' . _('Amount in supplier currency'). ' <b>' .
-	     	  		 number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b><i> (' .
+	     	  		 locale_number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b><i> (' .
 	     	  		 _('converted into local currency at an exchange rate of') . ' ' .
 	     	  		 $_SESSION['Alloc']->TransExRate . ')</i><p>';
 
@@ -490,8 +490,8 @@ if (isset($_POST['AllocTrans'])){
 		<td>' . $AllocnItem->TypeNo . '</td>
 		<td>' . $AllocnItem->TransDate . '</td>
 		<td>' . $AllocnItem->SuppRef . '</td>
-		<td class="number">' . number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
-		<td class="number">' . number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value=' . $YetToAlloc . '></td>';
+		<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+		<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value=' . $YetToAlloc . '></td>';
 		 if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
 			echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" value=' . true . ' />';
 	    } else {
@@ -504,10 +504,10 @@ if (isset($_POST['AllocTrans'])){
    }
 
    echo '<tr><td colspan=5 class=number><b><U>' . _('Total Allocated') . ':</U></b></td>
-   		<td class=number><b><U>' .  number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</U></b></td></tr>';
+   		<td class=number><b><U>' .  locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</U></b></td></tr>';
 
    echo '<tr><td colspan=5 class=number><b>' . _('Left to allocate') . '</b></td><td class=number><b>' .
-     		number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td></tr></table>';
+     		locale_number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td></tr></table>';
 
    echo '<div class="centre"><input type="hidden" name="TotalNumberOfAllocs" value="' . $Counter . '" />';
 

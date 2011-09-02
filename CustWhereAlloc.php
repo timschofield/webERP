@@ -85,7 +85,7 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 			<table cellpadding=2 class="selection">';
 
 		echo '<tr>
-				<th colspan=6><div class="centre"><font size=3 color=blue><b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. number_format($myrow['totamt'],2) . '</font></b></div></th>
+				<th colspan=6><div class="centre"><font size=3 color=blue><b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. locale_number_format($myrow['totamt'],2) . '</font></b></div></th>
 			</tr>';
 
 		$tableheader = '<tr>
@@ -121,8 +121,8 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 			<td>' . $myrow['transno'] . '</td>
 			<td>' . $myrow['reference'] . '</td>
 			<td>' . $myrow['rate'] . '</td>
-			<td class=number>' . number_format($myrow['totalamt'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class=number>' . number_format($myrow['amt'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class=number>' . locale_number_format($myrow['totalamt'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class=number>' . locale_number_format($myrow['amt'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 
 		$RowCounter++;
@@ -135,7 +135,7 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 		}
 		//end of while loop
 		echo '<tr><td colspan = 5 class=number>'._('Total allocated').'</td>
-			<td class=number>' . number_format($AllocsTotal,2) . '</td></tr>';
+			<td class=number>' . locale_number_format($AllocsTotal,2) . '</td></tr>';
 		echo '</table>';
 	}
 	}

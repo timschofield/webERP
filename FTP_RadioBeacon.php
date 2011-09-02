@@ -74,7 +74,7 @@ while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 	$FTPDispatchNote = $_SERVER['PHP_SELF'] . '?OrderNo=' . $myrow['orderno'];
 	$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 	$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-	$FormatedOrderValue = number_format($myrow['ordervalue'],2);
+	$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
 	$FormatedDateLastSent = ConvertSQLDate($myrow['datepackingslipprinted']);
 	$ModifyPage = $rootpath . 'SelectOrderItems.php?' . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
 

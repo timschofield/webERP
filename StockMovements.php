@@ -136,12 +136,12 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$DisplayTranDate,
 				$myrow['debtorno'],
 				$myrow['branchcode'],
-				number_format($myrow['qty'],
+				locale_number_format($myrow['qty'],
 				$myrow['decimalplaces']),
 				$myrow['reference'],
-				number_format($myrow['price'],2),
-				number_format($myrow['discountpercent']*100,2),
-				number_format($myrow['newqoh'],$myrow['decimalplaces']));
+				locale_number_format($myrow['price'],2),
+				locale_number_format($myrow['discountpercent']*100,2),
+				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 
 	} elseif ($myrow['type']==11){
 
@@ -163,11 +163,11 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$DisplayTranDate,
 				$myrow['debtorno'],
 				$myrow['branchcode'],
-				number_format($myrow['qty'],$myrow['decimalplaces']),
+				locale_number_format($myrow['qty'],$myrow['decimalplaces']),
 				$myrow['reference'],
-				number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
-				number_format($myrow['discountpercent']*100,2),
-				number_format($myrow['newqoh'],$myrow['decimalplaces']));
+				locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
+				locale_number_format($myrow['discountpercent']*100,2),
+				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	} else {
 
 		printf('<td>%s</td>
@@ -186,11 +186,11 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 			$DisplayTranDate,
 			$myrow['debtorno'],
 			$myrow['branchcode'],
-			number_format($myrow['qty'],$myrow['decimalplaces']),
+			locale_number_format($myrow['qty'],$myrow['decimalplaces']),
 			$myrow['reference'],
-			number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
-			number_format($myrow['discountpercent']*100,2),
-			number_format($myrow['newqoh'],$myrow['decimalplaces']));
+			locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($myrow['discountpercent']*100,2),
+			locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	}
 //end of page full new headings if
 }

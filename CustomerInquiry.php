@@ -125,7 +125,7 @@ if ($NIL_BALANCE==True){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
 	_('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') .
 	' ' . $CustomerRecord['currency'] . ')<br /><br />' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '<br />' . _('Credit Limit') .
-	': ' . number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '</p>';
+	': ' . locale_number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '</p>';
 
 if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br /><font color=RED size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br />';
@@ -139,11 +139,11 @@ echo '<table class="selection" width="70%">
 		<th width=20%>' . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
 		<th width=20%>' . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th></tr>';
 
-echo '<tr><td class=number>' . number_format($CustomerRecord['balance'],$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . number_format(($CustomerRecord['balance'] - $CustomerRecord['due']),$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . number_format(($CustomerRecord['due']-$CustomerRecord['overdue1']),$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . number_format(($CustomerRecord['overdue1']-$CustomerRecord['overdue2']) ,$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . number_format($CustomerRecord['overdue2'],$CustomerRecord['decimalplaces']) . '</td>
+echo '<tr><td class=number>' . locale_number_format($CustomerRecord['balance'],$CustomerRecord['decimalplaces']) . '</td>
+	<td class=number>' . locale_number_format(($CustomerRecord['balance'] - $CustomerRecord['due']),$CustomerRecord['decimalplaces']) . '</td>
+	<td class=number>' . locale_number_format(($CustomerRecord['due']-$CustomerRecord['overdue1']),$CustomerRecord['decimalplaces']) . '</td>
+	<td class=number>' . locale_number_format(($CustomerRecord['overdue1']-$CustomerRecord['overdue2']) ,$CustomerRecord['decimalplaces']) . '</td>
+	<td class=number>' . locale_number_format($CustomerRecord['overdue2'],$CustomerRecord['decimalplaces']) . '</td>
 	</tr>
 	</table>';
 
@@ -268,9 +268,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				//$CreditInvoiceFormatString parameters
 				$rootpath,
 				$myrow['transno'],
@@ -301,9 +301,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				//CreditInvoiceFormatString parameters
 				$rootpath,
 				$myrow['transno'],
@@ -334,9 +334,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 			//$PreviewInvoiceFormatString parameters
 				$rootpath,
 				$myrow['transno'],
@@ -363,9 +363,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				//$PreviewCreditFormatString parameters
 				$rootpath,
 				$myrow['transno'],
@@ -395,9 +395,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				//$PreviewCreditFormatString parameters
 				$rootpath,
 				$myrow['transno'],
@@ -429,9 +429,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				$rootpath,
 				$myrow['id'],
 				$rootpath,
@@ -448,9 +448,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				$rootpath,
 				$myrow['id']);
 		}
@@ -467,9 +467,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				$rootpath,
 				$myrow['type'],
 				$myrow['transno']);
@@ -482,9 +482,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']));
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']));
 		}
 	} else {
 		//If security token 8 in the allowed page security tokens then assumed ok for GL trans inquiries
@@ -498,9 +498,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']),
 				$rootpath,
 				$myrow['type'],
 				$myrow['transno']);
@@ -513,9 +513,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['reference'],
 				$myrow['invtext'],
 				$myrow['order_'],
-				number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
-				number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']));
+				locale_number_format($myrow['totalamount'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['allocated'],$CustomerRecord['decimalplaces']),
+				locale_number_format($myrow['totalamount']-$myrow['allocated'],$CustomerRecord['decimalplaces']));
 		}
 	}
 

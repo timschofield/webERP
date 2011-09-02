@@ -774,7 +774,7 @@ if (!isset($DebtorNo)) {
 		echo '<tr><td>' . _('Payment Discount Percent') . ':</td>
 				<td>' . $_POST['PymtDiscount'] . '</td></tr>';
 		echo '<tr><td>' . _('Credit Limit') . ':</td>
-				<td>' . number_format($_POST['CreditLimit'],2) . '</td></tr>';
+				<td>' . locale_number_format($_POST['CreditLimit'],2) . '</td></tr>';
 		echo '<tr><td>' . _('Tax Reference') . ':</td>
 				<td>' . $_POST['TaxRef'] . '</td></tr>';
 	} else {

@@ -162,9 +162,9 @@ if (DB_num_rows($result)>0){
 
 	while ($myrow2=DB_fetch_array($result)){
 
-		$DisplayQty = number_format($myrow2['quantity'],2);
-		$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
-		$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],2);
+		$DisplayQty = locale_number_format($myrow2['quantity'],2);
+		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],2);
+		$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],2);
 
 		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$myrow2['stkcode']);
 		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$myrow2['description']);

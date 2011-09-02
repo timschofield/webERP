@@ -240,7 +240,7 @@ if ($InputError ==0){
 			if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
 				echo '<td>' . $myrow['currency'] . '</td>
 					<td>' .  $myrow['sales_type'] . '</td>
-					<td class=number>' . number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td class=number>' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td>
 					<td><a href="' . $_SERVER['PHP_SELF'] . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&Price=' . $myrow['price'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&Edit=1">' . _('Edit') . '</td>
@@ -249,7 +249,7 @@ if ($InputError ==0){
 			} else {
 				echo '<td>' . $myrow['currency'] . '</td>
 					<td>' .  $myrow['sales_type'] . '</td>
-					<td class=number>' . number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td class=number>' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td></tr>';
 			}

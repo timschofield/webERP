@@ -145,9 +145,9 @@ $LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
 for ($i=1;$i<=$LastDayOfMonth;$i++){
 		$ColumnCounter++;
 		if(isset($DaySalesArray[$i])) {
-			echo '<td class="number" style="outline: 1px solid gray;">' . number_format($DaySalesArray[$i]->Sales,0) . '<br />' .  number_format($DaySalesArray[$i]->GPPercent*100,1) . '%</td>';
+			echo '<td class="number" style="outline: 1px solid gray;">' . locale_number_format($DaySalesArray[$i]->Sales,0) . '<br />' .  locale_number_format($DaySalesArray[$i]->GPPercent*100,1) . '%</td>';
 		} else {
-			echo '<td class="number" style="outline: 1px solid gray;">' . number_format(0,0) . '<br />' .  number_format(0,1) . '%</td>';
+			echo '<td class="number" style="outline: 1px solid gray;">' . locale_number_format(0,0) . '<br />' .  locale_number_format(0,1) . '%</td>';
 		}
 		if ($ColumnCounter==7){
 			echo '</tr><tr>';
@@ -176,7 +176,7 @@ if ($CumulativeTotalSales !=0){
 	$AverageDailySales = 0;
 }
 
-echo '<th colspan=7>' . _('Total Sales for month') . ': ' . number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . number_format($AverageDailySales,0) . '</th></tr>';
+echo '<th colspan=7>' . _('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . locale_number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
 
 echo '</table>';
 

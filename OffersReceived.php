@@ -114,10 +114,10 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		echo '<td>'.$myrow['offerid'].'</td>
 			<td>'.$myrow['suppname'].'</td>
 			<td>'.$myrow['description'].'</td>
-			<td class=number>'.number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
+			<td class=number>'.locale_number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
 			<td>'.$myrow['uom'].'</td>
-			<td class=number>'.number_format($myrow['price'],2).'</td>
-			<td class=number>'.number_format($myrow['price']*$myrow['quantity'],2).'</td>
+			<td class=number>'.locale_number_format($myrow['price'],2).'</td>
+			<td class=number>'.locale_number_format($myrow['price']*$myrow['quantity'],2).'</td>
 			<td>'.$myrow['currcode'].'</td>
 			<td>'.$myrow['expirydate'].'</td>
 			<td><input type="radio" name="action'.$myrow['offerid'].'" value="1"></td>
@@ -195,7 +195,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$result= DB_query($sql, $db);
 			$myrow=DB_fetch_array($result);
 			$MailText.=$myrow['description']."\t"._('Quantity').' '.$myrow['quantity']."\t"._('Price').' '.
-					number_Format($myrow['price'])."\n";
+					locale_number_format($myrow['price'])."\n";
 			$sql="INSERT INTO purchorderdetails (
 					orderno,
 					itemcode,
@@ -242,7 +242,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$result= DB_query($sql, $db);
 			$myrow=DB_fetch_array($result);
 			$MailText.=$myrow['description']."\t"._('Quantity').' '.$myrow['quantity']."\t"._('Price').' '.
-					number_Format($myrow['price'])."\n";
+					locale_number_format($myrow['price'])."\n";
 			$sql="DELETE FROM offers WHERE offerid='".$RejectID."'";
 			$result=DB_query($sql, $db);
 		}

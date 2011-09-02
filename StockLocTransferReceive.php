@@ -450,7 +450,7 @@ if (isset($_SESSION['Transfer'])){
 		echo '<td>' . $TrfLine->StockID . '</td>
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
-		echo '<td class=number>' . number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
+		echo '<td class=number>' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
 		if (isset($_POST['Qty' . $i]) and is_numeric($_POST['Qty' . $i])){
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
 			$Qty = $_POST['Qty' . $i];
@@ -463,7 +463,7 @@ if (isset($_SESSION['Transfer'])){
 		} else {
 			$Qty = $TrfLine->Quantity;
 		}
-		echo '<td class=number>' . number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
+		echo '<td class=number>' . locale_number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
 
 		if ($TrfLine->Controlled==1){
 			echo '<td class=number><input type=hidden name="Qty' . $i . '" VALUE="' . $Qty . '"><a href="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</a></td>';

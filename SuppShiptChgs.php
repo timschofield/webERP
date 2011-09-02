@@ -85,7 +85,7 @@ $TotalShiptValue = 0;
 foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 	echo '<tr><td>' . $EnteredShiptRef->ShiptRef . '</td>
-		<td class=number>' . number_format($EnteredShiptRef->Amount,2) . '</td>
+		<td class=number>' . locale_number_format($EnteredShiptRef->Amount,2) . '</td>
 		<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $EnteredShiptRef->Counter . '">' . _('Delete') . '</a></td></tr>';
 
 	$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
@@ -94,7 +94,7 @@ foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 echo '<tr>
 	<td class=number><font size=2 color=navy>' . _('Total') . ':</font></td>
-	<td class=number><font size=2 color=navy><U>' . number_format($TotalShiptValue,2) . '</U></font></td>
+	<td class=number><font size=2 color=navy><U>' . locale_number_format($TotalShiptValue,2) . '</U></font></td>
 </tr>
 </table><br />';
 

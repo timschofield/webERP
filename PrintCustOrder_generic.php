@@ -177,9 +177,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
             $ListCount ++;
 			
-			$DisplayQty = number_format($myrow2['quantity'],$myrow2['decimalplaces']);
-			$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
-			$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+			$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
+			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+			$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 
 			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode']);
 			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description']);
@@ -211,7 +211,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				$YPos -= ($line_height);
 				/*Loop around all the components of the assembly and list the quantity supplied */
 				while ($ComponentRow=DB_fetch_array($AssemblyResult)){
-					$DisplayQtySupplied = number_format($ComponentRow['quantity']*($myrow2['quantity'] - $myrow2['qtyinvoiced']),$ComponentRow['decimalplaces']);
+					$DisplayQtySupplied = locale_number_format($ComponentRow['quantity']*($myrow2['quantity'] - $myrow2['qtyinvoiced']),$ComponentRow['decimalplaces']);
 					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$ComponentRow['component']);
 					$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$ComponentRow['description']);
 					$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');

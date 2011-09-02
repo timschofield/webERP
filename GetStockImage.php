@@ -254,16 +254,26 @@ if( $automake && !isset($FileName) || $useblank ) {
 		$ixtextcolor = imagecolorallocatealpha($im,
 			$TextColour['red'],$TextColour['green'],$TextColour['blue'],$TextColour['alpha']);
 	}
+	
 	$sw = imagesx($im);
 	$sh = imagesy($im);
-	if ( isset($width) && ($width != $sw) || isset($height) && ($height != $sh)) {
+	if ( isset($width) AND ($width != $sw) OR isset($height) AND ($height != $sh)) {
 		if( !isset($width) )
 			$width = imagesx($im);
 		if( !isset($height) )
 			$height = imagesy($im);
-		$tmpim = imagecreatetruecolor($width, $height);
+			$resize_scale = min($width/$sw, $height/$sh);
+		if ($resize_scale < 1) {
+			$resize_new_width = floor($resize_scale*$sw);
+			$resize_new_height = floor($resize_scale*$sh);
+		} else {
+			$resize_new_width = $sw;
+			$resize_new_height = $sh;
+		}
+		
+		$tmpim = imagecreatetruecolor($resize_new_width, $resize_new_height);
 		imagealphablending ( $tmpim, true);
-		imagecopyresized($tmpim,$im,0,0,0,0,$width, $height, imagesx($im), imagesy($im) );
+		imagecopyresampled($tmpim,$im,0,0,0,0,$resize_new_width, $resize_new_height, $sw, $sh );
 		imagedestroy($im);
 		$im = $tmpim;
 		unset($tmpim);

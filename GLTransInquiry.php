@@ -73,11 +73,11 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			$DetailResult = false;
 
 			if ( $TransRow['amount'] > 0) {
-					$DebitAmount = number_format($TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
+					$DebitAmount = locale_number_format($TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 					$DebitTotal += $TransRow['amount'];
 					$CreditAmount = '&nbsp';
 			} else {
-					$CreditAmount = number_format(-$TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
+					$CreditAmount = locale_number_format(-$TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 					$CreditTotal += $TransRow['amount'];
 					$DebitAmount = '&nbsp';
 			}
@@ -143,18 +143,18 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				while ( $DetailRow = DB_fetch_row($DetailResult) ) {
 					if ( $TransRow['amount'] > 0){
 							if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-								$Debit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+								$Debit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 								$Credit = '&nbsp';
 							} else {
-								$Debit = number_format((-$DetailRow[1] - $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+								$Debit = locale_number_format((-$DetailRow[1] - $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 								$Credit = '&nbsp';
 							}
 					} else {
 							if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-								$Credit = number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+								$Credit = locale_number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 								$Debit = '&nbsp';
 							} else {
-								$Credit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+								$Credit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 								$Debit = '&nbsp';
 							}
 					}
@@ -182,8 +182,8 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 
 		echo '<tr bgcolor="#FFFFFF">
 				<td class="number" colspan=3><b>' . _('Total') . '</b></td>
-				<td class="number">' . number_format(($DebitTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . number_format((-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format(($DebitTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format((-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td colspan=2>&nbsp</td>
 			</tr>';
 		echo '</table><p>';

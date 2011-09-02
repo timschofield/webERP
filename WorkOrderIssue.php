@@ -307,7 +307,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						'" . FormatDateForSQL($_POST['issuedate']) . "',
 						'" . $PeriodNo . "',
 						'" . $WORow['wipact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . number_format($IssueItemRow['cost'],2) . "',
+						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'],2) . "',
 						'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
@@ -327,7 +327,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						'" . FormatDateForSQL($_POST['issuedate']) . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . number_format($IssueItemRow['cost'],2) . "',
+						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'],2) . "',
 						'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
@@ -533,11 +533,11 @@ echo '<table cellpadding=2 class=selection>
 		<td>' . ConvertSQLDate($WORow['requiredby']) . '</td>
 	</tr>
 	 <tr><td class="label">' . _('Quantity Ordered') . ':</td>
-		<td class="number">' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 		<td colspan="2">' . $WORow['units'] . '</td>
 	</tr>
 	 <tr><td class="label">' . _('Already Received') . ':</td>
-		<td class="number">' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
 		<td colspan="2">' . $WORow['units'] . '</td></tr>
 	<tr><td colspan=4></td></tr>
 	 <tr><td class="label">' . _('Date Material Issued') . ':</td>
@@ -606,8 +606,8 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										$db);
 		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
 
-		echo '<td class=number>' . number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
-			<td class=number>' . number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
+		echo '<td class=number>' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
+			<td class=number>' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
 	}
 
 	echo '</table><br />';

@@ -89,10 +89,10 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap(100,$YPos,30,$FontSize,$LowGPItems['transno']);
 		$LeftOvers = $pdf->addTextWrap(130,$YPos,50,$FontSize,$LowGPItems['stockid']);
 		$LeftOvers = $pdf->addTextWrap(220,$YPos,50,$FontSize,$LowGPItems['name']);
-		$DisplayUnitCost = number_format($LowGPItems['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
-		$DisplaySellingPrice = number_format($LowGPItems['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
-		$DisplayGP = number_format($LowGPItems['gp'],$_SESSION['CompanyRecord']['decimalplaces']);
-		$DisplayGPPercent = number_format(($LowGPItems['gp']*100)/$LowGPItems['sellingprice'],1);
+		$DisplayUnitCost = locale_number_format($LowGPItems['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplaySellingPrice = locale_number_format($LowGPItems['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayGP = locale_number_format($LowGPItems['gp'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayGPPercent = locale_number_format(($LowGPItems['gp']*100)/$LowGPItems['sellingprice'],1);
 
 		$LeftOvers = $pdf->addTextWrap(330,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
 		$LeftOvers = $pdf->addTextWrap(380,$YPos,62,$FontSize,$DisplayUnitCost, 'right');

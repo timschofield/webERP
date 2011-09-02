@@ -126,11 +126,11 @@ If (isset($_POST['PrintPDF'])
 
 	While ($AgedAnalysis = DB_fetch_array($SupplierResult,$db)){
 
-		$DisplayDue = number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],2);
-		$DisplayCurrent = number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],2);
-		$DisplayBalance = number_format($AgedAnalysis['balance'],2);
-		$DisplayOverdue1 = number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],2);
-		$DisplayOverdue2 = number_format($AgedAnalysis['overdue2'],2);
+		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],2);
+		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],2);
+		$DisplayBalance = locale_number_format($AgedAnalysis['balance'],2);
+		$DisplayOverdue1 = locale_number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],2);
+		$DisplayOverdue2 = locale_number_format($AgedAnalysis['overdue2'],2);
 
 		$TotBal += $AgedAnalysis['balance'];
 		$TotDue += ($AgedAnalysis['due']-$AgedAnalysis['overdue1']);
@@ -204,11 +204,11 @@ If (isset($_POST['PrintPDF'])
 			    $DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 			    $LeftOvers = $pdf->addTextWrap($Left_Margin+105,$YPos,70,$FontSize,$DisplayTranDate,'left');
 
-			    $DisplayDue = number_format($DetailTrans['due']-$DetailTrans['overdue1'],2);
-			    $DisplayCurrent = number_format($DetailTrans['balance']-$DetailTrans['due'],2);
-			    $DisplayBalance = number_format($DetailTrans['balance'],2);
-			    $DisplayOverdue1 = number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],2);
-			    $DisplayOverdue2 = number_format($DetailTrans['overdue2'],2);
+			    $DisplayDue = locale_number_format($DetailTrans['due']-$DetailTrans['overdue1'],2);
+			    $DisplayCurrent = locale_number_format($DetailTrans['balance']-$DetailTrans['due'],2);
+			    $DisplayBalance = locale_number_format($DetailTrans['balance'],2);
+			    $DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],2);
+			    $DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'],2);
 
 			    $LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			    $LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
@@ -238,11 +238,11 @@ If (isset($_POST['PrintPDF'])
 		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);
 	}
 
-	$DisplayTotBalance = number_format($TotBal,2);
-	$DisplayTotDue = number_format($TotDue,2);
-	$DisplayTotCurrent = number_format($TotCurr,2);
-	$DisplayTotOverdue1 = number_format($TotOD1,2);
-	$DisplayTotOverdue2 = number_format($TotOD2,2);
+	$DisplayTotBalance = locale_number_format($TotBal,2);
+	$DisplayTotDue = locale_number_format($TotDue,2);
+	$DisplayTotCurrent = locale_number_format($TotCurr,2);
+	$DisplayTotOverdue1 = locale_number_format($TotOD1,2);
+	$DisplayTotOverdue2 = locale_number_format($TotOD2,2);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
 	$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayTotCurrent,'right');

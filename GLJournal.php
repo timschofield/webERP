@@ -369,12 +369,12 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	echo '<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount>0) {
-		echo '<td class="number">' . number_format($JournalItem->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td><td></td>';
+		echo '<td class="number">' . locale_number_format($JournalItem->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td><td></td>';
 		$DebitTotal=$DebitTotal+$JournalItem->Amount;
 	} elseif($JournalItem->Amount<0) {
 		$Credit=(-1 * $JournalItem->Amount);
 		echo '<td></td>
-			<td class="number">' . number_format($Credit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+			<td class="number">' . locale_number_format($Credit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		$CreditTotal=$CreditTotal+$Credit;
 	}
 
@@ -385,11 +385,11 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 
 echo '<tr class="EvenTableRows"><td></td>
 	<td class="number"><b>' . _('Total') .  '</b></td>
-	<td class="number"><b>' . number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-	<td class="number"><b>' . number_format($CreditTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+	<td class="number"><b>' . locale_number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+	<td class="number"><b>' . locale_number_format($CreditTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
 if ($DebitTotal!=$CreditTotal) {
 	echo '<td align="center" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
-		number_format(abs($DebitTotal-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']);
+		locale_number_format(abs($DebitTotal-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']);
 }
 if ($DebitTotal>$CreditTotal) {
 	echo ' ' . _('Credit') . '</td></tr>';

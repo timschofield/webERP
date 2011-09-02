@@ -230,15 +230,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$POLine['conversionfactor']=1;
 				$POLine['decimalplaces']=2;
 			}
-			$DisplayQty = number_format($POLine['quantityord']/$POLine['conversionfactor'],$POLine['decimalplaces']);
+			$DisplayQty = locale_number_format($POLine['quantityord']/$POLine['conversionfactor'],$POLine['decimalplaces']);
 			if ($_POST['ShowAmounts']=='Yes'){
-				$DisplayPrice = number_format($POLine['unitprice']*$POLine['conversionfactor'],2);
+				$DisplayPrice = locale_number_format($POLine['unitprice']*$POLine['conversionfactor'],2);
 			} else {
 				$DisplayPrice = '----';
 			}
 			$DisplayDelDate = ConvertSQLDate($POLine['deliverydate'],2);
 			if ($_POST['ShowAmounts']=='Yes'){
-				$DisplayLineTotal = number_format($POLine['unitprice']*$POLine['quantityord'],2);
+				$DisplayLineTotal = locale_number_format($POLine['unitprice']*$POLine['quantityord'],2);
 			} else {
 				$DisplayLineTotal = '----';
 			}
@@ -285,7 +285,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				include ('includes/PO_PDFOrderPageHeader.inc');
 		} //end if need a new page headed up
 		if ($_POST['ShowAmounts']=='Yes'){
-			$DisplayOrderTotal = number_format($OrderTotal,2);
+			$DisplayOrderTotal = locale_number_format($OrderTotal,2);
 		} else {
 			$DisplayOrderTotal = '----';
 		}
