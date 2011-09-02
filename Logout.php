@@ -1,7 +1,7 @@
 <?php
-/* $Revision: 1.17 $ */
+
 /* $Id$*/
-//$PageSecurity =1;
+
 $AllowAnyone=True; /* Allow all users to log off  */
 
 include('includes/session.inc');

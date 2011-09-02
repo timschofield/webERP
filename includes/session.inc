@@ -89,7 +89,6 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'silverwolf';
 	switch ($rc) {
 	case  UL_OK;
-		include($PathPrefix . 'includes/LanguageSetup.php');
 		break;
 
 	case UL_SHOWLOGIN:

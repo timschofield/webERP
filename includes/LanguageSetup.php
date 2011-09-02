@@ -46,7 +46,6 @@ if (function_exists('gettext')){
 	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
 	bind_textdomain_codeset('messages', 'UTF-8'); 
-	$locale_info = localeconv();
 	
 } else {
 /*
@@ -84,10 +83,5 @@ if (function_exists('gettext')){
 	}
 }
 
-if (!function_exists('locale_number_format')){
-	function locale_number_format($Number, $DecimalPlaces) {
-		$LocaleInfo = localeconv();
-		return locale_number_format($Number, $DecimalPlaces, $LocaleInfo['decimal_point'], $LocaleInfo['thousands_sep']);
-	}
-}
+
 ?>

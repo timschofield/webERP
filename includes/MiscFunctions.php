@@ -304,12 +304,17 @@ function LogBackTrace( $dest = 0 ) {
 }
 
 function http_file_exists($url)  {
-	$f=@fopen($url,"r");
+	$f=@fopen($url,'r');
 	if($f) {
 		fclose($f);
 		return true;
 	}
 	return false;
+}
+
+function locale_number_format($Number, $DecimalPlaces) {
+	$LocaleInfo = localeconv(); 
+	return number_format($Number, $DecimalPlaces, $LocaleInfo['decimal_point'], $LocaleInfo['thousands_sep']);
 }
 
 ?>
