@@ -1,5 +1,7 @@
 webERP Change Log
 
+3/9/11 Ricard: Changed SelectProduct.php to show just current prices
+3/9/11 Phil: Changed SelectCustomer to use %% around each parameter to use just a single SQL statement rather than several which ignored other inputs - as suggested by Marcos Skambraks
 2/9/11 Phil: Made locale_number_format() as per Tim's instruction that displays numbers in the format of the locale in includes/LanguageSetup.php and replaced all occurrences of number_format() with locale_number_format()
 2/9/11 Warren Olds: scaling of image in GetStockImage.php
 31/8/11 Ricard: StockAdjustments.php now sends an email to the inventory manager on the creation of manual stock adjustments. The inventory manager email is defined in SystemParameters.php - leaving the email address blank will stop any emails from being created.

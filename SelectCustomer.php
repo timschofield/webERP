@@ -86,24 +86,12 @@ if (!isset($_POST['PageOffset'])) {
 	}
 }
 if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+	unset($_POST['JustSelectedACustomer']);
 	if (isset($_POST['Search'])) {
 		$_POST['PageOffset'] = 1;
 	}
-	if (mb_strlen($_POST['Keywords'])>0) {
-		$msg = _('Search Result: Customer Name has been used in search') . '<br />';
-		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
-	} elseif (mb_strlen($_POST['CustCode'])>0) {
-		$msg = _('Search Result: Customer Code has been used in search') . '<br />';
-	} elseif (mb_strlen($_POST['CustPhone'])>0) {
-		$msg = _('Search Result: Customer Phone has been used in search') . '<br />';
-	}elseif (($_POST['CustAdd'])) {
-		$msg = _('Search Result: Customer Address has been used in search') . '<br />';
-	} elseif (isset($_POST['CustType']) AND $_POST['CustType']!='ALL') {
-		$msg = _('Search Result: Customer Type has been used in search') . '<br />';
-	} elseif (isset($_POST['Area']) AND $_POST['Area']!='ALL') {
-		$msg = _('Search Result: Customer branch area has been used in search') . '<br />';
-	}
-	if (($_POST['Keywords'] == '') AND ($_POST['CustCode'] == '') AND ($_POST['CustPhone'] == '') AND ($_POST['CustType'] == 'ALL') AND ($_POST['Area'] == 'ALL') AND ($_POST['CustAdd'] == '')) {
+	
+	if (($_POST['Keywords'] == '') AND ($_POST['CustCode'] == '') AND ($_POST['CustPhone'] == '') AND (		$_POST['CustType'] == 'ALL') AND ($_POST['Area'] == 'ALL') AND ($_POST['CustAdd'] == '')) {
 		//no criteria set then default to all customers
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -122,12 +110,11 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				INNER JOIN debtortype
 				ON debtorsmaster.typeid = debtortype.typeid";
 	} else {
-		if (mb_strlen($_POST['Keywords']) > 0) {
-			//using the customer name
-			$_POST['Keywords'] = mb_strtoupper(trim($_POST['Keywords']));
-			//insert wildcard characters in spaces
-			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-			$SQL = "SELECT debtorsmaster.debtorno,
+		$SearchKeywords = mb_strtoupper(trim(str_replace(' ', '%', $_POST['Keywords'])));
+		$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
+		$_POST['CustPhone'] = trim($_POST['CustPhone']);
+		$_POST['CustAdd'] = trim($_POST['CustAdd']);
+		$SQL = "SELECT debtorsmaster.debtorno,
 						debtorsmaster.name,
 						debtorsmaster.address1,
 						debtorsmaster.address2,
@@ -139,103 +126,23 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 						debtortype.typename,
 						custbranch.phoneno,
 						custbranch.faxno
-					FROM debtorsmaster LEFT JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-					WHERE debtorsmaster.name " . LIKE . " '" . $SearchString . "'
-					AND debtorsmaster.typeid = debtortype.typeid";
-		} elseif (mb_strlen($_POST['CustCode']) > 0) {
-			$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
-			$SQL = "SELECT debtorsmaster.debtorno,
-						debtorsmaster.name,
-						debtorsmaster.address1,
-						debtorsmaster.address2,
-						debtorsmaster.address3,
-						debtorsmaster.address4,
-						custbranch.branchcode,
-						custbranch.brname,
-						custbranch.contactname,
-						debtortype.typename,
-						custbranch.phoneno,
-						custbranch.faxno
-					FROM debtorsmaster LEFT JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-					WHERE debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
-					AND debtorsmaster.typeid = debtortype.typeid";
-		} elseif (mb_strlen($_POST['CustPhone']) > 0) {
-			$SQL = "SELECT debtorsmaster.debtorno,
-						debtorsmaster.name,
-						debtorsmaster.address1,
-						debtorsmaster.address2,
-						debtorsmaster.address3,
-						debtorsmaster.address4,
-						custbranch.branchcode,
-						custbranch.brname,
-						custbranch.contactname,
-						debtortype.typename,
-						custbranch.phoneno,
-						custbranch.faxno
-					FROM debtorsmaster LEFT JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-					WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
-					AND debtorsmaster.typeid = debtortype.typeid";
-			// Added an option to search by address. I tried having it search address1, address2, address3, and address4, but my knowledge of MYSQL is limited.  This will work okay if you select the CSV Format then you can search though the address1 field. I would like to extend this to all 4 address fields. Gilles Deacur
-
-		} elseif (mb_strlen($_POST['CustAdd']) > 0) {
-			$SQL = "SELECT debtorsmaster.debtorno,
-							debtorsmaster.name,
-							debtorsmaster.address1,
-							debtorsmaster.address2,
-							debtorsmaster.address3,
-							debtorsmaster.address4,
-							custbranch.branchcode,
-							custbranch.brname,
-							custbranch.contactname,
-							debtortype.typename,
-							custbranch.phoneno,
-							custbranch.faxno
-						FROM debtorsmaster LEFT JOIN custbranch
-							ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-						WHERE debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+					FROM debtorsmaster INNER JOIN debtortype
+						ON debtorsmaster.typeid = debtortype.typeid
+					LEFT JOIN custbranch 
+						ON debtorsmaster.debtorno = custbranch.debtorno
+					WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%' 
+					AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' 
+					AND custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' 
+					AND (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
 						OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
 						OR debtorsmaster.address3 "  . LIKE . " '%" . $_POST['CustAdd'] . "%'
-						OR debtorsmaster.address4 "  . LIKE . " '%" . $_POST['CustAdd'] . "%'
-						AND debtorsmaster.typeid = debtortype.typeid";
-			// End added search feature. Gilles Deacur
-
-		} elseif (mb_strlen($_POST['CustType']) > 0 AND $_POST['CustType']!='ALL') {
-			$SQL = "SELECT debtorsmaster.debtorno,
-								debtorsmaster.name,
-								debtorsmaster.address1,
-								debtorsmaster.address2,
-								debtorsmaster.address3,
-								debtorsmaster.address4,
-								custbranch.branchcode,
-								custbranch.brname,
-								custbranch.contactname,
-								debtortype.typename,
-								custbranch.phoneno,
-								custbranch.faxno
-						FROM debtorsmaster LEFT JOIN custbranch
-								ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-						WHERE debtorsmaster.typeid LIKE debtortype.typeid
-						AND debtortype.typename = '" . $_POST['CustType'] . "'";
-		} elseif (mb_strlen($_POST['Area']) > 0 AND $_POST['Area']!='ALL') {
-			$SQL = "SELECT debtorsmaster.debtorno,
-								debtorsmaster.name,
-								debtorsmaster.address1,
-								debtorsmaster.address2,
-								debtorsmaster.address3,
-								debtorsmaster.address4,
-								custbranch.branchcode,
-								custbranch.brname,
-								custbranch.contactname,
-								debtortype.typename,
-								custbranch.phoneno,
-								custbranch.faxno
-						FROM debtorsmaster LEFT JOIN custbranch
-								ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
-						WHERE debtorsmaster.typeid LIKE debtortype.typeid
-						AND custbranch.area = '" . $_POST['Area'] . "'";
+						OR debtorsmaster.address4 "  . LIKE . " '%" . $_POST['CustAdd'] . "%')";
+		
+		if (mb_strlen($_POST['CustType']) > 0 AND $_POST['CustType']!='ALL') {
+			$SQL .= " AND debtortype.typename = '" . $_POST['CustType'] . "'";
+		} 
+		if (mb_strlen($_POST['Area']) > 0 AND $_POST['Area']!='ALL') {
+			$SQL .= " AND custbranch.area = '" . $_POST['Area'] . "'";
 		}
 	} //one of keywords or custcode or custphone was more than a zero length string
 	if ($_SESSION['SalesmanLogin'] != '') {
@@ -251,6 +158,7 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 		$_SESSION['CustomerID'] = $myrow['debtorno'];
 		$_SESSION['BranchCode'] = $myrow['branchcode'];
 		unset($result);
+		unset($_POST['Search']);
 	} elseif (DB_num_rows($result) == 0) {
 		prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'), 'info');
 		echo '<br />';
@@ -515,8 +423,8 @@ if (isset($result)) {
 				$k = 1;
 			}
 			echo '<td><font size="1"><input type="submit" name="SubmitCustomerSelection' . $i .'" value="' . htmlentities($myrow['debtorno'].' '.$myrow['branchcode'],ENT_QUOTES,'UTF-8') . '" /></font></td>
-				<input type="hidden" name="SelectedCustomer' . $i .'" value="'.$myrow['debtorno'].'">
-				<input type="hidden" name="SelectedBranch' . $i .'" value="'. $myrow['branchcode'].'" />
+				<input type="hidden" name="SelectedCustomer' . $i . '" value="'.$myrow['debtorno'].'">
+				<input type="hidden" name="SelectedBranch' . $i . '" value="'. $myrow['branchcode'].'" />
 				<td><font size=1>' . $myrow['name'] . '</font></td>
 				<td><font size=1>' . $myrow['brname'] . '</font></td>
 				<td><font size=1>' . $myrow['contactname'] . '</font></td>
@@ -578,10 +486,11 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	// Extended Customer Info only if selected in Configuration
 	if ($_SESSION['Extended_CustomerInfo'] == 1) {
 		if ($_SESSION['CustomerID'] != '') {
-			$sql = "SELECT debtortype.typeid, debtortype.typename
-						FROM debtorsmaster, debtortype
-					WHERE debtorsmaster.typeid = debtortype.typeid
-					AND debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
+			$sql = "SELECT debtortype.typeid, 
+							debtortype.typename
+						FROM debtorsmaster INNER JOIN debtortype
+					ON debtorsmaster.typeid = debtortype.typeid
+					WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$result = DB_query($sql, $db, $ErrMsg);
 			$myrow = DB_fetch_array($result);

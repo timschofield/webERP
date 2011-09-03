@@ -55,12 +55,11 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 						gltrans.posted,
 						chartmaster.accountname,
 						periods.lastdate_in_period
-					FROM gltrans,
-						chartmaster,
-						periods
-					WHERE gltrans.account = chartmaster.accountcode
-					AND periods.periodno=gltrans.periodno
-					AND gltrans.type= '" . $_GET['TypeID'] . "'
+					FROM gltrans INNER JOIN chartmaster
+					ON gltrans.account = chartmaster.accountcode
+					INNER JOIN periods 
+					ON periods.periodno=gltrans.periodno
+					WHERE gltrans.type= '" . $_GET['TypeID'] . "'
 					AND gltrans.typeno = '" . $_GET['TransNo'] . "'
 					ORDER BY gltrans.counterindex";
 		$TransResult = DB_query($SQL,$db);
@@ -142,21 +141,21 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			if ($DetailResult) {
 				while ( $DetailRow = DB_fetch_row($DetailResult) ) {
 					if ( $TransRow['amount'] > 0){
-							if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-								$Debit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-								$Credit = '&nbsp';
-							} else {
-								$Debit = locale_number_format((-$DetailRow[1] - $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-								$Credit = '&nbsp';
-							}
+						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
+							$Debit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = '&nbsp';
+						} else {
+							$Debit = locale_number_format((-$DetailRow[1] - $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = '&nbsp';
+						}
 					} else {
-							if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-								$Credit = locale_number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-								$Debit = '&nbsp';
-							} else {
-								$Credit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-								$Debit = '&nbsp';
-							}
+						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
+							$Credit = locale_number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Debit = '&nbsp';
+						} else {
+							$Credit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Debit = '&nbsp';
+						}
 					}
 
 					if ($j==1) {

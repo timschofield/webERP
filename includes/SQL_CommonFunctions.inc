@@ -13,7 +13,8 @@ Also updates the transaction number
 10 sales invoice
 11 sales credit note
 12 sales receipt
-
+etc
+* 
 */
 
 	DB_query("LOCK TABLES systypes WRITE",$db);

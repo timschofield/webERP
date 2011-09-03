@@ -313,7 +313,7 @@ function http_file_exists($url)  {
 }
 
 function locale_number_format($Number, $DecimalPlaces) {
-	$LocaleInfo = localeconv(); 
+	$LocaleInfo = localeconv();
 	return number_format($Number, $DecimalPlaces, $LocaleInfo['decimal_point'], $LocaleInfo['thousands_sep']);
 }
 

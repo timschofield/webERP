@@ -18,7 +18,9 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 	$DbgMsg = _('The SQL that was used to retrieve the account groups of the parent account group and that failed in the process was');
 
 	do {
-		$sql = "SELECT parentgroupname FROM accountgroups WHERE groupname='" . $GroupName ."'";
+		$sql = "SELECT parentgroupname 
+				FROM accountgroups 
+				WHERE groupname='" . $GroupName ."'";
 
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 		$myrow = DB_fetch_row($result);
