@@ -524,10 +524,11 @@ if (isset($_POST['NewItem'])){
 	*/
 
 	foreach ($_POST as $FormVariableName => $Quantity) {
-
+		/*The form entity name is of the format NewQtyX where X is the index number that identifies the stock item code held in the hidden StockIDX form variable 
+		 * */
 		if (mb_substr($FormVariableName, 0, 6)=='NewQty' AND $Quantity!=0) { //if the form variable represents a Qty to add to the order
 
-			$ItemCode = mb_substr($FormVariableName, 6, mb_strlen($FormVariableName)-6);
+			$ItemCode = $_POST['StockID' . mb_substr($FormVariableName, 6)];
 			$AlreadyOnThisOrder = 0;
 			
 			if ($_SESSION['PO_AllowSameItemMultipleTimes'] ==false){
@@ -1123,9 +1124,10 @@ if (isset($SearchResult)) {
 			<td class="number">' . $ConversionFactor .'</td>
 			<td>' . $OrderUnits . '</td>
 			<td>' . $ImageSource . '</td>
-			<td><input class="number" type="text" size="6" value="0" name="NewQty' . $myrow['stockid'] . '"></td>
+			<td><input class="number" type="text" size="6" value="0" name="NewQty' . $j . '"></td>
+			<input type="hidden" name="StockID' . $j .'" . value="' . $myrow['stockid'] . '" />
 			</tr>';
-			
+		$j++;
 		$PartsDisplayed++;
 		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
 			break;

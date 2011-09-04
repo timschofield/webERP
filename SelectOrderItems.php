@@ -22,10 +22,10 @@ if (isset($_POST['QuickEntry'])){
 	unset($_POST['PartSearch']);
 }
 
-if (isset($_POST['order_items'])){
-	foreach ($_POST as $key => $value) {
-		if (mb_strstr($key,'itm')) {
-			$NewItem_array[mb_substr($key,3)] = trim($value);
+if (isset($_POST['SelectingOrderItems'])){
+	foreach ($_POST as $FormVariable => $Quantity) {
+		if (mb_strpos($FormVariable,'OrderQty')!==false) {
+			$NewItem_array[$_POST['StockID' . mb_substr($FormVariable,8)]] = trim($Quantity);
 		}
 	}
 }
@@ -859,7 +859,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (!isset($Offset) or $Offset<0) {
 			$Offset=0;
 		}
-		$SQL = $SQL . " LIMIT " . $_SESSION['DefaultDisplayRecordsMax'] . " OFFSET " . number_format($_SESSION['DefaultDisplayRecordsMax']*$Offset);
+		$SQL = $SQL . " LIMIT " . $_SESSION['DefaultDisplayRecordsMax'] . " OFFSET " . strval($_SESSION['DefaultDisplayRecordsMax']*$Offset);
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$DbgMsg = _('The SQL used to get the part selection was');
@@ -900,7 +900,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	
 	/*Process Quick Entry */
 	/* If enter is pressed on the quick entry screen, the default button may be Recalculate */
-	 if (isset($_POST['order_items'])
+	 if (isset($_POST['SelectingOrderItems'])
 			OR isset($_POST['QuickEntry'])
 			OR isset($_POST['Recalculate'])){
 
@@ -1268,7 +1268,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	} /*end of if its a new item */
 
-	if (isset($NewItem_array) AND isset($_POST['order_items'])){
+	if (isset($NewItem_array) AND isset($_POST['SelectingOrderItems'])){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		$AlreadyWarnedAboutCredit = false;
@@ -1524,7 +1524,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								<th>' . _('Quantity') . '</th>
 							</tr>';
 			echo $TableHeader;
-			$j = 1;
+			$i=0;
+			$j=1;
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($result2)) {
@@ -1610,7 +1611,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><font size=1><input class="number"  tabindex='. number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+						<td><font size=1><input class="number"  tabindex='. strval($j+7).' type="textbox" size=6 name="OrderQty' . $i . '" value=0 />
+						<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
 						</td>
 						</tr>',
 						$myrow['stockid'],
@@ -1627,7 +1629,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 #end of page full new headings if
 			}
 #end of while loop for Frequently Ordered Items
-			echo '<td style="text-align:center" colspan=8><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
+			echo '<td style="text-align:center" colspan=8><input type="hidden" name="SelectingOrderItems" value=1><input tabindex='.strval($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		echo '<p><div class="centre"><b><p>' . $msg . '</b></p>';
@@ -1692,9 +1694,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier . '" method=post name="orderform">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<tr><td colspan=><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+8).' type="submit" name="Prev" value="'._('Prev').'"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+9).' type="submit" value="'._('Add to Sales Order').'"></td>';
-			echo '<td colspan=><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+10).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
+			echo '<tr><td colspan=><input type="hidden" name="previous" value='.strval($Offset-1).'><input tabindex='.strval($j+8).' type="submit" name="Prev" value="'._('Prev').'"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="SelectingOrderItems" value=1><input tabindex='.strval($j+9).' type="submit" value="'._('Add to Sales Order').'"></td>';
+			echo '<td colspan=><input type="hidden" name="nextlist" value='.strval($Offset+1).'><input tabindex='.strval($j+10).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			$TableHeader = '<tr>
 								<th>' . _('Code') . '</th>
 					   			<th>' . _('Description') . '</th>
@@ -1707,7 +1709,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					   		</tr>';
 			echo $TableHeader;
 			$ImageSource = _('No Image');
-			
+			$i=0;
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
@@ -1793,7 +1795,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><font size=1><input class="number"  tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+						<td><font size=1><input class="number"  tabindex='.strval($j+7).' type="textbox" size=6 name="OrderQty'. $i . '" value=0 />
+						<input type="hidden" name="StockID'. $i . '" value="' . $myrow['stockid']. '" />
 						</td>
 						</tr>',
 						$myrow['stockid'],
@@ -1803,6 +1806,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						locale_number_format($DemandQty,$QOHRow['decimalplaces']),
 						locale_number_format($OnOrder,$QOHRow['decimalplaces']),
 						locale_number_format($Available,$QOHRow['decimalplaces']) );
+				$i++;
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
@@ -1810,9 +1814,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr><td><input type="hidden" name="previous" value='. number_format($Offset-1).'><input tabindex='. number_format($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="order_items" value=1><input tabindex='. number_format($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
-			echo '<td><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
+			echo '<tr><td><input type="hidden" name="previous" value='. strval($Offset-1).'><input tabindex='. strval($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
+			echo '<td style="text-align:center" colspan=6><input type="hidden" name="SelectingOrderItems" value=1><input tabindex='. strval($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
+			echo '<td><input type="hidden" name="nextlist" value='.strval($Offset+1).'><input tabindex='.strval($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
 			echo '</table></form>';
 			echo $jsCall;
 

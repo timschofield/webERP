@@ -112,10 +112,14 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!=''){
 	$_SESSION['PaymentDetail']->Account=$_POST['BankAccount'];
 	/*Get the bank account currency and set that too */
 	$ErrMsg = _('Could not get the currency of the bank account');
-	$result = DB_query("SELECT currcode, decimalplaces 
+	$result = DB_query("SELECT currcode, 
+								decimalplaces 
 						FROM bankaccounts INNER JOIN currencies
-						ON bankaccounts.currcode=currencies.currabrev
-						WHERE accountcode ='" . $_POST['BankAccount'] . "'",$db,$ErrMsg);
+						ON bankaccounts.currcode = currencies.currabrev
+						WHERE accountcode ='" . $_POST['BankAccount'] . "'",
+						$db,
+						$ErrMsg);
+						
 	$myrow = DB_fetch_array($result);
 	$_SESSION['PaymentDetail']->AccountCurrency=$myrow['currcode'];
 	$_SESSION['PaymentDetail']->CurrDecimalPlaces=$myrow['decimalplaces'];
@@ -710,11 +714,11 @@ echo '<p><table class="selection">';
 
 echo '<tr><th colspan="4"><font size="3" color="blue">' . _('Payment');
 
-if ($_SESSION['PaymentDetail']->SupplierID!=""){
+if ($_SESSION['PaymentDetail']->SupplierID!=''){
 	echo ' ' . _('to') . ' ' . $_SESSION['PaymentDetail']->SuppName;
 }
 
-if ($_SESSION['PaymentDetail']->BankAccountName!=""){
+if ($_SESSION['PaymentDetail']->BankAccountName!=''){
 	echo ' ' . _('from the') . ' ' . $_SESSION['PaymentDetail']->BankAccountName;
 }
 
@@ -751,7 +755,6 @@ if (DB_num_rows($AccountsResults)==0){
 	}
 	echo '</select></td></tr>';
 }
-
 
 echo '<tr><td>' . _('Date Paid') . ':</td>
 	<td><input type="text" name="DatePaid" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength=10 size=11 onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['PaymentDetail']->DatePaid . '"></td>
