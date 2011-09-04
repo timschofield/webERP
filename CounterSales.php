@@ -85,7 +85,11 @@ if (!isset($_SESSION['Items'.$identifier])){
 			exit;
 		}
 		if (isset($_GET['DebtorNo'])) {
-			$_SESSION['Items'.$identifier]->DebtorNo = $_GET['DebtorNo'];
+			$_SESSION['Items'.$identifier]->DebtorNo = $_GET['DebtorNo'];tcpdf.php line 5826:
+//    header('Content-Type: application/force-download');
+//    header('Content-Type: application/octet-stream',false);
+//    header('Content-Type: application/download',false);
+
 			$_SESSION['Items'.$identifier]->Branch = $_GET['BranchNo'];
 		} else {
 			$_SESSION['Items'.$identifier]->Branch = $myrow['cashsalebranch'];
@@ -221,9 +225,9 @@ if (isset($_POST['CancelOrder'])) {
 
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
-	if ($_POST['Keywords']!=='' AND $_POST['StockCode']=='') {
+	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 		$msg='<div class="page_help_text">' . _('Item description has been used in search') . '.</div>';
-	} else if ($_POST['StockCode']!=='' AND $_POST['Keywords']=='') {
+	} else if ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
 		$msg='<div class="page_help_text">' . _('Item Code has been used in search') . '.</div>';
 	} else if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';

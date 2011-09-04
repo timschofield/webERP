@@ -757,9 +757,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	$msg ='';
 	if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
-		if ($_POST['Keywords']!=='' AND $_POST['StockCode']=='') {
+		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 			$msg='</b><div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
-		} elseif ($_POST['StockCode']!=='' AND $_POST['Keywords']=='') {
+		} elseif ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
 			$msg='</b><div class="page_help_text">' . _('Stock Code has been used in search') . '.</div>';
 		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 			$msg='</b><div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';

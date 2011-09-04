@@ -1,5 +1,7 @@
 webERP Change Log
 
+4/9/11 Marcos Skambraks: SelectOrderItems.php and CounterSales.php removed incorrect !== comparisons sh/been != comparisons
+4/9/11 Marcos Skambraks: modified tcpdf.php to just send the pdf header - was causing issues with apache fastcgi module
 3/9/11 Ricard: Changed SelectProduct.php to show just current prices
 3/9/11 Phil: Changed SelectCustomer to use %% around each parameter to use just a single SQL statement rather than several which ignored other inputs - as suggested by Marcos Skambraks
 2/9/11 Phil: Made locale_number_format() as per Tim's instruction that displays numbers in the format of the locale in includes/LanguageSetup.php and replaced all occurrences of number_format() with locale_number_format()
@@ -14,7 +16,7 @@ webERP Change Log
 21/8/11 Phil: Fixed bug that duplicated purchase order items when more than one item was added to an existing purchase order
 21/8/11 Phil: BackupDatabase.php Delete link now deletes any backup files in the company directory in case any were left there before - as this is a serious security issue if files are left on the web-server
 19/8/11 Phil: Fixed bug in Stocks.php should have used Date($_SESSION['DefaultDateFormat']) instead of Date('Y-m-d') inside GetPeriod function as pointed out by Ricard
-16/8/11 Tim: SelectCustomer.php fixed selection of customer where the first one was selected needed to kick off count at 0.
+16/8/11 Tim: SelectCustomer.php fixed selection of customer where the first one was selected needed /to kick off count at 0.
 19/8/11 Phil: Remove redundant field stockmaster.lastcurcostdate
 19/8/11 Ricard: Fine tuning formatting PDFStockNegatives.php
 19/8/11 Carlos Urbieta Cabrera: security.png image was missing now added
