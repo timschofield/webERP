@@ -354,6 +354,7 @@ if(isset($_GET['Trf_ID'])){
 			stockmaster.units,
 			stockmaster.controlled,
 			stockmaster.serialised,
+			stockmaster.perishable,
 			stockmaster.decimalplaces,
 			loctransfers.shipqty,
 			loctransfers.recqty,
@@ -398,6 +399,7 @@ if(isset($_GET['Trf_ID'])){
 									$myrow['units'],
 									$myrow['controlled'],
 									$myrow['serialised'],
+									$myrow['perishable'],
 									$myrow['decimalplaces']
 									);
 		$_SESSION['Transfer']->TransferItem[$i]->PrevRecvQty = $myrow['recqty'];
