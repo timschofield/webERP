@@ -240,7 +240,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		}
 		echo'<td>'.ConvertSQLDate($myrow['date']).'</td>
 			<td>'.$myrow['codeexpense'].'</td>
-			<td class="number">'.locale_number_format($myrow['amount'],2).'</td>
+			<td class="number">'.number_format($myrow['amount'],2).'</td>
 			<td>' . $Posted . '</td>
 			<td>'  .$myrow['notes'] . '</td>
 			<td>' . $myrow['receipt'] . '</td>';
@@ -276,7 +276,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	}
 
 	echo '<tr><td colspan=2 class="number">' . _('Current balance') . ':</td>
-				<td class=number>'.locale_number_format($Amount['0'],2).'</td></tr>';
+				<td class=number>'.number_format($Amount['0'],2).'</td></tr>';
 
 	// Do the postings
 	include ('includes/GLPostings.inc');

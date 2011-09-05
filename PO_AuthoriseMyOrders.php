@@ -119,10 +119,10 @@ while ($myrow=DB_fetch_array($result)) {
 		while ($linerow=DB_fetch_array($LineResult)) {
 			echo '<tr>
 					<td>'.$linerow['description'].'</td>
-					<td class="number">'.locale_number_format($linerow['quantityord'],2).'</td>
+					<td class="number">'.number_format($linerow['quantityord'],2).'</td>
 					<td>'.$myrow['currcode'].'</td>
-					<td class="number">'.locale_number_format($linerow['unitprice'],$myrow['decimalplaces']).'</td>
-					<td class="number">'.locale_number_format($linerow['unitprice']*$linerow['quantityord'],$myrow['decimalplaces']).'</td>
+					<td class="number">'.number_format($linerow['unitprice'],$myrow['decimalplaces']).'</td>
+					<td class="number">'.number_format($linerow['unitprice']*$linerow['quantityord'],$myrow['decimalplaces']).'</td>
 				</tr>';
 		} // end while order line detail
 		echo '</table></td></tr>';

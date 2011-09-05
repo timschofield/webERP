@@ -116,7 +116,7 @@ if (isset($_POST['Search']) and isset($result) AND !isset($SelectedParent)) {
 		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
 			$StockOnHand = 'N/A';
 		} else {
-			$StockOnHand = locale_number_format($myrow['totalonhand'],2);
+			$StockOnHand = number_format($myrow['totalonhand'],2);
 		}
 		$tabindex=$j+4;
 		printf('<td><input tabindex="' .$tabindex . '" type="submit" name="StockID" value="%s"</td>
@@ -207,7 +207,7 @@ if (isset($StockID) and $StockID!=""){
 					</tr>',
 					$ComponentLink,
 					$myrow['description'],
-					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
+					number_format($myrow['quantity'],$myrow['decimalplaces']),
 					$myrow['standardcost'],
 					$myrow['componentcost']);
 
@@ -219,14 +219,14 @@ if (isset($StockID) and $StockID!=""){
 		$TotalCost += $ParentLabourCost;
 		echo '<tr>
 			<td colspan="4" class="number"><b>' . _('Labour Cost') . '</b></td>
-			<td class=number><b>' . locale_number_format($ParentLabourCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+			<td class=number><b>' . number_format($ParentLabourCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
 		$TotalCost += $ParentOverheadCost;
 		echo '<tr><td colspan="4" class="number"><b>' . _('Overhead Cost') . '</b></td>
-			<td class=number><b>' . locale_number_format($ParentOverheadCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+			<td class=number><b>' . number_format($ParentOverheadCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
 
 		echo '<tr>
 			<td colspan=4 class=number><b>' . _('Total Cost') . '</b></td>
-			<td class=number><b>' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+			<td class=number><b>' . number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 		</tr>';
 
 		echo '</table>';

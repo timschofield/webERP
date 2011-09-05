@@ -80,8 +80,8 @@ If (isset($_POST['PrintPDF'])
 
 		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {
 
-			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'],2);
-			$DisplayFXBalance = locale_number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'],2);
+			$DisplayBalance = number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'],2);
+			$DisplayFXBalance = number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'],2);
 
 			$TotBal += $Balance;
 
@@ -103,7 +103,7 @@ If (isset($_POST['PrintPDF'])
 		include('includes/PDFSupplierBalsPageHeader.inc');
 	}
 
-	$DisplayTotBalance = locale_number_format($TotBal,2);
+	$DisplayTotBalance = number_format($TotBal,2);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
 

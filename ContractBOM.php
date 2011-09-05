@@ -247,7 +247,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->ItemCost;
 
-		$DisplayLineTotal = locale_number_format($LineTotal,2);
+		$DisplayLineTotal = number_format($LineTotal,2);
 
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -267,7 +267,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 		$TotalCost += $LineTotal;
 	}
 
-	$DisplayTotal = locale_number_format($TotalCost,2);
+	$DisplayTotal = number_format($TotalCost,2);
 	echo '<tr>
 			<td colspan="6" class="number">' . _('Total Cost') . '</td>
 			<td class="number"><b>' . $DisplayTotal . '</b></td>

@@ -680,13 +680,13 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 		if ($POLine->Deleted==False) {
 			$LineTotal = $POLine->Quantity * $POLine->Price;
-			$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+			$DisplayLineTotal = number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
 			// This should help display where item-price is a fraction
 			if ($POLine->Price > 1) {
-				$DisplayPrice = locale_number_format($POLine->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+				$DisplayPrice = number_format($POLine->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			} else {
-				$DisplayPrice = locale_number_format($POLine->Price,4);
+				$DisplayPrice = number_format($POLine->Price,4);
 			}
 
 			if ($k==1){
@@ -699,7 +699,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 			echo '<td>' . $POLine->StockID  . '</td>
 				<td>' . $POLine->ItemDescription . '</td>
-				<td class="number">' . locale_number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
+				<td class="number">' . number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
 				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . $POLine->ConversionFactor . '"></td>
@@ -718,7 +718,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 		}
 	}
 
-	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 	echo '<tr><td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
 						<td class="number"><b>' . $DisplayTotal . '</b></td>
 			</tr></table>';

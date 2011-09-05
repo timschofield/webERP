@@ -946,14 +946,14 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 					<td>' . $Component->ItemDescription . '</td>
 					<td class="number">' . $Component->Quantity . '</td>
 					<td>' . $Component->UOM . '</td>
-					<td class="number">' . locale_number_format($Component->ItemCost,2) . '</td>
-					<td class="number">' . locale_number_format(($Component->ItemCost * $Component->Quantity),2) . '</td>
+					<td class="number">' . number_format($Component->ItemCost,2) . '</td>
+					<td class="number">' . number_format(($Component->ItemCost * $Component->Quantity),2) . '</td>
 				</tr>';
 			$ContractBOMCost += ($Component->ItemCost *  $Component->Quantity);
 		}
 		echo '<tr>
 				<th colspan="5"><b>' . _('Total stock cost') . '</b></th>
-					<th class="number"><b>' . locale_number_format($ContractBOMCost,2) . '</b></th>
+					<th class="number"><b>' . number_format($ContractBOMCost,2) . '</b></th>
 				</tr>';
 	} else { //there are no items set up against this contract
 		echo '<tr>
@@ -979,11 +979,11 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 					<td>' . $Requirement->Requirement . '</td>
 					<td class="number">' . $Requirement->Quantity . '</td>
 					<td class="number">' . $Requirement->CostPerUnit . '</td>
-					<td class="number">' . locale_number_format(($Requirement->CostPerUnit * $Requirement->Quantity),2) . '</td>
+					<td class="number">' . number_format(($Requirement->CostPerUnit * $Requirement->Quantity),2) . '</td>
 				</tr>';
 			$ContractReqtsCost += ($Requirement->CostPerUnit * $Requirement->Quantity);
 		}
-		echo '<tr><th colspan="3"><b>' . _('Total other costs') . '</b></th><th class="number"><b>' . locale_number_format($ContractReqtsCost,2) . '</b></th></tr>';
+		echo '<tr><th colspan="3"><b>' . _('Total other costs') . '</b></th><th class="number"><b>' . number_format($ContractReqtsCost,2) . '</b></th></tr>';
 	} else { //there are no items set up against this contract
 		echo '<tr><td colspan="4"><i>' . _('None Entered') . '</i></td></tr>';
 	}
@@ -991,9 +991,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<br />';
 	echo'<table class="selection">
 			<tr><th>' . _('Total Contract Cost') . '</th>
-			<th class="number">' . locale_number_format(($ContractBOMCost+$ContractReqtsCost),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+			<th class="number">' . number_format(($ContractBOMCost+$ContractReqtsCost),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 			<th>' . _('Contract Price') . '</th>
-			<th class="number">' . locale_number_format(($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+			<th class="number">' . number_format(($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 			</tr>
 			</table>';
 

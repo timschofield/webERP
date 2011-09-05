@@ -85,12 +85,12 @@ if (isset($_POST['PrintPDF'])) {
 			$pdf->addTextWrap(50,$YPos,100,$FontSize,$myrow['stockid'],'',0,$fill);
 			$pdf->addTextWrap(150,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
 			$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow['loccode'],'left',0,$fill);
-			$pdf->addTextWrap(370,$YPos,50,$FontSize,locale_number_format($myrow['quantity'],
+			$pdf->addTextWrap(370,$YPos,50,$FontSize,number_format($myrow['quantity'],
 			                                    $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(420,$YPos,50,$FontSize,locale_number_format($myrow['reorderlevel'],
+			$pdf->addTextWrap(420,$YPos,50,$FontSize,number_format($myrow['reorderlevel'],
 			                                    $myrow['decimalplaces']),'right',0,$fill);
 			$shortage = $myrow['reorderlevel'] - $myrow['quantity'];
-			$pdf->addTextWrap(470,$YPos,50,$FontSize,locale_number_format($shortage,
+			$pdf->addTextWrap(470,$YPos,50,$FontSize,number_format($shortage,
 			                                    $myrow['decimalplaces']),'right',0,$fill);
 
 			if ($YPos < $Bottom_Margin + $line_height){
@@ -119,9 +119,9 @@ if (isset($_POST['PrintPDF'])) {
 					// and False to set to transparent
 
 						$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow2['loccode'],'left',0,$fill);
-						$pdf->addTextWrap(370,$YPos,50,$FontSize,locale_number_format($myrow2['quantity'],
+						$pdf->addTextWrap(370,$YPos,50,$FontSize,number_format($myrow2['quantity'],
 															$myrow2['decimalplaces']),'right',0,$fill);
-						$pdf->addTextWrap(420,$YPos,50,$FontSize,locale_number_format($myrow2['reorderlevel'],
+						$pdf->addTextWrap(420,$YPos,50,$FontSize,number_format($myrow2['reorderlevel'],
 				                                    $myrow2['decimalplaces']),'right',0,$fill);
 
 					if ($YPos < $Bottom_Margin + $line_height){

@@ -123,12 +123,12 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$myrow['transno'],
 				$DisplayTranDate,
 				$myrow['debtorno'],
-				locale_number_format($myrow['qty'],
+				number_format($myrow['qty'],
 				$myrow['decimalplaces']),
 				$myrow['reference'],
-				locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($myrow['discountpercent']*100,2),
-				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
+				number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($myrow['discountpercent']*100,2),
+				number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	$j++;
 	If ($j == 16){
 		$j=1;

@@ -55,7 +55,7 @@ echo '<div class="centre">';
 
 echo '<br /><a href="'. $rootpath. '/ConfirmDispatch_Invoice.php">'. _('Back to Confirmation of Dispatch') . '/' . _('Invoice'). '</a>';
 
-echo '<br /><font size=2><b>'. _('Dispatch of up to').' '. locale_number_format($LineItem->Quantity-$LineItem->QtyInv, $LineItem->DecimalPlaces). ' '. _('Controlled items').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('on order').' ' . $_SESSION['Items']->OrderNo . ' '. _('to'). ' ' . $_SESSION['Items']->CustomerName . '</b></font></div>';
+echo '<br /><font size=2><b>'. _('Dispatch of up to').' '. number_format($LineItem->Quantity-$LineItem->QtyInv, $LineItem->DecimalPlaces). ' '. _('Controlled items').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('on order').' ' . $_SESSION['Items']->OrderNo . ' '. _('to'). ' ' . $_SESSION['Items']->CustomerName . '</b></font></div>';
 
 /** vars needed by InputSerialItem : **/
 $StockID = $LineItem->StockID;

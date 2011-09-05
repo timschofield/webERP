@@ -362,7 +362,7 @@ echo '</td><td><input type=submit name="CheckCode" VALUE="'._('Check Part').'"><
 if (isset($_SESSION['Adjustment']) and mb_strlen($_SESSION['Adjustment']->ItemDescription)>1){
 	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Adjustment']->ItemDescription . ' ('._('In Units of').' ' .
 		$_SESSION['Adjustment']->PartUnit . ' ) - ' . _('Unit Cost').' = ' .
-			locale_number_format($_SESSION['Adjustment']->StandardCost,4) . '</font></td></tr>';
+			number_format($_SESSION['Adjustment']->StandardCost,4) . '</font></td></tr>';
 }
 
 echo '<tr><td>'. _('Adjustment to Stock At Location').':</td>

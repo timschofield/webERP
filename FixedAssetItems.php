@@ -543,9 +543,9 @@ echo '</table>';
 /*Get the last period depreciation (depn is transtype =44) was posted for */
 echo '<table><tr><th colspan=2>' . _('Asset Financial Summary') . '</th></tr>';
 
-echo '<tr><td>' . _('Accumulated Costs') . ':</td><td class="number">' . locale_number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
-echo '<tr><td>' . _('Accumulated Depreciation') . ':</td><td class="number">' . locale_number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
-echo '<tr><td>' . _('Net Book Value') . ':</td><td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+echo '<tr><td>' . _('Accumulated Costs') . ':</td><td class="number">' . number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+echo '<tr><td>' . _('Accumulated Depreciation') . ':</td><td class="number">' . number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+echo '<tr><td>' . _('Net Book Value') . ':</td><td class="number">' . number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 $result = DB_query("SELECT periods.lastdate_in_period, 
 								max(fixedassettrans.periodno) 

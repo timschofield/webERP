@@ -162,10 +162,10 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				if ($PartCounter > 0 & $HoldPart != $myrow['part']) {
 					$pdf->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$fill);
 					$pdf->addTextWrap(180,$YPos,40,$FontSize,_('Unit Cost: '),'center',0,$fill);
-					$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty,
+					$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($TotalPartQty,
 														$HoldDecimalPlaces),'right',0,$fill);
-					$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+					$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 					$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 					$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$fill);
 					$TotalPartCost = 0;
@@ -183,9 +183,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
 				$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
 				$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
-				$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'],
+				$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($myrow['supplyquantity'],
 														  $myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($ExtCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($ExtCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 				if ($_POST['Consolidation'] == 'None'){
 					$pdf->addTextWrap(370,$YPos,80,$FontSize,$myrow['ordertype'],'right',0,$fill);
 					$pdf->addTextWrap(450,$YPos,80,$FontSize,$myrow['orderno'],'right',0,$fill);
@@ -214,9 +214,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$YPos -=$line_height;
 		$pdf->addTextWrap(40,$YPos,130,$FontSize,$HoldDescription,'',0,$fill);
 		$pdf->addTextWrap(170,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-		$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
-		$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty,$HoldDecimalPlaces),'right',0,$fill);
-		$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($TotalPartQty,$HoldDecimalPlaces),'right',0,$fill);
+		$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 		$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 		$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$fill);
 		$FontSize =8;
@@ -231,7 +231,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');
 		$pdf->addTextWrap(150,$YPos,30,$FontSize,$PartCounter, 'left');
 		$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
-		$DisplayTotalVal = locale_number_format($Total_ExtCost,2);
+		$DisplayTotalVal = number_format($Total_ExtCost,2);
 		$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf');
@@ -283,9 +283,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<td>' . $myrow['description'] . '</td>
 				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>
 				<td>' . ConvertSQLDate($myrow['duedate']) . '</td>
-				<td class=number>' . locale_number_format($myrow['supplyquantity'],$myrow['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($myrow['supplyquantity'] * $myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+				<td class=number>' . number_format($myrow['supplyquantity'],$myrow['decimalplaces']) . '</td>
+				<td class=number>' . number_format($myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($myrow['supplyquantity'] * $myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 				
 			if ($_POST['Consolidation']!='None') {
 				echo '<td class="number">' . $myrow['consolidatedcount'] . '</td>';
@@ -300,7 +300,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		// Print out the grand totals
 		echo '<tr>
 				<td colspan="4" class="number">' . _('Number of Work Orders') .': ' . ($j-1) . '</td>
-				<td colspan="4" class="number">' . _('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td colspan="4" class="number">' . _('Total Extended Cost') . ': ' . number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			</table>';
 

@@ -10,8 +10,8 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,
 $TotalPayments += $AccumBalance;
 $TotalAccumDiffOnExch += $AccumDiffOnExch;
 
-$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,locale_number_format($AccumBalance,2), 'right');
-$LeftOvers = $pdf->addTextWrap(405,$YPos,60,$FontSize,locale_number_format($AccumDiffOnExch,2), 'right');
+$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,number_format($AccumBalance,2), 'right');
+$LeftOvers = $pdf->addTextWrap(405,$YPos,60,$FontSize,number_format($AccumDiffOnExch,2), 'right');
 
 
 if (isset($_POST['PrintPDFAndProcess'])){

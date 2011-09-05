@@ -144,13 +144,13 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				* */
 
 				$LeftOvers = $pdf->addTextWrap($XPos + 220, $YPos, 50 - $Left_Margin, $FontSize, ConvertSQLDate($myrow['datepurchased']));
-				$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, locale_number_format($myrow['costbfwd'], 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, locale_number_format($myrow['depnbfwd'], 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, locale_number_format($myrow['periodadditions'], 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, locale_number_format($myrow['perioddepn'], 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, locale_number_format($CostCfwd, 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, locale_number_format($AccumDepnCfwd, 0), 'right');
-				$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, locale_number_format($CostCfwd - $AccumDepnCfwd, 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, number_format($myrow['costbfwd'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, number_format($myrow['depnbfwd'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, number_format($myrow['periodadditions'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, number_format($myrow['perioddepn'], 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($CostCfwd, 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($AccumDepnCfwd, 0), 'right');
+				$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($CostCfwd - $AccumDepnCfwd, 0), 'right');
 
 				$YPos = $YPos - (0.8 * $line_height);
 				if ($YPos < $Bottom_Margin + $line_height) {
@@ -173,14 +173,14 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 				}
 			*/
 				echo '</td><td style="vertical-align:top">' . ConvertSQLDate($myrow['datepurchased']) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['costbfwd'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['depnbfwd'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['periodadditions'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['perioddepn'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($CostCfwd , 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($AccumDepnCfwd, 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($CostCfwd - $AccumDepnCfwd, 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['perioddisposal'], 2) . '</td></tr>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($myrow['costbfwd'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($myrow['depnbfwd'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($myrow['periodadditions'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($myrow['perioddepn'], 2) . '</td>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($CostCfwd , 2) . '</td>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($AccumDepnCfwd, 2) . '</td>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($CostCfwd - $AccumDepnCfwd, 2) . '</td>';
+				echo '<td style="vertical-align:top" class="number">' . number_format($myrow['perioddisposal'], 2) . '</td></tr>';
 			}
 		} // end of if the asset was either not disposed yet or disposed after the start date
 		$TotalCostBfwd +=$myrow['costbfwd'];
@@ -196,13 +196,13 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 
 	if (isset($_POST['pdf'])) {
 		$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 300 - $Left_Margin, $FontSize, _('TOTAL'));
-		$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, locale_number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, locale_number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, locale_number_format($TotalAdditions, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, locale_number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, locale_number_format($TotalCostCfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, locale_number_format($TotalDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, locale_number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 410, $YPos, 70, $FontSize, number_format($TotalAdditions, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 480, $YPos, 70, $FontSize, number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 550, $YPos, 70, $FontSize, number_format($TotalCostCfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 620, $YPos, 70, $FontSize, number_format($TotalDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($XPos + 690, $YPos, 70, $FontSize, number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 		$pdf->Output($_SESSION['DatabaseName'] . '_Asset Register_' . date('Y-m-d') . '.pdf', 'I');
 		exit;
@@ -220,14 +220,14 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		echo '<input type=hidden name="AssetLocation" value=' . $_POST['AssetLocation'] . '>';
 		//Total Values
 		echo '<tr><th style="vertical-align:top" colspan="5">' . _('TOTAL') . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalAdditions, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalCostCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
-		echo '<th style="text-align:right">' . locale_number_format($TotalDisposals, $_SESSION['CompanyRecord']['decimalplaces']) . '</th></tr>';
+		echo '<th style="text-align:right">' . number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalAdditions, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalCostCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
+		echo '<th style="text-align:right">' . number_format($TotalDisposals, $_SESSION['CompanyRecord']['decimalplaces']) . '</th></tr>';
 		echo '</table>';
 		echo '<br /><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
 		echo '<input type="Submit" name="csv" value="' . _('Print as CSV') . '"></div></form>';

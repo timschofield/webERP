@@ -304,9 +304,9 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	echo '<td>'.$LnItm->StockID.'</td>
 		<td>'.$LnItm->ItemDescription.'</td>
-		<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
+		<td class="number">' . number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
 		<td>'.$LnItm->Units.'</td>
-		<td class="number">' . locale_number_format($LnItm->QtyInv,$LnItm->DecimalPlaces) . '</td>';
+		<td class="number">' . number_format($LnItm->QtyInv,$LnItm->DecimalPlaces) . '</td>';
 
 	if ($LnItm->Controlled==1){
 
@@ -322,9 +322,9 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 			echo '<td class="number"><input tabindex="'.$j.'" type="text" class="number" name="' . $LnItm->LineNumber . '_QtyDispatched" maxlength=12 size=12 value="' . $LnItm->QtyDispatched . '"></td>';
 		}
 	}
-	$DisplayDiscountPercent = locale_number_format($LnItm->DiscountPercent*100,2) . '%';
-	$DisplayLineNetTotal = locale_number_format($LineTotal,$_SESSION['Items']->CurrDecimalPlaces);
-	$DisplayPrice = locale_number_format($LnItm->Price,$_SESSION['Items']->CurrDecimalPlaces);
+	$DisplayDiscountPercent = number_format($LnItm->DiscountPercent*100,2) . '%';
+	$DisplayLineNetTotal = number_format($LineTotal,$_SESSION['Items']->CurrDecimalPlaces);
+	$DisplayPrice = number_format($LnItm->Price,$_SESSION['Items']->CurrDecimalPlaces);
 	echo '<td class="number">'.$DisplayPrice.'</td>
 		<td class="number">'.$DisplayDiscountPercent.'</td>
 		<td class="number">'.$DisplayLineNetTotal.'</td>';
@@ -373,9 +373,9 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	$TaxTotal += $TaxLineTotal;
 
-	$DisplayTaxAmount = locale_number_format($TaxLineTotal ,$_SESSION['Items']->CurrDecimalPlaces);
+	$DisplayTaxAmount = number_format($TaxLineTotal ,$_SESSION['Items']->CurrDecimalPlaces);
 
-	$DisplayGrossLineTotal = locale_number_format($LineTotal+ $TaxLineTotal,$_SESSION['Items']->CurrDecimalPlaces);
+	$DisplayGrossLineTotal = number_format($LineTotal+ $TaxLineTotal,$_SESSION['Items']->CurrDecimalPlaces);
 
 	echo '<td class="number">'.$DisplayTaxAmount.'</td><td class="number">'.$DisplayGrossLineTotal.'</td>';
 
@@ -511,13 +511,13 @@ foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 }
 echo '</td>';
 
-echo '<td class="number">' . locale_number_format($FreightTaxTotal,$_SESSION['Items']->CurrDecimalPlaces) . '</td>
-	<td class="number">' . locale_number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],$_SESSION['Items']->CurrDecimalPlaces) . '</td>
+echo '<td class="number">' . number_format($FreightTaxTotal,$_SESSION['Items']->CurrDecimalPlaces) . '</td>
+	<td class="number">' . number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],$_SESSION['Items']->CurrDecimalPlaces) . '</td>
 	</tr>';
 
 $TaxTotal += $FreightTaxTotal;
 
-$DisplaySubTotal = locale_number_format(($_SESSION['Items']->total + $_POST['ChargeFreightCost']),$_SESSION['Items']->CurrDecimalPlaces);
+$DisplaySubTotal = number_format(($_SESSION['Items']->total + $_POST['ChargeFreightCost']),$_SESSION['Items']->CurrDecimalPlaces);
 
 
 /* round the totals to avoid silly entries */
@@ -529,8 +529,8 @@ echo '<tr>
 	<td colspan="10" class="number">' . _('Invoice Totals'). '</td>
 	<td class="number:><hr><b>'.$DisplaySubTotal.'</b><hr></td>
 	<td colspan="2"></td>
-	<td class="number"><hr><b>' . locale_number_format($TaxTotal,$_SESSION['Items']->CurrDecimalPlaces) . '</b><hr></td>
-	<td class="number"><hr><b>' . locale_number_format($TaxTotal+($_SESSION['Items']->total + $_POST['ChargeFreightCost']),$_SESSION['Items']->CurrDecimalPlaces) . '</b><hr></td>
+	<td class="number"><hr><b>' . number_format($TaxTotal,$_SESSION['Items']->CurrDecimalPlaces) . '</b><hr></td>
+	<td class="number"><hr><b>' . number_format($TaxTotal+($_SESSION['Items']->total + $_POST['ChargeFreightCost']),$_SESSION['Items']->CurrDecimalPlaces) . '</b><hr></td>
 </tr>';
 
 if (! isset($_POST['DispatchDate']) OR  ! Is_Date($_POST['DispatchDate'])){

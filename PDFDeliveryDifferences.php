@@ -195,7 +195,7 @@ while ($myrow=DB_fetch_array($Result)){
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,40,$FontSize,$myrow['orderno'], 'left');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,200,$FontSize,$myrow['stockid'] . ' - ' . $myrow['description'], 'left');
 
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,locale_number_format($myrow['quantitydiff']), 'right');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,number_format($myrow['quantitydiff']), 'right');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+335,$YPos,50,$FontSize,$myrow['debtorno'], 'left');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+385,$YPos,50,$FontSize,$myrow['branch'], 'left');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+435,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
@@ -212,7 +212,7 @@ while ($myrow=DB_fetch_array($Result)){
 
 
 $YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of differences') . ' ' . locale_number_format($TotalDiffs), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of differences') . ' ' . number_format($TotalDiffs), 'left');
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
@@ -258,10 +258,10 @@ $result = DB_query($sql,$db,$ErrMsg);
 
 $myrow=DB_fetch_row($result);
 $YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of order lines') . ' ' . locale_number_format($myrow[0]), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of order lines') . ' ' . number_format($myrow[0]), 'left');
 
 $YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . locale_number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . '%', 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . '%', 'left');
 
 $ReportFileName = $_SESSION['DatabaseName'] . '_DeliveryDifferences_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);

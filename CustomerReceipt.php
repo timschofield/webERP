@@ -254,7 +254,7 @@ if (isset($_POST['CommitBatch'])){
 				<td>'.$_SESSION['ReceiptBatch']->DateBanked.'</td>
 				<td>'.$ReceiptItem->CustomerName.'</td>
 				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
-				<td class=number>'.locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate,2) .'</td>';
+				<td class=number>'.number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate,2) .'</td>';
 
 		if ($ReceiptItem->GLCode ==''){
 			echo '<td><a target="_blank"  href="' . $rootpath . '/PDFReceipt.php?BatchNumber=' . $_SESSION['ReceiptBatch']->BatchNo. '&ReceiptNumber='.$CustomerReceiptCounter.'">'._('Print a Customer Receipt').'</a></td></tr>';
@@ -784,7 +784,7 @@ if (!isset($_SESSION['ReceiptBatch']->FunctionalExRate)){
 }
 if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Currency AND isset($_SESSION['ReceiptBatch']->AccountCurrency)){
 	if (isset($SuggestedExRate)){
-		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedExRate,4) . '</b>';
+		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedExRate,4) . '</b>';
 	} else {
 		$SuggestedExRateText ='';
 	}
@@ -799,7 +799,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Curre
 if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
 											AND isset($_SESSION['ReceiptBatch']->AccountCurrency)){
 	if (isset($SuggestedFunctionalExRate)){
-		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedFunctionalExRate,4) . '</b>';
+		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedFunctionalExRate,4) . '</b>';
 	} else {
 		$SuggestedFunctionalExRateText ='';
 	}
@@ -855,8 +855,8 @@ if (isset($_SESSION['ReceiptBatch'])){
 		$myrow=DB_fetch_array($Result);
 
 		echo '<tr>
-				<td class=number>' . locale_number_format($ReceiptItem->Amount,2) . '</td>
-				<td class=number>' . locale_number_format($ReceiptItem->Discount,2) . '</td>
+				<td class=number>' . number_format($ReceiptItem->Amount,2) . '</td>
+				<td class=number>' . number_format($ReceiptItem->Discount,2) . '</td>
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
 				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
 				<td>'.$ReceiptItem->Narrative . '</td>
@@ -865,7 +865,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;
 	}
 
-	echo '<tr><td class=number><b>' . locale_number_format($BatchTotal,2) . '</b></td></tr></table>';
+	echo '<tr><td class=number><b>' . number_format($BatchTotal,2) . '</b></td></tr></table>';
 }
 
 /*this next block of ifs deals with what information to display for input into the form
@@ -892,7 +892,7 @@ if (isset($_SESSION['CustomerRecord'])
 		AND isset($_SESSION['ReceiptBatch'])){
 /*a customer is selected  */
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . $_SESSION['CustomerRecord']['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': ' . locale_number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord']['reasondescription'];
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . $_SESSION['CustomerRecord']['name'] . ' - (' . _('All amounts stated in') . ' ' . $_SESSION['CustomerRecord']['currency'] . ')' . _('Terms') . ': ' . $_SESSION['CustomerRecord']['terms'] . '<br/>' . _('Credit Limit') . ': ' . number_format($_SESSION['CustomerRecord']['creditlimit'],0) . '  ' . _('Credit Status') . ': ' . $_SESSION['CustomerRecord']['reasondescription'];
 
 	if ($_SESSION['CustomerRecord']['dissallowinvoices']!=0){
 	   echo '<br /><font color=red size=4><b>' . _('ACCOUNT ON HOLD') . '</font></b><br/>';
@@ -908,17 +908,17 @@ if (isset($_SESSION['CustomerRecord'])
 			</tr>';
 
 	echo '<tr>
-		<td class=number>' . locale_number_format($_SESSION['CustomerRecord']['balance'],2) . '</td>
-		<td class=number>' . locale_number_format(($_SESSION['CustomerRecord']['balance'] - $_SESSION['CustomerRecord']['due']),2) . '</td>
-		<td class=number>' . locale_number_format(($_SESSION['CustomerRecord']['due']-$_SESSION['CustomerRecord']['overdue1']),2) . '</td>
-		<td class=number>' . locale_number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,2) . '</td>
-		<td class=number>' . locale_number_format($_SESSION['CustomerRecord']['overdue2'],2) . '</td>
+		<td class=number>' . number_format($_SESSION['CustomerRecord']['balance'],2) . '</td>
+		<td class=number>' . number_format(($_SESSION['CustomerRecord']['balance'] - $_SESSION['CustomerRecord']['due']),2) . '</td>
+		<td class=number>' . number_format(($_SESSION['CustomerRecord']['due']-$_SESSION['CustomerRecord']['overdue1']),2) . '</td>
+		<td class=number>' . number_format(($_SESSION['CustomerRecord']['overdue1']-$_SESSION['CustomerRecord']['overdue2']) ,2) . '</td>
+		<td class=number>' . number_format($_SESSION['CustomerRecord']['overdue2'],2) . '</td>
 		</tr>
 		</table><br />';
 
 	echo '<table class="selection">';
 
-	$DisplayDiscountPercent = locale_number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . '%';
+	$DisplayDiscountPercent = number_format($_SESSION['CustomerRecord']['pymtdiscount']*100,2) . '%';
 
 	echo '<input type="hidden" name="CustomerID" value="' . $_POST['CustomerID'] . '">';
 	echo '<input type="hidden" name="CustomerName" value="' . $_SESSION['CustomerRecord']['name'] . '">';
@@ -1051,7 +1051,7 @@ if (((isset($_SESSION['CustomerRecord'])
 				$k=1;
 			}
 			printf('<td><font size=1>
-					<input tabindex='.locale_number_format(12+$j).' type=submit name="Select" value="%s"></font></td>
+					<input tabindex='.number_format(12+$j).' type=submit name="Select" value="%s"></font></td>
 					<td>%s</td></tr>',
 					$myrow['debtorno'],
 					$myrow['name']);

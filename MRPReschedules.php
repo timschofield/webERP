@@ -94,7 +94,7 @@ if (isset($_POST['PrintPDF'])) {
 		$pdf->addTextWrap(130,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
 		$pdf->addTextWrap(330,$YPos,50,$FontSize,$myrow['orderno'],'right',0,$fill);
 		$pdf->addTextWrap(380,$YPos,30,$FontSize,$myrow['ordertype'],'right',0,$fill);
-		$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'], $myrow['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(410,$YPos,50,$FontSize,number_format($myrow['supplyquantity'], $myrow['decimalplaces']),'right',0,$fill);
 		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedDueDate,'right',0,$fill);
 		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedMRPDate,'right',0,$fill);
 

@@ -429,7 +429,7 @@ if (isset($_POST['CommitBatch'])){
 					'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 					'" . date('Y-m-d H-i-s') . "',
 					'" . $_SESSION['PaymentDetail']->Paymenttype . "',
-					'" . ($_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "',
+					'" . ($_SESSION['PaymentDetail']->FunctionalExRate/$_SESSION['PaymentDetail']->ExRate) . "',
 					'" . (-$_SESSION['PaymentDetail']->Amount-$_SESSION['PaymentDetail']->Discount) . "',
 					'" . $_SESSION['PaymentDetail']->Narrative . "'
 				)";
@@ -727,9 +727,8 @@ echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail']->DatePaid . '</font></th><
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
-		FROM bankaccounts,
-		chartmaster
-		WHERE bankaccounts.accountcode=chartmaster.accountcode";
+		FROM bankaccounts INNER JOIN chartmaster
+		ON bankaccounts.accountcode=chartmaster.accountcode";
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank accounts was');
@@ -802,7 +801,7 @@ if (!isset($_POST['FunctionalExRate'])){
 }
 if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Currency AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
 	if (isset($SuggestedExRate)){
-		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedExRate,4) . '</b>';
+		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedExRate,4) . '</b>';
 	} else {
 		$SuggestedExRateText ='';
 	}
@@ -817,7 +816,7 @@ if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Cur
 if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
 										AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
 	if (isset($SuggestedFunctionalExRate)){
-		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedFunctionalExRate,4) . '</b>';
+		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedFunctionalExRate,4) . '</b>';
 	} else {
 		$SuggestedFunctionalExRateText ='';
 	}
@@ -1011,7 +1010,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 			
 			echo '<tr>
 				<td align=left>' . $PaymentItem->cheque . '</td>
-				<td class=number>' . locale_number_format($PaymentItem->Amount,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</td>
+				<td class=number>' . number_format($PaymentItem->Amount,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</td>
 				<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
 				<td>' . stripslashes($PaymentItem->Narrative)  . '</td>
 				<td>' . $PaymentItem->tag . ' - ' . $TagName . '</td>
@@ -1019,7 +1018,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 				</tr>';
 			$PaymentTotal += $PaymentItem->Amount;
 		}
-		echo '<tr><td></td><td class=number><b>' . locale_number_format($PaymentTotal,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</b></td><td></td><td></td><td></td></tr></table><br />';
+		echo '<tr><td></td><td class=number><b>' . number_format($PaymentTotal,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</b></td><td></td><td></td><td></td></tr></table><br />';
 		echo '<input type=submit name="CommitBatch" value="' . _('Accept and Process Payment') . '">';
 	}
 

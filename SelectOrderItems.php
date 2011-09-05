@@ -1382,8 +1382,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-			$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-			$DisplayDiscount = locale_number_format(($OrderLine->DiscountPercent * 100),2);
+			$DisplayLineTotal = number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+			$DisplayDiscount = number_format(($OrderLine->DiscountPercent * 100),2);
 			$QtyOrdered = $OrderLine->Quantity;
 			$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
 
@@ -1454,7 +1454,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		} /* end of loop around items */
 
-		$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			$ColSpanNumber = 2;
 		} else {
@@ -1466,8 +1466,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			</tr>
 			</table>';
 
-		$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,2);
-		$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
+		$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
+		$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 		echo '<table><tr class="EvenTableRows"><td>' . _('Total Weight') . ':</td>
 						 <td>' . $DisplayWeight . '</td>
 						 <td>' . _('Total Volume') . ':</td>
@@ -1618,10 +1618,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$myrow['stockid'],
 						$myrow['description'],
 						$myrow['units'],
-						locale_number_format($QOH, $QOHRow['decimalplaces']),
-						locale_number_format($DemandQty, $QOHRow['decimalplaces']),
-						locale_number_format($OnOrder, $QOHRow['decimalplaces']),
-						locale_number_format($Available, $QOHRow['decimalplaces']) );
+						number_format($QOH, $QOHRow['decimalplaces']),
+						number_format($DemandQty, $QOHRow['decimalplaces']),
+						number_format($OnOrder, $QOHRow['decimalplaces']),
+						number_format($Available, $QOHRow['decimalplaces']) );
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
@@ -1802,10 +1802,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$myrow['stockid'],
 						$myrow['description'],
 						$myrow['units'],
-						locale_number_format($QOH,$QOHRow['decimalplaces']),
-						locale_number_format($DemandQty,$QOHRow['decimalplaces']),
-						locale_number_format($OnOrder,$QOHRow['decimalplaces']),
-						locale_number_format($Available,$QOHRow['decimalplaces']) );
+						number_format($QOH,$QOHRow['decimalplaces']),
+						number_format($DemandQty,$QOHRow['decimalplaces']),
+						number_format($OnOrder,$QOHRow['decimalplaces']),
+						number_format($Available,$QOHRow['decimalplaces']) );
 				$i++;
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';

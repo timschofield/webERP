@@ -139,10 +139,10 @@ if (DB_num_rows($result)>0){
 
 		} //end if need a new page headed up
 
-		$DisplayQty = locale_number_format($myrow2['quantity'],2);
-		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],2);
-		$DisplayPrice = locale_number_format($myrow2['unitprice'],2);
-		$DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
+		$DisplayQty = number_format($myrow2['quantity'],2);
+		$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
+		$DisplayPrice = number_format($myrow2['unitprice'],2);
+		$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
 		$SubTot =  $myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']);
 		$TaxProv = $myrow['taxprovinceid'];
 		$TaxCat = $myrow2['taxcatid'];
@@ -167,10 +167,10 @@ if (DB_num_rows($result)>0){
 
 		$DisplayTaxClass = $TaxClass . "%";
 		$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
-		$DisplayTaxAmount = locale_number_format($TaxAmount,2);
+		$DisplayTaxAmount = number_format($TaxAmount,2);
 
 		$LineTotal = $SubTot + $TaxAmount;
-		$DisplayTotal = locale_number_format($LineTotal,2);
+		$DisplayTotal = number_format($LineTotal,2);
 
 		$FontSize=10;
 
@@ -211,13 +211,13 @@ if (DB_num_rows($result)>0){
 
 	$YPos -= ($line_height);
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Total Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($TaxTotal,2),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($TaxTotal,2),'right');
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Excluding Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotalEx,2),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($QuotationTotalEx,2),'right');
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Including Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotal,2),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($QuotationTotal,2),'right');
 	
 	$YPos -= ($line_height);
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,20,10,_('Notes:'));

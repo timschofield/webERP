@@ -43,8 +43,8 @@ include('includes/header.inc');
 	echo '<table cellpadding="2" class="selection">
 		<tr><td class="label">' . _('Issue to work order') . ':</td><td>' . $_REQUEST['WO'] .'</td><td class="label">' . _('Item') . ':</td><td>' . $_REQUEST['StockID'] . ' - ' . $WORow['description'] . '</td></tr>
 	 	<tr><td class="label">' . _('Manufactured at') . ':</td><td>' . $WORow['locationname'] . '</td><td class="label">' . _('Required By') . ':</td><td>' . ConvertSQLDate($WORow['requiredby']) . '</td></tr>
-	 	<tr><td class="label">' . _('Quantity Ordered') . ':</td><td class=number>' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
-	 	<tr><td class="label">' . _('Already Received') . ':</td><td class=number>' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
+	 	<tr><td class="label">' . _('Quantity Ordered') . ':</td><td class=number>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
+	 	<tr><td class="label">' . _('Already Received') . ':</td><td class=number>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td><td colspan=2>' . $WORow['units'] . '</td></tr>
 	 	<tr><td class="label">' . _('Date Material Issued') . ':</td><td>' . Date($_SESSION['DefaultDateFormat']) . '</td>
 		<td class="label">' . _('Issued From') . ':</td><td>';
 
@@ -90,8 +90,8 @@ include('includes/header.inc');
 						$db);
 			$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
 
-			echo '<td align="right">' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
-				<td align="right">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
+			echo '<td align="right">' . number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
+				<td align="right">' . number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
 		}
 
 		echo '</table>';

@@ -129,7 +129,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 			if ($myrow[7]=='D' OR $myrow[7]=='K' OR $myrow[7]=='A' OR $myrow[7]=='G'){
 				$QuantityOnHand = _('N/A');
 			} else {
-				$QuantityOnHand = locale_number_format($myrow[10],$myrow[11]);
+				$QuantityOnHand = number_format($myrow[10],$myrow[11]);
 			}
 			printf('<td>%s</td>
 				<td>%s</td>
@@ -834,7 +834,7 @@ if (isset($_POST['Search']) AND isset($result) AND !isset($SelectedParent)) {
 		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K' OR $myrow['mbflag']=='G'){
 			$StockOnHand = _('N/A');
 		} else {
-			$StockOnHand = locale_number_format($myrow['totalonhand'],2);
+			$StockOnHand = number_format($myrow['totalonhand'],2);
 		}
 		$tab = $j+3;
 		printf('<td><input tabindex="' . $tab . '" type="submit" name="Select" value="%s"</td>

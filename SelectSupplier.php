@@ -343,9 +343,9 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			} else {
 				echo _('Last Paid:') . '</td><td valign=top class=select> <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b></td></tr>';
 			}
-			echo '<tr><td valign=top class=select>'._('Last Paid Amount:') . '</td><td valign=top class=select>  <b>' . locale_number_format($myrow['lastpaid'], 2) . '</b></td></tr>';
+			echo '<tr><td valign=top class=select>'._('Last Paid Amount:') . '</td><td valign=top class=select>  <b>' . number_format($myrow['lastpaid'], 2) . '</b></td></tr>';
 			echo '<tr><td valign=top class=select>'._('Supplier since:') . '</td><td valign=top class=select> <b>' . ConvertSQLDate($myrow['suppliersince']) . '</b></td></tr>';
-			echo '<tr><td valign=top class=select>'._('Total Spend with this Supplier:') . '</td><td valign=top class=select> <b>' . locale_number_format($row['total'], 2) . '</b></td></tr>';
+			echo '<tr><td valign=top class=select>'._('Total Spend with this Supplier:') . '</td><td valign=top class=select> <b>' . number_format($row['total'], 2) . '</b></td></tr>';
 			echo '</th></tr></table>';
 		}
 	}

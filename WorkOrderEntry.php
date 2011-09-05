@@ -482,7 +482,7 @@ echo '<tr><td class="label">' . _('Required By') . ':</td>
 
 if (isset($WOResult)){
 	echo '<tr><td class="label">' . _('Accumulated Costs') . ':</td>
-			  <td class="number">' . locale_number_format($myrow['costissued'],2) . '</td></tr>';
+			  <td class="number">' . number_format($myrow['costissued'],2) . '</td></tr>';
 }
 echo '</table>
 		<p><table class="selection">';

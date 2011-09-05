@@ -159,10 +159,10 @@ if (isset($_POST['PrintPDF'])) {
 			if ($Partctr > 0 & $holdpart != $myrow['part']) {
 				$pdf->addTextWrap(50,$YPos,130,$FontSize,$holddescription,'',0,$fill);
 				$pdf->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-				$pdf->addTextWrap(230,$YPos,40,$FontSize,locale_number_format($holdcost,2),'right',0,$fill);
-				$pdf->addTextWrap(270,$YPos,50,$FontSize,locale_number_format($totalpartqty,
+				$pdf->addTextWrap(230,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
+				$pdf->addTextWrap(270,$YPos,50,$FontSize,number_format($totalpartqty,
 																$holddecimalplaces),'right',0,$fill);
-				$pdf->addTextWrap(320,$YPos,60,$FontSize,locale_number_format($totalpartcost,2),'right',0,$fill);
+				$pdf->addTextWrap(320,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
 				$pdf->addTextWrap(380,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 				$pdf->addTextWrap(410,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
 				// Get and print supplier info for part
@@ -193,9 +193,9 @@ if (isset($_POST['PrintPDF'])) {
 			$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
 			$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
 			$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
-			$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'],
+			$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($myrow['supplyquantity'],
 													  $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($extcost,2),'right',0,$fill);
+			$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($extcost,2),'right',0,$fill);
 			if ($_POST['Consolidation'] == 'None'){
 				$pdf->addTextWrap(370,$YPos,80,$FontSize,$myrow['ordertype'],'right',0,$fill);
 				$pdf->addTextWrap(450,$YPos,80,$FontSize,$myrow['orderno'],'right',0,$fill);
@@ -223,9 +223,9 @@ if (isset($_POST['PrintPDF'])) {
 	$YPos -=$line_height;
 	$pdf->addTextWrap(40,$YPos,130,$FontSize,$holddescription,'',0,$fill);
 	$pdf->addTextWrap(170,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-	$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($holdcost,2),'right',0,$fill);
-	$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($totalpartqty,$holddecimalplaces),'right',0,$fill);
-	$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($totalpartcost,2),'right',0,$fill);
+	$pdf->addTextWrap(220,$YPos,40,$FontSize,number_format($holdcost,2),'right',0,$fill);
+	$pdf->addTextWrap(260,$YPos,50,$FontSize,number_format($totalpartqty,$holddecimalplaces),'right',0,$fill);
+	$pdf->addTextWrap(310,$YPos,60,$FontSize,number_format($totalpartcost,2),'right',0,$fill);
 	$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 	$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
 	// Get and print supplier info for part
@@ -253,7 +253,7 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Purchase Orders: '), 'left');
 	$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
 	$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
-	$DisplayTotalVal = locale_number_format($Total_Extcost,2);
+	$DisplayTotalVal = number_format($Total_Extcost,2);
 	$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Purchase_Orders_' . Date('Y-m-d') . '.pdf');

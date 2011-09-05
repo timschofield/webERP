@@ -89,9 +89,9 @@ foreach ($LineItem->SerialItems as $Bundle){
 	echo '<td>' . $Bundle->BundleRef . '</td>';
 
 	if ($LineItem->Serialised==0 and $Perishable==0){
-		echo '<td class=number>' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+		echo '<td class=number>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 	} else if ($LineItem->Serialised==0 and $Perishable==1){
-		echo '<td class=number>' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+		echo '<td class=number>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 		echo '<td class=number>' . $Bundle->ExpiryDate . '</td>';
 	}
 
@@ -103,9 +103,9 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td class=number><B>'. _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td class=number><B>'. _('Total Quantity'). ': ' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 } else {
-	echo '<tr><td class=number><B>'. _('Total Quantity'). ':</b></td><td class=number><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td class=number><B>'. _('Total Quantity'). ':</b></td><td class=number><b>' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 }
 
 /*Close off old table */
@@ -151,10 +151,10 @@ if ($EditControlled){
 			echo '<input type=hidden name="Qty' . $StartAddingAt .'" Value=1></TR>';
 		} else if ($LineItem->Serialised==0 and $Perishable==1) {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
+				value="'. number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
+				value="'. number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
 		}
 
 		$StartAddingAt++;
@@ -187,9 +187,9 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<input type=hidden name="Qty' . ($StartAddingAt+$RowNumber) .'" Value=1></tr>';
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
 		if (isset($LineItem->SerialItems[$myrow['serialno']])) {
-			echo '<td class=number>'.locale_number_format($myrow['quantity']-$LineItem->SerialItems[$myrow['serialno']]->BundleQty,$LineItem->DecimalPlaces).'</td>';
+			echo '<td class=number>'.number_format($myrow['quantity']-$LineItem->SerialItems[$myrow['serialno']]->BundleQty,$LineItem->DecimalPlaces).'</td>';
 		} else {
-			echo '<td class=number>'.locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'</td>';
+			echo '<td class=number>'.number_format($myrow['quantity'],$LineItem->DecimalPlaces).'</td>';
 		}
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11 value="0" maxlength=10></td>';
 		echo '<td><input type=hidden class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size=11

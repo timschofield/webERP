@@ -240,9 +240,9 @@ if (isset($_POST['ShowSales'])){
 		echo '<td>' . $i . '</td>
 				<td>' . $SalesRow['stockid'] . ' - ' . $SalesRow['description'] . '</td>
 				<td>' . $SalesRow['categorydescription'] . '</td>
-				<td class="number">' . locale_number_format($SalesRow['salesvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['netsalesvalue'],2) . '</td>
+				<td class="number">' . number_format($SalesRow['salesvalue'],2) . '</td>
+				<td class="number">' . number_format($SalesRow['returnvalue'],2) . '</td>
+				<td class="number">' . number_format($SalesRow['netsalesvalue'],2) . '</td>
 				<td class="number">' . $SalesRow['salesquantity'] . '</td>
 				</tr>';
 		$i++;
@@ -262,9 +262,9 @@ if (isset($_POST['ShowSales'])){
 		echo '<tr class="EvenTableRows">';
 	}
 	echo '<td class="number" colspan=3>' . _('GRAND Total') . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalSales,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalRefunds,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalNetSales,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalSales,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalRefunds,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalNetSales,2) . '</td>
 		<td class="number">' . $CumulativeTotalQuantity . '</td>
 		</tr>';
 	

@@ -83,7 +83,7 @@ If (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,80,$FontSize,$BOMList['component'],'left');
 		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$BOMList['compdescription'],'left');
 
-		$DisplayQuantity = locale_number_format($BOMList['quantity'],$BOMList['decimalplaces']);
+		$DisplayQuantity = number_format($BOMList['quantity'],$BOMList['decimalplaces']);
 		$LeftOvers = $pdf->addTextWrap(320,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_frm']),'left');
 		$LeftOvers = $pdf->addTextWrap(370,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_to']),'left');
 		$LeftOvers = $pdf->addTextWrap(420,$YPos,20,$FontSize,$BOMList['loccode'],'left');

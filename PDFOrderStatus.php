@@ -326,11 +326,11 @@ while ($myrow=DB_fetch_array($Result)){
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['stkcode'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,$myrow['description'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,locale_number_format($myrow['quantity'],$myrow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,number_format($myrow['quantity'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']), 'right');
 
 	  if ($myrow['quantity']>$myrow['qtyinvoiced']){
-		   $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,locale_number_format($myrow['quantity']-$myrow['qtyinvoiced'],$myrow['decimalplaces']), 'right');
+		   $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,number_format($myrow['quantity']-$myrow['qtyinvoiced'],$myrow['decimalplaces']), 'right');
 	  } else {
 		   $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,_('Complete'), 'left');
 	  }

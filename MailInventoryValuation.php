@@ -140,7 +140,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . " - " . $CategoryName);
 			}
 
-			$DisplayCatTotVal = locale_number_format($CatTot_Val,2);
+			$DisplayCatTotVal = number_format($CatTot_Val,2);
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
 			$YPos -=$line_height;
 
@@ -161,9 +161,9 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 		$FontSize=8;
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn['description']);
-		$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'],2);
-		$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'],0);
-		$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'],2);
+		$DisplayUnitCost = number_format($InventoryValn['unitcost'],2);
+		$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],0);
+		$DisplayItemTotal = number_format($InventoryValn['itemtotal'],2);
 
 		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
 		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
@@ -186,7 +186,7 @@ if ($_POST['DetailedReport']=='Yes'){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 }
 
-$DisplayCatTotVal = locale_number_format($CatTot_Val,2);
+$DisplayCatTotVal = number_format($CatTot_Val,2);
 $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
 
 If ($_POST['DetailedReport']=='Yes'){
@@ -199,7 +199,7 @@ $YPos -= (2*$line_height);
 
 /*Print out the grand totals */
 $LeftOvers = $pdf->addTextWrap(80, $YPos,260-$Left_Margin,$FontSize, _('Grand Total Value'), 'right');
-$DisplayTotalVal = locale_number_format($Tot_Val,2);
+$DisplayTotalVal = number_format($Tot_Val,2);
 $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 If ($_POST['DetailedReport']=='Yes'){
 	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);

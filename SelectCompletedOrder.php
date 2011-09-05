@@ -609,7 +609,7 @@ If (isset($SalesOrdersResult)) {
 		$ViewPage = $rootpath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
+		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
 		printf('<td><a href="%s">%s</a></td>
 			<td>%s</td>

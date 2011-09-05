@@ -123,10 +123,10 @@ if (!isset($_POST['Show'])) {
 					<td>'.$myrow['typename'].'</td>
 					<td>'.$myrow['banktranstype'].'</td>
 					<td>'.$myrow['ref'].'</td>
-					<td class=number>'.locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']).'</td>
-					<td class=number>'.locale_number_format($AccountCurrTotal,$BankDetailRow['decimalplaces']).'</td>
-					<td class=number>'.locale_number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-					<td class=number>'.locale_number_format($LocalCurrTotal,$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+					<td class=number>'.number_format($myrow['amount'],$BankDetailRow['decimalplaces']).'</td>
+					<td class=number>'.number_format($AccountCurrTotal,$BankDetailRow['decimalplaces']).'</td>
+					<td class=number>'.number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+					<td class=number>'.number_format($LocalCurrTotal,$_SESSION['CompanyRecord']['decimalplaces']).'</td>
 				</tr>';
 		}
 		echo '</table>';

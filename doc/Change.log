@@ -1,10 +1,13 @@
 webERP Change Log
 
+5/9/11 Phil: Fixed supplier payment exchange rate ... was being calculated incorrectly from functional exchange rate and the exchange rate between the currency of the bank account and currency of payment.
+5/9/11 Phil: GLTransInquiry posted was not retrieved correctly - now fixed
+4/9/11 Phil: Removed the stock code from form entities in SelectOrderItems.php and PO_Items.php to prevent issues with some characters in stock codes as suggested by Tim
 4/9/11 Marcos Skambraks: SelectOrderItems.php and CounterSales.php removed incorrect !== comparisons sh/been != comparisons
 4/9/11 Marcos Skambraks: modified tcpdf.php to just send the pdf header - was causing issues with apache fastcgi module
 3/9/11 Ricard: Changed SelectProduct.php to show just current prices
 3/9/11 Phil: Changed SelectCustomer to use %% around each parameter to use just a single SQL statement rather than several which ignored other inputs - as suggested by Marcos Skambraks
-2/9/11 Phil: Made locale_number_format() as per Tim's instruction that displays numbers in the format of the locale in includes/LanguageSetup.php and replaced all occurrences of number_format() with locale_number_format()
+2/9/11 Phil: Made number_format() as per Tim's instruction that displays numbers in the format of the locale in includes/LanguageSetup.php and replaced all occurrences of number_format() with number_format()
 2/9/11 Warren Olds: scaling of image in GetStockImage.php
 31/8/11 Ricard: StockAdjustments.php now sends an email to the inventory manager on the creation of manual stock adjustments. The inventory manager email is defined in SystemParameters.php - leaving the email address blank will stop any emails from being created.
 29/8/11 Ricard: Updated lastcostupdate in StockCostUpdate.php
@@ -74,8 +77,8 @@ webERP Change Log
 28/6/11 Exson: MRPDemands.php links missing ? now fixed - script fixed for quoting variable name CamelCasing
 27/6/11 Exson: MRP.php fixed modulus arithmetic that prevented suggesting production quantities where the quantity was less than 1 - the calculation using PanSize should round up to the nearest whole unit to manufacture
 26/6/11 Phil: Fixed reference to $_POST['StockID'] in WorkOrderCosting.php when updating the new weighted average cost
-26/6/11 Phil: Went back to no locale_number_formatting on PurchData.php
-26/6/11 Phil: Went back to no locale_number_formatting on PO_Items.php price and quantity - Brian May still reporting issues
+26/6/11 Phil: Went back to no number_formatting on PurchData.php
+26/6/11 Phil: Went back to no number_formatting on PO_Items.php price and quantity - Brian May still reporting issues
 25/6/11 Phil: Made PO_PDFPurchOrder.php have the description of the order item run over several lines where it exceeds the width of the space allowed for it
 22/6/11 Phil: Added message to AccountGroups.php to show that child account groups cannot have changes to their account section, their profit and loss or balance sheet and sequence in TB as these properties belong only to parent account groups and are inherited by the kids
 23/6/11 Phil: SelectOrderItems.php includes/DefineCartClass.php repaired credit checks 
@@ -223,7 +226,7 @@ webERP Change Log
 22/2/11: Phil: fix PDFTopItems.php for changed variable names - now using CamelCase tried to rework to conform
 22/2/11: Phil: remove options for PDFLanguage that are not unique in WWW_Users.php - make it default to the users settings in the SESSION for UserSettings.php
 18/2/11: Phil/Don Change PageSecurity array variable name to PageSecurityArray - caused problems with conflict with PageSecurity variable where register_globals = on; 
-18/2/11: Phil: PO_Items.php make locale_number_format variables turn back into numbers for > 1000
+18/2/11: Phil: PO_Items.php make number_format variables turn back into numbers for > 1000
 16/2/11: Phil: FixedAssetItems.php now checks for location before allowing additions
 16/2/11: Phil: Company preferences - changed wording of stock integration at cost removed the word standard as suggested by Exson
 16/2/11: Phil: SelectCreditItems.php formating/conventions lower case html and CreditInvoice.php
@@ -3067,7 +3070,7 @@ Version 0.2.0
 (Phil)Changed SelectOrderItems.php (again :( ) to avoid showing the last quick entry item as selected. unset($_GET["Edit"]) at the end of the quick entry code.
 (Phil)Fixed bugs in SupplierInvoice.php and SupplierCredit.php that crashed the entry if the tax method was changed without a manual entry being applied new button to change tax calculation method.
 (Phil)ConfirmDispatch_invoice.php now has link to new order entry
-(Phil)CustomerAllocations.php fixed a bug that was locale_number_format ing an already previously locale_number_format ed field to display 1 where locale_number_format had inserted a comma - ie where the figure for yet to allocate was > 999 the system displayed 1
+(Phil)CustomerAllocations.php fixed a bug that was number_format ing an already previously number_format ed field to display 1 where number_format had inserted a comma - ie where the figure for yet to allocate was > 999 the system displayed 1
 (Phil)SupplierInquiry.php made the invoices already paid incapable of changing status to held when already settled
 (Phil)SuppTransGLAnalysis.php made general ledger account select box show account code and in account code order
 (Phil)Made SelectOrderItems.php search only branches - a branch is required to invoice/credit it makes sense to select the branch rather than the customer and then the branch. The customer is implicit in the branch selection. Also use flag DisableTrans to ensure that only those current branches are allowed invoicing.

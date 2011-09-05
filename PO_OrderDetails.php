@@ -197,10 +197,10 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 echo '<tr><td><br /></td>
 	</tr>
 	<tr><td colspan=4 class=number>' . _('Total Order Value Excluding Tax') .'</td>
-	<td colspan=2 class=number>' . locale_number_format($OrderTotal,2) . '</td></tr>';
+	<td colspan=2 class=number>' . number_format($OrderTotal,2) . '</td></tr>';
 echo '<tr>
 	<td colspan=4 class=number>' . _('Total Order Value Received Excluding Tax') . '</td>
-	<td colspan=2 class=number>' . locale_number_format($RecdTotal,2) . '</td></tr>';
+	<td colspan=2 class=number>' . number_format($RecdTotal,2) . '</td></tr>';
 echo '</table>';
 
 echo '<br />';

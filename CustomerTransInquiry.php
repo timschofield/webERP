@@ -137,7 +137,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				$myrow['invtext'],
 				$myrow['order_'],
 				$myrow['rate'],
-				locale_number_format($myrow['totalamt'],2),
+				number_format($myrow['totalamt'],2),
 				$myrow['currcode'],
 				$rootpath,
 				SID,
@@ -156,7 +156,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				$myrow['invtext'],
 				$myrow['order_'],
 				$myrow['rate'],
-				locale_number_format($myrow['totalamt'],2),
+				number_format($myrow['totalamt'],2),
 				$myrow['currcode'],
 				$rootpath,
 				SID,
@@ -173,7 +173,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				$myrow['invtext'],
 				$myrow['order_'],
 				$myrow['rate'],
-				locale_number_format($myrow['totalamt'],2),
+				number_format($myrow['totalamt'],2),
 				$myrow['currcode']);
 		}
 

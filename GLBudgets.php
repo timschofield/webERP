@@ -173,13 +173,13 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	for ($i=1; $i<=12; $i++) {
 		echo '<tr>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod-(24-$i)] .'</th>';
-		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod-(24-$i)],2,'.','').'</td>';
+		echo '<td bgcolor="d2e5e8" class="number">'.number_format($actual[$CurrentYearEndPeriod-(24-$i)],2,'.','').'</td>';
 		echo '<td><input type="text" class="number" size=14 name="'.$i.'last" value="'.$budget[$CurrentYearEndPeriod-(24-$i)] .'"></td>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod-(12-$i)] .'</th>';
-		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod-(12-$i)],2,'.','').'</td>';
+		echo '<td bgcolor="d2e5e8" class="number">'.number_format($actual[$CurrentYearEndPeriod-(12-$i)],2,'.','').'</td>';
 		echo '<td><input type="text" class="number" size=14 name="'.$i.'this" value="'. $budget[$CurrentYearEndPeriod-(12-$i)] .'"></td>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod+($i)] .'</th>';
-		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod+$i],2,'.','').'</td>';
+		echo '<td bgcolor="d2e5e8" class="number">'.number_format($actual[$CurrentYearEndPeriod+$i],2,'.','').'</td>';
 		echo '<td><input type="text" class="number" size=14 name="'.$i.'next" value='. $budget[$CurrentYearEndPeriod+$i] .'></td>';
 		echo '</tr>';
 		$LastYearActual=$LastYearActual+$actual[$CurrentYearEndPeriod-(24-$i)];
@@ -193,14 +193,14 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 // Total Line
 
 	echo '<tr><th>'. _('Total') .'</th>';
-	echo '<th align="right">'.locale_number_format($LastYearActual,2,'.',''). '</th>';
-	echo '<th align="right">'.locale_number_format($LastYearBudget,2,'.',''). '</th>';
+	echo '<th align="right">'.number_format($LastYearActual,2,'.',''). '</th>';
+	echo '<th align="right">'.number_format($LastYearBudget,2,'.',''). '</th>';
 	echo '<th align="right"></th>';
-	echo '<th align="right">'.locale_number_format($ThisYearActual,2,'.',''). '</th>';
-	echo '<th align="right">'.locale_number_format($ThisYearBudget,2,'.',''). '</th>';
+	echo '<th align="right">'.number_format($ThisYearActual,2,'.',''). '</th>';
+	echo '<th align="right">'.number_format($ThisYearBudget,2,'.',''). '</th>';
 	echo '<th align="right"></th>';
-	echo '<th align="right">'.locale_number_format($NextYearActual,2,'.',''). '</th>';
-	echo '<th align="right">'.locale_number_format($NextYearBudget,2,'.',''). '</th></tr>';
+	echo '<th align="right">'.number_format($NextYearActual,2,'.',''). '</th>';
+	echo '<th align="right">'.number_format($NextYearBudget,2,'.',''). '</th></tr>';
 	echo '<tr><td colspan=2>'._('Annual Budget').'</td>
 				<td><input class=number type="text" size="14" name="AnnualAmountLY" value="0.00"></td>
 				</td><td><td></td>

@@ -407,24 +407,24 @@ if (isset($_POST['PrintPDF'])){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
 		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
 		$AverageOfLast4Months = $SalesRow['4mthtotal']/4;
-		$LeftOvers = $pdf->addTextWrap(251, $YPos, 50,$FontSize,locale_number_format($AverageOfLast4Months,1),'right');
+		$LeftOvers = $pdf->addTextWrap(251, $YPos, 50,$FontSize,number_format($AverageOfLast4Months,1),'right');
 
 		$MaxMthSales = Max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
-		$LeftOvers = $pdf->addTextWrap(309, $YPos, 50,$FontSize,locale_number_format($MaxMthSales,0),'right');
+		$LeftOvers = $pdf->addTextWrap(309, $YPos, 50,$FontSize,number_format($MaxMthSales,0),'right');
 
 		$Quantities = array($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
 		$StandardDeviation = standard_deviation($Quantities);
-		$LeftOvers = $pdf->addTextWrap(359, $YPos, 50,$FontSize,locale_number_format($StandardDeviation,2),'right');
+		$LeftOvers = $pdf->addTextWrap(359, $YPos, 50,$FontSize,number_format($StandardDeviation,2),'right');
 
-		$LeftOvers = $pdf->addTextWrap(409, $YPos, 50,$FontSize,locale_number_format($InventoryPlan['monthsleadtime'],1),'right');
+		$LeftOvers = $pdf->addTextWrap(409, $YPos, 50,$FontSize,number_format($InventoryPlan['monthsleadtime'],1),'right');
 
 		$RequiredStockInSupplyChain = $AverageOfLast4Months * ($_POST['NumberMonthsHolding']+$InventoryPlan['monthsleadtime']);
 
-		$LeftOvers = $pdf->addTextWrap(456, $YPos, 50,$FontSize,locale_number_format($RequiredStockInSupplyChain,0),'right');
-		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,locale_number_format($TotalDemand,0),'right');
+		$LeftOvers = $pdf->addTextWrap(456, $YPos, 50,$FontSize,number_format($RequiredStockInSupplyChain,0),'right');
+		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,number_format($InventoryPlan['qoh'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,number_format($TotalDemand,0),'right');
 
-		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($OnOrdRow['qtyonorder'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,number_format($OnOrdRow['qtyonorder'],0),'right');
 
 		$SuggestedTopUpOrder = $RequiredStockInSupplyChain - $InventoryPlan['qoh'] + $TotalDemand - $OnOrdRow['qtyonorder'];
 		if ($SuggestedTopUpOrder <=0){
@@ -432,7 +432,7 @@ if (isset($_POST['PrintPDF'])){
 
 		} else {
 
-			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
+			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,number_format($SuggestedTopUpOrder,0),'right');
 		}
 
 		if ($YPos < $Bottom_Margin + $line_height){

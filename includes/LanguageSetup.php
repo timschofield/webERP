@@ -37,9 +37,9 @@ if (function_exists('gettext')){
 	if ($_SESSION['Language']=='tr_TR.utf8') {
 		$Locale = setlocale(LC_CTYPE, 'C');
 	}
-	
+	/*
 	$Locale = setlocale (LC_NUMERIC, 'en_US'); //currently need all decimal points etc to be as expected on webserver
-
+	*/
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);

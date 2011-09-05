@@ -212,10 +212,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					$pdf->setFont('','B');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 					$YPos -= (2 * $line_height);
 					$pdf->setFont('','');
@@ -232,10 +232,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 						$YPos -= (2 * $line_height);
 						$pdf->setFont('','');
@@ -253,10 +253,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60, $YPos, 190, $FontSize, $ParentGroups[$Level]);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 						$YPos -= (2 * $line_height);
 						$pdf->setFont('','');
@@ -333,10 +333,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		// Print total for each account
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['accountcode']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$myrow['accountname']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,locale_number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$YPos -= $line_height;
 
 	}  //end of while loop
@@ -349,10 +349,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$pdf->setFont('','B');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 		$YPos -= (2 * $line_height);
 		$ParentGroups[$Level]='';
@@ -367,10 +367,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$YPos -= (2 * $line_height);
 	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Check Totals'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,locale_number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Trial_Balance_' . Date('Y-m-d') . '.pdf');
@@ -485,10 +485,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						<td class=number><I>%s</I></td>
 						</tr>',
 						$ParentGroups[$Level],
-						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+						number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 					$GrpActual[$Level] =0;
 					$GrpBudget[$Level] =0;
@@ -505,10 +505,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 							<td class=number><I>%s</I></td>
 							</tr>',
 							$ParentGroups[$Level],
-							locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-							locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-							locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-							locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+							number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
@@ -529,10 +529,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						<td class=number><I>%s</I></td>
 						</tr>',
 						$ParentGroups[$Level],
-						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+						number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 						$GrpActual[$Level] =0;
 						$GrpBudget[$Level] =0;
@@ -618,10 +618,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			</tr>',
 			$ActEnquiryURL,
 			$myrow['accountname'],
-			locale_number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
+			number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),
+			number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
+			number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
+			number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 		$j++;
 	}
@@ -641,10 +641,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				<td class=number><I>%s</I></td>
 				</tr>',
 				$ParentGroups[$Level],
-				locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+				number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 			$GrpActual[$Level] =0;
 			$GrpBudget[$Level] =0;
@@ -661,10 +661,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					<td class=number><I>%s</I></td>
 					</tr>',
 					$ParentGroups[$Level],
-					locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+					number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
@@ -685,10 +685,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				<td class=number><I>%s</I></td>
 				</tr>',
 				$ParentGroups[$Level],
-				locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+				number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+				number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
@@ -710,10 +710,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			<td class=number>%s</td>
 			<td class=number>%s</td>
 		</tr>',
-		locale_number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),
-		locale_number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),
-		locale_number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
-		locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
+		number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),
+		number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),
+		number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
+		number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 	echo '</table><br />';
 	echo '<div class="centre"><input type=submit Name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';

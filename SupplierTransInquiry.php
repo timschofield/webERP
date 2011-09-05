@@ -126,7 +126,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			$myrow['transtext'],
 			ConvertSQLDate($myrow['duedate']),
 			$myrow['rate'],
-			locale_number_format($myrow['totalamt'],2),
+			number_format($myrow['totalamt'],2),
 			$myrow['currcode']
 		);
 
@@ -155,7 +155,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					</tr>',
 					$GLTransRow['account'],
 					$GLTransRow['accountname'],
-					locale_number_format($GLTransRow['amount'],2),
+					number_format($GLTransRow['amount'],2),
 					$GLTransRow['narrative']);
 
 				$CheckGLTransBalance += $GLTransRow['amount'];

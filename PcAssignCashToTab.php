@@ -247,7 +247,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			// only cash assignations NOT authorized can be modified or deleted
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class=number>' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -261,7 +261,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}else{
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class=number>' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+				<td class=number>' . number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -282,7 +282,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<tr><td colspan="2" style="text-align:right"><b>' . _('Current balance') . ':</b></td>
-				<td>' . locale_number_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+				<td>' . number_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 		echo '</table>';
 

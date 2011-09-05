@@ -104,7 +104,7 @@ while ($myrow = DB_fetch_array($result)){
 		$AllocsTotal +=$myrow1['amt'];
 	}
 	//end of while loop
-	echo '<tr><td colspan="6" class="number">' . locale_number_format($AllocsTotal,2) . '</td></tr>';
+	echo '<tr><td colspan="6" class="number">' . number_format($AllocsTotal,2) . '</td></tr>';
 	echo '</table><hr>';
 }
 

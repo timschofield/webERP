@@ -113,7 +113,7 @@ foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 	echo '<tr>
 		<td>' . $EnteredGLCode->GLCode . '</td>
 		<td>' . $EnteredGLCode->GLActName . '</td>
-		<td class=number>' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+		<td class=number>' . number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 		<td>' . $EnteredGLCode->Narrative . '</td>
 		<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->Counter . '">' . _('Edit') . '</a></td>
 		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</a></td>
@@ -130,7 +130,7 @@ foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 
 echo '<tr>
 	<td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
-	<td class=number><font size=2 color=navy><u>' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
+	<td class=number><font size=2 color=navy><u>' . number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
 	</tr>
 	</table>';
 

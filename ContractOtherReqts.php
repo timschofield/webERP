@@ -100,7 +100,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 	foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $ContractReqtID => $ContractComponent) {
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->CostPerUnit;
-		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayLineTotal = number_format($LineTotal,$_SESSION['CompanyRecord']['decimalplaces']);
 
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -118,7 +118,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 		$TotalCost += $LineTotal;
 	}
 
-	$DisplayTotal = locale_number_format($TotalCost,2);
+	$DisplayTotal = number_format($TotalCost,2);
 	echo '<tr><td colspan="4" class="number">' . _('Total Other Requirements Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
 	echo '<br /><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Other Requirements Lines') . '" />';
 	echo ' <input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';

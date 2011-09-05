@@ -109,7 +109,7 @@ include('includes/header.inc');
 				$j++;
 			}
 			echo '<td>' . $CurPeriod . '</td>
-					<td class="number">' . locale_number_format($dtRow['bfwd'],2) . '</td>';
+					<td class="number">' . number_format($dtRow['bfwd'],2) . '</td>';
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totinvnetcrds
 					FROM debtortrans
@@ -121,7 +121,7 @@ include('includes/header.inc');
 
 			$invTotal += $invRow['totinvnetcrds'];
 
-			echo '<td class=number>' . locale_number_format($invRow['totinvnetcrds'],2) . '</td>';
+			echo '<td class=number>' . number_format($invRow['totinvnetcrds'],2) . '</td>';
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totreceipts
 					FROM debtortrans
@@ -134,7 +134,7 @@ include('includes/header.inc');
 			$RecTotal += $recRow['totreceipts'];
 			$CalcMovement = $dtRow['bfwd'] + $invRow['totinvnetcrds'] + $recRow['totreceipts'];
 
-			echo '<td class=number>' . locale_number_format($recRow['totreceipts'],2) . '</td>';
+			echo '<td class=number>' . number_format($recRow['totreceipts'],2) . '</td>';
 
 			$GLClosing += $glMovement;
 			$CalcTotal += $CalcMovement;
@@ -143,9 +143,9 @@ include('includes/header.inc');
 			$diff = ( $dtRow['bfwd'] == 0 ) ? 0 : round($glMovement,2) - round($CalcMovement,2);
 			$color = ( $diff == 0 OR $dtRow['bfwd'] == 0 ) ? 'green' : 'red';
 
-			echo '<td class=number>' . locale_number_format($glMovement,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class=number>' . locale_number_format(($CalcMovement),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class=number bgcolor=white><font color="' . $color . '">' . locale_number_format($diff,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
+			echo '<td class=number>' . number_format($glMovement,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class=number>' . number_format(($CalcMovement),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class=number bgcolor=white><font color="' . $color . '">' . number_format($diff,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
 			</tr>';
 			$CurPeriod++;
 		}
@@ -154,12 +154,12 @@ include('includes/header.inc');
 
 		echo '<tr bgcolor=white>
 				<td>' . _('Total') . '</td>
-				<td class=number>' . locale_number_format($GLOpening,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($invTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($RecTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($GLClosing,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($CalcTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class=number><font color="' . $difColor . '">' . locale_number_format($DiffTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
+				<td class=number>' . number_format($GLOpening,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($invTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($RecTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($GLClosing,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . number_format($CalcTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number><font color="' . $difColor . '">' . number_format($DiffTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
 			</tr>';
 		echo '</table></form>';
 	}

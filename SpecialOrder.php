@@ -554,13 +554,13 @@ if (count($_SESSION['SPL']->LineItems)>0){
 
 		$LineTotal = $SPLLine->Quantity * $SPLLine->Price;
 		$LineCostTotal = $SPLLine->Quantity * $SPLLine->Cost;
-		$DisplayLineTotal = locale_number_format($LineTotal,2);
-		$DisplayLineCostTotal = locale_number_format($LineCostTotal,2);
-		$DisplayLineTotalCurr = locale_number_format($LineTotal/$_SESSION['SPL']->CustCurrExRate,2);
-		$DisplayLineCostTotalCurr = locale_number_format($LineCostTotal/$_SESSION['SPL']->SuppCurrExRate,2);
-		$DisplayCost = locale_number_format($SPLLine->Cost,2);
-		$DisplayPrice = locale_number_format($SPLLine->Price,2);
-		$DisplayQuantity = locale_number_format($SPLLine->Quantity,2);
+		$DisplayLineTotal = number_format($LineTotal,2);
+		$DisplayLineCostTotal = number_format($LineCostTotal,2);
+		$DisplayLineTotalCurr = number_format($LineTotal/$_SESSION['SPL']->CustCurrExRate,2);
+		$DisplayLineCostTotalCurr = number_format($LineCostTotal/$_SESSION['SPL']->SuppCurrExRate,2);
+		$DisplayCost = number_format($SPLLine->Cost,2);
+		$DisplayPrice = number_format($SPLLine->Price,2);
+		$DisplayQuantity = number_format($SPLLine->Quantity,2);
 
 		if ($k==1){
 				echo '<tr class="EvenTableRows">';
@@ -583,7 +583,7 @@ if (count($_SESSION['SPL']->LineItems)>0){
 		$_SESSION['SPL']->total = $_SESSION['SPL']->total + $DisplayLineTotalCurr;
 	}
 
-	$DisplayTotal = locale_number_format($_SESSION['SPL']->total,2);
+	$DisplayTotal = number_format($_SESSION['SPL']->total,2);
 	echo '<tr>
 		<td colspan=8 class=number>' . _('TOTAL Excl Tax') . '</td>
 		<td class=number><b>' . $DisplayTotal . '</b></td>

@@ -312,9 +312,4 @@ function http_file_exists($url)  {
 	return false;
 }
 
-function locale_number_format($Number, $DecimalPlaces) {
-	$LocaleInfo = localeconv();
-	return number_format($Number, $DecimalPlaces, $LocaleInfo['decimal_point'], $LocaleInfo['thousands_sep']);
-}
-
 ?>

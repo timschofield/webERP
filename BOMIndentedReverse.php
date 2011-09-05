@@ -197,7 +197,7 @@ if (isset($_POST['PrintPDF'])) {
 		$pdf->addTextWrap(180,$YPos,180,$FontSize,$myrow['description'],'',0,$fill);
 		$pdf->addTextWrap(360,$YPos,30,$FontSize,$myrow['loccode'],'right',0,$fill);
 		$pdf->addTextWrap(390,$YPos,25,$FontSize,$myrow['workcentreadded'],'right',0,$fill);
-		$pdf->addTextWrap(415,$YPos,45,$FontSize,locale_number_format($myrow['quantity'],2),'right',0,$fill);
+		$pdf->addTextWrap(415,$YPos,45,$FontSize,number_format($myrow['quantity'],2),'right',0,$fill);
 		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedEffectiveAfter,'right',0,$fill);
 		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedEffectiveTo,'right',0,$fill);
 

@@ -141,11 +141,11 @@ echo '<table width=90% class="selection">
 		</tr>';
 
 echo '<tr>
-		  <td class=number>' . locale_number_format($SupplierRecord['balance'],2) . '</td>
-		  <td class=number>' . locale_number_format(($SupplierRecord['balance'] - $SupplierRecord['due']),2) . '</td>
-		  <td class=number>' . locale_number_format(($SupplierRecord['due']-$SupplierRecord['overdue1']),2) . '</td>
-		  <td class=number>' . locale_number_format(($SupplierRecord['overdue1']-$SupplierRecord['overdue2']) ,2) . '</td>
-		  <td class=number>' . locale_number_format($SupplierRecord['overdue2'],2) . '</td>
+		  <td class=number>' . number_format($SupplierRecord['balance'],2) . '</td>
+		  <td class=number>' . number_format(($SupplierRecord['balance'] - $SupplierRecord['due']),2) . '</td>
+		  <td class=number>' . number_format(($SupplierRecord['due']-$SupplierRecord['overdue1']),2) . '</td>
+		  <td class=number>' . number_format(($SupplierRecord['overdue1']-$SupplierRecord['overdue2']) ,2) . '</td>
+		  <td class=number>' . number_format($SupplierRecord['overdue2'],2) . '</td>
 	  </tr>
 	</table>';
 
@@ -243,9 +243,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td>' . $myrow['typename'] . '</td>
 					<td>' . $myrow['suppreference'] . '</td>
 					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'],2) .'</td>
-					<td class="number">' . locale_number_format($myrow['allocated'],2) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount']-$myrow['allocated'],2) . '</td>
+					<td class="number">' . number_format($myrow['totalamount'],2) .'</td>
+					<td class="number">' . number_format($myrow['allocated'],2) . '</td>
+					<td class="number">' . number_format($myrow['totalamount']-$myrow['allocated'],2) . '</td>
 					<td align="left">' . $myrow['transtext'] . '</td>
 					<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['transno'] .'">' . _('View GL Postings') . '</a></td>
 					<td><a href="' . $rootpath . '/PaymentAllocations.php?SuppID=' . $myrow['supplierno'] . '&InvID=' . $myrow['suppreference'] .'">' . _('View Payments') . '</a></td></tr>';
@@ -254,9 +254,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td>' . $myrow['typename'] . '</td>
 					<td>' . $myrow['suppreference'] . '</td>
 					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'],2) . '</td>
-					<td class="number">' .locale_number_format($myrow['allocated'],2) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'] - $myrow['allocated'],2) .'</td>
+					<td class="number">' . number_format($myrow['totalamount'],2) . '</td>
+					<td class="number">' .number_format($myrow['allocated'],2) . '</td>
+					<td class="number">' . number_format($myrow['totalamount'] - $myrow['allocated'],2) .'</td>
 					<td align="left">' . $myrow['transtext'] . '</td>';
 				$authsql="SELECT offhold
 							FROM purchorderauth
@@ -294,9 +294,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['typename'],
 					$myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
-					locale_number_format($myrow['totalamount'],2),
-					locale_number_format($myrow['allocated'],2),
-					locale_number_format($myrow['totalamount'] - $myrow['allocated'],2),
+					number_format($myrow['totalamount'],2),
+					number_format($myrow['allocated'],2),
+					number_format($myrow['totalamount'] - $myrow['allocated'],2),
 					$myrow['transtext']);
 
 			} else {
@@ -315,9 +315,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['typename'],
 					$myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
-					locale_number_format($myrow['totalamount'],2),
-					locale_number_format($myrow['allocated'],2),
-					locale_number_format($myrow['totalamount']-$myrow['allocated'],2),
+					number_format($myrow['totalamount'],2),
+					number_format($myrow['allocated'],2),
+					number_format($myrow['totalamount']-$myrow['allocated'],2),
 					$myrow['transtext'],
 					$_SERVER['PHP_SELF'],
 					$myrow['type'],
@@ -353,9 +353,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['typename'],
 				$myrow['suppreference'],
 				ConvertSQLDate($myrow['trandate']),
-				locale_number_format($myrow['totalamount'],2),
-				locale_number_format($myrow['allocated'],2),
-				locale_number_format($myrow['totalamount']-$myrow['allocated'],2),
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$myrow['transtext'],
 				$rootpath,
 				$myrow['id'],
@@ -379,9 +379,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['typename'],
 				$myrow['suppreference'],
 				ConvertSQLDate($myrow['trandate']),
-				locale_number_format($myrow['totalamount'],2),
-				locale_number_format($myrow['allocated'],2),
-				locale_number_format($myrow['totalamount'] - $myrow['allocated'],2),
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount'] - $myrow['allocated'],2),
 				$myrow['transtext'],
 				$rootpath,
 				$myrow['id']);

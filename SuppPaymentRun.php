@@ -191,8 +191,8 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 			}
 
-			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],2), 'right');
-			$LeftOvers = $pdf->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,2), 'right');
+			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,number_format($DetailTrans['balance'],2), 'right');
+			$LeftOvers = $pdf->addTextWrap(405, $YPos,60,$FontSize,number_format($DiffOnExch,2), 'right');
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
@@ -221,8 +221,8 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		}
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
-		$LeftOvers = $pdf->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,2), 'right');
-		$LeftOvers = $pdf->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,2), 'right');
+		$LeftOvers = $pdf->addTextWrap(340, $YPos, 60,$FontSize,number_format($TotalPayments,2), 'right');
+		$LeftOvers = $pdf->addTextWrap(405, $YPos, 60,$FontSize,number_format($TotalAccumDiffOnExch,2), 'right');
 
 	}
 

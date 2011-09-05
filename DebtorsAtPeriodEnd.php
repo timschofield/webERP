@@ -85,8 +85,8 @@ if (isset($_POST['PrintPDF'])
 
 		if (abs($Balance)>0.009 OR ABS($FXBalance)>0.009) {
 
-			$DisplayBalance = locale_number_format($DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'],$DebtorBalances['decimalplaces']);
-			$DisplayFXBalance = locale_number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],$DebtorBalances['decimalplaces']);
+			$DisplayBalance = number_format($DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'],$DebtorBalances['decimalplaces']);
+			$DisplayFXBalance = number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],$DebtorBalances['decimalplaces']);
 
 			$TotBal += $Balance;
 
@@ -110,7 +110,7 @@ if (isset($_POST['PrintPDF'])
 		include('includes/PDFDebtorBalsPageHeader.inc');
 	}
 
-	$DisplayTotBalance = locale_number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
+	$DisplayTotBalance = number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
 
 	$LeftOvers = $pdf->addTextWrap(50,$YPos,160,$FontSize,_('Total balances'),'left');
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');

@@ -203,10 +203,10 @@ if (!isset($_GET['Edit'])) {
 					<td><a href='%s?StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
 					</tr>", 
 					$myrow['suppname'], 
-					locale_number_format($myrow['price'], 3), 
+					number_format($myrow['price'], 3), 
 					$myrow['suppliersuom'],
 					$myrow['conversionfactor'],
-					locale_number_format($myrow['price']/$myrow['conversionfactor'],2),
+					number_format($myrow['price']/$myrow['conversionfactor'],2),
 					$myrow['currcode'], 
 					ConvertSQLDate($myrow['effectivefrom']), 
 					$myrow['minorderqty'], 

@@ -232,9 +232,9 @@ If (isset($_POST['PrintPDF'])
 	  			$DemandQty += $DemandRow[0];
 			}
 
-			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($InventoryPlan['qoh'], $InventoryPlan['decimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,locale_number_format($DemandQty,$InventoryPlan['decimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,locale_number_format($InventoryPlan['qoh']-$DemandQty,$InventoryPlan['decimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,number_format($InventoryPlan['qoh'], $InventoryPlan['decimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,number_format($DemandQty,$InventoryPlan['decimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,number_format($InventoryPlan['qoh']-$DemandQty,$InventoryPlan['decimalplaces']), 'right');
 
 		}
 

@@ -94,8 +94,8 @@ foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 			<td>' . $Component->ItemDescription . '</td>
 			<td class="number">' . $Component->Quantity . '</td>
 			<td>' . $Component->UOM . '</td>
-			<td class="number">' . locale_number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+			<td class="number">' . number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 	
 	$ContractBOMBudget += ($Component->ItemCost *  $Component->Quantity);
 	
@@ -104,8 +104,8 @@ foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 		echo '<td colspan="2" align="center">' . _('Actual usage') . '</td>
 			<td class="number">' . -$InventoryIssues[$Component->StockID]->Quantity . '</td>
 			<td>' . $InventoryIssues[$Component->StockID]->Units . '</td>
-			<td class="number">' . locale_number_format($InventoryIssues[$Component->StockID]->TotalCost/$InventoryIssues[$Component->StockID]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td>' . locale_number_format(-$InventoryIssues[$Component->StockID]->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . number_format($InventoryIssues[$Component->StockID]->TotalCost/$InventoryIssues[$Component->StockID]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td>' . number_format(-$InventoryIssues[$Component->StockID]->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 	} else {
 		echo '<td colspan="6"></td>
@@ -122,17 +122,17 @@ foreach ($InventoryIssues as $Component) { //actual inventory components used
 				<td>' . $Component->Description . '</td>
 				<td class="number">' . -$Component->Quantity . '</td>
 				<td>' . $Component->Units . '</td>
-				<td class="number">' . locale_number_format($Component->TotalCost/$Component->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format(-$Component->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . number_format($Component->TotalCost/$Component->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . number_format(-$Component->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 	} //end if its a component not originally budget for
 }
 
 echo '<tr>
 		<td class="number" colspan="5">' . _('Total Inventory Budgeted Cost') . ':</td>
-		<td class="number">' . locale_number_format($ContractBOMBudget,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
+		<td class="number">' . number_format($ContractBOMBudget,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
 		<td class="number" colspan="5">' . _('Total Inventory Actual Cost') . ':</td>
-		<td class="number">' . locale_number_format($ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
+		<td class="number">' . number_format($ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
 	</tr>';
 
 echo '<tr>
@@ -154,11 +154,11 @@ foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
 	echo '<tr><td>' . $Requirement->Requirement . '</td>
 			<td class="number">' . $Requirement->Quantity . '</td>
 			<td class="number">' . $Requirement->CostPerUnit . '</td>
-			<td class="number">' . locale_number_format(($Requirement->CostPerUnit * $Requirement->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . number_format(($Requirement->CostPerUnit * $Requirement->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 	$OtherReqtsBudget += ($Requirement->CostPerUnit * $Requirement->Quantity);
 }
-echo '<tr><th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsBudget,2) . '</b></th></tr>
+echo '<tr><th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th><th class="number"><b>' . number_format($OtherReqtsBudget,2) . '</b></th></tr>
 	</table></td>';
 
 //Now other requirements actual in a sub table
@@ -197,17 +197,17 @@ while ($OtherChargesRow=DB_fetch_array($OtherChargesResult)) {
 			<td>' . $OtherChargesRow['suppreference'] . '</td>
 			<td>' .ConvertSQLDate($OtherChargesRow['trandate']) . '</td>
 			<td>' . $OtherChargesRow['narrative'] . '</td>
-			<td class="number">' . locale_number_format($OtherChargesRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . number_format($OtherChargesRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td>' . $Anticipated . '</td>
 			</tr>';
 	$OtherReqtsActual +=$OtherChargesRow['amount'];
 }
-echo '<tr><th colspan="4" align="right"><b>' . _('Actual Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th></tr>
+echo '<tr><th colspan="4" align="right"><b>' . _('Actual Other Costs') . '</b></th><th class="number"><b>' . number_format($OtherReqtsActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th></tr>
 	</table></td></tr>';
 echo '<tr><td colspan="5"><b>' . _('Total Budget Contract Cost') . '</b></td>
-					<td class="number"><b>' . locale_number_format($OtherReqtsBudget+$ContractBOMBudget,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+					<td class="number"><b>' . number_format($OtherReqtsBudget+$ContractBOMBudget,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 					<td colspan="5"><b>' . _('Total Actual Contract Cost') . '</b></td>
-					<td class="number"><b>' . locale_number_format($OtherReqtsActual+$ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+					<td class="number"><b>' . number_format($OtherReqtsActual+$ContractBOMActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
 
 echo '</table>';
 
@@ -378,7 +378,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 											'" . Date('Y-m-d') . "',
 											'" . $PeriodNo . "',
 											'" . $GLCodes['stockact'] . "',
-											'" . $_SESSION['Contract'.$identifier]->WO . ' ' . $_SESSION['Contract'.$identifier]->ContractRef  . ' -  x 1 @ ' . locale_number_format(($OtherReqtsBudget+$ContractBOMBudget),2) . "',
+											'" . $_SESSION['Contract'.$identifier]->WO . ' ' . $_SESSION['Contract'.$identifier]->ContractRef  . ' -  x 1 @ ' . number_format(($OtherReqtsBudget+$ContractBOMBudget),2) . "',
 											'" . ($OtherReqtsBudget+$ContractBOMBudget) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The receipt of contract work order finished stock GL posting could not be inserted because');
@@ -398,7 +398,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 											'" . Date('Y-m-d') . "',
 											'" . $PeriodNo . "',
 											'" . $GLCodes['wipact'] . "',
-											'" . $_SESSION['Contract'.$identifier]->WO . ' ' . $_SESSION['Contract'.$identifier]->ContractRef  . ' -  x 1 @ ' . locale_number_format(($OtherReqtsBudget+$ContractBOMBudget),2) . "',
+											'" . $_SESSION['Contract'.$identifier]->WO . ' ' . $_SESSION['Contract'.$identifier]->ContractRef  . ' -  x 1 @ ' . number_format(($OtherReqtsBudget+$ContractBOMBudget),2) . "',
 											'" . -($OtherReqtsBudget+$ContractBOMBudget) . "')";
 
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP credit on receipt of finished items from a work order GL posting could not be inserted because');

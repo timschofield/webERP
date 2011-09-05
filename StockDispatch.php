@@ -122,34 +122,34 @@ If (isset($_POST['PrintPDF'])) {
 					//for simple template
 					$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
 					$pdf->addTextWrap(135,$YPos,250,$FontSize,$myrow['description'],'',0,$fill);
-					$pdf->addTextWrap(380,$YPos,45,$FontSize,locale_number_format($myrow['fromquantity'],
+					$pdf->addTextWrap(380,$YPos,45,$FontSize,number_format($myrow['fromquantity'],
 														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(425,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
+					$pdf->addTextWrap(425,$YPos,40,$FontSize,number_format($myrow['quantity'],
 														$myrow['decimalplaces']),'right',0,$fill);
 					$shipqty = $myrow['available'];
 					if ($myrow['neededqty'] < $myrow['available']) {
 							$shipqty = $myrow['neededqty'];
 						}
-					$pdf->addTextWrap(465,$YPos,40,11,locale_number_format($shipqty,
+					$pdf->addTextWrap(465,$YPos,40,11,number_format($shipqty,
 														$myrow['decimalplaces']),'right',0,$fill);
 					$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 				}else{
 					//for standard template
 					$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
 					$pdf->addTextWrap(135,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
-					$pdf->addTextWrap(305,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'],
+					$pdf->addTextWrap(305,$YPos,40,$FontSize,number_format($myrow['fromquantity'],
 														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(345,$YPos,40,$FontSize,locale_number_format($myrow['fromreorderlevel'],
+					$pdf->addTextWrap(345,$YPos,40,$FontSize,number_format($myrow['fromreorderlevel'],
 														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(380,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
+					$pdf->addTextWrap(380,$YPos,40,$FontSize,number_format($myrow['quantity'],
 														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(420,$YPos,40,$FontSize,locale_number_format($myrow['reorderlevel'],
+					$pdf->addTextWrap(420,$YPos,40,$FontSize,number_format($myrow['reorderlevel'],
 														$myrow['decimalplaces']),'right',0,$fill);
 					$shipqty = $myrow['available'];
 					if ($myrow['neededqty'] < $myrow['available']) {
 							$shipqty = $myrow['neededqty'];
 						}
-					$pdf->addTextWrap(460,$YPos,40,11,locale_number_format($shipqty,
+					$pdf->addTextWrap(460,$YPos,40,11,number_format($shipqty,
 														$myrow['decimalplaces']),'right',0,$fill);
 					$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 				}

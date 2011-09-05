@@ -365,11 +365,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){ //print the footer for the period
 						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . number_format($PrdTotalSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalRefunds,2) . '</td>
+							<td class="number">' . number_format($PrdTotalNetSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalCost,2) . '</td>
+							<td class="number">' . number_format($PrdTotalGP,2) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -400,11 +400,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){
 						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . number_format($PrdTotalSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalRefunds,2) . '</td>
+							<td class="number">' . number_format($PrdTotalNetSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalCost,2) . '</td>
+							<td class="number">' . number_format($PrdTotalGP,2) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -435,11 +435,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){
 						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . number_format($PrdTotalSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalRefunds,2) . '</td>
+							<td class="number">' . number_format($PrdTotalNetSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalCost,2) . '</td>
+							<td class="number">' . number_format($PrdTotalGP,2) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -470,11 +470,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){
 						echo '<td colspan="2" class="number">' . _('Total') . '-'. $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . number_format($PrdTotalSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalRefunds,2) . '</td>
+							<td class="number">' . number_format($PrdTotalNetSales,2) . '</td>
+							<td class="number">' . number_format($PrdTotalCost,2) . '</td>
+							<td class="number">' . number_format($PrdTotalGP,2) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -502,11 +502,11 @@ if (isset($_POST['ShowSales'])){
 		}
 		echo '<td>' . $SalesRow['tpe'] . '</td>
 				<td class="number">' . $SalesRow['nooforders'] . '</td>
-				<td class="number">' . locale_number_format($SalesRow['salesvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['cost'],2) . '</td>
-				<td class="number">' . locale_number_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),2) . '</td>
+				<td class="number">' . number_format($SalesRow['salesvalue'],2) . '</td>
+				<td class="number">' . number_format($SalesRow['returnvalue'],2) . '</td>
+				<td class="number">' . number_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],2) . '</td>
+				<td class="number">' . number_format($SalesRow['cost'],2) . '</td>
+				<td class="number">' . number_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),2) . '</td>
 			</tr>';
 		$PrdTotalOrders +=$SalesRow['nooforders'];
 		$PrdTotalSales += $SalesRow['salesvalue'];
@@ -531,11 +531,11 @@ if (isset($_POST['ShowSales'])){
 	}
 	echo '<td colspan="2" class="number">' . _('Total') . ' ' . $LastPeriodHeading . '</td>
 		<td class="number">' . $PrdTotalOrders . '</td>
-		<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+		<td class="number">' . number_format($PrdTotalSales,2) . '</td>
+		<td class="number">' . number_format($PrdTotalRefunds,2) . '</td>
+		<td class="number">' . number_format($PrdTotalNetSales,2) . '</td>
+		<td class="number">' . number_format($PrdTotalCost,2) . '</td>
+		<td class="number">' . number_format($PrdTotalGP,2) . '</td>
 	</tr>';
 	if ($k==1){
 		echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -546,11 +546,11 @@ if (isset($_POST['ShowSales'])){
 	}
 	echo '<td colspan="2" class="number">' . _('GRAND Total') . '</td>
 		<td class="number">' . $CumulativeTotalOrders . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalSales,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalRefunds,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalNetSales,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalCost,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalGP,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalSales,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalRefunds,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalNetSales,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalCost,2) . '</td>
+		<td class="number">' . number_format($CumulativeTotalGP,2) . '</td>
 		</tr>';
 	
 	echo '</table>';
