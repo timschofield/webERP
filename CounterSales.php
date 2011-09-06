@@ -22,11 +22,21 @@ if (empty($_GET['identifier'])) {
 }
 if (isset($_SESSION['Items'.$identifier])){
 	//update the Items object variable with the data posted from the form
-	$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
-	$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
-	$_SESSION['Items'.$identifier]->DeliverTo = $_POST['DeliverTo'];
-	$_SESSION['Items'.$identifier]->PhoneNo = $_POST['PhoneNo'];
-	$_SESSION['Items'.$identifier]->Email = $_POST['Email'];
+	if (isset($_POST['CustRef'])){
+		$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
+	}
+	if (isset($_POST['Comments'])){
+		$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
+	}
+	if (isset($_POST['DeliverTo'])){
+		$_SESSION['Items'.$identifier]->DeliverTo = $_POST['DeliverTo'];
+	}
+	if (isset($_POST['PhoneNo'])){
+		$_SESSION['Items'.$identifier]->PhoneNo = $_POST['PhoneNo'];
+	}
+	if (isset($_POST['Email'])){
+		$_SESSION['Items'.$identifier]->Email = $_POST['Email'];
+	}
 }
 
 if (isset($_POST['QuickEntry'])){
@@ -85,11 +95,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 			exit;
 		}
 		if (isset($_GET['DebtorNo'])) {
-			$_SESSION['Items'.$identifier]->DebtorNo = $_GET['DebtorNo'];tcpdf.php line 5826:
-//    header('Content-Type: application/force-download');
-//    header('Content-Type: application/octet-stream',false);
-//    header('Content-Type: application/download',false);
-
+			$_SESSION['Items'.$identifier]->DebtorNo = $_GET['DebtorNo'];
 			$_SESSION['Items'.$identifier]->Branch = $_GET['BranchNo'];
 		} else {
 			$_SESSION['Items'.$identifier]->Branch = $myrow['cashsalebranch'];
@@ -2263,7 +2269,7 @@ if (!isset($_POST['ProcessSale'])){
 				}
 				$OnOrder = $PurchQty + $WoQty;
 
-				$Available = $qoh - $DemandQty + $OnOrder;
+				$Available = $QOH - $DemandQty + $OnOrder;
 
 				printf('<td>%s</td>
 						<td>%s</td>
