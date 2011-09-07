@@ -20,23 +20,13 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier=$_GET['identifier'];
 }
-if (isset($_SESSION['Items'.$identifier])){
+if (isset($_SESSION['Items'.$identifier]) AND isset($_POST['CustRef'])){
 	//update the Items object variable with the data posted from the form
-	if (isset($_POST['CustRef'])){
-		$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
-	}
-	if (isset($_POST['Comments'])){
-		$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
-	}
-	if (isset($_POST['DeliverTo'])){
-		$_SESSION['Items'.$identifier]->DeliverTo = $_POST['DeliverTo'];
-	}
-	if (isset($_POST['PhoneNo'])){
-		$_SESSION['Items'.$identifier]->PhoneNo = $_POST['PhoneNo'];
-	}
-	if (isset($_POST['Email'])){
-		$_SESSION['Items'.$identifier]->Email = $_POST['Email'];
-	}
+	$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
+	$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
+	$_SESSION['Items'.$identifier]->DeliverTo = $_POST['DeliverTo'];
+	$_SESSION['Items'.$identifier]->PhoneNo = $_POST['PhoneNo'];
+	$_SESSION['Items'.$identifier]->Email = $_POST['Email'];
 }
 
 if (isset($_POST['QuickEntry'])){
