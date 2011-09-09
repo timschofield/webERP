@@ -104,11 +104,11 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] OR $AssetCategoryDescription =='0'){
 		if ($AssetCategoryDescription !='0'){ //then print totals
 			echo '<tr><th colspan=3 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-					<th class="number">' . number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th colspan=2></th>
-					<th class="number">' . number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 		}
 		echo '<tr><th colspan=9 align="left">' . $AssetRow['categorydescription']  . '</th></tr>';
@@ -147,12 +147,12 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	echo '<td>' . $AssetRow['assetid'] . '</td>
 		<td>' . $AssetRow['description'] . '</td>
 		<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
-		<td class="number">' . number_format($AssetRow['costtotal'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class="number">' . number_format($AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class="number">' . number_format($AssetRow['costtotal']-$AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($AssetRow['costtotal'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($AssetRow['costtotal']-$AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td align="center">' . $DepreciationType . '</td>
 		<td class="number">' . $AssetRow['depnrate']  . '</td>
-		<td class="number">' . number_format($NewDepreciation ,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($NewDepreciation ,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
 	$TotalCategoryCost +=$AssetRow['costtotal'];
 	$TotalCategoryAccumDepn +=$AssetRow['depnbfwd'];
@@ -227,18 +227,18 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
 echo '<tr><th colspan=3 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-					<th class="number">' . number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th colspan=2></th>
-					<th class="number">' . number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 echo '<tr><th colspan=3 align="right">' . _('GRAND Total') . ' </th>
-					<th class="number">' . number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th colspan=2></th>
-					<th class="number">' . number_format($TotalDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 
 echo '</table><hr><p></p>';

@@ -417,7 +417,7 @@ else {
 			$ViewPurchOrder = $rootpath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 			$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
-			$FormatedOrderValue = number_format($myrow['ordervalue'], $myrow['decimalplaces']);
+			$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $myrow['decimalplaces']);
 			/*  View	   Supplier	Currency	Requisition	 Order Date		 Initiator	Order Total
 			ModifyPage, $myrow["orderno"],		  $myrow["suppname"],			$myrow["currcode"],		 $myrow["requisitionno"]		$FormatedOrderDate,			 $myrow["initiator"]			 $FormatedOrderValue 			Order Status*/
 			echo '<td><a href="' . $ViewPurchOrder . '">' . $myrow['orderno'] . '</a></td>

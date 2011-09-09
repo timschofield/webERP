@@ -213,9 +213,9 @@ if($_REQUEST['POLine'] == 1){
 
 		while ($myrow2=DB_fetch_array($result)){
 
-			$DisplayQty = number_format($myrow2['quantity'],0);
-			$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],0);
-			$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],0);
+			$DisplayQty = locale_number_format($myrow2['quantity'],0);
+			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],0);
+			$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],0);
          		$StkCode[$i] = $myrow2['stkcode'];
          		$DscCode[$i] = $myrow2['description'];
          		$QtyCode[$i] = $DisplayQty ;

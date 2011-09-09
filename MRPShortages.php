@@ -208,14 +208,14 @@ if (isset($_POST['PrintPDF'])) {
 			$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['stockid'],'',0,$fill);
 			$pdf->addTextWrap(130,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
 			$pdf->addTextWrap(280,$YPos,25,$FontSize,$myrow['mbflag'],'right',0,$fill);
-			$pdf->addTextWrap(305,$YPos,55,$FontSize,number_format($myrow['computedcost'],2),'right',0,$fill);
-			$pdf->addTextWrap(360,$YPos,50,$FontSize,number_format($myrow['supply'],
+			$pdf->addTextWrap(305,$YPos,55,$FontSize,locale_number_format($myrow['computedcost'],2),'right',0,$fill);
+			$pdf->addTextWrap(360,$YPos,50,$FontSize,locale_number_format($myrow['supply'],
 							 $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(410,$YPos,50,$FontSize,number_format($myrow['demand'],
+			$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($myrow['demand'],
 							 $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(460,$YPos,50,$FontSize,number_format($shortage,
+			$pdf->addTextWrap(460,$YPos,50,$FontSize,locale_number_format($shortage,
 							 $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(510,$YPos,60,$FontSize,number_format($myrow['extcost'],2),'right',0,$fill);
+			$pdf->addTextWrap(510,$YPos,60,$FontSize,locale_number_format($myrow['extcost'],2),'right',0,$fill);
 
 			$Total_Shortage += $myrow['extcost'];
 			$Partctr++;
@@ -243,7 +243,7 @@ if (isset($_POST['PrintPDF'])) {
 	}else{
 		$pdf->addTextWrap(300,$YPos,180,$FontSize,_('Total Extended Excess:'), 'right');
 	}
-	$DisplayTotalVal = number_format($Total_Shortage,2);
+	$DisplayTotalVal = locale_number_format($Total_Shortage,2);
 	$pdf->addTextWrap(510,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
 	if ($_POST['ReportType'] == 'Shortage'){

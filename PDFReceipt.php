@@ -103,7 +103,7 @@ $LeftOvers = $pdf->addTextWrap(150,$YPos-($line_height*6),300,$FontSize, htmlspe
 $YPos=$YPos-($line_height*8);
 
 $LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,_('The Sum Of').' : ');
-$LeftOvers = $pdf->addTextWrap(150,$YPos,300,$FontSize,number_format(-$Amount,$DecimalPlaces).'  '.$Currency);
+$LeftOvers = $pdf->addTextWrap(150,$YPos,300,$FontSize,locale_number_format(-$Amount,$DecimalPlaces).'  '.$Currency);
 
 $YPos=$YPos-($line_height*2);
 

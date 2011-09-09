@@ -235,30 +235,31 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster,
-						stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units,
+                                        stockmaster.decmimalplaces   
+				FROM stockmaster INNER JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.discontinued=0
+				ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units,
+                                        stockmaster.decimalplaces 
+				FROM stockmaster INNER JOIN stockcategory
+				ON  stockmaster.categoryid=stockcategory.categoryid
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		}
 
 	} else if (mb_strlen($_POST['StockCode'])>0){
@@ -268,55 +269,59 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units,
+                                        stockmaster.decimalplaces
+				FROM stockmaster INNER JOIN stockcategory
+				  ON stockmaster.categoryid=stockcategory.categoryid
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units,
+                                        stockmaster.decimalplaces
+				FROM stockmaster INNER JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid
+				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		}
 
 	} else {
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units,
+                                        stockmaster.decimalplaces
+				FROM stockmaster INNER JOIN stockcategory
+				ON  stockmaster.categoryid=stockcategory.categoryid
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				ORDER BY stockmaster.stockid";
         	} else {
 			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.units
-					FROM stockmaster, stockcategory
-					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.mbflag <>'G'
-					AND stockmaster.controlled <> 1
-					AND stockmaster.discontinued=0
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					stockmaster.description,
+					stockmaster.units,
+                                        stockmaster.decimalplaces           
+				FROM stockmaster INNER JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid
+				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+				AND stockmaster.mbflag <>'G'
+				AND stockmaster.controlled <> 1
+				AND stockmaster.discontinued=0
+				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		  }
 	}
 
@@ -329,7 +334,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 	if (!isset($Offset) or $Offset<0) {
 		$Offset=0;
 	}
-	$SQL = $SQL . ' LIMIT ' . $_SESSION['DefaultDisplayRecordsMax'].' OFFSET '.number_format($_SESSION['DefaultDisplayRecordsMax']*$Offset);
+	$SQL = $SQL . ' LIMIT ' . $_SESSION['DefaultDisplayRecordsMax'].' OFFSET '.strval($_SESSION['DefaultDisplayRecordsMax']*$Offset);
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL used to get the part selection was');
@@ -736,7 +741,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-		$DisplayDiscount = number_format(($OrderLine->DiscountPercent * 100),2);
+		$DisplayDiscount = locale_number_format(($OrderLine->DiscountPercent * 100),2);
 		$QtyOrdered = $OrderLine->Quantity;
 		$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
 
@@ -767,7 +772,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 		echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . $OrderLine->Price . '" /></td>
 				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . ($OrderLine->DiscountPercent * 100) . '" /></td>
 				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" maxlength="40" value="' . $OrderLine->GPPercent . '" /></td>';
-		echo '<td class="number">' . number_format($SubTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td class="number">' . locale_number_format($SubTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $OrderLine->ItemDue;
 		if (!Is_Date($OrderLine->ItemDue)){
 			$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
@@ -793,8 +798,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 		$TaxTotal += $TaxLineTotal;
 		$_SESSION['Items'.$identifier]->TaxTotals=$TaxTotals;
 		$_SESSION['Items'.$identifier]->TaxGLCodes=$TaxGLCodes;
-		echo '<td class="number">' . number_format($TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
-		echo '<td class="number">' . number_format($SubTotal + $TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td class="number">' . locale_number_format($TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td class="number">' . locale_number_format($SubTotal + $TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
 
 		if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
@@ -811,9 +816,9 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 	} /* end of loop around items */
 
 	echo '<tr class="EvenTableRows"><td colspan="8" class="number"><b>' . _('Total') . '</b></td>
-				<td class="number">' . number_format(($_SESSION['Items'.$identifier]->total),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-				<td class="number">' . number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-				<td class="number">' . number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
 						</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
@@ -1039,17 +1044,17 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ''){
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 			$LineItemsSQL = $StartOf_LineItemsSQL .
-											"'".$StockItem->LineNumber . "',
-											'" . $OrderNo . "',
-											'" . $StockItem->StockID . "',
-											'". $StockItem->Price . "',
-											'" . $StockItem->Quantity . "',
-											'" . floatval($StockItem->DiscountPercent) . "',
-											'" . DB_escape_string($StockItem->Narrative) . "',
-											'" . Date('Y-m-d') . "',
-											'" . Date('Y-m-d') . "',
-											'" . $StockItem->Quantity . "',
-											1)";
+					"'".$StockItem->LineNumber . "',
+					'" . $OrderNo . "',
+					'" . $StockItem->StockID . "',
+					'". $StockItem->Price . "',
+					'" . $StockItem->Quantity . "',
+					'" . floatval($StockItem->DiscountPercent) . "',
+					'" . DB_escape_string($StockItem->Narrative) . "',
+					'" . Date('Y-m-d') . "',
+					'" . Date('Y-m-d') . "',
+					'" . $StockItem->Quantity . "',
+					1)";
 
 			$ErrMsg = _('Unable to add the sales order line');
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
@@ -2091,7 +2096,7 @@ if (!isset($_POST['ProcessSale'])){
 						<td style="text-align:center">%s</td>
 						<td style="text-align:center">%s</td>
 						<td style="text-align:center">%s</td>
-						<td><font size=1><input class="number" tabindex="'.number_format($j+7).'" type="textbox" size="6" name="itm%s" value="0" />
+						<td><font size=1><input class="number" tabindex="'.strval($j+7).'" type="textbox" size="6" name="itm%s" value="0" />
 						</td>
 						</tr>',
 						$myrow['stockid'],
@@ -2109,7 +2114,7 @@ if (!isset($_POST['ProcessSale'])){
 	#end of page full new headings if
 			}
 	#end of while loop for Frequently Ordered Items
-			echo '<td style="text-align:center" colspan="8"><input type="hidden" name="OrderItems" value="1" /><input tabindex='.number_format($j+8).' type="submit" value="'._('Add to Sale').'" /></td>';
+			echo '<td style="text-align:center" colspan="8"><input type="hidden" name="OrderItems" value="1" /><input tabindex='.strval($j+8).' type="submit" value="'._('Add to Sale').'" /></td>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		if (isset($msg)){
@@ -2172,9 +2177,9 @@ if (!isset($_POST['ProcessSale'])){
 			echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '" method="post" name="orderform">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<tr><td><input type="hidden" name="previous" value="'.number_format($Offset-1).'" /><input tabindex="'.number_format($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="OrderItems" value="1" /><input tabindex="'.number_format($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
-			echo '<td><input type="hidden" name="NextList" value="'.number_format($Offset+1).'" /><input tabindex="'.number_format($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
+			echo '<tr><td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
+			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="OrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
+			echo '<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
 			$TableHeader = '<tr><th>' . _('Code') . '</th>
 					   			<th>' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
@@ -2190,14 +2195,13 @@ if (!isset($_POST['ProcessSale'])){
 			while ($myrow=DB_fetch_array($SearchResult)) {
 
 				// Find the quantity in stock at location
-				$QOHSql = "SELECT sum(quantity) AS QOH,
-								stockmaster.decimalplaces
-							FROM locstock INNER JOIN stockmaster
-							WHERE locstock.stockid='" .$myrow['stockid'] . "'
-							AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+				$QOHSql = "SELECT sum(quantity) AS qoh
+ 					   FROM locstock
+					   WHERE locstock.stockid='" .$myrow['stockid'] . "'
+					   AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$QOHResult =  DB_query($QOHSql,$db);
 				$QOHRow = DB_fetch_array($QOHResult);
-				$QOH = $QOHRow['QOH'];
+				$QOH = $QOHRow['qoh'];
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
@@ -2268,15 +2272,15 @@ if (!isset($_POST['ProcessSale'])){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><font size="1"><input class="number"  tabindex="'.number_format($j+7).'" type="textbox" size="6" name="itm%s" value="0" /></font></td>
+						<td><font size="1"><input class="number"  tabindex="'.strval($j+7).'" type="textbox" size="6" name="itm%s" value="0" /></font></td>
 						</tr>',
 						$myrow['stockid'],
 						$myrow['description'],
 						$myrow['units'],
-						number_format($QOH, $QOHRow['decimalplaces']),
-						number_format($DemandQty, $QOHRow['decimalplaces']),
-						number_format($OnOrder, $QOHRow['decimalplaces']),
-						number_format($Available, $QOHRow['decimalplaces']),
+						locale_number_format($QOH, $myrow['decimalplaces']),
+						locale_number_format($DemandQty, $myrow['decimalplaces']),
+						locale_number_format($OnOrder, $myrow['decimalplaces']),
+						locale_number_format($Available, $myrow['decimalplaces']),
 						$myrow['stockid']);
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
@@ -2291,9 +2295,9 @@ if (!isset($_POST['ProcessSale'])){
 			echo '<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items'.$identifier]->PhoneNo.'" />';
 			echo '<input type="hidden" name="Email" value="'.$_SESSION['Items'.$identifier]->Email.'" />';
 
-			echo '<tr><td><input type="hidden" name="previous" value="'.number_format($Offset-1).'" /><input tabindex="'.number_format($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="OrderItems" value="1" /><input tabindex="'.number_format($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
-			echo '<td><input type="hidden" name="NextList" value="'.number_format($Offset+1).'" /><input tabindex="'.number_format($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
+			echo '<tr><td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
+			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="OrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
+			echo '<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
 			echo '</table></form>';
 			echo $jsCall;
 

@@ -254,7 +254,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					number_format($myrow['4'],2),
+					locale_number_format($myrow['4'],2),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8'],
@@ -270,7 +270,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					number_format($myrow['4'],2),
+					locale_number_format($myrow['4'],2),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8']);
@@ -292,7 +292,7 @@ if (!isset($SelectedTabs)){
 		}
 		
 		echo '<tr><td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
-					<td class="number">'.number_format($Amount['0'],2) . '</td></tr>';
+					<td class="number">'.locale_number_format($Amount['0'],2) . '</td></tr>';
 
 
 		echo '</table>';

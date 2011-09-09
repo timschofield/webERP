@@ -89,6 +89,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'silverwolf';
 	switch ($rc) {
 	case  UL_OK;
+		include($PathPrefix . 'includes/LanguageSetup.php');
 		break;
 
 	case UL_SHOWLOGIN:
@@ -293,10 +294,10 @@ if (!isset($AllowAnyone)){
 		echo '<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>';
 
 		echo '</td>
-					</tr>
-					</table>
-					</td>
-					</tr>';
+			</tr>
+			</table>
+			</td>
+			</tr>';
 
 		include($PathPrefix . 'includes/footer.inc');
 		exit;

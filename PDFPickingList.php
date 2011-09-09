@@ -284,9 +284,9 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 					$myrow2['qtyexpected']=0;
 					$myrow2['qtypicked']=0;
 				}
-				$DisplayQty = number_format($myrow2['quantity'],2);
-				$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
-				$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked'],2);
+				$DisplayQty = locale_number_format($myrow2['quantity'],2);
+				$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],2);
+				$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked'],2);
 				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
 				$sql="INSERT INTO pickinglistdetails
 					VALUES(

@@ -79,7 +79,7 @@ $k=0; //row colour counter
 	echo '<td>'.$myrow['supplierno'].'</td>
 		<td>'.$myrow['suppreference'].'</td>
 		<td>'.ConvertSQLDate($myrow['trandate']).'</td>
-		<td class="number">'.number_format($myrow['alloc'],$myrow['decimalplaces']).'</td>
+		<td class="number">'.locale_number_format($myrow['alloc'],$myrow['decimalplaces']).'</td>
 		</tr>';
 
 		$j++;

@@ -492,7 +492,7 @@ else {
 		
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
-		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
+		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
 
 		echo '<td><a href="'.$ModifyPage.'">' . $myrow['orderno'] . '</a></td>
 					<td>' . $FormatedOrderDate . '</td>

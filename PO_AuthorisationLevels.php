@@ -144,7 +144,7 @@ while ($myrow=DB_fetch_array($Result)) {
 			<td>' . $myrow['currency'] . '</td>
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
-			<td class="number">'.number_format($myrow['authlevel'],$myrow['decimalplaces']).'</td>
+			<td class="number">'.locale_number_format($myrow['authlevel'],$myrow['decimalplaces']).'</td>
 			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&UserID=' . $myrow['userid'] .
 	'&Currency='.$myrow['currabrev'].'">'._('Edit').'</td>
 			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&UserID=' . $myrow['userid'] .

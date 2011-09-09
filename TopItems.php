@@ -200,10 +200,10 @@ if (!(isset($_POST['Search']))) {
 				$i, 
 				$myrow['stkcode'], 
 				$myrow['description'], 
-				number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
+				locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
 				$myrow['units'], //unit
-				number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
-				number_format($ohRow[0], $myrow['decimalplaces']) //on hand 
+				locale_number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
+				locale_number_format($ohRow[0], $myrow['decimalplaces']) //on hand 
 				);
 		$i++;
 	}

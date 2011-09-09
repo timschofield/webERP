@@ -79,7 +79,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		<td class="number">%s</td>
 		<td><input type="text" class="number" name="%s" maxlength="10" size="10" value="%s" /></td>',
 		$myrow['locationname'],
-		number_format($myrow['quantity'],$myrow['decimalplaces']),
+		locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
 		$myrow['loccode'],
 		$myrow['reorderlevel']);
 	$j++;

@@ -184,11 +184,11 @@ if (isset($_POST['ShowSales'])){
 		}
 				
 		echo '<td>' . $SalesRow['categoryid'] . ' - ' . $SalesRow['categorydescription'] . '</td>
-				<td class="number">' . number_format($SalesRow['salesvalue'],2) . '</td>
-				<td class="number">' . number_format($SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . number_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . number_format($SalesRow['cost'],2) . '</td>
-				<td class="number">' . number_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),2) . '</td>
+				<td class="number">' . locale_number_format($SalesRow['salesvalue'],2) . '</td>
+				<td class="number">' . locale_number_format($SalesRow['returnvalue'],2) . '</td>
+				<td class="number">' . locale_number_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],2) . '</td>
+				<td class="number">' . locale_number_format($SalesRow['cost'],2) . '</td>
+				<td class="number">' . locale_number_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),2) . '</td>
 			</tr>';
 		
 		$CumulativeTotalSales += $SalesRow['salesvalue'];
@@ -206,11 +206,11 @@ if (isset($_POST['ShowSales'])){
 		echo '<tr class="EvenTableRows">';
 	}
 	echo '<td class="number">' . _('GRAND Total') . '</td>
-		<td class="number">' . number_format($CumulativeTotalSales,2) . '</td>
-		<td class="number">' . number_format($CumulativeTotalRefunds,2) . '</td>
-		<td class="number">' . number_format($CumulativeTotalNetSales,2) . '</td>
-		<td class="number">' . number_format($CumulativeTotalCost,2) . '</td>
-		<td class="number">' . number_format($CumulativeTotalGP,2) . '</td>
+		<td class="number">' . locale_number_format($CumulativeTotalSales,2) . '</td>
+		<td class="number">' . locale_number_format($CumulativeTotalRefunds,2) . '</td>
+		<td class="number">' . locale_number_format($CumulativeTotalNetSales,2) . '</td>
+		<td class="number">' . locale_number_format($CumulativeTotalCost,2) . '</td>
+		<td class="number">' . locale_number_format($CumulativeTotalGP,2) . '</td>
 		</tr>';
 	
 	echo '</table>';

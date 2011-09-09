@@ -795,7 +795,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 			$PrintQuotation = $rootpath . '/PDFQuotation.php?QuotationNo=' . $myrow['orderno'];
 			$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-			$FormatedOrderValue = number_format($myrow['ordervalue'],2);
+			$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
 	
 			if ($myrow['printedpackingslip']==0) {
 			  $PrintText = _('Print');
@@ -898,7 +898,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 		} else {
 			echo '<b>' . _('Total Quotation(s) Value in');
 		}
-		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>
+		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>
 			</table>';
 	} //end if there are some orders to show  
 }

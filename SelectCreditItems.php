@@ -687,7 +687,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		  foreach ($_SESSION['CreditItems'.$identifier]->LineItems as $LineItem) {
 
 			   $LineTotal =  round($LineItem->Quantity * $LineItem->Price * (1 - $LineItem->DiscountPercent),$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
-			   $DisplayLineTotal = number_format($LineTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
+			   $DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
 
 			   if ($k==1){
 				$RowStarter = '<tr class="EvenTableRows">';
@@ -749,8 +749,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$TaxTotal += $TaxLineTotal;
 
-			$DisplayTaxAmount = number_format($TaxLineTotal ,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
-			$DisplayGrossLineTotal = number_format($LineTotal+ $TaxLineTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
+			$DisplayTaxAmount = locale_number_format($TaxLineTotal ,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
+			$DisplayGrossLineTotal = locale_number_format($LineTotal+ $TaxLineTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
 
 			echo '<td class="number">' . $DisplayTaxAmount . '</td>
 				<td class="number">' . $DisplayGrossLineTotal . '</td>
@@ -810,19 +810,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		echo '</td>';
 
-		echo '<td class="number">' . number_format($FreightTaxTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</td>
-			<td class="number">' . number_format($FreightTaxTotal+ $_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</td>
+		echo '<td class="number">' . locale_number_format($FreightTaxTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($FreightTaxTotal+ $_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</td>
 			</tr>';
 
 		$TaxTotal += $FreightTaxTotal;
-		$DisplayTotal = number_format($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
+		$DisplayTotal = locale_number_format($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces);
 
 		echo '<tr>
 				<td colspan="7" class="number">' . _('Credit Totals') . '</td>
 				<td class="number"><b>' . $DisplayTotal . '</b></td>
 				<td colspan="2"></td>
-				<td class="number"><b>' . number_format($TaxTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</td>
-				<td class="number"><b>' . number_format($TaxTotal+($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost),$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</b></td>
+				<td class="number"><b>' . locale_number_format($TaxTotal,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</td>
+				<td class="number"><b>' . locale_number_format($TaxTotal+($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost),$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '</b></td>
 			</tr>
 			</table>';
 

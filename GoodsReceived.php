@@ -142,12 +142,12 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		$LineTotal = ($LnItm->ReceiveQty * $LnItm->Price );
 		$_SESSION['PO'.$identifier]->Total = $_SESSION['PO'.$identifier]->Total + $LineTotal;
-		$DisplaySupplierQtyOrd = number_format($LnItm->Quantity/$LnItm->ConversionFactor,$LnItm->DecimalPlaces);
-		$DisplaySupplierQtyRec = number_format($LnItm->QtyReceived/$LnItm->ConversionFactor,$LnItm->DecimalPlaces);
-		$DisplayQtyOrd = number_format($LnItm->Quantity,$LnItm->DecimalPlaces);
-		$DisplayQtyRec = number_format($LnItm->QtyReceived,$LnItm->DecimalPlaces);
-		$DisplayLineTotal = number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
-		$DisplayPrice = number_format($LnItm->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+		$DisplaySupplierQtyOrd = locale_number_format($LnItm->Quantity/$LnItm->ConversionFactor,$LnItm->DecimalPlaces);
+		$DisplaySupplierQtyRec = locale_number_format($LnItm->QtyReceived/$LnItm->ConversionFactor,$LnItm->DecimalPlaces);
+		$DisplayQtyOrd = locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces);
+		$DisplayQtyRec = locale_number_format($LnItm->QtyReceived,$LnItm->DecimalPlaces);
+		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+		$DisplayPrice = locale_number_format($LnItm->Price,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 
 
 		//Now Display LineItem
@@ -164,7 +164,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		if ($LnItm->Controlled == 1) {
 
-			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&LineNo=' . $LnItm->LineNo . '">' . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
+			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
 			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 size=10 value="' . $LnItm->ReceiveQty . '"></td>';
@@ -194,7 +194,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 	}//foreach(LineItem)
 	echo '<script>defaultControl(document.forms[0].RecvQty_'.$LnItm->LineNo.');</script>';
 	
-	$DisplayTotal = number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 	if ($_SESSION['ShowValueOnGRN']==1) {
 		echo '<tr><td colspan="11" class="number"><b>' . _('Total value of goods received'). '</b></td>
 							<td class="number"><b>'. $DisplayTotal. '</b></td>
@@ -646,7 +646,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $OrderLine->GLCode . "',
 										'PO: " . $_SESSION['PO'.$identifier]->OrderNo . " " . $_SESSION['PO'.$identifier]->SupplierID . " - " . $OrderLine->StockID
 												. " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " .
-													number_format($CurrentStandardCost,2) . "',
+													locale_number_format($CurrentStandardCost,2) . "',
 										'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "'
 										)";
 
@@ -671,7 +671,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $_SESSION['CompanyRecord']['grnact'] . "',
 										'" . _('PO'.$identifier) . ': ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' .
 													$OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' .
-														$OrderLine->ReceiveQty . ' @ ' . number_format($UnitCost,2) . "',
+														$OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,2) . "',
 										'" . -$UnitCost * $OrderLine->ReceiveQty . "'
 										)";
 

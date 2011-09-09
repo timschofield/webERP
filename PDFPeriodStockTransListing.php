@@ -184,7 +184,7 @@ while ($myrow=DB_fetch_array($result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$myrow['description'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$myrow['transno'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,number_format($myrow['qty'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($myrow['qty'],$myrow['decimalplaces']), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,$myrow['locationname'], 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,$myrow['reference'], 'right');
 

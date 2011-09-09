@@ -270,7 +270,7 @@ if (DB_num_rows($result) == 0) {
 		$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 	}
 	echo '<tr bgcolor="#CCCCCC">
-		<td class=number>'.number_format($myrow['price'],2).'</td>
+		<td class=number>'.locale_number_format($myrow['price'],2).'</td>
 		<td>'.$Branch.'</td>
 		<td>'.$myrow['units'].'</td>
 		<td class=number>'.$myrow['conversionfactor'].'</td>

@@ -210,9 +210,9 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					<td>' . $myrow['branch'] . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td>
-					<td class="number">' . number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class="number">' . number_format($CurrentGP, 1) . '%</td>
-					<td class="number">' . number_format($ProposedPrice, $myrow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($CurrentGP, 1) . '%</td>
+					<td class="number">' . locale_number_format($ProposedPrice, $myrow['decimalplaces']) . '</td>
 					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength=14 size=10 value="' . $myrow['price'] . '"></td>
 				</tr> ';
 			$PriceCounter++;

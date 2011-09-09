@@ -263,12 +263,12 @@ if (isset($_POST['ShowStatus'])){
 					mb_strtoupper($myrow['stockid']),
 					mb_strtoupper($myrow['stockid']),
 					$myrow['description'],
-					number_format($myrow['quantity'],$myrow['decimalplaces']),
-					number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
-					number_format($DemandQty,$myrow['decimalplaces']),
+					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
+					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
+					locale_number_format($DemandQty,$myrow['decimalplaces']),
 					mb_strtoupper($myrow['stockid']),
-					number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
-					number_format($QOO,$myrow['decimalplaces']));
+					locale_number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
+					locale_number_format($QOO,$myrow['decimalplaces']));
 		
 				if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
 
@@ -294,12 +294,12 @@ if (isset($_POST['ShowStatus'])){
 					mb_strtoupper($myrow['stockid']),
 					mb_strtoupper($myrow['stockid']),
 					$myrow['description'],
-					number_format($myrow['quantity'],$myrow['decimalplaces']),
-					number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
-					number_format($DemandQty,$myrow['decimalplaces']),
+					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
+					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
+					locale_number_format($DemandQty,$myrow['decimalplaces']),
 					mb_strtoupper($myrow['stockid']),
-					number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
-					number_format($QOO,$myrow['decimalplaces']));
+					locale_number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
+					locale_number_format($QOO,$myrow['decimalplaces']));
 				if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
 
 					echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';

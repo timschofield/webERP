@@ -88,11 +88,11 @@ if ($NoOfGRNs >0){
 			$DecimalPlaces=2;
 		}
 		if (is_numeric($myrow['conversionfactor']) AND $myrow['conversionfactor'] !=0){
-			$SuppliersQuantity=number_format($myrow['qtyrecd']/$myrow['conversionfactor'],$DecimalPlaces);
+			$SuppliersQuantity=locale_number_format($myrow['qtyrecd']/$myrow['conversionfactor'],$DecimalPlaces);
 		} else {
-			$SuppliersQuantity=number_format($myrow['qtyrecd'],$DecimalPlaces);
+			$SuppliersQuantity=locale_number_format($myrow['qtyrecd'],$DecimalPlaces);
 		}
-		$OurUnitsQuantity=number_format($myrow['qtyrecd'],$DecimalPlaces);
+		$OurUnitsQuantity=locale_number_format($myrow['qtyrecd'],$DecimalPlaces);
 		$DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 		
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $myrow['itemcode']);

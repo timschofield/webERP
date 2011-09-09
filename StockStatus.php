@@ -215,11 +215,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td></tr>',
-			number_format($myrow['quantity'], $DecimalPlaces),
-			number_format($myrow['reorderlevel'], $DecimalPlaces),
-			number_format($DemandQty, $DecimalPlaces),
-			number_format($myrow['quantity'] - $DemandQty, $DecimalPlaces),
-			number_format($QOO, $DecimalPlaces)
+			locale_number_format($myrow['quantity'], $DecimalPlaces),
+			locale_number_format($myrow['reorderlevel'], $DecimalPlaces),
+			locale_number_format($DemandQty, $DecimalPlaces),
+			locale_number_format($myrow['quantity'] - $DemandQty, $DecimalPlaces),
+			locale_number_format($QOO, $DecimalPlaces)
 			);
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
@@ -236,7 +236,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			<td class="number">%s</td>
 			</tr>',
 			$myrow['locationname'],
-			number_format($DemandQty, $DecimalPlaces)
+			locale_number_format($DemandQty, $DecimalPlaces)
 			);
 	}
 //end of page full new headings if
@@ -338,9 +338,9 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 			<td class="number">%s%%</td>
 			</tr>',
 			$ph[0],
-			number_format($ph[1],$DecimalPlaces),
-			number_format($ph[2],2),
-			number_format($ph[3]*100,2)
+			locale_number_format($ph[1],$DecimalPlaces),
+			locale_number_format($ph[2],2),
+			locale_number_format($ph[3]*100,2)
 			);
 	  }
 	 echo '</table>';

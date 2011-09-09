@@ -180,10 +180,10 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<td>' . $myrow['description'] . '</td>
 				<td class=number>' . $myrow['quantity'] . '</td>
 				<td>' . $myrow['units'] . '</td>
-				<td class=number>' . number_format($myrow['unitprice'],$CurrDecimalPlaces) . '</td>
-				<td class=number>' . number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
-				<td class=number>' . number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),$CurrDecimalPlaces) . '</td>
-				<td class=number>' . number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
+				<td class=number>' . locale_number_format($myrow['unitprice'],$CurrDecimalPlaces) . '</td>
+				<td class=number>' . locale_number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
+				<td class=number>' . locale_number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),$CurrDecimalPlaces) . '</td>
+				<td class=number>' . locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
 				<td>' . $DisplayActualDeliveryDate . '</td>
 			</tr>';
 
@@ -192,9 +192,9 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			$OrderTotalWeight = $OrderTotalWeight + $myrow['quantity'] * $myrow['kgs'];
 
 		}
-		$DisplayTotal = number_format($OrderTotal,$CurrDecimalPlaces);
-		$DisplayVolume = number_format($OrderTotalVolume,2);
-		$DisplayWeight = number_format($OrderTotalWeight,2);
+		$DisplayTotal = locale_number_format($OrderTotal,$CurrDecimalPlaces);
+		$DisplayVolume = locale_number_format($OrderTotalVolume,2);
+		$DisplayWeight = locale_number_format($OrderTotalWeight,2);
 
 		echo '<tr>
 			<td colspan=5 class=number><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>

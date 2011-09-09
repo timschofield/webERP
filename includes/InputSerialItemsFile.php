@@ -44,7 +44,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 		echo '<td>' . $Bundle->BundleRef . '</td>';
 
 		if ($LineItem->Serialised==0){
-			echo '<td align=right>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+			echo '<td align=right>' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 		}
 	}
 
@@ -54,10 +54,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td align=right><b>'.  _('Total Quantity'). ': ' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td align=right><b>'.  _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 	echo '<tr><td><hr></td></tr>';
 } else {
-	echo '<tr><td align=right><b>'. _('Total Quantity'). ':</b></td><td align=right><b>' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td align=right><b>'. _('Total Quantity'). ':</b></td><td align=right><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 	echo '<tr><td colspan=2><hr></td></tr>';
 }
 
@@ -82,7 +82,7 @@ if ($_FILES['ImportFile']['name'] == '' && $_SESSION['CurImportFile'] == ''){
 if ($_FILES['ImportFile']['error'] != '' && !isset($_SESSION['CurImportFile'])){
 		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />'.
 				 _('Name').':'.$_FILES['ImportFile']['name'].'<br />'.
-				 _('Size').':'.number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />'.
+				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />'.
 				 _('Type').':'.$_FILES['ImportFile']['type'].'<br />';
 		echo '<br />'._('Error was').' '.$_FILES['ImportFile']['error'].'<br />';
 		$LineItem->SerialItemsValid=false;
@@ -122,7 +122,7 @@ if ($ShowFileInfo){
 	********************************************/
 	echo '<table>';
 	echo '<tr><td>'._('Name').':</td><td>'.$_SESSION['CurImportFile']['name'].'</td></tr>
-		<tr><td>'. _('Size') .':</td><td>' . number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td></tr>
+		<tr><td>'. _('Size') .':</td><td>' . locale_number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td></tr>
 		<tr><td>'. _('Type') .':</td><td>' . $_SESSION['CurImportFile']['type'] . '</td></tr>
 		<tr><td>'. _('TempName') .':</td><td>' . $_SESSION['CurImportFile']['tmp_name'] . '</td></tr>
 	   <tr><td>'. _('Status') .':</td><td>' .

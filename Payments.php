@@ -801,7 +801,7 @@ if (!isset($_POST['FunctionalExRate'])){
 }
 if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Currency AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
 	if (isset($SuggestedExRate)){
-		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedExRate,4) . '</b>';
+		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedExRate,4) . '</b>';
 	} else {
 		$SuggestedExRateText ='';
 	}
@@ -816,7 +816,7 @@ if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Cur
 if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
 										AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
 	if (isset($SuggestedFunctionalExRate)){
-		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedFunctionalExRate,4) . '</b>';
+		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedFunctionalExRate,4) . '</b>';
 	} else {
 		$SuggestedFunctionalExRateText ='';
 	}
@@ -1010,7 +1010,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 			
 			echo '<tr>
 				<td align=left>' . $PaymentItem->cheque . '</td>
-				<td class=number>' . number_format($PaymentItem->Amount,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</td>
+				<td class=number>' . locale_number_format($PaymentItem->Amount,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</td>
 				<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
 				<td>' . stripslashes($PaymentItem->Narrative)  . '</td>
 				<td>' . $PaymentItem->tag . ' - ' . $TagName . '</td>
@@ -1018,7 +1018,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 				</tr>';
 			$PaymentTotal += $PaymentItem->Amount;
 		}
-		echo '<tr><td></td><td class=number><b>' . number_format($PaymentTotal,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</b></td><td></td><td></td><td></td></tr></table><br />';
+		echo '<tr><td></td><td class=number><b>' . locale_number_format($PaymentTotal,$_SESSION['PaymentDetail']->CurrDecimalPlaces) . '</b></td><td></td><td></td><td></td></tr></table><br />';
 		echo '<input type=submit name="CommitBatch" value="' . _('Accept and Process Payment') . '">';
 	}
 

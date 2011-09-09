@@ -216,15 +216,15 @@ if (isset($_POST['PrintPDF'])) {
 			$pdf->addTextWrap($Left_Margin+1,$YPos,90,$FontSize,$myrow['component'],'',0,$fill);
 			$pdf->addTextWrap(140,$YPos,30,$FontSize,$myrow['mbflag'],'',0,$fill);
 			$pdf->addTextWrap(170,$YPos,140,$FontSize,$myrow['description'],'',0,$fill);
-			$pdf->addTextWrap(310,$YPos,50,$FontSize,number_format($myrow['quantity'],
+			$pdf->addTextWrap(310,$YPos,50,$FontSize,locale_number_format($myrow['quantity'],
 											  $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(360,$YPos,40,$FontSize,number_format($myrow['qoh'],
+			$pdf->addTextWrap(360,$YPos,40,$FontSize,locale_number_format($myrow['qoh'],
 											  $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(400,$YPos,40,$FontSize,number_format($myrow['poqty'],
+			$pdf->addTextWrap(400,$YPos,40,$FontSize,locale_number_format($myrow['poqty'],
 											  $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(440,$YPos,40,$FontSize,number_format($myrow['woqty'],
+			$pdf->addTextWrap(440,$YPos,40,$FontSize,locale_number_format($myrow['woqty'],
 											  $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(480,$YPos,50,$FontSize,number_format($Difference,
+			$pdf->addTextWrap(480,$YPos,50,$FontSize,locale_number_format($Difference,
 											  $myrow['decimalplaces']),'right',0,$fill);
         }
 		if ($YPos < $Bottom_Margin + $line_height){

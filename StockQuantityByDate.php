@@ -141,7 +141,7 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 					'StockID=' . mb_strtoupper($myrows['stockid']),
 					mb_strtoupper($myrows['stockid']),
 					$myrows['description'],
-					number_format($LocQtyRow['newqoh'],$myrows['decimalplaces']));
+					locale_number_format($LocQtyRow['newqoh'],$myrows['decimalplaces']));
 
 				$TotalQuantity += $LocQtyRow['newqoh'];
 			}

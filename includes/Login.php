@@ -2,7 +2,7 @@
 /* $Id$*/
 
 // Display demo user name and password within login form if $allow_demo_mode is true
-include ('LanguageSetup.php');
+//include ('LanguageSetup.php');
 
 if ($allow_demo_mode == True and !isset($demo_text)) {
 	$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('weberp') . '</i>';

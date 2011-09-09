@@ -133,7 +133,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	
 	while ($myrow=DB_fetch_array($CustRecs)){
 	
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['ovamount'],2), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format(-$myrow['ovamount'],2), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,150,$FontSize,$myrow['name'], 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+215,$YPos,100,$FontSize,$myrow['invtext'], 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos,100,$FontSize,$myrow['reference'], 'left');
@@ -150,7 +150,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	/* Right now print out the GL receipt entries in the batch */
 	while ($myrow=DB_fetch_array($GLRecs)){
 	
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),2), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),2), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
 		$YPos -= ($line_height);
 		$TotalBanked +=  (-$myrow['amount']*$ExRate);
@@ -163,7 +163,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	
 	
 	$YPos-=$line_height;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format($TotalBanked,2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format($TotalBanked,2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
 	
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d').'.pdf');

@@ -137,11 +137,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		echo '<th></th>';
 	} else if ($Serialised == 0 and $Perishable==0) {
 		echo '<td>'.$myrow['serialno'].'</td>
-			<td class="number">'.number_format($myrow['quantity'],$DecimalPlaces).'</td>';
+			<td class="number">'.locale_number_format($myrow['quantity'],$DecimalPlaces).'</td>';
 		echo '<th></th>';
 	} else if ($Serialised == 0 and $Perishable==1){
 		echo '<td>'.$myrow['serialno'].'</td>
-			<td class="number">'.number_format($myrow['quantity'],$DecimalPlaces). '</td>
+			<td class="number">'.locale_number_format($myrow['quantity'],$DecimalPlaces). '</td>
 			<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>';
 		echo '<th></th>';
 	}
@@ -160,7 +160,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of while loop
 
 echo '</table><br />';
-echo '<div class="centre"><br /><b>' . _('Total quantity') . ': ' . number_format($TotalQuantity, $DecimalPlaces) . '<br /></div>';
+echo '<div class="centre"><br /><b>' . _('Total quantity') . ': ' . locale_number_format($TotalQuantity, $DecimalPlaces) . '<br /></div>';
 
 echo '</form>';
 include('includes/footer.inc');

@@ -322,9 +322,9 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 		echo '<tr><td>' . $EnteredGRN->GRNNo . '</td>
 			<td>' . $EnteredGRN->ItemCode . '</td>
 			<td>' . $EnteredGRN->ItemDescription . '</td>
-			<td class=number>' . number_format($EnteredGRN->This_QuantityInv,2) . '</td>
-			<td class=number>' . number_format($EnteredGRN->ChgPrice,2) . '</td>
-			<td class=number>' . number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</td>
+			<td class=number>' . locale_number_format($EnteredGRN->This_QuantityInv,2) . '</td>
+			<td class=number>' . locale_number_format($EnteredGRN->ChgPrice,2) . '</td>
+			<td class=number>' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</td>
 			<td></tr>';
 
 		$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
@@ -332,7 +332,7 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 	}
 
 	echo '<tr><td colspan=5 class=number><font color=red>' . _('Total Value of Goods Credited') . ':</font></td>
-		<td class=number><font color=red><U>' . number_format($TotalGRNValue,2) . '</U></font></td></tr>';
+		<td class=number><font color=red><U>' . locale_number_format($TotalGRNValue,2) . '</U></font></td></tr>';
 	echo '</table><br />';
 }
 
@@ -352,7 +352,7 @@ if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment char
 
 		echo '<tr>
 			<td>' . $EnteredShiptRef->ShiptRef . '</td>
-			<td class=number>' . number_format($EnteredShiptRef->Amount,2) . '</td>
+			<td class=number>' . locale_number_format($EnteredShiptRef->Amount,2) . '</td>
 			</tr>';
 
 		$TotalShiptValue +=  $EnteredShiptRef->Amount;
@@ -360,7 +360,7 @@ if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment char
 	}
 
 	echo '<tr><td class=number><font color=red>' . _('Total Credited Against Shipments') .  ':</font></td>
-			<td class=number><fontcolor=red><U>' . number_format($TotalShiptValue,2) .  '</U></font></td>
+			<td class=number><fontcolor=red><U>' . locale_number_format($TotalShiptValue,2) .  '</U></font></td>
 		</tr>
 		</table><br />';
 }
@@ -380,7 +380,7 @@ if (count( $_SESSION['SuppTrans']->Assets) > 0){   /*if there are any fixed asse
 
 		echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
 				<td>' . $EnteredAsset->Description . '</td>
-				<td class=number>' .	number_format($EnteredAsset->Amount,2) . '</td></tr>';
+				<td class=number>' .	locale_number_format($EnteredAsset->Amount,2) . '</td></tr>';
 
 		$TotalAssetValue += $EnteredAsset->Amount;
 
@@ -392,7 +392,7 @@ if (count( $_SESSION['SuppTrans']->Assets) > 0){   /*if there are any fixed asse
 	}
 
 	echo '<tr><td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
-			<td class=number><font size=4 color=BLUE><U>' .  number_format($TotalAssetValue,2) . '</U></font></td>
+			<td class=number><font size=4 color=BLUE><U>' .  locale_number_format($TotalAssetValue,2) . '</U></font></td>
 		</tr>
 		</table>';
 } //end loop around fixed assets
@@ -413,7 +413,7 @@ if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contrac
 	foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
 		echo '<tr><td>' . $Contract->ContractRef . '</td>
-				<td class=number>' . 	number_format($Contract->Amount,2) . '</td>
+				<td class=number>' . 	locale_number_format($Contract->Amount,2) . '</td>
 				<td>' . $Contract->Narrative . '</td>
 			</tr>';
 
@@ -427,7 +427,7 @@ if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contrac
 	}
 
 	echo '<tr><td class="number">' . _('Total') . ':</font></td>
-			<td class="number">' .  number_format($TotalContractsValue,2) . '</td>
+			<td class="number">' .  locale_number_format($TotalContractsValue,2) . '</td>
 			</tr></table><br />';
 }
 
@@ -449,7 +449,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 
 			echo '<tr><td>' . $EnteredGLCode->GLCode . '</td>
 				<td>' . $EnteredGLCode->GLActName . '</td>
-				<td class=number>' . number_format($EnteredGLCode->Amount,2) . '</td>
+				<td class=number>' . locale_number_format($EnteredGLCode->Amount,2) . '</td>
 				<td>' . $EnteredGLCode->Narrative . '</td></tr>';
 
 			$TotalGLValue = $TotalGLValue + $EnteredGLCode->Amount;
@@ -462,7 +462,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 		}
 
 		echo '<tr><td colspan=2 class=number><font size=4 color=red>' . _('Total') . ':</font></td>
-			<td class=number><font size=4 color=red><U>' . number_format($TotalGLValue,2) . '</U></font></td>
+			<td class=number><font size=4 color=red><U>' . locale_number_format($TotalGLValue,2) . '</U></font></td>
 			</tr></table><br />';
 	}
 
@@ -484,7 +484,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 	$_SESSION['SuppTrans']->OvAmount = round($TotalGRNValue + $TotalGLValue + $TotalAssetValue + $TotalShiptValue + $TotalContractsValue,2);
 
 	echo '<table class=selection><tr><td><font color=red>' . _('Credit Amount in Supplier Currency') . ':</font></td>
-			<td colspan=2 class=number>' . number_format($_SESSION['SuppTrans']->OvAmount,2) . '</td></tr>';
+			<td colspan=2 class=number>' . locale_number_format($_SESSION['SuppTrans']->OvAmount,2) . '</td></tr>';
 	echo '<input type="hidden" name="OvAmount" value="' . $_SESSION['SuppTrans']->OvAmount . '">';
 } else {
 	echo '<table class=selection><tr><td><font color=red>' . _('Credit Amount in Supplier Currency') .
@@ -534,7 +534,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 		echo '<input type=hidden name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . ' />';
 
-		echo '</td><td class=number>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
+		echo '</td><td class=number>' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
 
 	} else { /*Tax being entered manually accept the taxamount entered as is*/
 		$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
@@ -552,7 +552,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 	echo '</td></tr>';
     }
 
-$DisplayTotal = number_format($_SESSION['SuppTrans']->OvAmount + $TaxTotal,2);
+$DisplayTotal = locale_number_format($_SESSION['SuppTrans']->OvAmount + $TaxTotal,2);
 
 echo '<tr><td><font color=red>' . _('Credit Note Total') . '</font></td><td colspan=2 class=number><b>' .
 	  $DisplayTotal. '</b></td></tr></table> <br />';
@@ -877,7 +877,7 @@ then do the updates and inserts to process the credit note entered */
 															'" . $StockGLCode['purchpricevaract'] . "',
 															'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN Credit Note') . ' ' . $EnteredGRN->GRNNo .
 														 ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
-														 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
+														 locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 														 "', '" . (-$WriteOffToVariances) . "')";
 					
 									$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
@@ -902,7 +902,7 @@ then do the updates and inserts to process the credit note entered */
 												'" . $StockGLCode['stockact'] . "',
 												'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Average Cost Adj') .
 												' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
-												number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
+												locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
 												'" . (-($PurchPriceVar - $WriteOffToVariances)) . "')";
 		
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
@@ -952,7 +952,7 @@ then do the updates and inserts to process the credit note entered */
 														'" . $StockGLCode['purchpricevaract'] . "',
 														'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
 															' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' .
-															number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
+															locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
 														'" . (-$PurchPriceVar) . "')";
 		
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
@@ -993,7 +993,7 @@ then do the updates and inserts to process the credit note entered */
 											'" . $GLCode . "',
 											'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
 									 $EnteredGRN->ItemDescription . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var') .
-									 ' ' . number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2) . "',
+									 ' ' . locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2) . "',
 											'" . (-$PurchPriceVar) . "')";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
@@ -1078,7 +1078,7 @@ then do the updates and inserts to process the credit note entered */
 						'" . $SQLCreditNoteDate . "',
 						'" . $PeriodNo . "',
 						'" . $_SESSION['SuppTrans']->CreditorsAct . "',
-						'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Credit Note') . ' ' . $_SESSION['SuppTrans']->SuppReference . ' ' .  $_SESSION['SuppTrans']->CurrCode . number_format($_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST,2)  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .  "',
+						'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Credit Note') . ' ' . $_SESSION['SuppTrans']->SuppReference . ' ' .  $_SESSION['SuppTrans']->CurrCode . locale_number_format($_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST,2)  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .  "',
 						'" . round($LocalTotal + ($TaxTotal / $_SESSION['SuppTrans']->ExRate),2) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');

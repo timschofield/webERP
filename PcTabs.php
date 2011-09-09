@@ -238,7 +238,7 @@ or deletion of the records*/
 					$myrow['usercode'],
 					$myrow['typetabdescription'],
 					$myrow['currabrev'],
-					number_format($myrow['tablimit'],$myrow['decimalplaces']),
+					locale_number_format($myrow['tablimit'],$myrow['decimalplaces']),
 					$myrow['assigner'],
 					$myrow['authorizer'],
 					$myrow['glaccountassignment'].' - '. $myrow['glactassigntname'],

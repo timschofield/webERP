@@ -148,10 +148,10 @@ echo '<input type=hidden name="OldOverheadCost" value="' . $myrow['overheadcost'
 echo '<input type=hidden name="QOH" value="' . $myrow['totalqoh'] .'">';
 
 echo '<tr><td>' . _('Last Cost') .':</td>
-		<td class="number">' . number_format($myrow['lastcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+		<td class="number">' . locale_number_format($myrow['lastcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<tr><td>' . _('Cost') . ':</td>
-			<td class="number">' . number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>
 		</table>';
 } else {
@@ -159,7 +159,7 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	if ($myrow['mbflag']=='M'){
 		echo '<input type=hidden name="MaterialCost" value=' . $myrow['materialcost'] . '>';
 		echo '<tr><td>' . _('Standard Material Cost Per Unit') .':</td>
-				<td class="number">' . number_format($myrow['materialcost'],4) . '</td>
+				<td class="number">' . locale_number_format($myrow['materialcost'],4) . '</td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Standard Labour Cost Per Unit') . ':</td>

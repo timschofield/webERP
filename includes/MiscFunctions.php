@@ -312,4 +312,16 @@ function http_file_exists($url)  {
 	return false;
 }
 
+/*Functions to display numbers in locale of the user */
+
+function locale_number_format($Number, $DecimalPlaces) {
+	return money_format('%!.' . $DecimalPlaces . 'n',$Number);
+}
+
+/* and to parse the input of the user into useable number */
+
+function filter_number_format($Number) {
+	global $LocaleInfo;
+	return str_replace($LocaleInfo['decimal_point'],'.',str_replace($LocaleInfo['thousands_sep'],'',$Number));
+}
 ?>
