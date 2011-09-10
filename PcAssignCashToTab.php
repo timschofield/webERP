@@ -18,9 +18,9 @@ if (isset($_POST['SelectedIndex'])){
 }
 
 if (isset($_POST['Days'])){
-	$Days = $_POST['Days'];
+	$Days = filter_number_format($_POST['Days']);
 } elseif (isset($_GET['Days'])){
-	$Days = $_GET['Days'];
+	$Days = filter_number_format($_GET['Days']);
 }
 
 if (isset($_POST['Cancel'])) {
@@ -80,10 +80,10 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE pcashdetails
 				SET date = '".FormatDateForSQL($_POST['Date'])."',
-					amount = '" . $_POST['Amount'] . "',
+					amount = '" . filter_number_format($_POST['Amount']) . "',
 					authorized = '0000-00-00',
-					notes = '" . $_POST['Notes'] . "',
-					receipt = '" . $_POST['Receipt'] . "'
+					notes = '" . DB_escape_string($_POST['Notes']) . "',
+					receipt = '" . DB_escape_string($_POST['Receipt']) . "'
 				WHERE counterindex = '" . $SelectedIndex . "'";
 		$msg = _('Assignment of cash to PC Tab ') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
 
@@ -103,11 +103,11 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['SelectedTabs'] . "',
 					'".FormatDateForSQL($_POST['Date'])."',
 					'ASSIGNCASH',
-					'" .$_POST['Amount'] . "',
+					'" . filter_number_format($_POST['Amount']) . "',
 					authorized = '0000-00-00',
 					'0',
-					'" . $_POST['Notes'] . "',
-					'" . $_POST['Receipt'] . "'
+					'" . DB_escape_string($_POST['Notes']) . "',
+					'" . DB_escape_string($_POST['Receipt']) . "'
 					)";
 		$msg = _('Assignment of cash to PC Tab ') . ' ' . $_POST['SelectedTabs'] .  ' ' . _('has been created');
 	}
@@ -247,7 +247,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			// only cash assignations NOT authorized can be modified or deleted
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class=number>' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class=number>' . locale_money_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -261,7 +261,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}else{
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class=number>' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+				<td class=number>' . locale_money_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -282,7 +282,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<tr><td colspan="2" style="text-align:right"><b>' . _('Current balance') . ':</b></td>
-				<td>' . locale_number_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+				<td>' . locale_money_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 		echo '</table>';
 
@@ -319,7 +319,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
 			echo '<input type=hidden name="SelectedIndex" value="' . $SelectedIndex. '">';
 			echo '<input type=hidden name="CurrentAmount" value="' . $Amount[0]. '">';
-			echo '<input type=hidden name="Days" value="' .$Days. '">';
+			echo '<input type=hidden name="Days" value="' . $Days . '">';
 		}
 
 /* Ricard: needs revision of this date initialization */
@@ -359,8 +359,8 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '</td></tr></table>'; // close main table
 
-		echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '">
-									<input type=submit name=Cancel value="' . _('Cancel') . '"></div>';
+		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '">
+									<input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 		echo '</form>';
 
