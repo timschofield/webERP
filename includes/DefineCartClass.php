@@ -159,9 +159,9 @@ Class Cart {
 													VALUES(" . $this->LineCounter . ",
 														" . $_SESSION['ExistingOrder'] . ",
 														'" . trim(mb_strtoupper($StockID)) ."',
-														" . $Qty . ",
-														" . $Price . ",
-														" . $Disc . ",'
+														" . filter_number_format($Qty) . ",
+														" . filter_number_format($Price) . ",
+														" . filter_number_format($Disc) . ",'
 														" . $ItemDue . "',
 														" . $POLine . ")";
 				$result = DB_query($sql,
@@ -196,9 +196,9 @@ Class Cart {
 		$this->LineItems[$UpdateLineNumber]->GPPercent = $GPPercent;
 		if ($UpdateDB=='Yes'){
 			global $db;
-			$result = DB_query("UPDATE salesorderdetails SET quantity=" . $Qty . ",
-															unitprice=" . $Price . ",
-															discountpercent=" . $Disc . ",
+			$result = DB_query("UPDATE salesorderdetails SET quantity=" . filter_number_format($Qty) . ",
+															unitprice=" . filter_number_format($Price) . ",
+															discountpercent=" . filter_number_format($Disc) . ",
 															narrative ='" . DB_escape_string($Narrative) . "',
 															itemdue = '" . FormatDateForSQL($ItemDue) . "',
 															poline = '" . DB_escape_string($POLine) . "'

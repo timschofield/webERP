@@ -315,6 +315,11 @@ function http_file_exists($url)  {
 /*Functions to display numbers in locale of the user */
 
 function locale_number_format($Number, $DecimalPlaces) {
+	global $LocaleInfo;
+	return number_format($Number,$DecimalPlaces,$LocaleInfo['decimal_point'],$LocaleInfo['thousands_sep']);
+}
+
+function locale_money_format($Number, $DecimalPlaces) {
 	return money_format('%!.' . $DecimalPlaces . 'n',$Number);
 }
 

@@ -25,13 +25,13 @@ if (isset($_POST['QuickEntry'])){
 if (isset($_POST['SelectingOrderItems'])){
 	foreach ($_POST as $FormVariable => $Quantity) {
 		if (mb_strpos($FormVariable,'OrderQty')!==false) {
-			$NewItem_array[$_POST['StockID' . mb_substr($FormVariable,8)]] = trim($Quantity);
+			$NewItem_array[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format(trim($Quantity));
 		}
 	}
 }
 
 if (isset($_GET['NewItem'])){
-	$NewItem = trim($_GET['NewItem']);
+	$NewItem = filter_number_format(trim($_GET['NewItem']));
 }
 
 
@@ -124,7 +124,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						ON locations.loccode=salesorders.fromstkloc 
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev 
-						WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
+						WHERE salesorders.orderno = '" . filter_number_format($_GET['ModifyOrderNumber']) . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -294,79 +294,33 @@ if (isset($_POST['ChangeCustomer']) AND $_POST['ChangeCustomer']!=''){
 //Customer logins are not allowed to select other customers henc in_array(2,$_SESSION['AllowedPageSecurityTokens'])
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
-	if (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
-		prnMsg( _('Customer Branch Name keywords have been used in preference to the Customer Branch Code or Branch Phone Number entered'), 'warn');
-	}
-	if (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
-		prnMsg(_('Customer Branch Code has been used in preference to the Customer Branch Phone Number entered'), 'warn');
-	}
 	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
 		prnMsg(_('At least one Customer Branch Name keyword OR an extract of a Customer Branch Code or Branch Phone Number must be entered for the search'), 'warn');
 	} else {
-		if (mb_strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
-			$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
-			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
-
-			$SQL = "SELECT custbranch.brname,
-							custbranch.contactname,
-							custbranch.phoneno,
-							custbranch.faxno,
-							custbranch.branchcode,
-							custbranch.debtorno,
-							debtorsmaster.name
-						FROM custbranch
-						LEFT JOIN debtorsmaster
-						ON custbranch.debtorno=debtorsmaster.debtorno
-						WHERE custbranch.brname " . LIKE . " '$SearchString'";
+		$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
+		$SearchString = str_replace(' ', '%', $_POST['CustKeywords']) ;
+				
+		$SQL = "SELECT custbranch.brname,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.branchcode,
+						custbranch.debtorno,
+						debtorsmaster.name
+					FROM custbranch
+					LEFT JOIN debtorsmaster
+					ON custbranch.debtorno=debtorsmaster.debtorno
+					WHERE custbranch.brname " . LIKE . " '%" . $SearchString . "%' 
+					AND custbranch.debtorno " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%' 
+					AND custbranch.branchcode " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%' 
+					AND custbranch.phoneno " . LIKE . " '%" . trim($_POST['CustPhone']) . "%'";
 
 			if ($_SESSION['SalesmanLogin']!=''){
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 			$SQL .=	" AND custbranch.disabletrans=0
 						ORDER BY custbranch.debtorno, custbranch.branchcode";
-
-		} elseif (mb_strlen($_POST['CustCode'])>0){
-
-			$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
-
-			$SQL = "SELECT custbranch.brname,
-							custbranch.contactname,
-							custbranch.phoneno,
-							custbranch.faxno,
-							custbranch.branchcode,
-							custbranch.debtorno,
-							debtorsmaster.name
-						FROM custbranch
-						LEFT JOIN debtorsmaster
-						ON custbranch.debtorno=debtorsmaster.debtorno
-						WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'";
-
-			if ($_SESSION['SalesmanLogin']!=''){
-				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
-			}
-			$SQL .=	" AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno";
-		} elseif (mb_strlen($_POST['CustPhone'])>0){
-			$SQL = "SELECT custbranch.brname,
-							custbranch.contactname,
-							custbranch.phoneno,
-							custbranch.faxno,
-							custbranch.branchcode,
-							custbranch.debtorno,
-							debtorsmaster.name
-						FROM custbranch
-						INNER JOIN debtorsmaster
-						ON custbranch.debtorno=debtorsmaster.debtorno
-						WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'";
-
-			if ($_SESSION['SalesmanLogin']!=''){
-				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
-			}
-
-			$SQL .=	" AND custbranch.disabletrans=0
-					ORDER BY custbranch.debtorno";
-		}
 
 		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
 		$result_CustSelect = DB_query($SQL,$db,$ErrMsg);
@@ -399,7 +353,7 @@ if (isset($_POST['JustSelectedACustomer'])){
  record returned from a search so parse the $SelectCustomer string into customer code and branch code */
 if (isset($SelectedCustomer)) {
 
-	$_SESSION['Items'.$identifier]->DebtorNo  = trim($SelectedCustomer);
+	$_SESSION['Items'.$identifier]->DebtorNo = trim($SelectedCustomer);
 	$_SESSION['Items'.$identifier]->Branch = trim($SelectedBranch);
 
 	// Now check to ensure this account is not on hold */
@@ -922,7 +876,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$NewItem = mb_strtoupper($_POST[$QuickEntryCode]);
 			}
 			if (isset($_POST[$QuickEntryQty])) {
-				$NewItemQty = $_POST[$QuickEntryQty];
+				$NewItemQty = filter_number_format($_POST[$QuickEntryQty]);
 			}
 			if (isset($_POST[$QuickEntryItemDue])) {
 				$NewItemDue = $_POST[$QuickEntryItemDue];
@@ -941,7 +895,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 
 			if(!Is_Date($NewItemDue)) {
-					prnMsg(_('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . _('The date entry') . ' ' . $NewItemDue . ' ' . _('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
+				prnMsg(_('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . _('The date entry') . ' ' . $NewItemDue . ' ' . _('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 				//Attempt to default the due date to something sensible?
 				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			}
@@ -1054,8 +1008,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																				taxcatid,
 																				materialcost)
 										VALUES ('" . $AssetStockID . "',
-												'" . $AssetRow['description'] . "',
-												'" . $AssetRow['longdescription'] . "',
+												'" . DB_escape_string($AssetRow['description']) . "',
+												'" . DB_escape_string($AssetRow['longdescription']) . "',
 												'ASSETS',
 												'D',
 												'0',
@@ -1099,18 +1053,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 
-				$Quantity = $_POST['Quantity_' . $OrderLine->LineNumber];
+				$Quantity = filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]);
 
 				if (ABS($OrderLine->Price - $_POST['Price_' . $OrderLine->LineNumber])>0.01){
-					$Price = $_POST['Price_' . $OrderLine->LineNumber];
-					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-($_POST['Discount_' . $OrderLine->LineNumber]/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-$_POST['Discount_' . $OrderLine->LineNumber])/100);
-				} elseif (ABS($OrderLine->GPPercent - $_POST['GPPercent_' . $OrderLine->LineNumber])>=0.001) {
+					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
+					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
+				} elseif (ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.001) {
 					//then do a recalculation of the price at this new GP Percentage
-					$Price = ($OrderLine->StandardCost*$ExRate)/(1 -(($_POST['GPPercent_' . $OrderLine->LineNumber] + $_POST['Discount_' . $OrderLine->LineNumber])/100));
+					$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
 				} else {
-					$Price = $_POST['Price_' . $OrderLine->LineNumber];
+					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
 				}
-				$DiscountPercentage = $_POST['Discount_' . $OrderLine->LineNumber];
+				$DiscountPercentage = filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]);
 				if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
 					$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
 				} else {
@@ -1171,7 +1125,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																		'Yes', /*Update DB */
 																		$_POST['ItemDue_' . $OrderLine->LineNumber],
 																		$_POST['POLine_' . $OrderLine->LineNumber],
-																		$_POST['GPPercent_' . $OrderLine->LineNumber]);
+																		filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]));
 					} //within credit limit so make changes
 				} //there are changes to the order line to process
 			} //page not called from itself - POST variables not set
@@ -1382,7 +1336,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-			$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+			$DisplayLineTotal = locale_money_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 			$DisplayDiscount = locale_number_format(($OrderLine->DiscountPercent * 100),2);
 			$QtyOrdered = $OrderLine->Quantity;
 			$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
@@ -1454,7 +1408,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		} /* end of loop around items */
 
-		$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayTotal = locale_money_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			$ColSpanNumber = 2;
 		} else {
