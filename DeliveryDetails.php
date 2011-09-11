@@ -44,13 +44,13 @@ if (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 	/*store the old freight cost before it is recalculated to ensure that there has been no change - test for change after freight recalculated and get user to re-confirm if changed */
 
-	$OldFreightCost = round($_POST['FreightCost'],2);
+	$OldFreightCost = round(filter_number_format($_POST['FreightCost']),2);
 
 }
 
 if (isset($_POST['Update'])
-	or isset($_POST['BackToLineDetails'])
-	or isset($_POST['MakeRecurringOrder']))   {
+	OR isset($_POST['BackToLineDetails'])
+	OR isset($_POST['MakeRecurringOrder']))   {
 
 	$InputErrors =0;
 	if (mb_strlen($_POST['DeliverTo'])<=1){
@@ -64,7 +64,7 @@ if (isset($_POST['Update'])
 //	if (mb_strpos($_POST['BrAdd1'],_('Box'))>0){
 //		prnMsg(_('You have entered the word') . ' "' . _('Box') . '" ' . _('in the street address') . '. ' . _('Items cannot be delivered to') . ' ' ._('box') . ' ' . _('addresses'),'warn');
 //	}
-	if (!is_numeric($_POST['FreightCost'])){
+	if (!is_numeric(filter_number_format($_POST['FreightCost']))){
 		$InputErrors =1;
 		prnMsg( _('The freight cost entered is expected to be numeric'),'error');
 	}
@@ -119,7 +119,7 @@ if (isset($_POST['Update'])
 		if ($_SESSION['DoFreightCalc']==True){
 			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items'.$identifier]->totalVolume, $_SESSION['Items'.$identifier]->totalWeight, $_SESSION['Items'.$identifier]->Location, $db);
 			if ( !empty($BestShipper) ){
-				$_POST['FreightCost'] = round($_POST['FreightCost'],2);
+				$_POST['FreightCost'] = round(filter_number_format($_POST['FreightCost']),2);
 				$_POST['ShipVia'] = $BestShipper;
 			} else {
 				prnMsg(_($_POST['FreightCost']),'warn');
@@ -148,7 +148,7 @@ if (isset($_POST['Update'])
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 		if (DB_num_rows($result)==0){
 
-			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
+			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $sql;
@@ -183,7 +183,7 @@ if (isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 			$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
-			$_SESSION['Items'.$identifier]->FreightCost = round($_POST['FreightCost'],2);
+			$_SESSION['Items'.$identifier]->FreightCost = round(filter_number_format($_POST['FreightCost']),2);
 			$_SESSION['Items'.$identifier]->Quotation = $_POST['Quotation'];
 		} else {
 			$_SESSION['Items'.$identifier]->DeliverTo = $_POST['DeliverTo'];
@@ -200,13 +200,13 @@ if (isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->ShipVia = $_POST['ShipVia'];
 			$_SESSION['Items'.$identifier]->DeliverBlind = $_POST['DeliverBlind'];
 			$_SESSION['Items'.$identifier]->SpecialInstructions = $_POST['SpecialInstructions'];
-			$_SESSION['Items'.$identifier]->DeliveryDays = $_POST['DeliveryDays'];
+			$_SESSION['Items'.$identifier]->DeliveryDays = filter_number_format$_POST['DeliveryDays']);
 			$_SESSION['Items'.$identifier]->DeliveryDate = $_POST['DeliveryDate'];
 			$_SESSION['Items'.$identifier]->QuoteDate = $_POST['QuoteDate'];
 			$_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 			$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
-			$_SESSION['Items'.$identifier]->FreightCost = round($_POST['FreightCost'],2);
+			$_SESSION['Items'.$identifier]->FreightCost = round(filter_number_format($_POST['FreightCost']),2);
 			$_SESSION['Items'.$identifier]->Quotation = $_POST['Quotation'];
 		}
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
@@ -219,7 +219,7 @@ if (isset($_POST['Update'])
 		and show a link to set them up
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
-		if ((isset($BestShipper) and $BestShipper=='') AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
+		if ((isset($BestShipper) and $BestShipper=='') AND ($_POST['ShipVia']=='' OR !isset($_POST['ShipVia']))){
 			$sql =  "SELECT shipper_id
 						FROM shippers
 						WHERE shipper_id='" . $_SESSION['Default_Shipper']."'";
@@ -277,9 +277,9 @@ If (isset($_POST['ProcessOrder'])) {
 	if ($InputErrors ==0) {
 		$OK_to_PROCESS = 1;
 	}
-	If ($_POST['FreightCost'] != $OldFreightCost && $_SESSION['DoFreightCalc']==True){
+	If (filter_number_format($_POST['FreightCost']) != $OldFreightCost AND $_SESSION['DoFreightCalc']==true){
 		$OK_to_PROCESS = 0;
-		prnMsg(_('The freight charge has been updated') . '. ' . _('Please reconfirm that the order and the freight charges are acceptable and then confirm the order again if OK') .' <br /> '. _('The new freight cost is') .' ' . $_POST['FreightCost'] . ' ' . _('and the previously calculated freight cost was') .' '. $OldFreightCost,'warn');
+		prnMsg(_('The freight charge has been updated') . '. ' . _('Please reconfirm that the order and the freight charges are acceptable and then confirm the order again if OK') .' <br /> '. _('The new freight cost is') .' ' .filter_number_format($_POST['FreightCost']) . ' ' . _('and the previously calculated freight cost was') .' '. $OldFreightCost,'warn');
 	} else {
 
 /*check the customer's payment terms */

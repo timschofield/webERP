@@ -69,7 +69,7 @@ include ('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-$_SESSION['Items']->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
+$_SESSION['Items']->LineItems[$LineNo]->QtyDispatched = filter_number_format($TotalQuantity);
 
 include('includes/footer.inc');
 exit;

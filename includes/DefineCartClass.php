@@ -186,14 +186,14 @@ Class Cart {
 								$GPPercent){
 
 		if ($Qty>0){
-			$this->LineItems[$UpdateLineNumber]->Quantity = $Qty;
+			$this->LineItems[$UpdateLineNumber]->Quantity = filter_number_format($Qty);
 		}
-		$this->LineItems[$UpdateLineNumber]->Price = $Price;
-		$this->LineItems[$UpdateLineNumber]->DiscountPercent = $Disc;
+		$this->LineItems[$UpdateLineNumber]->Price = filter_number_format($Price);
+		$this->LineItems[$UpdateLineNumber]->DiscountPercent = filter_number_format($Disc);
 		$this->LineItems[$UpdateLineNumber]->Narrative = $Narrative;
 		$this->LineItems[$UpdateLineNumber]->ItemDue = $ItemDue;
 		$this->LineItems[$UpdateLineNumber]->POLine = $POLine;
-		$this->LineItems[$UpdateLineNumber]->GPPercent = $GPPercent;
+		$this->LineItems[$UpdateLineNumber]->GPPercent = filter_number_format($GPPercent);
 		if ($UpdateDB=='Yes'){
 			global $db;
 			$result = DB_query("UPDATE salesorderdetails SET quantity=" . filter_number_format($Qty) . ",
@@ -228,8 +228,10 @@ Class Cart {
 				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
 			} else {
 				/* something has been delivered. Clear the remaining Qty and Mark Completed */
-				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1
-									WHERE orderno='".$_SESSION['ExistingOrder']."' AND orderlineno='" . $LineNumber . "'" ,
+				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, 
+																completed=1
+									WHERE orderno='".$_SESSION['ExistingOrder']."' 
+									AND orderlineno='" . $LineNumber . "'" ,
 									$db,
 								   _('The order line could not be updated as completed because')
 								   );
@@ -470,20 +472,20 @@ Class LineDetails {
 		$this->LineNumber = $LineNumber;
 		$this->StockID =$StockItem;
 		$this->ItemDescription = $Descr;
-		$this->Quantity = $Qty;
-		$this->Price = $Prc;
-		$this->DiscountPercent = $DiscPercent;
+		$this->Quantity = filter_number_format($Qty);
+		$this->Price = filter_number_format($Prc);
+		$this->DiscountPercent = filter_number_format($DiscPercent);
 		$this->Units = $UOM;
-		$this->Volume = $Volume;
-		$this->Weight = $Weight;
+		$this->Volume = filter_number_format($Volume);
+		$this->Weight = filter_number_format($Weight);
 		$this->ActDispDate = $ActDispatchDate;
-		$this->QtyInv = $QtyInvoiced;
+		$this->QtyInv = filter_number_format($QtyInvoiced);
 		if ($Controlled==1){
 			$this->QtyDispatched = 0;
 		} else {
-			$this->QtyDispatched = $Qty - $QtyInvoiced;
+			$this->QtyDispatched = filter_number_format($Qty) - filter_number_format($QtyInvoiced);
 		}
-		$this->QOHatLoc = $QOHatLoc;
+		$this->QOHatLoc = filter_number_format($QOHatLoc);
 		$this->MBflag = $MBflag;
 		$this->DiscCat = $DiscCat;
 		$this->Controlled = $Controlled;
@@ -496,7 +498,7 @@ Class LineDetails {
 		$this->WorkOrderNo = 0;
 		$this->ItemDue = $ItemDue;
 		$this->POLine = $POLine;
-		$this->StandardCost = $StandardCost;
+		$this->StandardCost = filter_number_format($StandardCost);
 		$this->EOQ = $EOQ;
 		$this->NextSerialNo = $NextSerialNo;
 

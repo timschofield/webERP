@@ -25,13 +25,13 @@ if (isset($_POST['QuickEntry'])){
 if (isset($_POST['SelectingOrderItems'])){
 	foreach ($_POST as $FormVariable => $Quantity) {
 		if (mb_strpos($FormVariable,'OrderQty')!==false) {
-			$NewItem_array[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format(trim($Quantity));
+			$NewItemArray[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format(trim($Quantity));
 		}
 	}
 }
 
 if (isset($_GET['NewItem'])){
-	$NewItem = filter_number_format(trim($_GET['NewItem']));
+	$NewItem = trim($_GET['NewItem']);
 }
 
 
@@ -864,7 +864,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$Discount = 0;
 		$AlreadyWarnedAboutCredit = false;
 		 $i=1;
-		  while ($i<=$_SESSION['QuickEntries'] and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
+		  while ($i<=$_SESSION['QuickEntries'] AND isset($_POST['part_' . $i]) AND $_POST['part_' . $i]!='') {
 			$QuickEntryCode = 'part_' . $i;
 			$QuickEntryQty = 'qty_' . $i;
 			$QuickEntryPOLine = 'poline_' . $i;
@@ -1055,7 +1055,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$Quantity = filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]);
 
-				if (ABS($OrderLine->Price - $_POST['Price_' . $OrderLine->LineNumber])>0.01){
+				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
 					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
 				} elseif (ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.001) {
@@ -1099,8 +1099,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					
 					$WithinCreditLimit = true;
 					
-					if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  /*Check credit limits is 1 for warn
-									breach their credit limit		and 2 for prohibit sales */
+					if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  
+						/*Check credit limits is 1 for warn breach their credit limit and 2 for prohibit sales */
 						$DifferenceInOrderValue = ($Quantity*$Price*(1-$DiscountPercentage/100)) - ($OrderLine->Quantity*$OrderLine->Price*(1-$OrderLine->DiscountPercent));
 						
 						$_SESSION['Items'.$identifier]->CreditAvailable -= $DifferenceInOrderValue;
@@ -1222,11 +1222,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	} /*end of if its a new item */
 
-	if (isset($NewItem_array) AND isset($_POST['SelectingOrderItems'])){
+	if (isset($NewItemArray) AND isset($_POST['SelectingOrderItems'])){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		$AlreadyWarnedAboutCredit = false;
-		foreach($NewItem_array as $NewItem => $NewItemQty) {
+		foreach($NewItemArray as $NewItem => $NewItemQty) {
 			if($NewItemQty > 0)	{
 				$sql = "SELECT stockmaster.mbflag
 						FROM stockmaster
@@ -1617,7 +1617,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<td><b>' . _('Enter partial Description') . ':</b><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="' ;
 
 		if (isset($_POST['Keywords'])) {
-			 echo$_POST['Keywords'] ;
+			 echo $_POST['Keywords'] ;
 		}
 		echo '"></td>';
 

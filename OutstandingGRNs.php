@@ -86,7 +86,7 @@ If (isset($_POST['PrintPDF'])
 				/* need to print the total of previous supplier */
 				$YPos -= (2*$line_height);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
-				$DisplaySuppTotVal = locale_number_format($SuppTot_Val,$GRNs['decimalplaces']);
+				$DisplaySuppTotVal = locale_number_format($SuppTot_Val,$GRNs['currdecimalplaces']);
 				$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
 				$YPos -=$line_height;
 				$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
