@@ -31,7 +31,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	 }
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-	
+
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class=selection>
 	 			<tr>
@@ -50,7 +50,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	 echo '<select name="BankAccount">';
 
 	 while ($myrow=DB_fetch_array($result)){
-		echo '<option VALUE=' . $myrow['accountcode'] . '>' . $myrow['bankaccountname'] . '</option>';
+		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 	 }
 
 
@@ -72,12 +72,15 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	include('includes/ConnectDB.inc');
 }
 
-$SQL = "SELECT bankaccountname
-	FROM bankaccounts
+$SQL = "SELECT bankaccountname,
+               decimalplaces AS bankcurrdecimalplaces
+	FROM bankaccounts INNER JOIN currencies
+    ON bankaccounts.currcode=currencies.currabrev
 	WHERE accountcode = '" .$_POST['BankAccount'] . "'";
 $BankActResult = DB_query($SQL,$db);
 $myrow = DB_fetch_row($BankActResult);
 $BankAccountName = $myrow[0];
+$BankCurrDecimalPlaces = $myrow[1];
 
 $SQL= "SELECT amount,
 		ref,
@@ -123,7 +126,7 @@ include ('includes/PDFChequeListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format(-$myrow['amount'],2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_money_format(-$myrow['amount'],$BankCurrDecimalPlaces), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
 
 	$sql = "SELECT accountname,
@@ -148,7 +151,7 @@ while ($myrow=DB_fetch_array($Result)){
 	}
 	while ($GLRow=DB_fetch_array($GLTransResult)){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$GLRow['accountname'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,60,$FontSize,locale_number_format($GLRow['amount'],2), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,60,$FontSize,locale_money_format($GLRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,120,$FontSize,$GLRow['narrative'], 'left');
 		$YPos -= ($line_height);
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
@@ -176,7 +179,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . 
 
 $ReportFileName = $_SESSION['DatabaseName'] . '_ChequeListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);
-$pdf->__destruct(); 
+$pdf->__destruct();
 if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
 		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);

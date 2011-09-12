@@ -1,5 +1,7 @@
 webERP Change Log
 
+
+12/9/11 Phil/Exson/Tom: Change all scripts to allow display and input of numbers in the format of the selected users locale 
 5/9/11 Phil: Fixed supplier payment exchange rate ... was being calculated incorrectly from functional exchange rate and the exchange rate between the currency of the bank account and currency of payment.
 5/9/11 Phil: GLTransInquiry posted was not retrieved correctly - now fixed
 4/9/11 Phil: Removed the stock code from form entities in SelectOrderItems.php and PO_Items.php to prevent issues with some characters in stock codes as suggested by Tim

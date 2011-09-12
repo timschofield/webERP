@@ -26,7 +26,7 @@ if (!isset($_POST['Date'])){
 
 	 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	 echo '<table class=selection>
+	 echo '<table class="selection">
 	 			<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
 				<td><input type="text" name="Date" maxlength="10" size="10" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
@@ -62,10 +62,10 @@ $sql= "SELECT type,
 			invtext,
 			debtortrans.rate,
 			decimalplaces
-		FROM debtortrans INNER JOIN debtorsmaster 
-		ON debtortrans.debtorno=debtorsmaster.debtorno 
-		INNER JOIN currencies 
-		ON debtorsmaster.currcode=currencies.currabrev 
+		FROM debtortrans INNER JOIN debtorsmaster
+		ON debtortrans.debtorno=debtorsmaster.debtorno
+		INNER JOIN currencies
+		ON debtorsmaster.currcode=currencies.currabrev
 		WHERE type='" . $_POST['TransType'] . "'
 		AND date_format(inputdate, '%Y-%m-%d')='".FormatDateForSQL($_POST['Date'])."'";
 
@@ -104,15 +104,15 @@ include ('includes/PDFCustTransListingPageHeader.inc');
 while ($myrow=DB_fetch_array($result)){
 
 	$sql="SELECT name FROM debtorsmaster WHERE debtorno='" . $myrow['debtorno'] . "'";
-	$supplierresult=DB_query($sql, $db);
-	$supplierrow=DB_fetch_array($supplierresult);
+	$CustomerResult=DB_query($sql, $db);
+	$CustomerRow=DB_fetch_array($CustomerResult);
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$supplierrow['name'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$CustomerRow['name'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$myrow['transno'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($myrow['ovamount'],$myrow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,locale_number_format($myrow['ovgst'],$myrow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format($myrow['ovamount']+$myrow['ovgst'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_money_format($myrow['ovamount'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,locale_money_format($myrow['ovgst'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_money_format($myrow['ovamount']+$myrow['ovgst'],$myrow['decimalplaces']), 'right');
 
 	  $YPos -= ($line_height);
 	  $TotalAmount = $TotalAmount + ($myrow['ovamount']/$myrow['rate']);

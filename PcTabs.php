@@ -92,7 +92,7 @@ if (isset($_POST['Submit'])) {
 		$sql = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
 									typetabcode = '" . $_POST['SelectTabs'] . "',
 									currency = '" . $_POST['SelectCurrency'] . "',
-									tablimit = '" . $_POST['TabLimit'] . "',
+									tablimit = '" . filter_number_format($_POST['TabLimit']) . "',
 									assigner = '" . $_POST['SelectAssigner'] . "',
 									authorizer = '" . $_POST['SelectAuthoriser'] . "',
 									glaccountassignment = '" . $_POST['GLAccountCash'] . "',
@@ -131,12 +131,12 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['SelectUser'] . "',
 									'" . $_POST['SelectTabs'] . "',
 									'" . $_POST['SelectCurrency'] . "',
-									'" . $_POST['TabLimit'] . "',
+									'" . filter_number_format($_POST['TabLimit']) . "',
 									'" . $_POST['SelectAssigner'] . "',
 									'" . $_POST['SelectAuthoriser'] . "',
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "')";
-				
+
 			$msg = _('The Petty Cash Tab') . ' ' . $_POST['tabcode'] .  ' ' . _('has been created');
 
 		}
@@ -187,9 +187,9 @@ or deletion of the records*/
 					currencies.decimalplaces,
 					chartmaster1.accountname AS glactassigntname,
 					chartmaster2.accountname AS glactpcashname
-				FROM pctabs INNER JOIN currencies 
-				ON pctabs.currency=currencies.currabrev  
-				INNER JOIN pctypetabs 
+				FROM pctabs INNER JOIN currencies
+				ON pctabs.currency=currencies.currabrev
+				INNER JOIN pctypetabs
 				ON pctabs.typetabcode=pctypetabs.typetabcode
 				INNER JOIN chartmaster AS chartmaster1 ON
 				pctabs.glaccountassignment = chartmaster1.accountcode
@@ -210,9 +210,9 @@ or deletion of the records*/
 				<th>' . _('GL Account For Cash Assignment') . '</th>
 				<th>' . _('GL Account Petty Cash Tab') . '</th>
 			</tr>';
-	
+
 		$k=0; //row colour counter
-	
+
 		while ($myrow = DB_fetch_array($result)) {
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
@@ -221,7 +221,7 @@ or deletion of the records*/
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-	
+
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -329,7 +329,7 @@ if (!isset($_GET['delete'])) {
 	DB_free_result($result);
 	$SQL = "SELECT typetabcode,
 					typetabdescription
-			FROM pctypetabs 
+			FROM pctypetabs
 			ORDER BY typetabcode";
 
 	$result = DB_query($SQL,$db);
@@ -420,7 +420,7 @@ if (!isset($_GET['delete'])) {
 			<td><select name="GLAccountCash">';
 
 	DB_free_result($result);
-	$SQL = "SELECT chartmaster.accountcode, 
+	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname
 			FROM chartmaster INNER JOIN bankaccounts
 			ON chartmaster.accountcode = bankaccounts.accountcode
@@ -463,7 +463,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name="Submit" value="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type=submit name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</form>';
 

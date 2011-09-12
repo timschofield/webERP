@@ -19,9 +19,9 @@ if (isset($_POST['SelectedIndex'])){
 }
 
 if (isset($_POST['Days'])){
-	$Days = $_POST['Days'];
+	$Days = filter_number_format($_POST['Days']);
 } elseif (isset($_GET['Days'])){
-	$Days = $_GET['Days'];
+	$Days = filter_number_format($_GET['Days']);
 }
 
 if (isset($_POST['Process'])) {
@@ -73,7 +73,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 				pctabs.glaccountpcash,
 				pctabs.usercode,
 				pctabs.currency,
-				currencies.rate
+				currencies.rate,
+				currencies.decimalplaces
 			FROM pcashdetails, pctabs, currencies
 			WHERE pcashdetails.tabcode = pctabs.tabcode
 				AND pctabs.currency = currencies.currabrev
@@ -98,7 +99,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	while ($myrow=DB_fetch_array($result))	{
-
+         $CurrDecimalPlaces = $myrow['decimalplaces'];
 		//update database if update pressed
 		if ((isset($_POST['Submit']) AND $_POST['Submit']=='Update') AND isset($_POST[$myrow['counterindex']])){
 
@@ -107,7 +108,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			if ($myrow['rate'] == 1){ // functional currency
 				$Amount = $myrow['amount'];
 			}else{ // other currencies
-				$Amount = $myrow['amount']/$myrow['rate'];
+				$Amount = filter_number_format($myrow['amount']/$myrow['rate']);
 			}
 
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
@@ -158,7 +159,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 											0,
 											'',
 											0)";
-						
+
 			$ResultFrom = DB_Query($sqlFrom, $db, '', '', true);
 
 			$sqlTo="INSERT INTO `gltrans` (`counterindex`,
@@ -185,7 +186,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 										0,
 										'',
 										0)";
-					
+
 			$ResultTo = DB_Query($sqlTo, $db, '', '', true);
 
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
@@ -240,7 +241,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		}
 		echo'<td>'.ConvertSQLDate($myrow['date']).'</td>
 			<td>'.$myrow['codeexpense'].'</td>
-			<td class="number">'.locale_number_format($myrow['amount'],2).'</td>
+			<td class="number">'.locale_money_format($myrow['amount'],$CurrDecimalPlaces).'</td>
 			<td>' . $Posted . '</td>
 			<td>'  .$myrow['notes'] . '</td>
 			<td>' . $myrow['receipt'] . '</td>';
@@ -276,12 +277,12 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	}
 
 	echo '<tr><td colspan=2 class="number">' . _('Current balance') . ':</td>
-				<td class=number>'.locale_number_format($Amount['0'],2).'</td></tr>';
+				<td class=number>'.locale_money_format($Amount['0'],$CurrDecimalPlaces).'</td></tr>';
 
 	// Do the postings
 	include ('includes/GLPostings.inc');
 	echo'</table><br /><div class="centre"><input type="submit" name="Submit" value=' . _('Update') . '></div></form>';
-	
+
 
 } else { /*The option to submit was not hit so display form */
 

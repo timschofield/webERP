@@ -48,11 +48,13 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 			bankact,
 			banktrans.exrate,
 			banktrans.functionalexrate,
-			banktrans.currcode
-		FROM bankaccounts,
-			banktrans
-		WHERE bankaccounts.accountcode=banktrans.bankact
-		AND banktrans.transno='" . $_POST['BatchNo'] . "'
+			banktrans.currcode,
+			currencies.decimalplaces AS currdecimalplaces
+		FROM bankaccounts INNER JOIN banktrans
+		ON bankaccounts.accountcode=banktrans.bankact
+		INNER JOIN currencies
+		ON bankaccounts.currcode=currencies.currabrev
+		WHERE banktrans.transno='" . $_POST['BatchNo'] . "'
 		AND banktrans.type=12";
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
@@ -76,8 +78,8 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$BankActName = $myrow['bankaccountname'];
 	$BankActNumber = $myrow['bankaccountnumber'];
 	$BankingReference = $myrow['ref'];
-	
-	
+    $BankCurrDecimalPlaces = $myrow['currdecimalplaces'];
+
 	$SQL = "SELECT debtorsmaster.name,
 			ovamount,
 			invtext,
@@ -117,30 +119,30 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 		include('includes/footer.inc');
 		exit;
 	}
-	
-	
+
+
 	include('includes/PDFStarter.php');
-	
+
 	/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
-	
+
 	$pdf->addInfo('Title',_('Banking Summary'));
 	$pdf->addInfo('Subject',_('Banking Summary Number') . ' ' . $_POST['BatchNo']);
 	$line_height=12;
 	$PageNumber = 0;
 	$TotalBanked = 0;
-	
+
 	include ('includes/PDFBankingSummaryPageHeader.inc');
-	
+
 	while ($myrow=DB_fetch_array($CustRecs)){
-	
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format(-$myrow['ovamount'],2), 'right');
+
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_money_format(-$myrow['ovamount'],$BankCurrDecimalPlaces), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,150,$FontSize,$myrow['name'], 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+215,$YPos,100,$FontSize,$myrow['invtext'], 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos,100,$FontSize,$myrow['reference'], 'left');
-	
+
 		$YPos -= ($line_height);
 		$TotalBanked -= $myrow['ovamount'];
-	
+
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			include ('includes/PDFBankingSummaryPageHeader.inc');
@@ -150,24 +152,24 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	/* Right now print out the GL receipt entries in the batch */
 	while ($myrow=DB_fetch_array($GLRecs)){
 	
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),2), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_money_format((-$myrow['amount']*$ExRate*$FunctionalExRate),$BankCurrDecimalPlaces), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
 		$YPos -= ($line_height);
 		$TotalBanked +=  (-$myrow['amount']*$ExRate);
-	
+
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
 			/*Then set up a new page */
 			include ('includes/PDFBankingSummaryPageHeader.inc');
 		} /*end of new page header  */
 	} /* end of while there are GL receipts in the batch to print */
-	
-	
+
+
 	$YPos-=$line_height;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format($TotalBanked,2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
-	
+
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 }
 
 ?>

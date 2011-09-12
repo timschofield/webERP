@@ -106,7 +106,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
 			WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable']."'";
+			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable']) ."'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
 				$sql= "SELECT salesorders.orderno,
@@ -126,7 +126,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 						AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-							- TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable']."'";
+							- TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable'])."'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 
@@ -147,7 +147,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 						AND salesorders.fromstkloc='" . $_POST['Location'] . "'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-								- TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable'] . "'";
+								- TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']!='All'){
 
@@ -169,7 +169,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 						AND stockmaster.categoryid='" . $_POST['CategoryID'] ."'
 						AND salesorders.fromstkloc='" . $_POST['Location'] . "'
 						AND (TO_DAYS(salesorderdetails.actualdispatchdate)
-								- TO_DAYS(salesorders.deliverydate)) >'" . $_POST['DaysAcceptable'] . "'";
+								- TO_DAYS(salesorders.deliverydate)) >'" . filter_number_format($_POST['DaysAcceptable']) . "'";
 
 }
 

@@ -314,13 +314,14 @@ function http_file_exists($url)  {
 
 /*Functions to display numbers in locale of the user */
 
-function locale_number_format($Number, $DecimalPlaces) {
+function locale_number_format($Number, $DecimalPlaces=0) {
 	global $LocaleInfo;
 	return number_format($Number,$DecimalPlaces,$LocaleInfo['decimal_point'],$LocaleInfo['thousands_sep']);
 }
 
-function locale_money_format($Number, $DecimalPlaces) {
-	return money_format('%!.' . $DecimalPlaces . 'n',$Number);
+function locale_money_format($Number, $DecimalPlaces=0) {
+	global $LocaleInfo;
+	return number_format($Number,$DecimalPlaces,$LocaleInfo['mon_decimal_point'],$LocaleInfo['mon_thousands_sep']);
 }
 
 /* and to parse the input of the user into useable number */

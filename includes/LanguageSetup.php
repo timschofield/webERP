@@ -30,12 +30,12 @@ if (defined('LC_MESSAGES')){
 	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
 }
 
+$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
 //Turkish seems to be a special case
 if ($_SESSION['Language']=='tr_TR.utf8') {
 	$Locale = setlocale(LC_CTYPE, 'C');
 }
-	
-//$Locale = setlocale (LC_NUMERIC, 'en_US'); //currently need decimal points to be '.'
+
 
 if (function_exists('gettext')){
   

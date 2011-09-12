@@ -20,9 +20,9 @@ if (isset($_POST['SelectedIndex'])){
 }
 
 if (isset($_POST['Days'])){
-	$Days = $_POST['Days'];
+	$Days = filter_number_format($_POST['Days']);
 } elseif (isset($_GET['Days'])){
-	$Days = $_GET['Days'];
+	$Days = filter_number_format($_GET['Days']);
 }
 
 if (isset($_POST['Cancel'])) {
@@ -71,9 +71,9 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE pcashdetails
 			SET date = '".FormatDateForSQL($_POST['Date'])."',
 			codeexpense = '" . $_POST['SelectedExpense'] . "',
-			amount = '" .- $_POST['amount'] . "',
-			notes = '" . $_POST['Notes'] . "',
-			receipt = '" . $_POST['Receipt'] . "'
+			amount = '" .-filter_number_format($_POST['amount']) . "',
+			notes = '" . DB_escape_string($_POST['Notes']) . "',
+			receipt = '" . DB_escape_string($_POST['Receipt']) . "'
 			WHERE counterindex = '".$SelectedIndex."'";
 
 		$msg = _('The Expense Claim on Tab') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
@@ -95,11 +95,11 @@ if (isset($_POST['submit'])) {
 								VALUES ('','" . $_POST['SelectedTabs'] . "',
 										'".FormatDateForSQL($_POST['Date'])."',
 										'" . $_POST['SelectedExpense'] . "',
-										'" .- $_POST['amount'] . "',
+										'" . -filter_number_format($_POST['amount']) . "',
 										'',
 										'',
-										'" . $_POST['Notes'] . "',
-										'" . $_POST['Receipt'] . "'
+										'" . DB_escape_string($_POST['Notes']) . "',
+										'" . DB_escape_string($_POST['Receipt']) . "'
 										)";
 
 		$msg = _('The Expense Claim on Tab') . ' ' . $_POST['SelectedTabs'] .  ' ' . _('has been created');
@@ -181,7 +181,7 @@ if (!isset($SelectedTabs)){
 		echo '<br /><table class=selection>';
 		echo '<tr><th colspan="8"><font color="navy" size="3">' . _('Petty Cash Tab') . ' ' .$SelectedTabs. '</font></th></tr>';
 		echo '<tr><th colspan="8">' . _('Detail Of Movements For Last ') .': ';
- 
+
 
 		if(!isset ($Days)){
 			$Days=30;
@@ -254,7 +254,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					locale_number_format($myrow['4'],2),
+					locale_money_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8'],
@@ -270,7 +270,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					locale_number_format($myrow['4'],2),
+					locale_money_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8']);
@@ -290,9 +290,9 @@ if (!isset($SelectedTabs)){
 		if (!isset($Amount['0'])) {
 			$Amount['0']=0;
 		}
-		
+
 		echo '<tr><td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
-					<td class="number">'.locale_number_format($Amount['0'],2) . '</td></tr>';
+					<td class="number">'.locale_money_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 
 		echo '</table>';
@@ -302,7 +302,7 @@ if (!isset($SelectedTabs)){
 
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		
+
 		echo '<br /><table class="selection">'; //Main table
 
 
@@ -361,7 +361,7 @@ if (!isset($SelectedTabs)){
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount']=0;
 		}
-					
+
 		echo '<tr><td>' . _('Amount') . ':</td>
 				<td><input type="text" class="number" name="amount" size="12" maxlength="11" value="' . $_POST['Amount'] . '"></td></tr>';
 
@@ -380,7 +380,7 @@ if (!isset($SelectedTabs)){
 				<td><input type="text" name="Receipt" size="50" maxlength="49" value="' . $_POST['Receipt'] . '"></td></tr>';
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
 		echo '<input type="hidden" name="Days" value="' .$Days. '">';
-		
+
 		echo '</td></tr></table>'; // close main table
 		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
 		echo '</form>';

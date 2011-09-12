@@ -17,7 +17,7 @@ if (isset($_POST['PrintPDF'])){
 		if (!is_numeric($_POST['ActivityAmount'])){
 			$title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
-			echo '<p>';
+			echo '<p />';
 			prnMsg( _('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
 			include('includes/footer.inc');
 			exit;
@@ -230,7 +230,7 @@ if (isset($_POST['PrintPDF'])){
 	  $title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db) );
-	   echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+	   echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
 	   if ($debug==1){
 	      echo '<br />'. $SQL;
 	   }
@@ -242,7 +242,7 @@ if (isset($_POST['PrintPDF'])){
 	  $title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	  prnMsg( _('This report has no output because there were no customers retrieved'), 'error' );
-	  echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+	  echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
 	  include('includes/footer.inc');
 	  exit;
 	}
@@ -333,7 +333,7 @@ if (isset($_POST['PrintPDF'])){
 
 			if ($_POST['Activity']!='All'){
 				$LeftOvers = $pdf->addTextWrap(230,$YPos-20,60,$FontSize,_('Turnover'),'right');
-				$LeftOvers = $pdf->addTextWrap(230,$YPos-30,60,$FontSize,locale_number_format($LocalCurrencyTurnover), 'right');
+				$LeftOvers = $pdf->addTextWrap(230,$YPos-30,60,$FontSize,locale_money_format($LocalCurrencyTurnover,0), 'right');
 			}
 
 			$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,$Customers['brname']);
@@ -368,11 +368,11 @@ if (isset($_POST['PrintPDF'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
 		 $title . '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table class=selection>';
+	echo '<form action=' . $_SERVER['PHP_SELF'] . ' method="POST"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name=Areas[] multiple>';
 
-	$sql='SELECT areacode, areadescription FROM areas';
+	$sql="SELECT areacode, areadescription FROM areas";
 	$AreasResult= DB_query($sql,$db);
 
 	echo '<option selected value="All">' . _('All Areas') . '</option>';
@@ -386,11 +386,11 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<option selected value="All">'. _('All sales folk');
 
-	$sql = 'SELECT salesmancode, salesmanname FROM salesman';
+	$sql = "SELECT salesmancode, salesmanname FROM salesman";
 	$SalesFolkResult = DB_query($sql,$db);
 
 	While ($myrow = DB_fetch_array($SalesFolkResult)){
-		echo '<option VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
+		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 

@@ -32,7 +32,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}
 
 	/*Show a form to allow input of criteria for Tabs to show */
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ':</td><td><select name="SelectedTabs">';
 
 	if ($_SESSION['AccessLevel'] >= 15){ // superuser can supervise the supervisors
@@ -67,7 +67,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<tr><td>' . _('To Date:') .'</td><td>';
 	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '">';
 	echo '</td></tr></table><br />';
-	echo '<div class="centre"><input type=submit Name="ShowTB" Value="' . _('Show HTML') .'">';
+	echo '<div class="centre"><input type="submit" Name="ShowTB" Value="' . _('Show HTML') .'">';
 	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '"></div>';
 
 } else if (isset($_POST['PrintPDF'])) {
@@ -133,7 +133,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Tab Code :'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$SelectedTabs);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('From '));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+290,$YPos,70,$FontSize,_('From'). ' ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,20,$FontSize,_(': '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['FromDate']);
 
@@ -159,7 +159,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,_('Balance before '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,70,$FontSize,$_POST['FromDate']);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,_(': '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,locale_number_format($Balance['0'],2));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,locale_money_format($Balance['0'],$_SESSION['CompanyRecord']['decimalplaces']));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,70,$FontSize,$Tabs['currency']);
 
 	$YPos -= (2 * $line_height);
@@ -191,7 +191,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		// Print total for each account
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,70,$FontSize,ConvertSQLDate($myrow['date']));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+70,$YPos,130,$FontSize,$Description[0]);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,50,$FontSize,locale_number_format($myrow['amount'],2),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,50,$FontSize,locale_money_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,$myrow['notes']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,70,$FontSize,$myrow['receipt']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,ConvertSQLDate($myrow['authorized']));
@@ -216,7 +216,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+70,$YPos,100,$FontSize,_('Balance at'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$_POST['ToDate']);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+160,$YPos,20,$FontSize,_(': '));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+160,$YPos,70,$FontSize,locale_number_format($Amount[0],2),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+160,$YPos,70,$FontSize,locale_money_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,70,$FontSize,$Tabs['currency']);
 	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
 
@@ -282,7 +282,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '<tr><td>' . _('Balance before ') . ''.$_POST['FromDate'].'</td>
 				<td>:</td>
-				<td>' . ''.$Balance['0'].' '.$Tabs['currency'].'</td>
+				<td>' . locale_money_format($Balance['0'],$_SESSION['CompanyRecord']['decimalplaces']).' '.$Tabs['currency'].'</td>
 			</tr>';
 
 	$SqlBalanceNotAut = "SELECT SUM(amount)
@@ -299,7 +299,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$BalanceNotAut['0']=0;
 	}
 
-	echo '<tr><td>' . _('Total not authorised before ') . ''.$_POST['FromDate'].'</td><td>:</td><td>' . ''.$BalanceNotAut['0'].' '.$Tabs['currency'].'</td></tr>';
+	echo '<tr><td>' . _('Total not authorised before ') . ''.$_POST['FromDate'].'</td><td>:</td><td>' . ''.locale_money_format($BalanceNotAut['0'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'].'</td></tr>';
 
 
 	echo '</table>';
@@ -362,7 +362,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			</tr>",
 			ConvertSQLDate($myrow['2']),
 			$Description['0'],
-			locale_number_format($myrow['4'],2),
+			locale_money_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
 			$myrow['7'],
 			$myrow['8'],
 			ConvertSQLDate($myrow['5']));
@@ -376,7 +376,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			</tr>",
 			ConvertSQLDate($myrow['2']),
 			$Description['0'],
-			locale_number_format($myrow['4'],2),
+			locale_money_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
 			$myrow['7'],
 			$myrow['8'],
 			'          ');
@@ -397,7 +397,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}
 
 	echo '<tr><td colspan=2 style=text-align:right >' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
-				<td>'.locale_number_format($Amount[0],2).' </td><td>'.$Tabs['currency'].'</td></tr>';
+				<td>'.locale_money_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']).' </td><td>'.$Tabs['currency'].'</td></tr>';
 
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '"></div>';

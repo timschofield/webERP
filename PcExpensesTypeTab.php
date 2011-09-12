@@ -20,7 +20,7 @@ if (isset($_POST['SelectedType'])){
 if (!isset($_GET['delete']) and (ContainsIllegalCharacters($SelectedType) OR mb_strpos($SelectedType,' ')>0)){
 	$InputError = 1;
 	prnMsg(_('The petty cash tab type contain any of the following characters " \' - & or a space'),'error');
-} 
+}
 
 if (isset($_POST['SelectedTab'])){
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);
@@ -46,7 +46,7 @@ if (isset($_POST['Process'])) {
 if (isset($_POST['submit'])) {
 
 	$InputError=0;
-	
+
 	if ($_POST['SelectedExpense']=='') {
 		$InputError=1;
 		echo prnMsg(_('You have not selected an expense to add to this tab'),'error');
@@ -111,7 +111,7 @@ or deletion of the records*/
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">'; //Main table
-	
+
 	echo '<tr><td>' . _('Select Type of Tab') . ':</td><td><select name="SelectedTab">';
 
 	DB_free_result($result);
@@ -136,8 +136,8 @@ or deletion of the records*/
 	   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name="Process" value="' . _('Accept') . '">
-				<input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '">
+				<input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 	echo '</form>';
 
@@ -149,10 +149,10 @@ if (isset($_POST['process'])OR isset($SelectedTab)) {
 	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</a></div><p>';
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	
+
 	echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '">';
 
-	$sql = "SELECT pctabexpenses.codeexpense, 
+	$sql = "SELECT pctabexpenses.codeexpense,
 					pcexpenses.description
 			FROM pctabexpenses INNER JOIN pcexpenses
 			ON pctabexpenses.codeexpense=pcexpenses.codeexpense
@@ -186,9 +186,9 @@ while ($myrow = DB_fetch_array($result)) {
 			</tr>',
 			$myrow['codeexpense'],
 			$myrow['description'],
-			$_SERVER['PHP_SELF'], 
+			$_SERVER['PHP_SELF'],
 			$myrow['codeexpense'],
-			$_SERVER['PHP_SELF'], 
+			$_SERVER['PHP_SELF'],
 			$myrow['codeexpense']);
 	}
 	//END WHILE LIST LOOP
@@ -196,16 +196,16 @@ while ($myrow = DB_fetch_array($result)) {
 
 	if (! isset($_GET['delete'])) {
 
-		
+
 		echo '<br /><table  class="selection">'; //Main table
-	
+
 		echo '<tr><td>' . _('Select Expense Code') . ':</td><td><select name="SelectedExpense">';
-	
+
 		DB_free_result($result);
 		$SQL = "SELECT codeexpense,
 						description
 				FROM pcexpenses";
-	
+
 		$result = DB_query($SQL,$db);
 		if (!isset($_POST['SelectedExpense'])){
 			echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
@@ -217,18 +217,18 @@ while ($myrow = DB_fetch_array($result)) {
 				echo '<option value="';
 			}
 			echo $myrow['codeexpense'] . '">' . $myrow['codeexpense'] . ' - ' . $myrow['description'] . '</option>';
-	
+
 		} //end while loop
-	
+
 		echo '</select></td></tr>';
-	
+
 	   	echo '</td></tr></table>'; // close main table
-			
+
 		echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '">
 									<input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
-	
+
 		echo '</form>';
-	
+
 	} // end if user wish to delete
 }
 

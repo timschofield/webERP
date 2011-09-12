@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedExpense) AND $InputError !=1) {
 
 		$sql = "UPDATE pcexpenses
-			SET description = '" . $_POST['Description'] . "',
+			SET description = '" . DB_escape_string($_POST['Description']) . "',
 			glaccount = '" . $_POST['GLAccount'] . "'
 			WHERE codeexpense = '" . $SelectedExpense . "'";
 
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 						(codeexpense,
 			 			 description,glaccount)
 				VALUES ('" . $_POST['CodeExpense'] . "',
-						'" . $_POST['Description'] . "',
+						'" . DB_escape_string($_POST['Description']) . "',
 					'" . $_POST['GLAccount'] . "')";
 
 			$msg = _('Expense ') . ' ' . $_POST['CodeExpense'] .  ' ' . _('has been created');
@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
 	} else {
 
 			$sql="DELETE FROM pcexpenses
-				WHERE codeexpense='" . $SelectedExpense . "'";
+                  WHERE codeexpense='" . $SelectedExpense . "'";
 			$ErrMsg = _('The expense type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Expense type') .  ' ' . $SelectedExpense  . ' ' . _('has been deleted') ,'success');
@@ -203,7 +203,7 @@ or deletion of the records*/
 
 		printf('<td>%s</td>
 			<td>%s</td>
-			<td class=number>%s</td>
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</td>
 			<td><a href="%sSelectedExpense=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\');">' . _('Delete') . '</td>
@@ -249,7 +249,7 @@ if (! isset($_GET['delete'])) {
 		echo '<input type=hidden name="SelectedExpense" value="' . $SelectedExpense . '">';
 		echo '<input type=hidden name="CodeExpense" VALUE="' . $_POST['CodeExpense']. '">';
 		// We dont allow the user to change an existing type code
-		echo '<table class="selection"> 
+		echo '<table class="selection">
 				<tr>
 				<td>' . _('Code Of Expense') . ':</td>
 				<td>' . $_POST['CodeExpense'] . '</td></tr>';
@@ -285,9 +285,9 @@ if (! isset($_GET['delete'])) {
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['GLAccount']) and $myrow['accountcode']==$_POST['GLAccount']) {
-			echo '<option selected VALUE="';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 
@@ -297,7 +297,8 @@ if (! isset($_GET['delete'])) {
 
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type="submit" name=submit VALUE="' . _('Accept') . '"><input type=submit name=Cancel VALUE="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '">
+                  <input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 	echo '</form>';
 
