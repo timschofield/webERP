@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Id$*/
 
-//$PageSecurity = 2;
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -27,7 +26,7 @@ If (isset($_POST['PrintPDF'])
 			include('includes/header.inc');
 			echo '<br />';
 			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
-			echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '</a>';
+			echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Back') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -35,7 +34,7 @@ If (isset($_POST['PrintPDF'])
 			$title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
 			prnMsg(_('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-			echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Back') . '</a>';
+			echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Back') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -50,32 +49,35 @@ If (isset($_POST['PrintPDF'])
 		$SalesType = $CustNameRow[1];
 
 		$SQL = "SELECT prices.typeabbrev,
-						prices.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						prices.currabrev,
-						prices.startdate,
-						prices.enddate,
-						prices.price,
-						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
-						stockmaster.categoryid,
-						stockcategory.categorydescription,
-						prices.debtorno,
-						prices.branchcode,
-						custbranch.brname
-						FROM stockmaster,
-							stockcategory,
-							prices LEFT JOIN custbranch
+  						prices.stockid,
+  						stockmaster.description,
+  						stockmaster.longdescription,
+  						prices.currabrev,
+  						prices.startdate,
+  						prices.enddate,
+  						prices.price,
+  						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+  						stockmaster.categoryid,
+  						stockcategory.categorydescription,
+  						prices.debtorno,
+  						prices.branchcode,
+  						custbranch.brname,
+  						currencies.decimalplaces
+						FROM stockmaster INNER JOIN	stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						INNER JOIN prices
+						ON stockmaster.stockid=prices.stockid
+						INNER JOIN currencies
+						ON prices.currabrev=currencies.currabrev
+                        LEFT JOIN custbranch
 						ON prices.debtorno=custbranch.debtorno
 						AND prices.branchcode=custbranch.branchcode
-						WHERE stockmaster.stockid=prices.stockid
-						AND stockmaster.categoryid=stockcategory.categoryid
-						AND prices.typeabbrev = '" . $SalesType . "'
+						WHERE prices.typeabbrev = '" . $SalesType . "'
 						AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
 						AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
 						AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 						AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-						AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+						AND (prices.enddate='0000-00-00' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
 						ORDER BY prices.currabrev,
 							stockmaster.categoryid,
 							stockmaster.stockid,
@@ -89,31 +91,33 @@ If (isset($_POST['PrintPDF'])
 		$SalesTypeName = $SalesTypeRow[0];
 
 		$SQL = "SELECT prices.typeabbrev,
-				prices.stockid,
-				prices.startdate,
-				prices.enddate,
-				stockmaster.description,
-				stockmaster.longdescription,
-				prices.currabrev,
-				prices.price,
-				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
-				stockmaster.categoryid,
-				stockcategory.categorydescription
-			FROM prices,
-				stockmaster,
-				stockcategory
-			WHERE stockmaster.stockid=prices.stockid
-			AND stockmaster.categoryid=stockcategory.categoryid
-			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
-			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
-			AND prices.debtorno=''
-			ORDER BY prices.currabrev,
-				stockmaster.categoryid,
-				stockmaster.stockid,
-				prices.startdate";
+        				prices.stockid,
+        				prices.startdate,
+        				prices.enddate,
+        				stockmaster.description,
+        				stockmaster.longdescription,
+        				prices.currabrev,
+        				prices.price,
+        				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+        				stockmaster.categoryid,
+        				stockcategory.categorydescription,
+        				currencies.decimalplaces
+				FROM stockmaster INNER JOIN	stockcategory
+	   			     ON stockmaster.categoryid=stockcategory.categoryid
+				INNER JOIN prices
+    				ON stockmaster.stockid=prices.stockid
+				INNER JOIN currencies
+					ON prices.currabrev=currencies.currabrev
+                WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+    			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+    			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
+    			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
+    			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+    			AND prices.debtorno=''
+    			ORDER BY prices.currabrev,
+    				stockmaster.categoryid,
+    				stockmaster.stockid,
+    				prices.startdate";
 	}
 	$PricesResult = DB_query($SQL,$db,'','',false,false);
 
@@ -121,7 +125,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
@@ -132,7 +136,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
-		echo '<br /><a href="'.$_SERVER['PHP_SELF'] .'?' . SID . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.$_SERVER['PHP_SELF'] . '">'. _('Back').'</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -173,11 +177,11 @@ If (isset($_POST['PrintPDF'])
 		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47,$YPos,47,$FontSize,$DisplayEndDate);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47,$YPos,130,$FontSize,$PriceList['description']);
-		$DisplayUnitPrice = locale_number_format($PriceList['price'],2);
+		$DisplayUnitPrice = locale_money_format($PriceList['price'],$PriceList['decimalplaces']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130,$YPos,150,$FontSize,$DisplayUnitPrice, 'right');
 
 		if ($PriceList['price']!=0){
-			$DisplayGPPercent = (int)(($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']) . '%';
+			$DisplayGPPercent = (int)filter_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price'])) . '%';
 		} else {
 			$DisplayGPPercent = 0;
 		}
@@ -272,28 +276,30 @@ If (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<option VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For Sales Type/Price List').':</td><td><select name="SalesType">';
-		$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
+		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
+                  <td><select name="SalesType">';
+		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)){
-		          echo '<option Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
+		          echo '<option Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Show Gross Profit %') . ':</td><td><select name="ShowGPPercentages">';
-		echo '<option selected Value="No">'. _('Prices Only');
-		echo '<option Value="Yes">'. _('Show GP % too');
+		echo '<tr><td>' . _('Show Gross Profit %') . ':</td>
+                  <td><select name="ShowGPPercentages">';
+		echo '<option selected Value="No">'. _('Prices Only') . '</option>';
+		echo '<option Value="Yes">'. _('Show GP % too') . '</option>';
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">';
-		echo '<option selected Value="Sales Type Prices">'. _('Default Sales Type Prices');
-		echo '<option Value="Customer Special Prices Only">'. _('Customer Special Prices Only');
-		echo '<option Value="Full Description">'. _('Full Description');
+		echo '<option selected value="Sales Type Prices">'. _('Default Sales Type Prices');
+		echo '<option Value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>';
+		echo '<option Value="Full Description">'. _('Full Description') . '</option>';
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Effective As At') . ':</td><td><input type="text" size=11 class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '">';

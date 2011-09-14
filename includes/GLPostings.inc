@@ -111,7 +111,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 			$TotalAmount = 0;
 			$CurrentAccount = $UnpostedTrans['account'];
 		}
-		$TotalAmount = $TotalAmount + $UnpostedTrans['amount'];
+		$TotalAmount = filter_number_format($TotalAmount + $UnpostedTrans['amount']);
 		/*Update the Actual charge in the period of the transaction */
 		$sql = "UPDATE gltrans SET posted = 1 WHERE counterindex = '" . $UnpostedTrans['counterindex'] . "'";
 		$Posted = DB_query($sql,$db);
@@ -135,7 +135,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 was required as an optimisation for postgres */
 
 /*
-$sql = 'SELECT counterindex, periodno, account, amount FROM gltrans WHERE posted=0';
+$sql = "SELECT counterindex, periodno, account, amount FROM gltrans WHERE posted=0";
 
 $UnpostedTransResult = DB_query($sql, $db);
 
@@ -172,7 +172,7 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 				bfwdbudget,
 				period
 			FROM chartdetails
-			WHERE period >='" . ($AccountRow['startperiod']-1) . "'
+			WHERE period >='" . filter_number_format($AccountRow['startperiod']-1) . "'
 			AND accountcode='" . $AccountRow['accountcode'] . "'
 			ORDER BY period";
 		$ChartDetails = DB_query($sql,$db);
@@ -187,10 +187,10 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 			if ($myrow['period'] < $CreateTo) {
 				$BFwd +=$myrow['actual'];
 				$BFwdBudget += $myrow['budget'];
-				$sql = "UPDATE chartdetails SET bfwd ='" . $BFwd . "',
-							bfwdbudget ='" . $BFwdBudget . "'
+				$sql = "UPDATE chartdetails SET bfwd ='" . filter_number_format($BFwd) . "',
+							bfwdbudget ='" . filter_number_format($BFwdBudget) . "'
 					WHERE accountcode = '" . $AccountRow['accountcode'] . "'
-					AND period ='" . $myrow['period']+1 . "'";
+					AND period ='" . filter_number_format($myrow['period']+1) . "'";
 
 				$UpdChartDetails = DB_query($sql,$db, '', '', '', false);
 			}

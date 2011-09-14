@@ -243,9 +243,10 @@ function tableItems($CategoryID, &$ok) {
 		return noneButton( _('This category has no items to show') );
 	}
 
-	$txt=array(
-		_('Code'), _('Description'), _('Price').'<br />('.$_POST['Currency'].')',
-		_('All')
+	$txt=array(_('Code'), 
+               _('Description'), 
+               _('Price'). '<br />('.$_POST['Currency'].')',
+		       _('All')
 	);
 	$ix=0;
 	//  The table's header
@@ -265,7 +266,7 @@ function tableItems($CategoryID, &$ok) {
 	$ok=true;
 	$odd=true;
 	while ($myrow=DB_fetch_array($result)) {
-		$price = locale_number_format($myrow['price'],$DecimalPlaces);
+		$price = locale_money_format($myrow['price'],$DecimalPlaces);
 		$oddEven=$odd?"Odd":"Even";
 		$odd = !$odd;
 		$html .= <<<ZZZ
@@ -307,23 +308,23 @@ function getStockItems($CategoryID, $CurrCode, $SalesType, $EffectiveDate, $Stoc
 	} else {
 		$WhereClause = "stockmaster.categoryid='$CategoryID' ORDER BY stockmaster.stockid";
 	}
-	
+
 	$WhereClause = " stockmaster.discontinued!=1 AND " . $WhereClause;
 
-	$sql="SELECT stockmaster.stockid, 
-				stockmaster.description, 
-				stockmaster.longdescription, 
-				stockmaster.barcode, 
-				prices.price 
-			FROM stockmaster LEFT JOIN prices 
-			ON stockmaster.stockid=prices.stockid 
-			AND prices.currabrev = '" . $CurrCode . "' 
+	$sql="SELECT stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.longdescription,
+				stockmaster.barcode,
+				prices.price
+			FROM stockmaster LEFT JOIN prices
+			ON stockmaster.stockid=prices.stockid
+			AND prices.currabrev = '" . $CurrCode . "'
 			AND prices.typeabbrev= '" . $SalesType . "'
 			AND prices.startdate <= '" . $EffectiveDate . "'
-			AND (prices.enddate >= '" . $EffectiveDate . "' OR prices.enddate='0000-00-00') 
+			AND (prices.enddate >= '" . $EffectiveDate . "' OR prices.enddate='0000-00-00')
 			AND prices.debtorno=''
 			WHERE " . $WhereClause;
-		
+
 	return DB_query($sql, $db);
 }
 
@@ -491,7 +492,7 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) 
 			unset($ldescrip);
 			break;
 		case 'price':
-			$txt = locale_number_format($itemData['price'], $DecimalPlaces). ' '. $Currency;
+			$txt = locale_money_format($itemData['price'], $DecimalPlaces). ' '. $Currency;
 //			$adj='left';
 			break;
 		case 'bcode': break;

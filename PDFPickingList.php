@@ -21,9 +21,9 @@ if ($_SESSION['RequirePickingNote']==0) {
 if ((!isset($_GET['TransNo']) or $_GET['TransNo']=="") and !isset($_POST['TransDate'])){
 	$title = _('Select Picking Lists');
 	include('includes/header.inc');
-	$sql='SELECT loccode,
+	$sql="SELECT loccode,
 				locationname
-			FROM locations';
+			FROM locations";
 	$result=DB_query($sql, $db);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
@@ -49,78 +49,78 @@ $ErrMsg = _('There was a problem retrieving the order header details from the da
 if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 /* If there is no transaction date set, then it must be for a single order */
 	$sql = "SELECT salesorders.debtorno,
-		salesorders.orderno,
-		salesorders.customerref,
-		salesorders.comments,
-		salesorders.orddate,
-		salesorders.deliverto,
-		salesorders.deladd1,
-		salesorders.deladd2,
-		salesorders.deladd3,
-		salesorders.deladd4,
-		salesorders.deladd5,
-		salesorders.deladd6,
-		salesorders.deliverblind,
-		salesorders.deliverydate,
-		debtorsmaster.name,
-		debtorsmaster.address1,
-		debtorsmaster.address2,
-		debtorsmaster.address3,
-		debtorsmaster.address4,
-		debtorsmaster.address5,
-		debtorsmaster.address6,
-		shippers.shippername,
-		salesorders.printedpackingslip,
-		salesorders.datepackingslipprinted,
-		locations.locationname
-	FROM salesorders,
-		debtorsmaster,
-		shippers,
-		locations
-	WHERE salesorders.debtorno=debtorsmaster.debtorno
-	AND salesorders.shipvia=shippers.shipper_id
-	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.orderno='" . $_GET['TransNo']."'";
-} else if (isset($_POST['TransDate']) 
+        		salesorders.orderno,
+        		salesorders.customerref,
+        		salesorders.comments,
+        		salesorders.orddate,
+        		salesorders.deliverto,
+        		salesorders.deladd1,
+        		salesorders.deladd2,
+        		salesorders.deladd3,
+        		salesorders.deladd4,
+        		salesorders.deladd5,
+        		salesorders.deladd6,
+        		salesorders.deliverblind,
+        		salesorders.deliverydate,
+        		debtorsmaster.name,
+        		debtorsmaster.address1,
+        		debtorsmaster.address2,
+        		debtorsmaster.address3,
+        		debtorsmaster.address4,
+        		debtorsmaster.address5,
+        		debtorsmaster.address6,
+        		shippers.shippername,
+        		salesorders.printedpackingslip,
+        		salesorders.datepackingslipprinted,
+        		locations.locationname
+        	FROM salesorders,
+        		debtorsmaster,
+        		shippers,
+        		locations
+        	WHERE salesorders.debtorno=debtorsmaster.debtorno
+        	AND salesorders.shipvia=shippers.shipper_id
+        	AND salesorders.fromstkloc=locations.loccode
+        	AND salesorders.orderno='" . filter_number_format($_GET['TransNo'])."'";
+} else if (isset($_POST['TransDate'])
 		OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 /* We are printing picking lists for all orders on a day */
 	$sql = "SELECT salesorders.debtorno,
-		salesorders.orderno,
-		salesorders.customerref,
-		salesorders.comments,
-		salesorders.orddate,
-		salesorders.deliverto,
-		salesorders.deladd1,
-		salesorders.deladd2,
-		salesorders.deladd3,
-		salesorders.deladd4,
-		salesorders.deladd5,
-		salesorders.deladd6,
-		salesorders.deliverblind,
-		salesorders.deliverydate,
-		debtorsmaster.name,
-		debtorsmaster.address1,
-		debtorsmaster.address2,
-		debtorsmaster.address3,
-		debtorsmaster.address4,
-		debtorsmaster.address5,
-		debtorsmaster.address6,
-		shippers.shippername,
-		salesorders.printedpackingslip,
-		salesorders.datepackingslipprinted,
-		locations.locationname
-	FROM salesorders,
-		debtorsmaster,
-		shippers,
-		locations
-	WHERE salesorders.debtorno=debtorsmaster.debtorno
-	AND salesorders.shipvia=shippers.shipper_id
-	AND salesorders.fromstkloc=locations.loccode
-	AND salesorders.fromstkloc='".$_POST['loccode']."'
-	AND salesorders.deliverydate='" . FormatDateForSQL($_POST['TransDate'])."'";
+            		salesorders.orderno,
+            		salesorders.customerref,
+            		salesorders.comments,
+            		salesorders.orddate,
+            		salesorders.deliverto,
+            		salesorders.deladd1,
+            		salesorders.deladd2,
+            		salesorders.deladd3,
+            		salesorders.deladd4,
+            		salesorders.deladd5,
+            		salesorders.deladd6,
+            		salesorders.deliverblind,
+            		salesorders.deliverydate,
+            		debtorsmaster.name,
+            		debtorsmaster.address1,
+            		debtorsmaster.address2,
+            		debtorsmaster.address3,
+            		debtorsmaster.address4,
+            		debtorsmaster.address5,
+            		debtorsmaster.address6,
+            		shippers.shippername,
+            		salesorders.printedpackingslip,
+            		salesorders.datepackingslipprinted,
+            		locations.locationname
+            	FROM salesorders,
+            		debtorsmaster,
+            		shippers,
+            		locations
+            	WHERE salesorders.debtorno=debtorsmaster.debtorno
+            	AND salesorders.shipvia=shippers.shipper_id
+            	AND salesorders.fromstkloc=locations.loccode
+            	AND salesorders.fromstkloc='".$_POST['loccode']."'
+            	AND salesorders.deliverydate='" . FormatDateForSQL($_POST['TransDate'])."'";
 }
 
-if (isset($_POST['TransDate']) 
+if (isset($_POST['TransDate'])
 	OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 	$result=DB_query($sql,$db, $ErrMsg);
 
@@ -185,7 +185,7 @@ include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Picking List') );
 $pdf->addInfo('Subject', _('Laser Picking List') );
 $FontSize=12;
-$ListCount = 0; 
+$ListCount = 0;
 $Copy='';
 
 $line_height=$FormDesign->LineHeight;
@@ -207,44 +207,46 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		/* Are there any picking lists for this order already */
 		$sql="SELECT COUNT(orderno)
 				FROM pickinglists
-				WHERE orderno='" . $OrdersToPick[$i]['orderno'] . "'";
+				WHERE orderno='" . filter_number_format($OrdersToPick[$i]['orderno']) . "'";
 		$countresult=DB_query($sql, $db);
 		$count=DB_fetch_row($countresult);
 		if ($count[0]==0) {
 		/* There are no previous picking lists for this order */
 			$sql = "SELECT salesorderdetails.stkcode,
-				stockmaster.description,
-				salesorderdetails.orderlineno,
-				salesorderdetails.quantity,
-				salesorderdetails.qtyinvoiced,
-				salesorderdetails.unitprice,
-				salesorderdetails.narrative
-			FROM salesorderdetails
-			INNER JOIN stockmaster
-				ON salesorderdetails.stkcode=stockmaster.stockid
-			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'";
+            				stockmaster.description,
+            				salesorderdetails.orderlineno,
+            				salesorderdetails.quantity,
+            				salesorderdetails.qtyinvoiced,
+            				salesorderdetails.unitprice,
+            				salesorderdetails.narrative,
+            				stockmaster.decimalplaces
+            			FROM salesorderdetails
+            			INNER JOIN stockmaster
+            				ON salesorderdetails.stkcode=stockmaster.stockid
+            			WHERE salesorderdetails.orderno='" . filer_number_format($OrdersToPick[$i]['orderno']) ."'";
 		} else {
 		/* There are previous picking lists for this order so
 		 * need to take those quantities into account
 		 */
 			$sql = "SELECT salesorderdetails.stkcode,
-				stockmaster.description,
-				salesorderdetails.orderlineno,
-				salesorderdetails.quantity,
-				salesorderdetails.qtyinvoiced,
-				SUM(pickinglistdetails.qtyexpected) as qtyexpected,
-				SUM(pickinglistdetails.qtypicked) as qtypicked,
-				salesorderdetails.unitprice,
-				salesorderdetails.narrative
-			FROM salesorderdetails
-			INNER JOIN stockmaster
-				ON salesorderdetails.stkcode=stockmaster.stockid
-			LEFT JOIN pickinglists
-				ON salesorderdetails.orderno=pickinglists.orderno
-			LEFT JOIN pickinglistdetails
-				ON pickinglists.pickinglistno=pickinglistdetails.pickinglistno
-			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'
-			AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
+            				stockmaster.description,
+            				salesorderdetails.orderlineno,
+            				salesorderdetails.quantity,
+            				salesorderdetails.qtyinvoiced,
+            				SUM(pickinglistdetails.qtyexpected) as qtyexpected,
+            				SUM(pickinglistdetails.qtypicked) as qtypicked,
+            				salesorderdetails.unitprice,
+            				salesorderdetails.narrative,
+            				stockmaster.decimalplaces
+            			FROM salesorderdetails
+            			INNER JOIN stockmaster
+            				ON salesorderdetails.stkcode=stockmaster.stockid
+            			LEFT JOIN pickinglists
+            				ON salesorderdetails.orderno=pickinglists.orderno
+            			LEFT JOIN pickinglistdetails
+            				ON pickinglists.pickinglistno=pickinglistdetails.pickinglistno
+            			WHERE salesorderdetails.orderno='" . filter_number_format($OrdersToPick[$i]['orderno']) ."'
+            			AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
 		}
 		$lineresult=DB_query($sql,$db, $ErrMsg);
 	}
@@ -258,7 +260,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			$sql="INSERT INTO pickinglists
 				VALUES (
 				'" . $PickingListNo ."',
-				'" . $OrdersToPick[$i]['orderno']."',
+				'" . filter_number_format($OrdersToPick[$i]['orderno'])."',
 				'" . FormatDateForSQL($_POST['TransDate'])."',
 				'" . date('Y-m-d')."',
 				'0000-00-00')";
@@ -284,16 +286,16 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 					$myrow2['qtyexpected']=0;
 					$myrow2['qtypicked']=0;
 				}
-				$DisplayQty = locale_number_format($myrow2['quantity'],2);
-				$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],2);
-				$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked'],2);
+				$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
+				$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+				$DisplayQtySupplied = locale_number_format(filer_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked']),$myrow2['decimalplaces']);
 				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
 				$sql="INSERT INTO pickinglistdetails
 					VALUES(
 					'" . $PickingListNo ."',
 					'" . $Lines."',
 					'" . $myrow2['orderlineno']."',
-					'" . $DisplayQtySupplied."',
+					'" . filter_number_format($DisplayQtySupplied) ."',
 					0)";
 					$lineresult=DB_query($sql, $db);
 			}
@@ -327,6 +329,6 @@ if ($ListCount == 0){
 	exit;
 } else {
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 }
 ?>

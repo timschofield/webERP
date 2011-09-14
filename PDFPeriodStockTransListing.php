@@ -75,7 +75,7 @@ if (!isset($_POST['FromDate'])){
 	echo '</table>
 			<br />
 			<div class="centre">
-				<input type=submit name="Go" value="' . _('Create PDF') . '" />
+				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
 
 	 include('includes/footer.inc');
@@ -202,6 +202,6 @@ $YPos-=$line_height;
 
 $ReportFileName = $_SESSION['DatabaseName'] . '_StockTransListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);
-$pdf->__destruct(); 
+$pdf->__destruct();
 
 ?>

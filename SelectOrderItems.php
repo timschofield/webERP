@@ -271,7 +271,9 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['PrintedPackingSlip'] =0; /*Of course cos the order aint even started !!*/
 
-	if (in_array(2,$_SESSION['AllowedPageSecurityTokens']) AND ($_SESSION['Items'.$identifier]->DebtorNo=='' OR !isset($_SESSION['Items'.$identifier]->DebtorNo))){
+	if (in_array(2,$_SESSION['AllowedPageSecurityTokens']) 
+		AND ($_SESSION['Items'.$identifier]->DebtorNo=='' 
+			OR !isset($_SESSION['Items'.$identifier]->DebtorNo))){
 
 	/* need to select a customer for the first time out if authorisation allows it and if a customer
 	 has been selected for the order or not the session variable CustomerID holds the customer code
@@ -481,7 +483,8 @@ if (isset($SelectedCustomer)) {
 		prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently on hold please contact the credit control personnel to discuss'),'warn');
 	}
 
-} elseif (!$_SESSION['Items'.$identifier]->DefaultSalesType OR $_SESSION['Items'.$identifier]->DefaultSalesType=='')	{
+} elseif (!$_SESSION['Items'.$identifier]->DefaultSalesType 
+			OR $_SESSION['Items'.$identifier]->DefaultSalesType=='')	{
 
 #Possible that the check to ensure this account is not on hold has not been done
 #if the customer is placing own order, if this is the case then
@@ -649,7 +652,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$sql = "SELECT qtyinvoiced
 							FROM salesorderdetails
-							WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
+							WHERE orderno='" . filter_number_format($_SESSION['ExistingOrder']) . "'
 							AND qtyinvoiced>0";
 
 			$InvQties = DB_query($sql,$db);
@@ -665,11 +668,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if ($OK_to_delete==1){
 			if($_SESSION['ExistingOrder']!=0){
 
-				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . $_SESSION['ExistingOrder'] . "'";
+				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . filter_number_format($_SESSION['ExistingOrder']) . "'";
 				$ErrMsg =_('The order detail lines could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
-				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'] . "'";
+				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . filter_number_format($_SESSION['ExistingOrder']) . "'";
 				$ErrMsg = _('The order header could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
@@ -813,7 +816,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (!isset($Offset) or $Offset<0) {
 			$Offset=0;
 		}
-		$SQL = $SQL . " LIMIT " . $_SESSION['DefaultDisplayRecordsMax'] . " OFFSET " . strval($_SESSION['DefaultDisplayRecordsMax']*$Offset);
+		$SQL = $SQL . " LIMIT " . $_SESSION['DefaultDisplayRecordsMax'] . " OFFSET " . strval(filter_number_format($_SESSION['DefaultDisplayRecordsMax']*$Offset));
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$DbgMsg = _('The SQL used to get the part selection was');

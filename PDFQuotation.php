@@ -19,7 +19,7 @@ If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the quotation header details for Order Number') . ' ' . $_GET['QuotationNo'] . ' ' . _('from the database');
+$ErrMsg = _('There was a problem retrieving the quotation header details for Order Number') . ' ' . filter_number_format($_GET['QuotationNo']) . ' ' . _('from the database');
 
 $sql = "SELECT salesorders.customerref,
 				salesorders.comments,
@@ -44,15 +44,18 @@ $sql = "SELECT salesorders.customerref,
 				salesorders.datepackingslipprinted,
 				salesorders.branchcode,
 				locations.taxprovinceid,
-				locations.locationname
+				locations.locationname,
+				currencies.decimalplaces AS currdecimalplaces
 			FROM salesorders INNER JOIN debtorsmaster
 			ON salesorders.debtorno=debtorsmaster.debtorno
-			INNER JOIN shippers 
+			INNER JOIN shippers
 			ON salesorders.shipvia=shippers.shipper_id
-			INNER JOIN locations 
+			INNER JOIN locations
 			ON salesorders.fromstkloc=locations.loccode
+			INNER JOIN currencies
+			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE salesorders.quotation=1
-			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
+			AND salesorders.orderno='" . filter_number_format($_GET['QuotationNo']) ."'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -61,7 +64,7 @@ if (DB_num_rows($result)==0){
         $title = _('Print Quotation Error');
         include('includes/header.inc');
          echo '<div class="centre"><br /><br /><br />';
-        prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
+        prnMsg( _('Unable to Locate Quotation Number') . ' : ' . filter_number_format($_GET['QuotationNo']) . ' ', 'error');
         echo '<br />
 				<br />
 				<br />
@@ -109,14 +112,15 @@ $sql = "SELECT salesorderdetails.stkcode,
 		salesorderdetails.unitprice,
 		salesorderdetails.discountpercent,
 		stockmaster.taxcatid,
-		salesorderdetails.narrative
+		salesorderdetails.narrative,
+		stockmaster.decimalplaces
 	FROM salesorderdetails INNER JOIN stockmaster
 		ON salesorderdetails.stkcode=stockmaster.stockid
-	WHERE salesorderdetails.orderno='" . $_GET['QuotationNo'] . "'";
+	WHERE salesorderdetails.orderno='" . filter_number_format($_GET['QuotationNo']) . "'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
-$ListCount = 0; 
+$ListCount = 0;
 
 if (DB_num_rows($result)>0){
 	/*Yes there are line items to start the ball rolling with a page header */
@@ -139,26 +143,26 @@ if (DB_num_rows($result)>0){
 
 		} //end if need a new page headed up
 
-		$DisplayQty = locale_number_format($myrow2['quantity'],2);
-		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],2);
-		$DisplayPrice = locale_number_format($myrow2['unitprice'],2);
+		$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
+		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+		$DisplayPrice = locale_money_format($myrow2['unitprice'],$myrow['currdecimalplaces']);
 		$DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
-		$SubTot =  $myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']);
+		$SubTot =  filter_number_format($myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']));
 		$TaxProv = $myrow['taxprovinceid'];
 		$TaxCat = $myrow2['taxcatid'];
 		$Branch = $myrow['branchcode'];
-		$sql3 = "SELECT taxgrouptaxes.taxauthid 
-					FROM taxgrouptaxes INNER JOIN custbranch 
-					ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid 
+		$sql3 = "SELECT taxgrouptaxes.taxauthid
+					FROM taxgrouptaxes INNER JOIN custbranch
+					ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
 					WHERE custbranch.branchcode='" .$Branch ."'";
 		$result3=DB_query($sql3,$db, $ErrMsg);
 		while ($myrow3=DB_fetch_array($result3)){
 			$TaxAuth = $myrow3['taxauthid'];
 		}
 
-		$sql4 = "SELECT * FROM taxauthrates 
-					WHERE dispatchtaxprovince='" .$TaxProv ."' 
-					AND taxcatid='" .$TaxCat ."' 
+		$sql4 = "SELECT * FROM taxauthrates
+					WHERE dispatchtaxprovince='" .$TaxProv ."'
+					AND taxcatid='" .$TaxCat ."'
 					AND taxauthority='" .$TaxAuth ."'";
 		$result4=DB_query($sql4,$db, $ErrMsg);
 		while ($myrow4=DB_fetch_array($result4)){
@@ -166,11 +170,11 @@ if (DB_num_rows($result)>0){
 		}
 
 		$DisplayTaxClass = $TaxClass . "%";
-		$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
-		$DisplayTaxAmount = locale_number_format($TaxAmount,2);
+		$TaxAmount =  filter_number_format((($SubTot/100)*(100+$TaxClass))-$SubTot);
+		$DisplayTaxAmount = locale_money_format($TaxAmount,$myrow['currdecimalplaces']);
 
-		$LineTotal = $SubTot + $TaxAmount;
-		$DisplayTotal = locale_number_format($LineTotal,2);
+		$LineTotal = filter_number_format($SubTot + $TaxAmount);
+		$DisplayTotal = locale_money_format($LineTotal,$myrow['currdecimalplaces']);
 
 		$FontSize=10;
 
@@ -200,7 +204,7 @@ if (DB_num_rows($result)>0){
 		$YPos -= ($line_height);
 
 	} //end while there are line items to print out
-	
+
 	if ((mb_strlen($myrow['comments']) >200 AND $YPos-$line_height <= 75)
 			OR (mb_strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62)
 			OR $YPos-$line_height <= 50){
@@ -211,18 +215,18 @@ if (DB_num_rows($result)>0){
 
 	$YPos -= ($line_height);
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Total Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($TaxTotal,2),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($TaxTotal,$myrow['currdecimalplaces']),'right');
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Excluding Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotalEx,2),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotalEx,$myrow['currdecimalplaces']),'right');
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Including Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotal,2),'right');
-	
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotal,$myrow['currdecimalplaces']),'right');
+
 	$YPos -= ($line_height);
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,20,10,_('Notes:'));
 	$LeftOvers = $pdf->addTextWrap($XPos+28,$YPos,800,10,$myrow['comments']);
-	
+
 	if (mb_strlen($LeftOvers)>1){
 		$YPos -= 10;
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,850,10,$LeftOvers);

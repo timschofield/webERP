@@ -19,27 +19,26 @@ if (isset($_GET['Account'])) {
 
 if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDifference'])){
 
-	if (!is_numeric($_POST['BankStatementBalance'])){
+	if (!is_numeric(filter_number_format($_POST['BankStatementBalance']))){
 		prnMsg(_('The entry in the bank statement balance is not numeric. The balance on the bank statement should be entered. The exchange difference has not been calculated and no general ledger journal has been created'),'warn');
 		echo '<p>' . $_POST['BankStatementBalance'];
 	} else {
+		$_POST['BankStatementBalance'] = filter_number_format($_POST['BankStatementBalance']);
 		/* Now need to get the currency of the account and the current table ex rate */
 		$SQL = "SELECT rate, 
 						bankaccountname,
-						decimalplaces
+						decimalplaces AS currdecimalplaces
 				FROM bankaccounts INNER JOIN currencies
 				ON bankaccounts.currcode=currencies.currabrev
 				WHERE bankaccounts.accountcode = '" . $_POST['BankAccount']."'";
 
 		$ErrMsg = _('Could not retrieve the exchange rate for the selected bank account');
 		$CurrencyResult = DB_query($SQL,$db);
-		$CurrencyRow =  DB_fetch_row($CurrencyResult);
-		$ExRate = $CurrencyRow[0];
-		$BankAccountName = $CurrencyRow[1];
-		$CurrDecimalPlaces = $CurrencyRow[2];
-		$CalculatedBalance = $_POST['DoExchangeDifference'];
+		$CurrencyRow =  DB_fetch_array($CurrencyResult);
+		
+		$CalculatedBalance = filter_number_format($_POST['DoExchangeDifference']);
 
-		$ExchangeDifference = ($CalculatedBalance - $_POST['BankStatementBalance'])/$ExRate;
+		$ExchangeDifference = filter_number_format(($CalculatedBalance - $_POST['BankStatementBalance'])/$CurrencyRow['rate']);
 
 		include ('includes/SQL_CommonFunctions.inc');
 		$ExDiffTransNo = GetNextTransNo(36,$db);
@@ -62,7 +61,7 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 									'" . FormatDateForSQL($PostingDate) . "',
 									'" . $PeriodNo . "',
 									'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
-									'" . $BankAccountName . ' ' . _('reconciliation on') . " " .
+									'" . $CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . " " .
 										Date($_SESSION['DefaultDateFormat']) . "','" . $ExchangeDifference . "')";
 
 		$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
@@ -80,13 +79,13 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 									'" . FormatDateForSQL($PostingDate) . "',
 									'" . $PeriodNo . "',
 									'" . $_POST['BankAccount'] . "',
-									'" . $BankAccountName . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "',
+									'" . $CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "',
 									'" . (-$ExchangeDifference) . "')";
 
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$result = DB_Txn_Commit($db);
-		prnMsg(_('Exchange difference of') . ' ' . locale_number_format($ExchangeDifference,2) . ' ' . _('has been posted'),'success');
+		prnMsg(_('Exchange difference of') . ' ' . locale_money_format($ExchangeDifference,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 	} //end if the bank statement balance was numeric
 }
 
@@ -153,25 +152,24 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	/* Now need to get the currency of the account and the current table ex rate */
 	$SQL = "SELECT rate,
 					bankaccounts.currcode,
-					bankaccounts.bankaccountname
+					bankaccounts.bankaccountname,
+					currencies.decimalplaces AS currdecimalplaces
 			FROM bankaccounts INNER JOIN currencies
 			ON bankaccounts.currcode=currencies.currabrev
 			WHERE bankaccounts.accountcode = '" . $_POST['BankAccount']."'";
 	$ErrMsg = _('Could not retrieve the currency and exchange rate for the selected bank account');
 	$CurrencyResult = DB_query($SQL,$db);
-	$CurrencyRow =  DB_fetch_row($CurrencyResult);
-	$ExRate = $CurrencyRow[0];
-	$BankCurrCode = $CurrencyRow[1];
-	$BankAccountName = $CurrencyRow[2];
+	$CurrencyRow =  DB_fetch_array($CurrencyResult);
+
 
 	echo '<table class="selection">
-			<tr class="EvenTableRows"><td colspan=6><b>' . $BankAccountName . ' ' . _('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
+			<tr class="EvenTableRows"><td colspan=6><b>' . $CurrencyRow['bankaccountname'] . ' ' . _('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
 			
-	if ($_SESSION['CompanyRecord']['currencydefault']!=$BankCurrCode){
-		echo  ' (' . $BankCurrCode . ' @ ' . $ExRate .')';
+	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode']){
+		echo  ' (' . $CurrencyRow['currcode'] . ' @ ' . $CurrencyRow['rate'] .')';
 	}
 	echo '</b></td>
-			<td valign=bottom class="number"><b>' . locale_number_format($Balance*$ExRate,$CurrDecimalPlaces) . '</b></td></tr>';
+			<td valign=bottom class="number"><b>' . locale_money_format($Balance*$CurrencyRow['rate'],$CurrencyRow['currdecimalplaces']) . '</b></td></tr>';
 
 	$SQL = "SELECT amount/exrate AS amt,
 					amountcleared,
@@ -222,15 +220,15 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td class=number>%s</td>
-				<td class=number>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
 				</tr>',
 				ConvertSQLDate($myrow['transdate']),
 				$myrow['typename'],
 				$myrow['transno'],
 				$myrow['ref'],
-				locale_number_format($myrow['amt'],$CurrDecimalPlaces),
-				locale_number_format($myrow['outstanding'],$CurrDecimalPlaces));
+				locale_money_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
+				locale_money_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']));
 
 		$TotalUnpresentedCheques +=$myrow['outstanding'];
 
@@ -241,20 +239,20 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		}
 	}
 	//end of while loop
+	$TotalUnpresentedCheques = filter_number_format($TotalUnpresentedCheques);
 	echo '<tr></tr>
-			<tr class=EvenTableRows><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class="number">' . locale_number_format($TotalUnpresentedCheques,$CurrDecimalPlaces) . '</td></tr>';
+			<tr class=EvenTableRows><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class="number">' . locale_money_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td></tr>';
 
 	$SQL = "SELECT amount/exrate AS amt,
 				amountcleared,
-				(amount/exrate)-amountcleared as outstanding,
+				(amount/exrate)-amountcleared AS outstanding,
 				ref,
 				transdate,
 				systypes.typename,
 				transno
-			FROM banktrans,
-				systypes
-			WHERE banktrans.type = systypes.typeid
-			AND banktrans.bankact='" . $_POST['BankAccount'] . "'
+			FROM banktrans INNER JOIN systypes
+			ON banktrans.type = systypes.typeid
+			WHERE banktrans.bankact='" . $_POST['BankAccount'] . "'
 			AND amount > 0
 			AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate";
 
@@ -264,7 +262,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 	$UPChequesResult = DB_query($SQL,$db,$ErrMsg);
 
-	echo '<tr><td colspan=6><b>' . _('Less deposits not cleared') . ':</b></td></tr>';
+	echo '<tr><td colspan="6"><b>' . _('Less deposits not cleared') . ':</b></td></tr>';
 
 	$TableHeader = '<tr>
 					<th>' . _('Date') . '</th>
@@ -294,15 +292,15 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td class=number>%s</td>
-				<td class=number>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
 				</tr>',
 				ConvertSQLDate($myrow['transdate']),
 				$myrow['typename'],
 				$myrow['transno'],
 				$myrow['ref'],
-				locale_number_format($myrow['amt'],$CurrDecimalPlaces),
-				locale_number_format($myrow['outstanding'],$CurrDecimalPlaces) );
+				locale_money_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
+				locale_money_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']) );
 
 		$TotalUnclearedDeposits +=$myrow['outstanding'];
 
@@ -316,25 +314,28 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<tr></tr>
 			<tr class=EvenTableRows>
 				<td colspan=6>' . _('Total of all uncleared deposits') . '</td>
-				<td class=number>' . locale_number_format($TotalUnclearedDeposits,$CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_money_format($TotalUnclearedDeposits,$CurrencyRow['currdecimalplaces']) . '</td>
 			</tr>';
-	$FXStatementBalance = ($Balance*$ExRate) - $TotalUnpresentedCheques -$TotalUnclearedDeposits;
+	$FXStatementBalance = filter_number_format(($Balance*$CurrencyRow['rate']) - $TotalUnpresentedCheques -$TotalUnclearedDeposits);
 	echo '<tr></tr>
 			<tr class=EvenTableRows>
-				<td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $BankCurrCode . ')</b></td>
-				<td class=number>' . locale_number_format($FXStatementBalance,$CurrDecimalPlaces) . '</td></tr>';
+				<td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $CurrencyRow['currcode'] . ')</b></td>
+				<td class="number">' . locale_money_format($FXStatementBalance,$CurrencyRow['currdecimalplaces']) . '</td></tr>';
 
 	if (isset($_POST['DoExchangeDifference'])){
-		echo '<input type="hidden" name="DoExchangeDifference" value=' . $FXStatementBalance . '>';
-		echo '<tr><td colspan=6>' . _('Enter the actual bank statement balance') . ' (' . $BankCurrCode . ')</b></td>
-				<td class=number><input type="text" name="BankStatementBalance" maxlength=15 size=15 value=' . $_POST['BankStatementBalance'] . '><td></tr>';
+		echo '<input type="hidden" name="DoExchangeDifference" value=' . $FXStatementBalance . ' />';
+		if (!isset($_POST['BankStatementBalance'])){
+			$_POST['BankStatementBalance'] =0;
+		}
+		echo '<tr><td colspan=6>' . _('Enter the actual bank statement balance') . ' (' . $CurrencyRow['currcode'] . ')</b></td>
+				<td class="number"><input type="text" name="BankStatementBalance" maxlength="15" size="15" value=' . locale_number_format($_POST['BankStatementBalance'],$CurrencyRow['currdecimalplaces']) . ' /><td></tr>';
 		echo '<tr><td colspan=7 align="center"><input type="submit" name="PostExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '" onclick="return confirm(\'' . _('This will create a general ledger journal to write off the exchange difference in the current balance of the account. It is important that the exchange rate above reflects the current value of the bank account currency') . ' - ' . _('Are You Sure?') . '\');"></td></tr>';
 
 	}
 
 
 
-	if ($_SESSION['CompanyRecord']['currencydefault']!=$BankCurrCode AND !isset($_POST['DoExchangeDifference'])){
+	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode'] AND !isset($_POST['DoExchangeDifference'])){
 
 		echo '<tr><td colspan=7><hr></td></tr>
 				<tr><td colspan=7>' . _('It is normal for foreign currency accounts to have exchange differences that need to be reflected as the exchange rate varies. This reconciliation is prepared using the exchange rate set up in the currencies table (see the set-up tab). This table must be maintained with the current exchange rate before running the reconciliation. If you wish to create a journal to reflect the exchange difference based on the current exchange rate to correct the reconciliation to the actual bank statement balance click below.') . '</td></tr>';

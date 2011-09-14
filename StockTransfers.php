@@ -99,7 +99,7 @@ if ($NewTransfer){
 	if (DB_num_rows($result) == 0){
 		prnMsg( _('Unable to locate Stock Code').' '.mb_strtoupper($_POST['StockID']), 'error' );
 	} elseif (DB_num_rows($result)>0){
-		$myrow = DB_fetch_row($result);
+		$myrow = DB_fetch_array($result);
 		$_SESSION['Transfer']->TransferItem[0] = new LineItem (	trim(mb_strtoupper($_POST['StockID'])),
 															$myrow['description'],
 						 									filter_number_format($_POST['Quantity']),
@@ -112,7 +112,7 @@ if ($NewTransfer){
 
 		$_SESSION['Transfer']->TransferItem[0]->StandardCost = $myrow['standardcost'];
 
-		if ($myrow[2]=='D' OR $myrow[2]=='A' OR $myrow[2]=='K'){
+		if ($myrow['mbflag']=='D' OR $myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
 			prnMsg(_('The part entered is either or a dummy part or an assembly or a kit-set part') . '. ' . _('These parts are not physical parts and no stock holding is maintained for them') . '. ' . _('Stock Transfers are therefore not possible'),'warn');
 			echo '.<hr />';
 			echo '<a href="' . $rootpath . '/StockTransfers.php?NewTransfer=Yes">' . _('Enter another Transfer') . '</a>';

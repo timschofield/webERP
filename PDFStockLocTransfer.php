@@ -2,17 +2,13 @@
 
 /* $Id$*/
 
-/* $Revision: 1.12 $ */
-
-//$PageSecurity =1;
-
 $title = _('Stock Location Transfer Docket Error');
 include('includes/session.inc');
 
 include('includes/PDFStarter.php');
 
 if (isset($_POST['TransferNo'])) {
-	$_GET['TransferNo']=$_POST['TransferNo'];
+	$_GET['TransferNo']=filter_number_format($_POST['TransferNo']);
 }
 
 if (!isset($_GET['TransferNo'])){
@@ -20,13 +16,15 @@ if (!isset($_GET['TransferNo'])){
 	include ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Reprint transfer docket').'</p><br />';
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr><td>'._('Transfer docket to reprint').'</td>';
-	echo '<td><input type="text" class=number size=10 name="TransferNo"></td></tr></table>';
-	echo '<div class="centre"><input type=submit Name="Print" Value="' . _('Print') .'">';
+	echo '<td><input type="text" class="number" size="10" name="TransferNo"></td></tr></table>';
+	echo '<div class="centre"><input type="submit" name="Print" value="' . _('Print') .'">';
 	include ('includes/footer.inc');
 	exit;
+} else {
+  $_GET['TransferNo'] = filter_number_format($_GET['TransferNo']);
 }
 
 $pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
@@ -84,29 +82,6 @@ do {
 	}
 
 } while ($TransferRow = DB_fetch_array($result));
-/*
-$pdfcode = $pdf->output();
-$len = mb_strlen($pdfcode);
-
-
-if ($len<=20){
-	include('includes/header.inc');
-	echo '<p>';
-	prnMsg( _('There was no stock location transfer to print out'), 'warn');
-	echo '<br /><a href="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
-	include('includes/footer.inc');
-	exit;
-} else {
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=StockLocTrfShipment.pdf');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->Output('PDFStockLocTransfer.pdf', 'I');
-}
-*/
-$pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');//UldisN
-$pdf->__destruct(); //UldisN
+$pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');
+$pdf->__destruct();
 ?>

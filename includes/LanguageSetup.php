@@ -25,12 +25,19 @@ If (isset($_POST['Language'])) {
 }
 
 $Locale = setlocale (LC_ALL, $_SESSION['Language']);
+$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
 $LocaleInfo = localeconv();
+if ($LocaleInfo['mon_decimal_point']==''){
+	$LocaleInfo['mon_decimal_point']= $LocaleInfo['decimal_point'];
+}
+if ($LocaleInfo['mon_thousands_sep']==''){
+	$LocaleInfo['mon_thousands_sep']= $LocaleInfo['thousands_sep'];
+}
 if (defined('LC_MESSAGES')){
 	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
 }
 
-$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
+
 //Turkish seems to be a special case
 if ($_SESSION['Language']=='tr_TR.utf8') {
 	$Locale = setlocale(LC_CTYPE, 'C');

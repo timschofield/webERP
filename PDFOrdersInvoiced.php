@@ -211,7 +211,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 					stockmaster.description,
 					stockmaster.units,
 					stockmaster.decimalplaces";
-	
+
 } elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='All'){
 
 	$sql= "SELECT salesorders.orderno,
@@ -290,7 +290,7 @@ while ($myrow=DB_fetch_array($Result)){
 	if($OrderNo != $myrow['orderno']){
 		if ($AccumOrderTotal !=0){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,120,$FontSize,_('Total Invoiced for order') . ' ' . $OrderNo , 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,locale_number_format($AccumOrderTotal,2), 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,locale_money_format(filter_number_format($AccumOrderTotal),$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 			$YPos -= ($line_height);
 			$AccumOrderTotal =0;
 		}
@@ -395,12 +395,12 @@ while ($myrow=DB_fetch_array($Result)){
 
 	while ($InvRow=DB_fetch_array($InvoicesResult)){
 
-		$ValueInvoiced = $InvRow['price']*$InvRow['quantity'];
+		$ValueInvoiced = filter_number_format($InvRow['price']*$InvRow['quantity']);
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$InvRow['typename'] . ' ' . $InvRow['transno'], 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,locale_number_format($InvRow['quantity'],$myrow['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,locale_number_format($InvRow['price'],2), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,locale_number_format($ValueInvoiced,2), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,locale_money_format($InvRow['price'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,locale_money_format($ValueInvoiced,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 		 $YPos -= ($line_height);
 
@@ -414,7 +414,6 @@ while ($myrow=DB_fetch_array($Result)){
 	}
 
 
-
 	 $YPos -= ($line_height);
 	 if ($YPos - (2 *$line_height) < $Bottom_Margin){
 		/*Then set up a new page */
@@ -425,7 +424,7 @@ while ($myrow=DB_fetch_array($Result)){
 
 $YPos -= ($line_height);
 $LeftOvers = $pdf->addTextWrap($Left_Margin+260,$YPos,100,$FontSize,_('GRAND TOTAL INVOICED'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,locale_number_format($AccumTotalInv,2), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+360,$YPos,80,$FontSize,locale_money_format(filter_number_format($AccumTotalInv),$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 $YPos -= ($line_height);
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_OrdersInvoiced_' . date('Y-m-d') . '.pdf');
