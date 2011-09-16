@@ -8,7 +8,6 @@ if (isset($_POST['UserID']) AND isset($_POST['ID'])){
 	}
 }
 include('includes/session.inc');
-include ('includes/LanguagesArray.php');
 
 $ModuleList = array(_('Orders'),
 					_('Receivables'),
@@ -84,7 +83,15 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 	}
 	*/
-
+	if (!isset($SelectedUser)){
+		/* check to ensure the user id is not already entered */
+		$result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'",$db);
+		if (DB_num_rows($result)==1){
+			$InputError =1;
+			prnMsg(_('The user ID') . ' ' . $_POST['UserID'] . ' ' . _('already exists and cannot be used again'),'error');
+		}
+	}
+	
 	if ((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
 		$sql = "SELECT custbranch.debtorno
@@ -113,7 +120,7 @@ if (isset($_POST['submit'])) {
 	$_POST['ModulesAllowed']= $ModulesAllowed;
 
 
-	if ($SelectedUser AND $InputError !=1) {
+	if (isset($SelectedUser) AND $InputError !=1) {
 
 /*SelectedUser could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
@@ -388,7 +395,7 @@ if (isset($SelectedUser)) {
 
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
-	echo '<table class=selection>
+	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
 				<td><input type="text" name="UserID" size="22" maxlength="20"></td></tr>';
@@ -447,7 +454,7 @@ $sql = "SELECT loccode, locationname FROM locations";
 $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['DefaultLocation']) and $myrow['loccode'] == $_POST['DefaultLocation']){
+	if (isset($_POST['DefaultLocation']) AND $myrow['loccode'] == $_POST['DefaultLocation']){
 		echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
 	} else {
 		echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
@@ -478,14 +485,14 @@ echo '<tr><td>' . _('Restrict to Sales Person') . ':</td>
 
 $sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1";
 $result = DB_query($sql,$db);
-if ((isset($_POST['Salesman']) and $_POST['Salesman']=='') OR !isset($_POST['Salesman'])){
+if ((isset($_POST['Salesman']) AND $_POST['Salesman']=='') OR !isset($_POST['Salesman'])){
 	echo '<option selected value="">' .  _('Not a salesperson only login') . '</option>';
 } else {
 	echo '<option value="">' . _('Not a salesperson only login') . '</option>';
 }
 while ($myrow=DB_fetch_array($result)){
 
-	if (isset($_POST['Salesman']) and $myrow['salesmancode'] == $_POST['Salesman']){
+	if (isset($_POST['Salesman']) AND $myrow['salesmancode'] == $_POST['Salesman']){
 		echo '<option selected value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
@@ -498,42 +505,42 @@ echo '</select></td></tr>';
 echo '<tr><td>' . _('Reports Page Size') .':</td>
 	<td><select name="PageSize">';
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A4'){
 	echo '<option selected value="A4">' . _('A4') .'</option>';
 } else {
 	echo '<option value="A4">' . _('A4') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A3'){
 	echo '<option selected value="A3">' . _('A3') .'</option>';
 } else {
 	echo '<option value="A3">' . _('A3') .'</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A3_landscape'){
 	echo '<option selected value="A3_landscape">' . _('A3') . ' ' . _('landscape') .'</option>';
 } else {
 	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape') .'</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='letter'){
 	echo '<option selected value="letter">' . _('Letter') .'</option>';
 } else {
 	echo '<option value="letter">' . _('Letter') .'</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='letter_landscape'){
 	echo '<option selected value="letter_landscape">' . _('Letter') . ' ' . _('landscape') .'</option>';
 } else {
 	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape') .'</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='legal'){
 	echo '<option selected value="legal">' . _('Legal') .'</option>';
 } else {
 	echo '<option value="legal">' . _('Legal') .'</option>';
 }
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
+if(isset($_POST['PageSize']) AND $_POST['PageSize']=='legal_landscape'){
 	echo '<option selected value="legal_landscape">' . _('Legal') . ' ' . _('landscape') .'</option>';
 } else {
 	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape') .'</option>';
@@ -552,9 +559,9 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 
 	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
-		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
+		if (isset($_POST['Theme']) AND $_POST['Theme'] == $ThemeName){
 			echo '<option selected value="' . $ThemeName . '">' . $ThemeName .'</option>';
-		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme']==$ThemeName)) {
+		} else if (!isset($_POST['Theme']) AND ($_SESSION['DefaultTheme']==$ThemeName)) {
 			echo '<option selected value="' . $ThemeName . '">' . $ThemeName .'</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName .'</option>';
@@ -570,12 +577,12 @@ echo '<tr>
 	<td><select name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
-	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
-	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+	if (isset($_POST['UserLanguage']) AND $_POST['UserLanguage'] == $LanguageEntry){
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+	} elseif (!isset($_POST['UserLanguage']) AND $LanguageEntry == $DefaultLanguage) {
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	} else {
-		echo '<option value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	}
 }
 echo '</select></td></tr>';

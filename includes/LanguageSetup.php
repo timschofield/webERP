@@ -4,7 +4,7 @@
 
 /* Set internal character encoding to UTF-8 */
 mb_internal_encoding('UTF-8');
-
+include('includes/LanguagesArray.php');
 /* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
 to check for the existance of gettext function and setup the necessary enviroment to allow for automatic translation
 
@@ -13,7 +13,7 @@ NB this language must also exist in the locale on the web-server
 normally the lower case two character country code underscore uppercase
 2 character country code does the trick  except for en !!*/
 
-// Specify location of translation tables
+
 If (isset($_POST['Language'])) {
 	$_SESSION['Language'] = $_POST['Language'];
 	$Language = $_POST['Language'];
@@ -24,8 +24,14 @@ If (isset($_POST['Language'])) {
 	$Language = $_SESSION['Language'];
 }
 
-$Locale = setlocale (LC_ALL, $_SESSION['Language']);
-$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
+if (defined('LC_MESSAGES')){ //it's a unix/linux server
+	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
+	$Locale = setlocale (LC_NUMERIC, $_SESSION['Language']);
+} else { // it's a windows server
+	$Locale = setlocale (LC_ALL, $LanguageArray[$_SESSION['Language']]['WindowsLocale']);
+}
+//$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
+
 $LocaleInfo = localeconv();
 if ($LocaleInfo['mon_decimal_point']==''){
 	$LocaleInfo['mon_decimal_point']= $LocaleInfo['decimal_point'];
@@ -33,9 +39,7 @@ if ($LocaleInfo['mon_decimal_point']==''){
 if ($LocaleInfo['mon_thousands_sep']==''){
 	$LocaleInfo['mon_thousands_sep']= $LocaleInfo['thousands_sep'];
 }
-if (defined('LC_MESSAGES')){
-	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
-}
+
 
 
 //Turkish seems to be a special case

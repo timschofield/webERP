@@ -231,10 +231,9 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 								stockmoves.narrative,
 								stockmaster.units,
 								stockmaster.decimalplaces
-							FROM stockmoves,
-								stockmaster
-							WHERE stockmoves.stockid = stockmaster.stockid
-							AND stockmoves.type=10
+							FROM stockmoves INNER JOIN stockmaster
+							ON stockmoves.stockid = stockmaster.stockid
+							WHERE stockmoves.type=10
 							AND stockmoves.transno=" . $FromTransNo . "
 							AND stockmoves.show_on_inv_crds=1";
 			} else {
@@ -248,10 +247,9 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 								stockmoves.narrative,
 								stockmaster.units,
 								stockmaster.decimalplaces
-							FROM stockmoves,
-								stockmaster
-							WHERE stockmoves.stockid = stockmaster.stockid
-							AND stockmoves.type=11
+							FROM stockmoves INNER JOIN stockmaster
+							ON stockmoves.stockid = stockmaster.stockid
+							WHERE stockmoves.type=11
 							AND stockmoves.transno=" . $FromTransNo . "
 							AND stockmoves.show_on_inv_crds=1";
 			} // end else

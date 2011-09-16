@@ -44,7 +44,7 @@ if (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 	/*store the old freight cost before it is recalculated to ensure that there has been no change - test for change after freight recalculated and get user to re-confirm if changed */
 
-	$OldFreightCost = round(filter_number_format($_POST['FreightCost']),2);
+	$OldFreightCost = round(filter_number_format($_POST['FreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
 }
 
@@ -119,7 +119,7 @@ if (isset($_POST['Update'])
 		if ($_SESSION['DoFreightCalc']==True){
 			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items'.$identifier]->totalVolume, $_SESSION['Items'.$identifier]->totalWeight, $_SESSION['Items'.$identifier]->Location, $db);
 			if ( !empty($BestShipper) ){
-				$_POST['FreightCost'] = round(filter_number_format($_POST['FreightCost']),2);
+				$_POST['FreightCost'] = round(filter_number_format($_POST['FreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 				$_POST['ShipVia'] = $BestShipper;
 			} else {
 				prnMsg(_($_POST['FreightCost']),'warn');
@@ -183,7 +183,7 @@ if (isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 			$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
-			$_SESSION['Items'.$identifier]->FreightCost = round(filter_number_format($_POST['FreightCost']),2);
+			$_SESSION['Items'.$identifier]->FreightCost = round(filter_number_format($_POST['FreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 			$_SESSION['Items'.$identifier]->Quotation = $_POST['Quotation'];
 		} else {
 			$_SESSION['Items'.$identifier]->DeliverTo = $_POST['DeliverTo'];
@@ -200,13 +200,13 @@ if (isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->ShipVia = $_POST['ShipVia'];
 			$_SESSION['Items'.$identifier]->DeliverBlind = $_POST['DeliverBlind'];
 			$_SESSION['Items'.$identifier]->SpecialInstructions = $_POST['SpecialInstructions'];
-			$_SESSION['Items'.$identifier]->DeliveryDays = filter_number_format$_POST['DeliveryDays']);
+			$_SESSION['Items'.$identifier]->DeliveryDays = filter_number_format($_POST['DeliveryDays']);
 			$_SESSION['Items'.$identifier]->DeliveryDate = $_POST['DeliveryDate'];
 			$_SESSION['Items'.$identifier]->QuoteDate = $_POST['QuoteDate'];
 			$_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 			$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
-			$_SESSION['Items'.$identifier]->FreightCost = round(filter_number_format($_POST['FreightCost']),2);
+			$_SESSION['Items'.$identifier]->FreightCost = round(filter_number_format($_POST['FreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 			$_SESSION['Items'.$identifier]->Quotation = $_POST['Quotation'];
 		}
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
