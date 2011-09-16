@@ -46,7 +46,7 @@ if (isset($_POST['Submit'])) {
 						'".$_POST['CurrCode']."',
 						'".$CanCreate."',
 						'".$OffHold."',
-						'".$_POST['AuthLevel']."')";
+						'" . filter_number_format($_POST['AuthLevel'])."')";
 	$ErrMsg = _('The authentication details cannot be inserted because');
 	$Result=DB_query($sql,$db,$ErrMsg);
 	} else {
@@ -69,10 +69,10 @@ if (isset($_POST['Update'])) {
 	$sql="UPDATE purchorderauth SET
 			cancreate='".$CanCreate."',
 			offhold='".$OffHold."',
-			authlevel='".$_POST['AuthLevel']."'
+			authlevel='".filter_number_format($_POST['AuthLevel'])."'
 			WHERE userid='".$_POST['UserID']."'
 			AND currabrev='".$_POST['CurrCode']."'";
-	
+
 	$ErrMsg = _('The authentication details cannot be updated because');
 	$Result=DB_query($sql,$db,$ErrMsg);
 }
@@ -111,9 +111,9 @@ $sql="SELECT purchorderauth.userid,
 			purchorderauth.cancreate,
 			purchorderauth.offhold,
 			purchorderauth.authlevel
-	FROM purchorderauth INNER JOIN www_users 
+	FROM purchorderauth INNER JOIN www_users
 		ON purchorderauth.userid=www_users.userid
-	INNER JOIN currencies 
+	INNER JOIN currencies
 		ON purchorderauth.currabrev=currencies.currabrev";
 
 $ErrMsg = _('The authentication details cannot be retrieved because');
@@ -187,7 +187,8 @@ if (isset($_GET['Edit'])) {
 	$sql="SELECT cancreate,
 				offhold,
 				authlevel,
-				currency
+				currency,
+				decimalplaces
 			FROM purchorderauth INNER JOIN currencies
 			ON purchorderauth.currabrev=currencies.currabrev
 			WHERE userid='".$_GET['UserID']."'
@@ -200,7 +201,8 @@ if (isset($_GET['Edit'])) {
 	$CanCreate=$myrow['cancreate'];
 	$OffHold=$myrow['offhold'];
 	$AuthLevel=$myrow['authlevel'];
-	
+	$CurrDecimalPlaces=$myrow['decimalplaces'];
+
 	echo '<tr>
 			<td>'._('Currency').'</td>
 			<td>' . $myrow['currency'] . '</td>
@@ -235,7 +237,7 @@ if ($OffHold==1) {
 }
 
 echo '<tr><td>'._('User can authorise orders up to :').'</td>';
-echo '<td><input type=input name="AuthLevel" size=11 class="number" value="'  . $AuthLevel . '"></td</tr>';
+echo '<td><input type=input name="AuthLevel" size=11 class="number" value="'  . locale_money_format($AuthLevel,$CurrDecimalPlaces) . '"></td</tr>';
 echo '</table>';
 
 if (isset($_GET['Edit'])) {

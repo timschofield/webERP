@@ -40,10 +40,10 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND debtorsmaster.typeid = '" . $_GET['Customers'] . "'
-						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 				GROUP BY salesorderdetails.stkcode
 				ORDER BY " . $_GET['Sequence'] . " DESC
-				LIMIT " . $_GET['NumberOfTopItems'];
+				LIMIT " . filter_number_format($_GET['NumberOfTopItems']);
 	} else {
 		//the situation if the customer type selected "All"
 		if ($_GET['Customers'] == 'All') {
@@ -58,10 +58,10 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND salesorderdetails.stkcode = stockmaster.stockid
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND salesorders.fromstkloc = '" . $_GET['Location'] . "'
-						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "' 
+						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
 					ORDER BY " . $_GET['Sequence'] . " DESC
-					LIMIT 0," . $_GET['NumberOfTopItems'];
+					LIMIT 0," . filter_number_format($_GET['NumberOfTopItems']);
 		} else {
 			//the situation if the location and customer type not selected "All"
 			$SQL = "SELECT 	salesorderdetails.stkcode,
@@ -76,10 +76,10 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND salesorders.debtorno = debtorsmaster.debtorno
 						AND salesorders.fromstkloc = '" . $_GET['Location'] . "'
 						AND debtorsmaster.typeid = '" . $_GET['Customers'] . "'
-						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "' 
+						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
 					ORDER BY " . $_GET['Sequence'] . " DESC
-					LIMIT " . $_GET['NumberOfTopItems'];
+					LIMIT " . filter_number_format($_GET['NumberOfTopItems']);
 		}
 	}
 }
@@ -97,7 +97,7 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 100, $YPos, 100, $FontSize, $myrow['description']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 330, $YPos, 30, $FontSize, locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 370, $YPos, 300 - $Left_Margin, $FontSize, $myrow['units'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 400, $YPos, 70, $FontSize, locale_number_format($myrow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 400, $YPos, 70, $FontSize, locale_money_format($myrow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 490, $YPos, 30, $FontSize, locale_number_format($ohRow[0],$myrow['decimalplaces']), 'right');
 		if (mb_strlen($LeftOvers) > 1) {
 			$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $line_height, 270, $FontSize, $LeftOvers, 'left');
@@ -112,9 +112,9 @@ if (DB_num_rows($result)>0){
 		/*increment a line down for the next line item */
 		$YPos-= $line_height;
 	}
-	
+
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_TopItemsListing_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 }
 /*end of else not PrintPDF */
 ?>
