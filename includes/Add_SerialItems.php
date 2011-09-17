@@ -56,17 +56,21 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 
 				if ($LineItem->Serialised){
 					$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
-					if ($NewQty == 1 && $ExistingQty != 0){
+					if ($NewQty == 1 AND $ExistingQty != 0){
 						prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _('The Serial Number being added exists with a Quantity that is not Zero (0)!'), 'error' );
 						$SerialError = true;
-					} elseif ($NewQty == -1 && $ExistingQty != 1){
+					} elseif ($NewQty == -1 AND $ExistingQty != 1){
 						prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _('The Serial Number being removed exists with a Quantity that is not One (1)!'), 'error');
 						$SerialError = true;
 					}
 				}
-
+				if (isset($_POST['ExpiryDate' . $i])){
+					$ExpiryDate = $_POST['ExpiryDate' . $i];
+				} else {
+					$ExpiryDate ='0000-00-00';
+				}
 				if (!$SerialError){
-					$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($_POST['SerialNo' . $i], $NewQty, $_POST['ExpiryDate' . $i]);
+					$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($_POST['SerialNo' . $i], $NewQty, $ExpiryDate);
 				}
 			}
 		} /* end if posted Serialno . i is not blank */
@@ -92,7 +96,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
  /********************************************
    Add a Sequence of Items and save entries
  ********************************************/
-if ( isset($_POST['AddSequence']) && $_POST['AddSequence']!='') {
+if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
 	// do some quick validation
 	$BeginNo =  $_POST['BeginNo'];
 	$EndNo   = $_POST['EndNo'];
@@ -151,7 +155,7 @@ if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST[
 			}
 		} else {
 		//for controlled only items, we must receive: BatchID, Qty in a comma delimited  file
-			if($pieces[0] != "" && $pieces[1] != "" && is_numeric($pieces[1]) && $pieces[1] > 0 ){
+			if($pieces[0] != "" AND $pieces[1] != "" AND is_numeric($pieces[1]) AND $pieces[1] > 0 ){
 			/*If the user enters a duplicate batch number the later one over-writes
 			the first entered one - no warning given though ? */
 					//$LineItem->SerialItems[$pieces[0]] = new SerialItem ($pieces[0],  $pieces[1] );
@@ -198,10 +202,10 @@ if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST[
 			$SerialError = false;
 			if ($LineItem->Serialised){
 				$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
-				if ($NewQty == 1 && $ExistingQty != 0){
+				if ($NewQty == 1 AND $ExistingQty != 0){
 					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
 					$SerialError = true;
-				} elseif ($NewQty == -1 && $ExistingQty != 1){
+				} elseif ($NewQty == -1 AND $ExistingQty != 1){
 					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
 					$SerialError = true;
 				}
@@ -248,7 +252,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 			}
 		} else {
 		//for controlled only items, we must receive: BatchID, Qty in a comma delimited  file
-			if($Item->BundleRef != "" && $Item->BundleQty != "" && is_numeric($Item->BundleQty) && $Item->BundleQty > 0 ){
+			if($Item->BundleRef != "" AND $Item->BundleQty != "" AND is_numeric($Item->BundleQty) AND $Item->BundleQty > 0 ){
 			/*If the user enters a duplicate batch number the later one over-writes
 			the first entered one - no warning given though ? */
 					//$LineItem->SerialItems[$pieces[0]] = new SerialItem ($pieces[0],  $pieces[1] );
@@ -295,10 +299,10 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 			$SerialError = false;
 			if ($LineItem->Serialised){
 				$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
-				if ($NewQty == 1 && $ExistingQty != 0){
+				if ($NewQty == 1 AND $ExistingQty != 0){
 					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
 					$SerialError = true;
-				} elseif ($NewQty == -1 && $ExistingQty != 1){
+				} elseif ($NewQty == -1 AND $ExistingQty != 1){
 					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
 					$SerialError = true;
 				}

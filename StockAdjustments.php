@@ -36,12 +36,12 @@ if (isset($_GET['StockID'])){
 	$_SESSION['Adjustment']->Serialised = $myrow['serialised'];
 	$_SESSION['Adjustment']->DecimalPlaces = $myrow['decimalplaces'];
 	$_SESSION['Adjustment']->SerialItems = array();
-	if (!isset($_SESSION['Adjustment']->Quantity)or !is_numeric($_SESSION['Adjustment']->Quantity)){
+	if (!isset($_SESSION['Adjustment']->Quantity) OR !is_numeric($_SESSION['Adjustment']->Quantity)){
 		$_SESSION['Adjustment']->Quantity=0;
 	}
 	$NewAdjustment = true;
 } elseif (isset($_POST['StockID'])){
-	if(isset($_POST['StockID']) and $_POST['StockID'] != $_SESSION['Adjustment']->StockID){
+	if(isset($_POST['StockID']) AND $_POST['StockID'] != $_SESSION['Adjustment']->StockID){
 		$NewAdjustment = true;
 		$_SESSION['Adjustment']->StockID = trim(mb_strtoupper($_POST['StockID']));
 		$StockID = trim(mb_strtoupper($_POST['StockID']));
@@ -49,10 +49,10 @@ if (isset($_GET['StockID'])){
 	$_SESSION['Adjustment']->tag = $_POST['tag'];
 	$_SESSION['Adjustment']->Narrative = $_POST['Narrative'];
 	$_SESSION['Adjustment']->StockLocation = $_POST['StockLocation'];
-	if ($_POST['Quantity']=='' or !is_numeric($_POST['Quantity'])){
+	if ($_POST['Quantity']=='' or !is_numeric(filter_number_format($_POST['Quantity']))){
 		$_POST['Quantity']=0;
 	}
-	$_SESSION['Adjustment']->Quantity = $_POST['Quantity'];
+	$_SESSION['Adjustment']->Quantity = filter_number_format($_POST['Quantity']);
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
@@ -94,7 +94,7 @@ if (isset($_POST['CheckCode'])) {
 	exit;
 }
 
-if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
+if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 
 	$InputError = false; /*Start by hoping for the best */
 	$result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'",$db);
@@ -149,7 +149,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 			$QtyOnHandPrior = 0;
 		}
 
-		$SQL = "INSERT INTO stockmoves (	stockid,
+		$SQL = "INSERT INTO stockmoves (stockid,
 										type,
 										transno,
 										loccode,
@@ -175,7 +175,6 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-
 /*Get the ID of the StockMove... */
 		$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
 
@@ -188,11 +187,10 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 
 				/*First need to check if the serial items already exists or not */
 				$SQL = "SELECT COUNT(*)
-							FROM stockserialitems
-							WHERE
-							stockid='" . $_SESSION['Adjustment']->StockID . "'
-							AND loccode='" . $_SESSION['Adjustment']->StockLocation . "'
-							AND serialno='" . $Item->BundleRef . "'";
+						FROM stockserialitems
+						WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'
+						AND loccode='" . $_SESSION['Adjustment']->StockLocation . "'
+						AND serialno='" . $Item->BundleRef . "'";
 				$ErrMsg = _('Unable to determine if the serial item exists');
 				$Result = DB_query($SQL,$db,$ErrMsg);
 				$SerialItemExistsRow = DB_fetch_row($Result);
@@ -200,10 +198,9 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 				if ($SerialItemExistsRow[0]==1){
 
 					$SQL = "UPDATE stockserialitems SET quantity= quantity + " . $Item->BundleQty . "
-										WHERE
-										stockid='" . $_SESSION['Adjustment']->StockID . "'
-										AND loccode='" . $_SESSION['Adjustment']->StockLocation . "'
-										AND serialno='" . $Item->BundleRef . "'";
+							WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'
+							AND loccode='" . $_SESSION['Adjustment']->StockLocation . "'
+							AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg =  _('The following SQL to update the serial stock item record was used');
@@ -308,7 +305,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 
 		$Result = DB_Txn_Commit($db);
 
-		$ConfirmationText = _('A stock adjustment for'). ' ' . $_SESSION['Adjustment']->StockID . ' -  ' . $_SESSION['Adjustment']->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment']->StockLocation .' '. _('for a quantity of') . ' ' . $_SESSION['Adjustment']->Quantity ;
+		$ConfirmationText = _('A stock adjustment for'). ' ' . $_SESSION['Adjustment']->StockID . ' -  ' . $_SESSION['Adjustment']->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment']->StockLocation .' '. _('for a quantity of') . ' ' . locale_number_format($_SESSION['Adjustment']->Quantity,$_SESSION['Adjustment']->DecimalPlaces) ;
 		prnMsg( $ConfirmationText,'success');
 
 		if ($_SESSION['InventoryManagerEmail']!=''){
@@ -323,22 +320,24 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 }/* end if the user hit enter the adjustment */
 
 
-echo '<form action="'. $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
+echo '<form action="'. $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_SESSION['Adjustment'])) {
 	$StockID='';
 	$Controlled= 0;
 	$Quantity = 0;
+	$DecimalPlaces =2;
 } else {
 	$StockID = $_SESSION['Adjustment']->StockID;
 	$Controlled = $_SESSION['Adjustment']->Controlled;
 	$Quantity = $_SESSION['Adjustment']->Quantity;
-	$sql="SELECT materialcost, labourcost, overheadcost, units FROM stockmaster WHERE stockid='".$StockID."'";
+	$sql="SELECT materialcost, labourcost, overheadcost, units, decimalplaces FROM stockmaster WHERE stockid='".$StockID."'";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
 	$_SESSION['Adjustment']->PartUnit=$myrow['units'];
 	$_SESSION['Adjustment']->StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
+	$DecimalPlaces = $myrow['decimalplaces'];
 }
 echo '<br /><table class=selection>';
 echo '<tr><th colspan=4><font color=blue size=3>'._('Adjustment Details').'</font></th></tr>';
@@ -359,10 +358,10 @@ if (isset($StockID)) {
 	echo '<input type="text" name="StockCode" size=21 value="" maxlength=20>';
 }
 echo '</td><td><input type=submit name="CheckCode" VALUE="'._('Check Part').'"></td></tr>';
-if (isset($_SESSION['Adjustment']) and mb_strlen($_SESSION['Adjustment']->ItemDescription)>1){
+if (isset($_SESSION['Adjustment']) AND mb_strlen($_SESSION['Adjustment']->ItemDescription)>1){
 	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Adjustment']->ItemDescription . ' ('._('In Units of').' ' .
 		$_SESSION['Adjustment']->PartUnit . ' ) - ' . _('Unit Cost').' = ' .
-			locale_number_format($_SESSION['Adjustment']->StandardCost,4) . '</font></td></tr>';
+			locale_money_format($_SESSION['Adjustment']->StandardCost,4) . '</font></td></tr>';
 }
 
 echo '<tr><td>'. _('Adjustment to Stock At Location').':</td>
@@ -373,25 +372,28 @@ $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Adjustment']->StockLocation)){
 		if ($myrow['loccode'] == $_SESSION['Adjustment']->StockLocation){
-			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 	}
 }
 
 echo '</select></td></tr>';
-if (isset($_SESSION['Adjustment']) and !isset($_SESSION['Adjustment']->Narrative)) {
+if (isset($_SESSION['Adjustment']) AND !isset($_SESSION['Adjustment']->Narrative)) {
 	$_SESSION['Adjustment']->Narrative = '';
+	$Narrative ='';
+} else {
+	$Narrative ='';
 }
 
 echo '<tr><td>'. _('Comments On Why').':</td>
-	<td><input type="text" name="Narrative" size=32 maxlength=30 value="' . $_SESSION['Adjustment']->Narrative . '"></td></tr>';
+	<td><input type="text" name="Narrative" size=32 maxlength=30 value="' . $Narrative . '"></td></tr>';
 
 echo '<tr><td>'._('Adjustment Quantity').':</td>';
 
@@ -400,26 +402,26 @@ if ($Controlled==1){
 		if ($_SESSION['Adjustment']->StockLocation == ''){
 			$_SESSION['Adjustment']->StockLocation = $_SESSION['UserStockLocation'];
 		}
-		echo '<input type="HIDDEN" name="Quantity" Value="' . $_SESSION['Adjustment']->Quantity . '">
-				'.$_SESSION['Adjustment']->Quantity.' &nbsp; &nbsp; &nbsp; &nbsp;
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&' . SID . '">'._('Remove').'</a>]
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD&' . SID . '">'._('Add').'</a>]';
+		echo '<input type="hidden" name="Quantity" value="' . $_SESSION['Adjustment']->Quantity . '">
+				'.locale_number_format($_SESSION['Adjustment']->Quantity,$DecimalPlaces) .' &nbsp; &nbsp; &nbsp; &nbsp;
+				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE">'._('Remove').'</a>]
+				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD">'._('Add').'</a>]';
 } else {
-	echo '<input type="text" class="number" name="Quantity" size=12 maxlength=12 Value="' . $Quantity . '">';
+	echo '<input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($Quantity,$DecimalPlaces) . '">';
 }
 echo '</td></tr>';
 	//Select the tag
 echo '<tr><td>'._('Select Tag').'</td><td><select name="tag">';
 
-$SQL = 'SELECT tagref,
+$SQL = "SELECT tagref,
 				tagdescription
 		FROM tags
-		ORDER BY tagref';
+		ORDER BY tagref";
 
 $result=DB_query($SQL,$db);
-echo '<option value=0>0 - None';
+echo '<option value=0>0 - ' . _('None') . '</option>';
 while ($myrow=DB_fetch_array($result)){
-	if (isset($_SESSION['Adjustment']->tag) and $_SESSION['Adjustment']->tag==$myrow['tagref']){
+	if (isset($_SESSION['Adjustment']->tag) AND $_SESSION['Adjustment']->tag==$myrow['tagref']){
 		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	} else {
 		echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription']. '</option>';
@@ -428,7 +430,7 @@ while ($myrow=DB_fetch_array($result)){
 echo '</select></td>';
 // End select tag
 
-echo '</table><div class="centre"><br /><input type=submit name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '"><br />';
+echo '</table><div class="centre"><br /><input type="submit" name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '"><br />';
 
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation']='';

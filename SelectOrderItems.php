@@ -730,10 +730,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
-						FROM stockmaster,
-								stockcategory
-						WHERE stockmaster.categoryid=stockcategory.categoryid
-						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.discontinued=0
@@ -742,9 +741,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
-						FROM stockmaster, stockcategory
-						WHERE  stockmaster.categoryid=stockcategory.categoryid
-						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
 						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
@@ -761,9 +760,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
-						FROM stockmaster, stockcategory
-						WHERE stockmaster.categoryid=stockcategory.categoryid
-						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -772,9 +771,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
-						FROM stockmaster, stockcategory
-						WHERE stockmaster.categoryid=stockcategory.categoryid
-						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -787,9 +786,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
-						FROM stockmaster, stockcategory
-						WHERE  stockmaster.categoryid=stockcategory.categoryid
-						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
 						ORDER BY stockmaster.stockid";
@@ -797,9 +796,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
-						FROM stockmaster, stockcategory
-						WHERE stockmaster.categoryid=stockcategory.categoryid
-						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -816,7 +815,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (!isset($Offset) or $Offset<0) {
 			$Offset=0;
 		}
-		$SQL = $SQL . " LIMIT " . $_SESSION['DefaultDisplayRecordsMax'] . " OFFSET " . strval(filter_number_format($_SESSION['DefaultDisplayRecordsMax']*$Offset));
+		$SQL = $SQL . " LIMIT " . $_SESSION['DefaultDisplayRecordsMax'] . " OFFSET " . strval($_SESSION['DefaultDisplayRecordsMax']*$Offset);
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$DbgMsg = _('The SQL used to get the part selection was');
@@ -1056,7 +1055,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 
-				$Quantity = filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]);
+				$Quantity = round(filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]),$OrderLine->DecimalPlaces);
 
 				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
@@ -1164,7 +1163,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
 						if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
 							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
-							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->GPPercent = (($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price*(1-$DiscountMatrixRate)) - $_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->StandardCost*$ExRate)/($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price *(1-$DiscountMatrixRate)/100);
+							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->GPPercent = filter_number_format((($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price*(1-$DiscountMatrixRate)) - $_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->StandardCost*$ExRate)/($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price *(1-$DiscountMatrixRate)/100));
 						}
 					}
 				}
@@ -1292,7 +1291,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								FROM discountmatrix
 								WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 								AND discountcategory ='" . $OrderLine->DiscCat . "'
-								AND quantitybreak <= '" . $QuantityOfDiscCat . "'",$db);
+								AND quantitybreak <= '" . filter_number_format($QuantityOfDiscCat) . "'",$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] == NULL){
 				$DiscountMatrixRate = 0;
@@ -1365,22 +1364,22 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td>' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . $OrderLine->Quantity . '>';
+			echo '<td><input class="number" tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '>';
 			if ($QtyRemain != $QtyOrdered){
-				echo '<br />'.$OrderLine->QtyInv.' of '.$OrderLine->Quantity.' invoiced';
+				echo '<br />'.locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' of '.locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' invoiced';
 			}
 			echo '</td>
-					<td class="number">' . $OrderLine->QOHatLoc . '</td>
+					<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 					<td>' . $OrderLine->Units . '</td>';
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
-				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . $OrderLine->Price . '></td>
-					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . ($OrderLine->DiscountPercent * 100) . '></td>
-					<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size=3 maxlength=40 value=' . $OrderLine->GPPercent . '></td>';
+				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . locale_money_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '></td>
+					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '></td>
+					<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size=3 maxlength=40 value=' . locale_number_format($OrderLine->GPPercent,2) . '></td>';
 			} else {
-				echo '<td class=number>' . $OrderLine->Price . '</td><td></td>';
-				echo '<input type=hidden name="Price_' . $OrderLine->LineNumber . '" value=' . $OrderLine->Price . '>';
+				echo '<td class=number>' . locale_money_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td><td></td>';
+				echo '<input type=hidden name="Price_' . $OrderLine->LineNumber . '" value=' . locale_money_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '>';
 			}
 			if ($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)){
 				$RemTxt = _('Clear Remaining');

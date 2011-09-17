@@ -30,7 +30,7 @@ if (defined('LC_MESSAGES')){ //it's a unix/linux server
 } else { // it's a windows server
 	$Locale = setlocale (LC_ALL, $LanguageArray[$_SESSION['Language']]['WindowsLocale']);
 }
-//$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
+$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
 
 $LocaleInfo = localeconv();
 if ($LocaleInfo['mon_decimal_point']==''){

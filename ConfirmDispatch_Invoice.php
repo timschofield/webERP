@@ -212,7 +212,7 @@ set all the necessary session variables changed by the POST  */
 	}
 	foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 		if (isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])){
-			$_SESSION['Items']->FreightTaxes[$FreightTaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder]/100);
+			$_SESSION['Items']->FreightTaxes[$FreightTaxLine->TaxCalculationOrder]->TaxRate = filter_number_format(filter_number_format($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])/100);
 		}
 	}
 
@@ -227,7 +227,7 @@ set all the necessary session variables changed by the POST  */
 		}
 		foreach ($Itm->Taxes as $TaxLine) {
 			if (isset($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
-				$_SESSION['Items']->LineItems[$Itm->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = filter_number_format($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate']/100);
+				$_SESSION['Items']->LineItems[$Itm->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = filter_number_format(filter_number_format($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])/100);
 			}
 		}
 	} //end foreach lineitem
@@ -311,15 +311,15 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	if ($LnItm->Controlled==1){
 
 		if (isset($_POST['ProcessInvoice'])) {
-			echo '<td class="number">' . $LnItm->QtyDispatched . '</td>';
+			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number"><input type=hidden name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?LineNo='. $LnItm->LineNumber.'">' .$LnItm->QtyDispatched . '</a></td>';
+			echo '<td class="number"><input type=hidden name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?LineNo='. $LnItm->LineNumber.'">' .locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</a></td>';
 		}
 	} else {
 		if (isset($_POST['ProcessInvoice'])) {
-			echo '<td class="number">' .  $LnItm->QtyDispatched . '</td>';
+			echo '<td class="number">' .  locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number"><input tabindex="'.$j.'" type="text" class="number" name="' . $LnItm->LineNumber . '_QtyDispatched" maxlength=12 size=12 value="' . $LnItm->QtyDispatched . '"></td>';
+			echo '<td class="number"><input tabindex="'.$j.'" type="text" class="number" name="' . $LnItm->LineNumber . '_QtyDispatched" maxlength="12" size="12" value="' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '"></td>';
 		}
 	}
 	$DisplayDiscountPercent = locale_number_format($LnItm->DiscountPercent*100,2) . '%';
@@ -458,15 +458,15 @@ if (!isset($_POST['ChargeFreightCost'])) {
 	$_POST['ChargeFreightCost']=0;
 }
 if ($_SESSION['Items']->Any_Already_Delivered()==1 and (!isset($_SESSION['Items']->FreightCost) or $_POST['ChargeFreightCost']==0)) {
-	echo '<td colspan=2 class=number>'. _('Charge Freight Cost inc Tax').'</td>
+	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>
 		<td><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0"></td>';
 	$_SESSION['Items']->FreightCost=0;
 } else {
-	echo '<td colspan=2 class=number>'. _('Charge Freight Cost inc Tax').'</td>';
+	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>';
 	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . $_SESSION['Items']->FreightCost . '</td>';
 	} else {
-		echo '<td class="number"><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="' . $_SESSION['Items']->FreightCost . '"></td>';
+		echo '<td class="number"><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="' . $_SESSION['Items']->FreightCost . '" /></td>';
 	}
 	$_POST['ChargeFreightCost'] = $_SESSION['Items']->FreightCost;
 }
@@ -496,7 +496,7 @@ foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 		echo   $FreightTaxLine->TaxRate * 100 ;
 	} else {
 		echo  '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder .
-			'" maxlength="4" size="4" value="' . $FreightTaxLine->TaxRate * 100 . '">';
+			'" maxlength="4" size="4" value="' . $FreightTaxLine->TaxRate * 100 . '" />';
 	}
 
 	if ($FreightTaxLine->TaxOnTax ==1){
@@ -587,7 +587,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				/*Now look for assembly components that would go negative */
 				$SQL = "SELECT bom.component,
 							   stockmaster.description,
-							   locstock.quantity-(" . filter_number_format($OrderLine->QtyDispatched)  . "*bom.quantity) AS qtyleft
+							   locstock.quantity-(" . $OrderLine->QtyDispatched  . "*bom.quantity) AS qtyleft
 						FROM bom
 						INNER JOIN locstock
 						ON bom.component=locstock.stockid
@@ -612,7 +612,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 		if ($NegativesFound){
 			echo '<div class="centre">
-					<input type="submit" name="Update" value="' . _('Update'). '"></div>';
+					<input type="submit" name="Update" value="' . _('Update'). '" /></div>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -679,7 +679,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	while ($myrow = DB_fetch_array($Result)) {
 
-		if ($_SESSION['Items']->LineItems[$myrow['orderlineno']]->Quantity != $myrow['quantity'] OR $_SESSION['Items']->LineItems[$myrow['orderlineno']]->QtyInv != $myrow['qtyinvoiced']) {
+		if ($_SESSION['Items']->LineItems[$myrow['orderlineno']]->Quantity != $myrow['quantity'] 
+			OR $_SESSION['Items']->LineItems[$myrow['orderlineno']]->QtyInv != $myrow['qtyinvoiced']) {
 
 			echo '<br />'. _('Orig order for'). ' ' . $myrow['orderlineno'] . ' '. _('has a quantity of'). ' ' . $myrow['quantity'] . ' '. _('and an invoiced qty of'). ' ' . $myrow['qtyinvoiced'] . ' '. _('the session shows quantity of'). ' ' . $_SESSION['Items']->LineItems[$myrow['orderlineno']]->Quantity . ' ' . _('and quantity invoice of'). ' ' . $_SESSION['Items']->LineItems[$myrow['orderlineno']]->QtyInv;
 
