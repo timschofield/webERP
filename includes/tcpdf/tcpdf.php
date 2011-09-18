@@ -11772,7 +11772,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @since 4.2.005 (2008-11-06)
 		 */
 		protected function formatPageNumber($num) {
-			return locale_number_format((float)$num, 0, '', '.');
+			return number_format((float)$num, 0, '', '.');
 		}
 
 		/**
@@ -11784,7 +11784,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @see addTOC()
 		 */
 		protected function formatTOCPageNumber($num) {
-			return locale_number_format((float)$num, 0, '', '.');
+			return number_format((float)$num, 0, '', '.');
 		}
 
         /**

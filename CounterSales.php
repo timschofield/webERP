@@ -488,7 +488,7 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 
 			if (abs($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
 				$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
-				$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
+				$_POST['GPPercent_' . $OrderLine->LineNumber] = filter_number_format((($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
 			} else if (abs($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.001) {
 				//then do a recalculation of the price at this new GP Percentage
 				$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
@@ -509,16 +509,16 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 			if ($Quantity<0 or $Price <0 or $DiscountPercentage >100 or $DiscountPercentage <0){
 				prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 			} else if ($OrderLine->Quantity !=$Quantity
-						or $OrderLine->Price != $Price
-						or abs($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001
-						or $OrderLine->Narrative != $Narrative
-						or $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
-						or $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
+						OR $OrderLine->Price != $Price
+						OR abs($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001
+						OR $OrderLine->Narrative != $Narrative
+						OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
+						OR $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
 
 				$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
 																$Quantity,
 																$Price,
-																($DiscountPercentage/100),
+																filter_number_format($DiscountPercentage/100),
 																$Narrative,
 																'Yes', /*Update DB */
 																$_POST['ItemDue_' . $OrderLine->LineNumber],
@@ -1889,7 +1889,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 						'" . $BankAccountExRate . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $_POST['PaymentMethod'] . "',
-						'" . (filter_number_format($_POST['AmountPaid']) * $BankAccountExRate) . "',
+						'" . filter_number_format(filter_number_format($_POST['AmountPaid']) * $BankAccountExRate) . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
