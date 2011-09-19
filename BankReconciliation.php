@@ -17,13 +17,17 @@ if (isset($_GET['Account'])) {
 	$_POST['ShowRec']=true;
 }
 
+if (isset($_POST['BankStatementBalance'])){
+	$_POST['BankStatementBalance'] = filter_number_format($_POST['BankStatementBalance']);
+}
+
 if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDifference'])){
 
-	if (!is_numeric(filter_number_format($_POST['BankStatementBalance']))){
+	if (!is_numeric($_POST['BankStatementBalance'])){
 		prnMsg(_('The entry in the bank statement balance is not numeric. The balance on the bank statement should be entered. The exchange difference has not been calculated and no general ledger journal has been created'),'warn');
 		echo '<p>' . $_POST['BankStatementBalance'];
 	} else {
-		$_POST['BankStatementBalance'] = filter_number_format($_POST['BankStatementBalance']);
+
 		/* Now need to get the currency of the account and the current table ex rate */
 		$SQL = "SELECT rate, 
 						bankaccountname,

@@ -4,7 +4,7 @@
 
 /* Set internal character encoding to UTF-8 */
 mb_internal_encoding('UTF-8');
-include('includes/LanguagesArray.php');
+
 /* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
 to check for the existance of gettext function and setup the necessary enviroment to allow for automatic translation
 
@@ -24,40 +24,9 @@ If (isset($_POST['Language'])) {
 	$Language = $_SESSION['Language'];
 }
 
-if (defined('LC_MESSAGES')){ //it's a unix/linux server
-	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
-	$Locale = setlocale (LC_NUMERIC, $_SESSION['Language']);
-} else { // it's a windows server
-	$Locale = setlocale (LC_ALL, $LanguageArray[$_SESSION['Language']]['WindowsLocale']);
-}
-$Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
-
-$LocaleInfo = localeconv();
-if ($LocaleInfo['mon_decimal_point']==''){
-	$LocaleInfo['mon_decimal_point']= $LocaleInfo['decimal_point'];
-}
-if ($LocaleInfo['mon_thousands_sep']==''){
-	$LocaleInfo['mon_thousands_sep']= $LocaleInfo['thousands_sep'];
-}
-
-
-
-//Turkish seems to be a special case
-if ($_SESSION['Language']=='tr_TR.utf8') {
-	$Locale = setlocale(LC_CTYPE, 'C');
-}
-
-
-if (function_exists('gettext')){
-  
-	// possibly even if locale fails the language will still switch by using Language instead of locale variable
-	putenv('LANG=' . $_SESSION['Language']);
-	putenv('LANGUAGE=' . $_SESSION['Language']);
-	bindtextdomain ('messages', $PathPrefix . 'locale');
-	textdomain ('messages');
-	bind_textdomain_codeset('messages', 'UTF-8'); 
-	
-} else {
+/*Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if it doesn't exist aready before we include includes/LanguagesArray.php 
+ * */
+if (!function_exists('gettext')) {
 /*
 	PHPGettext integration by Braian Gomez
 	http://www.vairux.com/
@@ -91,7 +60,40 @@ if (function_exists('gettext')){
 			return $text;
 		}
 	}
-	$LocaleInfo = localeconv();
 }
+
+include('includes/LanguagesArray.php');
+
+if (defined('LC_MESSAGES')){ //it's a unix/linux server
+	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
+	$Locale = setlocale (LC_NUMERIC, $_SESSION['Language']);
+} else { // it's a windows server
+	$Locale = setlocale (LC_ALL, $LanguageArray[$_SESSION['Language']]['WindowsLocale']);
+}
+
+//for testing number_formats $Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
+
+$LocaleInfo = localeconv();
+if ($LocaleInfo['mon_decimal_point']==''){
+	$LocaleInfo['mon_decimal_point']= $LocaleInfo['decimal_point'];
+}
+if ($LocaleInfo['mon_thousands_sep']==''){
+	$LocaleInfo['mon_thousands_sep']= $LocaleInfo['thousands_sep'];
+}
+
+//Turkish seems to be a special case
+if ($_SESSION['Language']=='tr_TR.utf8') {
+	$Locale = setlocale(LC_CTYPE, 'C');
+}
+
+if (function_exists('gettext')){
+  
+	// possibly even if locale fails the language will still switch by using Language instead of locale variable
+	putenv('LANG=' . $_SESSION['Language']);
+	putenv('LANGUAGE=' . $_SESSION['Language']);
+	bindtextdomain ('messages', $PathPrefix . 'locale');
+	textdomain ('messages');
+	bind_textdomain_codeset('messages', 'UTF-8'); 
+} 
 
 ?>
