@@ -1,9 +1,6 @@
 <?php
 
 /* $Id$*/
-/* $Revision: 1.15 $ */
-
-//$PageSecurity = 2;
 
 include('includes/session.inc');
 
@@ -18,16 +15,15 @@ include('includes/header.inc');
 if (isset($_GET['FromGRNNo'])){
 
 	$SQL= "SELECT purchorderdetails.orderno
-		FROM purchorderdetails,
-			grns
-		WHERE purchorderdetails.podetailitem=grns.podetailitem
-		AND grns.grnno='" . $_GET['FromGRNNo'] ."'";
+		FROM purchorderdetails INNER JOIN grns
+		ON purchorderdetails.podetailitem=grns.podetailitem
+		WHERE grns.grnno='" . $_GET['FromGRNNo'] ."'";
 
 	$ErrMsg = _('The search of the GRNs was unsuccessful') . ' - ' . _('the SQL statement returned the error');
-	$orderResult = DB_query($SQL, $db, $ErrMsg);
+	$OrderResult = DB_query($SQL, $db, $ErrMsg);
 
-	$orderRow = DB_fetch_row($orderResult);
-	$_GET['OrderNo'] = $orderRow[0];
+	$OrderRow = DB_fetch_row($OrderResult);
+	$_GET['OrderNo'] = $OrderRow[0];
 	echo '<br /><font size=4 color=BLUE>' . _('Order Number') . ' ' . $_GET['OrderNo'] . '</font>';
 }
 
@@ -38,7 +34,7 @@ if (!isset($_GET['OrderNo'])) {
 
 	echo '<table class="table_index">
 		<tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Outstanding Purchase Orders') . '</a></li>
+                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
 	include('includes/footer.inc');
 	exit;
@@ -50,15 +46,18 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 			suppliers.suppname,
 			suppliers.currcode,
 			www_users.realname,
-			locations.locationname
-		FROM purchorders
+			locations.locationname,
+			currencies.decimalplaces AS currdecimalplaces
+		FROM purchorders 
+		INNER JOIN locations
+		ON locations.loccode=purchorders.intostocklocation
+		INNER JOIN suppliers
+		ON purchorders.supplierno = suppliers.supplierid
+		INNER JOIN currencies 
+		ON suppliers.currcode = currencies.currabrev
 		LEFT JOIN www_users
 		ON purchorders.initiator=www_users.userid
-		LEFT JOIN locations
-		ON locations.loccode=purchorders.intostocklocation
-		LEFT JOIN suppliers
-		ON purchorders.supplierno = suppliers.supplierid
-		WHERE purchorders.orderno = '" . $_GET['OrderNo'] ."'";
+		WHERE purchorders.orderno = '" . filter_number_format($_GET['OrderNo']) ."'";
 
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 
@@ -71,7 +70,7 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 	}
         echo '<table class="table_index">
                 <tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
+                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
                 </td></tr></table>';
 
 	include('includes/footer.inc');
@@ -85,8 +84,8 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="" />' . ' ' . $title . '</p>';
 
-echo '<table class=selection cellpadding=2>';
-echo '<tr><th colspan=8><font size=3 color=navy>'. _('Order Header Details'). '</font></th></tr>';
+echo '<table class="selection" cellpadding="2">';
+echo '<tr><th colspan="8"><font size="3" color="navy">'. _('Order Header Details'). '</font></th></tr>';
 echo '<tr><th style="text-align:left">' . _('Supplier Code'). '</td><td><a href="SelectSupplier.php?SupplierID='.$myrow['supplierid'].'">' . $myrow['supplierid'] . '</a></td>
 	<th style="text-align:left">' . _('Supplier Name'). '</td><td><a href="SelectSupplier.php?SupplierID='.$myrow['supplierid'].'">' . $myrow['suppname'] . '</a></td></tr>';
 
@@ -126,17 +125,22 @@ echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td colspan=3>' .
 
 echo '</table>';
 
+$CurrDecimalPlaces = $myrow['currdecimalplaces'];
 
 echo '<br />';
 /*Now get the line items */
 $ErrMsg = _('The line items of the purchase order could not be retrieved');
-$LineItemsSQL = "SELECT purchorderdetails.* FROM purchorderdetails
-				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] ."'";
+$LineItemsSQL = "SELECT purchorderdetails.*,
+						stockmaster.decimalplaces
+				FROM purchorderdetails 
+				LEFT JOIN stockmaster
+				ON purchorderdetails.itemcode=stockmaster.stockid
+				WHERE purchorderdetails.orderno = '" . filter_number_format($_GET['OrderNo']) ."'";
 
 $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
 
-echo '<table colspan=8 class=selection cellpadding=0>';
+echo '<table colspan="8" class="selection" cellpadding="0">';
 echo '<tr><th colspan=8><font size=3 color=navy>'. _('Order Line Details'). '</font></th></tr>';
 echo '<tr>
 		<th>' . _('Item Code'). '</td>
@@ -159,7 +163,11 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 	$RecdTotal += ($myrow['quantityrecd'] * $myrow['unitprice']);
 
 	$DisplayReqdDate = ConvertSQLDate($myrow['deliverydate']);
-
+	if ($myrow['decimalplaces']!=NULL){
+		$DecimalPlaces = $myrow['decimalplaces'];
+	} else {
+		$DecimalPlaces = 2;
+	}
 	// if overdue and outstanding quantities, then highlight as so
 	if (($myrow['quantityord'] - $myrow['quantityrecd'] > 0)
 	  	AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
@@ -176,31 +184,31 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 
 	printf ('<td>%s</td>
 		<td>%s</td>
-		<td class=number>%01.2f</td>
-		<td class=number>%01.2f</td>
-		<td class=number>%01.2f</td>
-		<td class=number>%01.2f</td>
-		<td class=number>%01.2f</td>
+		<td class="number">%s</td>
+		<td class="number">%s</td>
+		<td class="number">%s</td>
+		<td class="number">%s</td>
+		<td class="number">%s</td>
 		<td>%s</td>
 		</tr>' ,
 		$myrow['itemcode'],
 		$myrow['itemdescription'],
-		$myrow['quantityord'],
-		$myrow['quantityrecd'],
-		$myrow['qtyinvoiced'],
-		$myrow['unitprice'],
-		$myrow['actprice'],
+		locale_number_format($myrow['quantityord'],$DecimalPlaces),
+		locale_number_format($myrow['quantityrecd'],$DecimalPlaces),
+		locale_number_format($myrow['qtyinvoiced'],$DecimalPlaces),
+		locale_money_format($myrow['unitprice'],$CurrDecimalPlaces),
+		locale_money_format($myrow['actprice'],$CurrDecimalPlaces),
 		$DisplayReqdDate);
 
 }
 
 echo '<tr><td><br /></td>
 	</tr>
-	<tr><td colspan=4 class=number>' . _('Total Order Value Excluding Tax') .'</td>
-	<td colspan=2 class=number>' . locale_number_format($OrderTotal,2) . '</td></tr>';
+	<tr><td colspan=4 class="number">' . _('Total Order Value Excluding Tax') .'</td>
+	<td colspan=2 class="number">' . locale_money_format($OrderTotal,$CurrDecimalPlaces) . '</td></tr>';
 echo '<tr>
-	<td colspan=4 class=number>' . _('Total Order Value Received Excluding Tax') . '</td>
-	<td colspan=2 class=number>' . locale_number_format($RecdTotal,2) . '</td></tr>';
+	<td colspan=4 class="number">' . _('Total Order Value Received Excluding Tax') . '</td>
+	<td colspan=2 class="number">' . locale_money_format($RecdTotal,$CurrDecimalPlaces) . '</td></tr>';
 echo '</table>';
 
 echo '<br />';

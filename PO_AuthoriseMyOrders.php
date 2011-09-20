@@ -26,7 +26,7 @@ if (isset($_POST['UpdateAll'])) {
 					SET status='".$Status."',
 						stat_comment='".$Comment."',
 						allowprint=1
-					WHERE orderno='".$OrderNo."'";
+					WHERE orderno='".filter_number_format($OrderNo)."'";
 			$result=DB_query($sql, $db);
 		}
 	}
@@ -39,7 +39,7 @@ $sql="SELECT purchorders.*,
 			suppliers.currcode,
 			www_users.realname,
 			www_users.email,
-			currencies.decimalplaces
+			currencies.decimalplaces AS currdecimalplaces
 		FROM purchorders INNER JOIN suppliers
 			ON suppliers.supplierid=purchorders.supplierno
 		INNER JOIN currencies 
@@ -95,9 +95,10 @@ while ($myrow=DB_fetch_array($result)) {
 					<option value="Cancelled">'._('Cancelled').'</option>
 					</select></td>
 			</tr>';
-		echo "<input type='hidden' name='comment' value='".$myrow['stat_comment']."'>";
+		echo '<input type="hidden" name="comment" value="' . $myrow['stat_comment'] . '" />';
 		$LineSQL="SELECT purchorderdetails.*,
-					stockmaster.description
+					stockmaster.description,
+					stockmaster.decimalplaces
 				FROM purchorderdetails
 				LEFT JOIN stockmaster
 				ON stockmaster.stockid=purchorderdetails.itemcode
@@ -116,13 +117,18 @@ while ($myrow=DB_fetch_array($result)) {
 						<th>'._('Line Total').'</th>
 					</tr>';
 
-		while ($linerow=DB_fetch_array($LineResult)) {
+		while ($LineRow=DB_fetch_array($LineResult)) {
+			if ($LineRow['decimalplaces']!=NULL){
+				$DecimalPlaces = $LineRow['decimalplaces'];
+			}else {
+				$DecimalPlaces = 2;
+			}
 			echo '<tr>
-					<td>'.$linerow['description'].'</td>
-					<td class="number">'.locale_number_format($linerow['quantityord'],2).'</td>
+					<td>'.$LineRow['description'].'</td>
+					<td class="number">'.locale_number_format($LineRow['quantityord'],$DecimalPlaces).'</td>
 					<td>'.$myrow['currcode'].'</td>
-					<td class="number">'.locale_number_format($linerow['unitprice'],$myrow['decimalplaces']).'</td>
-					<td class="number">'.locale_number_format($linerow['unitprice']*$linerow['quantityord'],$myrow['decimalplaces']).'</td>
+					<td class="number">'.locale_number_format($LineRow['unitprice'],$myrow['decimalplaces']).'</td>
+					<td class="number">'.locale_number_format($LineRow['unitprice']*$LineRow['quantityord'],$myrow['currdecimalplaces']).'</td>
 				</tr>';
 		} // end while order line detail
 		echo '</table></td></tr>';

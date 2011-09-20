@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	// This gives some date in 1999?? $ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
 
-	if (!is_double((double) trim($_POST['Price'])) OR $_POST['Price']=='') {
+	if (!is_numeric((double) filter_number_format($_POST['Price'])) OR $_POST['Price']=='') {
 		$InputError = 1;
 		prnMsg( _('The price entered must be numeric'),'error');
 	}
@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
 			AND enddate ='" . FormatDateForSQL($_POST['EndDate']) . "'
 			AND prices.typeabbrev='" . $_POST['TypeAbbrev'] . "'
 			AND prices.currabrev='" . $_POST['CurrAbrev'] . "'
-			AND prices.price='" . $_POST['Price'] . "'
+			AND prices.price='" . filter_number_format($_POST['Price']) . "'
 			";
 
 	$result = DB_query($sql, $db);
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE prices SET
 					typeabbrev='" . $_POST['TypeAbbrev'] . "',
 					currabrev='" . $_POST['CurrAbrev'] . "',
-					price='" . $_POST['Price'] . "',
+					price='" . filter_number_format($_POST['Price']) . "',
 					startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
 					enddate='" . $SQLEndDate . "'
 				WHERE prices.stockid='".$Item."'
@@ -156,7 +156,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['CurrAbrev'] . "',
 								'" . FormatDateForSQL($_POST['StartDate']) . "',
 								'" . $SQLEndDate. "',
-								'" . $_POST['Price'] . "')";
+								'" . filter_number_format($_POST['Price']) . "')";
 		$ErrMsg = _('The new price could not be added');
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -208,11 +208,16 @@ if ($InputError ==0){
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result) > 0) {
-		echo '<table class=selection>';
-		echo '<tr><th colspan=7><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo _('Pricing for part') . ':<input type="text" name="Item" maxsizee=22 value="' . $Item . '" maxlength=20><input type=submit name="NewPart" value="' . _('Review Prices') . '">';
-		echo '</th></tr></form>';
+		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">
+				<table class=selection>
+				<tr>
+					<th colspan=7>
+					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . 
+					_('Pricing for part') . ':
+					<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20">
+					<input type=submit name="NewPart" value="' . _('Review Prices') . '"></th>
+				</tr>
+			</form>';
 
 		echo '<tr><th>' . _('Currency') . '</th>
 					<th>' . _('Sales Type') . '</th>
@@ -240,7 +245,7 @@ if ($InputError ==0){
 			if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
 				echo '<td>' . $myrow['currency'] . '</td>
 					<td>' .  $myrow['sales_type'] . '</td>
-					<td class=number>' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td>
 					<td><a href="' . $_SERVER['PHP_SELF'] . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&Price=' . $myrow['price'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&Edit=1">' . _('Edit') . '</td>
@@ -249,7 +254,7 @@ if ($InputError ==0){
 			} else {
 				echo '<td>' . $myrow['currency'] . '</td>
 					<td>' .  $myrow['sales_type'] . '</td>
-					<td class=number>' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td></tr>';
 			}
@@ -270,7 +275,7 @@ if ($InputError ==0){
 		echo '<input type=hidden name="OldEndDate" value="' . $_GET['EndDate'] . '">';
 		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
-		$_POST['Price'] = $_GET['Price'];
+		$_POST['Price'] = filter_number_format($_GET['Price']);
 		$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
 		if ($_GET['EndDate']=='' OR $_GET['EndDate']=='0000-00-00'){
 			$_POST['EndDate'] = '';
@@ -282,14 +287,15 @@ if ($InputError ==0){
 	$SQL = "SELECT currabrev, currency FROM currencies";
 	$result = DB_query($SQL,$db);
 
-	echo '<br /><table class=selection>';
+	echo '<br /><table class="selection">';
 	echo '<tr><th colspan=5><font color=BLUE size=3><b>' . $Item . ' - ' . $PartDescription . '</b></font></th></tr>';
-	echo '<tr><td>' . _('Currency') . ':</td><td><select name="CurrAbrev">';
+	echo '<tr><td>' . _('Currency') . ':</td>
+			<td><select name="CurrAbrev">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['currabrev']==$_POST['CurrAbrev']) {
-			echo '<option selected VALUE="';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 	} //end while loop
@@ -305,9 +311,9 @@ if ($InputError ==0){
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['typeabbrev']==$_POST['TypeAbbrev']) {
-			echo '<option selected VALUE="';
+			echo '<option selected value="';
 		} else {
-			echo '<option VALUE="';
+			echo '<option value="';
 		}
 		echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 
@@ -319,7 +325,9 @@ if ($InputError ==0){
 	if (!isset($_POST['StartDate'])){
 		$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
-
+	if (!isset($_POST['EndDate'])){
+		$_POST['EndDate'] = '';
+	}
 	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
 				<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size=10 maxlength=10 value="' . $_POST['StartDate'] . '"></td></tr>';
 	echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
@@ -330,16 +338,17 @@ if ($InputError ==0){
 
 	<tr><td><?php echo _('Price'); ?>:</td>
 	<td>
-	<input type="Text" class=number name="Price" size=12 maxlength=11 value=
+	<input type="text" class="number" name="Price" size=12 maxlength=11 value=
 	<?php if(isset($_POST['Price'])) {
 			echo $_POST['Price'];
-		   }?>>
+		   }
+	?> >
 
 	</td></tr>
 
 	</table>
 	<br /><div class="centre">
-	<input type="Submit" name="submit" value="<?php echo _('Enter') . '/' . _('Amend Price'); ?>">
+	<input type="submit" name="submit" value="<?php echo _('Enter') . '/' . _('Amend Price'); ?>">
 	</div>
 
 <?php

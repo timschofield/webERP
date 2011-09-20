@@ -209,7 +209,7 @@ if (isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])){
 	$_SESSION['PO'.$identifier]->Version = $_POST['Version'];
 	$_SESSION['PO'.$identifier]->DeliveryDate = $_POST['DeliveryDate'];
 	$_SESSION['PO'.$identifier]->Revised = $_POST['Revised'];
-	$_SESSION['PO'.$identifier]->ExRate = $_POST['ExRate'];
+	$_SESSION['PO'.$identifier]->ExRate = filter_number_format($_POST['ExRate']);
 	$_SESSION['PO'.$identifier]->Comments = $_POST['Comments'];
 	$_SESSION['PO'.$identifier]->DeliveryBy = $_POST['DeliveryBy'];
 	if (isset($_POST['StatusComments'])){
@@ -856,7 +856,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	$LocnResult = DB_query($sql,$db);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){
-		if (isset($_POST['StkLocation']) and ($_POST['StkLocation'] == $LocnRow['loccode'] OR
+		if (isset($_POST['StkLocation']) AND ($_POST['StkLocation'] == $LocnRow['loccode'] OR
 				($_POST['StkLocation']=='' AND $LocnRow['loccode']==$_SESSION['UserStockLocation']))){
 			echo '<option selected value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 		} else {
@@ -1076,7 +1076,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 	if ($_SESSION['PO'.$identifier]->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
 		echo '<tr><td>'. _('Exchange Rate').':'.'</td>
-				<td><input type="text" name="ExRate" value='.$_POST['ExRate'].' class="number" size=11></td>
+				<td><input type="text" name="ExRate" value='. $_POST['ExRate'].' class="number" size=11></td>
 			</tr>';
 	} else {
 		echo '<input type=hidden name="ExRate" value="1">';

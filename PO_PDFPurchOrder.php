@@ -6,7 +6,7 @@ include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');
 
-if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
+if(!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])){
 	$title = _('Select a Purchase Order');
 	include('includes/header.inc');
 	echo '<div class="centre"><br /><br /><br />';
@@ -95,9 +95,12 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 					purchorders.paymentterms,
 					suppliers.currcode,
 					purchorders.status,
-					purchorders.stat_comment
+					purchorders.stat_comment,
+					currencies.decimalplaces AS currdecimalplaces
 				FROM purchorders INNER JOIN suppliers
 					ON purchorders.supplierno = suppliers.supplierid
+				INNER JOIN currencies 
+					ON suppliers.currcode=currencies.currabrev
 				WHERE purchorders.orderno='" . $OrderNo ."'";
 	$result=DB_query($sql,$db, $ErrMsg);
 	if (DB_num_rows($result)==0){ /*There is no order header returned */
@@ -215,8 +218,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		include('includes/PO_PDFOrderPageHeader.inc');
 		$YPos=$Page_Height - $FormDesign->Data->y;
 		$OrderTotal = 0;
-		while ((isset($OrderNo) and $OrderNo=='Preview') 
-				OR (isset($result) and $POLine=DB_fetch_array($result))) {
+		while ((isset($OrderNo) AND $OrderNo=='Preview') 
+				OR (isset($result) AND $POLine=DB_fetch_array($result))) {
 			/* If we are previewing the order then fill the
 			 * order line with dummy data */
 			if ($OrderNo=='Preview') {
@@ -230,15 +233,20 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$POLine['conversionfactor']=1;
 				$POLine['decimalplaces']=2;
 			}
-			$DisplayQty = locale_number_format($POLine['quantityord']/$POLine['conversionfactor'],$POLine['decimalplaces']);
+			if ($POLine['decimalplaces']!=NULL){
+				$DecimalPlaces = $POLine['decimalplaces'];
+			} else {
+				$DecimalPlaces = 2;
+			}
+			$DisplayQty = locale_number_format($POLine['quantityord']/$POLine['conversionfactor'],$DecimalPlaces);
 			if ($_POST['ShowAmounts']=='Yes'){
-				$DisplayPrice = locale_number_format($POLine['unitprice']*$POLine['conversionfactor'],2);
+				$DisplayPrice = locale_money_format($POLine['unitprice']*$POLine['conversionfactor'],$POHeader['currdecimalplaces']);
 			} else {
 				$DisplayPrice = '----';
 			}
-			$DisplayDelDate = ConvertSQLDate($POLine['deliverydate'],2);
+			$DisplayDelDate = ConvertSQLDate($POLine['deliverydate']);
 			if ($_POST['ShowAmounts']=='Yes'){
-				$DisplayLineTotal = locale_number_format($POLine['unitprice']*$POLine['quantityord'],2);
+				$DisplayLineTotal = locale_money_format($POLine['unitprice']*$POLine['quantityord'],$POHeader['currdecimalplaces']);
 			} else {
 				$DisplayLineTotal = '----';
 			}
@@ -285,7 +293,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				include ('includes/PO_PDFOrderPageHeader.inc');
 		} //end if need a new page headed up
 		if ($_POST['ShowAmounts']=='Yes'){
-			$DisplayOrderTotal = locale_number_format($OrderTotal,2);
+			$DisplayOrderTotal = locale_money_format($OrderTotal,$POHeader['currdecimalplaces']);
 		} else {
 			$DisplayOrderTotal = '----';
 		}
@@ -330,15 +338,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$sql = "UPDATE purchorders	SET	allowprint =  0,
 										dateprinted  = '" . Date('Y-m-d') . "',
 										status = 'Printed',
-										stat_comment = '" . $StatusComment . "'
-				WHERE purchorders.orderno = '" .  $OrderNo."'";
+										stat_comment = '" . DB_escape_string($StatusComment) . "'
+				WHERE purchorders.orderno = '" .  filter_number_format($OrderNo) ."'";
 		$result = DB_query($sql,$db);
 	}
 	include('includes/footer.inc');
 } /* There was enough info to either print or email the purchase order */
  else { /*the user has just gone into the page need to ask the question whether to print the order or email it to the supplier */
 	include ('includes/header.inc');
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if ($ViewingOnly==1){
 		echo '<input type=hidden name="ViewingOnly" value=1>';
@@ -381,7 +389,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 						suppliercontacts.email
 				FROM suppliercontacts INNER JOIN purchorders
 				ON suppliercontacts.supplierid=purchorders.supplierno
-				WHERE purchorders.orderno='".$OrderNo."'";
+				WHERE purchorders.orderno='".filter_number_format($OrderNo)."'";
 		$ContactsResult=DB_query($SQL,$db, $ErrMsg);
 		if (DB_num_rows($ContactsResult)>0){
 			echo '<tr><td>'. _('Email to') .':</td><td><select name="EmailTo">';
@@ -404,7 +412,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	} else {
 		echo '</table>';
 	}
-	echo '<br /><div class="centre"><input type=submit name="DoIt" value="' . _('OK') . '"></div>';
+	echo '<br /><div class="centre"><input type="submit" name="DoIt" value="' . _('OK') . '"></div>';
 	echo '</form>';
 	include('includes/footer.inc');
 }

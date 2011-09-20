@@ -65,13 +65,13 @@ if (!function_exists('gettext')) {
 include('includes/LanguagesArray.php');
 
 if (defined('LC_MESSAGES')){ //it's a unix/linux server
-	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
-	$Locale = setlocale (LC_NUMERIC, $_SESSION['Language']);
+	$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
+	$LocaleSet = setlocale (LC_NUMERIC, $_SESSION['Language']);
 } else { // it's a windows server
-	$Locale = setlocale (LC_ALL, $LanguageArray[$_SESSION['Language']]['WindowsLocale']);
+	$LocaleSet = setlocale (LC_ALL, $LanguageArray[$_SESSION['Language']]['WindowsLocale']);
 }
 
-//for testing number_formats $Locale = setlocale (LC_NUMERIC, 'fr_FR.utf8');
+$LocaleSet = setlocale (LC_NUMERIC, 'nl_NL.utf8');
 
 $LocaleInfo = localeconv();
 if ($LocaleInfo['mon_decimal_point']==''){

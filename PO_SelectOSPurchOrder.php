@@ -18,9 +18,9 @@ if (isset($_GET['SelectedStockItem'])){
 }
 
 if (isset($_GET['OrderNumber'])){
-	$OrderNumber=trim($_GET['OrderNumber']);
+	$OrderNumber=(filter_number_format($_GET['OrderNumber']));
 } elseif (isset($_POST['OrderNumber'])){
-	$OrderNumber=trim($_POST['OrderNumber']);
+	$OrderNumber=(filter_number_format($_POST['OrderNumber']));
 }
 
 if (isset($_GET['SelectedSupplier'])){

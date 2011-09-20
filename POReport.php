@@ -53,7 +53,7 @@ if (isset($_POST['SupplierName'])){
 // Had to add supplierid to SummaryType when do summary by name because there could be several accounts
 // with the same name. Tried passing 'suppname,supplierid' in form, but it only read 'suppname'
 if (isset($_POST['SummaryType']) and $_POST['SummaryType'] == 'suppname') {
-	$_POST['SummaryType'] = 'suppname,suppliers.supplierid';
+	$_POST['SummaryType'] = "suppname, suppliers.supplierid";
 }
 
 if (isset($_POST['submit'])) {
@@ -566,10 +566,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -600,10 +600,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							</tr>',
@@ -653,10 +653,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -681,30 +681,41 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 					$TotalInvQty += $myrow['qtyinvoiced'];
 				} //END WHILE LIST LOOP
 				// Print totals
-					printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td class=number>%s</td><td class=number>
-						%s</td><td class=number>%s</td><td class=number>%s</td><td>%s</td><td>%s</td></tr>",
-					'Totals',
-					_('Lines - ') . $linectr,
-					' ',
-					' ',
-					' ',
-					locale_number_format($TotalQty,$LastDecimalPlaces),
-					locale_number_format($TotalExtCost,2),
-					locale_number_format($TotalExtPrice,2),
-					locale_number_format($TotalInvQty,$LastDecimalPlaces),
-					' ',
-					' ');
+					printf('<tr>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							</tr>',
+							_('Totals'),
+							_('Lines - ') . $linectr,
+							' ',
+							' ',
+							' ',
+							locale_number_format($TotalQty,$LastDecimalPlaces),
+							locale_money_format($TotalExtCost,2),
+							locale_money_format($TotalExtPrice,2),
+							locale_money_format($TotalInvQty,$LastDecimalPlaces),
+							' ',
+							' ');
 			}
 			echo '</table>';
 		} else {
 		  // Print summary stuff
-			echo '<br /><table class=selection width=98%>';
+			echo '<br /><table class="selection" width="98%">';
 			$summarytype = $_POST['SummaryType'];
 			// For SummaryType 'suppname' had to add supplierid to it for the GROUP BY in the sql,
 			// but have to take it away for $myrow[$summarytype] to be valid
 			// Set up description based on the Summary Type
-			if ($summarytype == 'suppname,suppliers.supplierid') {
-				$summarytype = 'suppname';
+			if ($summarytype == "suppname,suppliers.supplierid") {
+				$summarytype = "suppname";
 				$description = 'supplierno';
 				$summaryheader = _('Supplier Name');
 				$descriptionheader = _('Supplier Number');
@@ -738,7 +749,14 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 				$summaryheader = _('Month');
 				$descriptionheader = _('Month');
 			}
-			printf("<tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr>",
+			printf('<tr>
+					<th>%s</th>
+					<th>%s</th>
+					<th>%s</th>
+					<th>%s</th>
+					<th>%s</th>
+					<th>%s</th>
+					</tr>',
 				 _($summaryheader),
 				 _($descriptionheader),
 				 _('Quantity'),
@@ -763,10 +781,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 					}
 				printf('<td>%s</td>
 						<td>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 						</tr>',
 						$myrow[$summarytype],
 						$myrow[$description],
@@ -784,10 +802,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 				printf('<tr>
 						<td>%s</td>
 						<td>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 						</tr>',
 						_('Totals'),
 						_('Lines - ') . $linectr,

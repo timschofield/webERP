@@ -11,9 +11,9 @@ if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = $_POST['SelectedStockItem'];
 }
 if (isset($_GET['OrderNumber'])) {
-	$OrderNumber = $_GET['OrderNumber'];
+	$OrderNumber = filter_number_format($_GET['OrderNumber']);
 } elseif (isset($_POST['OrderNumber'])) {
-	$OrderNumber = $_POST['OrderNumber'];
+	$OrderNumber = filter_number_format($_POST['OrderNumber']);
 }
 if (isset($_GET['SelectedSupplier'])) {
 	$SelectedSupplier = $_GET['SelectedSupplier'];
@@ -166,20 +166,20 @@ while ($myrow1 = DB_fetch_array($result1)) {
 	}
 }
 echo '</select><td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>';
-echo '<td><input type="Text" name="Keywords" size=20 maxlength=25></td></tr><tr><td></td>';
+echo '<td><input type="text" name="Keywords" size=20 maxlength=25></td></tr><tr><td></td>';
 echo '<td><font size=3><b>' . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</font></td>';
 echo '<td><input type="text" name="StockCode" size=15 maxlength=18></td></tr>';
-echo '<tr><td colspan=3><div class=centre><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
+echo '<tr><td colspan=3><div class="centre"><input type=submit name="SearchParts" value="' . _('Search Parts Now') . '">';
 echo '<input type=submit name="ResetPart" value="' . _('Show All') . '"></div></td></tr>';
 echo '</table><br /><br />';
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding=2 colspan=7 class=selection>';
-	$TableHeader = '<tr><td class="tableheader">' . _('Code') . '</td>
-				<td class="tableheader">' . _('Description') . '</td>
-				<td class="tableheader">' . _('On Hand') . '</td>
-				<td class="tableheader">' . _('Orders') . '<br />' . _('Outstanding') . '</td>
-				<td class="tableheader">' . _('Units') . '</td>
-			</tr>';
+	$TableHeader = '<tr><th>' . _('Code') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('On Hand') . '</th>
+						<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+						<th>' . _('Units') . '</th>
+					</tr>';
 	echo $TableHeader;
 	$j = 1;
 	$k = 0; //row colour counter
@@ -244,7 +244,7 @@ else {
 					ON purchorders.supplierno = suppliers.supplierid
 					INNER JOIN currencies 
 					ON suppliers.currcode=currencies.currabrev
-					WHERE purchorders.orderno='" . $OrderNumber . "'
+					WHERE purchorders.orderno='" . filter_number_format($OrderNumber) . "'
 					GROUP BY purchorders.orderno,
 						suppliers.suppname,
 						purchorders.orddate,
@@ -417,7 +417,7 @@ else {
 			$ViewPurchOrder = $rootpath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 			$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
-			$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $myrow['decimalplaces']);
+			$FormatedOrderValue = locale_money_format($myrow['ordervalue'], $myrow['decimalplaces']);
 			/*  View	   Supplier	Currency	Requisition	 Order Date		 Initiator	Order Total
 			ModifyPage, $myrow["orderno"],		  $myrow["suppname"],			$myrow["currcode"],		 $myrow["requisitionno"]		$FormatedOrderDate,			 $myrow["initiator"]			 $FormatedOrderValue 			Order Status*/
 			echo '<td><a href="' . $ViewPurchOrder . '">' . $myrow['orderno'] . '</a></td>

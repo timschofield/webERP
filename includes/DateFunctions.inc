@@ -385,7 +385,7 @@ function FormatDateForSQL($DateEntry) {
 
 /* takes a date in a the format specified in $_SESSION['DefaultDateFormat']
 and converts to a yyyy/mm/dd format */
-
+	$DateArray = array();
 	$DateEntry = trim($DateEntry);
 
 	if (mb_strpos($DateEntry,'/')) {
@@ -414,12 +414,13 @@ and converts to a yyyy/mm/dd format */
 		}
 		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
 
-	}elseif (($_SESSION['DefaultDateFormat']=='d/m/Y') OR $_SESSION['DefaultDateFormat']=='d.m.Y'){
+	}elseif (($_SESSION['DefaultDateFormat']=='d/m/Y') 
+				OR $_SESSION['DefaultDateFormat']=='d.m.Y'){
 		if (mb_strlen($Date_Array[2])==2) {
 			if ((int)$Date_Array[2] <=60) {
 				$Date_Array[2] = '20'.$Date_Array[2];
 			} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
-				$Date_Array[2] = '19'.$Date_Array[2];
+				$Date_Array[2] = '19'. $Date_Array[2];
 			}
 		}
 		/* echo '<BR>The date returned is ' . $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0]; */
