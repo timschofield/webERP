@@ -68,10 +68,10 @@ if (defined('LC_MESSAGES')){ //it's a unix/linux server
 	$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
 	$LocaleSet = setlocale (LC_NUMERIC, $_SESSION['Language']);
 } else { // it's a windows server
-	$LocaleSet = setlocale (LC_ALL, $LanguageArray[$_SESSION['Language']]['WindowsLocale']);
+	$LocaleSet = setlocale (LC_ALL, $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
 }
 
-$LocaleSet = setlocale (LC_NUMERIC, 'nl_NL.utf8');
+//$LocaleSet = setlocale (LC_NUMERIC, 'nl_NL.utf8');
 
 $LocaleInfo = localeconv();
 if ($LocaleInfo['mon_decimal_point']==''){
