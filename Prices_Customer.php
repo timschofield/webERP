@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (!is_double((double) trim($_POST['Price'])) OR $_POST['Price']=="") {
+	if (!is_numeric(filter_number_format($_POST['Price'])) OR $_POST['Price']=='') {
 		$InputError = 1;
 		$msg = _('The price entered must be numeric');
 	}
@@ -105,13 +105,13 @@ if (isset($_POST['submit'])) {
 		$msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
 	}
 
-	if ((isset($_POST['Editing']) and $_POST['Editing']=='Yes') AND mb_strlen($Item)>1 AND $InputError !=1) {
+	if ((isset($_POST['Editing']) AND $_POST['Editing']=='Yes') AND mb_strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
 
 		$sql = "UPDATE prices SET typeabbrev='" . $SalesType . "',
 								currabrev='" . $CurrCode . "',
-								price='" . $_POST['Price'] . "',
+								price='" . filter_number_format($_POST['Price']) . "',
 								branchcode='" . $_POST['Branch'] . "',
 								startdate='" . FormatDateForSQL($_POST['StartDate']) . "',
 								enddate='" . FormatDateForSQL($_POST['EndDate']) . "'
@@ -138,7 +138,7 @@ if (isset($_POST['submit'])) {
 								'".$SalesType."',
 								'".$CurrCode."',
 								'" . $_SESSION['CustomerID'] . "',
-								'" . $_POST['Price'] . "',
+								'" . filter_number_format($_POST['Price']) . "',
 								'" . $_POST['Branch'] . "',
 								'" . FormatDateForSQL($_POST['StartDate']) . "',
 								'" . FormatDateForSQL($_POST['EndDate']) . "'
@@ -294,7 +294,7 @@ if (isset($_GET['Edit']) and $_GET['Edit']==1){
 	echo '<input type=hidden name="Editing" value="Yes">';
 	echo '<input type=hidden name="OldStartDate" value="' . $_GET['StartDate'] .'">';
 	echo '<input type=hidden name="OldEndDate" value="' .  $_GET['EndDate'] . '">';
-	$_POST['Price']=$_GET['Price'];
+	$_POST['Price']=filter_number_format($_GET['Price']);
 	$_POST['Branch']=$_GET['Branch'];
 	$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
 	if (Is_Date($_GET['EndDate'])){

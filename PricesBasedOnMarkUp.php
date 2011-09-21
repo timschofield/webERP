@@ -1,8 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
 /* $Id$*/
-//$PageSecurity=11;
-
 
 include('includes/session.inc');
 $title=_('Update Pricing');
@@ -48,7 +45,7 @@ echo '<tr>
                             <td><select name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])){
-	echo '<option selected value=0>' . _('No Price List Currency Selected');
+	echo '<option selected value=0>' . _('No Price List Currency Selected') . '</option>';
 }
 
 while ($Currencies=DB_fetch_array($result)){
@@ -94,7 +91,7 @@ if (isset($_POST['CostType']) and $_POST['CostType']=='OtherPriceList'){
 		echo '<option selected VALUE=0>' . _('No Price List Selected') . '</option>';
 	}
 	while ($PriceLists=DB_fetch_array($PricesResult)){
-		if (isset($_POST['BasePriceList']) and $_POST['BasePriceList']==$PriceLists['typeabbrev']){
+		if (isset($_POST['BasePriceList']) AND $_POST['BasePriceList']==$PriceLists['typeabbrev']){
 			echo '<option selected value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
 		} else {
 			echo '<option value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
@@ -161,10 +158,10 @@ if (!isset($_POST['IncreasePercent'])){
 }
 
 echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . '</td>
-                <td><input type="text" name="IncreasePercent" class=number size=4 maxlength=4 VALUE="' . $_POST['IncreasePercent'] . '"></td></tr></table>';
+                <td><input type="text" name="IncreasePercent" class="number" size="4" maxlength="4" value="' . $_POST['IncreasePercent'] . '"></td></tr></table>';
 
 
-echo '<p><div class="centre"><input type=submit name="UpdatePrices" VALUE="' . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');"></div>';
+echo '<p><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');"></div>';
 
 echo '</form>';
 
@@ -247,7 +244,7 @@ if (isset($_POST['UpdatePrices'])){
 				AND categoryid <='" . $_POST['StkCatTo'] . "'";
 		$PartsResult = DB_query($sql,$db);
 
-		$IncrementPercentage = $_POST['IncreasePercent']/100;
+		$IncrementPercentage = filter_number_format($_POST['IncreasePercent']/100);
 
 		$CurrenciesResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_POST['CurrCode'] . "'",$db);
 		$CurrencyRow = DB_fetch_row($CurrenciesResult);
@@ -300,7 +297,7 @@ if (isset($_POST['UpdatePrices'])){
 					prnMsg(_('The cost for this item is not set up or is set up as less than or equal to zero - no price changes will be made based on zero cost items. The item concerned is:') . ' ' . $myrow['stockid'],'warn');
 				}
 			}
-
+            $_POST['RoundingFactor'] = filter_number_format($_POST['RoundingFactor']);
 			if ($_POST['CostType']!='OtherPriceList'){
 				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage) * $CurrencyRate+($_POST['RoundingFactor']/2))/$_POST['RoundingFactor']) * $_POST['RoundingFactor'];
 				if ($RoundedPrice <=0){
@@ -315,15 +312,15 @@ if (isset($_POST['UpdatePrices'])){
 
 			if ($Cost > 0) {
 				$CurrentPriceResult = DB_query("SELECT price,
-																							startdate,
-																							enddate
-																			FROM prices
-																			WHERE typeabbrev= '" . $_POST['PriceList'] . "'
-																			AND debtorno =''
-																			AND currabrev='" . $_POST['CurrCode'] . "'
-																			AND startdate <='" . Date('Y-m-d') . "'
-																			AND (enddate>='" . Date('Y-m-d') . "' OR enddate='0000-00-00')
-																			AND stockid='" . $myrow['stockid'] . "'",$db);
+											 		   startdate,
+													   enddate
+													FROM prices
+													WHERE typeabbrev= '" . $_POST['PriceList'] . "'
+													AND debtorno =''
+													AND currabrev='" . $_POST['CurrCode'] . "'
+													AND startdate <='" . Date('Y-m-d') . "'
+													AND (enddate>='" . Date('Y-m-d') . "' OR enddate='0000-00-00')
+													AND stockid='" . $myrow['stockid'] . "'",$db);
 				if (DB_num_rows($CurrentPriceResult)==1){
 					$DayPriorToNewPrice = DateAdd($_POST['PriceStartDate'],'d',-1);
 					$CurrentPriceRow = DB_fetch_array($CurrentPriceResult);
@@ -336,8 +333,8 @@ if (isset($_POST['UpdatePrices'])){
 												AND stockid='" . $myrow['stockid'] . "'";
 					$ErrMsg =_('Error updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
 					$result = DB_query($UpdateSQL,$db,$ErrMsg);
-					
-				} 
+
+				}
 				$sql = "INSERT INTO prices (stockid,
 												typeabbrev,
 												currabrev,
@@ -349,11 +346,11 @@ if (isset($_POST['UpdatePrices'])){
 										'" . $_POST['CurrCode'] . "',
 										'" . FormatDateForSQL($_POST['PriceStartDate']) . "',
 										'" . $SQLEndDate . "',
-								 		'" . $RoundedPrice . "')";
+								 		'" . filter_number_format($RoundedPrice) . "')";
 				$ErrMsg =_('Error inserting new price for') . ' ' . $myrow['stockid'] . ' ' . _('because');
 				$result = DB_query($sql,$db,$ErrMsg);
 				prnMsg(_('Inserting new price for') . ' ' . $myrow['stockid'] . ' ' . _('to') . ' ' . $RoundedPrice,'info');
-			
+
 			}// end if cost > 0
 		}//end while loop around items in the category
 	}
