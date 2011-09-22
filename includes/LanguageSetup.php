@@ -66,14 +66,17 @@ include('includes/LanguagesArray.php');
 
 if (defined('LC_MESSAGES')){ //it's a unix/linux server
 	$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
-	$LocaleSet = setlocale (LC_NUMERIC, $_SESSION['Language']);
+	$LocaleSet = setlocale (LC_ALL, $_SESSION['Language']);
 } else { // it's a windows server
 	$LocaleSet = setlocale (LC_ALL, $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
 }
 
-//$LocaleSet = setlocale (LC_NUMERIC, 'nl_NL.utf8');
+//$LocaleSet = setlocale (LC_NUMERIC, 'fr_FR.utf8','fr_FR');
 
 $LocaleInfo = localeconv();
+//echo '<br/>Thousands separator = ' . strlen($LocaleInfo['thousands_sep']);
+//echo '<br/>Mon Thousands separator = ' . strlen($LocaleInfo['mon_thousands_sep']);
+
 if ($LocaleInfo['mon_decimal_point']==''){
 	$LocaleInfo['mon_decimal_point']= $LocaleInfo['decimal_point'];
 }

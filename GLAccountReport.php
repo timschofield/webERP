@@ -121,9 +121,9 @@ if (isset($_POST['RunReport'])){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Brought Forward Balance'));
 
 			if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-   			   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_money_format(-$RunningTotal,2) , 'right');
+   			   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_money_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			} else { //its a debit balance b/fwd
-               $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_money_format($RunningTotal,2) , 'right');
+               $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_money_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			}
 		}
 		$PeriodTotal = 0;

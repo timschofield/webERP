@@ -329,6 +329,6 @@ function locale_money_format($Number, $DecimalPlaces=0) {
 function filter_number_format($Number) {
 	global $LocaleInfo;
 	$Number = trim($Number);
-	return str_replace($LocaleInfo['decimal_point'],'.',str_replace($LocaleInfo['thousands_sep'],'',$Number));
+	return str_replace($LocaleInfo['decimal_point'],'.',str_replace($LocaleInfo['thousands_sep'],'',str_replace($LocaleInfo['mon_thousands_sep'],'',$Number)));
 }
 ?>
