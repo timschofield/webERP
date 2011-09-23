@@ -74,14 +74,18 @@ if (defined('LC_MESSAGES')){ //it's a unix/linux server
 //$LocaleSet = setlocale (LC_NUMERIC, 'fr_FR.utf8','fr_FR');
 
 $LocaleInfo = localeconv();
-//echo '<br/>Thousands separator = ' . strlen($LocaleInfo['thousands_sep']);
-//echo '<br/>Mon Thousands separator = ' . strlen($LocaleInfo['mon_thousands_sep']);
 
-if ($LocaleInfo['mon_decimal_point']==''){
-	$LocaleInfo['mon_decimal_point']= $LocaleInfo['decimal_point'];
+if ($LocaleInfo['decimal_point']==''){
+	$LocaleInfo['decimal_point'] = $LanguagesArray[$_SESSION['Language']]['Decimal_Point'];
 }
 if ($LocaleInfo['mon_thousands_sep']==''){
-	$LocaleInfo['mon_thousands_sep']= $LocaleInfo['thousands_sep'];
+	$LocaleInfo['mon_thousands_sep'] = $LanguagesArray[$_SESSION['Language']]['Thousands_Separator'];
+}
+if ($LocaleInfo['mon_thousands_sep']==''){
+	$LocaleInfo['mon_thousands_sep'] = $LanguagesArray[$_SESSION['Language']]['Thousands_Separator'];
+}
+if ($LocaleInfo['mon_decimal_point']==''){
+	$LocaleInfo['mon_decimal_point'] = $LanguagesArray[$_SESSION['Language']]['Decimal_Point'];
 }
 
 //Turkish seems to be a special case
