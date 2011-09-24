@@ -11,7 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 	$title = _('Select Order To Print');
 	include('includes/header.inc');
-	echo '<div class=centre><br /><br /><br />';
+	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
 	echo '<br />
 			<br />
@@ -65,7 +65,7 @@ $sql = "SELECT salesorders.debtorno,
 		WHERE salesorders.debtorno=debtorsmaster.debtorno
 		AND salesorders.shipvia=shippers.shipper_id
 		AND salesorders.fromstkloc=locations.loccode
-		AND salesorders.orderno='" . $_GET['TransNo'] . "'";
+		AND salesorders.orderno='" . filter_number_format($_GET['TransNo']) . "'";
 	
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -166,7 +166,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					stockmaster.decimalplaces
 				FROM salesorderdetails INNER JOIN stockmaster
 					ON salesorderdetails.stkcode=stockmaster.stockid
-				WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
+				WHERE salesorderdetails.orderno='" . filter_number_format($_GET['TransNo']) . "'";
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_num_rows($result)>0){
@@ -248,7 +248,7 @@ if ($ListCount == 0) {
     	$pdf->__destruct();
 	$sql = "UPDATE salesorders SET printedpackingslip=1, 
 									datepackingslipprinted='" . Date('Y-m-d') . "' 
-				WHERE salesorders.orderno='" .$_GET['TransNo'] . "'";
+				WHERE salesorders.orderno='" . filter_number_format($_GET['TransNo']) . "'";
 	$result = DB_query($sql,$db);
 }
 

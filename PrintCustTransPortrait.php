@@ -5,9 +5,9 @@
 include('includes/session.inc');
 
 if (isset($_GET['FromTransNo'])) {
-	$FromTransNo = $_GET['FromTransNo'];
+	$FromTransNo = filter_number_format($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])){
-	$FromTransNo = $_POST['FromTransNo'];
+	$FromTransNo = filter_number_format($_POST['FromTransNo']);
 } else {
 	$FromTransNo = '';
 }
@@ -25,8 +25,8 @@ if (isset($_GET['PrintPDF'])) {
 }
 
 If (!isset($_POST['ToTransNo'])
-	or trim($_POST['ToTransNo'])==''
-	or $_POST['ToTransNo'] < $FromTransNo) {
+	OR trim($_POST['ToTransNo'])==''
+	OR filter_number_format($_POST['ToTransNo']) < $FromTransNo) {
 
 	$_POST['ToTransNo'] = $FromTransNo;
 }
@@ -69,7 +69,7 @@ If (isset($PrintPDF)
 	$FirstPage = true;
 	$line_height=16;
 
-	while ($FromTransNo <= $_POST['ToTransNo']){
+	while ($FromTransNo <= filter_number_format($_POST['ToTransNo'])){
 
 	/*retrieve the invoice details from the database to print
 	notice that salesorder record must be present to print the invoice purging of sales orders will
@@ -164,7 +164,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies 
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
-						AND debtortrans.transno='" . $FromTransNo . "'";
+						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
@@ -217,7 +217,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies 
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
-						AND debtortrans.transno='" . $FromTransNo . "'";
+						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
 
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
@@ -234,7 +234,7 @@ If (isset($PrintPDF)
 
 			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 			if ($debug==1){
-			    prnMsg (_('The SQL used to get this information that failed was') . "<br />" . $sql,'error');
+			    prnMsg (_('The SQL used to get this information that failed was') . '<br />' . $sql,'error');
 			}
 			include ('includes/footer.inc');
 			exit;
@@ -260,7 +260,7 @@ If (isset($PrintPDF)
 					FROM stockmoves INNER JOIN stockmaster 
 					ON stockmoves.stockid = stockmaster.stockid
 					WHERE stockmoves.type=10
-					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
 					AND stockmoves.show_on_inv_crds=1";
 			} else {
 				/* only credit notes to be retrieved */
@@ -279,7 +279,7 @@ If (isset($PrintPDF)
 					FROM stockmoves INNER JOIN stockmaster 
 					ON stockmoves.stockid = stockmaster.stockid
 					WHERE stockmoves.type=11
-					AND stockmoves.transno='" . $FromTransNo . "'
+					AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
 					AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
@@ -537,7 +537,7 @@ If (isset($PrintPDF)
 		   echo '<option value="Credit">' . _('Credit Notes') . '</option>';
 		} else {
 		   echo '<option selected value="Credit">' . _('Credit Notes') . '</option>';
-		   echo '<option VALUE="Invoice">' . _('Invoices') . '</option>';
+		   echo '<option value="Invoice">' . _('Invoices') . '</option>';
 		}
 		echo '</select></td></tr>';
 
@@ -545,11 +545,11 @@ If (isset($PrintPDF)
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
 		   echo '<option selected value="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
-		   echo '<option VALUE="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
+		   echo '<option value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
 
 		} else {
 
-		   echo '<option VALUE="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
+		   echo '<option value="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
 		   echo '<option selected value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
 
 		}
@@ -642,7 +642,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies 
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
-						AND debtortrans.transno='" . $FromTransNo . "'";
+						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
 			} else { //its a credit note
 
 			   $sql = "SELECT debtortrans.trandate,
@@ -682,7 +682,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies 
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
-						AND debtortrans.transno='" . $FromTransNo . "'";
+						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
 
 			}
 
@@ -729,7 +729,7 @@ If (isset($PrintPDF)
 				echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
 				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
 
-				echo '</td><td width=50% class=number>';
+				echo '</td><td width=50% class+"number">';
 
 	/*Now the customer charged to details in a sub table within a cell of the main table*/
 
@@ -809,7 +809,7 @@ If (isset($PrintPDF)
 							FROM stockmoves INNER JOIN stockmaster
 							ON stockmoves.stockid = stockmaster.stockid
 							WHERE stockmoves.type=10
-							AND stockmoves.transno='" . $FromTransNo . "'
+							AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
 							AND stockmoves.show_on_inv_crds=1";
 		
 				} else { /* then its a credit note */
@@ -848,7 +848,7 @@ If (isset($PrintPDF)
 							FROM stockmoves INNER JOIN stockmaster
 							ON stockmoves.stockid = stockmaster.stockid
 							WHERE stockmoves.type=11
-							AND stockmoves.transno='" . $FromTransNo . "'
+							AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
 							AND stockmoves.show_on_inv_crds=1";
 				}
 
@@ -903,11 +903,11 @@ If (isset($PrintPDF)
 
 					      printf ('<td>%s</td>
 						      		<td>%s</td>
-									<td class=number>%s</td>
-									<td class=number>%s</td>
-									<td class=number>%s</td>
-									<td class=number>%s</td>
-									<td class=number>%s</td>
+									<td class+"number">%s</td>
+									<td class+"number">%s</td>
+									<td class+"number">%s</td>
+									<td class+"number">%s</td>
+									<td class+"number">%s</td>
 									</tr>',
 									$myrow2['stockid'],
 									$myrow2['description'],
@@ -949,7 +949,7 @@ If (isset($PrintPDF)
 						    echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br />';
 						    echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
 						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
-						    echo '</td><td class=number>' . _('Page') . ': ' .  $PageNumber . '</td></tr></table>';
+						    echo '</td><td class+"number">' . _('Page') . ': ' .  $PageNumber . '</td></tr></table>';
 						    echo '<table class="table1">
 									<tr>
 										<th>' . _('Item Code') . '</th>
@@ -997,7 +997,7 @@ If (isset($PrintPDF)
 					echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br />';
 					echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
 					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
-					echo '</td><td class=number>' . _('Page') . ': ' . $PageNumber . '</td>
+					echo '</td><td class+"number">' . _('Page') . ': ' . $PageNumber . '</td>
 						</tr>
 						</table>';
 					echo '<table class="table1">
@@ -1051,7 +1051,7 @@ If (isset($PrintPDF)
 				     echo '<tr><td class="number"><b>' . _('TOTAL INVOICE') . '</b></td>
 				     	<td class="number" bgcolor="#EEEEEE"><U><b>' . $DisplayTotal . '</b></U></td></tr>';
 				} else {
-				     echo '<tr><td class=number><font color=RED><b>' . _('TOTAL CREDIT') . '</b></font></td>
+				     echo '<tr><td class+"number"><font color=RED><b>' . _('TOTAL CREDIT') . '</b></font></td>
 				     		<td class="number" bgcolor="#EEEEEE"><font color="red"><U><b>' . $DisplayTotal . '</b></u></font></td></tr>';
 				}
 				echo '</table>';

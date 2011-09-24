@@ -16,9 +16,9 @@ if (empty($_GET['identifier'])) {
 	$identifier=$_GET['identifier'];
 }
 
-if ($_GET['NewRecurringOrder']=='Yes'){
+if (isset($_GET['NewRecurringOrder'])){
 	$NewRecurringOrder ='Yes';
-} elseif ($_POST['NewRecurringOrder']=='Yes'){
+} elseif (isset($_POST['NewRecurringOrder'])){
 	$NewRecurringOrder ='Yes';
 } else {
 	$NewRecurringOrder ='No';
@@ -57,12 +57,12 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 									recurringsalesorders.stopdate,
 									recurringsalesorders.lastrecurrence,
 									recurringsalesorders.autoinvoice
-								FROM recurringsalesorders,
-									debtorsmaster,
-									salestypes
-								WHERE recurringsalesorders.ordertype=salestypes.typeabbrev
-								AND recurringsalesorders.debtorno = debtorsmaster.debtorno
-								AND recurringsalesorders.recurrorderno = '" . $_GET['ModifyRecurringSalesOrder'] . "'";
+								FROM recurringsalesorders 
+								INNER JOIN debtorsmaster
+								ON recurringsalesorders.debtorno = debtorsmaster.debtorno
+								INNER JOIN salestypes
+								ON recurringsalesorders.ordertype=salestypes.typeabbrev
+								WHERE recurringsalesorders.recurrorderno = '" . $_GET['ModifyRecurringSalesOrder'] . "'";
 
 		$ErrMsg =  _('The order cannot be retrieved because');
 		$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -84,7 +84,7 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 			$_SESSION['Items'.$identifier]->ShipVia = $myrow['shipvia'];
 			$BestShipper = $myrow['shipvia'];
 			$_SESSION['Items'.$identifier]->DeliverTo = $myrow['deliverto'];
-			$_SESSION['Items'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
+			//$_SESSION['Items'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 			$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['deladd1'];
 			$_SESSION['Items'.$identifier]->DelAdd2 = $myrow['deladd2'];
 			$_SESSION['Items'.$identifier]->DelAdd3 = $myrow['deladd3'];
@@ -160,11 +160,11 @@ if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->I
 
 
 if (isset($_POST['DeleteRecurringOrder'])){
-	$sql = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
+	$sql = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . filter_number_format($_POST['ExistingRecurrOrderNo']) . "'";
 	$ErrMsg = _('Could not delete recurring sales order lines for the recurring order template') . ' ' . $_POST['ExistingRecurrOrderNo'];
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	$sql = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
+	$sql = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . filter_number_format($_POST['ExistingRecurrOrderNo']) . "'";
 	$ErrMsg = _('Could not delete the recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'];
 	$result = DB_query($sql,$db,$ErrMsg);
 
@@ -200,7 +200,6 @@ If (isset($_POST['Process'])) {
 	if ($InputErrors == 0 ){  /*Error checks above all passed ok so lets go*/
 
 
-
 		if ($NewRecurringOrder=='Yes'){
 
 			/* finally write the recurring order header to the database and then the line details*/
@@ -234,7 +233,7 @@ If (isset($_POST['Process'])) {
 										'" . $_SESSION['Items'.$identifier]->Branch . "',
 										'". $_SESSION['Items'.$identifier]->CustRef ."',
 										'". $_SESSION['Items'.$identifier]->Comments ."',
-										'" . Date("Y-m-d H:i") . "',
+										'" . Date('Y-m-d H:i') . "',
 										'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 										'" . $_SESSION['Items'.$identifier]->DeliverTo . "',
 										'" . $_SESSION['Items'.$identifier]->DelAdd1 . "',
@@ -254,32 +253,37 @@ If (isset($_POST['Process'])) {
 										'" . $_POST['AutoInvoice'] . "')";
 
 			$ErrMsg = _('The recurring order cannot be added because');
-			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,true);
+			$DbgMsg = _('The SQL that failed was');
+			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
+			
+			echo '<br/>' . $HeaderSQL;
 
 			$RecurrOrderNo = DB_Last_Insert_ID($db,'recurringsalesorders','recurrorderno');
 			echo 'xxx'.$RecurrOrderNo;
-			$StartOf_LineItemsSQL = "INSERT INTO recurrsalesorderdetails (
-						recurrorderno,
-						stkcode,
-						unitprice,
-						quantity,
-						discountpercent,
-						narrative)
-					values ('";
-
+			$StartOf_LineItemsSQL = "INSERT INTO recurrsalesorderdetails (recurrorderno,
+																			stkcode,
+																			unitprice,
+																			quantity,
+																			discountpercent,
+																			narrative)
+																		VALUES ('";
+													
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 				$LineItemsSQL = $StartOf_LineItemsSQL .
-					$RecurrOrderNo . "',
-					'" . $StockItem->StockID . "',
-					'". $StockItem->Price . "',
-					'" . $StockItem->Quantity . "',
-					'" . $StockItem->DiscountPercent . "',
-					'" . $StockItem->Narrative . "'
-				)";
+								$RecurrOrderNo . "',
+								'" . $StockItem->StockID . "',
+								'". filter_number_format($StockItem->Price) . "',
+								'" . filter_number_format($StockItem->Quantity) . "',
+								'" . filter_number_format($StockItem->DiscountPercent) . "',
+								'" . $StockItem->Narrative . "')";
 				$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
+				
+				echo '<br/>' . $LineItemsSQL;
+				
 			} /* inserted line items into sales order details */
-
+			
+			$result = DB_Txn_Commit($db);
 			prnmsg(_('The new recurring order template has been added'),'success');
 
 		} else { /* must be updating an existing recurring order */
@@ -287,7 +291,7 @@ If (isset($_POST['Process'])) {
 						stopdate =  '" . FormatDateforSQL($_POST['StopDate']) . "',
 						frequency = '" . $_POST['Frequency'] . "',
 						autoinvoice = '" . $_POST['AutoInvoice'] . "'
-					WHERE recurrorderno = '" . $_POST['ExistingRecurrOrderNo'] . "'";
+					WHERE recurrorderno = '" . filter_number_format($_POST['ExistingRecurrOrderNo']) . "'";
 
 			$ErrMsg = _('The recurring order cannot be updated because');
 			$UpdateQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
@@ -304,7 +308,6 @@ If (isset($_POST['Process'])) {
 	exit;
 
 	}
-	$result = DB_Txn_Commit($db);
 }
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
@@ -333,8 +336,8 @@ $k = 0; //row colour counter
 foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 	$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-	$DisplayLineTotal = locale_number_format($LineTotal,2);
-	$DisplayPrice = locale_number_format($StockItem->Price,2);
+	$DisplayLineTotal = locale_money_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+	$DisplayPrice = locale_money_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 	$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 	$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100),2);
 
@@ -347,28 +350,29 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 		$k=1;
 	}
 
-		echo '<td>$StockItem->StockID</td>
-			<td>$StockItem->ItemDescription</td>
-			<td class=number>$DisplayQuantity</td>
-			<td>$StockItem->Units</td>
-			<td class=number>$DisplayPrice</td>
-			<td class=number>$DisplayDiscount</td>
-			<td class=number>$DisplayLineTotal</td>
+		echo '<td>' . $StockItem->StockID . '</td>
+			<td>' . $StockItem->ItemDescription . '</td>
+			<td class="number">' . $DisplayQuantity . '</td>
+			<td>' . $StockItem->Units . '</td>
+			<td class="number">' . $DisplayPrice . '</td>
+			<td class="number">' . $DisplayDiscount . '</td>
+			<td class="number">' . $DisplayLineTotal . '</td>
 			</tr>';
 
-	$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
-	$_SESSION['Items'.$identifier]->totalVolume = $_SESSION['Items'.$identifier]->totalVolume + ($StockItem->Quantity * $StockItem->Volume);
-	$_SESSION['Items'.$identifier]->totalWeight = $_SESSION['Items'.$identifier]->totalWeight + ($StockItem->Quantity * $StockItem->Weight);
+	$_SESSION['Items'.$identifier]->total += $LineTotal;
+	$_SESSION['Items'.$identifier]->totalVolume += ($StockItem->Quantity * $StockItem->Volume);
+	$_SESSION['Items'.$identifier]->totalWeight += ($StockItem->Quantity * $StockItem->Weight);
 }
 
-$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,2);
+$DisplayTotal = locale_money_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 echo '<tr>
-	<td colspan=6 class=number><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
-	<td class=number>$DisplayTotal</td>
-</tr></table>';
+		<td colspan="6" class="number"><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
+		<td class="number">' . $DisplayTotal . '</td>
+	</tr>
+	</table>';
 
-echo '<br /><table class=selection>';
-echo '<tr><th colspan=7><font size=2 color=navy><b>'._('Order Header Details').'</b></font></th></tr>';
+echo '<br /><table class="selection">';
+echo '<tr><th colspan="7"><font size=2 color=navy><b>'._('Order Header Details').'</b></font></th></tr>';
 
 echo '<tr>
 	<td>'. _('Deliver To') .':</td>
@@ -415,7 +419,7 @@ if (!isset($_POST['StartDate'])){
 if ($NewRecurringOrder=='Yes'){
 	echo '<tr>
 	<td>'. _('Start Date') .':</td>
-	<td><input type=TEXT class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size=11 maxlength=10 value="' . $_POST['StartDate'] .'" /></td></tr>';
+	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size=11 maxlength=10 value="' . $_POST['StartDate'] .'" /></td></tr>';
 } else {
 	echo '<tr>
 	<td>'. _('Last Recurrence') . ':</td>
@@ -429,7 +433,7 @@ if (!isset($_POST['StopDate'])){
 
 echo '<tr>
 	<td>'. _('Finish Date') .':</td>
-	<td><input type=TEXT class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="StopDate" size=11 maxlength=10 value="' . $_POST['StopDate'] .'" /></td></tr>';
+	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StopDate" size=11 maxlength=10 value="' . $_POST['StopDate'] .'" /></td></tr>';
 
 echo '<tr>
 	<td>'. _('Frequency of Recurrence') .':</td>
@@ -493,15 +497,15 @@ echo '</table>';
 
 echo '<br /><div class="centre">';
 if ($NewRecurringOrder=='Yes'){
-	echo '<input type="hidden" name="NewRecurringOrder" value="Yes">';
-	echo '<input type="submit" name="Process" value="' . _('Create Recurring Order') . '">';
+	echo '<input type="hidden" name="NewRecurringOrder" value="Yes" />';
+	echo '<input type="submit" name="Process" value="' . _('Create Recurring Order') . '" />';
 } else {
 	echo '<input type=hidden name="NewRecurringOrder" value="No">';
-	echo '<input type=hidden name="ExistingRecurrOrderNo" value=' . $_POST['ExistingRecurrOrderNo'] . '>';
+	echo '<input type=hidden name="ExistingRecurrOrderNo" value="' . $_POST['ExistingRecurrOrderNo'] . '" />';
 
-	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '">';
+	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '" />';
 	echo '<hr>';
-	echo '<br /><br /><input type=submit name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');">';
+	echo '<br /><br /><input type=submit name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');" />';
 }
 
 echo '</form></div>';
