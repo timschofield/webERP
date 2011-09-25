@@ -22,37 +22,37 @@ echo '<table cellpadding=2 class="selection">';
 	
 echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
 		</tr>
-	<tr>
+		<tr>
 		<td>' . _('Custom Range') . ':</td>
 		<td><input type="radio" name="DateRange" value="Custom" ';
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked';
 }
-echo	'></td>
+echo	' /></td>
 		</tr>
-	<tr>
+		<tr>
 		<td>' . _('This Week') . ':</td>
 		<td><input type="radio" name="DateRange" value="ThisWeek" ';
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked';
 }
-echo	'></td>
+echo	' /></td>
 		</tr>
-	<tr>
+		<tr>
 		<td>' . _('This Month') . ':</td>
 		<td><input type="radio" name="DateRange" value="ThisMonth" ';
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked';
 }
-echo	'></td>
+echo	' /></td>
 		</tr>
-	<tr>
+		<tr>
 		<td>' . _('This Quarter') . ':</td>
 		<td><input type="radio" name="DateRange" value="ThisQuarter" ';
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked';
 }
-echo	'></td>
+echo	' /></td>
 		</tr>';
 if ($_POST['DateRange']=='Custom'){
 	echo '<tr>
@@ -67,7 +67,7 @@ if ($_POST['DateRange']=='Custom'){
 echo '</table>';
 
 
-echo '<br /><div class="centre"><input tabindex=4 type=submit name="ShowSales" value="' . _('Show Sales') . '">';
+echo '<br /><div class="centre"><input tabindex=4 type=submit name="ShowSales" value="' . _('Show Sales') . '" />';
 echo '</form></div>';
 echo '<br />';
 
@@ -184,11 +184,11 @@ if (isset($_POST['ShowSales'])){
 		}
 				
 		echo '<td>' . $SalesRow['categoryid'] . ' - ' . $SalesRow['categorydescription'] . '</td>
-				<td class="number">' . locale_number_format($SalesRow['salesvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['cost'],2) . '</td>
-				<td class="number">' . locale_number_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),2) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['salesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['returnvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 		
 		$CumulativeTotalSales += $SalesRow['salesvalue'];
@@ -206,11 +206,11 @@ if (isset($_POST['ShowSales'])){
 		echo '<tr class="EvenTableRows">';
 	}
 	echo '<td class="number">' . _('GRAND Total') . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalSales,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalRefunds,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalNetSales,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalCost,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalGP,2) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 	
 	echo '</table>';

@@ -44,11 +44,11 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 					purchorderdetails.stdcostunit,
 					purchorders.intostocklocation,
 					purchorders.orderno
-		FROM grns INNER JOIN purchorderdetails
-		ON grns.podetailitem=purchorderdetails.podetailitem
-		INNER JOIN purchorders
-		ON purchorderdetails.orderno = purchorders.orderno 
-		WHERE AND grnno='" . filter_number_format($_GET['GRNNo']) . "'";
+			FROM grns INNER JOIN purchorderdetails
+			ON grns.podetailitem=purchorderdetails.podetailitem
+			INNER JOIN purchorders
+			ON purchorderdetails.orderno = purchorders.orderno 
+			WHERE AND grnno='" . filter_number_format($_GET['GRNNo']) . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not get the details of the GRN selected for reversal because') . ' ';
 	$DbgMsg = _('The following SQL to retrieve the GRN details was used') . ':';
@@ -81,18 +81,18 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				stockserialmoves.moveqty
 		        FROM stockmoves INNER JOIN stockserialmoves
 				ON stockmoves.stkmoveno= stockserialmoves.stockmoveno
-			WHERE stockmoves.stockid='" . $GRN['itemcode'] . "'
-			AND stockmoves.type =25
-			AND stockmoves.transno='" . $GRN['grnbatch'] . "'";
+				WHERE stockmoves.stockid='" . $GRN['itemcode'] . "'
+				AND stockmoves.type =25
+				AND stockmoves.transno='" . $GRN['grnbatch'] . "'";
 		$GetStockMoveResult = DB_query($SQL,$db,_('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 
 		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
 
 			$SQL = "SELECT stockserialitems.quantity
 			        FROM stockserialitems
-				WHERE stockserialitems.stockid='" . $GRN['itemcode'] . "'
-				AND stockserialitems.loccode ='" . $GRN['intostocklocation'] . "'
-				AND stockserialitems.serialno ='" . $SerialStockMoves['serialno'] . "'";
+					WHERE stockserialitems.stockid='" . $GRN['itemcode'] . "'
+					AND stockserialitems.loccode ='" . $GRN['intostocklocation'] . "'
+					AND stockserialitems.serialno ='" . $SerialStockMoves['serialno'] . "'";
 			$GetQOHResult = DB_query($SQL,$db,_('Unable to retrieve the quantity on hand of') . ' ' . $GRN['itemcode'] . ' ' . _('for Serial No') . ' ' . $SerialStockMoves['serialno']);
 			$GetQOH = DB_fetch_row($GetQOHResult);
 			if ($GetQOH[0] < $SerialStockMoves['moveqty']){
@@ -175,7 +175,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 		/*now reverse the cost put to fixedassets */
 		$SQL = "UPDATE fixedassets SET cost = cost - " . filter_number_format($GRN['stdcostunit'] * $QtyToReverse)  . "
-					WHERE assetid = '" . $GRN['assetid'] . "'";
+				WHERE assetid = '" . $GRN['assetid'] . "'";
 		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost addition could not be reversed:');
 		$DbgMsg = _('The following SQL was used to attempt the reduce the cost of the asset was:');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
@@ -183,8 +183,8 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	} //end of if it is an asset
 
 	$SQL = "SELECT stockmaster.controlled
-				FROM stockmaster
-				WHERE stockmaster.stockid = '" . $GRN['itemcode'] . "'";
+			FROM stockmaster
+			WHERE stockmaster.stockid = '" . $GRN['itemcode'] . "'";
 	$Result = DB_query($SQL, $db, _('Could not determine if the item exists because'),'<br />' . _('The SQL that failed was') . ' ',true);
 
 	if (DB_num_rows($Result)==1){ /* if the GRN is in fact a stock item being reversed */
@@ -195,9 +195,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	/* Update location stock records - NB  a PO cannot be entered for a dummy/assembly/kit parts */
 	/*Need to get the current location quantity will need it later for the stock movement */
 		$SQL="SELECT quantity
-						FROM locstock
-						WHERE stockid='" . $GRN['itemcode'] . "'
-						AND loccode= '" . $GRN['intostocklocation'] . "'";
+				FROM locstock
+				WHERE stockid='" . $GRN['itemcode'] . "'
+				AND loccode= '" . $GRN['intostocklocation'] . "'";
 
 		$Result = DB_query($SQL, $db, _('Could not get the quantity on hand of the item before the reversal was processed'),_('The SQL that failed was'),true);
 		if (DB_num_rows($Result)==1){
@@ -209,9 +209,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		}
 
 		$SQL = "UPDATE locstock
-						SET quantity = quantity - " . $QtyToReverse . "
-						WHERE stockid = '" . $GRN['itemcode'] . "'
-						AND loccode = '" . $GRN['intostocklocation'] . "'";
+				SET quantity = quantity - " . $QtyToReverse . "
+				WHERE stockid = '" . $GRN['itemcode'] . "'
+				AND loccode = '" . $GRN['intostocklocation'] . "'";
 
   		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the location stock record was used');
@@ -366,7 +366,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			prnMsg(_('There are no outstanding goods received yet to be invoiced for') . ' ' . $_POST['SuppName'] . '.<br />' . _('To reverse a GRN that has been invoiced first it must be credited'),'warn');
 		} else { //there are GRNs to show
 
-			echo '<br /><table cellpadding=2 colspan=7 class=selection>';
+			echo '<br /><table cellpadding=2 colspan=7 class="selection">';
 			$TableHeader = '<tr>
 					<th>' . _('GRN') . ' #</th>
 					<th>' . _('Item Code') . '</th>
@@ -395,17 +395,17 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				$DisplayQtyInv = locale_number_format($myrow['quantityinv'],2);
 				$DisplayQtyRev = locale_number_format($myrow['qtytoreverse'],2);
 				$DisplayDateDel = ConvertSQLDate($myrow['deliverydate']);
-				$LinkToRevGRN = '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
+				$LinkToRevGRN = '<a href="' . $_SERVER['PHP_SELF'] . '?GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
 
-				printf("<td>%s</td>
+				printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
-					</tr>",
+					</tr>',
 					$myrow['grnno'],
 					$myrow['itemcode'],
 					$myrow['itemdescription'],

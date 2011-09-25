@@ -164,9 +164,10 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 $CategoryPath = '<a href="'.$_SERVER['PHP_SELF'] . '?ParentCategory=0">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
 
 $TempPath = '';
-if ($ParentCategory == null){
-	$ParentCategory =0;
+if (isset($ParentCategory)){
+	$ParentCategory=0;
 }
+
 if (isset($ParentCategory)) {
 	$TmpParentID = $ParentCategory;
 }
@@ -300,8 +301,7 @@ if (isset($SelectedCategory)) {
 	$_POST['SalesCatName']  = $myrow['salescatname'];
 
 	echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
-	echo '<input type=hidden name="ParentCategory" value="' .
-		(isset($_POST['ParentCatId'])?($_POST['ParentCategory']):('0')) . '">';
+	echo '<input type=hidden name="ParentCategory" value="' . (isset($_POST['ParentCatId'])?($_POST['ParentCategory']):('0')) . '">';
 	$FormCaps = _('Edit Sub Category');
 
 } else { //end of if $SelectedCategory only do the else when a new record is being entered
@@ -313,12 +313,11 @@ if (isset($SelectedCategory)) {
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
 	$FormCaps = _('New Sub Category');
 }
-echo '<input type=hidden name="EditName" value="1">';
-echo '<table class=selection>';
+echo '<input type="hidden" name="EditName" value="1">';
+echo '<table class="selection">';
 echo '<tr><th colspan="2">' . $FormCaps . '</th></tr>';
 echo '<tr><td>' . _('Category Name') . ':</td>
-            <td><input type="Text" name="SalesCatName" size=20 maxlength=20 value="' .
-			$_POST['SalesCatName'] . '"></td></tr>';
+            <td><input type="text" name="SalesCatName" size="20" maxlength="20" value="' . $_POST['SalesCatName'] . '"></td></tr>';
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr><td>'. _('Image File (.jpg)') . ':</td>
@@ -326,7 +325,7 @@ if (isset($SelectedCategory)) {
 }
 
 echo '</table>';
-echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Submit Information') . '"></div>';
+echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Submit Information') . '" /></div>';
 
 echo '</form></p>';
 
@@ -369,16 +368,17 @@ if($result && DB_num_rows($result)) {
 	echo '<p><form enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] .'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if( isset($SelectedCategory) ) { // If we selected a category we need to keep it selected
-		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
+		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	}
 	echo '<input type=hidden name="ParentCategory" value="' .
-		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
+		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" /> ';
 
-	echo '';
-	echo '<table class=selection>';
-	echo '<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>';
-	echo '<tr><td>' . _('Select Inv. Item') . ':</td><td>';
-	echo '<select name="AddStockID">';
+	
+	echo '<table class="selection">
+		<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>
+		<tr><td>' . _('Select Inv. Item') . ':</td>
+		<td><select name="AddStockID">';
+		
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected
@@ -415,10 +415,10 @@ $sql = "SELECT scp.stockid, sm.description FROM salescatprod scp
 $result = DB_query($sql,$db);
 if($result ) {
 	if( DB_num_rows($result)) {
-		echo '<table class=selection>';
-		echo '<tr><th colspan="3">'._('Inventory items in this category.').'</th></tr>';
-		echo '<tr><th>' . _('Stock Code') . '</th>';
-		echo '<th>' . _('Description') . '</th></tr>';
+		echo '<table class="selection">';
+		echo '<tr><th colspan="3">'._('Inventory items in this category.').'</th></tr>
+				<tr><th>' . _('Stock Code') . '</th>
+				<th>' . _('Description') . '</th></tr>';
 
 		$k=0; //row colour counter
 

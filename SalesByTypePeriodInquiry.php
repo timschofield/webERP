@@ -71,7 +71,7 @@ if ($_POST['DateRange']=='Custom'){
 			</tr>';
 }
 echo '</table>
-		</td><td valign=top>
+		</td><td valign="top">
 		<table>';
 		
 echo '<tr><th colspan="2" class="centre">' . _('Display Data') . '</th>
@@ -365,11 +365,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){ //print the footer for the period
 						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -400,11 +400,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){
 						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -435,11 +435,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){
 						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -470,11 +470,11 @@ if (isset($_POST['ShowSales'])){
 					if ($LastPeriodHeading != 'First Run Through'){
 						echo '<td colspan="2" class="number">' . _('Total') . '-'. $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
-							<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-							<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_money_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 						if ($k==1){
 							echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -502,11 +502,11 @@ if (isset($_POST['ShowSales'])){
 		}
 		echo '<td>' . $SalesRow['tpe'] . '</td>
 				<td class="number">' . $SalesRow['nooforders'] . '</td>
-				<td class="number">' . locale_number_format($SalesRow['salesvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],2) . '</td>
-				<td class="number">' . locale_number_format($SalesRow['cost'],2) . '</td>
-				<td class="number">' . locale_number_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),2) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['salesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['returnvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['salesvalue']+$SalesRow['returnvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format($SalesRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_money_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 		$PrdTotalOrders +=$SalesRow['nooforders'];
 		$PrdTotalSales += $SalesRow['salesvalue'];
@@ -531,11 +531,11 @@ if (isset($_POST['ShowSales'])){
 	}
 	echo '<td colspan="2" class="number">' . _('Total') . ' ' . $LastPeriodHeading . '</td>
 		<td class="number">' . $PrdTotalOrders . '</td>
-		<td class="number">' . locale_number_format($PrdTotalSales,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalRefunds,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalNetSales,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalCost,2) . '</td>
-		<td class="number">' . locale_number_format($PrdTotalGP,2) . '</td>
+		<td class="number">' . locale_money_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($PrdTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($PrdTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($PrdTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
 	if ($k==1){
 		echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
@@ -546,11 +546,11 @@ if (isset($_POST['ShowSales'])){
 	}
 	echo '<td colspan="2" class="number">' . _('GRAND Total') . '</td>
 		<td class="number">' . $CumulativeTotalOrders . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalSales,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalRefunds,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalNetSales,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalCost,2) . '</td>
-		<td class="number">' . locale_number_format($CumulativeTotalGP,2) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_money_format($CumulativeTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 	
 	echo '</table>';
