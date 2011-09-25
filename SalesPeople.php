@@ -5,10 +5,10 @@ include('includes/session.inc');
 $title = _('Sales People Maintenance');
 include('includes/header.inc');
 
-if (isset($_GET['SelectedSaleperson'])){
-	$SelectedSaleperson =mb_strtoupper($_GET['SelectedSaleperson']);
-} elseif(isset($_POST['SelectedSaleperson'])){
-	$SelectedSaleperson =mb_strtoupper($_POST['SelectedSaleperson']);
+if (isset($_GET['SelectedSalesPerson'])){
+	$SelectedSalesPerson =mb_strtoupper($_GET['SelectedSalesPerson']);
+} elseif(isset($_POST['SelectedSalesPerson'])){
+	$SelectedSalesPerson =mb_strtoupper($_POST['SelectedSalesPerson']);
 }
 
 if (isset($Errors)) {
@@ -53,10 +53,14 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
 
-	} elseif (!is_double((double)$_POST['CommissionRate1']) OR !is_double((double) $_POST['CommissionRate2'])) {
+	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1'])) 
+			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
 		$InputError = 1;
 		prnMsg(_('The commission rates must be a floating point number'),'error');
-	} elseif (!is_double((double)$_POST['Breakpoint'])) {
+		echo '<br/>Commission Rate 1 = ' . filter_number_format($_POST['CommissionRate1']);
+		echo '<br/>Commission Rate 2 = ' . filter_number_format($_POST['CommissionRate2']);
+		echo '<br/>The locale decimal point is ' . $LocaleInfo['decimal_point'];
+	} elseif (!is_numeric(filter_number_format($_POST['Breakpoint']))) {
 		$InputError = 1;
 		prnMsg(_('The breakpoint should be a floating point number'),'error');
 	}
@@ -80,18 +84,18 @@ if (isset($_POST['submit'])) {
 	  $_POST['Current']=0;
 	}
 
-	if (isset($SelectedSaleperson) AND $InputError !=1) {
+	if (isset($SelectedSalesPerson) AND $InputError !=1) {
 
-		/*SelectedSaleperson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
+		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
-						commissionrate1='" . $_POST['CommissionRate1'] . "',
+						commissionrate1='" . filter_number_format($_POST['CommissionRate1']) . "',
 						smantel='" . $_POST['SManTel'] . "',
 						smanfax='" . $_POST['SManFax'] . "',
-						breakpoint='" . $_POST['Breakpoint'] . "',
-						commissionrate2='" . $_POST['CommissionRate2'] . "',
+						breakpoint='" . filter_number_format($_POST['Breakpoint']) . "',
+						commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
 						current='" . $_POST['Current'] . "'
-				WHERE salesmancode = '".$SelectedSaleperson."'";
+				WHERE salesmancode = '".$SelectedSalesPerson."'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
@@ -107,12 +111,12 @@ if (isset($_POST['submit'])) {
 						smanfax,
 						current)
 				VALUES ('" . $_POST['SalesmanCode'] . "',
-					'" . $_POST['SalesmanName'] . "',
-					'" . $_POST['CommissionRate1'] . "',
-					'" . $_POST['CommissionRate2'] . "',
-					'" . $_POST['Breakpoint'] . "',
-					'" . $_POST['SManTel'] . "',
-					'" . $_POST['SManFax'] . "',
+					'" . DB_escape_string($_POST['SalesmanName']) . "',
+					'" . filter_number_format($_POST['CommissionRate1']) . "',
+					'" . filter_number_format($_POST['CommissionRate2']) . "',
+					'" . filter_number_format($_POST['Breakpoint']) . "',
+					'" . DB_escape_string($_POST['SManTel']) . "',
+					'" . DB_escape_string($_POST['SManFax']) . "',
 					'" . $_POST['Current'] . "'
 					)";
 
@@ -126,7 +130,7 @@ if (isset($_POST['submit'])) {
 
 		prnMsg($msg , 'success');
 
-		unset($SelectedSalesperson);
+		unset($SelectedSalesPerson);
 		unset($_POST['SalesmanCode']);
 		unset($_POST['SalesmanName']);
 		unset($_POST['CommissionRate1']);
@@ -142,61 +146,63 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
 
-	$sql= "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='".$SelectedSaleperson."'";
+	$sql= "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='".$SelectedSalesPerson."'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches that refer to this salesperson'),'error');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='".$SelectedSaleperson."'";
+		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='".$SelectedSalesPerson."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
 		} else {
 
-			$sql="DELETE FROM salesman WHERE salesmancode='".$SelectedSaleperson."'";
+			$sql="DELETE FROM salesman WHERE salesmancode='". $SelectedSalesPerson."'";
 			$ErrMsg = _('The salesperson could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-			prnMsg(_('Salesperson') . ' ' . $SelectedSalesperson . ' ' . _('has been deleted from the database'),'success');
-			unset ($SelectedSalesperson);
+			prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
+			unset ($SelectedSalesPerson);
 			unset($delete);
 		}
 	} //end if Sales-person used in GL accounts
 
 }
 
-if (!isset($SelectedSaleperson)) {
+if (!isset($SelectedSalesPerson)) {
 
-/* It could still be the second time the page has been run and a record has been selected for modification - SelectedSaleperson will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
+/* It could still be the second time the page has been run and a record has been selected for modification - SelectedSalesPerson will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 then none of the above are true and the list of Sales-persons will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
 	$sql = "SELECT salesmancode,
-			salesmanname,
-			smantel,
-			smanfax,
-			commissionrate1,
-			breakpoint,
-			commissionrate2,
-			current
-		FROM salesman";
+				salesmanname,
+				smantel,
+				smanfax,
+				commissionrate1,
+				breakpoint,
+				commissionrate2,
+				current
+			FROM salesman";
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>';
-	echo '<tr><th>' . _('Code') . '</th>
-		<th>' . _('Name') . '</th>
-		<th>' . _('Telephone') . '</th>
-		<th>' . _('Facsimile') . '</th>
-		<th>' . _('Comm Rate 1') . '</th>
-		<th>' . _('Break') . '</th>
-		<th>' . _('Comm Rate 2') . '</th>
-		<th>' . _('Current') . '</th></tr>';
+	echo '<table class="selection">';
+	echo '<tr>
+			<th>' . _('Code') . '</th>
+			<th>' . _('Name') . '</th>
+			<th>' . _('Telephone') . '</th>
+			<th>' . _('Facsimile') . '</th>
+			<th>' . _('Comm Rate 1') . '</th>
+			<th>' . _('Break') . '</th>
+			<th>' . _('Comm Rate 2') . '</th>
+			<th>' . _('Current') . '</th>
+		</tr>';
 	$k=0;
-	while ($myrow=DB_fetch_row($result)) {
+	while ($myrow=DB_fetch_array($result)) {
 
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
@@ -205,38 +211,41 @@ or deletion of the records*/
 		echo '<tr class="OddTableRows">';
 		$k++;
 	}
-	if ($myrow[7] == 1) $ActiveText = _("Yes"); else $ActiveText = _("No");
+	if ($myrow[7] == 1) {
+		$ActiveText = _('Yes'); 
+	} else {
+		$ActiveText = _('No');
+	}
 
-	printf('
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td class=number>%s</td>
-		<td class=number>%s</td>
-		<td class=number>%s</td>
-		<td>%s</td>
-		<td><a href="%sSelectedSaleperson=%s">'. _('Edit') . '</a></td>
-		<td><a href="%sSelectedSaleperson=%s&delete=1">' . _('Delete') . '</a></td>
-		</tr>',
-		$myrow[0],
-		$myrow[1],
-		$myrow[2],
-		$myrow[3],
-		$myrow[4],
-		$myrow[5],
-		$myrow[6],
-		$ActiveText,
-		$_SERVER['PHP_SELF'] . '?' . SID . '&',
-		$myrow[0],
-		$_SERVER['PHP_SELF'] . '?' . SID . '&',
-		$myrow[0]);
-
+	printf('<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td>%s</td>
+			<td><a href="%sSelectedSalesPerson=%s">'. _('Edit') . '</a></td>
+			<td><a href="%sSelectedSalesPerson=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales person?') . '\');">' . _('Delete') . '</a></td>
+			</tr>',
+			$myrow['salesmancode'],
+			$myrow['salesmanname'],
+			$myrow['smantel'],
+			$myrow['smanfax'],
+			locale_number_format($myrow['commissionrate1'],2),
+			locale_money_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($myrow['commissionrate2'],2),
+			$ActiveText,
+			$_SERVER['PHP_SELF'] . '?',
+			$myrow['salesmancode'],
+			$_SERVER['PHP_SELF'] . '?',
+			$myrow['salesmancode']);
+	
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!
 
-if (isset($SelectedSaleperson)) {
+if (isset($SelectedSalesPerson)) {
 	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Sales People') . '</a></div>';
 }
 
@@ -245,19 +254,19 @@ if (! isset($_GET['delete'])) {
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (isset($SelectedSaleperson)) {
+	if (isset($SelectedSalesPerson)) {
 		//editing an existing Sales-person
 
 		$sql = "SELECT salesmancode,
-				salesmanname,
-				smantel,
-				smanfax,
-				commissionrate1,
-				breakpoint,
-				commissionrate2,
-				current
-			FROM salesman
-			WHERE salesmancode='".$SelectedSaleperson."'";
+					salesmanname,
+					smantel,
+					smanfax,
+					commissionrate1,
+					breakpoint,
+					commissionrate2,
+					current
+				FROM salesman
+				WHERE salesmancode='".$SelectedSalesPerson."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -272,15 +281,20 @@ if (! isset($_GET['delete'])) {
 		$_POST['Current']  = $myrow['current'];
 
 
-		echo '<input type=hidden name="SelectedSaleperson" VALUE="' . $SelectedSaleperson . '">';
-		echo '<input type=hidden name="SalesmanCode" VALUE="' . $_POST['SalesmanCode'] . '">';
-		echo '<table class=selection> <tr><td>' . _('Salesperson code') . ':</td><td>';
-		echo $_POST['SalesmanCode'] . '</td></tr>';
+		echo '<input type=hidden name="SelectedSalesPerson" value="' . $SelectedSalesPerson . '" />';
+		echo '<input type=hidden name="SalesmanCode" value="' . $_POST['SalesmanCode'] . '" />';
+		echo '<table class="selection">
+				<tr>
+					<td>' . _('Salesperson code') . ':</td>
+					<td>' . $_POST['SalesmanCode'] . '</td></tr>';
 
-	} else { //end of if $SelectedSaleperson only do the else when a new record is being entered
+	} else { //end of if $SelectedSalesPerson only do the else when a new record is being entered
 
-		echo '<table class=selection><tr><td>' . _('Salesperson code') . ':</td>
-			<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size=3 maxlength=3></td></tr>';
+		echo '<table class="selection">
+				<tr>
+					<td>' . _('Salesperson code') . ':</td>
+					<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size=3 maxlength=3></td>
+				</tr>';
 	}
 	if (!isset($_POST['SalesmanName'])){
 	  $_POST['SalesmanName']='';
@@ -304,14 +318,34 @@ if (! isset($_GET['delete'])) {
 	  $_POST['Current']=0;
 	}
 
-	echo '<tr><td>' . _('Salesperson Name') . ':</td><td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size=30 maxlength=30 VALUE="' . $_POST['SalesmanName'] . '"></td></tr>';
-	echo '<tr><td>' . _('Telephone No') . ':</td><td><input type="text" name="SManTel" size=20 maxlength=20 VALUE="' . $_POST['SManTel'] . '"></td></tr>';
-	echo '<tr><td>' . _('Facsimile No') . ':</td><td><input type="text" name="SManFax" size=20 maxlength=20 VALUE="' . $_POST['SManFax'] . '"></td></tr>';
-	echo '<tr><td>' . _('Commission Rate 1') . ':</td><td><input type="text" class=number name="CommissionRate1" size=5 maxlength=5 VALUE="' . $_POST['CommissionRate1'] . '"></td></tr>';
-	echo '<tr><td>' . _('Breakpoint') . ':</td><td><input type="text" class=number name="Breakpoint" size=6 maxlength=6 VALUE="' . $_POST['Breakpoint'] . '"></td></tr>';
-	echo '<tr><td>' . _('Commission Rate 2') . ':</td><td><input type="text" class=number name="CommissionRate2" size=5 maxlength=5 VALUE="' . $_POST['CommissionRate2']. '"></td></tr>';
+	echo '<tr>
+			<td>' . _('Salesperson Name') . ':</td>
+			<td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size=30 maxlength=30 value="' . $_POST['SalesmanName'] . '"></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Telephone No') . ':</td>
+			<td><input type="text" name="SManTel" size=20 maxlength=20 value="' . $_POST['SManTel'] . '"></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Facsimile No') . ':</td>
+			<td><input type="text" name="SManFax" size=20 maxlength=20 value="' . $_POST['SManFax'] . '"></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Commission Rate 1') . ':</td>
+			<td><input type="text" class="number" name="CommissionRate1" size="5" maxlength="5" value="' . $_POST['CommissionRate1'] . '"></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Breakpoint') . ':</td>
+			<td><input type="text" class="number" name="Breakpoint" size="6" maxlength="6" value="' . $_POST['Breakpoint'] . '"></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Commission Rate 2') . ':</td>
+			<td><input type="text" class="number" name="CommissionRate2" size="5" maxlength="5" value="' . $_POST['CommissionRate2']. '"></td>
+		</tr>';
 
-	echo '<tr><td>' . _('Current?') . ':</td><td><select name="Current">';
+	echo '<tr>
+			<td>' . _('Current?') . ':</td>
+			<td><select name="Current">';
 	if ($_POST['Current']==1){
 		echo '<option selected value=1>' . _('Yes') . '</option>';
 	} else {
@@ -322,7 +356,8 @@ if (! isset($_GET['delete'])) {
 	} else {
 		echo '<option value=0>' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 
 	echo '</table>';
 
@@ -331,7 +366,6 @@ if (! isset($_GET['delete'])) {
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
-
 
 include('includes/footer.inc');
 ?>

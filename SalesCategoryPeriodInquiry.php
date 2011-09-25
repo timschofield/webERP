@@ -15,7 +15,7 @@ if (!isset($_POST['DateRange'])){
 	$_POST['DateRange']='ThisMonth';
 }
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+echo '<form name="form1" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding=2 class="selection">';
@@ -28,7 +28,7 @@ echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked';
 }
-echo	' /></td>
+echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
 		<tr>
 		<td>' . _('This Week') . ':</td>
@@ -36,7 +36,7 @@ echo	' /></td>
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked';
 }
-echo	' /></td>
+echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
 		<tr>
 		<td>' . _('This Month') . ':</td>
@@ -44,7 +44,7 @@ echo	' /></td>
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked';
 }
-echo	' /></td>
+echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
 		<tr>
 		<td>' . _('This Quarter') . ':</td>
@@ -52,9 +52,14 @@ echo	' /></td>
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked';
 }
-echo	' /></td>
+echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>';
 if ($_POST['DateRange']=='Custom'){
+	if (!isset($_POST['FromDate'])){
+		unset($_POST['ShowSales']);
+		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(1,1,1,Date('m')-12,Date('d')+1,Date('Y')));
+		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	}
 	echo '<tr>
 			<td>' . _('Date From') . ':</td>
 			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
@@ -67,14 +72,10 @@ if ($_POST['DateRange']=='Custom'){
 echo '</table>';
 
 
-echo '<br /><div class="centre"><input tabindex=4 type=submit name="ShowSales" value="' . _('Show Sales') . '" />';
+echo '<br /><div class="centre"><input tabindex=4 type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
 echo '</form></div>';
 echo '<br />';
 
-if ($_POST['DateRange']=='Custom' AND !isset($_POST['FromDate']) AND !isset($_POST['ToDate'])){
-	//Don't run the report until custom dates entered
-	unset($_POST['ShowSales']);
-}
 
 if (isset($_POST['ShowSales'])){
 	$InputError=0; //assume no input errors now test for errors
@@ -154,7 +155,6 @@ if (isset($_POST['ShowSales'])){
 	
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
 	$SalesResult = DB_query($sql,$db,$ErrMsg);
-	$OrdersResult = DB_query($OrdersSQL,$db,$ErrMsg);
 	
 	echo '<table cellpadding=2 class="selection">';
 	

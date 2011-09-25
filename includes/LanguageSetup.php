@@ -65,8 +65,9 @@ if (!function_exists('gettext')) {
 include('includes/LanguagesArray.php');
 
 if (defined('LC_MESSAGES')){ //it's a unix/linux server
-//	$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
-	$LocaleSet = setlocale (LC_ALL, $_SESSION['Language']);
+	$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
+	$LocaleSet = setlocale (LC_NUMERIC, $_SESSION['Language']);
+	//$LocaleSet = setlocale (LC_ALL, $_SESSION['Language']);
 } else { // it's a windows server
 	$LocaleSet = setlocale (LC_ALL, $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
 }

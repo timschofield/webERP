@@ -72,25 +72,24 @@ if (isset($_POST['submit'])) {
 			     FROM salestypes
 			     WHERE typeabbrev = '" . $_POST['TypeAbbrev'] . "'";
 
-		$checkresult = DB_query($checkSql,$db);
-		$checkrow = DB_fetch_row($checkresult);
+		$CheckResult = DB_query($checkSql,$db);
+		$CheckRow = DB_fetch_row($CheckResult);
 
-		if ( $checkrow[0] > 0 ) {
+		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( _('The customer/sales/pricelist type ') . $_POST['TypeAbbrev'] . _(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO salestypes
-						(typeabbrev,
-			 			 sales_type)
-				VALUES ('" . str_replace(' ', '', $_POST['TypeAbbrev']) . "',
-					'" . $_POST['Sales_Type'] . "')";
+			$sql = "INSERT INTO salestypes (typeabbrev,
+											sales_type)
+							VALUES ('" . str_replace(' ', '', $_POST['TypeAbbrev']) . "',
+									'" . $_POST['Sales_Type'] . "')";
 
 			$msg = _('Customer/sales/pricelist type') . ' ' . $_POST['Sales_Type'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typeabbrev)
-			     FROM salestypes";
+						FROM salestypes";
 			$result = DB_query($checkSql, $db);
 			$row = DB_fetch_row($result);
 
@@ -101,24 +100,15 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
 
-
-	// Fetch the default price list.
-		$sql = "SELECT confvalue
-					FROM config
-					WHERE confname='DefaultPriceList'";
-		$result = DB_query($sql,$db);
-		$PriceListRow = DB_fetch_row($result);
-		$DefaultPriceList = $PriceListRow[0];
-
-	// Does it exist
+	// Check the default price list exists
 		$checkSql = "SELECT count(*)
 			     FROM salestypes
-			     WHERE typeabbrev = '" . $DefaultPriceList . "'";
-		$checkresult = DB_query($checkSql,$db);
-		$checkrow = DB_fetch_row($checkresult);
+			     WHERE typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'";
+		$CheckResult = DB_query($checkSql,$db);
+		$CheckRow = DB_fetch_row($CheckResult);
 
 	// If it doesnt then update config with newly created one.
-		if ($checkrow[0] == 0) {
+		if ($CheckRow[0] == 0) {
 			$sql = "UPDATE config
 					SET confvalue='".$_POST['TypeAbbrev']."'
 					WHERE confname='DefaultPriceList'";
@@ -254,7 +244,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<input type=hidden name="SelectedType" value="' . $SelectedType . '">';
 		echo '<input type=hidden name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '">';
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		echo '<tr><th colspan=4><font size=2 color=blue><b>' . _('Sales Type/Price List Setup') . '</b></font></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td><td>';
 
@@ -266,21 +256,21 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		echo '<tr><th colspan=4><font size=2 color=blue><b>' . _('Sales Type/Price List Setup') . '</b></font></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td>
-				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size=3 maxlength=2 name="TypeAbbrev"></td></tr>';
+				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size=3 maxlength=2 name="TypeAbbrev" /></td></tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {
 		$_POST['Sales_Type']='';
 	}
 	echo '<tr><td>' . _('Sales Type Name') . ':</td>
-			<td><input type="Text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '"></td></tr>';
+			<td><input type="Text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
 
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name=submit VALUE="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '"><input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 	echo '</form>';
 

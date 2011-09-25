@@ -12,12 +12,14 @@ if (isset($_GET['SelectedToken'])) {
 		$Result = DB_query("SELECT script FROM scripts WHERE pagesecurity='" . $_GET['SelectedToken'] . "'",$db);
 		if (DB_num_rows($Result)>0){
 			prnMsg(_('This secuirty token is currently used by the following scripts and cannot be deleted'),'error');
-			echo '<table><tr>';
+			echo '<table>
+					<tr>';
 			$i=0;
 			while ($ScriptRow = DB_fetch_array($Result)){
 				if ($i==5){
 					$i=0;
-					echo '</tr><tr>';
+					echo '</tr>
+							<tr>';
 				}
 				$i++;
 				echo '<td>' . $ScriptRow['script'] . '</td>';
@@ -27,7 +29,10 @@ if (isset($_GET['SelectedToken'])) {
 			$Result = DB_query("DELETE FROM securitytokens WHERE tokenid='" . $_GET['SelectedToken'] . "'",$db);
 		}
 	} else { // it must be an edit
-		$sql="SELECT tokenid, tokenname FROM securitytokens where tokenid='".$_GET['SelectedToken']."'";
+		$sql="SELECT tokenid, 
+					tokenname 
+				FROM securitytokens 
+				WHERE tokenid='".$_GET['SelectedToken']."'";
 		$Result= DB_query($sql,$db);
 		$myrow = DB_fetch_array($Result,$db);
 		$_POST['TokenID']=$myrow['tokenid'];
@@ -69,7 +74,8 @@ if (isset($_POST['Submit'])) {
 }
 
 if (isset($_POST['Update']) AND $InputError == 0) {
-	$sql = "UPDATE securitytokens SET tokenname='".$_POST['TokenDescription'] . "' 
+	$sql = "UPDATE securitytokens 
+				SET tokenname='".$_POST['TokenDescription'] . "' 
 			WHERE tokenid='".$_POST['TokenID']."'";
 	$Result= DB_query($sql,$db);
 	$_POST['TokenDescription']='';
@@ -80,32 +86,43 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br /><table><tr>';
+echo '<br />
+		<table>
+		<tr>';
 
 if (isset($_GET['Action']) and $_GET['Action']=='edit') {
 	echo '<td>'. _('Description') . '</td>
-		<td><input type="text" size=30 maxlength=30 name="TokenDescription" value="'.$_POST['TokenDescription'] .'"></td><td>
-		<input type="hidden" name="TokenID" value="'.$_GET['SelectedToken'].'">';
-	echo '<input type="submit" name="Update" value=' . _('Update') . '>';
+		<td><input type="text" size=30 maxlength=30 name="TokenDescription" value="'.$_POST['TokenDescription'] .'"></td>
+		<td><input type="hidden" name="TokenID" value="'.$_GET['SelectedToken'].'"><input type="submit" name="Update" value="' . _('Update') . '" />';
 } else {
-	echo '<td>'._('Token ID') . '<td><input type="text" name="TokenID" value="'.$_POST['TokenID'].'"></td></tr>
-		<tr><td>'. _('Description') . '</td><td><input type="text" size=30 maxlength=30 name="TokenDescription" value="'.$_POST['TokenDescription'] .'"></td><td>';
-	echo '<input type="submit" name="Submit" value=' . _('Insert') . '>';
+	echo '<td>'._('Token ID') . '</td>
+			<td><input type="text" name="TokenID" value="'.$_POST['TokenID'].'" /></td>
+		</tr>
+		<tr>
+		<td>'. _('Description') . '</td>
+		<td><input type="text" size=30 maxlength=30 name="TokenDescription" value="'.$_POST['TokenDescription'] .'" /></td>
+		<td><input type="submit" name="Submit" value="' . _('Insert') . '" />';
 }
 
-echo '</td></tr></table><p></p>';
+echo '</td>
+	</tr>
+	</table>
+	<p></p>';
 
 echo '</form>';
 
 echo '<table class="selection">';
-echo '<tr><th>'. _('Token ID') .'</th>
-	<th>'. _('Description'). '</th>';
+echo '<tr>
+		<th>'. _('Token ID') .'</th>
+		<th>'. _('Description'). '</th>
+	</tr>';
 
 $sql="SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid";
 $Result= DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($Result,$db)){
-	echo '<tr><td>'.$myrow['tokenid'].'</td>
+	echo '<tr>
+			<td>'.$myrow['tokenid'].'</td>
 			<td>'.$myrow['tokenname'].'</td>
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedToken=' . $myrow['tokenid'] . '&Action=edit">' . _('Edit') . '</a></td>
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedToken=' . $myrow['tokenid'] . '&Action=delete">' . _('Delete') . '</a></td>
@@ -117,5 +134,4 @@ echo '</table><p></p>';
 echo '<script>defaultControl(document.form.TokenDescription);</script>';
 
 include('includes/footer.inc');
-
 ?>

@@ -136,19 +136,8 @@ if (isset($_POST['RunReport'])){
 
 			if ($myrow['periodno']!=$PeriodNo){
 				if ($PeriodNo!=-9999){ //ie its not the first time around
-					/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
-					$sql = "SELECT bfwd,
-								actual,
-								period
-							FROM chartdetails
-							WHERE chartdetails.accountcode='" . $SelectedAccount . "' 
-							AND chartdetails.period='" . $PeriodNo . "'";
-
-					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-					$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
-					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-           			$YPos -=$line_height;
-                	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Period Total'));
+					$YPos -=$line_height;
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Period Total'));
 					if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
 	                   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_money_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
                     } else { //its a debit balance b/fwd
