@@ -39,6 +39,7 @@ if (isset($_POST['SearchRecurringOrders'])){
 
 	$SQL = "SELECT recurringsalesorders.recurrorderno,
 				debtorsmaster.name,
+				currencies.decimalplaces AS currdecimalplaces,
 				custbranch.brname,
 				recurringsalesorders.customerref,
 				recurringsalesorders.orddate,
@@ -46,18 +47,20 @@ if (isset($_POST['SearchRecurringOrders'])){
 				recurringsalesorders.lastrecurrence,
 				recurringsalesorders.stopdate,
 				recurringsalesorders.frequency,
-				SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurrsalesorderdetails.discountpercent)) AS ordervalue
-			FROM recurringsalesorders,
-				recurrsalesorderdetails,
-				debtorsmaster,
-				custbranch
-			WHERE recurringsalesorders.recurrorderno = recurrsalesorderdetails.recurrorderno
-			AND recurringsalesorders.debtorno = debtorsmaster.debtorno
-			AND debtorsmaster.debtorno = custbranch.debtorno
-			AND recurringsalesorders.branchcode = custbranch.branchcode
-			AND recurringsalesorders.fromstkloc = '". $_POST['StockLocation'] . "'
+SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurrsalesorderdetails.discountpercent)) AS ordervalue
+			FROM recurringsalesorders INNER JOIN recurrsalesorderdetails
+			ON recurringsalesorders.recurrorderno = recurrsalesorderdetails.recurrorderno 
+			INNER JOIN debtorsmaster 
+			ON recurringsalesorders.debtorno = debtorsmaster.debtorno
+			INNER JOIN custbranch
+			ON debtorsmaster.debtorno = custbranch.debtorno
+			AND recurringsalesorders.branchcode = custbranch.branchcode 
+			INNER JOIN currencies 
+			ON debtorsmaster.currcode=currencies.currabrev 
+			WHERE recurringsalesorders.fromstkloc = '". $_POST['StockLocation'] . "'
 			GROUP BY recurringsalesorders.recurrorderno,
 				debtorsmaster.name,
+				currencies.decimalplaces,
 				custbranch.brname,
 				recurringsalesorders.customerref,
 				recurringsalesorders.orddate,
@@ -71,7 +74,8 @@ if (isset($_POST['SearchRecurringOrders'])){
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<br /><table cellpadding=2 colspan=7 width=90% class=selection>';
+	echo '<br />
+		<table cellpadding="2" colspan="7" width="90%" class="selection">';
 
 	$tableheader = '<tr>
 					<th>' . _('Modify') . '</th>
@@ -102,7 +106,7 @@ if (isset($_POST['SearchRecurringOrders'])){
 		$ModifyPage = $rootpath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($myrow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
-		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
+		$FormatedOrderValue = locale_money_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
 		printf('<td><a href="%s">%s</a></td>
 			<td>%s</td>

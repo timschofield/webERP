@@ -47,7 +47,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
 			if (!is_numeric(filter_number_format($_POST['SuppPrice'.$POLine->LineNo]))){
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'),'error');
 			} else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=filter_number_format((filter_number_format($_POST['SuppPrice'.$POLine->LineNo])/filter_number_format($_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor));
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Price=filter_number_format(filter_number_format($_POST['SuppPrice'.$POLine->LineNo])/filter_number_format($_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor));
 			}
 			$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ReqDelDate=$_POST['ReqDelDate'.$POLine->LineNo];
 		}
@@ -610,7 +610,7 @@ if (isset($_POST['NewItem'])){
 															$ItemCode,
 															0, /*Serialised */
 															0, /*Controlled */
-															filter_number_format((filter_number_format($Quantity)*$ConversionFactor), /* Qty */
+															filter_number_format($Quantity*$ConversionFactor), /* Qty */
 															$SupplierDescription,
 															$PurchPrice,
 															$ItemRow['units'],
@@ -626,8 +626,7 @@ if (isset($_POST['NewItem'])){
 															$SuppliersUnitOfMeasure,
 															$ConversionFactor,
 															$LeadTime,
-															$SuppliersPartNo
-															);
+															$SuppliersPartNo);
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
 					if ($debug==1){
@@ -701,9 +700,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
 				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . $POLine->ConversionFactor . '"></td>
-				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . locale_locale_format(round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces),$POLine->DecimalPlaces) . '"></td>
+				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size="10" value="' . locale_number_format(round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces),$POLine->DecimalPlaces) . '"></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
-				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . locale_money_format(round(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces),,$_SESSION['PO'.$identifier]->CurrDecimalPlaces) .'"></td>
+				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . locale_money_format(round(($POLine->Price *$POLine->ConversionFactor),$_SESSION['PO'.$identifier]->CurrDecimalPlaces),$_SESSION['PO'.$identifier]->CurrDecimalPlaces) .'"></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>';
 			if ($POLine->QtyReceived !=0 AND $POLine->Completed!=1){

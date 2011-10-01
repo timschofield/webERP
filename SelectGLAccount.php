@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 8;
-
 include('includes/session.inc');
 
 $title = _('Search GL Accounts');

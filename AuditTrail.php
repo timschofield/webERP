@@ -22,6 +22,12 @@ if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset(
 	unset($_POST['View']);
 }
 
+if (isset($_POST['ContainingText'])){
+	$ContainingText = trim(mb_strtoupper($_POST['ContainingText']));
+} elseif (isset($_GET['ContainingText'])){
+	$ContainingText = trim(mb_strtoupper($_GET['ContainingText']));
+}
+
 // Get list of tables
 $TableResult = DB_show_tables($db);
 
@@ -62,6 +68,14 @@ while ($tables = DB_fetch_row($TableResult)) {
 	}
 }
 echo '</select></td></tr>';
+
+if(!isset($_POST['ContainingText'])){
+	$_POST['ContainingText']='';
+}
+// Show the text
+echo '<tr><td>' . _('Containing text') . ':</td>';
+echo '<td><input type="text" name="ContainingText" size=20 maxlength=20 value="'. $_POST['ContainingText'] . '"></td></tr>';
+
 
 echo '</table><br />';
 echo '<div class="centre"><input tabindex="5" type="submit" name="View" value="' . _('View') . '"></div>';
@@ -122,21 +136,26 @@ if (isset($_POST['View'])) {
 		$_SESSION['SQLString']['fields'][0] = $Assigment[0];
 		$_SESSION['SQLString']['values'][0] = $Assigment[1];
 	}
+	
+	if (mb_strlen($ContainingText) > 0) {
+	    $ContainingText = " AND querystring LIKE '%" . $ContainingText . "%' ";
+	}else{
+	    $ContainingText = "";
+	}
 
 	if ($_POST['SelectedUser'] == 'ALL') {
 		$sql="SELECT transactiondate,
 				userid,
 				querystring
 			FROM audittrail
-			WHERE transactiondate
-			BETWEEN '". $FromDate."' AND '".$ToDate."'";
+			WHERE transactiondate BETWEEN '". $FromDate."' AND '".$ToDate."'" . $ContainingText;
 	} else {
 		$sql="SELECT transactiondate,
 				userid,
 				querystring
 			FROM audittrail
 			WHERE userid='".$_POST['SelectedUser']."'
-			AND transactiondate BETWEEN '".$FromDate."' AND '".$ToDate."'";
+			AND transactiondate BETWEEN '".$FromDate."' AND '".$ToDate."'" . $ContainingText;
 	}
 	$result = DB_query($sql,$db);
 

@@ -255,8 +255,6 @@ If (isset($_POST['Process'])) {
 			$ErrMsg = _('The recurring order cannot be added because');
 			$DbgMsg = _('The SQL that failed was');
 			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
-			
-			echo '<br/>' . $HeaderSQL;
 
 			$RecurrOrderNo = DB_Last_Insert_ID($db,'recurringsalesorders','recurrorderno');
 			echo 'xxx'.$RecurrOrderNo;
@@ -278,8 +276,6 @@ If (isset($_POST['Process'])) {
 								'" . filter_number_format($StockItem->DiscountPercent) . "',
 								'" . $StockItem->Narrative . "')";
 				$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
-				
-				echo '<br/>' . $LineItemsSQL;
 				
 			} /* inserted line items into sales order details */
 			

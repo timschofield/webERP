@@ -443,15 +443,15 @@ if (!isset($StockID)) {
 		}
 
 		if ($_POST['Quotations']=='Quotes_Only'){
-			echo '<option selected VALUE="Quotes_Only">' . _('Quotations Only');
-			echo '<option VALUE="Orders_Only">' . _('Orders Only');
+			echo '<option selected value="Quotes_Only">' . _('Quotations Only');
+			echo '<option value="Orders_Only">' . _('Orders Only');
 		} else {
-			echo '<option selected VALUE="Orders_Only">' . _('Orders Only');
-			echo '<option VALUE="Quotes_Only">' . _('Quotations Only');
+			echo '<option selected value="Orders_Only">' . _('Orders Only');
+			echo '<option value="Quotes_Only">' . _('Quotations Only');
 		}
 
 		echo '</select> </td><td>';
-		echo '<input type=submit name="SearchOrders" VALUE="' . _('Search') . '"></td>';
+		echo '<input type=submit name="SearchOrders" value="' . _('Search') . '"></td>';
     echo '&nbsp;&nbsp;<td><a href="' . $rootpath . '/SelectOrderItems.php?' . SID . '&NewOrder=Yes">' .
 		_('Add Sales Order') . '</a></td></tr></table>';
 	}
@@ -483,8 +483,8 @@ if (!isset($StockID)) {
       		<td><input type='Text' name='StockCode' size=15 maxlength=18></td>
       	</tr>
       </table>";
-	echo "<br /><input type=submit name='SearchParts' VALUE='" . _('Search Parts Now') .
-			"'><input type=submit name='ResetPart' VALUE='" . _('Show All') . "'></div><br />";
+	echo "<br /><input type=submit name='SearchParts' value='" . _('Search Parts Now') .
+			"'><input type=submit name='ResetPart' value='" . _('Show All') . "'></div><br />";
 
 if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 
@@ -510,7 +510,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 			$k++;
 		}
 
-		printf("<td><input type=submit name='SelectedStockItem' VALUE='%s'</td>
+		printf("<td><input type=submit name='SelectedStockItem' value='%s'</td>
 			<td>%s</td>
 			<td class=number>%s</td>
 			<td>%s</td>
@@ -725,16 +725,16 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 	/*show a table of the orders returned by the SQL */
 	if (DB_num_rows($SalesOrdersResult)>0) {
 		
-                /* Get users authority to place POs */
-                $AuthSQL="SELECT cancreate
-				FROM purchorderauth
-				WHERE userid='". $_SESSION['UserID'] . "'";
-			
+		/* Get users authority to place POs */
+		$AuthSQL="SELECT cancreate
+					FROM purchorderauth
+					WHERE userid='". $_SESSION['UserID'] . "'";
+						
 		/*we don't know what currency these orders might be in but if no authority at all then don't show option*/
 		$AuthResult=DB_query($AuthSQL,$db);
 		$AuthRow=DB_fetch_array($AuthResult);
 
-                echo '<table cellpadding=2 colspan=7 width=95% class=selection>';
+                echo '<table cellpadding="2" colspan="7" width="95%" class="selection">';
 
 		if (isset($_POST['Quotations']) AND $_POST['Quotations']=='Orders_Only'){
 			$tableheader = '<tr>
@@ -795,7 +795,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 			$PrintQuotation = $rootpath . '/PDFQuotation.php?QuotationNo=' . $myrow['orderno'];
 			$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-			$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
+			$FormatedOrderValue = locale_money_format($myrow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
 	
 			if ($myrow['printedpackingslip']==0) {
 			  $PrintText = _('Print');
@@ -898,7 +898,7 @@ if (isset($StockItemsResult) and DB_num_rows($StockItemsResult)>0) {
 		} else {
 			echo '<b>' . _('Total Quotation(s) Value in');
 		}
-		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>
+		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ' :</b></td><td class="number"><b>' . locale_money_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>
 			</table>';
 	} //end if there are some orders to show  
 }

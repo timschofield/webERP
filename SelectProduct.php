@@ -125,7 +125,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
 				<td class="select">';
-		$PriceResult = DB_query("SELECT typeabbrev, price FROM prices
+		$PriceResult = DB_query("SELECT typeabbrev, 
+										price FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
@@ -151,7 +152,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
 			$Price = $PriceRow[1];
-			echo $PriceRow[0] . '</td><td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			echo $PriceRow[0] . '</td><td class="select">' . locale_money_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<th class="number">' . _('Gross Profit') . '</th>
 				<td class="select">';
 			if ($Price > 0) {
@@ -164,7 +165,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				$Price = $PriceRow[1];
 				echo '<tr><td></td>
 						<th>' . $PriceRow[0] . '</th>
-						<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="select">' . locale_money_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<th class="number">' . _('Gross Profit') . '</th>
 						<td class="select">';
 				if ($Price > 0) {
@@ -190,7 +191,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Cost = $myrow['cost'];
 		}
 		echo '<th class="number">' . _('Cost') . '</th>
-			<td class="select">' . locale_number_format($Cost, 3) . '</td>';
+			<td class="select">' . locale_money_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
@@ -350,7 +351,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 				<th width="5%">' . _('Curr') . '</th>
 				<th width="15%">' . _('Eff Date') . '</th>
 				<th width="10%">' . _('Lead Time') . '</th>
-                           <th width="10%">' . _('Min Order Qty') . '</th>
+				<th width="10%">' . _('Min Order Qty') . '</th>
 				<th width="5%">' . _('Prefer') . '</th></tr>';
 	$SuppResult = DB_query("SELECT  suppliers.suppname,
 									suppliers.currcode,
@@ -370,7 +371,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC", $db);
 	while ($SuppRow = DB_fetch_array($SuppResult)) {
 		echo '<tr><td class="select">' . $SuppRow['suppname'] . '</td>
-					<td class="select">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
+					<td class="select">' . locale_money_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
 					<td class="select">' . $SuppRow['currcode'] . '</td>
 					<td class="select">' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
 					<td class="select">' . $SuppRow['leadtime'] . '</td>
@@ -422,11 +423,8 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $rootpath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded
-	if (file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg')){
-		echo ' picture exists alright!';
-	}
 	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120">';
+		echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&StockID=' . $StockID . '&text=' . $StockID . '&width=120&height=120">';
 	}
 	if (($myrow['mbflag'] == 'B') 
 		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))
@@ -439,7 +437,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 										purchdata.leadtime
 									FROM purchdata INNER JOIN suppliers
 									ON purchdata.supplierno=suppliers.supplierid
-									WHERE purchdata.stockid = '" . $StockID . "'", $db);
+									WHERE purchdata.stockid='" . $StockID . "'", $db);
 		while ($SuppRow = DB_fetch_array($SuppResult)) {
 			if (($myrow['eoq'] < $SuppRow['minorderqty'])) {
 				$EOQ = $SuppRow['minorderqty'];
@@ -467,7 +465,9 @@ if ($Its_A_Labour_Item == True) {
 }
 if (!$Its_A_Kitset) {
 	echo '<a href="' . $rootpath . '/Prices.php?Item=' . $StockID . '">' . _('Maintain Pricing') . '</a><br />';
-	if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != "" AND Strlen($_SESSION['CustomerID']) > 0) {
+	if (isset($_SESSION['CustomerID']) 
+		AND $_SESSION['CustomerID'] != '' 
+		AND mb_strlen($_SESSION['CustomerID']) > 0) {
 		echo '<a href="' . $rootpath . '/Prices_Customer.php?Item=' . $StockID . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</a><br />';
 	}
 	echo '<a href="' . $rootpath . '/DiscountCategories.php?StockID=' . $StockID . '">' . _('Maintain Discount Category') . '</a><br />';
@@ -498,7 +498,7 @@ echo '<table class="selection"><tr>';
 echo '<td>' . _('In Stock Category') . ':';
 echo '<select name="StockCat">';
 if (!isset($_POST['StockCat'])) {
-	$_POST['StockCat'] = "";
+	$_POST['StockCat'] ='';
 }
 if ($_POST['StockCat'] == 'All') {
 	echo '<option selected="True" value="All">' . _('All').'</option>';

@@ -58,15 +58,7 @@ if (!function_exists('imagecreatefrompng')){
 }
 $DefaultImage = 'webERPsmall.png';
 
-// FOR APACHE
-if ( $_SERVER['PATH_TRANSLATED'][0] == '/' OR $_SERVER['PATH_TRANSLATED'][0]=='') {
-	//*nix
-	$pathsep = '/';
-} else {
-	//Windows
-	$pathsep = "\\";
-}
-$FilePath =  $_SESSION['part_pics_dir'] . $pathsep;
+$FilePath =  $_SESSION['part_pics_dir'] . '/';
 
 $StockID = trim(mb_strtoupper($_GET['StockID']));
 if( isset($_GET['bgcolor']) )
@@ -90,13 +82,15 @@ if( isset($_GET['text']) ) {
 if( isset($_GET['transcolor'])) {
 	$doTrans = true;
 	$TranspColour = $_GET['transcolor'];
+} else {
+	$doTrans = false;
 }
 if( isset($_GET['bevel']) ) {
 	$bevel = $_GET['bevel'];
+} else {
+	$bevel = false;
 }
-if( isset($_GET['useblank']) ) {
-	$useblank = $_GET['useblank'];
-}
+
 if( isset($_GET['fontsize']) ) {
 	$fontsize = $_GET['fontsize'];
 } else {
@@ -104,6 +98,8 @@ if( isset($_GET['fontsize']) ) {
 }
 if( isset($_GET['notextbg']) ) {
 	$notextbg = true;
+} else {
+	$notextbg = false;
 }
 
 
@@ -157,7 +153,7 @@ if( !$automake && !isset($FileName) ) {
 }
 
 // See if we need to automake this image
-if( $automake && !isset($FileName) || $useblank ) {
+if( $automake AND !isset($FileName) ) {
 	// Have we got height and width specs
 	if( !isset($width) )
 		$width = 64;

@@ -147,7 +147,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						WHERE debtortrans.type=10
 						AND debtortrans.transno='" . $FromTransNo . "'";
 
-			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
+			if (isset($_POST['PrintEDI']) AND $_POST['PrintEDI']=='No') {
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
 			}
 		} else {
@@ -200,7 +200,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						WHERE debtortrans.type=11
 						AND debtortrans.transno='" . $FromTransNo . "'";
 
-			if ($_POST['PrintEDI']=='No')	{
+			if (isset($_POST['PrintEDI']) AND $_POST['PrintEDI']=='No')	{
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
 			}
 		} // end else

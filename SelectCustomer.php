@@ -179,7 +179,7 @@ if (isset($_POST['JustSelectedACustomer'])){
 		$_SESSION['BranchCode'] = $_POST['SelectedBranch'.$i];
 	}
 }
-//AND !isset($_POST['Keywords']) AND !isset($_POST['CustCode']) AND !isset($_POST['CustType']) AND !isset($_POST['CustPhone'])
+
 if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST['CSV'])) {
 	$SQL = "SELECT debtorsmaster.name,
 					custbranch.phoneno
@@ -502,8 +502,12 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			$SQL = "SELECT debtorsmaster.clientsince,
 						(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.clientsince))) as customersincedays,
 						(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.lastpaiddate))) as lastpaiddays,
-						debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
-					FROM debtorsmaster
+						debtorsmaster.paymentterms, 
+						debtorsmaster.lastpaid, 
+						debtorsmaster.lastpaiddate,
+						currencies.decimalplaces AS currdecimalplaces
+					FROM debtorsmaster INNER JOIN currencies 
+					ON debtorsmaster.currcode=currencies.currabrev
 					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
 			$DataResult = DB_query($SQL, $db);
 			$myrow = DB_fetch_array($DataResult);
@@ -530,7 +534,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					</tr>';
 			}
 			echo '<tr><td class="select">' . _('Last Paid Amount (inc tax):') . '</td>
-					<td class="select"> <b>' . locale_number_format($myrow['lastpaid'], 2) . '</b></td>
+					<td class="select"> <b>' . locale_money_format($myrow['lastpaid'], $myrow['currdecimalplaces']) . '</b></td>
 					<td class="select"></td>
 					</tr>';
 			echo '<tr><td class="select">' . _('Customer since:') . '</td>
@@ -546,7 +550,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			} else {
 				echo '<tr>
 						<td class="select">' . _('Total Spend from this Customer (inc tax):') . ' </td>
-						<td class="select"><b>' . locale_number_format($row['total'], 2) . '</b></td>
+						<td class="select"><b>' . locale_money_format($row['total'], $myrow['currdecimalplaces']) . '</b></td>
 						<td class="select"></td>
 						</tr>';
 			}
