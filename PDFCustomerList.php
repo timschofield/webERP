@@ -333,7 +333,7 @@ if (isset($_POST['PrintPDF'])){
 
 			if ($_POST['Activity']!='All'){
 				$LeftOvers = $pdf->addTextWrap(230,$YPos-20,60,$FontSize,_('Turnover'),'right');
-				$LeftOvers = $pdf->addTextWrap(230,$YPos-30,60,$FontSize,locale_money_format($LocalCurrencyTurnover,0), 'right');
+				$LeftOvers = $pdf->addTextWrap(230,$YPos-30,60,$FontSize,locale_number_format($LocalCurrencyTurnover,0), 'right');
 			}
 
 			$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,$Customers['brname']);

@@ -96,8 +96,8 @@ If ((isset($_POST['PrintPDF']))
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+5, $YPos, 80,$FontSize,$DetailTrans['typename'], 'left');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+95, $YPos, 80,$FontSize,$DisplayTranDate, 'left');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+175, $YPos, 80,$FontSize,$DetailTrans['suppreference'], 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+255, $YPos, 80,$FontSize,locale_money_format($DetailTrans['trantotal'],$SuppliersPaid['currdecimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+355, $YPos,80,$FontSize,locale_money_format($DetailTrans['amt'],$SuppliersPaid['currdecimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+255, $YPos, 80,$FontSize,locale_number_format($DetailTrans['trantotal'],$SuppliersPaid['currdecimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+355, $YPos,80,$FontSize,locale_number_format($DetailTrans['amt'],$SuppliersPaid['currdecimalplaces']), 'right');
 			$AccumBalance += $DetailTrans['amt'];
 
 			$YPos -=$line_height;
@@ -113,7 +113,7 @@ If ((isset($_POST['PrintPDF']))
 
         $TotalPayments += $AccumBalance;
 
-	    $LeftOvers = $pdf->addTextWrap($Left_Margin+355,$YPos,80,$FontSize,locale_money_format($AccumBalance,$SuppliersPaid['currdecimalplaces']), 'right');
+	    $LeftOvers = $pdf->addTextWrap($Left_Margin+355,$YPos,80,$FontSize,locale_number_format($AccumBalance,$SuppliersPaid['currdecimalplaces']), 'right');
 
 	    $YPos -= (1.5*$line_height);
 	    $pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);

@@ -700,9 +700,9 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							' ',
 							' ',
 							locale_number_format($TotalQty,$LastDecimalPlaces),
-							locale_money_format($TotalExtCost,2),
-							locale_money_format($TotalExtPrice,2),
-							locale_money_format($TotalInvQty,$LastDecimalPlaces),
+							locale_number_format($TotalExtCost,2),
+							locale_number_format($TotalExtPrice,2),
+							locale_number_format($TotalInvQty,$LastDecimalPlaces),
 							' ',
 							' ');
 			}

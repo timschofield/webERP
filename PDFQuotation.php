@@ -145,7 +145,7 @@ if (DB_num_rows($result)>0){
 
 		$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
-		$DisplayPrice = locale_money_format($myrow2['unitprice'],$myrow['currdecimalplaces']);
+		$DisplayPrice = locale_number_format($myrow2['unitprice'],$myrow['currdecimalplaces']);
 		$DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
 		$SubTot =  filter_number_format($myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']));
 		$TaxProv = $myrow['taxprovinceid'];
@@ -171,10 +171,10 @@ if (DB_num_rows($result)>0){
 
 		$DisplayTaxClass = $TaxClass . "%";
 		$TaxAmount =  filter_number_format((($SubTot/100)*(100+$TaxClass))-$SubTot);
-		$DisplayTaxAmount = locale_money_format($TaxAmount,$myrow['currdecimalplaces']);
+		$DisplayTaxAmount = locale_number_format($TaxAmount,$myrow['currdecimalplaces']);
 
 		$LineTotal = filter_number_format($SubTot + $TaxAmount);
-		$DisplayTotal = locale_money_format($LineTotal,$myrow['currdecimalplaces']);
+		$DisplayTotal = locale_number_format($LineTotal,$myrow['currdecimalplaces']);
 
 		$FontSize=10;
 

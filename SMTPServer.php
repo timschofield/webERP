@@ -6,23 +6,22 @@ $title = _('SMTP Server details');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/email.gif" title="' .
-		_('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/email.gif" title="' . _('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
 
 if (isset($_POST['submit'])) {
 	$sql="UPDATE emailsettings SET
-				host='".$_POST['host']."',
-				port='".$_POST['port']."',
-				heloaddress='".$_POST['heloaddress']."',
-				username='".$_POST['username']."',
-				password='".$_POST['password']."',
-				auth='".$_POST['auth']."'";
+				host='".$_POST['Host']."',
+				port='".$_POST['Port']."',
+				heloaddress='".$_POST['HeloAddress']."',
+				username='".$_POST['UserName']."',
+				password='".$_POST['Password']."',
+				auth='".$_POST['Auth']."'";
 	$result=DB_query($sql, $db);
 	prnMsg(_('The settings for the SMTP server have been successfully updated'), 'success');
 	echo '<br />';
 }
 
-$sql='SELECT id,
+$sql="SELECT id,
 			host,
 			port,
 			heloaddress,
@@ -30,7 +29,7 @@ $sql='SELECT id,
 			password,
 			timeout,
 			auth
-		FROM emailsettings';
+		FROM emailsettings";
 
 $result=DB_query($sql, $db);
 
@@ -38,15 +37,15 @@ $myrow=DB_fetch_array($result);
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class=selection>';
+echo '<table class="selection">';
 echo '<tr><td>'._('Server Host Name').'</td>
-		<td><input type="text" name=host value='.$myrow['host'].'></td></tr>';
+		<td><input type="text" name="Host" value="'.$myrow['host'].'" /></td></tr>';
 echo '<tr><td>'._('SMTP port').'</td>
-		<td><input type="text" name=port size=4 class=number value='.$myrow['port'].'></td></tr>';
+		<td><input type="text" name="Port" size="4" class="number" value="'.$myrow['port'].'" /></td></tr>';
 echo '<tr><td>'._('Helo Command').'</td>
-		<td><input type="text" name=heloaddress value='.$myrow['heloaddress'].'></td></tr>';
+		<td><input type="text" name="HeloAddress" value="'.$myrow['heloaddress'].'" /></td></tr>';
 echo '<tr><td>'._('Authorisation Required').'</td><td>';
-echo '<select name=auth>';
+echo '<select name="Auth">';
 if ($myrow['auth']==1) {
 	echo '<option selected value=1>'._('True').'</option>';
 	echo '<option value=0>'._('False').'</option>';
@@ -56,12 +55,12 @@ if ($myrow['auth']==1) {
 }
 echo '</select></td></tr>';
 echo '<tr><td>'._('User Name').'</td>
-	<td><input type="text" name=username value='.$myrow['username'].'></td></tr>';
+	<td><input type="text" name="UserName" value="'.$myrow['username'].'" /></td></tr>';
 echo '<tr><td>'._('Password').'</td>
-	<td><input type=password name=password value='.$myrow['password'].'></td></tr>';
+	<td><input type="password" name="Password" value="'.$myrow['password'].'" /></td></tr>';
 echo '<tr><td>'._('Timeout (seconds)').'</td>
-	<td><input type="text" size=5 name=timeout class=number value='.$myrow['timeout'].'></td></tr>';
-echo '<tr><td colspan=2><div class=centre><input type="submit" name="submit" value="' . _('Update') . '"></div></td></tr>';
+	<td><input type="text" size="5" name="Timeout" class="number" value="'.$myrow['timeout'].'" /></td></tr>';
+echo '<tr><td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td></tr>';
 echo '</table></form>';
 
 include('includes/footer.inc');

@@ -1,7 +1,7 @@
 webERP Change Log
 
 29/9/11 Ricard: added new query critera to AuditTrail.php to look for text in query strings to enable searching for updates/inserts/deletes relating to a specified customer or item code etc
-22/9/11 Exson: fixed the bug in GLAccountReport.php for typename from righttable in SQL and chang number_format for multinational.
+22/9/11 Exson: fixed the bug in GLAccountReport.php for typename from righttable in SQL and chang locale_number_format for multinational.
 17/9/11 Phil: Added WindowsLocale element to LanguagesArray.php and modified UserSettings.php and WWW_Users.php to use the new array definition. Also modified includes/LanguageSetup.php to use the windows locale string in the LanguagesArray as required for proper setting of the locale under windows.
 17/9/11 Felix Lim: added serialised field into PrintCustTransPortrait.php to reinstate possiblity for printing serialised items on invoice - not possible in landscape version (PrintCustTrans.php)
 12/9/11 Phil/Exson/Tom: Change all scripts to allow display and input of numbers in the format of the selected users locale 

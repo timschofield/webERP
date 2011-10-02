@@ -254,7 +254,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					locale_money_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
+					locale_number_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8'],
@@ -270,7 +270,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					locale_money_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
+					locale_number_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8']);
@@ -292,7 +292,7 @@ if (!isset($SelectedTabs)){
 		}
 
 		echo '<tr><td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
-					<td class="number">'.locale_money_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+					<td class="number">'.locale_number_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 
 		echo '</table>';

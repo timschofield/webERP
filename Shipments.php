@@ -21,7 +21,7 @@ if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment'])){
 	prnMsg( _('To set up a shipment') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'error');
         echo '<table class="selection">
                 <tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSupplier.php?'.SID .'">' . _('Select the Supplier') . '</a></li>
+                <li><a href="'. $rootpath . '/SelectSupplier.php">' . _('Select the Supplier') . '</a></li>
                 </td></tr></table></div>';
         include('includes/footer.inc');
         exit;
@@ -287,17 +287,22 @@ if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is 
 
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method="POST">';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table class=selection><tr><td><b>'. _('Shipment').': </td><td><b>' . $_SESSION['Shipment']->ShiptRef . '</b></td>
-		<td><b>'. _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</b></td></tr>';
+echo '<table class="selection">
+		<tr>
+			<td><b>'. _('Shipment').': </td>
+			<td><b>' . $_SESSION['Shipment']->ShiptRef . '</b></td>
+			<td><b>'. _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</b></td>
+		</tr>';
 
-echo '<tr><td>'. _('Vessel Name /Transport Agent'). ': </td>
-	<td colspan=3><input type=Text name="Vessel" maxlength=50 size=50 VALUE="' . $_SESSION['Shipment']->Vessel . '"></td>
-	<td>'._('Voyage Ref / Consignment Note').': </td>
-	<td><input type=Text name="VoyageRef" maxlength=20 size=20 VALUE="' . $_SESSION['Shipment']->VoyageRef . '"></td>
-</tr>';
+echo '<tr>
+		<td>'. _('Vessel Name /Transport Agent'). ': </td>
+		<td colspan=3><input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
+		<td>'._('Voyage Ref / Consignment Note').': </td>
+		<td><input type="text name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
+	</tr>';
 
 if (isset($_SESSION['Shipment']->ETA)){
 	$ETA = ConvertSQLDate($_SESSION['Shipment']->ETA);
@@ -307,9 +312,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 
 echo '<tr><td>'. _('Expected Arrival Date (ETA)'). ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type=Text class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength=10 size=10 VALUE="' . $ETA . '"></td>';
+	echo '<td><input type="text class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength=10 size=10 value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type=Text class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength=10 size=10 VALUE="' . Date($_SESSION['DefaultDateFormat']) . '"></td>';
+	echo '<td><input type="text class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength=10 size=10 value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>'. _('Into').' ';
 
@@ -346,14 +351,14 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-				echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>'; 
+				echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>'; 
 			} else {
-				echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 
@@ -376,7 +381,7 @@ echo '</td></tr></table>';
 if (count($_SESSION['Shipment']->LineItems)>0){
 	/* Always display all shipment lines */
 
-	echo '<br /><table cellpadding=2 colspan=7 class=selection>';
+	echo '<br /><table cellpadding=2 colspan=7 class="selection">';
 	echo '<tr><th colspan=9><font color=navy size=3>'. _('Order Lines On This Shipment'). '</font></th></tr>';
 
 	$TableHeader = '<tr>
@@ -426,7 +431,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 echo '</table>';
 }//there are lines on the shipment
 
-echo '<br /><div class="centre"><input type=submit name="Update" Value="'. _('Update Shipment Details') . '"></div><p>';
+echo '<br /><div class="centre"><input type=submit name="Update" value="'. _('Update Shipment Details') . '" /></div><p>';
 
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation'] =$_SESSION['Shipment']->StockLocation;
@@ -454,8 +459,8 @@ $result = DB_query($sql,$db);
 
 if (DB_num_rows($result)>0){
 
-	echo '<table cellpadding=2 colspan=7 class=selection>';
-	echo '<tr><th colspan=7><font color=navy size=3>'. _('Possible Order Lines To Add To This Shipment').'</font></th></tr>';
+	echo '<table cellpadding="2" colspan="7" class="selection">';
+	echo '<tr><th colspan="7"><font color="navy" size="3">'. _('Possible Order Lines To Add To This Shipment').'</font></th></tr>';
 
 	$TableHeader = '<tr>
 			<th>'. _('Order').'</th>
@@ -495,7 +500,7 @@ if (DB_num_rows($result)>0){
 			<td>' . $myrow['units'] . '</td>
 			<td class=number>' . locale_number_format($myrow['quantityrecd'],2) . '</td>
 			<td class=number>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Add=' . $myrow['podetailitem'] . '">'. _('Add').'</a></td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . 'Add=' . $myrow['podetailitem'] . '">'. _('Add').'</a></td>
 			</tr>';
 
 	}

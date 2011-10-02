@@ -162,8 +162,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 					while ($myrow=DB_fetch_array($SetldTrans)){
 
-						$DisplayAlloc = locale_money_format($myrow['alloc'],$StmtHeader['currdecimalplaces']);
-						$DisplayOutstanding = locale_money_format($myrow['ostdg'],$StmtHeader['currdecimalplaces']);
+						$DisplayAlloc = locale_number_format($myrow['alloc'],$StmtHeader['currdecimalplaces']);
+						$DisplayOutstanding = locale_number_format($myrow['ostdg'],$StmtHeader['currdecimalplaces']);
 
 						$FontSize=9;
 
@@ -173,10 +173,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 						$FontSize=10;
 						if ($myrow['total']>0){
-							$DisplayTotal = locale_money_format($myrow['total'],$StmtHeader['currdecimalplaces']);
+							$DisplayTotal = locale_number_format($myrow['total'],$StmtHeader['currdecimalplaces']);
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,$DisplayTotal, 'right');
 						} else {
-							$DisplayTotal = locale_money_format(-$myrow['total'],$StmtHeader['currdecimalplaces']);
+							$DisplayTotal = locale_number_format(-$myrow['total'],$StmtHeader['currdecimalplaces']);
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,60,$FontSize,$DisplayTotal, 'right');
 						}
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+459,$YPos,60,$FontSize,$DisplayAlloc, 'right');
@@ -213,8 +213,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 			while ($myrow=DB_fetch_array($OstdgTrans)){
 
-				$DisplayAlloc = locale_money_format($myrow['alloc'],$StmtHeader['currdecimalplaces']);
-				$DisplayOutstanding = locale_money_format($myrow['ostdg'],$StmtHeader['currdecimalplaces']);
+				$DisplayAlloc = locale_number_format($myrow['alloc'],$StmtHeader['currdecimalplaces']);
+				$DisplayOutstanding = locale_number_format($myrow['ostdg'],$StmtHeader['currdecimalplaces']);
 
 				$FontSize=9;
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,$myrow['typename'], 'left');
@@ -223,10 +223,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 				$FontSize=10;
 				if ($myrow['total']>0){
-					$DisplayTotal = locale_money_format($myrow['total'],$StmtHeader['currdecimalplaces']);
+					$DisplayTotal = locale_number_format($myrow['total'],$StmtHeader['currdecimalplaces']);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,55,$FontSize,$DisplayTotal, 'right');
 				} else {
-					$DisplayTotal = locale_money_format(-$myrow['total'],$StmtHeader['currdecimalplaces']);
+					$DisplayTotal = locale_number_format(-$myrow['total'],$StmtHeader['currdecimalplaces']);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,55,$FontSize,$DisplayTotal, 'right');
 				}
 
@@ -343,11 +343,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 		/*Now print out the footer and totals */
 
-			$DisplayDue = locale_money_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$StmtHeader['currdecimalplaces']);
-			$DisplayCurrent = locale_money_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$StmtHeader['currdecimalplaces']);
-			$DisplayBalance = locale_money_format($AgedAnalysis['balance'],$StmtHeader['currdecimalplaces']);
-			$DisplayOverdue1 = locale_money_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$StmtHeader['currdecimalplaces']);
-			$DisplayOverdue2 = locale_money_format($AgedAnalysis['overdue2'],$StmtHeader['currdecimalplaces']);
+			$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$StmtHeader['currdecimalplaces']);
+			$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$StmtHeader['currdecimalplaces']);
+			$DisplayBalance = locale_number_format($AgedAnalysis['balance'],$StmtHeader['currdecimalplaces']);
+			$DisplayOverdue1 = locale_number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$StmtHeader['currdecimalplaces']);
+			$DisplayOverdue2 = locale_number_format($AgedAnalysis['overdue2'],$StmtHeader['currdecimalplaces']);
 
 
 			$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+(4*$line_height),$Left_Margin,$Bottom_Margin+(4*$line_height));
@@ -377,7 +377,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 			if (mb_strlen($StmtHeader['lastpaiddate'])>1 AND $StmtHeader['lastpaid']!=0){
 				$pdf->addText($Left_Margin+5, $Bottom_Margin+13, $FontSize, _('Last payment received').' ' . ConvertSQLDate($StmtHeader['lastpaiddate']) .
-					'    ' . _('Amount received was').' ' . locale_money_format($StmtHeader['lastpaid'],$StmtHeader['currdecimalplaces']));
+					'    ' . _('Amount received was').' ' . locale_number_format($StmtHeader['lastpaid'],$StmtHeader['currdecimalplaces']));
 
 			}
 			/*also show the total due in the remittance section */

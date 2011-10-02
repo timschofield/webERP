@@ -14,7 +14,8 @@ items into the cart as well as plain vanilla items outside of the kitset loop
 
 $AlreadyOnThisOrder =0;
 
-if (count($_SESSION['Items'.$identifier]->LineItems)>0 AND $_SESSION['SO_AllowSameItemMultipleTimes']==0){
+if (count($_SESSION['Items'.$identifier]->LineItems)>0 
+	AND $_SESSION['SO_AllowSameItemMultipleTimes']==0){
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems AS $OrderItem) {
 
@@ -77,9 +78,9 @@ if ($AlreadyOnThisOrder!=1){
 
 		   	if ($_SESSION['ExistingOrder']!=0){
 				$UpdateDB = 'Yes';
-				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno='" . filter_number_format($_SESSION['ExistingOrder']) . "'",$db);
+				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno='" . $_SESSION['ExistingOrder'] . "'",$db);
 				$MaxNumRow = DB_fetch_row($result);
-				if ($MaxNumRow[0] != "" && $MaxNumRow[0] > 0) {
+				if ($MaxNumRow[0] != '' AND $MaxNumRow[0] > 0) {
 					$NewLineNo = $MaxNumRow[0]+1;
 				} else {
 					$NewLineNo = 0;
@@ -96,7 +97,7 @@ if ($AlreadyOnThisOrder!=1){
 										FROM discountmatrix
 										WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 										AND discountcategory ='" . $myrow['discountcategory'] . "'
-										AND quantitybreak <" . filter_number_format($NewItemQty),$db);
+										AND quantitybreak <" . $NewItemQty,$db);
 				$DiscCatRow = DB_fetch_row($result);
 				if ($DiscCatRow[0] != '' AND $DiscCatRow[0] > 0) {
 					$Discount = $DiscCatRow[0];
@@ -116,7 +117,7 @@ if ($AlreadyOnThisOrder!=1){
             }
 			if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  /*Check credit limits is 1 for warn
 											and 2 for prohibit sales */
-				$_SESSION['Items'.$identifier]->CreditAvailable -= round((filter_number_format($NewItemQty) * filter_number_format($Price) * (1- filter_number_format($Discount))),2);
+				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 					prnMsg(_('The customer account will breach their credit limit'),'warn');

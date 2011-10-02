@@ -2377,11 +2377,11 @@ class PHPlot {
 
     /*
      * Format a floating-point number.
-     * This is like PHP's number_format, but uses class variables for separators.
+     * This is like PHP's locale_number_format, but uses class variables for separators.
      * The separators will default to locale-specific values, if available.
      * Note: This method should be 'protected', but is called from test script(s).
      */
-    function number_format($number, $decimals=0)
+    function locale_number_format($number, $decimals=0)
     {
         if (!isset($this->decimal_point) || !isset($this->thousands_sep)) {
             // Load locale-specific values from environment, unless disabled:
@@ -2399,7 +2399,7 @@ class PHPlot {
               $this->thousands_sep = ',';
             }
         }
-        return number_format($number, $decimals, $this->decimal_point, $this->thousands_sep);
+        return locale_number_format($number, $decimals, $this->decimal_point, $this->thousands_sep);
     }
 
     /*
@@ -3596,7 +3596,7 @@ class PHPlot {
                 break;
             case 'data':
                 $which_lab = $format['prefix']
-                           . $this->number_format($which_lab, $format['precision'])
+                           . $this->locale_number_format($which_lab, $format['precision'])
                            . $this->data_units_text  // Obsolete
                            . $format['suffix'];
                 break;
@@ -4533,7 +4533,7 @@ class PHPlot {
                 else
                     $slicecol = $this->ndx_data_dark_colors[$color_index];
 
-                $label_txt = $this->number_format(($val / $total * 100), $precision) . '%';
+                $label_txt = $this->locale_number_format(($val / $total * 100), $precision) . '%';
                 $val = 360 * ($val / $total);
 
                 // NOTE that imagefilledarc measures angles CLOCKWISE (go figure why),

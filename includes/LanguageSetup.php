@@ -60,46 +60,28 @@ if (!function_exists('gettext')) {
 			return $text;
 		}
 	}
-}
-
-include('includes/LanguagesArray.php');
-
-if (defined('LC_MESSAGES')){ //it's a unix/linux server
-	$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
-	$LocaleSet = setlocale (LC_NUMERIC, $_SESSION['Language']);
-	//$LocaleSet = setlocale (LC_ALL, $_SESSION['Language']);
-} else { // it's a windows server
-	$LocaleSet = setlocale (LC_ALL, $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
-}
-
-$LocaleInfo = localeconv();
-
-if ($LocaleInfo['decimal_point']==''){
-	$LocaleInfo['decimal_point'] = $LanguagesArray[$_SESSION['Language']]['Decimal_Point'];
-}
-if ($LocaleInfo['mon_thousands_sep']==''){
-	$LocaleInfo['mon_thousands_sep'] = $LanguagesArray[$_SESSION['Language']]['Thousands_Separator'];
-}
-if ($LocaleInfo['mon_thousands_sep']==''){
-	$LocaleInfo['mon_thousands_sep'] = $LanguagesArray[$_SESSION['Language']]['Thousands_Separator'];
-}
-if ($LocaleInfo['mon_decimal_point']==''){
-	$LocaleInfo['mon_decimal_point'] = $LanguagesArray[$_SESSION['Language']]['Decimal_Point'];
-}
-
-//Turkish seems to be a special case
-if ($_SESSION['Language']=='tr_TR.utf8') {
-	$Locale = setlocale(LC_CTYPE, 'C');
-}
-
-if (function_exists('gettext')){
-  
+	include('includes/LanguagesArray.php');
+} else {
+	include('includes/LanguagesArray.php');
+	$LocaleSet = setlocale (LC_NUMERIC, 'en_US','english-us');
+	$LocaleSet = setlocale (LC_ALL, $_SESSION['Language'],$LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
+	
+	if (defined('LC_MESSAGES')){ //it's a unix/linux server
+		$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
+	}
+	//Turkish seems to be a special case
+	if ($_SESSION['Language']=='tr_TR.utf8') {
+		$Locale = setlocale(LC_CTYPE, 'C');
+	}
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);
 	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
 	bind_textdomain_codeset('messages', 'UTF-8'); 
-} 
+}
+
+$DecimalPoint = $LanguagesArray[$_SESSION['Language']]['DecimalPoint'];
+$ThousandsSeparator = $LanguagesArray[$_SESSION['Language']]['ThousandsSeparator'];
 
 ?>

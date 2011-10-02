@@ -275,7 +275,7 @@ class Numbers_Words_fr_BE extends Numbers_Words
             return $ret;
         }
         else
-            return explode(' ', number_format($num, 0, '', ' ')); // a faster version for integers
+            return explode(' ', locale_number_format($num, 0, '', ' ')); // a faster version for integers
     }
     // }}}
 

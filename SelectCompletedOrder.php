@@ -651,7 +651,7 @@ If (isset($SalesOrdersResult)) {
 		$ViewPage = $rootpath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-		$FormatedOrderValue = locale_money_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
+		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
 		printf('<td><a href="%s">%s</a></td>
 			<td>%s</td>

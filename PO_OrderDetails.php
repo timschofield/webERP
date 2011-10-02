@@ -196,8 +196,8 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 		locale_number_format($myrow['quantityord'],$DecimalPlaces),
 		locale_number_format($myrow['quantityrecd'],$DecimalPlaces),
 		locale_number_format($myrow['qtyinvoiced'],$DecimalPlaces),
-		locale_money_format($myrow['unitprice'],$CurrDecimalPlaces),
-		locale_money_format($myrow['actprice'],$CurrDecimalPlaces),
+		locale_number_format($myrow['unitprice'],$CurrDecimalPlaces),
+		locale_number_format($myrow['actprice'],$CurrDecimalPlaces),
 		$DisplayReqdDate);
 
 }
@@ -205,10 +205,10 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 echo '<tr><td><br /></td>
 	</tr>
 	<tr><td colspan=4 class="number">' . _('Total Order Value Excluding Tax') .'</td>
-	<td colspan=2 class="number">' . locale_money_format($OrderTotal,$CurrDecimalPlaces) . '</td></tr>';
+	<td colspan=2 class="number">' . locale_number_format($OrderTotal,$CurrDecimalPlaces) . '</td></tr>';
 echo '<tr>
 	<td colspan=4 class="number">' . _('Total Order Value Received Excluding Tax') . '</td>
-	<td colspan=2 class="number">' . locale_money_format($RecdTotal,$CurrDecimalPlaces) . '</td></tr>';
+	<td colspan=2 class="number">' . locale_number_format($RecdTotal,$CurrDecimalPlaces) . '</td></tr>';
 echo '</table>';
 
 echo '<br />';

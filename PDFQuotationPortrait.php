@@ -161,7 +161,7 @@ if (DB_num_rows($result)>0){
 
 		$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
-		$DisplayPrice = locale_money_format($myrow2['unitprice'],$myrow['currdecimalplaces']);
+		$DisplayPrice = locale_number_format($myrow2['unitprice'],$myrow['currdecimalplaces']);
 		$DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
 		$SubTot =  filter_number_format($myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']));
 		$TaxProv = $myrow['taxprovinceid'];
@@ -187,10 +187,10 @@ if (DB_num_rows($result)>0){
 
 		$DisplayTaxClass = $TaxClass . "%";
 		$TaxAmount =  filter_number_fomat((($SubTot/100)*(100+$TaxClass))-$SubTot);
-		$DisplayTaxAmount = locale_money_format($TaxAmount,$myrow['currdecimalplaces']);
+		$DisplayTaxAmount = locale_number_format($TaxAmount,$myrow['currdecimalplaces']);
 
 		$LineTotal = $SubTot + $TaxAmount;
-		$DisplayTotal = locale_money_format($LineTotal,$myrow['currdecimalplaces']);
+		$DisplayTotal = locale_number_format($LineTotal,$myrow['currdecimalplaces']);
 
 		$FontSize=10;
 
@@ -249,13 +249,13 @@ if (DB_num_rows($result)>0){
 	}
 	$YPos -= ($line_height);
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Total Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_money_format($TaxTotal,$myrow['currdecimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($TaxTotal,$myrow['currdecimalplaces']),'right');
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Excluding Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_money_format($QuotationTotalEx,$myrow['currdecimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotalEx,$myrow['currdecimalplaces']),'right');
 	$YPos -= 12;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Including Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_money_format($QuotationTotal,$myrow['currdecimalplaces']),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotal,$myrow['currdecimalplaces']),'right');
 
 } /*end if there are line details to show on the quotation*/
 

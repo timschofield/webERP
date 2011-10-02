@@ -291,11 +291,11 @@ if (isset($_POST['PrintPDF'])
 	
 	while ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)){
 		$DecimalPlaces = $AgedAnalysis['decimalplaces'];
-		$DisplayDue = locale_money_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$DecimalPlaces);
-		$DisplayCurrent = locale_money_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$DecimalPlaces);
-		$DisplayBalance = locale_money_format($AgedAnalysis['balance'],$DecimalPlaces);
-		$DisplayOverdue1 = locale_money_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$DecimalPlaces);
-		$DisplayOverdue2 = locale_money_format($AgedAnalysis['overdue2'],$DecimalPlaces);
+		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$DecimalPlaces);
+		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$DecimalPlaces);
+		$DisplayBalance = locale_number_format($AgedAnalysis['balance'],$DecimalPlaces);
+		$DisplayOverdue1 = locale_number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$DecimalPlaces);
+		$DisplayOverdue2 = locale_number_format($AgedAnalysis['overdue2'],$DecimalPlaces);
 
 		$TotBal += $AgedAnalysis['balance'];
 		$TotDue += ($AgedAnalysis['due']-$AgedAnalysis['overdue1']);
@@ -384,11 +384,11 @@ if (isset($_POST['PrintPDF'])
 			    $DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 			    $LeftOvers = $pdf->addTextWrap($Left_Margin+125,$YPos,75,$FontSize,$DisplayTranDate,'left');
 
-			    $DisplayDue = locale_money_format($DetailTrans['due']-$DetailTrans['overdue1'],$DecimalPlaces);
-			    $DisplayCurrent = locale_money_format($DetailTrans['balance']-$DetailTrans['due'],$DecimalPlaces);
-			    $DisplayBalance = locale_money_format($DetailTrans['balance'],$DecimalPlaces);
-			    $DisplayOverdue1 = locale_money_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],$DecimalPlaces);
-			    $DisplayOverdue2 = locale_money_format($DetailTrans['overdue2'],$DecimalPlaces);
+			    $DisplayDue = locale_number_format($DetailTrans['due']-$DetailTrans['overdue1'],$DecimalPlaces);
+			    $DisplayCurrent = locale_number_format($DetailTrans['balance']-$DetailTrans['due'],$DecimalPlaces);
+			    $DisplayBalance = locale_number_format($DetailTrans['balance'],$DecimalPlaces);
+			    $DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],$DecimalPlaces);
+			    $DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'],$DecimalPlaces);
 
 			    $LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			    $LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
@@ -418,11 +418,11 @@ if (isset($_POST['PrintPDF'])
 		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);
 	}
 
-	$DisplayTotBalance = locale_money_format($TotBal,$DecimalPlaces);
-	$DisplayTotDue = locale_money_format($TotDue,$DecimalPlaces);
-	$DisplayTotCurrent = locale_money_format($TotCurr,$DecimalPlaces);
-	$DisplayTotOverdue1 = locale_money_format($TotOD1,$DecimalPlaces);
-	$DisplayTotOverdue2 = locale_money_format($TotOD2,$DecimalPlaces);
+	$DisplayTotBalance = locale_number_format($TotBal,$DecimalPlaces);
+	$DisplayTotDue = locale_number_format($TotDue,$DecimalPlaces);
+	$DisplayTotCurrent = locale_number_format($TotCurr,$DecimalPlaces);
+	$DisplayTotOverdue1 = locale_number_format($TotOD1,$DecimalPlaces);
+	$DisplayTotOverdue2 = locale_number_format($TotOD2,$DecimalPlaces);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
 	$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayTotCurrent,'right');

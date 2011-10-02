@@ -223,7 +223,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
             			FROM salesorderdetails
             			INNER JOIN stockmaster
             				ON salesorderdetails.stkcode=stockmaster.stockid
-            			WHERE salesorderdetails.orderno='" . filer_number_format($OrdersToPick[$i]['orderno']) ."'";
+            			WHERE salesorderdetails.orderno='" . filer_locale_number_format($OrdersToPick[$i]['orderno']) ."'";
 		} else {
 		/* There are previous picking lists for this order so
 		 * need to take those quantities into account
@@ -288,7 +288,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				}
 				$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 				$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
-				$DisplayQtySupplied = locale_number_format(filer_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked']),$myrow2['decimalplaces']);
+				$DisplayQtySupplied = locale_number_format(filer_locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked']),$myrow2['decimalplaces']);
 				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
 				$sql="INSERT INTO pickinglistdetails
 					VALUES(

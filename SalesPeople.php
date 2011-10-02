@@ -233,7 +233,7 @@ or deletion of the records*/
 			$myrow['smantel'],
 			$myrow['smanfax'],
 			locale_number_format($myrow['commissionrate1'],2),
-			locale_money_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
 			locale_number_format($myrow['commissionrate2'],2),
 			$ActiveText,
 			$_SERVER['PHP_SELF'] . '?',

@@ -42,7 +42,7 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 		
 		$CalculatedBalance = filter_number_format($_POST['DoExchangeDifference']);
 
-		$ExchangeDifference = filter_number_format(($CalculatedBalance - $_POST['BankStatementBalance'])/$CurrencyRow['rate']);
+		$ExchangeDifference = ($CalculatedBalance - filter_number_format($_POST['BankStatementBalance']))/$CurrencyRow['rate'];
 
 		include ('includes/SQL_CommonFunctions.inc');
 		$ExDiffTransNo = GetNextTransNo(36,$db);
@@ -89,7 +89,7 @@ if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDif
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$result = DB_Txn_Commit($db);
-		prnMsg(_('Exchange difference of') . ' ' . locale_money_format($ExchangeDifference,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
+		prnMsg(_('Exchange difference of') . ' ' . locale_number_format($ExchangeDifference,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 	} //end if the bank statement balance was numeric
 }
 
@@ -173,7 +173,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		echo  ' (' . $CurrencyRow['currcode'] . ' @ ' . $CurrencyRow['rate'] .')';
 	}
 	echo '</b></td>
-			<td valign=bottom class="number"><b>' . locale_money_format($Balance*$CurrencyRow['rate'],$CurrencyRow['currdecimalplaces']) . '</b></td></tr>';
+			<td valign=bottom class="number"><b>' . locale_number_format($Balance*$CurrencyRow['rate'],$CurrencyRow['currdecimalplaces']) . '</b></td></tr>';
 
 	$SQL = "SELECT amount/exrate AS amt,
 					amountcleared,
@@ -231,8 +231,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				$myrow['typename'],
 				$myrow['transno'],
 				$myrow['ref'],
-				locale_money_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
-				locale_money_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']));
+				locale_number_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
+				locale_number_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']));
 
 		$TotalUnpresentedCheques +=$myrow['outstanding'];
 
@@ -243,9 +243,9 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		}
 	}
 	//end of while loop
-	$TotalUnpresentedCheques = filter_number_format($TotalUnpresentedCheques);
+
 	echo '<tr></tr>
-			<tr class=EvenTableRows><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class="number">' . locale_money_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td></tr>';
+			<tr class=EvenTableRows><td colspan=6>' . _('Total of all unpresented cheques') . '</td><td class="number">' . locale_number_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td></tr>';
 
 	$SQL = "SELECT amount/exrate AS amt,
 				amountcleared,
@@ -303,8 +303,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				$myrow['typename'],
 				$myrow['transno'],
 				$myrow['ref'],
-				locale_money_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
-				locale_money_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']) );
+				locale_number_format($myrow['amt'],$CurrencyRow['currdecimalplaces']),
+				locale_number_format($myrow['outstanding'],$CurrencyRow['currdecimalplaces']) );
 
 		$TotalUnclearedDeposits +=$myrow['outstanding'];
 
@@ -318,13 +318,13 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<tr></tr>
 			<tr class=EvenTableRows>
 				<td colspan=6>' . _('Total of all uncleared deposits') . '</td>
-				<td class="number">' . locale_money_format($TotalUnclearedDeposits,$CurrencyRow['currdecimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($TotalUnclearedDeposits,$CurrencyRow['currdecimalplaces']) . '</td>
 			</tr>';
-	$FXStatementBalance = filter_number_format(($Balance*$CurrencyRow['rate']) - $TotalUnpresentedCheques -$TotalUnclearedDeposits);
+	$FXStatementBalance = ($Balance*$CurrencyRow['rate'] - $TotalUnpresentedCheques -$TotalUnclearedDeposits);
 	echo '<tr></tr>
 			<tr class=EvenTableRows>
 				<td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $CurrencyRow['currcode'] . ')</b></td>
-				<td class="number">' . locale_money_format($FXStatementBalance,$CurrencyRow['currdecimalplaces']) . '</td></tr>';
+				<td class="number">' . locale_number_format($FXStatementBalance,$CurrencyRow['currdecimalplaces']) . '</td></tr>';
 
 	if (isset($_POST['DoExchangeDifference'])){
 		echo '<input type="hidden" name="DoExchangeDifference" value=' . $FXStatementBalance . ' />';

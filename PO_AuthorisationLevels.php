@@ -237,7 +237,7 @@ if ($OffHold==1) {
 }
 
 echo '<tr><td>'._('User can authorise orders up to :').'</td>';
-echo '<td><input type=input name="AuthLevel" size=11 class="number" value="'  . locale_money_format($AuthLevel,$CurrDecimalPlaces) . '"></td</tr>';
+echo '<td><input type=input name="AuthLevel" size=11 class="number" value="'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '"></td</tr>';
 echo '</table>';
 
 if (isset($_GET['Edit'])) {

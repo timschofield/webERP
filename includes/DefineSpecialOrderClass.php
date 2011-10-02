@@ -14,21 +14,26 @@ Class SpecialOrder {
 	var $SupplierName;
 	var $SuppCurrCode;
 	var $SuppCurrExRate;
+	var $SuppCurrDecimalPlaces;
 	var $CustomerID;
 	var $BranchCode;
 	var $CustomerName;
 	var $CustCurrCode;
+	var $CustCurrDecimalPlaces;
 	var $CustRef;
 	var $BranchName;
 	var $LinesOnOrder;
 	var $total;
 	var $PurchOrderNo;
+	var $Status;
+	var $AllowPrintPO;
 
 	function SpecialOrder(){
 	/*Constructor function initialises a new special order object */
 		$this->LineItems = array();
 		$this->total=0;
 		$this->LinesOnOrder=0;
+		$this->AllowPrintPO=0;
 	}
 
 	function add_to_order($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
@@ -44,7 +49,14 @@ Class SpecialOrder {
 	function remove_from_order(&$LineNo){
 		 unset($this->LineItems[$LineNo]);
 	}
-
+	
+	function Order_Value() {
+		$TotalValue=0;
+		foreach ($this->LineItems as $OrderedItems) {
+			$TotalValue += ($OrderedItems->Price)*($OrderedItems->Quantity);
+		}
+		return $TotalValue;
+	}
 
 } /* end of class defintion */
 

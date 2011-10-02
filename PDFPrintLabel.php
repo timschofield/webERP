@@ -266,7 +266,7 @@ function tableItems($CategoryID, &$ok) {
 	$ok=true;
 	$odd=true;
 	while ($myrow=DB_fetch_array($result)) {
-		$price = locale_money_format($myrow['price'],$DecimalPlaces);
+		$price = locale_number_format($myrow['price'],$DecimalPlaces);
 		$oddEven=$odd?"Odd":"Even";
 		$odd = !$odd;
 		$html .= <<<ZZZ
@@ -492,7 +492,7 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) 
 			unset($ldescrip);
 			break;
 		case 'price':
-			$txt = locale_money_format($itemData['price'], $DecimalPlaces). ' '. $Currency;
+			$txt = locale_number_format($itemData['price'], $DecimalPlaces). ' '. $Currency;
 //			$adj='left';
 			break;
 		case 'bcode': break;

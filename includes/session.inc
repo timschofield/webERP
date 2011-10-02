@@ -25,7 +25,7 @@ if( !ini_get('safe_mode') ){
 	set_time_limit($MaximumExecutionTime); 
 	ini_set('max_execution_time',$MaximumExecutionTime);
 } 
-
+session_write_close(); //in case a previous session is not closed
 session_start();
 
 include($PathPrefix . 'includes/ConnectDB.inc');

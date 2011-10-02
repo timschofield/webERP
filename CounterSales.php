@@ -15,6 +15,8 @@ include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 
+$AlreadyWarnedAboutCredit = false;
+
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
 } else {
@@ -36,7 +38,8 @@ if (isset($_POST['QuickEntry'])){
 if (isset($_POST['SelectingOrderItems'])){
 	foreach ($_POST as $FormVariable => $Quantity) {
 		if (mb_strpos($FormVariable,'OrderQty')!==false) {
-			$NewItemArray[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format(trim($Quantity));
+			$NewItemArray[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format($Quantity);
+			echo '<br/> The quantitiy entered was ' .  filter_number_format($Quantity) . ' the quantity for ' . $_POST['StockID' . mb_substr($FormVariable,8)] . ' unfiltered was: ' . $Quantity;
 		}
 	}
 }
@@ -483,12 +486,12 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 		if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
-
+			
 			$Quantity = filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]);
 
 			if (abs($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
 				$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
-				$_POST['GPPercent_' . $OrderLine->LineNumber] = filter_number_format((($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
+				$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
 			} else if (abs($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.001) {
 				//then do a recalculation of the price at this new GP Percentage
 				$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
@@ -518,7 +521,7 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 				$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
 																$Quantity,
 																$Price,
-																filter_number_format($DiscountPercentage/100),
+																$DiscountPercentage/100,
 																$Narrative,
 																'Yes', /*Update DB */
 																$_POST['ItemDue_' . $OrderLine->LineNumber],
@@ -769,16 +772,16 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 		echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 			<td>' . $OrderLine->ItemDescription . '</td>';
 
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . $OrderLine->Quantity . '" />';
+		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" />';
 
 		echo '</td>
-			<td class="number">' . $OrderLine->QOHatLoc . '</td>
+			<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 			<td>' . $OrderLine->Units . '</td>';
 
-		echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . $OrderLine->Price . '" /></td>
-				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . ($OrderLine->DiscountPercent * 100) . '" /></td>
-				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" maxlength="40" value="' . $OrderLine->GPPercent . '" /></td>';
-		echo '<td class="number">' . locale_money_format($SubTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
+				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
+		echo '<td class="number">' . locale_number_format($SubTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $OrderLine->ItemDue;
 		if (!Is_Date($OrderLine->ItemDue)){
 			$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
@@ -804,8 +807,8 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 		$TaxTotal += $TaxLineTotal;
 		$_SESSION['Items'.$identifier]->TaxTotals=$TaxTotals;
 		$_SESSION['Items'.$identifier]->TaxGLCodes=$TaxGLCodes;
-		echo '<td class="number">' . locale_money_format($TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
-		echo '<td class="number">' . locale_money_format($SubTotal + $TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td class="number">' . locale_number_format($TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td class="number">' . locale_number_format($SubTotal + $TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
 
 		if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
@@ -822,9 +825,9 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 	} /* end of loop around items */
 
 	echo '<tr class="EvenTableRows"><td colspan="8" class="number"><b>' . _('Total') . '</b></td>
-				<td class="number">' . locale_money_format(($_SESSION['Items'.$identifier]->total),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_money_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_money_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
 						</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
@@ -1889,7 +1892,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 						'" . $BankAccountExRate . "',
 						'" . $DefaultDispatchDate . "',
 						'" . $_POST['PaymentMethod'] . "',
-						'" . filter_number_format(filter_number_format($_POST['AmountPaid']) * $BankAccountExRate) . "',
+						'" . filter_number_format($_POST['AmountPaid']) * $BankAccountExRate . "',
 						'" . $_SESSION['Items'.$identifier]->DefaultCurrency . "')";
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');

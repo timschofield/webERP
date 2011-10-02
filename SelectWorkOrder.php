@@ -38,6 +38,7 @@ if (isset($_POST['SearchParts'])){
 
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.decimalplaces,
 						SUM(locstock.quantity) AS qoh,
 						stockmaster.units
 					FROM stockmaster,
@@ -48,12 +49,14 @@ if (isset($_POST['SearchParts'])){
 					AND stockmaster.mbflag='M'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.decimalplaces,
 						stockmaster.units
 					ORDER BY stockmaster.stockid";
 
 	 } elseif (isset($_POST['StockCode'])){
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.decimalplaces,
 						sum(locstock.quantity) as qoh,
 						stockmaster.units
 					FROM stockmaster,
@@ -64,12 +67,14 @@ if (isset($_POST['SearchParts'])){
 					AND stockmaster.mbflag='M'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.decimalplaces,
 						stockmaster.units
 					ORDER BY stockmaster.stockid";
 
 	 } elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.decimalplaces,
 						sum(locstock.quantity) as qoh,
 						stockmaster.units
 					FROM stockmaster,
@@ -79,6 +84,7 @@ if (isset($_POST['SearchParts'])){
 					AND stockmaster.mbflag='M'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.decimalplaces,
 						stockmaster.units
 					ORDER BY stockmaster.stockid";
 	 }
@@ -134,15 +140,15 @@ if (!isset($StockID)) {
 		}
 
 		if ($_POST['ClosedOrOpen']=='Closed_Only'){
-			echo '<option selected value="Closed_Only">' . _('Closed Work Orders Only');
-			echo '<option value="Open_Only">' . _('Open Work Orders Only');
+			echo '<option selected value="Closed_Only">' . _('Closed Work Orders Only') . '</option>';
+			echo '<option value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
 		} else {
-			echo '<option value="Closed_Only">' . _('Closed Work Orders Only');
-			echo '<option selected value="Open_Only">' . _('Open Work Orders Only');
+			echo '<option value="Closed_Only">' . _('Closed Work Orders Only')  . '</option>';
+			echo '<option selected value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
 		}
 
 		echo '</select> &nbsp&nbsp';
-		echo '<input type="submit" name="SearchOrders" value="' . _('Search') . '">';
+		echo '<input type="submit" name="SearchOrders" value="' . _('Search') . '" />';
 		echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td></tr></table><br />';
 	}
 
@@ -182,11 +188,11 @@ if (!isset($StockID)) {
 		echo '<br />
 			<table cellpadding="2" colspan="7" class="selection">';
 		$TableHeader = '<tr>
-					<th>' . _('Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('On Hand') . '</th>
-					<th>' . _('Units') . '</th>
-				</tr>';
+							<th>' . _('Code') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('On Hand') . '</th>
+							<th>' . _('Units') . '</th>
+						</tr>';
 		echo $TableHeader;
 	
 		$j = 1;
@@ -209,7 +215,7 @@ if (!isset($StockID)) {
 					</tr>',
 					$myrow['stockid'],
 					$myrow['description'],
-					$myrow['qoh'],
+					locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
 					$myrow['units']);
 	
 			$j++;
@@ -239,11 +245,12 @@ if (!isset($StockID)) {
 		}
 		if (isset($_REQUEST['WO']) && $_REQUEST['WO'] !='') {
 				$SQL = "SELECT workorders.wo,
-						woitems.stockid,
-						stockmaster.description,
-						woitems.qtyreqd,
-						woitems.qtyrecd,
-						workorders.requiredby
+								woitems.stockid,
+								stockmaster.description,
+								stockmaster.decimalplaces,
+								woitems.qtyreqd,
+								woitems.qtyrecd,
+								workorders.requiredby
 						FROM workorders
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
@@ -256,33 +263,35 @@ if (!isset($StockID)) {
 	
 				if (isset($_REQUEST['SelectedStockItem'])) {
 					$SQL = "SELECT workorders.wo,
-						woitems.stockid,
-						stockmaster.description,
-						woitems.qtyreqd,
-						woitems.qtyrecd,
-						workorders.requiredby
-						FROM workorders
-						INNER JOIN woitems ON workorders.wo=woitems.wo
-						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
-						WHERE workorders.closed='" . $ClosedOrOpen . "'
-						AND woitems.stockid='". $_REQUEST['SelectedStockItem'] ."'
-						AND workorders.loccode='" . $_POST['StockLocation'] . "'
-						ORDER BY workorders.wo,
+									woitems.stockid,
+									stockmaster.description,
+									stockmaster.decimalplaces,
+									woitems.qtyreqd,
+									woitems.qtyrecd,
+									workorders.requiredby
+							FROM workorders
+							INNER JOIN woitems ON workorders.wo=woitems.wo
+							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+							WHERE workorders.closed='" . $ClosedOrOpen . "'
+							AND woitems.stockid='". $_REQUEST['SelectedStockItem'] ."'
+							AND workorders.loccode='" . $_POST['StockLocation'] . "'
+							ORDER BY workorders.wo,
 								 woitems.stockid";
 				} else {
 					$SQL = "SELECT workorders.wo,
-						woitems.stockid,
-						stockmaster.description,
-						woitems.qtyreqd,
-						woitems.qtyrecd,
-						workorders.requiredby
-						FROM workorders
-						INNER JOIN woitems ON workorders.wo=woitems.wo
-						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
-						WHERE workorders.closed='" . $ClosedOrOpen . "'
-						AND workorders.loccode='" . $_POST['StockLocation'] . "'
-						ORDER BY workorders.wo,
-								 woitems.stockid";
+									woitems.stockid,
+									stockmaster.description,
+									stockmaster.decimalplaces,
+									woitems.qtyreqd,
+									woitems.qtyrecd,
+									workorders.requiredby
+							FROM workorders
+							INNER JOIN woitems ON workorders.wo=woitems.wo
+							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+							WHERE workorders.closed='" . $ClosedOrOpen . "'
+							AND workorders.loccode='" . $_POST['StockLocation'] . "'
+							ORDER BY workorders.wo,
+									 woitems.stockid";
 				}
 		} //end not order number selected
 	
@@ -350,9 +359,9 @@ if (!isset($StockID)) {
 					$Costing_WO,
 					$myrow['stockid'],
 					$myrow['description'],
-					$myrow['qtyreqd'],
-					$myrow['qtyrecd'],
-					$myrow['qtyreqd']-$myrow['qtyrecd'],
+					locale_number_format($myrow['qtyreqd'],$myrow['decimalplaces']),
+					locale_number_format($myrow['qtyrecd'],$myrow['decimalplaces']),
+					locale_number_format($myrow['qtyreqd']-$myrow['qtyrecd'],$myrow['decimalplaces']),
 					$FormatedRequiredByDate);
 	
 			$j++;

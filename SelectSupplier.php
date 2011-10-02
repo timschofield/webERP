@@ -72,7 +72,11 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 	unset($_POST['Next']);
 	unset($_POST['Previous']);
 }
-if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+if (isset($_POST['Search']) 
+	OR isset($_POST['Go']) 
+	OR isset($_POST['Next']) 
+	OR isset($_POST['Previous'])) {
+	
 	if (mb_strlen($_POST['Keywords']) > 0 AND mb_strlen($_POST['SupplierCode']) > 0) {
 		prnMsg( _('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
 	}
@@ -92,27 +96,27 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 			$SQL = "SELECT supplierid,
-					suppname,
-					currcode,
-					address1,
-					address2,
-					address3,
-					address4
-				FROM suppliers
-				WHERE suppname " . LIKE . " '" . $SearchString . "'
-				ORDER BY suppname";
+							suppname,
+							currcode,
+							address1,
+							address2,
+							address3,
+							address4
+						FROM suppliers
+						WHERE suppname " . LIKE . " '" . $SearchString . "'
+						ORDER BY suppname";
 		} elseif (mb_strlen($_POST['SupplierCode']) > 0) {
 			$_POST['SupplierCode'] = mb_strtoupper($_POST['SupplierCode']);
 			$SQL = "SELECT supplierid,
-					suppname,
-					currcode,
-					address1,
-					address2,
-					address3,
-					address4
-				FROM suppliers
-				WHERE supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'
-				ORDER BY supplierid";
+							suppname,
+							currcode,
+							address1,
+							address2,
+							address3,
+							address4
+						FROM suppliers
+						WHERE supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'
+						ORDER BY supplierid";
 		}
 	} //one of keywords or SupplierCode was more than a zero length string
 	$result = DB_query($SQL, $db);
@@ -129,22 +133,21 @@ if (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
 if (isset($_SESSION['SupplierID'])) {
 	$SupplierName = '';
 	$SQL = "SELECT suppliers.suppname
-		FROM suppliers
-		WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
+			FROM suppliers
+			WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
 	$SupplierNameResult = DB_query($SQL, $db);
 	if (DB_num_rows($SupplierNameResult) == 1) {
 		$myrow = DB_fetch_row($SupplierNameResult);
 		$SupplierName = $myrow[0];
 	}
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .
-				_('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] .
-				' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
-	echo '<br /><table width=90% colspan=2 cellpadding=4>';
-	echo '<tr>
-		<th width=33%>' . _('Supplier Inquiries') . '</th>
-		<th width=33%>' . _('Supplier Transactions') . '</th>
-		<th width=33%>' . _('Supplier Maintenance') . '</th>
+	echo '<br />
+		<table width=90% colspan=2 cellpadding=4>
+		<tr>
+			<th width=33%>' . _('Supplier Inquiries') . '</th>
+			<th width=33%>' . _('Supplier Transactions') . '</th>
+			<th width=33%>' . _('Supplier Maintenance') . '</th>
 		</tr>';
 	echo '<tr><td valign=top class="select">'; /* Inquiry Options */
 	echo '<a href="' . $rootpath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
@@ -175,33 +178,41 @@ if (isset($_SESSION['SupplierID'])) {
 } else {
 	// Supplier is not selected yet
 	echo '<br />';
-	echo '<table width=90% colspan=2 cellpadding=4>';
-	echo '<tr>
-		<th width=33%>' . _('Supplier Inquiries') . '</th>
-		<th width=33%>' . _('Supplier Transactions') . '</th>
-		<th width=33%>' . _('Supplier Maintenance') . '</th>
+	echo '<table width=90% colspan=2 cellpadding=4>
+		<tr>
+			<th width=33%>' . _('Supplier Inquiries') . '</th>
+			<th width=33%>' . _('Supplier Transactions') . '</th>
+			<th width=33%>' . _('Supplier Maintenance') . '</th>
 		</tr>';
-	echo '<tr><td valign=top class="select">'; /* Inquiry Options */
-	echo '</td><td valign=top class="select">'; /* Supplier Transactions */
-	echo '</td><td valign=top class="select">'; /* Supplier Maintenance */
+	echo '<tr>
+			<td valign=top class="select"></td>
+			<td valign=top class="select"></td>
+			<td valign=top class="select">'; /* Supplier Maintenance */
 	echo '<a href="' . $rootpath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
-	echo '</td></tr></table>';
+	echo '</td>
+		</tr>
+		</table>';
 }
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
-		<table cellpadding=3 colspan=4 class=selection><tr><td>' . _('Enter a partial Name') . ':</font></td><td>';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
+	<table cellpadding="3" colspan="4" class="selection">
+	<tr>
+		<td>' . _('Enter a partial Name') . ':</font></td>
+		<td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size=20 maxlength=25>';
+	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size=20 maxlength=25>';
+	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
-echo '</td><td><b>' . _('OR') . '</b></font></td><td>' . _('Enter a partial Code') . ':</font></td><td>';
+echo '</td>
+		<td><b>' . _('OR') . '</b></font></td>
+		<td>' . _('Enter a partial Code') . ':</font></td>
+		<td>';
 if (isset($_POST['SupplierCode'])) {
-	echo '<input type="text" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size=15 maxlength=18>';
+	echo '<input type="text" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="text" name="SupplierCode" size=15 maxlength=18>';
+	echo '<input type="text" name="SupplierCode" size="15" maxlength="18" />';
 }
 echo '</td></tr>
 		</table>
@@ -233,23 +244,25 @@ if (isset($_POST['Search'])) {
 			$ListPage++;
 		}
 		echo '</select>
-			<input type=submit name="Go" value="' . _('Go') . '">
-			<input type=submit name="Previous" value="' . _('Previous') . '">
-			<input type=submit name="Next" value="' . _('Next') . '">';
+			<input type=submit name="Go" value="' . _('Go') . '" />
+			<input type=submit name="Previous" value="' . _('Previous') . '" />
+			<input type=submit name="Next" value="' . _('Next') . '" />';
 		echo '<p>';
 	}
-	echo '<input type=hidden name="Search" value="' . _('Search Now') . '">';
-	echo '<br /><br />';
-	echo '<br /><table cellpadding=2 colspan=7>';
+	echo '<input type=hidden name="Search" value="' . _('Search Now') . '" />';
+	echo '<br />
+		<br />
+		<br />
+		<table cellpadding="2" colspan="7">';
 	$tableheader = '<tr>
-  		<th>' . _('Code') . '</th>
-		<th>' . _('Supplier Name') . '</th>
-		<th>' . _('Currency') . '</th>
-		<th>' . _('Address 1') . '</th>
-		<th>' . _('Address 2') . '</th>
-		<th>' . _('Address 3') . '</th>
-		<th>' . _('Address 4') . '</th>
-		</tr>';
+				  		<th>' . _('Code') . '</th>
+						<th>' . _('Supplier Name') . '</th>
+						<th>' . _('Currency') . '</th>
+						<th>' . _('Address 1') . '</th>
+						<th>' . _('Address 2') . '</th>
+						<th>' . _('Address 3') . '</th>
+						<th>' . _('Address 4') . '</th>
+					</tr>';
 	echo $tableheader;
 	$j = 1;
 	$k = 0; //row counter to determine background colour
@@ -266,12 +279,12 @@ if (isset($_POST['Search'])) {
 			$k = 1;
 		}
 		echo '<td><input type=submit name="Select" value="'.$myrow['supplierid'].'" /></td>
-			<td>'.$myrow['suppname'].'</td>
-			<td>'.$myrow['currcode'].'</td>
-			<td>'.$myrow['address1'].'</td>
-			<td>'.$myrow['address2'].'</td>
-			<td>'.$myrow['address3'].'</td>
-			<td>'.$myrow['address4'].'</td>
+				<td>'.$myrow['suppname'].'</td>
+				<td>'.$myrow['currcode'].'</td>
+				<td>'.$myrow['address1'].'</td>
+				<td>'.$myrow['address2'].'</td>
+				<td>'.$myrow['address3'].'</td>
+				<td>'.$myrow['address4'].'</td>
 			</tr>';
 		$RowIndex = $RowIndex + 1;
 		//end of page full new headings if
@@ -293,9 +306,9 @@ if (isset($ListPageMax) and $ListPageMax > 1) {
 		$ListPage++;
 	}
 	echo '</select>
-		<input type=submit name="Go" value="' . _('Go') . '">
-		<input type=submit name="Previous" value="' . _('Previous') . '">
-		<input type=submit name="Next" value="' . _('Next') . '">';
+		<input type=submit name="Go" value="' . _('Go') . '" />
+		<input type=submit name="Previous" value="' . _('Previous') . '" />
+		<input type=submit name="Next" value="' . _('Next') . '" />';
 	echo '<p>';
 }
 echo '</form>';
@@ -307,7 +320,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
 		} else {
 			echo '<div class="centre"><br />';
-			echo '<tr><td colspan=2>';
+			echo '<tr><td colspan="2">';
 			echo '<table width=45% colspan=2 border=2 cellpadding=4>';
 			echo '<tr><th width=33%>' . _('Supplier Mapping') . '</th></tr>';
 			echo '</td><td valign=top>'; /* Mapping */
@@ -322,8 +335,10 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			$sql = "SELECT suppliers.suppname,
 							suppliers.lastpaid,
 							suppliers.lastpaiddate,
-							suppliersince
-					FROM suppliers
+							suppliersince,
+							currencies.decimalplaces AS currdecimalplaces
+					FROM suppliers INNER JOIN currencies
+					ON supplier.currcode=currencies.currabrev
 					WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$DataResult = DB_query($sql, $db, $ErrMsg);
@@ -333,20 +348,34 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
 			echo '<br />';
-			echo '<tr><td colspan=2>';
-			echo '<table width=45% colspan=2 cellpadding=4>';
-			echo '<tr><th width=33% colspan=2>' . _('Supplier Data') . '</th></tr>';
-			echo '<tr><td valign=top class=select>'; /* Supplier Data */
+			echo '<tr><td colspan="2">';
+			echo '<table width="45%" colspan="2" cellpadding="4">';
+			echo '<tr><th width="33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
+			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";
 			if ($myrow['lastpaiddate'] == 0) {
-				echo _('No payments yet to this supplier.') . '</td><td valign=top class=select></td></tr>';
+				echo _('No payments yet to this supplier.') . '</td>
+					<td valign="top" class="select"></td>
+					</tr>';
 			} else {
-				echo _('Last Paid:') . '</td><td valign=top class=select> <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b></td></tr>';
+				echo _('Last Paid:') . '</td>
+					<td valign="top" class="select"> <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b></td>
+					</tr>';
 			}
-			echo '<tr><td valign=top class=select>'._('Last Paid Amount:') . '</td><td valign=top class=select>  <b>' . locale_number_format($myrow['lastpaid'], 2) . '</b></td></tr>';
-			echo '<tr><td valign=top class=select>'._('Supplier since:') . '</td><td valign=top class=select> <b>' . ConvertSQLDate($myrow['suppliersince']) . '</b></td></tr>';
-			echo '<tr><td valign=top class=select>'._('Total Spend with this Supplier:') . '</td><td valign=top class=select> <b>' . locale_number_format($row['total'], 2) . '</b></td></tr>';
-			echo '</th></tr></table>';
+			echo '<tr>
+					<td valign="top" class="select">'._('Last Paid Amount:') . '</td>
+					<td valign="top" class="select">  <b>' . locale_number_format($myrow['lastpaid'], $myrow['currdecimalplaces']) . '</b></td></tr>';
+			echo '<tr>
+					<td valign="top" class="select">'._('Supplier since:') . '</td>
+					<td valign="top" class="select"> <b>' . ConvertSQLDate($myrow['suppliersince']) . '</b></td>
+					</tr>';
+			echo '<tr>
+					<td valign="top" class="select">'._('Total Spend with this Supplier:') . '</td>
+					<td valign="top" class="select"> <b>' . locale_number_format($row['total'], $myrow['currdecimalplaces']) . '</b></td>
+					</tr>';
+			echo '</th>
+					</tr>
+					</table>';
 		}
 	}
 }

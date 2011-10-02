@@ -152,7 +152,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
 			$Price = $PriceRow[1];
-			echo $PriceRow[0] . '</td><td class="select">' . locale_money_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			echo $PriceRow[0] . '</td><td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<th class="number">' . _('Gross Profit') . '</th>
 				<td class="select">';
 			if ($Price > 0) {
@@ -165,7 +165,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				$Price = $PriceRow[1];
 				echo '<tr><td></td>
 						<th>' . $PriceRow[0] . '</th>
-						<td class="select">' . locale_money_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<th class="number">' . _('Gross Profit') . '</th>
 						<td class="select">';
 				if ($Price > 0) {
@@ -191,7 +191,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Cost = $myrow['cost'];
 		}
 		echo '<th class="number">' . _('Cost') . '</th>
-			<td class="select">' . locale_money_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+			<td class="select">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
@@ -371,7 +371,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC", $db);
 	while ($SuppRow = DB_fetch_array($SuppResult)) {
 		echo '<tr><td class="select">' . $SuppRow['suppname'] . '</td>
-					<td class="select">' . locale_money_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
+					<td class="select">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
 					<td class="select">' . $SuppRow['currcode'] . '</td>
 					<td class="select">' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
 					<td class="select">' . $SuppRow['leadtime'] . '</td>

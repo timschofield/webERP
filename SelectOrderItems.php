@@ -25,7 +25,7 @@ if (isset($_POST['QuickEntry'])){
 if (isset($_POST['SelectingOrderItems'])){
 	foreach ($_POST as $FormVariable => $Quantity) {
 		if (mb_strpos($FormVariable,'OrderQty')!==false) {
-			$NewItemArray[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format(trim($Quantity));
+			$NewItemArray[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format($Quantity);
 		}
 	}
 }
@@ -124,7 +124,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						ON locations.loccode=salesorders.fromstkloc 
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev 
-						WHERE salesorders.orderno = '" . filter_number_format($_GET['ModifyOrderNumber']) . "'";
+						WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -652,7 +652,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$sql = "SELECT qtyinvoiced
 							FROM salesorderdetails
-							WHERE orderno='" . filter_number_format($_SESSION['ExistingOrder']) . "'
+							WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
 							AND qtyinvoiced>0";
 
 			$InvQties = DB_query($sql,$db);
@@ -668,11 +668,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if ($OK_to_delete==1){
 			if($_SESSION['ExistingOrder']!=0){
 
-				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . filter_number_format($_SESSION['ExistingOrder']) . "'";
+				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . $_SESSION['ExistingOrder'] . "'";
 				$ErrMsg =_('The order detail lines could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
-				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . filter_number_format($_SESSION['ExistingOrder']) . "'";
+				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'] . "'";
 				$ErrMsg = _('The order header could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
@@ -1163,7 +1163,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
 						if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
 							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->DiscountPercent = $DiscountMatrixRate;
-							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->GPPercent = filter_number_format((($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price*(1-$DiscountMatrixRate)) - $_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->StandardCost*$ExRate)/($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price *(1-$DiscountMatrixRate)/100));
+							$_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->GPPercent = (($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price*(1-$DiscountMatrixRate)) - $_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->StandardCost*$ExRate)/($_SESSION['Items'.$identifier]->LineItems[$OrderLine_2->LineNumber]->Price *(1-$DiscountMatrixRate)/100);
 						}
 					}
 				}
@@ -1291,7 +1291,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								FROM discountmatrix
 								WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 								AND discountcategory ='" . $OrderLine->DiscCat . "'
-								AND quantitybreak <= '" . filter_number_format($QuantityOfDiscCat) . "'",$db);
+								AND quantitybreak <= '" . $QuantityOfDiscCat . "'",$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] == NULL){
 				$DiscountMatrixRate = 0;
@@ -1338,7 +1338,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
-			$DisplayLineTotal = locale_money_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+			$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 			$DisplayDiscount = locale_number_format(($OrderLine->DiscountPercent * 100),2);
 			$QtyOrdered = $OrderLine->Quantity;
 			$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
@@ -1374,19 +1374,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
-				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . locale_money_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '></td>
+				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '></td>
 					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '></td>
 					<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size=3 maxlength=40 value=' . locale_number_format($OrderLine->GPPercent,2) . '></td>';
 			} else {
-				echo '<td class=number>' . locale_money_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td><td></td>';
-				echo '<input type=hidden name="Price_' . $OrderLine->LineNumber . '" value=' . locale_money_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '>';
+				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td><td></td>';
+				echo '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '" value=' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '>';
 			}
 			if ($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)){
 				$RemTxt = _('Clear Remaining');
 			} else {
 				$RemTxt = _('Delete');
 			}
-			echo '</td><td class=number>' . $DisplayLineTotal . '</td>';
+			echo '</td><td class="number">' . $DisplayLineTotal . '</td>';
 			$LineDueDate = $OrderLine->ItemDue;
 			if (!Is_Date($OrderLine->ItemDue)){
 				$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
@@ -1401,7 +1401,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo $RowStarter;
 				echo '<td colspan=10>' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1">' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
 			} else {
-				echo '<input type=hidden name="Narrative" value="">';
+				echo '<input type="hidden" name="Narrative" value="" />';
 			}
 
 			$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
@@ -1410,7 +1410,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		} /* end of loop around items */
 
-		$DisplayTotal = locale_money_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+		$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			$ColSpanNumber = 2;
 		} else {
@@ -1418,7 +1418,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 		echo '<tr class="EvenTableRows">
 				<td class="number" colspan=7><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-				<td colspan="' . $ColSpanNumber . '" class=number>' . $DisplayTotal . '</td>
+				<td colspan="' . $ColSpanNumber . '" class="number">' . $DisplayTotal . '</td>
 			</tr>
 			</table>';
 
@@ -1445,7 +1445,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	 if ((!isset($_POST['QuickEntry'])  
 			AND !isset($_POST['SelectAsset']))){
 
-		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '">';
+		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '" />';
 
 		if ($_SESSION['FrequentlyOrderedItems']>0){ //show the Frequently Order Items selection where configured to do so
 

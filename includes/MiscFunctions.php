@@ -315,20 +315,16 @@ function http_file_exists($url)  {
 /*Functions to display numbers in locale of the user */
 
 function locale_number_format($Number, $DecimalPlaces=0) {
-	global $LocaleInfo;
-	return number_format($Number,$DecimalPlaces,$LocaleInfo['decimal_point'],$LocaleInfo['thousands_sep']);
-}
-
-function locale_money_format($Number, $DecimalPlaces=0) {
-	global $LocaleInfo;
-	return number_format($Number,$DecimalPlaces,$LocaleInfo['mon_decimal_point'],$LocaleInfo['mon_thousands_sep']);
+	global $DecimalPoint;
+	global $ThousandsSeparator;
+	return number_format($Number,$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
 }
 
 /* and to parse the input of the user into useable number */
 
 function filter_number_format($Number) {
-	global $LocaleInfo;
-	$Number = trim($Number);
-	return str_replace($LocaleInfo['decimal_point'],'.',str_replace($LocaleInfo['thousands_sep'],'',str_replace($LocaleInfo['mon_thousands_sep'],'',$Number)));
+	global $DecimalPoint;
+	global $ThousandsSeparator;
+	return str_replace($DecimalPoint,'.',str_replace($ThousandsSeparator,'',trim($Number)));
 }
 ?>

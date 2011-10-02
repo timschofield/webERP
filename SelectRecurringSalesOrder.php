@@ -106,7 +106,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 		$ModifyPage = $rootpath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($myrow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
-		$FormatedOrderValue = locale_money_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
+		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
 		printf('<td><a href="%s">%s</a></td>
 			<td>%s</td>

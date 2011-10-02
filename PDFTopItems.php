@@ -97,7 +97,7 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 100, $YPos, 100, $FontSize, $myrow['description']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 330, $YPos, 30, $FontSize, locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 370, $YPos, 300 - $Left_Margin, $FontSize, $myrow['units'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 400, $YPos, 70, $FontSize, locale_money_format($myrow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 400, $YPos, 70, $FontSize, locale_number_format($myrow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 490, $YPos, 30, $FontSize, locale_number_format($ohRow[0],$myrow['decimalplaces']), 'right');
 		if (mb_strlen($LeftOvers) > 1) {
 			$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $line_height, 270, $FontSize, $LeftOvers, 'left');
