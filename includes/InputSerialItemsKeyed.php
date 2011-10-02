@@ -22,7 +22,7 @@ if (isset($_GET['LineNo'])){
 /*Display the batches already entered with quantities if not serialised */
 
 echo '<table class="selection">
-		<tr><td valign=top>
+		<tr><td valign="top">
 			<table class="selection">';
 echo $tableheader;
 
@@ -64,9 +64,12 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td class="number"><B>'. _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td class="number"><b>'. _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 } else {
-	echo '<tr><td class="number"><B>'. _('Total Quantity'). ':</b></td><td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr>
+			<td class="number"><b>'. _('Total Quantity'). ':</b></td>
+			<td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
+		</tr>';
 }
 
 /*Close off old table */
@@ -98,8 +101,7 @@ $StartAddingAt = 0;
 if ($EditControlled){
 	foreach ($LineItem->SerialItems as $Bundle){
 
-		echo '<tr><td valign=top><input type="text" name="SerialNo'. $StartAddingAt .'"
-			value="'.$Bundle->BundleRef.'" size=21  maxlength=20></td>';
+		echo '<tr><td valign=top><input type="text" name="SerialNo'. $StartAddingAt .'" value="' .$Bundle->BundleRef.'" size="21"  maxlength="20" /></td>';
 
 		/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 		into the form for entry of quantities manually */
@@ -120,25 +122,25 @@ if ($EditControlled){
 
 for ($i=0;$i < 10;$i++){
 
-	echo '<tr><td valign=top><input type="text" name="SerialNo'. ($StartAddingAt+$i) .'" size=21  maxlength=20></td>';
+	echo '<tr><td valign=top><input type="text" name="SerialNo'. ($StartAddingAt+$i) .'" size="21"  maxlength="20" /></td>';
 
 	/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 	into the form for entry of quantities manually */
 
 	if ($LineItem->Serialised==1){
-		echo '<input type=hidden name="Qty' . ($StartAddingAt+$i) .'" Value=1></tr>';
+		echo '<input type=hidden name="Qty' . ($StartAddingAt+$i) .'" value=1></td></tr>';
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
-		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size=11  maxlength=10></td>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size=11  maxlength="10" /></td>';
 		echo '<td><input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size=11
-		 value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength=10></td></tr>';
+		 value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" /></td></tr>';
 	} else {
-		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size=11  maxlength=10></tr>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size=11  maxlength="10"></td></tr>';
 	}
 }
 
 echo '</table>';
-echo '<br /><div class=centre><input type=submit name="AddBatches" value="'. _('Enter'). '"></div>';
-echo '</form></td><td valign=top>';
+echo '<br /><div class=centre><input type="submit" name="AddBatches" value="'. _('Enter'). '"></div>';
+echo '</form></td><td valign="top">';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
 }

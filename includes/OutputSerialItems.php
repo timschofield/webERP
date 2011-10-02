@@ -29,21 +29,21 @@ $myrow=DB_fetch_array($result);
 $Perishable=$myrow['perishable'];
 if ($LineItem->Serialised==1){
 	$tableheader .= '<tr>
-			<th>'. _('Serial No').'</th>
-			</tr>';
+						<th>'. _('Serial No').'</th>
+					</tr>';
 	$listtableheader=$tableheader;
 } else if ($LineItem->Serialised==0 and $Perishable==1){
 	$tableheader = '<tr>
-				<th>'. _('Batch/Roll/Bundle'). ' #</th>
-				<th>'. _('Available'). '</th>
-				<th>'. _('Quantity'). '</th>
-				<th>'. _('Expiry Date'). '</th>
-				</tr>';
-	$listtableheader = '<tr>
-					<th>'. _('Batch/Roll/Bundle'). ' #</th>
-					<th>'. _('Quantity'). '</th>
-					<th>'. _('Expiry Date'). '</th>
+						<th>'. _('Batch/Roll/Bundle'). ' #</th>
+						<th>'. _('Available'). '</th>
+						<th>'. _('Quantity'). '</th>
+						<th>'. _('Expiry Date'). '</th>
 					</tr>';
+	$listtableheader = '<tr>
+							<th>'. _('Batch/Roll/Bundle'). ' #</th>
+							<th>'. _('Quantity'). '</th>
+							<th>'. _('Expiry Date'). '</th>
+						</tr>';
 } else {
 	$tableheader = '<tr>
 				<th>'. _('Batch/Roll/Bundle'). ' #</th>
@@ -62,7 +62,9 @@ if (isset($_GET['LineNo'])){
 
 /*Display the batches already entered with quantities if not serialised */
 
-echo '<table class=selection><tr><td valign=top><table class=selection>';
+echo '<table class="selection">
+		<tr>
+			<td valign="top"><table class="selection">';
 echo $listtableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
@@ -89,10 +91,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 	echo '<td>' . $Bundle->BundleRef . '</td>';
 
 	if ($LineItem->Serialised==0 and $Perishable==0){
-		echo '<td class=number>' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 	} else if ($LineItem->Serialised==0 and $Perishable==1){
-		echo '<td class=number>' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
-		echo '<td class=number>' . $Bundle->ExpiryDate . '</td>';
+		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
 
 	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
@@ -103,27 +105,30 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td class=number><B>'. _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td class="number"><b>'. _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 } else {
-	echo '<tr><td class=number><B>'. _('Total Quantity'). ':</b></td><td class=number><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr>
+			<td class="number"><b>'. _('Total Quantity'). ':</b></td>
+			<td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
+		</tr>';
 }
 
 /*Close off old table */
-echo '</table></td><td valign=top>';
+echo '</table></td><td valign="top">';
 
 /*Start a new table for the Serial/Batch ref input  in one column (as a sub table
 then the multi select box for selection of existing bundle/serial nos for dispatch if applicable*/
 //echo '<TABLE><TR><TD valign=TOP>';
 $TransferQuantity=$TotalQuantity;
 /*in the first column add a table for the input of newies */
-echo '<table class=selection>';
+echo '<table class="selection">';
 echo $tableheader;
 
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" name="Ga6uF5Wa" method="post">
-      <input type=hidden name=LineNo value="' . $LineNo . '">
-      <input type=hidden name=StockID value="' . $StockID . '">
-      <input type=hidden name=EntryType value="KEYED">';
+      <input type=hidden name="LineNo" value="' . $LineNo . '" />
+      <input type=hidden name="StockID" value="' . $StockID . '" />
+      <input type=hidden name="EntryType" value="KEYED" />';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;
@@ -141,20 +146,20 @@ $StartAddingAt = 0;
 if ($EditControlled){
 	foreach ($LineItem->SerialItems as $Bundle){
 
-		echo '<tr><td valign=top><input type="text" name="SerialNo'. $StartAddingAt .'"
-			value="'.$Bundle->BundleRef.'" size=21  maxlength=20></td>';
+		echo '<tr>
+				<td valign="top"><input type="text" name="SerialNo'. $StartAddingAt .'" value="'.$Bundle->BundleRef.'" size="21"  maxlength="20" /></td>';
 
 		/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 		into the form for entry of quantities manually */
 
 		if ($LineItem->Serialised==1){
-			echo '<input type=hidden name="Qty' . $StartAddingAt .'" Value=1></TR>';
+			echo '<input type=hidden name="Qty' . $StartAddingAt .'" value=1></tr>';
 		} else if ($LineItem->Serialised==0 and $Perishable==1) {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
+				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></td></tr>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
+				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></td></tr>';
 		}
 
 		$StartAddingAt++;
@@ -184,25 +189,24 @@ while ($myrow=DB_fetch_array($result)){
 	into the form for entry of quantities manually */
 
 	if ($LineItem->Serialised==1){
-		echo '<input type=hidden name="Qty' . ($StartAddingAt+$RowNumber) .'" Value=1></tr>';
+		echo '<input type=hidden name="Qty' . ($StartAddingAt+$RowNumber) .'" value=1></tr>';
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
 		if (isset($LineItem->SerialItems[$myrow['serialno']])) {
-			echo '<td class=number>'.locale_number_format($myrow['quantity']-$LineItem->SerialItems[$myrow['serialno']]->BundleQty,$LineItem->DecimalPlaces).'</td>';
+			echo '<td class="number">'.locale_number_format($myrow['quantity']-$LineItem->SerialItems[$myrow['serialno']]->BundleQty,$LineItem->DecimalPlaces).'</td>';
 		} else {
-			echo '<td class=number>'.locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'</td>';
+			echo '<td class="number">'.locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'</td>';
 		}
-		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11 value="0" maxlength=10></td>';
-		echo '<td><input type=hidden class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size=11
-		 value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength=10>'.ConvertSQLDate($myrow['expirationdate']).'</td></tr>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11 value="0" maxlength="10" /></td>';
+		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size="11" value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" />'.ConvertSQLDate($myrow['expirationdate']).'</td></tr>';
 	} else {
-		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11  value="'.$myrow['quantity'].'"  maxlength=10></tr>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11  value="'. locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'"  maxlength="10" /></td></tr>';
 	}
 	$RowNumber++;
 }
 
 echo '</table>';
 echo '<br /><div class=centre><input type=submit name="AddBatches" value="'. _('Enter'). '"></div>';
-echo '</form></td><td valign=top>';
+echo '</form></td><td valign="top">';
 $ShowExisting=True;
 $_POST['EntryType']='Sequential';
 if ($ShowExisting){

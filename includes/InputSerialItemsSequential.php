@@ -30,7 +30,7 @@ echo '<table>';
 echo $tableheader;
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?=' . $SID . '" method="post">
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
       <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
       <input type="hidden" name="LineNo" value="' . $LineNo . '">
       <input type="hidden" name="StockID" value="' . $StockID . '">
@@ -40,9 +40,14 @@ if ( isset($_GET['EditControlled']) ) {
 } elseif ( isset($_POST['EditControlled']) ){
 	$EditControlled = isset($_POST['EditControlled'])?$_POST['EditControlled']:false;
 }
-echo '<tr><td valign="top">'. _('Begin:') . '</td><td> <input type="text" name="BeginNo" size="21"  maxlength="20" value="'. $_POST['BeginNo']. '"></td></tr>';
-echo '<tr><td valign="top">'. _('End:') . '</td><td> <input type="text" name="EndNo" size="21"  maxlength="20"  value="'. $_POST['EndNo']. '"></td></tr>';
-
+echo '<tr>
+		<td valign="top">'. _('Begin:') . '</td>
+		<td> <input type="text" name="BeginNo" size="21"  maxlength="20" value="'. $_POST['BeginNo']. '" /></td>
+	</tr>';
+echo '<tr>
+		<td valign="top">'. _('End:') . '</td>
+		<td> <input type="text" name="EndNo" size="21"  maxlength="20"  value="'. $_POST['EndNo']. '" /></td>
+	</tr>';
 
 echo '</table>';
 echo '<br /><center><input type="submit" name="AddSequence" value="'. _('Enter'). '"></center><br />';

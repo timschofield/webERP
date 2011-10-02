@@ -12,22 +12,25 @@ if (isset($_POST['AddBatches'])){
 				$AddThisBundle = true;
 				/*If the user enters a duplicate serial number the later one over-writes
 				the first entered one - no warning given though ? */
-				if ($_POST['Qty' . $i] > $ExistingBundleQty){
+				if (filter_number_format($_POST['Qty' . $i]) > $ExistingBundleQty){
 					if ($LineItem->Serialised ==1){
-						echo "<br />" . $_POST['SerialNo' . $i] . " " . _('has already been sold');
+						echo '<br />' . $_POST['SerialNo' . $i] . " " . _('has already been sold');
 						$AddThisBundle = false;
 					} elseif ($ExistingBundleQty==0) { /* and its a batch */
-						echo "<br />There is none of " . $_POST['SerialNo' . $i] . " left.";
+						echo '<br />' . _('There is none of') . ' ' . $_POST['SerialNo' . $i] . ' ' . _('left');
 						$AddThisBundle = false;
 					} else {
-					 	echo '<br />' . _('There is only') . ' ' . $ExistingBundleQty . ' ' . _('of') . ' ' . $_POST['SerialNo' . $i] .
-							' ' . _('remaining') . '. ' . _('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
+					 	echo '<br />' . _('There is only') . ' ' . $ExistingBundleQty . ' ' . _('of') . ' ' . $_POST['SerialNo' . $i] . ' ' . _('remaining') . '. ' . _('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
 						$_POST['Qty' . $i] = $ExistingBundleQty;
 						$AddThisBundle = true;
 					}
 				}
-				if ($AddThisBundle==true and $_POST['Qty' . $i]>0){
-					$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], $_POST['Qty' . $i], $_POST['ExpiryDate' . $i]);
+				if ($AddThisBundle==true 
+					AND filter_number_format($_POST['Qty' . $i])>0){
+					
+					$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], 
+																					filter_number_format($_POST['Qty' . $i]), 
+																					$_POST['ExpiryDate' . $i]);
 				}
 			} /*end if ExistingBundleQty >0 */
 		} /* end if posted Serialno . i is not blank */

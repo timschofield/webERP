@@ -16,7 +16,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 					$AddThisBundle = true;
 					/*If the user enters a duplicate serial number the later one over-writes
 					the first entered one - no warning given though ? */
-					if ($_POST['Qty' . $i] > $ExistingBundleQty){
+					if (filter_number_format($_POST['Qty' . $i]) > $ExistingBundleQty){
 						if ($LineItem->Serialised ==1){
 							echo '<br />';
 							prnMsg ( $_POST['SerialNo' . $i] . ' ' .
@@ -38,7 +38,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 						}
 					}
 					if ($AddThisBundle==true){
-						$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:-1) * $_POST['Qty' . $i]);
+						$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:-1) * filter_number_format($_POST['Qty' . $i]));
 					}
 				} /*end if ExistingBundleQty >0 */
 				else {
@@ -51,7 +51,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 				//Serialised items can not exist w/ Qty > 0 if we have an $NewQty of 1
 				//Serialised items must exist w/ Qty = 1 if we have $NewQty of -1
 				$SerialError = false;
-				$NewQty = ($InOutModifier>0?1:-1) * $_POST['Qty' . $i];
+				$NewQty = ($InOutModifier>0?1:-1) * filter_number_format($_POST['Qty' . $i]);
 				$NewSerialNo = $_POST['SerialNo' . $i];
 
 				if ($LineItem->Serialised){
@@ -124,7 +124,9 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
   Validate an uploaded FILE and save entries
 ********************************************/
 $valid = true;
-if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST['ValidateFile'])){
+if (isset($_POST['EntryType']) 
+	AND $_POST['EntryType']=='FILE' 
+	AND isset($_POST['ValidateFile'])){
 
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
 
@@ -134,7 +136,7 @@ if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST[
 	while (!feof($handle)) {
 		$contents = trim(fgets($handle, 4096));
 		//$valid = $LineItem->SerialItems[$i]->importFileLineItem($contents);
-		$pieces  = explode(",",$contents);
+		$pieces  = explode(',',$contents);
 		if ($LineItem->Serialised == 1){
 		//for Serialised items, we are expecting the line to contain either just the serial no
 		//OR a comma delimited file w/ the serial no FIRST
@@ -155,12 +157,12 @@ if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST[
 			}
 		} else {
 		//for controlled only items, we must receive: BatchID, Qty in a comma delimited  file
-			if($pieces[0] != "" AND $pieces[1] != "" AND is_numeric($pieces[1]) AND $pieces[1] > 0 ){
+			if($pieces[0] != '' AND $pieces[1] != '' AND is_numeric(filter_number_format($pieces[1])) AND filter_number_format($pieces[1]) > 0 ){
 			/*If the user enters a duplicate batch number the later one over-writes
 			the first entered one - no warning given though ? */
 					//$LineItem->SerialItems[$pieces[0]] = new SerialItem ($pieces[0],  $pieces[1] );
 					$NewSerialNo = $pieces[0];
-					$NewQty = ($InOutModifier>0?1:-1) * $pieces[1];
+					$NewQty = ($InOutModifier>0?1:-1) * filter_number_format($pieces[1]);
 			} else {
 					$valid = false;
 			}
@@ -203,10 +205,10 @@ if (isset($_POST['EntryType']) and $_POST['EntryType']=='FILE' and isset($_POST[
 			if ($LineItem->Serialised){
 				$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
 				if ($NewQty == 1 AND $ExistingQty != 0){
-					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
+					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _('The Serial Number being added exists with a Quantity that is not Zero (0)!'), 'error' );
 					$SerialError = true;
 				} elseif ($NewQty == -1 AND $ExistingQty != 1){
-					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
+					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _('The Serial Number being removed exists with a Quantity that is not One (1)!'), 'error');
 					$SerialError = true;
 				}
 			}
@@ -269,19 +271,19 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 				$AddThisBundle = true;
 					/*If the user enters a duplicate serial number the later one over-writes the first entered one - no warning given though ? */
 					if ($NewQty > $ExistingBundleQty){
-							if ($LineItem->Serialised ==1){
-									echo '<br />' . '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('has already been sold'). '.';
-									$AddThisBundle = false;
-								} elseif ($ExistingBundleQty==0) { /* and its a batch */
-									echo '<br />' . _('There is none of'). ' <a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('remaining') .'.';
-									$AddThisBundle = false;
-							} else {
-									echo '<br />'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' .
-												'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '.
-												_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
-									$NewQty = $ExistingBundleQty;
-									$AddThisBundle = true;
-							}
+						if ($LineItem->Serialised ==1){
+								echo '<br />' . '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('has already been sold'). '.';
+								$AddThisBundle = false;
+							} elseif ($ExistingBundleQty==0) { /* and its a batch */
+								echo '<br />' . _('There is none of'). ' <a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('remaining') .'.';
+								$AddThisBundle = false;
+						} else {
+								echo '<br />'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' .
+											'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '.
+											_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
+								$NewQty = $ExistingBundleQty;
+								$AddThisBundle = true;
+						}
 					}
 					if ($AddThisBundle==true){
 							$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($NewSerialNo, $NewQty);

@@ -71,7 +71,7 @@ if (!isset($_SESSION['CurImportFile']) ){
 		$_SESSION['CurImportFile'] = '';
 		$LineItem->SerialItemsValid=false;
 }
-if ($_FILES['ImportFile']['name'] == '' && $_SESSION['CurImportFile'] == ''){
+if ($_FILES['ImportFile']['name'] == '' AND $_SESSION['CurImportFile'] == ''){
 	$msg = _('Please Choose a file and then click Set Entry Type to upload a file for import');
 	prnMsg($msg);
 	$LineItem->SerialItemsValid=false;
@@ -125,14 +125,12 @@ if ($ShowFileInfo){
 		<tr><td>'. _('Size') .':</td><td>' . locale_number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td></tr>
 		<tr><td>'. _('Type') .':</td><td>' . $_SESSION['CurImportFile']['type'] . '</td></tr>
 		<tr><td>'. _('TempName') .':</td><td>' . $_SESSION['CurImportFile']['tmp_name'] . '</td></tr>
-	   <tr><td>'. _('Status') .':</td><td>' .
-	($LineItem->SerialItemsValid?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td></tr>
-	   </table>'.
-		$invalid_imports.' '. _('out of') .' '.$TotalLines.' '. _('records are invalid').'<br />';
+	   <tr><td>'. _('Status') .':</td><td>' . ($LineItem->SerialItemsValid?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td></tr>
+	   </table>'. $invalid_imports.' '. _('out of') .' '.$TotalLines.' '. _('records are invalid').'<br />';
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
 }
 
-if (!$LineItem->SerialItemsValid && !$_SESSION['CurImportFile']['Processed']){
+if (!$LineItem->SerialItemsValid AND !$_SESSION['CurImportFile']['Processed']){
 		// If all items are not valid, show the raw first 10 lines of the file. maybe it will help.
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
 		$handle = fopen($filename, 'r');
@@ -168,7 +166,7 @@ if (!$LineItem->SerialItemsValid && !$_SESSION['CurImportFile']['Processed']){
 		$i++;
 		if ($i == 100) {
 			break;
-				}
+		}
 	}
 }
 
