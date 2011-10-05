@@ -70,7 +70,7 @@ $sql = "SELECT salesorders.customerref,
 			INNER JOIN currencies
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE salesorders.quotation=1
-			AND salesorders.orderno='" . filter_number_format($_GET['QuotationNo']) ."'";
+			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -82,7 +82,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-	prnMsg( _('Unable to Locate Quotation Number') . ' : ' . filter_number_format($_GET['QuotationNo']) . ' ', 'error');
+	prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
 	echo '<br />
 			<br />
 			<br />
@@ -111,7 +111,7 @@ LETS GO */
 $PaperSize = 'A4';
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Customer Quotation') );
-$pdf->addInfo('Subject', _('Quotation') . ' ' . filter_number_format($_GET['QuotationNo']));
+$pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
 $FontSize=12;
 $PageNumber = 1;
 $line_height=24;
@@ -163,7 +163,7 @@ if (DB_num_rows($result)>0){
 		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 		$DisplayPrice = locale_number_format($myrow2['unitprice'],$myrow['currdecimalplaces']);
 		$DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
-		$SubTot =  filter_number_format($myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']));
+		$SubTot =  $myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']);
 		$TaxProv = $myrow['taxprovinceid'];
 		$TaxCat = $myrow2['taxcatid'];
 		$Branch = $myrow['branchcode'];
@@ -186,7 +186,7 @@ if (DB_num_rows($result)>0){
 		}
 
 		$DisplayTaxClass = $TaxClass . "%";
-		$TaxAmount =  filter_number_fomat((($SubTot/100)*(100+$TaxClass))-$SubTot);
+		$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
 		$DisplayTaxAmount = locale_number_format($TaxAmount,$myrow['currdecimalplaces']);
 
 		$LineTotal = $SubTot + $TaxAmount;

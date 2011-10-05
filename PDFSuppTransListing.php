@@ -32,19 +32,20 @@ if (!isset($_POST['Date'])){
 				<td><input type="text" name="Date" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
 			<tr>';
 
-	echo '<tr><td>' . _('Transaction type') . '</td><td>';
+	echo '<tr>
+			<td>' . _('Transaction type') . '</td>
+			<td><select name="TransType">
+				<option value=20>' . _('Invoices') . '</option>
+				<option value=21>' . _('Credit Notes') . '</option>
+				<option value=22>' . _('Payments') . '</option>
+				</select></td>
+		</tr>';
 
-	echo "<select name='TransType'>";
-
-	echo '<option value=20>' . _('Invoices') . '</option>';
-	echo '<option value=21>' . _('Credit Notes') . '</option>';
-	echo '<option value=22>' . _('Payments') . '</option>';
-
-	 echo '</select></td></tr>';
-
-	 echo '</select></td></tr>
-			</table>
-			<br /><div class="centre"><input type="submit" name="Go" value="' . _('Create PDF') . '"></div>';
+	 echo '</table>
+			<br />
+			<div class="centre">
+				<input type="submit" name="Go" value="' . _('Create PDF') . '">
+			</div>';
 
 	 include('includes/footer.inc');
 	 exit;
@@ -54,21 +55,21 @@ if (!isset($_POST['Date'])){
 }
 
 $sql= "SELECT type,
-		supplierno,
-		suppreference,
-		trandate,
-		ovamount,
-		ovgst,
-		transtext,
-		currcode,
-		decimalplaces AS currdecimalplaces,
-		suppname
-	FROM supptrans INNER JOIN suppliers
-	ON supptrans.supplierno = suppliers.supplierno
-	INNER JOIN currencies
-	ON suppliers.currcode=currencies.currabrev
-	WHERE type='" . $_POST['TransType'] . "'
-	AND date_format(inputdate, '%Y-%m-%d')='".FormatDateForSQL($_POST['Date'])."'";
+			supplierno,
+			suppreference,
+			trandate,
+			ovamount,
+			ovgst,
+			transtext,
+			currcode,
+			decimalplaces AS currdecimalplaces,
+			suppname
+		FROM supptrans INNER JOIN suppliers
+		ON supptrans.supplierno = suppliers.supplierno
+		INNER JOIN currencies
+		ON suppliers.currcode=currencies.currabrev
+		WHERE type='" . $_POST['TransType'] . "'
+		AND inputdate='" . FormatDateForSQL($_POST['Date']) . "'";
 
 $result=DB_query($sql,$db,'','',false,false);
 

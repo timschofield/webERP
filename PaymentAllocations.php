@@ -27,15 +27,19 @@ if (!isset($_GET['InvID'])){
 $SuppID = $_GET['SuppID'];
 $InvID = $_GET['InvID'];
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payments') . '" alt="" />' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID . '</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payments') . '" alt="" />' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID . '</p>';
 
-echo '<div class="page_help_text">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&SupplierID=' . $SuppID . '"><br /> ' . _('Back to supplier inquiry') . '</a></div><br />';
+echo '<div class="page_help_text">' .
+		_('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&SupplierID=' . $SuppID . '">' . _('Back to supplier inquiry') . '</a>
+	</div>
+	<br />';
 
 $SQL= "SELECT supptrans.supplierno,
 				supptrans.suppreference,
 				supptrans.trandate,
 				supptrans.alloc,
-				currencies.decimalplaces
+				currencies.decimalplaces AS currdecimalplaces
 		FROM supptrans INNER JOIN suppliers
 		ON supptrans.supplierno=suppliers.supplierid
 		INNER JOIN currencies 
@@ -79,7 +83,7 @@ $k=0; //row colour counter
 	echo '<td>'.$myrow['supplierno'].'</td>
 		<td>'.$myrow['suppreference'].'</td>
 		<td>'.ConvertSQLDate($myrow['trandate']).'</td>
-		<td class="number">'.locale_number_format($myrow['alloc'],$myrow['decimalplaces']).'</td>
+		<td class="number">'.locale_number_format($myrow['alloc'],$myrow['currdecimalplaces']).'</td>
 		</tr>';
 
 		$j++;

@@ -809,10 +809,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						</tr>',
 						_('Totals'),
 						_('Lines - ') . $linectr,
-						$TotalQty,
+						locale_number_format($TotalQty,2),
 						locale_number_format($TotalExtCost,2),
 						locale_number_format($TotalExtPrice,2),
-						$TotalInvQty,
+						locale_number_format($TotalInvQty,2),
 						' ');
 		} // End of if ($_POST['ReportType']
 		echo '</table>';
@@ -948,8 +948,8 @@ function submitcsv(&$db,
 							   stockmaster.decimalplaces,
 							   stockmaster.description
 							   FROM purchorderdetails
-						LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-						LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+						INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+						INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 						LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
 						WHERE purchorders.orddate >='$FromDate'
 						 AND purchorders.orddate <='$ToDate'
@@ -977,8 +977,8 @@ function submitcsv(&$db,
 							   stockmaster.description
 							   FROM grns
 						LEFT JOIN purchorderdetails ON grns.podetailitem = purchorderdetails.podetailitem
-						LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-						LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+						INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+						INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 						LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
 						WHERE grns.deliverydate >='$FromDate'
 						 AND grns.deliverydate <='$ToDate'
@@ -1010,10 +1010,10 @@ function submitcsv(&$db,
 								   stockmaster.decimalplaces,
 								   stockmaster.description
 								   FROM purchorderdetails
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE purchorders.orddate >='$FromDate'
 							 AND purchorders.orddate <='$ToDate'
 							$WherePart
@@ -1023,9 +1023,9 @@ function submitcsv(&$db,
 							$WhereLineStatus
 							$WhereCategory
 							GROUP BY " . $_POST['SummaryType'] .
-							',stockmaster.decimalplaces,
+							",stockmaster.decimalplaces,
 							  stockmaster.description
-							ORDER BY ' . $orderby;
+							ORDER BY " . $orderby;
 			   } elseif ($_POST['SummaryType'] == 'orderno') {
 					$sql = "SELECT purchorderdetails.orderno,
 								   purchorders.supplierno,
@@ -1035,10 +1035,10 @@ function submitcsv(&$db,
 								   SUM(purchorderdetails.quantityord * purchorderdetails.stdcostunit) as extcost,
 								   suppliers.suppname
 								   FROM purchorderdetails
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE purchorders.orddate >='$FromDate'
 							 AND purchorders.orddate <='$ToDate'
 							$WherePart
@@ -1048,9 +1048,9 @@ function submitcsv(&$db,
 							$WhereLineStatus
 							$WhereCategory
 							GROUP BY " . $_POST['SummaryType'] .
-							',purchorders.supplierno,
+							",purchorders.supplierno,
 							  suppliers.suppname
-							ORDER BY ' . $orderby;
+							ORDER BY " . $orderby;
 			} elseif ($_POST['SummaryType'] == 'supplierno' || $_POST['SummaryType'] == 'suppname,suppliers.supplierid') {
 					$sql = "SELECT purchorders.supplierno,
 								   SUM(purchorderdetails.quantityord) as quantityord,
@@ -1059,10 +1059,10 @@ function submitcsv(&$db,
 								   SUM(purchorderdetails.quantityord * purchorderdetails.stdcostunit) as extcost,
 								   suppliers.suppname
 								   FROM purchorderdetails
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE purchorders.orddate >='$FromDate'
 							 AND purchorders.orddate <='$ToDate'
 							$WherePart
@@ -1072,9 +1072,9 @@ function submitcsv(&$db,
 							$WhereLineStatus
 							$WhereCategory
 							GROUP BY " . $_POST['SummaryType'] .
-							',purchorders.supplierno,
+							",purchorders.supplierno,
 							  suppliers.suppname
-							ORDER BY ' . $orderby;
+							ORDER BY " . $orderby;
 			} elseif ($_POST['SummaryType'] == 'month') {
 					$sql = "SELECT EXTRACT(YEAR_MONTH from purchorders.orddate) as month,
 								   CONCAT(MONTHNAME(purchorders.orddate),' ',YEAR(purchorders.orddate)) as monthname,
@@ -1083,10 +1083,10 @@ function submitcsv(&$db,
 								   SUM(purchorderdetails.quantityord * purchorderdetails.unitprice) as extprice,
 								   SUM(purchorderdetails.quantityord * purchorderdetails.stdcostunit) as extcost
 								   FROM purchorderdetails
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE purchorders.orddate >='$FromDate'
 							 AND purchorders.orddate <='$ToDate'
 							$WherePart
@@ -1096,8 +1096,8 @@ function submitcsv(&$db,
 							$WhereLineStatus
 							$WhereCategory
 							GROUP BY " . $_POST['SummaryType'] .
-							', monthname
-							ORDER BY ' . $orderby;
+							", monthname
+							ORDER BY " . $orderby;
 			} elseif ($_POST['SummaryType'] == 'categoryid') {
 					$sql = "SELECT SUM(purchorderdetails.quantityord) as quantityord,
 								   SUM(purchorderdetails.qtyinvoiced) as qtyinvoiced,
@@ -1106,10 +1106,10 @@ function submitcsv(&$db,
 								   stockmaster.categoryid,
 								   stockcategory.categorydescription
 								   FROM purchorderdetails
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE purchorders.orddate >='$FromDate'
 							 AND purchorders.orddate <='$ToDate'
 							$WherePart
@@ -1133,8 +1133,8 @@ function submitcsv(&$db,
 								   stockmaster.description
 								   FROM grns
 							LEFT JOIN purchorderdetails ON grns.podetailitem = purchorderdetails.podetailitem
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE grns.deliverydate >='$FromDate'
@@ -1158,10 +1158,10 @@ function submitcsv(&$db,
 								   suppliers.suppname
 								   FROM grns
 							LEFT JOIN purchorderdetails ON grns.podetailitem = purchorderdetails.podetailitem
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE grns.deliverydate >='$FromDate'
 							 AND grns.deliverydate <='$ToDate'
 							$WherePart
@@ -1183,10 +1183,10 @@ function submitcsv(&$db,
 								   suppliers.suppname
 								   FROM grns
 							LEFT JOIN purchorderdetails ON grns.podetailitem = purchorderdetails.podetailitem
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE grns.deliverydate >='$FromDate'
 							 AND grns.deliverydate <='$ToDate'
 							$WherePart
@@ -1208,10 +1208,10 @@ function submitcsv(&$db,
 								   SUM(grns.qtyrecd * grns.stdcostunit) as extcost
 								   FROM grns
 							LEFT JOIN purchorderdetails ON grns.podetailitem = purchorderdetails.podetailitem
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE grns.deliverydate >='$FromDate'
 							 AND grns.deliverydate <='$ToDate'
 							$WherePart
@@ -1232,10 +1232,10 @@ function submitcsv(&$db,
 								   SUM(grns.qtyrecd * grns.stdcostunit) as extcost
 								   FROM grns
 							LEFT JOIN purchorderdetails ON grns.podetailitem = purchorderdetails.podetailitem
-							LEFT JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
-							LEFT JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
+							INNER JOIN purchorders ON purchorders.orderno=purchorderdetails.orderno
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							LEFT JOIN stockmaster ON purchorderdetails.itemcode = stockmaster.stockid
-							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
+							INNER JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							WHERE grns.deliverydate >='$FromDate'
 							 AND grns.deliverydate <='$ToDate'
 							$WherePart

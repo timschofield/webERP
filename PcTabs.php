@@ -226,7 +226,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td class=number>%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -275,7 +275,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['SelectUser']  = $myrow['usercode'];
 		$_POST['SelectTabs']  = $myrow['typetabcode'];
 		$_POST['SelectCurrency']  = $myrow['currency'];
-		$_POST['TabLimit']  = $myrow['tablimit'];
+		$_POST['TabLimit']  = locale_number_format($myrow['tablimit']);
 		$_POST['SelectAssigner']  = $myrow['assigner'];
 		$_POST['SelectAuthoriser']  = $myrow['authorizer'];
 		$_POST['GLAccountCash']  = $myrow['glaccountassignment'];

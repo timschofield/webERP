@@ -5,7 +5,7 @@
 
 if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	global  $db;		// It is global, we may not be.
-	$sql = 'SELECT confname, confvalue FROM config';
+	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($sql,$db,$ErrMsg);
 	while( $myrow = DB_fetch_row($ConfigResult) ) {
@@ -28,8 +28,11 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	/*Load the pagesecurity settings from the database */
 	$sql="SELECT script, pagesecurity FROM scripts";
 	$result=DB_query($sql, $db,'','',false,false);
-	if (DB_error_no($db)!=0){ // the table may not exist with the pagesecurity field in it if it is an older webERP database
-		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+	if (DB_error_no($db)!=0){ 
+		/* the table may not exist with the pagesecurity field in it if it is an older webERP database 
+		 * divert to the db upgrade if the VersionNumber is not in the config table 
+		 * */
+		header('Location: UpgradeDatabase.php'); 
 	}
 	//Populate the PageSecurityArray array for each script's  PageSecurity value
 	while ($myrow=DB_fetch_array($result)) {

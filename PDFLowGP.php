@@ -47,7 +47,7 @@ if (isset($_POST['PrintPDF'])) {
 					ON stockmoves.debtorno=debtorsmaster.debtorno
 				WHERE stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
-				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . filter_number_format(filter_number_format($_POST['GPMin'])/100) . "
+				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
 				ORDER BY stockmaster.stockid";
 	
 	$LowGPSalesResult = DB_query($SQL,$db,'','',false,false);
@@ -129,21 +129,21 @@ if (isset($_POST['PrintPDF'])) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr><td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size=10 maxlength="10" value="' . $_POST['FromDate'] . '"></td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size=10 maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
 			</tr>';
 
 		echo '<tr><td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '"></td>
+					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 			</tr>';
 
 		echo '<tr><td>' . _('Show sales with GP') . '%' . _('below') . ':</td>
-				<td><input type="text" class="number" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '"></td>
+				<td><input type="text" class="number" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '" /></td>
 			</tr>';
 
 		echo '</table>
 				<br />
 				<div class="centre">
-					<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '">
+					<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 				</div>';
 	}
 	include('includes/footer.inc');

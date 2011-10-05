@@ -181,7 +181,7 @@ If (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130,$YPos,150,$FontSize,$DisplayUnitPrice, 'right');
 
 		if ($PriceList['price']!=0){
-			$DisplayGPPercent = (int)filter_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price'])) . '%';
+			$DisplayGPPercent = locale_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']),1) . '%';
 		} else {
 			$DisplayGPPercent = 0;
 		}

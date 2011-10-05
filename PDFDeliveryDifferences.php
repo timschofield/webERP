@@ -26,30 +26,39 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection>
+	echo '<table class="selection">
 			<tr>
 			<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat']. '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '"></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat']. '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
 			</tr>';
-	 echo '<tr>
-			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat']. '"  name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+	echo '<tr>
+			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat']. '"  name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
-	 echo '<tr><td>' . _('Inventory Category') . '</td><td>';
+	echo '<tr>
+			<td>' . _('Inventory Category') . '</td>
+			<td>';
 
-	 $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
-	 $result = DB_query($sql,$db);
+	$sql = "SELECT categorydescription, 
+					categoryid 
+			FROM stockcategory 
+			WHERE stocktype<>'D' 
+			AND stocktype<>'L'";
+	 
+	$result = DB_query($sql,$db);
 
 
-	 echo '<select name="CategoryID">';
-	 echo '<option selected value="All">' . _('Over All Categories') . '</option>';
+	 echo '<select name="CategoryID">
+			<option selected value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription']  . '</option>';
 	}
 
-	 echo '</select></td></tr>';
+	 echo '</select></td>
+		</tr>';
 
-	 echo '<tr><td>' . _('Inventory Location') . ':</td>
+	 echo '<tr>
+			<td>' . _('Inventory Location') . ':</td>
 			<td><select name="Location">
 				<option selected value="All">' . _('All Locations')  . '</option>';
 
@@ -59,16 +68,18 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	}
 	 echo '</select></td></tr>';
 
-	 echo '<tr><td>' . _('Email the report off') . ':</td>
+	 echo '<tr>
+				<td>' . _('Email the report off') . ':</td>
 				<td><select name="Email">
 					<option selected value="No">' . _('No')  . '</option>
 					<option value="Yes">' . _('Yes')  . '</option>
-					</select>
-				</td>
+					</select></td>
 			</tr>
 			</table>
 			<br />
-			<div class="centre"><input type="submit" name="Go" value="' . _('Create PDF') . '"></div>';
+			<div class="centre">
+				<input type="submit" name="Go" value="' . _('Create PDF') . '">
+			</div>';
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');
@@ -84,6 +95,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
+			stockmaster.decimalplaces,
 			quantitydiff,
 			trandate,
 			orderdeliverydifferenceslog.debtorno,
@@ -100,6 +112,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
+			stockmaster.decimalplaces,
 			quantitydiff,
 			trandate,
 			orderdeliverydifferenceslog.debtorno,
@@ -117,6 +130,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
+			stockmaster.decimalplaces,
 			quantitydiff,
 			trandate,
 			orderdeliverydifferenceslog.debtorno,
@@ -138,6 +152,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
+			stockmaster.decimalplaces,
 			quantitydiff,
 			trandate,
 			orderdeliverydifferenceslog.debtorno,
@@ -162,7 +177,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');
 	if ($debug==1){
-		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . "<br />$SQL",'error');
+		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . '<br />' . $SQL,'error');
 	}
 	include ('includes/footer.inc');
 	exit;
@@ -195,7 +210,7 @@ while ($myrow=DB_fetch_array($Result)){
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,40,$FontSize,$myrow['orderno'], 'left');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,200,$FontSize,$myrow['stockid'] . ' - ' . $myrow['description'], 'left');
 
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,locale_number_format($myrow['quantitydiff']), 'right');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,locale_number_format($myrow['quantitydiff'],$myrow['decimalplaces']), 'right');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+335,$YPos,50,$FontSize,$myrow['debtorno'], 'left');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+385,$YPos,50,$FontSize,$myrow['branch'], 'left');
 	  $LeftOvers = $pdf->addTextWrap($Left_Margin+435,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');

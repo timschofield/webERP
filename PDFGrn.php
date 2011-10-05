@@ -54,7 +54,7 @@ if ($GRNNo == 'Preview'){
 			ON grns.podetailitem=purchorderdetails.podetailitem
 			LEFT JOIN stockmaster
 			ON grns.itemcode=stockmaster.stockid
-			WHERE grnbatch='".filter_number_format($GRNNo)."'";
+			WHERE grnbatch='". $GRNNo ."'";
 
 	$GRNResult=DB_query($sql, $db);
 	$NoOfGRNs = DB_num_rows($GRNResult);
@@ -69,7 +69,7 @@ if ($GRNNo == 'Preview'){
 						suppliers.address6
 				FROM grns INNER JOIN suppliers
 				ON grns.supplierid=suppliers.supplierid
-				WHERE grnbatch='".filter_number_format($GRNNo)."'";
+				WHERE grnbatch='". $GRNNo ."'";
 		$SuppResult = DB_query($sql,$db,_('Could not get the supplier of the selected GRN'));
 		$SuppRow = DB_fetch_array($SuppResult);
 	}
@@ -88,7 +88,7 @@ if ($NoOfGRNs >0){
 			$DecimalPlaces=2;
 		}
 		if (is_numeric($myrow['conversionfactor']) AND $myrow['conversionfactor'] !=0){
-			$SuppliersQuantity=locale_number_format(filter_number_format($myrow['qtyrecd']/$myrow['conversionfactor']),$DecimalPlaces);
+			$SuppliersQuantity=locale_number_format($myrow['qtyrecd']/$myrow['conversionfactor'],$DecimalPlaces);
 		} else {
 			$SuppliersQuantity=locale_number_format($myrow['qtyrecd'],$DecimalPlaces);
 		}

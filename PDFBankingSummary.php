@@ -32,8 +32,14 @@ if (!isset($_POST['BatchNo'])){
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['transno'].'">'._('Batch') .' '. $myrow['transno'].' - '.ConvertSqlDate($myrow['transdate']).'</option>';
 	}
-	echo '</select></td></tr></table>';
-	echo '<br /><div class="centre"><input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '"></div></form>';
+	echo '</select></td>
+			</tr>
+			</table>';
+	echo '<br />
+			<div class="centre">
+				<input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '">
+			</div>
+		</form>';
 
 	include ('includes/footer.inc');
 	exit;
@@ -41,21 +47,21 @@ if (!isset($_POST['BatchNo'])){
 
 if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$SQL= "SELECT bankaccountname,
-			bankaccountnumber,
-			ref,
-			transdate,
-			banktranstype,
-			bankact,
-			banktrans.exrate,
-			banktrans.functionalexrate,
-			banktrans.currcode,
-			currencies.decimalplaces AS currdecimalplaces
-		FROM bankaccounts INNER JOIN banktrans
-		ON bankaccounts.accountcode=banktrans.bankact
-		INNER JOIN currencies
-		ON bankaccounts.currcode=currencies.currabrev
-		WHERE banktrans.transno='" . $_POST['BatchNo'] . "'
-		AND banktrans.type=12";
+				bankaccountnumber,
+				ref,
+				transdate,
+				banktranstype,
+				bankact,
+				banktrans.exrate,
+				banktrans.functionalexrate,
+				banktrans.currcode,
+				currencies.decimalplaces AS currdecimalplaces
+			FROM bankaccounts INNER JOIN banktrans
+			ON bankaccounts.accountcode=banktrans.bankact
+			INNER JOIN currencies
+			ON bankaccounts.currcode=currencies.currabrev
+			WHERE banktrans.transno='" . $_POST['BatchNo'] . "'
+			AND banktrans.type=12";
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
 	$DbgMsg = _('The SQL used to get the receipt header information that failed was');

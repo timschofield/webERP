@@ -108,7 +108,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			if ($myrow['rate'] == 1){ // functional currency
 				$Amount = $myrow['amount'];
 			}else{ // other currencies
-				$Amount = filter_number_format($myrow['amount']/$myrow['rate']);
+				$Amount = $myrow['amount']/$myrow['rate'];
 			}
 
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){

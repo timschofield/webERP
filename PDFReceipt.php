@@ -57,7 +57,7 @@ $sql="SELECT 	debtorno,
 			FROM debtortrans
 			WHERE type=12
 			AND transno='".$_GET['BatchNumber']."'
-			AND id='". filter_number_format($StartReceiptNumber-1+$_GET['ReceiptNumber']) ."'";
+			AND id='". $StartReceiptNumber-1+$_GET['ReceiptNumber'] ."'";
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $DebtorNo=$myrow['debtorno'];
@@ -70,7 +70,7 @@ $sql="SELECT currency,
 		WHERE currabrev=(SELECT currcode
     	FROM banktrans
 		WHERE type=12
-		AND transno='" . filter_number_format($_GET['BatchNumber'])."')";
+		AND transno='" . $_GET['BatchNumber']."')";
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $Currency=$myrow['currency'];
@@ -116,5 +116,5 @@ $YPos=$YPos-($line_height*10);
 
 $LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,'______________________________________________________________________________');
 
-$pdf->Output('Receipt-'.filter_number_format($_GET['ReceiptNumber']), 'I');
+$pdf->Output('Receipt-'.$_GET['ReceiptNumber'], 'I');
 ?>

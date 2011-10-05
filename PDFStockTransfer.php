@@ -22,11 +22,17 @@ if (!isset($_GET['TransferNo'])){
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $title.'</p><br />';
 		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection"><tr>';
-		echo '<td>'._('Print Stock Transfer Note').' : '.'</td>';
-		echo '<td><input type="text" class="number"  name="TransferNo" maxlength=10 size=11 /></td></tr>';
-		echo '</table>';
-		echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Print Transfer Note') . '"></div></form>';
+		echo '<table class="selection">
+			<tr>
+				<td>'._('Print Stock Transfer Note').' : '.'</td>
+				<td><input type="text" class="number"  name="TransferNo" maxlength=10 size=11 /></td>
+			</tr>
+			</table>';
+		echo '<br />
+			<div class="centre">
+				<input type="submit" name="Process" value="' . _('Print Transfer Note') . '">
+			</div>
+			</form>';
 		include('includes/footer.inc');
 		exit();
 	}
@@ -50,7 +56,8 @@ $sql="SELECT stockmoves.stockid,
 			stockmoves.loccode, 
 			locationname,
 			trandate, 
-			qty 
+			qty,
+			decimalplaces
 		FROM stockmoves 
 		INNER JOIN stockmaster
 		ON stockmoves.stockid=stockmaster.stockid
@@ -77,7 +84,7 @@ $Date=$myrow['trandate'];
 $myNextRow=DB_fetch_array($result);
 $ToCode=$myNextRow['loccode'];
 $To = $myNextRow['locationname'];
-$Quantity=$myNextRow['qty'];
+$Quantity=locale_number_format($myNextRow['qty'],$myNextRow['decimalplaces']);
 $Description=$myNextRow['description'];
 
 

@@ -8,7 +8,9 @@ $title = _('Payment Terms Maintenance');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $title . 
+	'</p>';
 
 if (isset($_GET['SelectedTerms'])){
 	$SelectedTerms = $_GET['SelectedTerms'];
@@ -45,7 +47,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'TermsIndicator';
 		$i++;
 	}
-	if (empty($_POST['DayNumber']) OR !is_numeric($_POST['DayNumber']) OR $_POST['DayNumber'] <= 0){
+	if (empty($_POST['DayNumber']) OR !is_numeric(filter_number_format($_POST['DayNumber'])) OR filter_number_format($_POST['DayNumber']) <= 0){
 		$InputError = 1;
 		prnMsg( _('The number of days or the day in the following month must be numeric') ,'error');
 		$Errors[$i] = 'DayNumber';
@@ -77,16 +79,16 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['DaysOrFoll']) AND $_POST['DaysOrFoll']=='on') {
 			$sql = "UPDATE paymentterms SET
-					terms='" . $_POST['Terms'] . "',
-					dayinfollowingmonth=0,
-					daysbeforedue='" . $_POST['DayNumber'] . "'
-				WHERE termsindicator = '" . $SelectedTerms . "'";
+							terms='" . $_POST['Terms'] . "',
+							dayinfollowingmonth=0,
+							daysbeforedue='" . filter_number_format($_POST['DayNumber']) . "'
+					WHERE termsindicator = '" . $SelectedTerms . "'";
 		} else {
 			$sql = "UPDATE paymentterms SET
-					terms='" . $_POST['Terms'] . "',
-					dayinfollowingmonth='" . $_POST['DayNumber'] . "',
-					daysbeforedue=0
-				WHERE termsindicator = '" . $SelectedTerms . "'";
+							terms='" . $_POST['Terms'] . "',
+							dayinfollowingmonth='" . filter_number_format($_POST['DayNumber']) . "',
+							daysbeforedue=0
+						WHERE termsindicator = '" . $SelectedTerms . "'";
 		}
 
 		$msg = _('The payment terms definition record has been updated') . '.';
@@ -102,7 +104,7 @@ if (isset($_POST['submit'])) {
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
 							'" . $_POST['Terms'] . "',
-							'" . $_POST['DayNumber'] . "',
+							'" . filter_number_format($_POST['DayNumber']) . "',
 							0
 						)";
 		} else {
@@ -114,7 +116,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['TermsIndicator'] . "',
 							'" . $_POST['Terms'] . "',
 							0,
-							'" . $_POST['DayNumber'] . "'
+							'" . filter_number_format($_POST['DayNumber']) . "'
 							)";
 		}
 
@@ -172,7 +174,9 @@ or deletion of the records*/
 	$result = DB_query($sql, $db);
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan=6><font color=blue size=3>'._('Payment Terms.').'</font></th></tr>';
+	echo '<tr>
+			<th colspan="6"><font color="blue" size="3">'._('Payment Terms.').'</font></th>
+		</tr>';
 	echo '<tr>
 			<th>' . _('Term Code') . '</th>
 			<th>' . _('Description') . '</th>
@@ -215,7 +219,9 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedTerms)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show all Payment Terms Definitions') . '</a></div>';
+	echo '<div class="centre">
+			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show all Payment Terms Definitions') . '</a>
+		</div>';
 }
 
 if (!isset($_GET['delete'])) {
@@ -245,28 +251,38 @@ if (!isset($_GET['delete'])) {
 		echo '<input type=hidden name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" />';
 		echo '<br />
 			<table class="selection">';
-		echo '<tr><th colspan=6><font color=blue size=3>'._('Update Payment Terms.').'</font></th></tr>';
-		echo '<tr><td>' . _('Term Code') . ':</td><td>';
-		echo $_POST['TermsIndicator'] . '</td></tr>';
+		echo '<tr>
+				<th colspan="6"><font color="blue" size="3">'._('Update Payment Terms.').'</font></th>
+			</tr>';
+		echo '<tr>
+				<td>' . _('Term Code') . ':</td>
+				<td>' . $_POST['TermsIndicator'] . '</td></tr>';
 
 	} else { //end of if $SelectedTerms only do the else when a new record is being entered
 
 		if (!isset($_POST['TermsIndicator'])) $_POST['TermsIndicator']='';
-		if (!isset($DaysBeforeDue)) $DaysBeforeDue=0;
+		if (!isset($DaysBeforeDue)) {
+			$DaysBeforeDue=0;
+		}
 		//if (!isset($DayInFollowingMonth)) $DayInFollowingMonth=0;
 		unset($DayInFollowingMonth); // Rather unset for a new record
-		if (!isset($_POST['Terms'])) $_POST['Terms']='';
+		if (!isset($_POST['Terms'])) {
+			$_POST['Terms']='';
+		}
 
 		echo '<table class="selection">';
-		echo '<tr><th colspan="6"><font color=blue size=3>'._('New Payment Terms.').'</font></th></tr>';
-		echo '<tr><td>' . _('Term Code') . ':</td><td><input type="text" name="TermsIndicator"
-		 ' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] .
-			'" size=3 maxlength=2></td></tr>';
+		echo '<tr>
+				<th colspan="6"><font color=blue size=3>'._('New Payment Terms.').'</font></th>
+			</tr>';
+		echo '<tr>
+				<td>' . _('Term Code') . ':</td>
+				<td><input type="text" name="TermsIndicator"' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] . '" size="3" maxlength="2" /></td>
+			</tr>';
 	}
 
 	echo '<tr>
 			<td>'. _('Terms Description'). ':</td>
-			<td><input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" value="'.$_POST['Terms']. '" size=35 maxlength=40></td>
+			<td><input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" value="'.$_POST['Terms']. '" size="35" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>'._('Due After A Given No. Of Days').':</td>
@@ -277,12 +293,12 @@ if (!isset($_GET['delete'])) {
 	echo ' ></td>
 		</tr>
 		<tr><td>'._('Days (Or Day In Following Month)').':</td>
-			<td><input type="Text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class="number"  size=4 maxlength=3 value="';
+			<td><input type="text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class="number"  size=4 maxlength=3 value="';
 	if ($DaysBeforeDue !=0) {
-		echo $DaysBeforeDue;
+		echo locale_number_format($DaysBeforeDue,0);
 	} else {
 		if (isset($DayInFollowingMonth)) {
-			echo $DayInFollowingMonth;
+			echo locale_number_format($DayInFollowingMonth,0);
 		}
 	}
 	echo '" /></td>

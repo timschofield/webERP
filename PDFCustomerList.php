@@ -28,141 +28,141 @@ if (isset($_POST['PrintPDF'])){
 
 	if (in_array('All', $_POST['Areas'])){
 		if (in_array('All', $_POST['SalesPeople'])){
-			$SQL = 'SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					debtorsmaster.address5,
-					debtorsmaster.address6,
-					debtorsmaster.salestype,
-					custbranch.branchcode,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.braddress2,
-					custbranch.braddress3,
-					custbranch.braddress4,
-					custbranch.braddress5,
-					custbranch.braddress6,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.email,
-					custbranch.area,
-					custbranch.salesman,
-					areas.areadescription,
-					salesman.salesmanname
-				FROM debtorsmaster INNER JOIN custbranch
-				ON debtorsmaster.debtorno=custbranch.debtorno
-				INNER JOIN areas
-				ON custbranch.area = areas.areacode
-				INNER JOIN salesman
-				ON custbranch.salesman=salesman.salesmancode
-				ORDER BY area,
-					salesman,
-					debtorsmaster.debtorno,
-					custbranch.branchcode';
+			$SQL = "SELECT debtorsmaster.debtorno,
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						debtorsmaster.address5,
+						debtorsmaster.address6,
+						debtorsmaster.salestype,
+						custbranch.branchcode,
+						custbranch.brname,
+						custbranch.braddress1,
+						custbranch.braddress2,
+						custbranch.braddress3,
+						custbranch.braddress4,
+						custbranch.braddress5,
+						custbranch.braddress6,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.email,
+						custbranch.area,
+						custbranch.salesman,
+						areas.areadescription,
+						salesman.salesmanname
+					FROM debtorsmaster INNER JOIN custbranch
+					ON debtorsmaster.debtorno=custbranch.debtorno
+					INNER JOIN areas
+					ON custbranch.area = areas.areacode
+					INNER JOIN salesman
+					ON custbranch.salesman=salesman.salesmancode
+					ORDER BY area,
+						salesman,
+						debtorsmaster.debtorno,
+						custbranch.branchcode";
 		} else {
 		/* there are a range of salesfolk selected need to build the where clause */
-			$SQL = 'SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					debtorsmaster.address5,
-					debtorsmaster.address6,
-					debtorsmaster.salestype,
-					custbranch.branchcode,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.braddress2,
-					custbranch.braddress3,
-					custbranch.braddress4,
-					custbranch.braddress5,
-					custbranch.braddress6,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.email,
-					custbranch.area,
-					custbranch.salesman,
-					areas.areadescription,
-					salesman.salesmanname
-				FROM debtorsmaster INNER JOIN custbranch
-				ON debtorsmaster.debtorno=custbranch.debtorno
-				INNER JOIN areas
-				ON custbranch.area = areas.areacode
-				INNER JOIN salesman
-				ON custbranch.salesman=salesman.salesmancode
-				WHERE (';
+			$SQL = "SELECT debtorsmaster.debtorno,
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						debtorsmaster.address5,
+						debtorsmaster.address6,
+						debtorsmaster.salestype,
+						custbranch.branchcode,
+						custbranch.brname,
+						custbranch.braddress1,
+						custbranch.braddress2,
+						custbranch.braddress3,
+						custbranch.braddress4,
+						custbranch.braddress5,
+						custbranch.braddress6,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.email,
+						custbranch.area,
+						custbranch.salesman,
+						areas.areadescription,
+						salesman.salesmanname
+					FROM debtorsmaster INNER JOIN custbranch
+					ON debtorsmaster.debtorno=custbranch.debtorno
+					INNER JOIN areas
+					ON custbranch.area = areas.areacode
+					INNER JOIN salesman
+					ON custbranch.salesman=salesman.salesmancode
+					WHERE (";
 
 				$i=0;
 				foreach ($_POST['SalesPeople'] as $Salesperson){
 					if ($i>0){
-						$SQL .= ' OR ';
+						$SQL .= " OR ";
 					}
 					$i++;
 					$SQL .= "custbranch.salesman='" . $Salesperson ."'";
 				}
 
-				$SQL .=') ORDER BY area,
+				$SQL .=") ORDER BY area,
 						salesman,
 						debtorsmaster.debtorno,
-						custbranch.branchcode';
+						custbranch.branchcode";
 		} /*end if SalesPeople =='All' */
 	} else { /* not all sales areas has been selected so need to build the where clause */
 		if (in_array('All', $_POST['SalesPeople'])){
-			$SQL = 'SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					debtorsmaster.address5,
-					debtorsmaster.address6,
-					debtorsmaster.salestype,
-					custbranch.branchcode,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.braddress2,
-					custbranch.braddress3,
-					custbranch.braddress4,
-					custbranch.braddress5,
-					custbranch.braddress6,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.email,
-					custbranch.area,
-					custbranch.salesman,
-					areas.areadescription,
-					salesman.salesmanname
-				FROM debtorsmaster INNER JOIN custbranch
-				ON debtorsmaster.debtorno=custbranch.debtorno
-				INNER JOIN areas
-				ON custbranch.area = areas.areacode
-				INNER JOIN salesman
-				ON custbranch.salesman=salesman.salesmancode
-				WHERE (';
-
+			$SQL = "SELECT debtorsmaster.debtorno,
+						debtorsmaster.name,
+						debtorsmaster.address1,
+						debtorsmaster.address2,
+						debtorsmaster.address3,
+						debtorsmaster.address4,
+						debtorsmaster.address5,
+						debtorsmaster.address6,
+						debtorsmaster.salestype,
+						custbranch.branchcode,
+						custbranch.brname,
+						custbranch.braddress1,
+						custbranch.braddress2,
+						custbranch.braddress3,
+						custbranch.braddress4,
+						custbranch.braddress5,
+						custbranch.braddress6,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.email,
+						custbranch.area,
+						custbranch.salesman,
+						areas.areadescription,
+						salesman.salesmanname
+					FROM debtorsmaster INNER JOIN custbranch
+					ON debtorsmaster.debtorno=custbranch.debtorno
+					INNER JOIN areas
+					ON custbranch.area = areas.areacode
+					INNER JOIN salesman
+					ON custbranch.salesman=salesman.salesmancode
+					WHERE (";
+	
 			$i=0;
 			foreach ($_POST['Areas'] as $Area){
 				if ($i>0){
-					$SQL .= ' OR ';
+					$SQL .= " OR ";
 				}
 				$i++;
 				$SQL .= "custbranch.area='" . $Area ."'";
 			}
 
-			$SQL .= ') ORDER BY custbranch.area,
+			$SQL .= ") ORDER BY custbranch.area,
 					custbranch.salesman,
 					debtorsmaster.debtorno,
-					custbranch.branchcode';
+					custbranch.branchcode";
 		} else {
 		/* there are a range of salesfolk selected need to build the where clause */
-			$SQL = 'SELECT debtorsmaster.debtorno,
+			$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					debtorsmaster.address1,
 					debtorsmaster.address2,
@@ -193,32 +193,32 @@ if (isset($_POST['PrintPDF'])){
 				ON custbranch.area = areas.areacode
 				INNER JOIN salesman
 				ON custbranch.salesman=salesman.salesmancode
-				WHERE (';
+				WHERE (";
 
 			$i=0;
 			foreach ($_POST['Areas'] as $Area){
 				if ($i>0){
-					$SQL .= ' OR ';
+					$SQL .= " OR ";
 				}
 				$i++;
 				$SQL .= "custbranch.area='" . $Area ."'";
 			}
 
-			$SQL .= ') AND (';
+			$SQL .= ") AND (";
 
 			$i=0;
 			foreach ($_POST['SalesPeople'] as $Salesperson){
 				if ($i>0){
-					$SQL .= ' OR ';
+					$SQL .= " OR ";
 				}
 				$i++;
 				$SQL .= "custbranch.salesman='" . $Salesperson ."'";
 			}
 
-			$SQL .=') ORDER BY custbranch.area,
+			$SQL .=") ORDER BY custbranch.area,
 					custbranch.salesman,
 					debtorsmaster.debtorno,
-					custbranch.branchcode';
+					custbranch.branchcode";
 		} /*end if Salesfolk =='All' */
 
 	} /* end if not all sales areas was selected */
@@ -261,11 +261,11 @@ if (isset($_POST['PrintPDF'])){
 			since the date entered */
 
 			$SQL = "SELECT SUM((ovamount+ovfreight+ovdiscount)/rate) AS turnover
-				FROM debtortrans
-				WHERE debtorno='" . $Customers['debtorno'] . "'
-				AND branchcode='" . $Customers['branchcode'] . "'
-				AND (type=10 or type=11)
-				AND trandate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
+					FROM debtortrans
+					WHERE debtorno='" . $Customers['debtorno'] . "'
+					AND branchcode='" . $Customers['branchcode'] . "'
+					AND (type=10 or type=11)
+					AND trandate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
 			$ActivityResult = DB_query($SQL, $db, _('Could not retrieve the activity of the branch because'), _('The failed SQL was'));
 
 			$ActivityRow = DB_fetch_row($ActivityResult);
@@ -382,9 +382,9 @@ if (isset($_POST['PrintPDF'])){
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('For Sales folk'). ':</td><td><select name=SalesPeople[] multiple>';
-
-	echo '<option selected value="All">'. _('All sales folk');
+	echo '<tr><td>' . _('For Sales folk'). ':</td>
+			<td><select name=SalesPeople[] multiple>
+				<option selected value="All">'. _('All sales folk') . '</option>';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
 	$SalesFolkResult = DB_query($sql,$db);
@@ -394,20 +394,28 @@ if (isset($_POST['PrintPDF'])){
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Level Of Activity'). ':</td><td><select name="Activity">';
+	echo '<tr><td>' . _('Level Of Activity'). ':</td>
+			<td><select name="Activity">
+				<option selected value="All">'. _('All customers') . '</option>
+				<option value="GreaterThan">'. _('Sales Greater Than') . '</option>
+				<option value="LessThan">'. _('Sales Less Than') . '</option>
+				</select></td>
+			<td>';
 
-	echo '<option selected value="All">'. _('All customers') . '</option>';
-	echo '<option value="GreaterThan">'. _('Sales Greater Than') . '</option>';
-	echo '<option value="LessThan">'. _('Sales Less Than') . '</option>';
-	echo '</select></td><td>';
-
-	echo '<input type="text" class=number name="ActivityAmount" size=8 maxlength=8 value=0></td></tr>';
+	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value=0></td>
+		</tr>';
 
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
-	echo '<tr><td>' . _('Activity Since'). ':</td>
-			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size=10 maxlength=10 value="' . $DefaultActivitySince . '"></td></tr>';
+	echo '<tr>
+			<td>' . _('Activity Since'). ':</td>
+			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size="10" maxlength="10" value="' . $DefaultActivitySince . '"></td>
+		</tr>';
 
-	echo '</table><br /><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
+	echo '</table>
+			<br />
+			<div class="centre">
+				<input type=Submit Name="PrintPDF" value="'. _('Print PDF'). '">
+			</div>';
 
 	include('includes/footer.inc');
 

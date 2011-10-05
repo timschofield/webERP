@@ -500,7 +500,7 @@ if (isset($_POST['Select'])) {
 		$_SESSION['PO'.$identifier]->SupplierName = $_POST['SupplierName'];
 		$_SESSION['PO'.$identifier]->CurrCode = $_POST['CurrCode'];
 		$_SESSION['PO'.$identifier]->CurrDecimalPlaces = $_POST['CurrDecimalPlaces'];
-		$_SESSION['PO'.$identifier]->ExRate = $_POST['ExRate'];
+		$_SESSION['PO'.$identifier]->ExRate = filter_number_format($_POST['ExRate']);
 		$_SESSION['PO'.$identifier]->PaymentTerms = $_POST['PaymentTerms'];
 		$_SESSION['PO'.$identifier]->SuppDelAdd1 = $_POST['SuppDelAdd1'];
 		$_SESSION['PO'.$identifier]->SuppDelAdd2 = $_POST['SuppDelAdd2'];
@@ -609,10 +609,13 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		prnMsg(_('Purchase Item(s) with this code') . ': ' .  $Purch_Item,'info');
 
 		echo '<div class="centre">';
-		echo '<br /><table class="table_index"><tr><td class="menu_group_item">';
+		echo '<br />
+				<table class="table_index">
+				<tr>
+					<td class="menu_group_item">';
 
 		/* the link */
-		echo '<li><a href="'.$rootpath.'/PO_Items.php?NewItem=' . $Purch_Item . '&identifier=' . $identifier . '">' . 	_('Enter Line Item to this purchase order') . '</a></li>';
+		echo '<a href="'.$rootpath.'/PO_Items.php?NewItem=' . $Purch_Item . '&identifier=' . $identifier . '">' . 	_('Enter Line Item to this purchase order') . '</a>';
 
 		echo '</td>
 			</tr>
@@ -829,8 +832,11 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		echo '</select></td></tr>';
 	
 		echo '<tr><td>' . _('Status Comment') . ':</td>
-					<td><input type="text" name="StatusComments" size=50></td></tr>
-					<tr><td colspan=2><b>' . $_SESSION['PO'.$identifier]->StatusComments .'</b></td></tr>';
+				<td><input type="text" name="StatusComments" size="50" /></td>
+			</tr>
+			<tr>
+				<td colspan="2">' . html_entity_decode($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'</td>
+			</tr>';
 		
 		echo '<input type="hidden" name="StatusCommentsComplete" value="' . htmlentities($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'" />';
 		echo '<tr><td><input type="submit" name="UpdateStatus" value="' . _('Status Update') .'"></td>';
@@ -847,8 +853,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		<tr><td valign=top>';
 	/*nested table level1 */
 
-	echo '<table class=selection width=100%><tr><td>' . _('Warehouse') . ':</td>
-			<td><select name=StkLocation onChange="ReloadForm(form1.LookupDeliveryAddress)">';
+	echo '<table class="selection" width="100%">
+			<tr>
+				<td>' . _('Warehouse') . ':</td>
+				<td><select name="StkLocation" onChange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	$sql = "SELECT loccode,
 					locationname
@@ -995,8 +1003,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	  /* end of sub table */
 
 	echo '</td><td>'; /*sub table nested */
-	echo '<table class=selection width=100%><tr><td>' . _('Supplier Selection') . ':</td><td>
-		<select name=Keywords onChange="ReloadForm(form1.SearchSuppliers)">';
+	echo '<table class="selection" width="100%">
+			<tr>
+				<td>' . _('Supplier Selection') . ':</td>
+				<td><select name="Keywords" onChange="ReloadForm(form1.SearchSuppliers)">';
 
 	$SuppCoResult = DB_query("SELECT supplierid, suppname FROM suppliers ORDER BY suppname",$db);
 
@@ -1009,10 +1019,13 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	}
 
 	echo '</select> ';
-	echo '<input type="submit" name="SearchSuppliers" value=' . _('Select Now') . '"></td></tr>';
+	echo '<input type="submit" name="SearchSuppliers" value=' . _('Select Now') . '" /></td>
+		</tr>';
 
-	echo '</td></tr><tr><td>' . _('Supplier Contact') . ':</td><td>
-		<select name="SupplierContact">';
+	echo '</td></tr>
+			<tr>
+				<td>' . _('Supplier Contact') . ':</td>
+				<td><select name="SupplierContact">';
 
 	$sql = "SELECT contact FROM suppliercontacts WHERE supplierid='" . $_POST['Select'] ."'";
 	$SuppCoResult = DB_query($sql,$db);
@@ -1030,28 +1043,35 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	echo '</select> ';
 	echo '</td></tr>';
 
-	echo '<tr><td>' . _('Address') . ' 1 :</td>
-		</td><td><input type="text" name="SuppDelAdd1" size="41" maxlength="40" value="' . $_POST['SuppDelAdd1'] . '"></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 1 :</td>
+			<td><input type="text" name="SuppDelAdd1" size="41" maxlength="40" value="' . $_POST['SuppDelAdd1'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 2 :</td>
-		</td><td><input type="text" name="SuppDelAdd2" size="41" maxlength="40" value="' . $_POST['SuppDelAdd2'] . '"></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 2 :</td>
+			<td><input type="text" name="SuppDelAdd2" size="41" maxlength="40" value="' . $_POST['SuppDelAdd2'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 3 :</td>
-		</td><td><input type="text" name="SuppDelAdd3" size="41" maxlength="40" value="' . $_POST['SuppDelAdd3'] . '"></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 3 :</td>
+			<td><input type="text" name="SuppDelAdd3" size="41" maxlength="40" value="' . $_POST['SuppDelAdd3'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 4 :</td>
-		</td><td><input type="text" name="SuppDelAdd5" size="21" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '"></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 4 :</td>
+			<td><input type="text" name="SuppDelAdd5" size="21" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 5 :</td>
-		</td><td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '"></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 5 :</td>
+			<td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Phone') . ':
-		</td><td><input type="text" name="SuppTel" size="31" maxlength="30" value="' . $_SESSION['PO'.$identifier]->SuppTel  . '"></td>
+	echo '<tr>
+			<td>' . _('Phone') . ':</td>
+			<td><input type="text" name="SuppTel" size="31" maxlength="30" value="' . $_SESSION['PO'.$identifier]->SuppTel  . '" /></td>
 		</tr>';
 
 	$result=DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
 
-	echo '<tr><td>' . _('Payment Terms') . ':</td>
+	echo '<tr>
+			<td>' . _('Payment Terms') . ':</td>
 			<td><select name="PaymentTerms">';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -1070,20 +1090,22 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	$myrow = DB_fetch_array($result);
 	$_POST['Port'] = $myrow['locationname'];
 
-	echo '<tr><td>' . _('Delivery To') . ':
-		</td><td><input type="text" name="Port" size="31" value="' . $_POST['Port'] . '"></td>
+	echo '<tr>
+			<td>' . _('Delivery To') . ':</td>
+			<td><input type="text" name="Port" size="31" value="' . $_POST['Port'] . '"></td>
 		</tr>';
 
 	if ($_SESSION['PO'.$identifier]->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
 		echo '<tr><td>'. _('Exchange Rate').':'.'</td>
-				<td><input type="text" name="ExRate" value='. $_POST['ExRate'].' class="number" size=11></td>
+				<td><input type="text" name="ExRate" value='. locale_number_format($_POST['ExRate'],5).' class="number" size="11" /></td>
 			</tr>';
 	} else {
-		echo '<input type=hidden name="ExRate" value="1">';
+		echo '<input type="hidden" name="ExRate" value="1" />';
 	}
 	echo '</td></tr></table>'; /*end of sub table */
  
-	echo '</td></tr><tr><th colspan=4><font color=blue size=4><b>' . _('Comments');
+	echo '</td></tr>
+			<tr><th colspan="4"><font color="blue" size="4"><b>' . _('Comments');
 
 	$Default_Comments = '';
 
@@ -1091,13 +1113,16 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		$_POST['Comments']=$Default_Comments;
 	}
 
-	echo ':</b></font></th></tr><tr><td colspan="4"><textarea name="Comments" style="width:100%" rows="5">' . $_POST['Comments'] . '</textarea>';
+	echo ':</b></font></th></tr>
+			<tr><td colspan="4"><textarea name="Comments" style="width:100%" rows="5">' . $_POST['Comments'] . '</textarea>';
 
 	echo '</table>';
 
 	echo '</td></tr></table><br />'; /* end of main table */
 
-	echo '<div class="centre"><input type="submit" name="EnterLines" value="' . _('Enter Line Items') . '"></div>';
+	echo '<div class="centre">
+			<input type="submit" name="EnterLines" value="' . _('Enter Line Items') . '">
+		</div>';
 
 } /*end of if supplier selected */
 

@@ -8,7 +8,7 @@ include('includes/session.inc');
 include('includes/PDFStarter.php');
 
 if (isset($_POST['TransferNo'])) {
-	$_GET['TransferNo']=filter_number_format($_POST['TransferNo']);
+	$_GET['TransferNo']=$_POST['TransferNo'];
 }
 
 if (!isset($_GET['TransferNo'])){
@@ -16,16 +16,19 @@ if (!isset($_GET['TransferNo'])){
 	include ('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Reprint transfer docket').'</p><br />';
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table><tr><td>'._('Transfer docket to reprint').'</td>';
-	echo '<td><input type="text" class="number" size="10" name="TransferNo"></td></tr></table>';
-	echo '<div class="centre"><input type="submit" name="Print" value="' . _('Print') .'">';
+	echo '<table>
+			<tr>
+				<td>'._('Transfer docket to reprint').'</td>
+				<td><input type="text" class="number" size="10" name="TransferNo" /></td>
+			</tr>
+		</table>';
+	echo '<div class="centre">
+			<input type="submit" name="Print" value="' . _('Print') .'">';
 	include ('includes/footer.inc');
 	exit;
-} else {
-  $_GET['TransferNo'] = filter_number_format($_GET['TransferNo']);
-}
+} 
 
 $pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
 $pdf->addInfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
@@ -43,12 +46,13 @@ $sql = "SELECT loctransfers.reference,
 			   loctransfers.shiploc,
 			   locations.locationname as shiplocname,
 			   loctransfers.recloc,
-			   locationsrec.locationname as reclocname
-			   FROM loctransfers
-			   INNER JOIN stockmaster ON loctransfers.stockid=stockmaster.stockid
-			   INNER JOIN locations ON loctransfers.shiploc=locations.loccode
-			   INNER JOIN locations AS locationsrec ON loctransfers.recloc = locationsrec.loccode
-			   WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
+			   locationsrec.locationname as reclocname,
+			   stockmaster.decimalplaces
+		FROM loctransfers
+		INNER JOIN stockmaster ON loctransfers.stockid=stockmaster.stockid
+		INNER JOIN locations ON loctransfers.shiploc=locations.loccode
+		INNER JOIN locations AS locationsrec ON loctransfers.recloc = locationsrec.loccode
+		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
@@ -70,7 +74,7 @@ do {
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$TransferRow['stockid'], 'left');
 	$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$TransferRow['description'], 'left');
-	$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$TransferRow['shipqty'], 'right');
+	$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($TransferRow['shipqty'],$TransferRow['decimalplaces']), 'right');
 
 	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 

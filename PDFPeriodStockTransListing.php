@@ -46,16 +46,18 @@ if (!isset($_POST['FromDate'])){
 			<option value=17>' . _('Stock Adjustment').'</option>
 			<option value=25>' . _('Purchase Order Delivery').'</option>
 			<option value=26>' . _('Work Order Receipt').'</option>
-			<option value=28>' . _('Work Order Issue').'</option>';
-
-	 echo '</select></td></tr>';
+			<option value=28>' . _('Work Order Issue').'</option>
+			</select></td>
+		</tr>';
 
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql, $db);
 
-	echo '<tr><td>' . _('For Stock Location') . ':</td>
-		<td><select name="StockLocation">';
-	echo '<option value="All">' . _('All') . '</option>';
+	echo '<tr>
+			<td>' . _('For Stock Location') . ':</td>
+			<td><select name="StockLocation">
+				<option value="All">' . _('All') . '</option>';
+				
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 			if ($myrow['loccode'] == $_POST['StockLocation']){

@@ -178,7 +178,7 @@ if (!isset($SelectedTabs)){
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<br /><table class=selection>';
+		echo '<br /><table class="selection">';
 		echo '<tr><th colspan="8"><font color="navy" size="3">' . _('Petty Cash Tab') . ' ' .$SelectedTabs. '</font></th></tr>';
 		echo '<tr><th colspan="8">' . _('Detail Of Movements For Last ') .': ';
 
@@ -186,7 +186,7 @@ if (!isset($SelectedTabs)){
 		if(!isset ($Days)){
 			$Days=30;
 		}
-		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
+		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
 		echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength="3" size="4" /> ' ._('Days');
 		echo '<input type="submit" name="Go" value="' . _('Go') . '" />';
 		echo '</th></div></form>';
@@ -263,7 +263,7 @@ if (!isset($SelectedTabs)){
 			} else {
 				printf('<td>%s</td>
 					<td>%s</td>
-					<td class=number>%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>

@@ -43,7 +43,7 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 				GROUP BY salesorderdetails.stkcode
 				ORDER BY " . $_GET['Sequence'] . " DESC
-				LIMIT " . filter_number_format($_GET['NumberOfTopItems']);
+				LIMIT " . $_GET['NumberOfTopItems'];
 	} else {
 		//the situation if the customer type selected "All"
 		if ($_GET['Customers'] == 'All') {
@@ -61,7 +61,7 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
 					ORDER BY " . $_GET['Sequence'] . " DESC
-					LIMIT 0," . filter_number_format($_GET['NumberOfTopItems']);
+					LIMIT 0," . $_GET['NumberOfTopItems'];
 		} else {
 			//the situation if the location and customer type not selected "All"
 			$SQL = "SELECT 	salesorderdetails.stkcode,
@@ -79,7 +79,7 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
 					ORDER BY " . $_GET['Sequence'] . " DESC
-					LIMIT " . filter_number_format($_GET['NumberOfTopItems']);
+					LIMIT " . $_GET['NumberOfTopItems'];
 		}
 	}
 }

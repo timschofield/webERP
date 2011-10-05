@@ -17,8 +17,10 @@ if (!isset($_POST['Date'])){
 	 $title = _('Customer Transaction Listing');
 	 include ('includes/header.inc');
 
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' '
-		. _('Customer Transaction Listing').'</p>';
+	echo '<div class="centre">
+			<p class="page_title_text">
+				<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' ' . _('Customer Transaction Listing').
+			'</p>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
@@ -27,24 +29,25 @@ if (!isset($_POST['Date'])){
 	 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	 echo '<table class="selection">
-	 			<tr>
+	 		<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
 				<td><input type="text" name="Date" maxlength="10" size="10" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
 			</tr>';
 
-	echo '<tr><td>' . _('Transaction type') . '</td><td>';
-
-	echo '<select name="TransType">';
-
-	echo '<option value=10>' . _('Invoices') . '</option>';
-	echo '<option value=11>' . _('Credit Notes') . '</option>';
-	echo '<option value=12>' . _('Receipts') . '</option>';
-
-	 echo '</select></td></tr>';
+	echo '<tr><td>' . _('Transaction type') . '</td>
+			<td><select name="TransType">
+				<option value=10>' . _('Invoices') . '</option>
+				<option value=11>' . _('Credit Notes') . '</option>
+				<option value=12>' . _('Receipts') . '</option>
+			</select></td>
+		</tr>';
 
 	 echo '</select></td></tr>
 			</table>
-			<br /><div class="centre"><input type="submit" name="Go" value="' . _('Create PDF') . '"></div>';
+			<br />
+			<div class="centre">
+				<input type="submit" name="Go" value="' . _('Create PDF') . '">
+			</div>';
 
 	 include('includes/footer.inc');
 	 exit;

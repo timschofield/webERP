@@ -7,19 +7,32 @@ include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
-        $title = _('Select Quotation To Print');
-        include('includes/header.inc');
-        echo '<div class="centre"><br /><br /><br />';
-        prnMsg( _('Select a Quotation to Print before calling this page') , 'error');
-        echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'&Quotations=Quotes_Only">' . _('Quotations') . '</a></li>
-                </td></tr></table></div><br /><br /><br />';
-        include('includes/footer.inc');
-        exit();
+	$title = _('Select Quotation To Print');
+	include('includes/header.inc');
+	echo '<div class="centre">
+			<br />
+			<br />
+			<br />';
+	prnMsg( _('Select a Quotation to Print before calling this page') , 'error');
+	echo '<br />
+			<br />
+			<br />
+			<table class="table_index">
+				<tr>
+					<td class="menu_group_item">
+						<a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Quotations') . '</a></td>
+				</tr>
+			</table>
+			</div>
+			<br />
+			<br />
+			<br />';
+	include('includes/footer.inc');
+	exit();
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the quotation header details for Order Number') . ' ' . filter_number_format($_GET['QuotationNo']) . ' ' . _('from the database');
+$ErrMsg = _('There was a problem retrieving the quotation header details for Order Number') . ' ' . $_GET['QuotationNo'] . ' ' . _('from the database');
 
 $sql = "SELECT salesorders.customerref,
 				salesorders.comments,
@@ -55,7 +68,7 @@ $sql = "SELECT salesorders.customerref,
 			INNER JOIN currencies
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE salesorders.quotation=1
-			AND salesorders.orderno='" . filter_number_format($_GET['QuotationNo']) ."'";
+			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -63,15 +76,18 @@ $result=DB_query($sql,$db, $ErrMsg);
 if (DB_num_rows($result)==0){
         $title = _('Print Quotation Error');
         include('includes/header.inc');
-         echo '<div class="centre"><br /><br /><br />';
-        prnMsg( _('Unable to Locate Quotation Number') . ' : ' . filter_number_format($_GET['QuotationNo']) . ' ', 'error');
+         echo '<div class="centre">
+				<br />
+				<br />
+				<br />';
+        prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
         echo '<br />
 				<br />
 				<br />
 				<table class="table_index">
 				<tr>
 					<td class="menu_group_item">
-						<ul><li><a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li></ul>
+						<a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a>
 					</td>
 				</tr>
 				</table>
@@ -116,7 +132,7 @@ $sql = "SELECT salesorderdetails.stkcode,
 		stockmaster.decimalplaces
 	FROM salesorderdetails INNER JOIN stockmaster
 		ON salesorderdetails.stkcode=stockmaster.stockid
-	WHERE salesorderdetails.orderno='" . filter_number_format($_GET['QuotationNo']) . "'";
+	WHERE salesorderdetails.orderno='" . $_GET['QuotationNo'] . "'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -147,7 +163,7 @@ if (DB_num_rows($result)>0){
 		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 		$DisplayPrice = locale_number_format($myrow2['unitprice'],$myrow['currdecimalplaces']);
 		$DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
-		$SubTot =  filter_number_format($myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']));
+		$SubTot =  $myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']);
 		$TaxProv = $myrow['taxprovinceid'];
 		$TaxCat = $myrow2['taxcatid'];
 		$Branch = $myrow['branchcode'];
@@ -169,11 +185,11 @@ if (DB_num_rows($result)>0){
 			$TaxClass = 100 * $myrow4['taxrate'];
 		}
 
-		$DisplayTaxClass = $TaxClass . "%";
-		$TaxAmount =  filter_number_format((($SubTot/100)*(100+$TaxClass))-$SubTot);
+		$DisplayTaxClass = $TaxClass . '%';
+		$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
 		$DisplayTaxAmount = locale_number_format($TaxAmount,$myrow['currdecimalplaces']);
 
-		$LineTotal = filter_number_format($SubTot + $TaxAmount);
+		$LineTotal = $SubTot + $TaxAmount;
 		$DisplayTotal = locale_number_format($LineTotal,$myrow['currdecimalplaces']);
 
 		$FontSize=10;

@@ -12,13 +12,13 @@ if ($_SESSION['RequirePickingNote']==0) {
 	$title = _('Picking Lists Not Enabled');
 	include('includes/header.inc');
 	echo '<br />';
-	prnMsg( _('The system is not configured for picking lists. Please consult your system administrator.'), 'info');
+	prnMsg( _('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
 	include('includes/footer.inc');
 	exit;
 }
 
 /* Show selection screen if we have no orders to work with */
-if ((!isset($_GET['TransNo']) or $_GET['TransNo']=="") and !isset($_POST['TransDate'])){
+if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransDate'])){
 	$title = _('Select Picking Lists');
 	include('includes/header.inc');
 	$sql="SELECT loccode,
@@ -28,17 +28,24 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=="") and !isset($_POST['TransD
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection"><tr>';
-	echo '<td>'._('Create picking lists for all deliveries to be made on').' : '.'</td>';
-	echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="TransDate" maxlength=10 size=11 value='.date($_SESSION['DefaultDateFormat'], mktime(date('m'),date('Y'),date('d')+1)).'></td></tr>';
+	echo '<table class="selection">
+		<tr>
+			<td>'._('Create picking lists for all deliveries to be made on').' : '.'</td>
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="TransDate" maxlength="10" size="11" value="'.date($_SESSION['DefaultDateFormat'], mktime(date('m'),date('Y'),date('d')+1)).'" /></td>
+		</tr>';
 	echo '<tr><td>'._('From Warehouse').' : '.'</td>
 			<td><select name="loccode">';
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value='.$myrow['loccode'].'>'.$myrow['locationname'].'</option>';
 	}
-	echo '</select></td></tr>';
-	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Print Picking Lists') . '"></div></form>';
+	echo '</select></td>
+		</tr>
+		</table>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="Process" value="' . _('Print Picking Lists') . '">
+		</div>
+		</form>';
 	include('includes/footer.inc');
 	exit();
 }
@@ -46,7 +53,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=="") and !isset($_POST['TransD
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details from the database');
 
-if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
+if (!isset($_POST['TransDate']) AND $_GET['TransNo'] != 'Preview') {
 /* If there is no transaction date set, then it must be for a single order */
 	$sql = "SELECT salesorders.debtorno,
         		salesorders.orderno,
@@ -80,7 +87,7 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
         	WHERE salesorders.debtorno=debtorsmaster.debtorno
         	AND salesorders.shipvia=shippers.shipper_id
         	AND salesorders.fromstkloc=locations.loccode
-        	AND salesorders.orderno='" . filter_number_format($_GET['TransNo'])."'";
+        	AND salesorders.orderno='" . $_GET['TransNo']."'";
 } else if (isset($_POST['TransDate'])
 		OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 /* We are printing picking lists for all orders on a day */
@@ -117,22 +124,26 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
             	AND salesorders.shipvia=shippers.shipper_id
             	AND salesorders.fromstkloc=locations.loccode
             	AND salesorders.fromstkloc='".$_POST['loccode']."'
-            	AND salesorders.deliverydate='" . FormatDateForSQL($_POST['TransDate'])."'";
+            	AND salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate'])."'";
 }
 
 if (isset($_POST['TransDate'])
 	OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 	$result=DB_query($sql,$db, $ErrMsg);
-
+	
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($result)==0){
 		$title = _('Print Picking List Error');
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('Unable to Locate any orders for this criteria '), 'info');
-		echo '<br /><table class="selection"><tr><td>
-				<a href="'. $rootpath . '/PDFPickingList.php">' . _('Enter Another Date') . '</a>
-				</td></tr></table><br />';
+		echo '<br />
+				<table class="selection">
+				<tr>
+					<td><a href="'. $rootpath . '/PDFPickingList.php">' . _('Enter Another Date') . '</a></td>
+				</tr>
+				</table>
+				<br />';
 		include('includes/footer.inc');
 		exit();
 	}
@@ -207,10 +218,10 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		/* Are there any picking lists for this order already */
 		$sql="SELECT COUNT(orderno)
 				FROM pickinglists
-				WHERE orderno='" . filter_number_format($OrdersToPick[$i]['orderno']) . "'";
-		$countresult=DB_query($sql, $db);
-		$count=DB_fetch_row($countresult);
-		if ($count[0]==0) {
+				WHERE orderno='" . $OrdersToPick[$i]['orderno'] . "'";
+		$CountResult=DB_query($sql, $db);
+		$Count=DB_fetch_row($CountResult);
+		if ($Count[0]==0) {
 		/* There are no previous picking lists for this order */
 			$sql = "SELECT salesorderdetails.stkcode,
             				stockmaster.description,
@@ -223,7 +234,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
             			FROM salesorderdetails
             			INNER JOIN stockmaster
             				ON salesorderdetails.stkcode=stockmaster.stockid
-            			WHERE salesorderdetails.orderno='" . filer_locale_number_format($OrdersToPick[$i]['orderno']) ."'";
+            			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'";
 		} else {
 		/* There are previous picking lists for this order so
 		 * need to take those quantities into account
@@ -245,22 +256,25 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
             				ON salesorderdetails.orderno=pickinglists.orderno
             			LEFT JOIN pickinglistdetails
             				ON pickinglists.pickinglistno=pickinglistdetails.pickinglistno
-            			WHERE salesorderdetails.orderno='" . filter_number_format($OrdersToPick[$i]['orderno']) ."'
+            			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'
             			AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
 		}
-		$lineresult=DB_query($sql,$db, $ErrMsg);
+		$LineResult=DB_query($sql,$db, $ErrMsg);
 	}
 
-	if ((isset($_GET['TransNo']) and $_GET['TransNo'] == 'Preview') or (isset($lineresult) and DB_num_rows($lineresult)>0)){
+	if ((isset($_GET['TransNo']) 
+		AND $_GET['TransNo'] == 'Preview') 
+		OR (isset($LineResult) 
+		AND DB_num_rows($LineResult)>0)){
 		/*Yes there are line items to start the ball rolling with a page header */
 		include('includes/PDFPickingListHeader.inc');
 		if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
-			$LinesToShow=DB_num_rows($lineresult);
+			$LinesToShow=DB_num_rows($LineResult);
 			$PickingListNo = GetNextTransNo(19, $db);
 			$sql="INSERT INTO pickinglists
 				VALUES (
 				'" . $PickingListNo ."',
-				'" . filter_number_format($OrdersToPick[$i]['orderno'])."',
+				'" . $OrdersToPick[$i]['orderno']."',
 				'" . FormatDateForSQL($_POST['TransDate'])."',
 				'" . date('Y-m-d')."',
 				'0000-00-00')";
@@ -274,6 +288,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		while ($Lines<$LinesToShow){
 			if (isset($_GET['TransNo']) and $_GET['TransNo'] == 'Preview') {
 				$myrow2['stkcode']=str_pad('',10,'x');
+				$myrow2['decimalplaces']=2;
 				$DisplayQty='XXXX.XX';
 				$DisplayPrevDel='XXXX.XX';
 				$DisplayQtySupplied='XXXX.XX';
@@ -281,23 +296,23 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				$myrow2['narrative']=str_pad('',18,'x');
 				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
 			} else {
-				$myrow2=DB_fetch_array($lineresult);
-				if ($count[0]==0) {
+				$myrow2=DB_fetch_array($LineResult);
+				if ($Count[0]==0) {
 					$myrow2['qtyexpected']=0;
 					$myrow2['qtypicked']=0;
 				}
 				$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 				$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
-				$DisplayQtySupplied = locale_number_format(filer_locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked']),$myrow2['decimalplaces']);
+				$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced']-$myrow2['qtyexpected']-$myrow2['qtypicked'],$myrow2['decimalplaces']);
 				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
 				$sql="INSERT INTO pickinglistdetails
 					VALUES(
 					'" . $PickingListNo ."',
 					'" . $Lines."',
 					'" . $myrow2['orderlineno']."',
-					'" . filter_number_format($DisplayQtySupplied) ."',
+					'" . $DisplayQtySupplied ."',
 					0)";
-					$lineresult=DB_query($sql, $db);
+					$LineResult=DB_query($sql, $db);
 			}
 			$ListCount ++;
 

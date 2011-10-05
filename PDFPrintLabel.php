@@ -10,12 +10,13 @@ require_once('includes/DefineLabelClass.php');
 $MsgErr=null;
 $DecimalPlaces=2;
 $pdf= null;
+/* The variable $AllLabels is the global variable that contains the list */
+$AllLabels = getXMLFile(LABELS_FILE); 
+/* of all the label objects defined until now. In case of a fresh
+installation or an empty XML labels file it holds a NULL value.
 
-	$AllLabels =				 //!< The variable $AllLabels is the global variable that contains the list
-		getXMLFile(LABELS_FILE); //!< of all the label objects defined until now. In case of a fresh
-								 //!<  installation or an empty XML labels file it holds a NULL value.
-
-// If there is no label templates, the user could select to set up a new one
+If there is no label templates, the user could select to set up a new one
+*/
 if ($AllLabels==null) {
 
 	abortMsg( _('There isn\'t any label template to select for printing. Click') .
@@ -345,11 +346,12 @@ function resizeLabel($label) {
 
 	$obj = $label->dimensions;
 	$unit = (string)$obj->Unit;
-	if ( array_key_exists($unit , $scales) )
+	if ( array_key_exists($unit , $scales) ) {
 		$factor = $scales[$unit];
-	else
+	} else {
 		abortMsg( _('Unit not defined in scale operation! Correct the template') );
-
+	}
+	
 	$dims = array();
 	foreach ($DimensionTags as $iTag=>$tag) {
 		if ($tag['type']=='n')   // it is a data numeric

@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	// This gives some date in 1999?? $ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
 
-	if (!is_numeric((double) filter_number_format($_POST['Price'])) OR $_POST['Price']=='') {
+	if (!is_numeric(filter_number_format($_POST['Price'])) OR $_POST['Price']=='') {
 		$InputError = 1;
 		prnMsg( _('The price entered must be numeric'),'error');
 	}
@@ -275,7 +275,8 @@ if ($InputError ==0){
 		echo '<input type=hidden name="OldEndDate" value="' . $_GET['EndDate'] . '">';
 		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
-		$_POST['Price'] = filter_number_format($_GET['Price']);
+		/*the price sent with the get is sql format price so no need to filter */
+		$_POST['Price'] = $_GET['Price']; 
 		$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
 		if ($_GET['EndDate']=='' OR $_GET['EndDate']=='0000-00-00'){
 			$_POST['EndDate'] = '';
@@ -284,7 +285,9 @@ if ($InputError ==0){
 		}
 	}
 
-	$SQL = "SELECT currabrev, currency FROM currencies";
+	$SQL = "SELECT currabrev, 
+					currency
+			FROM currencies";
 	$result = DB_query($SQL,$db);
 
 	echo '<br /><table class="selection">';
@@ -339,9 +342,10 @@ if ($InputError ==0){
 	<tr><td><?php echo _('Price'); ?>:</td>
 	<td>
 	<input type="text" class="number" name="Price" size=12 maxlength=11 value=
-	<?php if(isset($_POST['Price'])) {
-			echo $_POST['Price'];
-		   }
+	<?php 
+	if(isset($_POST['Price'])) {
+		echo $_POST['Price'];
+	}
 	?> >
 
 	</td></tr>
