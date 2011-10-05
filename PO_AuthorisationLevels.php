@@ -119,13 +119,15 @@ $sql="SELECT purchorderauth.userid,
 $ErrMsg = _('The authentication details cannot be retrieved because');
 $Result=DB_query($sql,$db,$ErrMsg);
 
-echo '<table class="selection"><tr>
+echo '<table class="selection">
+     <tr>
 		<th>' . _('User ID') . '</th>
 		<th>' . _('User Name') . '</th>
 		<th>' . _('Currency') . '</th>
 		<th>' . _('Create Order') . '</th>
 		<th>' . _('Can Release') . '<br />'. _('Invoices').'</th>
-		<th>' . _('Authority Level') . '</th></tr>';
+		<th>' . _('Authority Level') . '</th>
+    </tr>';
 
 while ($myrow=DB_fetch_array($Result)) {
 	if ($myrow['cancreate']==0) {

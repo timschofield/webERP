@@ -20,13 +20,13 @@ if (isset($_POST['UpdateAll'])) {
 		if (mb_substr($key,0,6)=='status') {
 			$OrderNo=mb_substr($key,6);
 			$Status=$_POST['status'.$OrderNo];
-			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' '.'<a href="mailto:' . $EmailRow['email'].'">'.$_SESSION['UserID'].'</a>
+			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">'.$_SESSION['UserID'].'</a>
 					<br />' . $_POST['comment'];
 			$sql="UPDATE purchorders
 					SET status='".$Status."',
 						stat_comment='".$Comment."',
 						allowprint=1
-					WHERE orderno='".filter_number_format($OrderNo)."'";
+					WHERE orderno='". $OrderNo."'";
 			$result=DB_query($sql, $db);
 		}
 	}
@@ -74,8 +74,8 @@ while ($myrow=DB_fetch_array($result)) {
 	$AuthLevel=$myauthrow['authlevel'];
 
 	$OrderValueSQL="SELECT sum(unitprice*quantityord) as ordervalue
-			FROM purchorderdetails
-			WHERE orderno='".$myrow['orderno'] . "'";
+		           	FROM purchorderdetails
+			        WHERE orderno='".$myrow['orderno'] . "'";
 
 	$OrderValueResult=DB_query($OrderValueSQL, $db);
 	$MyOrderValueRow=DB_fetch_array($OrderValueResult);
@@ -127,7 +127,7 @@ while ($myrow=DB_fetch_array($result)) {
 					<td>'.$LineRow['description'].'</td>
 					<td class="number">'.locale_number_format($LineRow['quantityord'],$DecimalPlaces).'</td>
 					<td>'.$myrow['currcode'].'</td>
-					<td class="number">'.locale_number_format($LineRow['unitprice'],$myrow['decimalplaces']).'</td>
+					<td class="number">'.locale_number_format($LineRow['unitprice'],$myrow['currdecimalplaces']).'</td>
 					<td class="number">'.locale_number_format($LineRow['unitprice']*$LineRow['quantityord'],$myrow['currdecimalplaces']).'</td>
 				</tr>';
 		} // end while order line detail
@@ -136,6 +136,5 @@ while ($myrow=DB_fetch_array($result)) {
 } //end while header loop
 echo '</table>';
 echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '"></form>';
-
 include('includes/footer.inc');
 ?>

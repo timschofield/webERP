@@ -57,7 +57,7 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 		ON suppliers.currcode = currencies.currabrev
 		LEFT JOIN www_users
 		ON purchorders.initiator=www_users.userid
-		WHERE purchorders.orderno = '" . filter_number_format($_GET['OrderNo']) ."'";
+		WHERE purchorders.orderno = '" . $_GET['OrderNo'] ."'";
 
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 
@@ -132,16 +132,16 @@ echo '<br />';
 $ErrMsg = _('The line items of the purchase order could not be retrieved');
 $LineItemsSQL = "SELECT purchorderdetails.*,
 						stockmaster.decimalplaces
-				FROM purchorderdetails 
+				FROM purchorderdetails
 				LEFT JOIN stockmaster
 				ON purchorderdetails.itemcode=stockmaster.stockid
-				WHERE purchorderdetails.orderno = '" . filter_number_format($_GET['OrderNo']) ."'";
+				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] ."'";
 
 $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
 
 echo '<table colspan="8" class="selection" cellpadding="0">';
-echo '<tr><th colspan=8><font size=3 color=navy>'. _('Order Line Details'). '</font></th></tr>';
+echo '<tr><th colspan="8"><font size="3" color="navy">'. _('Order Line Details'). '</font></th></tr>';
 echo '<tr>
 		<th>' . _('Item Code'). '</td>
 		<th>' . _('Item Description'). '</td>

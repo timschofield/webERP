@@ -339,7 +339,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 										dateprinted  = '" . Date('Y-m-d') . "',
 										status = 'Printed',
 										stat_comment = '" . DB_escape_string($StatusComment) . "'
-				WHERE purchorders.orderno = '" .  filter_number_format($OrderNo) ."'";
+				WHERE purchorders.orderno = '" .  $OrderNo ."'";
 		$result = DB_query($sql,$db);
 	}
 	include('includes/footer.inc');
@@ -353,8 +353,11 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	}
 	echo '<br /><br />';
 	echo '<input type=hidden name="OrderNo" value="'. $OrderNo. '">';
-	echo '<table><tr><td>'. _('Print or Email the Order'). '</td><td>
-		<select name="PrintOrEmail">';
+	echo '<table>
+         <tr>
+             <td>'. _('Print or Email the Order'). '</td>
+             <td><select name="PrintOrEmail">';
+
 	if (!isset($_POST['PrintOrEmail'])){
 		$_POST['PrintOrEmail'] = 'Print';
 	}
@@ -389,7 +392,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 						suppliercontacts.email
 				FROM suppliercontacts INNER JOIN purchorders
 				ON suppliercontacts.supplierid=purchorders.supplierno
-				WHERE purchorders.orderno='".filter_number_format($OrderNo)."'";
+				WHERE purchorders.orderno='". $OrderNo ."'";
 		$ContactsResult=DB_query($SQL,$db, $ErrMsg);
 		if (DB_num_rows($ContactsResult)>0){
 			echo '<tr><td>'. _('Email to') .':</td><td><select name="EmailTo">';
@@ -412,8 +415,12 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	} else {
 		echo '</table>';
 	}
-	echo '<br /><div class="centre"><input type="submit" name="DoIt" value="' . _('OK') . '"></div>';
-	echo '</form>';
+	echo '<br />
+         <div class="centre">
+              <input type="submit" name="DoIt" value="' . _('OK') . '" />
+         </div>
+         </form>';
+
 	include('includes/footer.inc');
 }
 ?>
