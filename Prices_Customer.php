@@ -5,12 +5,13 @@ include('includes/session.inc');
 
 $result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
-							debtorsmaster.salestype
+							debtorsmaster.salestype,
+							currencies.decimalplaces AS currdecimalplaces
 					 FROM debtorsmaster
 					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
-$myrow = DB_fetch_row($result);
+$myrow = DB_fetch_array($result);
 
-$title = _('Special Prices for') . ' '. $myrow[0];
+$title = _('Special Prices for') . ' '. $myrow['name'];
 
 include('includes/header.inc');
 
@@ -20,7 +21,7 @@ if (isset($_GET['Item'])){
 	$Item = $_POST['Item'];
 }
 
-if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==""){
+if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==''){
 
 	prnMsg( _('A customer must be selected from the customer selection screen') . ', '
 		. _('then an item must be selected before this page is called') . '. '
@@ -30,18 +31,13 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 	exit;
 }
 
-$result = DB_query("SELECT debtorsmaster.name,
-							debtorsmaster.currcode,
-							debtorsmaster.salestype
-						 FROM debtorsmaster
-						 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
-$myrow = DB_fetch_row($result);
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . _('Special Customer Prices').'</p><br />';
-echo '<font color=BLUE><b>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<br />' . ' ' . _('for') . ' ';
+echo '<font color=BLUE><b>' . $myrow['name'] . ' ' . _('in') . ' ' . $myrow['currcode'] . '<br />' . ' ' . _('for') . ' ';
 
-$CurrCode = $myrow[1];
-$SalesType = $myrow[2];
+$CurrCode = $myrow['currcode'];
+$SalesType = $myrow['salestype'];
+$CurrDecimalPlaces = $myrow['currdecimalplaces'];
 
 $result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
@@ -216,16 +212,16 @@ if (DB_num_rows($result) == 0) {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
 		printf('<tr class="EvenTableRows">
-				<td class=number>%0.2f</td>
-				<td class=date>%s</td>
-				<td class=date>%s</td></tr>',
-				$myrow['price'],
+				<td class="number">%s</td>
+				<td class="date">%s</td>
+				<td class="date">%s</td></tr>',
+				locale_number_format($myrow['price'],$CurrDecimalPlaces),
 				ConvertSQLDate($myrow['startdate']),
 				$EndDateDisplay);
 	}
 }
 
-echo '</table></td><td valign=top>';
+echo '</table></td><td valign="top">';
 
 //now get the prices for the customer selected
 
@@ -234,7 +230,8 @@ $sql = "SELECT prices.price,
 			   custbranch.brname,
 			   prices.startdate,
 			   prices.enddate
-		FROM prices LEFT JOIN custbranch ON prices.branchcode= custbranch.branchcode
+		FROM prices LEFT JOIN custbranch 
+		ON prices.branchcode= custbranch.branchcode
 		WHERE prices.typeabbrev = '".$SalesType."'
 		AND prices.stockid='".$Item."'
 		AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
@@ -242,13 +239,13 @@ $sql = "SELECT prices.price,
 		AND (custbranch.debtorno='" . $_SESSION['CustomerID'] . "' OR
 						custbranch.debtorno IS NULL)
 		ORDER BY prices.branchcode,
-							prices.startdate";
+				prices.startdate";
 
 $ErrMsg = _('Could not retrieve the special prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<table class=selection>';
+echo '<table class="selection">';
 
 if (DB_num_rows($result) == 0) {
 	echo '<tr><td>' . _('There are no special prices set up for this part') . '</td></tr>';
@@ -270,10 +267,10 @@ if (DB_num_rows($result) == 0) {
 		$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 	}
 	echo '<tr bgcolor="#CCCCCC">
-		<td class=number>'.locale_number_format($myrow['price'],2).'</td>
-		<td>'.$Branch.'</td>
+		<td class="number">'.locale_number_format($myrow['price'],$CurrDecimalPlaces).'</td>
+		<td>' . $Branch.'</td>
 		<td>'.$myrow['units'].'</td>
-		<td class=number>'.$myrow['conversionfactor'].'</td>
+		<td class="number">'.$myrow['conversionfactor'].'</td>
 		<td>'.ConvertSQLDate($myrow['startdate']).'</td>
 		<td>'.$EndDateDisplay.'</td>
  		<td><a href="'.$_SERVER['PHP_SELF'].'?Item='.$Item.'&Price='.$myrow['price'].'&Branch='.$myrow['branchcode'].
@@ -288,13 +285,13 @@ echo '</table></tr></table><p />';
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<input type=hidden name="Item" value="' . $Item . '">';
+echo '<input type="hidden" name="Item" value="' . $Item . '" />';
 
 if (isset($_GET['Edit']) and $_GET['Edit']==1){
-	echo '<input type=hidden name="Editing" value="Yes">';
-	echo '<input type=hidden name="OldStartDate" value="' . $_GET['StartDate'] .'">';
-	echo '<input type=hidden name="OldEndDate" value="' .  $_GET['EndDate'] . '">';
-	$_POST['Price']=filter_number_format($_GET['Price']);
+	echo '<input type="hidden" name="Editing" value="Yes" />';
+	echo '<input type="hidden" name="OldStartDate" value="' . $_GET['StartDate'] .'" />';
+	echo '<input type="hidden" name="OldEndDate" value="' .  $_GET['EndDate'] . '" />';
+	$_POST['Price']=$_GET['Price'];
 	$_POST['Branch']=$_GET['Branch'];
 	$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
 	if (Is_Date($_GET['EndDate'])){
@@ -322,11 +319,14 @@ $sql = "SELECT
 			branchcode,
 			brname
 			FROM custbranch
-			WHERE debtorno='".$_SESSION['CustomerID'] ."'";
+			WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 $result = DB_query($sql, $db);
-echo '<table class=selection>';
-echo '<tr><td>' . _('Branch') . ':</td>';
-echo '<td><select name="Branch">';
+
+echo '<table class="selection">
+		<tr>
+			<td>' . _('Branch') . ':</td>
+			<td><select name="Branch">';
+			
 while ($myrow=DB_fetch_array($result)) {
 	if ($myrow['branchcode']==$_POST['branch']) {
 		echo '<option selected value='.$myrow['branchcode'].'>'.$myrow['brname'].'</option>';
@@ -335,22 +335,28 @@ while ($myrow=DB_fetch_array($result)) {
 	}
 }
 echo '</select></td></tr>';
-echo '<tr><td>' . _('Start Date') . ':</td>
-                         <td><input type="Text" name="StartDate" class=date alt='.$_SESSION['DefaultDateFormat'].
-                         ' size=11 maxlength=10 value="' . $_POST['StartDate'] . '"></td></tr>';
-echo '<tr><td>' . _('End Date') . ':</td>
-                         <td><input type="Text" name="EndDate" class=date alt='.$_SESSION['DefaultDateFormat'].
-                         ' size=11 maxlength=10 value="' . $_POST['EndDate'] . '"></td></tr>';
+echo '<tr>
+		<td>' . _('Start Date') . ':</td>
+		<td><input type="text" name="StartDate" class="date" alt='.$_SESSION['DefaultDateFormat']. ' size="11" maxlength="10" value="' . $_POST['StartDate'] . '"></td>
+	</tr>';
+echo '<tr>
+		<td>' . _('End Date') . ':</td>
+		<td><input type="text" name="EndDate" class=date alt='.$_SESSION['DefaultDateFormat']. ' size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('Price') . ':</td>
-          <td><input type="Text" class=number name="Price" size=11 maxlength=10 value=' . $_POST['Price'] . '></td>
-			</tr></table>';
+          <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '"></td>
+		</tr>
+	</table>';
 
 
-echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
-
-echo '</form>';
+echo '<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		</div>
+		</form>';
+		
 include('includes/footer.inc');
+exit;
 
 function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, $db) {
 

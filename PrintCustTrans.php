@@ -692,11 +692,13 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						<td bgcolor="#BBBBBB"><b>';
 
 				if ($InvOrCredit=='Invoice') {
-				   echo '<font size=4>' . _('TAX INVOICE') . ' ';
+				   echo '<font size="4">' . _('TAX INVOICE') . ' ';
 				} else {
-				   echo '<font color=RED size=4>' . _('TAX CREDIT NOTE') . ' ';
+				   echo '<font color="red" size="4">' . _('TAX CREDIT NOTE') . ' ';
 				}
-				echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br /><font size=1>' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td></tr></table>';
+				echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br /><font size=1>' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
+					</tr>
+					</table>';
 
 				/* Now print out the logo and company name and address */
 				echo '<table class="table1">
@@ -711,13 +713,16 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 				echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
 				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
 
-				echo '</td><td WIDTH=50% class=number>';
+				echo '</td><td width="50%" class="number">';
 
 				/* Now the customer charged to details in a sub table within a cell of the main table*/
 
 				echo '<table class="table1">
-						<tr><td align=left bgcolor="#BBBBBB"><b>' . _('Charge To') . ':</b></td>
-							</tr><tr><td bgcolor="#EEEEEE">';
+						<tr>
+							<td align=left bgcolor="#BBBBBB"><b>' . _('Charge To') . ':</b></td>
+						</tr>
+						<tr>
+							<td bgcolor="#EEEEEE">';
 				echo $myrow['name'] . 
 					'<br />' . $myrow['address1'] . 
 					'<br />' . $myrow['address2'] . 
@@ -725,10 +730,14 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					'<br />' . $myrow['address4'] . 
 					'<br />' . $myrow['address5'] . 
 					'<br />' . $myrow['address6'];
-				echo '</td></tr></table>';
+				echo '</td>
+					</tr>
+					</table>';
 				/*end of the small table showing charge to account details */
 				echo _('Page') . ': ' . $PageNumber;
-				echo '</td></tr></table>';
+				echo '</td>
+					</tr>
+					</table>';
 				/*end of the main table showing the company name and charge to details */
 
 				if ($InvOrCredit=='Invoice') {
@@ -755,7 +764,8 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							'<br />' . $myrow['deladd5'] . 
 							'<br />' . $myrow['deladd6'] . '</td>
 							</tr>
-						</table><hr>';
+						</table>
+						<hr>';
 
 				   echo '<table class="table1">
 				   		<tr>
@@ -880,22 +890,22 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						   $DisplayDiscount = locale_number_format($myrow2['discountpercent']*100,2) . '%';
 					      }
 
-					      printf ('<td>%s</td>
-					      		<td>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							<td class=number>%s</td>
-							</tr>',
-							$myrow2['stockid'],
-							$myrow2['description'],
-							$DisplayQty,
-							$myrow2['units'],
-							$DisplayPrice,
-							$DisplayDiscount,
-							$DisplayNet);
-
+						  printf ('<td>%s</td>
+									<td>%s</td>
+									<td class="number">%s</td>
+									<td class="number">%s</td>
+									<td class="number">%s</td>
+									<td class="number">%s</td>
+									<td class="number">%s</td>
+									</tr>',
+									$myrow2['stockid'],
+									$myrow2['description'],
+									$DisplayQty,
+									$myrow2['units'],
+									$DisplayPrice,
+									$DisplayDiscount,
+									$DisplayNet);
+		
 					      if (mb_strlen($myrow2['narrative'])>1){
 					      		echo $RowStarter . '<td></td><td colspan=6>' . $myrow2['narrative'] . '</td></tr>';
 							$LineCounter++;
@@ -981,7 +991,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br />';
 					echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
 					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
-					echo '</td><td class=number>' . _('Page') . ': ' . $PageNumber . '</td></tr></table>';
+					echo '</td><td class="number">' . _('Page') . ': ' . $PageNumber . '</td></tr></table>';
 					echo '<table class="table1">
 							<tr>
 								<th>' . _('Item Code') . '</th>
@@ -1023,18 +1033,22 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 				/*Print out the invoice text entered */
 				echo '<table class=table1><tr>
-					<td class=number>' . _('Sub Total') . '</td>
-					<td class=number bgcolor="#EEEEEE" width=15%>' . $DisplaySubTot . '</td></tr>';
-				echo '<tr><td class=number>' . _('Freight') . '</td>
-					<td class=number bgcolor="#EEEEEE">' . $DisplayFreight . '</td></tr>';
-				echo '<tr><td class=number>' . _('Tax') . '</td>
-					<td class=number bgcolor="#EEEEEE">' . $DisplayTax . '</td></tr>';
+					<td class="number">' . _('Sub Total') . '</td>
+					<td class="number" bgcolor="#EEEEEE" width=15%>' . $DisplaySubTot . '</td></tr>';
+				echo '<tr><td class="number">' . _('Freight') . '</td>
+					<td class="number" bgcolor="#EEEEEE">' . $DisplayFreight . '</td></tr>';
+				echo '<tr><td class="number">' . _('Tax') . '</td>
+					<td class="number" bgcolor="#EEEEEE">' . $DisplayTax . '</td></tr>';
 				if ($InvOrCredit=='Invoice'){
-				     echo '<tr><td class=number><b>' . _('TOTAL INVOICE') . '</b></td>
-				     	<td class=number bgcolor="#EEEEEE"><U><b>' . $DisplayTotal . '</b></U></td></tr>';
+				     echo '<tr>
+							<td class="number"><b>' . _('TOTAL INVOICE') . '</b></td>
+							<td class="number" bgcolor="#EEEEEE"><U><b>' . $DisplayTotal . '</b></U></td>
+						</tr>';
 				} else {
-				     echo '<tr><td class=number><font color=RED><b>' . _('TOTAL CREDIT') . '</b></font></td>
-				     		<td class=number bgcolor="#EEEEEE"><font color="red"><U><b>' . $DisplayTotal . '</b></U></font></td></tr>';
+				     echo '<tr>
+							<td class="number"><font color=RED><b>' . _('TOTAL CREDIT') .'</b></font></td>
+				     		<td class="number" bgcolor="#EEEEEE"><font color="red"><U><b>' . $DisplayTotal . '</b></U></font></td>
+				     	</tr>';
 				}
 				echo '</table>';
 			} /* end of check to see that there was an invoice record to print */

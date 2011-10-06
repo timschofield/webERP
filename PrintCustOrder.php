@@ -20,15 +20,15 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
           <br />
           <table class="table_index">
                  <tr><td class="menu_group_item">
-                 		<li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
-                   		<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
-                     </td>
-                 </tr>
-          </table>
-          </div>
-          <br />
-          <br />
-          <br />';
+					<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+					<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+					 </td>
+				 </tr>
+			</table>
+			</div>
+			<br />
+			<br />
+			<br />';
 	include('includes/footer.inc');
 	exit;
 }

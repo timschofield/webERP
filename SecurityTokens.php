@@ -92,15 +92,16 @@ echo '<br />
 
 if (isset($_GET['Action']) and $_GET['Action']=='edit') {
 	echo '<td>'. _('Description') . '</td>
-		<td><input type="text" size=30 maxlength=30 name="TokenDescription" value="'.$_POST['TokenDescription'] .'"></td>
-		<td><input type="hidden" name="TokenID" value="'.$_GET['SelectedToken'].'"><input type="submit" name="Update" value="' . _('Update') . '" />';
+		<td><input type="text" size="50" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'"></td>
+		<td><input type="hidden" name="TokenID" value="'.$_GET['SelectedToken'].'" />
+			<input type="submit" name="Update" value="' . _('Update') . '" />';
 } else {
 	echo '<td>'._('Token ID') . '</td>
 			<td><input type="text" name="TokenID" value="'.$_POST['TokenID'].'" /></td>
 		</tr>
 		<tr>
 		<td>'. _('Description') . '</td>
-		<td><input type="text" size=30 maxlength=30 name="TokenDescription" value="'.$_POST['TokenDescription'] .'" /></td>
+		<td><input type="text" size="50" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'" /></td>
 		<td><input type="submit" name="Submit" value="' . _('Insert') . '" />';
 }
 
@@ -125,7 +126,7 @@ while ($myrow = DB_fetch_array($Result,$db)){
 			<td>'.$myrow['tokenid'].'</td>
 			<td>'.$myrow['tokenname'].'</td>
 			<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedToken=' . $myrow['tokenid'] . '&Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedToken=' . $myrow['tokenid'] . '&Action=delete">' . _('Delete') . '</a></td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedToken=' . $myrow['tokenid'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

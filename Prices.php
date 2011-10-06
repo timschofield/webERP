@@ -193,7 +193,7 @@ if ($InputError ==0){
 			prices.currabrev,
 			prices.startdate,
 			prices.enddate,
-			currencies.decimalplaces
+			currencies.decimalplaces AS currdecimalplaces
 		FROM prices 
 		INNER JOIN salestypes 
 			ON prices.typeabbrev = salestypes.typeabbrev
@@ -211,7 +211,7 @@ if ($InputError ==0){
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">
 				<table class=selection>
 				<tr>
-					<th colspan=7>
+					<th colspan="7">
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . 
 					_('Pricing for part') . ':
 					<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20">
@@ -245,7 +245,7 @@ if ($InputError ==0){
 			if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
 				echo '<td>' . $myrow['currency'] . '</td>
 					<td>' .  $myrow['sales_type'] . '</td>
-					<td class="number">' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td>
 					<td><a href="' . $_SERVER['PHP_SELF'] . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&Price=' . $myrow['price'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&Edit=1">' . _('Edit') . '</td>
@@ -254,7 +254,7 @@ if ($InputError ==0){
 			} else {
 				echo '<td>' . $myrow['currency'] . '</td>
 					<td>' .  $myrow['sales_type'] . '</td>
-					<td class="number">' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td></tr>';
 			}
@@ -269,10 +269,10 @@ if ($InputError ==0){
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($_GET['Edit'])){
-		echo '<input type=hidden name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'">';
-		echo '<input type=hidden name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '">';
-		echo '<input type=hidden name="OldStartDate" value="' . $_GET['StartDate'] . '">';
-		echo '<input type=hidden name="OldEndDate" value="' . $_GET['EndDate'] . '">';
+		echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'">';
+		echo '<input type="hidden" name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '">';
+		echo '<input type="hidden" name="OldStartDate" value="' . $_GET['StartDate'] . '">';
+		echo '<input type="hidden" name="OldEndDate" value="' . $_GET['EndDate'] . '">';
 		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
 		/*the price sent with the get is sql format price so no need to filter */
@@ -291,7 +291,7 @@ if ($InputError ==0){
 	$result = DB_query($SQL,$db);
 
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan=5><font color=BLUE size=3><b>' . $Item . ' - ' . $PartDescription . '</b></font></th></tr>';
+	echo '<tr><th colspan="5"><font color="blue" size="3"><b>' . $Item . ' - ' . $PartDescription . '</b></font></th></tr>';
 	echo '<tr><td>' . _('Currency') . ':</td>
 			<td><select name="CurrAbrev">';
 	while ($myrow = DB_fetch_array($result)) {
