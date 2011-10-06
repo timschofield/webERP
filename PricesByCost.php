@@ -163,7 +163,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<form action="' .$_SERVER['PHP_SELF'] .'" method="POST" name="update">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value=' . $_POST['StockCat'] . ' name="StockCat">
-			<input type="hidden" value=' . filter_number_format($_POST['Margin']) . ' name="Margin">
+			<input type="hidden" value=' . $_POST['Margin'] . ' name="Margin">
 			<input type="hidden" value=' . $_POST['CurrCode'] . ' name="CurrCode">
 			<input type="hidden" value=' . $_POST['Comparator'] . ' name="Comparator">
 			<input type="hidden" value=' . $_POST['SalesType'] . ' name="SalesType">';
@@ -213,7 +213,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					<td class="number">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($CurrentGP, 1) . '%</td>
 					<td class="number">' . locale_number_format($ProposedPrice, $myrow['decimalplaces']) . '</td>
-					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength=14 size=10 value="' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '"></td>
+					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength="14" size="10" value="' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '"></td>
 				</tr> ';
 			$PriceCounter++;
 		} //end of looping
@@ -227,7 +227,10 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	}
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br />';
-	echo '<br /><br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class=selection>';
+	echo '<br />
+          <br />
+          <form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+          <table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$SQL = "SELECT categoryid, categorydescription
@@ -243,9 +246,9 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Price') . '
-				<select name="Comparator">';
-	echo '<option value="1">' . _('Less than or equal to') . '</option>';
-	echo '<option value="2">' . _('Greater than or equal to') . '</option>';
+				<select name="Comparator">
+                <option value="1">' . _('Less than or equal to') . '</option>
+                <option value="2">' . _('Greater than or equal to') . '</option>';
 	if ($_SESSION['WeightedAverageCosting']==1) {
 		echo '</select>'.' '. _('Average Cost') . ' x </td>';
 	} else {

@@ -7,15 +7,28 @@ include('includes/class.pdf.php');
 include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
-If (!isset($_GET['TransNo']) || $_GET['TransNo']==""){
+If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	$title = _('Select Order To Print');
 	include('includes/header.inc');
-	echo '<div class=centre><br /><br /><br />';
+	echo '<div class="centre">
+         <br />
+         <br />
+         <br />';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
-	echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
-		<li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
-		<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
-		</td></tr></table></div><br /><br /><br />';
+	echo '<br />
+          <br />
+          <br />
+          <table class="table_index">
+                 <tr><td class="menu_group_item">
+                 		<li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
+                   		<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
+                     </td>
+                 </tr>
+          </table>
+          </div>
+          <br />
+          <br />
+          <br />';
 	include('includes/footer.inc');
 	exit;
 }
@@ -52,7 +65,7 @@ $sql = "SELECT salesorders.customerref,
 			ON salesorders.shipvia=shippers.shipper_id
 		INNER JOIN locations
 			ON salesorders.fromstkloc=locations.loccode
-		WHERE salesorders.orderno='" . filter_number_format($_GET['TransNo']). "'";
+		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -122,7 +135,7 @@ $sql = "SELECT salesorderdetails.stkcode,
 			stockmaster.decimalplaces
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
-		 WHERE salesorderdetails.orderno='" . filter_number_format($_GET['TransNo']) . "'";
+		 WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 $result=DB_query($sql, $db, $ErrMsg);
 
 if (DB_num_rows($result)>0){
@@ -195,9 +208,9 @@ if (DB_num_rows($result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . '_' . Date('Y-m-d') .'.pdf');
 	$pdf-> __destruct();
 
-	$sql = "UPDATE salesorders SET printedpackingslip=1, 
-									datepackingslipprinted='" . Date('Y-m-d') . "' 
-			WHERE salesorders.orderno='" .filter_number_format($_GET['TransNo']) . "'";
+	$sql = "UPDATE salesorders SET printedpackingslip=1,
+									datepackingslipprinted='" . Date('Y-m-d') . "'
+			WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 	$result = DB_query($sql,$db);
 } else {
 	$title = _('Print Packing Slip Error');

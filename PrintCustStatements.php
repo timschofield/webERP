@@ -79,7 +79,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	if (DB_Num_Rows($StatementResults) == 0){
 		$title = _('Print Statements') . ' - ' . _('No Customers Found');
-	        require('includes/header.inc');
+	    require('includes/header.inc');
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
 		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
 			$_POST['ToCust'].'.' , 'error');

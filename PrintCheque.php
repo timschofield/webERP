@@ -13,7 +13,10 @@ $FontSize=10;
 $PageNumber=1;
 $line_height=12;
 
-$result = db_query("SELECT hundredsname, decimalplaces FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
+$result = db_query("SELECT hundredsname, 
+                           decimalplaces 
+                    FROM currencies 
+                    WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
 
 If (DB_num_rows($result) == 0){
 	include ('includes/header.inc');

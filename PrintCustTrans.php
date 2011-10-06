@@ -7,7 +7,7 @@ include('includes/session.inc');
 if (isset($_GET['FromTransNo'])) {
 	$FromTransNo = trim($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])) {
-	$FromTransNo = trim($_POST['FromTransNo']);
+	$FromTransNo = filter_number_format($_POST['FromTransNo']);
 } else {
 	$FromTransNo = '';
 }
@@ -25,8 +25,8 @@ if (isset($_GET['PrintPDF'])) {
 }
 
 if (!isset($_POST['ToTransNo'])
-	or trim($_POST['ToTransNo'])==''
-	or $_POST['ToTransNo'] < $FromTransNo) {
+	OR trim($_POST['ToTransNo'])==''
+	OR filter_number_format($_POST['ToTransNo']) < $FromTransNo) {
 
 	$_POST['ToTransNo'] = $FromTransNo;
 }
@@ -72,7 +72,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 	$FirstPage = true;
 	$line_height=16;
 
-	while ($FromTransNo <= $_POST['ToTransNo']){
+	while ($FromTransNo <= filter_number_format($_POST['ToTransNo'])){
 
 	/* retrieve the invoice details from the database to print
 	notice that salesorder record must be present to print the invoice purging of sales orders will
@@ -127,22 +127,22 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							debtortrans.debtorno,
 							debtortrans.branchcode,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster 
-						ON debtortrans.debtorno=debtorsmaster.debtorno 
-						INNER JOIN custbranch 
-						ON debtortrans.debtorno=custbranch.debtorno 
+						FROM debtortrans INNER JOIN debtorsmaster
+						ON debtortrans.debtorno=debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON debtortrans.debtorno=custbranch.debtorno
 						AND debtortrans.branchcode=custbranch.branchcode
-						INNER JOIN salesorders 
+						INNER JOIN salesorders
 						ON debtortrans.order_ = salesorders.orderno
-						INNER JOIN shippers 
-						ON debtortrans.shipvia=shippers.shipper_id 
-						INNER JOIN salesman 
-						ON custbranch.salesman=salesman.salesmancode 
-						INNER JOIN locations 
-						ON salesorders.fromstkloc=locations.loccode 
-						INNER JOIN paymentterms 
+						INNER JOIN shippers
+						ON debtortrans.shipvia=shippers.shipper_id
+						INNER JOIN salesman
+						ON custbranch.salesman=salesman.salesmancode
+						INNER JOIN locations
+						ON salesorders.fromstkloc=locations.loccode
+						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
-						INNER JOIN currencies 
+						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
 						AND debtortrans.transno='" . $FromTransNo . "'";
@@ -186,16 +186,16 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							debtortrans.branchcode,
 							paymentterms.terms,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster 
-						ON debtortrans.debtorno=debtorsmaster.debtorno 
-						INNER JOIN custbranch 
-						ON debtortrans.debtorno=custbranch.debtorno 
+						FROM debtortrans INNER JOIN debtorsmaster
+						ON debtortrans.debtorno=debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON debtortrans.debtorno=custbranch.debtorno
 						AND debtortrans.branchcode=custbranch.branchcode
-						INNER JOIN salesman 
-						ON custbranch.salesman=salesman.salesmancode 
-						INNER JOIN paymentterms 
+						INNER JOIN salesman
+						ON custbranch.salesman=salesman.salesmancode
+						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
-						INNER JOIN currencies 
+						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
 						AND debtortrans.transno='" . $FromTransNo . "'";
@@ -460,10 +460,10 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 	if (isset($_GET['FromTransNo'])) {
 		$FromTransNo = trim($_GET['FromTransNo']);
 	} elseif (isset($_POST['FromTransNo'])) {
-		$FromTransNo = trim($_POST['FromTransNo']);
+		$FromTransNo = filter_number_format($_POST['FromTransNo']);
 	}
-	
-	
+
+
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include('includes/header.inc');
 
@@ -471,7 +471,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
 		$pdf->Output($FileName,'F');
 		$mail = new htmlMimeMail();
-		
+
 		$Attachment = $mail->getFile($FileName);
 		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $_GET['FromTransNo'] );
 		$mail->SetSubject($InvOrCredit . ' ' . $_GET['FromTransNo']);
@@ -489,7 +489,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 	} else { //its not an email just print the invoice to PDF
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf');
-		
+
 	}
 	$pdf->__destruct();
 
@@ -503,7 +503,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		/* if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
 		echo '<form action="' . $_SERVER['PHP_SELF'] .  '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		
+
 		echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</div>';
 		echo '<table class="table1">
 				<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name=InvOrCredit>';
@@ -532,12 +532,12 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 		echo '</select></td></tr>';
 		echo '<tr><td>' . _('Start invoice/credit note number to print') . '</td>
-				<td><input Type=text class=number max=6 size=7 name=FromTransNo></td></tr>';
+				<td><input type="text" class="number" maxlength="6" size="7" name="FromTransNo" /></td></tr>';
 		echo '<tr><td>' . _('End invoice/credit note number to print') . '</td>
-				<td><input Type=text class=number max=6 size=7 name="ToTransNo"></td></tr>
+				<td><input type="text" class="number" maxlength="6" size="7" name="ToTransNo" /></td></tr>
 			</table>';
-		echo '<div class="centre"><input type="submit" name="Print" value="' . _('Print') . '"><p>';
-		echo '<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+		echo '<div class="centre"><input type="submit" name="Print" value="' . _('Print') . '" /><p>';
+		echo '<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
 
 		$sql = "SELECT typeno FROM systypes WHERE typeid=10";
 
@@ -551,11 +551,13 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 
-		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b><br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</DIV';
+		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b>
+              <br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . 
+              '</div>';
 
 	} else {
 
-		while ($FromTransNo <= $_POST['ToTransNo']) {
+		while ($FromTransNo <= filter_number_format($_POST['ToTransNo'])) {
 
 			/*retrieve the invoice details from the database to print
 			notice that salesorder record must be present to print the invoice purging of sales orders will
@@ -600,22 +602,22 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 								salesman.salesmanname,
 								debtortrans.debtorno,
 								currencies.decimalplaces
-							FROM debtortrans INNER JOIN debtorsmaster 
-							ON debtortrans.debtorno=debtorsmaster.debtorno 
-							INNER JOIN custbranch 
-							ON debtortrans.debtorno=custbranch.debtorno 
+							FROM debtortrans INNER JOIN debtorsmaster
+							ON debtortrans.debtorno=debtorsmaster.debtorno
+							INNER JOIN custbranch
+							ON debtortrans.debtorno=custbranch.debtorno
 							AND debtortrans.branchcode=custbranch.branchcode
-							INNER JOIN salesorders 
+							INNER JOIN salesorders
 							ON debtortrans.order_ = salesorders.orderno
-							INNER JOIN shippers 
-							ON debtortrans.shipvia=shippers.shipper_id 
-							INNER JOIN salesman 
-							ON custbranch.salesman=salesman.salesmancode 
-							INNER JOIN locations 
-							ON salesorders.fromstkloc=locations.loccode 
-							INNER JOIN paymentterms 
+							INNER JOIN shippers
+							ON debtortrans.shipvia=shippers.shipper_id
+							INNER JOIN salesman
+							ON custbranch.salesman=salesman.salesmancode
+							INNER JOIN locations
+							ON salesorders.fromstkloc=locations.loccode
+							INNER JOIN paymentterms
 							ON debtorsmaster.paymentterms=paymentterms.termsindicator
-							INNER JOIN currencies 
+							INNER JOIN currencies
 							ON debtorsmaster.currcode=currencies.currabrev
 							WHERE debtortrans.type=10
 							AND debtortrans.transno='" . $FromTransNo . "'";
@@ -646,16 +648,16 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 								salesman.salesmanname,
 								debtortrans.debtorno,
 								currencies.decimalplaces
-							FROM debtortrans INNER JOIN debtorsmaster 
-							ON debtortrans.debtorno=debtorsmaster.debtorno 
-							INNER JOIN custbranch 
-							ON debtortrans.debtorno=custbranch.debtorno 
+							FROM debtortrans INNER JOIN debtorsmaster
+							ON debtortrans.debtorno=debtorsmaster.debtorno
+							INNER JOIN custbranch
+							ON debtortrans.debtorno=custbranch.debtorno
 							AND debtortrans.branchcode=custbranch.branchcode
-							INNER JOIN salesman 
-							ON custbranch.salesman=salesman.salesmancode 
-							INNER JOIN paymentterms 
+							INNER JOIN salesman
+							ON custbranch.salesman=salesman.salesmancode
+							INNER JOIN paymentterms
 							ON debtorsmaster.paymentterms=paymentterms.termsindicator
-							INNER JOIN currencies 
+							INNER JOIN currencies
 							ON debtorsmaster.currcode=currencies.currabrev
 							WHERE debtortrans.type=11
 							AND debtortrans.transno='" . $FromTransNo . "'";
@@ -674,8 +676,11 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 				$myrow = DB_fetch_array($result);
 				/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
-				if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND in_array(1, $_SESSION['AllowedPageSecurityTokens']) AND $myrow['debtorno'] != $_SESSION['CustomerID']){
-					echo '<p><font color=RED size=4>' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
+				if (count($_SESSION['AllowedPageSecurityTokens'])==1 
+                     AND in_array(1, $_SESSION['AllowedPageSecurityTokens']) 
+                     AND $myrow['debtorno'] != $_SESSION['CustomerID']){
+
+					echo '<p><font color="red" size="4">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
 					exit;
 				}
 
