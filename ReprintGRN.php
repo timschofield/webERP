@@ -13,14 +13,19 @@ if (!isset($_POST['PONumber'])) {
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
-echo '<tr><th colspan="2"><font size="2" color="navy">' . _('Select a purchase order') . '</th></tr>';
-echo '<tr><td>' . _('Enter a Purchase Order Number') . '</td>';
-echo '<td>' . '<input type="text" name="PONumber" class="number" size="7" value="'.$_POST['PONumber'].'" /></td></tr>';
-echo '<tr><td colspan=2 style="text-align: center"><input type="submit" name="Show" value="Show GRNs" /></td></tr>';
-
-echo '</table>';
-echo '</form>';
+echo '<table class="selection">
+		<tr>
+			<th colspan="2"><font size="2" color="navy">' . _('Select a purchase order') . '</th>
+		</tr>
+		<tr>
+			<td>' . _('Enter a Purchase Order Number') . '</td>
+			<td>' . '<input type="text" name="PONumber" class="number" size="7" value="'.$_POST['PONumber'].'" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>
+		</tr>
+	</table>
+	</form>';
 
 if (isset($_POST['Show'])) {
 	if ($_POST['PONumber']=='') {
@@ -64,15 +69,21 @@ if (isset($_POST['Show'])) {
 		exit;
 	}
 	$k=0;
-	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="8"><font size="2" color="navy">' . _('GRNs for Purchase Order No') .' ' . $_POST['PONumber'] . '</th></tr>';
-	echo '<tr><th>' . _('Supplier') . '</th>';
-	echo '<th>' . _('PO Order line') . '</th>';
-	echo '<th>' . _('GRN Number') . '</th>';
-	echo '<th>' . _('Item Code') . '</th>';
-	echo '<th>' . _('Item Description') . '</th>';
-	echo '<th>' . _('Delivery Date') . '</th>';
-	echo '<th>' . _('Quantity Received') . '</th></tr>';
+	echo '<br />
+			<table class="selection">
+			<tr>
+				<th colspan="8"><font size="2" color="navy">' . _('GRNs for Purchase Order No') .' ' . $_POST['PONumber'] . '</th>
+			</tr>
+			<tr>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('PO Order line') . '</th>
+				<th>' . _('GRN Number') . '</th>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Item Description') . '</th>
+				<th>' . _('Delivery Date') . '</th>
+				<th>' . _('Quantity Received') . '</th>
+			</tr>';
+			
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -81,15 +92,15 @@ if (isset($_POST['Show'])) {
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-		echo '<td>' . $myrow['suppname'] . '</td>';
-		echo '<td class="number">' . $myrow['podetailitem'] . '</td>';
-		echo '<td class="number">' . $myrow['grnbatch'] . '</td>';
-		echo '<td>' . $myrow['itemcode'] . '</td>';
-		echo '<td>' . $myrow['itemdescription'] . '</td>';
-		echo '<td>' . $myrow['deliverydate'] . '</td>';
-		echo '<td class="number">' . locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']) . '</td>';
-		echo '<td><a href="PDFGrn.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint') . '</a></td>';
-		echo '</tr>';
+		echo '<td>' . $myrow['suppname'] . '</td>
+			<td class="number">' . $myrow['podetailitem'] . '</td>
+			<td class="number">' . $myrow['grnbatch'] . '</td>
+			<td>' . $myrow['itemcode'] . '</td>
+			<td>' . $myrow['itemdescription'] . '</td>
+			<td>' . $myrow['deliverydate'] . '</td>
+			<td class="number">' . locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']) . '</td>
+			<td><a href="PDFGrn.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint') . '</a></td>
+		</tr>';
 	}
 	echo '</table>';
 }

@@ -160,11 +160,11 @@ if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->I
 
 
 if (isset($_POST['DeleteRecurringOrder'])){
-	$sql = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . filter_number_format($_POST['ExistingRecurrOrderNo']) . "'";
+	$sql = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete recurring sales order lines for the recurring order template') . ' ' . $_POST['ExistingRecurrOrderNo'];
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	$sql = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . filter_number_format($_POST['ExistingRecurrOrderNo']) . "'";
+	$sql = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete the recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'];
 	$result = DB_query($sql,$db,$ErrMsg);
 
@@ -287,7 +287,7 @@ If (isset($_POST['Process'])) {
 						stopdate =  '" . FormatDateforSQL($_POST['StopDate']) . "',
 						frequency = '" . $_POST['Frequency'] . "',
 						autoinvoice = '" . $_POST['AutoInvoice'] . "'
-					WHERE recurrorderno = '" . filter_number_format($_POST['ExistingRecurrOrderNo']) . "'";
+					WHERE recurrorderno = '" . $_POST['ExistingRecurrOrderNo'] . "'";
 
 			$ErrMsg = _('The recurring order cannot be updated because');
 			$UpdateQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
@@ -420,7 +420,7 @@ if ($NewRecurringOrder=='Yes'){
 	echo '<tr>
 	<td>'. _('Last Recurrence') . ':</td>
 	<td>' . $_POST['StartDate'] . '</td></tr>';
-	echo '<input type=hidden name="StartDate" value="' . $_POST['StartDate'] . '">';
+	echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '">';
 }
 
 if (!isset($_POST['StopDate'])){
@@ -486,7 +486,7 @@ if ($_SESSION['Items'.$identifier]->AllDummyLineItems()==true){
 	}
 	echo '</select></td></tr>';
 } else {
-	echo '<input type=hidden name="AutoInvoice" value=0>';
+	echo '<input type="hidden" name="AutoInvoice" value=0>';
 }
 
 echo '</table>';
@@ -496,8 +496,8 @@ if ($NewRecurringOrder=='Yes'){
 	echo '<input type="hidden" name="NewRecurringOrder" value="Yes" />';
 	echo '<input type="submit" name="Process" value="' . _('Create Recurring Order') . '" />';
 } else {
-	echo '<input type=hidden name="NewRecurringOrder" value="No">';
-	echo '<input type=hidden name="ExistingRecurrOrderNo" value="' . $_POST['ExistingRecurrOrderNo'] . '" />';
+	echo '<input type="hidden" name="NewRecurringOrder" value="No">';
+	echo '<input type="hidden" name="ExistingRecurrOrderNo" value="' . $_POST['ExistingRecurrOrderNo'] . '" />';
 
 	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '" />';
 	echo '<hr>';

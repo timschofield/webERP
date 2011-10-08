@@ -12,8 +12,11 @@ include('includes/header.inc');
 
 if ((isset($_SESSION['SupplierID']) AND $_SESSION['SupplierID']!='') 
 	OR (!isset($_POST['SupplierID']) OR $_POST['SupplierID'])==''){
+		
 	$_POST['SupplierID']=$_SESSION['SupplierID'];
+
 }
+
 if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	echo '<br />' . _('This page is expected to be called after a supplier has been selected');
 	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SelectSupplier.php">';
@@ -25,8 +28,7 @@ if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	$_POST['SuppName'] = $SuppRow[0];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Sales') .
-	'" alt="" />' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
 
 if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /* SQL to process the postings for the GRN reversal.. */
@@ -48,7 +50,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			ON grns.podetailitem=purchorderdetails.podetailitem
 			INNER JOIN purchorders
 			ON purchorderdetails.orderno = purchorders.orderno 
-			WHERE AND grnno='" . filter_number_format($_GET['GRNNo']) . "'";
+			WHERE AND grnno='" . $_GET['GRNNo'] . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not get the details of the GRN selected for reversal because') . ' ';
 	$DbgMsg = _('The following SQL to retrieve the GRN details was used') . ':';
@@ -59,7 +61,8 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	$QtyToReverse = $GRN['qtyrecd'] - $GRN['quantityinv'];
 
 	if ($QtyToReverse ==0){
-		echo '<br /><br />' . _('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . _('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
+		echo '<br />
+				<br />' . _('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . _('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
 		include ('includes/footer.inc');
 		exit;
 	}
@@ -118,7 +121,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /*Now the SQL to do the update to the PurchOrderDetails */
 
 	$SQL = "UPDATE purchorderdetails
-			SET quantityrecd = quantityrecd - '" . filter_number_format($QtyToReverse) . "',
+			SET quantityrecd = quantityrecd - '" . $QtyToReverse . "',
 			completed=0
 			WHERE purchorderdetails.podetailitem = '" . $GRN['podetailitem'] . "'";
 
@@ -144,9 +147,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN record could not be deleted because');
 		$DbgMsg = _('The following SQL to delete the GRN record was used');
-		$result = DB_query("DELETE FROM grns WHERE grnno='" . filter_number_format($_GET['GRNNo']) . "'",$db,$ErrMsg,$DbgMsg,true);
+		$result = DB_query("DELETE FROM grns WHERE grnno='" . $_GET['GRNNo'] . "'",$db,$ErrMsg,$DbgMsg,true);
 	} else {
-		$SQL = "UPDATE grns	SET qtyrecd = qtyrecd - " . filter_number_format($QtyToReverse) . "
+		$SQL = "UPDATE grns	SET qtyrecd = qtyrecd - " . $QtyToReverse . "
 				WHERE grns.grnno='" . $_GET['GRNNo'] . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN record could not be updated') . '. ' . _('This reversal of goods received has not been processed because');
@@ -163,18 +166,18 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 											inputdate,
 											cost)
 						VALUES ('" . $GRN['assetid'] . "',
-										25,
-										'" . $_GET['GRNNo'] . "',
-										'" . $GRN['deliverydate'] . "',
-										'" . $PeriodNo . "',
-										'" . Date('Y-m-d') . "',
-										'" . filter_number_format((-$GRN['stdcostunit']  * $QtyToReverse)) . "')";
+								'25',
+								'" . $_GET['GRNNo'] . "',
+								'" . $GRN['deliverydate'] . "',
+								'" . $PeriodNo . "',
+								'" . Date('Y-m-d') . "',
+								'" . (-$GRN['stdcostunit']  * $QtyToReverse) . "')";
 		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 		/*now reverse the cost put to fixedassets */
-		$SQL = "UPDATE fixedassets SET cost = cost - " . filter_number_format($GRN['stdcostunit'] * $QtyToReverse)  . "
+		$SQL = "UPDATE fixedassets SET cost = cost - " . $GRN['stdcostunit'] * $QtyToReverse  . "
 				WHERE assetid = '" . $GRN['assetid'] . "'";
 		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost addition could not be reversed:');
 		$DbgMsg = _('The following SQL was used to attempt the reduce the cost of the asset was:');
@@ -237,9 +240,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 										'" . $GRN['deliverydate'] . "',
 										'" . $PeriodNo . "',
 										'" . _('Reversal') . ' - ' . $_POST['SupplierID'] . ' - ' . $GRN['orderno'] . "',
-										'" . filter_number_format(-$QtyToReverse) . "',
+										'" . -$QtyToReverse . "',
 										'" . $GRN['stdcostunit'] . "',
-										'" . filter_number_format($QtyOnHandPrior - $QtyToReverse) . "'
+										'" . $QtyOnHandPrior - $QtyToReverse . "'
 										)";
 
   		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
@@ -260,6 +263,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 						'" . $GRN['itemcode'] . "',
 						'" . $SerialStockMoves['serialno'] . "',
 						'" . -$SerialStockMoves['moveqty'] . "')";
+						
 				$result = DB_query($SQL,$db,_('Could not insert the reversing stock movements for the batch/serial numbers'),_('The SQL used but failed was') . ':',true);
 
 				$SQL = "UPDATE stockserialitems
@@ -274,9 +278,14 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
 
-	if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $GRN['glcode'] !=0 AND $GRN['stdcostunit']!=0){ /*GLCode is set to 0 when the GLLink is not activated
-	this covers a situation where the GLLink is now active  but it wasn't when this PO was entered */
-	/*first the credit using the GLCode in the PO detail record entry*/
+	if ($_SESSION['CompanyRecord']['gllink_stock']==1 
+		AND $GRN['glcode'] !=0 
+		AND $GRN['stdcostunit']!=0){ 
+	
+	/*GLCode is set to 0 when the GLLink is not activated
+	this covers a situation where the GLLink is now active  but it wasn't when this PO was entered 
+	
+	First the credit using the GLCode in the PO detail record entry*/
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -292,7 +301,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 									'" . $PeriodNo . "',
 									'" . $GRN['glcode'] . "',
 									'" . _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
-									'" . filter_number_format(-($GRN['stdcostunit'] * $QtyToReverse)) . "')";
+									'" . -($GRN['stdcostunit'] * $QtyToReverse) . "')";
 					
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted for the reversal of the received item because');
 		$DbgMsg = _('The following SQL to insert the purchase GLTrans record was used');
@@ -313,7 +322,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['grnact'] . "', '"
 								. _('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
-								'" . filter_number_format($GRN['stdcostunit'] * $QtyToReverse) . "'
+								'" . $GRN['stdcostunit'] * $QtyToReverse . "'
 								)";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');
@@ -326,7 +335,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 	echo '<br />' . _('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . _('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . _('has been reversed') . '<br />';
 	unset($_GET['GRNNo']);  // to ensure it cant be done again!!
-	echo '<a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Select another GRN to Reverse') . '</a>';
+	echo '<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Select another GRN to Reverse') . '</a>';
 /*end of Process Goods Received Reversal entry */
 
 } else {
@@ -337,14 +346,17 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$_POST['RecdAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date("m")-3,Date("d"),Date("Y")));
 	}
 	echo '<table class="selection"><tr>';
-	echo '<input type="hidden" name="SupplierID" valuE="' . $_POST['SupplierID'] . '">';
-	echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '">';
+	echo '<input type="hidden" name="SupplierID" valuE="' . $_POST['SupplierID'] . '" />';
+	echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';
 	echo '<td>'._('Show all goods received after') . ': </td>
-			<td><input type="text" class="date" alt="'.
-			$_SESSION['DefaultDateFormat'].'" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] .
-			'" MAXLENGTH =10 size=10></td></tr>';;
-	echo '</table>';
-	echo '<br /><div class=centre><input type=submit name="ShowGRNS" value=' . _('Show Outstanding Goods Received') . '></div>';
+			<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'].'" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="10" /></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="ShowGRNS" value="' . _('Show Outstanding Goods Received') . '" />
+		</div>';
+		
 	if (isset($_POST['ShowGRNS'])){
 
 		$sql = "SELECT grnno,
@@ -368,15 +380,15 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 			echo '<br /><table cellpadding=2 colspan=7 class="selection">';
 			$TableHeader = '<tr>
-					<th>' . _('GRN') . ' #</th>
-					<th>' . _('Item Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Date') . '<br />' . _('Received') . '</th>
-					<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
-					<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
-					<th>' . _('Quantity To') . '<br />' . _('Reverse') . '</th>
-					</tr>';
-
+								<th>' . _('GRN') . ' #</th>
+								<th>' . _('Item Code') . '</th>
+								<th>' . _('Description') . '</th>
+								<th>' . _('Date') . '<br />' . _('Received') . '</th>
+								<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
+								<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
+								<th>' . _('Quantity To') . '<br />' . _('Reverse') . '</th>
+							</tr>';
+		
 			echo $TableHeader;
 
 			/* show the GRNs outstanding to be invoiced that could be reversed */
@@ -391,29 +403,29 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 					$k=1;
 				}
 
-				$DisplayQtyRecd = locale_number_format($myrow['qtyrecd'],2);
-				$DisplayQtyInv = locale_number_format($myrow['quantityinv'],2);
-				$DisplayQtyRev = locale_number_format($myrow['qtytoreverse'],2);
+				$DisplayQtyRecd = locale_number_format($myrow['qtyrecd'],'Variable');
+				$DisplayQtyInv = locale_number_format($myrow['quantityinv'],'Variable');
+				$DisplayQtyRev = locale_number_format($myrow['qtytoreverse'],'Variable');
 				$DisplayDateDel = ConvertSQLDate($myrow['deliverydate']);
 				$LinkToRevGRN = '<a href="' . $_SERVER['PHP_SELF'] . '?GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
 
 				printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>',
-					$myrow['grnno'],
-					$myrow['itemcode'],
-					$myrow['itemdescription'],
-					$DisplayDateDel,
-					$DisplayQtyRecd,
-					$DisplayQtyInv,
-					$DisplayQtyRev,
-					$LinkToRevGRN);
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						</tr>',
+						$myrow['grnno'],
+						$myrow['itemcode'],
+						$myrow['itemdescription'],
+						$DisplayDateDel,
+						$DisplayQtyRecd,
+						$DisplayQtyInv,
+						$DisplayQtyRev,
+						$LinkToRevGRN);
 
 				$RowCounter++;
 				if ($RowCounter >20){

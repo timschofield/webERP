@@ -176,22 +176,22 @@ If (DB_num_rows($ColsResult)== 0) {
     $title = _('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.inc');
     prnMsg (  _('The report does not have any output columns') . '. ' . _('You need to set up the data columns that you wish to show in the report'),'error',_('No Columns'));
-    echo "<BR><A HREF='$rootpath/SalesAnalReptCols.php?" . SID . "&ReportID=" . $_GET['ReportID'] . "'>" . _('Enter Columns for this report') . '</A>';
-    echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+    echo '<br /><a href="' . $rootpath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . _('Enter Columns for this report') . '</a>';
+    echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
     include('includes/footer.inc');
     Exit;
 } elseif (DB_num_rows($ColsResult) >10){
     $title = _('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.inc');
     prnMsg (_('The report cannot have more than 10 columns in it') . '. ' . _('Please delete one or more columns before attempting to run it'),'error',_('Too Many Columns'));
-    echo "<BR><A HREF='$rootpath/SalesAnalReptCols.php?" . SID . "&ReportID=" . $_GET['ReportID'] . "'>" . _('Maintain Columns for this report') . '</A>';
-    echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+    echo '<br /><a href="' . $rootpath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . _('Maintain Columns for this report') . '</a>';
+    echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
     include('includes/footer.inc');
     exit;
 }
 
 
-$SQLFromCls = ' FROM ((((((salesanalysis LEFT JOIN salestypes ON salesanalysis.typeabbrev = salestypes.typeabbrev) LEFT JOIN stockmaster ON salesanalysis.stockid = stockmaster.stockid) LEFT JOIN areas ON salesanalysis.area = areas.areacode) LEFT JOIN debtorsmaster ON salesanalysis.cust = debtorsmaster.debtorno) LEFT JOIN custbranch ON (salesanalysis.custbranch = custbranch.branchcode AND salesanalysis.cust=custbranch.debtorno)) LEFT JOIN stockcategory ON salesanalysis.stkcategory = stockcategory.categoryid) LEFT JOIN salesman ON salesanalysis.salesperson = salesman.salesmancode ';
+$SQLFromCls = " FROM ((((((salesanalysis LEFT JOIN salestypes ON salesanalysis.typeabbrev = salestypes.typeabbrev) LEFT JOIN stockmaster ON salesanalysis.stockid = stockmaster.stockid) LEFT JOIN areas ON salesanalysis.area = areas.areacode) LEFT JOIN debtorsmaster ON salesanalysis.cust = debtorsmaster.debtorno) LEFT JOIN custbranch ON (salesanalysis.custbranch = custbranch.branchcode AND salesanalysis.cust=custbranch.debtorno)) LEFT JOIN stockcategory ON salesanalysis.stkcategory = stockcategory.categoryid) LEFT JOIN salesman ON salesanalysis.salesperson = salesman.salesmancode ";
 $SQLSelectCls = 'SELECT ';
 $SQLGroupCls = 'GROUP BY ';
 
@@ -265,7 +265,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	     $title = _('User Defined Sales Analysis Problem') . ' ....';
 	    include('includes/header.inc');
 	     prnMsg(_('Calculated fields must use columns defined in the report specification') . '. ' . _('The numerator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Column'));
-	     echo "<BR><A HREF='$rootpath/SalesAnalReptCols.php?" . SID . "&ReportID=" . $_GET['ReportID'] . "'>" . _('Maintain Columns for this report') . '</A>';
+	     echo '<br /><a href="' . $rootpath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . _('Maintain Columns for this report') . '</a>';
 	     include('includes/footer.inc');
 	     exit;
 	 }
@@ -336,8 +336,8 @@ if (DB_num_rows($result)==0){
     $title = _('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.inc');
     prnMsg(_('The user defined sales analysis SQL did not return any rows') . ' - ' . _('have another look at the criteria specified'),'error',_('Nothing To Report'));
-    echo "<BR><A HREF='$rootpath/SalesAnalRepts.php?" . SID . '&SelectedReport=' . $_GET['ReportID'] . "'>" . _('Look at the design of this report') . '</A>';
-    echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+    echo '<br /><a href="' . $rootpath . '/SalesAnalRepts.php?SelectedReport=' . $_GET['ReportID'] . '">' . _('Look at the design of this report') . '</a>';
+    echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
     include('includes/footer.inc');
 
    exit;

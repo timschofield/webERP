@@ -60,19 +60,20 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	$Location=DB_fetch_array($ResultLocation);
 
 	echo'<p class="page_title_text" align="center"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
-	echo'<p class="page_title_text" align="center"><strong>' . _('Number Of Days Sales : ') . '' . $_POST['NumberOfDays'] . '' . _(' Days ') . ' </strong></p>';
+	echo'<p class="page_title_text" align="center"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
 	echo '<table>';
-	echo '<tr><th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Total Invoiced').'<br />'._('At All Locations') . '</th>
-						<th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
-						<th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
-						<th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
-						<th>' . _('Reorder Level') . '</th>
-					<tr>';
+	echo '<tr>
+			<th>' . _('Code') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Total Invoiced').'<br />'._('At All Locations') . '</th>
+			<th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
+			<th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
+			<th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
+			<th>' . _('Reorder Level') . '</th>
+		<tr>';
 
 	$k=0; //row colour counter
-	echo'<form action="ReorderLevelLocation.php" method="POST" name="update">';
+	echo'<form action="ReorderLevelLocation.php" method="post" name="update">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$i=1;
 	while ($myrow=DB_fetch_array($result))	{
@@ -88,9 +89,9 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		//variable for update data
 
 		echo'<input type="hidden" value=' . $_POST['order'] . ' name='. _('order').' />
-				<input type="hidden" value="' . $_POST['StockLocation'] . '" name="StockLocation" />
-				<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
-				<input type="hidden" value="' . $_POST['NumberOfDays'] . '" name="NumberOfDays" />';
+			<input type="hidden" value="' . $_POST['StockLocation'] . '" name="StockLocation" />
+			<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
+			<input type="hidden" value="' . locale_number_format($_POST['NumberOfDays'],0) . '" name="NumberOfDays" />';
 
 		//get qtyinvoice all
 		$sqlinv="SELECT sum(salesorderdetails.qtyinvoiced)as qtyinvoice
@@ -138,13 +139,13 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			<td class="number">'.$QtyInvoice.'</td>
 			<td class="number">'.$ohRow['0'].'</td>
 			<td class="number">'.$ohinRow['0'].'</td>
-			<td><input type="text" class="number" name="ReorderLevel' . $i .'" maxlength="3" size="4" value="'. $myrow['reorderlevel'] .'" />
+			<td><input type="text" class="number" name="ReorderLevel' . $i .'" maxlength="3" size="4" value="'. locale_number_format($myrow['reorderlevel'],0) .'" />
 				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" /></td>
 			</tr> ';
 		$i++;
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan=7><input type="submit" name="submit" value=' . _('Update') . ' /></td>
+			<td style="text-align:center" colspan="7"><input type="submit" name="submit" value=' . _('Update') . ' /></td>
 		</tr>
 		</form>';
 
@@ -191,13 +192,20 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo'<tr>
 			<td>' . _('Number Of Days Sales') . ':</td>
 			<td><input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" /></td>';
-	echo '<tr><td>' . _('Order By') . ':</td>
-				<td><select name="order">';
-	echo '<option value="1">'. _('Total Invoiced') . '</option>';
-	echo '<option value="2">'. _('Item Code') . '</option>';
-
-	echo '</select></td></tr>';
-	echo '</table><br /><p><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '"></div></p>';
+	echo '<tr>
+			<td>' . _('Order By') . ':</td>
+			<td><select name="order">
+				<option value="1">'. _('Total Invoiced') . '</option>
+				<option value="2">'. _('Item Code') . '</option>
+				</select></td>
+		</tr>';
+	echo '</table>
+			<br />
+			<p>
+			<div class="centre">
+				<input type="submit" name="submit" value="' . _('Submit') . '">
+			</div>
+			</p>';
 
 } /*end of else not submit */
 include('includes/footer.inc');

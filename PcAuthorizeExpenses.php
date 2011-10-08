@@ -57,7 +57,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	echo '<br /><table class=selection>';
 	echo '<tr><th colspan=7>' . _('Detail Of Movement For Last ') .': ';
 	echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength="3" size="4" />' . _('Days');
-	echo '<input type=submit name="Go" value="' . _('Go') . '"></tr></th>';
+	echo '<input type="submit" name="Go" value="' . _('Go') . '"></tr></th>';
 	echo '</form>';
 
 	$sql = "SELECT pcashdetails.counterindex,
@@ -101,7 +101,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	while ($myrow=DB_fetch_array($result))	{
          $CurrDecimalPlaces = $myrow['decimalplaces'];
 		//update database if update pressed
-		if ((isset($_POST['Submit']) AND $_POST['Submit']=='Update') AND isset($_POST[$myrow['counterindex']])){
+		if ((isset($_POST['Submit']) 
+			AND $_POST['Submit']=='Update') 
+			AND isset($_POST[$myrow['counterindex']])){
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
 
@@ -119,12 +121,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 				$type = 1;
 				$Amount = -$Amount;
 				$AccountFrom = $myrow['glaccountpcash'];
-				$SQLAccExp = "SELECT glaccount
+				$SQLAccExp = "SELECT glaccount,
+									tag
 								FROM pcexpenses
 								WHERE codeexpense = '".$myrow['codeexpense']."'";
 				$ResultAccExp = DB_query($SQLAccExp,$db);
 				$myrowAccExp = DB_fetch_array($ResultAccExp);
 				$AccountTo = $myrowAccExp['glaccount'];
+				$TagTo = $myrowAccExp['tag'];
 			}
 
 			//get typeno
@@ -158,7 +162,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 											'".-$Amount."',
 											0,
 											'',
-											0)";
+											'" . $TagTo ."')";
 
 			$ResultFrom = DB_Query($sqlFrom, $db, '', '', true);
 
@@ -185,7 +189,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 										'".$Amount."',
 										0,
 										'',
-										0)";
+										'" . $TagTo ."')";
 
 			$ResultTo = DB_Query($sqlTo, $db, '', '', true);
 
@@ -253,13 +257,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			if(($Authoriser!='00/00/0000')){
 				echo'<td>'.ConvertSQLDate($myrow['authorized']).'</td>';
 			}else{
-				echo '<td align=right><input type="checkbox" name="'.$myrow['counterindex'].'">';
+				echo '<td align=right><input type="checkbox" name="'.$myrow['counterindex'].'" /></td>';
 			}
 		}
 
-		echo '<input type="hidden" name="SelectedIndex" value="' . $myrow['counterindex']. '">';
-		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
-		echo '<input type="hidden" name="Days" value="' .$Days. '">';
+		echo '<input type="hidden" name="SelectedIndex" value="' . $myrow['counterindex']. '" />';
+		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
+		echo '<input type="hidden" name="Days" value="' .$Days. '" />';
 		echo'</tr>';
 
 

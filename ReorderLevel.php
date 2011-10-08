@@ -170,7 +170,10 @@ if (isset($_POST['PrintPDF'])) {
 			locationname
 		FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
-	echo '<table class=selection><tr><td>' . _('From Stock Location') . ':</td><td><select name="StockLocation"> ';
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('From Stock Location') . ':</td>
+				<td><select name="StockLocation"> ';
 	if (!isset($_POST['StockLocation'])){
 		$_POST['StockLocation']='All';
 	}
@@ -200,7 +203,9 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	echo '<tr><td>' . _('In Stock Category') . ':</td><td><select name="StockCat">';
+	echo '<tr>
+			<td>' . _('In Stock Category') . ':</td>
+			<td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -217,7 +222,11 @@ if (isset($_POST['PrintPDF'])) {
 		}
 	}
 	echo '</select></td></tr>';
-	echo '</table><br /><div class="centre"><input type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+	echo '</table>
+			<br />
+			<div class="centre">
+				<input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+			</div>';
 
 	include('includes/footer.inc');
 

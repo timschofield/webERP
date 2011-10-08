@@ -20,6 +20,7 @@ if (isset($_POST['Cancel'])) {
 	unset($_POST['CodeExpense']);
 	unset($_POST['Description']);
 	unset($_POST['GLAccount']);
+	unset($_POST['Tag']);
 }
 
 
@@ -85,10 +86,11 @@ if (isset($_POST['submit'])) {
 	
 	if (isset($SelectedExpense) AND $InputError !=1) {
 
-		$sql = "UPDATE pcexpenses
-			SET description = '" . DB_escape_string($_POST['Description']) . "',
-			glaccount = '" . $_POST['GLAccount'] . "'
-			WHERE codeexpense = '" . $SelectedExpense . "'";
+		$sql = "UPDATE pcexpenses 
+				SET description = '" . DB_escape_string($_POST['Description']) . "',
+					glaccount = '" . $_POST['GLAccount'] . "',
+					tag = '" . $_POST['Tag'] . "'
+				WHERE codeexpense = '" . $SelectedExpense . "'";
 
 		$msg = _('The Expenses type') . ' ' . $SelectedExpense . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
@@ -111,11 +113,14 @@ if (isset($_POST['submit'])) {
 
 			$sql = "INSERT INTO pcexpenses
 						(codeexpense,
-			 			 description,glaccount)
+			 			 description,
+			 			 glaccount,
+			 			 tag)
 				VALUES ('" . $_POST['CodeExpense'] . "',
 						'" . DB_escape_string($_POST['Description']) . "',
-					'" . $_POST['GLAccount'] . "')";
-
+						'" . $_POST['GLAccount'] . "',
+						'" . $_POST['Tag'] . "')";
+						
 			$msg = _('Expense ') . ' ' . $_POST['CodeExpense'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(codeexpense)
 						FROM pcexpenses";
@@ -134,6 +139,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['CodeExpense']);
 		unset($_POST['Description']);
 		unset($_POST['GLAccount']);
+		unset($_POST['Tag']);
 	}
 
 } elseif ( isset($_GET['delete']) ) {
@@ -181,6 +187,7 @@ or deletion of the records*/
 		<th>' . _('Description') . '</th>
 		<th>' . _('Account Code') . '</th>
 		<th>' . _('Account Description') . '</th>
+		<th>' . _('Tag') . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -200,20 +207,29 @@ or deletion of the records*/
 
 		$ResultDes = DB_query($sqldesc,$db);
 		$Description=DB_fetch_array($ResultDes);
+		
+		$SqlDescTag="SELECT tagdescription
+					FROM tags
+					WHERE tagref='". $myrow[3] . "'";
+
+		$ResultDesTag = DB_query($SqlDescTag,$db);
+		$DescriptionTag=DB_fetch_array($ResultDesTag);
 
 		printf('<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</td>
-			<td><a href="%sSelectedExpense=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\');">' . _('Delete') . '</td>
-			</tr>',
-			$myrow[0],
-			$myrow[1],
-			$myrow[2],
-			$Description[0],
-			$_SERVER['PHP_SELF'] . '?', $myrow[0],
-			$_SERVER['PHP_SELF'] . '?', $myrow[0]);
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</td>
+				<td><a href="%sSelectedExpense=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\');">' . _('Delete') . '</td>
+				</tr>',
+				$myrow[0],
+				$myrow[1],
+				$myrow[2],
+				$Description['accountname'],
+				$DescriptionTag['tagdesciption'],
+				$_SERVER['PHP_SELF'] . '?', $myrow[0],
+				$_SERVER['PHP_SELF'] . '?', $myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -228,14 +244,15 @@ if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class=selection>'; //Main table
+	echo '<p><table class="selection">'; //Main table
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedExpense) AND $SelectedExpense!='' ){
 
 		$sql = "SELECT codeexpense,
 			       description,
-				   glaccount
+				   glaccount,
+				   tag
 		        FROM pcexpenses
 		        WHERE codeexpense='" . $SelectedExpense . "'";
 
@@ -245,6 +262,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['CodeExpense'] = $myrow['codeexpense'];
 		$_POST['Description']  = $myrow['description'];
 		$_POST['GLAccount']  = $myrow['glaccount'];
+		$_POST['Tag']  = $myrow['tag'];
 
 		echo '<input type=hidden name="SelectedExpense" value="' . $SelectedExpense . '">';
 		echo '<input type=hidden name="CodeExpense" VALUE="' . $_POST['CodeExpense']. '">';
@@ -274,7 +292,9 @@ if (! isset($_GET['delete'])) {
 			<td><input type="text" ' . (in_array('Description',$Errors) ? 'class="inputerror"' : '' ) . ' name="Description" size=50 maxlength=49 value="' . $_POST['Description'] . '"></td>
 		</tr>';
 
-	echo '<tr><td>' . _('Account Code') . ':</td><td><select name="GLAccount">';
+	echo '<tr>
+			<td>' . _('Account Code') . ':</td>
+			<td><select name="GLAccount">';
 
 	DB_free_result($result);
 	$SQL = "SELECT accountcode,
@@ -294,11 +314,34 @@ if (! isset($_GET['delete'])) {
 	} //end while loop
 
 	echo '</select></td></tr>';
+	
+	//Select the tag
+	DB_free_result($result);
+	echo '<tr>
+			<td>' . _('Tag') . ':</td>
+			<td><select name="Tag">';
+
+	$SQL = "SELECT tagref,
+					tagdescription
+			FROM tags
+			ORDER BY tagref";
+
+	$result=DB_query($SQL,$db);
+	echo '<option value="0">0 - ' . _('None') . '</option>';
+	while ($myrow=DB_fetch_array($result)){
+		if (isset($_POST['Tag']) and $_POST['Tag']==$myrow['tagref']){
+			echo '<option selected value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
+		} else {
+			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+		}
+	}
+	echo '</select></td>';
+	// End select tag
 
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '">
-                  <input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
+			<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</form>';
 

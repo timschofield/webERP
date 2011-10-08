@@ -61,8 +61,65 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					 
 		$ErrMsg = _('Unable to retrieve the items on the selected orders for creating purchase orders for');
 		$ItemResult = DB_query($sql,$db,$ErrMsg);
+		
+		$ItemArray = array();
+		
+		while ($myrow = DB_fetch_array($ItemResult)){
+			$ItemArray[] = $myrow;
+		}
+		
+		/* Now figure out if there are any components of Assembly items that  need to be ordered too */
+		$sql = "SELECT purchdata.supplierno,
+						purchdata.stockid,
+						purchdata.price,
+						purchdata.suppliers_partno,
+						purchdata.supplierdescription,
+						purchdata.conversionfactor,
+						purchdata.leadtime,
+						purchdata.suppliersuom,
+						stockmaster.kgs,
+						stockmaster.volume,
+						stockcategory.stockact,
+						SUM(bom.quantity *(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)) AS orderqty
+				FROM purchdata INNER JOIN bom 
+				ON purchdata.stockid=bom.component
+				INNER JOIN salesorderdetails ON
+				bom.parent=salesorderdetails.stkcode
+				INNER JOIN stockmaster ON
+				purchdata.stockid = stockmaster.stockid
+				INNER JOIN stockmaster AS stockmaster2 
+				ON stockmaster2.stockid=salesorderdetails.stkcode
+				INNER JOIN stockcategory ON
+				stockmaster.categoryid = stockcategory.categoryid
+				WHERE purchdata.preferred=1 
+				AND stockmaster2.mbflag='A'
+				AND bom.loccode ='" . $_SESSION['UserStockLocation'] . "'
+				AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
+				AND bom.effectiveafter <='" . Date('Y-m-d') . "' 
+				AND bom.effectiveto > '" . Date('Y-m-d') . "'
+				AND (" . $OrdersToPlacePOFor . ")
+				GROUP BY purchdata.supplierno,
+					purchdata.stockid,
+					purchdata.price,
+					purchdata.suppliers_partno,
+					purchdata.supplierdescription,
+					purchdata.conversionfactor,
+					purchdata.leadtime,
+					purchdata.suppliersuom,
+					stockmaster.kgs,
+					stockmaster.volume,
+					stockcategory.stockact
+				ORDER BY purchdata.supplierno,
+					 purchdata.stockid";
+		$ErrMsg = _('Unable to retrieve the items on the selected orders for creating purchase orders for');
+		$ItemResult = DB_query($sql,$db,$ErrMsg);
+		
+		/* add any assembly item components from salesorders to the ItemArray */
+		while ($myrow = DB_fetch_array($ItemResult)){
+			$ItemArray[] = $myrow;
+		}
 
-		if (DB_num_rows($ItemResult)==0){
+		if (count($ItemArray)==0){
 			prnMsg(_('There might be no supplier purchasing data set up for any items on the selected sales order(s). No purchase orders have been created'),'warn');
 		} else {
 			/*Now get the default delivery address details from the users default stock location */
@@ -89,7 +146,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 				$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
 			}
 
-			while ($ItemRow = DB_fetch_array($ItemResult)){
+			foreach ($ItemArray as $ItemRow) {
 
 				if ($SupplierID != $ItemRow['supplierno']){
 				/* This order item is purchased from a different supplier so need to finish off the authorisation of the previous order and start a new order */
@@ -302,8 +359,6 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 	} /* there were sales orders checked to place POs for */
 }/*end of purchase order creation code */
 /* ******************************************************************************************* */
-
-
 
 /*To the sales order selection form */
 

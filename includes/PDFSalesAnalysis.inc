@@ -75,7 +75,7 @@ While ($myrow = DB_fetch_array($result)){
 				while ($Cols = DB_fetch_array($ColsResult)){
 					$Xpos = 160 + $Cols['colno']*60;
 					if ($Cols['calculation']==0){
-						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']]),'right');
+						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']],0),'right');
 					} else { /* its a calculation need to re-perform on the totals*/
 
 						switch ($Cols['calcoperator']) {
@@ -104,9 +104,9 @@ While ($myrow = DB_fetch_array($result)){
 								break;
 						} /*end of switch stmt block*/
 						if ($Cols['valformat']=='P'){
-							$TotalCalculation = locale_number_format($TotalCalculation * 100) . '%';
+							$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 						} else {
-							$TotalCalculation = locale_number_format($TotalCalculation);
+							$TotalCalculation = locale_number_format($TotalCalculation,0);
 						}
 						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 					}
@@ -119,7 +119,7 @@ While ($myrow = DB_fetch_array($result)){
 			}
 		}
 
-		if ($myrow['col3']!=$GrpData2 && $myrow['col3']!='0' && $myrow['col5']!='0'){
+		if ($myrow['col3']!=$GrpData2 AND $myrow['col3']!='0' AND $myrow['col5']!='0'){
 		/*Totals only relevant to GrpByLevel 2 if GrpByLevel 3 also used */
 			if ($Counter > 0){ /*Dont want to print totals if this is the first record */
 				$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,43);
@@ -128,7 +128,7 @@ While ($myrow = DB_fetch_array($result)){
 				while ($Cols = DB_fetch_array($ColsResult)){
 					$Xpos = 160 + $Cols['colno']*60;
 					if ($Cols['calculation']==0){
-						$LeftOvers = $pdf->addTextWrap($Xpos, $Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']]),'right');
+						$LeftOvers = $pdf->addTextWrap($Xpos, $Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']],0),'right');
 					} else { /* its a calculation need to re-perform on the totals*/
 
 						switch ($Cols['calcoperator']) {
@@ -157,9 +157,9 @@ While ($myrow = DB_fetch_array($result)){
 								break;
 						} /*end of switch stmt block*/
 						if ($Cols['valformat']=='P'){
-							$TotalCalculation = locale_number_format($TotalCalculation * 100) . '%';
+							$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 						} else {
-							$TotalCalculation = locale_number_format($TotalCalculation);
+							$TotalCalculation = locale_number_format($TotalCalculation,0);
 						}
 						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 					}/*end if not a calculation column*/
@@ -181,7 +181,7 @@ While ($myrow = DB_fetch_array($result)){
 				while ($Cols = DB_fetch_array($ColsResult)){
 					$Xpos = 160 + $Cols['colno']*60;
 					if ($Cols['calculation']==0){
-						$LeftOvers = $pdf->addTextWrap($Xpos, $Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']]),'right');
+						$LeftOvers = $pdf->addTextWrap($Xpos, $Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']],0),'right');
 					} else { /* its a calculation need to re-perform on the totals*/
 	
 						switch ($Cols['calcoperator']) {
@@ -210,9 +210,9 @@ While ($myrow = DB_fetch_array($result)){
 								break;
 						} /*end of switch stmt block*/
 						if ($Cols['valformat']=='P'){
-							$TotalCalculation = locale_number_format($TotalCalculation * 100) . '%';
+							$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 						} else {
-							$TotalCalculation = locale_number_format($TotalCalculation);
+							$TotalCalculation = locale_number_format($TotalCalculation,0);
 						}
 						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 					}/*end if its not a calculation */
@@ -281,9 +281,9 @@ While ($myrow = DB_fetch_array($result)){
 			$Xpos = 160 + ($Cols['colno']*60);
 			$ColumnNo = 'col' . (string) (($Cols['colno']) +8);
 			if ($Cols['valformat']=='P'){
-				$DisplayValue = locale_number_format($myrow[$ColumnNo] *100) . '%';
+				$DisplayValue = locale_number_format($myrow[$ColumnNo] *100,1) . '%';
 			} else {
-				$DisplayValue = locale_number_format($myrow[$ColumnNo]);
+				$DisplayValue = locale_number_format($myrow[$ColumnNo],0);
 			}
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize,$DisplayValue, 'right');
 
@@ -316,7 +316,7 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 	while ($Cols = DB_fetch_array($ColsResult)){
 		$Xpos = 160 + $Cols['colno']*60;
 		if ($Cols['calculation']==0){
-		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']]),'right');
+		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']],0),'right');
 
 		} else { /* its a calculation need to re-perform on the totals*/
 
@@ -346,9 +346,9 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 					break;
 			} /*end of switch stmt block*/
 			if ($Cols['valformat']=='P'){
-				$TotalCalculation = locale_number_format($TotalCalculation * 100) . '%';
+				$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 			} else {
-				$TotalCalculation = locale_number_format($TotalCalculation);
+				$TotalCalculation = locale_number_format($TotalCalculation,0);
 			}
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 		}
@@ -358,7 +358,7 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 }
 }
 
-if ($LastLine['col3']!='0' && $LastLine['col5']!='0'){
+if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 /* if GrpBY2 and GrpBy3 are both set need to show totals for GrpBy2 */
 if ($Counter>0){ /*Dont want to print totals if this is the first record */
 	$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,33);
@@ -367,7 +367,7 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 	while ($Cols = DB_fetch_array($ColsResult)){
 		$Xpos = 160 + $Cols['colno']*60;
 		if ($Cols['calculation']==0){
-		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']]),'right');
+		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']],0),'right');
 
 		} else { /* its a calculation need to re-perform on the totals*/
 
@@ -397,9 +397,9 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 					break;
 			} /*end of switch stmt block*/
 			if ($Cols['valformat']=='P'){
-				$TotalCalculation = locale_number_format($TotalCalculation * 100) . '%';
+				$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 			} else {
-				$TotalCalculation = locale_number_format($TotalCalculation);
+				$TotalCalculation = locale_number_format($TotalCalculation,0);
 			}
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 		}
@@ -417,7 +417,7 @@ if ($Counter>1){ /*Dont want to print totals if this is the first record */
 	while ($Cols = DB_fetch_array($ColsResult)){
 		$Xpos =160 + $Cols['colno']*60;
 		if ($Cols['calculation']==0){
-		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']]),'right');
+		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']],0),'right');
 		} else { /* its a calculation need to re-perform on the totals*/
 
 			switch ($Cols['calcoperator']) {
@@ -446,9 +446,9 @@ if ($Counter>1){ /*Dont want to print totals if this is the first record */
 				break;
 			} /*end of switch stmt block*/
 			if ($Cols['valformat']=='P'){
-				$TotalCalculation = locale_number_format($TotalCalculation * 100) . '%';
+				$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 			} else {
-				$TotalCalculation = locale_number_format($TotalCalculation);
+				$TotalCalculation = locale_number_format($TotalCalculation,0);
 			}
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 		}
@@ -464,7 +464,7 @@ if ($Counter>0){
 	while ($Cols = DB_fetch_array($ColsResult)){
 		$Xpos =160 + $Cols['colno']*60;
 		if ($Cols['calculation']==0){
-			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl4[$Cols['colno']]),'right');
+			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl4[$Cols['colno']],0),'right');
 		} else { /* its a calculation need to re-perform on the totals*/
 
 			switch ($Cols['calcoperator']) {
@@ -493,9 +493,9 @@ if ($Counter>0){
 				break;
 			} /*end of switch stmt block*/
 			if ($Cols['valformat']=='P'){
-				$TotalCalculation = locale_number_format($TotalCalculation * 100) . '%';
+				$TotalCalculation = locale_number_format($TotalCalculation * 100,1) . '%';
 			} else {
-				$TotalCalculation = locale_number_format($TotalCalculation);
+				$TotalCalculation = locale_number_format($TotalCalculation,0);
 			}
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 		}
@@ -505,7 +505,7 @@ if ($Counter>0){
 }
 
 
-if ($_GET['ProduceCVSFile']==True){
+if (isset($_GET['ProduceCVSFile'])){
 
 	function stripcomma($str) { //because we're using comma as a delimiter
 		return str_replace(',','',$str);
