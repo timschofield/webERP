@@ -317,7 +317,8 @@ function http_file_exists($url)  {
 function locale_number_format($Number, $DecimalPlaces=0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
-	if ($DecimalPlaces=='Variable'){
+	
+	if (!is_numeric($DecimalPlaces) AND $DecimalPlaces == 'Variable'){
 		$DecimalPlaces = mb_strlen($Number) - mb_strlen(intval($Number));
 		if ($DecimalPlaces > 0){
 			$DecimalPlaces--;

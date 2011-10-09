@@ -23,7 +23,7 @@ if (isset($_GET['Area'])) {
 }
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customers') . '</p>';
 if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
-	$_SESSION['CustomerType'] = "";
+	$_SESSION['CustomerType'] = '';
 }
 // only run geocode if integration is turned on and customer has been selected
 if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
@@ -38,7 +38,7 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 					custbranch.lat,
 					custbranch.lng
 				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
+				ON debtorsmaster.debtorno = custbranch.debtorno
 				WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'
 				ORDER BY debtorsmaster.debtorno";
 	$ErrMsg = _('An error occurred in retrieving the information');
@@ -85,13 +85,24 @@ if (!isset($_POST['PageOffset'])) {
 		$_POST['PageOffset'] = 1;
 	}
 }
-if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+if (isset($_POST['Search']) 
+	OR isset($_POST['CSV']) 
+	OR isset($_POST['Go']) 
+	OR isset($_POST['Next']) 
+	OR isset($_POST['Previous'])) {
+		
 	unset($_POST['JustSelectedACustomer']);
 	if (isset($_POST['Search'])) {
 		$_POST['PageOffset'] = 1;
 	}
 	
-	if (($_POST['Keywords'] == '') AND ($_POST['CustCode'] == '') AND ($_POST['CustPhone'] == '') AND (		$_POST['CustType'] == 'ALL') AND ($_POST['Area'] == 'ALL') AND ($_POST['CustAdd'] == '')) {
+	if (($_POST['Keywords'] == '') 
+		AND ($_POST['CustCode'] == '') 
+		AND ($_POST['CustPhone'] == '') 
+		AND ($_POST['CustType'] == 'ALL') 
+		AND ($_POST['Area'] == 'ALL') 
+		AND ($_POST['CustAdd'] == '')) {
+			
 		//no criteria set then default to all customers
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -200,7 +211,8 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br />';
 
 	echo '<table cellpadding=4 width=90% class="selection">
-			<tr><th width=33%>' . _('Customer Inquiries') . '</th>
+			<tr>
+				<th width=33%>' . _('Customer Inquiries') . '</th>
 				<th width=33%>' . _('Customer Transactions') . '</th>
 				<th width=33%>' . _('Customer Maintenance') . '</th>
 			</tr>';
@@ -231,9 +243,10 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 				<th width=33%>' . _('Customer Transactions') . '</th>
 				<th width=33%>' . _('Customer Maintenance') . '</th>
 			</tr>';
-	echo '<tr><td class="select">';
-	echo '</td><td class="select">';
-	echo '</td><td class="select">';
+	echo '<tr>
+			<td class="select"></td>
+			<td class="select"></td>
+			<td class="select">';
 	if (!isset($_SESSION['SalesmanLogin']) or $_SESSION['SalesmanLogin'] == '') {
 		echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br />';
 	}
@@ -248,18 +261,24 @@ echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/
 echo '<table cellpadding="3" colspan="4" class="selection">';
 echo '<tr><td colspan="2">' . _('Enter a partial Name') . ':</td><td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25">';
+	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" maxlength="25">';
+	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
-echo '</td><td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Enter a partial Code') . ':</td><td>';
+echo '</td>
+	<td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Enter a partial Code') . ':</td>
+	<td>';
 if (isset($_POST['CustCode'])) {
 	echo '<input type="text" name="CustCode" value="' . $_POST['CustCode'] . '" size="15" maxlength="18" />';
 } else {
 	echo '<input type="text" name="CustCode" size="15" maxlength="18" />';
 }
-echo '</td></tr><tr><td><font size=3><b>' . _('OR') . '</b></font></td>
-					<td>' . _('Enter a partial Phone Number') . ':</td><td>';
+echo '</td>
+	</tr>
+	<tr>
+		<td><font size=3><b>' . _('OR') . '</b></font></td>
+		<td>' . _('Enter a partial Phone Number') . ':</td>
+		<td>';
 if (isset($_POST['CustPhone'])) {
 	echo '<input type="text" name="CustPhone" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
 } else {
@@ -267,15 +286,18 @@ if (isset($_POST['CustPhone'])) {
 }
 echo '</td>';
 echo '<td><font size=3><b>' . _('OR') . '</b></font></td>
-		<td>' . _('Enter part of the Address') . ':</td><td>';
+		<td>' . _('Enter part of the Address') . ':</td>
+		<td>';
 if (isset($_POST['CustAdd'])) {
-	echo '<input type="text" name="CustAdd" value="' . $_POST['CustAdd'] . '" size="20" maxlength="25">';
+	echo '<input type="text" name="CustAdd" value="' . $_POST['CustAdd'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="CustAdd" size="20" maxlength="25">';
+	echo '<input type="text" name="CustAdd" size="20" maxlength="25" />';
 }
 echo '</td></tr>';
-echo '<tr><td><font size=3><b>' . _('OR') . '</b></font></td>
-		<td>' . _('Choose a Type') . ':</td><td>';
+echo '<tr>
+		<td><font size=3><b>' . _('OR') . '</b></font></td>
+		<td>' . _('Choose a Type') . ':</td>
+		<td>';
 if (isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
 	$result2 = DB_query("SELECT typeid, typename FROM debtortype", $db);
@@ -286,8 +308,8 @@ if (isset($_POST['CustType'])) {
 		echo '<tr><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></tr>';
 	} else {
 		// If OK show select box with option selected
-		echo '<select name="CustType">';
-		echo '<option value="ALL">' . _('Any') . '</option>';
+		echo '<select name="CustType">
+				<option value="ALL">' . _('Any') . '</option>';
 		while ($myrow = DB_fetch_array($result2)) {
 			if ($_POST['CustType'] == $myrow['typename']) {
 				echo '<option selected value="' . $myrow['typename'] . '">' . $myrow['typename']  . '</option>';
@@ -308,8 +330,8 @@ if (isset($_POST['CustType'])) {
 		echo '<tr><td colspan=2>' . prnMsg(_('No Customer types defined'), 'error') . '</td></tr>';
 	} else {
 		// if OK show select box with available options to choose
-		echo '<select name="CustType">';
-		echo '<option value="ALL">' . _('Any'). '</option>';
+		echo '<select name="CustType">
+				<option value="ALL">' . _('Any'). '</option>';
 		while ($myrow = DB_fetch_array($result2)) {
 			echo '<option value="' . $myrow['typename'] . '">' . $myrow['typename'] . '</option>';
 		} //end while loop
@@ -344,8 +366,8 @@ if (DB_num_rows($result2) == 0) {
 
 echo '</td></tr></table><br />';
 echo '<div class="centre">
-		<input type=submit name="Search" value="' . _('Search Now') . '" />
-		<input type=submit name="CSV" value="' . _('CSV Format') . '" />
+		<input type="submit" name="Search" value="' . _('Search Now') . '" />
+		<input type="submit" name="CSV" value="' . _('CSV Format') . '" />
 	</div>';
 if (isset($_SESSION['SalesmanLogin']) and $_SESSION['SalesmanLogin'] != '') {
 	prnMsg(_('Your account enables you to see only customers allocated to you'), 'warn', _('Note: Sales-person Login'));
@@ -379,9 +401,9 @@ if (isset($result)) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type=submit name="Go1" value="' . _('Go') . '" />
-				<input type=submit name="Previous" value="' . _('Previous') . '" />
-				<input type=submit name="Next" value="' . _('Next') . '" />';
+				<input type="submit" name="Go1" value="' . _('Go') . '" />
+				<input type="submit" name="Previous" value="' . _('Previous') . '" />
+				<input type="submit" name="Next" value="' . _('Next') . '" />';
 			echo '</div>';
 		}
 		echo '<br />
@@ -460,9 +482,9 @@ if (!isset($_POST['CSV'])) {
 			$ListPage++;
 		}
 		echo '</select>
-			<input type=submit name="Go2" value="' . _('Go') . '" />
-			<input type=submit name="Previous" value="' . _('Previous') . '" />
-			<input type=submit name="Next" value="' . _('Next') . '" />';
+			<input type="submit" name="Go2" value="' . _('Go') . '" />
+			<input type="submit" name="Previous" value="' . _('Previous') . '" />
+			<input type="submit" name="Next" value="' . _('Next') . '" />';
 	}
 	//end if results to show
 	echo '</div></form>';
@@ -474,13 +496,22 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		if ($lat == 0) {
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Customer.') . '</div>';
 		} else {
-			echo '<tr><td colspan=2>';
-			echo '<table width=45% colspan=2 cellpadding=4>';
-			echo '<tr><th width=33%>' . _('Customer Mapping') . '</th></tr>';
-			echo '</td><td valign="top">'; /* Mapping */
-			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
-			echo '<div align="center" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div><br />';
-			echo '</th></tr></table>';
+			echo '<tr>
+					<td colspan=2>
+					<table width="45%" colspan="2" cellpadding="4">
+						<tr>
+							<th width=33%>' . _('Customer Mapping') . '</th>
+						</tr>
+					</td>
+					<th valign="top">
+						<div class="centre">' . _('Mapping is enabled, Map will display below.') . '
+						</div>
+						<div align="center" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px">
+						</div>
+						<br />
+					</th>
+					</tr>
+					</table>';
 		}
 	}
 	// Extended Customer Info only if selected in Configuration

@@ -27,7 +27,7 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef']!='') {
 } else {
 	if (isset($_POST['SelectedCustomer'])) {
 		echo _('For customer') . ': ' . $_POST['SelectedCustomer'] . ' ' . _('and') . ' ';
-		echo '<input type="hidden" name="SelectedCustomer" value="' . $_POST['SelectedCustomer'] . '">';
+		echo '<input type="hidden" name="SelectedCustomer" value="' . $_POST['SelectedCustomer'] . '" />';
 	}
 }
 
@@ -145,14 +145,14 @@ $ContractsResult = DB_query($SQL,$db,$ErrMsg);
 echo '<table cellpadding="2" colspan="7" width="98%" class="selection">';
 
 $TableHeader = '<tr>
-			    <th>' . _('Modify') . '</th>
-				<th>' . _('Order') . '</th>
-				<th>' . _('Issue To WO') . '</th>
-				<th>' . _('Costing') . '</th>
-				<th>' . _('Contract Ref') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Required Date') . '</th>
+				    <th>' . _('Modify') . '</th>
+					<th>' . _('Order') . '</th>
+					<th>' . _('Issue To WO') . '</th>
+					<th>' . _('Costing') . '</th>
+					<th>' . _('Contract Ref') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Required Date') . '</th>
 				</tr>';
 
 echo $TableHeader;

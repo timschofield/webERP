@@ -57,9 +57,6 @@ if (isset($_POST['submit'])) {
 			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
 		$InputError = 1;
 		prnMsg(_('The commission rates must be a floating point number'),'error');
-		echo '<br/>Commission Rate 1 = ' . filter_number_format($_POST['CommissionRate1']);
-		echo '<br/>Commission Rate 2 = ' . filter_number_format($_POST['CommissionRate2']);
-		echo '<br/>The locale decimal point is ' . $LocaleInfo['decimal_point'];
 	} elseif (!is_numeric(filter_number_format($_POST['Breakpoint']))) {
 		$InputError = 1;
 		prnMsg(_('The breakpoint should be a floating point number'),'error');
@@ -88,10 +85,10 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
+		$sql = "UPDATE salesman SET salesmanname='" . DB_escape_string($_POST['SalesmanName']) . "',
 						commissionrate1='" . filter_number_format($_POST['CommissionRate1']) . "',
-						smantel='" . $_POST['SManTel'] . "',
-						smanfax='" . $_POST['SManFax'] . "',
+						smantel='" . DB_escape_string($_POST['SManTel']) . "',
+						smanfax='" . DB_escape_string($_POST['SManFax']) . "',
 						breakpoint='" . filter_number_format($_POST['Breakpoint']) . "',
 						commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
 						current='" . $_POST['Current'] . "'
@@ -110,7 +107,7 @@ if (isset($_POST['submit'])) {
 						smantel,
 						smanfax,
 						current)
-				VALUES ('" . $_POST['SalesmanCode'] . "',
+				VALUES ('" . DB_escape_string($_POST['SalesmanCode']) . "',
 					'" . DB_escape_string($_POST['SalesmanName']) . "',
 					'" . filter_number_format($_POST['CommissionRate1']) . "',
 					'" . filter_number_format($_POST['CommissionRate2']) . "',
@@ -275,9 +272,9 @@ if (! isset($_GET['delete'])) {
 		$_POST['SalesmanName'] = $myrow['salesmanname'];
 		$_POST['SManTel'] = $myrow['smantel'];
 		$_POST['SManFax'] = $myrow['smanfax'];
-		$_POST['CommissionRate1']  = $myrow['commissionrate1'];
-		$_POST['Breakpoint'] = $myrow['breakpoint'];
-		$_POST['CommissionRate2']  = $myrow['commissionrate2'];
+		$_POST['CommissionRate1']  = locale_number_format($myrow['commissionrate1'],'Variable');
+		$_POST['Breakpoint'] = locale_number_format($myrow['breakpoint'],'Variable');
+		$_POST['CommissionRate2']  = locale_number_format($myrow['commissionrate2'],'Variable');
 		$_POST['Current']  = $myrow['current'];
 
 
@@ -347,23 +344,23 @@ if (! isset($_GET['delete'])) {
 			<td>' . _('Current?') . ':</td>
 			<td><select name="Current">';
 	if ($_POST['Current']==1){
-		echo '<option selected value=1>' . _('Yes') . '</option>';
+		echo '<option selected value="1">' . _('Yes') . '</option>';
 	} else {
-		echo '<option value=1>' . _('Yes') . '</option>';
+		echo '<option value="1">' . _('Yes') . '</option>';
 	}
 	if ($_POST['Current']==0){
-		echo '<option selected value=0>' . _('No') . '</option>';
+		echo '<option selected value="0">' . _('No') . '</option>';
 	} else {
-		echo '<option value=0>' . _('No') . '</option>';
+		echo '<option value="0">' . _('No') . '</option>';
 	}
 	echo '</select></td>
-		</tr>';
-
-	echo '</table>';
-
-	echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
-
-	echo '</form>';
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 

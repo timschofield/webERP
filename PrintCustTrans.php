@@ -832,6 +832,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 								stockmoves.qty as quantity,
 								stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) AS fxnet,
 								(stockmoves.price * " . $ExchRate . ") AS fxprice,
+								stockmoves.narrative,
 								stockmaster.units,
 								stockmaster.decimalplaces
 							FROM stockmoves,

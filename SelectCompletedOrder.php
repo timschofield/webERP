@@ -519,7 +519,7 @@ if (!isset($_POST['OrderNumber'])){
 	$_POST['OrderNumber']='';
 }
 echo '<td>' . _('Order Number') . ':</td>
-	<td><input type="text" name="OrderNumber" maxlength =8 size=9 value ="' . $_POST['OrderNumber'] . '"></td>
+	<td><input type="text" name="OrderNumber" maxlength="8" size="9" value ="' . $_POST['OrderNumber'] . '" /></td>
 	<td>' . _('for all orders placed after') . ': </td>
 	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'"  name="OrdersAfterDate" maxlength="10" size="11" value="' . $_POST['OrdersAfterDate'] . '" /></td>
 	<td><input type="submit" name="SearchOrders" value="' . _('Search Orders') . '" /></td>
@@ -542,7 +542,7 @@ if (!isset($SelectedStockItem)) {
    echo '<div class="page_help_text"><font size=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . '   </font></div>';
    echo '<br />
 		<table class="selection">';
-   echo '<tr><td><font size=1>' . _('Select a stock category') . ':</font>';
+   echo '<tr><td><font size="1">' . _('Select a stock category') . ':</font>';
    echo '<select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -553,19 +553,23 @@ if (!isset($SelectedStockItem)) {
 		}
 	}
 
-   echo '</select>';
-   echo '<td><font size=1>' . _('Enter text extracts in the description') . ':</font></td>';
-   echo '<td><input type="text" name="Keywords" size="20" maxlength="25"></td></tr>';
-   echo '<tr><td></td>';
-   echo '<td><font size=3><b> ' ._('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . ':</font></td>';
-   echo '<td><input type="text" name="StockCode" size="15" maxlength="18"></td>';
-   echo '</tr>';
-   echo '<tr><td colspan=4><div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />';
+   echo '</select>
+		<td><font size="1">' . _('Enter text extracts in the description') . ':</font></td>
+		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><font size=3><b> ' ._('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . ':</font></td>
+		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
+   </tr>
+   <tr><td colspan=4><div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />';
 
    if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 		echo '<input type="submit" name="ResetPart" value="' . _('Show All') . '" /></div>';
    }
-   echo '</td></tr></table>';
+   echo '</td>
+		</tr>
+		</table>';
 
 }
 
@@ -574,12 +578,14 @@ If (isset($StockItemsResult)) {
 	echo '<br />
 		<table cellpadding="2" colspan="7" class="selection">';
 
-	$TableHeadings = '<tr><th>' . _('Code') . '</th>
+	$TableHeadings = '<tr>
+						<th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
 						<th>' . _('Purchase Orders') . '</th>
 						<th>' . _('Sales Orders') . '</th>
-						<th>' . _('Units') . '</th></tr>';
+						<th>' . _('Units') . '</th>
+					</tr>';
 
 	echo $TableHeadings;
 
@@ -597,17 +603,17 @@ If (isset($StockItemsResult)) {
 		}
 
 		printf('<td><font size=1><input type="submit" name="SelectedStockItem" value="%s" /></font></td>
-			<td><font size=1>%s</font></td>
-			<td class="number"><font size=1>%s</font></td>
-			<td class="number"><font size=1>%s</font></td>
-			<td class="number"><font size=1>%s</font></td>
-			<td><font size=1>%s</font></td></tr>',
-			$myrow['stockid'],
-			$myrow['description'],
-			locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
-			locale_number_format($myrow['qoo'],$myrow['decimalplaces']),
-			locale_number_format($myrow['qdem'],$myrow['decimalplaces']),
-			$myrow['units']);
+				<td><font size=1>%s</font></td>
+				<td class="number"><font size=1>%s</font></td>
+				<td class="number"><font size=1>%s</font></td>
+				<td class="number"><font size=1>%s</font></td>
+				<td><font size=1>%s</font></td></tr>',
+				$myrow['stockid'],
+				$myrow['description'],
+				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
+				locale_number_format($myrow['qoo'],$myrow['decimalplaces']),
+				locale_number_format($myrow['qdem'],$myrow['decimalplaces']),
+				$myrow['units']);
 
 //end of page full new headings if
 	}
@@ -631,7 +637,8 @@ If (isset($SalesOrdersResult)) {
 						<th>' . _('Order Date') . '</th>
 						<th>' . _('Req Del Date') . '</th>
 						<th>' . _('Delivery To') . '</th>
-						<th>' . _('Order Total') . '</th></tr>';
+						<th>' . _('Order Total') . '</th>
+					</tr>';
 
 	echo $tableheader;
 
@@ -654,23 +661,23 @@ If (isset($SalesOrdersResult)) {
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
 		printf('<td><a href="%s">%s</a></td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>',
-			$ViewPage,
-			$myrow['orderno'],
-			$myrow['name'],
-			$myrow['brname'],
-			$myrow['customerref'],
-			$FormatedOrderDate,
-			$FormatedDelDate,
-			$myrow['deliverto'],
-			$FormatedOrderValue);
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				</tr>',
+				$ViewPage,
+				$myrow['orderno'],
+				$myrow['name'],
+				$myrow['brname'],
+				$myrow['customerref'],
+				$FormatedOrderDate,
+				$FormatedDelDate,
+				$myrow['deliverto'],
+				$FormatedOrderValue);
 
 //end of page full new headings if
 	}

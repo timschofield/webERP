@@ -3,11 +3,11 @@
 /* $Id: SalesTopItemsInquiry.php 4261 2010-12-22 15:56:50Z  $*/
 
 include('includes/session.inc');
-$title = _('Sales Category Report');
+$title = _('Top Sales Inquiry');
 include('includes/header.inc');
 include('includes/DefineCartClass.php');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Category Report') . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
 echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DateRange'])){
@@ -244,7 +244,7 @@ if (isset($_POST['ShowSales'])){
 				<td class="number">' . locale_number_format($SalesRow['salesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($SalesRow['returnvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($SalesRow['netsalesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . $SalesRow['salesquantity'] . '</td>
+				<td class="number">' . locale_number_format($SalesRow['salesquantity'],'Variable') . '</td>
 				</tr>';
 		$i++;
 		
@@ -266,7 +266,7 @@ if (isset($_POST['ShowSales'])){
 		<td class="number">' . locale_number_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class="number">' . $CumulativeTotalQuantity . '</td>
+		<td class="number">' . locale_number_format($CumulativeTotalQuantity,'Variable') . '</td>
 		</tr>';
 	
 	echo '</table>';
