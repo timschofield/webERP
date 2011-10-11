@@ -65,7 +65,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		$ItemArray = array();
 		
 		while ($myrow = DB_fetch_array($ItemResult)){
-			$ItemArray[] = $myrow;
+			$ItemArray[$myrow['stockid']] = $myrow;
 		}
 		
 		/* Now figure out if there are any components of Assembly items that  need to be ordered too */
@@ -116,8 +116,26 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 		
 		/* add any assembly item components from salesorders to the ItemArray */
 		while ($myrow = DB_fetch_array($ItemResult)){
-			$ItemArray[] = $myrow;
+			if (isset($ItemArray[$myrow['stockid']])){
+			  /* if the item is already in the ItemArray then just add the quantity to the existing item */
+			   $ItemArray[$myrow['stockid']]['orderqty'] += $myrow['orderqty'];
+			} else { /*it is not already in the ItemArray so add it */
+				$ItemArray[$myrow['stockid']] = $myrow;
+			}
 		}
+
+
+		/* We need the items to order to be in supplier order so that only a single order is created for a supplier - so need to sort the multi-dimensional array to ensure it is listed by supplier sequence. To use array_multisort we need to get arrays of supplier with the same keys as the main array of rows
+		 */
+		foreach ($ItemArray as $key => $row) {
+			//to make the Supplier array with the keys of the $ItemArray
+			$SupplierArray[$key]  = $row['supplierno'];  
+		}
+		
+		/* Use array_multisort to Sort the ItemArray with supplierno ascending
+		Add $ItemArray as the last parameter, to sort by the common key
+		*/
+		array_multisort($SupplierArray, SORT_ASC, $ItemArray);
 
 		if (count($ItemArray)==0){
 			prnMsg(_('There might be no supplier purchasing data set up for any items on the selected sales order(s). No purchase orders have been created'),'warn');

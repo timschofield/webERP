@@ -32,12 +32,12 @@ if ( isset($_POST['submit']) ) {
 
 	if (mb_strlen($_POST['ShipperName']) >40) {
 		$InputError = 1;
-		prnMsg( _("The shipper's name must be forty characters or less long"), 'error');
+		prnMsg( _('The shipper\'s name must be forty characters or less long'), 'error');
 		$Errors[$i] = 'ShipperName';
 		$i++;
 	} elseif( trim($_POST['ShipperName']) == '' ) {
 		$InputError = 1;
-		prnMsg( _("The shipper's name may not be empty"), 'error');
+		prnMsg( _('The shipper\'s name may not be empty'), 'error');
 		$Errors[$i] = 'ShipperName';
 		$i++;
 	}
@@ -48,13 +48,13 @@ if ( isset($_POST['submit']) ) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE shippers SET shippername='" . $_POST['ShipperName'] . "' WHERE shipper_id = '".$SelectedShipper."'";
+		$sql = "UPDATE shippers SET shippername='" . DB_escape_string($_POST['ShipperName']) . "' WHERE shipper_id = '".$SelectedShipper."'";
 		$msg = _('The shipper record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*SelectedShipper is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Shipper form */
 
-		$sql = "INSERT INTO shippers (shippername) VALUES ('" . $_POST['ShipperName'] . "')";
+		$sql = "INSERT INTO shippers (shippername) VALUES ('" . DB_escape_string($_POST['ShipperName']) . "')";
 		$msg = _('The shipper record has been added');
 	}
 
@@ -126,7 +126,7 @@ or deletion of the records*/
 	$sql = "SELECT * FROM shippers ORDER BY shipper_id";
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>
+	echo '<table class="selection">
 		<tr><th>'. _('Shipper ID'). '</th><th>'. _('Shipper Name'). '</th></tr>';
 
 	$k=0; //row colour counter
@@ -141,13 +141,13 @@ or deletion of the records*/
 		}
 		printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%sSelectedShipper=%s">'. _('Edit').' </td>
-			<td><a href="%sSelectedShipper=%s&delete=1">'. _('Delete'). '</td></tr>',
+			<td><a href="%sSelectedShipper=%s">'. _('Edit').'</a></td>
+			<td><a href="%sSelectedShipper=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">'. _('Delete'). '</a></td></tr>',
 			$myrow[0],
 			$myrow[1],
-			$_SERVER['PHP_SELF'] . "?" . SID,
+			$_SERVER['PHP_SELF'] . '?' ,
 			$myrow[0],
-			$_SERVER['PHP_SELF'] . "?" . SID,
+			$_SERVER['PHP_SELF'] . '?',
 			$myrow[0]);
 	}
 	//END WHILE LIST LOOP
@@ -158,12 +158,12 @@ or deletion of the records*/
 if (isset($SelectedShipper)) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title . '</p>';
-	echo '<div class="centre"><a href="'.$_SERVER['PHP_SELF'] . '?' . SID.'">'._('REVIEW RECORDS').'</a></div>';
+	echo '<div class="centre"><a href="'.$_SERVER['PHP_SELF'] . '">'._('REVIEW RECORDS').'</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedShipper)) {
@@ -179,21 +179,26 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type=hidden name="SelectedShipper" VALUE='. $SelectedShipper .'>';
 		echo '<input type=hidden name="Shipper_ID" VALUE=' . $_POST['Shipper_ID'] . '>';
-		echo '<br /><table class=selection><tr><td>'. _('Shipper Code').':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
+		echo '<br /><table class="selection"><tr><td>'. _('Shipper Code').':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
 	} else {
-		echo "<br /><table class=selection>";
+		echo '<br />
+			<table class="selection">';
 	}
 	if (!isset($_POST['ShipperName'])) {
 		$_POST['ShipperName']='';
 	}
 
 	echo '<tr><td>'. _('Shipper Name') .':</td>
-	<td><input type="Text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) .
-		' value="'. $_POST['ShipperName'] .'" size=35 maxlength=40></td></tr>
+	<td><input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) .
+		' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" /></td>
+		</tr>
 
 	</table>
 
-	<br /><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information').'"></div>
+	<br />
+	<div class="centre">
+		<input type="Submit" name="submit" value="'. _('Enter Information').'" />
+	</div>
 
 	</form>';
 
