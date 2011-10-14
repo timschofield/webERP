@@ -4,7 +4,7 @@ include ('includes/session.inc');
 $title = _('Fixed Asset Register');
 $csv_output = '';
 // Reports being generated in HTML, PDF and CSV/EXCEL format
-if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
+if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	if (isset($_POST['pdf'])) {
 		$PaperSize = 'A4_Landscape';
 		include ('includes/PDFStarter.php');
@@ -213,11 +213,11 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		header('Location: ' .$_SESSION['reports_dir'] . '/FixedAssetRegister_' . Date('Y-m-d') .'.csv');
 
 	} else {
-		echo '<input type=hidden name="FromDate" value="' . $_POST['FromDate'] . '">';
-		echo '<input type=hidden name="ToDate" value=' . $_POST['ToDate'] . '>';
-		echo '<input type=hidden name="AssetCategory" value=' . $_POST['AssetCategory'] . '>';
-		echo '<input type=hidden name="AssetID" value=' . $_POST['AssetID'] . '>';
-		echo '<input type=hidden name="AssetLocation" value=' . $_POST['AssetLocation'] . '>';
+		echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />';
+		echo '<input type="hidden" name="ToDate" value=' . $_POST['ToDate'] . '>';
+		echo '<input type="hidden" name="AssetCategory" value="' . $_POST['AssetCategory'] . '" />';
+		echo '<input type="hidden" name="AssetID" value="' . $_POST['AssetID'] . '" />';
+		echo '<input type="hidden" name="AssetLocation" value="' . $_POST['AssetLocation'] . '" />';
 		//Total Values
 		echo '<tr><th style="vertical-align:top" colspan="5">' . _('TOTAL') . '</th>';
 		echo '<th style="text-align:right">' . locale_number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
@@ -229,8 +229,8 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		echo '<th style="text-align:right">' . locale_number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
 		echo '<th style="text-align:right">' . locale_number_format($TotalDisposals, $_SESSION['CompanyRecord']['decimalplaces']) . '</th></tr>';
 		echo '</table>';
-		echo '<br /><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
-		echo '<input type="Submit" name="csv" value="' . _('Print as CSV') . '"></div></form>';
+		echo '<br /><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;';
+		echo '<input type="submit" name="csv" value="' . _('Print as CSV') . '" /></div></form>';
 	}
 } else {
 	include ('includes/header.inc');
@@ -283,16 +283,16 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
-	echo '<tr><th>' . _(' From Date') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=11 value="' . $_POST['FromDate'] . '"></td>';
+	echo '<tr><th>' . _(' From Date') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=11 value="' . $_POST['FromDate'] . '" /></td>';
 	echo '</tr>';
-	echo '<tr><th>' . _('To Date ') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '"></td>
+	echo '<tr><th>' . _('To Date ') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	</table>
 	<br />';
-	
+
 	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
-	echo '<input type="Submit" name="pdf" value="' . _('Print as a pdf') . '">&nbsp;';
-	echo '<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '"></div>';
+	echo '<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;';
+	echo '<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '" /></div>';
 	echo '</form>';
 }
 include ('includes/footer.inc');

@@ -19,14 +19,16 @@ echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $sql = "SELECT loccode,
-		locationname
-	FROM locations";
+    	       locationname
+    	FROM locations";
 $resultStkLocs = DB_query($sql,$db);
 
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text">
+         <img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
+	'" alt="" />' . ' ' . $title.'
+    </p>';
 
-echo '<table class=selection>
+echo '<table class="selection">
 		<tr><td>' . _('From Stock Location') . ':</td>
 			<td><select name="StockLocation"> ';
 while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -45,9 +47,9 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 }
 echo '</select></td></tr>';
 
-$SQL="SELECT categoryid, 
-				categorydescription 
-		FROM stockcategory 
+$SQL="SELECT categoryid,
+				categorydescription
+		FROM stockcategory
 		ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 if (DB_num_rows($result1)==0){
@@ -84,22 +86,27 @@ if (!isset($_POST['BelowReorderQuantity'])){
 	$_POST['BelowReorderQuantity']='All';
 }
 if ($_POST['BelowReorderQuantity']=='All'){
-	echo '<option selected value="All">' . _('All') . '</option>';
-	echo '<option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>';
-	echo '<option value="NotZero">' . _('Only items where stock is available') . '</option>';
+	echo '<option selected value="All">' . _('All') . '</option>
+          <option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
+          <option value="NotZero">' . _('Only items where stock is available') . '</option>';
 } else if ($_POST['BelowReorderQuantity']=='Below') {
-	echo '<option value="All">' . _('All') . '</option>';
-	echo '<option selected value="Below">' . _('Only Items Below Re-order Quantity') . '</option>';
-	echo '<option value="NotZero">' . _('Only items where stock is available') . '</option>';
+	echo '<option value="All">' . _('All') . '</option>
+          <option selected value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
+          <option value="NotZero">' . _('Only items where stock is available') . '</option>';
 } else  {
-	echo '<option value="All">' . _('All') . '</option>';
-	echo '<option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>';
-	echo '<option selected value="NotZero">' . _('Only items where stock is available') . '</option>';
+	echo '<option value="All">' . _('All') . '</option>
+          <option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
+          <option selected value="NotZero">' . _('Only items where stock is available') . '</option>';
 }
 
-echo '</td></tr></table>';
+echo '</td>
+     </tr>
+     </table>';
 
-echo '<br /><div class="centre"><input type=submit name="ShowStatus" value="' . _('Show Stock Status') . '"></div>';
+echo '<br />
+     <div class="centre">
+          <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />
+     </div>';
 
 if (isset($_POST['ShowStatus'])){
 
@@ -142,21 +149,21 @@ if (isset($_POST['ShowStatus'])){
 					ORDER BY locstock.stockid";
 	}
 
-
 	$ErrMsg =  _('The stock held at each location cannot be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
 	$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-	echo '<br /><table cellpadding=5 cellspacing=4 class="selection">';
+	echo '<br />
+         <table cellpadding="5" cellspacing="4" class="selection">';
 
 	$tableheader = '<tr>
-					<th>' . _('StockID') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Quantity On Hand') . '</th>
-					<th>' . _('Re-Order Level') . '</th>
-					<th>' . _('Demand') . '</th>
-					<th>' . _('Available') . '</th>
-					<th>' . _('On Order') . '</th>
+    					<th>' . _('StockID') . '</th>
+    					<th>' . _('Description') . '</th>
+    					<th>' . _('Quantity On Hand') . '</th>
+    					<th>' . _('Re-Order Level') . '</th>
+    					<th>' . _('Demand') . '</th>
+    					<th>' . _('Available') . '</th>
+    					<th>' . _('On Order') . '</th>
 					</tr>';
 	echo $tableheader;
 	$j = 1;
@@ -167,12 +174,11 @@ if (isset($_POST['ShowStatus'])){
 		$StockID = $myrow['stockid'];
 
 		$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-                   	FROM salesorderdetails,
-                        	salesorders
-                   	WHERE salesorders.orderno = salesorderdetails.orderno
-			AND salesorders.fromstkloc='" . $myrow['loccode'] . "'
-			AND salesorderdetails.completed=0
-			AND salesorderdetails.stkcode='" . $StockID . "'";
+                   	FROM salesorderdetails INNER JOIN salesorders
+                   	ON salesorders.orderno = salesorderdetails.orderno
+        			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
+        			AND salesorderdetails.completed=0
+        			AND salesorderdetails.stkcode='" . $StockID . "'";
 
 		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$DemandResult = DB_query($sql,$db,$ErrMsg);
@@ -185,17 +191,16 @@ if (isset($_POST['ShowStatus'])){
 		}
 
 		//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-		$sql = "SELECT Sum((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-				FROM salesorderdetails,
-					salesorders,
-					bom,
-					stockmaster
-				WHERE salesorderdetails.stkcode=bom.parent
-				AND salesorders.orderno = salesorderdetails.orderno
-				AND salesorders.fromstkloc='" . $myrow['loccode'] . "'
+		$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+				FROM salesorderdetails INNER JOIN salesorders
+				     ON salesorders.orderno = salesorderdetails.orderno
+                INNER JOIN bom 
+                      ON salesorderdetails.stkcode=bom.parent
+				INNER JOIN stockmaster
+				      ON stockmaster.stockid=bom.parent
+				WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
 				AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 				AND bom.component='" . $StockID . "'
-				AND stockmaster.stockid=bom.parent
 				AND stockmaster.mbflag='A'";
 
 		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
@@ -206,10 +211,11 @@ if (isset($_POST['ShowStatus'])){
 			$DemandQty += $DemandRow[0];
 		}
 		$sql = "SELECT SUM((woitems.qtyreqd-woitems.qtyrecd)*bom.quantity) AS dem
-				FROM workorders, woitems, bom
-				WHERE woitems.wo = workorders.wo
-				AND   woitems.stockid =  bom.parent
-				AND   workorders.closed=0
+				FROM workorders INNER JOIN woitems
+                     ON woitems.wo = workorders.wo
+                INNER JOIN bom 
+                      ON woitems.stockid =  bom.parent
+				WHERE workorders.closed=0
 				AND   bom.component = '". $StockID . "'
 				AND   workorders.loccode='". $myrow['loccode'] ."'";
 		$DemandResult = DB_query($sql,$db, $ErrMsg);
@@ -253,23 +259,23 @@ if (isset($_POST['ShowStatus'])){
 					$k=1;
 				}
 				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=%s">%s</a></td>
-					<td>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
-					<td class=number><a target="_blank" href="' . $rootpath . 'SelectProduct.php?StockID=%s">%s</a></td>
-					<td class=number>%s</td>
-					</tr>',
-					mb_strtoupper($myrow['stockid']),
-					mb_strtoupper($myrow['stockid']),
-					$myrow['description'],
-					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
-					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
-					locale_number_format($DemandQty,$myrow['decimalplaces']),
-					mb_strtoupper($myrow['stockid']),
-					locale_number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
-					locale_number_format($QOO,$myrow['decimalplaces']));
-		
+    					<td>%s</td>
+    					<td class="number">%s</td>
+    					<td class="number">%s</td>
+    					<td class="number">%s</td>
+    					<td class="number"><a target="_blank" href="' . $rootpath . 'SelectProduct.php?StockID=%s">%s</a></td>
+    					<td class="number">%s</td>
+    					</tr>',
+    					mb_strtoupper($myrow['stockid']),
+    					mb_strtoupper($myrow['stockid']),
+    					$myrow['description'],
+    					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
+    					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
+    					locale_number_format($DemandQty,$myrow['decimalplaces']),
+    					mb_strtoupper($myrow['stockid']),
+    					locale_number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
+    					locale_number_format($QOO,$myrow['decimalplaces']));
+
 				if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
 
 					echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
@@ -285,31 +291,28 @@ if (isset($_POST['ShowStatus'])){
 					$k=1;
 				}
 				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=%s">%s</a></td>
-					<td>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
-					<td class=number><a target="_blank" href="' . $rootpath . 'SelectProduct.php?StockID=%s">%s</a></td>
-					<td class=number>%s</td>',
-					mb_strtoupper($myrow['stockid']),
-					mb_strtoupper($myrow['stockid']),
-					$myrow['description'],
-					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
-					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
-					locale_number_format($DemandQty,$myrow['decimalplaces']),
-					mb_strtoupper($myrow['stockid']),
-					locale_number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
-					locale_number_format($QOO,$myrow['decimalplaces']));
+    					<td>%s</td>
+    					<td class="number">%s</td>
+    					<td class="number">%s</td>
+    					<td class="number">%s</td>
+    					<td class="number"><a target="_blank" href="' . $rootpath . 'SelectProduct.php?StockID=%s">%s</a></td>
+    					<td class="number">%s</td>',
+    					mb_strtoupper($myrow['stockid']),
+    					mb_strtoupper($myrow['stockid']),
+    					$myrow['description'],
+    					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
+    					locale_number_format($myrow['reorderlevel'],$myrow['decimalplaces']),
+    					locale_number_format($DemandQty,$myrow['decimalplaces']),
+    					mb_strtoupper($myrow['stockid']),
+    					locale_number_format($myrow['quantity'] - $DemandQty,$myrow['decimalplaces']),
+    					locale_number_format($QOO,$myrow['decimalplaces']));
 				if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
 
-					echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
+					echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
 				} elseif ($myrow['controlled']==1){
-					echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
+					echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
 				}
-			}
-
-
-		//end of page full new headings if
+			} //end of page full new headings if
 		} //end of if BelowOrderQuantity or all items
 	}
 	//end of while loop

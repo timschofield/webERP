@@ -10,7 +10,7 @@ include('includes/SQL_CommonFunctions.inc');
 If (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-	if (!is_numeric($_POST['Percent'])) {
+	if (!is_numeric(filter_number_format($_POST['Percent']))) {
 		$_POST['Percent'] = 0;
 	}
 
@@ -63,7 +63,7 @@ If (isset($_POST['PrintPDF'])) {
 				stockmaster.serialised,
 				stockmaster.controlled,
 				ROUND((locstock.reorderlevel - locstock.quantity) *
-				   (1 + (" . $_POST['Percent'] . "/100)))
+				   (1 + (" . filter_number_format($_POST['Percent']) . "/100)))
 				as neededqty,
 			   (fromlocstock.quantity - fromlocstock.reorderlevel)  as available,
 			   fromlocstock.reorderlevel as fromreorderlevel,
@@ -89,9 +89,10 @@ If (isset($_POST['PrintPDF'])) {
 	  $title = _('Stock Dispatch - Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+	   echo '<br />
+            <a href="' .$rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo "<br />$sql";
+		  echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -101,7 +102,8 @@ If (isset($_POST['PrintPDF'])) {
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
-		echo "<br /><a href='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</a>';
+		echo '<br />
+             <a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -226,7 +228,9 @@ If (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 	$DefaultLocation = $myrow['defaultlocation'];
-	echo '<br/><form action=' . $_SERVER['PHP_SELF'] . " method='post'><table class=selection>";
+	echo '<br/>
+         <form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+         <table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 			locationname
@@ -235,8 +239,14 @@ If (isset($_POST['PrintPDF'])) {
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation']=$DefaultLocation;
 	}
-	echo '<table class=selection><tr><td>' . _('Dispatch Percent') . ':</td><td><input type ="text" name="Percent" class="number" size="8" value=0>';
-	echo '<tr><td>' . _('From Stock Location') . ':</td><td><select name="FromLocation"> ';
+	echo '<table class="selection">
+         <tr>
+             <td>' . _('Dispatch Percent') . ':</td>
+             <td><input type ="text" name="Percent" class="number" size="8" value="0" />
+         </tr>';
+	echo '<tr>
+              <td>' . _('From Stock Location') . ':</td>
+              <td><select name="FromLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['FromLocation']){
 			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -244,22 +254,26 @@ If (isset($_POST['PrintPDF'])) {
 			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+         </tr>';
 	DB_data_seek($resultStkLocs,0);
 	if (!isset($_POST['ToLocation'])) {
 		$_POST['ToLocation']=$DefaultLocation;
 	}
-	echo '<tr><td>' . _('To Stock Location') . ':</td><td><select name="ToLocation"> ';
+	echo '<tr>
+              <td>' . _('To Stock Location') . ':</td>
+              <td><select name="ToLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['ToLocation']){
-			 echo '<option selected Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+         </tr>';
 
-	$SQL='SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categorydescription';
+	$SQL="SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
 		echo '</table></td></tr>
@@ -274,7 +288,9 @@ If (isset($_POST['PrintPDF'])) {
 	// Define StockCat with 'name="StockCat[ ]" multiple' so can select more than one
 	// Also have to change way define $WhereCategory for WHERE clause
 
-	echo '<tr><td>' . _('In Stock Category') . ':</td><td><select name="StockCat">';
+	echo '<tr>
+              <td>' . _('In Stock Category') . ':</td>
+              <td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -305,12 +321,15 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<option value="simple">' . _('Simple') . '</option>';
 	echo '</select></td><td>&nbsp</td></tr>';
 
-	echo '</table><br/><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+	echo '</table>
+         <br/>
+         <div class="centre">
+              <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '">
+         </div>';
 
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
-
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
