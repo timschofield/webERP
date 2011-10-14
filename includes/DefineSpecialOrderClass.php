@@ -62,14 +62,14 @@ Class SpecialOrder {
 
 Class LineDetails {
 
-	Var $LineNo;
-	Var $ItemDescription;
-	Var $Quantity;
-	Var $Price;
-	Var $Cost;
-	Var $StkCat;
-	Var $ReqDelDate;
-	Var $PartCode;
+	var $LineNo;
+	var $ItemDescription;
+	var $Quantity;
+	var $Price;
+	var $Cost;
+	var $StkCat;
+	var $ReqDelDate;
+	var $PartCode;
 
 	function LineDetails ($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
 

@@ -54,11 +54,12 @@ If (isset($_POST['PrintPDF'])
 	}
 
 	if ($_POST['MakeStkChkData']=='AddUpdate'){
-		$sql = "DELETE stockcheckfreeze FROM stockcheckfreeze
-									INNER JOIN stockmaster ON stockcheckfreeze.stockid=stockmaster.stockid
-									WHERE stockmaster.categoryid >='" . $_POST['FromCriteria'] . "' AND
-									stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
-									stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
+		$sql = "DELETE stockcheckfreeze 
+				FROM stockcheckfreeze
+				INNER JOIN stockmaster ON stockcheckfreeze.stockid=stockmaster.stockid
+				WHERE stockmaster.categoryid >='" . $_POST['FromCriteria'] . "' 
+				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' 
+				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
 		$result = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -83,12 +84,13 @@ If (isset($_POST['PrintPDF'])
 					'" . Date('Y-m-d') . "'
 				FROM locstock INNER JOIN stockmaster
 				ON locstock.stockid=stockmaster.stockid
-				WHERE locstock.loccode='" . $_POST['Location'] . "' AND
-								stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' AND
-								 stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
-								 stockmaster.mbflag!='A' AND
-								 stockmaster.mbflag!='K' AND
-								 stockmaster.mbflag!='D'";
+				WHERE locstock.loccode='" . $_POST['Location'] . "' 
+				AND stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' 
+				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' 
+				AND stockmaster.mbflag!='A' 
+				AND stockmaster.mbflag!='K' 
+				AND stockmaster.mbflag!='G' 
+				AND stockmaster.mbflag!='D'";
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -112,26 +114,25 @@ If (isset($_POST['PrintPDF'])
 	}
 
 
-	  $SQL = "SELECT stockmaster.categoryid,
-					 stockcheckfreeze.stockid,
-					 stockmaster.description,
-					 stockmaster.decimalplaces,
-					 stockcategory.categorydescription,
-					 stockcheckfreeze.qoh
-					 FROM stockcheckfreeze,
-						  stockmaster,
-						  stockcategory
-					 WHERE stockcheckfreeze.stockid=stockmaster.stockid AND
-						   stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "' AND
-						   stockmaster.categoryid=stockcategory.categoryid AND
-						   stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "' AND
-						   (stockmaster.mbflag='B' OR mbflag='M') AND
-						   stockcheckfreeze.loccode = '" . $_POST['Location'] . "'";
-		if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly']==true){
-			$SQL .= ' AND stockcheckfreeze.qoh<>0';
-		}
+	$SQL = "SELECT stockmaster.categoryid,
+				 stockcheckfreeze.stockid,
+				 stockmaster.description,
+				 stockmaster.decimalplaces,
+				 stockcategory.categorydescription,
+				 stockcheckfreeze.qoh
+			 FROM stockcheckfreeze INNER JOIN stockmaster
+			 ON stockcheckfreeze.stockid=stockmaster.stockid 
+			 INNER JOIN stockcategory 
+			 ON stockmaster.categoryid=stockcategory.categoryid 
+			 WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "' 
+			 AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "' 
+			 AND (stockmaster.mbflag='B' OR mbflag='M') 
+			 AND stockcheckfreeze.loccode = '" . $_POST['Location'] . "'";
+	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly']==true){
+		$SQL .= " AND stockcheckfreeze.qoh<>0";
+	}
 
-		$SQL .=  ' ORDER BY stockmaster.categoryid, stockmaster.stockid';
+	$SQL .=  " ORDER BY stockmaster.categoryid, stockmaster.stockid";
 
 	$InventoryResult = DB_query($SQL,$db,'','',false,false);
 
@@ -159,9 +160,9 @@ If (isset($_POST['PrintPDF'])
 
 	$Category = '';
 
-	While ($InventoryPlan = DB_fetch_array($InventoryResult,$db)){
+	While ($InventoryCheckRow = DB_fetch_array($InventoryResult,$db)){
 
-		if ($Category!=$InventoryPlan['categoryid']){
+		if ($Category!=$InventoryCheckRow['categoryid']){
 			$FontSize=12;
 			if ($Category!=''){ /*Then it's NOT the first time round */
 				/*draw a line under the CATEGORY TOTAL*/
@@ -169,8 +170,8 @@ If (isset($_POST['PrintPDF'])
 				$YPos -=(2*$line_height);
 			}
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryPlan['categoryid'] . ' - ' . $InventoryPlan['categorydescription'], 'left');
-			$Category = $InventoryPlan['categoryid'];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryCheckRow['categoryid'] . ' - ' . $InventoryCheckRow['categorydescription'], 'left');
+			$Category = $InventoryCheckRow['categoryid'];
 		}
 
 		$FontSize=10;
@@ -179,12 +180,11 @@ If (isset($_POST['PrintPDF'])
 		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
 
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-				   		FROM salesorderdetails,
-								salesorders
-				   		WHERE salesorderdetails.orderno=salesorders.orderno AND
-				   			salesorders.fromstkloc ='" . $_POST['Location'] . "' AND
-				   			salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'  AND
-				   			salesorderdetails.completed = 0";
+			   		FROM salesorderdetails INNER JOIN salesorders
+			   		ON salesorderdetails.orderno=salesorders.orderno 
+			   		WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "' 
+			   		AND salesorderdetails.stkcode = '" . $InventoryCheckRow['stockid'] . "'  
+			   		AND salesorderdetails.completed = 0";
 
 			$DemandResult = DB_query($SQL,$db,'','',false, false);
 
@@ -204,19 +204,17 @@ If (isset($_POST['PrintPDF'])
 			$DemandQty = $DemandRow['qtydemand'];
 
 			//Also need to add in the demand for components of assembly items
-			$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity)
-						   AS dem
-						   FROM salesorderdetails,
-								salesorders,
-								bom,
-								stockmaster
-						   WHERE salesorderdetails.stkcode=bom.parent AND
-						   salesorders.orderno = salesorderdetails.orderno AND
-						   salesorders.fromstkloc='" . $_POST['Location'] . "' AND
-						   salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 AND
-						   bom.component='" . $InventoryPlan['stockid'] . "' AND
-						   stockmaster.stockid=bom.parent AND
-						   stockmaster.mbflag='A'";
+			$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+						   FROM salesorderdetails INNER JOIN salesorders 
+						   ON salesorders.orderno = salesorderdetails.orderno
+						   INNER JOIN bom 
+						   ON salesorderdetails.stkcode=bom.parent
+						   INNER JOIN stockmaster 
+						   ON stockmaster.stockid=bom.parent
+						   WHERE salesorders.fromstkloc='" . $_POST['Location'] . "' 
+						   AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 AND
+						   bom.component='" . $InventoryCheckRow['stockid'] . "' AND
+						   AND stockmaster.mbflag='A'";
 
 			$DemandResult = DB_query($sql,$db,'','',false,false);
 			if (DB_error_no($db) !=0) {
@@ -232,15 +230,15 @@ If (isset($_POST['PrintPDF'])
 	  			$DemandQty += $DemandRow[0];
 			}
 
-			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($InventoryPlan['qoh'], $InventoryPlan['decimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,locale_number_format($DemandQty,$InventoryPlan['decimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,locale_number_format($InventoryPlan['qoh']-$DemandQty,$InventoryPlan['decimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($InventoryCheckRow['qoh'], $InventoryCheckRow['decimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,locale_number_format($DemandQty,$InventoryCheckRow['decimalplaces']), 'right');
+			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,locale_number_format($InventoryCheckRow['qoh']-$DemandQty,$InventoryCheckRow['decimalplaces']), 'right');
 
 		}
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,$InventoryPlan['stockid'], 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,$InventoryCheckRow['stockid'], 'left');
 
-		$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$InventoryPlan['description'], 'left');
+		$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$InventoryCheckRow['description'], 'left');
 
 
 		$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
@@ -265,7 +263,8 @@ If (isset($_POST['PrintPDF'])
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
 			. _('print') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table class=selection>';
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+			<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td>
@@ -278,7 +277,9 @@ If (isset($_POST['PrintPDF'])
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('To Inventory Category Code') . ':</td><td><select name="ToCriteria">';
+		echo '<tr>
+				<td>' . _('To Inventory Category Code') . ':</td>
+				<td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -288,16 +289,21 @@ If (isset($_POST['PrintPDF'])
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For Inventory in Location') . ':</td><td><select name="Location">';
+		echo '<tr>
+				<td>' . _('For Inventory in Location') . ':</td>
+				<td><select name="Location">';
 		$sql = "SELECT loccode, locationname FROM locations";
 		$LocnResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 				  echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</td>
+			</tr>';
 
-		echo '<tr><td>' . _('Action for Stock Check Freeze') . ':</td>
+		echo '<tr>
+				<td>' . _('Action for Stock Check Freeze') . ':</td>
 				<td><select name="MakeStkChkData">';
 
 		if (!isset($_POST['MakeStkChkData'])){
@@ -320,23 +326,35 @@ If (isset($_POST['PrintPDF'])
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Show system quantity on sheets') . ':</td><td>';
+		echo '<tr>
+				<td>' . _('Show system quantity on sheets') . ':</td>
+				<td>';
 
 		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == false){
 				echo '<input type=checkbox name="ShowInfo" value=FALSE>';
 		} else {
 				echo '<input type=checkbox name="ShowInfo" value=TRUE>';
 		}
-		echo '</td></tr>';
+		echo '</td>
+			</tr>';
 
-		echo '<tr><td>' . _('Only print items with non zero quantities') . ':</td><td>';
+		echo '<tr>
+				<td>' . _('Only print items with non zero quantities') . ':</td>
+				<td>';
 		if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly'] == false){
-				echo '<input type=checkbox name="NonZerosOnly" VALUE=FALSE>';
+				echo '<input type="checkbox" name="NonZerosOnly" value=false />';
 		} else {
-				echo '<input type=checkbox name="NonZerosOnly" VALUE=TRUE>';
+				echo '<input type="checkbox" name="NonZerosOnly" value=true />';
 		}
 
-			echo '</td></tr></table><br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print and Process') . '"></div></form>';
+		echo '</td>
+			</tr>
+			</table>
+			<br />
+			<div class="centre">
+				<input type="submit" Name="PrintPDF" value="' . _('Print and Process') . '" />
+			</div>
+			</form>';
 	}
 	include('includes/footer.inc');
 

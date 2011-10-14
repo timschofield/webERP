@@ -10,8 +10,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
 	_('Inventory Items') . '" alt="" />' . ' ' . $title . '</p>';
 
-echo '<table class="selection"><tr><td>';
-echo _('Select recurring order templates for delivery from:') . ' </td><td>' . '<select name="StockLocation">';
+echo '<table class="selection">
+		<tr>
+			<td>' . _('Select recurring order templates for delivery from:') . ' </td>
+			<td>' . '<select name="StockLocation">';
 
 $sql = "SELECT loccode, locationname FROM locations";
 
@@ -31,9 +33,11 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 	}
 }
 
-echo '</select></td></tr></table>';
+echo '</select></td>
+	</tr>
+	</table>';
 
-echo '<br /><div class=centre><input type="submit" name="SearchRecurringOrders" value="' . _('Search Recurring Orders') . '"></div>';
+echo '<br /><div class=centre><input type="submit" name="SearchRecurringOrders" value="' . _('Search Recurring Orders') . '" /></div>';
 
 if (isset($_POST['SearchRecurringOrders'])){
 
@@ -78,15 +82,15 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 		<table cellpadding="2" colspan="7" width="90%" class="selection">';
 
 	$tableheader = '<tr>
-					<th>' . _('Modify') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Branch') . '</th>
-					<th>' . _('Cust Order') . ' #</th>
-					<th>' . _('Last Recurrence') . '</th>
-					<th>' . _('End Date') . '</th>
-					<th>' . _('Times p.a.') . '</th>
-					<th>' . _('Order Total') . '</th>
-				</tr>';
+						<th>' . _('Modify') . '</th>
+						<th>' . _('Customer') . '</th>
+						<th>' . _('Branch') . '</th>
+						<th>' . _('Cust Order') . ' #</th>
+						<th>' . _('Last Recurrence') . '</th>
+						<th>' . _('End Date') . '</th>
+						<th>' . _('Times p.a.') . '</th>
+						<th>' . _('Order Total') . '</th>
+					</tr>';
 		
 	echo $tableheader;
 
@@ -109,23 +113,23 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
 		printf('<td><a href="%s">%s</a></td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class=number>%s</td>
-			</tr>',
-			$ModifyPage,
-			$myrow['recurrorderno'],
-			$myrow['name'],
-			$myrow['brname'],
-			$myrow['customerref'],
-			$FormatedLastRecurrence,
-			$FormatedStopDate,
-			$myrow['frequency'],
-			$FormatedOrderValue);
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				</tr>',
+				$ModifyPage,
+				$myrow['recurrorderno'],
+				$myrow['name'],
+				$myrow['brname'],
+				$myrow['customerref'],
+				$FormatedLastRecurrence,
+				$FormatedStopDate,
+				$myrow['frequency'],
+				$FormatedOrderValue);
 
 		$j++;
 		If ($j == 12){

@@ -11,7 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 	'" alt="" />' . ' ' . $title . '</p>';
 
-if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
+if (isset($_GET['NewShipment']) AND $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']->LineItems);
 	unset($_SESSION['Shipment']);
 }
@@ -47,7 +47,7 @@ if (DB_num_rows($GetShiptHdrResult)==0) {
 $HeaderData = DB_fetch_array($GetShiptHdrResult);
 echo '<br />';
 echo '<table class="selection">';
-echo '<tr><th colspan=4><font size=3 color=navy>'._('Shipment Details').'</font></th></tr>';
+echo '<tr><th colspan="4"><font size="3" color="navy">'._('Shipment Details').'</font></th></tr>';
 echo '<tr>
 		<td><b>'. _('Shipment') .': </td>
 		<td><b>' . $_GET['SelectedShipment'] . '</b></td>
@@ -260,8 +260,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 							 /*So we need to write off some of the variance to variances and
 							 only the balance of the quantity in stock to go to stock value */
 
-					 $WriteOffToVariances =  ($myrow['totqtyinvoiced'] - $TotalQuantityOnHand)
-																				   * ($ItemShipmentCost - $StdCostUnit);
+					 $WriteOffToVariances =  ($myrow['totqtyinvoiced'] - $TotalQuantityOnHand) * ($ItemShipmentCost - $StdCostUnit);
 				 }
 
 
@@ -286,7 +285,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 									'" . $PeriodNo . "',
 							 		'" . $StockGLCodes['purchpricevaract'] . "',
 								 	'" . $myrow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['deicmalplaces']) . _('shipment quantity > stock held - variance write off') . "',
-									 " . filter_number_format($WriteOffToVariances) . ")";
+									 " . $WriteOffToVariances . ")";
 			
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the shipment variance posting for'). ' ' . $myrow['itemcode'] . ' '. _('could not be inserted into the database because');
 			   			$result = DB_query($sql,$db, $ErrMsg,'',TRUE);
@@ -306,7 +305,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 												'" . $PeriodNo . "',
 										 		'" . $StockGLCodes['stockact'] . "',
 											 	'" . $myrow['itemcode'] . ' ' . _('shipment avg cost adjt') . "',
-												'" . filter_number_format($myrow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit)- $WriteOffToVariances) . "')";
+												'" . ($myrow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit)- $WriteOffToVariances) . "')";
 						
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the shipment average cost adjustment for'). ' ' . $myrow['itemcode'] . ' '. _('could not be inserted into the database because');
 					$result = DB_query($sql,$db, $ErrMsg,'',TRUE);
@@ -329,14 +328,23 @@ if (db_num_rows($LineItemsResult) > 0) {
 
 					$CostIncrement = ($myrow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit) - $WriteOffToVariances) / $TotalQuantityOnHand;
 					
-					$sql = "UPDATE stockmaster SET  lastcost=materialcost+overheadcost+labourcost,
-														   materialcost=materialcost+" . filter_number_format($CostIncrement) . " 
-											WHERE stockid='" . $myrow['itemcode'] . "'";
+					$sql = "UPDATE stockmaster 
+								SET lastcost=materialcost+overheadcost+labourcost,
+									materialcost=materialcost+" . $CostIncrement . ",
+									lastcostupdate='" . Date('Y-m-d') . "' 
+							WHERE stockid='" . $myrow['itemcode'] . "'";
+							
 					$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg,'',TRUE);
+					
 				} else {
-					$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-								materialcost='" . filter_number_format($ItemShipmentCost) . "' WHERE stockid='" . $myrow['itemcode'] . "'";
+					$sql = "UPDATE stockmaster 
+								SET lastcost=materialcost+overheadcost+labourcost,
+									materialcost='" . $ItemShipmentCost . "',
+									lastcostupdate='" . Date('Y-m-d') . "'
+								WHERE stockid='" . $myrow['itemcode'] . "'";
+								
 					$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg,'',TRUE);
+					
 				}
 				/* End of Weighted Average Costing Code */
 
@@ -356,7 +364,9 @@ if (db_num_rows($LineItemsResult) > 0) {
 										'" . Date('Y-m-d') . "',
 										'" . $PeriodNo . "',
 										'" . $StockGLCodes['purchpricevaract'] . "',
-										'" . $myrow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty recd') .' ' . $myrow['totqtyrecd'] . "', " . filter_number_format(-$Variance * $myrow['totqtyrecd']) . ")";
+										'" . $myrow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty recd') .' ' . $myrow['totqtyrecd'] . "', 
+										" . -$Variance * $myrow['totqtyrecd'] . ")";
+										
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The Positive GL entry for the shipment variance posting for'). ' ' . $myrow['itemcode'] . ' '. _('could not be inserted into the database because');
 		   			$result = DB_query($sql,$db, $ErrMsg,'',TRUE);
 				 }
@@ -378,7 +388,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['grnact'] . "',
 								'" . $myrow['itemcode'] . ' ' ._('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty invoiced') . ' ' . $myrow['totqtyinvoiced'] . "',
-								" . filter_number_format($Variance * $myrow['totqtyinvoiced']) . ")";
+								" . ($Variance * $myrow['totqtyinvoiced']) . ")";
 
 				  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit GL entry for the shipment variance posting for') . ' ' . $myrow['itemcode'] . ' ' . _('could not be inserted because');
 
@@ -388,7 +398,9 @@ if (db_num_rows($LineItemsResult) > 0) {
 				if ( $_POST['UpdateCost'] == 'Yes' ){ /*Only ever a standard costing option
 												  Weighted average costing implies cost updates taking place automatically */
 
-					$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid ='" . $myrow['itemcode'] . "'",$db);
+					$QOHResult = DB_query("SELECT SUM(quantity) 
+											FROM locstock 
+											WHERE stockid ='" . $myrow['itemcode'] . "'",$db);
 					$QOHRow = DB_fetch_row($QOHResult);
 					$QOH=$QOHRow[0];
 
@@ -411,7 +423,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 											'" . $PeriodNo . "',
 											'" . $StockGLCodes['adjglact'] . "',
 											'" . _('Shipment of') . ' ' . $myrow['itemcode'] . " " . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "', 
-											" . filter_number_format(-$ValueOfChange) . ")";
+											" . -$ValueOfChange . ")";
 
 						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg($db);
 		
@@ -430,7 +442,8 @@ if (db_num_rows($LineItemsResult) > 0) {
 									'" . $PeriodNo . "',
 									'" . $StockGLCodes['stockact'] . "',
 									'" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "',
-									" . filter_number_format($ValueOfChange) . ")";
+									" . $ValueOfChange . ")";
+									
 						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg($db);
 		
 						   $Result = DB_query($SQL,$db, $ErrMsg,'',TRUE);
@@ -438,10 +451,11 @@ if (db_num_rows($LineItemsResult) > 0) {
 					} /*end of GL entries for a standard cost update */
 
 					/* Only the material cost is important for imported items */
-					$sql = "UPDATE stockmaster SET materialcost=" . filter_number_format($ItemShipmentCost) . ",
+					$sql = "UPDATE stockmaster SET materialcost=" . $ItemShipmentCost . ",
 												labourcost=0,
 												overheadcost=0,
-												lastcost='" . filter_number_format($StdCostUnit) . "'
+												lastcost='" . $StdCostUnit . "',
+												lastcostupdate='" . Date('Y-m-d') . "'
 										WHERE stockid='" . $myrow['itemcode'] . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg($db);
@@ -455,8 +469,8 @@ if (db_num_rows($LineItemsResult) > 0) {
 /*  Item / Qty Inv/  FX price/ Local Val/ Portion of chgs/ Shipt Cost/ Std Cost/ Variance/ Var % */
 
 	echo '<td>' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'] . '</td>
-			<td class="number">' . locale_number_format($myrow['totqtyinvoiced'],2) . '</td>
-			<td class="number">' . locale_number_format($myrow['totqtyrecd'],2) . '</td>
+			<td class="number">' . locale_number_format($myrow['totqtyinvoiced'],'Variable') . '</td>
+			<td class="number">' . locale_number_format($myrow['totqtyrecd'],'Variable') . '</td>
 			<td class="number">' . locale_number_format($ItemCharges,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($PortionOfCharges,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -465,20 +479,24 @@ if (db_num_rows($LineItemsResult) > 0) {
 			<td class="number">' . $VariancePercentage . '%</td></tr>';
 	}
 }
-echo '<tr><td colspan=3 class="number"><font color=BLUE><b>'. _('Total Shipment Charges'). '</b></font></td>
-	<td class="number">' . locale_number_format($TotalInvoiceValueOfShipment,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	<td class="number">' . locale_number_format($TotalCostsToApportion,$_SESSION['CompanyRecord']['decimalplaces']) .'</td></tr>';
+echo '<tr>
+		<td colspan=3 class="number"><font color=BLUE><b>'. _('Total Shipment Charges'). '</b></font></td>
+		<td class="number">' . locale_number_format($TotalInvoiceValueOfShipment,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($TotalCostsToApportion,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
+	</tr>';
 
-echo '<tr><td colspan=6 class="number">' . _('Total Value of all variances on this shipment') . '</td>
-			  <td class="number">' . locale_number_format($TotalShiptVariance,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+echo '<tr>
+		<td colspan="6" class="number">' . _('Total Value of all variances on this shipment') . '</td>
+		<td class="number">' . locale_number_format($TotalShiptVariance,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	</tr>';
 
 echo '</table>';
 
 
 echo '<br />
-	<table colspan=2 width=95%>
+	<table colspan="2" width="95%">
 	<tr>
-		<td valign=top>'; // put this shipment charges side by side in a table (major table 2 cols)
+		<td valign="top">'; // put this shipment charges side by side in a table (major table 2 cols)
 
 $sql = "SELECT suppliers.suppname,
 			supptrans.suppreference,
@@ -505,7 +523,9 @@ $sql = "SELECT suppliers.suppname,
 $ChargesResult = DB_query($sql,$db);
 
 echo '<table cellpadding="2" colspan="6" class="selection">';
-echo '<tr><th colspan=6><font color="navy" size="3">' . _('Shipment Charges Against Products'). '</font></th></tr>';
+echo '<tr>
+		<th colspan="6"><font color="navy" size="3">' . _('Shipment Charges Against Products'). '</font></th>
+	</tr>';
 
 $TableHeader = '<tr>
 					<th>'. _('Supplier'). '</th>
@@ -540,13 +560,16 @@ while ($myrow=db_fetch_array($ChargesResult)) {
 		<td>' . $myrow['suppreference'] . '</td>
 		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
 		<td>' . $myrow['stockid'] . '</td>
-		<td class="number">' . locale_number_format($myrow['value'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+		<td class="number">' . locale_number_format($myrow['value'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>';
 
 	$TotalItemShipmentChgs += $myrow['value'];
 }
 
-echo '<tr><td colspan=5 class="number"><font color=BLUE><b>'. _('Total Charges Against Shipment Items'). ':</b></font></td>
-	<td class="number">' . locale_number_format($TotalItemShipmentChgs,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+echo '<tr>
+		<td colspan="5" class="number"><font color="blue"><b>'. _('Total Charges Against Shipment Items'). ':</b></font></td>
+		<td class="number">' . locale_number_format($TotalItemShipmentChgs,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	</tr>';
 
 echo '</table>';
 
@@ -577,7 +600,9 @@ $sql = "SELECT suppliers.suppname,
 $ChargesResult = DB_query($sql,$db);
 
 echo '<table cellpadding="2" colspan="5" class="selection">';
-echo '<tr><th colspan="6"><font color="navy" size="3">'._('General Shipment Charges').'</font></th></tr>';
+echo '<tr>
+		<th colspan="6"><font color="navy" size="3">'._('General Shipment Charges').'</font></th>
+	</tr>';
 
 $TableHeader = '<tr>
 					<th>'. _('Supplier'). '</th>
@@ -621,13 +646,15 @@ echo '<tr>
 
 echo '</table>';
 
-echo '</td></tr></table>'; //major table close
+echo '</td>
+	</tr>
+	</table>'; //major table close
 
 if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to close */
 
 // if the page was called with Close=Yes then show options to confirm OK to c
 	echo '<div class="centre">
-			<form method="POST" action="' . $_SERVER['PHP_SELF'] .'?SelectedShipment=' . $_GET['SelectedShipment'] . '">';
+			<form method="post" action="' . $_SERVER['PHP_SELF'] .'?SelectedShipment=' . $_GET['SelectedShipment'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		if ($_SESSION['WeightedAverageCosting']==0){
@@ -637,8 +664,11 @@ if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to c
 					<option value="No">'. _('No') . '</option>
 					</select>';
 		}
-	echo '<br /><br /><input type=submit name="Close" value="'. _('Confirm OK to Close'). '" />';
-	echo '</form></div>';
+	echo '<br />
+		<br />
+		<input type=submit name="Close" value="'. _('Confirm OK to Close'). '" />
+		</form>
+		</div>';
 }
 
 if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */

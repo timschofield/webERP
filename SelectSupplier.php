@@ -145,11 +145,11 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<br />
 		<table width=90% colspan=2 cellpadding=4>
 		<tr>
-			<th width=33%>' . _('Supplier Inquiries') . '</th>
-			<th width=33%>' . _('Supplier Transactions') . '</th>
-			<th width=33%>' . _('Supplier Maintenance') . '</th>
+			<th width="33%">' . _('Supplier Inquiries') . '</th>
+			<th width="33%">' . _('Supplier Transactions') . '</th>
+			<th width="33%">' . _('Supplier Maintenance') . '</th>
 		</tr>';
-	echo '<tr><td valign=top class="select">'; /* Inquiry Options */
+	echo '<tr><td valign="top" class="select">'; /* Inquiry Options */
 	echo '<a href="' . $rootpath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
 		<br />
 		<br />';
@@ -180,14 +180,14 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<br />';
 	echo '<table width=90% colspan=2 cellpadding=4>
 		<tr>
-			<th width=33%>' . _('Supplier Inquiries') . '</th>
-			<th width=33%>' . _('Supplier Transactions') . '</th>
-			<th width=33%>' . _('Supplier Maintenance') . '</th>
+			<th width="33%">' . _('Supplier Inquiries') . '</th>
+			<th width="33%">' . _('Supplier Transactions') . '</th>
+			<th width="33%">' . _('Supplier Maintenance') . '</th>
 		</tr>';
 	echo '<tr>
-			<td valign=top class="select"></td>
-			<td valign=top class="select"></td>
-			<td valign=top class="select">'; /* Supplier Maintenance */
+			<td valign="top" class="select"></td>
+			<td valign="top" class="select"></td>
+			<td valign="top" class="select">'; /* Supplier Maintenance */
 	echo '<a href="' . $rootpath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
 	echo '</td>
 		</tr>

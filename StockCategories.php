@@ -7,8 +7,10 @@ $title = _('Stock Category Maintenance');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-	_('Inventory Adjustment') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
+	_('Inventory Adjustment') . '" alt="" />' . ' ' . $title . '
+	</p>';
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -229,29 +231,29 @@ or deletion of the records*/
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-		printf("<td>%s</td>
-            		<td>%s</td>
-            		<td>%s</td>
-            		<td class=number>%s</td>
-            		<td class=number>%s</td>
-            		<td class=number>%s</td>
-            		<td class=number>%s</td>
-            		<td class=number>%s</td>
-            		<td><a href=\"%sSelectedCategory=%s\">" . _('Edit') . "</td>
-            		<td><a href=\"%sSelectedCategory=%s&delete=yes\" onclick=\"return confirm('" . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
-            		</tr>",
-            		$myrow[0],
-            		$myrow[1],
-            		$myrow[2],
-            		$myrow[3],
-            		$myrow[4],
-            		$myrow[5],
-            		$myrow[6],
-            		$myrow[7],
-            		$_SERVER['PHP_SELF'] . '?',
-            		$myrow[0],
-            		$_SERVER['PHP_SELF'] . '?',
-            		$myrow[0]);
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</td>
+				<td><a href="%sSelectedCategory=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
+				</tr>',
+				$myrow[0],
+				$myrow[1],
+				$myrow[2],
+				$myrow[3],
+				$myrow[4],
+				$myrow[5],
+				$myrow[6],
+				$myrow[7],
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow[0],
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -302,16 +304,23 @@ if (! isset($_GET['delete'])) {
 			$_POST['MaterialUseageVarAc']  = $myrow['materialuseagevarac'];
 			$_POST['WIPAct']  = $myrow['wipact'];
 		}
-		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
-		echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '">';
-		echo '<table class=selection><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
+		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '" />';
+		echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
+		echo '<table class="selection">
+				<tr>
+					<td>' . _('Category Code') . ':</td>
+					<td>' . $_POST['CategoryID'] . '</td>
+				</tr>';
 
 	} else { //end of if $SelectedCategory only do the else when a new record is being entered
 		if (!isset($_POST['CategoryID'])) {
 			$_POST['CategoryID'] = '';
 		}
-		echo '<table class=selection><tr><td>' . _('Category Code') . ':</td>
-                             <td><input type="Text" name="CategoryID" size=7 maxlength=6 value="' . $_POST['CategoryID'] . '"></td></tr>';
+		echo '<table class="selection">
+				<tr>
+					<td>' . _('Category Code') . ':</td>
+					<td><input type="text" name="CategoryID" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
+				</tr>';
 	}
 
 	//SQL to poulate account selection boxes
@@ -339,11 +348,13 @@ if (! isset($_GET['delete'])) {
 		$_POST['CategoryDescription'] = '';
 	}
 
-	echo '<tr><td>' . _('Category Description') . ':</td>
-            <td><input type="Text" name="CategoryDescription" size=22 maxlength=20 value="' . $_POST['CategoryDescription'] . '"></td></tr>';
+	echo '<tr>
+			<td>' . _('Category Description') . ':</td>
+            <td><input type="text" name="CategoryDescription" size=22 maxlength=20 value="' . $_POST['CategoryDescription'] . '" /></td></tr>';
 
 
-	echo '<tr><td>' . _('Stock Type') . ':</td>
+	echo '<tr>
+			<td>' . _('Stock Type') . ':</td>
             <td><select name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
 		if (isset($_POST['StockType']) and $_POST['StockType']=='F') {
 			echo '<option selected value="F">' . _('Finished Goods') . '</option>';
@@ -366,7 +377,8 @@ if (! isset($_GET['delete'])) {
 			echo '<option value="L">' . _('Labour') . '</option>';
 		}
 
-	echo '</select></td></tr>';
+	echo '</select></td>
+			</tr>';
 
 	echo '<input type="submit" name="UpdateTypes" style="visibility:hidden;width:1px" value="Not Seen">';
 	if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
@@ -406,7 +418,8 @@ if (! isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 	DB_data_seek($BSAccountsResult,0);
 
-	echo '<tr><td>' . _('Stock Adjustments GL Code') . ':</td>
+	echo '<tr>
+			<td>' . _('Stock Adjustments GL Code') . ':</td>
             <td><select name="AdjGLAct">';
 
 	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
@@ -435,26 +448,32 @@ if (! isset($_GET['delete'])) {
 	} //end while loop
 	DB_data_seek($PnLAccountsResult,0);
 
-	echo '</select></td></tr><tr><td>';
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>';
 	if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 		echo  _('Labour Efficiency Variance GL Code');
 	} else {
 		echo  _('Usage Variance GL Code');
 	}
-	echo ':</td><td><select name="MaterialUseageVarAc"></option>';
+	echo ':</td>
+			<td><select name="MaterialUseageVarAc">';
 
 	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		if (isset($_POST['MaterialUseageVarAc']) and $myrow['accountcode']==$_POST['MaterialUseageVarAc']) {
-			echo '<option selected value=';
+			echo '<option selected value="';
 		} else {
-			echo '<option value=';
+			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
+		echo $myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
 
 	} //end while loop
 	DB_free_result($PnLAccountsResult);
-	echo '</select></td></tr>
-			</table>';
+	echo '</select></td>
+		</tr>
+		</table>';
+		
 	if (!isset($SelectedCategory)) {
 		$SelectedCategory='';
 	}
@@ -476,14 +495,15 @@ if (! isset($_GET['delete'])) {
 			'<br />The SQL was:<br />' . $sql;
 */
 		echo '<br /><table class=selection>';
-		$TableHeader = '<tr><th>' . _('Property Label') . '</th>
-						<th>' . _('Control Type') . '</th>
-						<th>' . _('Default Value') . '</th>
-						<th>' . _('Numeric Value') . '</th>
-						<th>' . _('Minimum Value') . '</th>
-						<th>' . _('Maximum Value') . '</th>
-						<th>' . _('Require in SO') . '</th>
-					</tr>';
+		$TableHeader = '<tr>
+							<th>' . _('Property Label') . '</th>
+							<th>' . _('Control Type') . '</th>
+							<th>' . _('Default Value') . '</th>
+							<th>' . _('Numeric Value') . '</th>
+							<th>' . _('Minimum Value') . '</th>
+							<th>' . _('Maximum Value') . '</th>
+							<th>' . _('Require in SO') . '</th>
+						</tr>';
 		echo $TableHeader;
 		$PropertyCounter =0;
 		$HeadingCounter =0;
@@ -494,25 +514,24 @@ if (! isset($_GET['delete'])) {
 			} else {
 				$HeadingCounter++;
 			}
-			echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value=' . $myrow['stkcatpropid'] . '>';
-			echo '<tr><td><input type="textbox" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" value="' . $myrow['label'] . '"></td>
+			echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value="' . $myrow['stkcatpropid'] . '" />';
+			echo '<tr><td><input type="textbox" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" value="' . $myrow['label'] . '" /></td>
 						<td><select name="PropControlType' . $PropertyCounter . '">';
 			if ($myrow['controltype']==0){
-				echo '<option selected value=0>' . _('Text Box') . '</option>';
+				echo '<option selected value="0">' . _('Text Box') . '</option>';
 			} else {
-				echo '<option value=0>' . _('Text Box') . '</option>';
+				echo '<option value="0">' . _('Text Box') . '</option>';
 			}
 			if ($myrow['controltype']==1){
-				echo '<option selected value=1>' . _('Select Box') . '</option>';
+				echo '<option selected value="1">' . _('Select Box') . '</option>';
 			} else {
-				echo '<option value=1>' . _('Select Box') . '</option>';
+				echo '<option value="1">' . _('Select Box') . '</option>';
 			}
 			if ($myrow['controltype']==2){
-				echo '<option selected value=2>' . _('Check Box') . '</option>';
+				echo '<option selected value="2">' . _('Check Box') . '</option>';
 			} else {
-				echo '<option value=2>' . _('Check Box') . '</option>';
+				echo '<option value="2">' . _('Check Box') . '</option>';
 			}
-
 			echo '</select></td>
 					<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" value="' . $myrow['defaultvalue'] . '"></td>
 					<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '"';
@@ -532,32 +551,36 @@ if (! isset($_GET['delete'])) {
 			}
 
 			echo '></td>
-					<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td></tr>';
+					<td><a href="' . $_SERVER['PHP_SELF'] . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>
+				</tr>';
 
 			$PropertyCounter++;
 		} //end loop around defined properties for this category
-		echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value="NewProperty">';
-		echo '<tr><td><input type="textbox" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100"></td>
-					<td><select name="PropControlType' . $PropertyCounter . '">';
-		echo '<option selected value=0>' . _('Text Box') . '</option>';
-		echo '<option value=1>' . _('Select Box') . '</option>';
-		echo '<option value=2>' . _('Check Box') . '</option>';
-		echo '</select></td>
-				<td><input type="textbox" name="PropDefault' . $PropertyCounter . '"></td>
-				<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '"></td>
-				<td><input type="textbox" "name="PropMinimum' . $PropertyCounter . '"></td>
-				<td><input type="textbox" name="PropMaximum' . $PropertyCounter . '"></td>
-				<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"></td></tr>';
+		echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value="NewProperty" />';
+		echo '<tr>
+				<td><input type="textbox" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" /></td>
+				<td><select name="PropControlType' . $PropertyCounter . '">
+					<option selected value=0>' . _('Text Box') . '</option>
+					<option value=1>' . _('Select Box') . '</option>
+					<option value=2>' . _('Check Box') . '</option>
+					</select></td>
+				<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" /></td>
+				<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '" /></td>
+				<td><input type="textbox" "name="PropMinimum' . $PropertyCounter . '" /></td>
+				<td><input type="textbox" name="PropMaximum' . $PropertyCounter . '" /></td>
+				<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'" /></td>
+				</tr>';
 		echo '</table>';
-		echo '<input type=hidden name="PropertyCounter" value=' . $PropertyCounter . '>';
+		echo '<input type="hidden" name="PropertyCounter" value="' . $PropertyCounter . '" />';
 
 	} /* end if there is a category selected */
 
 
-	echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
-
-
-	echo '</form>';
+	echo '<br />
+			<div class="centre">
+				<input type="submit" name="submit" value="' . _('Enter Information') . '">
+			</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 
