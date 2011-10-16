@@ -25,7 +25,8 @@ if (!isset($_SESSION['SuppTrans'])){
 
 /*If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
 
-if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
+if (isset($_POST['AddGLCodeToTrans']) 
+	AND $_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 
 	$InputError = False;
 	if ($_POST['GLCode'] == ''){
@@ -48,7 +49,7 @@ if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == _('Enter
 	} else if ($_POST['GLCode'] != '') {
 		$myrow = DB_fetch_row($result);
 		$GLActName = $myrow[1];
-		if (!is_numeric($_POST['Amount'])){
+		if (!is_numeric(filter_number_format($_POST['Amount']))){
 			prnMsg( _('The amount entered is not numeric') . '. ' . _('This line cannot be added to the transaction'),'error');
 			$InputError = True;
 		} elseif ($_POST['JobRef'] != ''){
@@ -65,7 +66,7 @@ if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == _('Enter
 		
 		$_SESSION['SuppTrans']->Add_GLCodes_To_Trans($_POST['GLCode'],
 													$GLActName,
-													$_POST['Amount'],
+													filter_number_format($_POST['Amount']),
 													$_POST['Narrative']);
 		unset($_POST['GLCode']);
 		unset($_POST['Amount']);
@@ -90,20 +91,21 @@ if (isset($_GET['Edit'])){
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' '
-	. _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' '
-	. _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
-echo '</p><table cellpadding=2 class=selection>';
+echo '</p>
+	<table class="selection">';
 
 $TableHeader = '<tr>
-				<th>' . _('Account') . '</th>
-				<th>' . _('Name') . '</th>
-				<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-				<th>' . _('Narrative') . '</th>
-				</tr>';
+					<th>' . _('Account') . '</th>
+					<th>' . _('Name') . '</th>
+					<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					<th>' . _('Narrative') . '</th>
+					</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
 $i=0;
@@ -111,12 +113,12 @@ $i=0;
 foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 
 	echo '<tr>
-		<td>' . $EnteredGLCode->GLCode . '</td>
-		<td>' . $EnteredGLCode->GLActName . '</td>
-		<td class=number>' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-		<td>' . $EnteredGLCode->Narrative . '</td>
-		<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->Counter . '">' . _('Edit') . '</a></td>
-		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</a></td>
+			<td>' . $EnteredGLCode->GLCode . '</td>
+			<td>' . $EnteredGLCode->GLActName . '</td>
+			<td class="number">' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			<td>' . $EnteredGLCode->Narrative . '</td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->Counter . '">' . _('Edit') . '</a></td>
+			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</a></td>
 		</tr>';
 
 	$TotalGLValue += $EnteredGLCode->Amount;
@@ -129,33 +131,41 @@ foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 }
 
 echo '<tr>
-	<td colspan=2 class=number><font size=4 color=blue>' . _('Total') . ':</font></td>
-	<td class=number><font size=2 color=navy><u>' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
+		<td colspan="2" class="number"><font size="4" color="blue">' . _('Total') . ':</font></td>
+		<td class="number"><font size="2" color="navy"><u>' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
 	</tr>
 	</table>';
 
-
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<br /><div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a></div>';
+	echo '<br />
+		<div class="centre">
+			<a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
+		</div>';
 } else {
-	echo '<br /><div class="centre"><a href="' . $rootpath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a></div>';
+	echo '<br />
+		<div class="centre">
+			<a href="' . $rootpath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>
+		</div>';
 }
 
 /*Set up a form to allow input of new GL entries */
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br /><table class="selection">';
+echo '<br />
+	<table class="selection">';
 if (!isset($_POST['GLCode'])) {
 	$_POST['GLCode']='';
 }
 echo '<tr>
-	<td>' . _('Account Code') . ':</td>
-	<td><input type="text" name="GLCode" size=12 maxlength=11 VALUE="' .  $_POST['GLCode'] . '"></td>
-	<input type="hidden" name="JobRef" value="">
+		<td>' . _('Account Code') . ':</td>
+		<td><input type="text" name="GLCode" size="12" maxlength="11" value="' .  $_POST['GLCode'] . '" /></td>
+		<input type="hidden" name="JobRef" value="" />
 	</tr>';
 echo '<tr>
-	<td>' . _('Account Selection') . ':<br />(' . _('If you know the code enter it above') . '<br />' . _('otherwise select the account from the list') . ')</td>
+	<td>' . _('Account Selection') . ':
+		<br />(' . _('If you know the code enter it above') . '
+		<br />' . _('otherwise select the account from the list') . ')</td>
 	<td><select name="AcctSelection">';
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
@@ -178,20 +188,23 @@ if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
 echo '<tr>
-	<td>' . _('Amount') . ':</td>
-	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  $_POST['Amount'] . '"></td>
+		<td>' . _('Amount') . ':</td>
+		<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>';
 
 if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative']='';
 }
 echo '<tr>
-	<td>' . _('Narrative') . ':</td>
-	<td><textarea name="Narrative" cols=40 rows=2>' .  $_POST['Narrative'] . '</textarea></td>
+		<td>' . _('Narrative') . ':</td>
+		<td><textarea name="Narrative" cols=40 rows=2>' .  $_POST['Narrative'] . '</textarea></td>
 	</tr>
-	</table><br />';
+	</table>
+	<br />';
 
-echo '<div class="centre"><input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '"></div>';
+echo '<div class="centre">
+		<input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '" />
+	</div>';
 
 echo '</form>';
 include('includes/footer.inc');

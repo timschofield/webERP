@@ -25,7 +25,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	}
 	$ErrorMessage='';
 	for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
-		if (isset($_POST['StockID' . $i]) and $_POST['StockID' . $i]!=''){
+		if (isset($_POST['StockID' . $i]) AND $_POST['StockID' . $i]!=''){
 			$_POST['StockID' . $i]=trim(mb_strtoupper($_POST['StockID' . $i]));
 			$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
 			$myrow = DB_fetch_row($result);
@@ -35,12 +35,12 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				$_POST['LinesCounter'] -= 10;
 			}
 			DB_free_result( $result );
-			if (!is_numeric($_POST['StockQTY' . $i])){
+			if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
 				$InputError = True;
 				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<br />';
 				$_POST['LinesCounter'] -= 10;
 			}
-			if ($_POST['StockQTY' . $i] <= 0){
+			if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
 				$InputError = True;
 				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<br />';
 				$_POST['LinesCounter'] -= 10;
@@ -53,7 +53,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 								$db);
 								
 			$myrow = DB_fetch_row($result);
-			if ($myrow[0] < $_POST['StockQTY' . $i]){
+			if ($myrow[0] < filter_number_format($_POST['StockQTY' . $i])){
 				$InputError = True;
 				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have enough stock available for transfer.') . '.<br />';
 				$_POST['LinesCounter'] -= 10;
@@ -94,7 +94,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 								recloc)
 						VALUES ('" . $_POST['Trf_ID'] . "',
 							'" . $_POST['StockID' . $i] . "',
-							'" . round($_POST['StockQTY' . $i], $DecimalRow['decimalplaces']) . "',
+							'" . round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . "',
 							'" . Date('Y-m-d') . "',
 							'" . $_POST['FromStockLocation']  ."',
 							'" . $_POST['ToStockLocation'] . "')";
@@ -136,8 +136,9 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan=4><input type=hidden name="Trf_ID" value="' . $Trf_ID . '"><font size=3 color=blue>'.
-			_('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</font></th></tr>';
+	echo '<tr>
+			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><font size="3" color="blue">'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</font></th>
+		</tr>';
 
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
@@ -197,8 +198,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$k++;
 			
 			echo '<tr>
-				<td><input type="text" name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '"></td>
-				<td><input type="text" name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
+				<td><input type="text" name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
+				<td><input type="text" name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
 			</tr>';
 		}
 	}else {
@@ -215,20 +216,24 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$_POST['StockQTY' . $i]=0;
 		}
 		echo '<tr>
-			<td><input type="text" name="StockID' . $i .'" size=21  maxlength=20 value="' . $_POST['StockID' . $i] . '"></td>
-			<td><input type="text" name="StockQTY' . $i .'" size=10 maxlength=10 class="number" value="' . $_POST['StockQTY' . $i] . '"></td>
+			<td><input type="text" name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
+			<td><input type="text" name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i]) . '" /></td>
 		</tr>';
 		$i++;
 	}
 
-	echo '</table><br /><div class="centre">
-		<input type="hidden" name="LinesCounter" value='. $i .'>
-		<input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '">
-		<input type="submit" name="Submit" value="'. _('Create Transfer Shipment'). '"><br />';
+	echo '</table>
+		<br />
+		<div class="centre">
+		<input type="hidden" name="LinesCounter" value="'. $i .'" />
+		<input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '" />
+		<input type="submit" name="Submit" value="'. _('Create Transfer Shipment'). '" />
+		<br />';
 		
 	echo '<script type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
 	
-	echo '</form></div>';
+	echo '</form>
+		</div>';
 	include('includes/footer.inc');
 }
 ?>

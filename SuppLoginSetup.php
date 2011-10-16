@@ -184,15 +184,13 @@ $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
 
-	if (isset($_POST['DefaultLocation']) and $myrow['loccode'] == $_POST['DefaultLocation']){
+	if (isset($_POST['DefaultLocation']) 
+		AND $myrow['loccode'] == $_POST['DefaultLocation']){
 
 		echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-
 	} else {
-		echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
-
 }
 
 echo '<tr><td>' . _('Reports Page Size') .':</td>
@@ -211,7 +209,7 @@ if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
 }
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
-	echo '<option selected Value="A3_landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
+	echo '<option selected value="A3_landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
 } else {
 	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
 }

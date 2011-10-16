@@ -50,13 +50,14 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 		}
 	}
 
-	if (!is_numeric($_POST['Amount'])){
+	if (!is_numeric(filter_number_format($_POST['Amount']))){
 		prnMsg(_('The amount entered is not numeric') . '. ' . _('This shipment charge cannot be added to the invoice'),'error');
 		$InputError = True;
 	}
 
 	if ($InputError == False){
-		$_SESSION['SuppTrans']->Add_Shipt_To_Trans($_POST['ShiptRef'], $_POST['Amount']);
+		$_SESSION['SuppTrans']->Add_Shipt_To_Trans($_POST['ShiptRef'], 
+													filter_number_format($_POST['Amount']));
 		unset($_POST['ShiptRef']);
 		unset($_POST['Amount']);
 	}
@@ -105,10 +106,16 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (!isset($_POST['ShiptRef'])) {
 	$_POST['ShiptRef']='';
 }
-echo '<table class=selection>';
-echo '<tr><td>' . _('Shipment Reference') . ':</td>
-	<td><input type="text" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '"></td></tr>';
-echo '<tr><td>' . _('Shipment Selection') . ':<br /> ' . _('If you know the code enter it above') . '<br />' . _('otherwise select the shipment from the list') . '</td><td><select name="ShiptSelection">';
+echo '<table class="selection">';
+echo '<tr>
+		<td>' . _('Shipment Reference') . ':</td>
+		<td><input type="text" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '" /></td>
+	</tr>';
+echo '<tr>
+		<td>' . _('Shipment Selection') . ':
+			<br /> ' . _('If you know the code enter it above') . '
+			<br />' . _('otherwise select the shipment from the list') . '</td>
+		<td><select name="ShiptSelection">';
 
 $sql = "SELECT shiptref,
 				vessel,
@@ -129,17 +136,23 @@ while ($myrow = DB_fetch_array($result)) {
 	echo $myrow['shiptref'] . '>' . $myrow['shiptref'] . ' - ' . $myrow['vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($myrow['eta']) . ' ' . _('from') . ' ' . $myrow['suppname']  . '</option>';
 }
 
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>';
 
 if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
-echo '<tr><td>' . _('Amount') . ':</td>
-	<td><input type="text" name="Amount" size="12" maxlength="11" value="' .  $_POST['Amount'] . '"></td></tr>';
-echo '</table>';
+echo '<tr>
+		<td>' . _('Amount') . ':</td>
+		<td><input type="text" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+	</tr>
+	</table>';
 
-echo '<br /><div class=centre><input type="submit" name="AddShiptChgToInvoice" value="' . _('Enter Shipment Charge') . '"></div>';
-
-echo '</form>';
+echo '<br />
+	<div class=centre>
+		<input type="submit" name="AddShiptChgToInvoice" value="' . _('Enter Shipment Charge') . '" />
+	</div>
+	</form>';
+	
 include('includes/footer.inc');
 ?>

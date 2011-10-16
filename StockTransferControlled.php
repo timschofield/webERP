@@ -17,7 +17,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/i
 if (!isset($_SESSION['Transfer'])) {
 	/* This page can only be called when a stock Transfer is pending */
 	echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?NewTransfer=Yes">'._('Enter A Stock Transfer').'</a><br />';
-	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated').'<br />','error');
+	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated'),'error');
 	echo '</div>';
 	include('includes/footer.inc');
 	exit;
@@ -46,7 +46,7 @@ if ($LineItem->Controlled != 1 ){
 	} else {
 		echo '<div class="centre"><a href="' . $rootpath . '/StockTransfers.php?NewTransfer=Yes">'._('Enter A Stock Transfer').'</a></div>';
 	}
-	prnMsg('<br />'. _('Notice') . ' - ' . _('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
+	prnMsg(_('Notice') . ' - ' . _('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -57,18 +57,22 @@ if (isset($TransferItem)){
 
 	echo _('Transfer Items is set equal to') . ' ' . $TransferItem;
 
-	echo '<br /><a href="'.$rootpath.'/StockLocTransferReceive.php?StockID='.$LineItem->StockID.'">'._('Back To Transfer Screen').'</a>';
+	echo '<br />
+			<a href="'.$rootpath.'/StockLocTransferReceive.php?StockID='.$LineItem->StockID.'">'._('Back To Transfer Screen').'</a>';
 } else {
-	echo '<br /><a href="'.$rootpath.'/StockTransfers.php?StockID='.$LineItem->StockID. '">'._('Back To Transfer Screen').'</a>';
+	echo '<br />
+			<a href="'.$rootpath.'/StockTransfers.php?StockID='.$LineItem->StockID. '">'._('Back To Transfer Screen').'</a>';
 }
 
-echo '<br /><font size=2><b>'. _('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font></div>';
+echo '<br />
+	<font size="2"><b>'. _('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font>
+	</div>';
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['Transfer']->StockLocationFrom;
 $ItemMustExist = true;
 $StockID = $LineItem->StockID;
-$InOutModifier=1; //seems odd, but it's correct
+$InOutModifier=1; 
 $ShowExisting = true;
 if (isset($TransferItem)){
 	$LineNo=$TransferItem;

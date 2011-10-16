@@ -11,7 +11,6 @@ for controlled items - used in:
 */
 
 //we start with a batch or serial no header and need to display something for verification...
-global $tableheader;
 
 include ('includes/Add_SerialItemsOut.php');
 
@@ -155,11 +154,10 @@ if ($EditControlled){
 		if ($LineItem->Serialised==1){
 			echo '<input type=hidden name="Qty' . $StartAddingAt .'" value=1></tr>';
 		} else if ($LineItem->Serialised==0 and $Perishable==1) {
-			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></td></tr>';
+			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></td></tr>';
 		} else {
-			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></td></tr>';
+			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11"
+				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></td></tr>';
 		}
 
 		$StartAddingAt++;
@@ -183,21 +181,22 @@ $result=DB_query($sql, $db);
 $RowNumber=0;
 while ($myrow=DB_fetch_array($result)){
 
-	echo '<tr><td valign=top>'.$myrow['serialno'].'<input type=hidden name="SerialNo'. ($RowNumber) .'" size=21 value="'.$myrow['serialno'].'" maxlength=20></td>';
+	echo '<tr>
+			<td valign=top>'.$myrow['serialno'].'<input type="hidden" name="SerialNo'. ($RowNumber) .'" size="21" value="'.$myrow['serialno'].'" maxlength="20" /></td>';
 
 	/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 	into the form for entry of quantities manually */
 
 	if ($LineItem->Serialised==1){
-		echo '<input type=hidden name="Qty' . ($StartAddingAt+$RowNumber) .'" value=1></tr>';
+		echo '<input type="hidden" name="Qty' . ($StartAddingAt+$RowNumber) .'" value="1" /></tr>';
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
 		if (isset($LineItem->SerialItems[$myrow['serialno']])) {
 			echo '<td class="number">'.locale_number_format($myrow['quantity']-$LineItem->SerialItems[$myrow['serialno']]->BundleQty,$LineItem->DecimalPlaces).'</td>';
 		} else {
 			echo '<td class="number">'.locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'</td>';
 		}
-		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11 value="0" maxlength="10" /></td>';
-		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size="11" value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" />'.ConvertSQLDate($myrow['expirationdate']).'</td></tr>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size="11" value="0" maxlength="10" /></td>';
+		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size="11" value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" />' . ConvertSQLDate($myrow['expirationdate']).'</td></tr>';
 	} else {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11  value="'. locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'"  maxlength="10" /></td></tr>';
 	}
@@ -205,14 +204,18 @@ while ($myrow=DB_fetch_array($result)){
 }
 
 echo '</table>';
-echo '<br /><div class=centre><input type=submit name="AddBatches" value="'. _('Enter'). '"></div>';
-echo '</form></td><td valign="top">';
+echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. _('Enter'). '" /></div>';
+echo '</form>
+		</td><td valign="top">';
 $ShowExisting=True;
 $_POST['EntryType']='Sequential';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
 }
-echo '</td></tr></table><script type="text/javascript">
+echo '</td>
+	</tr>
+	</table>
+	<script type="text/javascript">
 //<![CDATA[
 document.Ga6uF5Wa.SerialNo0.focus();
 //]]>

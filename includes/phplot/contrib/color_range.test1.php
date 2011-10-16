@@ -1,6 +1,6 @@
 <?php
 # PHPlot / contrib / color_range : Test 1, make a picture
-# $Id: color_range.test1.php,v 1.1 2009/12/09 03:45:49 lbayuk Exp $
+# $Id: color_range.test1.php 451 2009-12-09 03:45:49Z lbayuk $
 # This creates a PNG file on output with a color gradient.
 
 require_once 'color_range.php';
@@ -16,9 +16,9 @@ Each color is of the form rrggbb with 2 digit hex color components.
 # Split color "rrggbb" into separate components. Code is from PHPlot.
 function rgb($color)
 {
-  return array(hexdec(mb_substr($color, 1, 2)),
-               hexdec(mb_substr($color, 3, 2)),
-               hexdec(mb_substr($color, 5, 2)));
+  return array(hexdec(substr($color, 1, 2)),
+               hexdec(substr($color, 3, 2)),
+               hexdec(substr($color, 5, 2)));
 }
 
 if ($_SERVER['argc'] != 4) usage();

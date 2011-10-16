@@ -5,8 +5,10 @@ include('includes/session.inc');
 $title = _('Stock Of Controlled Items');
 include('includes/header.inc');
 
-echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
-'" alt="" /><b>' . $title. '</b></p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt="" /><b>' . $title. '</b>
+	</p>';
 
 if (isset($_GET['StockID'])){
 	if (ContainsIllegalCharacters ($_GET['StockID'])){
@@ -70,50 +72,52 @@ $sql = "SELECT serialno,
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
 $LocStockResult = DB_query($sql, $db, $ErrMsg);
 
-echo '<table cellpadding=2 class="selection">';
+echo '<table class="selection">';
 
 if ($Serialised==1){
-	echo '<tr><th colspan="5"><font color=navy size=2>' . _('Serialised items in') . ' ';
+	echo '<tr><th colspan="5"><font color="navy" size="2">' . _('Serialised items in') . ' ';
 } else {
-	echo '<tr><th colspan="11"><font color=navy size=2>' . _('Controlled items in') . ' ';
+	echo '<tr><th colspan="11"><font color="navy" size="2">' . _('Controlled items in') . ' ';
 }
 echo $myrow[0]. '</font></th></tr>';
 
-echo '<tr><th colspan="11"><font color=navy size=2>' . $StockID .'-'. $Description .'</b>  (' . _('In units of') . ' ' . $UOM . ')</font></th></tr>';
+echo '<tr>
+		<th colspan="11"><font color="navy" size="2">' . $StockID .'-'. $Description .'</b>  (' . _('In units of') . ' ' . $UOM . ')</font></th>
+	</tr>';
 
 if ($Serialised == 1){
 	$tableheader = '<tr>
-			<th>' . _('Serial Number') . '</th>
-			<th></th>
-			<th>' . _('Serial Number') . '</th>
-			<th></th>
-			<th>' . _('Serial Number') . '</th>
-			</tr>';
+						<th>' . _('Serial Number') . '</th>
+						<th></th>
+						<th>' . _('Serial Number') . '</th>
+						<th></th>
+						<th>' . _('Serial Number') . '</th>
+					</tr>';
 } else if ($Serialised == 0 and $Perishable==0){
 	$tableheader = '<tr>
-			<th>' . _('Batch/Bundle Ref') . '</th>
-			<th>' . _('Quantity On Hand') . '</th>
-			<th></th>
-			<th>' . _('Batch/Bundle Ref') . '</th>
-			<th>' . _('Quantity On Hand') . '</th>
-			<th></th>
-   			<th>' . _('Batch/Bundle Ref') . '</th>
-			<th>' . _('Quantity On Hand') . '</th>
-   			</tr>';
+						<th>' . _('Batch/Bundle Ref') . '</th>
+						<th>' . _('Quantity On Hand') . '</th>
+						<th></th>
+						<th>' . _('Batch/Bundle Ref') . '</th>
+						<th>' . _('Quantity On Hand') . '</th>
+						<th></th>
+						<th>' . _('Batch/Bundle Ref') . '</th>
+						<th>' . _('Quantity On Hand') . '</th>
+					</tr>';
 } else if ($Serialised == 0 and $Perishable==1){
 	$tableheader = '<tr>
-			<th>' . _('Batch/Bundle Ref') . '</th>
-			<th>' . _('Quantity On Hand') . '</th>
-			<th>' . _('Expiry Date') . '</th>
-			<th></th>
-			<th>' . _('Batch/Bundle Ref') . '</th>
-			<th>' . _('Quantity On Hand') . '</th>
-			<th>' . _('Expiry Date') . '</th>
-			<th></th>
-   			<th>' . _('Batch/Bundle Ref') . '</th>
-			<th>' . _('Quantity On Hand') . '</th>
-			<th>' . _('Expiry Date') . '</th>
-   			</tr>';
+						<th>' . _('Batch/Bundle Ref') . '</th>
+						<th>' . _('Quantity On Hand') . '</th>
+						<th>' . _('Expiry Date') . '</th>
+						<th></th>
+						<th>' . _('Batch/Bundle Ref') . '</th>
+						<th>' . _('Quantity On Hand') . '</th>
+						<th>' . _('Expiry Date') . '</th>
+						<th></th>
+			   			<th>' . _('Batch/Bundle Ref') . '</th>
+						<th>' . _('Quantity On Hand') . '</th>
+						<th>' . _('Expiry Date') . '</th>
+			   		</tr>';
 }
 echo $tableheader;
 $TotalQuantity =0;

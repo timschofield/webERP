@@ -1,6 +1,6 @@
 <?php
 # PHPlot / contrib / prune_labels : Test
-# $Id: prune_labels.test.php,v 1.1 2009/12/09 03:45:57 lbayuk Exp $
+# $Id: prune_labels.test.php 455 2009-12-09 03:45:57Z lbayuk $
 # Test driver for contrib / prune_labels
 
 require_once 'prune_labels.php';
@@ -29,7 +29,7 @@ function test($count, $maxlabels)
     }
     $status = ($non_blank <= $maxlabels) ? 'PASS' : 'FAIL';
     echo "$status: $count rows, maxlabels=$maxlabels => $non_blank labels\n";
-    echo mb_substr($line, 0, 80) . "\n";  # Only show first 80 chars.
+    echo substr($line, 0, 80) . "\n";  # Only show first 80 chars.
 }
 
 /* Test cases for prune_labels */

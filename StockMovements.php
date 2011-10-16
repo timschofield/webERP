@@ -27,8 +27,9 @@ if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
    $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-3,Date('d'),Date('y')));
 }
-echo '<br /><table cellpadding=2 class=selection>';
-echo '<tr><th colspan=10>' . _('Stock Code') . ':<input type="text" name="StockID" size=21 value="' . $StockID . '" maxlength=20>';
+echo '<br />
+		<table class="selection">';
+echo '<tr><th colspan="10">' . _('Stock Code') . ':<input type="text" name="StockID" size=21 value="' . $StockID . '" maxlength="20" />';
 
 echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
@@ -50,36 +51,37 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 	}
 }
 
-echo '</select></th></tr>';
-echo '<tr><th colspan=10>' . _('Show Movements before') . ': <input type="text" name="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="12" VALUE="' . $_POST['BeforeDate'] . '">';
-echo ' ' . _('But after') . ': <input type="text" name="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="12" VALUE="' . $_POST['AfterDate'] . '">';
-echo ' <input type="submit" name="ShowMoves" value="' . _('Show Stock Movements') . '"></th></tr>';
+echo '</select></th>
+	</tr>';
+echo '<tr>
+		<th colspan="10">' . _('Show Movements before') . ': <input type="text" name="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="12" value="' . $_POST['BeforeDate'] . '" /> ' . _('But after') . ': <input type="text" name="AfterDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="12" value="' . $_POST['AfterDate'] . '" /><input type="submit" name="ShowMoves" value="' . _('Show Stock Movements') . '" /></th>
+	</tr>';
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
 $sql = "SELECT stockmoves.stockid,
-		systypes.typename,
-		stockmoves.type,
-		stockmoves.transno,
-		stockmoves.trandate,
-		stockmoves.debtorno,
-		stockmoves.branchcode,
-		stockmoves.qty,
-		stockmoves.reference,
-		stockmoves.price,
-		stockmoves.discountpercent,
-		stockmoves.newqoh,
-		stockmaster.decimalplaces
-	FROM stockmoves
-	INNER JOIN systypes ON stockmoves.type=systypes.typeid
-	INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
-	WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
-	AND stockmoves.trandate >= '". $SQLAfterDate . "'
-	AND stockmoves.stockid = '" . $StockID . "'
-	AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
-	AND hidemovt=0
-	ORDER BY stkmoveno DESC";
+				systypes.typename,
+				stockmoves.type,
+				stockmoves.transno,
+				stockmoves.trandate,
+				stockmoves.debtorno,
+				stockmoves.branchcode,
+				stockmoves.qty,
+				stockmoves.reference,
+				stockmoves.price,
+				stockmoves.discountpercent,
+				stockmoves.newqoh,
+				stockmaster.decimalplaces
+		FROM stockmoves
+		INNER JOIN systypes ON stockmoves.type=systypes.typeid
+		INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
+		WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
+		AND stockmoves.trandate >= '". $SQLAfterDate . "'
+		AND stockmoves.stockid = '" . $StockID . "'
+		AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
+		AND hidemovt=0
+		ORDER BY stkmoveno DESC";
 
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 $DbgMsg = _('The SQL that failed was') . ' ';
@@ -87,17 +89,17 @@ $DbgMsg = _('The SQL that failed was') . ' ';
 $MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 $tableheader = '<tr>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Number') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Reference') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Discount') . '</th>
-				<th>' . _('New Qty') . '</th>
-			</tr>';
+					<th>' . _('Type') . '</th>
+					<th>' . _('Number') . '</th>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Branch') . '</th>
+					<th>' . _('Quantity') . '</th>
+					<th>' . _('Reference') . '</th>
+					<th>' . _('Price') . '</th>
+					<th>' . _('Discount') . '</th>
+					<th>' . _('New Qty') . '</th>
+				</tr>';
 		
 echo $tableheader;
 
@@ -123,11 +125,11 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td class=number>%s</td>
+				<td class="number">%s</td>
 				<td>%s</td>
-				<td class=number>%s</td>
-				<td class=number>%s%%</td>
-				<td class=number>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s%%</td>
+				<td class="number">%s</td>
 				</tr>',
 				$rootpath,
 				$myrow['transno'],
@@ -136,10 +138,9 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				$DisplayTranDate,
 				$myrow['debtorno'],
 				$myrow['branchcode'],
-				locale_number_format($myrow['qty'],
-				$myrow['decimalplaces']),
+				locale_number_format($myrow['qty'],$myrow['decimalplaces']),
 				$myrow['reference'],
-				locale_number_format($myrow['price'],2),
+				locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($myrow['discountpercent']*100,2),
 				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 
@@ -150,11 +151,11 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td class=number>%s</td>
+				<td class="number">%s</td>
 				<td>%s</td>
-				<td class=number>%s</td>
-				<td class=number>%s%%</td>
-				<td class=number>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s%%</td>
+				<td class="number">%s</td>
 				</tr>',
 				$rootpath,
 				$myrow['transno'],
@@ -171,26 +172,26 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 	} else {
 
 		printf('<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class=number>%s</td>
-			<td>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s%%</td>
-			<td class=number>%s</td>
-			</tr>',
-			$myrow['typename'],
-			$myrow['transno'],
-			$DisplayTranDate,
-			$myrow['debtorno'],
-			$myrow['branchcode'],
-			locale_number_format($myrow['qty'],$myrow['decimalplaces']),
-			$myrow['reference'],
-			locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow['discountpercent']*100,2),
-			locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s%%</td>
+				<td class="number">%s</td>
+				</tr>',
+				$myrow['typename'],
+				$myrow['transno'],
+				$DisplayTranDate,
+				$myrow['debtorno'],
+				$myrow['branchcode'],
+				locale_number_format($myrow['qty'],$myrow['decimalplaces']),
+				$myrow['reference'],
+				locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
+				locale_number_format($myrow['discountpercent']*100,2),
+				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	}
 //end of page full new headings if
 }

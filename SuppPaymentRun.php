@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 5;
-
 Class Allocation {
 	Var $TransID;
 	Var $Amount;

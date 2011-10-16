@@ -6,19 +6,22 @@ include('includes/session.inc');
 $title = _('Stock On Hand By Date');
 include('includes/header.inc');
 
-echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
-'" alt="" /><b>' . $title. '</b></p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt="" /><b>' . $title. '</b>
+	</p>';
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $resultStkLocs = DB_query($sql, $db);
 
-echo '<table class=selection><tr>';
-echo '<td>' . _('For Stock Category') . ':</td>
-	<td><select name="StockCategory"> ';
-echo '<option value="All">' . _('All') . '</option>';
+echo '<table class="selection">
+	<tr>
+		<td>' . _('For Stock Category') . ':</td>
+		<td><select name="StockCategory">
+			<option value="All">' . _('All') . '</option>';
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockCategory']) AND $_POST['StockCategory']!='All'){
@@ -60,9 +63,15 @@ if (!isset($_POST['OnHandDate'])){
 }
 
 echo '<td>' . _('On-Hand On Date') . ':</td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="OnHandDate" size=12 maxlength=12 value="' . $_POST['OnHandDate'] . '"></td></tr>';
-echo '<tr><td colspan=6><div class="centre"><input type=submit name="ShowStatus" value="' . _('Show Stock Status') .'"></div></td></tr></table>';
-echo '</form>';
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="OnHandDate" size="12" maxlength="12" value="' . $_POST['OnHandDate'] . '" /></td></tr>';
+echo '<tr>
+		<td colspan="6">
+		<div class="centre">
+		<input type=submit name="ShowStatus" value="' . _('Show Stock Status') .'" />
+		</div></td>
+	</tr>
+	</table>
+	</form>';
 
 $TotalQuantity = 0;
 
@@ -89,12 +98,14 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 
 	$SQLOnHandDate = FormatDateForSQL($_POST['OnHandDate']);
 
-	echo '<br /><table cellpadding=5 cellspacing=1 class=selection>';
+	echo '<br />
+		<table class="selection">';
 
 	$tableheader = '<tr>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Quantity On Hand') . '</th></tr>';
+						<th>' . _('Item Code') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Quantity On Hand') . '</th>
+					</tr>';
 	echo $tableheader;
 
 	while ($myrows=DB_fetch_array($StockResult)) {
@@ -128,16 +139,16 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 
 			if($NumRows == 0){
 				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>',
-					'StockID=' . mb_strtoupper($myrows['stockid']),
-					mb_strtoupper($myrows['stockid']),
-					$myrows['description'],
-					0);
+						<td>%s</td>
+						<td class="number">%s</td>',
+						'StockID=' . mb_strtoupper($myrows['stockid']),
+						mb_strtoupper($myrows['stockid']),
+						$myrows['description'],
+						0);
 			} else {
 				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</td>
 					<td>%s</td>
-					<td class=number>%s</td>',
+					<td class="number">%s</td>',
 					'StockID=' . mb_strtoupper($myrows['stockid']),
 					mb_strtoupper($myrows['stockid']),
 					$myrows['description'],
@@ -154,7 +165,9 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 		}
 
 	}//end of while loop
-	echo '<tr><td>' . _('Total Quantity') . ': ' . $TotalQuantity . '</td></tr>
+	echo '<tr>
+			<td>' . _('Total Quantity') . ': ' . $TotalQuantity . '</td>
+		</tr>
 		</table>';
 }
 

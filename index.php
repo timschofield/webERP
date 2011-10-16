@@ -528,7 +528,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							</tr>
 						</table>
 					</td>
-					<td class="menu_group_items">  <!-- PO Inquiries -->
+					<td class="menu_group_items">  <!-- PO Inquiries and Reports -->
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
@@ -538,6 +538,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/POReport.php">' . _('Purchase Order Detail Or Summary Inquiries') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SuppPriceList.php">' . _('Supplier Price List') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>

@@ -18,13 +18,15 @@ if (isset($_GET['New'])) {
 if (isset($_GET['From'])) {
 	$_POST['StockLocationFrom']=$_GET['From'];
 	$_POST['StockLocationTo']=$_GET['To'];
-	$_POST['Quantity']=filter_number_format($_GET['Quantity']);
+	$_POST['Quantity']=$_GET['Quantity'];
 }
 
 if (isset($_POST['CheckCode'])) {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . _('Select Item to Transfer') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
+		'" alt="" />' . ' ' . _('Select Item to Transfer') . '
+		</p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid, 
@@ -41,11 +43,13 @@ if (isset($_POST['CheckCode'])) {
 	$DbgMsg=_('The SQL to get the stock description was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<table class="selection">
-			<tr><th>'._('Stock Code').'</th>
+			<tr>
+				<th>'._('Stock Code').'</th>
 				<th>'._('Stock Description').'</th>
 			</tr>';
 	while ($myrow = DB_fetch_array($result)) {
-		echo '<tr><td>'.$myrow['stockid'].'</td>
+		echo '<tr>
+				<td>'.$myrow['stockid'].'</td>
 				<td>'.$myrow['description'].'</td>
 				<td><a href="' . $rootpath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&Description='.$myrow['description'].'&NewTransfer=Yes&Quantity='. filter_number_format($_POST['Quantity']).'&From='.$_POST['StockLocationFrom'].'&To='.$_POST['StockLocationTo'].'">'
 				._('Transfer').'</a></td>
@@ -69,7 +73,8 @@ if (isset($_GET['NewTransfer'])){
 if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additional inputs */
 	$_POST['StockID'] = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){	/* initiate a new transfer only if the StockID is different to the previous entry */
-	if (isset($_SESSION['Transfer']) AND $_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
+	if (isset($_SESSION['Transfer']) 
+		AND $_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
 		unset($_SESSION['Transfer']);
 		$NewTransfer = true;
 	}
@@ -123,10 +128,17 @@ if ($NewTransfer){
 	}
 }
 
-if (isset($_POST['Quantity']) AND isset($_SESSION['Transfer']->TransferItem[0]->Controlled) AND $_SESSION['Transfer']->TransferItem[0]->Controlled==0){
+if (isset($_POST['Quantity']) 
+	AND isset($_SESSION['Transfer']->TransferItem[0]->Controlled) 
+	AND $_SESSION['Transfer']->TransferItem[0]->Controlled==0){
+	
 	$_SESSION['Transfer']->TransferItem[0]->Quantity = filter_number_format($_POST['Quantity']);
+
 }
-if ( isset($_POST['StockLocationFrom']) AND $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ){
+
+if ( isset($_POST['StockLocationFrom']) 
+	AND $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ){
+		
 	$_SESSION['Transfer']->StockLocationFrom = $_POST['StockLocationFrom'];
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	$_SESSION['Transfer']->TransferItem[0]->Quantity=filter_number_format($_POST['Quantity']);
@@ -142,20 +154,20 @@ if ( isset($_POST['EnterTransfer']) ){
 	$myrow = DB_fetch_row($result);
 	$InputError = false;
 	if (DB_num_rows($result)==0) {
-		echo '<p>';
+		echo '<br />';
 		prnMsg(_('The entered item code does not exist'), 'error');
 		$InputError = true;
 	} elseif (!is_numeric($_SESSION['Transfer']->TransferItem[0]->Quantity)){
-		echo '<p>';
+		echo '<br />';
 		prnMsg( _('The quantity entered must be numeric'), 'error' );
 		$InputError = true;
 	} elseif ($_SESSION['Transfer']->TransferItem[0]->Quantity <= 0){
-		echo '<p>';
+		echo '<br />';
 		prnMsg( _('The quantity entered must be a positive number greater than zero'), 'error');
 		$InputError = true;
 	}
 	if ($_SESSION['Transfer']->StockLocationFrom==$_SESSION['Transfer']->StockLocationTo){
-		echo '<p>';
+		echo '<br />';
 		prnMsg( _('The locations to transfer from and to must be different'), 'error');
 		$InputError = true;
 	}
@@ -186,7 +198,8 @@ if ( isset($_POST['EnterTransfer']) ){
 			// There must actually be some error this should never happen
 			$QtyOnHandPrior = 0;
 		}
-		if ($_SESSION['ProhibitNegativeStock']==1 AND $QtyOnHandPrior<$_SESSION['Transfer']->TransferItem[0]->Quantity) {
+		if ($_SESSION['ProhibitNegativeStock']==1 
+			AND $QtyOnHandPrior<$_SESSION['Transfer']->TransferItem[0]->Quantity) {
 			prnMsg( _('There is insufficient stock to make this transfer and webERP is setup to prevent negative stock'), 'warn');
 			include('includes/footer.inc');
 			exit;
@@ -209,8 +222,8 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $SQLTransferDate . "',
 						'" . $PeriodNo . "',
 						'To " . $_SESSION['Transfer']->StockLocationTo ."',
-						'" . filter_number_format(round(-$_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces))  . "',
-						'" . filter_number_format($QtyOnHandPrior - round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)) ."'
+						'" . round(-$_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)  . "',
+						'" . $QtyOnHandPrior - round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) ."'
 						)";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
@@ -242,11 +255,11 @@ if ( isset($_POST['EnterTransfer']) ){
 				if ($SerialItemExistsRow[0]==1){
 
 					$SQL = "UPDATE stockserialitems
-							SET quantity= quantity - '" . filter_number_format($Item->BundleQty) . "',
+							SET quantity= quantity - '" . $Item->BundleQty . "',
 							expirationdate='" . FormatDateForSQL($Item->ExpiryDate) . "'
 							WHERE stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 							AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'
-							AND serialno='" . $Item->BundleRef . "'";
+							AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
@@ -262,7 +275,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $_SESSION['Transfer']->StockLocationFrom . "',
 						'" . DB_escape_string($Item->BundleRef) . "',
 						'" . FormatDateForSQL($Item->ExpiryDate) . "',
-						'" . filter_number_format(-$Item->BundleQty) . "')";
+						'" . -$Item->BundleQty . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be added because');
 					$DbgMsg = _('The following SQL to insert the serial stock item record was used');
@@ -281,7 +294,7 @@ if ( isset($_POST['EnterTransfer']) ){
 							'" . $StkMoveNo . "',
 							'" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
 							'" . DB_escape_string($Item->BundleRef) . "',
-							'" . filter_number_format($Item->BundleQty) . "'
+							'" . $Item->BundleQty . "'
 							)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
@@ -325,7 +338,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					'" . $PeriodNo . "',
 					'" . _('From') . " " . $_SESSION['Transfer']->StockLocationFrom . "',
 					'" . $_SESSION['Transfer']->TransferItem[0]->Quantity . "',
-					'" . filter_number_format(round($QtyOnHandPrior + $_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)) . "')";
+					'" . round($QtyOnHandPrior + $_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg = _('The following SQL to insert the stock movement record was used');
@@ -355,7 +368,7 @@ if ( isset($_POST['EnterTransfer']) ){
 				if ($SerialItemExistsRow[0]==1){
 
 					$SQL = "UPDATE stockserialitems
-							SET quantity= quantity + '" . filter_number_format($Item->BundleQty) . "',
+							SET quantity= quantity + '" . $Item->BundleQty . "',
 								expirationdate='" . FormatDateForSQL($Item->ExpiryDate) . "'
 							WHERE stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 							AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'
@@ -375,7 +388,7 @@ if ( isset($_POST['EnterTransfer']) ){
 								'" . $_SESSION['Transfer']->StockLocationTo . "',
 								'" . DB_escape_string($Item->BundleRef) . "',
 								'" . FormatDateForSQL($Item->ExpiryDate) . "',
-								'" . filter_number_format($Item->BundleQty) . "')";
+								'" . $Item->BundleQty . "')";
 		
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be added because');
 					$DbgMsg = _('The following SQL to insert the serial stock item record was used:');
@@ -392,7 +405,7 @@ if ( isset($_POST['EnterTransfer']) ){
 							VALUES ('" . $StkMoveNo . "',
 								'" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
 								'" . DB_escape_string($Item->BundleRef) . "',
-								'" . filter_number_format($Item->BundleQty) . "')";
+								'" . $Item->BundleQty . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -401,7 +414,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		} /*end if the transfer item is a controlled item */
 
 
-		$SQL = "UPDATE locstock SET quantity = quantity - '" . filter_number_format(round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)) . "'
+		$SQL = "UPDATE locstock SET quantity = quantity - '" . round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "'
 				WHERE stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 				AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
@@ -410,7 +423,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$SQL = "UPDATE locstock
-				SET quantity = quantity + '" . filter_number_format(round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)) . "'
+				SET quantity = quantity + '" . round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "'
 				WHERE stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 				AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'";
 
@@ -429,37 +442,46 @@ if ( isset($_POST['EnterTransfer']) ){
 
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
+		'" alt="" />' . ' ' . $title . '
+	</p>';
 
-echo '<form action="'. $_SERVER['PHP_SELF'] . '" method=post>';
+echo '<form action="'. $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
 }
 echo '<table class="selection">
-		<tr><td>'. _('Stock Code'). ':</td><td>';
+		<tr>
+			<td>'. _('Stock Code'). ':</td>
+			<td>';
 if (isset($_POST['StockID'])) {
 	echo '<input type="text" name="StockID" size="21" value="' . $_POST['StockID'] . '" maxlength="20" /></td></tr>';
 } else {
 	echo '<input type="text" name="StockID" size="21" value="" maxlength="20" /></td></tr>';
 }
 echo '<tr><td>'. _('Partial Description'). ':</td>
-		<td><input type="text" name="StockText" size="21" value="' . $_GET['Description'] .'"></td>
+		<td><input type="text" name="StockText" size="21" value="' . $_GET['Description'] .'" /></td>
 		<td>'._('Partial Stock Code'). ':</td><td>';
 if (isset($_POST['StockID'])) {
 	echo '<input type="text" name="StockCode" size="21" value="' . $_POST['StockID'] .'" maxlength="20" />';
 } else {
 	echo '<input type="text" name="StockCode" size="21" value="" maxlength="20" />';
 }
-echo '</td><td><input type=submit name="CheckCode" value="'._('Check Part').'"></td></tr>';
+echo '</td><td><input type=submit name="CheckCode" value="'._('Check Part').'" /></td></tr>';
 
-if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) and mb_strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
-	echo '<tr><td colspan=3><font color=BLUE size=3>' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</font></td></tr>';
+if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) 
+	AND mb_strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
+		
+	echo '<tr>
+			<td colspan="3"><font color="blue" size="3">' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</font></td>
+		</tr>';
 }
 
-echo '<tr><td>' . _('From Stock Location').':</td>
+echo '<tr>
+		<td>' . _('From Stock Location').':</td>
 		<td><select name="StockLocationFrom">';
 
 $sql = "SELECT loccode, locationname FROM locations";
@@ -475,13 +497,15 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_SESSION['Transfer']->StockLocationFrom=$myrow['loccode'] . '</option>';
 	} else {
-		 echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>';
 
-echo '<tr><td>'. _('To Stock Location').': </td>
+echo '<tr>
+		<td>'. _('To Stock Location').': </td>
 		<td><select name="StockLocationTo"> ';
 
 DB_data_seek($resultStkLocs,0);
@@ -503,18 +527,25 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 
 echo '</select></td></tr>';
 
-echo '<tr><td>'._('Transfer Quantity').':</td>';
+echo '<tr>
+		<td>'._('Transfer Quantity').':</td>';
 
-if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled) AND $_SESSION['Transfer']->TransferItem[0]->Controlled==1){
-	echo '<td class=number><input type=hidden name="Quantity" value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity .
-		'><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
+if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled) 
+	AND $_SESSION['Transfer']->TransferItem[0]->Controlled==1){
+	
+	echo '<td class="number"><input type="hidden" name="Quantity" value=' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '/><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
 } elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)){
 	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value=' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '></td></tr>';
 } else {
-	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value="0"></td></tr>';
+	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value="0"></td>
+		</tr>';
 }
 
-echo '</table><div class="centre"><br /><input type="submit" name="EnterTransfer" value="' . _('Enter Stock Transfer') . '"><br />';
+echo '</table>
+	<div class="centre">
+		<br />
+		<input type="submit" name="EnterTransfer" value="' . _('Enter Stock Transfer') . '" />
+		<br />';
 
 if (empty($_SESSION['Transfer']->TransferItem[0]->StockID) and isset($_POST['StockID'])) {
 	$StockID=$_POST['StockID'];
@@ -524,12 +555,18 @@ if (empty($_SESSION['Transfer']->TransferItem[0]->StockID) and isset($_POST['Sto
 	$StockID='';
 }
 if (isset($_SESSION['Transfer'])) {
-	echo '<br /><a href="'.$rootpath.'/StockStatus.php?StockID=' . $StockID . '">'._('Show Stock Status').'</a>';
-	echo '<br /><a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
-	echo '<br /><a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
-	echo '<br /><a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
-	echo '<br /><a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
+	echo '<br />
+		<a href="'.$rootpath.'/StockStatus.php?StockID=' . $StockID . '">'._('Show Stock Status').'</a>';
+	echo '<br />
+		<a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
+	echo '<br />
+		<a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
+	echo '<br />
+		<a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
+	echo '<br />
+		<a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
 }
-echo '</div></form>';
+echo '</div>
+	</form>';
 include('includes/footer.inc');
 ?>

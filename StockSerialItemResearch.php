@@ -1,49 +1,50 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 3;
-
 include('includes/session.inc');
 $title = _('Serial Item Research');
 include('includes/header.inc');
 
-echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
-'" alt="" /><b>' . $title. '</b></p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt="" /><b>' . $title. '</b>
+	</p>';
 
 
 //validate the submission
 if (isset($_POST['serialno'])) {
-	$SN = trim($_POST['serialno']);
+	$SerialNo = trim($_POST['serialno']);
 } elseif(isset($_GET['serialno'])) {
-	$SN = trim($_GET['serialno']);
+	$SerialNo = trim($_GET['serialno']);
 } else {
-	$SN = '';
+	$SerialNo = '';
 }
-$SN = $SN;
+
 
 
 echo '<div class="centre">
 <br />
-<form name=SNRESEARCH method=post action="' . $_SERVER['PHP_SELF'] .'">';
+<form name="SerialNoResearch" method="post" action="' . $_SERVER['PHP_SELF'] .'">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo  _('Serial Number') .': <input ID="serialno" name="serialno" size=21 maxlength=20 VALUE="'. $SN . '"> &nbsp;
-<input type=submit name=submit></div><br />
+echo  _('Serial Number') .': <input ID="serialno" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" />
+</div>
+<br />
 </form>';
 
-echo "<SCRIPT>
-document.getElementById('serialno').focus();
-</SCRIPT>";
+echo '<SCRIPT>
+document.getElementById("serialno").focus();
+</SCRIPT>';
 
 
-if ($SN!='') {
+if ($SerialNo!='') {
 	//the point here is to allow a semi fuzzy search, but still keep someone from killing the db server
-	if (mb_strstr($SN,'%')){
-		while(mb_strstr($SN,'%%'))	{
-			$SN = str_replace('%%','%',$SN);
+	if (mb_strstr($SerialNo,'%')){
+		while(mb_strstr($SerialNo,'%%'))	{
+			$SerialNo = str_replace('%%','%',$SerialNo);
 		}
-		if (mb_strlen($SN) < 11){
-			$SN = str_replace('%','',$SN);
+		if (mb_strlen($SerialNo) < 11){
+			$SerialNo = str_replace('%','',$SerialNo);
 			prnMsg('You can not use LIKE with short numbers. It has been removed.','warn');
 		}
 	}
@@ -60,55 +61,56 @@ if ($SN!='') {
 				ON sm.type=st.typeid
 			INNER JOIN locations l
 				on sm.loccode = l.loccode
-			WHERE ssi.serialno like '$SN'
+			WHERE ssi.serialno " . LIKE . " '" . $SerialNo . "'
 			ORDER BY stkmoveno";
 
 	$result = DB_query($SQL,$db);
 
 	if (DB_num_rows($result) == 0){
-		prnMsg( _('No History found for Serial Number'). ': <b>'.$SN.'</b>' , 'warn');
+		prnMsg( _('No History found for Serial Number'). ': <b>'.$SerialNo.'</b>' , 'warn');
 	} else {
-		echo '<h4>'. _('Details for Serial Item').': <b>'.$SN.'</b><br />'. _('Length').'='.mb_strlen($SN).'</h4>';
-		echo '<table class=selection>';
-		echo "<tr><th>" . _('StockID') . "</th>
-			<th>" . _('CurInvQty') . "</th>
-			<th>" . _('Move Qty') . "</th>
-			<th>" . _('Move Type') . "</th>
-			<th>" . _('Trans #') . "</th>
-			<th>" . _('Location') . "</th>
-			<th>" . _('Date') . "</th>
-			<th>" . _('DebtorNo') . "</th>
-			<th>" . _('Branch') . "</th>
-			<th>" . _('Move Ref') . "</th>
-			<th>" . _('Total Move Qty') . "</th>
-			</tr>";
+		echo '<h4>'. _('Details for Serial Item').': <b>'.$SerialNo.'</b><br />'. _('Length').'='.mb_strlen($SerialNo).'</h4>';
+		echo '<table class="selection">';
+		echo '<tr>
+				<th>' . _('StockID') . '</th>
+				<th>' . _('CurInvQty') . '</th>
+				<th>' . _('Move Qty') . '</th>
+				<th>' . _('Move Type') . '</th>
+				<th>' . _('Trans #') . '</th>
+				<th>' . _('Location') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('DebtorNo') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Move Ref') . '</th>
+				<th>' . _('Total Move Qty') . '</th>
+			</tr>';
 		while ($myrow=DB_fetch_row($result)) {
-			printf("<tr>
-				<td>%s<br />%s</td>
-				<td class=number>%s</td>
-				<td class=number>%s</td>
-				<td>%s (%s)</td>
-				<td class=number>%s</td>
-				<td>%s - %s</td>
-				<td>%s &nbsp;</td>
-				<td>%s &nbsp;</td>
-				<td>%s &nbsp;</td>
-				<td>%s &nbsp;</td>
-				<td class=number>%s</td>
-				</tr>",
-				$myrow[1],
-				$myrow[0],
-				$myrow[2],
-				$myrow[3],
-				$myrow[5], $myrow[4],
-				$myrow[6],
-				$myrow[7], $myrow[8],
-				$myrow[9],
-				$myrow[10],
-				$myrow[11],
-				$myrow[12],
-				$myrow[13]
-			);
+			printf('<tr>
+					<td>%s<br />%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s (%s)</td>
+					<td class="number">%s</td>
+					<td>%s - %s</td>
+					<td>%s &nbsp;</td>
+					<td>%s &nbsp;</td>
+					<td>%s &nbsp;</td>
+					<td>%s &nbsp;</td>
+					<td class="number">%s</td>
+					</tr>',
+					$myrow[1],
+					$myrow[0],
+					$myrow[2],
+					$myrow[3],
+					$myrow[5], $myrow[4],
+					$myrow[6],
+					$myrow[7], $myrow[8],
+					$myrow[9],
+					$myrow[10],
+					$myrow[11],
+					$myrow[12],
+					$myrow[13]
+				);
 		} //END WHILE LIST LOOP
 		echo '</table>';
 	} // ELSE THERE WHERE ROWS

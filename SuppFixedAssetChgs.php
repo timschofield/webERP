@@ -42,14 +42,15 @@ if (isset($_POST['AddAssetToInvoice'])){
 		}
 	}
 
-	if (!is_numeric($_POST['Amount'])){
+	if (!is_numeric(filter_number_format($_POST['Amount']))){
 		prnMsg(_('The amount entered is not numeric. This fixed asset cannot be added to the invoice'),'error');
 		$InputError = True;
 		unset($_POST['Amount']);
 	}
 
 	if ($InputError == False){
-		$_SESSION['SuppTrans']->Add_Asset_To_Trans($_POST['AssetID'], $_POST['Amount']);
+		$_SESSION['SuppTrans']->Add_Asset_To_Trans($_POST['AssetID'], 
+													filter_number_format($_POST['Amount']));
 		unset($_POST['AssetID']);
 		unset($_POST['Amount']);
 	}
@@ -68,10 +69,12 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p></div>';
-echo '<table cellpadding=2 class=selection>';
-$TableHeader = '<tr><th>' . _('Asset ID') . '</th>
+echo '<table class=selection>';
+$TableHeader = '<tr>
+					<th>' . _('Asset ID') . '</th>
 					<th>' . _('Description') . '</th>
-					<th>' . _('Amount') . '</th></tr>';
+					<th>' . _('Amount') . '</th>
+				</tr>';
 echo $TableHeader;
 
 $TotalAssetValue = 0;
@@ -80,7 +83,7 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 
 	echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
 		<td>' . $EnteredAsset->Description . '</td>
-		<td class=number>' . locale_number_format($EnteredAsset->Amount,2) . '</td>
+		<td class=number>' . locale_number_format($EnteredAsset->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces). '</td>
 		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredAsset->Counter . '">' . _('Delete') . '</a></td></tr>';
 
 	$TotalAssetValue +=  $EnteredAsset->Amount;
@@ -89,7 +92,7 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 
 echo '<tr>
 	<td class="number"><font size="2" color="navy">' . _('Total') . ':</font></td>
-	<td class="number"><font size="2" color="navy"><U>' . locale_number_format($TotalAssetValue,2) . '</U></font></td>
+	<td class="number"><font size="2" color="navy"><U>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td>
 </tr>
 </table><br />';
 
@@ -111,37 +114,47 @@ prnMsg(_('If you know the code enter it in the Asset ID input box, otherwise sel
 
 echo '<br /><table class="selection">';
 
-echo '<tr><td>' . _('Enter Asset ID') . ':</td>
-	<td><input type="text" name="AssetID" size="5" maxlength="6" VALUE="' .  $_POST['AssetID'] . '"> <a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td></tr>';
-echo '<tr><td><b>' . _('OR') .' </b>'. _('Select from list') . ':</td><td><select name="AssetSelection">';
+echo '<tr>
+		<td>' . _('Enter Asset ID') . ':</td>
+		<td><input type="text" name="AssetID" size="5" maxlength="6" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
+	</tr>';
+echo '<tr>
+		<td><b>' . _('OR') .' </b>'. _('Select from list') . ':</td>
+		<td><select name="AssetSelection">';
 
-$sql = 'SELECT assetid,
+$sql = "SELECT assetid,
 			description
 		FROM fixedassets
 		WHERE cost=0
-		ORDER BY assetid DESC';
+		ORDER BY assetid DESC";
 
 $result = DB_query($sql, $db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['AssetSelection']) AND $myrow['AssetID']==$_POST['AssetSelection']) {
-		echo '<option selected VALUE="';
+		echo '<option selected value="';
 	} else {
-		echo '<option VALUE="';
+		echo '<option value="';
 	}
 	echo $myrow['assetid'] . '">' . $myrow['assetid'] . ' - ' . $myrow['description']  . '</option>';
 }
 
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>';
 
 if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
-echo '<tr><td>' . _('Amount') . ':</td>
-	<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  $_POST['Amount'] . '"></td></tr>';
+echo '<tr>
+		<td>' . _('Amount') . ':</td>
+		<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+	</tr>';
 echo '</table>';
 
-echo '<br /><div class=centre><input type="submit" name="AddAssetToInvoice" value="' . _('Enter Fixed Asset') . '"></div>';
+echo '<br />
+	<div class="centre">
+		<input type="submit" name="AddAssetToInvoice" value="' . _('Enter Fixed Asset') . '" />
+	</div>';
 
 echo '</form>';
 include('includes/footer.inc');

@@ -14,7 +14,7 @@ $LanguagesArray['en_GB.utf8']['ThousandsSeparator'] = '.';
 $LanguagesArray['cz_CZ.utf8']['LanguageName'] = _('Czech');
 $LanguagesArray['cz_CZ.utf8']['WindowsLocale'] = 'czech';
 $LanguagesArray['cz_CZ.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['cz_CZ.utf8']['ThousandsSeparator'] = '.';
+$LanguagesArray['cz_CZ.utf8']['ThousandsSeparator'] = ' ';
 
 $LanguagesArray['de_DE.utf8']['LanguageName'] = _('German');
 $LanguagesArray['de_DE.utf8']['WindowsLocale'] = 'german';
@@ -54,7 +54,7 @@ $LanguagesArray['hi_IN.utf8']['ThousandsSeparator'] = ',';
 $LanguagesArray['hr_HR.utf8']['LanguageName'] = _('Hungarian');
 $LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'hungarian';
 $LanguagesArray['hr_HR.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['hr_HR.utf8']['ThousandsSeparator'] = '.';
+$LanguagesArray['hr_HR.utf8']['ThousandsSeparator'] = ' ';
 
 $LanguagesArray['id_ID.utf8']['LanguageName'] = _('Indonisian');
 $LanguagesArray['id_ID.utf8']['WindowsLocale'] = 'indonesian';
@@ -84,7 +84,7 @@ $LanguagesArray['nl_NL.utf8']['ThousandsSeparator'] = '.';
 $LanguagesArray['pl_PL.utf8']['LanguageName'] = _('Polish');
 $LanguagesArray['pl_PL.utf8']['WindowsLocale'] = 'polish';
 $LanguagesArray['pl_PL.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['pl_PL.utf8']['ThousandsSeparator'] = '.';
+$LanguagesArray['pl_PL.utf8']['ThousandsSeparator'] = ' ';
 
 $LanguagesArray['pt_BR.utf8']['LanguageName'] = _('Brazilian Portuguese');
 $LanguagesArray['pt_BR.utf8']['WindowsLocale'] = 'portuguese-brazil';
@@ -114,10 +114,10 @@ $LanguagesArray['sq_AL.utf8']['ThousandsSeparator'] = ' ';
 $LanguagesArray['sv_SE.utf8']['LanguageName'] = _('Swedish');
 $LanguagesArray['sv_SE.utf8']['WindowsLocale'] = 'swedish';
 $LanguagesArray['sv_SE.utf8']['DecimalPoint'] = ',';
-$LanguagesArray['sv_SE.utf8']['ThousandsSeparator'] = '.';
+$LanguagesArray['sv_SE.utf8']['ThousandsSeparator'] = ' ';
 
 $LanguagesArray['sw_KE.utf8']['LanguageName'] = _('Kiswahili');
-$LanguagesArray['sw_KE.utf8']['WindowsLocale'] = 'english-us';
+$LanguagesArray['sw_KE.utf8']['WindowsLocale'] = 'kiswahili';
 $LanguagesArray['sw_KE.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['sw_KE.utf8']['ThousandsSeparator'] = ',';
 
