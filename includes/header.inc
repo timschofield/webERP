@@ -3,9 +3,13 @@
 
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
-	//  $rootpath
 	//  $title - should be defined in the page this file is included with
-
+	if (!isset($rootpath)){
+		$rootpath = dirname($_SERVER['PHP_SELF']);
+		if ($rootpath == '/' OR $rootpath == "\\") {
+			$rootpath = '';
+		}
+	}
 	$StrictXHTML=False;
 
 	if (!headers_sent()){

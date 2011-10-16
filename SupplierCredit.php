@@ -193,7 +193,7 @@ if the link is not active then OvAmount must be entered manually. */
 				$_SESSION['SuppTrans']->OvAmount +=  $FixedAsset->Amount;
 			}
 		}
-
+		$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
 	} else {
 /*OvAmount must be entered manually */
 		 $_SESSION['SuppTrans']->OvAmount = round(filter_number_format($_POST['OvAmount']),$_SESSION['SuppTrans']->CurrDecimalPlaces);

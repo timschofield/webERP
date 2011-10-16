@@ -324,7 +324,10 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ID';
 		$i++;
 	}
-	if (mb_strlen($_POST['SuppName']) > 40 or mb_strlen($_POST['SuppName']) == 0 or $_POST['SuppName'] == '') {
+	if (mb_strlen($_POST['SuppName']) > 40 
+		OR mb_strlen($_POST['SuppName']) == 0 
+		OR $_POST['SuppName'] == '') {
+			
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
 		$Errors[$i]='Name';
@@ -360,7 +363,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Email';
 		$i++;
 	}
-	if (mb_strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
+	if (mb_strlen($_POST['Email'])>0 AND !IsEmailAddress($_POST['Email'])) {
 		$InputError = 1;
 		prnMsg(_('The email address is not correctly formed'),'error');
 		$Errors[$i] = 'Email';
@@ -453,21 +456,21 @@ if (isset($_POST['submit'])) {
 			$suppcurr = DB_fetch_row($currresult);
 
 			if ($supptrans == 0) {
-				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
-							address1='" . $_POST['Address1'] . "',
-							address2='" . $_POST['Address2'] . "',
-							address3='" . $_POST['Address3'] . "',
-							address4='" . $_POST['Address4'] . "',
-							telephone='".$_POST['Phone']."',
-							fax = '".$_POST['Fax']."',
-							email = '".$_POST['Email']."',
+				$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "',
+							address1='" . DB_escape_string($_POST['Address1']) . "',
+							address2='" . DB_escape_string($_POST['Address2']) . "',
+							address3='" . DB_escape_string($_POST['Address3']) . "',
+							address4='" . DB_escape_string($_POST['Address4']) . "',
+							telephone='". DB_escape_string($_POST['Phone']) ."',
+							fax = '". DB_escape_string($_POST['Fax'])."',
+							email = '" . DB_escape_string($_POST['Email']) . "',
 							supptype = '".$_POST['SupplierType']."',
 							currcode='" . $_POST['CurrCode'] . "',
 							suppliersince='".$SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
-							bankpartics='" . $_POST['BankPartics'] . "',
-							bankref='" . $_POST['BankRef'] . "',
-					 		bankact='" . $_POST['BankAct'] . "',
+							bankpartics='" . DB_escape_string($_POST['BankPartics']) . "',
+							bankref='" . DB_escape_string($_POST['BankRef']) . "',
+					 		bankact='" . DB_escape_string($_POST['BankAct']) . "',
 							remittance='" . $_POST['Remittance'] . "',
 							taxgroupid='" . $_POST['TaxGroup'] . "',
 							factorcompanyid='" . $_POST['FactorID'] ."',
@@ -479,20 +482,20 @@ if (isset($_POST['submit'])) {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
 					prnMsg( _('Cannot change currency code as transactions already exist'), 'info');
 				}
-				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
-							address1='" . $_POST['Address1'] . "',
-							address2='" . $_POST['Address2'] . "',
-							address3='" . $_POST['Address3'] . "',
-							address4='" . $_POST['Address4'] . "',
-							telephone='".$_POST['Phone']."',
-							fax = '".$_POST['Fax']."',
-							email = '".$_POST['Email']."',
+				$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "',
+							address1='" . DB_escape_string($_POST['Address1']) . "',
+							address2='" . DB_escape_string($_POST['Address2']) . "',
+							address3='" . DB_escape_string($_POST['Address3']) . "',
+							address4='" . DB_escape_string($_POST['Address4']) . "',
+							telephone='" . DB_escape_string($_POST['Phone'])."',
+							fax = '" . DB_escape_string($_POST['Fax']) . "',
+							email = '" . DB_escape_string($_POST['Email']) . "',
 							supptype = '".$_POST['SupplierType']."',
 							suppliersince='" . $SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
-							bankpartics='" . $_POST['BankPartics'] . "',
-							bankref='" . $_POST['BankRef'] . "',
-					 		bankact='" . $_POST['BankAct'] . "',
+							bankpartics='" . DB_escape_string($_POST['BankPartics']) . "',
+							bankref='" . DB_escape_string($_POST['BankRef']) . "',
+					 		bankact='" . DB_escape_string($_POST['BankAct']) . "',
 							remittance='" . $_POST['Remittance'] . "',
 							taxgroupid='" . $_POST['TaxGroup'] . "',
 							factorcompanyid='" . $_POST['FactorID'] ."',
@@ -533,28 +536,28 @@ if (isset($_POST['submit'])) {
 										lat,
 										lng,
 										taxref)
-								 VALUES ('$SupplierID',
-								 	'" . $_POST['SuppName'] . "',
-									'" . $_POST['Address1'] . "',
-									'" . $_POST['Address2'] . "',
-									'" . $_POST['Address3'] . "',
-									'" . $_POST['Address4'] . "',
-									'".$_POST['Phone']."',
-									'".$_POST['Fax']."',
-									'".$_POST['Email']."',
+								 VALUES ('" . $SupplierID . "',
+								 	'" . DB_escape_string($_POST['SuppName']) . "',
+									'" . DB_escape_string($_POST['Address1']) . "',
+									'" . DB_escape_string($_POST['Address2']) . "',
+									'" . DB_escape_string($_POST['Address3']) . "',
+									'" . DB_escape_string($_POST['Address4']) . "',
+									'" . DB_escape_string($_POST['Phone']) . "',
+									'" . DB_escape_string($_POST['Fax']) . "',
+									'" . DB_escape_string($_POST['Email']) . "',
 									'".$_POST['SupplierType']."',
 									'" . $_POST['CurrCode'] . "',
 									'" . $SQL_SupplierSince . "',
 									'" . $_POST['PaymentTerms'] . "',
-									'" . $_POST['BankPartics'] . "',
-									'" . $_POST['BankRef'] . "',
-									'" . $_POST['BankAct'] . "',
-						                       	'" . $_POST['Remittance'] . "',
-						                       	'" . $_POST['TaxGroup'] . "',
-						                       	'" . $_POST['FactorID'] . "',
-						                       	'" . $latitude ."',
-						                       	'" . $longitude ."',
-						                       	'" . $_POST['TaxRef'] . "')";
+									'" . DB_escape_string($_POST['BankPartics']) . "',
+									'" . DB_escape_string($_POST['BankRef']) . "',
+									'" . DB_escape_string($_POST['BankAct']) . "',
+									'" . $_POST['Remittance'] . "',
+									'" . $_POST['TaxGroup'] . "',
+									'" . $_POST['FactorID'] . "',
+									'" . $latitude ."',
+									'" . $longitude ."',
+									'" . $_POST['TaxRef'] . "')";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
@@ -714,7 +717,7 @@ if (!isset($SupplierID)) {
 			<td><select name="FactorID">';
 	echo '<option value=0>' . _('None');
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['FactorID']) and $_POST['FactorID'] == $myrow['id']){
+		if (isset($_POST['FactorID']) AND $_POST['FactorID'] == $myrow['id']){
 		echo '<option selected value=' . $myrow['id'] . '>' . $myrow['coyname'] .'</option>';
 		} else {
 		echo '<option value=' . $myrow['id'] . '>' . $myrow['coyname'] .'</option>';

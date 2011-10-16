@@ -204,13 +204,16 @@ while ($myrow = DB_fetch_row($result)) {
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<div class="centre"><p><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Types Defined') . '</a></div><p>';
+	echo '<div class="centre">
+			<p><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Types Defined') . '</a></p>
+		</div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><table class="selection">'; //Main table
+	echo '<br />
+		<table class="selection">'; //Main table
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
@@ -226,12 +229,13 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeID'] = $myrow['typeid'];
 		$_POST['TypeName']  = $myrow['typename'];
 
-		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '">';
-		echo '<input type="hidden" name="TypeID" value="' . $_POST['TypeID'] . '">';
+		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
+		echo '<input type="hidden" name="TypeID" value="' . $_POST['TypeID'] . '" />';
 
 		// We dont allow the user to change an existing type code
 
-		echo '<tr><td>' ._('Type ID') . ': </td>
+		echo '<tr>
+				<td>' ._('Type ID') . ': </td>
 				<td>' . $_POST['TypeID'] . '</td>
 			</tr>';
 	}
@@ -239,15 +243,21 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['TypeName'])) {
 		$_POST['TypeName']='';
 	}
-	echo '<tr><td>' . _('Type Name') . ':</td>
-			<td><input type="text" name="TypeName" value="' . $_POST['TypeName'] . '"></td>
+	echo '<tr>
+			<td>' . _('Type Name') . ':</td>
+			<td><input type="text" name="TypeName" value="' . $_POST['TypeName'] . '" /></td>
 		</tr>';
 
-	echo '<tr><td colspan=2><p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '"></div>';
-
-   	echo '</td></tr></table>'; // close main table
-
-	echo '</form>';
+	echo '<tr>
+			<td colspan="2">
+				<div class="centre">
+					<input type="submit" name="submit" value="' . _('Accept') . '">
+				</div>
+			</td>
+		</tr>
+		</table>
+		
+		</form>';
 
 } // end if user wish to delete
 

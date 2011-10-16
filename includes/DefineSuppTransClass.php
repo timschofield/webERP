@@ -256,6 +256,42 @@ Class SuppTrans {
 	function Remove_Contract_From_Trans($ContractID){
 	     unset($this->Contracts[$ContractID]);
 	}
+	
+	function Total_GRN_Value(){
+		$TotalGRNs =0;
+		foreach ($this->GRNs as $GRN) {
+			$TotalGRNs += ($GRN->This_QuantityInv*$GRN->ChgPrice);
+		}
+		return $TotalGRNs;
+	}
+	function Total_Shipts_Value(){
+		$TotalShiptValue =0;
+		foreach ($this->Shipts as $Shipt) {
+			$TotalShiptValue += $Shipt->Amount;
+		}
+		return $TotalShiptValue;
+	}
+	function Total_GL_Value(){
+		$TotalGLValue =0;
+		foreach ($this->GLCodes as $GL) {
+			$TotalGLValue += $GL->Amount;
+		}
+		return $TotalGLValue;
+	}
+	function Total_Assets_Value(){
+		$TotalAssetValue =0;
+		foreach ($this->Assets as $Asset) {
+			$TotalAssetValue += $Asset->Amount;
+		}
+		return $TotalAssetValue;
+	}
+	function Total_Contracts_Value(){
+		$TotalContractsValue =0;
+		foreach ($this->Contracts as $Contract) {
+			$TotalContractsValue += $Contract->Amount;
+		}
+		return $TotalContractsValue;
+	}
 } /* end of class defintion */
 
 Class GRNs {

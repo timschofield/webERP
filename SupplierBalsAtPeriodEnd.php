@@ -22,30 +22,28 @@ If (isset($_POST['PrintPDF'])
       /*Now figure out the aged analysis for the Supplier range under review */
 
 	$SQL = "SELECT suppliers.supplierid,
-			suppliers.suppname,
-  			currencies.currency,
-			SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
-			SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
-			SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
-	(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END)
-	 AS afterdatetrans,
-	 	Sum(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
-				AND (supptrans.type=22 OR supptrans.type=21) THEN
-	       supptrans.diffonexch ELSE 0 END)
-	 AS afterdatediffonexch,
-			Sum(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
-	supptrans.ovamount + supptrans.ovgst ELSE 0 END
-	) AS fxafterdatetrans
-	FROM suppliers,
-		currencies,
-		supptrans
-	WHERE suppliers.currcode = currencies.currabrev
-		AND suppliers.supplierid = supptrans.supplierno
-		AND suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
-		AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
-	GROUP BY suppliers.supplierid,
-		suppliers.suppname,
-		currencies.currency";
+					suppliers.suppname,
+		  			currencies.currency,
+		  			currencies.decimalplaces AS currdecimalplaces,
+					SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
+					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
+					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
+			(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END) AS afterdatetrans,
+					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
+						AND (supptrans.type=22 OR supptrans.type=21) THEN
+						supptrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
+					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
+						supptrans.ovamount + supptrans.ovgst ELSE 0 END) AS fxafterdatetrans
+			FROM suppliers INNER JOIN currencies 
+			ON suppliers.currcode = currencies.currabrev
+			INNER JOIN supptrans 
+			ON suppliers.supplierid = supptrans.supplierno
+			WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
+			AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
+			GROUP BY suppliers.supplierid,
+				suppliers.suppname,
+				currencies.currency,
+				currencies.decimalplaces";
 
 	$SupplierResult = DB_query($SQL,$db);
 
@@ -80,8 +78,8 @@ If (isset($_POST['PrintPDF'])
 
 		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {
 
-			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'],2);
-			$DisplayFXBalance = locale_number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'],2);
+			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'],$_SESSION['CompanyRecord']['decimalplaces']);
+			$DisplayFXBalance = locale_number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'],$SupplierBalances['currdecimalplaces']);
 
 			$TotBal += $Balance;
 
@@ -103,7 +101,7 @@ If (isset($_POST['PrintPDF'])
 		include('includes/PDFSupplierBalsPageHeader.inc');
 	}
 
-	$DisplayTotBalance = locale_number_format($TotBal,2);
+	$DisplayTotBalance = locale_number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
 
@@ -125,29 +123,41 @@ If (isset($_POST['PrintPDF'])
 	}
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><table class="selection">';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<tr><td>' . _('From Supplier Code') . ':</font></td>
-			<td><input Type=text maxlength=6 size=7 name=FromCriteria value="'.$_POST['FromCriteria'].'"></td></tr>';
-	echo '<tr><td>' . _('To Supplier Code') . ':</td>
-			<td><input Type=text maxlength=6 size=7 name=ToCriteria value="'.$_POST['ToCriteria'].'"></td></tr>';
-
-	echo '<tr><td>' . _('Balances As At') . ':</td>
+	echo '<tr>
+			<td>' . _('From Supplier Code') . ':</td>
+			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="'.$_POST['FromCriteria'].'" /></td>
+		</tr>
+		<tr>
+			<td>' . _('To Supplier Code') . ':</td>
+			<td><input type="text" maxlength="6" size="7" name="ToCriteria" value="'.$_POST['ToCriteria'].'" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Balances As At') . ':</td>
 			<td><select Name="PeriodEnd">';
 
-	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
+	$sql = "SELECT periodno, 
+					lastdate_in_period 
+			FROM periods 
+			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
 	$Periods = DB_query($sql,$db,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
-		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="TRUE">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1).'</option>';
+		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1).'</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 
 	echo '</table>
-			<br /><div class="centre"><input type=Submit Name="PrintPDF" Value="' . _('Print PDF') . '"></div>';
+			<br />
+			<div class="centre">
+				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			</div>';
 
 	include('includes/footer.inc');
 }/*end of else not PrintPDF */
