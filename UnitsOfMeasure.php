@@ -25,9 +25,9 @@ if (isset($_POST['Submit'])) {
 
 	//first off validate inputs sensible
 
-	if (mb_strpos($_POST['MeasureName'],'&')>0 OR mb_strpos($_POST['MeasureName'],"'")>0) {
+	if (ContainsIllegalCharacters($_POST['MeasureName'])) {
 		$InputError = 1;
-		prnMsg( _('The unit of measure cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		prnMsg( _('The unit of measure cannot contain any of the illegal characters') ,'error');
 	}
 	if (trim($_POST['MeasureName']) == '') {
 		$InputError = 1;
@@ -81,11 +81,8 @@ if (isset($_POST['Submit'])) {
 			$InputError = 1;
 			prnMsg( _('The unit of measure can not be created because another with the same name already exists.'),'error');
 		} else {
-			$sql = "INSERT INTO unitsofmeasure (
-						unitname )
-				VALUES (
-					'" . $_POST['MeasureName'] ."'
-					)";
+			$sql = "INSERT INTO unitsofmeasure (unitname )
+					VALUES ('" . $_POST['MeasureName'] ."')";
 		}
 		$msg = _('New unit of measure added');
 	}
@@ -186,7 +183,7 @@ if (isset($_POST['Submit'])) {
 
 		echo '<td>' . $myrow[1] . '</td>';
 		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedMeasureID=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
+		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedMeasureID=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete') .'</a></td>';
 		echo '</tr>';
 
 	} //END WHILE LIST LOOP
@@ -195,10 +192,12 @@ if (isset($_POST['Submit'])) {
 
 
 if (isset($SelectedMeasureID)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Units of Measure') . '</a></div>';
+	echo '<div class="centre">
+			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Units of Measure') . '</a>
+		</div>';
 }
 
-echo '<p>';
+echo '<p />';
 
 if (! isset($_GET['delete'])) {
 
@@ -223,7 +222,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['MeasureID'] = $myrow['unitid'];
 			$_POST['MeasureName']  = $myrow['unitname'];
 
-			echo '<input type="hidden" name="SelectedMeasureID" value="' . $_POST['MeasureID'] . '">';
+			echo '<input type="hidden" name="SelectedMeasureID" value="' . $_POST['MeasureID'] . '" />';
 			echo '<table class="selection">';
 		}
 
@@ -233,11 +232,13 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 		<td>' . _('Unit of Measure') . ':' . '</td>
-		<td><input type="text" name="MeasureName" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '"></td>
+		<td><input type="text" name="MeasureName" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
 		</tr>';
 	echo '</table>';
 
-	echo '<div class="centre"><input type="submit" name="Submit" value=' . _('Enter Information') . '></div>';
+	echo '<div class="centre">
+			<input type="submit" name="Submit" value=' . _('Enter Information') . '>
+		</div>';
 
 	echo '</form>';
 

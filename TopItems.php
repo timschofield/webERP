@@ -10,7 +10,9 @@ include ('includes/header.inc');
 //check if input already
 if (!(isset($_POST['Search']))) {
 			
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
+		</p>';
 	echo '<form action="' . $_SERVER['PHP_SELF'] . '?name="SelectCustomer" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';

@@ -14,22 +14,26 @@ if (!isset($_POST['DoUpgrade'])){
 	
 	if (!isset($_SESSION['VersionNumber'])){
 		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is not actually recorded at this version'),'info');
-		echo '<table><tr><td>' . _('Select the version you are upgrading from:') . '</td>
-				<td><select name="OldVersion" >';
-		echo '<option selected value="Manual">' . _('Apply database changes manually') . '</option>';
-		echo '<option value="3.00">' . _('Version 3.00') . '</option>';
-		echo '<option value="3.01">' . _('Version 3.01') . '</option>';
-		echo '<option value="3.02">' . _('Version 3.02') . '</option>';
-		echo '<option value="3.03">' . _('Version 3.03') . '</option>';
-		echo '<option value="3.04">' . _('Version 3.04') . '</option>';
-		echo '<option value="3.05">' . _('Version 3.05') . '</option>';
-		echo '<option value="3.06">' . _('Version 3.06') . '</option>';
-		echo '<option value="3.07">' . _('Version 3.07') . '</option>';
-		echo '<option value="3.08">' . _('Version 3.08') . '</option>';
-		echo '<option value="3.09">' . _('Version 3.09') . '</option>';
-		echo '<option value="3.10">' . _('Version 3.10') . '</option>';
-		echo '<option value="3.11.x">' . _('Version 3.11 or 4.01 - 4.02') . '</option>';
-		echo '</select></td></tr></table>';
+		echo '<table class="selection">
+			<tr>
+				<td>' . _('Select the version you are upgrading from:') . '</td>
+				<td><select name="OldVersion" >
+					<option selected value="Manual">' . _('Apply database changes manually') . '</option>
+					<option value="3.00">' . _('Version 3.00') . '</option>
+					<option value="3.01">' . _('Version 3.01') . '</option>
+					<option value="3.02">' . _('Version 3.02') . '</option>
+					<option value="3.03">' . _('Version 3.03') . '</option>
+					<option value="3.04">' . _('Version 3.04') . '</option>
+					<option value="3.05">' . _('Version 3.05') . '</option>
+					<option value="3.06">' . _('Version 3.06') . '</option>
+					<option value="3.07">' . _('Version 3.07') . '</option>
+					<option value="3.08">' . _('Version 3.08') . '</option>
+					<option value="3.09">' . _('Version 3.09') . '</option>
+					<option value="3.10">' . _('Version 3.10') . '</option>
+					<option value="3.11.x">' . _('Version 3.11 or 4.01 - 4.02') . '</option>
+				</select></td>
+			</tr>
+		</table>';
 	} else {
 		if ($_SESSION['VersionNumber']=='4.00RC1'){
 			$_SESSION['VersionNumber']='3.12';
@@ -130,8 +134,11 @@ if (isset($_POST['DoUpgrade'])){
 		$ScriptFileEntries = sizeof($SQLEntries);
 		$sql ='';
 		$InAFunction = false;
-		echo '<br /><table>
-				<tr><th colspan=2>' . _('Applying') . ' ' . $SQLScriptFile . '</th></tr>';
+		echo '<br />
+			<table>
+			<tr>
+				<th colspan="2">' . _('Applying') . ' ' . $SQLScriptFile . '</th>
+			</tr>';
 
 		for ($i=0; $i<=$ScriptFileEntries; $i++) {
 	
