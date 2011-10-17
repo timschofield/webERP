@@ -83,15 +83,15 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		$ErrMsg = _('Cannot update GL budgets');
 		$DbgMsg = _('The SQL that failed to update the GL budgets was');
 		for ($i=1; $i<=12; $i++) {
-			$SQL="UPDATE chartdetails SET budget='".Round($_POST[$i.'last'],2). "'
+			$SQL="UPDATE chartdetails SET budget='".Round(filter_number_format($_POST[$i.'last']),2). "'
 					WHERE period='" . ($CurrentYearEndPeriod-(24-$i)) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
 			$result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-			$SQL="UPDATE chartdetails SET budget='".Round($_POST[$i.'this'],2). "'
+			$SQL="UPDATE chartdetails SET budget='".Round(filter_number_format($_POST[$i.'this']),2). "'
 					WHERE period='" . ($CurrentYearEndPeriod-(12-$i)) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
 			$result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-			$SQL="UPDATE chartdetails SET budget='".Round($_POST[$i.'next'],2)."'
+			$SQL="UPDATE chartdetails SET budget='".Round(filter_number_format($_POST[$i.'next']),2)."'
 					WHERE period='" .  ($CurrentYearEndPeriod+$i) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
 			$result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
@@ -125,14 +125,14 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	
 	if (isset($_POST['apportion'])) {
 		for ($i=1; $i<=12; $i++) {
-			if ($_POST['AnnualAmountLY'] != '0' AND is_numeric($_POST['AnnualAmountLY'])){
-				$budget[$CurrentYearEndPeriod+$i-24]	=round( $_POST['AnnualAmountLY']/12,0);
+			if (filter_number_format($_POST['AnnualAmountLY']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmountLY']))){
+				$budget[$CurrentYearEndPeriod+$i-24]	=round(filter_number_format( $_POST['AnnualAmountLY'])/12,0);
 			}
-			if ($_POST['AnnualAmountTY'] != '0' AND is_numeric($_POST['AnnualAmountTY'])){
-				$budget[$CurrentYearEndPeriod+$i-12]	= round($_POST['AnnualAmountTY']/12,0);
+			if (filter_number_format($_POST['AnnualAmountTY']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmountTY']))){
+				$budget[$CurrentYearEndPeriod+$i-12]	= round(filter_number_format($_POST['AnnualAmountTY'])/12,0);
 			}
-			if ($_POST['AnnualAmount'] != '0' AND is_numeric($_POST['AnnualAmount'])){
-				$budget[$CurrentYearEndPeriod+$i]	= round($_POST['AnnualAmount']/12,0);
+			if (filter_number_format($_POST['AnnualAmount']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmount']))){
+				$budget[$CurrentYearEndPeriod+$i]	= round(filter_number_format($_POST['AnnualAmount'])/12,0);
 			}
 		}
 	}
@@ -173,14 +173,14 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	for ($i=1; $i<=12; $i++) {
 		echo '<tr>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod-(24-$i)] .'</th>';
-		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod-(24-$i)],2,'.','').'</td>';
-		echo '<td><input type="text" class="number" size=14 name="'.$i.'last" value="'.$budget[$CurrentYearEndPeriod-(24-$i)] .'"></td>';
+		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod-(24-$i)],2).'</td>';
+		echo '<td><input type="text" class="number" size=14 name="'.$i.'last" value="'.locale_number_format($budget[$CurrentYearEndPeriod-(24-$i)],2) .'"></td>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod-(12-$i)] .'</th>';
-		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod-(12-$i)],2,'.','').'</td>';
-		echo '<td><input type="text" class="number" size=14 name="'.$i.'this" value="'. $budget[$CurrentYearEndPeriod-(12-$i)] .'"></td>';
+		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod-(12-$i)],2).'</td>';
+		echo '<td><input type="text" class="number" size=14 name="'.$i.'this" value="'. locale_number_format($budget[$CurrentYearEndPeriod-(12-$i)],2) .'"></td>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod+($i)] .'</th>';
-		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod+$i],2,'.','').'</td>';
-		echo '<td><input type="text" class="number" size=14 name="'.$i.'next" value='. $budget[$CurrentYearEndPeriod+$i] .'></td>';
+		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($actual[$CurrentYearEndPeriod+$i],2).'</td>';
+		echo '<td><input type="text" class="number" size=14 name="'.$i.'next" value="'. locale_number_format($budget[$CurrentYearEndPeriod+$i],2) .'"></td>';
 		echo '</tr>';
 		$LastYearActual=$LastYearActual+$actual[$CurrentYearEndPeriod-(24-$i)];
 		$LastYearBudget=$LastYearBudget+$budget[$CurrentYearEndPeriod-(24-$i)];
