@@ -34,25 +34,25 @@ if (isset($_POST['TaxAuthority']) AND
       /*Now get the invoices for the tax report */
 
 	$SQL = "SELECT debtortrans.transno,
-			debtortrans.type,
-			systypes.typename,
-			debtortrans.trandate,
-			debtortrans.debtorno,
-			debtorsmaster.name,
-			debtortrans.branchcode,
-			debtortrans.order_,
-			(debtortrans.ovamount+debtortrans.ovfreight)/debtortrans.rate AS netamount,
-			debtortrans.ovfreight/debtortrans.rate AS freightamount,
-			debtortranstaxes.taxamount/debtortrans.rate AS tax
-		FROM debtortrans
-		INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
-		INNER JOIN systypes ON debtortrans.type=systypes.typeid
-		INNER JOIN debtortranstaxes ON debtortrans.id = debtortranstaxes.debtortransid
-		WHERE debtortrans.prd >= '" . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . "'
-		AND debtortrans.prd <= '" . $_POST['ToPeriod'] . "'
-		AND (debtortrans.type=10 OR debtortrans.type=11)
-		AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
-		ORDER BY debtortrans.id";
+					debtortrans.type,
+					systypes.typename,
+					debtortrans.trandate,
+					debtortrans.debtorno,
+					debtorsmaster.name,
+					debtortrans.branchcode,
+					debtortrans.order_,
+					(debtortrans.ovamount+debtortrans.ovfreight)/debtortrans.rate AS netamount,
+					debtortrans.ovfreight/debtortrans.rate AS freightamount,
+					debtortranstaxes.taxamount/debtortrans.rate AS tax
+			FROM debtortrans
+			INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
+			INNER JOIN systypes ON debtortrans.type=systypes.typeid
+			INNER JOIN debtortranstaxes ON debtortrans.id = debtortranstaxes.debtortransid
+			WHERE debtortrans.prd >= '" . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . "'
+			AND debtortrans.prd <= '" . $_POST['ToPeriod'] . "'
+			AND (debtortrans.type=10 OR debtortrans.type=11)
+			AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
+			ORDER BY debtortrans.id";
 
 	$DebtorTransResult = DB_query($SQL,$db,'','',false,false); //don't trap errors in DB_query
 
@@ -91,8 +91,8 @@ if (isset($_POST['TaxAuthority']) AND
 			$LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,ConvertSQLDate($DebtorTransRow['trandate']),'left');
 			$LeftOvers = $pdf->addTextWrap(200,$YPos,150,$FontSize, $DebtorTransRow['name'],'left');
 			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize, $DebtorTransRow['branchcode'],'left');
-			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, locale_number_format($DebtorTransRow['netamount'],2),'right');
-			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, locale_number_format($DebtorTransRow['tax'],2),'right');
+			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, locale_number_format($DebtorTransRow['netamount'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, locale_number_format($DebtorTransRow['tax'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
@@ -118,8 +118,8 @@ if (isset($_POST['TaxAuthority']) AND
 
 	if ($_POST['DetailOrSummary']=='Detail'){
 		/*Print out the outputs totals */
-		$LeftOvers = $pdf->addTextWrap(410,$YPos,60,8, locale_number_format($Outputs,2),'right');
-		$LeftOvers = $pdf->addTextWrap(470,$YPos,60,8, locale_number_format($OutputTax,2),'right');
+		$LeftOvers = $pdf->addTextWrap(410,$YPos,60,8, locale_number_format($Outputs,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap(470,$YPos,60,8, locale_number_format($OutputTax,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 		/*Rule off under output totals */
 		$pdf->line(410, $YPos-5,530, $YPos-5);
@@ -190,8 +190,8 @@ if (isset($_POST['TaxAuthority']) AND
 			$LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,ConvertSQLDate($SuppTransRow['trandate']),'left');
 			$LeftOvers = $pdf->addTextWrap(200,$YPos,150,$FontSize, $SuppTransRow['suppname'],'left');
 
-			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, locale_number_format($SuppTransRow['netamount'],2),'right');
-			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, locale_number_format($SuppTransRow['taxamt'],2),'right');
+			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, locale_number_format($SuppTransRow['netamount'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, locale_number_format($SuppTransRow['taxamt'],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
@@ -217,8 +217,8 @@ if (isset($_POST['TaxAuthority']) AND
 
 	if ($_POST['DetailOrSummary']=='Detail'){
 		/*Print out the input totals */
-		$LeftOvers = $pdf->addTextWrap(410,$YPos,60,8, locale_number_format($Inputs,2),'right');
-		$LeftOvers = $pdf->addTextWrap(470,$YPos,60,8, locale_number_format($InputTax,2),'right');
+		$LeftOvers = $pdf->addTextWrap(410,$YPos,60,8, locale_number_format($Inputs,$_SESSION['CompanyRecord']['decimalplaces']),'right');
+		$LeftOvers = $pdf->addTextWrap(470,$YPos,60,8, locale_number_format($InputTax,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 		/*Rule off under input totals */
 		$pdf->line(410, $YPos-5,530, $YPos-5);
@@ -253,17 +253,17 @@ if (isset($_POST['TaxAuthority']) AND
 	$YPos -= (2*$line_height);
 
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,180,$FontSize,_('Total Sales and Income (incl Tax)'),'left');
-	$LeftOvers = $pdf->addTextWrap(220,$YPos,100,$FontSize,locale_number_format($Outputs+$OutputTax,2),'right');
+	$LeftOvers = $pdf->addTextWrap(220,$YPos,100,$FontSize,locale_number_format($Outputs+$OutputTax,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 	$YPos -= $line_height;
 
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,180,$FontSize,_('Tax On Liable Sales'),'left');
-	$LeftOvers = $pdf->addTextWrap(220,$YPos,100,$FontSize,locale_number_format($OutputTax,2),'right');
+	$LeftOvers = $pdf->addTextWrap(220,$YPos,100,$FontSize,locale_number_format($OutputTax,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,200,$FontSize,_('Tax On Purchases'),'left');
-	$LeftOvers = $pdf->addTextWrap(220,$YPos,100,$FontSize,locale_number_format($InputTax,2),'right');
+	$LeftOvers = $pdf->addTextWrap(220,$YPos,100,$FontSize,locale_number_format($InputTax,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 	$YPos -= (2*$line_height);
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,500,$FontSize,_('Adjustments for Tax paid to Customs, FBT, entertainments etc must also be entered'),'left');
@@ -289,7 +289,7 @@ if (isset($_POST['TaxAuthority']) AND
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $title. '</p>';
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST">
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
 			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -301,18 +301,20 @@ if (isset($_POST['TaxAuthority']) AND
 		echo '<option Value=' . $myrow['taxid'] . '>' . $myrow['description'] . '</option>';
 	}
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Return Covering') . ':</font></td>
+	echo '<tr>
+			<td>' . _('Return Covering') . ':</font></td>
 			<td><select name="NoOfPeriods">
 			<option value=1>' . _('One Month') . '</option>' .
 			'<option selected value=2>' ._('Two Months')  . '</option>' .
 			'<option value=3>' . _('Quarter') . '</option>' .
 			'<option value=6>' . _('Six Months')  . '</option>' .
-			'</select></td></tr>';
+			'</select></td>
+		</tr>';
 
 
-	echo '<tr><td>' . _('Return To') . ':</td>
+	echo '<tr>
+			<td>' . _('Return To') . ':</td>
 			<td><select name="ToPeriod">';
-
 
 	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
 
@@ -325,23 +327,28 @@ if (isset($_POST['TaxAuthority']) AND
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
 		if ($myrow['periodno']==$DefaultPeriod){
-			echo '<option selected VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option selected value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
 
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 
-	echo '<tr><td>' . _('Detail Or Summary Only') . ':</font></td>
+	echo '<tr>
+			<td>' . _('Detail Or Summary Only') . ':</font></td>
 			<td><select name="DetailOrSummary">
-			<option Value="Detail">' . _('Detail and Summary') . '</option> 
-			<option selected value="Summary">' . _('Summary Only') . '</option>
-			</select></td></tr>';
+				<option value="Detail">' . _('Detail and Summary') . '</option> 
+				<option selected value="Summary">' . _('Summary Only') . '</option>
+			</select></td>
+		</tr>';
 
 
 	echo '</table>
-		<br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '">
+		<br />
+		<div class="centre">
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
 		</form>';
 

@@ -954,13 +954,22 @@ if (!isset($SupplierID)) {
 	echo '</select></td></tr></table>';
 
 	if (isset($_POST['New'])) {
-		echo '<p><div class="centre"><input type="Submit" name="submit" value="' . _('Add These New Supplier Details') . '"></form>';
+		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" /></form>';
 	} else {
-		echo '<br /><p><div class="centre"><input type="Submit" name="submit" value="' . _('Update Supplier') . '"></div><br />';
+		echo '<br />
+				<div class="centre">
+					<input type="Submit" name="submit" value="' . _('Update Supplier') . '" />
+				</div>
+			<br />';
 //		echo '<p><font color=red><b>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br /></font></b>';
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
-		echo '<br /><div class=centre><input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick=\"return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');\"></form>';
-		echo '<br /><a href="' . $rootpath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a></div>';
+		echo '<br />
+			<div class=centre>
+				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick=\"return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');\">
+		</form>';
+		echo '<br />
+			<a href="' . $rootpath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a>
+			</div>';
 	}
 	echo '</div>';
 } // end of main ifs

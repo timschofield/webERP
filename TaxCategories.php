@@ -26,9 +26,9 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (mb_strpos($_POST['TaxCategoryName'],'&')>0 OR mb_strpos($_POST['TaxCategoryName'],"'")>0) {
+	if (ContainsIllegalCharacters($_POST['TaxCategoryName'])) {
 		$InputError = 1;
-		prnMsg( _('The tax category name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		prnMsg( _('The tax category name cannot contain the character') . " '&' " . _('or the character') ." ' " . _('or a space') ,'error');
 	}
 	if (trim($_POST['TaxCategoryName']) == '') {
 		$InputError = 1;
@@ -162,10 +162,10 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get tax categories because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo '<table class=selection>
-		<tr>
-		<th>' . _('Tax Categories') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Tax Categories') . '</th>
+			</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -178,18 +178,20 @@ if (isset($_POST['submit'])) {
 			$k++;
 		}
 
-		echo '<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>';
-		echo '</tr>';
+		echo '<td>' . $myrow[1] . '</td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><p>';
+	echo '</table><p />';
 } //end of ifs and buts!
 
 
 if (isset($SelectedTaxCategory)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Tax Categories') . '</a></div>';
+	echo '<div class="centre">
+			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Tax Categories') . '</a>
+		</div>';
 }
 
 echo '<p>';
@@ -216,23 +218,25 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['TaxCategoryName']  = $myrow['taxcatname'];
 
-			echo '<input type="hidden" name="SelectedTaxCategory" value="' . $myrow['taxcatid'] . '">';
-			echo '<table class=selection>';
+			echo '<input type="hidden" name="SelectedTaxCategory" value="' . $myrow['taxcatid'] . '" />';
+			echo '<table class="selection">';
 		}
 
 	}  else {
 		$_POST['TaxCategoryName']='';
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 	}
 	echo '<tr>
-		<td>' . _('Tax Category Name') . ':' . '</td>
-		<td><input type="text" name="TaxCategoryName" size=30 maxlength=30 value="' . $_POST['TaxCategoryName'] . '"></td>
-		</tr>';
-	echo '</table>';
+			<td>' . _('Tax Category Name') . ':' . '</td>
+			<td><input type="text" name="TaxCategoryName" size=30 maxlength=30 value="' . $_POST['TaxCategoryName'] . '" /></td>
+		</tr>
+		</table>';
 
-	echo '<br /><div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
-
-	echo '</form>';
+	echo '<br />
+			<div class="centre">
+				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 

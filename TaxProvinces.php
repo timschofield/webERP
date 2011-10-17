@@ -7,7 +7,9 @@ $title = _('Dispatch Tax Provinces');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+	</p>';
 
 if ( isset($_GET['SelectedTaxProvince']) )
 	$SelectedTaxProvince = $_GET['SelectedTaxProvince'];
@@ -25,9 +27,9 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (mb_strpos($_POST['TaxProvinceName'],'&')>0 OR mb_strpos($_POST['TaxProvinceName'],"'")>0) {
+	if (ContainsIllegalCharacters($_POST['TaxProvinceName'])) {
 		$InputError = 1;
-		prnMsg( _('The tax province name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		prnMsg( _('The tax province name cannot contain any of the illegal characters'),'error');
 	}
 	if (trim($_POST['TaxProvinceName']) == '') {
 		$InputError = 1;
@@ -74,22 +76,24 @@ if (isset($_POST['submit'])) {
 				WHERE taxprovincename " .LIKE. " '".$_POST['TaxProvinceName'] ."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
+		
 		if ( $myrow[0] > 0 ) {
+		
 			$InputError = 1;
 			prnMsg( _('The tax province cannot be created because another with the same name already exists'),'error');
+		
 		} else {
-			$sql = "INSERT INTO taxprovinces (
-							taxprovincename )
-				VALUES (
-					'" . $_POST['TaxProvinceName'] ."'
-					)";
+			
+			$sql = "INSERT INTO taxprovinces (taxprovincename )
+					VALUES ('" . $_POST['TaxProvinceName'] ."')";
+					
 			$ErrMsg = _('Could not add tax province');
 			$result = DB_query($sql,$db, $ErrMsg);
 
 			$TaxProvinceID = DB_Last_Insert_ID($db, 'taxprovinces', 'taxprovinceid');
 			$sql = "INSERT INTO taxauthrates (taxauthority, dispatchtaxprovince, taxcatid)
 					SELECT taxauthorities.taxid, '" . $TaxProvinceID . "', taxcategories.taxcatid
-						FROM taxauthorities CROSS JOIN taxcategories";
+					FROM taxauthorities CROSS JOIN taxcategories";
 			$ErrMsg = _('Could not add tax authority rates for the new dispatch tax province. The rates of tax will not be able to be added - manual database interaction will be required to use this dispatch tax province');
 			$result = DB_query($sql,$db, $ErrMsg);
 		}
@@ -156,10 +160,10 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Could not get tax categories because');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<table class=selection>
-		<tr>
-		<th>" . _('Tax Provinces') . "</th>
-		</tr>";
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Tax Provinces') . '</th>
+			</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -172,10 +176,10 @@ if (isset($_POST['submit'])) {
 			$k++;
 		}
 
-		echo '<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxProvince=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTaxProvince=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>';
-		echo '</tr>';
+		echo '<td>' . $myrow[1] . '</td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxProvince=' . $myrow[0] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxProvince=' . $myrow[0] . '&delete=1">' . _('Delete') .'</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table><p>';
@@ -183,7 +187,9 @@ if (isset($_POST['submit'])) {
 
 
 if (isset($SelectedTaxProvince)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Tax Provinces') . '</a></div>';
+	echo '<div class="centre">
+			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Tax Provinces') . '</a>
+		</div>';
 }
 
 echo '<p>';
@@ -210,7 +216,7 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['TaxProvinceName']  = $myrow['taxprovincename'];
 
-			echo '<input type=hidden name="SelectedTaxProvince" value="' . $myrow['taxprovinceid'] . '">';
+			echo '<input type="hidden" name="SelectedTaxProvince" value="' . $myrow['taxprovinceid'] . '" />';
 			echo '<table class="selection">';
 		}
 
@@ -219,22 +225,28 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">';
 	}
 	echo '<tr>
-		<td>' . _('Tax Province Name') . ':' . '</td>
-		<td><input type="text" name="TaxProvinceName" size="30" maxlength="30" value="' . $_POST['TaxProvinceName'] . '"></td>
-		</tr>';
-	echo '</table>';
+			<td>' . _('Tax Province Name') . ':' . '</td>
+			<td><input type="text" name="TaxProvinceName" size="30" maxlength="30" value="' . $_POST['TaxProvinceName'] . '" /></td>
+		</tr>
+		</table>';
 
-	echo '<br /><div class="centre"><input type=Submit name=submit value=' . _('Enter Information') . '></div>';
+	echo '<br />
+			<div class="centre">
+				<input type=Submit name=submit value="' . _('Enter Information') . '" />
+			</div>';
 
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 
-echo '<div class="centre">';
-echo '<br /><a href="' . $rootpath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>';
-echo '<br /><a href="' . $rootpath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>';
-echo '<br /><a href="' . $rootpath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>';
-echo '</div>';
+echo '<div class="centre">
+		<br />
+		<a href="' . $rootpath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>
+		<br />
+		<a href="' . $rootpath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>
+		<br />
+		<a href="' . $rootpath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>
+	</div>';
 
 include('includes/footer.inc');
 ?>

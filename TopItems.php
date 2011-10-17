@@ -11,9 +11,9 @@ include ('includes/header.inc');
 if (!(isset($_POST['Search']))) {
 			
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '</p>';
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '?name="SelectCustomer" method="POST">';
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '?name="SelectCustomer" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table cellpadding="3" colspan="4" class="selection">';
+	echo '<table class="selection">';
 	//to view store location
 	echo '<tr>
 			<td width="150">' . _('Select Location') . '  </td>
@@ -21,17 +21,20 @@ if (!(isset($_POST['Search']))) {
 			<td><select name="Location">';
 	$sql = "SELECT loccode,
 					locationname
-				FROM `locations`";
+			FROM locations";
 	$result = DB_query($sql, $db);
 	echo '<option value="All">' . _('All') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['loccode'] . ' - ' . $myrow['locationname'] . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 	//to view list of customer
-	echo '<tr><td width="150">' . _('Select Customer Type') . '</td>
-				<td>:</td>
-				<td><select name="Customers">';
+	echo '<tr>
+			<td width="150">' . _('Select Customer Type') . '</td>
+			<td>:</td>
+			<td><select name="Customers">';
+			
 	$sql = "SELECT typename,
 					typeid
 				FROM debtortype";
@@ -41,17 +44,20 @@ if (!(isset($_POST['Search']))) {
 		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
 	echo '</select></td>
-			</tr>';
+		</tr>';
 	//view order by list to display
-	echo '<tr>	<td width="150">' . _('Select Order By ') . ' </td>
-				<td>:</td>
-				<td><select name="Sequence">';
-	echo '	<option value="totalinvoiced">' . _('Total Pieces') . '</option>';
-	echo '	<option value="valuesales">' . _('Value of Sales') . '</option>';
-	echo '	</select></td>
-				</tr>';
+	echo '<tr>
+			<td width="150">' . _('Select Order By ') . ' </td>
+			<td>:</td>
+			<td><select name="Sequence">
+				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
+				<option value="valuesales">' . _('Value of Sales') . '</option>
+				</select></td>
+		</tr>';
 	//View number of days
-	echo '<tr><td>' . _('Number Of Days') . ' </td><td>:</td>
+	echo '<tr>
+			<td>' . _('Number Of Days') . ' </td>
+			<td>:</td>
 			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	maxlength="8" value="0" /></td>
 		 </tr>';
 	//view number of NumberOfTopItems items
@@ -65,8 +71,8 @@ if (!(isset($_POST['Search']))) {
 		</tr>
 	</table>
 	<br />
-	<div class=centre>
-		<input tabindex=5 type="submit" name="Search" value="' . _('Search') . '" />
+	<div class="centre">
+		<input tabindex="5" type="submit" name="Search" value="' . _('Search') . '" />
 	</div>
 	</form>';
 } else {
@@ -164,7 +170,8 @@ if (!(isset($_POST['Search']))) {
 	echo '<form action="PDFTopItems.php"  method="GET">
 		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$TableHeader = '<tr><th>' . _('#') . '</th>
+	$TableHeader = '<tr>
+						<th>' . _('#') . '</th>
 						<th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
 						<th>' . _('Total Invoiced') . '</th>
