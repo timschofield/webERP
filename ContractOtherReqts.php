@@ -28,8 +28,8 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 				//this is the same as deleting the line - so delete it
 				$_SESSION['Contract'.$identifier]->Remove_ContractRequirement($ContractComponentID);
 			} else {
-				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->Quantity=$_POST['Qty'.$ContractComponentID];
-				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->CostPerUnit=$_POST['CostPerUnit'.$ContractComponentID];
+				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->Quantity=filter_number_format($_POST['Qty'.$ContractComponentID]);
+				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->CostPerUnit=filter_number_format($_POST['CostPerUnit'.$ContractComponentID]);
 				$_SESSION['Contract'.$identifier]->ContractReqts[$ContractComponentID]->Requirement=$_POST['Requirement'.$ContractComponentID];
 			}
 		} // end loop around the items on the contract requirements array
@@ -55,18 +55,18 @@ if(isset($_GET['Delete'])){
 }
 if (isset($_POST['EnterNewRequirement'])){
 	$InputError = false;
-	if (!is_numeric($_POST['Quantity'])){
+	if (!is_numeric(filter_number_format($_POST['Quantity']))){
 		prnMsg(_('The quantity of the new requirement is expected to be numeric'),'error');
 		$InputError = true;
 	}
-	if (!is_numeric($_POST['CostPerUnit'])){
+	if (!is_numeric(filter_number_format($_POST['CostPerUnit']))){
 		prnMsg(_('The cost per unit of the new requirement is expected to be numeric'),'error');
 		$InputError = true;
 	}
 	if (!$InputError){
 		$_SESSION['Contract'.$identifier]->Add_To_ContractRequirements ($_POST['RequirementDescription'],
-																		$_POST['Quantity'],
-																		$_POST['CostPerUnit']);
+																		filter_number_format($_POST['Quantity']),
+																		filter_number_format($_POST['CostPerUnit']));
 		unset($_POST['RequirementDescription']);
 		unset($_POST['Quantity']);
 		unset($_POST['CostPerUnit']);

@@ -226,13 +226,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Errors[$i] = 'EffectiveTo';
 			$i++;
 		}
-		if (!is_numeric($_POST['Quantity'])) {
+		if (!is_numeric(filter_number_format($_POST['Quantity']))) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered must be numeric'),'error');
 			$Errors[$i] = 'Quantity';
 			$i++;
 		}
-		if ($_POST['Quantity']==0) {
+		if (filter_number_format($_POST['Quantity']==0)) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered cannot be zero'),'error');
 			$Errors[$i] = 'Quantity';
@@ -270,7 +270,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						loccode='" . $_POST['LocCode'] . "',
 						effectiveafter='" . $EffectiveAfterSQL . "',
 						effectiveto='" . $EffectiveToSQL . "',
-						quantity= '" . $_POST['Quantity'] . "',
+						quantity= '" . filter_number_format($_POST['Quantity']) . "',
 						autoissue='" . $_POST['AutoIssue'] . "'
 					WHERE bom.parent='" . $SelectedParent . "'
 					AND bom.component='" . $SelectedComponent . "'";
@@ -317,7 +317,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 								'" . $_POST['Component'] . "',
 								'" . $_POST['WorkCentreAdded'] . "',
 								'" . $_POST['LocCode'] . "',
-								" . $_POST['Quantity'] . ",
+								" . filter_number_format($_POST['Quantity']) . ",
 								'" . $EffectiveAfterSQL . "',
 								'" . $EffectiveToSQL . "',
 								" . $_POST['AutoIssue'] . ")";

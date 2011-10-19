@@ -40,29 +40,29 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	// loop through amounts allocated using AllocnItm->ID for each record
 		if (isset($_POST['Amt' . $AllocCounter])) {
 			// allocatable charge amounts
-			if (!is_numeric($_POST['Amt' . $AllocCounter])) {
+			if (!is_numeric(filter_number_format($_POST['Amt' . $AllocCounter]))) {
 				$_POST['Amt' . $AllocCounter] = 0;
 			}
-			if ($_POST['Amt' . $AllocCounter] < 0) {
+			if (filter_number_format($_POST['Amt' . $AllocCounter] < 0)) {
 				prnMsg(_('Amount entered was negative') . '. ' . _('Only positive amounts are allowed') . '.','warn');
 				$_POST['Amt' . $AllocCounter] = 0;
 			}
 			if (isset($_POST['All' . $AllocCounter]) and $_POST['All' . $AllocCounter] == True) {
 				$_POST['Amt' . $AllocCounter] = $_POST['YetToAlloc' . $AllocCounter];
 			}
-			if ($_POST['Amt' . $AllocCounter] > $_POST['YetToAlloc' . $AllocCounter]) {
+			if (filter_number_format($_POST['Amt' . $AllocCounter]) > filter_number_format($_POST['YetToAlloc' . $AllocCounter])) {
 				$_POST['Amt' . $AllocCounter]=$_POST['YetToAlloc' . $AllocCounter];
 				// Amount entered must be smaller than unallocated amount
 			}
 
-			$_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->AllocAmt = $_POST['Amt' . $AllocCounter];
+			$_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->AllocAmt = filter_number_format($_POST['Amt' . $AllocCounter]);
 			// recalcuate the new difference on exchange (a +positive amount is a gain -ve a loss)
 			$_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->DiffOnExch =
-			  ($_POST['Amt' . $AllocCounter] / $_SESSION['Alloc']->TransExRate) -
-			  ($_POST['Amt' . $AllocCounter] / $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->ExRate);
+			  (filter_number_format($_POST['Amt' . $AllocCounter]) / $_SESSION['Alloc']->TransExRate) -
+			  (filter_number_format($_POST['Amt' . $AllocCounter]) / $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->ExRate);
 
 			$TotalDiffOnExch = $TotalDiffOnExch + $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->DiffOnExch;
-			$TotalAllocated = $TotalAllocated + $_POST['Amt' . $AllocCounter];
+			$TotalAllocated = $TotalAllocated + filter_number_format($_POST['Amt' . $AllocCounter]);
 		}
 
 	}

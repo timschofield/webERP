@@ -63,15 +63,15 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 	}
 	$_SESSION['ReceiptBatch']->DateBanked = $_POST['DateBanked'];
 	if (isset($_POST['ExRate']) and $_POST['ExRate']!=''){
-		if (is_numeric($_POST['ExRate'])){
-			$_SESSION['ReceiptBatch']->ExRate = $_POST['ExRate'];
+		if (is_numeric(filter_number_format($_POST['ExRate']))){
+			$_SESSION['ReceiptBatch']->ExRate = filter_number_format($_POST['ExRate']);
 		} else {
 			prnMsg(_('The exchange rate entered should be numeric'),'warn');
 		}
 	}
 	if (isset($_POST['FunctionalExRate']) and $_POST['FunctionalExRate']!=''){
-		if (is_numeric($_POST['FunctionalExRate'])){
-			$_SESSION['ReceiptBatch']->FunctionalExRate=$_POST['FunctionalExRate']; //ex rate between receipt currency and account currency
+		if (is_numeric(filter_number_format($_POST['FunctionalExRate']))){
+			$_SESSION['ReceiptBatch']->FunctionalExRate=filter_number_format($_POST['FunctionalExRate']); //ex rate between receipt currency and account currency
 		} else {
 			prnMsg(_('The functional exchange rate entered should be numeric'),'warn');
 		}

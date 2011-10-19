@@ -15,7 +15,7 @@ if (isset($_POST['PrintPDF'])) {
 	$PageNumber=1;
 	$line_height=12;
 
-	if (!$_POST['Quantity'] OR !is_numeric($_POST['Quantity'])) {
+	if (!$_POST['Quantity'] OR !is_numeric(filter_number_format($_POST['Quantity']))) {
 	    $_POST['Quantity'] = 1;
 	}
 
@@ -48,7 +48,7 @@ if (isset($_POST['PrintPDF'])) {
 	// This finds the top level
 	$sql = "INSERT INTO passbom (part, extendedqpa, sortpart)
 			   SELECT bom.component AS part,
-					  (" . $_POST['Quantity'] . " * bom.quantity) as extendedqpa,
+					  (" . filter_number_format($_POST['Quantity']) . " * bom.quantity) as extendedqpa,
 					   CONCAT(bom.parent,bom.component) AS sortpart
 					  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
@@ -76,7 +76,7 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.loccode,
 					 bom.effectiveafter,
 					 bom.effectiveto,
-					 (" . $_POST['Quantity'] . " * bom.quantity) as extendedqpa
+					 (" . filter_number_format($_POST['Quantity']) . " * bom.quantity) as extendedqpa
 					 FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= NOW() 
