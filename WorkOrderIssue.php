@@ -13,13 +13,15 @@ if (isset($_GET['StockID'])){
 	$_POST['StockID']=$_GET['StockID'];
 }
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a><br />';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
+	<br />';
+echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a>
+	<br />';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -31,8 +33,8 @@ if (!isset($_POST['WO']) OR !isset($_POST['StockID'])) {
 	include ('includes/footer.inc');
 	exit;
 } else {
-	echo '<input type="hidden" name="WO" value=' .$_POST['WO'] . '>';
-	echo '<input type="hidden" name="StockID" value=' .$_POST['StockID'] . '>';
+	echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
+	echo '<input type="hidden" name="StockID" value="' .$_POST['StockID'] . '" />';
 }
 if (isset($_GET['IssueItem'])){
 	$_POST['IssueItem']=$_GET['IssueItem'];
@@ -40,7 +42,6 @@ if (isset($_GET['IssueItem'])){
 if (isset($_GET['FromLocation'])){
 	$_POST['FromLocation'] =$_GET['FromLocation'];
 }
-
 
 if (isset($_POST['Process'])){ //user hit the process the work order issues entered.
 
@@ -78,15 +79,15 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 	$QuantityIssued =0;
 	if (is_array($_POST['SerialNos'])){ //then we are issuing a serialised item
 		$QuantityIssued = count($_POST['SerialNos']); // the total quantity issued as 1 per serial no
-	} elseif ( isset($_POST['Qty'])){ //then its a plain non-controlled item
-		$QuantityIssued = $_POST['Qty'];
+	} elseif (isset($_POST['Qty'])){ //then its a plain non-controlled item
+		$QuantityIssued = filter_number_format($_POST['Qty']);
 	} else { //it must be a batch/lot controlled item
 		for ($i=0;$i<15;$i++){
 			if (mb_strlen($_POST['Qty'.$i])>0){
-				if (!is_numeric($_POST['Qty'.$i])){
+				if (!is_numeric(filter_number_format($_POST['Qty'.$i]))){
 					$InputError=1;
 				} else {
-					$QuantityIssued += $_POST['Qty'.$i];
+					$QuantityIssued += filter_number_format($_POST['Qty'.$i]);
 				} //end if the qty field is numeric
 			} // end if the qty field is entered
 		}//end for the 15 fields available for batch/lot entry
@@ -152,9 +153,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 			}
 
 			$SQL = "UPDATE locstock
-				SET quantity = locstock.quantity - " . $QuantityIssued . "
-				WHERE locstock.stockid = '" . $_POST['IssueItem'] . "'
-				AND loccode = '" . $_POST['FromLocation'] . "'";
+					SET quantity = locstock.quantity - " . $QuantityIssued . "
+					WHERE locstock.stockid = '" . $_POST['IssueItem'] . "'
+					AND loccode = '" . $_POST['FromLocation'] . "'";
 
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 			$DbgMsg =  _('The following SQL to update the location stock record was used');
@@ -179,7 +180,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							28,
 							'" . $WOIssueNo . "',
 							'" . $_POST['FromLocation'] . "',
-							'" . FormatDateForSQL($_POST['issuedate']) . "',
+							'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 							'" . $IssueItemRow['cost'] . "',
 							'" . $PeriodNo . "',
 							'" . $_POST['WO'] . "',
@@ -217,9 +218,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 						/* now insert the serial stock movement */
 						$SQL = "INSERT INTO stockserialmoves (stockmoveno,
-											stockid,
-											serialno,
-											moveqty)
+																stockid,
+																serialno,
+																moveqty)
 									VALUES ('" . $StkMoveNo . "',
 											'" . $_POST['IssueItem'] . "',
 											'" . $SerialNo . "',
@@ -240,7 +241,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						$SQL = "SELECT COUNT(*) FROM stockserialitems
 								WHERE stockid='" .$_POST['IssueItem'] . "'
 								AND loccode = '" . $_POST['FromLocation'] . "'
-								AND serialno = '" . $_POST['BatchRef' .$i] . "'";
+								AND serialno = '" . DB_escape_string($_POST['BatchRef' .$i]) . "'";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch/lot reference for the item already exists because');
 						$DbgMsg =  _('The following SQL to test for an already existing controlled item was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -250,7 +251,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							$SQL = "UPDATE stockserialitems SET quantity = quantity - " . $_POST['Qty' . $i] . "
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode = '" . $_POST['FromLocation'] . "'
-										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
+										AND serialno = '" . DB_escape_string($_POST['BatchRef' .$i]) . "'";
 						} else {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
@@ -259,9 +260,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 												quantity)
 												VALUES ('" . $_POST['IssueItem'] . "',
 												'" . $_POST['FromLocation'] . "',
-												'" . $_POST['BatchRef' . $i] . "',
+												'" . DB_escape_string($_POST['BatchRef' . $i]) . "',
 												'',
-												'" . -($_POST['Qty'.$i]) . "')";
+												'" . -(filter_number_format($_POST['Qty'.$i])) . "')";
 						}
 
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The batch/lot item record could not be inserted because');
@@ -277,8 +278,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 											moveqty)
 									VALUES ('" . $StkMoveNo . "',
 											'" . $_POST['IssueItem'] . "',
-											'" . $_POST['BatchRef'.$i]  . "',
-											'" . $_POST['Qty'.$i]  . "')";
+											'" . DB_escape_string($_POST['BatchRef'.$i])  . "',
+											'" . filter_number_format($_POST['Qty'.$i])  . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -304,10 +305,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							amount)
 					VALUES (28,
 						'" . $WOIssueNo . "',
-						'" . FormatDateForSQL($_POST['issuedate']) . "',
+						'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 						'" . $PeriodNo . "',
 						'" . $WORow['wipact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'],2) . "',
+						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
 						'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
@@ -316,18 +317,18 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 		/*now the credit Stock entry*/
 			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
 					VALUES (28,
 						'" . $WOIssueNo . "',
-						'" . FormatDateForSQL($_POST['issuedate']) . "',
+						'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'],2) . "',
+						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 						'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
@@ -373,10 +374,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 /*User hit the search button looking for an item to issue to the WO */
 if (isset($_POST['Search'])){
 
-	If ($_POST['Keywords'] AND $_POST['StockCode']) {
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'),'warn');
 	}
-	If (mb_strlen($_POST['Keywords'])>0) {
+	if (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -523,26 +524,35 @@ if ($WORow['closed']==1){
 if (!isset($_POST['IssuedDate'])){
 	$_POST['IssuedDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<table cellpadding=2 class=selection>
-	<tr><td class="label">' . _('Issue to work order') . ':</td>
-		<td>' . $_POST['WO'] .'</td><td class="label">' . _('Item') . ':</td>
-		<td>' . $_POST['StockID'] . ' - ' . $WORow['description'] . '</td>
-	</tr>
-	 <tr><td class="label">' . _('Manufactured at') . ':</td>
-		<td>' . $WORow['locationname'] . '</td><td class="label">' . _('Required By') . ':</td>
-		<td>' . ConvertSQLDate($WORow['requiredby']) . '</td>
-	</tr>
-	 <tr><td class="label">' . _('Quantity Ordered') . ':</td>
-		<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
-		<td colspan="2">' . $WORow['units'] . '</td>
-	</tr>
-	 <tr><td class="label">' . _('Already Received') . ':</td>
-		<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-		<td colspan="2">' . $WORow['units'] . '</td></tr>
-	<tr><td colspan=4></td></tr>
-	 <tr><td class="label">' . _('Date Material Issued') . ':</td>
-		<td><input type="text" name=issuedate value=' . Date($_SESSION['DefaultDateFormat']) . ' class=date size=10 alt="'.$_SESSION['DefaultDateFormat'].'" ></td>
-		<td class="label">' . _('Issued From') . ':</td><td>';
+echo '<table class="selection">
+		<tr>
+			<td class="label">' . _('Issue to work order') . ':</td>
+			<td>' . $_POST['WO'] .'</td><td class="label">' . _('Item') . ':</td>
+			<td>' . $_POST['StockID'] . ' - ' . $WORow['description'] . '</td>
+		</tr>
+		<tr>
+			<td class="label">' . _('Manufactured at') . ':</td>
+			<td>' . $WORow['locationname'] . '</td>
+			<td class="label">' . _('Required By') . ':</td>
+			<td>' . ConvertSQLDate($WORow['requiredby']) . '</td>
+		</tr>
+		<tr>
+			<td class="label">' . _('Quantity Ordered') . ':</td>
+			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
+			<td colspan="2">' . $WORow['units'] . '</td>
+		</tr>
+		<tr>
+			<td class="label">' . _('Already Received') . ':</td>
+			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+			<td colspan="2">' . $WORow['units'] . '</td></tr>
+		<tr>
+			<td colspan="4"></td>
+		</tr>
+		<tr>
+			<td class="label">' . _('Date Material Issued') . ':</td>
+			<td><input type="text" name="IssuedDate" value=' . Date($_SESSION['DefaultDateFormat']) . ' class="date" size="10" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+			<td class="label">' . _('Issued From') . ':</td>
+			<td>';
 
 if (!isset($_POST['IssueItem'])){
 	$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
@@ -567,20 +577,26 @@ if (!isset($_POST['IssueItem'])){
 						WHERE loccode='" . $_POST['FromLocation'] . "'",
 				$db);
 	$LocRow = DB_fetch_array($LocResult);
-	echo '<input type="hidden" name="FromLocation" value="' . $_POST['FromLocation'] . '">';
+	echo '<input type="hidden" name="FromLocation" value="' . $_POST['FromLocation'] . '" />';
 	echo $LocRow['locationname'];
 }
-echo '</td></tr>
-	</table><br />
-	<table class=selection>';
+echo '</td>
+	</tr>
+	</table>
+	<br />
+	<table class="selection">';
 
 
 if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	//set up options for selection of the item to be issued to the WO
-	echo '<tr><th colspan=5>' . _('Material Requirements For this Work Order') . '</th></tr>';
-	echo '<tr><th colspan=2>' . _('Item') . '</th>
-		<th>' . _('Qty Required') . '</th>
-		<th>' . _('Qty Issued') . '</th></tr>';
+	echo '<tr>
+			<th colspan="5">' . _('Material Requirements For this Work Order') . '</th>
+		</tr>';
+	echo '<tr>
+			<th colspan="2">' . _('Item') . '</th>
+			<th>' . _('Qty Required') . '</th>
+			<th>' . _('Qty Issued') . '</th>
+		</tr>';
 
 	$RequirmentsResult = DB_query("SELECT worequirements.stockid,
 										stockmaster.description,
@@ -594,10 +610,13 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 		if ($RequirementsRow['autoissue']==0){
-			echo '<tr><td><input type="submit" name="IssueItem" value="' .$RequirementsRow['stockid'] . '"></td>
+			echo '<tr>
+					<td><input type="submit" name="IssueItem" value="' .$RequirementsRow['stockid'] . '" /></td>
 					<td>' . $RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] . '</td>';
 		} else {
-			echo '<tr><td class="notavailable">' . _('Auto Issue') . '<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] .'</td>';
+			echo '<tr>
+					<td class="notavailable">' . _('Auto Issue') . '</td>
+					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] .'</td>';
 		}
 		$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
 											WHERE stockmoves.type=28
@@ -606,11 +625,13 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										$db);
 		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
 
-		echo '<td class=number>' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
-			<td class=number>' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
+		echo '<td class="number">' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td>
+		</tr>';
 	}
 
-	echo '</table><br />';
+	echo '</table>
+		<br />';
 
 	$SQL="SELECT categoryid,
 			categorydescription
@@ -619,7 +640,8 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 			ORDER BY categorydescription";
 		$result1 = DB_query($SQL,$db);
 
-	echo '<table class=selection><tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
+	echo '<table class="selection">
+			<tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])){
 		echo '<option selected value="All">' . _('All') . '</option>';
@@ -640,13 +662,14 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
 	</select>
 	<td><?php echo _('Enter text extracts in the'); ?> <b><?php echo _('description'); ?></b>:</td>
-	<td><input type="Text" name="Keywords" size=20 maxlength=25 value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td></tr>
+	<td><input type="text" name="Keywords" size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td></tr>
 	<tr><td></td>
-			<td><font SIZE 3><b><?php echo _('OR'); ?> </b></font><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</td>
-		<td><input type="Text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
+			<td><font size="3"><b><?php echo _('OR'); ?> </b></font><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</td>
+		<td><input type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
 			</tr>
 			</table>
-			<br /><div class="centre"><input type=submit name="Search" value="<?php echo _('Search Now'); ?>">
+			<br />
+			<div class="centre"><input type="submit" name="Search" value="<?php echo _('Search Now'); ?>" />
 
 	<script language='JavaScript' type='text/javascript'>
 
@@ -662,10 +685,13 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
 		if (DB_num_rows($SearchResult)>1){
 
-			echo '<br /><table cellpadding=2 colspan=7 class=selection>';
-			$TableHeader = '<tr><th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Units') . '</th></tr>';
+			echo '<br />
+				<table cellpadding="2" colspan="7" class="selection">';
+			$TableHeader = '<tr>
+								<th>' . _('Code') . '</th>
+								<th>' . _('Description') . '</th>
+								<th>' . _('Units') . '</th>
+							</tr>';
 			echo $TableHeader;
 			$j = 1;
 			$k=0; //row colour counter
@@ -693,11 +719,11 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					}
 
 					$IssueLink = $_SERVER['PHP_SELF'] . '?WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '&IssueItem=' . $myrow['stockid'] . '&FromLocation=' . $_POST['FromLocation'];
-					printf("<td><font size=1>%s</font></td>
-							<td><font size=1>%s</font></td>
-							<td><font size=1>%s</font></td>
+					printf('<td><font size="1">%s</font></td>
+							<td><font size="1">%s</font></td>
+							<td><font size="1">%s</font></td>
 							<td>%s</td>
-							<td><font size=1><a href='%s'>"
+							<td><font size="1"><a href="%s">'
 							. _('Add to Work Order') . '</a></font></td>
 							</tr>',
 							$myrow['stockid'],
@@ -720,23 +746,27 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
 	//need to get some details about the item to issue
 	$sql = "SELECT description,
-			decimalplaces,
-			units,
-			controlled,
-			serialised
-		FROM stockmaster
-		WHERE stockid='" . $_POST['IssueItem'] . "'";
+				decimalplaces,
+				units,
+				controlled,
+				serialised
+			FROM stockmaster
+			WHERE stockid='" . $_POST['IssueItem'] . "'";
 	$ErrMsg = _('Could not get the detail of the item being issued because');
 	$IssueItemResult = DB_query($sql,$db,$ErrMsg);
 	$IssueItemRow = DB_fetch_array($IssueItemResult);
 
-	echo '<table class=selection>
-		<tr><td class="label">' . _('Issuing') . ':</td>
+	echo '<table class="selection">
+		<tr>
+			<td class="label">' . _('Issuing') . ':</td>
 			<td>' . $_POST['IssueItem'] . ' - ' . $IssueItemRow['description'] .'</td>
-			<td class="label">' . _('Units') . ':</td><td>' . $IssueItemRow['units'] .'</td></tr>
+			<td class="label">' . _('Units') . ':</td>
+			<td>' . $IssueItemRow['units'] .'</td>
+		</tr>
 		</table>';
 
-	echo '<br /><table class=selection>';
+	echo '<br />
+		<table class="selection">';
 
 	//Now Setup the form for entering quantities of the item to be issued to the WO
 	if ($IssueItemRow['controlled']==1){ //controlled
@@ -744,17 +774,21 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 		if ($IssueItemRow['serialised']==1){ //serialised
 			echo '<tr><th>' . _('Serial Numbers Issued') . '</th></tr>';
 
-
 			$SerialNoResult = DB_query("SELECT serialno
 										FROM stockserialitems
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode='" . $_POST['FromLocation'] . "'",
 						$db,_('Could not retrieve the serial numbers available at the location specified because'));
 			if (DB_num_rows($SerialNoResult)==0){
-				echo '<tr><td>' . _('There are no serial numbers at this location to issue') . '</td></tr>';
-				echo '<tr><td colspan=2><div class=centre><input type=submit name="Retry" value="' . _('Reselect Location or Issued Item') . '"></td></tr>';
+				echo '<tr>
+						<td>' . _('There are no serial numbers at this location to issue') . '</td>
+					</tr>';
+				echo '<tr>
+						<td colspan="2"><div class="centre"><input type="submit" name="Retry" value="' . _('Reselect Location or Issued Item') . '" /></td>
+					</tr>';
 			} else {
-				echo '<tr><td><select name="SerialNos[]" multiple>';
+				echo '<tr>
+						<td><select name="SerialNos[]" multiple>';
 				while ($SerialNoRow = DB_fetch_array($SerialNoResult)){
 					if (in_array($SerialNoRow['serialno'],$_POST['SerialNos'])){
 						echo '<option selected value="' . $SerialNoRow['serialno'] . '">' . $SerialNoRow['serialno'] . '</option>';
@@ -763,24 +797,33 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					}
 				}
 				echo '</select></td></tr>';
-				echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '">';
-				echo '<tr><td colspan=2><div class=centre><input type=submit name="Process" value="' . _('Process Items Issued') . '"></div></td></tr>';
+				echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
+				echo '<tr>
+						<td colspan="2"><div class="centre"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
+					</tr>';
 			}
 		} else { //controlled but not serialised - just lot/batch control
-			echo '<tr><th colspan="2">' . _('Batch/Lots Issued') . '</th></tr>';
+			echo '<tr>
+					<th colspan="2">' . _('Batch/Lots Issued') . '</th>
+				</tr>';
 			for ($i=0;$i<15;$i++){
-				echo '<tr><td><input type="textbox" name="BatchRef' . $i .'" ';
-				echo '></td>
-					  <td><input type="textbox" name="Qty' . $i .'"></td></tr>';
+				echo '<tr>
+						<td><input type="text" name="BatchRef' . $i .'" ';
+				echo '/></td>
+					  <td><input type="text" name="Qty' . $i .'" /></td></tr>';
 			}
-			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '">';
-			echo '<tr><td colspan=2><div class=centre><input type=submit name="Process" value="' . _('Process Items Issued') . '"></div></td></tr>';
+			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
+			echo '<tr>
+					<td colspan="2"><div class="centre"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
+				</tr>';
 		} //end of lot/batch control
 	} else { //not controlled - an easy one!
-		echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '">';
+		echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 		echo '<tr><td>' . _('Quantity Issued') . ':</td>
-			  <td><input class=number type="textbox" name="Qty"></tr>';
-		echo '<tr><td colspan=2><input type=submit name="Process" value="' . _('Process Items Issued') . '"></div></td></tr>';
+			  <td><input class="number" type="text" name="Qty" /></tr>';
+		echo '<tr>
+				<td colspan="2"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
+			</tr>';
 	}
 } //end if selecting new item to issue or entering the issued item quantities
 echo '</table>';

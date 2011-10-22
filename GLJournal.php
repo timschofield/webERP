@@ -10,9 +10,13 @@ $title = _('Journal Entry');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if (isset($_GET['NewJournal']) and $_GET['NewJournal'] == 'Yes' AND isset($_SESSION['JournalDetail'])){
+if (isset($_GET['NewJournal']) 
+	AND $_GET['NewJournal'] == 'Yes' 
+	AND isset($_SESSION['JournalDetail'])){
+
 	unset($_SESSION['JournalDetail']->GLEntries);
 	unset($_SESSION['JournalDetail']);
+
 }
 
 if (!isset($_SESSION['JournalDetail'])){
@@ -44,7 +48,7 @@ if (isset($_POST['JournalType'])){
 	$_SESSION['JournalDetail']->JournalType = $_POST['JournalType'];
 }
 
-if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Process Journal')){
+if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Process Journal')){
 
  /* once the GL analysis of the journal is entered
   process all the data in the session cookie into the DB
@@ -60,19 +64,19 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 		$SQL = "INSERT INTO gltrans (type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount,
-						tag)
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount,
+									tag)
 				VALUES ('0',
 					'" . $TransNo . "',
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 					'" . $PeriodNo . "',
 					'" . $JournalItem->GLCode . "',
-					'" . $JournalItem->Narrative . "',
+					'" . DB_escape_string($JournalItem->Narrative)  . "',
 					'" . $JournalItem->Amount . "',
 					'" . $JournalItem->tag."'
 					)";
@@ -82,19 +86,19 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 
 		if ($_POST['JournalType']=='Reversing'){
 			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount,
-							tag) 
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount,
+										tag) 
 					VALUES ('0',
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						'" . ($PeriodNo + 1) . "',
 						'" . $JournalItem->GLCode . "',
-						'Reversal - " . $JournalItem->Narrative . "',
+						'" . _('Reversal') . " - " . DB_escape_string($JournalItem->Narrative) . "',
 						'" . -($JournalItem->Amount) ."',
 						'".$JournalItem->tag."'
 						)";
@@ -117,7 +121,8 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	unset($_SESSION['JournalDetail']);
 
 	/*Set up a newy in case user wishes to enter another */
-	echo '<br /><a href="' . $_SERVER['PHP_SELF'] . '?NewJournal=Yes">'._('Enter Another General Ledger Journal').'</a>';
+	echo '<br />
+			<a href="' . $_SERVER['PHP_SELF'] . '?NewJournal=Yes">'._('Enter Another General Ledger Journal').'</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 	include ('includes/footer.inc');
@@ -128,17 +133,17 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	/* User hit delete the line from the journal */
 	$_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
 
-} elseif (isset($_POST['Process']) and $_POST['Process']==_('Accept')){ //user hit submit a new GL Analysis line into the journal
+} elseif (isset($_POST['Process']) AND $_POST['Process']==_('Accept')){ //user hit submit a new GL Analysis line into the journal
 	if ($_POST['GLCode']!='') {
 		$extract = explode(' - ',$_POST['GLCode']);
 		$_POST['GLCode'] = $extract[0];
 	}
 	if ($_POST['Debit']>0) {
-		$_POST['GLAmount'] = $_POST['Debit'];
+		$_POST['GLAmount'] = filter_number_format($_POST['Debit']);
 	} elseif ($_POST['Credit']>0) {
-		$_POST['GLAmount'] = '-' . $_POST['Credit'];
+		$_POST['GLAmount'] = -filter_number_format($_POST['Credit']);
 	}
-	if ($_POST['GLManualCode'] != '' AND is_numeric($_POST['GLManualCode'])){
+	if ($_POST['GLManualCode'] != ''){
 		// If a manual code was entered need to check it exists and isnt a bank account
 		$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
@@ -167,17 +172,25 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 				unset($_POST['GLManualCode']);
 			} else {
 				$myrow = DB_fetch_array($Result);
-				$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $myrow['accountname'], $_POST['tag']);
+				$_SESSION['JournalDetail']->add_to_glanalysis(filter_number_format($_POST['GLAmount']), 
+															$_POST['GLNarrative'], 
+															$_POST['GLManualCode'], 
+															$myrow['accountname'], 
+															$_POST['tag']);
 			}
 		}
 	} else {
 		$AllowThisPosting =true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1){
-			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']){
+			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' 
+				AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']){
+				
 				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
 				$AllowThisPosting = false;
 			}
-			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact']){
+			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' 
+				AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact']){
+				
 				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
 				$AllowThisPosting = false;
 			}
@@ -199,7 +212,11 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $_POST['GLCode'] . "'";
 			$Result=DB_query($SQL,$db);
 			$myrow=DB_fetch_array($Result);
-			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $myrow['accountname'], $_POST['tag']);
+			$_SESSION['JournalDetail']->add_to_glanalysis(filter_number_format($_POST['GLAmount']), 
+															$_POST['GLNarrative'], 
+															$_POST['GLCode'], 
+															$myrow['accountname'], 
+															$_POST['tag']);
 		}
 	}
 
@@ -225,7 +242,9 @@ if (isset($Cancel)){
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+	</p>';
 
 // A new table in the first column of the main table
 
@@ -234,18 +253,21 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 }
 
-echo '<table><tr>
-		<td colspan="5"><table class="selection"><tr><td>'._('Date to Process Journal') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
-echo '<td>' . _('Type') . ':</td>
-		<td><select name="JournalType">';
+echo '<table>
+		<tr>
+		<td colspan="5"><table class="selection">
+						<tr>
+							<td>'._('Date to Process Journal') . ':</td>
+							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
+							<td>' . _('Type') . ':</td>
+							<td><select name="JournalType">';
 
 if ($_POST['JournalType'] == 'Reversing'){
-	echo '<option selected="True" value = "Reversing">' . _('Reversing').'</option>';
+	echo '<option selected value = "Reversing">' . _('Reversing').'</option>';
 	echo '<option value = "Normal">' . _('Normal').'</option>';
 } else {
 	echo '<option value = "Reversing">' . _('Reversing').'</option>';
-	echo '<option selected="True" value = "Normal">' . _('Normal') . '</option>';
+	echo '<option selected value = "Normal">' . _('Normal') . '</option>';
 }
 
 echo '</select></td>
@@ -257,20 +279,27 @@ echo '<br />';
 echo '<table class="selection" width="70%">';
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-echo '<tr><th colspan="3"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Line Entry') . '</b></font></div></th></tr>';
+echo '<tr>
+		<th colspan="3">
+		<div class="centre"><font size="3" color="blue"><b>' . _('Journal Line Entry') . '</b></font></div>
+		</th>
+	</tr>';
 
 /*now set up a GLCode field to select from avaialble GL accounts */
-echo '<tr><th>' . _('GL Tag') . '</th>
+echo '<tr>
+		<th>' . _('GL Tag') . '</th>
 		<th>' . _('GL Account Code') . '</th>
-		<th>' . _('Select GL Account') . '</th></tr>';
+		<th>' . _('Select GL Account') . '</th>
+	</tr>';
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 //Select the tag
-echo '<tr><td><select name="tag">';
+echo '<tr>
+		<td><select name="tag">';
 
 $SQL = "SELECT tagref,
-		tagdescription
+				tagdescription
 		FROM tags
 		ORDER BY tagref";
 
@@ -294,9 +323,9 @@ echo '<td><input class="number" type="text" Name="GLManualCode" Maxlength="12" s
 		' value="'. $_POST['GLManualCode'] .'"  /></td>';
 
 $sql="SELECT accountcode,
-		accountname
-	FROM chartmaster
-	ORDER BY accountcode";
+			accountname
+		FROM chartmaster
+		ORDER BY accountcode";
 
 $result=DB_query($sql, $db);
 echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
@@ -314,35 +343,50 @@ if (!isset($_POST['GLNarrative'])) {
 	$_POST['GLNarrative'] = '';
 }
 if (!isset($_POST['Credit'])) {
-	$_POST['Credit'] = '';
+	$_POST['Credit'] = 0;
 }
 if (!isset($_POST['Debit'])) {
-	$_POST['Debit'] = '';
+	$_POST['Debit'] = 0;
 }
 
-echo '</tr><tr><th>' . _('Debit') . '</th>
-				<td><input type="text" class="number" name = "Debit" onChange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . $_POST['Debit'] . '" /></td>';
-echo '</tr><tr><th>' . _('Credit') . '</th>
-				<td><input type="text" class="number" Name = "Credit" onChange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . $_POST['Credit'] . '" /></td>';
-echo '</tr><tr><td></td><td></td><th>'. _('Narrative'). '</th>';
-echo '</tr><tr><th></th><th>' . _('GL Narrative') . '</th>';
+echo '</tr>
+	<tr>
+		<th>' . _('Debit') . '</th>
+		<td><input type="text" class="number" name = "Debit" onChange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+	</tr>
+	<tr>
+		<th>' . _('Credit') . '</th>
+		<td><input type="text" class="number" Name = "Credit" onChange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<th>'. _('Narrative'). '</th>
+	</tr>
+	<tr>
+		<th></th>
+		<th>' . _('GL Narrative') . '</th>
+		<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>
+	</tr>
+	</table>
+	<br />'; /*Close the main table */
+echo '<div class="centre">
+		<input type="submit" name="Process" value="' . _('Accept') . '" />
+	</div>
+	<br />
+	<br />';
 
-echo '<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>';
-
-echo '</tr></table><br />'; /*Close the main table */
-echo '<div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" /></div><br /><br />';
-
-
-echo '<table class="selection" width="85%">';
-
-echo '<tr><th colspan="6"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Summary') . '</b></font></div></th></tr>';
-echo '<tr>
-	<th>'._('GL Tag').'</th>
-	<th>'._('GL Account').'</th>
-	<th>'._('Debit').'</th>
-	<th>'._('Credit').'</th>
-	<th>'._('Narrative').'</th>
-	</tr>';
+echo '<table class="selection" width="85%">
+		<tr>
+			<th colspan="6"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Summary') . '</b></font></div></th>
+		</tr>
+		<tr>
+			<th>'._('GL Tag').'</th>
+			<th>'._('GL Account').'</th>
+			<th>'._('Debit').'</th>
+			<th>'._('Credit').'</th>
+			<th>'._('Narrative').'</th>
+		</tr>';
 
 $DebitTotal=0;
 $CreditTotal=0;
@@ -369,8 +413,9 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	echo '<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount>0) {
-		echo '<td class="number">' . locale_number_format($JournalItem->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td><td></td>';
-		$DebitTotal=$DebitTotal+$JournalItem->Amount;
+		echo '<td class="number">' . locale_number_format($JournalItem->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td></td>';
+		$DebitTotal += $JournalItem->Amount;
 	} elseif($JournalItem->Amount<0) {
 		$Credit=(-1 * $JournalItem->Amount);
 		echo '<td></td>
@@ -384,9 +429,10 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 }
 
 echo '<tr class="EvenTableRows"><td></td>
-	<td class="number"><b>' . _('Total') .  '</b></td>
-	<td class="number"><b>' . locale_number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-	<td class="number"><b>' . locale_number_format($CreditTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+		<td class="number"><b>' . _('Total') .  '</b></td>
+		<td class="number"><b>' . locale_number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+		<td class="number"><b>' . locale_number_format($CreditTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+	</tr>';
 if ($DebitTotal!=$CreditTotal) {
 	echo '<td align="center" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
 		locale_number_format(abs($DebitTotal-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']);
@@ -398,10 +444,15 @@ if ($DebitTotal>$CreditTotal) {
 }
 echo '</table>';
 
-if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
-	echo '<br /><br /><div class="centre"><input type="submit" name="CommitBatch" value="' ._('Accept and Process Journal').'" /></div>';
+if (abs($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
+	echo '<br />
+			<br />
+			<div class="centre">
+				<input type="submit" name="CommitBatch" value="' ._('Accept and Process Journal').'" />
+			</div>';
 } elseif(count($_SESSION['JournalDetail']->GLEntries)>0) {
-	echo '<br /><br />';
+	echo '<br />
+		<br />';
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'),'warn');
 }
 

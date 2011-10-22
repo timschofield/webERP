@@ -24,7 +24,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 	//first off validate inputs sensible
-	if (isset($_POST['SecRoleName']) && mb_strlen($_POST['SecRoleName'])<4){
+	if (isset($_POST['SecRoleName']) AND mb_strlen($_POST['SecRoleName'])<4){
 		$InputError = 1;
 		prnMsg(_('The role description entered must be at least 4 characters long'),'error');
 	}
@@ -34,12 +34,12 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	unset($sql);
 	if (isset($_POST['SecRoleName']) ){ // Update or Add Security Headings
 		if(isset($SelectedRole)) { // Update Security Heading
-			$sql = "UPDATE securityroles SET secrolename = '".$_POST['SecRoleName']."'
+			$sql = "UPDATE securityroles SET secrolename = '" . DB_escape_string($_POST['SecRoleName']) . "'
 					WHERE secroleid = '".$SelectedRole . "'";
 			$ErrMsg = _('The update of the security role description failed because');
 			$ResMsg = _('The Security role description was updated.');
 		} else { // Add Security Heading
-			$sql = "INSERT INTO securityroles (secrolename) VALUES ('".$_POST['SecRoleName']."')";
+			$sql = "INSERT INTO securityroles (secrolename) VALUES ('" . DB_escape_string($_POST['SecRoleName']) ."')";
 			$ErrMsg = _('The update of the security role failed because');
 			$ResMsg = _('The Security role was created.');
 		}
@@ -165,10 +165,16 @@ echo '<table class="selection">';
 if (!isset($_POST['SecRoleName'])) {
 	$_POST['SecRoleName']='';
 }
-echo '<tr><td>' . _('Role') . ':</td>
-	<td><input type="text" name="SecRoleName" size=40 maxlength=40 value="' . $_POST['SecRoleName'] . '"></tr>';
-echo '</table><br />
-	<div class="centre"><input type="submit" name="submit" value="' . _('Enter Role') . '"></div></form>';
+echo '<tr>
+		<td>' . _('Role') . ':</td>
+		<td><input type="text" name="SecRoleName" size=40 maxlength=40 value="' . $_POST['SecRoleName'] . '" />
+	</tr>';
+echo '</table>
+	<br />
+	<div class="centre">
+		<input type="submit" name="submit" value="' . _('Enter Role') . '" />
+	</div>
+	</form>';
 
 if (isset($SelectedRole)) {
 	$sql = "SELECT tokenid, tokenname

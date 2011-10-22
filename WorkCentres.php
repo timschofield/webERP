@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		delete code below*/
 
 		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
-						description = '" . $_POST['Description'] . "',
+						description = '" . DB_escape_string($_POST['Description']) . "',
 						overheadrecoveryact ='" . $_POST['OverheadRecoveryAct'] . "',
 						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
 				WHERE code = '" . $SelectedWC . "'";
@@ -52,13 +52,13 @@ if (isset($_POST['submit'])) {
 	/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
 
 		$sql = "INSERT INTO workcentres (code,
-						location,
-						description,
-						overheadrecoveryact,
-						overheadperhour)
+										location,
+										description,
+										overheadrecoveryact,
+										overheadperhour)
 					VALUES ('" . $_POST['Code'] . "',
 						'" . $_POST['Location'] . "',
-						'" . $_POST['Description'] . "',
+						'" . DB_escape_string($_POST['Description']) . "',
 						'" . $_POST['OverheadRecoveryAct'] . "',
 						'" . $_POST['OverheadPerHour'] . "'
 						)";
@@ -107,7 +107,9 @@ if (!isset($SelectedWC)) {
 then none of the above are true and the list of work centres will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '
+		</p>';
 
 	$sql = "SELECT workcentres.code,
 				workcentres.description,
@@ -120,31 +122,34 @@ or deletion of the records*/
 
 	$result = DB_query($sql,$db);
 	echo '<table class="selection">
-			<tr bgcolor ="#800000"><th>' . _('WC Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Location') . '</th>
-					<th>' . _('Overhead GL Account') . '</th>
-					<th>' . _('Overhead Per Hour') . '</th>
+			<tr bgcolor ="#800000">
+				<th>' . _('WC Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Location') . '</th>
+				<th>' . _('Overhead GL Account') . '</th>
+				<th>' . _('Overhead Per Hour') . '</th>
 			</tr>';
 
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 
-		printf("<tr><td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class=number>%s</td>
-				<td><a href=\"%s&SelectedWC=%s\">" . _('Edit') . "</td>
-				<td><a href=\"%s&SelectedWC=%s&delete=yes\">" . _('Delete') ."</td>
-				</tr>",
-				$myrow[0],
-				$myrow[1],
-				$myrow[2],
-				$myrow[3],
-				$myrow[4],
+		printf('<tr>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td><a href="%s&SelectedWC=%s">' . _('Edit') . '</td>
+					<td><a href="%s&SelectedWC=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete') .'</td>
+				</tr>',
+				$myrow['code'],
+				$myrow['description'],
+				$myrow['locationname'],
+				$myrow['overheadrecoveryact'],
+				$myrow['overheadperhour'],
 				$_SERVER['PHP_SELF'] . '?',
-				$myrow[0], $_SERVER['PHP_SELF'] . '?',
-				$myrow[0]);
+				$myrow['code'], 
+				$_SERVER['PHP_SELF'] . '?',
+				$myrow['code']);
 	}
 
 	//END WHILE LIST LOOP
@@ -158,20 +163,21 @@ if (isset($SelectedWC)) {
 	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show all Work Centres') . '</a></div>';
 }
 
-echo '<p><form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<br />
+	<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedWC)) {
 	//editing an existing work centre
 
 	$sql = "SELECT code,
-			location,
-			description,
-			overheadrecoveryact,
-			overheadperhour
-		FROM workcentres
-		WHERE code='" . $SelectedWC . "'";
-
+					location,
+					description,
+					overheadrecoveryact,
+					overheadperhour
+			FROM workcentres
+			WHERE code='" . $SelectedWC . "'";
+		
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
@@ -181,31 +187,36 @@ if (isset($SelectedWC)) {
 	$_POST['OverheadRecoveryAct']  = $myrow['overheadrecoveryact'];
 	$_POST['OverheadPerHour']  = $myrow['overheadperhour'];
 
-	echo '<input type="hidden" name="SelectedWC" value=' . $SelectedWC . '>';
-	echo '<input type="hidden" name="Code" value="' . $_POST['Code'] . '">';
-	echo '<table class="selection"><tr><td>' ._('Work Centre Code') . ':</td>
-										<td>' . $_POST['Code'] . '</td></tr>';
+	echo '<input type="hidden" name="SelectedWC" value="' . $SelectedWC . '" />
+		<input type="hidden" name="Code" value="' . $_POST['Code'] . '" />
+		<table class="selection">
+			<tr>
+				<td>' ._('Work Centre Code') . ':</td>
+				<td>' . $_POST['Code'] . '</td>
+			</tr>';
 
 } else { //end of if $SelectedWC only do the else when a new record is being entered
 	if (!isset($_POST['Code'])) {
 		$_POST['Code'] = '';
 	}
-	echo '<table class="selection"><tr>
-			<td>' . _('Work Centre Code') . ':</td>
-			<td><input type="Text" name="Code" size="6" maxlength="5" value="' . $_POST['Code'] . '"></td>
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Work Centre Code') . ':</td>
+				<td><input type="text" name="Code" size="6" maxlength="5" value="' . $_POST['Code'] . '" /></td>
 			</tr>';
 }
 
 $SQL = "SELECT locationname,
-		loccode
+				loccode
 		FROM locations";
 $result = DB_query($SQL,$db);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
-echo '<tr><td>' . _('Work Centre Description') . ':</td>
-	<td><input type="Text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '"></td>
+echo '<tr>
+		<td>' . _('Work Centre Description') . ':</td>
+		<td><input type="Text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	<tr><td>' . _('Location') . ':</td>
 		<td><select name="Location">';
@@ -214,7 +225,7 @@ while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
 		echo '<option selected value="';
 	} else {
-		echo '<option VALUE="';
+		echo '<option value="';
 	}
 	echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 
@@ -223,13 +234,15 @@ while ($myrow = DB_fetch_array($result)) {
 DB_free_result($result);
 
 
-echo '</select></td></tr>
-	<tr><td>' . _('Overhead Recovery GL Account') . ':</td>
+echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Overhead Recovery GL Account') . ':</td>
 		<td><select name="OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
 $SQL = "SELECT accountcode,
-			accountname
+				accountname
 		FROM chartmaster INNER JOIN accountgroups
 			ON chartmaster.group_=accountgroups.groupname
 		WHERE accountgroups.pandl!=0
@@ -253,17 +266,23 @@ if (!isset($_POST['OverheadPerHour'])) {
 }
 
 echo '</td></tr>';
-echo '<tr><td>' . _('Overhead Per Hour') . ':</td>
-	<td><input type="Text" class="number" name="OverheadPerHour" size=6 maxlength=6 value='.$_POST['OverheadPerHour'].'>';
+echo '<tr>
+		<td>' . _('Overhead Per Hour') . ':</td>
+		<td><input type="text" class="number" name="OverheadPerHour" size="6" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />';
 
-echo '</td></tr></table>';
+echo '</td>
+	</tr>
+	</table>';
 
-echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
+echo '<br />
+	<div class="centre">
+		<input type="Submit" name="submit" value="' . _('Enter Information') . '" />
+	</div>';
 
 if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
-	echo "<script>defaultControl(document.forms[0].Code);</script>";
+	echo '<script>defaultControl(document.forms[0].Code);</script>';
 } else {
-	echo "<script>defaultControl(document.forms[0].Description);</script>";
+	echo '<script>defaultControl(document.forms[0].Description);</script>';
 }
 
 echo '</form>';

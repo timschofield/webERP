@@ -388,9 +388,9 @@ if (isset($SelectedUser)) {
 	$_POST['Blocked'] = $myrow['blocked'];
 	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
 
-	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '">';
-	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '">';
-	echo '<input type="hidden" name="ModulesAllowed" value="' . $_POST['ModulesAllowed'] . '">';
+	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" /';
+	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
+	echo '<input type="hidden" name="ModulesAllowed" value="' . $_POST['ModulesAllowed'] . '" />';
 
 	echo '<table class=selection> <tr><td>' . _('User code') . ':</td><td>';
 	echo $_POST['UserID'] . '</td></tr>';
@@ -400,7 +400,7 @@ if (isset($SelectedUser)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input type="text" name="UserID" size="22" maxlength="20"></td></tr>';
+				<td><input type="text" name="UserID" size="22" maxlength="20" /></td></tr>';
 
 	/*set the default modules to show to all
 	this had trapped a few people previously*/
@@ -668,7 +668,7 @@ echo '</select></td>
 echo '</table>
 	<br />
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '">
+		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
 	</form>';
 

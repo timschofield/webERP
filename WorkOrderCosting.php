@@ -6,10 +6,12 @@ $title = _('Work Order Costing');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
-
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
+	<br />
+	<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
+	_('Search') . '" alt="" />' . ' ' . $title . '
+	</p>';
 
 echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -47,14 +49,17 @@ if (DB_num_rows($WOResult)==0){
 $WorkOrderRow = DB_fetch_array($WOResult);
 
 
-echo '<table cellpadding=2 class=selection>
-	<tr><td class="label">' . _('Work order') . ':</td>
+echo '<table class="selection">
+	<tr>
+		<td class="label">' . _('Work order') . ':</td>
 		<td>' . $_POST['WO'] .'</td>
 	 	<td class="label">' . _('Manufactured at') . ':</td>
 		<td>' . $WorkOrderRow['locationname'] . '</td>
 		<td class="label">' . _('Required By') . ':</td>
-		<td>' . ConvertSQLDate($WorkOrderRow['requiredby']) . '</td></tr>
-	</table><br />';
+		<td>' . ConvertSQLDate($WorkOrderRow['requiredby']) . '</td>
+	</tr>
+	</table>
+	<br />';
 
 
 $WOItemsResult = DB_query("SELECT woitems.stockid,
@@ -77,19 +82,23 @@ $WOItemsResult = DB_query("SELECT woitems.stockid,
 							$db,
 							$ErrMsg);
 
-echo  '<table class="selection"><tr><th>' . _('Item') . '</th>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Quantity Required') . '</th>
-		<th>' . _('Units') . '</th>
-		<th>' . _('Quantity Received') . '</th>
-		<th>' . _('Status') . '</th>
-		<th>' . _('Receive') . '</th>
-		<th>' . _('Issue') . '</th></tr>';
+echo  '<table class="selection">
+		<tr>
+			<th>' . _('Item') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Quantity Required') . '</th>
+			<th>' . _('Units') . '</th>
+			<th>' . _('Quantity Received') . '</th>
+			<th>' . _('Status') . '</th>
+			<th>' . _('Receive') . '</th>
+			<th>' . _('Issue') . '</th>
+		</tr>';
 
 $TotalStdValueRecd =0;
 while ($WORow = DB_fetch_array($WOItemsResult)){
 
-	 echo '<tr><td>' . $WORow['stockid'] . '</td>
+	 echo '<tr>
+				<td>' . $WORow['stockid'] . '</td>
 	 			<td>' . $WORow['description'] . '</td>
 	 			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 	 			<td>' . $WORow['units'] . '</td>
@@ -106,17 +115,17 @@ echo '</table>
 	<br />
 	<table class="selection">';
 
-
-echo '<tr><th>' . _('Item') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Qty Reqd') . '</th>
-			<th>' . _('Cost Reqd') . '</th>
-			<th>' . _('Date Issued') . '</th>
-			<th>' . _('Issued Qty') . '</th>
-			<th>' . _('Issued Cost') . '</th>
-			<th>' . _('Usage Variance') . '</th>
-			<th>' . _('Cost Variance') . '</th>
-			</tr>';
+echo '<tr>
+		<th>' . _('Item') . '</th>
+		<th>' . _('Description') . '</th>
+		<th>' . _('Qty Reqd') . '</th>
+		<th>' . _('Cost Reqd') . '</th>
+		<th>' . _('Date Issued') . '</th>
+		<th>' . _('Issued Qty') . '</th>
+		<th>' . _('Issued Cost') . '</th>
+		<th>' . _('Usage Variance') . '</th>
+		<th>' . _('Cost Variance') . '</th>
+	</tr>';
 
 $RequirementsResult = DB_query("SELECT worequirements.stockid,
 									   stockmaster.description,
@@ -185,7 +194,8 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 		} else {
 			echo '<tr class="OddTableRows">';
 		}
-		echo '<td colspan="9"><hr></td></tr>';
+		echo '<td colspan="9"><hr></td>
+			</tr>';
 	}
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
@@ -201,13 +211,15 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	/*Required quantity is the quantity required of the component based on the quantity of the finished item received */
 	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*($RequirementsRow['stdcost']);
 
-	echo '<td colspan="2"></td><td class="number">'  . locale_number_format($RequirementsRow['requiredqty'],$RequirementsRow['decimalplaces']) . '</td>
-		<td class="number">' . locale_number_format($RequirementsRow['expectedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td></td>
-		<td class="number">' . locale_number_format($IssueQty,$RequirementsRow['decimalplaces']) . '</td>
-		<td class="number">' . locale_number_format($IssueCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class="number">' . locale_number_format($UsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class="number">' . locale_number_format($CostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+	echo '<td colspan="2"></td>
+			<td class="number">'  . locale_number_format($RequirementsRow['requiredqty'],$RequirementsRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($RequirementsRow['expectedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td></td>
+			<td class="number">' . locale_number_format($IssueQty,$RequirementsRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($IssueCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($UsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($CostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>';
 	$TotalReqdCost += $RequirementsRow['expectedcost'];
 	$TotalIssuedCost += $IssueCost;
 	$TotalCostVar += $CostVar;
@@ -217,26 +229,28 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	} else {
 		$k++;
 	}
-	echo '<tr><td colspan="9"><hr></td></tr>';
+	echo '<tr>
+			<td colspan="9"><hr></td>
+		</tr>';
 }
 
 
 //Now need to run through the issues to the work order that weren't in the requirements
 
 $sql = "SELECT stockmoves.stockid,
-		stockmaster.description,
-		stockmaster.decimalplaces,
-		trandate,
-		qty,
-		stockmoves.standardcost
-	FROM stockmoves INNER JOIN stockmaster
-	ON stockmoves.stockid=stockmaster.stockid
-	WHERE stockmoves.type=28
-	AND reference = '" . $_POST['WO'] . "'
-	AND stockmoves.stockid NOT IN
-			(SELECT worequirements.stockid
-				FROM worequirements
-			WHERE worequirements.wo='" . $_POST['WO'] . "')";
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				trandate,
+				qty,
+				stockmoves.standardcost
+		FROM stockmoves INNER JOIN stockmaster
+		ON stockmoves.stockid=stockmaster.stockid
+		WHERE stockmoves.type=28
+		AND reference = '" . $_POST['WO'] . "'
+		AND stockmoves.stockid NOT IN
+					(SELECT worequirements.stockid
+						FROM worequirements
+					WHERE worequirements.wo='" . $_POST['WO'] . "')";
 
 $WOIssuesResult = DB_query($sql,$db,_('Could not get issues that were not required by the BOM because'));
 
@@ -251,33 +265,38 @@ if (DB_num_rows($WOIssuesResult)>0){
 		}
 
 		echo '<td>' .  $WOIssuesRow['stockid'] . '</td>
-			<td>' .  $WOIssuesRow['description'] . '</td>
-			<td class="number">0</td>
-			<td class="number">0</td>
-			<td>' . ConvertSQLDate($WOIssuesRow['trandate']) . '</td>
-			<td class="number">' . locale_number_format(-$WOIssuesRow['qty'],$WOIssuesRow['decimalplaces'])  .'</td>
-			<td class="number">' . locale_number_format(-$WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])  .'</td>
-			<td class="number">' . locale_number_format($WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])  .'</td>
-			<td class="number">0</td></tr>';
+				<td>' .  $WOIssuesRow['description'] . '</td>
+				<td class="number">0</td>
+				<td class="number">0</td>
+				<td>' . ConvertSQLDate($WOIssuesRow['trandate']) . '</td>
+				<td class="number">' . locale_number_format(-$WOIssuesRow['qty'],$WOIssuesRow['decimalplaces'])  .'</td>
+				<td class="number">' . locale_number_format(-$WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])  .'</td>
+				<td class="number">' . locale_number_format($WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])  .'</td>
+				<td class="number">0</td>
+			</tr>';
 
 		$TotalUsageVar += ($WOIssuesRow['qty']*$WOIssuesRow['standardcost']);
 	}
 }
 # <!--	<td colspan="5"></td> -->
-echo '<tr><td colspan="3"></td>
+echo '<tr>
+		<td colspan="3"></td>
 		<td><hr/></td>
 		<td colspan="2"></td>
 		<td colspan="3"><hr></td>
 	</tr>';
-echo '<tr><td colspan="2" class="number">' . _('Totals') . '</td>
-	<td></td>
-	<td class="number">' . locale_number_format($TotalReqdCost,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
-	<td></td><td></td>
-	<td class="number">' . locale_number_format($TotalIssuedCost,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
-	<td class="number">' . locale_number_format($TotalUsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	<td class="number">' . locale_number_format($TotalCostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
-
-echo '<tr><td colspan="3"></td>
+echo '<tr>
+		<td colspan="2" class="number">' . _('Totals') . '</td>
+		<td></td>
+		<td class="number">' . locale_number_format($TotalReqdCost,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
+		<td></td><td></td>
+		<td class="number">' . locale_number_format($TotalIssuedCost,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
+		<td class="number">' . locale_number_format($TotalUsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($TotalCostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	</tr>';
+	
+echo '<tr>
+		<td colspan="3"></td>
 		<td><hr/></td>
 		<td colspan="2"></td>
 		<td colspan="3"><hr></td>
@@ -403,12 +422,12 @@ If (isset($_POST['Close'])) {
 			if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $TotalUsageVar!=0){
 
 				$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
 							'" . Date('Y-m-d') . "',
@@ -422,12 +441,12 @@ If (isset($_POST['Close'])) {
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
 							'" . Date('Y-m-d') . "',
@@ -445,11 +464,11 @@ If (isset($_POST['Close'])) {
 			if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $TotalCostVar!=0){
 
 				$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
 							amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
@@ -464,12 +483,12 @@ If (isset($_POST['Close'])) {
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
 							'" . Date('Y-m-d') . "',
@@ -515,12 +534,21 @@ If (isset($_POST['Close'])) {
 
 
 if ($WorkOrderRow['closed']==0){
-	echo '<tr><td colspan="9"><div class="centre"><input type=submit name="Close" value="' . _('Close This Work Order') . '" onclick="return confirm(\'' . _('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . _('Are You Sure?') . '\');"></div></td></tr>';
+	echo '<tr>
+			<td colspan="9">
+				<div class="centre">
+					<input type=submit name="Close" value="' . _('Close This Work Order') . '" onclick="return confirm(\'' . _('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . _('Are You Sure?') . '\');">
+				</div>
+			</td>
+		</tr>';
 } else {
-	echo '<tr><td colspan="9">' . _('This work order is closed and cannot accept additional issues of materials or receipts of manufactured items') . '</td></tr>';
+	echo '<tr>
+			<td colspan="9">' . _('This work order is closed and cannot accept additional issues of materials or receipts of manufactured items') . '</td>
+		</tr>';
 }
-echo '</table>';
-echo '</form>';
+echo '</table>
+	
+	</form>';
 
 include('includes/footer.inc');
 ?>
