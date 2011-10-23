@@ -679,7 +679,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
 	// would cover it, so no planned order would have to be created for the second requirement.
 	$ExcessQty = 0;
 	foreach ($Requirements as $key => $row) {
-			 $DateRequired[$key] = $row['daterequired'];
+		 $DateRequired[$key] = $row['daterequired'];
 	}
 	if (count($Requirements)) {
 		array_multisort($DateRequired, SORT_ASC, $Requirements);

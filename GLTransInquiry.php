@@ -34,9 +34,11 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 		//
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="'
 			. _('Print') . '" alt="" />' . ' ' . $title . '</p>';
-		echo '<table class=selection>'; //Main table
-		echo '<tr><th colspan=7><font size=3 color=blue><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></font></th></tr>';
+		echo '<table class="selection">'; //Main table
 		echo '<tr>
+				<th colspan="7"><font size="3" color="blue"><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></font></th>
+			</tr>
+			<tr>
 				<th>' . _('Date') . '</th>
 				<th>' . _('Period') .'</th>
 				<th>'. _('GL Account') .'</th>
@@ -88,14 +90,13 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					$date = '&TransAfterDate=' . $TranDate;
 
 					$DetailSQL = "SELECT debtortrans.debtorno,
-									debtortrans.ovamount,
-									debtortrans.ovgst,
-									debtortrans.rate,
-									debtorsmaster.name
-									FROM debtortrans,
-									debtorsmaster
-									WHERE debtortrans.debtorno = debtorsmaster.debtorno
-									AND debtortrans.type = '" . $TransRow['type'] . "'
+										debtortrans.ovamount,
+										debtortrans.ovgst,
+										debtortrans.rate,
+										debtorsmaster.name
+									FROM debtortrans INNER JOIN debtorsmaster
+									ON debtortrans.debtorno = debtorsmaster.debtorno
+									WHERE debtortrans.type = '" . $TransRow['type'] . "'
 									AND debtortrans.transno = '" . $_GET['TransNo']. "'";
 					$DetailResult = DB_query($DetailSQL,$db);
 			} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )	{
@@ -103,14 +104,13 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					$date = '&FromDate=' . $TranDate;
 
 					$DetailSQL = "SELECT supptrans.supplierno,
-									supptrans.ovamount,
-									supptrans.ovgst,
-									supptrans.rate,
-									suppliers.suppname
-									FROM supptrans,
-									suppliers
-									WHERE supptrans.supplierno = suppliers.supplierid
-									AND supptrans.type = '" . $TransRow['type'] . "'
+										supptrans.ovamount,
+										supptrans.ovgst,
+										supptrans.rate,
+										suppliers.suppname
+									FROM supptrans INNER JOIN suppliers
+									ON supptrans.supplierno = suppliers.supplierid
+									WHERE supptrans.type = '" . $TransRow['type'] . "'
 									AND supptrans.transno = '" . $_GET['TransNo'] . "'";
 					$DetailResult = DB_query($DetailSQL,$db);
 			} else {
@@ -119,7 +119,6 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					if( mb_strlen($TransRow['narrative'])==0 ) {
 						$TransRow['narrative'] = '&nbsp';
 					}
-					
 					
 					if ($j==1) {
 						echo '<tr class="OddTableRows">';
@@ -180,17 +179,20 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 		DB_free_result($TransResult);
 
 		echo '<tr bgcolor="#FFFFFF">
-				<td class="number" colspan=3><b>' . _('Total') . '</b></td>
+				<td class="number" colspan="3"><b>' . _('Total') . '</b></td>
 				<td class="number">' . locale_number_format(($DebitTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format((-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td colspan=2>&nbsp</td>
+				<td colspan="2">&nbsp</td>
 			</tr>';
 		echo '</table><p>';
 	}
 
 }
 
-echo '</td></tr></table>';
+echo '</td>
+	</tr>
+	</table>';
+	
 include('includes/footer.inc');
 
 ?>

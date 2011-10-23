@@ -12,15 +12,21 @@ if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod']))
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
 
-if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
+if ((!isset($_POST['FromPeriod']) 
+	AND !isset($_POST['ToPeriod'])) 
+		OR isset($_POST['SelectADifferentPeriod'])){
 
 	include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Profit and Loss Report') . '</p>';
-echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also called an Income Statment, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . '<br />'
-. _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />'
-. _('The P&L represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br />'
-. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Profit and Loss Report') . '
+		</p>';
+	echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also called an Income Statment, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . 
+		'<br />'
+	. _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />'
+	. _('The P&L represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br />'
+	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
+	
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -37,7 +43,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	/*Show a form to allow input of criteria for profit and loss to show */
 	echo '<p><table class="selection">
 			<tr><td>' . _('Select Period From') . ':</td>
-				<td><select Name="FromPeriod">';
+				<td><select name="FromPeriod">';
 
 	$sql = "SELECT periodno, 
 					lastdate_in_period 
@@ -49,20 +55,21 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
 			if( $_POST['FromPeriod']== $myrow['periodno']){
-				echo '<option selected value=' . $myrow['periodno'] . '>' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option selected value="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			}
 		} else {
 			if($myrow['lastdate_in_period']==$DefaultFromDate){
-				echo '<option selected value=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option selected value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 			}
 		}
 	}
 
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
 		$LastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$sql = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
@@ -90,18 +97,23 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>'._('Detail Or Summary').':</td>
-				<td><select name="Detail">
+	echo '<tr>
+			<td>'._('Detail Or Summary').':</td>
+			<td><select name="Detail">
 					<option selected value="Summary">'._('Summary') . '</option>
 					<option selected value="Detailed">'._('All Accounts') . '</option>
 					</select>
-				</td>
-			</tr>';
-
-	echo '</table>';
-
-	echo '<br /><div class="centre"><input type="submit" name="ShowPL" value="' ._('Show on Screen (HTML)') . '"></div>';
-	echo '<br /><div class="centre"><input type="submit" name="PrintPDF" value="'._('Produce PDF Report').'"></div>';
+			</td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="ShowPL" value="' ._('Show on Screen (HTML)') . '" />
+		</div>
+		<br />
+		<div class="centre">
+			<input type="submit" name="PrintPDF" value="'._('Produce PDF Report').'" />
+		</div>';
 
 	/*Now do the posting while the user is thinking about the period to select */
 
@@ -344,7 +356,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 		if ($myrow['groupname'] != $ActGrp){
 			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
-					$Level++;
+				$Level++;
 			}
 			$ActGrp = $myrow['groupname'];
 			$ParentGroups[$Level]=$ActGrp;
@@ -537,10 +549,10 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 } else {
 
 	include('includes/header.inc');
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '">
-			<input type=hidden name="ToPeriod" value="' . $_POST['ToPeriod'] . '">';
+	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
+			<input type=hidden name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
@@ -556,7 +568,6 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
-
 	$SQL = "SELECT accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
@@ -568,20 +579,18 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-				FROM chartmaster INNER JOIN accountgroups
-				ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
-				ON chartmaster.accountcode= chartdetails.accountcode
-				WHERE accountgroups.pandl=1
-				GROUP BY accountgroups.sectioninaccounts,
+			FROM chartmaster INNER JOIN accountgroups
+			ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
+			ON chartmaster.accountcode= chartdetails.accountcode
+			WHERE accountgroups.pandl=1
+			GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmaster.accountname,
-					accountgroups.sequenceintb
-				ORDER BY accountgroups.sectioninaccounts,
+					chartmaster.accountname
+			ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
-					accountgroups.sequenceintb,
 					chartdetails.accountcode";
 		
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
@@ -591,22 +600,22 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
-	echo '<table cellpadding=2 class=selection>';
+	echo '<table class="selection">';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
 							<th>' . _('Account') . '</th>
 							<th>'._('Account Name') .'</th>
-							<th colspan=2>' . _('Period Actual') .'</th>
-							<th colspan=2>' . _('Period Budget') .'</th>
-							<th colspan=2>' . _('Last Year') . '</th>
+							<th colspan="2">' . _('Period Actual') .'</th>
+							<th colspan="2">' . _('Period Budget') .'</th>
+							<th colspan="2">' . _('Last Year') . '</th>
 						</tr>';
 	} else { /*summary */
 		$TableHeader = '<tr>
-							<th colspan=2></th>
-							<th colspan=2>' . _('Period Actual') .'</th>
-							<th colspan=2>' . _('Period Budget') . '</th>
-							<th colspan=2>' . _('Last Year') . '</th>
+							<th colspan="2"></th>
+							<th colspan="2">' . _('Period Actual') .'</th>
+							<th colspan="2">' . _('Period Budget') . '</th>
+							<th colspan="2">' . _('Last Year') . '</th>
 						</tr>';
 	}
 
@@ -643,8 +652,8 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 					while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 					if ($_POST['Detail']=='Detailed'){
 						echo '<tr>
-								<td colspan=2></td>
-								<td colspan=6><hr></td>
+								<td colspan="2"></td>
+								<td colspan="6"><hr /></td>
 							</tr>';
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 					} else {
@@ -652,13 +661,13 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 					}
 				if ($Section ==1){ /*Income */
 						printf('<tr>
-								<td colspan=2><font size=2><I>%s </I></font></td>
+								<td colspan="2"><font size="2"><i>%s</i></font></td>
 								<td></td>
-								<td class=number>%s</td>
+								<td class="number">%s</td>
 								<td></td>
-								<td class=number>%s</td>
+								<td class="number">%s</td>
 								<td></td>
-								<td class=number>%s</td>
+								<td class="number">%s</td>
 								</tr>',
 								$ActGrpLabel,
 								locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -666,12 +675,12 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 								locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 					} else { /*Costs */
 						printf('<tr>
-								<td colspan=2><font size=2><I>%s </I></font></td>
-								<td class=number>%s</td>
+								<td colspan="2"><font size=2><i>%s </i></font></td>
+								<td class="number">%s</td>
 								<td></td>
-								<td class=number>%s</td>
+								<td class="number">%s</td>
 								<td></td>
-								<td class=number>%s</td>
+								<td class="number">%s</td>
 								<td></td>
 								</tr>',
 								$ActGrpLabel,
@@ -688,8 +697,8 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				//still need to print out the old group totals
 				if ($_POST['Detail']=='Detailed'){
 						echo '<tr>
-								<td colspan=2></td>
-								<td colspan=6><hr></td>
+								<td colspan="2"></td>
+								<td colspan="6"><hr /></td>
 							</tr>';
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 					} else {
@@ -698,13 +707,13 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 				if ($Section ==1){ /*Income */
 					printf('<tr>
-							<td colspan=2><font size=2><I>%s </I></font></td>
+							<td colspan="2"><font size=2><i>%s </i></font></td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							</tr>',
 							$ActGrpLabel,
 							locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -712,12 +721,12 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 							locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				} else { /*Costs */
 					printf('<tr>
-							<td colspan=2><font size=2><I>%s </I></font></td>
-							<td class=number>%s</td>
+							<td colspan="2"><font size=2><i>%s </i></font></td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
 							</tr>',
 							$ActGrpLabel,
@@ -740,21 +749,21 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 					echo '<tr>
 							<td colspan=3></td>
-      						<td><hr></td>
+      						<td><hr /></td>
 							<td></td>
-							<td><hr></td>
+							<td><hr /></td>
 							<td></td>
-							<td><hr></td>
+							<td><hr /></td>
 						</tr>';
 
 					printf('<tr>
-							<td colspan=2><font size=4>%s</font></td>
+							<td colspan="2"><font size=4>%s</font></td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							</tr>',
 							$Sections[$Section],
 							locale_number_format(-$SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),
@@ -765,21 +774,21 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 							$TotalLYIncome = -$SectionPrdLY;
 				} else {
 					echo '<tr>
-							<td colspan=2></td>
-		      				<td><hr></td>
+							<td colspan="2"></td>
+		      				<td><hr /></td>
 							<td></td>
-							<td><hr></td>
+							<td><hr /></td>
 							<td></td>
-							<td><hr></td>
+							<td><hr /></td>
 							</tr>';
 							printf('<tr>
-							<td colspan=2><font size=4>%s</font></td>
+							<td colspan="2"><font size=4>%s</font></td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							</tr>',
 							$Sections[$Section],
 							locale_number_format($SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),
@@ -788,17 +797,17 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				}
 				if ($Section==2){ /*Cost of Sales - need sub total for Gross Profit*/
 					echo '<tr>
-							<td colspan=2></td>
-							<td colspan=6><hr></td>
+							<td colspan="2"></td>
+							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr>
-							<td colspan=2><font size=4>'._('Gross Profit').'</font></td>
+							<td colspan="2"><font size=4>'._('Gross Profit').'</font></td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							<td></td>
-							<td class=number>%s</td>
+							<td class="number">%s</td>
 							</tr>',
 							locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),
@@ -820,18 +829,18 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 						$LYGPPercent = 0;
 					}
 					echo '<tr>
-							<td colspan=2></td>
-							<td colspan=6><hr></td>
+							<td colspan="2"></td>
+							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr>
-							<td colspan=2><font size=2><I>'._('Gross Profit Percent').'</I></font></td>
+							<td colspan="2"><font size=2><i>'._('Gross Profit Percent').'</i></font></td>
 							<td></td>
-							<td class=number><I>%s</I></td>
+							<td class="number"><i>%s</i></td>
 							<td></td>
-							<td class=number><I>%s</I></td>
+							<td class="number"><i>%s</i></td>
 							<td></td>
-							<td class=number><I>%s</I></td>
-							</tr><tr><td colspan=6> </td></tr>',
+							<td class="number"><i>%s</i></td>
+							</tr><tr><td colspan="6"> </td></tr>',
 							locale_number_format($PrdGPPercent,1) . '%',
 							locale_number_format($BudgetGPPercent,1) . '%',
 							locale_number_format($LYGPPercent,1). '%');
@@ -846,7 +855,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
-					<td colspan=6><font size=4 color=BLUE><b>%s</b></font></td>
+					<td colspan="6"><font size=4 color=BLUE><b>%s</b></font></td>
 					</tr>',
 					$Sections[$myrow['sectioninaccounts']]);
 			}
@@ -908,11 +917,11 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				 printf('<td>%s</td>
 						<td>%s</td>
 						<td></td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
 						<td></td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
 						<td></td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
 						</tr>',
 						$ActEnquiryURL,
 						$myrow['accountname'],
@@ -922,11 +931,11 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			} else {
 				printf('<td>%s</td>
 						<td>%s</td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
 						<td></td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
 						<td></td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
 						<td></td>
 						</tr>',
 						$ActEnquiryURL,
@@ -947,8 +956,8 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 				if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
-						<td colspan=2></td>
-						<td colspan=6><hr></td>
+						<td colspan="2"></td>
+						<td colspan="6"><hr /></td>
 					</tr>';
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 				} else {
@@ -956,32 +965,32 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				}
 				if ($Section ==1){ /*Income */
 					printf('<tr>
-						<td colspan=2><font size=2><I>%s </I></font></td>
-						<td></td>
-						<td class="number">%s</td>
-						<td></td>
-						<td class="number">%s</td>
-						<td></td>
-						<td class="number">%s</td>
-						</tr>',
-						$ActGrpLabel,
-						locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format(-$GrpPrdLY[$Level]),$_SESSION['CompanyRecord']['decimalplaces']);
+								<td colspan="2"><font size=2><i>%s </i></font></td>
+								<td></td>
+								<td class="number">%s</td>
+								<td></td>
+								<td class="number">%s</td>
+								<td></td>
+								<td class="number">%s</td>
+							</tr>',
+							$ActGrpLabel,
+							locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							locale_number_format(-$GrpPrdLY[$Level]),$_SESSION['CompanyRecord']['decimalplaces']);
 				} else { /*Costs */
 					printf('<tr>
-						<td colspan=2><font size=2><I>%s </I></font></td>
-						<td class="number">%s</td>
-						<td></td>
-						<td class="number">%s</td>
-						<td></td>
-						<td class="number">%s</td>
-						<td></td>
-						</tr>',
-						$ActGrpLabel,
-						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-						locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+								<td colspan="2"><font size=2><i>%s </i></font></td>
+								<td class="number">%s</td>
+								<td></td>
+								<td class="number">%s</td>
+								<td></td>
+								<td class="number">%s</td>
+								<td></td>
+							</tr>',
+							$ActGrpLabel,
+							locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+							locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				}
 				$GrpPrdLY[$Level] = 0;
 				$GrpPrdActual[$Level] = 0;
@@ -992,8 +1001,8 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 			//still need to print out the old group totals
 			if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
-							<td colspan=2></td>
-							<td colspan=6><hr></td>
+							<td colspan="2"></td>
+							<td colspan="6"><hr /></td>
 						</tr>';
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
 				} else {
@@ -1002,13 +1011,13 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 			if ($Section ==1){ /*Income */
 				printf('<tr>
-						<td colspan=2><font size=2><I>%s </I></font></td>
-						<td></td>
-						<td class=number>%s</td>
-						<td></td>
-						<td class=number>%s</td>
-						<td></td>
-						<td class=number>%s</td>
+							<td colspan="2"><font size=2><i>%s </i></font></td>
+							<td></td>
+							<td class="number">%s</td>
+							<td></td>
+							<td class="number">%s</td>
+							<td></td>
+							<td class="number">%s</td>
 						</tr>',
 						$ActGrpLabel,
 						locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -1016,13 +1025,13 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 						locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 			} else { /*Costs */
 				printf('<tr>
-						<td colspan=2><font size=2><I>%s </I></font></td>
-						<td class=number>%s</td>
-						<td></td>
-						<td class=number>%s</td>
-						<td></td>
-						<td class=number>%s</td>
-						<td></td>
+							<td colspan="2"><font size="2"><i>%s </i></font></td>
+							<td class="number">%s</td>
+							<td></td>
+							<td class="number">%s</td>
+							<td></td>
+							<td class="number">%s</td>
+							<td></td>
 						</tr>',
 						$ActGrpLabel,
 						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -1043,21 +1052,21 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 			echo '<tr>
 					<td colspan=3></td>
-					<td><hr></td>
+					<td><hr /></td>
 					<td></td>
-					<td><hr></td>
+					<td><hr /></td>
 					<td></td>
-					<td><hr></td>
+					<td><hr /></td>
 				</tr>';
 
 			printf('<tr>
-					<td colspan=2><font size=4>%s</font></td>
-					<td></td>
-					<td class=number>%s</td>
-					<td></td>
-					<td class=number>%s</td>
-					<td></td>
-					<td class=number>%s</td>
+						<td colspan="2"><font size=4>%s</font></td>
+						<td></td>
+						<td class="number">%s</td>
+						<td></td>
+						<td class="number">%s</td>
+						<td></td>
+						<td class="number">%s</td>
 					</tr>',
 					$Sections[$Section],
 					locale_number_format(-$SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),
@@ -1068,21 +1077,21 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 					$TotalLYIncome = -$SectionPrdLY;
 		} else {
 			echo '<tr>
-					<td colspan=2></td>
-					<td><hr></td>
+					<td colspan="2"></td>
+					<td><hr /></td>
 					<td></td>
-					<td><hr></td>
+					<td><hr /></td>
 					<td></td>
-					<td><hr></td>
+					<td><hr /></td>
 				</tr>';
 			printf('<tr>
-					<td colspan=2><font size=4>%s</font></td>
-					<td></td>
-					<td class=number>%s</td>
-					<td></td>
-					<td class=number>%s</td>
-					<td></td>
-					<td class=number>%s</td>
+						<td colspan="2"><font size=4>%s</font></td>
+						<td></td>
+						<td class="number">%s</td>
+						<td></td>
+						<td class="number">%s</td>
+						<td></td>
+						<td class="number">%s</td>
 					</tr>',
 					$Sections[$Section],
 					locale_number_format($SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),
@@ -1091,17 +1100,17 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 		}
 		if ($Section==2){ /*Cost of Sales - need sub total for Gross Profit*/
 			echo '<tr>
-					<td colspan=2></td>
-					<td colspan=6><hr></td>
+					<td colspan="2"></td>
+					<td colspan="6"><hr /></td>
 				</tr>';
 			printf('<tr>
-					<td colspan=2><font size=4>'._('Gross Profit').'</font></td>
-					<td></td>
-					<td class=number>%s</td>
-					<td></td>
-					<td class=number>%s</td>
-					<td></td>
-					<td class=number>%s</td>
+						<td colspan="2"><font size="4">'._('Gross Profit').'</font></td>
+						<td></td>
+						<td class="number">%s</td>
+						<td></td>
+						<td class="number">%s</td>
+						<td></td>
+						<td class="number">%s</td>
 					</tr>',
 					locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),
@@ -1123,18 +1132,18 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 				$LYGPPercent = 0;
 			}
 			echo '<tr>
-					<td colspan=2></td>
-					<td colspan=6><hr></td>
+					<td colspan="2"></td>
+					<td colspan="6"><hr /></td>
 				</tr>';
 			printf('<tr>
-					<td colspan=2><font size=2><I>'._('Gross Profit Percent').'</I></font></td>
+					<td colspan="2"><font size=2><i>'._('Gross Profit Percent').'</i></font></td>
 					<td></td>
-					<td class=number><I>%s</I></td>
+					<td class="number"><i>%s</i></td>
 					<td></td>
-					<td class=number><I>%s</I></td>
+					<td class="number"><i>%s</i></td>
 					<td></td>
-					<td class=number><I>%s</I></td>
-					</tr><tr><td colspan=6> </td></tr>',
+					<td class="number"><i>%s</i></td>
+					</tr><tr><td colspan="6"> </td></tr>',
 					locale_number_format($PrdGPPercent,1) . '%',
 					locale_number_format($BudgetGPPercent,1) . '%',
 					locale_number_format($LYGPPercent,1). '%');
@@ -1149,7 +1158,7 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 
 		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])){
 			printf('<tr>
-				<td colspan=6><font size=4 color=BLUE><b>%s</b></font></td>
+				<td colspan="6"><font size=4 color=BLUE><b>%s</b></font></td>
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}
@@ -1158,23 +1167,22 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	}
 
 	echo '<tr>
-			<td colspan=2></td>
-			<td colspan=6><hr></td>
+			<td colspan="2"></td>
+			<td colspan="6"><hr /></td>
 		</tr>';
 
 	printf('<tr bgcolor="#ffffff">
-			<td colspan=2><font size="4" color="blue"><b>'._('Profit').' - '._('Loss').'</b></font></td>
-			<td></td>
-			<td class="number">%s</td>
-			<td></td>
-			<td class="number">%s</td>
-			<td></td>
-			<td class="number">%s</td>
+				<td colspan="2"><font size="4" color="blue"><b>'._('Profit').' - '._('Loss').'</b></font></td>
+				<td></td>
+				<td class="number">%s</td>
+				<td></td>
+				<td class="number">%s</td>
+				<td></td>
+				<td class="number">%s</td>
 			</tr>',
 			locale_number_format(-$PeriodProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),
 			locale_number_format(-$PeriodBudgetProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format(-$PeriodLYProfitLoss,$_SESSION['CompanyRecord']['decimalplaces'])
-			);
+			locale_number_format(-$PeriodLYProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']) );
 
 	if ($TotalIncome !=0){
 		$PrdNPPercent = 100*(-$PeriodProfitLoss)/$TotalIncome;
@@ -1193,18 +1201,18 @@ echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also c
 	}
 	echo '<tr>
 			<td colspan="2"></td>
-			<td colspan="6"><hr></td>
+			<td colspan="6"><hr /></td>
 		</tr>';
 
 	printf('<tr>
-			<td colspan="2"><font size="2"><I>'._('Net Profit Percent').'</I></font></td>
-			<td></td>
-			<td class="number"><I>%s</I></td>
-			<td></td>
-			<td class="number"><I>%s</I></td>
-			<td></td>
-			<td class="number"><I>%s</I></td>
-			</tr><tr><td colspan="6"> </td>
+				<td colspan="2"><font size="2"><i>'._('Net Profit Percent').'</i></font></td>
+				<td></td>
+				<td class="number"><i>%s</i></td>
+				<td></td>
+				<td class="number"><i>%s</i></td>
+				<td></td>
+				<td class="number"><i>%s</i></td>
+				</tr><tr><td colspan="6"> </td>
 			</tr>',
 			locale_number_format($PrdNPPercent,1) . '%',
 			locale_number_format($BudgetNPPercent,1) . '%',

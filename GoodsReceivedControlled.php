@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+
 /* $Id$*/
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
@@ -23,8 +23,10 @@ if (empty($_GET['identifier'])) {
 
 if (!isset($_SESSION['PO'.$identifier])) {
 	/* This page can only be called with a purchase order number for receiving*/
-	echo '<div class="centre"><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">'.
-		_('Select a purchase order to receive'). '</a></div><br />';
+	echo '<div class="centre">
+			<a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Select a purchase order to receive'). '</a>
+		</div>
+		<br />';
 	prnMsg( _('This page can only be opened if a purchase order and line item has been selected') . '. ' . _('Please do that first'),'error');
 	include('includes/footer.inc');
 	exit;
@@ -35,8 +37,9 @@ if (isset($_GET['LineNo']) AND $_GET['LineNo']>0){
 } elseif (isset($_POST['LineNo'])){
 	$LineNo = $_POST['LineNo'];
 } else {
-	echo '<div class="centre"><a href="' . $rootpath . '/GoodsReceived.php">'.
-		_('Select a line Item to Receive').'</a></div>';
+	echo '<div class="centre">
+			<a href="' . $rootpath . '/GoodsReceived.php">' . _('Select a line Item to Receive').'</a>
+		</div>';
 	prnMsg( _('This page can only be opened if a Line Item on a PO has been selected') . '. ' . _('Please do that first'), 'error');
 	include( 'includes/footer.inc');
 	exit;
@@ -47,8 +50,9 @@ $LineItem = &$_SESSION['PO'.$identifier]->LineItems[$LineNo];
 
 if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items */
 
-	echo '<div class="centre"><a href="' . $rootpath . '/GoodsReceived.php">'.
-		_('Back to the Purchase Order'). '</a></div>';
+	echo '<div class="centre">
+			<a href="' . $rootpath . '/GoodsReceived.php">' . _('Back to the Purchase Order'). '</a>
+		</div>';
 	prnMsg( _('The line being received must be controlled as defined in the item definition'), 'error');
 	include('includes/footer.inc');
 	exit;
@@ -57,12 +61,12 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 /********************************************
   Get the page going....
 ********************************************/
-echo '<div class="centre">';
-
-echo '<br /><a href="'.$rootpath.'/GoodsReceived.php?identifier=' .$identifier . '">'. _('Back To Purchase Order'). ' # '. $_SESSION['PO'.$identifier]->OrderNo . '</a>';
-
-echo '<br /><font size=2><b>'. _('Receive controlled item'). ' '. $LineItem->StockID  . ' - ' . $LineItem->ItemDescription .
-	' ' . _('on order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</b></font></div>';
+echo '<div class="centre">
+		<br />
+		<a href="'.$rootpath.'/GoodsReceived.php?identifier=' .$identifier . '">'. _('Back To Purchase Order'). ' # '. $_SESSION['PO'.$identifier]->OrderNo . '</a>
+		<br />
+		<font size="2"><b>'. _('Receive controlled item'). ' '. $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</b></font>
+	</div>';
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['PO'.$identifier]->Location;

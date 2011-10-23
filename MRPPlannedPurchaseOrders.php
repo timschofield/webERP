@@ -32,9 +32,9 @@ if (isset($_POST['PrintPDF'])) {
 	$WhereDate = ' ';
 	$ReportDate = ' ';
 	if (Is_Date($_POST['cutoffdate'])) {
-			   $FormatDate = FormatDateForSQL($_POST['cutoffdate']);
-			   $WhereDate = " AND duedate <= '" . $FormatDate . "' ";
-			   $ReportDate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
+		$FormatDate = FormatDateForSQL($_POST['cutoffdate']);
+		$WhereDate = " AND duedate <= '" . $FormatDate . "' ";
+		$ReportDate = _(' Through  ') . Format_Date($_POST['cutoffdate']);
 	}
 	if ($_POST['Consolidation'] == 'None') {
 		$sql = "SELECT mrpplannedorders.*,
@@ -159,10 +159,9 @@ if (isset($_POST['PrintPDF'])) {
 			if ($Partctr > 0 & $holdpart != $myrow['part']) {
 				$pdf->addTextWrap(50,$YPos,130,$FontSize,$holddescription,'',0,$fill);
 				$pdf->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-				$pdf->addTextWrap(230,$YPos,40,$FontSize,locale_number_format($holdcost,2),'right',0,$fill);
-				$pdf->addTextWrap(270,$YPos,50,$FontSize,locale_number_format($totalpartqty,
-																$holddecimalplaces),'right',0,$fill);
-				$pdf->addTextWrap(320,$YPos,60,$FontSize,locale_number_format($totalpartcost,2),'right',0,$fill);
+				$pdf->addTextWrap(230,$YPos,40,$FontSize,locale_number_format($holdcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(270,$YPos,50,$FontSize,locale_number_format($totalpartqty,	$holddecimalplaces),'right',0,$fill);
+				$pdf->addTextWrap(320,$YPos,60,$FontSize,locale_number_format($totalpartcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 				$pdf->addTextWrap(380,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 				$pdf->addTextWrap(410,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
 				// Get and print supplier info for part
@@ -193,9 +192,8 @@ if (isset($_POST['PrintPDF'])) {
 			$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$myrow['part'],'',0,$fill);
 			$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$fill);
 			$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$fill);
-			$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'],
-													  $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($extcost,2),'right',0,$fill);
+			$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'],$myrow['decimalplaces']),'right',0,$fill);
+			$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($extcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 			if ($_POST['Consolidation'] == 'None'){
 				$pdf->addTextWrap(370,$YPos,80,$FontSize,$myrow['ordertype'],'right',0,$fill);
 				$pdf->addTextWrap(450,$YPos,80,$FontSize,$myrow['orderno'],'right',0,$fill);
@@ -223,9 +221,9 @@ if (isset($_POST['PrintPDF'])) {
 	$YPos -=$line_height;
 	$pdf->addTextWrap(40,$YPos,130,$FontSize,$holddescription,'',0,$fill);
 	$pdf->addTextWrap(170,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$fill);
-	$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($holdcost,2),'right',0,$fill);
+	$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($holdcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 	$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($totalpartqty,$holddecimalplaces),'right',0,$fill);
-	$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($totalpartcost,2),'right',0,$fill);
+	$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($totalpartcost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
 	$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 	$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
 	// Get and print supplier info for part
@@ -253,7 +251,7 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Purchase Orders: '), 'left');
 	$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
 	$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
-	$DisplayTotalVal = locale_number_format($Total_Extcost,2);
+	$DisplayTotalVal = locale_number_format($Total_Extcost,$_SESSION['CompanyRecord']['decimalplaces']);
 	$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Purchase_Orders_' . Date('Y-m-d') . '.pdf');
@@ -278,8 +276,8 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<option value="no">' . _('Plain Print');
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Cut Off Date') . ':</td><td><input type ="text" class=date alt="'.$_SESSION['DefaultDateFormat'] .
-			'" name="cutoffdate" size="10" value="'.date($_SESSION['DefaultDateFormat']).'"></td></tr>';
-	echo '</table><p><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div></form>';
+			'" name="cutoffdate" size="10" value="'.date($_SESSION['DefaultDateFormat']).'" /></td></tr>';
+	echo '</table><p><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div></form>';
 
 	include('includes/footer.inc');
 
@@ -342,11 +340,10 @@ function GetPartInfo(&$db,$part) {
 	// Printed when there is a part break
 	$sql = "SELECT orddate as maxdate,
 				   purchorders.orderno
-			FROM purchorders,
-				 purchorderdetails
-			WHERE purchorders.orderno = purchorderdetails.orderno
-			  AND purchorderdetails.itemcode = '" . $part ."'
-			  ORDER BY orddate DESC LIMIT 1";
+			FROM purchorders INNER JOIN purchorderdetails
+			ON purchorders.orderno = purchorderdetails.orderno
+			WHERE purchorderdetails.itemcode = '" . $part ."'
+			ORDER BY orddate DESC LIMIT 1";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)>0) {
 		$myrow = DB_fetch_array($result,$db);
@@ -359,8 +356,8 @@ function GetPartInfo(&$db,$part) {
 		$myrow = DB_fetch_array($result,$db);
 		$PartInfo[] = $myrow['supplierno'];
 		$sql = "SELECT supplierno
-			FROM purchdata
-			WHERE stockid = '" . $part . "'
+				FROM purchdata
+				WHERE stockid = '" . $part . "'
 				AND preferred='1'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_array($result,$db);

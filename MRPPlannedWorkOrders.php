@@ -251,7 +251,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		echo '<table class="selection">';
 		echo '<tr><th colspan="9"><font size="3" color="blue">' . _('Consolidation') . ': ' . $_POST['Consolidation'] .
 			"&nbsp;&nbsp;&nbsp;&nbsp;" . _('Cutoff Date') . ': ' . $_POST['cutoffdate'] . '</font></th></tr>';
-		echo '<tr><th></th>
+		echo '<tr>
+				<th></th>
 				<th>' . _('Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('MRP Date') . '</th>

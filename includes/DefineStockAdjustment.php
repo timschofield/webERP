@@ -3,14 +3,14 @@
 class StockAdjustment {
 
         var $StockID;
-        Var $StockLocation;
+        var $StockLocation;
         var $Controlled;
         var $Serialised;
         var $ItemDescription;
-        Var $PartUnit;
-        Var $StandardCost;
-        Var $DecimalPlaces;
-        Var $Quantity;
+        var $PartUnit;
+        var $StandardCost;
+        var $DecimalPlaces;
+        var $Quantity;
         var $tag;
         var $SerialItems; /*array to hold controlled items*/
 
@@ -25,7 +25,7 @@ class StockAdjustment {
         	$this->StandardCost = 0;
         	$this->DecimalPlaces = 0;
             $this->SerialItems = array();
-            $Quantity =0;
+            $this->Quantity = 0;
             $this->tag=0;
         }
 }

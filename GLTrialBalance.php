@@ -13,15 +13,22 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); //this reads in the Accounts Sections array
 
 
-if (isset($_POST['FromPeriod']) and isset($_POST['ToPeriod']) and $_POST['FromPeriod'] > $_POST['ToPeriod']){
+if (isset($_POST['FromPeriod']) 
+	AND isset($_POST['ToPeriod']) 
+	AND $_POST['FromPeriod'] > $_POST['ToPeriod']){
+		
 	prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
 	$_POST['SelectADifferentPeriod']=_('Select A Different Period');
 }
 
-if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
+if ((! isset($_POST['FromPeriod']) 
+	AND ! isset($_POST['ToPeriod'])) 
+	OR isset($_POST['SelectADifferentPeriod'])){
 
 	include  ('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $title . '
+		</p>';
 	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -65,7 +72,8 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		}
 	}
 
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
 		$lastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$sql = "SELECT periodno
@@ -98,8 +106,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		</table>
 		<br />';
 
-	echo '<div class="centre"><input type=submit Name="ShowTB" Value="' . _('Show Trial Balance') .'">';
-	echo '<input type="submit" name="PrintPDF" value="'._('PrintPDF').'"></div>';
+	echo '<div class="centre">
+			<input type="submit" Name="ShowTB" value="' . _('Show Trial Balance') .'" />
+			<input type="submit" name="PrintPDF" value="'._('PrintPDF').'" />
+		</div>';
 
 /*Now do the posting while the user is thinking about the period to select */
 
@@ -379,7 +389,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 } else {
 
 	include('includes/header.inc');
-	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type=hidden name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type=hidden name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -479,10 +489,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
 					printf('<tr>
 						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
-						<td class=number><I>%s</I></td>
-						<td class=number><I>%s</I></td>
-						<td class=number><I>%s</I></td>
-						<td class=number><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
 						</tr>',
 						$ParentGroups[$Level],
 						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -499,10 +509,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					do {
 						printf('<tr>
 							<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
-							<td class=number><I>%s</I></td>
-							<td class=number><I>%s</I></td>
-							<td class=number><I>%s</I></td>
-							<td class=number><I>%s</I></td>
+							<td class="number"><I>%s</I></td>
+							<td class="number"><I>%s</I></td>
+							<td class="number"><I>%s</I></td>
+							<td class="number"><I>%s</I></td>
 							</tr>',
 							$ParentGroups[$Level],
 							locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -523,10 +533,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					if ($Level>0){
 						printf('<tr>
 						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
-						<td class=number><I>%s</I></td>
-						<td class=number><I>%s</I></td>
-						<td class=number><I>%s</I></td>
-						<td class=number><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
 						</tr>',
 						$ParentGroups[$Level],
 						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -547,7 +557,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			$ParentGroups[$Level]=$myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
 			printf('<tr>
-				<td colspan=6><font size=4 color=blue><b>%s</b></font></td>
+					<td colspan="6"><font size="4" color="blue"><b>%s</b></font></td>
 				</tr>',
 				$myrow['groupname']);
 			echo $TableHeader;
@@ -610,18 +620,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$ActEnquiryURL = '<a href="'. $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . '&Show=Yes">' . $myrow['accountcode'] . '<a>';
 
 		printf('<td>%s</td>
-			<td>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			</tr>',
-			$ActEnquiryURL,
-			$myrow['accountname'],
-			locale_number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>',
+				$ActEnquiryURL,
+				$myrow['accountname'],
+				locale_number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),
+				locale_number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
+				locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
+				locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 
 		$j++;
 	}
@@ -634,17 +644,17 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			$ParentGroups[$Level]=$myrow['groupname'];
 		} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
 			printf('<tr>
-				<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
-				<td class=number><I>%s</I></td>
-				<td class=number><I>%s</I></td>
-				<td class=number><I>%s</I></td>
-				<td class=number><I>%s</I></td>
-				</tr>',
-				$ParentGroups[$Level],
-				locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+					<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+					<td class="number"><I>%s</I></td>
+					<td class="number"><I>%s</I></td>
+					<td class="number"><I>%s</I></td>
+					<td class="number"><I>%s</I></td>
+					</tr>',
+					$ParentGroups[$Level],
+					locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+					locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 
 			$GrpActual[$Level] =0;
 			$GrpBudget[$Level] =0;
@@ -654,18 +664,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		} else {
 			do {
 				printf('<tr>
-					<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
-					<td class=number><I>%s</I></td>
-					<td class=number><I>%s</I></td>
-					<td class=number><I>%s</I></td>
-					<td class=number><I>%s</I></td>
-					</tr>',
-					$ParentGroups[$Level],
-					locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
-
+						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						</tr>',
+						$ParentGroups[$Level],
+						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+	
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
 				$GrpPrdActual[$Level] =0;
@@ -678,18 +688,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 			if ($Level >0){
 				printf('<tr>
-				<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
-				<td class=number><I>%s</I></td>
-				<td class=number><I>%s</I></td>
-				<td class=number><I>%s</I></td>
-				<td class=number><I>%s</I></td>
-				</tr>',
-				$ParentGroups[$Level],
-				locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
-
+						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						<td class="number"><I>%s</I></td>
+						</tr>',
+						$ParentGroups[$Level],
+						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
+						locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+		
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
 				$GrpPrdActual[$Level] =0;
@@ -704,17 +714,17 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 
 	printf('<tr bgcolor="#ffffff">
-			<td colspan=2><font color=BLUE><b>' . _('Check Totals') . '</b></font></td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-		</tr>',
-		locale_number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),
-		locale_number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),
-		locale_number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
-		locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
-
+				<td colspan=2><font color=BLUE><b>' . _('Check Totals') . '</b></font></td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+			</tr>',
+			locale_number_format($CheckMonth,$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
+	
 	echo '</table><br />';
 	echo '<div class="centre"><input type=submit Name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }

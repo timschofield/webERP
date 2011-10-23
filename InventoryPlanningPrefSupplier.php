@@ -13,7 +13,7 @@ function standard_deviation($Data){
 
 	$TotalDifferenceSquared =0;
 	foreach ($Data as $Element){
-			$TotalDifferenceSquared += (($Element-$Average) * ($Element-$Average));
+		$TotalDifferenceSquared += (($Element-$Average) * ($Element-$Average));
 	}
 	Return sqrt($TotalDifferenceSquared/$Counter);
 }

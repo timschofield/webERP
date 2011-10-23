@@ -370,7 +370,8 @@ if (isset($_POST['PrintPDF'])
 	$title=_('Inventory Planning Reporting');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
 	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
@@ -381,65 +382,69 @@ if (isset($_POST['PrintPDF'])
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr>
-					<td>' . _('From Inventory Category Code') . ':</td>
-					<td><select name="FromCriteria">';
+				<td>' . _('From Inventory Category Code') . ':</td>
+				<td><select name="FromCriteria">';
 
-					$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
-					$CatResult= DB_query($sql,$db);
-					While ($myrow = DB_fetch_array($CatResult)){
-					echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'] .'</option>';
-					}
-					echo "</select>
-					</td>
-			 </tr>";
-
-		echo '<tr>
-					<td>' . _('To Inventory Category Code') . ':</td>
-					<td><select name="ToCriteria">';
+		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid";
+		$CatResult= DB_query($sql,$db);
+		while ($myrow = DB_fetch_array($CatResult)){
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] .'</option>';
+		}
+		echo '</select>
+			</td>
+			 </tr>
+			 <tr>
+				<td>' . _('To Inventory Category Code') . ':</td>
+				<td><select name="ToCriteria">';
 
 					/*Set the index for the categories result set back to 0 */
-					DB_data_seek($CatResult,0);
+		DB_data_seek($CatResult,0);
 
-					While ($myrow = DB_fetch_array($CatResult)){
-					echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'].'</option>';
-					}
-					echo '</select></td>
-			 </tr>';
+		while ($myrow = DB_fetch_array($CatResult)){
+			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'].'</option>';
+		}
+		echo '</select></td>
+			</tr>
+			<tr>
+				<td>' . _('For Inventory in Location') . ':</td>
+				<td><select name="Location">';
+					
+		$sql = "SELECT loccode, locationname FROM locations";
+		$LocnResult=DB_query($sql,$db);
+
+		echo '<option value="All">' . _('All Locations').'</option>';
+
+		while ($myrow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'].'</option>';
+		}
+		echo '</select>
+				</td>
+			</tr>';
 
 		echo '<tr>
-					<td>' . _('For Inventory in Location') . ":</td><td><select name='Location'>";
-					$sql = 'SELECT loccode, locationname FROM locations';
-					$LocnResult=DB_query($sql,$db);
-
-					echo "<option value='All'>" . _('All Locations').'</option>';
-
-					while ($myrow=DB_fetch_array($LocnResult)){
-					echo "<option value='" . $myrow['loccode'] . "'>" . $myrow['locationname'].'</option>';
-		      		}
-					echo '</select>
-					</td>
-			  </tr>';
-
-		echo '<tr>
-					<td>' . _('Stock Planning') . ":</td>
-					<td><select name='NumberMonthsHolding'>";
-					echo '<option selected="True" value="1">' . _('One Month MAX') .'</option>';
-					echo '<option value="1.5">' . _('One Month and a half MAX') .'</option>';
-					echo '<option value="2">' . _('Two Months MAX') .'</option>';
-					echo '<option value="2.5">' . _('Two Month and a half MAX') .'</option>';
-					echo '<option value="3">' . _('Three Months MAX') .'</option>';
-					echo '<option value="4">' . _('Four Months MAX') .'</option>';
-					echo '<option value="11">' . _('One Month AVG') .'</option>';
-					echo '<option value="11.5">' . _('One Month and a half AVG') .'</option>';
-					echo '<option value="12">' . _('Two Months AVG') .'</option>';
-					echo '<option value="12.5">' . _('Two Month and a half AVG') .'</option>';
-					echo '<option value="13">' . _('Three Months AVG') .'</option>';
-					echo '<option value="14">' . _('Four Months AVG') .'</option>';
-					echo '</select>
-					</td>
-			 </tr>';
-
-		echo "</table><br /><div class='centre'><input type='submit' Name='PrintPDF' value='" . _('Print PDF') . "' /></div></form>";
+				<td>' . _('Stock Planning') . ':</td>
+				<td><select name="NumberMonthsHolding">
+					<option selected="True" value="1">' . _('One Month MAX') .'</option>
+					<option value="1.5">' . _('One Month and a half MAX') .'</option>
+					<option value="2">' . _('Two Months MAX') .'</option>
+					<option value="2.5">' . _('Two Month and a half MAX') .'</option>
+					<option value="3">' . _('Three Months MAX') .'</option>
+					<option value="4">' . _('Four Months MAX') .'</option>
+					<option value="11">' . _('One Month AVG') .'</option>
+					<option value="11.5">' . _('One Month and a half AVG') .'</option>
+					<option value="12">' . _('Two Months AVG') .'</option>
+					<option value="12.5">' . _('Two Month and a half AVG') .'</option>
+					<option value="13">' . _('Three Months AVG') .'</option>
+					<option value="14">' . _('Four Months AVG') .'</option>
+					</select>
+				</td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>
+		</form>';
 	}
 	include('includes/footer.inc');
 

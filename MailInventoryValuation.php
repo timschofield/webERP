@@ -63,48 +63,48 @@ $line_height = 12;
 if ($Location=='All'){
 
 	$SQL = "SELECT stockmaster.categoryid,
-			stockcategory.categorydescription,
-			stockmaster.stockid,
-			stockmaster.description,
-			SUM(locstock.quantity) as qtyonhand,
-			stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-			SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
-		FROM stockmaster,
-			stockcategory,
-			locstock
-		WHERE stockmaster.stockid=locstock.stockid
-		AND stockmaster.categoryid=stockcategory.categoryid
-		GROUP BY stockmaster.categoryid,
-			stockcategory.categorydescription,
-			unitcost,
-			stockmaster.stockid,
-			stockmaster.description
-		HAVING SUM(locstock.quantity)!=0
-		AND stockmaster.categoryid >= '" . $FromCriteria . "'
-		AND stockmaster.categoryid <= '" . $ToCriteria . "'
-		ORDER BY stockmaster.categoryid,
-			stockmaster.stockid";
+				stockcategory.categorydescription,
+				stockmaster.stockid,
+				stockmaster.description,
+				SUM(locstock.quantity) as qtyonhand,
+				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
+				SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+			FROM stockmaster,
+				stockcategory,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
+			GROUP BY stockmaster.categoryid,
+				stockcategory.categorydescription,
+				unitcost,
+				stockmaster.stockid,
+				stockmaster.description
+			HAVING SUM(locstock.quantity)!=0
+			AND stockmaster.categoryid >= '" . $FromCriteria . "'
+			AND stockmaster.categoryid <= '" . $ToCriteria . "'
+			ORDER BY stockmaster.categoryid,
+				stockmaster.stockid";
 
 } else {
 
 	$SQL = "SELECT stockmaster.categoryid,
-			stockcategory.categorydescription,
-			stockmaster.stockid,
-			stockmaster.description,
-			locstock.quantity as qtyonhand,
-			stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-			locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
-		FROM stockmaster,
-			stockcategory,
-			locstock
-		WHERE stockmaster.stockid=locstock.stockid
-		AND stockmaster.categoryid=stockcategory.categoryid
-		AND locstock.quantity!=0
-		AND stockmaster.categoryid >= '" . $FromCriteria . "'
-		AND stockmaster.categoryid <= '" . $ToCriteria . "'
-		AND locstock.loccode = '" . $Location . "'
-		ORDER BY stockmaster.categoryid,
-			stockmaster.stockid";
+				stockcategory.categorydescription,
+				stockmaster.stockid,
+				stockmaster.description,
+				locstock.quantity as qtyonhand,
+				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
+				locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+			FROM stockmaster,
+				stockcategory,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
+			AND locstock.quantity!=0
+			AND stockmaster.categoryid >= '" . $FromCriteria . "'
+			AND stockmaster.categoryid <= '" . $ToCriteria . "'
+			AND locstock.loccode = '" . $Location . "'
+			ORDER BY stockmaster.categoryid,
+				stockmaster.stockid";
 
 }
 $InventoryResult = DB_query($SQL,$db,'','',false,true);
@@ -141,7 +141,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 			}
 
 			$DisplayCatTotVal = locale_number_format($CatTot_Val,2);
-			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
+			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
 			$YPos -=$line_height;
 
 			If ($_POST['DetailedReport']=='Yes'){
@@ -161,9 +161,9 @@ While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 		$FontSize=8;
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn['description']);
-		$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'],2);
+		$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'],0);
-		$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'],2);
+		$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'],$_SESSION['CompanyRecord']['decimalplaces']);
 
 		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
 		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, 'right');

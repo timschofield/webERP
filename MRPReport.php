@@ -171,9 +171,9 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 				   stockmaster.decimalplaces,
 				   stockmaster.mbflag
 				   FROM levels
-					LEFT JOIN stockmaster
-					  ON levels.part = stockmaster.stockid
-						WHERE part = '" . $_POST['Part'] . "'";
+			LEFT JOIN stockmaster
+			ON levels.part = stockmaster.stockid
+			WHERE part = '" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db,'','',false,true);
 	$myrow=DB_fetch_array($result);
 	$pdf->addTextWrap($Left_Margin,$YPos,35,$FontSize,_('Part:'),'');
@@ -422,7 +422,8 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 
 	// Details for Demand/Supply Sections
 	$i = 0;
-	while ((isset($Supplies[$i]) and mb_strlen($Supplies[$i]['part'])) > 1 or (isset($Requirements[$i]) and mb_strlen($Requirements[$i]['part']) > 1)){
+	while ((isset($Supplies[$i]) AND mb_strlen($Supplies[$i]['part'])) > 1 
+			OR (isset($Requirements[$i]) AND mb_strlen($Requirements[$i]['part']) > 1)){
 
 		$YPos -=$line_height;
 		$FontSize=7;
@@ -459,15 +460,14 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			$FormatedSupDueDate = ConvertSQLDate($Supplies[$i]['duedate']);
 			$FormatedSupMRPDate = ConvertSQLDate($Supplies[$i]['mrpdate']);
 			// Order no is meaningless for QOH and REORD ordertypes
-			if ($suptype == "QOH" || $suptype == "REORD") {
-				$pdf->addTextWrap(310,$YPos,45,$FontSize," ",'');
+			if ($suptype == 'QOH' OR $suptype == 'REORD') {
+				$pdf->addTextWrap(310,$YPos,45,$FontSize,' ','');
 			} else {
 				$pdf->addTextWrap(310,$YPos,45,$FontSize,$Supplies[$i]['orderno'],'');
 			}
 			$pdf->addTextWrap(355,$YPos,35,$FontSize,$displaytype,'');
 			$pdf->addTextWrap(390,$YPos,25,$FontSize,$fortype,'');
-			$pdf->addTextWrap(415,$YPos,40,$FontSize,locale_number_format($Supplies[$i]['supplyquantity'],
-																 $myrow['decimalplaces']),'right');
+			$pdf->addTextWrap(415,$YPos,40,$FontSize,locale_number_format($Supplies[$i]['supplyquantity'],$myrow['decimalplaces']),'right');
 			$pdf->addTextWrap(455,$YPos,50,$FontSize,$FormatedSupDueDate,'right');
 			$pdf->addTextWrap(505,$YPos,50,$FontSize,$FormatedSupMRPDate,'right');
 		}
@@ -488,7 +488,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	}
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct(); //UldisN
+	$pdf->__destruct(); 
 
 } else { /*The option to print PDF was not hit so display form */
 
@@ -499,14 +499,14 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		prnMsg(_('This report shows the MRP calculation for a specific item - a part code must be selected'),'warn');
 	}
 	// Always show the search facilities
-	$SQL = 'SELECT categoryid,
-			categorydescription
-		FROM stockcategory
-		ORDER BY categorydescription';
+	$SQL = "SELECT categoryid,
+					categorydescription
+			FROM stockcategory
+			ORDER BY categorydescription";
 	$result1 = DB_query($SQL, $db);
 	if (DB_num_rows($result1) == 0) {
 		echo '<p><font size=4 color=red>' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up');
-		echo '<br /><a href="' . $rootpath . '/StockCategories.php?' . SID . '">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		exit;
 	}
 
@@ -534,20 +534,28 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	echo '</select>';
 	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size=20 maxlength=25>';
+		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size=20 maxlength=25>';
+		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 	}
 	echo '</td></tr><tr><td></td>';
 	echo '<td><font size 3><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 	echo '<td>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size=15 maxlength=18>';
+		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="StockCode" size=15 maxlength=18>';
+		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
 	}
-	echo '</td></tr></table><br />';
-	echo '<div class="centre"><input type=submit name="Search" value="' . _('Search Now') . '"></div><br /></form>';
+	echo '</td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+		</div>
+		<br />
+		</form>';
+		
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 	echo '</form>';
 	if (!isset($_POST['Search'])) {
@@ -712,7 +720,8 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			$_POST['PageOffset'] = $ListPageMax;
 		}
 		if ($ListPageMax > 1) {
-			echo "<div class='centre'><p>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo '<div class="centre">
+					<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
@@ -724,23 +733,22 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type=submit name="Go" value="' . _('Go') . '">
-				<input type=submit name="Previous" value="' . _('Previous') . '">
-				<input type=submit name="Next" value="' . _('Next') . '">';
-			echo '<input type=hidden name=Keywords value="'.$_POST['Keywords'].'">';
-			echo '<input type=hidden name=StockCat value="'.$_POST['StockCat'].'">';
-			echo '<input type=hidden name=StockCode value="'.$_POST['StockCode'].'">';
-//			echo '<input type=hidden name=Search value="Search">';
-			echo '<p></div>';
+				<input type="submit" name="Go" value="' . _('Go') . '" />
+				<input type="submit" name="Previous" value="' . _('Previous') . '" />
+				<input type="submit" name="Next" value="' . _('Next') . '" />
+				<input type="hidden" name="Keywords" value="'.$_POST['Keywords'].'" />
+				<input type="hidden" name="StockCat" value="'.$_POST['StockCat'].'" />
+				<input type="hidden" name="StockCode" value="'.$_POST['StockCode'].'" />
+				</div>';
 		}
-		echo '<table cellpadding=2 colspan=7>';
+		echo '<table class="selection">';
 		$tableheader = '<tr>
-					<th>' . _('Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Total Qty On Hand') . '</th>
-					<th>' . _('Units') . '</th>
-					<th>' . _('Stock Status') . '</th>
-				</tr>';
+							<th>' . _('Code') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('Total Qty On Hand') . '</th>
+							<th>' . _('Units') . '</th>
+							<th>' . _('Stock Status') . '</th>
+						</tr>';
 		echo $tableheader;
 		$j = 1;
 		$k = 0; //row counter to determine background colour
@@ -759,9 +767,9 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			if ($myrow['mbflag'] == 'D') {
 				$qoh = 'N/A';
 			} else {
-				$qoh = locale_number_format($myrow["qoh"], $myrow['decimalplaces']);
+				$qoh = locale_number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
-			echo '<td><input type="submit" name="Select" value="'.$myrow['stockid']. '"></td>
+			echo '<td><input type="submit" name="Select" value="'.$myrow['stockid']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">'.$qoh . '</td>
 				<td>' . $myrow['units'].'</td>
@@ -776,45 +784,44 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			//end of page full new headings if
 		}
 		//end of while loop
-		echo '</table></form><br />';
+		echo '</table>
+			</form>
+			<br />';
 	}
 
 	include('includes/footer.inc');
 }
 /* end display list if there is more than one record */
 
-
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin) {
 
-
-$line_height=12;
-/*PDF page header for MRP Report */
-if ($PageNumber>1){
-	$pdf->newPage();
-}
-
-$FontSize=9;
-$YPos= $Page_Height-$Top_Margin;
-
-$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-
-$YPos -=$line_height;
-
-$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Report'));
-$pdf->addTextWrap($Page_Width-$Right_Margin-110,$YPos,160,$FontSize,_('Printed') . ': ' .
-	 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-
-$YPos -=(2*$line_height);
-
-
-/*set up the headings */
-$Xpos = $Left_Margin+1;
-
-$FontSize=8;
-$YPos =$YPos - (2*$line_height);
-$PageNumber++;
+	$line_height=12;
+	/*PDF page header for MRP Report */
+	if ($PageNumber>1){
+		$pdf->newPage();
+	}
+	
+	$FontSize=9;
+	$YPos= $Page_Height-$Top_Margin;
+	
+	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+	
+	$YPos -=$line_height;
+	
+	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Report'));
+	$pdf->addTextWrap($Page_Width-$Right_Margin-110,$YPos,160,$FontSize,_('Printed') . ': ' .
+		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
+	
+	$YPos -=(2*$line_height);
+	
+	/*set up the headings */
+	$Xpos = $Left_Margin+1;
+	
+	$FontSize=8;
+	$YPos =$YPos - (2*$line_height);
+	$PageNumber++;
+	
 } // End of PrintHeader function
-
 
 ?>

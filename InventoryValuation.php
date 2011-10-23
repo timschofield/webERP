@@ -150,8 +150,6 @@ if (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(438,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
 			
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
-			
-
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Val += $InventoryValn['itemtotal'];
@@ -200,27 +198,35 @@ if (isset($_POST['PrintPDF'])
 	include('includes/header.inc');
 
 
-	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
+	if (empty($_POST['FromCriteria']) OR empty($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-			_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+		echo '<p class="page_title_text">
+				<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $title . '
+			</p>';
 
-		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST"><table class="selection">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td>
+		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+			<table class="selection">
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<tr>
+				<td>' . _('From Inventory Category Code') . ':</td>
 				<td><select name="FromCriteria">';
 
-		$sql="SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categoryid";
+		$sql="SELECT categoryid, 
+					categorydescription 
+				FROM stockcategory  
+				ORDER BY categoryid";
+				
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select></td>
+			</tr>';
 
-		echo '<tr><td>' . _('To Inventory Category Code') . ':</td>
-					<td><select name="ToCriteria">';
+		echo '<tr>
+				<td>' . _('To Inventory Category Code') . ':</td>
+				<td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -228,32 +234,39 @@ if (isset($_POST['PrintPDF'])
 		While ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select></td>
+			</tr>';
 
-		echo '<tr><td>' . _('For Inventory in Location') . ':</td>
+		echo '<tr>
+				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
-		$sql = "SELECT loccode, locationname FROM locations";
+				
+		$sql = "SELECT loccode, 
+						locationname 
+				FROM locations";
+				
 		$LocnResult=DB_query($sql,$db);
 
 		echo '<option value="All">' . _('All Locations') . '</option>';
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select></td>
+			</tr>';
 
-		echo '<tr><td>' . _('Summary or Detailed Report') . ':</td>
-					<td><select name="DetailedReport">
-						<option selected value="No">' . _('Summary Report') . '</option>
-						<option Value="Yes">' . _('Detailed Report') . '</option>
-						</select></td>
-				</tr>';
-
-		echo '</table>
-				<br />
-				<div class="centre">
-					<input type="Submit" name="PrintPDF" value="' . _('Print PDF') . '">
-				</div>';
+		echo '<tr>
+				<td>' . _('Summary or Detailed Report') . ':</td>
+				<td><select name="DetailedReport">
+					<option selected value="No">' . _('Summary Report') . '</option>
+					<option Value="Yes">' . _('Detailed Report') . '</option>
+					</select></td>
+			</tr>
+			</table>
+			<br />
+			<div class="centre">
+				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			</div>';
 	}
 	include('includes/footer.inc');
 
