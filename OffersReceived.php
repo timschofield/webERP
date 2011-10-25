@@ -42,52 +42,62 @@ if (!isset($_POST['supplierid'])) {
 			_('Select Supplier') . '" alt="" />' . ' ' . _('Select Supplier') . '</p>';
 		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] .'">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class=selection>';
-		echo '<tr><td>'._('Select Supplier').'</td>';
-		echo '<td><select name=supplierid>';
+		echo '<table class="selection">
+			<tr>
+				<td>'._('Select Supplier').'</td>
+				<td><select name=supplierid>';
 		while ($myrow=DB_fetch_array($result)) {
 			echo '<option value="'.$myrow['supplierid'].'">'.$myrow['suppname'].'</option>';
 		}
-		echo '</select></td></tr>';
-		echo '<tr><td colspan=12><div class="centre"><input type=submit name=select value=' . _('Enter Information') . '></div></td></tr>';
-		echo '</table>';
-		echo '</form>';
+		echo '</select></td>
+			</tr>
+			<tr><td colspan="12">
+				<div class="centre">
+					<input type=submit name=select value=' . _('Enter Information') . '>
+				</div>
+				</td>
+			</tr>
+			</table>
+			</form>';
 	}
 }
 
 if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	$sql = "SELECT offers.offerid,
-			offers.tenderid,
-			offers.supplierid,
-			suppliers.suppname,
-			offers.stockid,
-			stockmaster.description,
-			offers.quantity,
-			offers.uom,
-			offers.price,
-			offers.expirydate,
-			offers.currcode,
-			stockmaster.decimalplaces
-		FROM offers
-		LEFT JOIN purchorderauth
-			ON offers.currcode=purchorderauth.currabrev
-		LEFT JOIN suppliers
-			ON suppliers.supplierid=offers.supplierid
-		LEFT JOIN stockmaster
-			ON stockmaster.stockid=offers.stockid
-		WHERE purchorderauth.userid='".$_SESSION['UserID']."'
-			AND offers.expirydate>'".date('Y-m-d')."'
-			AND offers.supplierid='".$_POST['supplierid']."'
-		ORDER BY offerid";
+				offers.tenderid,
+				offers.supplierid,
+				suppliers.suppname,
+				offers.stockid,
+				stockmaster.description,
+				offers.quantity,
+				offers.uom,
+				offers.price,
+				offers.expirydate,
+				offers.currcode,
+				stockmaster.decimalplaces,
+				currencies.decimalplaces AS currdecimalplaces
+			FROM offers INNER JOIN purchorderauth
+				ON offers.currcode=purchorderauth.currabrev
+			INNER JOIN suppliers
+				ON suppliers.supplierid=offers.supplierid
+			INNER JOIN currencies 
+				ON suppliers.currcode=currencies.currabrev
+			LEFT JOIN stockmaster
+				ON stockmaster.stockid=offers.stockid
+			WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
+			AND offers.expirydate>'" . date('Y-m-d') . "'
+			AND offers.supplierid='" . $_POST['supplierid'] . "'
+			ORDER BY offerid";
 	$result=DB_query($sql, $db);
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Supplier Offers') . '" alt="" />' . ' ' . _('Supplier Offers') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Supplier Offers') . '" alt="" />' . ' ' . _('Supplier Offers') . '
+		</p>';
 
-	echo '<table class=selection>
+	echo '<table class="selection">
 			<tr>
 				<th>'._('Offer ID').'</th>
 				<th>'._('Supplier').'</th>
@@ -100,7 +110,8 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				<th>'._('Offer Expires').'</th>
 				<th>'._('Accept').'</th>
 				<th>'._('Reject').'</th>
-				<th>'._('Defer').'</th></tr>';
+				<th>'._('Defer').'</th>
+			</tr>';
 	$k=0;
 
 	while ($myrow=DB_fetch_array($result)) {
@@ -114,20 +125,27 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		echo '<td>'.$myrow['offerid'].'</td>
 			<td>'.$myrow['suppname'].'</td>
 			<td>'.$myrow['description'].'</td>
-			<td class=number>'.locale_number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
+			<td class="number">'.locale_number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
 			<td>'.$myrow['uom'].'</td>
-			<td class=number>'.locale_number_format($myrow['price'],2).'</td>
-			<td class=number>'.locale_number_format($myrow['price']*$myrow['quantity'],2).'</td>
+			<td class="number">'.locale_number_format($myrow['price'],$myrow['currdecimalplaces']).'</td>
+			<td class="number">'.locale_number_format($myrow['price']*$myrow['quantity'],$myrow['currdecimalplaces']).'</td>
 			<td>'.$myrow['currcode'].'</td>
 			<td>'.$myrow['expirydate'].'</td>
-			<td><input type="radio" name="action'.$myrow['offerid'].'" value="1"></td>
-			<td><input type="radio" name="action'.$myrow['offerid'].'" value="2"></td>
-			<td><input type="radio" checked name="action'.$myrow['offerid'].'" value="3"></td>
-			<td><input type="hidden" name="supplierid" value="'.$myrow['supplierid'].'"></td>
+			<td><input type="radio" name="action'.$myrow['offerid'].'" value="1" /></td>
+			<td><input type="radio" name="action'.$myrow['offerid'].'" value="2" /></td>
+			<td><input type="radio" checked name="action'.$myrow['offerid'].'" value="3" /></td>
+			<td><input type="hidden" name="supplierid" value="'.$myrow['supplierid'].'" /></td>
 		</tr>';
 	}
-	echo '<tr><td colspan=12><div class="centre"><input type="submit" name="submit" value=' . _('Enter Information') . '></div></td></tr>';
-	echo '</form></table>';
+	echo '<tr>
+			<td colspan="12">
+				<div class="centre">
+					<input type="submit" name="submit" value=' . _('Enter Information') . '>
+				</div>
+			</td>
+		</tr>
+		</form>
+		</table>';
 } else if(isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	include ('includes/htmlMimeMail.php');
 	$accepts=array();
@@ -196,24 +214,22 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$myrow=DB_fetch_array($result);
 			$MailText.=$myrow['description']."\t"._('Quantity').' '.$myrow['quantity']."\t"._('Price').' '.
 					locale_number_format($myrow['price'])."\n";
-			$sql="INSERT INTO purchorderdetails (
-					orderno,
-					itemcode,
-					deliverydate,
-					itemdescription,
-					unitprice,
-					actprice,
-					quantityord,
-					suppliersunit)
-				VALUES (
-					'".$OrderNo."',
-					'".$myrow['stockid']."',
-					'".date('Y-m-d')."',
-					'".$myrow['description']."',
-					'".$myrow['price']."',
-					'".$myrow['price']."',
-					'".$myrow['quantity']."',
-					'".$myrow['uom']."')";
+			$sql="INSERT INTO purchorderdetails (orderno,
+												itemcode,
+												deliverydate,
+												itemdescription,
+												unitprice,
+												actprice,
+												quantityord,
+												suppliersunit)
+									VALUES ('".$OrderNo."',
+											'".$myrow['stockid']."',
+											'".date('Y-m-d')."',
+											'".$myrow['description']."',
+											'".$myrow['price']."',
+											'".$myrow['price']."',
+											'".$myrow['quantity']."',
+											'".$myrow['uom']."')";
 			$result=DB_query($sql, $db);
 			$sql="DELETE FROM offers WHERE offerid='".$AcceptID."'";
 			$result=DB_query($sql, $db);

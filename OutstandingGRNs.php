@@ -164,12 +164,19 @@ If (isset($_POST['PrintPDF'])
 			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<tr><td>' . _('From Supplier Code') . ':</td>
-		<td><input type="text" name="FromCriteria" value="0"></td></tr>';
-	echo '<tr><td>' . _('To Supplier Code'). ':</td>
-		<td><input type="text" name="ToCriteria" value="zzzzzzz"></td></tr>';
-
-	echo '</table><br /><div class="centre"><input type=Submit Name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+	echo '<tr>
+			<td>' . _('From Supplier Code') . ':</td>
+			<td><input type="text" name="FromCriteria" value="0"></td>
+		</tr>
+		<tr>
+			<td>' . _('To Supplier Code'). ':</td>
+			<td><input type="text" name="ToCriteria" value="zzzzzzz"></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type=Submit Name="PrintPDF" value="' . _('Print PDF') . '">
+		</div>';
 
 	include('includes/footer.inc');
 

@@ -323,7 +323,7 @@ $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['c
 
 $YPos -=$line_height;
 if ($_POST['ReportType'] == 'Shortage'){
-$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Shortages Report'));
+	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Shortages Report'));
 }else{
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Excess Report'));
 }
@@ -350,8 +350,8 @@ $pdf->addTextWrap(305,$YPos,55,$FontSize,_('Unit Cost'), 'right');
 $pdf->addTextWrap(360,$YPos,50,$FontSize,_('Supply'), 'right');
 $pdf->addTextWrap(410,$YPos,50,$FontSize,_('Demand'), 'right');
 if ($_POST['ReportType'] == 'Shortage'){
-$pdf->addTextWrap(460,$YPos,50,$FontSize,_('Shortage'), 'right');
-$pdf->addTextWrap(510,$YPos,60,$FontSize,_('Ext. Shortage'), 'right');
+	$pdf->addTextWrap(460,$YPos,50,$FontSize,_('Shortage'), 'right');
+	$pdf->addTextWrap(510,$YPos,60,$FontSize,_('Ext. Shortage'), 'right');
 }else{
 	$pdf->addTextWrap(460,$YPos,50,$FontSize,_('Excess'), 'right');
 	$pdf->addTextWrap(510,$YPos,60,$FontSize,_('Ext. Excess'), 'right');

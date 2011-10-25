@@ -121,23 +121,36 @@ if (isset($_POST['PrintPDF'])) {
 	$title=_('MRP Reschedule Reporting');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
-		. _('Stock') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
+		. _('Stock') . '" alt="" />' . ' ' . $title . '
+		</p>';
 
-	echo '<br /><br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post">
-			<table class=selection>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><td>' . _('Print Option') . ':</td><td><select name="Fill">';
-	echo '<option selected value="yes">' . _('Print With Alternating Highlighted Lines');
-	echo '<option value="no">' . _('Plain Print');
-	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Selection') . ':</td><td><select name="Selection">';
-	echo '<option selected value="All">' . _('All').'</option>';
-	echo '<option value="WO">' . _('Work Orders Only').'</option>';
-	echo '<option value="PO">' . _('Purchase Orders Only').'</option>';
-	echo '</select></td></tr>';
-	echo '</table><br />';
-	echo '<div class="centre"><input type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+	echo '<br />
+		<br />
+		<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+		<table class="selection">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<tr>
+			<td>' . _('Print Option') . ':</td>
+			<td><select name="Fill">
+				<option selected value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
+				<option value="no">' . _('Plain Print') . '</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Selection') . ':</td>
+			<td><select name="Selection">
+				<option selected value="All">' . _('All').'</option>
+				<option value="WO">' . _('Work Orders Only').'</option>
+				<option value="PO">' . _('Purchase Orders Only').'</option>
+				</select></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type=submit name="PrintPDF" value="' . _('Print PDF') . '">
+		</div>';
 
 	include('includes/footer.inc');
 
