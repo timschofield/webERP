@@ -8,7 +8,7 @@ include('includes/header.inc');
 
 if (isset($_POST['submit'])) {
 
-	if (!$_POST['Leeway'] || !is_numeric($_POST['Leeway'])) {
+	if (!isset($_POST['Leeway']) OR !is_numeric(filter_number_format($_POST['Leeway']))) {
 		$_POST['Leeway'] = 0;
 	}
 
@@ -508,7 +508,7 @@ if (isset($_POST['submit'])) {
 								'" .  $_POST['shrinkageflag']  . "',
 								'" .  $_POST['eoqflag']  . "',
 								'" .  $_POST['usemrpdemands']  . "',
-								'" . $_POST['Leeway'] . "')";
+								'" . filter_number_format($_POST['Leeway']) . "')";
 	$result = DB_query($sql,$db);
 
 } else { // End of if submit isset
@@ -540,28 +540,49 @@ if (isset($_POST['submit'])) {
 		if ($myrow['shrinkageflag'] == 'y') {
 			 $useshrinkage = _('Yes');
 		}
-		echo '<table cellpadding=5><tr><td valign=top>';
-		echo '<table class=selection>';
-		echo '<tr><th colspan=3><font color=blue size=3>'._('Last Run Details').'</font></th></tr>';
-		echo '<tr>';
-		echo '<td>' . _('Last Run Time') . ':&nbsp&nbsp</td><td>' . $myrow['runtime'] . '</td></tr>';
-		echo '<td>' . _('Location') . ':&nbsp&nbsp</td><td>' . $myrow['location'] . '</td></tr>';
-		echo '<td>' . _('Days Leeway') . ':&nbsp&nbsp</td><td>' . $leeway . '</td></tr>';
-		echo '<td>' . _('Use MRP Demands') . ':&nbsp&nbsp</td><td>' . $usemrpdemands . '</td></tr>';
-		echo '<td>' . _('Use EOQ') . ':&nbsp&nbsp</td><td>' . $useeoq . '</td></tr>';
-		echo '<td>' . _('Use Pan Size') . ':&nbsp&nbsp</td><td>' . $usepansize . '</td></tr>';
-		echo '<td>' . _('Use Shrinkage') . ':&nbsp&nbsp</td><td>' . $useshrinkage . '</td></tr>';
-		echo '</table></td>';
+		echo '<table class="selection">
+				<tr>
+					<th colspan="3"><font color="blue" size="3">'._('Last Run Details').'</font></th>
+				</tr>
+				<tr>
+					<td>' . _('Last Run Time') . ':</td><td>' . $myrow['runtime'] . '</td>
+				</tr>
+				<tr>
+					<td>' . _('Location') . ':</td>
+					<td>' . $myrow['location'] . '</td>
+				</tr>
+				<tr>
+					<td>' . _('Days Leeway') . ':</td>
+					<td>' . $leeway . '</td>
+				</tr>
+				<tr>
+					<td>' . _('Use MRP Demands') . ':</td>
+					<td>' . $usemrpdemands . '</td>
+				</tr>
+				<tr>
+					<td>' . _('Use EOQ') . ':</td>
+					<td>' . $useeoq . '</td>
+				</tr>
+				<tr>
+					<td>' . _('Use Pan Size') . ':</td>
+					<td>' . $usepansize . '</td>
+				</tr>
+				<tr>
+					<td>' . _('Use Shrinkage') . ':</td>
+					<td>' . $useshrinkage . '</td>
+				</tr>
+				</table>';
 	}
 	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF']  . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	// Generate selections for Location
-	echo '<tr><th colspan="3"><font color=blue size=3>'._('This Run Details').'</font></th></tr>';
-	echo '<tr>
-	 <td>' . _('Location') . '</td>
-	 <td><select name="location[]" multiple>
-	 <option value="All" selected>' . _('All') . '</option>';
+	echo '<table class="selection">
+			<tr>
+				<th colspan="3"><font color="blue" size="3">'._('This Run Details').'</font></th>
+			</tr>
+			<tr>
+				<td>' . _('Location') . '</td>
+				<td><select name="location[]" multiple>
+					<option value="All" selected>' . _('All') . '</option>';
 	 $sql = "SELECT loccode,
 				locationname
 			   FROM locations";
@@ -575,17 +596,33 @@ if (isset($_POST['submit'])) {
 		$leeway =0;
 	}
 
-	echo '<tr><td>' . _('Days Leeway') . ':</td><td><input type="text" name="Leeway" class=number size="4" value=' . $leeway . '>';
-	echo '<tr><td>' ._('Use MRP Demands?') . ':</td>';
-	echo '<td><input type="checkbox" name="usemrpdemands" value="y" checked></td></tr>';
-	echo '<tr><td>' ._('Use EOQ?') . ':</td>';
-	echo '<td><input type="checkbox" name="eoqflag" value="y" checked></td></tr>';
-	echo '<tr><td>' ._('Use Pan Size?') . ':</td>';
-	echo '<td><input type="checkbox" name="pansizeflag" value="y" checked></td></tr>';
-	echo '<tr><td>' ._('Use Shrinkage?') . ':</td>';
-	echo '<td><input type="checkbox" name="shrinkageflag" value="y" checked></td></tr>';
-	echo '</table></td></tr></table><div class="centre"><br /><br /><input type="submit" name="submit" value="' . _('Run MRP') . '"></div>';
-	echo '</form>';
+	echo '<tr>
+			<td>' . _('Days Leeway') . ':</td>
+			<td><input type="text" name="Leeway" class=number size="4" value="' . $leeway . '" />
+		</tr>
+		<tr>
+			<td>' ._('Use MRP Demands?') . ':</td>
+			<td><input type="checkbox" name="usemrpdemands" value="y" checked /></td>
+		</tr>
+		<tr>
+			<td>' ._('Use EOQ?') . ':</td>
+			<td><input type="checkbox" name="eoqflag" value="y" checked /></td>
+		</tr>
+		<tr>
+			<td>' ._('Use Pan Size?') . ':</td>
+			<td><input type="checkbox" name="pansizeflag" value="y" checked /></td>
+		</tr>
+		<tr>
+			<td>' ._('Use Shrinkage?') . ':</td>
+			<td><input type="checkbox" name="shrinkageflag" value="y" checked /></td>
+		</tr>
+		</table>
+		<div class="centre">
+			<br />
+			<br />
+			<input type="submit" name="submit" value="' . _('Run MRP') . '" />
+		</div>
+		</form>';
 }  // End of Main program logic -------------------------------------------------------
 
 
@@ -640,7 +677,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
 				$ReqDate = ConvertSQLDate($Requirements[$reqi]['daterequired']);
 				$DateDiff = DateDiff($DueDate,$ReqDate,'d');
 				//if ($Supplies[$supi]['duedate'] > $Requirements[$reqi]['daterequired']) {
-				if ($DateDiff > abs($_POST['Leeway'])) {
+				if ($DateDiff > abs(filter_number_format($_POST['Leeway']))) {
 					$sql = "UPDATE mrpsupplies SET mrpdate = '" . $Requirements[$reqi]['daterequired'] .
 					   "' WHERE id = '" . $Supplies[$supi]['id'] . "' AND duedate = mrpdate";
 					$result = DB_query($sql,$db);

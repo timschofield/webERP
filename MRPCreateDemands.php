@@ -33,6 +33,14 @@ if (isset($_POST['submit'])) {
 		$InputError=1;
 		unset($_POST['DistDate']);
 	}
+	if (!is_numeric(filter_number_format($_POST['ExcludeQuantity']))){
+		$msg = _('The quantity below which no demand will be created must be numeric');
+		$InputError=1;
+	}
+	if (!is_numeric(filter_number_format($_POST['Multiplier']))){
+		$msg = _('The multiplier is expected to be a positive number');
+		$InputError=1;
+	}
 	
 	if ($InputError==1){
 		prnMsg($msg,'error');
@@ -68,17 +76,23 @@ if (isset($_POST['submit'])) {
 	// number quantity into each entry of the periodqty array, and add 1 to the periodqty array
 	// until the remainder number is used up. Then create an mrpdemands records for everything
 	// in the array
-	$multiplier = $_POST['Multiplier'];
-	if ($_POST['Multiplier'] < 1) {
-		$multiplier = 1;
+	
+	if (filter_number_format($_POST['Multiplier']) < 1) {
+		$Multiplier = 1;
+	} else {
+		$Multiplier = filter_number_format($_POST['Multiplier']);
 	}
-	$excludeqty = $_POST['Excludeqty'];
-	if ($_POST['Excludeqty'] < 1) {
-		$excludeqty = 1;
+	
+	if ($_POST['ExcludeQuantity'] < 1) {
+		$ExcludeQty = 1;
+	} else {
+		$ExcludeQty = filter_number_format($_POST['ExcludeQuantity']);
 	}
-	$excludeamt = $_POST['Excludeamt'];
-	if ($_POST['Excludeamt'] < 1) {
-		$excludeamt = 0;
+	
+	if ($_POST['ExcludeAmount'] < 1) {
+		$ExcludeAmount = 0;
+	} else {
+		$ExcludeAmount = filter_number_format($_POST['ExcludeAmount']);
 	}
 	
 	// Create array of dates based on DistDate and adding either weeks or months
@@ -137,10 +151,10 @@ if (isset($_POST['submit'])) {
 	
 	$TotalRecords = 0;
 	while ($myrow = DB_fetch_array($result)) {
-		if (($myrow['totqty'] >= $excludeqty) and ($myrow['totextqty'] >= $excludeamt)) {
+		if (($myrow['totqty'] >= $ExcludeQty) AND ($myrow['totextqty'] >= $ExcludeAmount)) {
 			unset($PeriodQty);
 			$PeriodQty[] = ' ';
-			$TotalQty = $myrow['totqtyinvoiced'] * $multiplier;
+			$TotalQty = $myrow['totqtyinvoiced'] * $Multiplier;
 			$WholeNumber = floor($TotalQty / $_POST['PeriodNumber']);
 			$Remainder = ($TotalQty % $_POST['PeriodNumber']);
 			if ($WholeNumber > 0) {
@@ -169,7 +183,7 @@ if (isset($_POST['submit'])) {
 					$TotalRecords++;
 	
 			} // end of foreach for INSERT
-		} // end of if that checks exludeqty, excludeamt
+		} // end of if that checks exludeqty, ExcludeAmount
 	
 	} //end while loop
 	
@@ -179,10 +193,12 @@ if (isset($_POST['submit'])) {
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
 	_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><b><br /></b>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class=selection>';
-echo '<tr><td>' . _('Demand Type') . ':</td><td><select name="MRPDemandtype">';
+echo '<table class="selection">
+	<tr>
+		<td>' . _('Demand Type') . ':</td>
+		<td><select name="MRPDemandtype">';
 $sql = "SELECT mrpdemandtype,
 				description
 		FROM mrpdemandtypes";
@@ -223,36 +239,42 @@ if (!isset($_POST['ToDate'])) {
 if (!isset($_POST['DistDate'])) {
 	$_POST['DistDate']=date($_SESSION['DefaultDateFormat']);
 }
-echo '<tr><td>' . _('From Sales Date') . ':</td>
-		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="10" value="' . $_POST['FromDate'] . '" />';
-echo '&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="10" value="' . $_POST['ToDate'] . '" /></td>
-	</tr>';
-echo '<tr><td>' . _('Start Date For Distribution') . ':</td>
+echo '<tr>
+		<td>' . _('From Sales Date') . ':</td>
+		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="10" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="10" value="' . $_POST['ToDate'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Start Date For Distribution') . ':</td>
 		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="DistDate" size="10" value="' . $_POST['DistDate'] . '" /></td>
-	</tr>';
-echo '<tr><td>' . _('Distribution Period') . ':</td>
-		<td><select name="Period">';
-echo 	'<option selected value="weekly">' . _('Weekly') . '</option>
-		 <option value="monthly">' . _('Monthly') .'</option>
-		</select></td>
-	  </tr>';
-echo '<tr><td>' . _('Number of Periods') .':</td>
+	</tr>
+	<tr>
+		<td>' . _('Distribution Period') . ':</td>
+		<td><select name="Period">
+			<option selected value="weekly">' . _('Weekly') . '</option>
+			<option value="monthly">' . _('Monthly') .'</option>
+			</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Number of Periods') .':</td>
 		<td><input type ="text" class="number" name="PeriodNumber" size="4" value="1" /></td>
-	  </tr>';
-echo '<tr><td>' . _('Exclude Total Quantity Less Than') . ':</td>
-		<td><input type ="text" class="number" name="Excludeqty" size="4" value="1">';
-echo '<tr><td>' . _('Exclude Total Dollars Less Than') . ':</td>
-		<td><input type ="text" class="number" name="Excludeamt" size="8" value="0"></td>
-	  </tr>';
-echo '<tr><td>' . _('Multiplier') .':</td>
+	</tr>
+	<tr>
+		<td>' . _('Exclude Total Quantity Less Than') . ':</td>
+		<td><input type ="text" class="number" name="ExcludeQuantity" size="4" value="1" />
+	<tr>
+		<td>' . _('Exclude Total Dollars Less Than') . ':</td>
+		<td><input type ="text" class="number" name="ExcludeAmount" size="8" value="0" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Multiplier') .':</td>
 		<td><input type="text" class="number" name="Multiplier" size="2" value="1" /></td>
-	  </tr>
-	  <tr>
+	</tr>
+	<tr>
 		<td></td>
-	  </tr>
-	  </table>';
-echo '<br />
-	<div class=centre>
+	</tr>
+	</table>
+	<br />
+	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Submit') .  '" />
 	</div>';
 

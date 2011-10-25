@@ -16,8 +16,10 @@ if (isset($_POST['ChangeDate'])){
 	$ChangeDate =trim(mb_strtoupper($_GET['ChangeDate']));
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-			_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
+			_('Inventory') . '" alt="" />' . ' ' . $title . '
+	</p>';
 
 if (isset($_POST['submit'])) {
 	submit($db,$ChangeDate);
@@ -60,12 +62,11 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	$ConvertToDate = ConvertSQLDate($FormatToDate);
 
 	$DateGreater = Date1GreaterThanDate2($_POST['ToDate'],$_POST['FromDate']);
-	$DateDiff = DateDiff($ConvertToDate,$ConvertFromDate,"d"); // Date1 minus Date2
+	$DateDiff = DateDiff($ConvertToDate,$ConvertFromDate,'d'); // Date1 minus Date2
 
 	if ($DateDiff < 1) {
 		$InputError = 1;
 		prnMsg(_('To Date Must Be Greater Than From Date'),'error');
-
 	}
 
 	 if ($InputError == 1) {
@@ -87,9 +88,10 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 
 	$i = 0;
 
-	// $DaysTextArray used so can get text of day based on the value get from DayOfWeekFromSQLDate of
-	// the calendar date. See if that text is in the ExcludeDays array
-	$DaysTextArray = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+	/* $DaysTextArray used so can get text of day based on the value get from DayOfWeekFromSQLDate of
+	 the calendar date. See if that text is in the ExcludeDays array note no gettext here hard coded english days from $_POST 
+	 * $DaysTextArray = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+	 */
 	$ExcludeDays = array($_POST['Sunday'],$_POST['Monday'],$_POST['Tuesday'],$_POST['Wednesday'],
 						 $_POST['Thursday'],$_POST['Friday'],$_POST['Saturday']);
 
@@ -132,7 +134,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 					WHERE calendardate = '" . $CalDate . "'";
 		   $resultupdate = DB_query($sql,$db,$ErrMsg);
 	}
-	prnMsg(_("The MRP Calendar has been created"),'succes');
+	prnMsg(_('The MRP Calendar has been created'),'success');
 	display($db,$ChangeDate);
 
 } // End of function submit()
@@ -168,10 +170,10 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 		$newmanufacturingflag = 1;
 	}
 	$sql = "UPDATE mrpcalendar SET manufacturingflag = '".$newmanufacturingflag."'
-				WHERE calendardate = '".$CalDate."'";
+			WHERE calendardate = '".$CalDate."'";
 	$ErrMsg = _('Cannot update the MRP Calendar');
 	$resultupdate = DB_query($sql,$db,$ErrMsg);
-	prnMsg(_("The MRP calendar record for $ChangeDate has been updated"),'success');
+	prnMsg(_('The MRP calendar record for') . ' ' . $ChangeDate  . ' ' . _('has been updated'),'success');
 	unset ($ChangeDate);
 	display($db,$ChangeDate);
 
@@ -204,14 +206,15 @@ function listall(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_L
 				   daynumber,
 				   manufacturingflag,
 				   DAYNAME(calendardate) as dayname
-		FROM mrpcalendar
-		WHERE calendardate >='" . $FromDate . "'
-		  AND calendardate <='" . $ToDate . "'";
+			FROM mrpcalendar
+			WHERE calendardate >='" . $FromDate . "'
+			AND calendardate <='" . $ToDate . "'";
 
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo '<br /><table class="selection">
+	echo '<br />
+		<table class="selection">
 		<tr bgcolor ="#800000">
 			<th>' . _('Date') . '</th>
 			<th>' . _('Manufacturing Date') . '</th>
@@ -258,57 +261,62 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 
 	echo '<tr>
 			<td>' . _('From Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '"></td></tr>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
 			<tr></tr><td>' . _('To Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '"></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		<tr><td></td></tr>
 		<tr><td></td></tr>
 		<tr><td>'._('Exclude The Following Days').'</td></tr>
 		 <tr>
 			<td>' . _('Saturday') . ':</td>
-			<td><input type="checkbox" name="Saturday" value="Saturday"></td>
+			<td><input type="checkbox" name="Saturday" value="Saturday" /></td>
 		</tr>
 		 <tr>
 			<td>' . _('Sunday') . ':</td>
-			<td><input type="checkbox" name="Sunday" value="Sunday"></td>
+			<td><input type="checkbox" name="Sunday" value="Sunday" /></td>
 		</tr>
 		 <tr>
 			<td>' . _('Monday') . ':</td>
-			<td><input type="checkbox" name="Monday" value="Monday"></td>
+			<td><input type="checkbox" name="Monday" value="Monday" /></td>
 		</tr>
 		 <tr>
 			<td>' . _('Tuesday') . ':</td>
-			<td><input type="checkbox" name="Tuesday" value="Tuesday"></td>
+			<td><input type="checkbox" name="Tuesday" value="Tuesday" /></td>
 		</tr>
 		 <tr>
 			<td>' . _('Wednesday') . ':</td>
-			<td><input type="checkbox" name="Wednesday" value="Wednesday"></td>
+			<td><input type="checkbox" name="Wednesday" value="Wednesday" /></td>
 		</tr>
 		 <tr>
 			<td>' . _('Thursday') . ':</td>
-			<td><input type="checkbox" name="Thursday" value="Thursday"></td>
+			<td><input type="checkbox" name="Thursday" value="Thursday" /></td>
 		</tr>
 		 <tr>
 			<td>' . _('Friday') . ':</td>
-			<td><input type="checkbox" name="Friday" value="Friday"></td>
+			<td><input type="checkbox" name="Friday" value="Friday" /></td>
 		</tr>
 		</table><br />
-		<div class=centre><input type="submit" name="submit" value="' . _('Create Calendar') . '">
-		<input type="submit" name="listall" value="' . _('List Date Range') . '"></div>';
+		<div class="centre">
+			<input type="submit" name="submit" value="' . _('Create Calendar') . '" />
+			<input type="submit" name="listall" value="' . _('List Date Range') . '">
+		</div>';
 
 	if (!isset($_POST['ChangeDate'])) {
 		$_POST['ChangeDate']=date($_SESSION['DefaultDateFormat']);
 	}
 	
-	echo '<br /><table class="selection">';
-	echo '<tr>
+	echo '<br />
+		<table class="selection">
+		<tr>
 			<td>' . _('Change Date Status') . ':</td>
-			<td><input type="text" name="ChangeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] .
-				'" size="12" maxlength="12" value="' . $_POST['ChangeDate'] . '"></td>
-		  <td><input type="submit" name="update" value="' . _('Update') . '"></td></tr></table>';
-	echo '<br /><br /><div class="centre"></div>';
-	echo '</form>';
+			<td><input type="text" name="ChangeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" maxlength="12" value="' . $_POST['ChangeDate'] . '" /></td>
+			<td><input type="submit" name="update" value="' . _('Update') . '" /></td>
+		</tr>
+		</table>
+		<br />
+		<br />
+		</form>';
 
 } // End of function display()
 
