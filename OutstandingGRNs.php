@@ -160,22 +160,22 @@ If (isset($_POST['PrintPDF'])
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="POST">
+	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
 			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" name="FromCriteria" value="0"></td>
+			<td><input type="text" name="FromCriteria" value="0" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Supplier Code'). ':</td>
-			<td><input type="text" name="ToCriteria" value="zzzzzzz"></td>
+			<td><input type="text" name="ToCriteria" value="zzzzzzz" /></td>
 		</tr>
 		</table>
 		<br />
 		<div class="centre">
-			<input type=Submit Name="PrintPDF" value="' . _('Print PDF') . '">
+			<input type=Submit Name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
 
 	include('includes/footer.inc');
