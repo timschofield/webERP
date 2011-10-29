@@ -29,6 +29,7 @@ if (!isset($_GET['SelectedContract'])){
 $sql = "SELECT stockmoves.stockid,
 				stockmaster.description,
 				stockmaster.units,
+				stockmaster.decimalplaces,
 				SUM(stockmoves.qty) AS quantity,
 				SUM(stockmoves.qty*stockmoves.standardcost) AS totalcost
 		FROM stockmoves INNER JOIN stockmaster
@@ -37,7 +38,8 @@ $sql = "SELECT stockmoves.stockid,
 		AND stockmoves.reference='" . $_SESSION['Contract'.$identifier]->WO . "'
 		GROUP BY stockmoves.stockid,
 				stockmaster.description,
-				stockmaster.units";
+				stockmaster.units,
+				stockmaster.decimalplaces";
 $ErrMsg = _('Could not get the inventory issues for this contract because');
 $InventoryIssuesResult = DB_query($sql,$db,$ErrMsg);
 $InventoryIssues = array();
@@ -47,7 +49,9 @@ while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 	$InventoryIssues[$InventoryIssuesRow['stockid']]->Quantity = $InventoryIssuesRow['quantity'];
 	$InventoryIssues[$InventoryIssuesRow['stockid']]->TotalCost = $InventoryIssuesRow['totalcost'];
 	$InventoryIssues[$InventoryIssuesRow['stockid']]->Units = $InventoryIssuesRow['units'];
+	$InventoryIssues[$InventoryIssuesRow['stockid']]->DecimalPlaces = $InventoryIssuesRow['decimalplaces'];
 	$InventoryIssues[$InventoryIssuesRow['stockid']]->Matched = 0;
+	
 }
 
 echo '<p class="page_title_text">
@@ -92,7 +96,7 @@ foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 	echo '<tr>
 			<td>' . $Component->StockID . '</td>
 			<td>' . $Component->ItemDescription . '</td>
-			<td class="number">' . $Component->Quantity . '</td>
+			<td class="number">' . locale_number_format($Component->Quantity,$Component->DecimalPlaces) . '</td>
 			<td>' . $Component->UOM . '</td>
 			<td class="number">' . locale_number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
@@ -102,7 +106,7 @@ foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 	if (isset($InventoryIssues[$Component->StockID])){
 		$InventoryIssues[$Component->StockID]->Matched=1;
 		echo '<td colspan="2" align="center">' . _('Actual usage') . '</td>
-			<td class="number">' . -$InventoryIssues[$Component->StockID]->Quantity . '</td>
+			<td class="number">' . locale_number_format(-$InventoryIssues[$Component->StockID]->Quantity,$Component->DecimalPlaces) . '</td>
 			<td>' . $InventoryIssues[$Component->StockID]->Units . '</td>
 			<td class="number">' . locale_number_format($InventoryIssues[$Component->StockID]->TotalCost/$InventoryIssues[$Component->StockID]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td>' . locale_number_format(-$InventoryIssues[$Component->StockID]->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -120,7 +124,7 @@ foreach ($InventoryIssues as $Component) { //actual inventory components used
 				<td colspan="6"></td>
 				<td>' . $Component->StockID . '</td>
 				<td>' . $Component->Description . '</td>
-				<td class="number">' . -$Component->Quantity . '</td>
+				<td class="number">' . locale_number_format(-$Component->Quantity,$Component->DecimalPlaces) . '</td>
 				<td>' . $Component->Units . '</td>
 				<td class="number">' . locale_number_format($Component->TotalCost/$Component->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format(-$Component->TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -152,13 +156,13 @@ echo '<tr>
 						
 foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
 	echo '<tr><td>' . $Requirement->Requirement . '</td>
-			<td class="number">' . $Requirement->Quantity . '</td>
-			<td class="number">' . $Requirement->CostPerUnit . '</td>
+			<td class="number">' . locale_number_format($Requirement->Quantity,'Variable') . '</td>
+			<td class="number">' . locale_number_format($Requirement->CostPerUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format(($Requirement->CostPerUnit * $Requirement->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 	$OtherReqtsBudget += ($Requirement->CostPerUnit * $Requirement->Quantity);
 }
-echo '<tr><th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsBudget,2) . '</b></th></tr>
+echo '<tr><th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsBudget,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th></tr>
 	</table></td>';
 
 //Now other requirements actual in a sub table
@@ -428,10 +432,13 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 
 if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order being processed now
 
-	echo '<form  method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' .SID .'&amp;SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&amp;identifier=' . $identifier . '">';
+	echo '<form  method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&identifier=' . $identifier . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><div class="centre"><input type="submit" name="CloseContract" value="' . _('Close Contract') .  '" onclick="return confirm(\'' . _('Closing the contract will prevent further stock being issued to it and charges being made against it. Variances will be taken to the profit and loss account. Are You Sure?') . '\');" /></div>';
-	echo '</form>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="CloseContract" value="' . _('Close Contract') .  '" onclick="return confirm(\'' . _('Closing the contract will prevent further stock being issued to it and charges being made against it. Variances will be taken to the profit and loss account. Are You Sure?') . '\');" />
+		</div>
+		</form>';
 }
 
 include('includes/footer.inc');

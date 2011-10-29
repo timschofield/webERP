@@ -65,9 +65,9 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 	$_SESSION['Contract'.$identifier]->CategoryID = $_POST['CategoryID'];
 	$_SESSION['Contract'.$identifier]->LocCode = $_POST['LocCode'];
 	$_SESSION['Contract'.$identifier]->RequiredDate = $_POST['RequiredDate'];
-	$_SESSION['Contract'.$identifier]->Margin = $_POST['Margin'];
+	$_SESSION['Contract'.$identifier]->Margin = filter_number_format($_POST['Margin']);
 	$_SESSION['Contract'.$identifier]->CustomerRef = $_POST['CustomerRef'];
-	$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
+	$_SESSION['Contract'.$identifier]->ExRate = filter_number_format($_POST['ExRate']);
 
 
 /*User hit the button to enter line items -
@@ -254,10 +254,10 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		$_SESSION['Contract'.$identifier]->CategoryID = $_POST['CategoryID'];
 		$_SESSION['Contract'.$identifier]->LocCode = $_POST['LocCode'];
 		$_SESSION['Contract'.$identifier]->RequiredDate = $_POST['RequiredDate'];
-		$_SESSION['Contract'.$identifier]->Margin = $_POST['Margin'];
+		$_SESSION['Contract'.$identifier]->Margin = filter_number_format($_POST['Margin']);
 		$_SESSION['Contract'.$identifier]->Status = $_POST['Status'];
 		$_SESSION['Contract'.$identifier]->CustomerRef = $_POST['CustomerRef'];
-		$_SESSION['Contract'.$identifier]->ExRate = $_POST['ExRate'];
+		$_SESSION['Contract'.$identifier]->ExRate = filter_number_format($_POST['ExRate']);
 
 		/*Get the first work centre for the users location - until we set this up properly */
 		$result = DB_query("SELECT code FROM workcentres WHERE location='" . $_SESSION['Contract'.$identifier]->LocCode ."'",$db);
@@ -305,9 +305,9 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$sql = "UPDATE contracts SET categoryid = '" . $_POST['CategoryID'] ."',
 										requireddate = '" . FormatDateForSQL($_POST['RequiredDate']) . "',
 										loccode='" . $_POST['LocCode'] . "',
-										margin = '" . $_POST['Margin'] . "',
+										margin = '" . filter_number_format($_POST['Margin']) . "',
 										customerref = '" . $_POST['CustomerRef'] . "',
-										exrate = '" . $_POST['ExRate'] . "'
+										exrate = '" . filter_number_format($_POST['ExRate']) . "'
 							WHERE contractref ='" . $_POST['ContractRef'] . "'";
 			$ErrMsg = _('Cannot update the contract because');
 			$result = DB_query($sql,$db,$ErrMsg);
@@ -404,9 +404,9 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 							'" . $_POST['CategoryID'] . "',
 							'" . $_POST['LocCode'] . "',
 							'" . FormatDateForSQL($_POST['RequiredDate']) . "',
-							'" . $_POST['Margin'] . "',
+							'" . filter_number_format($_POST['Margin']) . "',
 							'" . $_POST['CustomerRef'] . "',
-							'". $_POST['ExRate'] ."')";
+							'". filter_number_format($_POST['ExRate']) ."')";
 
 		$ErrMsg = _('The new contract could not be added because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -895,13 +895,15 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		$_SESSION['Contract'.$identifier]->Margin =50;
 	}
 	echo '<tr><td>' . _('Gross Profit') . ' %:</td>
-			<td><input type="text" name="Margin" size="4" maxlength="4" value="' . $_SESSION['Contract'.$identifier]->Margin . '" /></td></tr>';
+			<td><input type="text" name="Margin" size="4" maxlength="4" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin,2) . '" /></td></tr>';
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
-		echo '<tr><td>' . $_SESSION['Contract'.$identifier]->CurrCode . ' ' . _('Exchange Rate') . ':</td>
-				<td><input type="text" name="ExRate" size="10" maxlength="10" value="' . $_SESSION['Contract'.$identifier]->ExRate . '" /></td></tr>';
+		echo '<tr>
+				<td>' . $_SESSION['Contract'.$identifier]->CurrCode . ' ' . _('Exchange Rate') . ':</td>
+				<td><input type="text" name="ExRate" size="10" maxlength="10" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" /></td>
+			</tr>';
 	} else {
-		echo '<input type="hidden" name="ExRate" value="' . $_SESSION['Contract'.$identifier]->ExRate . '" />';
+		echo '<input type="hidden" name="ExRate" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" />';
 	}
 
 	echo '<tr><td>' . _('Contract Status') . ':</td><td>';

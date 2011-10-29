@@ -9,7 +9,7 @@ webERP Change Log
 22/9/11 Exson: fixed the bug in GLAccountReport.php for typename from the right table (systypes) in SQL and change locale_number_format for multinational.
 17/9/11 Phil: Added WindowsLocale element to LanguagesArray.php and modified UserSettings.php and WWW_Users.php to use the new array definition. Also modified includes/LanguageSetup.php to use the windows locale string in the LanguagesArray as required for proper setting of the locale under windows.
 17/9/11 Felix Lim: added serialised field into PrintCustTransPortrait.php to reinstate possiblity for printing serialised items on invoice - not possible in landscape version (PrintCustTrans.php)
-12/9/11 Phil/Exson/Tom: Change all scripts to allow display and input of numbers in the format of the selected users locale 
+12/9/11-31/10/11 Phil/Exson/Tom: Change all scripts to allow display and input of numbers in the format of the selected users locale 
 5/9/11 Phil: Fixed supplier payment exchange rate ... was being calculated incorrectly from functional exchange rate and the exchange rate between the currency of the bank account and currency of payment.
 5/9/11 Phil: GLTransInquiry posted was not retrieved correctly - now fixed
 4/9/11 Phil: Removed the stock code from form entities in SelectOrderItems.php and PO_Items.php to prevent issues with some characters in stock codes as suggested by Tim

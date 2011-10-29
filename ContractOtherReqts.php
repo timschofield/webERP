@@ -88,10 +88,10 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 	}
 
 	echo '<tr>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Quantity') . '</th>
-		<th>' . _('Unit Cost') .  '</th>
-		<th>' . _('Sub-total') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Unit Cost') .  '</th>
+			<th>' . _('Sub-total') . '</th>
 		</tr>';
 
 	$_SESSION['Contract'.$identifier]->total = 0;
@@ -111,17 +111,25 @@ if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 		}
 
 		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
-			  <td><input type="text" class="number" name="Qty' . $ContractReqtID . '" size="11" value="' . $ContractComponent->Quantity  . '" /></td>
-			  <td><input type="text" class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . $ContractComponent->CostPerUnit . '" /></td>
+			  <td><input type="text" class="number" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,'Variable')  . '" /></td>
+			  <td><input type="text" class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->CostPerUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . 'identifier='.$identifier. '&amp;Delete=' . $ContractReqtID . '">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier. '&amp;Delete=' . $ContractReqtID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this contract requirement?') . '\');">' . _('Delete') . '</a></td>
+			  </tr>';
 		$TotalCost += $LineTotal;
 	}
 
-	$DisplayTotal = locale_number_format($TotalCost,2);
-	echo '<tr><td colspan="4" class="number">' . _('Total Other Requirements Cost') . '</td><td class="number"><b>' . $DisplayTotal . '</b></td></tr></table>';
-	echo '<br /><div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Other Requirements Lines') . '" />';
-	echo ' <input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';
+	$DisplayTotal = locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']);
+	echo '<tr>
+			<td colspan="4" class="number">' . _('Total Other Requirements Cost') . '</td>
+			<td class="number"><b>' . $DisplayTotal . '</b></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="UpdateLines" value="' . _('Update Other Requirements Lines') . '" />
+			<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" />
+		</div>';
 
 } /*Only display the contract other requirements lines if there are any !! */
 
@@ -133,17 +141,30 @@ if (!isset($_POST['RequirementDescription'])) {
 	$_POST['CostPerUnit']=0;
 }
 echo '<table class="selection">
-		<tr><th colspan="2">' . _('Enter New Requirements') . '</th></tr>
-		<tr><td>' . _('Requirement Description') . '</td>
-		<td><textarea name="RequirementDescription" cols="30" rows="3">' . $_POST['RequirementDescription'] . '</textarea></td></tr>';
-echo '<tr><td>' . _('Quantity Required') . ':</td>
-		<td><input type="text" class="number" name="Quantity" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td></tr>';
-echo '<tr><td>' . _('Cost Per Unit') . ':</td>
-		<td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td></tr>';
-echo '</table>';
-
-echo '<br /><div class="centre"><input type="submit" name="EnterNewRequirement" value="' . _('Enter New Contract Requirement') . '" /></div>';
-
-echo '</form>';
+		<tr>
+			<th colspan="2">' . _('Enter New Requirements') . '</th>
+		</tr>
+		<tr>
+			<td>' . _('Requirement Description') . '</td>
+			<td><textarea name="RequirementDescription" cols="30" rows="3">' . $_POST['RequirementDescription'] . '</textarea></td>
+		</tr>
+		<tr>
+			<td>' . _('Quantity Required') . ':</td>
+			<td><input type="text" class="number" name="Quantity" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Cost Per Unit') . ':</td>
+			<td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
+		</tr>
+		
+		</table>
+		
+		<br />
+		<div class="centre">
+			<input type="submit" name="EnterNewRequirement" value="' . _('Enter New Contract Requirement') . '" />
+		</div>
+		
+		</form>';
+		
 include('includes/footer.inc');
 ?>

@@ -127,7 +127,7 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 		
 		if ($POHeader['status'] != 'Authorised' AND $POHeader['status'] != 'Printed') {
 			include('includes/header.inc');
-			prnMsg( _('Purchase orders can only be printed once they have been authorised') . '. ' . _('This order is currently at a status of') . ' ' . _($OrderStatus),'warn');
+			prnMsg( _('Purchase orders can only be printed once they have been authorised') . '. ' . _('This order is currently at a status of') . ' ' . _($POHeader['status']),'warn');
 			include('includes/footer.inc');
 			exit;
 		}

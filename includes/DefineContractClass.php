@@ -38,20 +38,22 @@ Class Contract {
 	}
 
 	function Add_To_ContractBOM($StockID, 
-														    $ItemDescription, 
-														    $WorkCentre, 
-														    $Quantity, 
-														    $ItemCost, 
-														    $UOM){
+							    $ItemDescription, 
+							    $WorkCentre, 
+							    $Quantity, 
+							    $ItemCost, 
+							    $UOM,
+							    $DecimalPlaces){
 																
 		if (isset($StockID) AND $Quantity!=0){
 			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($this->BOMComponentCounter,
-																																								$StockID, 
-																																								$ItemDescription, 
-																																								$WorkCentre, 
-																																								$Quantity,
-																																								$ItemCost, 
-																																								$UOM);
+																	$StockID, 
+																	$ItemDescription, 
+																	$WorkCentre, 
+																	$Quantity,
+																	$ItemCost, 
+																	$UOM,
+																	$DecimalPlaces);
 			$this->BOMComponentCounter++;
 			Return 1;
 		}
@@ -70,7 +72,11 @@ Class Contract {
 	
 /*Requirments Methods */
 
-function Add_To_ContractRequirements($Requirement, $Quantity, $CostPerUnit,$ContractReqID=0){
+function Add_To_ContractRequirements($Requirement, 
+									$Quantity, 
+									$CostPerUnit,
+									$ContractReqID=0){
+										
 		if (isset($Requirement) AND $Quantity!=0 AND $CostPerUnit!=0){
 			$this->ContractReqts[$this->RequirementsCounter] = new ContractRequirement($Requirement, $Quantity, $CostPerUnit,$ContractReqID);
 			$this->RequirementsCounter++;
@@ -95,15 +101,17 @@ Class ContractComponent {
 	var $Quantity;
 	var $ItemCost;
 	var $UOM;
+	var $DecimalPlaces;
 	
 	function ContractComponent ($ComponentID, 
-															$StockID, 
-															$ItemDescription, 
-															$WorkCentre, 
-															$Quantity, 
-															$ItemCost, 
-															$UOM){
-
+								$StockID, 
+								$ItemDescription, 
+								$WorkCentre, 
+								$Quantity, 
+								$ItemCost, 
+								$UOM,
+								$DecimalPlaces=0){
+	
 /* Constructor function to add a new Contract Component object with passed params */
 		$this->ComponentID = $ComponentID;
 		$this->StockID = $StockID;
@@ -112,6 +120,7 @@ Class ContractComponent {
 		$this->Quantity = $Quantity;
 		$this->ItemCost= $ItemCost;
 		$this->UOM = $UOM;
+		$this->DecimalPlaces = $DecimalPlaces;
 	}
 }
 
@@ -123,9 +132,9 @@ Class ContractRequirement {
 	var $CostPerUnit;
 	
 	function ContractRequirement ($Requirement, 
-																$Quantity, 
-																$CostPerUnit,
-																$ContractReqID=0){
+									$Quantity, 
+									$CostPerUnit,
+									$ContractReqID=0){
 
 /* Constructor function to add a new Contract Component object with passed params */
 		$this->Requirement = $Requirement;
