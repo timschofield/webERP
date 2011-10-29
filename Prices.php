@@ -208,7 +208,7 @@ if ($InputError ==0){
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result) > 0) {
-		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">
 				<table class=selection>
 				<tr>
 					<th colspan="7">
@@ -248,8 +248,8 @@ if ($InputError ==0){
 					<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td>
-					<td><a href="' . $_SERVER['PHP_SELF'] . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&Price=' . $myrow['price'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&Edit=1">' . _('Edit') . '</td>
-					<td><a href="' . $_SERVER['PHP_SELF'] . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td></tr>';
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&Price=' . $myrow['price'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&Edit=1">' . _('Edit') . '</td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td></tr>';
 					
 			} else {
 				echo '<td>' . $myrow['currency'] . '</td>
@@ -266,7 +266,7 @@ if ($InputError ==0){
 		prnMsg(_('There are no prices set up for this part'),'warn');
 	}
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($_GET['Edit'])){
 		echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'">';

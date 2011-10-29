@@ -161,8 +161,8 @@ if (!isset($SelectedArea)) {
 		}
 		echo '<td>' . $myrow[0] . '</td>
 			<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedArea=' . $myrow[0] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales area?') . '\');">' . _('Delete') . '</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedArea=' . $myrow[0] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales area?') . '\');">' . _('Delete') . '</a></td>';
 		echo '<td><a href="SelectCustomer.php'. '?Area=' . $myrow[0] . '">' . _('View Customers from this Area') . '</a></td>';
 	}
 	//END WHILE LIST LOOP
@@ -172,13 +172,13 @@ if (!isset($SelectedArea)) {
 //end of ifs and buts!
 
 if (isset($SelectedArea)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Areas Defined') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Areas Defined') . '</a></div>';
 }
 
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '"><br />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '"><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedArea)) {

@@ -13,7 +13,7 @@ if (isset($_GET['StockID'])){
 }
 
 if (!isset($_POST['StockID'])) {
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post"><b><br /></b>'.
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post"><b><br /></b>'.
 	'<div class="page_help_text">'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' .
 	 _('to view the costed bill of materials') . '<br /><font size=1>' .
 	 _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') .

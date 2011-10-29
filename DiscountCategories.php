@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 }
 
 if (isset($_POST['selectchoice'])) {
-	echo '<form name="update" method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form name="update" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
@@ -91,7 +91,7 @@ if (isset($_POST['selectchoice'])) {
 			<br />';
 	}
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ChooseOption" value="'.$_POST['ChooseOption'].'">';
 	echo '<input type="hidden" name="selectchoice" value="'.$_POST['selectchoice'].'">';
@@ -212,7 +212,7 @@ if (isset($_POST['selectchoice'])) {
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			$DeleteURL = $_SERVER['PHP_SELF'] . '?Delete=yes&StockID=' . $myrow['stockid'] . '&DiscountCategory=' . $myrow['discountcategory'];
+			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=yes&StockID=' . $myrow['stockid'] . '&DiscountCategory=' . $myrow['discountcategory'];
 
 			printf('<td>%s</td>
 					<td>%s - %s</td>
@@ -235,7 +235,7 @@ if (isset($_POST['selectchoice'])) {
 }
 
 if (!isset($_POST['selectchoice'])) {
-	echo '<form method="post" name="choose" action="' . $_SERVER['PHP_SELF'] .  '">';
+	echo '<form method="post" name="choose" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr><td>'._('Update discount category for').'</td>';

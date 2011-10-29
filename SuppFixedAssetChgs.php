@@ -84,7 +84,7 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 	echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
 		<td>' . $EnteredAsset->Description . '</td>
 		<td class=number>' . locale_number_format($EnteredAsset->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces). '</td>
-		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredAsset->Counter . '">' . _('Delete') . '</a></td></tr>';
+		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $EnteredAsset->Counter . '">' . _('Delete') . '</a></td></tr>';
 
 	$TotalAssetValue +=  $EnteredAsset->Amount;
 
@@ -103,7 +103,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 }
 
 /*Set up a form to allow input of new Shipment charges */
-echo '<br /><form action="' . $_SERVER['PHP_SELF'] . '" method="post" />';
+echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" />';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {

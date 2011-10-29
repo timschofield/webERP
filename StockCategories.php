@@ -250,9 +250,9 @@ or deletion of the records*/
 				$myrow[5],
 				$myrow[6],
 				$myrow[7],
-				$_SERVER['PHP_SELF'] . '?',
+				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 				$myrow[0],
-				$_SERVER['PHP_SELF'] . '?',
+				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 				$myrow[0]);
 	}
 	//END WHILE LIST LOOP
@@ -266,7 +266,7 @@ or deletion of the records*/
 <p>
 <?php
 if (isset($SelectedCategory)) {  ?>
-	<div class='centre'><a href="<?php echo $_SERVER['PHP_SELF'];?>"><?php echo _('Show All Stock Categories'); ?></a></div>
+	<div class='centre'><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>"><?php echo _('Show All Stock Categories'); ?></a></div>
 <?php } ?>
 
 <p>
@@ -275,7 +275,7 @@ if (isset($SelectedCategory)) {  ?>
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form name="CategoryForm" method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form name="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCategory)) {
@@ -551,7 +551,7 @@ if (! isset($_GET['delete'])) {
 			}
 
 			echo '></td>
-					<td><a href="' . $_SERVER['PHP_SELF'] . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>
 				</tr>';
 
 			$PropertyCounter++;

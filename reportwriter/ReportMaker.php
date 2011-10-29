@@ -22,7 +22,7 @@ require('admin/defaults.php'); // load default values
 $usrMsg = ''; // setup array for return messages
 if (isset($_GET['reportid'])) { // then entered with report id requested, fix variable to show filter form
 	$_POST['todo'] = RPT_BTN_CONT; // fake the code to think the continue button was pressed
-	$_POST['ReportID'] = $_GET['reportid']; // convert Report ID to a POST variable
+	$_POST['ReportID'] = (int) $_GET['reportid']; // convert Report ID to a POST variable
 	$GoBackURL = $rootpath.'/index.php'; // set the return path to the index.php page
 } elseif (isset($_POST['GoBackURL'])) {
 	$GoBackURL = $_POST['GoBackURL']; // set the return path to the index.php page because entered from a link

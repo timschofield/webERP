@@ -21,7 +21,7 @@ $allow_demo_mode = True;
 putenv('TZ=Europe/London');
 // putenv('TZ=Australia/Melbourne');
 // putenv('TZ=Australia/Sydney');
-// putenv('TZ=Pacific/Auckland');
+//putenv('TZ=Pacific/Auckland');
 
 // Connection information for the database
 // $host is the computer ip address or name where the database is located
@@ -76,7 +76,7 @@ NOTE: In some windows installation this command doesn't work and the administrat
 eg. if the files are under the webserver root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
 */
 
-$rootpath = dirname($_SERVER['PHP_SELF']);
+$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
 if (isset($DirectoryLevelsDeep)){
 	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
 		$rootpath = mb_substr($rootpath,0, strrpos($rootpath,'/'));
@@ -91,8 +91,9 @@ if ($rootpath == "/" OR $rootpath == "\\") {
 /* Report all errors except E_NOTICE
 This is the default value set in php.ini for most installations but just to be sure it is forced here
 turning on NOTICES destroys things */
-
 error_reporting (E_ALL && ~E_NOTICE);
+/* For Development Use */
+//error_reporting (-1);
 
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>

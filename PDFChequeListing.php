@@ -30,7 +30,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		prnMsg($msg,'error');
 	}
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">

@@ -25,7 +25,7 @@ $sql="SELECT script,
 
 $result=DB_query($sql, $db);
 
-echo '<br /><form method="post" id="PageSecurity" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<br /><form method="post" id="PageSecurity" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">';

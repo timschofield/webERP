@@ -19,7 +19,7 @@ if (!isset($_POST['DateRange'])){
 	$_POST['DateRange']='ThisMonth';
 }
 
-echo '<form name="Form1" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+echo '<form name="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding=2 class="selection">

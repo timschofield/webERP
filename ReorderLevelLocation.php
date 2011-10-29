@@ -157,7 +157,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	echo '<br />
 		<br />
-		<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
 		<table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,

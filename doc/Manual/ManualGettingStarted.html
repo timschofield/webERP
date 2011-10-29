@@ -60,7 +60,7 @@ a config.php setting for $SessionSavePath which should be set
 appropriately for the web server host.
 </li><li>For a reason unknown some servers are unable to obtain the
 correct directory automatically using the line: $rootpath =
-dirname($_SERVER['PHP_SELF']); This will be evidenced by the system's
+dirname(htmlspecialchars($_SERVER['PHP_SELF'])); This will be evidenced by the system's
 inability to find the page links for the various system options. If
 this happens the $rootpath variable can be set to the root path of the
 scripts directly.<br />
@@ -341,7 +341,7 @@ NOTE: In some windows installation this command doesn't work and the administrat
 eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.<br />
 */<br />
 <br />
-$rootpath = dirname($_SERVER['PHP_SELF']);<br />
+$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));<br />
 if ($rootpath == "/" OR $rootpath == "\\") {<br />
 	$rootpath = "";<br />
 }<br />

@@ -44,7 +44,7 @@ if (isset($_GET['BackupFile'])){
 		prnMsg(_('Once you have downloaded the database backup file to your local machine you should use the link below to delete it - backup files can consume a lot of space on your hosting account and will accumulate if not deleted - they also contain sensitive information which would otherwise be available for others to download!'),'info');
 		echo '<br />
 			<br />
-			<a href="'. $_SERVER['PHP_SELF'] . '?BackupFile=' .$BackupFile  .'">' . _('Delete the backup file off the server') . '</a>';
+			<a href="'. htmlspecialchars($_SERVER['PHP_SELF']) . '?BackupFile=' .$BackupFile  .'">' . _('Delete the backup file off the server') . '</a>';
 	} else {
 		prnMsg(_('There was some problem producing a backup using mysqldump. Normally this relates to a permissions issue - the web-server user must have permission to write to the companies directory'),'error');
 	}

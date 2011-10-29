@@ -32,7 +32,7 @@ Einige für Windows deklarierte Installationen kommen mit einer Einstellung für s
 <li>
 Wenn das System bei Ihrem Provider auf einer Rechnergruppe gehostet wird, muss das als ein permanentes Verzeichnis angegeben werden, andernfalls finden von Seite zu Seite wechselnde Server die Anmeldeinformationen nicht. Es gibt in der config.php eine Einstellung $SessionSavePath, diese sollte in diesen Fällen entsprechend gesetzt werden.
 <li>
-Aus unklaren Gründen sind manche Server nicht in der Lage, über $rootpath = dirname($_SERVER['PHP_SELF']); automatisch das korrekte Verzeichnis zu ermitteln. Das äußert sich darin, dass das System nicht in der Lage ist, die Seiten-Links für die unterschiedlichen Systemfunktionen zu finden. Wenn das geschieht, kann die Variable $rootpath direkt auf den Pfad gesetzt werden, in dem die Skripte liegen.
+Aus unklaren Gründen sind manche Server nicht in der Lage, über $rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'])); automatisch das korrekte Verzeichnis zu ermitteln. Das äußert sich darin, dass das System nicht in der Lage ist, die Seiten-Links für die unterschiedlichen Systemfunktionen zu finden. Wenn das geschieht, kann die Variable $rootpath direkt auf den Pfad gesetzt werden, in dem die Skripte liegen.
 <br /><br />
 Das System könnte mit vielen anderen Datenbankservern genutzt werden, aber es ist auf MySQL entwickelt und getestet worden. Eine ConnectDB.inc-Datei für Postgres ist mit beigefügt und es gibt eine Einstellung in der config.php ($dbtype), die es dem Systemadministrator erlaubt, eine Postrgres-Datenbank zu verwenden, wenn ihm diese lieber ist. Unabhängige Benchmarks zeigen, dass MySQL für die allgemeinsten Datenbankaufgaben eines der schnellsten Systeme ist. Es ist insbesondere schnell beim Aufbau der Verbindungen, und weil es in der Natur des Web liegt, dass für jede Seite eine neue Verbindung erstellt wird, macht das MySQL für Web-Anwendungen besonders tauglich. 
 <br /><br />
@@ -213,7 +213,7 @@ NOTE: In some windows installation this command doesn't work and the administrat
 eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.<br />
 */<br />
 <br />
-$rootpath = dirname($_SERVER['PHP_SELF']);<br />
+$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));<br />
 if ($rootpath == "/" OR $rootpath == "\\") {<br />
 	$rootpath = "";<br />
 }<br />

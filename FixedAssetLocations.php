@@ -54,7 +54,7 @@ if (isset($_POST['update']) and !isset($_POST['delete'])) {
 												parentlocationid='".$_POST['ParentLocationID']."'
 									WHERE locationid ='".$_POST['LocationID']."'";
 			 $result=DB_query($sql,$db);
-			 echo '<meta http-equiv="Refresh" content="0; url="'.$_SERVER['PHP_SELF'].'">';
+			 echo '<meta http-equiv="Refresh" content="0; url="'.htmlspecialchars($_SERVER['PHP_SELF']).'">';
 		}
 } else {
 	// if you are not updating then you want to delete but lets be sure first.
@@ -99,11 +99,11 @@ while ($myrow=DB_fetch_array($result)) {
 	$parentresult=DB_query($parentsql, $db);
 	$parentrow=DB_fetch_array($parentresult);
 	echo '<td>'.$parentrow['locationdescription'].'</td>';
-	echo '<td><a href="'.$_SERVER['PHP_SELF'] . '?' . SID.'SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</td>';
+	echo '<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID.'SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</td>';
 }
 
 echo '</table><br />';
-echo '<form name="LocationForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class=selection>';
+echo '<form name="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '"><table class=selection>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<tr><th style="text-align:left">'._('Location ID').'</th>';
 if (isset($_GET['SelectedLocation'])) {

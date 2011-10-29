@@ -24,7 +24,7 @@ if (isset($_POST['serialno'])) {
 
 echo '<div class="centre">
 <br />
-<form name="SerialNoResearch" method="post" action="' . $_SERVER['PHP_SELF'] .'">';
+<form name="SerialNoResearch" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .'">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo  _('Serial Number') .': <input ID="serialno" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" />

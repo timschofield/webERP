@@ -182,8 +182,8 @@ if (isset($_POST['Submit'])) {
 		}
 
 		echo '<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedMeasureID=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete') .'</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedMeasureID=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete') .'</a></td>';
 		echo '</tr>';
 
 	} //END WHILE LIST LOOP
@@ -193,7 +193,7 @@ if (isset($_POST['Submit'])) {
 
 if (isset($SelectedMeasureID)) {
 	echo '<div class="centre">
-			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Units of Measure') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Units of Measure') . '</a>
 		</div>';
 }
 
@@ -201,7 +201,7 @@ echo '<p />';
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] .  '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedMeasureID)) {

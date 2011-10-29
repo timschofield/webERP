@@ -33,7 +33,7 @@ if (isset($StockID)){
 		<font color="navy" size="3"><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('in units of') . ' ' . $myrow[1] . ')</font>';
 }
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
 	<div class="centre">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

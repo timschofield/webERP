@@ -179,8 +179,8 @@ if (isset($_POST['submit'])) {
 		}
 
 		echo '<td>' . $myrow[1] . '</td>
-				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedTaxCategory=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedTaxCategory=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
 
 if (isset($SelectedTaxCategory)) {
 	echo '<div class="centre">
-			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Tax Categories') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Tax Categories') . '</a>
 		</div>';
 }
 
@@ -198,7 +198,7 @@ echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTaxCategory)) {

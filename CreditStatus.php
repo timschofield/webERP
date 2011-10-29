@@ -175,9 +175,9 @@ or deletion of the records*/
 			$myrow['reasoncode'],
 			$myrow['reasondescription'],
 			$DissallowText,
-			$_SERVER['PHP_SELF'],
+			htmlspecialchars($_SERVER['PHP_SELF']),
 			$myrow['reasoncode'],
-			$_SERVER['PHP_SELF'],
+			htmlspecialchars($_SERVER['PHP_SELF']),
 			$myrow['reasoncode']);
 	
 	} //END WHILE LIST LOOP
@@ -186,12 +186,12 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedReason)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show Defined Credit Status Codes') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show Defined Credit Status Codes') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReason) and ($InputError!=1)) {

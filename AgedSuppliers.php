@@ -271,7 +271,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form sction="' . $_SERVER['PHP_SELF'] . '" method="post">
+		echo '<form sction="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
 			<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

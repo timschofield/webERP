@@ -190,9 +190,9 @@ if (!isset($SelectedGroup)) {
 					</tr>',
 					$myrow['taxgroupid'],
 					$myrow['taxgroupdescription'],
-					$_SERVER['PHP_SELF']  . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 					$myrow['taxgroupid'],
-					$_SERVER['PHP_SELF'] . '?',
+					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 					$myrow['taxgroupid'],
 					urlencode($myrow['taxgroupdescription']));
 
@@ -204,7 +204,7 @@ if (!isset($SelectedGroup)) {
 
 if (isset($SelectedGroup)) {
 	echo '<div class="centre">
-			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Existing Groups') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Existing Groups') . '</a>
 		</div>';
 }
 
@@ -225,7 +225,7 @@ if (isset($SelectedGroup)) {
 	}
 }
 echo '<br />';
-echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedGroup'])) {
 	echo '<input type="hidden" name="SelectedGroup" value="' . $_POST['SelectedGroup'] . '" />';
@@ -274,7 +274,7 @@ if (isset($SelectedGroup)) {
 
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if (count($TaxAuthsUsed)>0) {
-		echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<input type=hidden name="SelectedGroup" value="' . $SelectedGroup .'" />';
 		echo '<table class="selection">
@@ -379,7 +379,7 @@ if (isset($SelectedGroup)) {
 				$AvailRow['taxname'],
 				$TaxAuthRow[$TaxAuthUsedPointer]['calculationorder'],
 				$TaxOnTax,
-				$_SERVER['PHP_SELF']  . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 				$SelectedGroup,
 				$AvailRow['taxid']
 				);
@@ -395,7 +395,7 @@ if (isset($SelectedGroup)) {
 				<td><a href="%sSelectedGroup=%s&add=1&TaxAuthority=%s">' . _('Add') . '</a></td>',
 				$AvailRow['taxid'],
 				$AvailRow['taxname'],
-				$_SERVER['PHP_SELF']  . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 				$SelectedGroup,
 				$AvailRow['taxid']	);
 		}

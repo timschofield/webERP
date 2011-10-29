@@ -124,9 +124,9 @@ if (!isset($SelectedRole)) {
 			<td><a href="%s&SelectedRole=%s&delete=1&SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['secrolename'],
-			$_SERVER['PHP_SELF']  . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 			$myrow['secroleid'],
-			$_SERVER['PHP_SELF'] . '?',
+			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 			$myrow['secroleid'],
 			urlencode($myrow['secrolename']));
 
@@ -136,7 +136,7 @@ if (!isset($SelectedRole)) {
 
 
 if (isset($SelectedRole)) {
-	echo '<br /><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Existing Roles') . '</a></div>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Existing Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -156,7 +156,7 @@ if (isset($SelectedRole)) {
 	}
 }
 echo '<br />';
-echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedRole'])) {
 	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '">';
@@ -221,7 +221,7 @@ if (isset($SelectedRole)) {
 					<td>&nbsp;</td>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
-					$_SERVER['PHP_SELF']  . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 					$SelectedRole,
 					$AvailRow['tokenid'] );
 		} else {
@@ -233,7 +233,7 @@ if (isset($SelectedRole)) {
 					<td><a href="%sSelectedRole=%s&add=1&PageToken=%s">' . _('Add') . '</a></td>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
-					$_SERVER['PHP_SELF']  . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 					$SelectedRole,
 					$AvailRow['tokenid'] );
 		}

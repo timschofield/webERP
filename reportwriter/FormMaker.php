@@ -34,7 +34,7 @@ switch ($_POST['todo']) {
 		exit();
 
 	default: // determine how we entered the script to show correct form list information
-		$OutputString = BuildFormList($_GET['id']); // ['id'] will be null for generic entry
+		$OutputString = BuildFormList((int) $_GET['id']); // ['id'] will be null for generic entry
 		$title=RPT_FORMSELECT;
 		$IncludePage = 'forms/FormsList.html';
 		break;
@@ -43,7 +43,7 @@ switch ($_POST['todo']) {
 		$ReportID = $_POST['ReportID']; // fetch the report id
 		if ($ReportID=='') { // then no report was selected, error
 			$usrMsg[] = array('message'=>FRM_NORPT, 'level'=>'error');
-			$OutputString = BuildFormList($_GET['id']);
+			$OutputString = BuildFormList((int) $_GET['id']);
 			$title=RPT_FORMSELECT;
 			$IncludePage = 'forms/FormsList.html';
 		} else {
@@ -65,7 +65,7 @@ switch ($_POST['todo']) {
 		$ReportID = $_POST['ReportID']; // fetch the report id
 		if ($ReportID=='') { // then no report was selected, error
 			$usrMsg[] = array('message'=>FRM_NORPT, 'level'=>'error');
-			$OutputString = BuildFormList($_GET['id']);
+			$OutputString = BuildFormList((int) $_GET['id']);
 			$title=RPT_FORMSELECT;
 			$IncludePage = 'forms/FormsList.html';
 			break;
@@ -117,7 +117,7 @@ switch ($_POST['todo']) {
 			$title=RPT_CRITERIA;
 			$IncludePage = 'forms/FormsFilter.html';
 		} else { // return to the form list page
-			$OutputString = BuildFormList($_GET['id']);
+			$OutputString = BuildFormList((int) $_GET['id']);
 			$title=RPT_FORMSELECT;
 			$IncludePage = 'forms/FormsList.html';
 		}

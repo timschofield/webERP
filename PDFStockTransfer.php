@@ -20,7 +20,7 @@ if (!isset($_GET['TransferNo'])){
 		$title = _('Print Stock Transfer');
 		include('includes/header.inc');
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $title.'</p><br />';
-		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" name="form">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">
 			<tr>

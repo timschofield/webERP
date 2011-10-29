@@ -22,7 +22,7 @@ if (isset($_POST['Select'])) {
 
 	echo '<br /><div class="centre"><a href="' . $rootpath . '/GLAccounts.php?' . SID . '&SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
 	echo '<br /><a href="' . $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
-	echo '<br /><a href="' . $_SERVER['PHP_SELF'] . '?' . SID .  '">' . _('New Search') . '</a></div>';
+	echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID .  '">' . _('New Search') . '</a></div>';
 
 } elseif (isset($_POST['Search'])){
 
@@ -76,7 +76,7 @@ if (!isset($AccountID)) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
-	echo "<br /><form action='" . $_SERVER['PHP_SELF'] . '?' . SID . "' method=post>";
+	echo "<br /><form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . "' method=post>";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(mb_strlen($msg)>1){

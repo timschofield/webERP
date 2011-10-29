@@ -25,7 +25,7 @@ $PathPrefix='../../';
 
 include('ManualHeader.html');
 ?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
 <?php
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -61,7 +61,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectIntroduction">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Introduction'; ?>">简介</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Introduction'; ?>">简介</A>
 <?php
   } else {
 ?>
@@ -79,7 +79,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectRequirements">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Requirements'; ?>">要求</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Requirements'; ?>">要求</A>
 <?php
   } else {
 ?>
@@ -99,7 +99,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectGettingStarted">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=GettingStarted'; ?>">初识webERP</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=GettingStarted'; ?>">初识webERP</A>
 <?php
   } else {
 ?>
@@ -123,7 +123,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSecuritySchema">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SecuritySchema'; ?>">安全计划</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=SecuritySchema'; ?>">安全计划</A>
 <?php
   } else {
 ?>
@@ -138,7 +138,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectCreatingNewSystem">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=CreatingNewSystem'; ?>">创建一个新系统</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=CreatingNewSystem'; ?>">创建一个新系统</A>
 <?php
   } else {
 ?>
@@ -164,7 +164,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSystemConventions">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SystemConventions'; ?>">系统惯例</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=SystemConventions'; ?>">系统惯例</A>
 <?php
   } else {
 ?>
@@ -183,7 +183,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectInventory">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Inventory'; ?>">库存 (aka "存货")</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Inventory'; ?>">库存 (aka "存货")</A>
 <?php
   } else {
 ?>
@@ -249,7 +249,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectAccountsReceivable">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=AccountsReceivable'; ?>">应收账款</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=AccountsReceivable'; ?>">应收账款</A>
 <?php
   } else {
 ?>
@@ -296,7 +296,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectAccountsPayable">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=AccountsPayable'; ?>">应付账款</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=AccountsPayable'; ?>">应付账款</A>
 <?php
   } else {
 ?>
@@ -325,7 +325,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSalesPeople">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SalesPeople'; ?>">销售人员</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=SalesPeople'; ?>">销售人员</A>
 <?php
   } else {
 ?>
@@ -346,7 +346,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectCurrencies">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Currencies'; ?>">货币</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Currencies'; ?>">货币</A>
 <?php
   } else {
 ?>
@@ -369,7 +369,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSalesTypes">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SalesTypes'; ?>">销售类型 / 价格表</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=SalesTypes'; ?>">销售类型 / 价格表</A>
 <?php
   } else {
 ?>
@@ -389,7 +389,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectPaymentTerms">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=PaymentTerms'; ?>">付款条件</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=PaymentTerms'; ?>">付款条件</A>
 <?php
   } else {
 ?>
@@ -410,7 +410,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectCreditStatus">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=CreditStatus'; ?>">信用状况</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=CreditStatus'; ?>">信用状况</A>
 <?php
   } else {
 ?>
@@ -431,7 +431,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectTax">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Tax'; ?>">税收</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Tax'; ?>">税收</A>
 <?php
   } else {
 ?>
@@ -454,7 +454,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectPrices">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Prices'; ?>">价格和折扣</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Prices'; ?>">价格和折扣</A>
 <?php
   } else {
 ?>
@@ -475,7 +475,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectARTransactions">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=ARTransactions'; ?>">应收账款交易</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=ARTransactions'; ?>">应收账款交易</A>
 <?php
   } else {
 ?>
@@ -508,7 +508,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectARInquiries">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=ARInquiries'; ?>">应收账款查询</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=ARInquiries'; ?>">应收账款查询</A>
 <?php
   } else {
 ?>
@@ -528,7 +528,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectARReports">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=ARReports'; ?>">应收账款报告</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=ARReports'; ?>">应收账款报告</A>
 <?php
   } else {
 ?>
@@ -550,7 +550,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSalesAnalysis">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SalesAnalysis'; ?>">销售分析</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=SalesAnalysis'; ?>">销售分析</A>
 <?php
   } else {
 ?>
@@ -571,7 +571,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSalesOrders">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SalesOrders'; ?>">销售订单</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=SalesOrders'; ?>">销售订单</A>
 <?php
   } else {
 ?>
@@ -599,7 +599,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="PurchaseOrdering">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=PurchaseOrdering'; ?>">采购订单</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=PurchaseOrdering'; ?>">采购订单</A>
 <?php
   } else {
 ?>
@@ -621,7 +621,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectShipments">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Shipments'; ?>">运输</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Shipments'; ?>">运输</A>
 <?php
   } else {
 ?>
@@ -643,7 +643,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectContractCosting">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Contracts'; ?>">合同成本</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Contracts'; ?>">合同成本</A>
 <?php
   } else {
 ?>
@@ -664,7 +664,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectManufacturing">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Manufacturing'; ?>">制造</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Manufacturing'; ?>">制造</A>
 <?php
   } else {
 ?>
@@ -687,7 +687,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectMRP">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=MRP'; ?>">
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=MRP'; ?>">
               物料需求计划</A>
 <?php
   } else {
@@ -712,7 +712,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectGeneralLedger">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=GeneralLedger'; ?>">总帐</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=GeneralLedger'; ?>">总帐</A>
 <?php
   } else {
 ?>
@@ -739,7 +739,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectFixedAssets">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=FixedAssets'; ?>">固定资产</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=FixedAssets'; ?>">固定资产</A>
 <?php
   } else {
 ?>
@@ -761,7 +761,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectReportBuilder">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=ReportBuilder'; ?>">自定义SQL报告工具</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=ReportBuilder'; ?>">自定义SQL报告工具</A>
 <?php
   } else {
 ?>
@@ -788,7 +788,7 @@ if (!isset($_POST['Submit'])) {
 if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="PettyCash">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=PettyCash'; ?>">小额现金管理系统</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=PettyCash'; ?>">小额现金管理系统</A>
 <?php
   } else {
 ?>
@@ -808,7 +808,7 @@ if (!isset($_POST['Submit'])) {
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectMultilanguage">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Multilanguage'; ?>">多语言</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Multilanguage'; ?>">多语言</A>
 <?php
   } else {
 ?>
@@ -830,7 +830,7 @@ if (!isset($_POST['Submit'])) {
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSpecialUtilities">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SpecialUtilities'; ?>">特殊工具</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=SpecialUtilities'; ?>">特殊工具</A>
 <?php
   } else {
 ?>
@@ -852,7 +852,7 @@ if (!isset($_POST['Submit'])) {
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectNewScripts">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=NewScripts'; ?>">研发 - 基础</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=NewScripts'; ?>">研发 - 基础</A>
 <?php
   } else {
 ?>
@@ -883,7 +883,7 @@ if (!isset($_POST['Submit'])) {
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectAPI">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=API'; ?>">研发 - API</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=API'; ?>">研发 - API</A>
 <?php
   } else {
 ?>
@@ -905,7 +905,7 @@ if (!isset($_POST['Submit'])) {
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectStructure">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Structure'; ?>">研发 - 结构</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Structure'; ?>">研发 - 结构</A>
 <?php
   } else {
 ?>
@@ -936,7 +936,7 @@ if (!isset($_POST['Submit'])) {
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectContributors">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Contributors'; ?>">贡献者 -致谢</A>
+              <A HREF="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?ViewTopic=Contributors'; ?>">贡献者 -致谢</A>
 <?php
   } else {
 ?>

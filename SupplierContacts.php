@@ -168,10 +168,10 @@ if (!isset($SelectedContact)){
 					$myrow['fax'],
 					$myrow['email'],
 					$myrow['email'],
-					$_SERVER['PHP_SELF'] . '?',
+					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 					$SupplierID,
 					$myrow['contact'],
-					$_SERVER['PHP_SELF']. '?',
+					htmlspecialchars($_SERVER['PHP_SELF']). '?',
 					$SupplierID,
 					$myrow['contact']);
 		} while ($myrow = DB_fetch_array($result));
@@ -187,14 +187,14 @@ echo '</table><br />';
 
 if (isset($SelectedContact)) {
 	echo '<div class="centre">
-			<a href="' . $_SERVER['PHP_SELF'] . '?SupplierID=' . $SupplierID . '">' .
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SupplierID=' . $SupplierID . '">' .
 		  _('Show all the supplier contacts for') . ' ' . $SupplierID . '</a>
 		 </div>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedContact)) {

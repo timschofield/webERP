@@ -31,7 +31,7 @@ if (get_magic_quotes_gpc()){
 <div id="container">
 	<div id="login_logo"></div>
 	<div id="login_box">
-	<form action="<?php echo $_SERVER['PHP_SELF'];?>" name="loginform" method="post">
+	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" name="loginform" method="post">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span><?php echo _('Company'); ?>:</span>
 	<?php

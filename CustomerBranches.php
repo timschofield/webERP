@@ -408,11 +408,11 @@ if (!isset($SelectedBranch)){
 				$myrow[8],
 				$myrow[9],
 				($myrow[11]?_('No'):_('Yes')),
-				$_SERVER['PHP_SELF'],
+				htmlspecialchars($_SERVER['PHP_SELF']),
 				$DebtorNo,
 				urlencode($myrow[1]),
 				_('Edit'),
-				$_SERVER['PHP_SELF'],
+				htmlspecialchars($_SERVER['PHP_SELF']),
 				$DebtorNo,
 				urlencode($myrow[1]),
 				_('Delete Branch'));
@@ -456,7 +456,7 @@ if (!isset($SelectedBranch)){
 }
 
 if (!isset($_GET['delete'])) {
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] .'">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedBranch)) {
@@ -532,7 +532,7 @@ if (!isset($_GET['delete'])) {
 		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
 			'" alt="">' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
 		if (isset($SelectedBranch)) {
-			echo '<div class="centre"><a href=' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $DebtorNo. '>' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
+			echo '<div class="centre"><a href=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DebtorNo=' . $DebtorNo. '>' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
 		}
 		echo '<br /><table class="selection">';
 		echo '<tr><th colspan=2><div class="centre"><b>'._('Change Branch').'</b></th></tr>';

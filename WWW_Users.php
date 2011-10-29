@@ -328,9 +328,9 @@ if (!isset($SelectedUser)) {
 					$myrow['pagesize'],
 					$myrow['theme'],
 					$LanguagesArray[$myrow['language']],
-					$_SERVER['PHP_SELF']  . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 					$myrow['userid'],
-					$_SERVER['PHP_SELF'] . '?',
+					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 					$myrow['userid']);
 
 	} //END WHILE LIST LOOP
@@ -339,10 +339,10 @@ if (!isset($SelectedUser)) {
 
 
 if (isset($SelectedUser)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF']  . '">' . _('Review Existing Users') . '</a></div><br />';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'])  . '">' . _('Review Existing Users') . '</a></div><br />';
 }
 
-echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedUser)) {

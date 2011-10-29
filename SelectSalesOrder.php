@@ -382,7 +382,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
 
-echo '<form action="' . $_SERVER['PHP_SELF'] .'" method=post>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) .'" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 

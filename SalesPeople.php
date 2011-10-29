@@ -233,9 +233,9 @@ or deletion of the records*/
 			locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
 			locale_number_format($myrow['commissionrate2'],2),
 			$ActiveText,
-			$_SERVER['PHP_SELF'] . '?',
+			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 			$myrow['salesmancode'],
-			$_SERVER['PHP_SELF'] . '?',
+			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 			$myrow['salesmancode']);
 	
 	} //END WHILE LIST LOOP
@@ -243,12 +243,12 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedSalesPerson)) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show All Sales People') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show All Sales People') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPerson)) {

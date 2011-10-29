@@ -305,7 +305,7 @@ if (isset($_POST['ProcessStockChange'])){
 	
 }
 
-echo '<form action="' . $_SERVER['PHP_SELF'] .  '" method=post>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p><table>

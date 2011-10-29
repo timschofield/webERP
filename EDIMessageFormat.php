@@ -97,7 +97,7 @@ if (isset($msg)) {
 	prnMsg($msg,'success');
 }
 
-echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p><table border=0 width=100%>
@@ -153,9 +153,9 @@ or deletion of the records*/
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
-				$_SERVER['PHP_SELF'] . '?' . SID,
+				htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID,
 				$myrow[0],
-				$_SERVER['PHP_SELF'] . '?' . SID,
+				htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID,
 				$myrow[0]);
 
 	} //END WHILE LIST LOOP
@@ -188,7 +188,7 @@ if (isset($SelectedMessageLine)) {
 	$_POST['SequenceNo']  = $myrow['sequenceno'];
 	$_POST['LineText']  = $myrow['linetext'];
 
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '?MessageType=INVOIC&PartnerCode=' . $myrow['partnercode'] . '">' . _('Review Message Lines') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?MessageType=INVOIC&PartnerCode=' . $myrow['partnercode'] . '">' . _('Review Message Lines') . '</a></div>';
 
 	echo '<input type=hidden name="SelectedMessageLine" VALUE="' . $SelectedMessageLine . '">';
 	echo '<input type=hidden name="MessageType" VALUE="' . $myrow['messagetype'] . '">';

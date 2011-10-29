@@ -457,7 +457,7 @@ if (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
 			<table>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

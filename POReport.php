@@ -816,7 +816,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						' ');
 		} // End of if ($_POST['ReportType']
 		echo '</table>';
-		echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="ReportType" value="'.$_POST['ReportType'].'">';
 		echo '<input type="hidden" name="DateType" value="'.$_POST['DateType'].'">';
@@ -1494,7 +1494,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // Display form fields. This function is called the first time
 // the page is called.
 
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';

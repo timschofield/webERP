@@ -108,7 +108,7 @@ if (!isset($SelectedTab)){
 then none of the above are true and the list of sales types will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">'; //Main table
 
@@ -146,8 +146,8 @@ or deletion of the records*/
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedTab)) {
 
-	echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</a></div><p>';
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</a></div><p>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '">';
@@ -186,9 +186,9 @@ while ($myrow = DB_fetch_array($result)) {
 			</tr>',
 			$myrow['codeexpense'],
 			$myrow['description'],
-			$_SERVER['PHP_SELF'],
+			htmlspecialchars($_SERVER['PHP_SELF']),
 			$myrow['codeexpense'],
-			$_SERVER['PHP_SELF'],
+			htmlspecialchars($_SERVER['PHP_SELF']),
 			$myrow['codeexpense']);
 	}
 	//END WHILE LIST LOOP

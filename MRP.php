@@ -573,7 +573,7 @@ if (isset($_POST['submit'])) {
 				</tr>
 				</table>';
 	}
-	echo '<p><form method="post" action="' . $_SERVER['PHP_SELF']  . '">';
+	echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'])  . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>

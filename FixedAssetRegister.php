@@ -73,7 +73,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	} elseif (isset($_POST['csv'])) {
 		$csv_output = "'Asset ID','Description','Serial Number','Location','Date Acquired','Cost B/Fwd','Period Additions','Depn B/Fwd','Period Depreciation','Cost C/Fwd', 'Accum Depn C/Fwd','NBV','Disposal Value'\n";
 	} else {
-		echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '"><table class="selection">';
+		echo '<form name="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '"><table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
 		echo '<br /><table width=80% cellspacing="1" class="selection"><tr>';
@@ -237,7 +237,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title;
 
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories', $db);
-	echo '<form name="RegisterForm" method="post" action="' . $_SERVER['PHP_SELF'] . '"><table class="selection">';
+	echo '<form name="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><th>' . _('Asset Category') . '</th>';
 	echo '<td><select name=AssetCategory>';

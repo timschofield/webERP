@@ -122,7 +122,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 
 	/*Set up a newy in case user wishes to enter another */
 	echo '<br />
-			<a href="' . $_SERVER['PHP_SELF'] . '?NewJournal=Yes">'._('Enter Another General Ledger Journal').'</a>';
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?NewJournal=Yes">'._('Enter Another General Ledger Journal').'</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 	include ('includes/footer.inc');
@@ -239,7 +239,7 @@ if (isset($Cancel)){
 }
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="form">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
@@ -424,7 +424,7 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	}
 
 	echo '<td>' . $JournalItem->Narrative  . '</td>
-		<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $JournalItem->ID . '">' . _('Delete').'</a></td>
+		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $JournalItem->ID . '">' . _('Delete').'</a></td>
 	</tr>';
 }
 

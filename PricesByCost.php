@@ -160,7 +160,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				<th>' . _('List Price') . '</th>
 			<tr>';
 		$k = 0; //row colour counter
-		echo '<form action="' .$_SERVER['PHP_SELF'] .'" method="POST" name="update">';
+		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF']) .'" method="POST" name="update">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value=' . $_POST['StockCat'] . ' name="StockCat">
 			<input type="hidden" value=' . $_POST['Margin'] . ' name="Margin">
@@ -219,17 +219,17 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		} //end of looping
 		echo '<tr>
 			<td style="text-align:right" colspan=4><input type="submit" name="submit" value=' . _('Update') . ' onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');"></td>
-			<td style="text-align:left" colspan=3><a href="' . $_SERVER['PHP_SELF'] . '"><input type="submit" value="' . _('Back') . '"><a/></td>
+			<td style="text-align:left" colspan=3><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '"><input type="submit" value="' . _('Back') . '"><a/></td>
 			 </tr></form>';
 	} else {
 		prnMsg(_('There were no prices meeting the criteria specified to review'),'info');
-		echo '<p><div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Back') . '<a/></div><p>';
+		echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Back') . '<a/></div><p>';
 	}
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br />';
 	echo '<br />
           <br />
-          <form action="' . $_SERVER['PHP_SELF'] . '" method="post">
+          <form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
           <table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

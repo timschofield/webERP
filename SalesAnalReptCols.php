@@ -297,7 +297,7 @@ if (DB_num_rows($result)!=0){
           	<td>%s</td>
           	<td>%s</td>
           	<td><a href="%sReportID=%s&SelectedCol=%s&delete=1">' . _('Delete') . '</td></tr>',
-          	$_SERVER['PHP_SELF'] . '?',
+          	htmlspecialchars($_SERVER['PHP_SELF']) . '?',
           	$ReportID,
           	$myrow[1],
           	$myrow[1],
@@ -311,7 +311,7 @@ if (DB_num_rows($result)!=0){
           	$myrow[9],
           	$myrow[10],
           	$BudOrAct,
-          	$_SERVER['PHP_SELF'] . '?',
+          	htmlspecialchars($_SERVER['PHP_SELF']) . '?',
           	$ReportID,
           	$myrow[1]);
 
@@ -334,7 +334,7 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
 	$ReportHeading=$myrow['reportheading'];
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ReportHeading" value="'.$ReportHeading.'" />';
 	echo '<input type=hidden name="ReportID" value="' . $ReportID . '" />';

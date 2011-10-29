@@ -157,7 +157,7 @@ echo '<tr>
 
 echo '<br />
 	<div class="centre">
-		<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo _('Show all transactions after') . ': ' .'<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" /> 
 	<input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
@@ -277,12 +277,12 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$AuthRow=DB_fetch_array($AuthResult);
 				
 				if ($AuthRow[0]==0) {
-					echo '<td><a href="' .$_SERVER['PHP_SELF'] . '?HoldType=' . $myrow['type'] . '&HoldTrans=' . $myrow['transno']. '&HoldStatus=' . $HoldValue . '&FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue .'</a></td>';
+					echo '<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF']) . '?HoldType=' . $myrow['type'] . '&HoldTrans=' . $myrow['transno']. '&HoldStatus=' . $HoldValue . '&FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue .'</a></td>';
 				} else {
 					if ($HoldValue==_('Release')) {
 						echo '<td>' . $HoldValue .'</a></td>';
 					} else {
-						echo '<td><a href="' . $_SERVER['PHP_SELF']. '?' . 'HoldType=' . $myrow['type'] .'&HoldTrans=' . $myrow['transno'] . '&HoldStatus=' . $HoldValue . '&FromDate=' . $_POST['TransAfterDate'] .'">'.$HoldValue .'</a></td>';
+						echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']). '?' . 'HoldType=' . $myrow['type'] .'&HoldTrans=' . $myrow['transno'] . '&HoldStatus=' . $HoldValue . '&FromDate=' . $_POST['TransAfterDate'] .'">'.$HoldValue .'</a></td>';
 					}
 				}
 				echo '<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] .'&TransNo=' . $myrow['transno'] .'">' ._('View GL Postings') . '</a></td></tr>';
@@ -331,7 +331,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']),
 						locale_number_format($myrow['totalamount']-$myrow['allocated'],$SupplierRecord['currdecimalplaces']),
 						$myrow['transtext'],
-						$_SERVER['PHP_SELF'],
+						htmlspecialchars($_SERVER['PHP_SELF']),
 						$myrow['type'],
 						$myrow['transno'],
 						$HoldValue,

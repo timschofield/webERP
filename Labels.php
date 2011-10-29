@@ -270,7 +270,7 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $msg.'</p>';
 
 	echo '<br />
-	<form action="'.$_SERVER['PHP_SELF'].'" method="POST">
+	<form action="'.htmlspecialchars($_SERVER['PHP_SELF']).'" method="POST">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<div class="centre">
 		<table border="2" cellspacing="4" class="selection">
@@ -425,7 +425,7 @@ function showLabelsList($list) {
 			}
 		}
 	</script>
-	<form action="'.$_SERVER['PHP_SELF'].'" method="POST" id="form1" target="_self">
+	<form action="'.htmlspecialchars($_SERVER['PHP_SELF']).'" method="POST" id="form1" target="_self">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="action" id="action" value="" />
 		<input type="hidden" name="labelID" id="labelID" value="" />

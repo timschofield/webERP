@@ -521,7 +521,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="">' . ' ' . _('Purchase Order: Select Supplier') . '';
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method="post" name="choosesupplier">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier=' . $identifier . '" method="post" name="choosesupplier">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($SuppliersReturned)){
 		echo '<input type="hidden" name="SuppliersReturned" value="' . $SuppliersReturned .'" />';
@@ -592,7 +592,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 } else {
 /* everything below here only do if a supplier is selected */
 
-	echo '<form name="form1" action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method="post">';
+	echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier=' . $identifier . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">

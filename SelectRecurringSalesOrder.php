@@ -5,7 +5,7 @@ include('includes/session.inc');
 $title = _('Search Recurring Sales Orders');
 include('includes/header.inc');
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
 	_('Inventory Items') . '" alt="" />' . ' ' . $title . '</p>';

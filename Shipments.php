@@ -288,7 +288,7 @@ if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is 
 
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">
@@ -426,7 +426,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 			<td class="number">' . locale_number_format($LnItm->QtyInvoiced,2) . '</td>
 			<td class="number">' . locale_number_format($LnItm->UnitPrice,2) . '</td>
 			<td class="number">' . locale_number_format($LnItm->StdCostUnit,2) . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</a></td>
 			</tr>';
 	}//for each line on the shipment
 echo '</table>';
@@ -505,7 +505,7 @@ if (DB_num_rows($result)>0){
 			<td>' . $myrow['units'] . '</td>
 			<td class="number">' . locale_number_format($myrow['quantityrecd'],,$myrow['decimalplaces']) . '</td>
 			<td class="number">' . ConvertSQLDate($myrow['deliverydate']) . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?' . 'Add=' . $myrow['podetailitem'] . '">'. _('Add').'</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . 'Add=' . $myrow['podetailitem'] . '">'. _('Add').'</a></td>
 			</tr>';
 
 	}

@@ -11,7 +11,7 @@ $title = _('Special Order Entry');
 
 include('includes/header.inc');
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -652,7 +652,7 @@ if (count($_SESSION['SPL']->LineItems)>0){
 			<td class="number">' . $DisplayLineTotal . '</td>
 			<td class="number">' . $DisplayLineCostTotalCurr . '</td>
 			<td class="number">' . $DisplayLineTotalCurr . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $SPLLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $SPLLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
 
 		$_SESSION['SPL']->total += ($LineTotal/$_SESSION['SPL']->CustCurrExRate);
 	}

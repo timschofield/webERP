@@ -209,9 +209,9 @@ or deletion of the records*/
 			$myrow['terms'],
 			$FollMthText,
 			$DueAfterText,
-			$_SERVER['PHP_SELF'],
+			htmlspecialchars($_SERVER['PHP_SELF']),
 			$myrow[0],
-			$_SERVER['PHP_SELF'],
+			htmlspecialchars($_SERVER['PHP_SELF']),
 			$myrow[0]);
 	
 	} //END WHILE LIST LOOP
@@ -220,13 +220,13 @@ or deletion of the records*/
 
 if (isset($SelectedTerms)) {
 	echo '<div class="centre">
-			<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Show all Payment Terms Definitions') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show all Payment Terms Definitions') . '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTerms)) {

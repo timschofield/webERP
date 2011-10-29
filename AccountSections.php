@@ -193,11 +193,11 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 		}
 
 		echo '<td>' . $myrow[0] . '</td><td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedSectionID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
 		if ( $myrow[0] == '1' || $myrow[0] == '2' ) {
 			echo '<td><b>'._('Restricted').'</b></td>';
 		} else {
-			echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?SelectedSectionID=' . $myrow[0] . '&amp;delete=1">' . _('Delete') .'</a></td>';
+			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedSectionID=' . $myrow[0] . '&amp;delete=1">' . _('Delete') .'</a></td>';
 		}
 		echo '</tr>';
 	} //END WHILE LIST LOOP
@@ -206,12 +206,12 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 
 
 if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
-	echo '<div class="centre"><a href="' . $_SERVER['PHP_SELF'] . '">' . _('Review Account Sections') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Account Sections') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" name="AccountSections" action="' . $_SERVER['PHP_SELF'] .  '">';
+	echo '<form method="post" name="AccountSections" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedSectionID'])) {

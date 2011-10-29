@@ -335,11 +335,11 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 	echo '<br />' . _('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . _('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . _('has been reversed') . '<br />';
 	unset($_GET['GRNNo']);  // to ensure it cant be done again!!
-	echo '<a href="' . $_SERVER['PHP_SELF'] . '">' . _('Select another GRN to Reverse') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Select another GRN to Reverse') . '</a>';
 /*end of Process Goods Received Reversal entry */
 
 } else {
-	echo '<form action="' . $_SERVER['PHP_SELF'] . '" method=post>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['RecdAfterDate']) OR !Is_Date($_POST['RecdAfterDate'])) {
@@ -407,7 +407,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				$DisplayQtyInv = locale_number_format($myrow['quantityinv'],'Variable');
 				$DisplayQtyRev = locale_number_format($myrow['qtytoreverse'],'Variable');
 				$DisplayDateDel = ConvertSQLDate($myrow['deliverydate']);
-				$LinkToRevGRN = '<a href="' . $_SERVER['PHP_SELF'] . '?GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
+				$LinkToRevGRN = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
 
 				printf('<td>%s</td>
 						<td>%s</td>

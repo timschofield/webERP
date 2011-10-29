@@ -56,7 +56,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
 
-	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
+	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
 
 	$TotalQuantity += $Bundle->BundleQty;
 }
@@ -84,7 +84,7 @@ echo '<table class="selection">';
 echo $tableheader;
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '" name="Ga6uF5Wa" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" name="Ga6uF5Wa" method="post">
       <input type=hidden name="LineNo" value="' . $LineNo . '">
       <input type=hidden name="StockID" value="' . $StockID . '">
       <input type=hidden name="EntryType" value="KEYED">';

@@ -642,7 +642,7 @@ if (isset($_POST['NewItem'])){
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form name="form1" action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method=post>';
+echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier=' . $identifier . '" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*need to set up entry for item description where not a stock item and GL Codes */
@@ -706,9 +706,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td class="number">' . $DisplayLineTotal . '</td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'"></td>';
 			if ($POLine->QtyReceived !=0 AND $POLine->Completed!=1){
-				echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier .'&Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
+				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier .'&Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
 			} elseif ($POLine->QtyReceived ==0) {
-				echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier .'&Delete=' . $POLine->LineNo . '">' . _('Delete'). '</a></td>';
+				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier .'&Delete=' . $POLine->LineNo . '">' . _('Delete'). '</a></td>';
 			}
 			echo '</tr>';
 			$_SESSION['PO'.$identifier]->Total += $LineTotal;
