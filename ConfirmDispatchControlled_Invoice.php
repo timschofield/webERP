@@ -15,9 +15,10 @@ if (isset($_GET['LineNo'])){
 } elseif (isset($_POST['LineNo'])){
         $LineNo = (int)$_POST['LineNo'];
 } else {
-	echo '<div class="centre"><a href="' . $rootpath . '/ConfirmDispatch_Invoice.php">'.
-		_('Select a line item to invoice').'</a><br />';
-	echo '<br />';
+	echo '<div class="centre">
+			<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php">'. _('Select a line item to invoice').'</a>
+			<br />
+			<br />';
 	prnMsg( _('This page can only be opened if a line item on a sales order to be invoiced has been selected') . '. ' . _('Please do that first'),'error');
 	echo '</div>';
 	include('includes/footer.inc');
@@ -26,8 +27,9 @@ if (isset($_GET['LineNo'])){
 
 if (!isset($_SESSION['Items']) OR !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with a sales order number to invoice */
-	echo '<div class="centre"><a href="' . $rootpath . '/SelectSalesOrder.php">'. _('Select a sales order to invoice').
-		'</a><br />';
+	echo '<div class="centre">
+			<a href="' . $rootpath . '/SelectSalesOrder.php">'. _('Select a sales order to invoice') . '</a>
+			<br />';
 	prnMsg( _('This page can only be opened if a sales order and line item has been selected Please do that first'),'error');
 	echo '</div>';
 	include('includes/footer.inc');

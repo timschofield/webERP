@@ -72,6 +72,14 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'GroupName';
 		$i++;
 	}
+	if (!is_numeric(filter_number_format($_POST['SequenceInTB']))){
+		$InputError = 1;
+		prnMsg( _('The sequence that the account group is listed in the trial balance is expected to be numeric'),'error');
+		$Errors[$i] = 'SequenceInTB';
+		$i++;
+	} else {
+		$_POST['SequenceInTB'] = filter_number_format($_POST['SequenceInTB']);
+	}
 	if (mb_strlen($_POST['GroupName'])==0){
 		$InputError = 1;
 		prnMsg( _('The account group name must be at least one character long'),'error');
@@ -109,19 +117,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'SectionInAccounts';
 		$i++;
 	}
-	if (!is_long((int) $_POST['SequenceInTB'])) {
-		$InputError = 1;
-		prnMsg( _('The sequence in the trial balance must be an integer'),'error');
-		$Errors[$i] = 'SequenceInTB';
-		$i++;
-	}
-	if (!is_numeric($_POST['SequenceInTB']) or $_POST['SequenceInTB'] > 10000) {
-		$InputError = 1;
-		prnMsg( _('The sequence in the TB must be numeric and less than') . ' 10,000','error');
-		$Errors[$i] = 'SequenceInTB';
-		$i++;
-	}
-
+	
 
 	if ($_POST['SelectedAccountGroup']!='' AND $InputError !=1) {
 
@@ -150,9 +146,9 @@ if (isset($_POST['submit'])) {
 					parentgroupname)
 			VALUES (
 				'" . $_POST['GroupName'] . "',
-				" . $_POST['SectionInAccounts'] . ",
-				" . $_POST['SequenceInTB'] . ",
-				" . $_POST['PandL'] . ",
+				'" . $_POST['SectionInAccounts'] . "',
+				'" . $_POST['SequenceInTB'] . "',
+				'" . $_POST['PandL'] . "',
 				'" . $_POST['ParentGroupName'] . "'
 				)";
         $ErrMsg = _('An error occurred in inserting the account group');
@@ -213,13 +209,13 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 	$sql = "SELECT groupname,
-			sectionname,
-			sequenceintb,
-			pandl,
-			parentgroupname
-		FROM accountgroups
-		LEFT JOIN accountsection ON sectionid = sectioninaccounts
-		ORDER BY sequenceintb";
+					sectionname,
+					sequenceintb,
+					pandl,
+					parentgroupname
+			FROM accountgroups
+			LEFT JOIN accountsection ON sectionid = sectioninaccounts
+			ORDER BY sequenceintb";
 
     $DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
@@ -236,7 +232,7 @@ or deletion of the records*/
 		</tr>';
 
 	$k=0; //row colour counter
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -246,7 +242,7 @@ or deletion of the records*/
 			$k++;
 		}
 
-		switch ($myrow[3]) {
+		switch ($myrow['pandl']) {
 		case -1:
 			$PandLText=_('Yes');
 			break;
@@ -257,14 +253,14 @@ or deletion of the records*/
 			$PandLText=_('No');
 			break;
 		} //end of switch statement
-
-		echo '<td>' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '</td>
-			<td>' . $myrow[1] . '</td>
-			<td>' . $myrow[2] . '</td>
+		
+		echo '<td>' . htmlentities($myrow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
+			<td>' . $myrow['sectionname'] . '</td>
+			<td>' . $myrow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
-			<td>' . $myrow[4] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedAccountGroup=' . htmlentities($myrow[0], ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete') .'</a></td></tr>';
+			<td>' . $myrow['parentgroupname'] . '</td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedAccountGroup=' . htmlentities($myrow['groupname'], ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedAccountGroup=' . htmlentities($myrow['groupname'], ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete') .'</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -285,12 +281,12 @@ if (! isset($_GET['delete'])) {
 		//editing an existing account group
 
 		$sql = "SELECT groupname,
-				sectioninaccounts,
-				sequenceintb,
-				pandl,
-				parentgroupname
-			FROM accountgroups
-			WHERE groupname='" . $_GET['SelectedAccountGroup'] ."'";
+						sectioninaccounts,
+						sequenceintb,
+						pandl,
+						parentgroupname
+				FROM accountgroups
+				WHERE groupname='" . $_GET['SelectedAccountGroup'] ."'";
 
 		$ErrMsg = _('An error occurred in retrieving the account group information');
 		$DbgMsg = _('The SQL that was used to retrieve the account group and that failed in the process was');

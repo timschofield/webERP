@@ -1,9 +1,8 @@
 <?php
-/* $Revision: 1.3 $ */
 
 $DirectoryLevelsDeep = 1;
 $PathPrefix = '../';
-//$PageSecurity = 1; // set security level for webERP 
+
 require($PathPrefix . 'includes/session.inc');
 
 // TBD The followiung line needs to be replace when more translations are available
@@ -140,12 +139,12 @@ function BuildFormList($GroupID) {
 			$OutputString .= '<tr bgcolor="#CCCCCC"><td colspan="3" align="center">'.$GName.'</td></tr>';
 			$OutputString .= '<tr><td colspan="3" width="250" valign="top">';
 			$sql= "SELECT id, 
-										groupname, 
-										reportname 
-							FROM ".DBReports." 
-							WHERE defaultreport='1' 
-							AND reporttype='frm' 
-							ORDER BY groupname, 
+						groupname, 
+						reportname 
+					FROM ".DBReports." 
+					WHERE defaultreport='1' 
+					AND reporttype='frm' 
+					ORDER BY groupname, 
 												reportname";
 			$Result=DB_query($sql,$db,'','',false,true);
 			$FormList = '';
@@ -166,10 +165,10 @@ function BuildFormList($GroupID) {
 		}
 	} else { // fetch the forms specific to a group GroupID
 		$sql= "SELECT id, 
-									reportname 
-						FROM ".DBReports." 
-						WHERE defaultreport='1' AND groupname='".$GroupID."' 
-						ORDER BY reportname";
+					reportname 
+				FROM ".DBReports." 
+				WHERE defaultreport='1' AND groupname='".$GroupID."' 
+				ORDER BY reportname";
 		$Result=DB_query($sql,$db,'','',false,true);
 		$OutputString .= '<tr><td colspan="3" width="250" valign="top">';
 		while ($Forms = DB_fetch_array($Result)) {
@@ -183,27 +182,27 @@ function BuildFormList($GroupID) {
 function FetchReportDetails($ReportID) {
 	global $db;
 	$sql= "SELECT reportname, 
-								reporttype, 
-								groupname, 
-								papersize, 
-								paperorientation,
-								margintop, 
-								marginbottom, 
-								marginleft, 
-								marginright,
-								table1, 
-								table2, 
-								table2criteria, 
-								table3, 
-								table3criteria, 
-								table4, 
-								table4criteria,
-								table5, 
-								table5criteria, 
-								table6, 
-								table6criteria
-				FROM " . DBReports . " 
-				WHERE id = ".$ReportID.";";
+					reporttype, 
+					groupname, 
+					papersize, 
+					paperorientation,
+					margintop, 
+					marginbottom, 
+					marginleft, 
+					marginright,
+					table1, 
+					table2, 
+					table2criteria, 
+					table3, 
+					table3criteria, 
+					table4, 
+					table4criteria,
+					table5, 
+					table5criteria, 
+					table6, 
+					table6criteria
+			FROM " . DBReports . " 
+			WHERE id = '".$ReportID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow=DB_fetch_assoc($Result);
 	foreach ($myrow as $key=>$value) {
@@ -221,9 +220,9 @@ function RetrieveFields($ReportID, $EntryType) {
 	global $db;
 	$FieldListings = '';
 	$sql= "SELECT *	FROM ".DBRptFields." 
-					WHERE reportid = '".$ReportID."' 
-					AND entrytype = '".$EntryType."'
-					ORDER BY seqnum";
+			WHERE reportid = '".$ReportID."' 
+			AND entrytype = '".$EntryType."'
+			ORDER BY seqnum";
 	$Result=DB_query($sql,$db,'','',false,true);
 	while ($FieldValues = DB_fetch_assoc($Result)) { $FieldListings[] = $FieldValues; }
 	return $FieldListings;

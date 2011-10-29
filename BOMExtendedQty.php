@@ -259,37 +259,39 @@ if (isset($_POST['PrintPDF'])) {
 		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 	echo '<br />
-			<br />
-			<form action=' . htmlspecialchars($_SERVER['PHP_SELF']) . ' method="post">
-			<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr>
+		<br />
+		<form action=' . htmlspecialchars($_SERVER['PHP_SELF']) . ' method="post">
+		<table class="selection">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<tr>
 			<td>' . _('Part') . ':</td>
-			<td><input type ="text" name="Part" size="20">';
-	echo '<tr>
+			<td><input type ="text" name="Part" size="20" /></td>
+		</tr>
+		<tr>
 			<td>' . _('Quantity') . ':</td>
-			<td><input type="text" class="number" name="Quantity" size="4" /></td></tr>';
-			
-	echo '<tr>
+			<td><input type="text" class="number" name="Quantity" size="4" /></td>
+		</tr>
+		<tr>
 			<td>' . _('Selection Option') . ':</td>
 			<td><select name="Select">
 				<option selected value="All">' . _('Show All Parts') . '</option>
 				<option value="Shortages">' . _('Only Show Shortages') . '</option>
 			</select></td>
-		</tr>';
-	echo '<tr>
+		</tr>
+		<tr>
 			<td>' . _('Print Option') . ':</td>
 			<td><select name="Fill">
 				<option selected value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
 			</select></td>
-		</tr>';
-	echo '</table>
+		</tr>
+		</table>
+		<br />
+		<br />
+		<div class="centre">
 			<br />
-			<br />
-			<div class="centre">
-			<br /><input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
-			</div>';
+			<input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>';
 
 	include('includes/footer.inc');
 
@@ -316,7 +318,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 	$YPos -=$line_height;
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Build Quantity:  ') . $_POST['Quantity']);
+	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Build Quantity:  ') . locale_number_format($_POST['Quantity'],'Variable');
 
 	$YPos -=(2*$line_height);
 

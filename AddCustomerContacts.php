@@ -197,14 +197,14 @@ if (!isset($_GET['delete'])) {
 		$_POST['ContactNotes']  = $myrow['notes'];
 		$_POST['ContactEmail'] = $myrow['email'];
 		$_POST['DebtorNo']  = $myrow['debtorno'];
-		echo '<input type=hidden name="Id" value='. $Id .'>';
-		echo '<input type=hidden name="Con_ID" value=' . $_POST['Con_ID'] . '>';
-		echo '<input type=hidden name="DebtorNo" value=' . $_POST['DebtorNo'] . '>';
+		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
+		echo '<input type="hidden" name="Con_ID" value="' . $_POST['Con_ID'] . '" />';
+		echo '<input type="hidden" name="DebtorNo" value="' . $_POST['DebtorNo'] . '" />';
 		echo '<br />
 				<table class="selection">
 				<tr>
-				<td>'. _('Contact Code').':</td>
-				<td>' . $_POST['Con_ID'] . '</td>
+					<td>'. _('Contact Code').':</td>
+					<td>' . $_POST['Con_ID'] . '</td>
 				</tr>';
 	} else {
 		echo '<br />
@@ -213,37 +213,54 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr><td>'. _('Contact Name') . '</td>';
     if (isset($_POST['ContactName'])) {
-        echo '<td><input type="text" name="ContactName" value="' . $_POST['ContactName']. '" size=35 maxlength=40></td></tr>';
+        echo '<td><input type="text" name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
+			</tr>';
     } else {
-        echo '<td><input type="text" name="ContactName" size=35 maxlength=40></td></tr>';
+        echo '<td><input type="text" name="ContactName" size="35" maxlength="40" /></td>
+			</tr>';
     }
-	echo '<tr><td>' . _('Role') . '</td>';
+	echo '<tr>
+			<td>' . _('Role') . '</td>';
     if (isset($_POST['ContactRole'])) {
-        echo '<td><input type="text" name="ContactRole" value="'. $_POST['ContactRole']. '" size=35 maxlength=40></td></tr>';
+        echo '<td><input type="text" name="ContactRole" value="'. $_POST['ContactRole']. '" size="35" maxlength="40" /></td>
+			</tr>';
     } else {
-        echo '<td><input type="text" name="ContactRole" size=35 maxlength=40></td></tr>';
+        echo '<td><input type="text" name="ContactRole" size="35" maxlength="40" /></td>
+			</tr>';
     }
 	echo '<tr><td>' . _('Phone') . '</td>';
     if (isset($_POST['ContactPhone'])) {
-        echo '<td><input type="text" name="ContactPhone" value="' . $_POST['ContactPhone'] . '" size=35 maxlength=40></td></tr>';
+        echo '<td><input type="text" name="ContactPhone" value="' . $_POST['ContactPhone'] . '" size="35" maxlength="40" /></td>
+			</tr>';
     } else {
-        echo '<td><input type="text" name="ContactPhone" size=35 maxlength=40></td></tr>';
+        echo '<td><input type="text" name="ContactPhone" size="35" maxlength="40" /></td>
+			</tr>';
     }
-    echo '<tr><td>' . _('Email') . '</td>';
+    echo '<tr>
+			<td>' . _('Email') . '</td>';
     if (isset($_POST['ContactEmail'])) {
-        echo '<td><input type="text" name="ContactEmail" value="' . $_POST['ContactEmail'] . '" size=55 maxlength="55"></td></tr>';
+        echo '<td><input type="text" name="ContactEmail" value="' . $_POST['ContactEmail'] . '" size="55" maxlength="55" /></td>
+			</tr>';
     } else {
-        echo '<td><input type="text" name="ContactEmail" size="55" maxlength="55"></td></tr>';
+        echo '<td><input type="text" name="ContactEmail" size="55" maxlength="55" /></td>
+			</tr>';
     }
-	echo '<tr><td>' . _('Notes') . '</td>';
+	echo '<tr>
+			<td>' . _('Notes') . '</td>';
     if (isset($_POST['ContactNotes'])) {
         echo '<td><textarea name="ContactNotes">'. $_POST['ContactNotes'] . '</textarea>';
     } else {
        echo '<td><textarea name="ContactNotes"></textarea>';
     }
-	echo '<tr><td colspan=2><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information') . '"></div></td></tr>';
-	echo '</table>';
-	echo '</form>';
+	echo '<tr>
+			<td colspan="2">
+				<div class="centre">
+					<input type="submit" name="submit" value="'. _('Enter Information') . '" />
+				</div>
+			</td>
+		</tr>
+		</table>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 

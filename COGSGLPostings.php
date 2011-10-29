@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedCOGSPostingID could also exist if submit had not been clicked this 		code would not run in this case cos submit is false of course	see the delete code below*/
 
 		$sql = "UPDATE cogsglpostings SET
-						glcode = " . $_POST['GLCode'] . ",
+						glcode = '" . $_POST['GLCode'] . "',
 						area = '" . $_POST['Area'] . "',
 						stkcat = '" . $_POST['StkCat'] . "',
 						salestype='" . $_POST['SalesType'] . "'
@@ -83,8 +83,9 @@ if (!isset($SelectedCOGSPostingID)) {
 	if (DB_num_rows($result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
-		echo '<table class="selection">';
-		echo '<tr><th>' . _('Area') . '</th>
+		echo '<table class="selection">
+			<tr>
+				<th>' . _('Area') . '</th>
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
 				<th>' . _('COGS Account') . '</th>
@@ -101,19 +102,19 @@ if (!isset($SelectedCOGSPostingID)) {
 			}
 
 			printf('<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
-				$myrow['area'],
-				$myrow['stkcat'],
-				$myrow['salestype'],
-				$myrow['accountname'],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-				$myrow['id'],
-				htmlspecialchars($_SERVER['PHP_SELF']). '?',
-				$myrow['id']);
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
+					<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
+					$myrow['area'],
+					$myrow['stkcat'],
+					$myrow['salestype'],
+					$myrow['accountname'],
+					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+					$myrow['id'],
+					htmlspecialchars($_SERVER['PHP_SELF']). '?',
+					$myrow['id']);
 		}//end while
 		echo '</table>';
 	}
@@ -181,8 +182,9 @@ if (!isset($SelectedCOGSPostingID)) {
 
 		$result = DB_query($sql,$db);
 
-		echo '<table class=selection>';
-		echo '<tr><th>' . _('Area') . '</th>
+		echo '<table class="selection">
+			<tr>
+				<th>' . _('Area') . '</th>
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
 				<th>' . _('GL Account') . '</th>
@@ -246,7 +248,7 @@ if (isset($SelectedCOGSPostingID)) {
 	$_POST['StkCat']  = $myrow['stkcat'];
 	$_POST['SalesType'] = $myrow['salestype'];
 
-	echo '<input type=hidden name="SelectedCOGSPostingID" value="' . $SelectedCOGSPostingID . '">';
+	echo '<input type="hidden" name="SelectedCOGSPostingID" value="' . $SelectedCOGSPostingID . '">';
 
 }  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
@@ -275,10 +277,12 @@ DB_free_result($result);
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $result = DB_query($sql,$db);
 
-echo '</select></td></tr>
-		<tr><td>' . _('Stock Category') . ':</td>
-			<td><select tabindex=2 name="StkCat">
-				<option value="ANY">' . _('Any Other') . '</option>';
+echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Stock Category') . ':</td>
+		<td><select tabindex=2 name="StkCat">
+			<option value="ANY">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']) {
@@ -295,8 +299,10 @@ DB_free_result($result);
 $sql = "SELECT typeabbrev, sales_type FROM salestypes";
 $result = DB_query($sql,$db);
 
-echo '</select></td></tr>
-		<tr><td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
+echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
 		<td><select tabindex=3 name="SalesType">
 			<option value="AN">' . _('Any Other') . '</option>';
 
@@ -310,9 +316,11 @@ while ($myrow = DB_fetch_array($result)) {
 
 } //end while loop
 
-echo '</select></td></tr>
-		<tr><td>' . _('Post to GL account') . ':</td>
-			<td><select tabindex="4" name="GLCode">';
+echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Post to GL account') . ':</td>
+		<td><select tabindex="4" name="GLCode">';
 
 DB_free_result($result);
 $sql = "SELECT chartmaster.accountcode,
@@ -338,8 +346,14 @@ while ($myrow = DB_fetch_array($result)) {
 
 DB_free_result($result);
 
-echo '</select></td></tr></table>';
-echo '<br /><div class="centre"><input tabindex="5" type="Submit" name="submit" value="' . _('Enter Information') . '"></form></div>';
+echo '</select></td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre">
+		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
+	</div>
+	</form>';
 
 include('includes/footer.inc');
 ?>

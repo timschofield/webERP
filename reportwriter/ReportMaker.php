@@ -1,8 +1,7 @@
 <?php
-/* $Revision: 1.7 $ */
+
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
-//$PageSecurity = 1; // set security level for webERP
 
 // TBD The followiung line needs to be replace when more translations are available
 $ReportLanguage = 'en_US';					// default language file 
@@ -49,7 +48,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		if ($SeqNum<>1) $success = ChangeSequence($ReportID, $SeqNum, 'fieldlist', 'up');
 	} elseif (isset($_POST['dn'.$SeqNum.'_x'])) { // the shift down button was pushed
 		$sql = "SELECT seqnum FROM ".DBRptFields." 
-						WHERE reportid = ".$ReportID." AND entrytype = 'fieldlist';";
+						WHERE reportid = '".$ReportID."' AND entrytype = 'fieldlist';";
 		$Result=DB_query($sql,$db,'','',false,true);
 		if ($SeqNum<DB_num_rows($Result)) {
 			$success = ChangeSequence($ReportID, $SeqNum, 'fieldlist', 'down');
@@ -69,9 +68,9 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 	$Prefs = FetchReportDetails($ReportID);  //fetch the defaults
 	switch ($_POST['todo']) {
 		case RPT_BTN_DELRPT: // enter here only from My Report selection, never from default report
-			$sql= "DELETE FROM ".DBReports." WHERE id = ".$ReportID.";";
+			$sql= "DELETE FROM ".DBReports." WHERE id = '".$ReportID."'";
 			$Result=DB_query($sql,$db,'','',false,true);
-			$sql= "DELETE FROM ".DBRptFields." WHERE reportid = ".$ReportID.";";
+			$sql= "DELETE FROM ".DBRptFields." WHERE reportid = '".$ReportID."'";
 			$Result=DB_query($sql,$db,'','',false,true);
 			// Recreate drop down list and return to report home (handled in Cancel below)
 
@@ -221,7 +220,7 @@ function build_dropdown_list($arraylist) {
 
 function FetchReportDetails($ReportID) {
 	global $db;
-	$sql= "SELECT *	FROM ".DBReports." WHERE id = ".$ReportID.";";
+	$sql= "SELECT *	FROM ".DBReports." WHERE id = '".$ReportID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow=DB_fetch_assoc($Result);
 	foreach ($myrow as $key=>$value) {
@@ -243,7 +242,7 @@ function RetrieveFields($ReportID, $EntryType) {
 	global $db;
 	$FieldListings = '';
 	$sql= "SELECT *	FROM ".DBRptFields." 
-		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."'
+		WHERE reportid = '".$ReportID."' AND entrytype = '".$EntryType."'
 		ORDER BY seqnum";
 	$Result=DB_query($sql,$db,'','',false,true);
 	while ($FieldValues = DB_fetch_assoc($Result)) { 
@@ -259,9 +258,9 @@ function ChangeSequence($ReportID,
 	global $db;
 	// find the id of the row to move
 	$sql = "SELECT id FROM ".DBRptFields." 
-		WHERE reportid = ".$ReportID." 
+		WHERE reportid = '".$ReportID."' 
 		AND entrytype = '".$EntryType."' 
-		AND seqnum = ".$SeqNum.";";
+		AND seqnum = '".$SeqNum."'";
 		
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow = DB_fetch_row($Result);
@@ -273,11 +272,11 @@ function ChangeSequence($ReportID,
 	}
 	// first move affected sequence to seqnum, then seqnum to new position
 	$sql = "UPDATE ".DBRptFields." SET seqnum='".$SeqNum."' 
-		WHERE reportid = ".$ReportID." 
+		WHERE reportid = '".$ReportID."' 
 		AND entrytype = '".$EntryType."' 
-		AND seqnum = ".$NewSeqNum.";";
+		AND seqnum = '".$NewSeqNum."'";
 	$Result=DB_query($sql,$db,'','',false,true);
-	$sql = "UPDATE ".DBRptFields." SET seqnum='".$NewSeqNum."' WHERE id = ".$OrigID.";";
+	$sql = "UPDATE ".DBRptFields." SET seqnum='".$NewSeqNum."' WHERE id = '".$OrigID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return true;
 }
@@ -342,7 +341,7 @@ function ReadPostData($ReportID, $Prefs) {
 	if (isset($_POST['PageForm'])) {
 		$success = SavePrefs($ReportID);
 		// values saved, read them back in to update $Prefs array
-		$sql= "SELECT *	FROM ".DBReports." WHERE id = ".$ReportID.";";
+		$sql= "SELECT *	FROM ".DBReports." WHERE id = '".$ReportID."'";
 		$Result=DB_query($sql,$db,'','',false,true);
 		$myrow=DB_fetch_assoc($Result);
 		foreach ($myrow as $key=>$value) $Prefs[$key]=$value;
@@ -383,7 +382,7 @@ function ReadPostData($ReportID, $Prefs) {
 		$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['tovalue'.$i];
 		if (!$Prefs['defaultreport']) { // save it since it's a custom report
 			$sql = "UPDATE ".DBRptFields." SET params='".$Prefs['CritListings'][$i-1]['params']."' 
-				WHERE reportid =".$ReportID." AND entrytype='critlist' AND seqnum=".$i.";";
+				WHERE reportid ='".$ReportID."' AND entrytype='critlist' AND seqnum='".$i."'";
 			$Result=DB_query($sql,$db,'','',false,true);
 		}
 		$i++;
@@ -400,7 +399,7 @@ function ReadPostData($ReportID, $Prefs) {
 		$sql = "UPDATE ".DBRptFields." SET 
 				visible='".$Prefs['FieldListings'][$i-1]['visible']."',
 				columnbreak='".$Prefs['FieldListings'][$i-1]['columnbreak']."'
-			WHERE reportid =".$ReportID." AND entrytype='fieldlist' AND seqnum=".$i.";";
+			WHERE reportid ='".$ReportID."' AND entrytype='fieldlist' AND seqnum='".$i."'";
 		$Result=DB_query($sql,$db,'','',false,true);
 		$i++;
 	}
@@ -409,7 +408,7 @@ function ReadPostData($ReportID, $Prefs) {
 
 function SaveFilters($ReportID, $EntryType, $Params) {
 	global $db;
-	$sql = "UPDATE ".DBRptFields." SET params='".$Params."' WHERE reportid =".$ReportID." AND entrytype='".$EntryType."';";
+	$sql = "UPDATE ".DBRptFields." SET params='".$Params."' WHERE reportid ='".$ReportID."' AND entrytype='".$EntryType."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return true;
 }
@@ -417,10 +416,10 @@ function SaveFilters($ReportID, $EntryType, $Params) {
 function SaveDefSettings($ReportID, $EntryType, $SeqNum) {
 	// This function sets all the params for a given entrytype to 0 and sets just the new default seqnum to 1
 	global $db;
-	$sql = "UPDATE ".DBRptFields." SET params='0' WHERE reportid=".$ReportID." AND entrytype='".$EntryType."';";
+	$sql = "UPDATE ".DBRptFields." SET params='0' WHERE reportid='".$ReportID."' AND entrytype='".$EntryType."';";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$sql = "UPDATE ".DBRptFields." SET params='1' 
-		WHERE reportid =".$ReportID." AND entrytype='".$EntryType."' AND seqnum=".$SeqNum.";";
+		WHERE reportid ='".$ReportID."' AND entrytype='".$EntryType."' AND seqnum='".$SeqNum."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return true;
 }
@@ -487,7 +486,7 @@ function SavePrefs($ReportID) {
 			col18width = ".$_POST['Col18Width'].",
 			col19width = ".$_POST['Col19Width'].",
 			col20width = ".$_POST['Col20Width'].",
-		WHERE id =".$ReportID.";";
+		WHERE id ='".$ReportID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return true;
 }
@@ -520,9 +519,9 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 		} 
 		// check for the same report to update or replace a different report than ReportID
 		if ($myrow['id']<>$ReportID) { // erase the report to overwrite and duplicate ReportID
-			$sql= "DELETE FROM ".DBReports." WHERE id = ".$myrow['id'].";";
+			$sql= "DELETE FROM ".DBReports." WHERE id = '".$myrow['id']."'";
 			$Result=DB_query($sql,$db,'','',false,true);
-			$sql= "DELETE FROM ".DBRptFields." WHERE reportid = ".$myrow['id'].";";
+			$sql= "DELETE FROM ".DBRptFields." WHERE reportid = '".$myrow['id']."'";
 			$Result=DB_query($sql,$db,'','',false,true);
 		} else { // just return because the save as name is the same as the current report name
 			$Rtn['message'] = RPT_REPORT.$Prefs['reportname'].RPT_WASSAVED.$_POST['ReportName'];
@@ -534,26 +533,26 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 	// Input validated perform requested operation
 	$OrigID = $ReportID;
 	// Set the report id to 0 to prepare to duplicate
-	$sql = "UPDATE ".DBReports." SET id=0 WHERE id=".$ReportID.";";
+	$sql = "UPDATE ".DBReports." SET id=0 WHERE id='".$ReportID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$sql = "INSERT INTO ".DBReports." SELECT * FROM ".DBReports." WHERE id=0;";
 	$Result=DB_query($sql,$db,'','',false,true);
 	// Fetch the id entered
 	$ReportID = DB_Last_Insert_ID($db,'reports','id');
 	// Restore original report ID from 0
-	$sql = "UPDATE ".DBReports." SET id=".$OrigID." WHERE id=0;";
+	$sql = "UPDATE ".DBReports." SET id='".$OrigID."' WHERE id=0;";
 	$Result=DB_query($sql,$db,'','',false,true);
 	// Set the report name per the form and make a non-default report
-	$sql = "UPDATE ".DBReports." SET reportname='".addslashes($_POST['ReportName'])."', defaultreport='0' WHERE id =".$ReportID.";";
+	$sql = "UPDATE ".DBReports." SET reportname='".addslashes($_POST['ReportName'])."', defaultreport='0' WHERE id ='".$ReportID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	// fetch the fields and duplicate
-	$sql = "SELECT * FROM ".DBRptFields." WHERE reportid=".$OrigID.";";
+	$sql = "SELECT * FROM ".DBRptFields." WHERE reportid='".$OrigID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	while ($temp = DB_fetch_array($Result)) $field[] = $temp;
 	foreach ($field as $row) {
 		$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, seqnum, fieldname, 
 				displaydesc, visible, columnbreak, params)
-			VALUES (".$ReportID.", '".$row['entrytype']."', ".$row['seqnum'].",
+			VALUES ('".$ReportID."', '".$row['entrytype']."', '".$row['seqnum']."',
 				'".$row['fieldname']."', '".$row['displaydesc']."', '".$row['visible']."',
 				'".$row['columnbreak']."', '".$row['params']."');";
 		$Result=DB_query($sql,$db,'','',false,true);

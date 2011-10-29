@@ -287,15 +287,15 @@ if (isset($_POST['PrintPDF'])
 	$TotOD2=0;
 
  	$ListCount = DB_num_rows($CustomerResult); 
-	$DecimalPlaces =2; //by default
+	$CurrDecimalPlaces =2; //by default
 	
 	while ($AgedAnalysis = DB_fetch_array($CustomerResult,$db)){
-		$DecimalPlaces = $AgedAnalysis['decimalplaces'];
-		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$DecimalPlaces);
-		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$DecimalPlaces);
-		$DisplayBalance = locale_number_format($AgedAnalysis['balance'],$DecimalPlaces);
-		$DisplayOverdue1 = locale_number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$DecimalPlaces);
-		$DisplayOverdue2 = locale_number_format($AgedAnalysis['overdue2'],$DecimalPlaces);
+		$CurrDecimalPlaces = $AgedAnalysis['decimalplaces'];
+		$DisplayDue = locale_number_format($AgedAnalysis['due']-$AgedAnalysis['overdue1'],$CurrDecimalPlaces);
+		$DisplayCurrent = locale_number_format($AgedAnalysis['balance']-$AgedAnalysis['due'],$CurrDecimalPlaces);
+		$DisplayBalance = locale_number_format($AgedAnalysis['balance'],$CurrDecimalPlaces);
+		$DisplayOverdue1 = locale_number_format($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2'],$CurrDecimalPlaces);
+		$DisplayOverdue2 = locale_number_format($AgedAnalysis['overdue2'],$CurrDecimalPlaces);
 
 		$TotBal += $AgedAnalysis['balance'];
 		$TotDue += ($AgedAnalysis['due']-$AgedAnalysis['overdue1']);
@@ -384,11 +384,11 @@ if (isset($_POST['PrintPDF'])
 			    $DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 			    $LeftOvers = $pdf->addTextWrap($Left_Margin+125,$YPos,75,$FontSize,$DisplayTranDate,'left');
 
-			    $DisplayDue = locale_number_format($DetailTrans['due']-$DetailTrans['overdue1'],$DecimalPlaces);
-			    $DisplayCurrent = locale_number_format($DetailTrans['balance']-$DetailTrans['due'],$DecimalPlaces);
-			    $DisplayBalance = locale_number_format($DetailTrans['balance'],$DecimalPlaces);
-			    $DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],$DecimalPlaces);
-			    $DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'],$DecimalPlaces);
+			    $DisplayDue = locale_number_format($DetailTrans['due']-$DetailTrans['overdue1'],$CurrDecimalPlaces);
+			    $DisplayCurrent = locale_number_format($DetailTrans['balance']-$DetailTrans['due'],$CurrDecimalPlaces);
+			    $DisplayBalance = locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces);
+			    $DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],$CurrDecimalPlaces);
+			    $DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'],$CurrDecimalPlaces);
 
 			    $LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			    $LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
@@ -418,11 +418,11 @@ if (isset($_POST['PrintPDF'])
 		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);
 	}
 
-	$DisplayTotBalance = locale_number_format($TotBal,$DecimalPlaces);
-	$DisplayTotDue = locale_number_format($TotDue,$DecimalPlaces);
-	$DisplayTotCurrent = locale_number_format($TotCurr,$DecimalPlaces);
-	$DisplayTotOverdue1 = locale_number_format($TotOD1,$DecimalPlaces);
-	$DisplayTotOverdue2 = locale_number_format($TotOD2,$DecimalPlaces);
+	$DisplayTotBalance = locale_number_format($TotBal,$CurrDecimalPlaces);
+	$DisplayTotDue = locale_number_format($TotDue,$CurrDecimalPlaces);
+	$DisplayTotCurrent = locale_number_format($TotCurr,$CurrDecimalPlaces);
+	$DisplayTotOverdue1 = locale_number_format($TotOD1,$CurrDecimalPlaces);
+	$DisplayTotOverdue2 = locale_number_format($TotOD2,$CurrDecimalPlaces);
 
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
 	$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayTotCurrent,'right');
@@ -433,10 +433,7 @@ if (isset($_POST['PrintPDF'])
 	if ($ListCount == 0) {
 		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
-		prnMsg(_('There are no customers meeting the criteria specified to list'),'info');
-		if ($debug==1){
-			prnMsg($SQL,'info');
-		}
+		prnMsg(_('There are no customers meeting the criteria specified with balances to list'),'info');
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
@@ -458,26 +455,27 @@ if (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
-			<table>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-		echo '<tr><td>' . _('From Customer Code') . ':' . '</font></td>
-				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="0"></td>
-			</tr>';
-		echo '<tr><td>' . _('To Customer Code') . ':' . '</td>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<table class="selection">
+			<tr>
+				<td>' . _('From Customer Code') . ':' . '</font></td>
+				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="0" /></td>
+			</tr>
+			<tr>
+				<td>' . _('To Customer Code') . ':' . '</td>
 				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
-			</tr>';
-
-		echo '<tr><td>' . _('All balances or overdues only') . ':' . '</td>
+			</tr>
+			<tr>
+				<td>' . _('All balances or overdues only') . ':' . '</td>
 				<td><select tabindex="3" name="All_Or_Overdues">
 					<option selected value="All">' . _('All customers with balances') . '</option>
 					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
 					<option value="HeldOnly">' . _('Held accounts only') . '</option>
 					</select>
 				</td>
-			</tr>';
-
-		echo '<tr><td>' . _('Only Show Customers Of') . ':' . '</td>
+			</tr>
+			<tr>
+				<td>' . _('Only Show Customers Of') . ':' . '</td>
 				<td><select tabindex="4" name="Salesman">';
 
 		$sql = "SELECT salesmancode, salesmanname FROM salesman";
@@ -487,9 +485,10 @@ if (isset($_POST['PrintPDF'])
 		while ($myrow=DB_fetch_array($result)){
 				echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 		}
-		echo '</select></td></tr>';
-
-		echo '<tr><td>' . _('Only show customers trading in') . ':' . '</td>
+		echo '</select></td>
+			</tr>
+			<tr>
+				<td>' . _('Only show customers trading in') . ':' . '</td>
 				<td><select tabindex="5" name="Currency">';
 
 		$sql = "SELECT currency, currabrev FROM currencies";
@@ -502,17 +501,21 @@ if (isset($_POST['PrintPDF'])
 			      echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		      }
 		}
-		echo '</select></td></tr>';
-
-		echo '<tr><td>' . _('Summary or detailed report') . ':' . '</td>
+		echo '</select></td>
+			</tr>
+			<tr>
+				<td>' . _('Summary or detailed report') . ':' . '</td>
 				<td><select tabindex="6" name="DetailedReport">
 					<option selected value="No">' . _('Summary Report') . '</option>
 					<option value="Yes">' . _('Detailed Report') . '</option>
 					</select>
 				</td>
-			</tr>';
-
-		echo '</table><br /><div class="centre"><input tabindex="7" type=submit name="PrintPDF" value="' . _('Print PDF') , '"></div>';
+			</tr>
+			</table>
+			<br />
+			<div class="centre">
+				<input tabindex="7" type=submit name="PrintPDF" value="' . _('Print PDF') , '" />
+			</div>';
 	}
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

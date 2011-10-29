@@ -715,8 +715,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			} //END WHILE LIST LOOP
 			echo '</table>';
 		} else {
-			if ($_SESSION['CustomerID'] != "") {
-				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Group Notes') . '" alt=""><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Group Note') . '</a></div><br />';
+			if ($_SESSION['CustomerID'] != '') {
+				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Group Notes') . '" alt=""><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType  . '">' . ' ' . _('Add New Group Note') . '</a></div><br />';
 			}
 		}
 	}

@@ -15,8 +15,11 @@ include('includes/GetSalesTransGLCodes.inc');
 
 if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
-	echo '<div class="centre"><a href="' . $rootpath . '/SelectSalesOrder.php">' . _('Select a sales order to invoice'). '</a></div>';
-	echo '<br /><br />';
+	echo '<div class="centre">
+			<a href="' . $rootpath . '/SelectSalesOrder.php">' . _('Select a sales order to invoice'). '</a>
+		</div>
+		<br />
+		<br />';
 	prnMsg( _('This page can only be opened if an order has been selected Please select an order first from the delivery details screen click on Confirm for invoicing'), 'error' );
 	include ('includes/footer.inc');
 	exit;
@@ -59,17 +62,16 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 								currencies.decimalplaces,
 								custbranch.defaultshipvia,
 								custbranch.specialinstructions
-						FROM salesorders,
-							debtorsmaster,
-							custbranch,
-							currencies,
-							locations
-						WHERE salesorders.debtorno = debtorsmaster.debtorno
-						AND salesorders.branchcode = custbranch.branchcode
+						FROM salesorders INNER JOIN debtorsmaster 
+						ON salesorders.debtorno = debtorsmaster.debtorno
+						INNER JOIN custbranch 
+						ON salesorders.branchcode = custbranch.branchcode
 						AND salesorders.debtorno = custbranch.debtorno
-						AND locations.loccode=salesorders.fromstkloc
-						AND debtorsmaster.currcode = currencies.currabrev
-						AND salesorders.orderno = '" . $_GET['OrderNumber']."'";
+						INNER JOIN currencies 
+						ON debtorsmaster.currcode = currencies.currabrev 
+						INNER JOIN locations 
+						ON locations.loccode=salesorders.fromstkloc
+						WHERE salesorders.orderno = '" . $_GET['OrderNumber']."'";
 
 	$ErrMsg = _('The order cannot be retrieved because');
 	$DbgMsg = _('The SQL to get the order header was');
@@ -222,7 +224,7 @@ set all the necessary session variables changed by the POST  */
 			foreach ($Itm->SerialItems as $SerialItem) { //calculate QtyDispatched from bundle quantities
 				$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 			}
-		} else if (is_numeric($_POST[$Itm->LineNumber .  '_QtyDispatched' ]) AND filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched']) <= ($_SESSION['Items']->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyInv)){
+		} else if (is_numeric(filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched' ])) AND filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched']) <= ($_SESSION['Items']->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyInv)){
 			$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched = filter_number_format($_POST[$Itm->LineNumber  . '_QtyDispatched']);
 		}
 		foreach ($Itm->Taxes as $TaxLine) {
@@ -439,7 +441,7 @@ if(!isset($_SESSION['Items']->FreightCost)) {
 	}
 }
 
-if (isset($_POST['ChargeFreightCost']) and !is_numeric($_POST['ChargeFreightCost'])){
+if (isset($_POST['ChargeFreightCost']) and !is_numeric(filter_number_format($_POST['ChargeFreightCost']))){
 	$_POST['ChargeFreightCost'] = 0;
 }
 

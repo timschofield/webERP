@@ -208,7 +208,7 @@ if (isset($_POST['PrintPDF'])) {
 		$pdf->addTextWrap(180,$YPos,180,$FontSize,$myrow['description'],'',0,$fill);
 		$pdf->addTextWrap(360,$YPos,30,$FontSize,$myrow['loccode'],'right',0,$fill);
 		$pdf->addTextWrap(390,$YPos,25,$FontSize,$myrow['workcentreadded'],'right',0,$fill);
-		$pdf->addTextWrap(415,$YPos,45,$FontSize,locale_number_format($myrow['quantity'],2),'right',0,$fill);
+		$pdf->addTextWrap(415,$YPos,45,$FontSize,locale_number_format($myrow['quantity'],'Variable'),'right',0,$fill);
 		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedEffectiveAfter,'right',0,$fill);
 		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedEffectiveTo,'right',0,$fill);
 
@@ -235,7 +235,7 @@ if (isset($_POST['PrintPDF'])) {
 			include('includes/footer.inc');
 			exit;
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_trans_' . date('Y-m-d').'.pdf');
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_Bill_Of_Material_Indented_' . date('Y-m-d').'.pdf');
 		$pdf->__destruct();
 	}
 
@@ -250,26 +250,32 @@ if (isset($_POST['PrintPDF'])) {
 			<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
 			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><td>' . _('Part') . ':</td>
+	echo '<tr>
+			<td>' . _('Part') . ':</td>
 			<td><input type ="text" name="Part" size="20" />
 		</tr>
-		<tr><td>' . _('Levels') . ':</td>
+		<tr>
+			<td>' . _('Levels') . ':</td>
 			<td><select name="Levels">
 				<option selected value="All">' . _('All Levels') . '</option>
 				<option value="One">' . _('One Level') . '</option>
 				</select>
 			</td>
-		</tr>';
-
-	echo '<tr><td>' . _('Print Option') . ':</td>
+		</tr>
+		<tr>
+			<td>' . _('Print Option') . ':</td>
 			<td><select name="Fill">
 				<option selected value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
 				</select>
 			</td>
-		</tr>';
-	echo '</table>
-			<p><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div></p>';
+		</tr>
+		</table>
+		<p>
+		<div class="centre">
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>
+		</p>';
 
 	include('includes/footer.inc');
 

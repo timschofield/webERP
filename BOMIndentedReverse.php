@@ -86,29 +86,28 @@ if (isset($_POST['PrintPDF'])) {
 	$ComponentCounter = 1;
 	while ($ComponentCounter > 0) {
 		$LevelCounter++;
-		$sql = "INSERT INTO tempbom (
-				parent,
-				component,
-				sortpart,
-				level,
-				workcentreadded,
-				loccode,
-				effectiveafter,
-				effectiveto,
-				quantity)
-			  SELECT bom.parent,
-					 bom.component,
-					 CONCAT(passbom.sortpart,bom.parent) AS sortpart,
-					 " . $LevelCounter . " AS level,
-					 bom.workcentreadded,
-					 bom.loccode,
-					 bom.effectiveafter,
-					 bom.effectiveto,
-					 bom.quantity
-			FROM bom,passbom
-			WHERE bom.component = passbom.part
-			AND bom.effectiveto >= NOW() 
-			AND bom.effectiveafter <= NOW()";
+		$sql = "INSERT INTO tempbom (parent,
+									component,
+									sortpart,
+									level,
+									workcentreadded,
+									loccode,
+									effectiveafter,
+									effectiveto,
+									quantity)
+				  SELECT bom.parent,
+						 bom.component,
+						 CONCAT(passbom.sortpart,bom.parent) AS sortpart,
+						 " . $LevelCounter . " AS level,
+						 bom.workcentreadded,
+						 bom.loccode,
+						 bom.effectiveafter,
+						 bom.effectiveto,
+						 bom.quantity
+				FROM bom,passbom
+				WHERE bom.component = passbom.part
+				AND bom.effectiveto >= NOW() 
+				AND bom.effectiveafter <= NOW()";
 		$result = DB_query($sql,$db);
 
 		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
@@ -157,10 +156,10 @@ if (isset($_POST['PrintPDF'])) {
               WHERE stockid = '" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
-	$assembly = $_POST['Part'];
-	$assemblydesc = $myrow['description'];
+	$Assembly = $_POST['Part'];
+	$AssemblyDesc = $myrow['description'];
 
-	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$assemblydesc);
+	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$AssemblyDesc);
 
     $Tot_Val=0;
     $fill = false;
@@ -168,13 +167,13 @@ if (isset($_POST['PrintPDF'])) {
     $sql = "SELECT tempbom.*,
                    stockmaster.description,
                    stockmaster.mbflag
-              FROM tempbom,stockmaster
-              WHERE tempbom.parent = stockmaster.stockid
+              FROM tempbom INNER JOIN stockmaster
+              ON tempbom.parent = stockmaster.stockid
               ORDER BY sortpart";
 	$result = DB_query($sql,$db);
 
-    $ListCount = DB_num_rows($result); // UldisN
-
+    $ListCount = DB_num_rows($result); 
+    
 	While ($myrow = DB_fetch_array($result,$db)){
 
 		$YPos -=$line_height;
@@ -197,13 +196,13 @@ if (isset($_POST['PrintPDF'])) {
 		$pdf->addTextWrap(180,$YPos,180,$FontSize,$myrow['description'],'',0,$fill);
 		$pdf->addTextWrap(360,$YPos,30,$FontSize,$myrow['loccode'],'right',0,$fill);
 		$pdf->addTextWrap(390,$YPos,25,$FontSize,$myrow['workcentreadded'],'right',0,$fill);
-		$pdf->addTextWrap(415,$YPos,45,$FontSize,locale_number_format($myrow['quantity'],2),'right',0,$fill);
+		$pdf->addTextWrap(415,$YPos,45,$FontSize,locale_number_format($myrow['quantity'],'Variable'),'right',0,$fill);
 		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedEffectiveAfter,'right',0,$fill);
 		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedEffectiveTo,'right',0,$fill);
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin,$assemblydesc);
+	                   $Right_Margin,$AssemblyDesc);
 		}
 
 	} /*end while loop */
@@ -213,7 +212,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin,$assemblydesc);
+	                   $Right_Margin,$AssemblyDesc);
 	}
 	if ($ListCount == 0) {
 			$title = _('Print Reverse Indented BOM Listing Error');
@@ -235,19 +234,27 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<br />
-			<br />
-			<form action=' . htmlspecialchars($_SERVER['PHP_SELF']) . ' method="post">
-			<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><td>' . _('Part') . ':</td>
-		<td><input type ="text" name="Part" size="20">';
-	echo '<tr><td>' . _('Print Option') . ':</td>
+		<br />
+		<form action=' . htmlspecialchars($_SERVER['PHP_SELF']) . ' method="post">
+		<table class="selection">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<tr>
+			<td>' . _('Part') . ':</td>
+			<td><input type ="text" name="Part" size="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Print Option') . ':</td>
 			<td><select name="Fill">
 				<option selected value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
-			</select></td></tr>';
-	echo '</table>
-			<p><div class="centre"><input type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div></p>';
+			</select></td>
+		</tr>
+		</table>
+		<p>
+		<div class="centre">
+			<input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>
+		</p>';
 
 	include('includes/footer.inc');
 
@@ -255,7 +262,7 @@ if (isset($_POST['PrintPDF'])) {
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-                     $Page_Width,$Right_Margin,$assemblydesc) {
+                     $Page_Width,$Right_Margin,$AssemblyDesc) {
 
 
 	$line_height=12;
@@ -292,7 +299,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 
 	$pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,_('Component:'),'',0);
 	$pdf->addTextWrap(100,$YPos,100,$FontSize,mb_strtoupper($_POST['Part']),'',0);
-	$pdf->addTextWrap(200,$YPos,150,$FontSize,$assemblydesc,'',0);
+	$pdf->addTextWrap(200,$YPos,150,$FontSize,$AssemblyDesc,'',0);
 	$YPos -=(2*$line_height);
 	$Xpos = $Left_Margin+5;
 	$FontSize=8;
