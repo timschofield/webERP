@@ -6,17 +6,19 @@ include('includes/session.inc');
 $title = _('Customer Transactions Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '</p>';
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
+	</p>';
 echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div>
 	<br />';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table cellpadding=2 class=selection><tr>';
-
-echo '<td>' . _('Type') . ':</td>
-	<td><select tabindex="1" name="TransType"> ';
+echo '<table class="selection">
+		<tr>
+			<td>' . _('Type') . ':</td>
+			<td><select tabindex="1" name="TransType"> ';
 
 $sql = "SELECT typeid, 
 				typename 
@@ -35,7 +37,7 @@ while ($myrow=DB_fetch_array($resultTypes)){
 		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 		}
 	} else {
-		     echo "<option Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
+		     echo '<option Value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
 }
 echo '</select></td>';
@@ -46,31 +48,38 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<td>' . _('From') . ':</td><td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="FromDate" maxlength="10" size="11" VALUE="' . $_POST['FromDate'] . '"></td>';
-echo '<td>' . _('To') . ':</td><td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="TEXT" name="ToDate" maxlength="10" size="11" VALUE="' . $_POST['ToDate'] . '"></td>';
+echo '<td>' . _('From') . ':</td>
+	<td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+	<td>' . _('To') . ':</td>
+	<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>';
 
-echo "</tr></table><br /><div class='centre'><input tabindex=4 type=submit name='ShowResults' VALUE='" . _('Show Transactions') . "'>";
-
-echo '</form></div>';
+echo '</tr></table>
+		<br />
+		<div class="centre">
+			<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Transactions') . '">
+		</div>
+		</form>';
 
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
    $SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
    $sql = "SELECT transno,
-   		trandate,
-		debtortrans.debtorno,
-		branchcode,
-		reference,
-		invtext,
-		order_,
-		rate,
-		ovamount+ovgst+ovfreight+ovdiscount as totalamt,
-		currcode,
-		typename
-	FROM debtortrans
-		INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
-		INNER JOIN systypes ON debtortrans.type = systypes.typeid
-	WHERE ";
+		   		trandate,
+				debtortrans.debtorno,
+				branchcode,
+				reference,
+				invtext,
+				order_,
+				debtortrans.rate,
+				ovamount+ovgst+ovfreight+ovdiscount as totalamt,
+				currcode,
+				typename,
+				decimalplaces AS currdecimalplaces
+			FROM debtortrans
+			INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
+			INNER JOIN currencies ON debtorsmaster.currcode=currencies.currabrev
+			INNER JOIN systypes ON debtortrans.type = systypes.typeid
+			WHERE ";
 
    $sql = $sql . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
 	if  ($_POST['TransType']!='All')  {
@@ -82,21 +91,23 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $DbgMsg =  _('The SQL that failed was');
    $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
-   echo '<br /><table cellpadding=2 class=selection>';
+   echo '<br />
+		<table class="selection">';
 
-   $tableheader = "<tr>
-			<th>" . _('Type') . "</th>
-			<th>" . _('Number') . "</th>
-			<th>" . _('Date') . "</th>
-			<th>" . _('Customer') . "</th>
-			<th>" . _('Branch') . "</th>
-			<th>" . _('Reference') . "</th>
-			<th>" . _('Comments') . "</th>
-			<th>" . _('Order') . "</th>
-			<th>" . _('Ex Rate') . "</th>
-			<th>" . _('Amount') . "</th>
-			<th>" . _('Currency') . '</th></tr>';
-	echo $tableheader;
+   $TableHeader = '<tr>
+					<th>' . _('Type') . '</th>
+					<th>' . _('Number') . '</th>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Branch') . '</th>
+					<th>' . _('Reference') . '</th>
+					<th>' . _('Comments') . '</th>
+					<th>' . _('Order') . '</th>
+					<th>' . _('Ex Rate') . '</th>
+					<th>' . _('Amount') . '</th>
+					<th>' . _('Currency') . '</th>
+				</tr>';
+	echo $TableHeader;
 
 	$RowCounter = 1;
 	$k = 0; //row colour counter
@@ -111,70 +122,69 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			$k++;
 		}
 
-		$format_base = "<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td width='200'>%s</td>
-				<td>%s</td>
-				<td class=number>%s</td>
-				<td class=number>%s</td>
-				<td>%s</td>";
+		$format_base = '<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td width="200">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>';
 
 		if ($_POST['TransType']==10){ /* invoices */
 
-			printf("$format_base
-				<td><a target='_blank' href='%s/PrintCustTrans.php?%&FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' title='" . _('Click to preview the invoice') . "'></a></td>
-				</tr>",
-				$myrow['typename'],
-				$myrow['transno'],
-				ConvertSQLDate($myrow['trandate']),
-				$myrow['debtorno'],
-				$myrow['branchcode'],
-				$myrow['reference'],
-				$myrow['invtext'],
-				$myrow['order_'],
-				$myrow['rate'],
-				locale_number_format($myrow['totalamt'],2),
-				$myrow['currcode'],
-				$rootpath,
-				SID,
-				$myrow['transno'],
-				$rootpath.'/css/'.$theme.'/images/preview.gif');
+			printf($format_base .
+					'<td><a target="_blank" href=%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice"><img src="%s" title="' . _('Click to preview the invoice') . '"></a></td>
+					</tr>',
+					$myrow['typename'],
+					$myrow['transno'],
+					ConvertSQLDate($myrow['trandate']),
+					$myrow['debtorno'],
+					$myrow['branchcode'],
+					$myrow['reference'],
+					$myrow['invtext'],
+					$myrow['order_'],
+					locale_number_format($myrow['rate'],6),
+					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
+					$myrow['currcode'],
+					$rootpath,
+					$myrow['transno'],
+					$rootpath.'/css/'.$theme.'/images/preview.gif');
+					
 		} elseif ($_POST['TransType']==11){ /* credit notes */
-			printf("$format_base
-				<td><a target='_blank' href='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' title='" . _('Click to preview the credit') . "'></a></td>
-				</tr>",
-				$myrow['typename'],
-				$myrow['transno'],
-				ConvertSQLDate($myrow['trandate']),
-				$myrow['debtorno'],
-				$myrow['branchcode'],
-				$myrow['reference'],
-				$myrow['invtext'],
-				$myrow['order_'],
-				$myrow['rate'],
-				locale_number_format($myrow['totalamt'],2),
-				$myrow['currcode'],
-				$rootpath,
-				SID,
-				$myrow['transno'],
-				$rootpath.'/css/'.$theme.'/images/preview.gif');
+			printf($format_base .
+					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit"><img src="%s" title="' . _('Click to preview the credit') . '"></a></td>
+					</tr>',
+					$myrow['typename'],
+					$myrow['transno'],
+					ConvertSQLDate($myrow['trandate']),
+					$myrow['debtorno'],
+					$myrow['branchcode'],
+					$myrow['reference'],
+					$myrow['invtext'],
+					$myrow['order_'],
+					locale_number_format($myrow['rate'],6),
+					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
+					$myrow['currcode'],
+					$rootpath,
+					$myrow['transno'],
+					$rootpath.'/css/'.$theme.'/images/preview.gif');
 		} else {  /* otherwise */
-			printf("$format_base</tr>",
-				$myrow['typename'],
-				$myrow['transno'],
-				ConvertSQLDate($myrow['trandate']),
-				$myrow['debtorno'],
-				$myrow['branchcode'],
-				$myrow['reference'],
-				$myrow['invtext'],
-				$myrow['order_'],
-				$myrow['rate'],
-				locale_number_format($myrow['totalamt'],2),
-				$myrow['currcode']);
+			printf($format_base . '</tr>',
+					$myrow['typename'],
+					$myrow['transno'],
+					ConvertSQLDate($myrow['trandate']),
+					$myrow['debtorno'],
+					$myrow['branchcode'],
+					$myrow['reference'],
+					$myrow['invtext'],
+					$myrow['order_'],
+					locale_number_format($myrow['rate'],6),
+					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
+					$myrow['currcode']);
 		}
 
 	}

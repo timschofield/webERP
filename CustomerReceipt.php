@@ -52,7 +52,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 		$_SESSION['ReceiptBatch']->BankAccountName = $myrow[0];
 		$_SESSION['ReceiptBatch']->AccountCurrency=$myrow[1];
 		unset($result);
-	} elseif (DB_num_rows($result)==0 and !$BankAccountEmpty){
+	} elseif (DB_num_rows($result)==0 AND !$BankAccountEmpty){
 		prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');
 		include ('includes/footer.inc');
 		exit;
@@ -62,7 +62,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 		$_POST['DateBanked'] = Date($_SESSION['DefaultDateFormat']);
 	}
 	$_SESSION['ReceiptBatch']->DateBanked = $_POST['DateBanked'];
-	if (isset($_POST['ExRate']) and $_POST['ExRate']!=''){
+	if (isset($_POST['ExRate']) AND $_POST['ExRate']!=''){
 		if (is_numeric(filter_number_format($_POST['ExRate']))){
 			$_SESSION['ReceiptBatch']->ExRate = filter_number_format($_POST['ExRate']);
 		} else {

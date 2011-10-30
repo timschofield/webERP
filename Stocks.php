@@ -778,6 +778,9 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['TaxCat'] = $myrow['taxcatid'];
 	$_POST['DecimalPlaces'] = $myrow['decimalplaces'];
 	$_POST['NextSerialNo'] = $myrow['nextserialno'];
+	$_POST['Pansize'] = $myrow['pansize'];
+	$_POST['ShrinkFactor'] = $myrow['shrinkfactor']; 
+
 
 	echo '<tr><td>' . _('Item Code') . ':</td>
 			<td>'.$StockID.'</td>

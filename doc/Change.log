@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/10/11 Exson: Modification to Stocks.php to avoid losing PanSize and ShrinkFactor
 30/10/11 Phil: Made it so a saleman cannot be deleted if a user is setup referring only to this salesperson
 29/10/11 High-Tech Bridge SA Security Research Lab <advisory@htbridge.ch> - sanitising $_SERVER['PHP_SELF'] and unquoted sql in reportwriter/FormMaker.php and reportwriter/ReportMaker.php
 15/10/11 Phil: Tried to get correct characters for each language's thousands separator and decimal point in includes/LanguagesArray.php
@@ -88,8 +89,8 @@ webERP Change Log
 28/6/11 Exson: MRPDemands.php links missing ? now fixed - script fixed for quoting variable name CamelCasing
 27/6/11 Exson: MRP.php fixed modulus arithmetic that prevented suggesting production quantities where the quantity was less than 1 - the calculation using PanSize should round up to the nearest whole unit to manufacture
 26/6/11 Phil: Fixed reference to $_POST['StockID'] in WorkOrderCosting.php when updating the new weighted average cost
-26/6/11 Phil: Went back to no locale_number_formatting on PurchData.php
-26/6/11 Phil: Went back to no locale_number_formatting on PO_Items.php price and quantity - Brian May still reporting issues
+26/6/11 Phil: Went back to no number_formatting on PurchData.php
+26/6/11 Phil: Went back to no number_formatting on PO_Items.php price and quantity - Brian May still reporting issues
 25/6/11 Phil: Made PO_PDFPurchOrder.php have the description of the order item run over several lines where it exceeds the width of the space allowed for it
 22/6/11 Phil: Added message to AccountGroups.php to show that child account groups cannot have changes to their account section, their profit and loss or balance sheet and sequence in TB as these properties belong only to parent account groups and are inherited by the kids
 23/6/11 Phil: SelectOrderItems.php includes/DefineCartClass.php repaired credit checks 
@@ -142,7 +143,6 @@ webERP Change Log
 28/5/11 Ricard: Fix sql to take quotes out of literals in upgrade script. PDFPrintLabels fix sql to get current price.
 28/5/11 Phil: Reported by Daniel Brewer Fix SelectSalesOrder.php creation of PO with excluding redundant fields in purchorderdetails that were taken out.
 28/5/11 Exson: UpdateCurrencyRateDaily was set to 1 when the option to enable it was clicked - should have been set to today's date in SystemParameters - fixed. Now no error reported bu ConvertSQLDate function when user enables update currencies daily.
-
 
 26/5/11 Version 4.04 Release
 

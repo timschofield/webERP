@@ -77,7 +77,7 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.effectiveafter,
 					 bom.effectiveto,
 					 (" . filter_number_format($_POST['Quantity']) . " * bom.quantity) as extendedqpa
-					 FROM bom
+			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= NOW() 
 			  AND bom.effectiveafter <= NOW()";
@@ -188,11 +188,13 @@ if (isset($_POST['PrintPDF'])) {
                       GROUP BY purchorderdetails.itemcode) AS poqty,
                    (SELECT
                       SUM(woitems.qtyreqd - woitems.qtyrecd) as netwoqty
-                      FROM woitems
+                      FROM woitems INNER JOIN workorders
+                      ON woitems.wo = workorders.wo
                       WHERE woitems.stockid = tempbom.component
+                      AND workorders.closed=0
                       GROUP BY woitems.stockid) AS woqty
-              FROM tempbom,stockmaster
-              WHERE tempbom.component = stockmaster.stockid
+              FROM tempbom INNER JOIN stockmaster
+              ON tempbom.component = stockmaster.stockid
               GROUP BY tempbom.component,
                        stockmaster.description,
                        stockmaster.decimalplaces,
