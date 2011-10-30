@@ -156,14 +156,21 @@ if (isset($_POST['submit'])) {
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
 		} else {
+			$sql= "SELECT COUNT(*) FROM www_users WHERE salesman='".$SelectedSalesPerson."'";
+			$result = DB_query($sql,$db);
+			$myrow = DB_fetch_row($result);
+			if ($myrow[0]>0) {
+				prnMsg(_('Cannot delete this salesperson because') , '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('user records that refer to this salesperson') . '.' ._('First delete any users that refer to this sales person'),'error');
+			} else {
 
-			$sql="DELETE FROM salesman WHERE salesmancode='". $SelectedSalesPerson."'";
-			$ErrMsg = _('The salesperson could not be deleted because');
-			$result = DB_query($sql,$db,$ErrMsg);
+				$sql="DELETE FROM salesman WHERE salesmancode='". $SelectedSalesPerson."'";
+				$ErrMsg = _('The salesperson could not be deleted because');
+				$result = DB_query($sql,$db,$ErrMsg);
 
-			prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
-			unset ($SelectedSalesPerson);
-			unset($delete);
+				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
+				unset ($SelectedSalesPerson);
+				unset($delete);
+			}
 		}
 	} //end if Sales-person used in GL accounts
 

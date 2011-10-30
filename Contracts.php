@@ -276,7 +276,6 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$WorkCentre = $_SESSION['Contract'.$identifier]->LocCode;
 		}
 		/*The above is a bit of a hack to get a default workcentre for a location based on the users default location*/
-
 	}
 
 	$sql = "SELECT contractref,
@@ -542,22 +541,22 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 											quotation)
 										VALUES (
 											'". $OrderNo . "',
-											'" . DB_escape_string($_SESSION['Contract'.$identifier]->DebtorNo)  . "',
-											'" . DB_escape_string($_SESSION['Contract'.$identifier]->BranchCode) . "',
-											'". DB_escape_string($_SESSION['Contract'.$identifier]->CustomerRef) ."',
-											'" . DB_escape_string(Date('Y-m-d H:i')) . "',
-											'" . DB_escape_string($CustomerDetailsRow['salestype']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['defaultshipvia']) ."',
-											'". DB_escape_string($CustomerDetailsRow['brname']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['braddress1']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['braddress2']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['braddress3']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['braddress4']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['braddress5']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['braddress6']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['phoneno']) . "',
-											'" . DB_escape_string($CustomerDetailsRow['email']) . "',
-											'" . DB_escape_string($_SESSION['Contract'.$identifier]->LocCode) ."',
+											'" . $_SESSION['Contract'.$identifier]->DebtorNo  . "',
+											'" . $_SESSION['Contract'.$identifier]->BranchCode . "',
+											'". $_SESSION['Contract'.$identifier]->CustomerRef ."',
+											'" . Date('Y-m-d H:i') . "',
+											'" . $CustomerDetailsRow['salestype'] . "',
+											'" . $CustomerDetailsRow['defaultshipvia'] ."',
+											'". $CustomerDetailsRow['brname'] . "',
+											'" . $CustomerDetailsRow['braddress1'] . "',
+											'" . $CustomerDetailsRow['braddress2'] . "',
+											'" . $CustomerDetailsRow['braddress3'] . "',
+											'" . $CustomerDetailsRow['braddress4'] . "',
+											'" . $CustomerDetailsRow['braddress5'] . "',
+											'" . $CustomerDetailsRow['braddress6'] . "',
+											'" . $CustomerDetailsRow['phoneno'] . "',
+											'" . $CustomerDetailsRow['email'] . "',
+											'" . $_SESSION['Contract'.$identifier]->LocCode ."',
 											'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "',
 											'" . Date('Y-m-d') . "',
 											'1' )";
@@ -573,10 +572,10 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 													itemdue)
 										VALUES ('0',
 												'" . $OrderNo . "',
-												'" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "',
+												'" . $_SESSION['Contract'.$identifier]->ContractRef . "',
 												'" . ($ContractPrice * $_SESSION['Contract'.$identifier]->ExRate) . "',
 												'1',
-												'" . DB_escape_string($_SESSION['Contract'.$identifier]->CustomerRef) . "',
+												'" . $_SESSION['Contract'.$identifier]->CustomerRef . "',
 												'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "')";
 	$DbgMsg = _('The SQL that failed was');
 	$ErrMsg = _('Unable to add the quotation line');
@@ -586,7 +585,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	//make the status of the contract 1 - to indicate that it is now quoted
 	$sql = "UPDATE contracts SET orderno='" . $OrderNo . "',
 								status='" . 1 . "'
-						WHERE contractref='" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "'";
+						WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
 	$ErrMsg = _('Unable to update the contract status and order number because');
 	$UpdContractResult = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	$Result = DB_Txn_Commit($db);
@@ -596,7 +595,6 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $OrderNo . '&amp;Quotations=Quotes_Only">' . _('Go to quotation number:') . ' ' . $OrderNo . '</a>';
 
 } //end of if making a quotation
-
 
 if (isset($_POST['SearchCustomers'])){
 
@@ -624,7 +622,7 @@ if (isset($_POST['SearchCustomers'])){
 						FROM custbranch
 						LEFT JOIN debtorsmaster
 						ON custbranch.debtorno=debtorsmaster.debtorno
-						WHERE custbranch.brname " . LIKE . " '$SearchString'
+						WHERE custbranch.brname " . LIKE . " '" . $SearchString . "'
 						AND custbranch.disabletrans=0
 						ORDER BY custbranch.debtorno, custbranch.branchcode";
 
@@ -832,8 +830,10 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	/*Set up form for entry of contract header stuff */
 
-	echo '<table class="selection">';
-	echo '<tr><td>' . _('Contract Reference') . ':</td><td>';
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Contract Reference') . ':</td>
+				<td>';
 	if ($_SESSION['Contract'.$identifier]->Status==0) {
 		/*Then the contract has not become an order yet and we can allow changes to the ContractRef */
 		echo '<input type="text" name="ContractRef" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />';
@@ -875,27 +875,36 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		}
 	}
 
-	echo '</select></td></tr>';
-
-	echo '<tr><td>' . _('Contract Description');
-	echo ':</td><td><textarea name="ContractDescription" style="width:100%" rows="5">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td></tr>';
-
-	echo '<tr><td>'. _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td><td><input type="file" id="Drawing" name="Drawing" /></td></tr>';
+	echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Contract Description') . ':</td>
+			<td><textarea name="ContractDescription" style="width:100%" rows="5">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td>
+		</tr><tr>
+			<td>'. _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td>
+			<td><input type="file" id="Drawing" name="Drawing" /></td>
+		</tr>';
 
 	if (!isset($_SESSION['Contract'.$identifier]->RequiredDate)) {
 		$_SESSION['Contract'.$identifier]->RequiredDate = DateAdd(date($_SESSION['DefaultDateFormat']),'m',1);
 	}
 
-	echo '<tr><td>' . _('Required Date') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredDate" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Required Date') . ':</td>
+			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredDate" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td>
+		</tr>';
 
-	echo '<tr><td>' . _('Customer Reference') . ':</td>
-			<td><input type="text" name="CustomerRef" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->CustomerRef . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Customer Reference') . ':</td>
+			<td><input type="text" name="CustomerRef" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->CustomerRef . '" /></td>
+		</tr>';
 	if (!isset($_SESSION['Contract'.$identifier]->Margin)){
 		$_SESSION['Contract'.$identifier]->Margin =50;
 	}
-	echo '<tr><td>' . _('Gross Profit') . ' %:</td>
-			<td><input type="text" name="Margin" size="4" maxlength="4" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin,2) . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Gross Profit') . ' %:</td>
+			<td><input type="text" name="Margin" size="4" maxlength="4" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin,2) . '" /></td>
+		</tr>';
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
 		echo '<tr>
@@ -906,7 +915,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo '<input type="hidden" name="ExRate" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" />';
 	}
 
-	echo '<tr><td>' . _('Contract Status') . ':</td><td>';
+	echo '<tr>
+			<td>' . _('Contract Status') . ':</td>
+			<td>';
 
 	$StatusText = array();
 	$StatusText[0] = _('Setup');
@@ -920,19 +931,29 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo _('Order Placed');
 	}
 	echo '<input type="hidden" name="Status" value="'.$_SESSION['Contract'.$identifier]->Status.'" />';
-	echo '</td></tr>';
+	echo '</td>
+		</tr>';
 	if ($_SESSION['Contract'.$identifier]->Status >=1) {
-		echo '<tr><td>' . _('Quotation Reference/Sales Order No') . ':</td>
-				<td><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $_SESSION['Contract'.$identifier]->OrderNo . '&Quotations=Quotes_Only">' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a></td></tr>';
+		echo '<tr>
+				<td>' . _('Quotation Reference/Sales Order No') . ':</td>
+				<td><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $_SESSION['Contract'.$identifier]->OrderNo . '&Quotations=Quotes_Only">' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a></td>
+			</tr>';
 	}
 	if ($_SESSION['Contract'.$identifier]->Status!=2 and isset($_SESSION['Contract'.$identifier]->WO)) {
-		echo '<tr><td>' . _('Contract Work Order Ref') . ':</td>
-					<td>' . $_SESSION['Contract'.$identifier]->WO . '</td></tr>';
+		echo '<tr>
+				<td>' . _('Contract Work Order Ref') . ':</td>
+				<td>' . $_SESSION['Contract'.$identifier]->WO . '</td>
+			</tr>';
 	}
 	echo '</table><br />';
 
-	echo '<table><tr><td>
-				<table class="selection"><tr><th colspan="6">' . _('Stock Items Required') . '</th></tr>';
+	echo '<table>
+			<tr>
+				<td>
+				<table class="selection">
+				<tr>
+					<th colspan="6">' . _('Stock Items Required') . '</th>
+				</tr>';
 	$ContractBOMCost = 0;
 	if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
 		echo '<tr><th>' . _('Item Code') . '</th>
@@ -944,29 +965,30 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				</tr>';
 					
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
-			echo '<tr><td>' . $Component->StockID . '</td>
+			echo '<tr>
+					<td>' . $Component->StockID . '</td>
 					<td>' . $Component->ItemDescription . '</td>
-					<td class="number">' . $Component->Quantity . '</td>
+					<td class="number">' . locale_number_format($Component->Quantity,$Component->DecimalPlaces) . '</td>
 					<td>' . $Component->UOM . '</td>
-					<td class="number">' . locale_number_format($Component->ItemCost,2) . '</td>
-					<td class="number">' . locale_number_format(($Component->ItemCost * $Component->Quantity),2) . '</td>
+					<td class="number">' . locale_number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
 			$ContractBOMCost += ($Component->ItemCost *  $Component->Quantity);
 		}
 		echo '<tr>
 				<th colspan="5"><b>' . _('Total stock cost') . '</b></th>
-					<th class="number"><b>' . locale_number_format($ContractBOMCost,2) . '</b></th>
+					<th class="number"><b>' . locale_number_format($ContractBOMCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th>
 				</tr>';
 	} else { //there are no items set up against this contract
 		echo '<tr>
 				<td colspan="6"><i>' . _('None Entered') . '</i></td>
-				</tr>';
+			</tr>';
 	}
 	echo '</table></td>'; //end of contract BOM table
 	echo '<td valign="top">
 			<table class="selection">
 				<tr>
-				<th colspan="4">' . _('Other Requirements') . '</th>
+					<th colspan="4">' . _('Other Requirements') . '</th>
 				</tr>';
 	$ContractReqtsCost = 0;
 	if (count($_SESSION['Contract'.$identifier]->ContractReqts)!=0){
@@ -979,28 +1001,35 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
 			echo '<tr>
 					<td>' . $Requirement->Requirement . '</td>
-					<td class="number">' . $Requirement->Quantity . '</td>
-					<td class="number">' . $Requirement->CostPerUnit . '</td>
-					<td class="number">' . locale_number_format(($Requirement->CostPerUnit * $Requirement->Quantity),2) . '</td>
+					<td class="number">' . locale_number_format($Requirement->Quantity,'Variable') . '</td>
+					<td class="number">' . locale_number_format($Requirement->CostPerUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format(($Requirement->CostPerUnit * $Requirement->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
 			$ContractReqtsCost += ($Requirement->CostPerUnit * $Requirement->Quantity);
 		}
-		echo '<tr><th colspan="3"><b>' . _('Total other costs') . '</b></th><th class="number"><b>' . locale_number_format($ContractReqtsCost,2) . '</b></th></tr>';
+		echo '<tr>
+				<th colspan="3"><b>' . _('Total other costs') . '</b></th>
+				<th class="number"><b>' . locale_number_format($ContractReqtsCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></th>
+			</tr>';
 	} else { //there are no items set up against this contract
-		echo '<tr><td colspan="4"><i>' . _('None Entered') . '</i></td></tr>';
+		echo '<tr>
+				<td colspan="4"><i>' . _('None Entered') . '</i></td>
+			</tr>';
 	}
 	echo '</table></td></tr></table>';
 	echo '<br />';
 	echo'<table class="selection">
-			<tr><th>' . _('Total Contract Cost') . '</th>
-			<th class="number">' . locale_number_format(($ContractBOMCost+$ContractReqtsCost),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-			<th>' . _('Contract Price') . '</th>
-			<th class="number">' . locale_number_format(($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+			<tr>
+				<th>' . _('Total Contract Cost') . '</th>
+				<th class="number">' . locale_number_format(($ContractBOMCost+$ContractReqtsCost),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+				<th>' . _('Contract Price') . '</th>
+				<th class="number">' . locale_number_format(($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 			</tr>
-			</table>';
+		</table>';
 
 	echo'<p></p>';
-	echo '<div class="centre"><input type="submit" name="EnterContractBOM" value="' . _('Enter Items Required') . '" />
+	echo '<div class="centre">
+			<input type="submit" name="EnterContractBOM" value="' . _('Enter Items Required') . '" />
 			<input type="submit" name="EnterContractRequirements" value="' . _('Enter Other Requirements') .'" />';
 	if($_SESSION['Contract'.$identifier]->Status==0){ // not yet quoted
 		echo '<input type="submit" name="CommitContract" value="' . _('Commit Changes') .'" />';
@@ -1008,12 +1037,17 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo '<input type="submit" name="CommitContract" value="' . _('Update Quotation') .'" />';
 	}
 	if($_SESSION['Contract'.$identifier]->Status==0){ //not yet quoted
-		echo ' <input type="submit" name="CreateQuotation" value="' . _('Create Quotation') .'" /></div>';
+		echo ' <input type="submit" name="CreateQuotation" value="' . _('Create Quotation') .'" />
+			</div>';
 	} else {
 		echo '</div>';
 	}
 	if ($_SESSION['Contract'.$identifier]->Status!=2) {
-		echo '<p><div class="centre"><input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" /></div></p>';
+		echo '<p>
+				<div class="centre">
+					<input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
+				</div>
+			</p>';
 	}
 	echo '</form>';
 } /*end of if customer selected  and entering contract header*/

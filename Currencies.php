@@ -40,7 +40,9 @@ if (isset($_POST['submit'])) {
 	$i=1;
 
 	$sql="SELECT count(currabrev)
-			FROM currencies WHERE currabrev='".$_POST['Abbreviation']."'";
+			FROM currencies 
+			WHERE currabrev='".$_POST['Abbreviation']."'";
+			
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 
@@ -56,23 +58,23 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Abbreviation';
 		$i++;
 	}
-	if (!is_numeric($_POST['ExchangeRate'])){
+	if (!is_numeric(filter_number_format($_POST['ExchangeRate']))){
 		$InputError = 1;
 	   prnMsg(_('The exchange rate must be numeric'),'error');
 		$Errors[$i] = 'ExchangeRate';
 		$i++;
 	}
-	if (!is_numeric($_POST['DecimalPlaces'])){
+	if (!is_numeric(filter_number_format($_POST['DecimalPlaces']))){
 		$InputError = 1;
 	   prnMsg(_('The number of decimal places to display for amounts in this currency must be numeric'),'error');
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
-	}elseif ($_POST['DecimalPlaces']<=0){
+	}elseif (filter_number_format($_POST['DecimalPlaces'])<=0){
 		$InputError = 1;
 	   prnMsg(_('The number of decimal places to display for amounts in this currency must be positive or zero'),'error');
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
-	} elseif ($_POST['DecimalPlaces']>2){
+	} elseif (filter_number_format($_POST['DecimalPlaces'])>2){
 		$InputError = 1;
 	   prnMsg(_('The number of decimal places to display for amounts in this currency is expected to be 2 or less'),'error');
 		$Errors[$i] = 'DecimalPlaces';
@@ -113,8 +115,8 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE currencies SET currency='" . $_POST['CurrencyName'] . "',
 										country='". $_POST['Country']. "',
 										hundredsname='" . $_POST['HundredsName'] . "',
-										decimalplaces='" . $_POST['DecimalPlaces'] . "',
-										rate='" .$_POST['ExchangeRate'] . "'
+										decimalplaces='" . filter_number_format($_POST['DecimalPlaces']) . "',
+										rate='" .filter_number_format($_POST['ExchangeRate']) . "'
 					WHERE currabrev = '" . $SelectedCurrency . "'";
 
 		$msg = _('The currency definition record has been updated');
@@ -131,8 +133,8 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['Abbreviation'] . "',
 										'" . $_POST['Country'] . "',
 										'" . $_POST['HundredsName'] .  "',
-										'" . $_POST['DecimalPlaces'] . "',
-										'" . $_POST['ExchangeRate'] . "')";
+										'" . filter_number_format($_POST['DecimalPlaces']) . "',
+										'" . filter_number_format($_POST['ExchangeRate']) . "')";
 				
 		$msg = _('The currency definition record has been added');
 	}
@@ -208,7 +210,8 @@ or deletion of the records*/
 	$result = DB_query($sql, $db);
 
 	echo '<table class="selection">';
-	echo '<tr><td></td>
+	echo '<tr>
+			<td></td>
 			<th>' . _('ISO4217 Code') . '</th>
 			<th>' . _('Currency Name') . '</th>
 			<th>' . _('Country') . '</th>
@@ -216,7 +219,7 @@ or deletion of the records*/
 			<th>' . _('Decimal Places') . '</th>
 			<th>' . _('Exchange Rate') . '</th>
 			<th>' . _('Ex Rate - ECB') .'</th>
-			</tr>';
+		</tr>';
 
 	$k=0; //row colour counter
 	/*Get published currency rates from Eurpoean Central Bank */
@@ -249,9 +252,9 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
-					<td class=number>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td><a href="%s&SelectedCurrency=%s">%s</a></td>
 					<td><a href="%s&SelectedCurrency=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">%s</a></td>
 					<td><a href="%s/ExchangeRateTrend.php?%s">' . _('Graph') . '</a></td>
@@ -261,9 +264,9 @@ or deletion of the records*/
 					$myrow['currency'],
 					$myrow['country'],
 					$myrow['hundredsname'],
-					$myrow['decimalplaces'],
-					locale_number_format($myrow['rate'],5),
-					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),5),
+					locale_number_format($myrow['decimalplaces'],0),
+					locale_number_format($myrow['rate'],6),
+					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),6),
 					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 					$myrow['currabrev'],
 					_('Edit'),
@@ -280,14 +283,14 @@ or deletion of the records*/
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td colspan=4>%s</td>
+					<td colspan="4">%s</td>
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
 					$myrow['currency'],
 					$myrow['country'],
 					$myrow['hundredsname'],
-					$myrow['decimalplaces'],
+					locale_number_format($myrow['decimalplaces'],0),
 					1,
 					_('Functional Currency'));
 		}
@@ -312,11 +315,11 @@ if (!isset($_GET['delete'])) {
 		//editing an existing payment terms
 
 		$sql = "SELECT currency,
-				currabrev,
-				country,
-				hundredsname,
-				decimalplaces,
-				rate
+					currabrev,
+					country,
+					hundredsname,
+					decimalplaces,
+					rate
 				FROM currencies
 				WHERE currabrev='" . $SelectedCurrency . "'";
 
@@ -329,70 +332,75 @@ if (!isset($_GET['delete'])) {
 		$_POST['CurrencyName']  = $myrow['currency'];
 		$_POST['Country']  = $myrow['country'];
 		$_POST['HundredsName']  = $myrow['hundredsname'];
-		$_POST['ExchangeRate']  = $myrow['rate'];
-		$_POST['DecimalPlaces']  = $myrow['decimalplaces'];
+		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'],6);
+		$_POST['DecimalPlaces']  = locale_number_format($myrow['decimalplaces'],0);
 
 
 
-		echo '<input type="hidden" name="SelectedCurrency" value="' . $SelectedCurrency . '">';
-		echo '<input type="hidden" name="Abbreviation" value="' . $_POST['Abbreviation'] . '">';
+		echo '<input type="hidden" name="SelectedCurrency" value="' . $SelectedCurrency . '" />';
+		echo '<input type="hidden" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" />';
 		echo '<table class="selection">
 			<tr>
-			<td>' . _('ISO 4217 Currency Code').':</td>
-			<td>' . $_POST['Abbreviation'] . '</td>
+				<td>' . _('ISO 4217 Currency Code').':</td>
+				<td>' . $_POST['Abbreviation'] . '</td>
 			</tr>';
 
 	} else { //end of if $SelectedCurrency only do the else when a new record is being entered
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
 		echo '<table class="selection">
 			<tr>
-			<td>' ._('Currency Abbreviation') . ':</td>
-			<td><input ' . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" size=4 maxlength=3></td></tr>';
+				<td>' ._('Currency Abbreviation') . ':</td>
+				<td><input ' . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" size="4" maxlength="3" /></td>
+			</tr>';
 	}
 
-	echo '<tr><td>'._('Currency Name').':</td>';
-	echo '<td>';
+	echo '<tr>
+			<td>'._('Currency Name').':</td>
+			<td>';
 	if (!isset($_POST['CurrencyName'])) {
 		$_POST['CurrencyName']='';
 	}
-	echo '<input ' . (in_array('CurrencyName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="CurrencyName" size=20 maxlength=20 value="' . $_POST['CurrencyName'] . '">';
-	echo '</td></tr>';
-	echo '<tr><td>'._('Country').':</td>';
-	echo '<td>';
+	echo '<input ' . (in_array('CurrencyName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="CurrencyName" size="20" maxlength="20" value="' . $_POST['CurrencyName'] . '" /></td>
+		</tr>
+		<tr>
+			<td>'._('Country').':</td>
+			<td>';
 	if (!isset($_POST['Country'])) {
 		$_POST['Country']='';
 	}
-	echo '<input ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Country" size=30 maxlength=50 value="' . $_POST['Country'] . '">';
-	echo '</td></tr>';
-	
-	echo '<tr><td>'._('Hundredths Name').':</td>';
-	echo '<td>';
+	echo '<input ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Country" size="30" maxlength="50" value="' . $_POST['Country'] . '" /></td>
+		</tr>
+		<tr>
+			<td>'._('Hundredths Name').':</td>
+			<td>';
 	if (!isset($_POST['HundredsName'])) {
 		$_POST['HundredsName']='';
 	}
-	echo '<input ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="HundredsName" size=10 maxlength=15 value="'. $_POST['HundredsName'].'">';
-	echo '</td></tr>';
-	
-	echo '<tr><td>'._('Decimal Places to Display').':</td>';
-	echo '<td>';
+	echo '<input ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="HundredsName" size="10" maxlength="15" value="'. $_POST['HundredsName'].'" /></td>
+		</tr>
+		<tr>
+			<td>'._('Decimal Places to Display').':</td>
+			<td>';
 	if (!isset($_POST['DecimalPlaces'])) {
 		$_POST['DecimalPlaces']='';
 	}
-	echo '<input ' . (in_array('DecimalPlaces',$Errors) ?  'class="inputerror"' : 'class="number"' ) .' type="text" name="DecimalPlaces" size="2" maxlength="2" value="'. $_POST['DecimalPlaces'].'">';
-	echo '</td></tr>';
-	
-	echo '<tr><td>'._('Exchange Rate').':</td>';
-	echo '<td>';
+	echo '<input ' . (in_array('DecimalPlaces',$Errors) ?  'class="inputerror"' : 'class="number"' ) .' type="text" name="DecimalPlaces" size="2" maxlength="2" value="'. $_POST['DecimalPlaces'].'" /></td>
+		</tr>
+		<tr>
+			<td>'._('Exchange Rate').':</td>
+			<td>';
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate']='';
 	}
-	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class=number name="ExchangeRate" size=10 maxlength=9 value='. $_POST['ExchangeRate'].'>';
-	echo '</td></tr>';
-	echo '</table>';
+	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="9" value="'. $_POST['ExchangeRate'].'"></td>
+		</tr>
+		</table>';
 
-	echo '<br /><div class="centre"><input type="Submit" name="submit" value='._('Enter Information').'></div>';
-
-	echo '</form>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="'._('Enter Information').'" />
+		</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 

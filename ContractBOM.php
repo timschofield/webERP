@@ -14,7 +14,7 @@ $identifier=$_GET['identifier'];
  */
 
 if (!isset($_SESSION['Contract'.$identifier])){
-	header('Location:' . $rootpath . '/Contracts.php?' . SID);
+	header('Location:' . $rootpath . '/Contracts.php');
 	exit;
 }
 include('includes/header.inc');
@@ -22,11 +22,11 @@ include('includes/header.inc');
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 	if($_SESSION['Contract'.$identifier]->Status!=2){ //dont do anything if the customer has committed to the contract
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $ContractComponent) {
-			if ($_POST['Qty'.$ContractComponent->ComponentID]==0){
+			if (filter_number_format($_POST['Qty'.$ContractComponent->ComponentID])==0){
 				//this is the same as deleting the line - so delete it
 				$_SESSION['Contract'.$identifier]->Remove_ContractComponent($ContractComponent->ComponentID);
 			} else {
-				$_SESSION['Contract'.$identifier]->ContractBOM[$ContractComponent->ComponentID]->Quantity=$_POST['Qty'.$ContractComponent->ComponentID];
+				$_SESSION['Contract'.$identifier]->ContractBOM[$ContractComponent->ComponentID]->Quantity=filter_number_format($_POST['Qty'.$ContractComponent->ComponentID]);
 			}
 		} // end loop around the items on the contract BOM
 	} // end if the contract is not currently committed to by the customer
@@ -53,29 +53,29 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.description " . LIKE . " '$SearchString'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
+					AND stockmaster.description " . LIKE . " '$SearchString'
+					ORDER BY stockmaster.stockid";
 		} else {
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.description " . LIKE . " '$SearchString'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
+					AND stockmaster.description " . LIKE . " '$SearchString'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 
 	} elseif ($_POST['StockCode']){
@@ -84,55 +84,55 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					ORDER BY stockmaster.stockid";
 		} else {
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 
 	} else {
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					ORDER BY stockmaster.stockid";
 		} else {
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 	}
 
@@ -160,52 +160,48 @@ if(isset($_GET['Delete'])){
 	}
 }
 
-
-
 if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as the part code selected */
-/* take the form entries and enter the data from the form into the PurchOrder class variable */
-	foreach ($_POST as $ItemCode => $Quantity) {
-		if (mb_substr($ItemCode, 0, 3)=='Qty') {
-			$ItemCode=mb_substr($ItemCode, 3, mb_strlen($ItemCode)-3);
-			$AlreadyOnThisBOM = 0;
-
+	for ($i=0;$i < $_POST['CountOfItems'];$i++) {
+		$AlreadyOnThisBOM = 0;
+		if (filter_number_format($_POST['Qty'.$i])>0){
 			if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
-
+	
 				foreach ($_SESSION['Contract'.$identifier]->ContractBOM AS $Component) {
-
+	
 				/* do a loop round the items on the order to see that the item
 				is not already on this order */
-					if ($Component->StockID == $ItemCode) {
+					if ($Component->StockID == trim($_POST['StockID'.$i])) {
 						$AlreadyOnThisBOM = 1;
-						prnMsg( _('The item') . ' ' . $ItemCode . ' ' . _('is already in the bill of material for this contract. The system will not allow the same item on the contract more than once. However you can change the quantity required for the item.'),'error');
+						prnMsg( _('The item') . ' ' . trim($_POST['StockID'.$i]) . ' ' . _('is already in the bill of material for this contract. The system will not allow the same item on the contract more than once. However you can change the quantity required for the item.'),'error');
 					}
 				} /* end of the foreach loop to look for preexisting items of the same code */
 			}
-
-			if ($AlreadyOnThisBOM!=1 and $Quantity>0){
-
+	
+			if ($AlreadyOnThisBOM!=1){
+	
 				$sql = "SELECT stockmaster.description,
 								stockmaster.stockid,
 								stockmaster.units,
 								stockmaster.decimalplaces,
 								stockmaster.materialcost+labourcost+overheadcost AS unitcost
 							FROM stockmaster
-							WHERE stockmaster.stockid = '". $ItemCode . "'";
-
+							WHERE stockmaster.stockid = '". trim($_POST['StockID'.$i]) . "'";
+	
 				$ErrMsg = _('The item details could not be retrieved');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
 				$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
+	
 				if ($myrow = DB_fetch_array($result1)){
-
-					$_SESSION['Contract'.$identifier]->Add_To_ContractBOM ($ItemCode,
+	
+					$_SESSION['Contract'.$identifier]->Add_To_ContractBOM (trim($_POST['StockID'.$i]),
 																			$myrow['description'],
-																			$DefaultWorkCentre,
-																			$Quantity, /* Qty */
+																			'',
+																			filter_number_format($_POST['Qty'.$i]), /* Qty */
 																			$myrow['unitcost'],
-																			$myrow['units']);
+																			$myrow['units'],
+																			$myrow['decimalplaces']);
 				} else {
-					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
+					prnMsg (_('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
 					if ($debug==1){
 						echo '<br />' . $sql;
 					}
@@ -213,7 +209,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 					exit;
 				}
 			} /* end of if not already on the contract BOM */
-		}
+		} /* the quantity of the item is > 0 */
 	}
 } /* end of if its a new item */
 
@@ -223,21 +219,25 @@ echo '<form name="ContractBOMForm" action="' . htmlspecialchars($_SERVER['PHP_SE
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
+		</p>';
 
-	echo '<table cellpadding="2" class="selection">';
+	echo '<table class="selection">';
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
-		echo  '<tr><th colspan="7"><font color="navy" size="2">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</font></th></tr>';
+		echo  '<tr>
+				<th colspan="7"><font color="navy" size="2">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</font></th>
+			</tr>';
 	}
 
 	echo '<tr>
-		<th>' . _('Item Code') . '</th>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Quantity') . '</th>
-		<th>' . _('UOM') .'</th>
-		<th>' . _('Unit Cost') .  '</th>
-		<th>' . _('Sub-total') . '</th>
+			<th>' . _('Item Code') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('UOM') .'</th>
+			<th>' . _('Unit Cost') .  '</th>
+			<th>' . _('Sub-total') . '</th>
 		</tr>';
 
 	$_SESSION['Contract'.$identifier]->total = 0;
@@ -247,7 +247,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->ItemCost;
 
-		$DisplayLineTotal = locale_number_format($LineTotal,2);
+		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CompanyRecord']['decimalplaces']);
 
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -259,17 +259,17 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 		echo '<td>' . $ContractComponent->StockID . '</td>
 			  <td>' . $ContractComponent->ItemDescription . '</td>
-			  <td><input type="text" class="number" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . $ContractComponent->Quantity  . '" /></td>
+			  <td><input type="text" class="number" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,$ContractComponent->DecimalPlaces)  . '" /></td>
 			  <td>' . $ContractComponent->UOM . '</td>
-			  <td class="number">' . $ContractComponent->ItemCost . '</td>
+			  <td class="number">' . locale_number_format($ContractComponent->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier. '&Delete=' . $ContractComponent->ComponentID . '">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier. '&Delete=' . $ContractComponent->ComponentID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . '\');">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 
-	$DisplayTotal = locale_number_format($TotalCost,2);
+	$DisplayTotal = locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']);
 	echo '<tr>
-			<td colspan="6" class="number">' . _('Total Cost') . '</td>
+			<td colspan="5" class="number">' . _('Total Cost') . '</td>
 			<td class="number"><b>' . $DisplayTotal . '</b></td>
 		</tr>
 		</table>';
@@ -281,11 +281,11 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 if (!isset($_GET['Edit'])) {
 	$sql="SELECT categoryid,
-			categorydescription
-		FROM stockcategory
-		WHERE stocktype<>'L'
-		AND stocktype<>'D'
-		ORDER BY categorydescription";
+				categorydescription
+			FROM stockcategory
+			WHERE stocktype<>'L'
+			AND stocktype<>'D'
+			ORDER BY categorydescription";
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -316,21 +316,25 @@ if (!isset($_GET['Edit'])) {
 	}
 
 	echo '</select></td>
-		<td><font size="2">' . _('Enter text extracts in the description') . ':</font></td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
-		<tr><td></td>
-		<td><font size="3"> <b>' . _('OR') . ' </b></font><font size="2">' . _('Enter extract of the Stock Code') .
-			':</font></td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+			<td><font size="2">' . _('Enter text extracts in the description') . ':</font></td>
+			<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
 		</tr>
-		<tr><td></td>
-		<td><font size="3"><b>' . _('OR') . ' </b></font><font size="2"><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></font></td></tr>
-		</table><br />
-		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" />
-		</div><br />';
+		<tr>
+			<td></td>
+			<td><font size="3"> <b>' . _('OR') . ' </b></font><font size="2">' . _('Enter extract of the Stock Code') . ':</font></td>
+			<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><font size="3"><b>' . _('OR') . ' </b></font><font size="2"><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></font></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+		</div>
+		<br />';
 
-
-	$PartsDisplayed =0;
 }
 
 if (isset($SearchResult)) {
@@ -338,17 +342,16 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1" colspan="7">';
 
 	$TableHeader = '<tr>
-					<th>' . _('Code')  . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Units') . '</th>
-					<th>' . _('Image') . '</th>
-					<th>' . _('Quantity') . '</th>
+						<th>' . _('Code')  . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Units') . '</th>
+						<th>' . _('Image') . '</th>
+						<th>' . _('Quantity') . '</th>
 					</tr>';
 	echo $TableHeader;
 
-	$j = 1;
 	$k=0; //row colour counter
-
+	$i=0;
 	while ($myrow=DB_fetch_array($SearchResult)) {
 
 		if ($k==1){
@@ -366,31 +369,34 @@ if (isset($SearchResult)) {
 		}
 
 		echo '<td>'.$myrow['stockid'].'</td>
-			<td>'.$myrow['description'].'</td>
-			<td>'.$myrow['units'] . '</td>
-			<td>'.$ImageSource.'</td>
-			<td><input class="number" type="text" size="6" value="0" name="Qty'.$myrow['stockid'].'" /></td>
+				<td>'.$myrow['description'].'</td>
+				<td>'.$myrow['units'] . '</td>
+				<td>'.$ImageSource.'</td>
+				<td><input class="number" type="text" size="6" value="0" name="Qty'.$i.'" />
+				<input type="hidden" name="StockID'.$i.'" value="' . $myrow['stockid'] . '" />
+				</td>
 			</tr>';
-
-		$PartsDisplayed++;
-		if ($PartsDisplayed == $_SESSION['DisplayRecordsMax']){
+		$i++;
+		if ($i == $_SESSION['DisplayRecordsMax']){
 			break;
 		}
 #end of page full new headings if
 	}
+	
 #end of while loop
-	echo '</table>';
-	if ($PartsDisplayed == $_SESSION['DisplayRecordsMax']){
+	echo '</table>
+			<input type="hidden" name="CountOfItems" value="'. $i . '" />';
+	if ($i == $_SESSION['DisplayRecordsMax']){
 
-
-		prnMsg( _('Only the first') . ' ' . $_SESSION['DisplayRecordsMax'] . ' ' . _('can be displayed') . '. ' .
-			_('Please restrict your search to only the parts required'),'info');
+		prnMsg( _('Only the first') . ' ' . $_SESSION['DisplayRecordsMax'] . ' ' . _('can be displayed') . '. ' . _('Please restrict your search to only the parts required'),'info');
 	}
-	echo '<br /><div class="centre"><input type="submit" name="NewItem" value="' . _('Add to Contract Bill Of Material') .'" /></div>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="NewItem" value="' . _('Add to Contract Bill Of Material') .'" />
+		</div>';
 }#end if SearchResults to show
 
-echo '<hr />';
-
-echo '</form>';
+echo '<hr />
+	</form>';
 include('includes/footer.inc');
 ?>

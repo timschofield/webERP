@@ -18,7 +18,11 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($StockID) and !isset($_POST['UpdateCategories'])) {
-	$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."' GROUP BY stockid";
+	$sql = "SELECT COUNT(stockid) 
+			FROM stockmaster 
+			WHERE stockid='".$StockID."' 
+			GROUP BY stockid";
+			
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]==0) {
@@ -32,10 +36,11 @@ if (isset($_POST['New'])) {
 	$New=$_POST['New'];
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />' . "\n";
-
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
-		. _('Stock') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+	<br />
+	<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $title . '
+	</p>';
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
@@ -342,8 +347,8 @@ if (isset($_POST['submit'])) {
 				DB_Txn_Begin($db);
 				
 				$sql = "UPDATE stockmaster
-						SET longdescription='" . DB_escape_string($_POST['LongDescription']) . "',
-							description='" . DB_escape_string($_POST['Description']) . "',
+						SET longdescription='" . $_POST['LongDescription'] . "',
+							description='" . $_POST['Description'] . "',
 							discontinued='" . $_POST['Discontinued'] . "',
 							controlled='" . $_POST['Controlled'] . "',
 							serialised='" . $_POST['Serialised']."',
@@ -354,11 +359,10 @@ if (isset($_POST['submit'])) {
 							eoq='" . filter_number_format($_POST['EOQ']) . "',
 							volume='" . filter_number_format($_POST['Volume']) . "',
 							kgs='" . filter_number_format($_POST['KGS']) . "',
-							barcode='" . DB_escape_string($_POST['BarCode']) . "',
+							barcode='" . $_POST['BarCode'] . "',
 							discountcategory='" . $_POST['DiscountCategory'] . "',
 							taxcatid='" . $_POST['TaxCat'] . "',
 							decimalplaces='" . $_POST['DecimalPlaces'] . "',
-							appendfile='" . $_POST['ItemPDF'] . "',
 							shrinkfactor='" . filter_number_format($_POST['ShrinkFactor']) . "',
 							pansize='" . filter_number_format($_POST['Pansize']) . "',
 							nextserialno='" . $_POST['NextSerialNo'] . "'
@@ -520,12 +524,11 @@ if (isset($_POST['submit'])) {
 												discountcategory,
 												taxcatid,
 												decimalplaces,
-												appendfile,
 												shrinkfactor,
 												pansize)
 							VALUES ('".$StockID."',
-								'" . DB_escape_string($_POST['Description']) . "',
-								'" . DB_escape_string($_POST['LongDescription']) . "',
+								'" . $_POST['Description'] . "',
+								'" . $_POST['LongDescription'] . "',
 								'" . $_POST['CategoryID'] . "',
 								'" . $_POST['Units'] . "',
 								'" . $_POST['MBFlag'] . "',
@@ -536,11 +539,10 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['Perishable']. "',
 								'" . filter_number_format($_POST['Volume']) . "',
 								'" . filter_number_format($_POST['KGS']) . "',
-								'" . DB_escape_string($_POST['BarCode']) . "',
+								'" . $_POST['BarCode'] . "',
 								'" . $_POST['DiscountCategory'] . "',
 								'" . $_POST['TaxCat'] . "',
 								'" . $_POST['DecimalPlaces']. "',
-								'" . $_POST['ItemPDF']. "',
 								'" . filter_number_format($_POST['ShrinkFactor']) . "',
 								'" . filter_number_format($_POST['Pansize']) . "')";
 
@@ -582,7 +584,6 @@ if (isset($_POST['submit'])) {
 						unset($_POST['ReorderLevel']);
 						unset($_POST['DiscountCategory']);
 						unset($_POST['DecimalPlaces']);
-						unset($_POST['ItemPDF']);
 						unset($_POST['ShrinkFactor']);
 						unset($_POST['Pansize']);
 						unset($StockID);
@@ -703,7 +704,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['DiscountCategory']);
 		unset($_POST['TaxCat']);
 		unset($_POST['DecimalPlaces']);
-		unset($_POST['ItemPDF']);
 		unset($_SESSION['SelectedStockItem']);
 		unset($StockID);
 		
@@ -754,7 +754,6 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 					discountcategory,
 					taxcatid,
 					decimalplaces,
-					appendfile,
 					nextserialno
 			FROM stockmaster
 			WHERE stockid = '".$StockID."'";
@@ -778,7 +777,6 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
 	$_POST['DecimalPlaces'] = $myrow['decimalplaces'];
-	$_POST['ItemPDF']  = $myrow['appendfile'];
 	$_POST['NextSerialNo'] = $myrow['nextserialno'];
 
 	echo '<tr><td>' . _('Item Code') . ':</td>
@@ -812,51 +810,8 @@ if (isset($_POST['LongDescription'])) {
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('long') . '):</td>
 		<td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
-	</tr>';
-
-// Generate selection drop down from pdf_append directory - by emdx,
-// developed with examples from http://au2.php.net/manual/en/function.opendir.php
-function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '', $char_length = 60) {
-	$teller = 0;
-	if (!file_exists($dir)) {
-		mkdir($dir);
-		chmod($dir, 0777);
-	}
-	if ($handle = opendir($dir)) {
-		$mydir = '<select name="' . $select_name . '">';
-		$mydir .= '<option value=0>' . _('none') . '</option>';
-		if (isset($_POST['ItemPDF'])) {
-			$curr_val = $_POST['ItemPDF'];
-		} else {
-			$curr_val .=  _('none');
-		}
-		while (false !== ($file = readdir($handle)))	{
-			$files[] = $file;
-		}
-		closedir($handle);
-		sort($files);
-		foreach ($files as $val) {
-			if (is_file($dir.$val)) {
-				$mydir .= '<option value="' . $val . '"';
-				$mydir .= ($val == $curr_val) ? ' selected>' : '>';
-				$mydir .= $val . '</option>';
-				$teller++;
-			}
-		}
-		$mydir .= '';
-	}
-	return $mydir;
-}
-if (!isset($_POST['ItemPDF'])) {
-	$_POST['ItemPDF'] = '';
-}
-echo '<tr>
-		<td>' . _('PDF attachment (.pdf)') . ':' . '</td>
-		<td>' . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append/','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td>
-	</tr>';
-
-// Add image upload for New Item  - by Ori
-echo '<tr>
+	</tr>
+	<tr>
 		<td>'. _('Image File (.jpg)') . ':</td>
 		<td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
 

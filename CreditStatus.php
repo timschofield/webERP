@@ -17,7 +17,9 @@ if (isset($Errors)) {
 }
 $Errors = array();
 $InputError = 0;
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+	</p>
 	<br />';
 
 if (isset($_POST['submit'])) {
@@ -141,14 +143,14 @@ then none of the above are true and the list of status codes will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons';
+	$sql = "SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons";
 	$result = DB_query($sql, $db);
 
-	echo '<table class=selection>';
-	echo '<tr>
-		<th>'. _('Status Code') .'</th>
-		<th>'. _('Description') .'</th>
-		<th>'. _('Disallow Invoices') .'</th>';
+	echo '<table class="selection">
+		<tr>
+			<th>'. _('Status Code') .'</th>
+			<th>'. _('Description') .'</th>
+			<th>'. _('Disallow Invoices') .'</th>';
 
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($result)) {
@@ -186,7 +188,9 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedReason)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show Defined Credit Status Codes') . '</a></div>';
+	echo '<div class="centre">
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show Defined Credit Status Codes') . '</a>
+		</div>';
 }
 
 if (!isset($_GET['delete'])) {
@@ -210,8 +214,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription']  = $myrow['reasondescription'];
 		$_POST['DisallowInvoices']  = $myrow['dissallowinvoices'];
 
-		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '">';
-		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '">';
+		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '" />';
+		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" />';
 		echo '<table class="selection">
 				<tr>
 					<td>'. _('Status Code') .':</td>
@@ -226,7 +230,7 @@ if (!isset($_GET['delete'])) {
 			<table class="selection">
 			<tr>
 				<td>'. _('Status Code') .':</td>
-				<td><input ' . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) . ' tabindex=1 type="text" name="ReasonCode" value="'. $_POST['ReasonCode'] .'" size=3 maxlength=2></td>
+				<td><input ' . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="ReasonCode" value="'. $_POST['ReasonCode'] .'" size="3" maxlength="2" /></td>
 			</tr>';
 	}
 
@@ -241,13 +245,17 @@ if (!isset($_GET['delete'])) {
 		<tr>
 			<td>'. _('Disallow Invoices') . '</td>';
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
-		echo '<td><input tabindex=3 type="checkbox" checked name="DisallowInvoices"></td></tr>';
+		echo '<td><input tabindex="3" type="checkbox" checked name="DisallowInvoices" /></td>
+			</tr>';
 	} else {
-		echo '<td><input tabindex=3 type="checkbox" name="DisallowInvoices"></td></tr>';
+		echo '<td><input tabindex=3 type="checkbox" name="DisallowInvoices" /></td>
+			</tr>';
 	}
 	echo '</table>
 			<br />
-			<div class="centre"><input tabindex=4 type="submit" name="submit" value="' . _('Enter Information') . '"></div>
+			<div class="centre">
+				<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
+			</div>
 			</form>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');

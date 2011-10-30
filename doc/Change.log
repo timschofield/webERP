@@ -1,5 +1,6 @@
 webERP Change Log
 
+30/10/11 Phil: Made it so a saleman cannot be deleted if a user is setup referring only to this salesperson
 29/10/11 High-Tech Bridge SA Security Research Lab <advisory@htbridge.ch> - sanitising $_SERVER['PHP_SELF'] and unquoted sql in reportwriter/FormMaker.php and reportwriter/ReportMaker.php
 15/10/11 Phil: Tried to get correct characters for each language's thousands separator and decimal point in includes/LanguagesArray.php
 15/10/11 Phil: Updated PHPplot to 5.5.0

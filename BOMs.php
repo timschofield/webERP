@@ -9,7 +9,7 @@ $title = _('Multi-Level Bill Of Materials Maintenance');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-function display_children($parent, $level, &$BOMTree) {
+function display_children($Parent, $Level, &$BOMTree) {
 
 	global $db;
 	global $i;
@@ -17,25 +17,25 @@ function display_children($parent, $level, &$BOMTree) {
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 								component
-						FROM bom WHERE parent='" . $parent. "'"
+						FROM bom WHERE parent='" . $Parent. "'"
 						,$db);
 	if (DB_num_rows($c_result) > 0) {
 		
 		while ($row = DB_fetch_array($c_result)) {
-			//echo '<br />Parent: ' . $parent . ' Level: ' . $level . ' row[component]: ' . $row['component'] .'<br />';
-			if ($parent != $row['component']) {
+			//echo '<br />Parent: ' . $Parent . ' Level: ' . $Level . ' row[component]: ' . $row['component'] .'<br />';
+			if ($Parent != $row['component']) {
 				// indent and display the title of this child
-				$BOMTree[$i]['Level'] = $level; 		// Level
-				if ($level > 15) {
+				$BOMTree[$i]['Level'] = $Level; 		// Level
+				if ($Level > 15) {
 					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'),'error');
 					exit;
 				}
-				$BOMTree[$i]['Parent'] = $parent;		// Assemble
+				$BOMTree[$i]['Parent'] = $Parent;		// Assemble
 				$BOMTree[$i]['Component'] = $row['component'];	// Component
 				// call this function again to display this
 				// child's children
 				$i++;
-				display_children($row['component'], $level + 1, $BOMTree);
+				display_children($row['component'], $Level + 1, $BOMTree);
 			}
 		}
 	}
@@ -53,11 +53,11 @@ ie the BOM is recursive otherwise false ie 0 */
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($result)!=0) {
-		while ($myrow=DB_fetch_row($result)){
-			if ($myrow[0]==$UltimateParent){
+		while ($myrow=DB_fetch_array($result)){
+			if ($myrow['component']==$UltimateParent){
 				return 1;
 			}
-			if (CheckForRecursiveBOM($UltimateParent, $myrow[0],$db)){
+			if (CheckForRecursiveBOM($UltimateParent, $myrow['component'],$db)){
 				return 1;
 			}
 		} //(while loop)
@@ -70,11 +70,10 @@ ie the BOM is recursive otherwise false ie 0 */
 function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 
 		global $ParentMBflag;
-		// Modified by POPAD&T
 		$sql = "SELECT bom.component,
-						stockmaster.description,
+						stockmaster.description as itemdescription,
 						locations.locationname,
-						workcentres.description,
+						workcentres.description as workcentrename,
 						bom.quantity,
 						bom.effectiveafter,
 						bom.effectiveto,
@@ -83,19 +82,17 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 						stockmaster.controlled,
 						locstock.quantity AS qoh,
 						stockmaster.decimalplaces
-					FROM bom,
-						stockmaster,
-						locations,
-						workcentres,
-						locstock
-					WHERE bom.component='".$Component."'
-					AND bom.parent = '".$Parent."'
-					AND bom.component=stockmaster.stockid
-					AND bom.loccode = locations.loccode
-					AND locstock.loccode=bom.loccode
-					AND bom.component = locstock.stockid
-					AND bom.workcentreadded=workcentres.code
-					AND stockmaster.stockid=bom.component";
+				FROM bom INNER JOIN stockmaster
+				ON bom.component=stockmaster.stockid 
+				INNER JOIN locations ON 
+				bom.loccode = locations.loccode 
+				INNER JOIN workcentres 
+				ON bom.workcentreadded=workcentres.code
+				INNER JOIN locstock 
+				ON bom.loccode=locstock.loccode 
+				AND bom.component = locstock.stockid
+				WHERE bom.component='".$Component."'
+				AND bom.parent = '".$Parent."'";
 
 		$ErrMsg = _('Could not retrieve the BOM components because');
 		$DbgMsg = _('The SQL used to retrieve the components was');
@@ -104,33 +101,41 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 		//echo $TableHeader;
 		$RowCounter =0;
 
-		while ($myrow=DB_fetch_row($result)) {
+		while ($myrow=DB_fetch_array($result)) {
 
 			$Level1 = str_repeat('-&nbsp;',$Level-1).$Level;
-			if( $myrow[7]=='B' OR $myrow[7]=='K' OR $myrow[7]=='D') {
+			if( $myrow['mbflag']=='B' 
+				OR $myrow['mbflag']=='K' 
+				OR $myrow['mbflag']=='D') {
+					
 				$DrillText = '%s%s';
 				$DrillLink = '<div class="centre">'._('No lower levels').'</div>';
 				$DrillID='';
 			} else {
 				$DrillText = '<a href="%s&Select=%s">' . _('Drill Down');
 				$DrillLink = htmlspecialchars($_SERVER['PHP_SELF']) . '?';
-				$DrillID=$myrow[0];
+				$DrillID=$myrow['component'];
 			}
 			if ($ParentMBflag!='M' AND $ParentMBflag!='G'){
 				$AutoIssue = _('N/A');
-			} elseif ($myrow[9]==0 AND $myrow[8]==1){//autoissue and not controlled
+			} elseif ($myrow['controlled']==0 AND $myrow['autoissue']==1){//autoissue and not controlled
 				$AutoIssue = _('Yes');
-			} elseif ($myrow[9]==0) {
+			} elseif ($myrow['controlled']==1) {
 				$AutoIssue = _('No');
 			} else {
 				$AutoIssue = _('N/A');
 			}
 
-			if ($myrow[7]=='D' OR $myrow[7]=='K' OR $myrow[7]=='A' OR $myrow[7]=='G'){
+			if ($myrow['mbflag']=='D' //dummy orservice
+				OR $myrow['mbflag']=='K' //kit-set
+				OR $myrow['mbflag']=='A'  // assembly
+				OR $myrow['mbflag']=='G') /* ghost */ {
+				
 				$QuantityOnHand = _('N/A');
 			} else {
-				$QuantityOnHand = locale_number_format($myrow[10],$myrow[11]);
-			}
+				$QuantityOnHand = locale_number_format($myrow['qoh'],$myrow['decimalplaces']);
+			}	
+			
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -146,23 +151,23 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					 <td><a href="%s&Select=%s&SelectedComponent=%s&delete=1&ReSelect=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
 					 </tr>',
 					$Level1,
-					$myrow[0],
-					$myrow[1],
-					$myrow[2],
-					$myrow[3],
-					locale_number_format($myrow[4],'Variable'),
-					ConvertSQLDate($myrow[5]),
-					ConvertSQLDate($myrow[6]),
+					$myrow['component'],
+					$myrow['itemdescription'],
+					$myrow['locationname'],
+					$myrow['workcentrename'],
+					locale_number_format($myrow['quantity'],'Variable'),
+					ConvertSQLDate($myrow['effectiveafter']),
+					ConvertSQLDate($myrow['effectiveto']),
 					$AutoIssue,
 					$QuantityOnHand,
 					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 					$Parent,
-					$myrow[0],
+					$myrow['component'],
 					$DrillLink,
 					$DrillID,
 					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 					$Parent,
-					$myrow[0],
+					$myrow['component'],
 					$UltimateParent);
 
 		} //END WHILE LIST LOOP
@@ -246,7 +251,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Errors[$i] = 'EffectiveTo';
 			$i++;
 		}
-		if($_POST['AutoIssue']==1 and isset($_POST['Component'])){
+		if($_POST['AutoIssue']==1 AND isset($_POST['Component'])){
 			$sql = "SELECT controlled FROM stockmaster WHERE stockid='" . $_POST['Component'] . "'";
 			$CheckControlledResult = DB_query($sql,$db);
 			$CheckControlledRow = DB_fetch_row($CheckControlledResult);

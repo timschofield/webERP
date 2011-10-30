@@ -139,40 +139,44 @@ echo '<table class="selection" width="70%">
 		<th width=20%>' . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
 		<th width=20%>' . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th></tr>';
 
-echo '<tr><td class=number>' . locale_number_format($CustomerRecord['balance'],$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . locale_number_format(($CustomerRecord['balance'] - $CustomerRecord['due']),$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . locale_number_format(($CustomerRecord['due']-$CustomerRecord['overdue1']),$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . locale_number_format(($CustomerRecord['overdue1']-$CustomerRecord['overdue2']) ,$CustomerRecord['decimalplaces']) . '</td>
-	<td class=number>' . locale_number_format($CustomerRecord['overdue2'],$CustomerRecord['decimalplaces']) . '</td>
+echo '<tr>
+		<td class="number">' . locale_number_format($CustomerRecord['balance'],$CustomerRecord['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format(($CustomerRecord['balance'] - $CustomerRecord['due']),$CustomerRecord['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format(($CustomerRecord['due']-$CustomerRecord['overdue1']),$CustomerRecord['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format(($CustomerRecord['overdue1']-$CustomerRecord['overdue2']) ,$CustomerRecord['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($CustomerRecord['overdue2'],$CustomerRecord['decimalplaces']) . '</td>
 	</tr>
 	</table>';
 
-echo '<br /><div class="centre"><form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': <input tabindex=1 type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength =10 size=12>' . '<input tabindex=2 type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '"></div>
-</form>
-<br />';
+echo '<br />
+	<div class="centre">
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
+		. _('Show all transactions after') . ': <input tabindex=1 type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="12" />
+		<input tabindex="2" type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
+	</div>
+	</form>
+	<br />';
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
 $SQL = "SELECT systypes.typename,
-		debtortrans.id,
-		debtortrans.type,
-		debtortrans.transno,
-		debtortrans.branchcode,
-		debtortrans.trandate,
-		debtortrans.reference,
-		debtortrans.invtext,
-		debtortrans.order_,
-		debtortrans.rate,
-		(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) AS totalamount,
-		debtortrans.alloc AS allocated
-	FROM debtortrans,
-		systypes
-	WHERE debtortrans.type = systypes.typeid
-	AND debtortrans.debtorno = '" . $CustomerID . "'
-	AND debtortrans.trandate >= '$DateAfterCriteria'
-	ORDER BY debtortrans.id";
+				debtortrans.id,
+				debtortrans.type,
+				debtortrans.transno,
+				debtortrans.branchcode,
+				debtortrans.trandate,
+				debtortrans.reference,
+				debtortrans.invtext,
+				debtortrans.order_,
+				debtortrans.rate,
+				(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) AS totalamount,
+				debtortrans.alloc AS allocated
+		FROM debtortrans INNER JOIN systypes
+		ON debtortrans.type = systypes.typeid
+		WHERE debtortrans.debtorno = '" . $CustomerID . "'
+		AND debtortrans.trandate >= '" . $DateAfterCriteria . "'
+		ORDER BY debtortrans.id";
 
 $ErrMsg = _('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL,$db,$ErrMsg);
@@ -184,24 +188,24 @@ if (DB_num_rows($TransResult)==0){
 }
 /*show a table of the invoices returned by the SQL */
 
-echo '<table class="selection" cellpadding="2" colspan="7">';
+echo '<table class="selection">';
 
 $tableheader = '<tr>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Number') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Reference') . '</th>
-				<th>' . _('Comments') . '</th>
-				<th>' . _('Order') . '</th>
-				<th>' . _('Total') . '</th>
-				<th>' . _('Allocated') . '</th>
-				<th>' . _('Balance') . '</th>
-				<th>' . _('More Info') . '</th>
-				<th>' . _('More Info') . '</th>
-				<th>' . _('More Info') . '</th>
-				<th>' . _('More Info') . '</th>
-				<th>' . _('More Info') . '</th>
+					<th>' . _('Type') . '</th>
+					<th>' . _('Number') . '</th>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Branch') . '</th>
+					<th>' . _('Reference') . '</th>
+					<th>' . _('Comments') . '</th>
+					<th>' . _('Order') . '</th>
+					<th>' . _('Total') . '</th>
+					<th>' . _('Allocated') . '</th>
+					<th>' . _('Balance') . '</th>
+					<th>' . _('More Info') . '</th>
+					<th>' . _('More Info') . '</th>
+					<th>' . _('More Info') . '</th>
+					<th>' . _('More Info') . '</th>
+					<th>' . _('More Info') . '</th>
 				</tr>';
 
 echo $tableheader;
@@ -233,9 +237,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						<td>%s</td>
 						<td width="200">%s</td>
 						<td>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>';
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>';
 						
 
 	$CreditInvoiceFormatString = '<td><a href="%s/Credit_Invoice.php?InvoiceNumber=%s">' . _('Credit ') .'<img src="%s/credit.gif" title="' . _('Click to credit the invoice') . '"></a></td>';

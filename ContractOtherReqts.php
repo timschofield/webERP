@@ -24,7 +24,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 	if($_SESSION['Contract'.$identifier]->Status!=2){ //dont do anything if the customer has committed to the contract
 		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $ContractComponentID => $ContractRequirementItem) {
 
-			if ($_POST['Qty'.$ContractComponentID]==0){
+			if (filter_number_format($_POST['Qty'.$ContractComponentID])==0){
 				//this is the same as deleting the line - so delete it
 				$_SESSION['Contract'.$identifier]->Remove_ContractRequirement($ContractComponentID);
 			} else {
@@ -81,10 +81,12 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 
 if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 
-	echo '<table cellpadding="2" colspan="7" class="selection">';
+	echo '<table class="selection">';
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
-		echo  '<tr><th colspan="5">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</th></tr>';
+		echo  '<tr>
+				<th colspan="5">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</th>
+			</tr>';
 	}
 
 	echo '<tr>
