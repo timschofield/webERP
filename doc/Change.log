@@ -5,6 +5,7 @@ webERP Change Log
 29/10/11 High-Tech Bridge SA Security Research Lab <advisory@htbridge.ch> - sanitising $_SERVER['PHP_SELF'] and unquoted sql in reportwriter/FormMaker.php and reportwriter/ReportMaker.php
 15/10/11 Phil: Tried to get correct characters for each language's thousands separator and decimal point in includes/LanguagesArray.php
 15/10/11 Phil: Updated PHPplot to 5.5.0
+15/10/11 Fred Schuettler aguapop - theme
 8/10/11 Ricard: PcExpenses.php PcAuthorizeExpense.php now uses GL tags
 8/10/11 Phil: SelectSalesOrder.php now allows for creation of purchase orders for the components of assembly items on sales orders.
 29/9/11 Ricard: added new query critera to AuditTrail.php to look for text in query strings to enable searching for updates/inserts/deletes relating to a specified customer or item code etc

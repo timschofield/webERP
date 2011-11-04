@@ -33,8 +33,10 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/g
 
 // Make an array of the security roles
 $sql = "SELECT secroleid,
-		secrolename
-	FROM securityroles ORDER BY secroleid";
+				secrolename
+		FROM securityroles 
+		ORDER BY secroleid";
+		
 $Sec_Result = DB_query($sql, $db);
 $SecurityRoles = array();
 // Now load it into an a ray using Key/Value pairs
@@ -72,7 +74,8 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
-	} elseif ((mb_strlen($_POST['Cust'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {
+	} elseif ((mb_strlen($_POST['Cust'])>0) 
+				AND (mb_strlen($_POST['BranchCode'])==0)) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
@@ -173,15 +176,15 @@ if (isset($_POST['submit'])) {
 						theme,
 						language,
 						pdflanguage)
-					VALUES ('" . DB_escape_string($_POST['UserID']) . "',
-						'" . DB_escape_string($_POST['RealName']) ."',
-						'" . DB_escape_string($_POST['Cust']) ."',
-						'" . DB_escape_string($_POST['BranchCode']) ."',
-						'" . DB_escape_string($_POST['SupplierID']) ."',
+					VALUES ('" . $_POST['UserID'] . "',
+						'" . $_POST['RealName'] ."',
+						'" . $_POST['Cust'] ."',
+						'" . $_POST['BranchCode'] ."',
+						'" . $_POST['SupplierID'] ."',
 						'" . $_POST['Salesman'] . "',
 						'" . CryptPass($_POST['Password']) ."',
-						'" . DB_escape_string($_POST['Phone']) . "',
-						'" . DB_escape_string($_POST['Email']) ."',
+						'" . $_POST['Phone'] . "',
+						'" . $_POST['Email'] ."',
 						'" . $_POST['PageSize'] ."',
 						'" . $_POST['Access'] . "',
 						'" . $_POST['DefaultLocation'] ."',
@@ -327,7 +330,7 @@ if (!isset($SelectedUser)) {
 					$SecurityRoles[($myrow['fullaccess'])],
 					$myrow['pagesize'],
 					$myrow['theme'],
-					$LanguagesArray[$myrow['language']],
+					$LanguagesArray[$myrow['language']]['LanguageName'],
 					htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
 					$myrow['userid'],
 					htmlspecialchars($_SERVER['PHP_SELF']) . '?',

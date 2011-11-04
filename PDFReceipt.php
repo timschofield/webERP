@@ -46,23 +46,23 @@ $YPos -= (1.5 * $line_height);
 
 $PageNumber++;
 
-$sql="SELECT MIN(id) as start FROM debtortrans WHERE type=12 AND transno='". filer_locale_number_format($_GET['BatchNumber']). "'";
+$sql="SELECT MIN(id) as start FROM debtortrans WHERE type=12 AND transno='". $_GET['BatchNumber']. "'";
 $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $StartReceiptNumber=$myrow['start'];
 
-$sql="SELECT 	debtorno,
-				ovamount,
-				invtext
-			FROM debtortrans
-			WHERE type=12
-			AND transno='".$_GET['BatchNumber']."'
-			AND id='". $StartReceiptNumber-1+$_GET['ReceiptNumber'] ."'";
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
-$DebtorNo=$myrow['debtorno'];
-$Amount=$myrow['ovamount'];
-$Narrative=$myrow['invtext'];
+$sql="SELECT debtorno,
+			ovamount,
+			invtext
+		FROM debtortrans
+		WHERE type=12
+		AND transno='" . $_GET['BatchNumber'] . "'
+		AND id='". ($StartReceiptNumber-1+$_GET['ReceiptNumber']) ."'";
+$result = DB_query($sql, $db);
+$myrow = DB_fetch_array($result);
+$DebtorNo = $myrow['debtorno'];
+$Amount = $myrow['ovamount'];
+$Narrative = $myrow['invtext'];
 
 $sql="SELECT currency,
 		     decimalplaces
@@ -76,13 +76,13 @@ $myrow=DB_fetch_array($result);
 $Currency=$myrow['currency'];
 $DecimalPlaces=$myrow['decimalplaces'];
 
-$sql="SELECT  name,
-              address1,
-			  address2,
-			  address3,
-			  address4,
-			  address5,
-			  address6
+$sql="SELECT name,
+             address1,
+			 address2,
+			 address3,
+			 address4,
+			 address5,
+			 address6
 		FROM debtorsmaster
 		WHERE debtorno='".$DebtorNo."'";
 

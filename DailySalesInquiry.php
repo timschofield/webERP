@@ -5,7 +5,6 @@
 include('includes/session.inc');
 $title = _('Daily Sales Inquiry');
 include('includes/header.inc');
-include('includes/DefineCartClass.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '
@@ -21,16 +20,18 @@ echo '<table class="selection">
 		<td>' . _('Month to Show') . ':</td>
 		<td><select tabindex="1" name="MonthToShow">';
 
-
 if (!isset($_POST['MonthToShow'])){
 	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE period='" . $_POST['MonthToShow'] . "'",$db);
+	$myrow = DB_fetch_array($Result);
+	$EndDateSQL = $myrow['lastdate_in_period'];
 }
 
 $PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods",$db);
 
 while ($PeriodRow = DB_fetch_array($PeriodsResult)){
 	if ($_POST['MonthToShow']==$PeriodRow['periodno']) {
-	     echo '<option selected Value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
+	     echo '<option selected value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
 		 $EndDateSQL = $PeriodRow['lastdate_in_period'];
 	} else {
 	     echo '<option value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
