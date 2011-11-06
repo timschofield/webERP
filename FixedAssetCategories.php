@@ -8,8 +8,10 @@ $title = _('Fixed Asset Category Maintenance');
 
 include('includes/header.inc');
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Fixed Asset Categories') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<div class="centre">
+	<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $title . '
+	</p>';
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -41,11 +43,12 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($_POST['CostAct'] == $_SESSION['CompanyRecord']['debtorsact']
-				OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['creditorsact']
-				OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['debtorsact']
-				OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['creditorsact']
-				OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['grnact']
-				OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['grnact']){
+			OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['creditorsact']
+			OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['debtorsact']
+			OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['creditorsact']
+			OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['grnact']
+			OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['grnact']){
+				
 		prnMsg(_('The accounts selected to post cost or accumulated depreciation to cannot be either of the debtors control account, creditors control account or GRN suspense accounts'),'error');
 		$InputError =1;
 	}
@@ -62,12 +65,12 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 	if (in_array($_POST['CostAct'], $BankAccounts)) {
-		prnMsg( _('The asset cost account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset cost'),'error');
-		$InputError =1;
+		prnMsg(_('The asset cost account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset cost'),'error');
+		$InputError=1;
 	}
 	if (in_array($_POST['AccumDepnAct'], $BankAccounts)) {
 		prnMsg( _('The accumulated depreciation account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset accumulated depreciation'),'error');
-		$InputError =1;
+		$InputError=1;
 	}
 
 	if (isset($SelectedCategory) AND $InputError !=1) {
@@ -76,13 +79,14 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE fixedassetcategories SET
-								categorydescription = '" . $_POST['CategoryDescription'] . "',
-								costact = '" . $_POST['CostAct'] . "',
-								depnact = '" . $_POST['DepnAct'] . "',
-								disposalact = '" . $_POST['DisposalAct'] . "',
-								accumdepnact = '" . $_POST['AccumDepnAct'] . "'
-						WHERE categoryid = '".$SelectedCategory . "'";
+		$sql = "UPDATE fixedassetcategories 
+					SET categorydescription = '" . $_POST['CategoryDescription'] . "',
+						costact = '" . $_POST['CostAct'] . "',
+						depnact = '" . $_POST['DepnAct'] . "',
+						disposalact = '" . $_POST['DisposalAct'] . "',
+						accumdepnact = '" . $_POST['AccumDepnAct'] . "'
+				WHERE categoryid = '".$SelectedCategory . "'";
+				
 		$ErrMsg = _('Could not update the fixed asset category') . $_POST['CategoryDescription'] . _('because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -91,11 +95,11 @@ if (isset($_POST['submit'])) {
 	} elseif ($InputError !=1) {
 
 		$sql = "INSERT INTO fixedassetcategories (categoryid,
-											categorydescription,
-											costact,
-											depnact,
-											disposalact,
-											accumdepnact)
+												categorydescription,
+												costact,
+												depnact,
+												disposalact,
+												accumdepnact)
 								VALUES ('" . $_POST['CategoryID'] . "',
 										'" . $_POST['CategoryDescription'] . "',
 										'" . $_POST['CostAct'] . "',
@@ -227,16 +231,23 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	$_POST['DisposalAct']  = $myrow['disposalact'];
 	$_POST['AccumDepnAct']  = $myrow['accumdepnact'];
 
-	echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
-	echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '">';
-	echo '<table class=selection><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
+	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
+	echo '<input type="hidden" name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
+	echo '<table class="selection">
+		<tr>
+			<td>' . _('Category Code') . ':</td>
+			<td>' . $_POST['CategoryID'] . '</td>
+		</tr>';
 
 } else { //end of if $SelectedCategory only do the else when a new record is being entered
 	if (!isset($_POST['CategoryID'])) {
 		$_POST['CategoryID'] = '';
 	}
-	echo '<table class=selection><tr><td>' . _('Category Code') . ':</td>
-				 <td><input type="Text" name="CategoryID" size=7 maxlength=6 value="' . $_POST['CategoryID'] . '"></td></tr>';
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Category Code') . ':</td>
+				<td><input type="text" name="CategoryID" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
+			</tr>';
 }
 
 //SQL to poulate account selection boxes
@@ -262,12 +273,13 @@ if (!isset($_POST['CategoryDescription'])) {
 	$_POST['CategoryDescription'] = '';
 }
 
-echo '<tr><td>' . _('Category Description') . ':</td>
-			<td><input type="Text" name="CategoryDescription" size=22 maxlength=20 value="' . $_POST['CategoryDescription'] . '"></td></tr>';
-
-echo '<tr><td>' . _('Fixed Asset Cost GL Code');
-
-echo ':</td><td><select name="CostAct">';
+echo '<tr>
+		<td>' . _('Category Description') . ':</td>
+		<td><input type="text" name="CategoryDescription" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Fixed Asset Cost GL Code') . ':</td>
+		<td><select name="CostAct">';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)){
 
@@ -277,9 +289,10 @@ while ($myrow = DB_fetch_array($BSAccountsResult)){
 		echo '<option value='.$myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
 	}
 } //end while loop
-echo '</select></td></tr>';
-
-echo '<tr><td>' . _('Profit and Loss Depreciation GL Code') . ':</td>
+echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Profit and Loss Depreciation GL Code') . ':</td>
 		<td><select name="DepnAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
@@ -289,10 +302,13 @@ while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		echo '<option value='.$myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
 	}
 } //end while loop
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>';
 
 DB_data_seek($PnLAccountsResult,0);
-echo '<tr><td>' .  _('Profit or Loss on Disposal GL Code:') . '</td><td><select name="DisposalAct">';
+echo '<tr>
+		<td>' .  _('Profit or Loss on Disposal GL Code:') . '</td>
+		<td><select name="DisposalAct">';
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $myrow['accountcode']==$_POST['DisposalAct']) {
 		echo '<option selected value='.$myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
@@ -300,11 +316,13 @@ while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		echo '<option value='.$myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
 	}
 } //end while loop
-echo '</select></td></tr>';
-
+echo '</select></td>
+	</tr>';
 
 DB_data_seek($BSAccountsResult,0);
-echo '<tr><td>' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</td><td><select name="AccumDepnAct">';
+echo '<tr>
+		<td>' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</td>
+		<td><select name="AccumDepnAct">';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 
@@ -317,11 +335,15 @@ while ($myrow = DB_fetch_array($BSAccountsResult)) {
 } //end while loop
 
 
-echo '</select></td></tr></table><br />';
+echo '</select></td>
+	</tr>
+	</table>
+	<br />';
 
-echo '<div class="centre"><input type="Submit" name="submit" value="' . _('Enter Information') . '"></div>';
-
-echo '</form>';
+echo '<div class="centre">
+		<input type="Submit" name="submit" value="' . _('Enter Information') . '" />
+	</div>
+	</form>';
 
 include('includes/footer.inc');
 ?>

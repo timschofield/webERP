@@ -51,14 +51,14 @@ if (!isset($_POST['ToDate'])){
 echo '<td>' . _('From') . ':</td>
 	<td><input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 	<td>' . _('To') . ':</td>
-	<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>';
-
-echo '</tr></table>
-		<br />
-		<div class="centre">
-			<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Transactions') . '">
-		</div>
-		</form>';
+	<td><input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre">
+		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Transactions') . '" />
+	</div>
+	</form>';
 
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);

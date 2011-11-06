@@ -45,7 +45,7 @@ if (isset($_POST['NewEDIInvMsg'])){
 }
 
 $InputError = 0;
-if ($InputError !=1 and isset($_POST['update'])) {
+if ($InputError !=1 AND isset($_POST['update'])) {
 
 	/*SelectedMessageLine could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 	if (!isset($SelectedMessageLine)) {
@@ -62,7 +62,7 @@ if ($InputError !=1 and isset($_POST['update'])) {
 	$msg = _('Message line updated');
 	unset ($SelectedMessageLine);
 
-} elseif ($InputError !=1 and isset($_POST['submit'])) {
+} elseif ($InputError !=1 AND isset($_POST['submit'])) {
 
 /*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new message line form */
 
@@ -123,8 +123,8 @@ or deletion of the records*/
 
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>';
-	echo '<tr><th colspan=5><font size=3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode.'</font></th></tr>';
+	echo '<table class="selection">';
+	echo '<tr><th colspan="5"><font size=3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode.'</font></th></tr>';
 	$TableHeader = '<tr>
 					<th>' . _('Section') . '</th>
 					<th>' . _('Sequence') . '</th>
@@ -161,8 +161,10 @@ or deletion of the records*/
 	} //END WHILE LIST LOOP
 	echo '</table><p>';
 	if (DB_num_rows($result)==0){
-		echo '<div class="centre"><input tabindex=1 type=submit name="NewEDIInvMsg" value="' .
-			_('Create New EDI Invoice Message From Default Template') . '"></div><br />';
+		echo '<div class="centre">
+				<input tabindex=1 type=submit name="NewEDIInvMsg" value="' . _('Create New EDI Invoice Message From Default Template') . '" />
+			</div>
+			<br />';
 	}
 } //end of ifs SelectedLine is not set
 
@@ -183,19 +185,18 @@ if (isset($SelectedMessageLine)) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-
 	$_POST['Section']  = $myrow['section'];
 	$_POST['SequenceNo']  = $myrow['sequenceno'];
 	$_POST['LineText']  = $myrow['linetext'];
 
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?MessageType=INVOIC&PartnerCode=' . $myrow['partnercode'] . '">' . _('Review Message Lines') . '</a></div>';
 
-	echo '<input type=hidden name="SelectedMessageLine" VALUE="' . $SelectedMessageLine . '">';
-	echo '<input type=hidden name="MessageType" VALUE="' . $myrow['messagetype'] . '">';
-	echo '<input type=hidden name="PartnerCode" VALUE="' . $myrow['partnercode'] . '">';
+	echo '<input type="hidden" name="SelectedMessageLine" value="' . $SelectedMessageLine . '" />';
+	echo '<input type="hidden" name="MessageType" value="' . $myrow['messagetype'] . '" />';
+	echo '<input type="hidden" name="PartnerCode" value="' . $myrow['partnercode'] . '" />';
 } else { //end of if $SelectedMessageLine only do the else when a new record is being entered
-	echo '<input type=hidden name="MessageType" VALUE="' . $MessageType . '">';
-	echo '<input type=hidden name="PartnerCode" VALUE="' . $PartnerCode . '">';
+	echo '<input type="hidden" name="MessageType" value="' . $MessageType . '" />';
+	echo '<input type="hidden" name="PartnerCode" value="' . $PartnerCode . '" />';
 }
 
 echo '<table class=selection>';
@@ -209,18 +210,18 @@ echo '<td>';
 echo '<select tabindex=2 name="Section">';
 
 if ($_POST['Section']=='Heading') {
-	echo '<option selected VALUE="Heading">' . _('Heading') . '</option>';
+	echo '<option selected value="Heading">' . _('Heading') . '</option>';
 } else {
 	echo '<option value="Heading">' . _('Heading') . '</option>';
 }
 
-if (isset($_POST['Section']) and $_POST['Section']=='Detail') {
-	echo '<option selected VALUE="Detail">' . _('Detail') . '</option>';
+if (isset($_POST['Section']) AND $_POST['Section']=='Detail') {
+	echo '<option selected value="Detail">' . _('Detail') . '</option>';
 } else {
 	echo '<option value="Detail">' . _('Detail') . '</option>';
 }
-if (isset($_POST['Section']) and $_POST['Section']=='Summary') {
-	echo '<option selected VALUE="Summary">' . _('Summary') . '</option>';
+if (isset($_POST['Section']) AND $_POST['Section']=='Summary') {
+	echo '<option selected value="Summary">' . _('Summary') . '</option>';
 } else {
 	echo '<option value="Summary">' . _('Summary') . '</option>';
 }
@@ -234,17 +235,17 @@ if (!isset($_POST['LineText'])) {$_POST['LineText']='';}
 echo '</td></tr>';
 
 echo '<tr><td>Sequence Number:</td>';
-echo '<td><input tabindex=3 type="text" name=SequenceNo size=3 maxlength=3 value='.$_POST['SequenceNo'].'>';
+echo '<td><input tabindex=3 type="text" name=SequenceNo size=3 maxlength=3 value='.$_POST['SequenceNo'].' />';
 echo '</td></tr>';
 echo '<tr><td>' .  _('Line Text') . ':' .'</td>';
 echo '<td>';
-echo '<input tabindex=4 type="Text" name="LineText" size=50 maxlength=50 VALUE='.$_POST['LineText'] .'>';
+echo '<input tabindex=4 type="text" name="LineText" size=50 maxlength=50 value='.$_POST['LineText'] .' />';
 echo '</td></tr>';
 echo '</table><br />';
 if (isset($_GET['SelectedMessageLine'])) {
-	echo '<div class="centre"><input tabindex=5 type="submit" name="update" value="'.  _('Update Information'). '"></div>';
+	echo '<div class="centre"><input tabindex=5 type="submit" name="update" value="'.  _('Update Information'). '" /></div>';
 } else {
-	echo '<div class="centre"><input tabindex=5 type="submit" name="submit" value="'.  _('Enter Information'). '"></div>';
+	echo '<div class="centre"><input tabindex=5 type="submit" name="submit" value="'.  _('Enter Information'). '" /></div>';
 }
 
 echo '</form>';

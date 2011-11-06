@@ -3,12 +3,11 @@
 /*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 
-//$PageSecurity=15;
-include ("includes/session.inc");
+include ('includes/session.inc');
 
 $title = _('UTILITY PAGE That sets up a new blank company record if not already existing');
 
-include("includes/header.inc");
+include('includes/header.inc');
 
 $sql = "SELECT COUNT(coycode) FROM companies";
 $Result = DB_query($sql,$db);
@@ -18,7 +17,8 @@ if ($myrow[0]==0){
 	$sql = "INSERT INTO companies (coycode, coyname) VALUES (1,'Enter company name')";
 	$Result = DB_query($sql,$db);
 } else {
-	echo '<p>' . _('An existing company record is set up already. No alterations have been made');
+	prnMsg(_('An existing company record is set up already. No alterations have been made'),'error');
+	include('includes/footer.inc');
 	exit;
 }
 
@@ -94,9 +94,7 @@ if ($myrow[0]==0){
 	$Result = DB_query($sql,$db);
 }
 
+prnMsg(_('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $rootpath . '/CompanyPreferences.php">' . _('this link') . '</a>','success');
 
-echo '<p>' . _('Company record is now available for modification by clicking') . " <a href='" . $rootpath . "/CompanyPreferences.php'>" . _('this link') . "</a>";
-
-
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>

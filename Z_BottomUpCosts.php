@@ -2,7 +2,6 @@
 /* $Id$*/
 /* Script to update costs for all BOM items, from the bottom up */
 
-//$PageSecurity = 15;
 include('includes/session.inc');
 $title = _('Recalculate BOM costs');
 include('includes/header.inc');
@@ -13,6 +12,7 @@ if (isset($_GET['Run'])){
 } elseif (isset($_POST['Run'])){
 	$Run = $_POST['Run'];
 }
+
 
 if (isset($Run)) { //start bom processing
 
@@ -37,20 +37,28 @@ if (isset($Run)) { //start bom processing
 	}
 
 	if ($inputerror == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on item '. $item['component']. '. Cost update has been rolled back.'),'error');
+		prnMsg(_('Failed on item') . ' ' . $item['component']. ' ' . _('Cost update has been rolled back'),'error');
 		DB_Txn_Rollback($db);
 	} else { //all good so commit data transaction
 		DB_Txn_Commit($db);
 		prnMsg( _('All cost updates committed to the database.'),'success');
 	}
 
-} else { //show file upload form
+} else { 
+	
+	echo '<br />
+		<br />';
+	prnMsg(_('This script will not update the General Ledger stock balances for the changed costs. If you use integrated stock then do not use this utility'),'warn');
 
-	echo "<form action=" . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . sid . " method=post name='form'>";
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" name="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Update costs for all items listed in a bill of materials').'<br /></p>';
-	echo "<div class=centre><input type='submit' name='Run' value='" . _('Run') . "'></div></form>";
-
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Update costs for all items listed in a bill of materials').'<br />
+		</p>
+		<div class="centre">
+			<input type="submit" name="Run" value="' . _('Run') . '" />
+		</div>
+		</form>';
 }
 
 include('includes/footer.inc');

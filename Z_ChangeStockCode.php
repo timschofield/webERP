@@ -47,25 +47,31 @@ if (isset($_POST['ProcessStockChange'])){
 	
 		echo '<br />' . _('Adding the new stock master record');
 		$sql = "INSERT INTO stockmaster (stockid,
-						categoryid,
-						description,
-						longdescription,
-						units,
-						mbflag,
-						actualcost,
-						lastcost,
-						materialcost,
-						labourcost,
-						overheadcost,
-						lowestlevel,
-						discontinued,
-						controlled,
-						eoq,
-						volume,
-						kgs,
-						barcode,
-						discountcategory,
-						taxcatid)
+										categoryid,
+										description,
+										longdescription,
+										units,
+										mbflag,
+										actualcost,
+										lastcost,
+										materialcost,
+										labourcost,
+										overheadcost,
+										lowestlevel,
+										discontinued,
+										controlled,
+										eoq,
+										volume,
+										kgs,
+										barcode,
+										discountcategory,
+										taxcatid,
+										decimalplaces,
+										shrinkfactor,
+										pansize,
+										netweight,
+										perishable,
+										nextserialno)
 				SELECT '" . $_POST['NewStockID'] . "',
 					categoryid,
 					description,
@@ -85,7 +91,13 @@ if (isset($_POST['ProcessStockChange'])){
 					kgs,
 					barcode,
 					discountcategory,
-					taxcatid
+					taxcatid,
+					decimalplaces,
+					shrinkfactor,
+					pansize,
+					netweight,
+					perishable,
+					nextserialno
 				FROM stockmaster
 				WHERE stockid='" . $_POST['OldStockID'] . "'";
 	
@@ -113,8 +125,6 @@ if (isset($_POST['ProcessStockChange'])){
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 	
-	
-		
 		echo '<br />' . _('Changing MRP demands information');
 		$sql = "UPDATE mrpdemands SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
 		$ErrMsg = _('The SQL to update the mrpdemands records failed');
@@ -305,20 +315,24 @@ if (isset($_POST['ProcessStockChange'])){
 	
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '" method=post>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p><table>
-	<tr><td>' . _('Existing Inventory Code') . ':</td>
-		<td><input type=Text name="OldStockID" size=20 maxlength=20></td></tr>';
-
-echo '<tr><td>' . _('New Inventory Code') . ':</td>
-		<td><input type="text" name="NewStockID" size=20 maxlength=20></td></tr>';
-echo '</table>';
-
-echo '<div class="centre"><input type="submit" name="ProcessStockChange" value="' . _('Process') . '"></div>';
-
-echo '</form>';
+	<tr>
+		<td>' . _('Existing Inventory Code') . ':</td>
+		<td><input type="text" name="OldStockID" size="20" maxlength="20" /></td>
+	</tr>
+	<tr>
+		<td>' . _('New Inventory Code') . ':</td>
+		<td><input type="text" name="NewStockID" size="20" maxlength="20" /></td>
+	</tr>
+	</table>
+	<div class="centre">
+		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
+	</div>
+	
+	</form>';
 
 include('includes/footer.inc');
 ?>

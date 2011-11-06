@@ -20,26 +20,26 @@ if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
-	if (!is_numeric($_POST['QuantityBreak'])){
+	if (!is_numeric(filter_number_format($_POST['QuantityBreak']))){
 		prnMsg( _('The quantity break must be entered as a positive number'),'error');
 		$InputError =1;
 		$Errors[$i] = 'QuantityBreak';
 		$i++;
 	}
 
-	if ($_POST['QuantityBreak']<=0){
+	if (filter_number_format($_POST['QuantityBreak'])<=0){
 		prnMsg( _('The quantity of all items on an order in the discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('at which the discount will apply is 0 or less than 0') . '. ' . _('Positive numbers are expected for this entry'),'warn');
 		$InputError =1;
 		$Errors[$i] = 'QuantityBreak';
 		$i++;
 	}
-	if (!is_numeric($_POST['DiscountRate'])){
+	if (!is_numeric(filter_number_format($_POST['DiscountRate']))){
 		prnMsg( _('The discount rate must be entered as a positive number'),'warn');
 		$InputError =1;
 		$Errors[$i] = 'DiscountRate';
 		$i++;
 	}
-	if ($_POST['DiscountRate']<=0 OR $_POST['DiscountRate']>=70){
+	if (filter_number_format($_POST['DiscountRate'])<=0 OR filter_number_format($_POST['DiscountRate'])>=70){
 		prnMsg( _('The discount rate applicable for this record is either less than 0% or greater than 70%') . '. ' . _('Numbers between 1 and 69 are expected'),'warn');
 		$InputError =1;
 		$Errors[$i] = 'DiscountRate';
@@ -57,8 +57,8 @@ if (isset($_POST['submit'])) {
 							discountrate)
 					VALUES('" . $_POST['SalesType'] . "',
 						'" . $_POST['DiscountCategory'] . "',
-						'" . $_POST['QuantityBreak'] . "',
-						'" . ($_POST['DiscountRate']/100) . "')";
+						'" . filter_number_format($_POST['QuantityBreak']) . "',
+						'" . (filter_number_format($_POST['DiscountRate'])/100) . "')";
 
 		$result = DB_query($sql,$db);
 		prnMsg( _('The discount matrix record has been added'),'success');
@@ -111,8 +111,9 @@ echo '</select>';
 $sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
 $result = DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
-	echo '<tr><td>'. _('Discount Category Code') .': </td>';
-	echo '<td><select name="DiscountCategory">';
+	echo '<tr>
+			<td>'. _('Discount Category Code') .': </td>
+			<td><select name="DiscountCategory">';
 
 	while ($myrow = DB_fetch_array($result)){
 		if ($myrow['discountcategory']==$_POST['DiscCat']){
@@ -123,17 +124,23 @@ if (DB_num_rows($result) > 0) {
 	}
 	echo '</select></td>';
 } else {
-	echo '<input type="hidden" name="DiscountCategory" value="">';
+	echo '<input type="hidden" name="DiscountCategory" value="" />';
 }
 
-echo '<tr><td>' . _('Quantity Break') . '</td>
-		<td><input class="number" tabindex=3 ' . (in_array('QuantityBreak',$Errors) ? 'class="inputerror"' : '') .' type="text" name="QuantityBreak" size=10 maxlength=10></td></tr>';
-
-echo '<tr><td>' . _('Discount Rate') . ' (%):</td>
-		<td><input class="number" tabindex=4 ' . (in_array('DiscountRate',$Errors) ? 'class="inputerror"' : '') . 'type="text" name="DiscountRate" size=11 maxlength=14></td></tr>';
-echo '</table><br />';
-
-echo '<div class="centre"><input tabindex=5 type="submit" name="submit" value="' . _('Enter Information') . '"></div><br />';
+echo '<tr>
+		<td>' . _('Quantity Break') . '</td>
+		<td><input class="number" tabindex=3 ' . (in_array('QuantityBreak',$Errors) ? 'class="inputerror"' : '') .' type="text" name="QuantityBreak" size="10" maxlength="10" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Discount Rate') . ' (%):</td>
+		<td><input class="number" tabindex=4 ' . (in_array('DiscountRate',$Errors) ? 'class="inputerror"' : '') . 'type="text" name="DiscountRate" size="5" maxlength="5" /></td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre">
+		<input tabindex=5 type="submit" name="submit" value="' . _('Enter Information') . '">
+	</div>
+	<br />';
 
 $sql = "SELECT sales_type,
 			salestype,
@@ -169,22 +176,21 @@ while ($myrow = DB_fetch_array($result)) {
 	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
 
 	printf('<td>%s</td>
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</td>
-		</tr>',
-		$myrow['sales_type'],
-		$myrow['discountcategory'],
-		$myrow['quantitybreak'],
-		$myrow['discountrate']*100 ,
-		$DeleteURL);
+			<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</td>
+			</tr>',
+			$myrow['sales_type'],
+			$myrow['discountcategory'],
+			$myrow['quantitybreak'],
+			$myrow['discountrate']*100 ,
+			$DeleteURL);
 
 }
 
-echo '</table>';
-
-echo '</form>';
+echo '</table>
+	</form>';
 
 include('includes/footer.inc');
 ?>

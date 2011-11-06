@@ -104,13 +104,16 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'AssetLocation';
 		$i++;
 	}
-	if (!is_numeric($_POST['DepnRate']) OR $_POST['DepnRate']>100 OR $_POST['DepnRate']<0){
+	if (!is_numeric(filter_number_format($_POST['DepnRate'])) 
+		OR filter_number_format($_POST['DepnRate'])>100 
+		OR filter_number_format($_POST['DepnRate'])<0){
+			
 		$InputError = 1;
 		prnMsg(_('The depreciation rate is expected to be a number between 0 and 100'),'error');
 		$Errors[$i] = 'DepnRate';
 		$i++;
 	}
-	if ($_POST['DepnRate']>0 AND $_POST['DepnRate']<1){
+	if (filter_number_format($_POST['DepnRate'])>0 AND filter_number_format($_POST['DepnRate'])<1){
 		prnMsg(_('Numbers less than 1 are interpreted as less than 1%. The depreciation rate should be entered as a number between 0 and 100'),'warn');
 	}
 
@@ -226,15 +229,15 @@ if (isset($_POST['submit'])) {
 				} /*end if there was accumulated depreciation for the asset */
 			} /* end if there is a change in asset category */
 			$sql = "UPDATE fixedassets
-				SET longdescription='" . $_POST['LongDescription'] . "',
-					description='" . $_POST['Description'] . "',
-					assetcategoryid='" . $_POST['AssetCategoryID'] . "',
-					assetlocation='" . $_POST['AssetLocation'] . "',
-					depntype='" . $_POST['DepnType'] . "',
-					depnrate='" . $_POST['DepnRate'] . "',
-					barcode='" . $_POST['BarCode'] . "',
-					serialno='" . $_POST['SerialNo'] . "'
-				WHERE assetid='" . $AssetID . "'";
+					SET longdescription='" . $_POST['LongDescription'] . "',
+						description='" . $_POST['Description'] . "',
+						assetcategoryid='" . $_POST['AssetCategoryID'] . "',
+						assetlocation='" . $_POST['AssetLocation'] . "',
+						depntype='" . $_POST['DepnType'] . "',
+						depnrate='" . filter_number_format($_POST['DepnRate']) . "',
+						barcode='" . $_POST['BarCode'] . "',
+						serialno='" . $_POST['SerialNo'] . "'
+					WHERE assetid='" . $AssetID . "'";
 
 			$ErrMsg = _('The asset could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the asset and failed was');
@@ -257,7 +260,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['AssetCategoryID'] . "',
 							'" . $_POST['AssetLocation'] . "',
 							'" . $_POST['DepnType'] . "',
-							'" . $_POST['DepnRate']. "',
+							'" . filter_number_format($_POST['DepnRate']). "',
 							'" . $_POST['BarCode'] . "',
 							'" . $_POST['SerialNo'] . "' )";
 			$ErrMsg =  _('The asset could not be added because');
@@ -382,7 +385,7 @@ echo '<form name="AssetForm" enctype="multipart/form-data" method="post" action=
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-if (!isset($AssetID) or $AssetID=='') {
+if (!isset($AssetID) OR $AssetID=='') {
 
 /*If the page was called without $AssetID passed to page then assume a new asset is to be entered other wise the form showing the fields with the existing entries against the asset will show for editing with a hidden AssetID field. New is set to flag that the page may have called itself and still be entering a new asset, in which case the page needs to know not to go looking up details for an existing asset*/
 
@@ -425,13 +428,19 @@ if (!isset($AssetID) or $AssetID=='') {
 	$_POST['AssetLocation']  = $AssetRow['assetlocation'];
 	$_POST['DepnType']  = $AssetRow['depntype'];
 	$_POST['BarCode']  = $AssetRow['barcode'];
-	$_POST['DepnRate']  = $AssetRow['depnrate'];
+	$_POST['DepnRate']  = locale_number_format($AssetRow['depnrate'],2);
 
-	echo '<tr><td>' . _('Asset Code') . ':</td><td>'.$AssetID.'</td></tr>'. "\n";
-	echo '<input type="Hidden" name="AssetID" value="'.$AssetID.'"/>'. "\n";
+	echo '<tr>
+			<td>' . _('Asset Code') . ':</td>
+			<td>' . $AssetID . '</td>
+		</tr>';
+	echo '<input type="Hidden" name="AssetID" value="'.$AssetID.'"/>';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
-	echo '<tr><td>' . _('Asset Code') . ':</td><td>' . $AssetID . '</td></tr>';
+	echo '<tr>
+			<td>' . _('Asset Code') . ':</td>
+			<td>' . $AssetID . '</td>
+		</tr>';
 	echo '<input type="Hidden" name="AssetID" value="' . $AssetID . '"/>';
 }
 
@@ -440,19 +449,27 @@ if (isset($_POST['Description'])) {
 } else {
 	$Description ='';
 }
-echo '<tr><td>' . _('Asset Description') . ' (' . _('short') . '):</td>
-	<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" size=52 maxlength=50 value="' . $Description . '"></td></tr>'."\n";
+
+echo '<tr>
+		<td>' . _('Asset Description') . ' (' . _('short') . '):</td>
+		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '"></td>
+	</tr>';
 
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
 } else {
 	$LongDescription ='';
 }
-echo '<tr><td>' . _('Asset Description') . ' (' . _('long') . '):</td><td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></td></tr>';
+echo '<tr>
+		<td>' . _('Asset Description') . ' (' . _('long') . '):</td>
+		<td><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols="40" rows="4">' . stripslashes($LongDescription) . '</textarea></td>
+	</tr>';
 
 if (!isset($New) ) { //ie not new at all!
 	
-	echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
+	echo '<tr>
+			<td>'. _('Image File (.jpg)') . ':</td>
+			<td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
 
 	if (function_exists('imagecreatefromjpg')){
 		$AssetImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
@@ -478,7 +495,9 @@ if (!isset($New) ) { //ie not new at all!
 	// EOR Add Image upload for New Item  - by Ori
 } //only show the add image if the asset already exists - otherwise AssetID will not be set - and the image needs the AssetID to save
 
-echo '<tr><td>' . _('Asset Category') . ':</td><td><select name="AssetCategoryID">';
+echo '<tr>
+		<td>' . _('Asset Category') . ':</td>
+		<td><select name="AssetCategoryID">';
 
 $sql = "SELECT categoryid, categorydescription FROM fixedassetcategories";
 $ErrMsg = _('The asset categories could not be retrieved because');
@@ -499,7 +518,10 @@ if (!isset($_POST['AssetCategoryID'])) {
 }
 
 if (isset($AssetRow) AND ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow['datepurchased']!='')){
-	echo '<tr><td>' . _('Date Purchased') . ':</td><td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td></tr>';
+	echo '<tr>
+			<td>' . _('Date Purchased') . ':</td>
+			<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
+		</tr>';
 }
 
 $sql = "SELECT locationid, locationdescription FROM fixedassetlocations";
@@ -507,7 +529,10 @@ $ErrMsg = _('The asset locations could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve asset locations and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<tr><td>' . _('Asset Location') . ':</td><td><select name="AssetLocation">';
+echo '<tr>
+		<td>' . _('Asset Location') . ':</td>
+		<td><select name="AssetLocation">';
+		
 while ($myrow=DB_fetch_array($result)){
 	if ($_POST['AssetLocation']==$myrow['locationid']){
 		echo '<option selected value="' . $myrow['locationid'] .'">' . $myrow['locationdescription'] . '</option>';
@@ -515,14 +540,20 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['locationid'] .'">' . $myrow['locationdescription'] . '</option>';
 	}
 }
-echo '</select><a target="_blank" href="'. $rootpath . '/FixedAssetLocations.php">'.' ' . _('Add Asset Location') . '</a></td></tr>';
-
-echo '<tr><td>' . _('Bar Code') . ':</td><td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" size=22 maxlength=20 value="' . $_POST['BarCode'] . '"></td></tr>';
-
-echo '<tr><td>' . _('Serial Number') . ':</td><td><input ' . (in_array('SerialNo',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="SerialNo" size=32 maxlength=30 value="' . $_POST['SerialNo'] . '"></td></tr>';
-
-
-echo '<tr><td>' . _('Depreciation Type') . ':</td><td><select name="DepnType">';
+echo '</select>
+	<a target="_blank" href="'. $rootpath . '/FixedAssetLocations.php">'.' ' . _('Add Asset Location') . '</a></td>
+	</tr>
+	<tr>
+		<td>' . _('Bar Code') . ':</td>
+		<td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" maxlength="20" value="' . $_POST['BarCode'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Serial Number') . ':</td>
+		<td><input ' . (in_array('SerialNo',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="SerialNo" size="32" maxlength="30" value="' . $_POST['SerialNo'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Depreciation Type') . ':</td>
+		<td><select name="DepnType">';
 
 if (!isset($_POST['DepnType'])){
 	$_POST['DepnType'] = 0; //0 = Straight line - 1 = Diminishing Value
@@ -535,19 +566,35 @@ if ($_POST['DepnType']==0){ //straight line
 	echo '<option selected value="1">' . _('Diminishing Value') . '</option>';
 }
 
-echo '</select></td></tr>';
+echo '</select></td>
+	</tr>
+	<tr>
+		<td>' . _('Depreciation Rate') . ':</td>
+		<td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="text" name="DepnRate" size="4" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
+	</tr>
+	</table>';
 
-echo '<tr><td>' . _('Depreciation Rate') . ':</td><td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="Text" name="DepnRate" size=4 maxlength=4 value="' . $_POST['DepnRate'] . '">%</td></tr>';
-echo '</table>';
+if (isset($AssetRow)){
+	
+	echo '<table>
+		<tr>
+			<th colspan="2">' . _('Asset Financial Summary') . '</th>
+		</tr>
+		<tr>
+			<td>' . _('Accumulated Costs') . ':</td>
+			<td class="number">' . locale_number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>
+		<tr>
+			<td>' . _('Accumulated Depreciation') . ':</td>
+			<td class="number">' . locale_number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>
+		<tr>
+			<td>' . _('Net Book Value') . ':</td>
+			<td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>';
 
-/*Get the last period depreciation (depn is transtype =44) was posted for */
-echo '<table><tr><th colspan=2>' . _('Asset Financial Summary') . '</th></tr>';
-
-echo '<tr><td>' . _('Accumulated Costs') . ':</td><td class="number">' . locale_number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
-echo '<tr><td>' . _('Accumulated Depreciation') . ':</td><td class="number">' . locale_number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
-echo '<tr><td>' . _('Net Book Value') . ':</td><td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
-
-$result = DB_query("SELECT periods.lastdate_in_period, 
+	/*Get the last period depreciation (depn is transtype =44) was posted for */
+	$result = DB_query("SELECT periods.lastdate_in_period, 
 								max(fixedassettrans.periodno) 
 					FROM fixedassettrans INNER JOIN periods 
 					ON fixedassettrans.periodno=periods.periodno 
@@ -555,26 +602,35 @@ $result = DB_query("SELECT periods.lastdate_in_period,
 					GROUP BY periods.lastdate_in_period
 					ORDER BY periods.lastdate_in_period DESC",$db);
 									
-$LastDepnRun = DB_fetch_row($result);
-if(DB_num_rows($result)==0){
-	$LastRunDate = _('Not Yet Run');
-} else {
-	$LastRunDate = ConvertSQLDate($LastDepnRun[0]);
+	$LastDepnRun = DB_fetch_row($result);
+	if(DB_num_rows($result)==0){
+		$LastRunDate = _('Not Yet Run');
+	} else {
+		$LastRunDate = ConvertSQLDate($LastDepnRun[0]);
+	}
+	echo '<tr>
+			<td>' . _('Depreciation last run') . ':</td>
+			<td>' . $LastRunDate . '</td>
+		</tr>
+		</table>';
 }
-echo '<tr><td>' . _('Depreciation last run') . ':</td><td>' . $LastRunDate . '</td></tr>
-			</table>';
-
 
 if (isset($New)) {
-	echo '<div class="centre"><br /><input type="submit" name="submit" value="' . _('Insert New Fixed Asset') . '">';
-
+	echo '<div class="centre">
+			<br />
+			<input type="submit" name="submit" value="' . _('Insert New Fixed Asset') . '" />';
 } else {
-
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '"></div>';
-	prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
-	echo '<br /><div class="centre"><input type="submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');"></div>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="' . _('Update') . '" />
+		</div>';
+		prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
 }
 
-echo '</form></div>';
+echo '</div>
+	</form>';
 include('includes/footer.inc');
 ?>

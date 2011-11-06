@@ -8,6 +8,16 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/LanguagesArray.php');
 
+
+if (!isset($_SESSION['CustomerID'])){
+	echo '<br />
+		<br />';
+	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $rootpath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>','info');
+	include('includes/footer.inc');
+	exit;
+} 
+
+
 echo '<a href="' . $rootpath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
 $sql="SELECT name
@@ -20,7 +30,8 @@ $CustomerName=$myrow['name'];
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
 	'" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
-		'</p><br />';
+	'</p>
+	<br />';
 
 
 if (isset($_POST['submit'])) {
@@ -246,11 +257,11 @@ echo '</select></td>
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
-	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+	} elseif (!isset($_POST['UserLanguage']) AND $LanguageEntry == $DefaultLanguage) {
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	} else {
-		echo '<option value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	}
 }
 echo '</select></td>

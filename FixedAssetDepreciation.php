@@ -66,6 +66,7 @@ $sql="SELECT fixedassets.assetid,
 			fixedassetcategories.depnact,
 			fixedassetcategories.categorydescription
 		ORDER BY assetcategoryid, assetid";
+		
 $AssetsResult=DB_query($sql, $db);
 
 $InputError = false; //always hope for the best
@@ -80,7 +81,8 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 }
 
 echo '<p></p><table>';
-$Heading = '<tr><th>' . _('Asset ID') . '</th>
+$Heading = '<tr>
+				<th>' . _('Asset ID') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Date Purchased') . '</th>
 				<th>' . _('Cost') . '</th>
@@ -97,6 +99,10 @@ $AssetCategoryDescription ='0';
 $TotalCost =0;
 $TotalAccumDepn=0;
 $TotalDepn = 0;
+$TotalCategoryCost = 0;
+$TotalCategoryAccumDepn =0;
+$TotalCategoryDepn = 0;
+
 $RowCounter = 0;
 $k=0;
 
@@ -111,7 +117,9 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 					<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 		}
-		echo '<tr><th colspan=9 align="left">' . $AssetRow['categorydescription']  . '</th></tr>';
+		echo '<tr>
+				<th colspan="9" align="left">' . $AssetRow['categorydescription']  . '</th>
+			</tr>';
 		$AssetCategoryDescription = $AssetRow['categorydescription'];
 		$TotalCategoryCost = 0;
 		$TotalCategoryAccumDepn =0;
@@ -161,7 +169,9 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	$TotalAccumDepn +=$AssetRow['depnbfwd'];
 	$TotalDepn +=$NewDepreciation;
 
-	if (isset($_POST['CommitDepreciation']) AND $NewDepreciation !=0 AND $InputError==false){
+	if (isset($_POST['CommitDepreciation']) 
+		AND $NewDepreciation !=0 
+		AND $InputError==false){
 
 		//debit depreciation expense
 		$SQL = "INSERT INTO gltrans (type,
@@ -178,9 +188,11 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . $AssetRow['depnact'] . "',
 								'" . $AssetRow['assetid'] . "',
 								'" . $NewDepreciation ."')";
+		
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
@@ -226,22 +238,26 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
-echo '<tr><th colspan=3 align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-					<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th colspan=2></th>
-					<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					</tr>';
-echo '<tr><th colspan=3 align="right">' . _('GRAND Total') . ' </th>
-					<th class="number">' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . locale_number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . locale_number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th colspan=2></th>
-					<th class="number">' . locale_number_format($TotalDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					</tr>';
+echo '<tr>
+		<th colspan="3" align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
+		<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th colspan="2"></th>
+		<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+	</tr>
+	<tr>
+		<th colspan="3" align="right">' . _('GRAND Total') . ' </th>
+		<th class="number">' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th colspan="2"></th>
+		<th class="number">' . locale_number_format($TotalDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+	</tr>';
 
-echo '</table><hr><p></p>';
+echo '</table>
+		<hr />
+		<p />';
 
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$result = DB_Txn_Commit($db);
@@ -251,20 +267,24 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 } else {
-	echo '<form action=' . htmlspecialchars($_SERVER['PHP_SELF']) . ' method=post name="form">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" name="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p></p>';
-	echo '<table class=selection width=30%><tr></tr><tr>';
+	echo '<p />
+		<table class="selection" width="30%">
+		<tr></tr>
+		<tr>';
 	if ($AllowUserEnteredProcessDate){
 		echo '<td>'._('Date to Process Depreciation'). ':</td>
-					<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" name="ProcessDate" maxlength=10 size=11 value="' . $_POST['ProcessDate'] . '"></td>';
+			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" name="ProcessDate" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
 	} else {
 		echo '<td>'._('Date to Process Depreciation'). ':</td>
-					<td>' . $_POST['ProcessDate'] .'</td>';
+			<td>' . $_POST['ProcessDate'] .'</td>';
 	}
-	echo '<td><div class="centre"><input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'"></div>';
-	echo '</tr></table><br />';
-	echo '</form>';
+	echo '<td><div class="centre"><input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'" /></div></td>
+		</tr>
+		</table>
+		<br />
+		</form>';
 }
 include('includes/footer.inc');
 ?>

@@ -133,13 +133,16 @@ if (isset($_POST['PrintPDF'])
 				<table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr><td>' . _('From Customer Code') .':</font></td>
+		echo '<tr>
+				<td>' . _('From Customer Code') .':</font></td>
 				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="1" /></td>
-				</tr>';
-		echo '<tr><td>' . _('To Customer Code') . ':</td>
-				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td></tr>';
-
-		echo '<tr><td>' . _('Balances As At') . ':</td>
+			</tr>
+			<tr>
+				<td>' . _('To Customer Code') . ':</td>
+				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Balances As At') . ':</td>
 				<td><select tabindex="3" name="PeriodEnd">';
 
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
@@ -152,9 +155,14 @@ if (isset($_POST['PrintPDF'])
 		}
 	}
 
-	echo '</select></td></tr>';
-	echo '</table>
-			<br /><div class="centre"><input tabindex=5 type=submit name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+	echo '</select></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input tabindex="5" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>
+		</form>';
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

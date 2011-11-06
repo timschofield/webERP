@@ -192,18 +192,28 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 }
 
-echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "?=" . $SID . "' method=post>";
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p><table>
-<tr><td>' . _('Customer Code') . ":</td><td><input type=Text name='DebtorNo' size=20 maxlength=20></td></tr>
-<tr><td>" . _('Existing Branch Code') . ":</td><td><input type=Text name='OldBranchCode' size=20 maxlength=20></td></tr>
-<tr><td>" . _('New Branch Code') . ":</td><td><input type=Text name='NewBranchCode' size=20 maxlength=20></td></tr>
-</table>";
+echo '<p />
+	<table>
+		<tr>
+			<td>' . _('Customer Code') . ':</td>
+			<td><input type="text" name="DebtorNo" size="20" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Existing Branch Code') . ':</td>
+			<td><input type="text" name="OldBranchCode" size="20" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td>' . _('New Branch Code') . ':</td>
+			<td><input type="text" name="NewBranchCode" size="20" maxlength="20" /></td>
+		</tr>
+	</table>';
 
-echo "<input type=submit name='ProcessCustomerChange' VALUE='" . _('Process') . "'>";
+echo '<input type="submit" name="ProcessCustomerChange" value="' . _('Process') . '" />';
 
 echo '</form>';
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>

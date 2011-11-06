@@ -76,20 +76,23 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		echo '<form name="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '"><table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
-		echo '<br /><table width=80% cellspacing="1" class="selection"><tr>';
-		echo '<th>' . _('Asset ID') . '</th>';
-		echo '<th>' . _('Description') . '</th>';
-		echo '<th>' . _('Serial Number') . '</th>';
-		echo '<th>' . _('Location') . '</th>';
-		echo '<th>' . _('Date Acquired') . '</th>';
-		echo '<th>' . _('Cost B/fwd') . '</th>';
-		echo '<th>' . _('Depn B/fwd') . '</th>';
-		echo '<th>' . _('Additions') . '</th>';
-		echo '<th>' . _('Depn') . '</th>';
-		echo '<th>' . _('Cost C/fwd') . '</th>';
-		echo '<th>' . _('Depn C/fwd') . '</th>';
-		echo '<th>' . _('NBV') . '</th>';
-		echo '<th>' . _('Disposal Value') . '</th></tr>';
+		echo '<br />
+			<table width=80% cellspacing="1" class="selection">
+			<tr>
+				<th>' . _('Asset ID') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Serial Number') . '</th>
+				<th>' . _('Location') . '</th>
+				<th>' . _('Date Acquired') . '</th>
+				<th>' . _('Cost B/fwd') . '</th>
+				<th>' . _('Depn B/fwd') . '</th>
+				<th>' . _('Additions') . '</th>
+				<th>' . _('Depn') . '</th>
+				<th>' . _('Cost C/fwd') . '</th>
+				<th>' . _('Depn C/fwd') . '</th>
+				<th>' . _('NBV') . '</th>
+				<th>' . _('Disposal Value') . '</th>
+			</tr>';
 	}
 	$TotalCostBfwd =0;
 	$TotalCostCfwd = 0;
@@ -160,10 +163,11 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 				$csv_output .= $myrow['assetid'] . ',' . $myrow['longdescription'] .',' . $myrow['serialno'] . ',' . $myrow['locationdescription'] . ',' . $myrow['datepurchased'] . ',' . $myrow['costbfwd'] . ',' . $myrow['periodadditions'] . ',' . $myrow['depnbfwd'] . ',' . $myrow['perioddepn'] . ',' . $CostCfwd . ',' . $AccumDepnCfwd . ',' . ($CostCfwd - $AccumDepnCfwd) . ',' . $myrow['perioddisposal'] . "\n";
 
 			} else {
-				echo '<tr><td style="vertical-align:top">' . $myrow['assetid'] . '</td>';
-				echo '<td style="vertical-align:top">' . $myrow['longdescription'] . '</td>';
-				echo '<td style="vertical-align:top">' . $myrow['serialno'] . '</td>';
-				echo '<td>' . $myrow['locationdescription'] . '<br />';
+				echo '<tr>
+						<td style="vertical-align:top">' . $myrow['assetid'] . '</td>
+						<td style="vertical-align:top">' . $myrow['longdescription'] . '</td>
+						<td style="vertical-align:top">' . $myrow['serialno'] . '</td>
+						<td>' . $myrow['locationdescription'] . '<br />';
 			/*	Not reworked yet
 			 * for ($i = 1;$i < sizeOf($Ancestors) - 1;$i++) {
 					for ($j = 0;$j < $i;$j++) {
@@ -172,15 +176,17 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 					echo '|_' . $Ancestors[$i] . '<br />';
 				}
 			*/
-				echo '</td><td style="vertical-align:top">' . ConvertSQLDate($myrow['datepurchased']) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['costbfwd'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['depnbfwd'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['periodadditions'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['perioddepn'], 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($CostCfwd , 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($AccumDepnCfwd, 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($CostCfwd - $AccumDepnCfwd, 2) . '</td>';
-				echo '<td style="vertical-align:top" class="number">' . locale_number_format($myrow['perioddisposal'], 2) . '</td></tr>';
+				echo '</td>
+					<td style="vertical-align:top">' . ConvertSQLDate($myrow['datepurchased']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($myrow['costbfwd'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($myrow['depnbfwd'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($myrow['periodadditions'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($myrow['perioddepn'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($CostCfwd , $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($AccumDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($CostCfwd - $AccumDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top" class="number">' . locale_number_format($myrow['perioddisposal'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				</tr>';
 			}
 		} // end of if the asset was either not disposed yet or disposed after the start date
 		$TotalCostBfwd +=$myrow['costbfwd'];
@@ -239,9 +245,10 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories', $db);
 	echo '<form name="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><th>' . _('Asset Category') . '</th>';
-	echo '<td><select name=AssetCategory>';
-	echo '<option value="%">' . _('ALL') . '</option>';
+	echo '<tr>
+			<th>' . _('Asset Category') . '</th>
+			<td><select name=AssetCategory>
+				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetCategory']) and $myrow['categoryid'] == $_POST['AssetCategory']) {
 			echo '<option selected value=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'] . '</option>';
@@ -249,12 +256,14 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			echo '<option value=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 	$sql = "SELECT  locationid, locationdescription FROM fixedassetlocations";
 	$result = DB_query($sql, $db);
-	echo '<tr><th>' . _('Asset Location') . '</th>';
-	echo '<td><select name="AssetLocation">';
-	echo '<option value="%">' . _('ALL') . '</option>';
+	echo '<tr>
+			<th>' . _('Asset Location') . '</th>
+			<td><select name="AssetLocation">
+				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetLocation']) AND $myrow['locationid'] == $_POST['AssetLocation']) {
 			echo '<option selected value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
@@ -262,12 +271,14 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 	$sql = "SELECT assetid, description FROM fixedassets";
 	$result = DB_query($sql, $db);
-	echo '<tr><th>' . _('Asset') . '</th>';
-	echo '<td><select name="AssetID">';
-	echo '<option value="%">' . _('ALL') . '</option>';
+	echo '<tr>
+			<th>' . _('Asset') . '</th>
+			<td><select name="AssetID">
+				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetID']) AND $myrow['assetid'] == $_POST['AssetID']) {
 			echo '<option selected value=' . $myrow['assetid'] . '>' . $myrow['assetid'] . ' - ' . $myrow['description'] . '</option>';
@@ -275,7 +286,8 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			echo '<option value=' . $myrow['assetid'] . '>'  . $myrow['assetid'] . ' - ' . $myrow['description'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 	if (empty($_POST['FromDate'])) {
 		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), date('d'), date('Y') - 1));
 	}
@@ -283,17 +295,22 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
-	echo '<tr><th>' . _(' From Date') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=11 value="' . $_POST['FromDate'] . '" /></td>';
-	echo '</tr>';
-	echo '<tr><th>' . _('To Date ') . '</th><td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-	</tr>
+	echo '<tr>
+			<th>' . _(' From Date') . '</th>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=11 value="' . $_POST['FromDate'] . '" /></td>
+		</tr>
+		<tr>
+			<th>' . _('To Date ') . '</th>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+		</tr>
 	</table>
-	<br />';
-
-	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Show Assets') . '">&nbsp;';
-	echo '<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;';
-	echo '<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '" /></div>';
-	echo '</form>';
+	<br />
+	<div class="centre">
+		<input type="submit" name="submit" value="' . _('Show Assets') . '" />&nbsp;
+		<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;
+		<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '" />
+	</div>
+	</form>';
 }
 include ('includes/footer.inc');
 

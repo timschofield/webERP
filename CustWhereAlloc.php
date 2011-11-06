@@ -6,7 +6,7 @@ include('includes/session.inc');
 $title = _('Customer How Paid Inquiry');
 include('includes/header.inc');
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
@@ -96,7 +96,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 			echo '<tr>
 					<th colspan="6">
 					<div class="centre">
-						<font size=3 color=blue><b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</font></b>
+						<font size=3 color="blue"><b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</font></b>
 					</div>
 					</th>
 				</tr>';

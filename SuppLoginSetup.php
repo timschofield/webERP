@@ -8,6 +8,15 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/LanguagesArray.php');
 
+
+if (!isset($_SESSION['SupplierID'])){
+	echo '<br />
+		<br />';
+	prnMsg(_('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>','info');
+	include('includes/footer.inc');
+	exit;
+} 
+
 $ModuleList = array(_('Orders'),
 					_('Receivables'),
 					_('Payables'),
@@ -125,16 +134,16 @@ if (!isset($_POST['Email'])) {
 echo '<tr>
 		<td>' . _('Password') . ':</td>
 		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '">
-	</tr>';
-echo '<tr>
+	</tr>
+	<tr>
 		<td>' . _('Full Name') . ':</td>
 		<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
-	</tr>';
-echo '<tr>
+	</tr>
+	<tr>
 		<td>' . _('Telephone No') . ':</td>
 		<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
-	</tr>';
-echo '<tr>
+	</tr>
+	<tr>
 		<td>' . _('Email Address') .':</td>
 		<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
 	</tr>';
@@ -269,17 +278,16 @@ echo '<tr>
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	} else {
-		echo '<option value="' . $LanguageEntry . '">' . $LanguageName .'</option>';
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	}
 }
-echo '</select></td></tr>';
-
-
-echo '</table>
+echo '</select></td>
+	</tr>
+	</table>
 	<br />
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
@@ -288,7 +296,5 @@ echo '</table>
 
 echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
 
-
 include('includes/footer.inc');
-
 ?>

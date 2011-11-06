@@ -19,12 +19,12 @@ if(isset($_POST['Submit'])) {
   } else {
     $newStkID = $_POST['exStkID'];
   }
-  $result = DB_query('begin', $db);
+  DB_Txn_Begin($db);
 
   if($type == 'N') {
       /* duplicate rows into stockmaster */
       $sql = "INSERT INTO stockmaster
-			              select '".$newStkID."' as stockid,
+			              select '" . $newStkID . "' as stockid,
 						categoryid,
 						description,
 						longdescription,
@@ -112,30 +112,36 @@ if(isset($_POST['Submit'])) {
      $sql = "SELECT stockid, description FROM stockmaster WHERE stockid IN (SELECT DISTINCT parent FROM bom) AND  mbflag IN ('M', 'A', 'K');";
      $result = DB_query($sql, $db);
 
-     echo '<p>'._('From Stock ID') . ': <select name="StkID">';
-     while($row = DB_fetch_row($result))
-       {
-	 echo "<option value=\"$row[0]\">".$row[0]." -- ".$row[1]."</option>";
-       }
-     echo "</select><br/><input type=\"radio\" name=\"type\" value=\"N\" checked=\"\"/>"._(" To New Stock ID");
-     echo ": <input type=\"text\" maxlength=\"20\" name=\"toStkID\"/>";
-
-     $sql = "SELECT stockid, description FROM stockmaster WHERE stockid NOT IN (SELECT DISTINCT parent FROM bom) AND mbflag IN ('M', 'A', 'K');";
-     $result = DB_query($sql, $db);
-
-     if(DB_num_rows($result) > 0)
-       {
-	 echo "<br/><input type=\"radio\" name=\"type\" value=\"E\"/>"._("To Existing Stock ID");
-	 echo ": <select name=\"exStkID\">";
-	 while($row = DB_fetch_row($result))
-	   {
-	     echo "<option value=\"$row[0]\">".$row[0]." -- ".$row[1]."</option>";
-	   }
-	 echo "</select>";
-       }
-     echo "</p>";
-     echo "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></p>";
-
-     include('includes/footer.inc');
-   }
+     echo '<br />
+			<br />' . _('From Stock ID') . ': <select name="StkID">';
+     while($row = DB_fetch_row($result)) {
+		echo '<option value="' . $row[0] . '">' . $row[0]. ' -- ' . $row[1] . '</option>';
+	}
+	echo '</select>
+		<br/>
+		<input type="radio" name="type" value="N" checked="" />' ._('To New Stock ID') .':
+		<input type="text" maxlength="20" name="toStkID" />';
+	
+	$sql = "SELECT stockid, 
+					description 
+			FROM stockmaster 
+			WHERE stockid NOT IN (SELECT DISTINCT parent FROM bom) 
+			AND mbflag IN ('M', 'A', 'K');";
+	$result = DB_query($sql, $db);
+	
+	if(DB_num_rows($result) > 0) {
+		echo '<br/>
+			<input type="radio" name="type" value="E" />' . _('To Existing Stock ID') . ': 
+			<select name="exStkID">';
+		while($row = DB_fetch_row($result)){
+			echo '<option value="' . $row[0] .'">' . $row[0] . ' -- ' . $row[1] . '</option>';
+		}
+		echo '</select>';
+	}
+	
+	echo '<br />
+		<input type="submit" name="Submit" value="' . _('Submit') . '" />';
+	
+	include('includes/footer.inc');
+}
 ?>

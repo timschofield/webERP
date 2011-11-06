@@ -2,7 +2,6 @@
 /* $Id$*/
 /*Script to Delete all sales transactions*/
 
-//$PageSecurity=15;
 include ('includes/session.inc');
 $title = _('UTILITY PAGE To Changes A Customer Code In All Tables');
 include('includes/header.inc');
@@ -35,59 +34,59 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 	prnMsg(_('Inserting the new debtors master record'),'info');
 	$sql = "INSERT INTO debtorsmaster (`debtorno`,
-																		`name`,
-																		`address1`,
-																		`address2`,
-																		`address3`,
-																		`address4`,
-																		`currcode`,
-																		`salestype`,
-																		`clientsince`,
-																		`holdreason`,
-																		`paymentterms`,
-																		`discount`,
-																		`discountcode`,
-																		`pymtdiscount`,
-																		`lastpaid`,
-																		`lastpaiddate`,
-																		`creditlimit`,
-																		`invaddrbranch`,
-																		`ediinvoices`,
-																		`ediorders`,
-																		`edireference`,
-																		`editransport`,
-																		`ediaddress`,
-																		`ediserveruser`,
-																		`ediserverpwd`,
-																		`typeid`)
-														SELECT '" . $_POST['NewDebtorNo'] . "',
-																		`name`,
-																		`address1`,
-																		`address2`,
-																		`address3`,
-																		`address4`,
-																		`currcode`,
-																		`salestype`,
-																		`clientsince`,
-																		`holdreason`,
-																		`paymentterms`,
-																		`discount`,
-																		`discountcode`,
-																		`pymtdiscount`,
-																		`lastpaid`,
-																		`lastpaiddate`,
-																		`creditlimit`,
-																		`invaddrbranch`,
-																		`ediinvoices`,
-																		`ediorders`,
-																		`edireference`,
-																		`editransport`,
-																		`ediaddress`,
-																		`ediserveruser`,
-																		`ediserverpwd`,
-																		`typeid`
-											FROM debtorsmaster
-											WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
+									`name`,
+									`address1`,
+									`address2`,
+									`address3`,
+									`address4`,
+									`currcode`,
+									`salestype`,
+									`clientsince`,
+									`holdreason`,
+									`paymentterms`,
+									`discount`,
+									`discountcode`,
+									`pymtdiscount`,
+									`lastpaid`,
+									`lastpaiddate`,
+									`creditlimit`,
+									`invaddrbranch`,
+									`ediinvoices`,
+									`ediorders`,
+									`edireference`,
+									`editransport`,
+									`ediaddress`,
+									`ediserveruser`,
+									`ediserverpwd`,
+									`typeid`)
+					SELECT '" . $_POST['NewDebtorNo'] . "',
+									`name`,
+									`address1`,
+									`address2`,
+									`address3`,
+									`address4`,
+									`currcode`,
+									`salestype`,
+									`clientsince`,
+									`holdreason`,
+									`paymentterms`,
+									`discount`,
+									`discountcode`,
+									`pymtdiscount`,
+									`lastpaid`,
+									`lastpaiddate`,
+									`creditlimit`,
+									`invaddrbranch`,
+									`ediinvoices`,
+									`ediorders`,
+									`edireference`,
+									`editransport`,
+									`ediaddress`,
+									`ediserveruser`,
+									`ediserverpwd`,
+									`typeid`
+					FROM debtorsmaster
+					WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
 
 	$DbgMsg =_('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new debtors master record failed') . ', ' . _('the SQL statement was');
@@ -95,63 +94,63 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 	prnMsg(_('Inserting new customer branch records'),'info');
 	$sql = "INSERT INTO custbranch ( `branchcode`,
-																`debtorno`,
-																`brname`,
-																`braddress1`,
-																`braddress2`,
-																`braddress3`,
-																`braddress4`,
-																`braddress5`,
-																`braddress6`,
-																`estdeliverydays`,
-																`area`,
-																`salesman`,
-																`fwddate`,
-																`phoneno`,
-																`faxno`,
-																`contactname`,
-																`email`,
-																`defaultlocation`,
-																`taxgroupid`,
-																`disabletrans`,
-																`brpostaddr1`,
-																`brpostaddr2`,
-																`brpostaddr3`,
-																`brpostaddr4`,
-																`brpostaddr5`,
-																`brpostaddr6`,
-																`defaultshipvia`,
-																`custbranchcode`)
-														SELECT branchcode,
-															'" . $_POST['NewDebtorNo'] . "',
-																`brname`,
-																`braddress1`,
-																`braddress2`,
-																`braddress3`,
-																`braddress4`,
-																`braddress5`,
-																`braddress6`,
-																`estdeliverydays`,
-																`area`,
-																`salesman`,
-																`fwddate`,
-																`phoneno`,
-																`faxno`,
-																`contactname`,
-																`email`,
-																`defaultlocation`,
-																`taxgroupid`,
-																`disabletrans`,
-																`brpostaddr1`,
-																`brpostaddr2`,
-																`brpostaddr3`,
-																`brpostaddr4`,
-																`brpostaddr5`,
-																`brpostaddr6`,
-																`defaultshipvia`,
-																`custbranchcode`
-															FROM custbranch
-															WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
+									`debtorno`,
+									`brname`,
+									`braddress1`,
+									`braddress2`,
+									`braddress3`,
+									`braddress4`,
+									`braddress5`,
+									`braddress6`,
+									`estdeliverydays`,
+									`area`,
+									`salesman`,
+									`fwddate`,
+									`phoneno`,
+									`faxno`,
+									`contactname`,
+									`email`,
+									`defaultlocation`,
+									`taxgroupid`,
+									`disabletrans`,
+									`brpostaddr1`,
+									`brpostaddr2`,
+									`brpostaddr3`,
+									`brpostaddr4`,
+									`brpostaddr5`,
+									`brpostaddr6`,
+									`defaultshipvia`,
+									`custbranchcode`)
+							SELECT branchcode,
+								'" . $_POST['NewDebtorNo'] . "',
+									`brname`,
+									`braddress1`,
+									`braddress2`,
+									`braddress3`,
+									`braddress4`,
+									`braddress5`,
+									`braddress6`,
+									`estdeliverydays`,
+									`area`,
+									`salesman`,
+									`fwddate`,
+									`phoneno`,
+									`faxno`,
+									`contactname`,
+									`email`,
+									`defaultlocation`,
+									`taxgroupid`,
+									`disabletrans`,
+									`brpostaddr1`,
+									`brpostaddr2`,
+									`brpostaddr3`,
+									`brpostaddr4`,
+									`brpostaddr5`,
+									`brpostaddr6`,
+									`defaultshipvia`,
+									`custbranchcode`
+								FROM custbranch
+								WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
 
 	$ErrMsg = _('The SQL to insert new customer branch records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -224,21 +223,24 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 }
 
-echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "?=" . $SID . "' method=post>";
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p><table>
-	<tr><td>' . _('Existing Debtor Code') . ":</td>
-		<td><input type=Text name='OldDebtorNo' size=20 maxlength=20></td>
-	</tr>";
-echo '<tr><td> ' . _('New Debtor Code') . ":</td>
-	<td><input type=Text name='NewDebtorNo' size=20 maxlength=20></td>
+echo '<br />
+	<table>
+	<tr>
+		<td>' . _('Existing Debtor Code') . ':</td>
+		<td><input type="text" name="OldDebtorNo" size="20" maxlength="20" /></td>
 	</tr>
-	</table>";
-
-echo "<input type=submit name='ProcessCustomerChange' VALUE='" . _('Process') . "'>";
-
-echo '</form>';
+	<tr>
+		<td> ' . _('New Debtor Code') . ':</td>
+		<td><input type="text" name="NewDebtorNo" size="20" maxlength="20" /></td>
+	</tr>
+	</table>
+	
+	<input type="submit" name="ProcessCustomerChange" value="' . _('Process') . '" />
+	
+	</form>';
 
 include('includes/footer.inc');
 
