@@ -143,7 +143,7 @@ CREATE TABLE `banktrans` (
   KEY `ref` (`ref`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -606,7 +606,7 @@ CREATE TABLE `debtortrans` (
   CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -967,7 +967,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=355 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=361 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2800,7 +2800,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-01 22:29:20
+-- Dump completed on 2011-11-06 19:52:31
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -2898,6 +2898,8 @@ INSERT INTO `banktrans` VALUES (22,12,15,1060,'8839206 Meijboom\r\n2111439\r\n',
 INSERT INTO `banktrans` VALUES (23,22,10,1060,'9238272 PLEXX BV\r\nJULI\r\n',-340,1,0.44,'2011-07-25','Imported',-340,'EUR');
 INSERT INTO `banktrans` VALUES (24,22,11,1060,'DUBROW-',0,1,0.5,'2011-09-05','Cash',-100,'EUR');
 INSERT INTO `banktrans` VALUES (25,22,12,1060,'DUBROW-',0,1,0.5,'2011-09-05','Cash',-1000,'EUR');
+INSERT INTO `banktrans` VALUES (26,12,16,1030,'',0,1,1,'2011-11-02','Cash',15.21,'AUD');
+INSERT INTO `banktrans` VALUES (27,12,18,1030,'',0,1,1,'2011-11-03','Cash',2011.98,'AUD');
 
 --
 -- Dumping data for table `bom`
@@ -10465,7 +10467,7 @@ INSERT INTO `custnotes` VALUES (1,'ANGRY','http://www.logicworks.co.nz','Test no
 --
 
 INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger &amp; Son','P O Box 67','Gowerbridge','Upperton','Michigan','','','USD','DE','2005-04-30 00:00:00',1,'7',0,0,10,'2011-03-23 00:00:00',5000,0,'',0,0,'','email','','','','1344-654-112',0,1);
-INSERT INTO `debtorsmaster` VALUES ('CASH','Cash Sales - from POS','','','','','','','AUD','DE','2011-06-20 00:00:00',1,'CA',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
+INSERT INTO `debtorsmaster` VALUES ('CASH','Cash Sales - from POS','','','','','','','AUD','DE','2011-06-20 00:00:00',1,'CA',0,0,2011.98,'2011-11-03 00:00:00',1000,0,'',0,0,'','email','','','','',0,1);
 INSERT INTO `debtorsmaster` VALUES ('CHABAL','Beastly Ventures','','','','','','','EUR','DE','2011-09-03 00:00:00',1,'20',0,0,56.55,'2011-07-19 00:00:00',1000,0,'',0,0,'','email','','','','',0,1);
 INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
 INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','GBP','DE','2005-06-15 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
@@ -10507,6 +10509,8 @@ INSERT INTO `debtortrans` VALUES (30,12,12,'CHABAL','','2011-07-19 00:00:00','20
 INSERT INTO `debtortrans` VALUES (31,13,12,'CHABAL','','2011-07-19 00:00:00','2011-09-03 08:09:04',11,0,'9354603 Proserve\r\n10','',0,0.521,98.97,0,0,0,0,0,'9354603 Proserve\r\n1023659\r\n',0,0,'');
 INSERT INTO `debtortrans` VALUES (32,14,12,'CHABAL','','2011-07-19 00:00:00','2011-09-03 09:09:52',11,0,'9354603 Proserve\r\n10','',0,0.521,98.97,0,0,0,0,0,'9354603 Proserve\r\n1023659\r\n',0,0,'');
 INSERT INTO `debtortrans` VALUES (33,15,12,'CHABAL','','2011-07-19 00:00:00','2011-09-04 05:09:34',11,0,'8839206 Meijboom\r\n21','',0,0.44,-56.55,0,0,0,0,0,'8839206 Meijboom\r\n2111439\r\n',0,0,'');
+INSERT INTO `debtortrans` VALUES (34,16,12,'CASH','','2011-11-02 00:00:00','2011-11-02 21:27:07',0,0,'Cash ','',0,1,-15.21,0,0,-1.5,0,0,'test',0,0,'');
+INSERT INTO `debtortrans` VALUES (35,18,12,'CASH','','2011-11-03 00:00:00','2011-11-03 20:23:59',0,0,'Cash ','',0,1,-2011.98,0,0,-2.91,0,0,'',0,0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -11128,6 +11132,12 @@ INSERT INTO `gltrans` VALUES (351,22,11,0,'2011-09-05',13,2100,'DUBROW-',200,1,'
 INSERT INTO `gltrans` VALUES (352,22,11,0,'2011-09-05',13,1060,'DUBROW-',-200,1,'',0);
 INSERT INTO `gltrans` VALUES (353,22,12,0,'2011-09-05',13,2100,'DUBROW-',2000,1,'',0);
 INSERT INTO `gltrans` VALUES (354,22,12,0,'2011-09-05',13,1060,'DUBROW-',-2000,1,'',0);
+INSERT INTO `gltrans` VALUES (355,12,16,0,'2011-11-02',0,1030,'',15.21,0,'',0);
+INSERT INTO `gltrans` VALUES (356,12,16,0,'2011-11-02',0,1100,'',-16.71,0,'',0);
+INSERT INTO `gltrans` VALUES (357,12,16,0,'2011-11-02',0,4900,'',1.5,0,'',0);
+INSERT INTO `gltrans` VALUES (358,12,18,0,'2011-11-03',0,1030,'',2011.98,0,'',0);
+INSERT INTO `gltrans` VALUES (359,12,18,0,'2011-11-03',0,1100,'',-2014.89,0,'',0);
+INSERT INTO `gltrans` VALUES (360,12,18,0,'2011-11-03',0,4900,'',2.91,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -13671,7 +13681,7 @@ INSERT INTO `systypes` VALUES (2,'Receipt - GL',2);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',19);
 INSERT INTO `systypes` VALUES (11,'Credit Note',7);
-INSERT INTO `systypes` VALUES (12,'Receipt',15);
+INSERT INTO `systypes` VALUES (12,'Receipt',18);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',28);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',22);
@@ -13848,7 +13858,7 @@ INSERT INTO `workorders` VALUES (18,'MEL','2011-09-04','2011-09-04',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-11-01 22:23:59','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,'2011-11-03 21:53:27','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'gel','en_GB.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -13856,5 +13866,5 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-01 22:29:20
+-- Dump completed on 2011-11-06 19:52:31
 SET FOREIGN_KEY_CHECKS = 1;

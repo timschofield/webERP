@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Victor's-webERP romanian translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-01 22:26+1300\n"
+"POT-Creation-Date: 2011-11-06 19:49+1300\n"
 "PO-Revision-Date: 2011-01-30 23:04+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: Victor <info@onofrei.net>\n"
@@ -143,7 +143,7 @@ msgstr ""
 #: CustomerBranches.php:286 CustomerBranches.php:296 CustomerBranches.php:306
 #: CustomerBranches.php:316 CustomerTypes.php:147 CustomerTypes.php:157
 #: Customers.php:289 Customers.php:298 Customers.php:306 Customers.php:314
-#: Factors.php:134 FixedAssetCategories.php:129 GLAccounts.php:80
+#: Factors.php:134 FixedAssetCategories.php:133 GLAccounts.php:80
 #: GLAccounts.php:96 Locations.php:237 Locations.php:245 Locations.php:256
 #: Locations.php:265 Locations.php:274 Locations.php:283 Locations.php:292
 #: Locations.php:301 MRPDemandTypes.php:87 PaymentMethods.php:138
@@ -212,7 +212,7 @@ msgstr "Nu am putut obţine grupuri considerare deoarece"
 #: CustEDISetup.php:17 DailyBankTransactions.php:11 DebtorsAtPeriodEnd.php:125
 #: DiscountCategories.php:10 DiscountCategories.php:131 DiscountMatrix.php:16
 #: EDIMessageFormat.php:104 FixedAssetLocations.php:9
-#: FixedAssetRegister.php:13 FixedAssetRegister.php:237
+#: FixedAssetRegister.php:13 FixedAssetRegister.php:243
 #: FixedAssetTransfer.php:31 FormDesigner.php:129 GLBalanceSheet.php:362
 #: GLBudgets.php:29 GLJournal.php:246 InventoryPlanning.php:374
 #: InventoryPlanningPrefSupplier.php:467 Labels.php:115 Labels.php:270
@@ -239,7 +239,7 @@ msgstr "Nu am putut obţine grupuri considerare deoarece"
 #: WWW_Users.php:31 WhereUsedInquiry.php:18 WorkCentres.php:111
 #: WorkCentres.php:162 WorkOrderCosting.php:13 WorkOrderEntry.php:11
 #: WorkOrderIssue.php:22 WorkOrderReceive.php:15 WorkOrderStatus.php:42
-#: Z_BottomUpCosts.php:51
+#: Z_BottomUpCosts.php:56
 msgid "Search"
 msgstr "Cautare"
 
@@ -247,7 +247,7 @@ msgstr "Cautare"
 msgid "Group Name"
 msgstr "Nume grup"
 
-#: AccountGroups.php:228 EDIMessageFormat.php:129 EDIMessageFormat.php:207
+#: AccountGroups.php:228 EDIMessageFormat.php:129 EDIMessageFormat.php:208
 msgid "Section"
 msgstr "Sectiune"
 
@@ -294,8 +294,8 @@ msgstr "Grupul de mamă"
 #: SystemParameters.php:654 SystemParameters.php:781 SystemParameters.php:916
 #: SystemParameters.php:918 SystemParameters.php:928 SystemParameters.php:930
 #: SystemParameters.php:984 SystemParameters.php:996 SystemParameters.php:998
-#: TaxGroups.php:307 TaxGroups.php:310 TaxGroups.php:366 WWW_Users.php:629
-#: WWW_Users.php:631
+#: TaxGroups.php:307 TaxGroups.php:310 TaxGroups.php:366 WWW_Users.php:632
+#: WWW_Users.php:634
 msgid "Yes"
 msgstr "Da"
 
@@ -329,8 +329,8 @@ msgstr "Da"
 #: SystemParameters.php:655 SystemParameters.php:782 SystemParameters.php:915
 #: SystemParameters.php:919 SystemParameters.php:927 SystemParameters.php:931
 #: SystemParameters.php:985 SystemParameters.php:995 SystemParameters.php:999
-#: TaxGroups.php:308 TaxGroups.php:311 TaxGroups.php:368 WWW_Users.php:628
-#: WWW_Users.php:632 includes/PDFLowGPPageHeader.inc:44
+#: TaxGroups.php:308 TaxGroups.php:311 TaxGroups.php:368 WWW_Users.php:631
+#: WWW_Users.php:635 includes/PDFLowGPPageHeader.inc:44
 #: includes/PDFTaxPageHeader.inc:35
 msgid "No"
 msgstr "Nu"
@@ -340,8 +340,8 @@ msgstr "Nu"
 #: BOMs.php:149 BankAccounts.php:223 COGSGLPostings.php:108
 #: COGSGLPostings.php:206 CreditStatus.php:174 Currencies.php:272
 #: CustomerBranches.php:414 CustomerTypes.php:202 Customers.php:1011
-#: Customers.php:1045 EDIMessageFormat.php:150 Factors.php:300
-#: FixedAssetCategories.php:182 FixedAssetLocations.php:102
+#: Customers.php:1045 EDIMessageFormat.php:150 Factors.php:329
+#: FixedAssetCategories.php:186 FixedAssetLocations.php:107
 #: FreightCosts.php:240 GLAccounts.php:312 GLTags.php:91 GeocodeSetup.php:173
 #: Labels.php:411 Locations.php:382 MRPDemandTypes.php:120 MRPDemands.php:306
 #: PO_AuthorisationLevels.php:151 PaymentMethods.php:200 PaymentTerms.php:205
@@ -355,7 +355,7 @@ msgstr "Nu"
 #: SuppTransGLAnalysis.php:120 SupplierContacts.php:163 SupplierTypes.php:189
 #: TaxAuthorities.php:174 TaxCategories.php:182 TaxGroups.php:188
 #: TaxProvinces.php:180 UnitsOfMeasure.php:185 WWW_Access.php:123
-#: WWW_Users.php:315 WorkCentres.php:141 includes/InputSerialItems.php:88
+#: WWW_Users.php:318 WorkCentres.php:141 includes/InputSerialItems.php:88
 #: includes/OutputSerialItems.php:20
 #, php-format
 msgid "Edit"
@@ -371,9 +371,9 @@ msgstr "Sunteţi sigur că doriţi să ştergeţi această ramură?"
 #: BOMs.php:151 BankAccounts.php:224 COGSGLPostings.php:109
 #: COGSGLPostings.php:207 ContractBOM.php:266 ContractOtherReqts.php:119
 #: CounterSales.php:812 CreditStatus.php:175 Credit_Invoice.php:381
-#: Currencies.php:275 CustomerReceipt.php:865 CustomerTypes.php:203
-#: Customers.php:1046 DiscountCategories.php:219 DiscountMatrix.php:175
-#: EDIMessageFormat.php:151 FixedAssetCategories.php:183 FreightCosts.php:241
+#: Currencies.php:275 CustomerReceipt.php:913 CustomerTypes.php:203
+#: Customers.php:1046 DiscountCategories.php:219 DiscountMatrix.php:182
+#: EDIMessageFormat.php:151 FixedAssetCategories.php:187 FreightCosts.php:241
 #: GLAccounts.php:313 GLJournal.php:427 GLTags.php:92 GeocodeSetup.php:174
 #: Labels.php:411 Locations.php:383 MRPDemandTypes.php:121 MRPDemands.php:307
 #: PO_AuthorisationLevels.php:153 PO_Items.php:711 PaymentMethods.php:201
@@ -392,7 +392,7 @@ msgstr "Sunteţi sigur că doriţi să ştergeţi această ramură?"
 #: SuppTransGLAnalysis.php:121 SupplierContacts.php:164 SupplierTypes.php:191
 #: TaxAuthorities.php:175 TaxCategories.php:183 TaxGroups.php:189
 #: TaxProvinces.php:181 UnitsOfMeasure.php:186 WOSerialNos.php:319
-#: WWW_Access.php:124 WWW_Users.php:316 WorkCentres.php:142
+#: WWW_Access.php:124 WWW_Users.php:319 WorkCentres.php:142
 #: includes/InputSerialItemsKeyed.php:59 includes/OutputSerialItems.php:99
 #, php-format
 msgid "Delete"
@@ -438,18 +438,18 @@ msgstr "În secţiunea Conturi"
 #: AccountGroups.php:397 AccountSections.php:264 AddCustomerContacts.php:258
 #: AddCustomerNotes.php:245 AddCustomerTypeNotes.php:210 Areas.php:227
 #: BOMs.php:759 BankAccounts.php:391 COGSGLPostings.php:354
-#: CreditStatus.php:257 Currencies.php:401 CustLoginSetup.php:261
-#: DiscountMatrix.php:136 EDIMessageFormat.php:247
-#: FixedAssetCategories.php:322 FixedAssetLocations.php:148
+#: CreditStatus.php:257 Currencies.php:401 CustLoginSetup.php:272
+#: DiscountMatrix.php:141 EDIMessageFormat.php:248
+#: FixedAssetCategories.php:344 FixedAssetLocations.php:156
 #: FreightCosts.php:339 GLAccounts.php:262 GeocodeSetup.php:270
 #: Locations.php:597 MRPDemandTypes.php:187 MRPDemands.php:419
 #: OffersReceived.php:56 OffersReceived.php:143 PO_AuthorisationLevels.php:248
 #: PaymentMethods.php:282 PaymentTerms.php:309 Prices_Customer.php:354
 #: SalesAnalReptCols.php:552 SalesAnalRepts.php:514 SalesGLPostings.php:416
 #: SalesPeople.php:368 Shippers.php:200 StockCategories.php:581
-#: SuppLoginSetup.php:285 SupplierContacts.php:281 TaxAuthorities.php:327
+#: SuppLoginSetup.php:293 SupplierContacts.php:281 TaxAuthorities.php:327
 #: TaxCategories.php:237 TaxProvinces.php:235 UnitsOfMeasure.php:240
-#: WWW_Users.php:671 WorkCentres.php:279
+#: WWW_Users.php:674 WorkCentres.php:279
 msgid "Enter Information"
 msgstr "Introduceţi Informaţii"
 
@@ -521,7 +521,7 @@ msgstr "Nu am putut prelua secţiunea solicitate vă rugăm să încercaţi din 
 msgid "Customer Contacts"
 msgstr "Client Contacte"
 
-#: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:11
+#: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:21
 #: Z_CheckDebtorsControl.php:20
 msgid "Back to Customers"
 msgstr "Înapoi la Clienţii"
@@ -561,7 +561,7 @@ msgstr ""
 
 #: AddCustomerContacts.php:61 AddCustomerNotes.php:52
 #: AddCustomerTypeNotes.php:49 Areas.php:73 CustomerTypes.php:69
-#: DeliveryDetails.php:774 Factors.php:105 FixedAssetItems.php:243
+#: DeliveryDetails.php:774 Factors.php:105 FixedAssetItems.php:246
 #: MRPCalendar.php:176 PO_Items.php:374 PcAssignCashToTab.php:88
 #: PcClaimExpensesFromTab.php:79 PcExpenses.php:95 PcTabs.php:102
 #: PcTypeTabs.php:60 SalesAnalReptCols.php:129 SalesPeople.php:97
@@ -599,13 +599,13 @@ msgstr "Telefon nu"
 #: AddCustomerContacts.php:131 AddCustomerContacts.php:240
 #: CustomerBranches.php:374 CustomerBranches.php:774 CustomerInquiry.php:253
 #: Customers.php:1001 Customers.php:1009 EmailCustTrans.php:15
-#: EmailCustTrans.php:63 Factors.php:225 Factors.php:263 Locations.php:563
+#: EmailCustTrans.php:63 Factors.php:245 Factors.php:292 Locations.php:563
 #: OrderDetails.php:109 PDFRemittanceAdvice.php:243 PO_PDFPurchOrder.php:369
 #: PO_PDFPurchOrder.php:372 PrintCustTrans.php:714 PrintCustTrans.php:945
 #: PrintCustTrans.php:994 PrintCustTransPortrait.php:753
 #: PrintCustTransPortrait.php:999 PrintCustTransPortrait.php:1056
 #: SelectCustomer.php:610 SupplierContacts.php:154 SupplierContacts.php:274
-#: UserSettings.php:183 WWW_Users.php:271 includes/PDFPickingListHeader.inc:25
+#: UserSettings.php:183 WWW_Users.php:274 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:29
@@ -633,7 +633,7 @@ msgstr "Review toate persoanele de contact pentru acest client"
 msgid "Contact Code"
 msgstr "A lua legatura cu Codul"
 
-#: AddCustomerContacts.php:214 Factors.php:219 SupplierContacts.php:236
+#: AddCustomerContacts.php:214 Factors.php:233 SupplierContacts.php:236
 msgid "Contact Name"
 msgstr "Nume de Contact"
 
@@ -703,9 +703,9 @@ msgid "Date"
 msgstr "Data"
 
 #: AddCustomerNotes.php:122 AddCustomerTypeNotes.php:109 PcReportTab.php:173
-#: Stocks.php:1017 UpgradeDatabase.php:171 UpgradeDatabase.php:174
-#: UpgradeDatabase.php:177 UpgradeDatabase.php:180 UpgradeDatabase.php:183
-#: UpgradeDatabase.php:186 UpgradeDatabase.php:189 UpgradeDatabase.php:192
+#: Stocks.php:1017 UpgradeDatabase.php:172 UpgradeDatabase.php:175
+#: UpgradeDatabase.php:178 UpgradeDatabase.php:181 UpgradeDatabase.php:184
+#: UpgradeDatabase.php:187 UpgradeDatabase.php:190 UpgradeDatabase.php:193
 #: Z_Upgrade_3.10-3.11.php:62 Z_Upgrade_3.10-3.11.php:66
 #: Z_Upgrade_3.10-3.11.php:70 Z_Upgrade_3.10-3.11.php:74
 #: Z_Upgrade_3.10-3.11.php:78 Z_Upgrade_3.11-4.00.php:62
@@ -892,7 +892,7 @@ msgstr "nu a putut fi recuperate, deoarece"
 #: ConfirmDispatch_Invoice.php:152 ConfirmDispatch_Invoice.php:960
 #: ConfirmDispatch_Invoice.php:974 Contracts.php:580 CounterSales.php:1353
 #: CounterSales.php:1367 Credit_Invoice.php:697 Credit_Invoice.php:718
-#: CustomerReceipt.php:523 CustomerReceipt.php:657 CustomerReceipt.php:685
+#: CustomerReceipt.php:537 CustomerReceipt.php:676 CustomerReceipt.php:704
 #: CustomerTransInquiry.php:91 DeliveryDetails.php:396 GLProfit_Loss.php:596
 #: GLTagProfit_Loss.php:511 PDFRemittanceAdvice.php:85 Payments.php:325
 #: PurchData.php:86 PurchData.php:104 PurchData.php:245
@@ -906,7 +906,7 @@ msgstr "nu a putut fi recuperate, deoarece"
 #: SupplierInquiry.php:78 SupplierInquiry.php:100 SupplierInquiry.php:136
 #: SupplierInquiry.php:190 SupplierTransInquiry.php:95 WOSerialNos.php:47
 #: WorkOrderCosting.php:418 WorkOrderReceive.php:273
-#: Z_ChangeBranchCode.php:105 Z_ChangeCustomerCode.php:92
+#: Z_ChangeBranchCode.php:105 Z_ChangeCustomerCode.php:91
 #: Z_DeleteCreditNote.php:58 Z_DeleteInvoice.php:87
 #: includes/PDFPaymentRun_PymtFooter.php:59
 #: includes/PDFPaymentRun_PymtFooter.php:89
@@ -927,11 +927,11 @@ msgstr "Nu exista clienti care îndeplinesc criteriile specificate la lista"
 msgid "Aged Debtor Analysis"
 msgstr "Aged Debitor Analiza"
 
-#: AgedDebtors.php:461 DebtorsAtPeriodEnd.php:136
+#: AgedDebtors.php:461 DebtorsAtPeriodEnd.php:137
 msgid "From Customer Code"
 msgstr "Din codul de abonat"
 
-#: AgedDebtors.php:465 DebtorsAtPeriodEnd.php:139
+#: AgedDebtors.php:465 DebtorsAtPeriodEnd.php:141
 msgid "To Customer Code"
 msgstr "Pentru codul de abonat"
 
@@ -978,7 +978,7 @@ msgstr "Raportul detaliat"
 
 #: AgedDebtors.php:517 AgedSuppliers.php:328 BOMExtendedQty.php:295
 #: BOMIndented.php:276 BOMIndentedReverse.php:255 BOMListing.php:129
-#: DebtorsAtPeriodEnd.php:157 InventoryPlanning.php:445
+#: DebtorsAtPeriodEnd.php:163 InventoryPlanning.php:445
 #: InventoryPlanningPrefSupplier.php:516 InventoryQuantities.php:209
 #: InventoryValuation.php:268 MRPPlannedPurchaseOrders.php:280
 #: MRPPlannedWorkOrders.php:337 MRPReschedules.php:152 MRPShortages.php:302
@@ -1111,7 +1111,7 @@ msgid "Area Code"
 msgstr "Zona de Codul"
 
 #: Areas.php:132 CustomerTypes.php:164 Factors.php:140
-#: FixedAssetCategories.php:134 GLAccounts.php:197 Locations.php:328
+#: FixedAssetCategories.php:138 GLAccounts.php:197 Locations.php:328
 #: MRPDemands.php:248 PcAssignCashToTab.php:135 PcClaimExpensesFromTab.php:126
 #: PcExpenses.php:166 PcExpensesTypeTab.php:101 PcTabs.php:166
 #: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:135
@@ -1163,7 +1163,7 @@ msgstr "ID Utilizator"
 
 #: AuditTrail.php:49 AuditTrail.php:62 ContractBOM.php:298
 #: CounterSales.php:2141 CounterSales.php:2144 CustomerTransInquiry.php:31
-#: DailySalesInquiry.php:46 DailySalesInquiry.php:48 FixedAssetRegister.php:56
+#: DailySalesInquiry.php:47 DailySalesInquiry.php:49 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:167
 #: InventoryQuantities.php:193 InventoryQuantities.php:195 MRP.php:585
 #: MRPReport.php:523 MRPReport.php:525 MRPReschedules.php:144
@@ -1217,8 +1217,8 @@ msgstr "Utilizator"
 #: StockCategories.php:217 StockLocMovements.php:88 StockMovements.php:92
 #: SupplierAllocations.php:453 SupplierInquiry.php:207
 #: SupplierTransInquiry.php:19 SupplierTransInquiry.php:100
-#: Z_CheckAllocationsFrom.php:26 Z_CheckAllocationsFrom.php:49
-#: Z_CheckAllocs.php:57 Z_CheckGLTransBalance.php:11
+#: Z_CheckAllocationsFrom.php:32 Z_CheckAllocationsFrom.php:57
+#: Z_CheckAllocs.php:62 Z_CheckGLTransBalance.php:11
 #: includes/InputSerialItemsFile.php:86 includes/InputSerialItemsFile.php:126
 #: includes/PDFTaxPageHeader.inc:34
 msgid "Type"
@@ -1393,7 +1393,7 @@ msgid "Printed"
 msgstr "Imprimate"
 
 #: BOMExtendedQty.php:321 BOMIndented.php:303 BOMIndentedReverse.php:283
-#: FixedAssetRegister.php:334 GLAccountReport.php:322
+#: FixedAssetRegister.php:351 GLAccountReport.php:322
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:233
 #: MRPPlannedPurchaseOrders.php:304 MRPPlannedWorkOrders.php:361
 #: MRPReport.php:814 MRPReschedules.php:178 MRPShortages.php:332
@@ -1529,9 +1529,9 @@ msgstr "Un nivel"
 #: BOMInquiry.php:199 BOMs.php:529 BOMs.php:855 ContractBOM.php:236
 #: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2015
 #: CounterSales.php:2196 CreditStatus.php:152 CreditStatus.php:241
-#: EmailConfirmation.php:192 FixedAssetCategories.php:159
-#: FixedAssetDepreciation.php:84 FixedAssetRegister.php:81
-#: FixedAssetRegister.php:355 FixedAssetTransfer.php:50
+#: EmailConfirmation.php:192 FixedAssetCategories.php:163
+#: FixedAssetDepreciation.php:86 FixedAssetRegister.php:83
+#: FixedAssetRegister.php:372 FixedAssetTransfer.php:50
 #: FixedAssetTransfer.php:110 GLTags.php:59 GLTags.php:77
 #: GLTransInquiry.php:47 GoodsReceived.php:99 InventoryQuantities.php:244
 #: Labels.php:410 MRPDemandTypes.php:113 MRPDemands.php:91 MRPDemands.php:292
@@ -1645,7 +1645,7 @@ msgstr "descriere"
 
 #: BOMInquiry.php:30 BOMs.php:839 ContractBOM.php:324 ContractBOM.php:329
 #: Contracts.php:756 Contracts.php:759 CounterSales.php:2166
-#: CustomerReceipt.php:1026 CustomerReceipt.php:1029
+#: CustomerReceipt.php:1101 CustomerReceipt.php:1104
 #: DiscountCategories.php:104 DiscountCategories.php:106
 #: DiscountCategories.php:110 DiscountCategories.php:112
 #: FixedAssetTransfer.php:61 MRPDemands.php:333 MRPDemands.php:336
@@ -1679,12 +1679,12 @@ msgstr "Introduceţi extract de"
 #: StockStatus.php:59 StockTransfers.php:47 StockTransfers.php:458
 #: StockUsage.php:64 SupplierTenders.php:359 WorkOrderEntry.php:606
 #: WorkOrderIssue.php:667 Z_ChangeStockCategory.php:90
-#: Z_ChangeStockCode.php:303
+#: Z_ChangeStockCode.php:313
 msgid "Stock Code"
 msgstr "Cod Inventar"
 
 #: BOMInquiry.php:37 BOMs.php:844 ContractBOM.php:334 Contracts.php:764
-#: CounterSales.php:2170 CustomerReceipt.php:1034 FixedAssetTransfer.php:72
+#: CounterSales.php:2170 CustomerReceipt.php:1111 FixedAssetTransfer.php:72
 #: MRPDemands.php:338 MRPReport.php:554 PO_Header.php:541 PO_Items.php:1060
 #: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:978
 #: SelectCustomer.php:369 SelectGLAccount.php:96 SelectOrderItems.php:593
@@ -1722,7 +1722,7 @@ msgstr "SQL pentru a găsi piesele selectate nu a reuşit, cu mesajul"
 
 #: BOMInquiry.php:112 BOMs.php:528 BOMs.php:854 ContractBOM.php:345
 #: CounterSales.php:2014 CounterSales.php:2195 CustomerBranches.php:367
-#: CustomerReceipt.php:1040 GLCodesInquiry.php:26 MRPDemands.php:90
+#: CustomerReceipt.php:1122 GLCodesInquiry.php:26 MRPDemands.php:90
 #: MRPPlannedWorkOrders.php:256 MRPReport.php:746 PDFOrderStatus.php:318
 #: PDFOrdersInvoiced.php:347 PDFPrintLabel.php:247 PO_Header.php:551
 #: PO_Items.php:1072 PO_SelectOSPurchOrder.php:230 PO_SelectPurchOrder.php:211
@@ -2040,7 +2040,7 @@ msgstr "SQL utilizat pentru a prelua descrierea pe de o parte mamă a fost"
 msgid "Assembly"
 msgstr "Asamblat"
 
-#: BOMs.php:408 FixedAssetRegister.php:357 Stocks.php:958 Stocks.php:960
+#: BOMs.php:408 FixedAssetRegister.php:374 Stocks.php:958 Stocks.php:960
 msgid "Purchased"
 msgstr "Cumparate"
 
@@ -2076,7 +2076,7 @@ msgstr "Kit seturi"
 msgid "Level"
 msgstr "Nivel"
 
-#: BOMs.php:530 BOMs.php:660 Contracts.php:868 FixedAssetRegister.php:83
+#: BOMs.php:530 BOMs.php:660 Contracts.php:868 FixedAssetRegister.php:85
 #: InventoryQuantities.php:245 Locations.php:328 MRP.php:551 MRP.php:583
 #: PDFOrderStatus.php:278 PDFOrdersInvoiced.php:309 ReorderLevel.php:258
 #: ReorderLevel.php:267 ReorderLevelLocation.php:169 StockCounts.php:133
@@ -2342,7 +2342,7 @@ msgstr "Bank Account Number"
 msgid "Bank Address"
 msgstr "Adresa Bancii"
 
-#: BankAccounts.php:196 CustomerAllocations.php:333 CustomerReceipt.php:755
+#: BankAccounts.php:196 CustomerAllocations.php:333 CustomerReceipt.php:783
 #: CustomerTransInquiry.php:108 OffersReceived.php:109 PDFPrintLabel.php:97
 #: PO_AuthorisationLevels.php:126 PO_AuthorisationLevels.php:209
 #: PO_AuthorisationLevels.php:214 PO_AuthoriseMyOrders.php:115
@@ -2450,7 +2450,7 @@ msgstr ""
 "dvs. Bank Declaraţie. Verifica extrasul de cont bancar şi faceţi clic pe "
 "check-box atunci când veţi găsi tranzacţiei de potrivire."
 
-#: BankMatching.php:92 BankReconciliation.php:104 CustomerReceipt.php:728
+#: BankMatching.php:92 BankReconciliation.php:104 CustomerReceipt.php:749
 #: DailyBankTransactions.php:32 PDFChequeListing.php:44 Payments.php:741
 #: TaxAuthorities.php:151 TaxAuthorities.php:316
 msgid "Bank Account"
@@ -2582,7 +2582,7 @@ msgid "Ref"
 msgstr "Ref"
 
 #: BankMatching.php:264 ConfirmDispatch_Invoice.php:276 Credit_Invoice.php:279
-#: CustWhereAlloc.php:109 CustomerAllocations.php:364 CustomerReceipt.php:844
+#: CustWhereAlloc.php:109 CustomerAllocations.php:364 CustomerReceipt.php:892
 #: CustomerTransInquiry.php:107 PaymentAllocations.php:67 Payments.php:1014
 #: Payments.php:1018 Payments.php:1034 PcAssignCashToTab.php:222
 #: PcAssignCashToTab.php:345 PcAuthorizeExpenses.php:90
@@ -2595,7 +2595,7 @@ msgstr "Ref"
 #: SupplierAllocations.php:457 SupplierCredit.php:352 SupplierCredit.php:385
 #: SupplierCredit.php:421 SupplierCredit.php:460 SupplierInvoice.php:330
 #: SupplierInvoice.php:371 SupplierInvoice.php:411 SupplierInvoice.php:455
-#: SupplierTransInquiry.php:108 Z_CheckAllocs.php:61
+#: SupplierTransInquiry.php:108 Z_CheckAllocs.php:66
 #: includes/PDFBankingSummaryPageHeader.inc:55
 #: includes/PDFChequeListingPageHeader.inc:37
 msgid "Amount"
@@ -2665,25 +2665,25 @@ msgstr "a fost postat"
 msgid "The bank accounts could not be retrieved by the SQL because"
 msgstr "Conturile bancare nu a putut fi recuperate de către SQL, deoarece"
 
-#: BankReconciliation.php:101 CustomerReceipt.php:719
+#: BankReconciliation.php:101 CustomerReceipt.php:737
 #: DailyBankTransactions.php:28 Payments.php:737 SuppPaymentRun.php:317
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "SQL utilizat pentru a prelua conturile bancare a fost"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 msgid "Bank Accounts have not yet been defined"
 msgstr "Conturi bancare nu au fost încă definite"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 msgid "You must first"
 msgstr "Tu trebuie mai întâi să"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 #: DailyBankTransactions.php:38 Payments.php:749 SuppPaymentRun.php:330
 msgid "define the bank accounts"
 msgstr "definirea conturilor bancare"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 #: DailyBankTransactions.php:38 Payments.php:749 SuppPaymentRun.php:330
 msgid "and general ledger accounts to be affected"
 msgstr "şi conturile registrul general de a fi afectate"
@@ -2726,7 +2726,7 @@ msgstr "Adauga unpresented înapoi controale"
 #: PrintCustTransPortrait.php:1038 StockMovements.php:93
 #: SupplierAllocations.php:454 SupplierAllocations.php:567
 #: SupplierAllocations.php:642 SupplierTransInquiry.php:101
-#: Z_CheckAllocs.php:58 Z_CheckGLTransBalance.php:12
+#: Z_CheckAllocs.php:63 Z_CheckGLTransBalance.php:12
 #: includes/PDFQuotationPageHeader.inc:88
 #: includes/PDFQuotationPortraitPageHeader.inc:86
 #: includes/PDFStatementPageHeader.inc:168
@@ -2741,7 +2741,7 @@ msgstr "Numar"
 #: GLAccountReport.php:337 PDFRemittanceAdvice.php:301
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 ShiptsList.php:37
 #: StockCounts.php:99 StockCounts.php:135 StockLocMovements.php:93
-#: StockMovements.php:98 Z_CheckAllocs.php:59
+#: StockMovements.php:98 Z_CheckAllocs.php:64
 #: includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -2868,7 +2868,7 @@ msgstr "Categorie Inventar"
 
 #: COGSGLPostings.php:90 COGSGLPostings.php:189 COGSGLPostings.php:305
 #: Customers.php:747 Customers.php:750 DiscountMatrix.php:96
-#: DiscountMatrix.php:153 Prices.php:223 PricesByCost.php:262
+#: DiscountMatrix.php:160 Prices.php:223 PricesByCost.php:262
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:224 SalesGLPostings.php:354 SelectOrderItems.php:710
 #: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
@@ -2884,7 +2884,7 @@ msgstr "CBV Cont"
 msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi acest preţ?"
 
-#: COGSGLPostings.php:190 CustomerReceipt.php:956 GLJournal.php:385
+#: COGSGLPostings.php:190 CustomerReceipt.php:1017 GLJournal.php:385
 #: GLTransInquiry.php:44 Payments.php:1035 SupplierTransInquiry.php:170
 #: TaxAuthorities.php:148 TaxAuthorities.php:149 index.php:1288
 msgid "GL Account"
@@ -3005,29 +3005,29 @@ msgstr "Numărul oficial al companiei"
 msgid "Tax Authority Reference"
 msgstr "Autoritatea fiscală de referinţă"
 
-#: CompanyPreferences.php:238 Factors.php:207
+#: CompanyPreferences.php:238 Factors.php:210
 msgid "Address Line 1"
 msgstr "Adresa Linia 1"
 
-#: CompanyPreferences.php:243 Factors.php:209
+#: CompanyPreferences.php:243 Factors.php:213
 msgid "Address Line 2"
 msgstr "Adresa Linia 2"
 
-#: CompanyPreferences.php:248 Factors.php:211
+#: CompanyPreferences.php:248 Factors.php:217
 msgid "Address Line 3"
 msgstr "Adresa Rândul 3"
 
-#: CompanyPreferences.php:253 Factors.php:213
+#: CompanyPreferences.php:253 Factors.php:221
 msgid "Address Line 4"
 msgstr "Adresa linia 4"
 
 #: CompanyPreferences.php:258 Customers.php:459 Customers.php:704
-#: Customers.php:734 Factors.php:215
+#: Customers.php:734 Factors.php:225
 msgid "Address Line 5"
 msgstr "Adresa Linia 5"
 
 #: CompanyPreferences.php:263 Customers.php:461 Customers.php:708
-#: Customers.php:738 Factors.php:217
+#: Customers.php:738 Factors.php:229
 msgid "Address Line 6"
 msgstr "Adresa Line 6"
 
@@ -3039,9 +3039,9 @@ msgstr "Numărul de telefon"
 msgid "Facsimile Number"
 msgstr "Numărul facsimil"
 
-#: CompanyPreferences.php:278 CustLoginSetup.php:150 Customers.php:449
-#: SuppLoginSetup.php:138 Suppliers.php:679 Suppliers.php:856
-#: WWW_Users.php:445
+#: CompanyPreferences.php:278 CustLoginSetup.php:161 Customers.php:449
+#: SuppLoginSetup.php:147 Suppliers.php:679 Suppliers.php:856
+#: WWW_Users.php:448
 msgid "Email Address"
 msgstr "Adresa de email"
 
@@ -3099,7 +3099,7 @@ msgstr "Crea intrări GL pentru tranzacţiile stoc"
 
 #: CompanyPreferences.php:519 ConfirmDispatch_Invoice.php:617
 #: ConfirmDispatch_Invoice.php:1645 Credit_Invoice.php:1509
-#: FixedAssetItems.php:120 FixedAssetItems.php:573 GLBudgets.php:234
+#: FixedAssetItems.php:123 FixedAssetItems.php:625 GLBudgets.php:234
 #: GLTags.php:64 GoodsReceived.php:248 GoodsReceived.php:254
 #: GoodsReceived.php:261 GoodsReceived.php:738 Labels.php:259
 #: MRPCalendar.php:314 PO_AuthoriseMyOrders.php:138 Payments.php:886
@@ -3232,10 +3232,10 @@ msgstr "Confirmaţi Factura"
 msgid "Confirm Dispatch and Invoice"
 msgstr "Confirmaţi expediţiei şi a facturii"
 
-#: ConfirmDispatch_Invoice.php:248 Contracts.php:772 CustLoginSetup.php:21
-#: CustLoginSetup.php:22 CustomerAllocations.php:327 CustomerBranches.php:363
+#: ConfirmDispatch_Invoice.php:248 Contracts.php:772 CustLoginSetup.php:31
+#: CustLoginSetup.php:32 CustomerAllocations.php:327 CustomerBranches.php:363
 #: CustomerBranches.php:532 CustomerBranches.php:579 CustomerInquiry.php:126
-#: CustomerReceipt.php:846 CustomerReceipt.php:897 CustomerReceipt.php:1022
+#: CustomerReceipt.php:894 CustomerReceipt.php:948 CustomerReceipt.php:1096
 #: CustomerTransInquiry.php:101 Customers.php:14 Customers.php:325
 #: DeliveryDetails.php:804 FTP_RadioBeacon.php:51 PDFOrderStatus.php:275
 #: PDFOrdersInvoiced.php:305 PricesByCost.php:153 SalesGraph.php:180
@@ -3257,14 +3257,14 @@ msgstr "Client"
 #: ConfirmDispatch_Invoice.php:248 CustEDISetup.php:93 Customers.php:440
 #: Customers.php:643 Customers.php:678 DeliveryDetails.php:804
 #: OrderDetails.php:67 SalesAnalRepts.php:27 SalesAnalRepts.php:29
-#: WWW_Users.php:272 WWW_Users.php:491 Z_ChangeBranchCode.php:199
+#: WWW_Users.php:275 WWW_Users.php:494 Z_ChangeBranchCode.php:201
 #: includes/PDFStatementPageHeader.inc:112 includes/PDFTransPageHeader.inc:46
 #: includes/PDFTransPageHeaderPortrait.inc:55
 msgid "Customer Code"
 msgstr "Cod Client"
 
-#: ConfirmDispatch_Invoice.php:249 CustEDISetup.php:96 CustomerReceipt.php:235
-#: CustomerReceipt.php:1041 Customers.php:443 Customers.php:684
+#: ConfirmDispatch_Invoice.php:249 CustEDISetup.php:96 CustomerReceipt.php:248
+#: CustomerReceipt.php:1123 Customers.php:443 Customers.php:684
 #: Customers.php:714 DeliveryDetails.php:805 OrderDetails.php:69
 #: POReport.php:494 POReport.php:1268 SalesInquiry.php:754
 #: SalesInquiry.php:764 SalesInquiry.php:788 SalesInquiry.php:932
@@ -3366,7 +3366,7 @@ msgid "Price"
 msgstr "Pret"
 
 #: ConfirmDispatch_Invoice.php:272 CounterSales.php:736 Credit_Invoice.php:275
-#: CustomerReceipt.php:845 DeliveryDetails.php:828 OrderDetails.php:167
+#: CustomerReceipt.php:893 DeliveryDetails.php:828 OrderDetails.php:167
 #: PrintCustTrans.php:865 PrintCustTrans.php:954 PrintCustTrans.php:1003
 #: PrintCustTransPortrait.php:912 PrintCustTransPortrait.php:1010
 #: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:323
@@ -3937,7 +3937,7 @@ msgid "Cannot retrieve the mbflag"
 msgstr "Nu poate prelua mbflag"
 
 #: ConfirmDispatch_Invoice.php:925 CounterSales.php:1317
-#: FixedAssetItems.php:574 SalesAnalReptCols.php:328 Stocks.php:1199
+#: FixedAssetItems.php:627 SalesAnalReptCols.php:328 Stocks.php:1199
 #: Suppliers.php:965 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "AVERTISMENT"
@@ -3969,7 +3969,7 @@ msgstr "Nu sa putut prelua componente de asamblare din baza de date pentru"
 
 #: ConfirmDispatch_Invoice.php:959 CounterSales.php:1352
 #: Credit_Invoice.php:696 EDIMessageFormat.php:43 EDISendInvoices.php:105
-#: FixedAssetCategories.php:86 FixedAssetCategories.php:105
+#: FixedAssetCategories.php:90 FixedAssetCategories.php:109
 #: PricesBasedOnMarkUp.php:334 PricesBasedOnMarkUp.php:350
 #: SelectCreditItems.php:1407 SpecialOrder.php:493 StockCategories.php:23
 #: StockCategories.php:84 StockCategories.php:155 Z_ReApplyCostToSA.php:62
@@ -4281,7 +4281,7 @@ msgstr "prelucrate"
 
 #: ConfirmDispatch_Invoice.php:1601 ConfirmDispatch_Invoice.php:1603
 #: ContractBOM.php:293 CounterSales.php:1969 CounterSales.php:1971
-#: CustomerReceipt.php:528 DeliveryDetails.php:577 DeliveryDetails.php:581
+#: CustomerReceipt.php:542 DeliveryDetails.php:577 DeliveryDetails.php:581
 #: DeliveryDetails.php:779 DeliveryDetails.php:782 GLBalanceSheet.php:18
 #: GLProfit_Loss.php:22 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:519
 #: GLTags.php:51 GLTransInquiry.php:36 PDFStockLocTransfer.php:28
@@ -4389,7 +4389,7 @@ msgstr ""
 "Există o problemă selectarea înregistrărilor parte pentru a afişa, deoarece"
 
 #: ContractBOM.php:140 PO_Items.php:989 SupplierTenders.php:471
-#: Z_ChangeStockCategory.php:63 Z_ChangeStockCode.php:92
+#: Z_ChangeStockCategory.php:63 Z_ChangeStockCode.php:104
 msgid "The SQL statement that failed was"
 msgstr "Instrucţiunea SQL care nu au fost"
 
@@ -4502,13 +4502,13 @@ msgstr "Introduceţi extras din Codul de Valori"
 msgid "Create a New Stock Item"
 msgstr "Crea un element nou stoc"
 
-#: ContractBOM.php:348 FixedAssetItems.php:473 Stocks.php:838
+#: ContractBOM.php:348 FixedAssetItems.php:490 Stocks.php:838
 #: SupplierTenders.php:492
 msgid "Image"
 msgstr "Imagine"
 
-#: ContractBOM.php:368 CounterSales.php:2029 FixedAssetItems.php:468
-#: FixedAssetItems.php:472 PO_Items.php:1098 SalesCategories.php:248
+#: ContractBOM.php:368 CounterSales.php:2029 FixedAssetItems.php:485
+#: FixedAssetItems.php:489 PO_Items.php:1098 SalesCategories.php:248
 #: SelectCreditItems.php:1017 SelectOrderItems.php:1489
 #: SelectOrderItems.php:1667 Stocks.php:832 Stocks.php:836
 #: SupplierTenders.php:518 WorkOrderEntry.php:643 WorkOrderIssue.php:709
@@ -4617,7 +4617,7 @@ msgstr "Bugetate Alte costuri"
 #: PO_SelectOSPurchOrder.php:480 PO_SelectPurchOrder.php:431 PurchData.php:164
 #: ReprintGRN.php:78 SelectProduct.php:349 SelectSupplier.php:143
 #: ShipmentCosting.php:531 ShipmentCosting.php:608 Shipt_Select.php:293
-#: ShiptsList.php:11 SuppCreditGRNs.php:269 SuppLoginSetup.php:24
+#: ShiptsList.php:11 SuppCreditGRNs.php:269 SuppLoginSetup.php:33
 #: SuppPriceList.php:205 SuppPriceList.php:276 SupplierAllocations.php:566
 #: SupplierAllocations.php:641 SupplierCredit.php:262 SupplierInquiry.php:118
 #: SupplierInvoice.php:234 SupplierTransInquiry.php:104
@@ -5153,7 +5153,7 @@ msgstr ""
 "filiale Cod Client sau Sucursala Numărul de telefon trebuie să fie introdus "
 "pentru căutare"
 
-#: Contracts.php:663 CustomerReceipt.php:574 SelectCustomer.php:163
+#: Contracts.php:663 CustomerReceipt.php:592 SelectCustomer.php:163
 #: SelectOrderItems.php:327
 msgid "The searched customer records requested cannot be retrieved because"
 msgstr "Cautat înregistrările cerute de client nu pot fi recuperate, deoarece"
@@ -5260,12 +5260,12 @@ msgstr "Resetare"
 msgid "Branch"
 msgstr "Ramură"
 
-#: Contracts.php:774 Factors.php:260 SelectCreditItems.php:240
+#: Contracts.php:774 Factors.php:289 SelectCreditItems.php:240
 #: SelectCustomer.php:415 SelectOrderItems.php:603 SupplierContacts.php:226
 msgid "Contact"
 msgstr "A lua legatura cu"
 
-#: Contracts.php:776 EmailConfirmation.php:160 Factors.php:223
+#: Contracts.php:776 EmailConfirmation.php:160 Factors.php:241
 #: PDFCustomerList.php:342 PDFRemittanceAdvice.php:241
 #: SelectCreditItems.php:242 SelectCustomer.php:418 SelectOrderItems.php:605
 #: includes/PDFOrderPageHeader_generic.inc:32
@@ -5278,7 +5278,7 @@ msgstr "A lua legatura cu"
 msgid "Fax"
 msgstr "Fax"
 
-#: Contracts.php:824 CustomerInquiry.php:126 CustomerReceipt.php:897
+#: Contracts.php:824 CustomerInquiry.php:126 CustomerReceipt.php:948
 #: PDFRemittanceAdvice.php:267 PO_Header.php:600 PrintCustTrans.php:847
 #: PrintCustTransPortrait.php:893 SupplierInquiry.php:118
 #: includes/PDFQuotationPageHeader.inc:86
@@ -5309,7 +5309,7 @@ msgstr "Categorie"
 msgid "The stock categories could not be retrieved because"
 msgstr "Categorii de stoc nu a putut fi recuperate, deoarece"
 
-#: Contracts.php:850 FixedAssetItems.php:485 PricesBasedOnMarkUp.php:109
+#: Contracts.php:850 FixedAssetItems.php:504 PricesBasedOnMarkUp.php:109
 #: SpecialOrder.php:690 Stocks.php:848
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "SQL folosite pentru a prelua categorii de stoc şi nu a fost"
@@ -5368,7 +5368,7 @@ msgstr "Cursul de schimb"
 msgid "Contract Status"
 msgstr "Status contract"
 
-#: Contracts.php:923 SuppLoginSetup.php:20 WWW_Users.php:21 index.php:20
+#: Contracts.php:923 SuppLoginSetup.php:29 WWW_Users.php:21 index.php:20
 msgid "Setup"
 msgstr "Setari"
 
@@ -5674,8 +5674,8 @@ msgstr "GP%"
 msgid "Net"
 msgstr "Net"
 
-#: CounterSales.php:816 CustomerReceipt.php:831 CustomerReceipt.php:848
-#: CustomerReceipt.php:1011 GLAccountInquiry.php:155 GLAccountReport.php:341
+#: CounterSales.php:816 CustomerReceipt.php:869 CustomerReceipt.php:896
+#: CustomerReceipt.php:1079 GLAccountInquiry.php:155 GLAccountReport.php:341
 #: GLJournal.php:364 GLJournal.php:388 Payments.php:1036
 #: SelectOrderItems.php:1402 SuppContractChgs.php:80 SuppContractChgs.php:167
 #: SuppTransGLAnalysis.php:107 SuppTransGLAnalysis.php:199
@@ -5852,7 +5852,7 @@ msgid "New Work Order Number"
 msgstr "Noi de lucru Număr de Ordine"
 
 #: CounterSales.php:1212 DeliveryDetails.php:555 EDIMessageFormat.php:127
-#: EDIMessageFormat.php:204 Prices_Customer.php:36
+#: EDIMessageFormat.php:205 Prices_Customer.php:36
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:336 SpecialOrder.php:116
 #: SpecialOrder.php:119
 msgid "for"
@@ -5885,11 +5885,11 @@ msgstr ""
 "SQL care nu a reuşit să insera tranzacţie GL pentru debit contul bancar a "
 "fost"
 
-#: CounterSales.php:1827 CustomerReceipt.php:442
+#: CounterSales.php:1827 CustomerReceipt.php:456
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "Nu poate insera o tranzacţie GL pentru debitul contului bancar"
 
-#: CounterSales.php:1845 CustomerReceipt.php:491
+#: CounterSales.php:1845 CustomerReceipt.php:505
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
@@ -5897,31 +5897,31 @@ msgstr ""
 "SQL care nu a reuşit să insera tranzacţie GL pentru creditul contului "
 "debitorilor a fost"
 
-#: CounterSales.php:1846 CustomerReceipt.php:492
+#: CounterSales.php:1846 CustomerReceipt.php:506
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr "Nu poate insera o tranzacţie GL pentru debitorii contul de credit"
 
-#: CounterSales.php:1898 CustomerReceipt.php:469
+#: CounterSales.php:1898 CustomerReceipt.php:483
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "SQL care nu a reuşit să introduceţi tranzacţia cont bancar a fost"
 
-#: CounterSales.php:1899 CustomerReceipt.php:470
+#: CounterSales.php:1899 CustomerReceipt.php:484
 msgid "Cannot insert a bank transaction"
 msgstr "Nu poate insera o tranzacţie bancă"
 
-#: CounterSales.php:1927 CustomerReceipt.php:401
+#: CounterSales.php:1927 CustomerReceipt.php:415
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "SQL care nu a reuşit să insera tranzacţie primirea client a fost"
 
-#: CounterSales.php:1928 CustomerReceipt.php:402
+#: CounterSales.php:1928 CustomerReceipt.php:416
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr "Nu poate insera o tranzacţie primirea împotriva clienţilor, deoarece"
 
-#: CounterSales.php:1937 CustomerReceipt.php:410
+#: CounterSales.php:1937 CustomerReceipt.php:424
 msgid "The SQL that failed to update the date of the last payment received was"
 msgstr "SQL care nu a reuşit să actualiza data ultimei plăţi a fost primit"
 
-#: CounterSales.php:1938 CustomerReceipt.php:411
+#: CounterSales.php:1938 CustomerReceipt.php:425
 msgid ""
 "Cannot update the customer record for the date of the last payment received "
 "because"
@@ -6577,9 +6577,9 @@ msgid "The currency code cannot contain any of the following characters"
 msgstr ""
 "Codul de curs valutar nu poate conţine oricare dintre următoarele caractere"
 
-#: Currencies.php:107 CustEDISetup.php:31 CustLoginSetup.php:40
-#: Customers.php:56 Stocks.php:113 SuppLoginSetup.php:42 TaxCategories.php:31
-#: WWW_Users.php:66 WorkCentres.php:35 Z_ChangeBranchCode.php:28
+#: Currencies.php:107 CustEDISetup.php:31 CustLoginSetup.php:51
+#: Customers.php:56 Stocks.php:113 SuppLoginSetup.php:51 TaxCategories.php:31
+#: WWW_Users.php:68 WorkCentres.php:35 Z_ChangeBranchCode.php:28
 #: Z_ImportStocks.php:123
 msgid "or a space"
 msgstr "sau un spaţiu"
@@ -6808,28 +6808,40 @@ msgstr "Update EDI configurare"
 msgid "Customer Login Configuration"
 msgstr "Login client de configurare"
 
-#: CustLoginSetup.php:22 SelectCustomer.php:210 SuppLoginSetup.php:24
+#: CustLoginSetup.php:15
+#, fuzzy
+msgid "A customer must first be selected before logins can be defined for it"
+msgstr ""
+"Un element trebuie să fie mai întâi selectat înainte de această pagină este "
+"denumită"
+
+#: CustLoginSetup.php:15
+#, fuzzy
+msgid "Select A Customer"
+msgstr "Selectaţi un client"
+
+#: CustLoginSetup.php:32 SelectCustomer.php:210 SuppLoginSetup.php:33
 msgid " has been selected"
 msgstr " a fost selectat"
 
-#: CustLoginSetup.php:37 SuppLoginSetup.php:39 WWW_Users.php:63
+#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:65
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "ID-ul de utilizator introdus trebuie să fie de cel puţin 4 caractere"
 
-#: CustLoginSetup.php:40 SuppLoginSetup.php:42 WWW_Users.php:66
+#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:68
 msgid "User names cannot contain any of the following characters"
 msgstr ""
 "Numele de utilizatori nu pot conţine oricare dintre următoarele caractere"
 
-#: CustLoginSetup.php:44 SuppLoginSetup.php:46 WWW_Users.php:70
+#: CustLoginSetup.php:55 SuppLoginSetup.php:55 WWW_Users.php:72
 msgid "The password entered must be at least 5 characters long"
 msgstr "Parola introduse trebuie să fie de cel puţin 5 caractere"
 
-#: CustLoginSetup.php:48 SuppLoginSetup.php:50 WWW_Users.php:74
+#: CustLoginSetup.php:59 SuppLoginSetup.php:59 WWW_Users.php:76
 msgid "The password cannot contain the user id"
 msgstr "Parola nu poate conţine utilizator id"
 
-#: CustLoginSetup.php:51 WWW_Users.php:77
+#: CustLoginSetup.php:62 WWW_Users.php:80
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
@@ -6837,110 +6849,110 @@ msgstr ""
 "Dacă introduceţi un cod client, de asemenea, trebuie să introduceţi un cod "
 "Sucursala valabil pentru acest client"
 
-#: CustLoginSetup.php:61 WWW_Users.php:102
+#: CustLoginSetup.php:72 WWW_Users.php:105
 msgid "The check on validity of the customer code and branch failed because"
 msgstr "Verifica valabilitatea codului de client şi ramură a eşuat pentru că"
 
-#: CustLoginSetup.php:62 WWW_Users.php:103
+#: CustLoginSetup.php:73 WWW_Users.php:106
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr ""
 "SQL care a fost folosit pentru a verifica codul de client şi filiala a fost"
 
-#: CustLoginSetup.php:66 WWW_Users.php:107
+#: CustLoginSetup.php:77 WWW_Users.php:110
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr "Codul a intrat Filiala nu este valabil pentru a intrat Cod Client"
 
-#: CustLoginSetup.php:104 SuppLoginSetup.php:93
+#: CustLoginSetup.php:115 SuppLoginSetup.php:102
 #, fuzzy
 msgid "The user could not be added because"
 msgstr "Activul nu a putut fi adăugată deoarece"
 
-#: CustLoginSetup.php:105 SuppLoginSetup.php:94
+#: CustLoginSetup.php:116 SuppLoginSetup.php:103
 #, fuzzy
 msgid "The SQL that was used to insert the new user and failed was"
 msgstr "SQL care a fost folosit pentru a actualiza utilizatorului şi nu a fost"
 
-#: CustLoginSetup.php:107
+#: CustLoginSetup.php:118
 #, fuzzy
 msgid "A new customer login has been created"
 msgstr "Un ordin de lucru nou a fost creat pentru"
 
-#: CustLoginSetup.php:120 SuppLoginSetup.php:108 WWW_Users.php:268
-#: WWW_Users.php:402
+#: CustLoginSetup.php:131 SuppLoginSetup.php:117 WWW_Users.php:271
+#: WWW_Users.php:405
 msgid "User Login"
 msgstr "Nume Utilizator"
 
-#: CustLoginSetup.php:138 SMTPServer.php:59 SuppLoginSetup.php:126
-#: WWW_Users.php:433 includes/Login.php:59
+#: CustLoginSetup.php:149 SMTPServer.php:59 SuppLoginSetup.php:135
+#: WWW_Users.php:436 includes/Login.php:59
 msgid "Password"
 msgstr "Parola"
 
-#: CustLoginSetup.php:142 SuppLoginSetup.php:130 WWW_Users.php:269
-#: WWW_Users.php:437
+#: CustLoginSetup.php:153 SuppLoginSetup.php:139 WWW_Users.php:272
+#: WWW_Users.php:440
 msgid "Full Name"
 msgstr "Numele complet"
 
-#: CustLoginSetup.php:146 Locations.php:555 SalesPeople.php:330
-#: SuppLoginSetup.php:134 SupplierContacts.php:262 WWW_Users.php:441
+#: CustLoginSetup.php:157 Locations.php:555 SalesPeople.php:330
+#: SuppLoginSetup.php:143 SupplierContacts.php:262 WWW_Users.php:444
 msgid "Telephone No"
 msgstr "Nr de telefon"
 
-#: CustLoginSetup.php:155 CustomerBranches.php:545 CustomerBranches.php:582
-#: WWW_Users.php:273 WWW_Users.php:496
+#: CustLoginSetup.php:166 CustomerBranches.php:545 CustomerBranches.php:582
+#: WWW_Users.php:276 WWW_Users.php:499
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:244
 msgid "Branch Code"
 msgstr "Sucursala Codul"
 
-#: CustLoginSetup.php:175 SuppLoginSetup.php:196 WWW_Users.php:530
+#: CustLoginSetup.php:186 SuppLoginSetup.php:205 WWW_Users.php:533
 msgid "Reports Page Size"
 msgstr "Rapoarte Dimensiune pagină"
 
-#: CustLoginSetup.php:179 CustLoginSetup.php:181 EmailConfirmation.php:119
+#: CustLoginSetup.php:190 CustLoginSetup.php:192 EmailConfirmation.php:119
 #: PrintCustOrder.php:101 PrintCustOrder_generic.php:111
-#: SuppLoginSetup.php:200 SuppLoginSetup.php:202 WWW_Users.php:534
-#: WWW_Users.php:536
+#: SuppLoginSetup.php:209 SuppLoginSetup.php:211 WWW_Users.php:537
+#: WWW_Users.php:539
 msgid "A4"
 msgstr "A4"
 
-#: CustLoginSetup.php:185 CustLoginSetup.php:187 CustLoginSetup.php:191
-#: CustLoginSetup.php:193 SuppLoginSetup.php:206 SuppLoginSetup.php:208
-#: SuppLoginSetup.php:212 SuppLoginSetup.php:214 WWW_Users.php:540
-#: WWW_Users.php:542 WWW_Users.php:546 WWW_Users.php:548
+#: CustLoginSetup.php:196 CustLoginSetup.php:198 CustLoginSetup.php:202
+#: CustLoginSetup.php:204 SuppLoginSetup.php:215 SuppLoginSetup.php:217
+#: SuppLoginSetup.php:221 SuppLoginSetup.php:223 WWW_Users.php:543
+#: WWW_Users.php:545 WWW_Users.php:549 WWW_Users.php:551
 msgid "A3"
 msgstr "A3"
 
-#: CustLoginSetup.php:191 CustLoginSetup.php:193 CustLoginSetup.php:203
-#: CustLoginSetup.php:205 CustLoginSetup.php:214 CustLoginSetup.php:216
+#: CustLoginSetup.php:202 CustLoginSetup.php:204 CustLoginSetup.php:214
+#: CustLoginSetup.php:216 CustLoginSetup.php:225 CustLoginSetup.php:227
 #: EmailConfirmation.php:119 PrintCustOrder.php:101
-#: PrintCustOrder_generic.php:111 SuppLoginSetup.php:212
-#: SuppLoginSetup.php:214 SuppLoginSetup.php:224 SuppLoginSetup.php:226
-#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:546
-#: WWW_Users.php:548 WWW_Users.php:558 WWW_Users.php:560 WWW_Users.php:569
-#: WWW_Users.php:571
+#: PrintCustOrder_generic.php:111 SuppLoginSetup.php:221
+#: SuppLoginSetup.php:223 SuppLoginSetup.php:233 SuppLoginSetup.php:235
+#: SuppLoginSetup.php:244 SuppLoginSetup.php:246 WWW_Users.php:549
+#: WWW_Users.php:551 WWW_Users.php:561 WWW_Users.php:563 WWW_Users.php:572
+#: WWW_Users.php:574
 msgid "landscape"
 msgstr "peisaj"
 
-#: CustLoginSetup.php:197 CustLoginSetup.php:199 CustLoginSetup.php:203
-#: CustLoginSetup.php:205 SuppLoginSetup.php:218 SuppLoginSetup.php:220
-#: SuppLoginSetup.php:224 SuppLoginSetup.php:226 WWW_Users.php:552
-#: WWW_Users.php:554 WWW_Users.php:558 WWW_Users.php:560
+#: CustLoginSetup.php:208 CustLoginSetup.php:210 CustLoginSetup.php:214
+#: CustLoginSetup.php:216 SuppLoginSetup.php:227 SuppLoginSetup.php:229
+#: SuppLoginSetup.php:233 SuppLoginSetup.php:235 WWW_Users.php:555
+#: WWW_Users.php:557 WWW_Users.php:561 WWW_Users.php:563
 msgid "Letter"
 msgstr "Scrisoare"
 
-#: CustLoginSetup.php:209 CustLoginSetup.php:211 CustLoginSetup.php:214
-#: CustLoginSetup.php:216 SuppLoginSetup.php:230 SuppLoginSetup.php:232
-#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:564
-#: WWW_Users.php:566 WWW_Users.php:569 WWW_Users.php:571
+#: CustLoginSetup.php:220 CustLoginSetup.php:222 CustLoginSetup.php:225
+#: CustLoginSetup.php:227 SuppLoginSetup.php:239 SuppLoginSetup.php:241
+#: SuppLoginSetup.php:244 SuppLoginSetup.php:246 WWW_Users.php:567
+#: WWW_Users.php:569 WWW_Users.php:572 WWW_Users.php:574
 msgid "Legal"
 msgstr "Juridice"
 
-#: CustLoginSetup.php:222 SuppLoginSetup.php:243 UserSettings.php:146
-#: WWW_Users.php:279 WWW_Users.php:578
+#: CustLoginSetup.php:233 SuppLoginSetup.php:252 UserSettings.php:146
+#: WWW_Users.php:282 WWW_Users.php:581
 msgid "Theme"
 msgstr "Aparenta"
 
-#: CustLoginSetup.php:244 SuppLoginSetup.php:267 UserSettings.php:127
-#: WWW_Users.php:280 WWW_Users.php:603
+#: CustLoginSetup.php:255 SuppLoginSetup.php:276 UserSettings.php:127
+#: WWW_Users.php:283 WWW_Users.php:606
 msgid "Language"
 msgstr "Limba"
 
@@ -6967,7 +6979,7 @@ msgid "The transaction number to be queried must be entered first"
 msgstr ""
 "Numărul de tranzacţie pentru a fi interogate trebuie să fie înscrise primul"
 
-#: CustWhereAlloc.php:87 CustomerTransInquiry.php:90 Z_CheckAllocs.php:51
+#: CustWhereAlloc.php:87 CustomerTransInquiry.php:90 Z_CheckAllocs.php:56
 msgid ""
 "The customer transactions for the selected criteria could not be retrieved "
 "because"
@@ -6988,23 +7000,23 @@ msgid "Transaction Total"
 msgstr "Totală a tranzacţiei"
 
 #: CustWhereAlloc.php:108 CustomerTransInquiry.php:106
-#: SupplierTransInquiry.php:107 Z_CheckAllocs.php:60
+#: SupplierTransInquiry.php:107 Z_CheckAllocs.php:65
 msgid "Ex Rate"
 msgstr "Ex Rate"
 
-#: CustWhereAlloc.php:110 Z_CheckAllocs.php:62
+#: CustWhereAlloc.php:110 Z_CheckAllocs.php:67
 msgid "Alloc"
 msgstr "Alloc"
 
 #: CustWhereAlloc.php:128 EmailCustTrans.php:12 SalesInquiry.php:1080
-#: SupplierCredit.php:1113 Z_CheckAllocs.php:80
+#: SupplierCredit.php:1113 Z_CheckAllocs.php:85
 msgid "Credit Note"
 msgstr "Nota de credit"
 
 #: CustWhereAlloc.php:130 PcAssignCashToTab.php:225 PcAssignCashToTab.php:361
 #: PcAuthorizeExpenses.php:93 PcClaimExpensesFromTab.php:215
 #: PcClaimExpensesFromTab.php:379 PcReportTab.php:174 PcReportTab.php:328
-#: Z_CheckAllocs.php:82 Z_SalesIntegrityCheck.php:90
+#: Z_CheckAllocs.php:87 Z_SalesIntegrityCheck.php:90
 #: Z_SalesIntegrityCheck.php:105
 msgid "Receipt"
 msgstr "Primire"
@@ -7073,7 +7085,7 @@ msgstr "a fost"
 msgid "Allocate Receipt"
 msgstr "Alocarea Chitanţă"
 
-#: CustomerAllocations.php:322 CustomerReceipt.php:529
+#: CustomerAllocations.php:322 CustomerReceipt.php:543
 msgid "Allocate Receipts"
 msgstr "Alocarea Încasări"
 
@@ -7116,7 +7128,7 @@ msgid "Yet to"
 msgstr "Cu toate acestea, la"
 
 #: CustomerAllocations.php:365 CustomerAllocations.php:491
-#: CustomerAllocations.php:532 CustomerReceipt.php:231 CustomerReceipt.php:529
+#: CustomerAllocations.php:532 CustomerReceipt.php:240 CustomerReceipt.php:543
 #: SupplierAllocations.php:458 SupplierAllocations.php:594
 #: SupplierAllocations.php:670
 #, php-format
@@ -7168,7 +7180,7 @@ msgstr "Stânga de a aloca"
 msgid "Process Allocations"
 msgstr "Procesul de Alocările"
 
-#: CustomerAllocations.php:434 CustomerReceipt.php:1015 Labels.php:265
+#: CustomerAllocations.php:434 CustomerReceipt.php:1086 Labels.php:265
 #: Payments.php:1026 PcAssignCashToTab.php:177 PcAssignCashToTab.php:373
 #: PcAuthorizeExpenses.php:323 PcClaimExpensesFromTab.php:167
 #: PcClaimExpensesFromTab.php:385 PcExpenses.php:344 PcExpensesTypeTab.php:140
@@ -7519,8 +7531,8 @@ msgstr ""
 msgid "Define Sales People"
 msgstr "Definiţi oamenii de vanzari"
 
-#: CustomerBranches.php:683 DailySalesInquiry.php:40 SalesPeople.php:170
-#: WWW_Users.php:275
+#: CustomerBranches.php:683 DailySalesInquiry.php:41 SalesPeople.php:170
+#: WWW_Users.php:278
 msgid "Salesperson"
 msgstr "Vânzător"
 
@@ -7579,7 +7591,7 @@ msgstr "Draw de stoc din"
 msgid "Phone Number"
 msgstr "Număr de telefon"
 
-#: CustomerBranches.php:763 Factors.php:262
+#: CustomerBranches.php:763 Factors.php:291
 msgid "Fax Number"
 msgstr "Număr de fax"
 
@@ -7669,48 +7681,48 @@ msgstr "Selectaţi un client să solicite informaţii despre"
 msgid "The config value NumberOfMonthMustBeShown cannot be retrieved"
 msgstr "Valoarea config NumberOfMonthMustBeShown nu pot fi recuperate"
 
-#: CustomerInquiry.php:127 CustomerReceipt.php:897 SelectOrderItems.php:711
+#: CustomerInquiry.php:127 CustomerReceipt.php:948 SelectOrderItems.php:711
 #: SupplierCredit.php:264 SupplierInquiry.php:120 SupplierInvoice.php:236
 msgid "Terms"
 msgstr "Termeni"
 
-#: CustomerInquiry.php:127 CustomerReceipt.php:897 Customers.php:512
+#: CustomerInquiry.php:127 CustomerReceipt.php:948 Customers.php:512
 #: Customers.php:806 Customers.php:836
 msgid "Credit Limit"
 msgstr "Limita de credit"
 
-#: CustomerInquiry.php:128 CustomerReceipt.php:897 Customers.php:533
+#: CustomerInquiry.php:128 CustomerReceipt.php:948 Customers.php:533
 #: Customers.php:873 Customers.php:879 Customers.php:897 Customers.php:919
 #: Customers.php:924 index.php:1080
 msgid "Credit Status"
 msgstr "Stare de credit"
 
-#: CustomerInquiry.php:131 CustomerReceipt.php:900
+#: CustomerInquiry.php:131 CustomerReceipt.php:952
 msgid "ACCOUNT ON HOLD"
 msgstr "CONT ON HOLD"
 
-#: CustomerInquiry.php:136 CustomerReceipt.php:905 PrintCustStatements.php:362
+#: CustomerInquiry.php:136 CustomerReceipt.php:958 PrintCustStatements.php:362
 #: SupplierInquiry.php:142
 msgid "Total Balance"
 msgstr "Total Sold"
 
-#: CustomerInquiry.php:137 CustomerReceipt.php:906 PrintCustStatements.php:358
+#: CustomerInquiry.php:137 CustomerReceipt.php:959 PrintCustStatements.php:358
 #: SalesPeople.php:206 Shipments.php:396 Stocks.php:977 Stocks.php:979
 #: SupplierInquiry.php:143 includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
 msgstr "Curent"
 
-#: CustomerInquiry.php:138 CustomerReceipt.php:907 SupplierInquiry.php:144
+#: CustomerInquiry.php:138 CustomerReceipt.php:960 SupplierInquiry.php:144
 msgid "Now Due"
 msgstr "Acum Datorită"
 
-#: CustomerInquiry.php:139 CustomerInquiry.php:140 CustomerReceipt.php:908
-#: CustomerReceipt.php:909 SupplierInquiry.php:145 SupplierInquiry.php:146
+#: CustomerInquiry.php:139 CustomerInquiry.php:140 CustomerReceipt.php:961
+#: CustomerReceipt.php:962 SupplierInquiry.php:145 SupplierInquiry.php:146
 msgid "Days Overdue"
 msgstr "De zile restante"
 
-#: CustomerInquiry.php:140 CustomerReceipt.php:909 PrintCustStatements.php:361
+#: CustomerInquiry.php:140 CustomerReceipt.php:962 PrintCustStatements.php:361
 #: SupplierInquiry.php:146
 msgid "Over"
 msgstr "Peste"
@@ -7732,7 +7744,7 @@ msgid "There are no transactions to display since"
 msgstr "Nu sunt tranzacţii pentru a afişa, deoarece"
 
 #: CustomerInquiry.php:202 SupplierInquiry.php:211
-#: Z_CheckAllocationsFrom.php:29 Z_CheckAllocationsFrom.php:52
+#: Z_CheckAllocationsFrom.php:35 Z_CheckAllocationsFrom.php:60
 #: includes/PDFStatementPageHeader.inc:172
 msgid "Allocated"
 msgstr "Alocate"
@@ -7806,31 +7818,31 @@ msgstr "Click pentru a aloca fonduri"
 msgid "Receipt Entry"
 msgstr "Primirea de intrare"
 
-#: CustomerReceipt.php:32
+#: CustomerReceipt.php:35
 msgid "A bank account must be selected for this receipt"
 msgstr "Un cont bancar trebuie să fie selectate pentru această primire"
 
-#: CustomerReceipt.php:47 Payments.php:699
+#: CustomerReceipt.php:54 Payments.php:699
 msgid "The bank account name cannot be retrieved because"
 msgstr "Numele contului bancar nu pot fi recuperate, deoarece"
 
-#: CustomerReceipt.php:56 Payments.php:709
+#: CustomerReceipt.php:63 Payments.php:709
 msgid "The bank account number"
 msgstr "Numărul contului bancar"
 
-#: CustomerReceipt.php:56
+#: CustomerReceipt.php:63
 msgid "is not set up as a bank account"
 msgstr "nu este configurat ca un cont bancar"
 
-#: CustomerReceipt.php:69
+#: CustomerReceipt.php:76
 msgid "The exchange rate entered should be numeric"
 msgstr "Cursul de schimb a intrat ar trebui să fie numeric"
 
-#: CustomerReceipt.php:76
+#: CustomerReceipt.php:83
 msgid "The functional exchange rate entered should be numeric"
 msgstr "Cursul de schimb ar trebui să fie funcţională a intrat numerice"
 
-#: CustomerReceipt.php:92
+#: CustomerReceipt.php:99
 msgid ""
 "Changing the currency of the receipt means that existing entries need to be "
 "re-done - only customers trading in the selected currency can be selected"
@@ -7839,78 +7851,78 @@ msgstr ""
 "trebuie să fie re-face - doar de tranzacţionare de clienţi în moneda "
 "selectata pot fi selectate"
 
-#: CustomerReceipt.php:160 Payments.php:650
+#: CustomerReceipt.php:167 Payments.php:650
 msgid "No General Ledger code has been chosen"
 msgstr "Nr General Ledger cod a fost aleasă"
 
-#: CustomerReceipt.php:160 GLJournal.php:171 Payments.php:633 Payments.php:650
+#: CustomerReceipt.php:167 GLJournal.php:171 Payments.php:633 Payments.php:650
 msgid "so this GL analysis item could not be added"
 msgstr "astfel încât acest element de analiză GL nu ar putea fi adăugate"
 
-#: CustomerReceipt.php:206
+#: CustomerReceipt.php:213
 msgid "The company has not yet been set up properly"
 msgstr "Compania nu a fost încă stabilit în mod corespunzător"
 
-#: CustomerReceipt.php:206
+#: CustomerReceipt.php:213
 msgid "this information is needed to process the batch"
 msgstr "această informaţie este necesară pentru procesul de lot"
 
-#: CustomerReceipt.php:206
+#: CustomerReceipt.php:213
 msgid "Processing has been cancelled"
 msgstr "Prelucrarea a fost anulat"
 
-#: CustomerReceipt.php:231
+#: CustomerReceipt.php:240
 msgid "Summary of Receipt Batch"
 msgstr "Rezumatul Batch Receipt"
 
-#: CustomerReceipt.php:233
+#: CustomerReceipt.php:246
 msgid "Batch Number"
 msgstr "Numărul de lot"
 
-#: CustomerReceipt.php:234 CustomerReceipt.php:753
+#: CustomerReceipt.php:247 CustomerReceipt.php:779
 msgid "Date Banked"
 msgstr "Data infiltratiilor"
 
-#: CustomerReceipt.php:236 CustomerReceipt.php:847
+#: CustomerReceipt.php:249 CustomerReceipt.php:895
 msgid "GL Code"
 msgstr "GL Cod"
 
-#: CustomerReceipt.php:237 CustomerReceipt.php:996
+#: CustomerReceipt.php:250 CustomerReceipt.php:1061
 msgid "Amount of Receipt"
 msgstr "Suma de primire"
 
-#: CustomerReceipt.php:260
+#: CustomerReceipt.php:274
 msgid "Print a Customer Receipt"
 msgstr "Imprima un client de primire"
 
-#: CustomerReceipt.php:284
+#: CustomerReceipt.php:298
 msgid "Cannot insert a GL entry for the receipt because"
 msgstr "Nu se poate insera o intrare GL pentru primire, deoarece"
 
-#: CustomerReceipt.php:285
+#: CustomerReceipt.php:299
 msgid "The SQL that failed to insert the receipt GL entry was"
 msgstr "SQL care nu a reuşit să introduceţi intrare primirea GL a fost"
 
-#: CustomerReceipt.php:354
+#: CustomerReceipt.php:368
 msgid "Act Transfer"
 msgstr "Actul de transfer"
 
-#: CustomerReceipt.php:363
+#: CustomerReceipt.php:377
 msgid "The SQL that failed to insert the bank transaction was"
 msgstr "SQL care nu a reuşit să insera tranzacţie bancară a fost"
 
-#: CustomerReceipt.php:364 Payments.php:553 Payments.php:579
+#: CustomerReceipt.php:378 Payments.php:553 Payments.php:579
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr "Nu poate insera o tranzacţie bancă folosind SQL"
 
-#: CustomerReceipt.php:441
+#: CustomerReceipt.php:455
 msgid ""
 "The SQL that failed to insert the GL transaction fro the bank account debit "
 "was"
 msgstr ""
 "SQL care nu a reuşit să insera tranzacţie GL fro cont bancar de debit a fost"
 
-#: CustomerReceipt.php:515
+#: CustomerReceipt.php:529
 msgid ""
 "The SQL that failed to insert the GL transaction for the payment discount "
 "debit was"
@@ -7918,31 +7930,31 @@ msgstr ""
 "SQL care nu a reuşit să insera tranzacţie GL pentru debit discount de plată "
 "a fost"
 
-#: CustomerReceipt.php:516
+#: CustomerReceipt.php:530
 msgid "Cannot insert a GL transaction for the payment discount debit"
 msgstr "Nu poate insera o tranzacţie GL pentru debit discount de plată"
 
-#: CustomerReceipt.php:522 GLJournal.php:113
+#: CustomerReceipt.php:536 GLJournal.php:113
 msgid "Cannot commit the changes"
 msgstr "Nu poate comite modificările"
 
-#: CustomerReceipt.php:526
+#: CustomerReceipt.php:540
 msgid "Receipt batch"
 msgstr "Primire lot"
 
-#: CustomerReceipt.php:526
+#: CustomerReceipt.php:540
 msgid "has been successfully entered into the database"
 msgstr "a fost introdus cu succes în baza de date"
 
-#: CustomerReceipt.php:528
+#: CustomerReceipt.php:542
 msgid "Print PDF Batch Summary"
 msgstr "Imprimare PDF Batch Rezumatul"
 
-#: CustomerReceipt.php:530 index.php:290
+#: CustomerReceipt.php:544 index.php:290
 msgid "Enter Receipts"
 msgstr "Inregistrare plati"
 
-#: CustomerReceipt.php:542 SelectCreditItems.php:71
+#: CustomerReceipt.php:557 SelectCreditItems.php:71
 msgid ""
 "Customer name keywords have been used in preference to the customer code "
 "extract entered"
@@ -7950,7 +7962,7 @@ msgstr ""
 "Clientul cuvinte cheie nume au fost folosite în preferinţa pentru codul de "
 "client extract introdus"
 
-#: CustomerReceipt.php:545 SelectCreditItems.php:74
+#: CustomerReceipt.php:563 SelectCreditItems.php:74
 msgid ""
 "At least one Customer Name keyword OR an extract of a Customer Code must be "
 "entered for the search"
@@ -7958,40 +7970,40 @@ msgstr ""
 "cel puţin un nume Client cuvânt cheie sau un extras al unui Cod Clientul "
 "trebuie să fie introdus pentru căutare"
 
-#: CustomerReceipt.php:576 SelectCreditItems.php:110 SelectOrderItems.php:507
+#: CustomerReceipt.php:594 SelectCreditItems.php:110 SelectOrderItems.php:507
 msgid "SQL used to retrieve the customer details was"
 msgstr "SQL utilizat pentru a prelua detalii client a fost"
 
-#: CustomerReceipt.php:583 SelectCustomer.php:174
+#: CustomerReceipt.php:601 SelectCustomer.php:174
 msgid "No customer records contain the selected text"
 msgstr "Nu există înregistrări client conţin textul selectat"
 
-#: CustomerReceipt.php:583 PO_Header.php:347 SelectCreditItems.php:119
+#: CustomerReceipt.php:601 PO_Header.php:347 SelectCreditItems.php:119
 #: SelectCustomer.php:174 includes/PO_ReadInOrder.inc:124
 msgid "please alter your search criteria and try again"
 msgstr "va rugam sa modifice criteriile de căutare şi încercaţi din nou"
 
-#: CustomerReceipt.php:656 CustomerReceipt.php:684 Customers.php:635
+#: CustomerReceipt.php:675 CustomerReceipt.php:703 Customers.php:635
 msgid "The customer details could not be retrieved because"
 msgstr "Detaliile client nu a putut fi recuperate, deoarece"
 
-#: CustomerReceipt.php:718 DailyBankTransactions.php:27 Payments.php:736
+#: CustomerReceipt.php:736 DailyBankTransactions.php:27 Payments.php:736
 msgid "The bank accounts could not be retrieved because"
 msgstr "Conturile bancare nu a putut fi recuperate, deoarece"
 
-#: CustomerReceipt.php:723 CustomerReceipt.php:725
+#: CustomerReceipt.php:741 CustomerReceipt.php:743
 msgid "Enter Receipt"
 msgstr "Introduceţi Chitanţă"
 
-#: CustomerReceipt.php:723 CustomerReceipt.php:933
+#: CustomerReceipt.php:741 CustomerReceipt.php:989
 msgid "General Ledger Receipt Entry"
 msgstr "General Ledger Primirea de intrare"
 
-#: CustomerReceipt.php:725
+#: CustomerReceipt.php:743
 msgid "Enter Customer Receipt"
 msgstr "Introduceţi bon client"
 
-#: CustomerReceipt.php:726
+#: CustomerReceipt.php:744
 msgid ""
 "To enter a payment TO a customer (ie. to pay out a credit note), enter a "
 "negative payment amount."
@@ -7999,24 +8011,24 @@ msgstr ""
 "Pentru a introduce o plată către un client (adică să plătească o notă de "
 "credit), introduceţi o sumă de plată negativ."
 
-#: CustomerReceipt.php:766
+#: CustomerReceipt.php:794
 msgid "No currencies are defined yet"
 msgstr "Nu valute sunt definite încă"
 
-#: CustomerReceipt.php:766
+#: CustomerReceipt.php:794
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "Veniturile nu pot fi introduse până la o moneda este definită"
 
-#: CustomerReceipt.php:789 CustomerReceipt.php:804 Payments.php:819
+#: CustomerReceipt.php:818 CustomerReceipt.php:835 Payments.php:819
 #: Payments.php:836
 msgid "Suggested rate:"
 msgstr "Sugerat Rata:"
 
-#: CustomerReceipt.php:796
+#: CustomerReceipt.php:826
 msgid "Receipt Exchange Rate"
 msgstr "Cursul de schimb la data primirii"
 
-#: CustomerReceipt.php:798
+#: CustomerReceipt.php:828
 msgid ""
 "The exchange rate between the currency of the bank account currency and the "
 "currency of the receipt"
@@ -8024,11 +8036,11 @@ msgstr ""
 "Cursul de schimb dintre moneda de moneda contului bancar şi moneda de la "
 "primirea"
 
-#: CustomerReceipt.php:811 Payments.php:844
+#: CustomerReceipt.php:843 Payments.php:844
 msgid "Functional Exchange Rate"
 msgstr "Funcţionale Cursul de schimb"
 
-#: CustomerReceipt.php:812 Payments.php:846
+#: CustomerReceipt.php:845 Payments.php:846
 msgid ""
 "The exchange rate between the currency of the business (the functional "
 "currency) and the currency of the bank account"
@@ -8036,11 +8048,11 @@ msgstr ""
 "Cursul de schimb dintre moneda de afaceri (moneda funcţională) şi moneda de "
 "cont bancar"
 
-#: CustomerReceipt.php:815
+#: CustomerReceipt.php:850
 msgid "Receipt Type"
 msgstr "Primire Tip"
 
-#: CustomerReceipt.php:832 CustomerReceipt.php:1014 CustomerTypes.php:264
+#: CustomerReceipt.php:875 CustomerReceipt.php:1085 CustomerTypes.php:264
 #: ExchangeRateTrend.php:51 FreightCosts.php:59 GLJournal.php:136
 #: GLJournal.php:374 OffersReceived.php:111 Payments.php:1025
 #: PcAssignCashToTab.php:176 PcAssignCashToTab.php:372
@@ -8051,20 +8063,20 @@ msgstr "Primire Tip"
 msgid "Accept"
 msgstr "Accepta"
 
-#: CustomerReceipt.php:838
+#: CustomerReceipt.php:885
 msgid "Banked"
 msgstr "Infiltratiilor"
 
-#: CustomerReceipt.php:839
+#: CustomerReceipt.php:886
 msgid "Banked into the"
 msgstr "Trece în"
 
-#: CustomerReceipt.php:840 PO_Items.php:234 Payments.php:728
+#: CustomerReceipt.php:887 PO_Items.php:234 Payments.php:728
 #: SelectSalesOrder.php:211 SelectSalesOrder.php:372 SpecialOrder.php:559
 msgid "on"
 msgstr "pe"
 
-#: CustomerReceipt.php:844 GoodsReceived.php:102 GoodsReceived.php:106
+#: CustomerReceipt.php:892 GoodsReceived.php:102 GoodsReceived.php:106
 #: GoodsReceived.php:112 POReport.php:629 POReport.php:1358 ReverseGRN.php:386
 #: ReverseGRN.php:387 ShipmentCosting.php:146 Shipments.php:393
 #: Shipments.php:475 StockDispatch.php:379 StockDispatch.php:386
@@ -8072,7 +8084,7 @@ msgstr "pe"
 msgid "Received"
 msgstr "Primit"
 
-#: CustomerReceipt.php:886
+#: CustomerReceipt.php:937
 msgid ""
 "The selected customer does not trade in the currency of the receipt being "
 "entered - either the currency of the receipt needs to be changed or a "
@@ -8081,16 +8093,16 @@ msgstr ""
 "Clientul selectat nu comerţului în moneda de primire a fi introduse - fie "
 "moneda de primire trebuie să fie schimbat sau un alt client selectat"
 
-#: CustomerReceipt.php:936 GLAccountCSV.php:62 GLAccountInquiry.php:46
+#: CustomerReceipt.php:994 GLAccountCSV.php:62 GLAccountInquiry.php:46
 #: GLAccountReport.php:266 Payments.php:901 StockAdjustments.php:431
 msgid "Select Tag"
 msgstr "Selectaţi Tag"
 
-#: CustomerReceipt.php:960 GLBudgets.php:49 Payments.php:982
+#: CustomerReceipt.php:1023 GLBudgets.php:49 Payments.php:982
 msgid "No General ledger accounts have been set up yet"
 msgstr "Nr conturile General Ledger au fost stabilite încă"
 
-#: CustomerReceipt.php:960
+#: CustomerReceipt.php:1023
 msgid ""
 "receipts cannot be entered against GL accounts until the GL accounts are set "
 "up"
@@ -8098,47 +8110,47 @@ msgstr ""
 "veniturile nu pot fi introduse împotriva conturile GL până conturile GL sunt "
 "stabilite"
 
-#: CustomerReceipt.php:1001 Payments.php:1085
+#: CustomerReceipt.php:1067 Payments.php:1085
 msgid "Amount of Discount"
 msgstr "Suma de Reducere"
 
-#: CustomerReceipt.php:1002
+#: CustomerReceipt.php:1068
 msgid "agreed prompt payment discount is"
 msgstr "reducere convenite de plată este prompt"
 
-#: CustomerReceipt.php:1007
+#: CustomerReceipt.php:1074
 msgid "Payee Bank Details"
 msgstr "Payee Banca Detalii"
 
-#: CustomerReceipt.php:1022
+#: CustomerReceipt.php:1096
 msgid "Select a Customer"
 msgstr "Selectaţi un client"
 
-#: CustomerReceipt.php:1024
+#: CustomerReceipt.php:1099
 msgid "Text in the Customer"
 msgstr "Text în Client"
 
-#: CustomerReceipt.php:1024
+#: CustomerReceipt.php:1099
 msgid "name"
 msgstr "Numele"
 
-#: CustomerReceipt.php:1027
+#: CustomerReceipt.php:1102
 msgid "Text extract in the Customer"
 msgstr "Text extras în care Clientul"
 
-#: CustomerReceipt.php:1027
+#: CustomerReceipt.php:1102
 msgid "code"
 msgstr "cod"
 
-#: CustomerReceipt.php:1030
+#: CustomerReceipt.php:1105
 msgid "Customer invoice number"
 msgstr "Client număr de factură"
 
-#: CustomerReceipt.php:1035
+#: CustomerReceipt.php:1114
 msgid "Enter A GL Receipt"
 msgstr "Introduceţi o chitanţă GL"
 
-#: CustomerReceipt.php:1077
+#: CustomerReceipt.php:1162
 msgid "Accept and Process Batch"
 msgstr "Acceptaţi şi proces discontinuu"
 
@@ -8155,7 +8167,7 @@ msgid "Choose which type of transaction to report on."
 msgstr "Alegeţi ce tip de tranzacţie să prezinte un raport cu privire."
 
 #: CustomerTransInquiry.php:51 FixedAssetRegister.php:78
-#: FixedAssetRegister.php:332 PcReportTab.php:136 PcReportTab.php:256
+#: FixedAssetRegister.php:349 PcReportTab.php:136 PcReportTab.php:256
 #: SalesAnalRepts.php:430 SalesAnalRepts.php:458 SalesAnalRepts.php:487
 #: SalesAnalRepts.php:506 ShipmentCosting.php:54 Shipments.php:298
 #: StockDispatch.php:383 StockLocTransferReceive.php:209
@@ -8176,7 +8188,7 @@ msgstr "Alegeţi ce tip de tranzacţie să prezinte un raport cu privire."
 msgid "From"
 msgstr "De la"
 
-#: CustomerTransInquiry.php:53 FixedAssetRegister.php:333 POReport.php:517
+#: CustomerTransInquiry.php:53 FixedAssetRegister.php:350 POReport.php:517
 #: POReport.php:1516 PcReportTab.php:262 SalesAnalRepts.php:431
 #: SalesAnalRepts.php:459 SalesAnalRepts.php:488 SalesAnalRepts.php:507
 #: SalesInquiry.php:780 SalesInquiry.php:1089 StockDispatch.php:384
@@ -8496,11 +8508,11 @@ msgstr "pentru a configura tipurile de client"
 msgid "Click here to continue"
 msgstr "Click aici pentru a continua"
 
-#: Customers.php:445 Factors.php:221 Factors.php:261 OrderDetails.php:103
+#: Customers.php:445 Factors.php:237 Factors.php:290 OrderDetails.php:103
 #: PrintCustTrans.php:712 PrintCustTrans.php:943 PrintCustTrans.php:992
 #: PrintCustTransPortrait.php:751 PrintCustTransPortrait.php:997
 #: PrintCustTransPortrait.php:1054 SalesPeople.php:201 Suppliers.php:673
-#: Suppliers.php:852 WWW_Users.php:270
+#: Suppliers.php:852 WWW_Users.php:273
 msgid "Telephone"
 msgstr "Telefon"
 
@@ -8742,64 +8754,64 @@ msgstr "Selectaţi o altă dată"
 msgid "Daily Sales Inquiry"
 msgstr "Vânzări de zi cu zi anchetă"
 
-#: DailySalesInquiry.php:11
+#: DailySalesInquiry.php:10
 msgid "Daily Sales"
 msgstr "Vânzări de zi cu zi"
 
-#: DailySalesInquiry.php:13
+#: DailySalesInquiry.php:12
 msgid "Select the month to show daily sales for"
 msgstr "Selectaţi lună pentru a arăta de vânzări de zi cu zi pentru"
 
-#: DailySalesInquiry.php:21
+#: DailySalesInquiry.php:20
 msgid "Month to Show"
 msgstr "Lună pentru a Show"
 
-#: DailySalesInquiry.php:64
+#: DailySalesInquiry.php:65
 msgid "Show Daily Sales For The Selected Month"
 msgstr "Arată de vânzări zilnice pentru luna selectata"
 
-#: DailySalesInquiry.php:99 SalesByTypePeriodInquiry.php:326
+#: DailySalesInquiry.php:100 SalesByTypePeriodInquiry.php:326
 #: SalesCategoryPeriodInquiry.php:156 SalesTopItemsInquiry.php:210
 msgid "The sales data could not be retrieved because"
 msgstr "Datele de vânzări nu a putut fi recuperate, deoarece"
 
-#: DailySalesInquiry.php:104 MRPCalendar.php:276
+#: DailySalesInquiry.php:105 MRPCalendar.php:276
 msgid "Sunday"
 msgstr "Duminică"
 
-#: DailySalesInquiry.php:105 MRPCalendar.php:280
+#: DailySalesInquiry.php:106 MRPCalendar.php:280
 msgid "Monday"
 msgstr "Luni"
 
-#: DailySalesInquiry.php:106 MRPCalendar.php:284
+#: DailySalesInquiry.php:107 MRPCalendar.php:284
 msgid "Tuesday"
 msgstr "Marţi"
 
-#: DailySalesInquiry.php:107 MRPCalendar.php:288
+#: DailySalesInquiry.php:108 MRPCalendar.php:288
 msgid "Wednesday"
 msgstr "Miercuri"
 
-#: DailySalesInquiry.php:108 MRPCalendar.php:292
+#: DailySalesInquiry.php:109 MRPCalendar.php:292
 msgid "Thursday"
 msgstr "Joi"
 
-#: DailySalesInquiry.php:109 MRPCalendar.php:296
+#: DailySalesInquiry.php:110 MRPCalendar.php:296
 msgid "Friday"
 msgstr "Vineri"
 
-#: DailySalesInquiry.php:110 MRPCalendar.php:272
+#: DailySalesInquiry.php:111 MRPCalendar.php:272
 msgid "Saturday"
 msgstr "Sâmbătă"
 
-#: DailySalesInquiry.php:185
+#: DailySalesInquiry.php:186
 msgid "Total Sales for month"
 msgstr "Vânzările totale pentru luna"
 
-#: DailySalesInquiry.php:185
+#: DailySalesInquiry.php:186
 msgid "GP%"
 msgstr "GP%"
 
-#: DailySalesInquiry.php:185
+#: DailySalesInquiry.php:186
 msgid "Avg Daily Sales"
 msgstr "AVG Vânzări zilnic"
 
@@ -8828,15 +8840,15 @@ msgstr "soldurile Total"
 msgid "Debtor Balances"
 msgstr "Debitor Solduri"
 
-#: DebtorsAtPeriodEnd.php:142 SupplierBalsAtPeriodEnd.php:139
+#: DebtorsAtPeriodEnd.php:145 SupplierBalsAtPeriodEnd.php:139
 msgid "Balances As At"
 msgstr "Soldurile Ca La"
 
-#: DebtorsAtPeriodEnd.php:146 SupplierBalsAtPeriodEnd.php:147
+#: DebtorsAtPeriodEnd.php:149 SupplierBalsAtPeriodEnd.php:147
 msgid "Could not retrieve period data because"
 msgstr "Nu sa putut prelua date perioadă din cauza"
 
-#: DebtorsAtPeriodEnd.php:146
+#: DebtorsAtPeriodEnd.php:149
 msgid "The SQL that failed to get the period data was"
 msgstr "SQL care nu a reuşit să obţine datele perioadă a fost"
 
@@ -9243,7 +9255,7 @@ msgstr ""
 "Comandantul evidenţă operativă a mărfurilor a fost actualizat la nici o "
 "categorie cu discount"
 
-#: DiscountCategories.php:74 DiscountCategories.php:100 DiscountMatrix.php:114
+#: DiscountCategories.php:74 DiscountCategories.php:100 DiscountMatrix.php:115
 msgid "Discount Category Code"
 msgstr "Discount Categorie Codul"
 
@@ -9285,7 +9297,7 @@ msgstr "la toate articolele din categoria stoc"
 msgid "Update Items"
 msgstr "Update Produse"
 
-#: DiscountCategories.php:202 DiscountMatrix.php:154 Stocks.php:1065
+#: DiscountCategories.php:202 DiscountMatrix.php:161 Stocks.php:1065
 msgid "Discount Category"
 msgstr "Discount Categorie"
 
@@ -9383,15 +9395,15 @@ msgstr "Record discount matrice a fost şters"
 msgid "Customer Price List"
 msgstr "Client Lista de preturi"
 
-#: DiscountMatrix.php:129 DiscountMatrix.php:155
+#: DiscountMatrix.php:131 DiscountMatrix.php:162
 msgid "Quantity Break"
 msgstr "Cantitate Break"
 
-#: DiscountMatrix.php:132 DiscountMatrix.php:156
+#: DiscountMatrix.php:135 DiscountMatrix.php:163
 msgid "Discount Rate"
 msgstr "Discount Rate"
 
-#: DiscountMatrix.php:175
+#: DiscountMatrix.php:182
 #, fuzzy, php-format
 msgid "Are you sure you wish to delete this discount matrix record?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi acest contact?"
@@ -9420,7 +9432,7 @@ msgstr "Mesaj linie adăugat"
 msgid "The selected message line has been deleted"
 msgstr "Preţul selectat a fost şters"
 
-#: EDIMessageFormat.php:127 EDIMessageFormat.php:204
+#: EDIMessageFormat.php:127 EDIMessageFormat.php:205
 msgid "Definition of"
 msgstr "Definiţia"
 
@@ -9437,30 +9449,30 @@ msgstr "Format String"
 msgid "Create New EDI Invoice Message From Default Template"
 msgstr "Creare mesaj nou EDI factura de la şablon implicit"
 
-#: EDIMessageFormat.php:191
+#: EDIMessageFormat.php:192
 msgid "Review Message Lines"
 msgstr "Review Mesaj Lines"
 
-#: EDIMessageFormat.php:212 EDIMessageFormat.php:214
+#: EDIMessageFormat.php:213 EDIMessageFormat.php:215
 msgid "Heading"
 msgstr "Rubrică"
 
-#: EDIMessageFormat.php:218 EDIMessageFormat.php:220 POReport.php:1504
+#: EDIMessageFormat.php:219 EDIMessageFormat.php:221 POReport.php:1504
 #: SalesInquiry.php:1050
 msgid "Detail"
 msgstr "Detaliu"
 
-#: EDIMessageFormat.php:223 EDIMessageFormat.php:225 GLBalanceSheet.php:53
+#: EDIMessageFormat.php:224 EDIMessageFormat.php:226 GLBalanceSheet.php:53
 #: GLProfit_Loss.php:103 GLTagProfit_Loss.php:117 POReport.php:1505
 #: SalesInquiry.php:1051 Tax.php:240
 msgid "Summary"
 msgstr "Rezumatul"
 
-#: EDIMessageFormat.php:239
+#: EDIMessageFormat.php:240
 msgid "Line Text"
 msgstr "Linie text"
 
-#: EDIMessageFormat.php:245 FixedAssetLocations.php:144
+#: EDIMessageFormat.php:246 FixedAssetLocations.php:151
 #: PO_AuthorisationLevels.php:246
 msgid "Update Information"
 msgstr "Update Informaţii"
@@ -10385,25 +10397,25 @@ msgstr "furnizori folosind aceasta companie factor"
 msgid "Factoring company record record for"
 msgstr "Compania de Factoring record record pentru"
 
-#: Factors.php:205
+#: Factors.php:206
 msgid "Factor company Name"
 msgstr "Factorul de numele companiei"
 
-#: Factors.php:232
+#: Factors.php:255
 msgid "Insert New Factor"
 msgstr "Introduceţi o nouă Factor"
 
-#: Factors.php:235
+#: Factors.php:261
 msgid "Update Factor"
 msgstr "Update Factor"
 
-#: Factors.php:236 Suppliers.php:965
+#: Factors.php:263 Suppliers.php:965
 msgid "There is no second warning if you hit the delete button below"
 msgstr ""
 "Nu există nici un al doilea avertisment, dacă te-a lovit şterge butonul de "
 "mai jos"
 
-#: Factors.php:236
+#: Factors.php:263
 msgid ""
 "However checks will be made to ensure there are no suppliers are using this "
 "factor before the deletion is processed"
@@ -10411,47 +10423,47 @@ msgstr ""
 "Cu toate acestea controale vor fi efectuate pentru a asigura că nu există "
 "furnizori sunt folosind acest factor înainte de ştergere este procesată"
 
-#: Factors.php:237
+#: Factors.php:265
 msgid "Delete Factor"
 msgstr "Ştergeţi Factor"
 
-#: Factors.php:237
+#: Factors.php:265
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această companie de factoring?"
 
-#: Factors.php:252 TaxAuthorities.php:146
+#: Factors.php:281 TaxAuthorities.php:146
 msgid "ID"
 msgstr "ID-ul"
 
-#: Factors.php:253
+#: Factors.php:282
 msgid "Company Name"
 msgstr "Numele companiei"
 
-#: Factors.php:254 PurchData.php:353 SelectSupplier.php:261
+#: Factors.php:283 PurchData.php:353 SelectSupplier.php:261
 msgid "Address 1"
 msgstr "Adresa 1"
 
-#: Factors.php:255 PurchData.php:354 SelectSupplier.php:262
+#: Factors.php:284 PurchData.php:354 SelectSupplier.php:262
 msgid "Address 2"
 msgstr "2 pentru adresă"
 
-#: Factors.php:256 PurchData.php:355 SelectSupplier.php:263
+#: Factors.php:285 PurchData.php:355 SelectSupplier.php:263
 msgid "Address 3"
 msgstr "Adresa 3"
 
-#: Factors.php:257 SelectSupplier.php:264
+#: Factors.php:286 SelectSupplier.php:264
 msgid "Address 4"
 msgstr "Adresa 4"
 
-#: Factors.php:258
+#: Factors.php:287
 msgid "Address 5"
 msgstr "Adresa 5"
 
-#: Factors.php:259
+#: Factors.php:288
 msgid "Address 6"
 msgstr "Adresa 6"
 
-#: Factors.php:304
+#: Factors.php:336
 msgid "Create New Factor"
 msgstr "Crearea de noi Factor"
 
@@ -10459,15 +10471,15 @@ msgstr "Crearea de noi Factor"
 msgid "Fixed Asset Category Maintenance"
 msgstr "Mijloacelor fixe Categorie Întreţinere"
 
-#: FixedAssetCategories.php:12
+#: FixedAssetCategories.php:13
 msgid "Fixed Asset Categories"
 msgstr "Categorii activelor fixe"
 
-#: FixedAssetCategories.php:34
+#: FixedAssetCategories.php:36
 msgid "The Fixed Asset Category code must be six characters or less long"
 msgstr "Fixe cod Categorie trebuie să fie de şase caractere sau mai puţin timp"
 
-#: FixedAssetCategories.php:37
+#: FixedAssetCategories.php:39
 msgid ""
 "The Fixed Asset Category code must be at least 1 character but less than six "
 "characters long"
@@ -10475,14 +10487,14 @@ msgstr ""
 "Fixe cod Categorie trebuie să fie de cel puţin 1 caracter, dar mai puţin de "
 "şase caractere"
 
-#: FixedAssetCategories.php:40
+#: FixedAssetCategories.php:42
 msgid ""
 "The Fixed Asset Category description must be twenty characters or less long"
 msgstr ""
 "Fixe Descrierea Categorie trebuie să fie de douazeci de caractere sau mai "
 "puţin timp"
 
-#: FixedAssetCategories.php:49
+#: FixedAssetCategories.php:52
 msgid ""
 "The accounts selected to post cost or accumulated depreciation to cannot be "
 "either of the debtors control account, creditors control account or GRN "
@@ -10492,7 +10504,7 @@ msgstr ""
 "nu poate fi nici de cont de control debitori, creditori cont de control sau "
 "conturi GRN suspans"
 
-#: FixedAssetCategories.php:65
+#: FixedAssetCategories.php:68
 msgid ""
 "The asset cost account selected is a bank account - bank accounts are "
 "protected from having any other postings made to them. Select another "
@@ -10502,7 +10514,7 @@ msgstr ""
 "sunt protejate de a avea orice alte postări a făcut pentru ei. Selectaţi un "
 "alt cont de bilanţul pentru costul activului"
 
-#: FixedAssetCategories.php:69
+#: FixedAssetCategories.php:72
 msgid ""
 "The accumulated depreciation account selected is a bank account - bank "
 "accounts are protected from having any other postings made to them. Select "
@@ -10512,23 +10524,23 @@ msgstr ""
 "bancare sunt protejate de a avea orice alte postări făcut pentru ei. "
 "Selectaţi un alt cont de bilanţul activului amortizarea"
 
-#: FixedAssetCategories.php:86
+#: FixedAssetCategories.php:90
 msgid "Could not update the fixed asset category"
 msgstr "Nu am putut actualiza categoria activelor fixe"
 
-#: FixedAssetCategories.php:89
+#: FixedAssetCategories.php:93
 msgid "Updated the fixed asset category record for"
 msgstr "Actualizat fix record pentru categoria de active"
 
-#: FixedAssetCategories.php:105
+#: FixedAssetCategories.php:109
 msgid "Could not insert the new fixed asset category"
 msgstr "Nu ar putea introduce noi categorii de active fixe"
 
-#: FixedAssetCategories.php:107
+#: FixedAssetCategories.php:111
 msgid "A new fixed asset category record has been added for"
 msgstr "Un nou record fix din categoria activelor a fost adăugată pentru"
 
-#: FixedAssetCategories.php:128
+#: FixedAssetCategories.php:132
 msgid ""
 "Cannot delete this fixed asset category because fixed assets have been "
 "created using this category"
@@ -10536,35 +10548,35 @@ msgstr ""
 "Nu se poate şterge această categorie de active fixe, deoarece activele "
 "imobilizate au fost create folosind această categorie"
 
-#: FixedAssetCategories.php:129
+#: FixedAssetCategories.php:133
 msgid "fixed assets referring to this category code"
 msgstr "activele imobilizate referindu-se la acest cod categorie"
 
-#: FixedAssetCategories.php:134
+#: FixedAssetCategories.php:138
 msgid "The fixed asset category"
 msgstr "Mijloacelor fixe categorie"
 
-#: FixedAssetCategories.php:158 StockCategories.php:215
+#: FixedAssetCategories.php:162 StockCategories.php:215
 msgid "Cat Code"
 msgstr "Cat Codul"
 
-#: FixedAssetCategories.php:160
+#: FixedAssetCategories.php:164
 msgid "Cost GL"
 msgstr "Costul GL"
 
-#: FixedAssetCategories.php:161
+#: FixedAssetCategories.php:165
 msgid "P & L Depn GL"
 msgstr "P &amp; L GL Depn"
 
-#: FixedAssetCategories.php:162
+#: FixedAssetCategories.php:166
 msgid "Disposal GL"
 msgstr "Eliminarea GL"
 
-#: FixedAssetCategories.php:163
+#: FixedAssetCategories.php:167
 msgid "Accum Depn GL"
 msgstr "Accum Depn GL"
 
-#: FixedAssetCategories.php:183
+#: FixedAssetCategories.php:187
 #, php-format
 msgid ""
 "Are you sure you wish to delete this fixed asset category? Additional checks "
@@ -10575,33 +10587,33 @@ msgstr ""
 "Verificări suplimentare vor fi efectuate înainte de ştergere efective pentru "
 "a asigura integritatea datelor nu este compromisă."
 
-#: FixedAssetCategories.php:203
+#: FixedAssetCategories.php:207
 msgid "Show All Fixed Asset Categories"
 msgstr "Arata Toate categoriile fix Asset"
 
-#: FixedAssetCategories.php:232 FixedAssetCategories.php:238
+#: FixedAssetCategories.php:238 FixedAssetCategories.php:248
 #: StockCategories.php:311 StockCategories.php:321
 msgid "Category Code"
 msgstr "Cod Categorie"
 
-#: FixedAssetCategories.php:265 POReport.php:741 POReport.php:1433
+#: FixedAssetCategories.php:277 POReport.php:741 POReport.php:1433
 #: SalesInquiry.php:960 StockCategories.php:352
 msgid "Category Description"
 msgstr "Descriere Categorie"
 
-#: FixedAssetCategories.php:268
+#: FixedAssetCategories.php:281
 msgid "Fixed Asset Cost GL Code"
 msgstr "Costuri fixe GL Asset Codul"
 
-#: FixedAssetCategories.php:282
+#: FixedAssetCategories.php:295
 msgid "Profit and Loss Depreciation GL Code"
 msgstr "De profit şi pierdere Codul Amortizare GL"
 
-#: FixedAssetCategories.php:295
+#: FixedAssetCategories.php:310
 msgid "Profit or Loss on Disposal GL Code:"
 msgstr "Profit sau pierdere privind Codul de eliminare GL:"
 
-#: FixedAssetCategories.php:307
+#: FixedAssetCategories.php:324
 msgid "Balance Sheet Accumulated Depreciation GL Code"
 msgstr "Bilanţul acumulate GL Codul Amortizare"
 
@@ -10614,7 +10626,7 @@ msgstr "Amortizarea Jurnalul de intrare"
 msgid "The date is expected to be in the format"
 msgstr "Datele introduse trebuie să fie în format"
 
-#: FixedAssetDepreciation.php:73
+#: FixedAssetDepreciation.php:74
 msgid ""
 "No depreciation will be committed as the processing date is beyond the "
 "current date. The depreciation run can only be run for periods prior to today"
@@ -10623,17 +10635,17 @@ msgstr ""
 "curentă. Rula amortizare pot fi rulate numai pentru perioadele anterioare de "
 "astăzi"
 
-#: FixedAssetDepreciation.php:83 FixedAssetRegister.php:80
-#: FixedAssetRegister.php:331 FixedAssetTransfer.php:109
+#: FixedAssetDepreciation.php:85 FixedAssetRegister.php:82
+#: FixedAssetRegister.php:348 FixedAssetTransfer.php:109
 #: SuppFixedAssetChgs.php:74 SupplierCredit.php:383 SupplierInvoice.php:369
 msgid "Asset ID"
 msgstr "Asset ID"
 
-#: FixedAssetDepreciation.php:85 FixedAssetItems.php:502 SelectAsset.php:245
+#: FixedAssetDepreciation.php:87 FixedAssetItems.php:522 SelectAsset.php:245
 msgid "Date Purchased"
 msgstr "Data achiziţionării"
 
-#: FixedAssetDepreciation.php:86 PricesByCost.php:157 SalesAnalReptCols.php:36
+#: FixedAssetDepreciation.php:88 PricesByCost.php:157 SalesAnalReptCols.php:36
 #: SalesAnalReptCols.php:38 SelectProduct.php:193 SelectProduct.php:350
 #: ShipmentCosting.php:149 ShipmentCosting.php:150 StockCostUpdate.php:153
 #: includes/PDFInventoryValnPageHeader.inc:35
@@ -10642,27 +10654,27 @@ msgstr "Data achiziţionării"
 msgid "Cost"
 msgstr "Cost"
 
-#: FixedAssetDepreciation.php:87
+#: FixedAssetDepreciation.php:89
 msgid "Accum Depn"
 msgstr "Accum Depn"
 
-#: FixedAssetDepreciation.php:88
+#: FixedAssetDepreciation.php:90
 msgid "B/fwd Book Value"
 msgstr "B / Fwd valoarea contabilă"
 
-#: FixedAssetDepreciation.php:89
+#: FixedAssetDepreciation.php:91
 msgid "Depn Type"
 msgstr "Depn Tip"
 
-#: FixedAssetDepreciation.php:90
+#: FixedAssetDepreciation.php:92
 msgid "Depn Rate"
 msgstr "Depn Rate"
 
-#: FixedAssetDepreciation.php:91
+#: FixedAssetDepreciation.php:93
 msgid "New Depn"
 msgstr "Noi Depn"
 
-#: FixedAssetDepreciation.php:106 FixedAssetDepreciation.php:229
+#: FixedAssetDepreciation.php:112 FixedAssetDepreciation.php:242
 #: InventoryValuation.php:116 InventoryValuation.php:168
 #: MailInventoryValuation.php:140 MailInventoryValuation.php:186
 #: OutstandingGRNs.php:88 OutstandingGRNs.php:135
@@ -10670,36 +10682,36 @@ msgstr "Noi Depn"
 msgid "Total for"
 msgstr "Total pentru"
 
-#: FixedAssetDepreciation.php:122
+#: FixedAssetDepreciation.php:130
 msgid "SL"
 msgstr "SL"
 
-#: FixedAssetDepreciation.php:128
+#: FixedAssetDepreciation.php:136
 msgid "DV"
 msgstr "DV"
 
-#: FixedAssetDepreciation.php:181
+#: FixedAssetDepreciation.php:192
 msgid "Cannot insert a depreciation GL entry for the depreciation because"
 msgstr ""
 "Nu poate introduce un GL intrare depreciere pentru depreciere, deoarece"
 
-#: FixedAssetDepreciation.php:182 GLJournal.php:84 GLJournal.php:107
+#: FixedAssetDepreciation.php:193 GLJournal.php:84 GLJournal.php:107
 msgid "The SQL that failed to insert the GL Trans record was"
 msgstr "SQL care nu a reuşit să insera GL record Trans a fost"
 
-#: FixedAssetDepreciation.php:217
+#: FixedAssetDepreciation.php:229
 msgid ""
 "Cannot insert a fixed asset transaction entry for the depreciation because"
 msgstr ""
 "Nu poate insera o tranzacţie de intrare a activelor fixe pentru depreciere, "
 "deoarece"
 
-#: FixedAssetDepreciation.php:218
+#: FixedAssetDepreciation.php:230
 msgid "The SQL that failed to insert the fixed asset transaction record was"
 msgstr ""
 "SQL care nu a reuşit să insera fix înregistrează tranzacţia a fost activ"
 
-#: FixedAssetDepreciation.php:224
+#: FixedAssetDepreciation.php:236
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "accumulated depreciation could not be updated:"
@@ -10707,7 +10719,7 @@ msgstr ""
 "CRITICE EROARE! Notaţi această eroare şi solicitaţi asistenţă. Amortizarea "
 "activelor fixe acumulate nu a putut fi actualizat:"
 
-#: FixedAssetDepreciation.php:225
+#: FixedAssetDepreciation.php:237
 msgid ""
 "The following SQL was used to attempt the update the accumulated "
 "depreciation of the asset was:"
@@ -10715,28 +10727,28 @@ msgstr ""
 "Următoarele SQL a fost folosit pentru încercarea de a actualiza amortizarea "
 "acumulată a activului a fost:"
 
-#: FixedAssetDepreciation.php:236 SalesByTypePeriodInquiry.php:554
+#: FixedAssetDepreciation.php:250 SalesByTypePeriodInquiry.php:554
 #: SalesCategoryPeriodInquiry.php:208 SalesTopItemsInquiry.php:265
 msgid "GRAND Total"
 msgstr "GRAND Total"
 
-#: FixedAssetDepreciation.php:248 FixedAssetRegister.php:361
+#: FixedAssetDepreciation.php:264 FixedAssetRegister.php:378
 msgid "Depreciation"
 msgstr "Depreciere"
 
-#: FixedAssetDepreciation.php:248 GLJournal.php:116 Payments.php:585
+#: FixedAssetDepreciation.php:264 GLJournal.php:116 Payments.php:585
 msgid "has been successfully entered"
 msgstr "a fost introdus cu succes"
 
-#: FixedAssetDepreciation.php:250
+#: FixedAssetDepreciation.php:266
 msgid "Return to main menu"
 msgstr "A reveni la meniul principal"
 
-#: FixedAssetDepreciation.php:259 FixedAssetDepreciation.php:262
+#: FixedAssetDepreciation.php:277 FixedAssetDepreciation.php:280
 msgid "Date to Process Depreciation"
 msgstr "Data la Procesul de amortizare"
 
-#: FixedAssetDepreciation.php:265
+#: FixedAssetDepreciation.php:283
 msgid "Commit Depreciation"
 msgstr "Commit Amortizarea"
 
@@ -10795,11 +10807,11 @@ msgstr ""
 "Nu exista categorii de active definite. Toate bunurile trebuie să aparţină "
 "unei categorii valabil,"
 
-#: FixedAssetItems.php:109 Z_ImportFixedAssets.php:132
+#: FixedAssetItems.php:112 Z_ImportFixedAssets.php:132
 msgid "The depreciation rate is expected to be a number between 0 and 100"
 msgstr "Rata de amortizare este de aşteptat să fie un număr între 0 şi 100"
 
-#: FixedAssetItems.php:114
+#: FixedAssetItems.php:117
 msgid ""
 "Numbers less than 1 are interpreted as less than 1%. The depreciation rate "
 "should be entered as a number between 0 and 100"
@@ -10807,53 +10819,53 @@ msgstr ""
 "Numerele de mai puţin de 1 sunt interpretate ca mai puţin de 1%. Rata de "
 "amortizare ar trebui să fie introdus ca un număr între 0 şi 100"
 
-#: FixedAssetItems.php:160 FixedAssetItems.php:180 FixedAssetItems.php:200
-#: FixedAssetItems.php:220
+#: FixedAssetItems.php:163 FixedAssetItems.php:183 FixedAssetItems.php:203
+#: FixedAssetItems.php:223
 msgid "change category"
 msgstr "schimbare de categorie"
 
-#: FixedAssetItems.php:163 FixedAssetItems.php:183 FixedAssetItems.php:203
-#: FixedAssetItems.php:223
+#: FixedAssetItems.php:166 FixedAssetItems.php:186 FixedAssetItems.php:206
+#: FixedAssetItems.php:226
 msgid "Cannot insert a GL entry for the change of asset category because"
 msgstr ""
 "Nu se poate insera o intrare GL pentru schimbarea de categorii de active, "
 "deoarece"
 
-#: FixedAssetItems.php:164 FixedAssetItems.php:184 FixedAssetItems.php:204
-#: FixedAssetItems.php:224 FixedAssetItems.php:334 FixedAssetItems.php:354
+#: FixedAssetItems.php:167 FixedAssetItems.php:187 FixedAssetItems.php:207
+#: FixedAssetItems.php:227 FixedAssetItems.php:337 FixedAssetItems.php:357
 msgid "The SQL that failed to insert the cost GL Trans record was"
 msgstr "SQL care nu a reuşit să introduceţi costul GL record Trans a fost"
 
-#: FixedAssetItems.php:239
+#: FixedAssetItems.php:242
 msgid "The asset could not be updated because"
 msgstr "Activul nu a putut fi actualizat deoarece"
 
-#: FixedAssetItems.php:240
+#: FixedAssetItems.php:243
 msgid "The SQL that was used to update the asset and failed was"
 msgstr "SQL care a fost folosit pentru a actualiza activului şi nu a fost"
 
-#: FixedAssetItems.php:243 FixedAssetRegister.php:268
-#: FixedAssetRegister.php:354
+#: FixedAssetItems.php:246 FixedAssetRegister.php:279
+#: FixedAssetRegister.php:371
 msgid "Asset"
 msgstr "Asset"
 
-#: FixedAssetItems.php:263 Z_ImportFixedAssets.php:211
+#: FixedAssetItems.php:266 Z_ImportFixedAssets.php:211
 msgid "The asset could not be added because"
 msgstr "Activul nu a putut fi adăugată deoarece"
 
-#: FixedAssetItems.php:264
+#: FixedAssetItems.php:267
 msgid "The SQL that was used to add the asset failed was"
 msgstr "SQL care a fost utilizat pentru a adăuga activul nu a fost"
 
-#: FixedAssetItems.php:269
+#: FixedAssetItems.php:272
 msgid "The new asset has been added to the database with an asset code of:"
 msgstr "Noului activ a fost adăugată la baza de date cu un cod activ al:"
 
-#: FixedAssetItems.php:279 Stocks.php:599
+#: FixedAssetItems.php:282 Stocks.php:599
 msgid "Validation failed, no updates or deletes took place"
 msgstr "Validare a eşuat, nu actualizări sau şterge au avut loc"
 
-#: FixedAssetItems.php:298
+#: FixedAssetItems.php:301
 msgid ""
 "The asset still has a net book value - only assets with a zero net book "
 "value can be deleted"
@@ -10861,7 +10873,7 @@ msgstr ""
 "Activul are încă o valoare contabilă netă - doar activele cu o valoare "
 "contabilă netă zero pot fi şterse"
 
-#: FixedAssetItems.php:303
+#: FixedAssetItems.php:306
 msgid ""
 "The asset has transactions associated with it. The asset can only be deleted "
 "when the fixed asset transactions are purged, otherwise the integrity of "
@@ -10871,7 +10883,7 @@ msgstr ""
 "când tranzacţiile mijloacelor fixe sunt eliminate, altfel integritatea "
 "rapoartelor active fixe poate fi compromisă"
 
-#: FixedAssetItems.php:308
+#: FixedAssetItems.php:311
 msgid ""
 "There is a purchase order set up for this asset. The purchase order line "
 "must be deleted first"
@@ -10879,16 +10891,16 @@ msgstr ""
 "Există un ordin de cumpărare stabilit pentru acest activ. Pentru Linia de "
 "cumpărare trebuie să fie şterse prima"
 
-#: FixedAssetItems.php:330 FixedAssetItems.php:350
+#: FixedAssetItems.php:333 FixedAssetItems.php:353
 msgid "Delete asset"
 msgstr "Ştergeţi activ"
 
-#: FixedAssetItems.php:333
+#: FixedAssetItems.php:336
 msgid "Cannot insert a GL entry for the deletion of the asset because"
 msgstr ""
 "Nu se poate insera o intrare GL pentru eliminarea a activului, deoarece"
 
-#: FixedAssetItems.php:353
+#: FixedAssetItems.php:356
 msgid ""
 "Cannot insert a GL entry for the reversal of accumulated depreciation on "
 "deletion of the asset because"
@@ -10896,120 +10908,120 @@ msgstr ""
 "Nu se poate insera o intrare GL pentru inversarea de amortizarea acumulată "
 "pe eliminarea activului, deoarece"
 
-#: FixedAssetItems.php:360
+#: FixedAssetItems.php:363
 msgid "Could not delete the asset record"
 msgstr "Nu a putut şterge înregistrarea activului"
 
-#: FixedAssetItems.php:364
+#: FixedAssetItems.php:367
 msgid "Deleted the asset  record for asset number"
 msgstr "Eliminat record activ pentru numărul de activ"
 
-#: FixedAssetItems.php:430 FixedAssetItems.php:434 FixedAssetTransfer.php:61
+#: FixedAssetItems.php:434 FixedAssetItems.php:441 FixedAssetTransfer.php:61
 #: SelectAsset.php:242
 msgid "Asset Code"
 msgstr "Codul Asset"
 
-#: FixedAssetItems.php:443 FixedAssetItems.php:451
+#: FixedAssetItems.php:454 FixedAssetItems.php:464
 msgid "Asset Description"
 msgstr "Asset Descriere"
 
-#: FixedAssetItems.php:443 Stocks.php:804
+#: FixedAssetItems.php:454 Stocks.php:804
 msgid "short"
 msgstr "scurt"
 
-#: FixedAssetItems.php:451 Stocks.php:814
+#: FixedAssetItems.php:464 Stocks.php:814
 msgid "long"
 msgstr "lung"
 
-#: FixedAssetItems.php:455 SalesCategories.php:323 Stocks.php:818
+#: FixedAssetItems.php:471 SalesCategories.php:323 Stocks.php:818
 msgid "Image File (.jpg)"
 msgstr "Image File (. Jpg)"
 
-#: FixedAssetItems.php:481 FixedAssetRegister.php:242
+#: FixedAssetItems.php:499 FixedAssetRegister.php:249
 msgid "Asset Category"
 msgstr "Asset Categorie"
 
-#: FixedAssetItems.php:484
+#: FixedAssetItems.php:503
 msgid "The asset categories could not be retrieved because"
 msgstr "Categoriile de active nu a putut fi recuperate, deoarece"
 
-#: FixedAssetItems.php:496
+#: FixedAssetItems.php:515
 msgid "Add or Modify Asset Categories"
 msgstr "Adăugaţi sau Modificare categorii de active"
 
-#: FixedAssetItems.php:506
+#: FixedAssetItems.php:528
 msgid "The asset locations could not be retrieved because"
 msgstr "Locaţii activ nu a putut fi recuperate, deoarece"
 
-#: FixedAssetItems.php:507
+#: FixedAssetItems.php:529
 msgid "The SQL used to retrieve asset locations and failed was"
 msgstr "SQL folosite pentru a prelua locaţii activelor şi a eşuat a fost"
 
-#: FixedAssetItems.php:510 FixedAssetRegister.php:255 SelectAsset.php:74
+#: FixedAssetItems.php:533 FixedAssetRegister.php:264 SelectAsset.php:74
 #: SelectAsset.php:244
 msgid "Asset Location"
 msgstr "Asset Locaţie"
 
-#: FixedAssetItems.php:518
+#: FixedAssetItems.php:544
 #, fuzzy
 msgid "Add Asset Location"
 msgstr "Asset Locaţie"
 
-#: FixedAssetItems.php:520 Stocks.php:1055 includes/DefineLabelClass.php:50
+#: FixedAssetItems.php:547 Stocks.php:1055 includes/DefineLabelClass.php:50
 msgid "Bar Code"
 msgstr "Codul de bare"
 
-#: FixedAssetItems.php:522 FixedAssetRegister.php:82
+#: FixedAssetItems.php:551 FixedAssetRegister.php:84
 #: StockSerialItemResearch.php:30 StockSerialItems.php:90
 #: StockSerialItems.php:92 StockSerialItems.php:94
 msgid "Serial Number"
 msgstr "Număr de serie"
 
-#: FixedAssetItems.php:525
+#: FixedAssetItems.php:555
 msgid "Depreciation Type"
 msgstr "Amortizarea Tip"
 
-#: FixedAssetItems.php:531 FixedAssetItems.php:534
+#: FixedAssetItems.php:562 FixedAssetItems.php:565
 msgid "Straight Line"
 msgstr "Straight Line"
 
-#: FixedAssetItems.php:532 FixedAssetItems.php:535
+#: FixedAssetItems.php:563 FixedAssetItems.php:566
 msgid "Diminishing Value"
 msgstr "Diminuarea Valoare"
 
-#: FixedAssetItems.php:540
+#: FixedAssetItems.php:572
 msgid "Depreciation Rate"
 msgstr "Deprecierea cursului de"
 
-#: FixedAssetItems.php:544
+#: FixedAssetItems.php:581
 msgid "Asset Financial Summary"
 msgstr "Activ financiar Rezumat"
 
-#: FixedAssetItems.php:546 WorkOrderEntry.php:502
+#: FixedAssetItems.php:584 WorkOrderEntry.php:502
 msgid "Accumulated Costs"
 msgstr "Costurile acumulate"
 
-#: FixedAssetItems.php:547
+#: FixedAssetItems.php:588
 msgid "Accumulated Depreciation"
 msgstr "Amortizarea cumulată"
 
-#: FixedAssetItems.php:548 FixedAssetRegister.php:364
+#: FixedAssetItems.php:592 FixedAssetRegister.php:381
 msgid "Net Book Value"
 msgstr "Net valoarea contabilă"
 
-#: FixedAssetItems.php:560
+#: FixedAssetItems.php:607
 msgid "Not Yet Run"
 msgstr "Cu toate acestea, nu Run"
 
-#: FixedAssetItems.php:564
+#: FixedAssetItems.php:612
 msgid "Depreciation last run"
 msgstr "Amortizarea ultima alerga"
 
-#: FixedAssetItems.php:569
+#: FixedAssetItems.php:621
 msgid "Insert New Fixed Asset"
 msgstr "Inserarea de noi mijloace fixe Asset"
 
-#: FixedAssetItems.php:574
+#: FixedAssetItems.php:627
 msgid ""
 "Only click the Delete button if you are sure you wish to delete the asset. "
 "Only assets with a zero book value can be deleted"
@@ -11017,11 +11029,11 @@ msgstr ""
 "Doar faceţi clic pe butonul Delete dacă sunteţi sigur că doriţi să ştergeţi "
 "activului. Numai activele cu o valoare contabilă zero pot fi şterse"
 
-#: FixedAssetItems.php:575
+#: FixedAssetItems.php:630
 msgid "Delete This Asset"
 msgstr "Ştergeţi acest avantaj"
 
-#: FixedAssetItems.php:575
+#: FixedAssetItems.php:630
 msgid "Are You Sure? Only assets with a zero book value can be deleted."
 msgstr "Esti sigur? Numai activele cu o valoare contabilă zero pot fi şterse."
 
@@ -11029,39 +11041,39 @@ msgstr "Esti sigur? Numai activele cu o valoare contabilă zero pot fi şterse."
 msgid "Fixed Asset Locations"
 msgstr "Locaţii fixe Asset"
 
-#: FixedAssetLocations.php:14
+#: FixedAssetLocations.php:15
 msgid "You must enter at least one character in the location ID"
 msgstr "Trebuie să introduceţi cel puţin un caracter în ID-ul de locaţie"
 
-#: FixedAssetLocations.php:18 FixedAssetLocations.php:48
+#: FixedAssetLocations.php:19 FixedAssetLocations.php:49
 msgid "You must enter at least one character in the location description"
 msgstr "Trebuie să introduceţi cel puţin un caracter în descrierea locaţie"
 
-#: FixedAssetLocations.php:68
+#: FixedAssetLocations.php:70
 msgid "This location has child locations so cannot be removed"
 msgstr "Această locaţie a locatii copil deci nu pot fi eliminate"
 
-#: FixedAssetLocations.php:75
+#: FixedAssetLocations.php:77
 msgid "You have assets in this location location so it cannot be removed"
 msgstr "Ai active în această locaţie locaţie, astfel că nu poate fi îndepărtat"
 
-#: FixedAssetLocations.php:81
+#: FixedAssetLocations.php:83
 msgid "The location has been deleted successfully"
 msgstr "Adresa a fost ştearsă cu succes"
 
-#: FixedAssetLocations.php:91 FixedAssetLocations.php:108
+#: FixedAssetLocations.php:94 FixedAssetLocations.php:116
 msgid "Location ID"
 msgstr "Locaţie ID"
 
-#: FixedAssetLocations.php:92 FixedAssetLocations.php:116
+#: FixedAssetLocations.php:95 FixedAssetLocations.php:126
 msgid "Location Description"
 msgstr "Locaţie Descriere"
 
-#: FixedAssetLocations.php:93 FixedAssetLocations.php:119
+#: FixedAssetLocations.php:96 FixedAssetLocations.php:130
 msgid "Parent Location"
 msgstr "Mamă Locaţie"
 
-#: FixedAssetLocations.php:146
+#: FixedAssetLocations.php:154
 msgid "Delete This Location"
 msgstr "Ştergeţi Acest Locaţie"
 
@@ -11070,43 +11082,43 @@ msgstr "Ştergeţi Acest Locaţie"
 msgid "Fixed Asset Register"
 msgstr "Active fixe Inregistrare"
 
-#: FixedAssetRegister.php:84
+#: FixedAssetRegister.php:86
 msgid "Date Acquired"
 msgstr "Data dobândite"
 
-#: FixedAssetRegister.php:85
+#: FixedAssetRegister.php:87
 msgid "Cost B/fwd"
 msgstr "B Cost / Fwd"
 
-#: FixedAssetRegister.php:86
+#: FixedAssetRegister.php:88
 msgid "Depn B/fwd"
 msgstr "Depn B / Fwd"
 
-#: FixedAssetRegister.php:87 FixedAssetRegister.php:360
+#: FixedAssetRegister.php:89 FixedAssetRegister.php:377
 msgid "Additions"
 msgstr "Adiţii"
 
-#: FixedAssetRegister.php:88
+#: FixedAssetRegister.php:90
 msgid "Depn"
 msgstr "Depn"
 
-#: FixedAssetRegister.php:89
+#: FixedAssetRegister.php:91
 msgid "Cost C/fwd"
 msgstr "C Cost / Fwd"
 
-#: FixedAssetRegister.php:90
+#: FixedAssetRegister.php:92
 msgid "Depn C/fwd"
 msgstr "Depn C / Fwd"
 
-#: FixedAssetRegister.php:91
+#: FixedAssetRegister.php:93
 msgid "NBV"
 msgstr "NBV"
 
-#: FixedAssetRegister.php:92
+#: FixedAssetRegister.php:94
 msgid "Disposal Value"
 msgstr "Valoare de eliminare"
 
-#: FixedAssetRegister.php:198 FixedAssetRegister.php:222
+#: FixedAssetRegister.php:204 FixedAssetRegister.php:228
 #: PDFBankingSummary.php:175 PDFChequeListing.php:182 PO_Items.php:719
 #: includes/PDFSalesAnalysis.inc:71 includes/PDFSalesAnalysis.inc:125
 #: includes/PDFSalesAnalysis.inc:178 includes/PDFSalesAnalysis.inc:312
@@ -11114,56 +11126,56 @@ msgstr "Valoare de eliminare"
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: FixedAssetRegister.php:232 FixedAssetRegister.php:294
+#: FixedAssetRegister.php:238 FixedAssetRegister.php:310
 msgid "Print as a pdf"
 msgstr "Imprima ca un PDF"
 
-#: FixedAssetRegister.php:233 FixedAssetRegister.php:295
+#: FixedAssetRegister.php:239 FixedAssetRegister.php:311
 msgid "Print as CSV"
 msgstr "Imprimare în format CSV"
 
-#: FixedAssetRegister.php:244 FixedAssetRegister.php:257
-#: FixedAssetRegister.php:270 SuppPriceList.php:222
+#: FixedAssetRegister.php:251 FixedAssetRegister.php:266
+#: FixedAssetRegister.php:281 SuppPriceList.php:222
 msgid "ALL"
 msgstr "TOATE"
 
-#: FixedAssetRegister.php:286
+#: FixedAssetRegister.php:299
 msgid " From Date"
 msgstr " Data de la"
 
-#: FixedAssetRegister.php:288
+#: FixedAssetRegister.php:303
 msgid "To Date "
 msgstr "La Data "
 
-#: FixedAssetRegister.php:293
+#: FixedAssetRegister.php:309
 msgid "Show Assets"
 msgstr "Arată Active"
 
-#: FixedAssetRegister.php:329
+#: FixedAssetRegister.php:346
 msgid "Asset Category "
 msgstr "Asset Categorie "
 
-#: FixedAssetRegister.php:330
+#: FixedAssetRegister.php:347
 msgid "Asset Location "
 msgstr "Asset Locaţie "
 
-#: FixedAssetRegister.php:356
+#: FixedAssetRegister.php:373
 msgid "Serial No."
 msgstr "Serial No."
 
-#: FixedAssetRegister.php:358
+#: FixedAssetRegister.php:375
 msgid "Cost B/Fwd"
 msgstr "B Cost / Fwd"
 
-#: FixedAssetRegister.php:359
+#: FixedAssetRegister.php:376
 msgid "Depn B/Fwd"
 msgstr "Depn B / Fwd"
 
-#: FixedAssetRegister.php:362
+#: FixedAssetRegister.php:379
 msgid "Cost C/Fwd"
 msgstr "C Cost / Fwd"
 
-#: FixedAssetRegister.php:363
+#: FixedAssetRegister.php:380
 msgid "Depn C/Fwd"
 msgstr "Depn C / Fwd"
 
@@ -13243,7 +13255,7 @@ msgstr "Cantităţile de raportare a inventarului"
 #: SelectProduct.php:78 StockDispatch.php:221 StockMovements.php:19
 #: StockQties_csv.php:8 StockQuantityByDate.php:10 StockReorderLevel.php:18
 #: StockSerialItemResearch.php:9 StockSerialItems.php:9 StockStatus.php:42
-#: StockTransferControlled.php:14 SuppLoginSetup.php:15 WWW_Users.php:16
+#: StockTransferControlled.php:14 SuppLoginSetup.php:24 WWW_Users.php:16
 #: index.php:15
 msgid "Inventory"
 msgstr "Inventar"
@@ -13998,6 +14010,7 @@ msgid "Multiplier"
 msgstr "Multiplicator"
 
 #: MRPCreateDemands.php:278 PricesByCost.php:286 ReorderLevelLocation.php:206
+#: Z_CopyBOM.php:143
 msgid "Submit"
 msgstr "Trimite"
 
@@ -17297,7 +17310,7 @@ msgid "Order Header Details"
 msgstr "Pentru Header Detalii"
 
 #: PO_OrderDetails.php:89 Suppliers.php:655 Suppliers.php:838
-#: WWW_Users.php:274 WWW_Users.php:501
+#: WWW_Users.php:277 WWW_Users.php:504
 msgid "Supplier Code"
 msgstr "Codul furnizorul"
 
@@ -17477,7 +17490,7 @@ msgstr "conform instrucţiunilor"
 msgid "Emailing Purchase order"
 msgstr "Email pentru cumparare"
 
-#: PO_PDFPurchOrder.php:332 Z_ChangeStockCode.php:245
+#: PO_PDFPurchOrder.php:332 Z_ChangeStockCode.php:255
 msgid "failed"
 msgstr "eşuat"
 
@@ -17589,7 +17602,7 @@ msgid "Show All"
 msgstr "Arata toate"
 
 #: PO_SelectOSPurchOrder.php:233 PO_SelectPurchOrder.php:214
-#: Shipt_Select.php:192 SuppLoginSetup.php:11 WWW_Users.php:12
+#: Shipt_Select.php:192 SuppLoginSetup.php:20 WWW_Users.php:12
 msgid "Orders"
 msgstr "Obligă"
 
@@ -18333,7 +18346,7 @@ msgstr "Autorizarea Cheltuieli Petty Cash"
 msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr ""
 
-#: PcAuthorizeExpenses.php:42 PcAuthorizeExpenses.php:45 SuppLoginSetup.php:19
+#: PcAuthorizeExpenses.php:42 PcAuthorizeExpenses.php:45 SuppLoginSetup.php:28
 #: WWW_Users.php:20 index.php:19
 msgid "Petty Cash"
 msgstr "Cheltuieli mărunte"
@@ -19420,7 +19433,7 @@ msgstr "Preturi speciale ale clienţilor"
 #: Prices_Customer.php:36 SpecialOrder.php:116 SpecialOrder.php:119
 #: SuppTransGLAnalysis.php:106 SupplierCredit.php:318 SupplierCredit.php:319
 #: SupplierCredit.php:421 SupplierCredit.php:460 SupplierInvoice.php:455
-#: Z_CurrencySuppliersBalances.php:27
+#: Z_CurrencyDebtorsBalances.php:33 Z_CurrencySuppliersBalances.php:31
 msgid "in"
 msgstr "în"
 
@@ -22186,7 +22199,7 @@ msgstr "Vânzări anchetă"
 msgid "Top Sales Items Inquiry"
 msgstr "Top vânzări elementele de listă"
 
-#: SalesTopItemsInquiry.php:83 WWW_Users.php:625
+#: SalesTopItemsInquiry.php:83 WWW_Users.php:628
 msgid "Display"
 msgstr "Afişare"
 
@@ -25468,8 +25481,8 @@ msgstr ""
 "Circulaţiei stocurilor pentru criteriile selectate nu a putut fi recuperate, "
 "deoarece"
 
-#: StockLocMovements.php:89 Z_CheckAllocationsFrom.php:27
-#: Z_CheckAllocationsFrom.php:50
+#: StockLocMovements.php:89 Z_CheckAllocationsFrom.php:33
+#: Z_CheckAllocationsFrom.php:58
 msgid "Trans No"
 msgstr "Trans nr"
 
@@ -26778,8 +26791,8 @@ msgstr ""
 "furnizorului, apoi pe link-ul pentru a introduce o factura furnizorului sau "
 "note de credit trebuie să fie făcut clic pe"
 
-#: SuppContractChgs.php:22 SuppFixedAssetChgs.php:20 SuppShiptChgs.php:28
-#: SuppTransGLAnalysis.php:20
+#: SuppContractChgs.php:22 SuppFixedAssetChgs.php:20 SuppLoginSetup.php:15
+#: SuppShiptChgs.php:28 SuppTransGLAnalysis.php:20
 msgid "Select A Supplier"
 msgstr "Selectaţi un furnizor"
 
@@ -27187,49 +27200,56 @@ msgstr "Deselectează toate"
 msgid "Add to Invoice"
 msgstr "Adauga la factură"
 
-#: SuppLoginSetup.php:12 WWW_Users.php:13 index.php:12
+#: SuppLoginSetup.php:15
+#, fuzzy
+msgid "A supplier must first be selected before logins can be defined for it"
+msgstr ""
+"Un element trebuie să fie mai întâi selectat înainte de această pagină este "
+"denumită"
+
+#: SuppLoginSetup.php:21 WWW_Users.php:13 index.php:12
 msgid "Receivables"
 msgstr "Plati clienti"
 
-#: SuppLoginSetup.php:13 WWW_Users.php:14 index.php:13
+#: SuppLoginSetup.php:22 WWW_Users.php:14 index.php:13
 msgid "Payables"
 msgstr "Achitari furnizori"
 
-#: SuppLoginSetup.php:14 WWW_Users.php:15
+#: SuppLoginSetup.php:23 WWW_Users.php:15
 msgid "Purchasing"
 msgstr "De cumpărare"
 
-#: SuppLoginSetup.php:16 WWW_Users.php:17 index.php:16
+#: SuppLoginSetup.php:25 WWW_Users.php:17 index.php:16
 msgid "Manufacturing"
 msgstr "Producere"
 
-#: SuppLoginSetup.php:17 SuppTransGLAnalysis.php:95 SuppTransGLAnalysis.php:98
+#: SuppLoginSetup.php:26 SuppTransGLAnalysis.php:95 SuppTransGLAnalysis.php:98
 #: SupplierCredit.php:227 SupplierCredit.php:301 SupplierInvoice.php:204
 #: SupplierInvoice.php:272 WWW_Users.php:18 index.php:17
 msgid "General Ledger"
 msgstr "Contabilitate"
 
-#: SuppLoginSetup.php:18 WWW_Users.php:19 index.php:18
+#: SuppLoginSetup.php:27 WWW_Users.php:19 index.php:18
 msgid "Asset Manager"
 msgstr "Asset Manager"
 
-#: SuppLoginSetup.php:22 SupplierContacts.php:16
+#: SuppLoginSetup.php:31 SupplierContacts.php:16
 msgid "Back to Suppliers"
 msgstr "Înapoi la Furnizori"
 
-#: SuppLoginSetup.php:96
+#: SuppLoginSetup.php:105
 #, fuzzy
 msgid "A new supplier login has been created"
 msgstr "Un ordin de lucru nou a fost creat pentru"
 
-#: SuppLoginSetup.php:172
+#: SuppLoginSetup.php:181
 msgid ""
 "The supplier login role is expected to contain just one token - number 9. "
 "There is no such role currently defined - so a supplier login cannot be set "
 "up until this role is defined"
 msgstr ""
 
-#: SuppLoginSetup.php:179 WWW_Users.php:464
+#: SuppLoginSetup.php:188 WWW_Users.php:467
 msgid "Default Location"
 msgstr "Implicit Locaţie"
 
@@ -31091,67 +31111,67 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:126
+#: UpgradeDatabase.php:127
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:140
+#: UpgradeDatabase.php:141
 msgid "Applying"
 msgstr "Aplicarea"
 
-#: UpgradeDatabase.php:168 Z_Upgrade3.10.php:29 Z_Upgrade3.10.php:34
+#: UpgradeDatabase.php:169 Z_Upgrade3.10.php:29 Z_Upgrade3.10.php:34
 #: Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51 Z_Upgrade3.10.php:60
 #: Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74 Z_Upgrade3.10.php:79
 #: Z_Upgrade_3.10-3.11.php:59 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Succes"
 
-#: UpgradeDatabase.php:171 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:172 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tabelul a fost deja creat"
 
-#: UpgradeDatabase.php:174
+#: UpgradeDatabase.php:175
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Coloana a fost deja creat"
 
-#: UpgradeDatabase.php:177 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:178 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Coloana a fost deja creat"
 
-#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:181 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Index există deja"
 
-#: UpgradeDatabase.php:183 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Intrarea a fost deja făcut"
 
-#: UpgradeDatabase.php:186
+#: UpgradeDatabase.php:187
 msgid "SQL syntax error. The SQL error message is"
 msgstr "Eroare de sintaxă SQL. Mesajul de eroare SQL este"
 
-#: UpgradeDatabase.php:189 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:190 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "cheie primară există deja"
 
-#: UpgradeDatabase.php:192
+#: UpgradeDatabase.php:193
 msgid "Index already dropped previously"
 msgstr "Index a scăzut deja anterior"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:196 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Eşec"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:196 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Eroare număr"
@@ -31185,11 +31205,11 @@ msgstr "0 va implicit la sistemul de stabilire a"
 msgid "The password and password confirmation fields entered do not match"
 msgstr "Câmpurile parola şi confirmarea parolei introduse nu se potrivesc"
 
-#: UserSettings.php:66 UserSettings.php:82 WWW_Users.php:198
+#: UserSettings.php:66 UserSettings.php:82 WWW_Users.php:201
 msgid "The user alterations could not be processed because"
 msgstr "Modificările utilizator nu a putut fi prelucrate, deoarece"
 
-#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:199
+#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:202
 msgid "The SQL that was used to update the user and failed was"
 msgstr "SQL care a fost folosit pentru a actualiza utilizatorului şi nu a fost"
 
@@ -31218,7 +31238,7 @@ msgstr "Confirma parola"
 msgid "If you leave the password boxes empty your password will not change"
 msgstr "Dacă lăsaţi casetele parola gol parola dvs. nu se va schimba"
 
-#: UserSettings.php:200 WWW_Users.php:643
+#: UserSettings.php:200 WWW_Users.php:646
 msgid "PDF Language Support"
 msgstr "PDF Suport pentru limbi"
 
@@ -31466,83 +31486,83 @@ msgstr "Est Rusă Japoneză Coreeană European ebraică Thai Arabă"
 msgid "User Maintenance"
 msgstr "Reglaje utilizator"
 
-#: WWW_Users.php:91
+#: WWW_Users.php:94
 #, fuzzy
 msgid "The user ID"
 msgstr "ID Utilizator"
 
-#: WWW_Users.php:91
+#: WWW_Users.php:94
 #, fuzzy
 msgid "already exists and cannot be used again"
 msgstr " există deja în acest tip de Tab."
 
-#: WWW_Users.php:156
+#: WWW_Users.php:159
 msgid "The selected user record has been updated"
 msgstr "Record de utilizator selectat a fost actualizat"
 
-#: WWW_Users.php:193
+#: WWW_Users.php:196
 msgid "A new user record has been inserted"
 msgstr "Un nou record de utilizator a fost introdus"
 
-#: WWW_Users.php:234
+#: WWW_Users.php:237
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr ""
 "Nu se poate şterge ca intrări de utilizator există deja în pista de audit"
 
-#: WWW_Users.php:238
+#: WWW_Users.php:241
 msgid "The User could not be deleted because"
 msgstr "Utilizatorul nu a putut fi şterse deoarece"
 
-#: WWW_Users.php:240
+#: WWW_Users.php:243
 msgid "User Deleted"
 msgstr "Utilizator şters"
 
-#: WWW_Users.php:276
+#: WWW_Users.php:279
 msgid "Last Visit"
 msgstr "Ultima vizită"
 
-#: WWW_Users.php:277 WWW_Users.php:449
+#: WWW_Users.php:280 WWW_Users.php:452
 msgid "Security Role"
 msgstr "Rolul de securitate"
 
-#: WWW_Users.php:278
+#: WWW_Users.php:281
 msgid "Report Size"
 msgstr "Raport Size"
 
-#: WWW_Users.php:316
+#: WWW_Users.php:319
 #, fuzzy, php-format
 msgid "Are you sure you wish to delete this user?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi acest furnizor?"
 
-#: WWW_Users.php:342
+#: WWW_Users.php:345
 msgid "Review Existing Users"
 msgstr "Review utilizatori existenţi"
 
-#: WWW_Users.php:395
+#: WWW_Users.php:398
 msgid "User code"
 msgstr "Codul de utilizator"
 
-#: WWW_Users.php:506
+#: WWW_Users.php:509
 msgid "Restrict to Sales Person"
 msgstr "Limiteze la Persoana de vânzări"
 
-#: WWW_Users.php:512 WWW_Users.php:514
+#: WWW_Users.php:515 WWW_Users.php:517
 msgid "Not a salesperson only login"
 msgstr "Nu este un agent de vanzari autentificare numai"
 
-#: WWW_Users.php:625
+#: WWW_Users.php:628
 msgid "options"
 msgstr "opţiuni"
 
-#: WWW_Users.php:656 index.php:40
+#: WWW_Users.php:659 index.php:40
 msgid "Account Status"
 msgstr "Stare cont"
 
-#: WWW_Users.php:659 WWW_Users.php:663
+#: WWW_Users.php:662 WWW_Users.php:666
 msgid "Open"
 msgstr "Deschis"
 
-#: WWW_Users.php:660 WWW_Users.php:662
+#: WWW_Users.php:663 WWW_Users.php:665
 msgid "Blocked"
 msgstr "Blocate"
 
@@ -32468,7 +32488,7 @@ msgstr "Ordinul de lucru Status anchetă"
 msgid "Manual Issue"
 msgstr "Manual Eliberarea"
 
-#: Z_BottomUpCosts.php:7
+#: Z_BottomUpCosts.php:6
 msgid "Recalculate BOM costs"
 msgstr "Recalcularea BOM costurile"
 
@@ -32485,20 +32505,32 @@ msgstr ""
 "nivelului şi a eşuat în procesul a fost"
 
 #: Z_BottomUpCosts.php:40
-msgid "Failed on item "
+#, fuzzy
+msgid "Failed on item"
 msgstr "A eşuat la postul "
+
+#: Z_BottomUpCosts.php:40
+#, fuzzy
+msgid "Cost update has been rolled back"
+msgstr "Nu au fost efectuate actualizări"
 
 #: Z_BottomUpCosts.php:44
 msgid "All cost updates committed to the database."
 msgstr "Toate actualizările cost angajat la baza de date."
 
 #: Z_BottomUpCosts.php:51
+msgid ""
+"This script will not update the General Ledger stock balances for the "
+"changed costs. If you use integrated stock then do not use this utility"
+msgstr ""
+
+#: Z_BottomUpCosts.php:56
 msgid "Update costs for all items listed in a bill of materials"
 msgstr ""
 "costuri de actualizare pentru toate elementele enumerate la un proiect de "
 "lege de materiale"
 
-#: Z_BottomUpCosts.php:52
+#: Z_BottomUpCosts.php:59
 msgid "Run"
 msgstr "Alerga"
 
@@ -32558,8 +32590,8 @@ msgid "The SQL to update debtor transaction records failed because"
 msgstr ""
 "SQL pentru a actualiza înregistrările tranzacţiilor debitor a eşuat pentru că"
 
-#: Z_ChangeBranchCode.php:118 Z_ChangeCustomerCode.php:165
-#: Z_ChangeStockCategory.php:77 Z_ChangeStockCode.php:152
+#: Z_ChangeBranchCode.php:118 Z_ChangeCustomerCode.php:164
+#: Z_ChangeStockCategory.php:77 Z_ChangeStockCode.php:162
 msgid "Changing sales analysis records"
 msgstr "Schimbarea de vânzări de înregistrări analiză"
 
@@ -32568,8 +32600,8 @@ msgid "The SQL to update Sales Analysis records failed because"
 msgstr ""
 "SQL pentru a actualiza Vânzări înregistrările Analiza a eşuat pentru că"
 
-#: Z_ChangeBranchCode.php:128 Z_ChangeCustomerCode.php:172
-#: Z_ChangeStockCode.php:159
+#: Z_ChangeBranchCode.php:128 Z_ChangeCustomerCode.php:171
+#: Z_ChangeStockCode.php:169
 msgid "Changing order delivery differences records"
 msgstr "Schimbarea diferenţe de livrare pentru înregistrările"
 
@@ -32579,8 +32611,8 @@ msgstr ""
 "SQL pentru a actualiza diferenţele comanda de livrare de înregistrări a "
 "eşuat pentru că"
 
-#: Z_ChangeBranchCode.php:138 Z_ChangeCustomerCode.php:178
-#: Z_ChangeStockCode.php:166
+#: Z_ChangeBranchCode.php:138 Z_ChangeCustomerCode.php:177
+#: Z_ChangeStockCode.php:176
 msgid "Changing pricing records"
 msgstr "Schimbarea de înregistrări de stabilire a preţurilor"
 
@@ -32590,7 +32622,7 @@ msgstr ""
 "SQL pentru a actualiza înregistrările de stabilire a preţurilor a eşuat "
 "pentru că"
 
-#: Z_ChangeBranchCode.php:147 Z_ChangeCustomerCode.php:184
+#: Z_ChangeBranchCode.php:147 Z_ChangeCustomerCode.php:183
 msgid "Changing sales orders records"
 msgstr "Schimbarea comenzile de vânzări de înregistrări"
 
@@ -32600,8 +32632,8 @@ msgstr ""
 "SQL de actualizare a vânzărilor de înregistrări antet pentru a eşuat pentru "
 "că"
 
-#: Z_ChangeBranchCode.php:156 Z_ChangeCustomerCode.php:190
-#: Z_ChangeStockCode.php:103
+#: Z_ChangeBranchCode.php:156 Z_ChangeCustomerCode.php:189
+#: Z_ChangeStockCode.php:115
 msgid "Changing stock movement records"
 msgstr "Schimbarea evidenţa stocurilor circulaţie"
 
@@ -32609,11 +32641,11 @@ msgstr "Schimbarea evidenţa stocurilor circulaţie"
 msgid "The SQL to update the stock movement records failed because"
 msgstr "SQL pentru a actualiza evidenţa operativă a eşuat pentru că mişcarea"
 
-#: Z_ChangeBranchCode.php:164 Z_ChangeCustomerCode.php:195
+#: Z_ChangeBranchCode.php:164 Z_ChangeCustomerCode.php:194
 msgid "Changing user default customer records"
 msgstr "Schimbarea implicit înregistrări utilizator client"
 
-#: Z_ChangeBranchCode.php:170 Z_ChangeCustomerCode.php:198
+#: Z_ChangeBranchCode.php:170 Z_ChangeCustomerCode.php:197
 msgid "The SQL to update the user records failed"
 msgstr "SQL pentru a actualiza înregistrările utilizator nu a reuşit"
 
@@ -32633,132 +32665,132 @@ msgstr "Ştergerea vechiul record ramura client"
 msgid "The SQL to delete the old customer branch record failed because"
 msgstr "SQL pentru a şterge vechiul record ramura client a eşuat pentru că"
 
-#: Z_ChangeBranchCode.php:200
+#: Z_ChangeBranchCode.php:205
 msgid "Existing Branch Code"
 msgstr "Existente Codul Branch"
 
-#: Z_ChangeBranchCode.php:201
+#: Z_ChangeBranchCode.php:209
 msgid "New Branch Code"
 msgstr "Filiala nou Cod"
 
-#: Z_ChangeBranchCode.php:204 Z_ChangeCustomerCode.php:239
-#: Z_ChangeStockCategory.php:99 Z_ChangeStockCode.php:319
-#: Z_DeleteSalesTransActions.php:179
+#: Z_ChangeBranchCode.php:214 Z_ChangeCustomerCode.php:241
+#: Z_ChangeStockCategory.php:108 Z_ChangeStockCode.php:332
+#: Z_DeleteSalesTransActions.php:178
 msgid "Process"
 msgstr "Procesul de"
 
-#: Z_ChangeCustomerCode.php:7
+#: Z_ChangeCustomerCode.php:6
 msgid "UTILITY PAGE To Changes A Customer Code In All Tables"
 msgstr ""
 "PAGINA utilitate pentru a Modificări Un cod clientului în toate tabelele"
 
-#: Z_ChangeCustomerCode.php:15
+#: Z_ChangeCustomerCode.php:14
 msgid "The customer code"
 msgstr "Cod Client"
 
-#: Z_ChangeCustomerCode.php:15
+#: Z_ChangeCustomerCode.php:14
 msgid "does not currently exist as a customer code in the system"
 msgstr "nu există în prezent ca un cod client în sistem"
 
-#: Z_ChangeCustomerCode.php:22
+#: Z_ChangeCustomerCode.php:21
 msgid "The new customer code to change the old code to must be entered as well"
 msgstr ""
 "Cod client nou pentru a schimba codul vechi trebuie să fie introduse, precum "
 "şi"
 
-#: Z_ChangeCustomerCode.php:29
+#: Z_ChangeCustomerCode.php:28
 msgid "The replacement customer code"
 msgstr "Înlocuire Cod Client"
 
-#: Z_ChangeCustomerCode.php:29
+#: Z_ChangeCustomerCode.php:28
 msgid "already exists as a customer code in the system"
 msgstr "există deja ca un cod client în sistem"
 
-#: Z_ChangeCustomerCode.php:29
+#: Z_ChangeCustomerCode.php:28
 msgid "a unique customer code must be entered for the new code"
 msgstr "un cod unic de client trebuie să fie înscrise pentru cod nou"
 
-#: Z_ChangeCustomerCode.php:36
+#: Z_ChangeCustomerCode.php:35
 msgid "Inserting the new debtors master record"
 msgstr "Introducerea nou record de debitori master"
 
-#: Z_ChangeCustomerCode.php:93
+#: Z_ChangeCustomerCode.php:92
 msgid "The SQL to insert the new debtors master record failed"
 msgstr "SQL pentru a insera noul record debitorilor master nu a reuşit"
 
-#: Z_ChangeCustomerCode.php:93 Z_DeleteSalesTransActions.php:56
+#: Z_ChangeCustomerCode.php:92 Z_DeleteSalesTransActions.php:56
 msgid "the SQL statement was"
 msgstr "instrucţiunea SQL a fost"
 
-#: Z_ChangeCustomerCode.php:96
+#: Z_ChangeCustomerCode.php:95
 msgid "Inserting new customer branch records"
 msgstr "Inserarea noi recorduri client ramură"
 
-#: Z_ChangeCustomerCode.php:156
+#: Z_ChangeCustomerCode.php:155
 msgid "The SQL to insert new customer branch records failed"
 msgstr "SQL pentru a insera noi recorduri ramură client nu a reuşit"
 
-#: Z_ChangeCustomerCode.php:158
+#: Z_ChangeCustomerCode.php:157
 msgid "Changing debtor transaction records"
 msgstr "Schimbarea înregistrări debitor tranzacţie"
 
-#: Z_ChangeCustomerCode.php:162
+#: Z_ChangeCustomerCode.php:161
 msgid "The SQL to update debtor transaction records failed"
 msgstr "SQL pentru a actualiza înregistrările tranzacţiilor debitor a eşuat"
 
-#: Z_ChangeCustomerCode.php:169 Z_ChangeStockCategory.php:79
-#: Z_ChangeStockCode.php:154
+#: Z_ChangeCustomerCode.php:168 Z_ChangeStockCategory.php:79
+#: Z_ChangeStockCode.php:164
 msgid "The SQL to update Sales Analysis records failed"
 msgstr "SQL pentru a actualiza Vânzări înregistrări Analiza a eşuat"
 
-#: Z_ChangeCustomerCode.php:174 Z_ChangeStockCode.php:161
+#: Z_ChangeCustomerCode.php:173 Z_ChangeStockCode.php:171
 msgid "The SQL to update order delivery differences records failed"
 msgstr ""
 "SQL pentru a actualiza diferenţele ordin de livrare de înregistrări a eşuat"
 
-#: Z_ChangeCustomerCode.php:181 Z_ChangeStockCode.php:168
+#: Z_ChangeCustomerCode.php:180 Z_ChangeStockCode.php:178
 msgid "The SQL to update the pricing records failed"
 msgstr ""
 "SQL pentru a actualiza înregistrările de stabilire a preţurilor nu a reuşit"
 
-#: Z_ChangeCustomerCode.php:187 Z_ChangeCustomerCode.php:192
-#: Z_ChangeStockCode.php:175
+#: Z_ChangeCustomerCode.php:186 Z_ChangeCustomerCode.php:191
+#: Z_ChangeStockCode.php:185
 msgid "The SQL to update the sales order header records failed"
 msgstr "SQL de actualizare a vânzărilor de înregistrări antet pentru a eşuat"
 
-#: Z_ChangeCustomerCode.php:201
+#: Z_ChangeCustomerCode.php:200
 msgid "Changing the customer code in contract header records"
 msgstr "Schimbarea codului client în înregistrările antet contract"
 
-#: Z_ChangeCustomerCode.php:204
+#: Z_ChangeCustomerCode.php:203
 msgid "The SQL to update contract header records failed"
 msgstr "SQL pentru a actualiza înregistrările antet contract nu a reuşit"
 
-#: Z_ChangeCustomerCode.php:209
+#: Z_ChangeCustomerCode.php:208
 msgid "Deleting the old customer branch records from the CustBranch table"
 msgstr ""
 "Ştergerea înregistrărilor vechi client de ramificaţie de la masa CustBranch"
 
-#: Z_ChangeCustomerCode.php:211
+#: Z_ChangeCustomerCode.php:210
 msgid ""
 "The SQL to delete the old CustBranch records for the old debtor record failed"
 msgstr ""
 "SQL pentru a şterge înregistrările vechi CustBranch pentru înregistrare "
 "debitor vechi a eşuat"
 
-#: Z_ChangeCustomerCode.php:215
+#: Z_ChangeCustomerCode.php:214
 msgid "Deleting the customer code from the DebtorsMaster table"
 msgstr "Ştergerea codul de client din tabelul DebtorsMaster"
 
-#: Z_ChangeCustomerCode.php:218
+#: Z_ChangeCustomerCode.php:217
 msgid "The SQL to delete the old debtor record failed"
 msgstr "SQL pentru a şterge înregistrarea debitor vechi a eşuat"
 
-#: Z_ChangeCustomerCode.php:231
+#: Z_ChangeCustomerCode.php:232
 msgid "Existing Debtor Code"
 msgstr "Existente Codul Debitor"
 
-#: Z_ChangeCustomerCode.php:234
+#: Z_ChangeCustomerCode.php:236
 msgid "New Debtor Code"
 msgstr "Noi Debitor Cod"
 
@@ -32812,21 +32844,21 @@ msgstr "SQL pentru a insera noul record categoria stocurilor nu a reuşit"
 
 #: Z_ChangeStockCategory.php:66 Z_ChangeStockCategory.php:71
 #: Z_ChangeStockCategory.php:76 Z_ChangeStockCategory.php:81
-#: Z_ChangeStockCategory.php:89 Z_ChangeStockCode.php:95
-#: Z_ChangeStockCode.php:101 Z_ChangeStockCode.php:107
-#: Z_ChangeStockCode.php:114 Z_ChangeStockCode.php:122
-#: Z_ChangeStockCode.php:132 Z_ChangeStockCode.php:141
-#: Z_ChangeStockCode.php:149 Z_ChangeStockCode.php:156
-#: Z_ChangeStockCode.php:163 Z_ChangeStockCode.php:170
-#: Z_ChangeStockCode.php:177 Z_ChangeStockCode.php:184
-#: Z_ChangeStockCode.php:191 Z_ChangeStockCode.php:197
-#: Z_ChangeStockCode.php:203 Z_ChangeStockCode.php:209
-#: Z_ChangeStockCode.php:216 Z_ChangeStockCode.php:223
-#: Z_ChangeStockCode.php:230 Z_ChangeStockCode.php:237
-#: Z_ChangeStockCode.php:243 Z_ChangeStockCode.php:248
-#: Z_ChangeStockCode.php:255 Z_ChangeStockCode.php:265
-#: Z_ChangeStockCode.php:270 Z_ChangeStockCode.php:277
-#: Z_ChangeStockCode.php:289 Z_ChangeStockCode.php:300
+#: Z_ChangeStockCategory.php:89 Z_ChangeStockCode.php:107
+#: Z_ChangeStockCode.php:113 Z_ChangeStockCode.php:119
+#: Z_ChangeStockCode.php:126 Z_ChangeStockCode.php:132
+#: Z_ChangeStockCode.php:142 Z_ChangeStockCode.php:151
+#: Z_ChangeStockCode.php:159 Z_ChangeStockCode.php:166
+#: Z_ChangeStockCode.php:173 Z_ChangeStockCode.php:180
+#: Z_ChangeStockCode.php:187 Z_ChangeStockCode.php:194
+#: Z_ChangeStockCode.php:201 Z_ChangeStockCode.php:207
+#: Z_ChangeStockCode.php:213 Z_ChangeStockCode.php:219
+#: Z_ChangeStockCode.php:226 Z_ChangeStockCode.php:233
+#: Z_ChangeStockCode.php:240 Z_ChangeStockCode.php:247
+#: Z_ChangeStockCode.php:253 Z_ChangeStockCode.php:258
+#: Z_ChangeStockCode.php:265 Z_ChangeStockCode.php:275
+#: Z_ChangeStockCode.php:280 Z_ChangeStockCode.php:287
+#: Z_ChangeStockCode.php:299 Z_ChangeStockCode.php:310
 msgid "completed"
 msgstr "terminat"
 
@@ -32855,15 +32887,15 @@ msgstr "Ştergerea vechiul record categoria stoc"
 msgid "The SQL to delete the old stock category record failed"
 msgstr "SQL pentru a şterge vechiul record categoria stocurilor nu a reuşit"
 
-#: Z_ChangeStockCategory.php:90 Z_ChangeStockCode.php:303
+#: Z_ChangeStockCategory.php:90 Z_ChangeStockCode.php:313
 msgid "was successfully changed to"
 msgstr "a fost schimbat cu succes la"
 
-#: Z_ChangeStockCategory.php:95
+#: Z_ChangeStockCategory.php:98
 msgid "Existing Inventory Category Code"
 msgstr "Categorie existente Codul Inventarul"
 
-#: Z_ChangeStockCategory.php:97
+#: Z_ChangeStockCategory.php:102
 msgid "New Inventory Category Code"
 msgstr "Noi Inventarul Categorie Codul"
 
@@ -32895,199 +32927,199 @@ msgstr "un cod unic de stoc trebuie să fie înscrise pentru cod nou"
 msgid "Adding the new stock master record"
 msgstr "Adăugarea nou record de master stoc"
 
-#: Z_ChangeStockCode.php:93
+#: Z_ChangeStockCode.php:105
 msgid "The SQL to insert the new stock master record failed"
 msgstr "SQL pentru a insera noul record master stoc a eşuat"
 
-#: Z_ChangeStockCode.php:97
+#: Z_ChangeStockCode.php:109
 msgid "Changing stock location records"
 msgstr "Schimbarea evidenţa stocurilor locaţie"
 
-#: Z_ChangeStockCode.php:99
+#: Z_ChangeStockCode.php:111
 msgid "The SQL to update stock location records failed"
 msgstr "SQL să actualizeze evidenţa stocurilor locaţie nu a reuşit"
 
-#: Z_ChangeStockCode.php:105
+#: Z_ChangeStockCode.php:117
 msgid "The SQL to update stock movement transaction records failed"
 msgstr ""
 "SQL pentru a actualiza circulaţie înregistrările tranzacţiilor nu a reuşit "
 "stoc"
 
-#: Z_ChangeStockCode.php:109
+#: Z_ChangeStockCode.php:121
 msgid "Changing location transfer information"
 msgstr "Schimbarea transfer de informaţii localizare"
 
-#: Z_ChangeStockCode.php:112
+#: Z_ChangeStockCode.php:124
 msgid "The SQL to update the loctransfers records failed"
 msgstr "SQL pentru a actualiza înregistrările loctransfers a eşuat"
 
-#: Z_ChangeStockCode.php:118
+#: Z_ChangeStockCode.php:128
 msgid "Changing MRP demands information"
 msgstr "Schimbarea MRP cere informaţii"
 
-#: Z_ChangeStockCode.php:120
+#: Z_ChangeStockCode.php:130
 msgid "The SQL to update the mrpdemands records failed"
 msgstr "SQL pentru a actualiza înregistrările mrpdemands a eşuat"
 
-#: Z_ChangeStockCode.php:128
+#: Z_ChangeStockCode.php:138
 msgid "Changing MRP planned orders information"
 msgstr "Schimbarea MRP de informaţii planificate comenzi"
 
-#: Z_ChangeStockCode.php:130
+#: Z_ChangeStockCode.php:140
 msgid "The SQL to update the mrpplannedorders records failed"
 msgstr "SQL pentru a actualiza înregistrările mrpplannedorders a eşuat"
 
-#: Z_ChangeStockCode.php:137
+#: Z_ChangeStockCode.php:147
 msgid "Changing MRP requirements information"
 msgstr "Schimbarea MRP informaţii cerinţele"
 
-#: Z_ChangeStockCode.php:139
+#: Z_ChangeStockCode.php:149
 msgid "The SQL to update the mrprequirements records failed"
 msgstr "SQL pentru a actualiza înregistrările mrprequirements a eşuat"
 
-#: Z_ChangeStockCode.php:145
+#: Z_ChangeStockCode.php:155
 msgid "Changing MRP supplies information"
 msgstr "Schimbarea MRP furnizează informaţii"
 
-#: Z_ChangeStockCode.php:147
+#: Z_ChangeStockCode.php:157
 msgid "The SQL to update the mrpsupplies records failed"
 msgstr "SQL pentru a actualiza înregistrările mrpsupplies a eşuat"
 
-#: Z_ChangeStockCode.php:173
+#: Z_ChangeStockCode.php:183
 msgid "Changing sales orders detail records"
 msgstr "Schimbarea ordinele de vânzare de înregistrări detaliu"
 
-#: Z_ChangeStockCode.php:180
+#: Z_ChangeStockCode.php:190
 msgid "Changing purchase order details records"
 msgstr "Schimbarea detaliile comenzii de achiziţie de înregistrări"
 
-#: Z_ChangeStockCode.php:182
+#: Z_ChangeStockCode.php:192
 msgid "The SQL to update the purchase order detail records failed"
 msgstr ""
 "SQL pentru a actualiza ordinea înregistrări detaliu de achiziţie nu a reuşit"
 
-#: Z_ChangeStockCode.php:187
+#: Z_ChangeStockCode.php:197
 msgid "Changing purchasing data records"
 msgstr "Modificarea datelor privind cumpărarea de înregistrări"
 
-#: Z_ChangeStockCode.php:189
+#: Z_ChangeStockCode.php:199
 msgid "The SQL to update the purchasing data records failed"
 msgstr "SQL să actualizeze registrele de achiziţii de date a eşuat"
 
-#: Z_ChangeStockCode.php:193
+#: Z_ChangeStockCode.php:203
 msgid "Changing the stock code in shipment charges records"
 msgstr "Schimbarea codului stocul tarifelor în transportul de înregistrări"
 
-#: Z_ChangeStockCode.php:195
+#: Z_ChangeStockCode.php:205
 msgid "The SQL to update Shipment Charges records failed"
 msgstr "SQL pentru a actualiza Costurile de Transport înregistrări a eşuat"
 
-#: Z_ChangeStockCode.php:199
+#: Z_ChangeStockCode.php:209
 msgid "Changing the stock check freeze file records"
 msgstr "Schimbarea a îngheţării verifica stocul de înregistrări fişier"
 
-#: Z_ChangeStockCode.php:201
+#: Z_ChangeStockCode.php:211
 msgid "The SQL to update stock check freeze records failed"
 msgstr "SQL de actualizare a verifica registrele congela stoc a eşuat"
 
-#: Z_ChangeStockCode.php:205
+#: Z_ChangeStockCode.php:215
 msgid "Changing the stock counts table records"
 msgstr "Schimbarea stocul contează înregistrările de masă"
 
-#: Z_ChangeStockCode.php:207
+#: Z_ChangeStockCode.php:217
 msgid "The SQL to update stock counts records failed"
 msgstr "SQL pentru a actualiza numărul de stoc de înregistrări a eşuat"
 
-#: Z_ChangeStockCode.php:212
+#: Z_ChangeStockCode.php:222
 msgid "Changing the GRNs table records"
 msgstr "Schimbarea înregistrările tabel GRNs"
 
-#: Z_ChangeStockCode.php:214
+#: Z_ChangeStockCode.php:224
 msgid "The SQL to update GRN records failed"
 msgstr "SQL pentru a actualiza înregistrările NRG a eşuat"
 
-#: Z_ChangeStockCode.php:219
+#: Z_ChangeStockCode.php:229
 msgid "Changing the contract BOM table records"
 msgstr "Modificarea contractului BOM înregistrările tabel"
 
-#: Z_ChangeStockCode.php:221
+#: Z_ChangeStockCode.php:231
 msgid "The SQL to contract BOM records failed"
 msgstr "SQL a contractului de înregistrări BOM a eşuat"
 
-#: Z_ChangeStockCode.php:226 Z_ChangeStockCode.php:233
+#: Z_ChangeStockCode.php:236 Z_ChangeStockCode.php:243
 msgid "Changing the BOM table records"
 msgstr "Schimbarea înregistrările tabel BOM"
 
-#: Z_ChangeStockCode.php:226
+#: Z_ChangeStockCode.php:236
 msgid "components"
 msgstr "componente"
 
-#: Z_ChangeStockCode.php:228
+#: Z_ChangeStockCode.php:238
 msgid "The SQL to update the BOM records failed"
 msgstr "SQL pentru a actualiza înregistrările BOM a eşuat"
 
-#: Z_ChangeStockCode.php:233 Z_ChangeStockCode.php:251
+#: Z_ChangeStockCode.php:243 Z_ChangeStockCode.php:261
 msgid "parents"
 msgstr "părinţi"
 
-#: Z_ChangeStockCode.php:235
+#: Z_ChangeStockCode.php:245
 msgid "The SQL to update the BOM parent records failed"
 msgstr "SQL pentru a actualiza înregistrările BOM-mamă nu a reuşit"
 
-#: Z_ChangeStockCode.php:239
+#: Z_ChangeStockCode.php:249
 msgid "Changing any image files"
 msgstr "Schimbarea orice fişiere imagine"
 
-#: Z_ChangeStockCode.php:251
+#: Z_ChangeStockCode.php:261
 msgid "Changing the item properties table records"
 msgstr "Schimbarea elementul proprietăţile înregistrările tabel"
 
-#: Z_ChangeStockCode.php:253
+#: Z_ChangeStockCode.php:263
 msgid "The SQL to update the item properties records failed"
 msgstr "SQL pentru a actualiza înregistrările element proprietăţile eşuat"
 
-#: Z_ChangeStockCode.php:260
+#: Z_ChangeStockCode.php:270
 msgid "Changing work order requirements information"
 msgstr "Schimbarea de lucru pentru informaţii cerinţele"
 
-#: Z_ChangeStockCode.php:263
+#: Z_ChangeStockCode.php:273
 msgid "The SQL to update the stockid worequirements records failed"
 msgstr "SQL pentru a actualiza înregistrările stockid worequirements a eşuat"
 
-#: Z_ChangeStockCode.php:268
+#: Z_ChangeStockCode.php:278
 msgid "The SQL to update the parent stockid worequirements records failed"
 msgstr ""
 "SQL pentru a actualiza worequirements mamă stockid înregistrări a eşuat"
 
-#: Z_ChangeStockCode.php:272
+#: Z_ChangeStockCode.php:282
 msgid "Changing work order information"
 msgstr "Schimbarea de lucru pentru informaţii"
 
-#: Z_ChangeStockCode.php:275
+#: Z_ChangeStockCode.php:285
 msgid "The SQL to update the woitem records failed"
 msgstr "SQL pentru a actualiza înregistrările woitem a eşuat"
 
-#: Z_ChangeStockCode.php:280
+#: Z_ChangeStockCode.php:290
 msgid "Changing any serialised item information"
 msgstr "Schimbarea orice informaţii serializate element"
 
-#: Z_ChangeStockCode.php:284 Z_ChangeStockCode.php:287
+#: Z_ChangeStockCode.php:294 Z_ChangeStockCode.php:297
 msgid "The SQL to update the stockserialitem records failed"
 msgstr "SQL pentru a actualiza înregistrările stockserialitem a eşuat"
 
-#: Z_ChangeStockCode.php:296
+#: Z_ChangeStockCode.php:306
 msgid "Deleting the old stock master record"
 msgstr "Ştergerea vechiul record master stoc"
 
-#: Z_ChangeStockCode.php:298
+#: Z_ChangeStockCode.php:308
 msgid "The SQL to delete the old stock master record failed"
 msgstr "SQL pentru a şterge vechiul record master stoc a eşuat"
 
-#: Z_ChangeStockCode.php:312
+#: Z_ChangeStockCode.php:323
 msgid "Existing Inventory Code"
 msgstr "Existente Codul Inventarul"
 
-#: Z_ChangeStockCode.php:315
+#: Z_ChangeStockCode.php:327
 msgid "New Inventory Code"
 msgstr "Inventarul nou Cod"
 
@@ -33095,19 +33127,19 @@ msgstr "Inventarul nou Cod"
 msgid "Identify Allocation Stuff Ups"
 msgstr "Identificarea Stuff Alocarea Ups"
 
-#: Z_CheckAllocationsFrom.php:28 Z_CheckAllocationsFrom.php:51
+#: Z_CheckAllocationsFrom.php:34 Z_CheckAllocationsFrom.php:59
 msgid "Ov Amt"
 msgstr "Ov Amt"
 
-#: Z_CheckAllocationsFrom.php:30 Z_CheckAllocationsFrom.php:53
+#: Z_CheckAllocationsFrom.php:36 Z_CheckAllocationsFrom.php:61
 msgid "Tot Allcns"
 msgstr "Tot Allcns"
 
-#: Z_CheckAllocationsFrom.php:59
+#: Z_CheckAllocationsFrom.php:67
 msgid "There are no inconsistent allocations"
 msgstr "Nu există alocări inconsecvente"
 
-#: Z_CheckAllocationsFrom.php:59 Z_CheckAllocs.php:28
+#: Z_CheckAllocationsFrom.php:67 Z_CheckAllocs.php:28
 msgid "all is well"
 msgstr "totul este bine"
 
@@ -33175,15 +33207,16 @@ msgstr "Verificaţi perioada de control Ledger Sales Account"
 msgid "UTILITY PAGE To Copy a BOM"
 msgstr "PAGINA UTILITATE Pentru a copia un BOM"
 
-#: Z_CopyBOM.php:115
+#: Z_CopyBOM.php:116
 msgid "From Stock ID"
 msgstr "ID-ul de la Bursa de Valori"
 
-#: Z_CopyBOM.php:120
-msgid " To New Stock ID"
+#: Z_CopyBOM.php:122
+#, fuzzy
+msgid "To New Stock ID"
 msgstr " La Bursa de Valori New ID"
 
-#: Z_CopyBOM.php:128
+#: Z_CopyBOM.php:134
 msgid "To Existing Stock ID"
 msgstr "Pentru stocul existent ID"
 
@@ -33209,25 +33242,25 @@ msgstr "Detalii Grafic Creat cu succes"
 msgid "No additional chart details were required to be added"
 msgstr "Nr detalii suplimentare diagramă au fost necesare pentru a fi adăugate"
 
-#: Z_CreateCompany.php:9
+#: Z_CreateCompany.php:8
 msgid ""
 "UTILITY PAGE That sets up a new blank company record if not already existing"
 msgstr ""
 "UTILITATE pagină care stabileşte un nou record companie necompletată dacă nu "
 "este deja existente"
 
-#: Z_CreateCompany.php:21
+#: Z_CreateCompany.php:20
 msgid ""
 "An existing company record is set up already. No alterations have been made"
 msgstr ""
 "O înregistrare existentă a companiei este configurat deja. Modificări nu au "
 "fost făcute"
 
-#: Z_CreateCompany.php:98
+#: Z_CreateCompany.php:97
 msgid "Company record is now available for modification by clicking"
 msgstr "Record Company este acum disponibil pentru modificarea făcând clic"
 
-#: Z_CreateCompany.php:98
+#: Z_CreateCompany.php:97
 msgid "this link"
 msgstr "acest link"
 
@@ -33293,11 +33326,11 @@ msgstr "Debitor valutar Solduri"
 msgid "Debtors Balances By Currency Totals"
 msgstr "Debitorii soldurilor în funcţie de valuta Totaluri"
 
-#: Z_CurrencyDebtorsBalances.php:26
+#: Z_CurrencyDebtorsBalances.php:30
 msgid "Total Debtor Balances in"
 msgstr "Debitor Total Solduri în"
 
-#: Z_CurrencyDebtorsBalances.php:34 Z_CurrencySuppliersBalances.php:32
+#: Z_CurrencyDebtorsBalances.php:40 Z_CurrencySuppliersBalances.php:38
 msgid "Total Balances in local currency"
 msgstr "Solduri Total exprimat în monedă locală"
 
@@ -33305,7 +33338,7 @@ msgstr "Solduri Total exprimat în monedă locală"
 msgid "Suppliers Balances By Currency Totals"
 msgstr "Soldurile furnizorilor de către Totaluri valutar"
 
-#: Z_CurrencySuppliersBalances.php:24
+#: Z_CurrencySuppliersBalances.php:28
 msgid "Total Supplier Balances in"
 msgstr "Furnizorul Total Solduri în"
 
@@ -33588,7 +33621,7 @@ msgstr "Tranzacţii Ştergeţi Vânzări"
 msgid "Deleting sales analysis records"
 msgstr "Ştergerea de vânzări de înregistrări analiză"
 
-#: Z_DeleteSalesTransActions.php:17 Z_DeleteSalesTransActions.php:112
+#: Z_DeleteSalesTransActions.php:17 Z_DeleteSalesTransActions.php:110
 msgid "The SQL to delete Sales Analysis records failed because"
 msgstr ""
 "SQL pentru a şterge înregistrările de vânzări Analiza a eşuat pentru că"
@@ -33639,31 +33672,31 @@ msgstr "Efectuarea stoc pentru toate părţile şi locaţiile zero"
 msgid "The SQL to make all stocks zero failed because"
 msgstr "SQL pentru a face toate stocurile zero a eşuat pentru că"
 
-#: Z_DeleteSalesTransActions.php:75
+#: Z_DeleteSalesTransActions.php:73
 msgid "Making the quantity invoiced zero on all orders"
 msgstr "Efectuarea cantitatea facturată zero privire la toate comenzile"
 
-#: Z_DeleteSalesTransActions.php:78
+#: Z_DeleteSalesTransActions.php:76
 msgid "The SQL to un-invoice all sales orders failed"
 msgstr "SQL a ONU-factura toate ordinele de vânzare nu a reuşit"
 
-#: Z_DeleteSalesTransActions.php:84
+#: Z_DeleteSalesTransActions.php:82
 msgid "Deleting all sales related GL Transactions"
 msgstr "Ştergerea Tranzacţii toate vânzările legate de GL"
 
-#: Z_DeleteSalesTransActions.php:86
+#: Z_DeleteSalesTransActions.php:84
 msgid "The SQL to delete sales related GL Transactions failed"
 msgstr "SQL pentru a şterge vânzări Tranzacţii legate de GL nu a reuşit"
 
-#: Z_DeleteSalesTransActions.php:92
+#: Z_DeleteSalesTransActions.php:90
 msgid "Deleting all stock related GL Transactions"
 msgstr "Ştergerea tuturor Tranzacţii stoc legate de GL"
 
-#: Z_DeleteSalesTransActions.php:95
+#: Z_DeleteSalesTransActions.php:93
 msgid "The SQL to delete stock related GL Transactions failed"
 msgstr "SQL pentru a şterge stoc Tranzacţii legate de GL nu a reuşit"
 
-#: Z_DeleteSalesTransActions.php:101
+#: Z_DeleteSalesTransActions.php:99
 msgid ""
 "Zeroing all purchase order quantities received and uncompleting all purchase "
 "orders"
@@ -33671,7 +33704,7 @@ msgstr ""
 "Zero toate cantităţile primite şi ordine de cumpărare uncompleting toate "
 "ordinele de cumpărare"
 
-#: Z_DeleteSalesTransActions.php:104
+#: Z_DeleteSalesTransActions.php:102
 msgid ""
 "The SQL to zero quantity received for all purchase orders line items and "
 "uncompleted all purchase order line items because"
@@ -33679,33 +33712,33 @@ msgstr ""
 "SQL la zero cantitatea primită pentru toate elementele de cumpărare linie de "
 "ordine şi neterminate, pentru toate elementele de achiziţie linie, deoarece"
 
-#: Z_DeleteSalesTransActions.php:110
+#: Z_DeleteSalesTransActions.php:108
 msgid "Deleting all GRN records"
 msgstr "Ştergerea tuturor înregistrărilor GRN"
 
-#: Z_DeleteSalesTransActions.php:115 Z_DeleteSalesTransActions.php:128
+#: Z_DeleteSalesTransActions.php:113 Z_DeleteSalesTransActions.php:126
 msgid ""
 "The SQL to update the transaction number of stock receipts has failed because"
 msgstr ""
 "SQL pentru a actualiza numărul de tranzacţie a încasărilor din stoc a eşuat, "
 "deoarece"
 
-#: Z_DeleteSalesTransActions.php:120
+#: Z_DeleteSalesTransActions.php:118
 msgid "Deleting all Purchase Orders"
 msgstr "Ştergerea toate ordinele de cumpărare"
 
-#: Z_DeleteSalesTransActions.php:122
+#: Z_DeleteSalesTransActions.php:120
 msgid ""
 "The SQL to delete all purchase order details failed, the SQL statement was"
 msgstr ""
 "SQL pentru a şterge toate detaliile de achiziţie pentru a eşuat, a fost "
 "declaraţia SQL"
 
-#: Z_DeleteSalesTransActions.php:125
+#: Z_DeleteSalesTransActions.php:123
 msgid "The SQL to delete all purchase orders failed because"
 msgstr "SQL pentru a şterge toate ordinele de cumpărare a eşuat pentru că"
 
-#: Z_DeleteSalesTransActions.php:134
+#: Z_DeleteSalesTransActions.php:132
 msgid ""
 "It is necessary to re-post the remaining general ledger transactions for the "
 "general ledger to get back in sync with the transactions that remain. This "
@@ -33715,55 +33748,55 @@ msgstr ""
 "registrul general pentru a reveni în sincronizare cu tranzacţiile care "
 "rămân. Aceasta este o opţiune din pagina Z_index.php"
 
-#: Z_DeleteSalesTransActions.php:141
+#: Z_DeleteSalesTransActions.php:140
 msgid "Delete All Sales Analysis"
 msgstr "Şterge toate vânzările Analiza"
 
-#: Z_DeleteSalesTransActions.php:144
+#: Z_DeleteSalesTransActions.php:143
 msgid "Delete All statement transactions"
 msgstr "Ştergeţi Toate tranzacţiile declaraţie"
 
-#: Z_DeleteSalesTransActions.php:147
+#: Z_DeleteSalesTransActions.php:146
 msgid "Zero All stock balances"
 msgstr "Toate soldurile zero stoc"
 
-#: Z_DeleteSalesTransActions.php:150
+#: Z_DeleteSalesTransActions.php:149
 msgid "Make Invoiced Qty Of All Sales Orders Nil"
 msgstr "Asiguraţi-Cantitate facturată din toate ordinele de vânzări Nil"
 
-#: Z_DeleteSalesTransActions.php:153
+#: Z_DeleteSalesTransActions.php:152
 msgid "Delete All Sales Orders"
 msgstr "Şterge toate vânzările Comenzi"
 
-#: Z_DeleteSalesTransActions.php:156
+#: Z_DeleteSalesTransActions.php:155
 msgid "Zero Received Qty of all purchase orders"
 msgstr "Zero primite Cantitate de toate ordinele de cumpărare"
 
-#: Z_DeleteSalesTransActions.php:159
+#: Z_DeleteSalesTransActions.php:158
 msgid "Delete All Purchase Orders"
 msgstr "Şterge toate achiziţiile Comenzi"
 
-#: Z_DeleteSalesTransActions.php:162
+#: Z_DeleteSalesTransActions.php:161
 msgid "Delete All Sales related stock movements"
 msgstr "Ştergeţi Toate vânzările legate de mişcările de stoc"
 
-#: Z_DeleteSalesTransActions.php:165
+#: Z_DeleteSalesTransActions.php:164
 msgid "Delete All Stock Receipt stock movements"
 msgstr "Ştergeţi Toate Stock Primirea circulaţiei stocurilor"
 
-#: Z_DeleteSalesTransActions.php:168
+#: Z_DeleteSalesTransActions.php:167
 msgid "Delete All Sales GL Transactions"
 msgstr "Ştergeţi Toate tranzacţiile de vânzare GL"
 
-#: Z_DeleteSalesTransActions.php:171
+#: Z_DeleteSalesTransActions.php:170
 msgid "Delete All Stock GL Transactions"
 msgstr "Ştergeţi Toate tranzacţiile de Valori GL"
 
-#: Z_DeleteSalesTransActions.php:174
+#: Z_DeleteSalesTransActions.php:173
 msgid "Delete All PO Goods Received (GRNs)"
 msgstr "Ştergeţi Toate Marfa PO Primit (GRNs)"
 
-#: Z_DeleteSalesTransActions.php:179
+#: Z_DeleteSalesTransActions.php:178
 msgid "Are You Really REALLY Sure?"
 msgstr "Sunt într-adevăr sigur?"
 

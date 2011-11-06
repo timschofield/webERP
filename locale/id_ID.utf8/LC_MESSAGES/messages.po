@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weberp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-01 22:26+1300\n"
+"POT-Creation-Date: 2011-11-06 19:49+1300\n"
 "PO-Revision-Date: 2011-02-05 16:44+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: www.baliboss.com <open@baliboss.com>\n"
@@ -143,7 +143,7 @@ msgstr ""
 #: CustomerBranches.php:286 CustomerBranches.php:296 CustomerBranches.php:306
 #: CustomerBranches.php:316 CustomerTypes.php:147 CustomerTypes.php:157
 #: Customers.php:289 Customers.php:298 Customers.php:306 Customers.php:314
-#: Factors.php:134 FixedAssetCategories.php:129 GLAccounts.php:80
+#: Factors.php:134 FixedAssetCategories.php:133 GLAccounts.php:80
 #: GLAccounts.php:96 Locations.php:237 Locations.php:245 Locations.php:256
 #: Locations.php:265 Locations.php:274 Locations.php:283 Locations.php:292
 #: Locations.php:301 MRPDemandTypes.php:87 PaymentMethods.php:138
@@ -210,7 +210,7 @@ msgstr "Tidak dapat mengambil grup rekening karena"
 #: CustEDISetup.php:17 DailyBankTransactions.php:11 DebtorsAtPeriodEnd.php:125
 #: DiscountCategories.php:10 DiscountCategories.php:131 DiscountMatrix.php:16
 #: EDIMessageFormat.php:104 FixedAssetLocations.php:9
-#: FixedAssetRegister.php:13 FixedAssetRegister.php:237
+#: FixedAssetRegister.php:13 FixedAssetRegister.php:243
 #: FixedAssetTransfer.php:31 FormDesigner.php:129 GLBalanceSheet.php:362
 #: GLBudgets.php:29 GLJournal.php:246 InventoryPlanning.php:374
 #: InventoryPlanningPrefSupplier.php:467 Labels.php:115 Labels.php:270
@@ -237,7 +237,7 @@ msgstr "Tidak dapat mengambil grup rekening karena"
 #: WWW_Users.php:31 WhereUsedInquiry.php:18 WorkCentres.php:111
 #: WorkCentres.php:162 WorkOrderCosting.php:13 WorkOrderEntry.php:11
 #: WorkOrderIssue.php:22 WorkOrderReceive.php:15 WorkOrderStatus.php:42
-#: Z_BottomUpCosts.php:51
+#: Z_BottomUpCosts.php:56
 msgid "Search"
 msgstr "Cari"
 
@@ -245,7 +245,7 @@ msgstr "Cari"
 msgid "Group Name"
 msgstr "Nama Grup"
 
-#: AccountGroups.php:228 EDIMessageFormat.php:129 EDIMessageFormat.php:207
+#: AccountGroups.php:228 EDIMessageFormat.php:129 EDIMessageFormat.php:208
 msgid "Section"
 msgstr "Kelompok"
 
@@ -292,8 +292,8 @@ msgstr "Grup Induk"
 #: SystemParameters.php:654 SystemParameters.php:781 SystemParameters.php:916
 #: SystemParameters.php:918 SystemParameters.php:928 SystemParameters.php:930
 #: SystemParameters.php:984 SystemParameters.php:996 SystemParameters.php:998
-#: TaxGroups.php:307 TaxGroups.php:310 TaxGroups.php:366 WWW_Users.php:629
-#: WWW_Users.php:631
+#: TaxGroups.php:307 TaxGroups.php:310 TaxGroups.php:366 WWW_Users.php:632
+#: WWW_Users.php:634
 msgid "Yes"
 msgstr "Ya"
 
@@ -327,8 +327,8 @@ msgstr "Ya"
 #: SystemParameters.php:655 SystemParameters.php:782 SystemParameters.php:915
 #: SystemParameters.php:919 SystemParameters.php:927 SystemParameters.php:931
 #: SystemParameters.php:985 SystemParameters.php:995 SystemParameters.php:999
-#: TaxGroups.php:308 TaxGroups.php:311 TaxGroups.php:368 WWW_Users.php:628
-#: WWW_Users.php:632 includes/PDFLowGPPageHeader.inc:44
+#: TaxGroups.php:308 TaxGroups.php:311 TaxGroups.php:368 WWW_Users.php:631
+#: WWW_Users.php:635 includes/PDFLowGPPageHeader.inc:44
 #: includes/PDFTaxPageHeader.inc:35
 msgid "No"
 msgstr "No"
@@ -338,8 +338,8 @@ msgstr "No"
 #: BOMs.php:149 BankAccounts.php:223 COGSGLPostings.php:108
 #: COGSGLPostings.php:206 CreditStatus.php:174 Currencies.php:272
 #: CustomerBranches.php:414 CustomerTypes.php:202 Customers.php:1011
-#: Customers.php:1045 EDIMessageFormat.php:150 Factors.php:300
-#: FixedAssetCategories.php:182 FixedAssetLocations.php:102
+#: Customers.php:1045 EDIMessageFormat.php:150 Factors.php:329
+#: FixedAssetCategories.php:186 FixedAssetLocations.php:107
 #: FreightCosts.php:240 GLAccounts.php:312 GLTags.php:91 GeocodeSetup.php:173
 #: Labels.php:411 Locations.php:382 MRPDemandTypes.php:120 MRPDemands.php:306
 #: PO_AuthorisationLevels.php:151 PaymentMethods.php:200 PaymentTerms.php:205
@@ -353,7 +353,7 @@ msgstr "No"
 #: SuppTransGLAnalysis.php:120 SupplierContacts.php:163 SupplierTypes.php:189
 #: TaxAuthorities.php:174 TaxCategories.php:182 TaxGroups.php:188
 #: TaxProvinces.php:180 UnitsOfMeasure.php:185 WWW_Access.php:123
-#: WWW_Users.php:315 WorkCentres.php:141 includes/InputSerialItems.php:88
+#: WWW_Users.php:318 WorkCentres.php:141 includes/InputSerialItems.php:88
 #: includes/OutputSerialItems.php:20
 #, php-format
 msgid "Edit"
@@ -369,9 +369,9 @@ msgstr "Apakah Anda yakin ingin menghapus cabang ini?"
 #: BOMs.php:151 BankAccounts.php:224 COGSGLPostings.php:109
 #: COGSGLPostings.php:207 ContractBOM.php:266 ContractOtherReqts.php:119
 #: CounterSales.php:812 CreditStatus.php:175 Credit_Invoice.php:381
-#: Currencies.php:275 CustomerReceipt.php:865 CustomerTypes.php:203
-#: Customers.php:1046 DiscountCategories.php:219 DiscountMatrix.php:175
-#: EDIMessageFormat.php:151 FixedAssetCategories.php:183 FreightCosts.php:241
+#: Currencies.php:275 CustomerReceipt.php:913 CustomerTypes.php:203
+#: Customers.php:1046 DiscountCategories.php:219 DiscountMatrix.php:182
+#: EDIMessageFormat.php:151 FixedAssetCategories.php:187 FreightCosts.php:241
 #: GLAccounts.php:313 GLJournal.php:427 GLTags.php:92 GeocodeSetup.php:174
 #: Labels.php:411 Locations.php:383 MRPDemandTypes.php:121 MRPDemands.php:307
 #: PO_AuthorisationLevels.php:153 PO_Items.php:711 PaymentMethods.php:201
@@ -390,7 +390,7 @@ msgstr "Apakah Anda yakin ingin menghapus cabang ini?"
 #: SuppTransGLAnalysis.php:121 SupplierContacts.php:164 SupplierTypes.php:191
 #: TaxAuthorities.php:175 TaxCategories.php:183 TaxGroups.php:189
 #: TaxProvinces.php:181 UnitsOfMeasure.php:186 WOSerialNos.php:319
-#: WWW_Access.php:124 WWW_Users.php:316 WorkCentres.php:142
+#: WWW_Access.php:124 WWW_Users.php:319 WorkCentres.php:142
 #: includes/InputSerialItemsKeyed.php:59 includes/OutputSerialItems.php:99
 #, php-format
 msgid "Delete"
@@ -436,18 +436,18 @@ msgstr "Kelompok Rekening"
 #: AccountGroups.php:397 AccountSections.php:264 AddCustomerContacts.php:258
 #: AddCustomerNotes.php:245 AddCustomerTypeNotes.php:210 Areas.php:227
 #: BOMs.php:759 BankAccounts.php:391 COGSGLPostings.php:354
-#: CreditStatus.php:257 Currencies.php:401 CustLoginSetup.php:261
-#: DiscountMatrix.php:136 EDIMessageFormat.php:247
-#: FixedAssetCategories.php:322 FixedAssetLocations.php:148
+#: CreditStatus.php:257 Currencies.php:401 CustLoginSetup.php:272
+#: DiscountMatrix.php:141 EDIMessageFormat.php:248
+#: FixedAssetCategories.php:344 FixedAssetLocations.php:156
 #: FreightCosts.php:339 GLAccounts.php:262 GeocodeSetup.php:270
 #: Locations.php:597 MRPDemandTypes.php:187 MRPDemands.php:419
 #: OffersReceived.php:56 OffersReceived.php:143 PO_AuthorisationLevels.php:248
 #: PaymentMethods.php:282 PaymentTerms.php:309 Prices_Customer.php:354
 #: SalesAnalReptCols.php:552 SalesAnalRepts.php:514 SalesGLPostings.php:416
 #: SalesPeople.php:368 Shippers.php:200 StockCategories.php:581
-#: SuppLoginSetup.php:285 SupplierContacts.php:281 TaxAuthorities.php:327
+#: SuppLoginSetup.php:293 SupplierContacts.php:281 TaxAuthorities.php:327
 #: TaxCategories.php:237 TaxProvinces.php:235 UnitsOfMeasure.php:240
-#: WWW_Users.php:671 WorkCentres.php:279
+#: WWW_Users.php:674 WorkCentres.php:279
 msgid "Enter Information"
 msgstr "Masukkan Informasi"
 
@@ -517,7 +517,7 @@ msgstr "Tidak dapat mengambil kelompok yang diminta, silahkan coba kembali."
 msgid "Customer Contacts"
 msgstr "Kontak Person Customer"
 
-#: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:11
+#: AddCustomerContacts.php:20 CustEDISetup.php:9 CustLoginSetup.php:21
 #: Z_CheckDebtorsControl.php:20
 msgid "Back to Customers"
 msgstr "Kembali ke Data Customer"
@@ -556,7 +556,7 @@ msgstr ""
 
 #: AddCustomerContacts.php:61 AddCustomerNotes.php:52
 #: AddCustomerTypeNotes.php:49 Areas.php:73 CustomerTypes.php:69
-#: DeliveryDetails.php:774 Factors.php:105 FixedAssetItems.php:243
+#: DeliveryDetails.php:774 Factors.php:105 FixedAssetItems.php:246
 #: MRPCalendar.php:176 PO_Items.php:374 PcAssignCashToTab.php:88
 #: PcClaimExpensesFromTab.php:79 PcExpenses.php:95 PcTabs.php:102
 #: PcTypeTabs.php:60 SalesAnalReptCols.php:129 SalesPeople.php:97
@@ -594,13 +594,13 @@ msgstr "Telpon"
 #: AddCustomerContacts.php:131 AddCustomerContacts.php:240
 #: CustomerBranches.php:374 CustomerBranches.php:774 CustomerInquiry.php:253
 #: Customers.php:1001 Customers.php:1009 EmailCustTrans.php:15
-#: EmailCustTrans.php:63 Factors.php:225 Factors.php:263 Locations.php:563
+#: EmailCustTrans.php:63 Factors.php:245 Factors.php:292 Locations.php:563
 #: OrderDetails.php:109 PDFRemittanceAdvice.php:243 PO_PDFPurchOrder.php:369
 #: PO_PDFPurchOrder.php:372 PrintCustTrans.php:714 PrintCustTrans.php:945
 #: PrintCustTrans.php:994 PrintCustTransPortrait.php:753
 #: PrintCustTransPortrait.php:999 PrintCustTransPortrait.php:1056
 #: SelectCustomer.php:610 SupplierContacts.php:154 SupplierContacts.php:274
-#: UserSettings.php:183 WWW_Users.php:271 includes/PDFPickingListHeader.inc:25
+#: UserSettings.php:183 WWW_Users.php:274 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:29
@@ -628,7 +628,7 @@ msgstr "Tinjau semua kontak person untuk Customer ini"
 msgid "Contact Code"
 msgstr "Kode Kontak Person"
 
-#: AddCustomerContacts.php:214 Factors.php:219 SupplierContacts.php:236
+#: AddCustomerContacts.php:214 Factors.php:233 SupplierContacts.php:236
 msgid "Contact Name"
 msgstr "Nama Kontak Person"
 
@@ -697,9 +697,9 @@ msgid "Date"
 msgstr "Tanggal"
 
 #: AddCustomerNotes.php:122 AddCustomerTypeNotes.php:109 PcReportTab.php:173
-#: Stocks.php:1017 UpgradeDatabase.php:171 UpgradeDatabase.php:174
-#: UpgradeDatabase.php:177 UpgradeDatabase.php:180 UpgradeDatabase.php:183
-#: UpgradeDatabase.php:186 UpgradeDatabase.php:189 UpgradeDatabase.php:192
+#: Stocks.php:1017 UpgradeDatabase.php:172 UpgradeDatabase.php:175
+#: UpgradeDatabase.php:178 UpgradeDatabase.php:181 UpgradeDatabase.php:184
+#: UpgradeDatabase.php:187 UpgradeDatabase.php:190 UpgradeDatabase.php:193
 #: Z_Upgrade_3.10-3.11.php:62 Z_Upgrade_3.10-3.11.php:66
 #: Z_Upgrade_3.10-3.11.php:70 Z_Upgrade_3.10-3.11.php:74
 #: Z_Upgrade_3.10-3.11.php:78 Z_Upgrade_3.11-4.00.php:62
@@ -886,7 +886,7 @@ msgstr "tidak dapat diambil karena"
 #: ConfirmDispatch_Invoice.php:152 ConfirmDispatch_Invoice.php:960
 #: ConfirmDispatch_Invoice.php:974 Contracts.php:580 CounterSales.php:1353
 #: CounterSales.php:1367 Credit_Invoice.php:697 Credit_Invoice.php:718
-#: CustomerReceipt.php:523 CustomerReceipt.php:657 CustomerReceipt.php:685
+#: CustomerReceipt.php:537 CustomerReceipt.php:676 CustomerReceipt.php:704
 #: CustomerTransInquiry.php:91 DeliveryDetails.php:396 GLProfit_Loss.php:596
 #: GLTagProfit_Loss.php:511 PDFRemittanceAdvice.php:85 Payments.php:325
 #: PurchData.php:86 PurchData.php:104 PurchData.php:245
@@ -900,7 +900,7 @@ msgstr "tidak dapat diambil karena"
 #: SupplierInquiry.php:78 SupplierInquiry.php:100 SupplierInquiry.php:136
 #: SupplierInquiry.php:190 SupplierTransInquiry.php:95 WOSerialNos.php:47
 #: WorkOrderCosting.php:418 WorkOrderReceive.php:273
-#: Z_ChangeBranchCode.php:105 Z_ChangeCustomerCode.php:92
+#: Z_ChangeBranchCode.php:105 Z_ChangeCustomerCode.php:91
 #: Z_DeleteCreditNote.php:58 Z_DeleteInvoice.php:87
 #: includes/PDFPaymentRun_PymtFooter.php:59
 #: includes/PDFPaymentRun_PymtFooter.php:89
@@ -921,11 +921,11 @@ msgstr "Tidak ada pelanggan yang memenuhi kriteria tertentu untuk daftar"
 msgid "Aged Debtor Analysis"
 msgstr "Analisa Debitur yang Lewat Jatuh Tempo"
 
-#: AgedDebtors.php:461 DebtorsAtPeriodEnd.php:136
+#: AgedDebtors.php:461 DebtorsAtPeriodEnd.php:137
 msgid "From Customer Code"
 msgstr "Kode Customer Awal"
 
-#: AgedDebtors.php:465 DebtorsAtPeriodEnd.php:139
+#: AgedDebtors.php:465 DebtorsAtPeriodEnd.php:141
 msgid "To Customer Code"
 msgstr "Kode Customer Akhir"
 
@@ -972,7 +972,7 @@ msgstr "Laporan Terperinci"
 
 #: AgedDebtors.php:517 AgedSuppliers.php:328 BOMExtendedQty.php:295
 #: BOMIndented.php:276 BOMIndentedReverse.php:255 BOMListing.php:129
-#: DebtorsAtPeriodEnd.php:157 InventoryPlanning.php:445
+#: DebtorsAtPeriodEnd.php:163 InventoryPlanning.php:445
 #: InventoryPlanningPrefSupplier.php:516 InventoryQuantities.php:209
 #: InventoryValuation.php:268 MRPPlannedPurchaseOrders.php:280
 #: MRPPlannedWorkOrders.php:337 MRPReschedules.php:152 MRPShortages.php:302
@@ -1103,7 +1103,7 @@ msgid "Area Code"
 msgstr "Kode Area"
 
 #: Areas.php:132 CustomerTypes.php:164 Factors.php:140
-#: FixedAssetCategories.php:134 GLAccounts.php:197 Locations.php:328
+#: FixedAssetCategories.php:138 GLAccounts.php:197 Locations.php:328
 #: MRPDemands.php:248 PcAssignCashToTab.php:135 PcClaimExpensesFromTab.php:126
 #: PcExpenses.php:166 PcExpensesTypeTab.php:101 PcTabs.php:166
 #: PcTypeTabs.php:135 SalesAnalReptCols.php:215 SalesCategories.php:135
@@ -1155,7 +1155,7 @@ msgstr "ID User"
 
 #: AuditTrail.php:49 AuditTrail.php:62 ContractBOM.php:298
 #: CounterSales.php:2141 CounterSales.php:2144 CustomerTransInquiry.php:31
-#: DailySalesInquiry.php:46 DailySalesInquiry.php:48 FixedAssetRegister.php:56
+#: DailySalesInquiry.php:47 DailySalesInquiry.php:49 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:167
 #: InventoryQuantities.php:193 InventoryQuantities.php:195 MRP.php:585
 #: MRPReport.php:523 MRPReport.php:525 MRPReschedules.php:144
@@ -1209,8 +1209,8 @@ msgstr "User"
 #: StockCategories.php:217 StockLocMovements.php:88 StockMovements.php:92
 #: SupplierAllocations.php:453 SupplierInquiry.php:207
 #: SupplierTransInquiry.php:19 SupplierTransInquiry.php:100
-#: Z_CheckAllocationsFrom.php:26 Z_CheckAllocationsFrom.php:49
-#: Z_CheckAllocs.php:57 Z_CheckGLTransBalance.php:11
+#: Z_CheckAllocationsFrom.php:32 Z_CheckAllocationsFrom.php:57
+#: Z_CheckAllocs.php:62 Z_CheckGLTransBalance.php:11
 #: includes/InputSerialItemsFile.php:86 includes/InputSerialItemsFile.php:126
 #: includes/PDFTaxPageHeader.inc:34
 msgid "Type"
@@ -1383,7 +1383,7 @@ msgid "Printed"
 msgstr "Dicetak"
 
 #: BOMExtendedQty.php:321 BOMIndented.php:303 BOMIndentedReverse.php:283
-#: FixedAssetRegister.php:334 GLAccountReport.php:322
+#: FixedAssetRegister.php:351 GLAccountReport.php:322
 #: InventoryPlanningPrefSupplier.php:58 InventoryQuantities.php:233
 #: MRPPlannedPurchaseOrders.php:304 MRPPlannedWorkOrders.php:361
 #: MRPReport.php:814 MRPReschedules.php:178 MRPShortages.php:332
@@ -1518,9 +1518,9 @@ msgstr "Satu Tingkat"
 #: BOMInquiry.php:199 BOMs.php:529 BOMs.php:855 ContractBOM.php:236
 #: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2015
 #: CounterSales.php:2196 CreditStatus.php:152 CreditStatus.php:241
-#: EmailConfirmation.php:192 FixedAssetCategories.php:159
-#: FixedAssetDepreciation.php:84 FixedAssetRegister.php:81
-#: FixedAssetRegister.php:355 FixedAssetTransfer.php:50
+#: EmailConfirmation.php:192 FixedAssetCategories.php:163
+#: FixedAssetDepreciation.php:86 FixedAssetRegister.php:83
+#: FixedAssetRegister.php:372 FixedAssetTransfer.php:50
 #: FixedAssetTransfer.php:110 GLTags.php:59 GLTags.php:77
 #: GLTransInquiry.php:47 GoodsReceived.php:99 InventoryQuantities.php:244
 #: Labels.php:410 MRPDemandTypes.php:113 MRPDemands.php:91 MRPDemands.php:292
@@ -1632,7 +1632,7 @@ msgstr "keterangan"
 
 #: BOMInquiry.php:30 BOMs.php:839 ContractBOM.php:324 ContractBOM.php:329
 #: Contracts.php:756 Contracts.php:759 CounterSales.php:2166
-#: CustomerReceipt.php:1026 CustomerReceipt.php:1029
+#: CustomerReceipt.php:1101 CustomerReceipt.php:1104
 #: DiscountCategories.php:104 DiscountCategories.php:106
 #: DiscountCategories.php:110 DiscountCategories.php:112
 #: FixedAssetTransfer.php:61 MRPDemands.php:333 MRPDemands.php:336
@@ -1666,12 +1666,12 @@ msgstr "Masukkan kutipan"
 #: StockStatus.php:59 StockTransfers.php:47 StockTransfers.php:458
 #: StockUsage.php:64 SupplierTenders.php:359 WorkOrderEntry.php:606
 #: WorkOrderIssue.php:667 Z_ChangeStockCategory.php:90
-#: Z_ChangeStockCode.php:303
+#: Z_ChangeStockCode.php:313
 msgid "Stock Code"
 msgstr "Kode Stok"
 
 #: BOMInquiry.php:37 BOMs.php:844 ContractBOM.php:334 Contracts.php:764
-#: CounterSales.php:2170 CustomerReceipt.php:1034 FixedAssetTransfer.php:72
+#: CounterSales.php:2170 CustomerReceipt.php:1111 FixedAssetTransfer.php:72
 #: MRPDemands.php:338 MRPReport.php:554 PO_Header.php:541 PO_Items.php:1060
 #: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:978
 #: SelectCustomer.php:369 SelectGLAccount.php:96 SelectOrderItems.php:593
@@ -1709,7 +1709,7 @@ msgstr "SQL untuk mencari barang yang dipilih gagal dengan pesan"
 
 #: BOMInquiry.php:112 BOMs.php:528 BOMs.php:854 ContractBOM.php:345
 #: CounterSales.php:2014 CounterSales.php:2195 CustomerBranches.php:367
-#: CustomerReceipt.php:1040 GLCodesInquiry.php:26 MRPDemands.php:90
+#: CustomerReceipt.php:1122 GLCodesInquiry.php:26 MRPDemands.php:90
 #: MRPPlannedWorkOrders.php:256 MRPReport.php:746 PDFOrderStatus.php:318
 #: PDFOrdersInvoiced.php:347 PDFPrintLabel.php:247 PO_Header.php:551
 #: PO_Items.php:1072 PO_SelectOSPurchOrder.php:230 PO_SelectPurchOrder.php:211
@@ -2020,7 +2020,7 @@ msgstr "SQL yang digunakan untuk mengambil keterangan barang induk adalah"
 msgid "Assembly"
 msgstr "Rakitan"
 
-#: BOMs.php:408 FixedAssetRegister.php:357 Stocks.php:958 Stocks.php:960
+#: BOMs.php:408 FixedAssetRegister.php:374 Stocks.php:958 Stocks.php:960
 msgid "Purchased"
 msgstr "Dibeli"
 
@@ -2056,7 +2056,7 @@ msgstr "Set"
 msgid "Level"
 msgstr "Tingkat"
 
-#: BOMs.php:530 BOMs.php:660 Contracts.php:868 FixedAssetRegister.php:83
+#: BOMs.php:530 BOMs.php:660 Contracts.php:868 FixedAssetRegister.php:85
 #: InventoryQuantities.php:245 Locations.php:328 MRP.php:551 MRP.php:583
 #: PDFOrderStatus.php:278 PDFOrdersInvoiced.php:309 ReorderLevel.php:258
 #: ReorderLevel.php:267 ReorderLevelLocation.php:169 StockCounts.php:133
@@ -2314,7 +2314,7 @@ msgstr "Nomor Rekening Bank"
 msgid "Bank Address"
 msgstr "Alamat Bank"
 
-#: BankAccounts.php:196 CustomerAllocations.php:333 CustomerReceipt.php:755
+#: BankAccounts.php:196 CustomerAllocations.php:333 CustomerReceipt.php:783
 #: CustomerTransInquiry.php:108 OffersReceived.php:109 PDFPrintLabel.php:97
 #: PO_AuthorisationLevels.php:126 PO_AuthorisationLevels.php:209
 #: PO_AuthorisationLevels.php:214 PO_AuthoriseMyOrders.php:115
@@ -2421,7 +2421,7 @@ msgstr ""
 "Rekening Koran Bank Anda. Periksa rekening koran bank Anda dan klik kotak-"
 "centang saat Anda menemukan transaksi yang cocok"
 
-#: BankMatching.php:92 BankReconciliation.php:104 CustomerReceipt.php:728
+#: BankMatching.php:92 BankReconciliation.php:104 CustomerReceipt.php:749
 #: DailyBankTransactions.php:32 PDFChequeListing.php:44 Payments.php:741
 #: TaxAuthorities.php:151 TaxAuthorities.php:316
 msgid "Bank Account"
@@ -2553,7 +2553,7 @@ msgid "Ref"
 msgstr "Ref"
 
 #: BankMatching.php:264 ConfirmDispatch_Invoice.php:276 Credit_Invoice.php:279
-#: CustWhereAlloc.php:109 CustomerAllocations.php:364 CustomerReceipt.php:844
+#: CustWhereAlloc.php:109 CustomerAllocations.php:364 CustomerReceipt.php:892
 #: CustomerTransInquiry.php:107 PaymentAllocations.php:67 Payments.php:1014
 #: Payments.php:1018 Payments.php:1034 PcAssignCashToTab.php:222
 #: PcAssignCashToTab.php:345 PcAuthorizeExpenses.php:90
@@ -2566,7 +2566,7 @@ msgstr "Ref"
 #: SupplierAllocations.php:457 SupplierCredit.php:352 SupplierCredit.php:385
 #: SupplierCredit.php:421 SupplierCredit.php:460 SupplierInvoice.php:330
 #: SupplierInvoice.php:371 SupplierInvoice.php:411 SupplierInvoice.php:455
-#: SupplierTransInquiry.php:108 Z_CheckAllocs.php:61
+#: SupplierTransInquiry.php:108 Z_CheckAllocs.php:66
 #: includes/PDFBankingSummaryPageHeader.inc:55
 #: includes/PDFChequeListingPageHeader.inc:37
 msgid "Amount"
@@ -2635,25 +2635,25 @@ msgstr "telah dibukukan"
 msgid "The bank accounts could not be retrieved by the SQL because"
 msgstr "Rekening bank tidak dapat diambil oleh SQL karena"
 
-#: BankReconciliation.php:101 CustomerReceipt.php:719
+#: BankReconciliation.php:101 CustomerReceipt.php:737
 #: DailyBankTransactions.php:28 Payments.php:737 SuppPaymentRun.php:317
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "SQL yang digunakan untuk mengambil rekening bank adalah"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 msgid "Bank Accounts have not yet been defined"
 msgstr "Rekening Bank belum dibuat"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 msgid "You must first"
 msgstr "Pertama-tama Anda harus"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 #: DailyBankTransactions.php:38 Payments.php:749 SuppPaymentRun.php:330
 msgid "define the bank accounts"
 msgstr "buat rekening bank"
 
-#: BankReconciliation.php:111 CustomerReceipt.php:733
+#: BankReconciliation.php:111 CustomerReceipt.php:757
 #: DailyBankTransactions.php:38 Payments.php:749 SuppPaymentRun.php:330
 msgid "and general ledger accounts to be affected"
 msgstr "dan rekening buku besar yang akan digunakan"
@@ -2695,7 +2695,7 @@ msgstr "tambahkan kembali cek yang belum di-clear"
 #: PrintCustTransPortrait.php:1038 StockMovements.php:93
 #: SupplierAllocations.php:454 SupplierAllocations.php:567
 #: SupplierAllocations.php:642 SupplierTransInquiry.php:101
-#: Z_CheckAllocs.php:58 Z_CheckGLTransBalance.php:12
+#: Z_CheckAllocs.php:63 Z_CheckGLTransBalance.php:12
 #: includes/PDFQuotationPageHeader.inc:88
 #: includes/PDFQuotationPortraitPageHeader.inc:86
 #: includes/PDFStatementPageHeader.inc:168
@@ -2710,7 +2710,7 @@ msgstr "Nomor"
 #: GLAccountReport.php:337 PDFRemittanceAdvice.php:301
 #: PaymentAllocations.php:64 PaymentAllocations.php:65 ShiptsList.php:37
 #: StockCounts.php:99 StockCounts.php:135 StockLocMovements.php:93
-#: StockMovements.php:98 Z_CheckAllocs.php:59
+#: StockMovements.php:98 Z_CheckAllocs.php:64
 #: includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -2835,7 +2835,7 @@ msgstr "Kategori Barang"
 
 #: COGSGLPostings.php:90 COGSGLPostings.php:189 COGSGLPostings.php:305
 #: Customers.php:747 Customers.php:750 DiscountMatrix.php:96
-#: DiscountMatrix.php:153 Prices.php:223 PricesByCost.php:262
+#: DiscountMatrix.php:160 Prices.php:223 PricesByCost.php:262
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:224 SalesGLPostings.php:354 SelectOrderItems.php:710
 #: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
@@ -2851,7 +2851,7 @@ msgstr "Rekening HPP"
 msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "Apakah Anda yakin Anda ingin menghapus harga ini?"
 
-#: COGSGLPostings.php:190 CustomerReceipt.php:956 GLJournal.php:385
+#: COGSGLPostings.php:190 CustomerReceipt.php:1017 GLJournal.php:385
 #: GLTransInquiry.php:44 Payments.php:1035 SupplierTransInquiry.php:170
 #: TaxAuthorities.php:148 TaxAuthorities.php:149 index.php:1288
 msgid "GL Account"
@@ -2963,29 +2963,29 @@ msgstr "Nomor Terdaftar Perusahaan"
 msgid "Tax Authority Reference"
 msgstr "Keterangan Wewenang Pajak"
 
-#: CompanyPreferences.php:238 Factors.php:207
+#: CompanyPreferences.php:238 Factors.php:210
 msgid "Address Line 1"
 msgstr "Alamat Baris 1"
 
-#: CompanyPreferences.php:243 Factors.php:209
+#: CompanyPreferences.php:243 Factors.php:213
 msgid "Address Line 2"
 msgstr "Alamat Baris 2"
 
-#: CompanyPreferences.php:248 Factors.php:211
+#: CompanyPreferences.php:248 Factors.php:217
 msgid "Address Line 3"
 msgstr "Alamat Baris 3"
 
-#: CompanyPreferences.php:253 Factors.php:213
+#: CompanyPreferences.php:253 Factors.php:221
 msgid "Address Line 4"
 msgstr "Alamat Baris 4"
 
 #: CompanyPreferences.php:258 Customers.php:459 Customers.php:704
-#: Customers.php:734 Factors.php:215
+#: Customers.php:734 Factors.php:225
 msgid "Address Line 5"
 msgstr "Alamat Baris 5"
 
 #: CompanyPreferences.php:263 Customers.php:461 Customers.php:708
-#: Customers.php:738 Factors.php:217
+#: Customers.php:738 Factors.php:229
 msgid "Address Line 6"
 msgstr "Alamat Baris 6"
 
@@ -2997,9 +2997,9 @@ msgstr "Nomor Telpon"
 msgid "Facsimile Number"
 msgstr "Nomor Fax"
 
-#: CompanyPreferences.php:278 CustLoginSetup.php:150 Customers.php:449
-#: SuppLoginSetup.php:138 Suppliers.php:679 Suppliers.php:856
-#: WWW_Users.php:445
+#: CompanyPreferences.php:278 CustLoginSetup.php:161 Customers.php:449
+#: SuppLoginSetup.php:147 Suppliers.php:679 Suppliers.php:856
+#: WWW_Users.php:448
 msgid "Email Address"
 msgstr "Alamat Email"
 
@@ -3057,7 +3057,7 @@ msgstr "Buat catatan GL untuk transaksi barang"
 
 #: CompanyPreferences.php:519 ConfirmDispatch_Invoice.php:617
 #: ConfirmDispatch_Invoice.php:1645 Credit_Invoice.php:1509
-#: FixedAssetItems.php:120 FixedAssetItems.php:573 GLBudgets.php:234
+#: FixedAssetItems.php:123 FixedAssetItems.php:625 GLBudgets.php:234
 #: GLTags.php:64 GoodsReceived.php:248 GoodsReceived.php:254
 #: GoodsReceived.php:261 GoodsReceived.php:738 Labels.php:259
 #: MRPCalendar.php:314 PO_AuthoriseMyOrders.php:138 Payments.php:886
@@ -3188,10 +3188,10 @@ msgstr "Konfirmasi Faktur"
 msgid "Confirm Dispatch and Invoice"
 msgstr "Konfirmasi Pengiriman dan Faktur"
 
-#: ConfirmDispatch_Invoice.php:248 Contracts.php:772 CustLoginSetup.php:21
-#: CustLoginSetup.php:22 CustomerAllocations.php:327 CustomerBranches.php:363
+#: ConfirmDispatch_Invoice.php:248 Contracts.php:772 CustLoginSetup.php:31
+#: CustLoginSetup.php:32 CustomerAllocations.php:327 CustomerBranches.php:363
 #: CustomerBranches.php:532 CustomerBranches.php:579 CustomerInquiry.php:126
-#: CustomerReceipt.php:846 CustomerReceipt.php:897 CustomerReceipt.php:1022
+#: CustomerReceipt.php:894 CustomerReceipt.php:948 CustomerReceipt.php:1096
 #: CustomerTransInquiry.php:101 Customers.php:14 Customers.php:325
 #: DeliveryDetails.php:804 FTP_RadioBeacon.php:51 PDFOrderStatus.php:275
 #: PDFOrdersInvoiced.php:305 PricesByCost.php:153 SalesGraph.php:180
@@ -3213,14 +3213,14 @@ msgstr "Customer"
 #: ConfirmDispatch_Invoice.php:248 CustEDISetup.php:93 Customers.php:440
 #: Customers.php:643 Customers.php:678 DeliveryDetails.php:804
 #: OrderDetails.php:67 SalesAnalRepts.php:27 SalesAnalRepts.php:29
-#: WWW_Users.php:272 WWW_Users.php:491 Z_ChangeBranchCode.php:199
+#: WWW_Users.php:275 WWW_Users.php:494 Z_ChangeBranchCode.php:201
 #: includes/PDFStatementPageHeader.inc:112 includes/PDFTransPageHeader.inc:46
 #: includes/PDFTransPageHeaderPortrait.inc:55
 msgid "Customer Code"
 msgstr "Kode Customer"
 
-#: ConfirmDispatch_Invoice.php:249 CustEDISetup.php:96 CustomerReceipt.php:235
-#: CustomerReceipt.php:1041 Customers.php:443 Customers.php:684
+#: ConfirmDispatch_Invoice.php:249 CustEDISetup.php:96 CustomerReceipt.php:248
+#: CustomerReceipt.php:1123 Customers.php:443 Customers.php:684
 #: Customers.php:714 DeliveryDetails.php:805 OrderDetails.php:69
 #: POReport.php:494 POReport.php:1268 SalesInquiry.php:754
 #: SalesInquiry.php:764 SalesInquiry.php:788 SalesInquiry.php:932
@@ -3322,7 +3322,7 @@ msgid "Price"
 msgstr "Harga"
 
 #: ConfirmDispatch_Invoice.php:272 CounterSales.php:736 Credit_Invoice.php:275
-#: CustomerReceipt.php:845 DeliveryDetails.php:828 OrderDetails.php:167
+#: CustomerReceipt.php:893 DeliveryDetails.php:828 OrderDetails.php:167
 #: PrintCustTrans.php:865 PrintCustTrans.php:954 PrintCustTrans.php:1003
 #: PrintCustTransPortrait.php:912 PrintCustTransPortrait.php:1010
 #: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:323
@@ -3877,7 +3877,7 @@ msgid "Cannot retrieve the mbflag"
 msgstr "Tidak dapat mengambil mbflag yang"
 
 #: ConfirmDispatch_Invoice.php:925 CounterSales.php:1317
-#: FixedAssetItems.php:574 SalesAnalReptCols.php:328 Stocks.php:1199
+#: FixedAssetItems.php:627 SalesAnalReptCols.php:328 Stocks.php:1199
 #: Suppliers.php:965 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "PERINGATAN"
@@ -3906,7 +3906,7 @@ msgstr "Tidak dapat mengambil komponen rakitan dari database untuk"
 
 #: ConfirmDispatch_Invoice.php:959 CounterSales.php:1352
 #: Credit_Invoice.php:696 EDIMessageFormat.php:43 EDISendInvoices.php:105
-#: FixedAssetCategories.php:86 FixedAssetCategories.php:105
+#: FixedAssetCategories.php:90 FixedAssetCategories.php:109
 #: PricesBasedOnMarkUp.php:334 PricesBasedOnMarkUp.php:350
 #: SelectCreditItems.php:1407 SpecialOrder.php:493 StockCategories.php:23
 #: StockCategories.php:84 StockCategories.php:155 Z_ReApplyCostToSA.php:62
@@ -4193,7 +4193,7 @@ msgstr "telah diproses"
 
 #: ConfirmDispatch_Invoice.php:1601 ConfirmDispatch_Invoice.php:1603
 #: ContractBOM.php:293 CounterSales.php:1969 CounterSales.php:1971
-#: CustomerReceipt.php:528 DeliveryDetails.php:577 DeliveryDetails.php:581
+#: CustomerReceipt.php:542 DeliveryDetails.php:577 DeliveryDetails.php:581
 #: DeliveryDetails.php:779 DeliveryDetails.php:782 GLBalanceSheet.php:18
 #: GLProfit_Loss.php:22 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:519
 #: GLTags.php:51 GLTransInquiry.php:36 PDFStockLocTransfer.php:28
@@ -4300,7 +4300,7 @@ msgid "There is a problem selecting the part records to display because"
 msgstr "Ada kesalahan saat memilih data barang untuk ditampilkan karena"
 
 #: ContractBOM.php:140 PO_Items.php:989 SupplierTenders.php:471
-#: Z_ChangeStockCategory.php:63 Z_ChangeStockCode.php:92
+#: Z_ChangeStockCategory.php:63 Z_ChangeStockCode.php:104
 msgid "The SQL statement that failed was"
 msgstr "SQL yang gagal adalah"
 
@@ -4413,13 +4413,13 @@ msgstr "Masukkan kutipan dari Kode Stok"
 msgid "Create a New Stock Item"
 msgstr "Buat Barang Stok Baru"
 
-#: ContractBOM.php:348 FixedAssetItems.php:473 Stocks.php:838
+#: ContractBOM.php:348 FixedAssetItems.php:490 Stocks.php:838
 #: SupplierTenders.php:492
 msgid "Image"
 msgstr "Gambar"
 
-#: ContractBOM.php:368 CounterSales.php:2029 FixedAssetItems.php:468
-#: FixedAssetItems.php:472 PO_Items.php:1098 SalesCategories.php:248
+#: ContractBOM.php:368 CounterSales.php:2029 FixedAssetItems.php:485
+#: FixedAssetItems.php:489 PO_Items.php:1098 SalesCategories.php:248
 #: SelectCreditItems.php:1017 SelectOrderItems.php:1489
 #: SelectOrderItems.php:1667 Stocks.php:832 Stocks.php:836
 #: SupplierTenders.php:518 WorkOrderEntry.php:643 WorkOrderIssue.php:709
@@ -4528,7 +4528,7 @@ msgstr "Anggaran Biaya Lain-lain"
 #: PO_SelectOSPurchOrder.php:480 PO_SelectPurchOrder.php:431 PurchData.php:164
 #: ReprintGRN.php:78 SelectProduct.php:349 SelectSupplier.php:143
 #: ShipmentCosting.php:531 ShipmentCosting.php:608 Shipt_Select.php:293
-#: ShiptsList.php:11 SuppCreditGRNs.php:269 SuppLoginSetup.php:24
+#: ShiptsList.php:11 SuppCreditGRNs.php:269 SuppLoginSetup.php:33
 #: SuppPriceList.php:205 SuppPriceList.php:276 SupplierAllocations.php:566
 #: SupplierAllocations.php:641 SupplierCredit.php:262 SupplierInquiry.php:118
 #: SupplierInvoice.php:234 SupplierTransInquiry.php:104
@@ -5041,7 +5041,7 @@ msgstr ""
 "Setidaknya satu kata kunci Nama Cabang Customer ATAU kutipan dari Kode "
 "Cabang Customer atau Nomor Telepon Cabang harus dimasukkan untuk pencarian"
 
-#: Contracts.php:663 CustomerReceipt.php:574 SelectCustomer.php:163
+#: Contracts.php:663 CustomerReceipt.php:592 SelectCustomer.php:163
 #: SelectOrderItems.php:327
 msgid "The searched customer records requested cannot be retrieved because"
 msgstr "Data customer yang diminta tidak dapat diambil karena"
@@ -5148,12 +5148,12 @@ msgstr "Reset"
 msgid "Branch"
 msgstr "Cabang"
 
-#: Contracts.php:774 Factors.php:260 SelectCreditItems.php:240
+#: Contracts.php:774 Factors.php:289 SelectCreditItems.php:240
 #: SelectCustomer.php:415 SelectOrderItems.php:603 SupplierContacts.php:226
 msgid "Contact"
 msgstr "Kontak Person"
 
-#: Contracts.php:776 EmailConfirmation.php:160 Factors.php:223
+#: Contracts.php:776 EmailConfirmation.php:160 Factors.php:241
 #: PDFCustomerList.php:342 PDFRemittanceAdvice.php:241
 #: SelectCreditItems.php:242 SelectCustomer.php:418 SelectOrderItems.php:605
 #: includes/PDFOrderPageHeader_generic.inc:32
@@ -5166,7 +5166,7 @@ msgstr "Kontak Person"
 msgid "Fax"
 msgstr "Fax"
 
-#: Contracts.php:824 CustomerInquiry.php:126 CustomerReceipt.php:897
+#: Contracts.php:824 CustomerInquiry.php:126 CustomerReceipt.php:948
 #: PDFRemittanceAdvice.php:267 PO_Header.php:600 PrintCustTrans.php:847
 #: PrintCustTransPortrait.php:893 SupplierInquiry.php:118
 #: includes/PDFQuotationPageHeader.inc:86
@@ -5197,7 +5197,7 @@ msgstr "Kategori"
 msgid "The stock categories could not be retrieved because"
 msgstr "Kategori stok tidak dapat diambil karena"
 
-#: Contracts.php:850 FixedAssetItems.php:485 PricesBasedOnMarkUp.php:109
+#: Contracts.php:850 FixedAssetItems.php:504 PricesBasedOnMarkUp.php:109
 #: SpecialOrder.php:690 Stocks.php:848
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr "SQL yang digunakan untuk mengambil kategori stok dan gagal adalah"
@@ -5256,7 +5256,7 @@ msgstr "Kurs"
 msgid "Contract Status"
 msgstr "Status Kontrak"
 
-#: Contracts.php:923 SuppLoginSetup.php:20 WWW_Users.php:21 index.php:20
+#: Contracts.php:923 SuppLoginSetup.php:29 WWW_Users.php:21 index.php:20
 msgid "Setup"
 msgstr "Pengaturan"
 
@@ -5559,8 +5559,8 @@ msgstr "GP %"
 msgid "Net"
 msgstr "Net"
 
-#: CounterSales.php:816 CustomerReceipt.php:831 CustomerReceipt.php:848
-#: CustomerReceipt.php:1011 GLAccountInquiry.php:155 GLAccountReport.php:341
+#: CounterSales.php:816 CustomerReceipt.php:869 CustomerReceipt.php:896
+#: CustomerReceipt.php:1079 GLAccountInquiry.php:155 GLAccountReport.php:341
 #: GLJournal.php:364 GLJournal.php:388 Payments.php:1036
 #: SelectOrderItems.php:1402 SuppContractChgs.php:80 SuppContractChgs.php:167
 #: SuppTransGLAnalysis.php:107 SuppTransGLAnalysis.php:199
@@ -5733,7 +5733,7 @@ msgid "New Work Order Number"
 msgstr "Nomor Order Produksi yang Baru"
 
 #: CounterSales.php:1212 DeliveryDetails.php:555 EDIMessageFormat.php:127
-#: EDIMessageFormat.php:204 Prices_Customer.php:36
+#: EDIMessageFormat.php:205 Prices_Customer.php:36
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:336 SpecialOrder.php:116
 #: SpecialOrder.php:119
 msgid "for"
@@ -5765,11 +5765,11 @@ msgid ""
 msgstr ""
 "SQL yang gagal untuk memasukkan transaksi GL untuk debit rekening bank adalah"
 
-#: CounterSales.php:1827 CustomerReceipt.php:442
+#: CounterSales.php:1827 CustomerReceipt.php:456
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "Tidak dapat memasukkan transaksi GL untuk debet rekening bank"
 
-#: CounterSales.php:1845 CustomerReceipt.php:491
+#: CounterSales.php:1845 CustomerReceipt.php:505
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
@@ -5777,31 +5777,31 @@ msgstr ""
 "SQL yang gagal untuk memasukkan transaksi GL untuk kredit rekening debitur "
 "adalah"
 
-#: CounterSales.php:1846 CustomerReceipt.php:492
+#: CounterSales.php:1846 CustomerReceipt.php:506
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr "Tidak dapat memasukkan transaksi GL untuk kredit rekening debitur"
 
-#: CounterSales.php:1898 CustomerReceipt.php:469
+#: CounterSales.php:1898 CustomerReceipt.php:483
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "SQL yang gagal memasukkan transaksi rekening bank adalah"
 
-#: CounterSales.php:1899 CustomerReceipt.php:470
+#: CounterSales.php:1899 CustomerReceipt.php:484
 msgid "Cannot insert a bank transaction"
 msgstr "Tidak dapat memasukkan transaksi bank"
 
-#: CounterSales.php:1927 CustomerReceipt.php:401
+#: CounterSales.php:1927 CustomerReceipt.php:415
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "SQL yang gagal memasukkan transaksi penerimaan customer adalah"
 
-#: CounterSales.php:1928 CustomerReceipt.php:402
+#: CounterSales.php:1928 CustomerReceipt.php:416
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr "Tidak dapat memasukkan transaksi penerimaan terhadap customer karena"
 
-#: CounterSales.php:1937 CustomerReceipt.php:410
+#: CounterSales.php:1937 CustomerReceipt.php:424
 msgid "The SQL that failed to update the date of the last payment received was"
 msgstr "SQL yang gagal memperbarui tanggal diterima pembayaran terakhir adalah"
 
-#: CounterSales.php:1938 CustomerReceipt.php:411
+#: CounterSales.php:1938 CustomerReceipt.php:425
 msgid ""
 "Cannot update the customer record for the date of the last payment received "
 "because"
@@ -6435,9 +6435,9 @@ msgstr "Mata uang yang berlaku tidak dapat diubah atau dihapus"
 msgid "The currency code cannot contain any of the following characters"
 msgstr "Kode mata uang tidak dapat berisi karakter berikut"
 
-#: Currencies.php:107 CustEDISetup.php:31 CustLoginSetup.php:40
-#: Customers.php:56 Stocks.php:113 SuppLoginSetup.php:42 TaxCategories.php:31
-#: WWW_Users.php:66 WorkCentres.php:35 Z_ChangeBranchCode.php:28
+#: Currencies.php:107 CustEDISetup.php:31 CustLoginSetup.php:51
+#: Customers.php:56 Stocks.php:113 SuppLoginSetup.php:51 TaxCategories.php:31
+#: WWW_Users.php:68 WorkCentres.php:35 Z_ChangeBranchCode.php:28
 #: Z_ImportStocks.php:123
 msgid "or a space"
 msgstr "atau spasi"
@@ -6664,27 +6664,37 @@ msgstr "Perbarui Konfigurasi EDI"
 msgid "Customer Login Configuration"
 msgstr "Konfigurasi Login Customer"
 
-#: CustLoginSetup.php:22 SelectCustomer.php:210 SuppLoginSetup.php:24
+#: CustLoginSetup.php:15
+#, fuzzy
+msgid "A customer must first be selected before logins can be defined for it"
+msgstr "Barang harus dipilih dulu sebelum halaman ini dipanggil"
+
+#: CustLoginSetup.php:15
+#, fuzzy
+msgid "Select A Customer"
+msgstr "Pilih Customer"
+
+#: CustLoginSetup.php:32 SelectCustomer.php:210 SuppLoginSetup.php:33
 msgid " has been selected"
 msgstr " telah dipilih"
 
-#: CustLoginSetup.php:37 SuppLoginSetup.php:39 WWW_Users.php:63
+#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:65
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "ID user yang dimasukkan minimum 4 karakter"
 
-#: CustLoginSetup.php:40 SuppLoginSetup.php:42 WWW_Users.php:66
+#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:68
 msgid "User names cannot contain any of the following characters"
 msgstr "Nama user tidak dapat berisi karakter berikut"
 
-#: CustLoginSetup.php:44 SuppLoginSetup.php:46 WWW_Users.php:70
+#: CustLoginSetup.php:55 SuppLoginSetup.php:55 WWW_Users.php:72
 msgid "The password entered must be at least 5 characters long"
 msgstr "Kata sandi yang dimasukkan minimum 5 karakter"
 
-#: CustLoginSetup.php:48 SuppLoginSetup.php:50 WWW_Users.php:74
+#: CustLoginSetup.php:59 SuppLoginSetup.php:59 WWW_Users.php:76
 msgid "The password cannot contain the user id"
 msgstr "Kata sandi tidak dapat berisi id user"
 
-#: CustLoginSetup.php:51 WWW_Users.php:77
+#: CustLoginSetup.php:62 WWW_Users.php:80
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
@@ -6692,110 +6702,110 @@ msgstr ""
 "Jika Anda memasukkan Kode Customer Anda juga harus memasukkan Kode Cabang "
 "yang berlaku untuk Customer ini"
 
-#: CustLoginSetup.php:61 WWW_Users.php:102
+#: CustLoginSetup.php:72 WWW_Users.php:105
 msgid "The check on validity of the customer code and branch failed because"
 msgstr "Pengecekan berlakunya kode customer dan cabang gagal karena"
 
-#: CustLoginSetup.php:62 WWW_Users.php:103
+#: CustLoginSetup.php:73 WWW_Users.php:106
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr "SQL yang digunakan untuk memeriksa kode customer dan cabang adalah"
 
-#: CustLoginSetup.php:66 WWW_Users.php:107
+#: CustLoginSetup.php:77 WWW_Users.php:110
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr ""
 "Kode Cabang yang dimasukkan tidak berlaku untuk Kode Customer yang dimasukkan"
 
-#: CustLoginSetup.php:104 SuppLoginSetup.php:93
+#: CustLoginSetup.php:115 SuppLoginSetup.php:102
 #, fuzzy
 msgid "The user could not be added because"
 msgstr "aktiva tidak dapat ditambahkan karena"
 
-#: CustLoginSetup.php:105 SuppLoginSetup.php:94
+#: CustLoginSetup.php:116 SuppLoginSetup.php:103
 #, fuzzy
 msgid "The SQL that was used to insert the new user and failed was"
 msgstr "SQL yang digunakan untuk memperbarui user dan gagal adalah"
 
-#: CustLoginSetup.php:107
+#: CustLoginSetup.php:118
 #, fuzzy
 msgid "A new customer login has been created"
 msgstr "Order produksi yang baru telah dibuat untuk"
 
-#: CustLoginSetup.php:120 SuppLoginSetup.php:108 WWW_Users.php:268
-#: WWW_Users.php:402
+#: CustLoginSetup.php:131 SuppLoginSetup.php:117 WWW_Users.php:271
+#: WWW_Users.php:405
 msgid "User Login"
 msgstr "Login User"
 
-#: CustLoginSetup.php:138 SMTPServer.php:59 SuppLoginSetup.php:126
-#: WWW_Users.php:433 includes/Login.php:59
+#: CustLoginSetup.php:149 SMTPServer.php:59 SuppLoginSetup.php:135
+#: WWW_Users.php:436 includes/Login.php:59
 msgid "Password"
 msgstr "Kata Sandi"
 
-#: CustLoginSetup.php:142 SuppLoginSetup.php:130 WWW_Users.php:269
-#: WWW_Users.php:437
+#: CustLoginSetup.php:153 SuppLoginSetup.php:139 WWW_Users.php:272
+#: WWW_Users.php:440
 msgid "Full Name"
 msgstr "Nama Lengkap"
 
-#: CustLoginSetup.php:146 Locations.php:555 SalesPeople.php:330
-#: SuppLoginSetup.php:134 SupplierContacts.php:262 WWW_Users.php:441
+#: CustLoginSetup.php:157 Locations.php:555 SalesPeople.php:330
+#: SuppLoginSetup.php:143 SupplierContacts.php:262 WWW_Users.php:444
 msgid "Telephone No"
 msgstr "No Telpon"
 
-#: CustLoginSetup.php:155 CustomerBranches.php:545 CustomerBranches.php:582
-#: WWW_Users.php:273 WWW_Users.php:496
+#: CustLoginSetup.php:166 CustomerBranches.php:545 CustomerBranches.php:582
+#: WWW_Users.php:276 WWW_Users.php:499
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:244
 msgid "Branch Code"
 msgstr "Kode Cabang"
 
-#: CustLoginSetup.php:175 SuppLoginSetup.php:196 WWW_Users.php:530
+#: CustLoginSetup.php:186 SuppLoginSetup.php:205 WWW_Users.php:533
 msgid "Reports Page Size"
 msgstr "Ukuran Halaman Laporan"
 
-#: CustLoginSetup.php:179 CustLoginSetup.php:181 EmailConfirmation.php:119
+#: CustLoginSetup.php:190 CustLoginSetup.php:192 EmailConfirmation.php:119
 #: PrintCustOrder.php:101 PrintCustOrder_generic.php:111
-#: SuppLoginSetup.php:200 SuppLoginSetup.php:202 WWW_Users.php:534
-#: WWW_Users.php:536
+#: SuppLoginSetup.php:209 SuppLoginSetup.php:211 WWW_Users.php:537
+#: WWW_Users.php:539
 msgid "A4"
 msgstr "A4"
 
-#: CustLoginSetup.php:185 CustLoginSetup.php:187 CustLoginSetup.php:191
-#: CustLoginSetup.php:193 SuppLoginSetup.php:206 SuppLoginSetup.php:208
-#: SuppLoginSetup.php:212 SuppLoginSetup.php:214 WWW_Users.php:540
-#: WWW_Users.php:542 WWW_Users.php:546 WWW_Users.php:548
+#: CustLoginSetup.php:196 CustLoginSetup.php:198 CustLoginSetup.php:202
+#: CustLoginSetup.php:204 SuppLoginSetup.php:215 SuppLoginSetup.php:217
+#: SuppLoginSetup.php:221 SuppLoginSetup.php:223 WWW_Users.php:543
+#: WWW_Users.php:545 WWW_Users.php:549 WWW_Users.php:551
 msgid "A3"
 msgstr "A3"
 
-#: CustLoginSetup.php:191 CustLoginSetup.php:193 CustLoginSetup.php:203
-#: CustLoginSetup.php:205 CustLoginSetup.php:214 CustLoginSetup.php:216
+#: CustLoginSetup.php:202 CustLoginSetup.php:204 CustLoginSetup.php:214
+#: CustLoginSetup.php:216 CustLoginSetup.php:225 CustLoginSetup.php:227
 #: EmailConfirmation.php:119 PrintCustOrder.php:101
-#: PrintCustOrder_generic.php:111 SuppLoginSetup.php:212
-#: SuppLoginSetup.php:214 SuppLoginSetup.php:224 SuppLoginSetup.php:226
-#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:546
-#: WWW_Users.php:548 WWW_Users.php:558 WWW_Users.php:560 WWW_Users.php:569
-#: WWW_Users.php:571
+#: PrintCustOrder_generic.php:111 SuppLoginSetup.php:221
+#: SuppLoginSetup.php:223 SuppLoginSetup.php:233 SuppLoginSetup.php:235
+#: SuppLoginSetup.php:244 SuppLoginSetup.php:246 WWW_Users.php:549
+#: WWW_Users.php:551 WWW_Users.php:561 WWW_Users.php:563 WWW_Users.php:572
+#: WWW_Users.php:574
 msgid "landscape"
 msgstr "lanskap"
 
-#: CustLoginSetup.php:197 CustLoginSetup.php:199 CustLoginSetup.php:203
-#: CustLoginSetup.php:205 SuppLoginSetup.php:218 SuppLoginSetup.php:220
-#: SuppLoginSetup.php:224 SuppLoginSetup.php:226 WWW_Users.php:552
-#: WWW_Users.php:554 WWW_Users.php:558 WWW_Users.php:560
+#: CustLoginSetup.php:208 CustLoginSetup.php:210 CustLoginSetup.php:214
+#: CustLoginSetup.php:216 SuppLoginSetup.php:227 SuppLoginSetup.php:229
+#: SuppLoginSetup.php:233 SuppLoginSetup.php:235 WWW_Users.php:555
+#: WWW_Users.php:557 WWW_Users.php:561 WWW_Users.php:563
 msgid "Letter"
 msgstr "Letter"
 
-#: CustLoginSetup.php:209 CustLoginSetup.php:211 CustLoginSetup.php:214
-#: CustLoginSetup.php:216 SuppLoginSetup.php:230 SuppLoginSetup.php:232
-#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:564
-#: WWW_Users.php:566 WWW_Users.php:569 WWW_Users.php:571
+#: CustLoginSetup.php:220 CustLoginSetup.php:222 CustLoginSetup.php:225
+#: CustLoginSetup.php:227 SuppLoginSetup.php:239 SuppLoginSetup.php:241
+#: SuppLoginSetup.php:244 SuppLoginSetup.php:246 WWW_Users.php:567
+#: WWW_Users.php:569 WWW_Users.php:572 WWW_Users.php:574
 msgid "Legal"
 msgstr "Legal"
 
-#: CustLoginSetup.php:222 SuppLoginSetup.php:243 UserSettings.php:146
-#: WWW_Users.php:279 WWW_Users.php:578
+#: CustLoginSetup.php:233 SuppLoginSetup.php:252 UserSettings.php:146
+#: WWW_Users.php:282 WWW_Users.php:581
 msgid "Theme"
 msgstr "Tema"
 
-#: CustLoginSetup.php:244 SuppLoginSetup.php:267 UserSettings.php:127
-#: WWW_Users.php:280 WWW_Users.php:603
+#: CustLoginSetup.php:255 SuppLoginSetup.php:276 UserSettings.php:127
+#: WWW_Users.php:283 WWW_Users.php:606
 msgid "Language"
 msgstr "Bahasa"
 
@@ -6821,7 +6831,7 @@ msgstr "Tampilkan Pengalokasian"
 msgid "The transaction number to be queried must be entered first"
 msgstr "Nomor transaksi yang diminta harus dimasukkan lebih dulu"
 
-#: CustWhereAlloc.php:87 CustomerTransInquiry.php:90 Z_CheckAllocs.php:51
+#: CustWhereAlloc.php:87 CustomerTransInquiry.php:90 Z_CheckAllocs.php:56
 msgid ""
 "The customer transactions for the selected criteria could not be retrieved "
 "because"
@@ -6840,23 +6850,23 @@ msgid "Transaction Total"
 msgstr "Total Transaksi"
 
 #: CustWhereAlloc.php:108 CustomerTransInquiry.php:106
-#: SupplierTransInquiry.php:107 Z_CheckAllocs.php:60
+#: SupplierTransInquiry.php:107 Z_CheckAllocs.php:65
 msgid "Ex Rate"
 msgstr "Kurs"
 
-#: CustWhereAlloc.php:110 Z_CheckAllocs.php:62
+#: CustWhereAlloc.php:110 Z_CheckAllocs.php:67
 msgid "Alloc"
 msgstr "Dialokasi"
 
 #: CustWhereAlloc.php:128 EmailCustTrans.php:12 SalesInquiry.php:1080
-#: SupplierCredit.php:1113 Z_CheckAllocs.php:80
+#: SupplierCredit.php:1113 Z_CheckAllocs.php:85
 msgid "Credit Note"
 msgstr "Nota Kredit"
 
 #: CustWhereAlloc.php:130 PcAssignCashToTab.php:225 PcAssignCashToTab.php:361
 #: PcAuthorizeExpenses.php:93 PcClaimExpensesFromTab.php:215
 #: PcClaimExpensesFromTab.php:379 PcReportTab.php:174 PcReportTab.php:328
-#: Z_CheckAllocs.php:82 Z_SalesIntegrityCheck.php:90
+#: Z_CheckAllocs.php:87 Z_SalesIntegrityCheck.php:90
 #: Z_SalesIntegrityCheck.php:105
 msgid "Receipt"
 msgstr "Penerimaan"
@@ -6922,7 +6932,7 @@ msgstr "adalah"
 msgid "Allocate Receipt"
 msgstr "Alokasi Penerimaan"
 
-#: CustomerAllocations.php:322 CustomerReceipt.php:529
+#: CustomerAllocations.php:322 CustomerReceipt.php:543
 msgid "Allocate Receipts"
 msgstr "Alokasi Penerimaan"
 
@@ -6965,7 +6975,7 @@ msgid "Yet to"
 msgstr "Belum di"
 
 #: CustomerAllocations.php:365 CustomerAllocations.php:491
-#: CustomerAllocations.php:532 CustomerReceipt.php:231 CustomerReceipt.php:529
+#: CustomerAllocations.php:532 CustomerReceipt.php:240 CustomerReceipt.php:543
 #: SupplierAllocations.php:458 SupplierAllocations.php:594
 #: SupplierAllocations.php:670
 #, php-format
@@ -7017,7 +7027,7 @@ msgstr "Belum dialokasi"
 msgid "Process Allocations"
 msgstr "Proses Alokasi"
 
-#: CustomerAllocations.php:434 CustomerReceipt.php:1015 Labels.php:265
+#: CustomerAllocations.php:434 CustomerReceipt.php:1086 Labels.php:265
 #: Payments.php:1026 PcAssignCashToTab.php:177 PcAssignCashToTab.php:373
 #: PcAuthorizeExpenses.php:323 PcClaimExpensesFromTab.php:167
 #: PcClaimExpensesFromTab.php:385 PcExpenses.php:344 PcExpensesTypeTab.php:140
@@ -7360,8 +7370,8 @@ msgstr "Silahkan gunakan link di bawah untuk membuat minimum 1 staff sales"
 msgid "Define Sales People"
 msgstr "Masukkan Staff Sales"
 
-#: CustomerBranches.php:683 DailySalesInquiry.php:40 SalesPeople.php:170
-#: WWW_Users.php:275
+#: CustomerBranches.php:683 DailySalesInquiry.php:41 SalesPeople.php:170
+#: WWW_Users.php:278
 msgid "Salesperson"
 msgstr "Sales"
 
@@ -7416,7 +7426,7 @@ msgstr "Ambil Stok Dari"
 msgid "Phone Number"
 msgstr "Nomor Telpon"
 
-#: CustomerBranches.php:763 Factors.php:262
+#: CustomerBranches.php:763 Factors.php:291
 msgid "Fax Number"
 msgstr "Nomor Fax"
 
@@ -7506,48 +7516,48 @@ msgstr "Pilih Customer untuk Dicari Informasi"
 msgid "The config value NumberOfMonthMustBeShown cannot be retrieved"
 msgstr "Nilai config NumberOfMonthMustBeShown tidak dapat diambil"
 
-#: CustomerInquiry.php:127 CustomerReceipt.php:897 SelectOrderItems.php:711
+#: CustomerInquiry.php:127 CustomerReceipt.php:948 SelectOrderItems.php:711
 #: SupplierCredit.php:264 SupplierInquiry.php:120 SupplierInvoice.php:236
 msgid "Terms"
 msgstr "Tempo"
 
-#: CustomerInquiry.php:127 CustomerReceipt.php:897 Customers.php:512
+#: CustomerInquiry.php:127 CustomerReceipt.php:948 Customers.php:512
 #: Customers.php:806 Customers.php:836
 msgid "Credit Limit"
 msgstr "Batas Kredit"
 
-#: CustomerInquiry.php:128 CustomerReceipt.php:897 Customers.php:533
+#: CustomerInquiry.php:128 CustomerReceipt.php:948 Customers.php:533
 #: Customers.php:873 Customers.php:879 Customers.php:897 Customers.php:919
 #: Customers.php:924 index.php:1080
 msgid "Credit Status"
 msgstr "Status Kredit"
 
-#: CustomerInquiry.php:131 CustomerReceipt.php:900
+#: CustomerInquiry.php:131 CustomerReceipt.php:952
 msgid "ACCOUNT ON HOLD"
 msgstr "REKENING DIBEKUKAN"
 
-#: CustomerInquiry.php:136 CustomerReceipt.php:905 PrintCustStatements.php:362
+#: CustomerInquiry.php:136 CustomerReceipt.php:958 PrintCustStatements.php:362
 #: SupplierInquiry.php:142
 msgid "Total Balance"
 msgstr "Total Saldo"
 
-#: CustomerInquiry.php:137 CustomerReceipt.php:906 PrintCustStatements.php:358
+#: CustomerInquiry.php:137 CustomerReceipt.php:959 PrintCustStatements.php:358
 #: SalesPeople.php:206 Shipments.php:396 Stocks.php:977 Stocks.php:979
 #: SupplierInquiry.php:143 includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
 msgstr "Mutakhir (Aktif)"
 
-#: CustomerInquiry.php:138 CustomerReceipt.php:907 SupplierInquiry.php:144
+#: CustomerInquiry.php:138 CustomerReceipt.php:960 SupplierInquiry.php:144
 msgid "Now Due"
 msgstr "Jatuh Tempo Sekarang"
 
-#: CustomerInquiry.php:139 CustomerInquiry.php:140 CustomerReceipt.php:908
-#: CustomerReceipt.php:909 SupplierInquiry.php:145 SupplierInquiry.php:146
+#: CustomerInquiry.php:139 CustomerInquiry.php:140 CustomerReceipt.php:961
+#: CustomerReceipt.php:962 SupplierInquiry.php:145 SupplierInquiry.php:146
 msgid "Days Overdue"
 msgstr "Hari Terlambat"
 
-#: CustomerInquiry.php:140 CustomerReceipt.php:909 PrintCustStatements.php:361
+#: CustomerInquiry.php:140 CustomerReceipt.php:962 PrintCustStatements.php:361
 #: SupplierInquiry.php:146
 msgid "Over"
 msgstr "Lebih Dari"
@@ -7569,7 +7579,7 @@ msgid "There are no transactions to display since"
 msgstr "Tidak ada transaksi untuk ditampilkan sejak"
 
 #: CustomerInquiry.php:202 SupplierInquiry.php:211
-#: Z_CheckAllocationsFrom.php:29 Z_CheckAllocationsFrom.php:52
+#: Z_CheckAllocationsFrom.php:35 Z_CheckAllocationsFrom.php:60
 #: includes/PDFStatementPageHeader.inc:172
 msgid "Allocated"
 msgstr "Dialokasi"
@@ -7643,31 +7653,31 @@ msgstr "Klik untuk mengalokasikan dana"
 msgid "Receipt Entry"
 msgstr "Masukkan Penerimaan"
 
-#: CustomerReceipt.php:32
+#: CustomerReceipt.php:35
 msgid "A bank account must be selected for this receipt"
 msgstr "Sebuah rekening bank harus dipilih untuk penerimaan ini"
 
-#: CustomerReceipt.php:47 Payments.php:699
+#: CustomerReceipt.php:54 Payments.php:699
 msgid "The bank account name cannot be retrieved because"
 msgstr "Nama rekening bank tidak dapat diambil karena"
 
-#: CustomerReceipt.php:56 Payments.php:709
+#: CustomerReceipt.php:63 Payments.php:709
 msgid "The bank account number"
 msgstr "Nomor rekening bank"
 
-#: CustomerReceipt.php:56
+#: CustomerReceipt.php:63
 msgid "is not set up as a bank account"
 msgstr "tidak di-set sebagai rekening bank"
 
-#: CustomerReceipt.php:69
+#: CustomerReceipt.php:76
 msgid "The exchange rate entered should be numeric"
 msgstr "Kurs yang dimasukkan harus berupa angka"
 
-#: CustomerReceipt.php:76
+#: CustomerReceipt.php:83
 msgid "The functional exchange rate entered should be numeric"
 msgstr "Kurs berlaku yang dimasukkan harus berupa angka"
 
-#: CustomerReceipt.php:92
+#: CustomerReceipt.php:99
 msgid ""
 "Changing the currency of the receipt means that existing entries need to be "
 "re-done - only customers trading in the selected currency can be selected"
@@ -7676,108 +7686,108 @@ msgstr ""
 "untuk dimasukkan kembali - hanya customer yang bertransaksi dalam mata uang "
 "terpilih yang dapat dipilih"
 
-#: CustomerReceipt.php:160 Payments.php:650
+#: CustomerReceipt.php:167 Payments.php:650
 msgid "No General Ledger code has been chosen"
 msgstr "Tidak ada General Ledger kode telah dipilih"
 
-#: CustomerReceipt.php:160 GLJournal.php:171 Payments.php:633 Payments.php:650
+#: CustomerReceipt.php:167 GLJournal.php:171 Payments.php:633 Payments.php:650
 msgid "so this GL analysis item could not be added"
 msgstr "jadi item analisa GL ini tidak dapat dimasukkan"
 
-#: CustomerReceipt.php:206
+#: CustomerReceipt.php:213
 msgid "The company has not yet been set up properly"
 msgstr "Perusahaan belum dimasukkan dengan benar"
 
-#: CustomerReceipt.php:206
+#: CustomerReceipt.php:213
 msgid "this information is needed to process the batch"
 msgstr "informasi ini diperlukan untuk memproses kelompok tersebut"
 
-#: CustomerReceipt.php:206
+#: CustomerReceipt.php:213
 msgid "Processing has been cancelled"
 msgstr "Pemrosesan telah dibatalkan"
 
-#: CustomerReceipt.php:231
+#: CustomerReceipt.php:240
 msgid "Summary of Receipt Batch"
 msgstr "Ringkasan Batch Penerimaan"
 
-#: CustomerReceipt.php:233
+#: CustomerReceipt.php:246
 msgid "Batch Number"
 msgstr "Nomor batch"
 
-#: CustomerReceipt.php:234 CustomerReceipt.php:753
+#: CustomerReceipt.php:247 CustomerReceipt.php:779
 msgid "Date Banked"
 msgstr "Tanggal Disetor"
 
-#: CustomerReceipt.php:236 CustomerReceipt.php:847
+#: CustomerReceipt.php:249 CustomerReceipt.php:895
 msgid "GL Code"
 msgstr "Kode GL"
 
-#: CustomerReceipt.php:237 CustomerReceipt.php:996
+#: CustomerReceipt.php:250 CustomerReceipt.php:1061
 msgid "Amount of Receipt"
 msgstr "Jumlah Penerimaan"
 
-#: CustomerReceipt.php:260
+#: CustomerReceipt.php:274
 msgid "Print a Customer Receipt"
 msgstr "Cetak Tanda Terima Pelanggan"
 
-#: CustomerReceipt.php:284
+#: CustomerReceipt.php:298
 msgid "Cannot insert a GL entry for the receipt because"
 msgstr "Tidak dapat memasukkan catatan GL untuk penerimaan tersebut karena"
 
-#: CustomerReceipt.php:285
+#: CustomerReceipt.php:299
 msgid "The SQL that failed to insert the receipt GL entry was"
 msgstr "SQL yang gagal memasukkan tanda catatan GL penerimaan adalah"
 
-#: CustomerReceipt.php:354
+#: CustomerReceipt.php:368
 msgid "Act Transfer"
 msgstr "Transfer Rekening"
 
-#: CustomerReceipt.php:363
+#: CustomerReceipt.php:377
 msgid "The SQL that failed to insert the bank transaction was"
 msgstr "SQL yang gagal memasukkan transaksi bank adalah"
 
-#: CustomerReceipt.php:364 Payments.php:553 Payments.php:579
+#: CustomerReceipt.php:378 Payments.php:553 Payments.php:579
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr "Tidak dapat memasukkan transaksi bank dengan SQL"
 
-#: CustomerReceipt.php:441
+#: CustomerReceipt.php:455
 msgid ""
 "The SQL that failed to insert the GL transaction fro the bank account debit "
 "was"
 msgstr "SQL yang gagal memasukkan transaksi GL dari debet rekening bank adalah"
 
-#: CustomerReceipt.php:515
+#: CustomerReceipt.php:529
 msgid ""
 "The SQL that failed to insert the GL transaction for the payment discount "
 "debit was"
 msgstr ""
 "SQL yang gagal memasukkan transaksi GL untuk debet diskon pembayaran adalah"
 
-#: CustomerReceipt.php:516
+#: CustomerReceipt.php:530
 msgid "Cannot insert a GL transaction for the payment discount debit"
 msgstr "Tidak dapat memasukkan transaksi GL untuk debet diskon pembayaran"
 
-#: CustomerReceipt.php:522 GLJournal.php:113
+#: CustomerReceipt.php:536 GLJournal.php:113
 msgid "Cannot commit the changes"
 msgstr "Tidak dapat menyimpan perubahan"
 
-#: CustomerReceipt.php:526
+#: CustomerReceipt.php:540
 msgid "Receipt batch"
 msgstr "Kelompok Penerimaan"
 
-#: CustomerReceipt.php:526
+#: CustomerReceipt.php:540
 msgid "has been successfully entered into the database"
 msgstr "telah berhasil dimasukkan ke database"
 
-#: CustomerReceipt.php:528
+#: CustomerReceipt.php:542
 msgid "Print PDF Batch Summary"
 msgstr "Cetak PDF Ringkasan Kelompok"
 
-#: CustomerReceipt.php:530 index.php:290
+#: CustomerReceipt.php:544 index.php:290
 msgid "Enter Receipts"
 msgstr "Masukkan Penerimaan"
 
-#: CustomerReceipt.php:542 SelectCreditItems.php:71
+#: CustomerReceipt.php:557 SelectCreditItems.php:71
 msgid ""
 "Customer name keywords have been used in preference to the customer code "
 "extract entered"
@@ -7785,7 +7795,7 @@ msgstr ""
 "Kata kunci nama customer telah digunakan dibandingkan dengan kutipan kode "
 "customer yang dimasukkan"
 
-#: CustomerReceipt.php:545 SelectCreditItems.php:74
+#: CustomerReceipt.php:563 SelectCreditItems.php:74
 msgid ""
 "At least one Customer Name keyword OR an extract of a Customer Code must be "
 "entered for the search"
@@ -7793,40 +7803,40 @@ msgstr ""
 "Setidaknya satu kata kunci Nama Customer ATAU kutipan dari Kode Customer "
 "harus dimasukkan untuk pencarian"
 
-#: CustomerReceipt.php:576 SelectCreditItems.php:110 SelectOrderItems.php:507
+#: CustomerReceipt.php:594 SelectCreditItems.php:110 SelectOrderItems.php:507
 msgid "SQL used to retrieve the customer details was"
 msgstr "SQL yang digunakan untuk mengambil rincian customer adalah"
 
-#: CustomerReceipt.php:583 SelectCustomer.php:174
+#: CustomerReceipt.php:601 SelectCustomer.php:174
 msgid "No customer records contain the selected text"
 msgstr "Tidak ada data customer yang berisi teks terpilih"
 
-#: CustomerReceipt.php:583 PO_Header.php:347 SelectCreditItems.php:119
+#: CustomerReceipt.php:601 PO_Header.php:347 SelectCreditItems.php:119
 #: SelectCustomer.php:174 includes/PO_ReadInOrder.inc:124
 msgid "please alter your search criteria and try again"
 msgstr "silakan ubah kriteria pencarian Anda dan coba kembali"
 
-#: CustomerReceipt.php:656 CustomerReceipt.php:684 Customers.php:635
+#: CustomerReceipt.php:675 CustomerReceipt.php:703 Customers.php:635
 msgid "The customer details could not be retrieved because"
 msgstr "Rincian customer tidak dapat diambil karena"
 
-#: CustomerReceipt.php:718 DailyBankTransactions.php:27 Payments.php:736
+#: CustomerReceipt.php:736 DailyBankTransactions.php:27 Payments.php:736
 msgid "The bank accounts could not be retrieved because"
 msgstr "rekening bank tidak dapat diambil karena"
 
-#: CustomerReceipt.php:723 CustomerReceipt.php:725
+#: CustomerReceipt.php:741 CustomerReceipt.php:743
 msgid "Enter Receipt"
 msgstr "Masukkan Penerimaan"
 
-#: CustomerReceipt.php:723 CustomerReceipt.php:933
+#: CustomerReceipt.php:741 CustomerReceipt.php:989
 msgid "General Ledger Receipt Entry"
 msgstr "Masukkan Penerimaan Buku Besar"
 
-#: CustomerReceipt.php:725
+#: CustomerReceipt.php:743
 msgid "Enter Customer Receipt"
 msgstr "Masukkan Penerimaan Customer"
 
-#: CustomerReceipt.php:726
+#: CustomerReceipt.php:744
 msgid ""
 "To enter a payment TO a customer (ie. to pay out a credit note), enter a "
 "negative payment amount."
@@ -7834,34 +7844,34 @@ msgstr ""
 "Untuk memasukkan pembayaran KEPADA customer (yaitu: membayarkan nota "
 "kredit), masukkan jumlah peymbayaran negatif"
 
-#: CustomerReceipt.php:766
+#: CustomerReceipt.php:794
 msgid "No currencies are defined yet"
 msgstr "Belum ada mata uang yang sudah dibuat"
 
-#: CustomerReceipt.php:766
+#: CustomerReceipt.php:794
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "Penerimaan tidak dapat dimasukkan sampai mata uang telah dibuat"
 
-#: CustomerReceipt.php:789 CustomerReceipt.php:804 Payments.php:819
+#: CustomerReceipt.php:818 CustomerReceipt.php:835 Payments.php:819
 #: Payments.php:836
 msgid "Suggested rate:"
 msgstr "Kurs Diusulkan:"
 
-#: CustomerReceipt.php:796
+#: CustomerReceipt.php:826
 msgid "Receipt Exchange Rate"
 msgstr "Kurs Penerimaan"
 
-#: CustomerReceipt.php:798
+#: CustomerReceipt.php:828
 msgid ""
 "The exchange rate between the currency of the bank account currency and the "
 "currency of the receipt"
 msgstr "Kurs antara mata uang dari rekening bank dan mata uang penerimaan"
 
-#: CustomerReceipt.php:811 Payments.php:844
+#: CustomerReceipt.php:843 Payments.php:844
 msgid "Functional Exchange Rate"
 msgstr "Kurs yang Berlaku"
 
-#: CustomerReceipt.php:812 Payments.php:846
+#: CustomerReceipt.php:845 Payments.php:846
 msgid ""
 "The exchange rate between the currency of the business (the functional "
 "currency) and the currency of the bank account"
@@ -7869,11 +7879,11 @@ msgstr ""
 "Kurs antara mata uang bisnis (mata uang yang berlaku) dan mata uang rekening "
 "bank"
 
-#: CustomerReceipt.php:815
+#: CustomerReceipt.php:850
 msgid "Receipt Type"
 msgstr "Tipe Penerimaan"
 
-#: CustomerReceipt.php:832 CustomerReceipt.php:1014 CustomerTypes.php:264
+#: CustomerReceipt.php:875 CustomerReceipt.php:1085 CustomerTypes.php:264
 #: ExchangeRateTrend.php:51 FreightCosts.php:59 GLJournal.php:136
 #: GLJournal.php:374 OffersReceived.php:111 Payments.php:1025
 #: PcAssignCashToTab.php:176 PcAssignCashToTab.php:372
@@ -7884,20 +7894,20 @@ msgstr "Tipe Penerimaan"
 msgid "Accept"
 msgstr "Terima"
 
-#: CustomerReceipt.php:838
+#: CustomerReceipt.php:885
 msgid "Banked"
 msgstr "Disetor"
 
-#: CustomerReceipt.php:839
+#: CustomerReceipt.php:886
 msgid "Banked into the"
 msgstr "Disetor ke"
 
-#: CustomerReceipt.php:840 PO_Items.php:234 Payments.php:728
+#: CustomerReceipt.php:887 PO_Items.php:234 Payments.php:728
 #: SelectSalesOrder.php:211 SelectSalesOrder.php:372 SpecialOrder.php:559
 msgid "on"
 msgstr "pada"
 
-#: CustomerReceipt.php:844 GoodsReceived.php:102 GoodsReceived.php:106
+#: CustomerReceipt.php:892 GoodsReceived.php:102 GoodsReceived.php:106
 #: GoodsReceived.php:112 POReport.php:629 POReport.php:1358 ReverseGRN.php:386
 #: ReverseGRN.php:387 ShipmentCosting.php:146 Shipments.php:393
 #: Shipments.php:475 StockDispatch.php:379 StockDispatch.php:386
@@ -7905,7 +7915,7 @@ msgstr "pada"
 msgid "Received"
 msgstr "Diterima"
 
-#: CustomerReceipt.php:886
+#: CustomerReceipt.php:937
 msgid ""
 "The selected customer does not trade in the currency of the receipt being "
 "entered - either the currency of the receipt needs to be changed or a "
@@ -7915,16 +7925,16 @@ msgstr ""
 "sedang dimasukkan - (coba salah satu) mata uang penerimaan perlu dirubah "
 "atau customer lain dipilih"
 
-#: CustomerReceipt.php:936 GLAccountCSV.php:62 GLAccountInquiry.php:46
+#: CustomerReceipt.php:994 GLAccountCSV.php:62 GLAccountInquiry.php:46
 #: GLAccountReport.php:266 Payments.php:901 StockAdjustments.php:431
 msgid "Select Tag"
 msgstr "Pilih Tag"
 
-#: CustomerReceipt.php:960 GLBudgets.php:49 Payments.php:982
+#: CustomerReceipt.php:1023 GLBudgets.php:49 Payments.php:982
 msgid "No General ledger accounts have been set up yet"
 msgstr "Belum ada rekening Buku Besar yang sudah dibuat"
 
-#: CustomerReceipt.php:960
+#: CustomerReceipt.php:1023
 msgid ""
 "receipts cannot be entered against GL accounts until the GL accounts are set "
 "up"
@@ -7932,47 +7942,47 @@ msgstr ""
 "penerimaan tidak dapat dimasukkan terhadap rekening GL sampai rekening GL "
 "dibuat"
 
-#: CustomerReceipt.php:1001 Payments.php:1085
+#: CustomerReceipt.php:1067 Payments.php:1085
 msgid "Amount of Discount"
 msgstr "Jumlah Diskon"
 
-#: CustomerReceipt.php:1002
+#: CustomerReceipt.php:1068
 msgid "agreed prompt payment discount is"
 msgstr "diskon pembayaran yang disetujui adalah"
 
-#: CustomerReceipt.php:1007
+#: CustomerReceipt.php:1074
 msgid "Payee Bank Details"
 msgstr "Rincian Bank Penerima"
 
-#: CustomerReceipt.php:1022
+#: CustomerReceipt.php:1096
 msgid "Select a Customer"
 msgstr "Pilih Customer"
 
-#: CustomerReceipt.php:1024
+#: CustomerReceipt.php:1099
 msgid "Text in the Customer"
 msgstr "Teks di Customer"
 
-#: CustomerReceipt.php:1024
+#: CustomerReceipt.php:1099
 msgid "name"
 msgstr "(nama)"
 
-#: CustomerReceipt.php:1027
+#: CustomerReceipt.php:1102
 msgid "Text extract in the Customer"
 msgstr "Kutipan teks di Customer"
 
-#: CustomerReceipt.php:1027
+#: CustomerReceipt.php:1102
 msgid "code"
 msgstr "(kode)"
 
-#: CustomerReceipt.php:1030
+#: CustomerReceipt.php:1105
 msgid "Customer invoice number"
 msgstr "Nomor faktur customer"
 
-#: CustomerReceipt.php:1035
+#: CustomerReceipt.php:1114
 msgid "Enter A GL Receipt"
 msgstr "Masukkan Penerimaan GL"
 
-#: CustomerReceipt.php:1077
+#: CustomerReceipt.php:1162
 msgid "Accept and Process Batch"
 msgstr "Terima dan Proses Kelompok"
 
@@ -7989,7 +7999,7 @@ msgid "Choose which type of transaction to report on."
 msgstr "Pilih tipe transaksi untuk dibuat laporan."
 
 #: CustomerTransInquiry.php:51 FixedAssetRegister.php:78
-#: FixedAssetRegister.php:332 PcReportTab.php:136 PcReportTab.php:256
+#: FixedAssetRegister.php:349 PcReportTab.php:136 PcReportTab.php:256
 #: SalesAnalRepts.php:430 SalesAnalRepts.php:458 SalesAnalRepts.php:487
 #: SalesAnalRepts.php:506 ShipmentCosting.php:54 Shipments.php:298
 #: StockDispatch.php:383 StockLocTransferReceive.php:209
@@ -8010,7 +8020,7 @@ msgstr "Pilih tipe transaksi untuk dibuat laporan."
 msgid "From"
 msgstr "Dari"
 
-#: CustomerTransInquiry.php:53 FixedAssetRegister.php:333 POReport.php:517
+#: CustomerTransInquiry.php:53 FixedAssetRegister.php:350 POReport.php:517
 #: POReport.php:1516 PcReportTab.php:262 SalesAnalRepts.php:431
 #: SalesAnalRepts.php:459 SalesAnalRepts.php:488 SalesAnalRepts.php:507
 #: SalesInquiry.php:780 SalesInquiry.php:1089 StockDispatch.php:384
@@ -8317,11 +8327,11 @@ msgstr "untuk mengatur jenis pelanggan Anda"
 msgid "Click here to continue"
 msgstr "Klik di sini untuk melanjutkan"
 
-#: Customers.php:445 Factors.php:221 Factors.php:261 OrderDetails.php:103
+#: Customers.php:445 Factors.php:237 Factors.php:290 OrderDetails.php:103
 #: PrintCustTrans.php:712 PrintCustTrans.php:943 PrintCustTrans.php:992
 #: PrintCustTransPortrait.php:751 PrintCustTransPortrait.php:997
 #: PrintCustTransPortrait.php:1054 SalesPeople.php:201 Suppliers.php:673
-#: Suppliers.php:852 WWW_Users.php:270
+#: Suppliers.php:852 WWW_Users.php:273
 msgid "Telephone"
 msgstr "Telpon"
 
@@ -8563,64 +8573,64 @@ msgstr "Pilih Tanggal lain"
 msgid "Daily Sales Inquiry"
 msgstr "Penjualan Harian Permintaan"
 
-#: DailySalesInquiry.php:11
+#: DailySalesInquiry.php:10
 msgid "Daily Sales"
 msgstr "Penjualan Harian"
 
-#: DailySalesInquiry.php:13
+#: DailySalesInquiry.php:12
 msgid "Select the month to show daily sales for"
 msgstr "Pilih bulan untuk menunjukkan penjualan harian untuk"
 
-#: DailySalesInquiry.php:21
+#: DailySalesInquiry.php:20
 msgid "Month to Show"
 msgstr "Bulan ke Show"
 
-#: DailySalesInquiry.php:64
+#: DailySalesInquiry.php:65
 msgid "Show Daily Sales For The Selected Month"
 msgstr "Daily Show Penjualan Untuk Bulan Terpilih"
 
-#: DailySalesInquiry.php:99 SalesByTypePeriodInquiry.php:326
+#: DailySalesInquiry.php:100 SalesByTypePeriodInquiry.php:326
 #: SalesCategoryPeriodInquiry.php:156 SalesTopItemsInquiry.php:210
 msgid "The sales data could not be retrieved because"
 msgstr "Data penjualan tidak dapat diambil karena"
 
-#: DailySalesInquiry.php:104 MRPCalendar.php:276
+#: DailySalesInquiry.php:105 MRPCalendar.php:276
 msgid "Sunday"
 msgstr "Minggu"
 
-#: DailySalesInquiry.php:105 MRPCalendar.php:280
+#: DailySalesInquiry.php:106 MRPCalendar.php:280
 msgid "Monday"
 msgstr "Senin"
 
-#: DailySalesInquiry.php:106 MRPCalendar.php:284
+#: DailySalesInquiry.php:107 MRPCalendar.php:284
 msgid "Tuesday"
 msgstr "Selasa"
 
-#: DailySalesInquiry.php:107 MRPCalendar.php:288
+#: DailySalesInquiry.php:108 MRPCalendar.php:288
 msgid "Wednesday"
 msgstr "Rabu"
 
-#: DailySalesInquiry.php:108 MRPCalendar.php:292
+#: DailySalesInquiry.php:109 MRPCalendar.php:292
 msgid "Thursday"
 msgstr "Kamis"
 
-#: DailySalesInquiry.php:109 MRPCalendar.php:296
+#: DailySalesInquiry.php:110 MRPCalendar.php:296
 msgid "Friday"
 msgstr "Jumat"
 
-#: DailySalesInquiry.php:110 MRPCalendar.php:272
+#: DailySalesInquiry.php:111 MRPCalendar.php:272
 msgid "Saturday"
 msgstr "Sabtu"
 
-#: DailySalesInquiry.php:185
+#: DailySalesInquiry.php:186
 msgid "Total Sales for month"
 msgstr "Total Penjualan selama satu bulan"
 
-#: DailySalesInquiry.php:185
+#: DailySalesInquiry.php:186
 msgid "GP%"
 msgstr "GP%"
 
-#: DailySalesInquiry.php:185
+#: DailySalesInquiry.php:186
 msgid "Avg Daily Sales"
 msgstr "Rata-rata Penjualan Harian"
 
@@ -8649,15 +8659,15 @@ msgstr "Jumlah saldo"
 msgid "Debtor Balances"
 msgstr "Saldo Debitur"
 
-#: DebtorsAtPeriodEnd.php:142 SupplierBalsAtPeriodEnd.php:139
+#: DebtorsAtPeriodEnd.php:145 SupplierBalsAtPeriodEnd.php:139
 msgid "Balances As At"
 msgstr "Saldo Per Tanggal"
 
-#: DebtorsAtPeriodEnd.php:146 SupplierBalsAtPeriodEnd.php:147
+#: DebtorsAtPeriodEnd.php:149 SupplierBalsAtPeriodEnd.php:147
 msgid "Could not retrieve period data because"
 msgstr "Tidak dapat mengambil data periode karena"
 
-#: DebtorsAtPeriodEnd.php:146
+#: DebtorsAtPeriodEnd.php:149
 msgid "The SQL that failed to get the period data was"
 msgstr "SQL yang gagal mengambil data periode adalah"
 
@@ -9055,7 +9065,7 @@ msgstr "Master stok telah diperbarui dengan kategori diskon ini"
 msgid "The stock master record has been updated to no discount category"
 msgstr "Data master stok telah diperbarui tanpa kategori diskon"
 
-#: DiscountCategories.php:74 DiscountCategories.php:100 DiscountMatrix.php:114
+#: DiscountCategories.php:74 DiscountCategories.php:100 DiscountMatrix.php:115
 msgid "Discount Category Code"
 msgstr "Kode Kategori Diskon"
 
@@ -9097,7 +9107,7 @@ msgstr "ke semua barang dalam kategori stok"
 msgid "Update Items"
 msgstr "Perbarui Barang"
 
-#: DiscountCategories.php:202 DiscountMatrix.php:154 Stocks.php:1065
+#: DiscountCategories.php:202 DiscountMatrix.php:161 Stocks.php:1065
 msgid "Discount Category"
 msgstr "Kategori Diskon"
 
@@ -9194,15 +9204,15 @@ msgstr "Data matriks diskon telah dihapus"
 msgid "Customer Price List"
 msgstr "Daftar Harga Customer"
 
-#: DiscountMatrix.php:129 DiscountMatrix.php:155
+#: DiscountMatrix.php:131 DiscountMatrix.php:162
 msgid "Quantity Break"
 msgstr "Batas Kuantitas"
 
-#: DiscountMatrix.php:132 DiscountMatrix.php:156
+#: DiscountMatrix.php:135 DiscountMatrix.php:163
 msgid "Discount Rate"
 msgstr "Tarif diskon"
 
-#: DiscountMatrix.php:175
+#: DiscountMatrix.php:182
 #, fuzzy, php-format
 msgid "Are you sure you wish to delete this discount matrix record?"
 msgstr "Apakah Anda yakin ingin menghapus kontak person ini?"
@@ -9228,7 +9238,7 @@ msgstr "Baris pesan ditambahkan"
 msgid "The selected message line has been deleted"
 msgstr "Baris pesan yang dipilih telah dihapus"
 
-#: EDIMessageFormat.php:127 EDIMessageFormat.php:204
+#: EDIMessageFormat.php:127 EDIMessageFormat.php:205
 msgid "Definition of"
 msgstr "Definisi dari"
 
@@ -9245,30 +9255,30 @@ msgstr "String Format"
 msgid "Create New EDI Invoice Message From Default Template"
 msgstr "Buat Pesan Faktur EDI Baru Dari Contoh Standar"
 
-#: EDIMessageFormat.php:191
+#: EDIMessageFormat.php:192
 msgid "Review Message Lines"
 msgstr "Tinjau Semua Baris Pesan"
 
-#: EDIMessageFormat.php:212 EDIMessageFormat.php:214
+#: EDIMessageFormat.php:213 EDIMessageFormat.php:215
 msgid "Heading"
 msgstr "Heading"
 
-#: EDIMessageFormat.php:218 EDIMessageFormat.php:220 POReport.php:1504
+#: EDIMessageFormat.php:219 EDIMessageFormat.php:221 POReport.php:1504
 #: SalesInquiry.php:1050
 msgid "Detail"
 msgstr "Rincian"
 
-#: EDIMessageFormat.php:223 EDIMessageFormat.php:225 GLBalanceSheet.php:53
+#: EDIMessageFormat.php:224 EDIMessageFormat.php:226 GLBalanceSheet.php:53
 #: GLProfit_Loss.php:103 GLTagProfit_Loss.php:117 POReport.php:1505
 #: SalesInquiry.php:1051 Tax.php:240
 msgid "Summary"
 msgstr "Ringkasan"
 
-#: EDIMessageFormat.php:239
+#: EDIMessageFormat.php:240
 msgid "Line Text"
 msgstr "Teks Baris"
 
-#: EDIMessageFormat.php:245 FixedAssetLocations.php:144
+#: EDIMessageFormat.php:246 FixedAssetLocations.php:151
 #: PO_AuthorisationLevels.php:246
 msgid "Update Information"
 msgstr "Perbarui Informasi"
@@ -10180,23 +10190,23 @@ msgstr "supplier yang menggunakan perusahaan penagih ini"
 msgid "Factoring company record record for"
 msgstr "Anjak perusahaan rekaman rekor"
 
-#: Factors.php:205
+#: Factors.php:206
 msgid "Factor company Name"
 msgstr "Nama perusahaan Penagih"
 
-#: Factors.php:232
+#: Factors.php:255
 msgid "Insert New Factor"
 msgstr "Masukkan Penagih Baru"
 
-#: Factors.php:235
+#: Factors.php:261
 msgid "Update Factor"
 msgstr "Perbarui Penagih"
 
-#: Factors.php:236 Suppliers.php:965
+#: Factors.php:263 Suppliers.php:965
 msgid "There is no second warning if you hit the delete button below"
 msgstr "Tidak ada peringatan kedua jika Anda menekan tombol hapus di bawah ini"
 
-#: Factors.php:236
+#: Factors.php:263
 msgid ""
 "However checks will be made to ensure there are no suppliers are using this "
 "factor before the deletion is processed"
@@ -10204,47 +10214,47 @@ msgstr ""
 "Tetapi pemeriksaan akan dilakukan untuk memastikan tidak ada supplier yang "
 "sedang menggunakan penagih ini sebelum penghapusan diproses"
 
-#: Factors.php:237
+#: Factors.php:265
 msgid "Delete Factor"
 msgstr "Hapus Penagih"
 
-#: Factors.php:237
+#: Factors.php:265
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "Apakah Anda yakin ingin menghapus perusahaan penagih ini"
 
-#: Factors.php:252 TaxAuthorities.php:146
+#: Factors.php:281 TaxAuthorities.php:146
 msgid "ID"
 msgstr "ID"
 
-#: Factors.php:253
+#: Factors.php:282
 msgid "Company Name"
 msgstr "Nama Perusahaan"
 
-#: Factors.php:254 PurchData.php:353 SelectSupplier.php:261
+#: Factors.php:283 PurchData.php:353 SelectSupplier.php:261
 msgid "Address 1"
 msgstr "Alamat 1"
 
-#: Factors.php:255 PurchData.php:354 SelectSupplier.php:262
+#: Factors.php:284 PurchData.php:354 SelectSupplier.php:262
 msgid "Address 2"
 msgstr "Alamat 2"
 
-#: Factors.php:256 PurchData.php:355 SelectSupplier.php:263
+#: Factors.php:285 PurchData.php:355 SelectSupplier.php:263
 msgid "Address 3"
 msgstr "Alamat 3"
 
-#: Factors.php:257 SelectSupplier.php:264
+#: Factors.php:286 SelectSupplier.php:264
 msgid "Address 4"
 msgstr "Alamat 4"
 
-#: Factors.php:258
+#: Factors.php:287
 msgid "Address 5"
 msgstr "Alamat 5"
 
-#: Factors.php:259
+#: Factors.php:288
 msgid "Address 6"
 msgstr "Alamat 6"
 
-#: Factors.php:304
+#: Factors.php:336
 msgid "Create New Factor"
 msgstr "Buat Penagih Baru"
 
@@ -10252,26 +10262,26 @@ msgstr "Buat Penagih Baru"
 msgid "Fixed Asset Category Maintenance"
 msgstr "Pengaturan Kategori Aktiva Tetap"
 
-#: FixedAssetCategories.php:12
+#: FixedAssetCategories.php:13
 msgid "Fixed Asset Categories"
 msgstr "Aktiva Tetap Kategori"
 
-#: FixedAssetCategories.php:34
+#: FixedAssetCategories.php:36
 msgid "The Fixed Asset Category code must be six characters or less long"
 msgstr "Kode Kategori Aktiva Tetap maksimum 6 karakter"
 
-#: FixedAssetCategories.php:37
+#: FixedAssetCategories.php:39
 msgid ""
 "The Fixed Asset Category code must be at least 1 character but less than six "
 "characters long"
 msgstr "Kode Kategori Aktiva Tetap minimum 1 karakter tapi maksimum 6 karakter"
 
-#: FixedAssetCategories.php:40
+#: FixedAssetCategories.php:42
 msgid ""
 "The Fixed Asset Category description must be twenty characters or less long"
 msgstr "Keterangan Kategori Aktiva Tetap maksimum 20 karakter"
 
-#: FixedAssetCategories.php:49
+#: FixedAssetCategories.php:52
 msgid ""
 "The accounts selected to post cost or accumulated depreciation to cannot be "
 "either of the debtors control account, creditors control account or GRN "
@@ -10281,7 +10291,7 @@ msgstr ""
 "dapat salah satu dari rekening kontrol debitur, kreditur kontrol account "
 "atau rekening suspense GRN"
 
-#: FixedAssetCategories.php:65
+#: FixedAssetCategories.php:68
 msgid ""
 "The asset cost account selected is a bank account - bank accounts are "
 "protected from having any other postings made to them. Select another "
@@ -10291,7 +10301,7 @@ msgstr ""
 "dilindungi dari memiliki posting apapun lainnya yang dibuat kepada mereka. "
 "Pilih account neraca untuk biaya aset"
 
-#: FixedAssetCategories.php:69
+#: FixedAssetCategories.php:72
 msgid ""
 "The accumulated depreciation account selected is a bank account - bank "
 "accounts are protected from having any other postings made to them. Select "
@@ -10301,23 +10311,23 @@ msgstr ""
 "bank dilindungi dari memiliki posting apapun lainnya yang dibuat kepada "
 "mereka. Pilih account neraca untuk aset akumulasi penyusutan"
 
-#: FixedAssetCategories.php:86
+#: FixedAssetCategories.php:90
 msgid "Could not update the fixed asset category"
 msgstr "Tidak dapat memperbarui kategori aktiva tetap"
 
-#: FixedAssetCategories.php:89
+#: FixedAssetCategories.php:93
 msgid "Updated the fixed asset category record for"
 msgstr "Telah memperbarui data kategori aktiva tetap untuk"
 
-#: FixedAssetCategories.php:105
+#: FixedAssetCategories.php:109
 msgid "Could not insert the new fixed asset category"
 msgstr "Tidak dapat memasukkan kategori aset baru tetap"
 
-#: FixedAssetCategories.php:107
+#: FixedAssetCategories.php:111
 msgid "A new fixed asset category record has been added for"
 msgstr "Sebuah catatan aktiva tetap kategori baru telah ditambahkan untuk"
 
-#: FixedAssetCategories.php:128
+#: FixedAssetCategories.php:132
 msgid ""
 "Cannot delete this fixed asset category because fixed assets have been "
 "created using this category"
@@ -10325,35 +10335,35 @@ msgstr ""
 "Tidak dapat menghapus kategori ini aktiva tetap karena aset tetap telah "
 "dibuat dengan menggunakan kategori ini"
 
-#: FixedAssetCategories.php:129
+#: FixedAssetCategories.php:133
 msgid "fixed assets referring to this category code"
 msgstr "aktiva tetap mengacu pada kode kategori"
 
-#: FixedAssetCategories.php:134
+#: FixedAssetCategories.php:138
 msgid "The fixed asset category"
 msgstr "Kategori aktiva tetap"
 
-#: FixedAssetCategories.php:158 StockCategories.php:215
+#: FixedAssetCategories.php:162 StockCategories.php:215
 msgid "Cat Code"
 msgstr "Kode Kategori"
 
-#: FixedAssetCategories.php:160
+#: FixedAssetCategories.php:164
 msgid "Cost GL"
 msgstr "Biaya GL"
 
-#: FixedAssetCategories.php:161
+#: FixedAssetCategories.php:165
 msgid "P & L Depn GL"
 msgstr "GL Penyusutan Laba/Rugi"
 
-#: FixedAssetCategories.php:162
+#: FixedAssetCategories.php:166
 msgid "Disposal GL"
 msgstr "Pembuangan GL"
 
-#: FixedAssetCategories.php:163
+#: FixedAssetCategories.php:167
 msgid "Accum Depn GL"
 msgstr "Accum Depn GL"
 
-#: FixedAssetCategories.php:183
+#: FixedAssetCategories.php:187
 #, php-format
 msgid ""
 "Are you sure you wish to delete this fixed asset category? Additional checks "
@@ -10364,33 +10374,33 @@ msgstr ""
 "tambahan akan dilakukan sebelum penghapusan sebenarnya untuk memastikan "
 "integritas data tidak terganggu."
 
-#: FixedAssetCategories.php:203
+#: FixedAssetCategories.php:207
 msgid "Show All Fixed Asset Categories"
 msgstr "Tampilkan Semua Kategori Aktiva Tetap"
 
-#: FixedAssetCategories.php:232 FixedAssetCategories.php:238
+#: FixedAssetCategories.php:238 FixedAssetCategories.php:248
 #: StockCategories.php:311 StockCategories.php:321
 msgid "Category Code"
 msgstr "Kode Kategori"
 
-#: FixedAssetCategories.php:265 POReport.php:741 POReport.php:1433
+#: FixedAssetCategories.php:277 POReport.php:741 POReport.php:1433
 #: SalesInquiry.php:960 StockCategories.php:352
 msgid "Category Description"
 msgstr "Keterangan Kategori"
 
-#: FixedAssetCategories.php:268
+#: FixedAssetCategories.php:281
 msgid "Fixed Asset Cost GL Code"
 msgstr "Aktiva Tetap Biaya Kode GL"
 
-#: FixedAssetCategories.php:282
+#: FixedAssetCategories.php:295
 msgid "Profit and Loss Depreciation GL Code"
 msgstr "Kode GL Penyusutan Laba/Rugi"
 
-#: FixedAssetCategories.php:295
+#: FixedAssetCategories.php:310
 msgid "Profit or Loss on Disposal GL Code:"
 msgstr "Laba atau Rugi Pelepasan GL Kode:"
 
-#: FixedAssetCategories.php:307
+#: FixedAssetCategories.php:324
 msgid "Balance Sheet Accumulated Depreciation GL Code"
 msgstr "Neraca Akumulasi Penyusutan Kode GL"
 
@@ -10403,7 +10413,7 @@ msgstr "Masukkan Jurnal Penyusutan"
 msgid "The date is expected to be in the format"
 msgstr "Tanggal yang dimasukkan harus dalam format"
 
-#: FixedAssetDepreciation.php:73
+#: FixedAssetDepreciation.php:74
 msgid ""
 "No depreciation will be committed as the processing date is beyond the "
 "current date. The depreciation run can only be run for periods prior to today"
@@ -10412,17 +10422,17 @@ msgstr ""
 "tanggal saat ini. Jangka depresiasi hanya bisa dijalankan untuk periode "
 "sebelum hari ini"
 
-#: FixedAssetDepreciation.php:83 FixedAssetRegister.php:80
-#: FixedAssetRegister.php:331 FixedAssetTransfer.php:109
+#: FixedAssetDepreciation.php:85 FixedAssetRegister.php:82
+#: FixedAssetRegister.php:348 FixedAssetTransfer.php:109
 #: SuppFixedAssetChgs.php:74 SupplierCredit.php:383 SupplierInvoice.php:369
 msgid "Asset ID"
 msgstr "ID Aktiva"
 
-#: FixedAssetDepreciation.php:85 FixedAssetItems.php:502 SelectAsset.php:245
+#: FixedAssetDepreciation.php:87 FixedAssetItems.php:522 SelectAsset.php:245
 msgid "Date Purchased"
 msgstr "Tanggal Dibeli"
 
-#: FixedAssetDepreciation.php:86 PricesByCost.php:157 SalesAnalReptCols.php:36
+#: FixedAssetDepreciation.php:88 PricesByCost.php:157 SalesAnalReptCols.php:36
 #: SalesAnalReptCols.php:38 SelectProduct.php:193 SelectProduct.php:350
 #: ShipmentCosting.php:149 ShipmentCosting.php:150 StockCostUpdate.php:153
 #: includes/PDFInventoryValnPageHeader.inc:35
@@ -10431,27 +10441,27 @@ msgstr "Tanggal Dibeli"
 msgid "Cost"
 msgstr "Biaya"
 
-#: FixedAssetDepreciation.php:87
+#: FixedAssetDepreciation.php:89
 msgid "Accum Depn"
 msgstr "Accum Depn"
 
-#: FixedAssetDepreciation.php:88
+#: FixedAssetDepreciation.php:90
 msgid "B/fwd Book Value"
 msgstr "B / fwd Nilai Buku"
 
-#: FixedAssetDepreciation.php:89
+#: FixedAssetDepreciation.php:91
 msgid "Depn Type"
 msgstr "Depn Jenis"
 
-#: FixedAssetDepreciation.php:90
+#: FixedAssetDepreciation.php:92
 msgid "Depn Rate"
 msgstr "Tingkat Depn"
 
-#: FixedAssetDepreciation.php:91
+#: FixedAssetDepreciation.php:93
 msgid "New Depn"
 msgstr "Baru Depn"
 
-#: FixedAssetDepreciation.php:106 FixedAssetDepreciation.php:229
+#: FixedAssetDepreciation.php:112 FixedAssetDepreciation.php:242
 #: InventoryValuation.php:116 InventoryValuation.php:168
 #: MailInventoryValuation.php:140 MailInventoryValuation.php:186
 #: OutstandingGRNs.php:88 OutstandingGRNs.php:135
@@ -10459,35 +10469,35 @@ msgstr "Baru Depn"
 msgid "Total for"
 msgstr "Total untuk"
 
-#: FixedAssetDepreciation.php:122
+#: FixedAssetDepreciation.php:130
 msgid "SL"
 msgstr "SL"
 
-#: FixedAssetDepreciation.php:128
+#: FixedAssetDepreciation.php:136
 msgid "DV"
 msgstr "DV"
 
-#: FixedAssetDepreciation.php:181
+#: FixedAssetDepreciation.php:192
 msgid "Cannot insert a depreciation GL entry for the depreciation because"
 msgstr ""
 "Tidak dapat menyisipkan penyusutan GL entri untuk beban penyusutan karena"
 
-#: FixedAssetDepreciation.php:182 GLJournal.php:84 GLJournal.php:107
+#: FixedAssetDepreciation.php:193 GLJournal.php:84 GLJournal.php:107
 msgid "The SQL that failed to insert the GL Trans record was"
 msgstr "SQL yang gagal memasukkan data GL Trans adalah"
 
-#: FixedAssetDepreciation.php:217
+#: FixedAssetDepreciation.php:229
 msgid ""
 "Cannot insert a fixed asset transaction entry for the depreciation because"
 msgstr ""
 "Tidak dapat memasukkan entri transaksi aktiva tetap untuk beban penyusutan "
 "karena"
 
-#: FixedAssetDepreciation.php:218
+#: FixedAssetDepreciation.php:230
 msgid "The SQL that failed to insert the fixed asset transaction record was"
 msgstr "SQL yang gagal untuk memasukkan catatan transaksi aktiva tetap adalah"
 
-#: FixedAssetDepreciation.php:224
+#: FixedAssetDepreciation.php:236
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "accumulated depreciation could not be updated:"
@@ -10495,7 +10505,7 @@ msgstr ""
 "KRITIS ERROR! CATATAN BAWAH INI KESALAHAN DAN MENCARI BANTUAN. Penyusutan "
 "aktiva tetap akumulasi tidak dapat diperbarui:"
 
-#: FixedAssetDepreciation.php:225
+#: FixedAssetDepreciation.php:237
 msgid ""
 "The following SQL was used to attempt the update the accumulated "
 "depreciation of the asset was:"
@@ -10503,28 +10513,28 @@ msgstr ""
 "SQL berikut ini digunakan untuk mencoba memperbarui akumulasi penyusutan "
 "aktiva tetap:"
 
-#: FixedAssetDepreciation.php:236 SalesByTypePeriodInquiry.php:554
+#: FixedAssetDepreciation.php:250 SalesByTypePeriodInquiry.php:554
 #: SalesCategoryPeriodInquiry.php:208 SalesTopItemsInquiry.php:265
 msgid "GRAND Total"
 msgstr "GRAND Jumlah"
 
-#: FixedAssetDepreciation.php:248 FixedAssetRegister.php:361
+#: FixedAssetDepreciation.php:264 FixedAssetRegister.php:378
 msgid "Depreciation"
 msgstr "Penyusutan"
 
-#: FixedAssetDepreciation.php:248 GLJournal.php:116 Payments.php:585
+#: FixedAssetDepreciation.php:264 GLJournal.php:116 Payments.php:585
 msgid "has been successfully entered"
 msgstr "telah berhasil dimasukkan"
 
-#: FixedAssetDepreciation.php:250
+#: FixedAssetDepreciation.php:266
 msgid "Return to main menu"
 msgstr "Kembali ke menu utama"
 
-#: FixedAssetDepreciation.php:259 FixedAssetDepreciation.php:262
+#: FixedAssetDepreciation.php:277 FixedAssetDepreciation.php:280
 msgid "Date to Process Depreciation"
 msgstr "Tanggal untuk Proses Penyusutan"
 
-#: FixedAssetDepreciation.php:265
+#: FixedAssetDepreciation.php:283
 msgid "Commit Depreciation"
 msgstr "Komit Penyusutan"
 
@@ -10582,11 +10592,11 @@ msgstr ""
 "Ada kategori tidak ada aset yang ditetapkan. Semua aset harus termasuk "
 "kategori yang valid,"
 
-#: FixedAssetItems.php:109 Z_ImportFixedAssets.php:132
+#: FixedAssetItems.php:112 Z_ImportFixedAssets.php:132
 msgid "The depreciation rate is expected to be a number between 0 and 100"
 msgstr "Tingkat penyusutan diharapkan menjadi nomor antara 0 dan 100"
 
-#: FixedAssetItems.php:114
+#: FixedAssetItems.php:117
 msgid ""
 "Numbers less than 1 are interpreted as less than 1%. The depreciation rate "
 "should be entered as a number between 0 and 100"
@@ -10594,52 +10604,52 @@ msgstr ""
 "Nomor kurang dari 1 diinterpretasikan sebagai kurang dari 1%. Tingkat "
 "penyusutan harus dimasukkan sebagai angka antara 0 dan 100"
 
-#: FixedAssetItems.php:160 FixedAssetItems.php:180 FixedAssetItems.php:200
-#: FixedAssetItems.php:220
+#: FixedAssetItems.php:163 FixedAssetItems.php:183 FixedAssetItems.php:203
+#: FixedAssetItems.php:223
 msgid "change category"
 msgstr "perubahan kategori"
 
-#: FixedAssetItems.php:163 FixedAssetItems.php:183 FixedAssetItems.php:203
-#: FixedAssetItems.php:223
+#: FixedAssetItems.php:166 FixedAssetItems.php:186 FixedAssetItems.php:206
+#: FixedAssetItems.php:226
 msgid "Cannot insert a GL entry for the change of asset category because"
 msgstr ""
 "Tidak dapat menyisipkan entri GL untuk perubahan dari kategori aset karena"
 
-#: FixedAssetItems.php:164 FixedAssetItems.php:184 FixedAssetItems.php:204
-#: FixedAssetItems.php:224 FixedAssetItems.php:334 FixedAssetItems.php:354
+#: FixedAssetItems.php:167 FixedAssetItems.php:187 FixedAssetItems.php:207
+#: FixedAssetItems.php:227 FixedAssetItems.php:337 FixedAssetItems.php:357
 msgid "The SQL that failed to insert the cost GL Trans record was"
 msgstr "SQL yang gagal untuk memasukkan biaya GL rekor Trans adalah"
 
-#: FixedAssetItems.php:239
+#: FixedAssetItems.php:242
 msgid "The asset could not be updated because"
 msgstr "aktiva tidak dapat diperbarui karena"
 
-#: FixedAssetItems.php:240
+#: FixedAssetItems.php:243
 msgid "The SQL that was used to update the asset and failed was"
 msgstr "SQL yang digunakan untuk memperbarui aset dan gagal adalah"
 
-#: FixedAssetItems.php:243 FixedAssetRegister.php:268
-#: FixedAssetRegister.php:354
+#: FixedAssetItems.php:246 FixedAssetRegister.php:279
+#: FixedAssetRegister.php:371
 msgid "Asset"
 msgstr "Aset"
 
-#: FixedAssetItems.php:263 Z_ImportFixedAssets.php:211
+#: FixedAssetItems.php:266 Z_ImportFixedAssets.php:211
 msgid "The asset could not be added because"
 msgstr "aktiva tidak dapat ditambahkan karena"
 
-#: FixedAssetItems.php:264
+#: FixedAssetItems.php:267
 msgid "The SQL that was used to add the asset failed was"
 msgstr "SQL yang digunakan untuk menambah aktiva gagal adalah"
 
-#: FixedAssetItems.php:269
+#: FixedAssetItems.php:272
 msgid "The new asset has been added to the database with an asset code of:"
 msgstr "Aset baru telah ditambahkan ke database dengan kode aset:"
 
-#: FixedAssetItems.php:279 Stocks.php:599
+#: FixedAssetItems.php:282 Stocks.php:599
 msgid "Validation failed, no updates or deletes took place"
 msgstr "Pengesahan gagal, tidak ada pembaruan atau penghapusan yang dilakukan"
 
-#: FixedAssetItems.php:298
+#: FixedAssetItems.php:301
 msgid ""
 "The asset still has a net book value - only assets with a zero net book "
 "value can be deleted"
@@ -10647,7 +10657,7 @@ msgstr ""
 "aset masih memiliki nilai buku bersih - aktiva hanya dengan nilai buku nol "
 "net dapat dihapus"
 
-#: FixedAssetItems.php:303
+#: FixedAssetItems.php:306
 msgid ""
 "The asset has transactions associated with it. The asset can only be deleted "
 "when the fixed asset transactions are purged, otherwise the integrity of "
@@ -10657,7 +10667,7 @@ msgstr ""
 "ketika transaksi aktiva tetap dibersihkan, jika integritas laporan aktiva "
 "tetap dapat mempengaruhi"
 
-#: FixedAssetItems.php:308
+#: FixedAssetItems.php:311
 msgid ""
 "There is a purchase order set up for this asset. The purchase order line "
 "must be deleted first"
@@ -10665,15 +10675,15 @@ msgstr ""
 "Ada pesanan pembelian diatur untuk aset ini. Garis pesanan pembelian harus "
 "dihapus terlebih dahulu"
 
-#: FixedAssetItems.php:330 FixedAssetItems.php:350
+#: FixedAssetItems.php:333 FixedAssetItems.php:353
 msgid "Delete asset"
 msgstr "Hapus aset"
 
-#: FixedAssetItems.php:333
+#: FixedAssetItems.php:336
 msgid "Cannot insert a GL entry for the deletion of the asset because"
 msgstr "Tidak dapat menyisipkan entri GL untuk penghapusan aset karena"
 
-#: FixedAssetItems.php:353
+#: FixedAssetItems.php:356
 msgid ""
 "Cannot insert a GL entry for the reversal of accumulated depreciation on "
 "deletion of the asset because"
@@ -10681,120 +10691,120 @@ msgstr ""
 "Tidak dapat menyisipkan entri GL untuk pembalikan akumulasi penyusutan pada "
 "penghapusan aktiva karena"
 
-#: FixedAssetItems.php:360
+#: FixedAssetItems.php:363
 msgid "Could not delete the asset record"
 msgstr "Tidak dapat menghapus catatan aset"
 
-#: FixedAssetItems.php:364
+#: FixedAssetItems.php:367
 msgid "Deleted the asset  record for asset number"
 msgstr "Menghapus catatan aset untuk jumlah aset"
 
-#: FixedAssetItems.php:430 FixedAssetItems.php:434 FixedAssetTransfer.php:61
+#: FixedAssetItems.php:434 FixedAssetItems.php:441 FixedAssetTransfer.php:61
 #: SelectAsset.php:242
 msgid "Asset Code"
 msgstr "Kode Aktiva"
 
-#: FixedAssetItems.php:443 FixedAssetItems.php:451
+#: FixedAssetItems.php:454 FixedAssetItems.php:464
 msgid "Asset Description"
 msgstr "Keterangan Aktiva"
 
-#: FixedAssetItems.php:443 Stocks.php:804
+#: FixedAssetItems.php:454 Stocks.php:804
 msgid "short"
 msgstr "singkat"
 
-#: FixedAssetItems.php:451 Stocks.php:814
+#: FixedAssetItems.php:464 Stocks.php:814
 msgid "long"
 msgstr "panjang"
 
-#: FixedAssetItems.php:455 SalesCategories.php:323 Stocks.php:818
+#: FixedAssetItems.php:471 SalesCategories.php:323 Stocks.php:818
 msgid "Image File (.jpg)"
 msgstr "File Gambar (.jpg)"
 
-#: FixedAssetItems.php:481 FixedAssetRegister.php:242
+#: FixedAssetItems.php:499 FixedAssetRegister.php:249
 msgid "Asset Category"
 msgstr "Kategori Aktiva"
 
-#: FixedAssetItems.php:484
+#: FixedAssetItems.php:503
 msgid "The asset categories could not be retrieved because"
 msgstr "Kategori aktiva tidak dapat diambil karena"
 
-#: FixedAssetItems.php:496
+#: FixedAssetItems.php:515
 msgid "Add or Modify Asset Categories"
 msgstr "Tambah atau Ubah Kategori Aktiva"
 
-#: FixedAssetItems.php:506
+#: FixedAssetItems.php:528
 msgid "The asset locations could not be retrieved because"
 msgstr "Lokasi aktiva tidak dapat diambil karena"
 
-#: FixedAssetItems.php:507
+#: FixedAssetItems.php:529
 msgid "The SQL used to retrieve asset locations and failed was"
 msgstr "SQL digunakan untuk mengambil lokasi aktiva dan gagal adalah"
 
-#: FixedAssetItems.php:510 FixedAssetRegister.php:255 SelectAsset.php:74
+#: FixedAssetItems.php:533 FixedAssetRegister.php:264 SelectAsset.php:74
 #: SelectAsset.php:244
 msgid "Asset Location"
 msgstr "Lokasi Aset"
 
-#: FixedAssetItems.php:518
+#: FixedAssetItems.php:544
 #, fuzzy
 msgid "Add Asset Location"
 msgstr "Lokasi Aset"
 
-#: FixedAssetItems.php:520 Stocks.php:1055 includes/DefineLabelClass.php:50
+#: FixedAssetItems.php:547 Stocks.php:1055 includes/DefineLabelClass.php:50
 msgid "Bar Code"
 msgstr "Kode Barcode"
 
-#: FixedAssetItems.php:522 FixedAssetRegister.php:82
+#: FixedAssetItems.php:551 FixedAssetRegister.php:84
 #: StockSerialItemResearch.php:30 StockSerialItems.php:90
 #: StockSerialItems.php:92 StockSerialItems.php:94
 msgid "Serial Number"
 msgstr "Nomor Seri"
 
-#: FixedAssetItems.php:525
+#: FixedAssetItems.php:555
 msgid "Depreciation Type"
 msgstr "Tipe Penyusutan"
 
-#: FixedAssetItems.php:531 FixedAssetItems.php:534
+#: FixedAssetItems.php:562 FixedAssetItems.php:565
 msgid "Straight Line"
 msgstr "Garis Lurus"
 
-#: FixedAssetItems.php:532 FixedAssetItems.php:535
+#: FixedAssetItems.php:563 FixedAssetItems.php:566
 msgid "Diminishing Value"
 msgstr "Berkurangnya Nilai"
 
-#: FixedAssetItems.php:540
+#: FixedAssetItems.php:572
 msgid "Depreciation Rate"
 msgstr "Tarif Penyusutan"
 
-#: FixedAssetItems.php:544
+#: FixedAssetItems.php:581
 msgid "Asset Financial Summary"
 msgstr "Aset Ringkasan Keuangan"
 
-#: FixedAssetItems.php:546 WorkOrderEntry.php:502
+#: FixedAssetItems.php:584 WorkOrderEntry.php:502
 msgid "Accumulated Costs"
 msgstr "Biaya Terakumulasi"
 
-#: FixedAssetItems.php:547
+#: FixedAssetItems.php:588
 msgid "Accumulated Depreciation"
 msgstr "Akumulasi Penyusutan"
 
-#: FixedAssetItems.php:548 FixedAssetRegister.php:364
+#: FixedAssetItems.php:592 FixedAssetRegister.php:381
 msgid "Net Book Value"
 msgstr "Nilai Buku"
 
-#: FixedAssetItems.php:560
+#: FixedAssetItems.php:607
 msgid "Not Yet Run"
 msgstr "Belum Jalankan"
 
-#: FixedAssetItems.php:564
+#: FixedAssetItems.php:612
 msgid "Depreciation last run"
 msgstr "Penyusutan terakhir menjalankan"
 
-#: FixedAssetItems.php:569
+#: FixedAssetItems.php:621
 msgid "Insert New Fixed Asset"
 msgstr "Masukkan Aktiva Tetap Baru"
 
-#: FixedAssetItems.php:574
+#: FixedAssetItems.php:627
 msgid ""
 "Only click the Delete button if you are sure you wish to delete the asset. "
 "Only assets with a zero book value can be deleted"
@@ -10802,11 +10812,11 @@ msgstr ""
 "Hanya klik tombol Hapus jika Anda yakin Anda ingin menghapus aset tersebut. "
 "Hanya aset dengan nilai buku nol dapat dihapus"
 
-#: FixedAssetItems.php:575
+#: FixedAssetItems.php:630
 msgid "Delete This Asset"
 msgstr "Hapus Aset ini"
 
-#: FixedAssetItems.php:575
+#: FixedAssetItems.php:630
 msgid "Are You Sure? Only assets with a zero book value can be deleted."
 msgstr "Apakah Anda Yakin? Hanya aset dengan nilai buku nol dapat dihapus."
 
@@ -10814,39 +10824,39 @@ msgstr "Apakah Anda Yakin? Hanya aset dengan nilai buku nol dapat dihapus."
 msgid "Fixed Asset Locations"
 msgstr "Lokasi Aktiva Tetap"
 
-#: FixedAssetLocations.php:14
+#: FixedAssetLocations.php:15
 msgid "You must enter at least one character in the location ID"
 msgstr "Anda harus masukkan minimum 1 karakter untuk ID lokasi"
 
-#: FixedAssetLocations.php:18 FixedAssetLocations.php:48
+#: FixedAssetLocations.php:19 FixedAssetLocations.php:49
 msgid "You must enter at least one character in the location description"
 msgstr "Anda harus masukkan minimum 1 karakter dalam keterangan lokasi"
 
-#: FixedAssetLocations.php:68
+#: FixedAssetLocations.php:70
 msgid "This location has child locations so cannot be removed"
 msgstr "Lokasi ini memiliki lokasi anak maka tidak dapat dihapus"
 
-#: FixedAssetLocations.php:75
+#: FixedAssetLocations.php:77
 msgid "You have assets in this location location so it cannot be removed"
 msgstr "Anda memiliki aset di lokasi ini lokasi sehingga tidak dapat dihapus"
 
-#: FixedAssetLocations.php:81
+#: FixedAssetLocations.php:83
 msgid "The location has been deleted successfully"
 msgstr "Lokasi telah dihapus berhasil"
 
-#: FixedAssetLocations.php:91 FixedAssetLocations.php:108
+#: FixedAssetLocations.php:94 FixedAssetLocations.php:116
 msgid "Location ID"
 msgstr "ID Lokasi"
 
-#: FixedAssetLocations.php:92 FixedAssetLocations.php:116
+#: FixedAssetLocations.php:95 FixedAssetLocations.php:126
 msgid "Location Description"
 msgstr "Keterangan Lokasi"
 
-#: FixedAssetLocations.php:93 FixedAssetLocations.php:119
+#: FixedAssetLocations.php:96 FixedAssetLocations.php:130
 msgid "Parent Location"
 msgstr "Induk Lokasi"
 
-#: FixedAssetLocations.php:146
+#: FixedAssetLocations.php:154
 msgid "Delete This Location"
 msgstr "Hapus Lokasi ini"
 
@@ -10855,43 +10865,43 @@ msgstr "Hapus Lokasi ini"
 msgid "Fixed Asset Register"
 msgstr "Buku Catatan Aktiva Tetap"
 
-#: FixedAssetRegister.php:84
+#: FixedAssetRegister.php:86
 msgid "Date Acquired"
 msgstr "Tanggal Diperoleh"
 
-#: FixedAssetRegister.php:85
+#: FixedAssetRegister.php:87
 msgid "Cost B/fwd"
 msgstr "Biaya B / fwd"
 
-#: FixedAssetRegister.php:86
+#: FixedAssetRegister.php:88
 msgid "Depn B/fwd"
 msgstr "Depn B / fwd"
 
-#: FixedAssetRegister.php:87 FixedAssetRegister.php:360
+#: FixedAssetRegister.php:89 FixedAssetRegister.php:377
 msgid "Additions"
 msgstr "Penambahan"
 
-#: FixedAssetRegister.php:88
+#: FixedAssetRegister.php:90
 msgid "Depn"
 msgstr "Depn"
 
-#: FixedAssetRegister.php:89
+#: FixedAssetRegister.php:91
 msgid "Cost C/fwd"
 msgstr "Biaya C / fwd"
 
-#: FixedAssetRegister.php:90
+#: FixedAssetRegister.php:92
 msgid "Depn C/fwd"
 msgstr "Depn C / fwd"
 
-#: FixedAssetRegister.php:91
+#: FixedAssetRegister.php:93
 msgid "NBV"
 msgstr "Nilai Buku Bersih (NBV)"
 
-#: FixedAssetRegister.php:92
+#: FixedAssetRegister.php:94
 msgid "Disposal Value"
 msgstr "Nilai Penjualan"
 
-#: FixedAssetRegister.php:198 FixedAssetRegister.php:222
+#: FixedAssetRegister.php:204 FixedAssetRegister.php:228
 #: PDFBankingSummary.php:175 PDFChequeListing.php:182 PO_Items.php:719
 #: includes/PDFSalesAnalysis.inc:71 includes/PDFSalesAnalysis.inc:125
 #: includes/PDFSalesAnalysis.inc:178 includes/PDFSalesAnalysis.inc:312
@@ -10899,56 +10909,56 @@ msgstr "Nilai Penjualan"
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: FixedAssetRegister.php:232 FixedAssetRegister.php:294
+#: FixedAssetRegister.php:238 FixedAssetRegister.php:310
 msgid "Print as a pdf"
 msgstr "Cetak dalam bentuk pdf"
 
-#: FixedAssetRegister.php:233 FixedAssetRegister.php:295
+#: FixedAssetRegister.php:239 FixedAssetRegister.php:311
 msgid "Print as CSV"
 msgstr "Cetak sebagai CSV"
 
-#: FixedAssetRegister.php:244 FixedAssetRegister.php:257
-#: FixedAssetRegister.php:270 SuppPriceList.php:222
+#: FixedAssetRegister.php:251 FixedAssetRegister.php:266
+#: FixedAssetRegister.php:281 SuppPriceList.php:222
 msgid "ALL"
 msgstr "SEMUA"
 
-#: FixedAssetRegister.php:286
+#: FixedAssetRegister.php:299
 msgid " From Date"
 msgstr " Dari Tanggal"
 
-#: FixedAssetRegister.php:288
+#: FixedAssetRegister.php:303
 msgid "To Date "
 msgstr "Untuk Tanggal "
 
-#: FixedAssetRegister.php:293
+#: FixedAssetRegister.php:309
 msgid "Show Assets"
 msgstr "Tampilkan Aktiva"
 
-#: FixedAssetRegister.php:329
+#: FixedAssetRegister.php:346
 msgid "Asset Category "
 msgstr "Aset Kategori "
 
-#: FixedAssetRegister.php:330
+#: FixedAssetRegister.php:347
 msgid "Asset Location "
 msgstr "Lokasi Aset "
 
-#: FixedAssetRegister.php:356
+#: FixedAssetRegister.php:373
 msgid "Serial No."
 msgstr "Serial No"
 
-#: FixedAssetRegister.php:358
+#: FixedAssetRegister.php:375
 msgid "Cost B/Fwd"
 msgstr "Biaya B / Fwd"
 
-#: FixedAssetRegister.php:359
+#: FixedAssetRegister.php:376
 msgid "Depn B/Fwd"
 msgstr "Depn B / Fwd"
 
-#: FixedAssetRegister.php:362
+#: FixedAssetRegister.php:379
 msgid "Cost C/Fwd"
 msgstr "Biaya C / Fwd"
 
-#: FixedAssetRegister.php:363
+#: FixedAssetRegister.php:380
 msgid "Depn C/Fwd"
 msgstr "Depn C / Fwd"
 
@@ -12987,7 +12997,7 @@ msgstr "Laporan Kuantitas Inventori"
 #: SelectProduct.php:78 StockDispatch.php:221 StockMovements.php:19
 #: StockQties_csv.php:8 StockQuantityByDate.php:10 StockReorderLevel.php:18
 #: StockSerialItemResearch.php:9 StockSerialItems.php:9 StockStatus.php:42
-#: StockTransferControlled.php:14 SuppLoginSetup.php:15 WWW_Users.php:16
+#: StockTransferControlled.php:14 SuppLoginSetup.php:24 WWW_Users.php:16
 #: index.php:15
 msgid "Inventory"
 msgstr "Inventori"
@@ -13735,6 +13745,7 @@ msgid "Multiplier"
 msgstr "Pengganda"
 
 #: MRPCreateDemands.php:278 PricesByCost.php:286 ReorderLevelLocation.php:206
+#: Z_CopyBOM.php:143
 msgid "Submit"
 msgstr "Ajukan"
 
@@ -17002,7 +17013,7 @@ msgid "Order Header Details"
 msgstr "Order Header Detail"
 
 #: PO_OrderDetails.php:89 Suppliers.php:655 Suppliers.php:838
-#: WWW_Users.php:274 WWW_Users.php:501
+#: WWW_Users.php:277 WWW_Users.php:504
 msgid "Supplier Code"
 msgstr "Kode Supplier"
 
@@ -17176,7 +17187,7 @@ msgstr "sesuai petunjuk"
 msgid "Emailing Purchase order"
 msgstr "Meng-email order Pembelian"
 
-#: PO_PDFPurchOrder.php:332 Z_ChangeStockCode.php:245
+#: PO_PDFPurchOrder.php:332 Z_ChangeStockCode.php:255
 msgid "failed"
 msgstr "gagal"
 
@@ -17286,7 +17297,7 @@ msgid "Show All"
 msgstr "Tampilkan Semua"
 
 #: PO_SelectOSPurchOrder.php:233 PO_SelectPurchOrder.php:214
-#: Shipt_Select.php:192 SuppLoginSetup.php:11 WWW_Users.php:12
+#: Shipt_Select.php:192 SuppLoginSetup.php:20 WWW_Users.php:12
 msgid "Orders"
 msgstr "Order"
 
@@ -18021,7 +18032,7 @@ msgstr "Otorisasi Beban Petty Kas"
 msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr ""
 
-#: PcAuthorizeExpenses.php:42 PcAuthorizeExpenses.php:45 SuppLoginSetup.php:19
+#: PcAuthorizeExpenses.php:42 PcAuthorizeExpenses.php:45 SuppLoginSetup.php:28
 #: WWW_Users.php:20 index.php:19
 msgid "Petty Cash"
 msgstr "Uang belanja kecil-kecilan"
@@ -19078,7 +19089,7 @@ msgstr "Harga Customer Khusus"
 #: Prices_Customer.php:36 SpecialOrder.php:116 SpecialOrder.php:119
 #: SuppTransGLAnalysis.php:106 SupplierCredit.php:318 SupplierCredit.php:319
 #: SupplierCredit.php:421 SupplierCredit.php:460 SupplierInvoice.php:455
-#: Z_CurrencySuppliersBalances.php:27
+#: Z_CurrencyDebtorsBalances.php:33 Z_CurrencySuppliersBalances.php:31
 msgid "in"
 msgstr "dalam"
 
@@ -21794,7 +21805,7 @@ msgstr "Informasi Penjualan"
 msgid "Top Sales Items Inquiry"
 msgstr "Top Daftar Penjualan Produk"
 
-#: SalesTopItemsInquiry.php:83 WWW_Users.php:625
+#: SalesTopItemsInquiry.php:83 WWW_Users.php:628
 msgid "Display"
 msgstr "Tampilkan"
 
@@ -25008,8 +25019,8 @@ msgid ""
 msgstr ""
 "Perpindahan stok untuk kriteria yang dipilih tidak dapat diambil karena"
 
-#: StockLocMovements.php:89 Z_CheckAllocationsFrom.php:27
-#: Z_CheckAllocationsFrom.php:50
+#: StockLocMovements.php:89 Z_CheckAllocationsFrom.php:33
+#: Z_CheckAllocationsFrom.php:58
 msgid "Trans No"
 msgstr "Nomor Trans"
 
@@ -26272,8 +26283,8 @@ msgstr ""
 "harus dipilih dari layar pilihan pemasok, maka link untuk memasukkan faktur "
 "pemasok atau catatan kredit harus diklik"
 
-#: SuppContractChgs.php:22 SuppFixedAssetChgs.php:20 SuppShiptChgs.php:28
-#: SuppTransGLAnalysis.php:20
+#: SuppContractChgs.php:22 SuppFixedAssetChgs.php:20 SuppLoginSetup.php:15
+#: SuppShiptChgs.php:28 SuppTransGLAnalysis.php:20
 msgid "Select A Supplier"
 msgstr "Pilih Supplier"
 
@@ -26674,49 +26685,54 @@ msgstr "Batal Pilih Semua"
 msgid "Add to Invoice"
 msgstr "Tambahkan ke Faktur"
 
-#: SuppLoginSetup.php:12 WWW_Users.php:13 index.php:12
+#: SuppLoginSetup.php:15
+#, fuzzy
+msgid "A supplier must first be selected before logins can be defined for it"
+msgstr "Barang harus dipilih dulu sebelum halaman ini dipanggil"
+
+#: SuppLoginSetup.php:21 WWW_Users.php:13 index.php:12
 msgid "Receivables"
 msgstr "Piutang"
 
-#: SuppLoginSetup.php:13 WWW_Users.php:14 index.php:13
+#: SuppLoginSetup.php:22 WWW_Users.php:14 index.php:13
 msgid "Payables"
 msgstr "Hutang"
 
-#: SuppLoginSetup.php:14 WWW_Users.php:15
+#: SuppLoginSetup.php:23 WWW_Users.php:15
 msgid "Purchasing"
 msgstr "Pembelian"
 
-#: SuppLoginSetup.php:16 WWW_Users.php:17 index.php:16
+#: SuppLoginSetup.php:25 WWW_Users.php:17 index.php:16
 msgid "Manufacturing"
 msgstr "Produksi"
 
-#: SuppLoginSetup.php:17 SuppTransGLAnalysis.php:95 SuppTransGLAnalysis.php:98
+#: SuppLoginSetup.php:26 SuppTransGLAnalysis.php:95 SuppTransGLAnalysis.php:98
 #: SupplierCredit.php:227 SupplierCredit.php:301 SupplierInvoice.php:204
 #: SupplierInvoice.php:272 WWW_Users.php:18 index.php:17
 msgid "General Ledger"
 msgstr "Buku Besar"
 
-#: SuppLoginSetup.php:18 WWW_Users.php:19 index.php:18
+#: SuppLoginSetup.php:27 WWW_Users.php:19 index.php:18
 msgid "Asset Manager"
 msgstr "Pengelola Asset"
 
-#: SuppLoginSetup.php:22 SupplierContacts.php:16
+#: SuppLoginSetup.php:31 SupplierContacts.php:16
 msgid "Back to Suppliers"
 msgstr "Kembali ke Supplier"
 
-#: SuppLoginSetup.php:96
+#: SuppLoginSetup.php:105
 #, fuzzy
 msgid "A new supplier login has been created"
 msgstr "Order produksi yang baru telah dibuat untuk"
 
-#: SuppLoginSetup.php:172
+#: SuppLoginSetup.php:181
 msgid ""
 "The supplier login role is expected to contain just one token - number 9. "
 "There is no such role currently defined - so a supplier login cannot be set "
 "up until this role is defined"
 msgstr ""
 
-#: SuppLoginSetup.php:179 WWW_Users.php:464
+#: SuppLoginSetup.php:188 WWW_Users.php:467
 msgid "Default Location"
 msgstr "Lokasi Utama"
 
@@ -30482,67 +30498,67 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:126
+#: UpgradeDatabase.php:127
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:140
+#: UpgradeDatabase.php:141
 msgid "Applying"
 msgstr "Menerapkan"
 
-#: UpgradeDatabase.php:168 Z_Upgrade3.10.php:29 Z_Upgrade3.10.php:34
+#: UpgradeDatabase.php:169 Z_Upgrade3.10.php:29 Z_Upgrade3.10.php:34
 #: Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51 Z_Upgrade3.10.php:60
 #: Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74 Z_Upgrade3.10.php:79
 #: Z_Upgrade_3.10-3.11.php:59 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Berhasil"
 
-#: UpgradeDatabase.php:171 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:172 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tabel telah dibuat"
 
-#: UpgradeDatabase.php:174
+#: UpgradeDatabase.php:175
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Kolom telah dibuat"
 
-#: UpgradeDatabase.php:177 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:178 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Kolom telah dibuat"
 
-#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:181 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Indeks sudah ada"
 
-#: UpgradeDatabase.php:183 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Pemasukkan telah dilakukan"
 
-#: UpgradeDatabase.php:186
+#: UpgradeDatabase.php:187
 msgid "SQL syntax error. The SQL error message is"
 msgstr "SQL syntax error. Pesan kesalahan SQL"
 
-#: UpgradeDatabase.php:189 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:190 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "Kunci primer sudah ada"
 
-#: UpgradeDatabase.php:192
+#: UpgradeDatabase.php:193
 msgid "Index already dropped previously"
 msgstr "Indeks telah menjatuhkan sebelumnya"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:196 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Gagal"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:196 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Nomor kesalahan"
@@ -30575,11 +30591,11 @@ msgstr "0 akan diubah ke pengaturan standar sistem"
 msgid "The password and password confirmation fields entered do not match"
 msgstr "Kolom kata sandi dan konfirmasi kata kunci yang dimasukkan tidak cocok"
 
-#: UserSettings.php:66 UserSettings.php:82 WWW_Users.php:198
+#: UserSettings.php:66 UserSettings.php:82 WWW_Users.php:201
 msgid "The user alterations could not be processed because"
 msgstr "Perubahan user tidak dapat diproses karena"
 
-#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:199
+#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:202
 msgid "The SQL that was used to update the user and failed was"
 msgstr "SQL yang digunakan untuk memperbarui user dan gagal adalah"
 
@@ -30608,7 +30624,7 @@ msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 "Jika Anda biarkan kotak kata sandi kosong, kata sandi Anda tidak akan diubah"
 
-#: UserSettings.php:200 WWW_Users.php:643
+#: UserSettings.php:200 WWW_Users.php:646
 msgid "PDF Language Support"
 msgstr "PDF Dukungan Bahasa"
 
@@ -30852,82 +30868,82 @@ msgstr "Eropa Timur Rusia Jepang Korea Arab Ibrani Thailand"
 msgid "User Maintenance"
 msgstr "Pengaturan User"
 
-#: WWW_Users.php:91
+#: WWW_Users.php:94
 #, fuzzy
 msgid "The user ID"
 msgstr "ID User"
 
-#: WWW_Users.php:91
+#: WWW_Users.php:94
 #, fuzzy
 msgid "already exists and cannot be used again"
 msgstr " sudah ada dalam Jenis Tab."
 
-#: WWW_Users.php:156
+#: WWW_Users.php:159
 msgid "The selected user record has been updated"
 msgstr "Data user yang dipilih telah diperbarui"
 
-#: WWW_Users.php:193
+#: WWW_Users.php:196
 msgid "A new user record has been inserted"
 msgstr "Data user baru telah dimasukkan"
 
-#: WWW_Users.php:234
+#: WWW_Users.php:237
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr "Tidak dapat menghapus user karena sudah tercatat dalam log perubahan"
 
-#: WWW_Users.php:238
+#: WWW_Users.php:241
 msgid "The User could not be deleted because"
 msgstr "User tidak dapat dihapus karena"
 
-#: WWW_Users.php:240
+#: WWW_Users.php:243
 msgid "User Deleted"
 msgstr "User telah Dihapus"
 
-#: WWW_Users.php:276
+#: WWW_Users.php:279
 msgid "Last Visit"
 msgstr "Kunjungan Terakhir"
 
-#: WWW_Users.php:277 WWW_Users.php:449
+#: WWW_Users.php:280 WWW_Users.php:452
 msgid "Security Role"
 msgstr "Peran Keamanan"
 
-#: WWW_Users.php:278
+#: WWW_Users.php:281
 msgid "Report Size"
 msgstr "Ukuran Laporan"
 
-#: WWW_Users.php:316
+#: WWW_Users.php:319
 #, fuzzy, php-format
 msgid "Are you sure you wish to delete this user?"
 msgstr "Apakah Anda yakin ingin menghapus supplier ini?"
 
-#: WWW_Users.php:342
+#: WWW_Users.php:345
 msgid "Review Existing Users"
 msgstr "Tinjau Semua User"
 
-#: WWW_Users.php:395
+#: WWW_Users.php:398
 msgid "User code"
 msgstr "Kode user"
 
-#: WWW_Users.php:506
+#: WWW_Users.php:509
 msgid "Restrict to Sales Person"
 msgstr "Batasi ke Staff Sales"
 
-#: WWW_Users.php:512 WWW_Users.php:514
+#: WWW_Users.php:515 WWW_Users.php:517
 msgid "Not a salesperson only login"
 msgstr "Bukan hanya login staffsales"
 
-#: WWW_Users.php:625
+#: WWW_Users.php:628
 msgid "options"
 msgstr "(pilihan)"
 
-#: WWW_Users.php:656 index.php:40
+#: WWW_Users.php:659 index.php:40
 msgid "Account Status"
 msgstr "Status Akun"
 
-#: WWW_Users.php:659 WWW_Users.php:663
+#: WWW_Users.php:662 WWW_Users.php:666
 msgid "Open"
 msgstr "Aktif"
 
-#: WWW_Users.php:660 WWW_Users.php:662
+#: WWW_Users.php:663 WWW_Users.php:665
 msgid "Blocked"
 msgstr "Diblokir"
 
@@ -31832,7 +31848,7 @@ msgstr "Informasi Status Order Produksi"
 msgid "Manual Issue"
 msgstr "Terbit Manual"
 
-#: Z_BottomUpCosts.php:7
+#: Z_BottomUpCosts.php:6
 msgid "Recalculate BOM costs"
 msgstr "Hitung Ulang Biaya BOM"
 
@@ -31849,18 +31865,30 @@ msgstr ""
 "proses itu"
 
 #: Z_BottomUpCosts.php:40
-msgid "Failed on item "
+#, fuzzy
+msgid "Failed on item"
 msgstr "Gagal pada item "
+
+#: Z_BottomUpCosts.php:40
+#, fuzzy
+msgid "Cost update has been rolled back"
+msgstr "Tidak ada pembaruan yang sudah dilakukan"
 
 #: Z_BottomUpCosts.php:44
 msgid "All cost updates committed to the database."
 msgstr "Semua biaya pembaruan komitmen untuk database."
 
 #: Z_BottomUpCosts.php:51
+msgid ""
+"This script will not update the General Ledger stock balances for the "
+"changed costs. If you use integrated stock then do not use this utility"
+msgstr ""
+
+#: Z_BottomUpCosts.php:56
 msgid "Update costs for all items listed in a bill of materials"
 msgstr "Update biaya untuk semua item yang tercantum dalam bill of material"
 
-#: Z_BottomUpCosts.php:52
+#: Z_BottomUpCosts.php:59
 msgid "Run"
 msgstr "Menjalankan"
 
@@ -31916,8 +31944,8 @@ msgstr "Mengubah data transaksi customer"
 msgid "The SQL to update debtor transaction records failed because"
 msgstr "SQL gagal memperbarui data transaksi debitur karena"
 
-#: Z_ChangeBranchCode.php:118 Z_ChangeCustomerCode.php:165
-#: Z_ChangeStockCategory.php:77 Z_ChangeStockCode.php:152
+#: Z_ChangeBranchCode.php:118 Z_ChangeCustomerCode.php:164
+#: Z_ChangeStockCategory.php:77 Z_ChangeStockCode.php:162
 msgid "Changing sales analysis records"
 msgstr "Mengubah data analisa penjualan"
 
@@ -31925,8 +31953,8 @@ msgstr "Mengubah data analisa penjualan"
 msgid "The SQL to update Sales Analysis records failed because"
 msgstr "SQL gagal memperbarui data Analisa Penjualan karena"
 
-#: Z_ChangeBranchCode.php:128 Z_ChangeCustomerCode.php:172
-#: Z_ChangeStockCode.php:159
+#: Z_ChangeBranchCode.php:128 Z_ChangeCustomerCode.php:171
+#: Z_ChangeStockCode.php:169
 msgid "Changing order delivery differences records"
 msgstr "Mengubah data perbedaan pengiriman order"
 
@@ -31934,8 +31962,8 @@ msgstr "Mengubah data perbedaan pengiriman order"
 msgid "The SQL to update order delivery differences records failed because"
 msgstr "SQL gagal memperbarui data perbedaan pengiriman order karena"
 
-#: Z_ChangeBranchCode.php:138 Z_ChangeCustomerCode.php:178
-#: Z_ChangeStockCode.php:166
+#: Z_ChangeBranchCode.php:138 Z_ChangeCustomerCode.php:177
+#: Z_ChangeStockCode.php:176
 msgid "Changing pricing records"
 msgstr "Mengubah data harga"
 
@@ -31943,7 +31971,7 @@ msgstr "Mengubah data harga"
 msgid "The SQL to update the pricing records failed because"
 msgstr "SQL gagal memperbarui data harga karena"
 
-#: Z_ChangeBranchCode.php:147 Z_ChangeCustomerCode.php:184
+#: Z_ChangeBranchCode.php:147 Z_ChangeCustomerCode.php:183
 msgid "Changing sales orders records"
 msgstr "Mengubah data order penjualan"
 
@@ -31951,8 +31979,8 @@ msgstr "Mengubah data order penjualan"
 msgid "The SQL to update the sales order header records failed because"
 msgstr "SQL gagal memperbarui data header order penjualan karena"
 
-#: Z_ChangeBranchCode.php:156 Z_ChangeCustomerCode.php:190
-#: Z_ChangeStockCode.php:103
+#: Z_ChangeBranchCode.php:156 Z_ChangeCustomerCode.php:189
+#: Z_ChangeStockCode.php:115
 msgid "Changing stock movement records"
 msgstr "Mengubah data perpindahan stok"
 
@@ -31960,11 +31988,11 @@ msgstr "Mengubah data perpindahan stok"
 msgid "The SQL to update the stock movement records failed because"
 msgstr "SQL gagal memperbarui data perpindahan stok karena"
 
-#: Z_ChangeBranchCode.php:164 Z_ChangeCustomerCode.php:195
+#: Z_ChangeBranchCode.php:164 Z_ChangeCustomerCode.php:194
 msgid "Changing user default customer records"
 msgstr "Mengubah data user mengenai customer standar"
 
-#: Z_ChangeBranchCode.php:170 Z_ChangeCustomerCode.php:198
+#: Z_ChangeBranchCode.php:170 Z_ChangeCustomerCode.php:197
 msgid "The SQL to update the user records failed"
 msgstr "SQL gagal memperbarui data user"
 
@@ -31984,124 +32012,124 @@ msgstr "Menghapus data cabang customer yang lama"
 msgid "The SQL to delete the old customer branch record failed because"
 msgstr "SQL gagal menghapus data cabang customer karena"
 
-#: Z_ChangeBranchCode.php:200
+#: Z_ChangeBranchCode.php:205
 msgid "Existing Branch Code"
 msgstr "Kode Cabang Yang Ada"
 
-#: Z_ChangeBranchCode.php:201
+#: Z_ChangeBranchCode.php:209
 msgid "New Branch Code"
 msgstr "Kode Cabang Baru"
 
-#: Z_ChangeBranchCode.php:204 Z_ChangeCustomerCode.php:239
-#: Z_ChangeStockCategory.php:99 Z_ChangeStockCode.php:319
-#: Z_DeleteSalesTransActions.php:179
+#: Z_ChangeBranchCode.php:214 Z_ChangeCustomerCode.php:241
+#: Z_ChangeStockCategory.php:108 Z_ChangeStockCode.php:332
+#: Z_DeleteSalesTransActions.php:178
 msgid "Process"
 msgstr "Proses"
 
-#: Z_ChangeCustomerCode.php:7
+#: Z_ChangeCustomerCode.php:6
 msgid "UTILITY PAGE To Changes A Customer Code In All Tables"
 msgstr "HALAMAN FASILITAS Untuk Mengubah Kode Customer Di Semua Tabel"
 
-#: Z_ChangeCustomerCode.php:15
+#: Z_ChangeCustomerCode.php:14
 msgid "The customer code"
 msgstr "Kode customer"
 
-#: Z_ChangeCustomerCode.php:15
+#: Z_ChangeCustomerCode.php:14
 msgid "does not currently exist as a customer code in the system"
 msgstr "tidak ada dalam sebagai kode customer dalam sistem"
 
-#: Z_ChangeCustomerCode.php:22
+#: Z_ChangeCustomerCode.php:21
 msgid "The new customer code to change the old code to must be entered as well"
 msgstr "Kode baru customer untuk mengubah kode lama harus dimasukkan juga"
 
-#: Z_ChangeCustomerCode.php:29
+#: Z_ChangeCustomerCode.php:28
 msgid "The replacement customer code"
 msgstr "Kode customer pengganti"
 
-#: Z_ChangeCustomerCode.php:29
+#: Z_ChangeCustomerCode.php:28
 msgid "already exists as a customer code in the system"
 msgstr "sudah ada sebagai kode customer dalam sistem"
 
-#: Z_ChangeCustomerCode.php:29
+#: Z_ChangeCustomerCode.php:28
 msgid "a unique customer code must be entered for the new code"
 msgstr "kode customer unik harus dimasukkan untuk kode yang baru"
 
-#: Z_ChangeCustomerCode.php:36
+#: Z_ChangeCustomerCode.php:35
 msgid "Inserting the new debtors master record"
 msgstr "Memasukkan data master debitur baru"
 
-#: Z_ChangeCustomerCode.php:93
+#: Z_ChangeCustomerCode.php:92
 msgid "The SQL to insert the new debtors master record failed"
 msgstr "SQL gagal memasukkan data master debitur baru"
 
-#: Z_ChangeCustomerCode.php:93 Z_DeleteSalesTransActions.php:56
+#: Z_ChangeCustomerCode.php:92 Z_DeleteSalesTransActions.php:56
 msgid "the SQL statement was"
 msgstr "perintah SQL itu adalah"
 
-#: Z_ChangeCustomerCode.php:96
+#: Z_ChangeCustomerCode.php:95
 msgid "Inserting new customer branch records"
 msgstr "Memasukkan data cabang customer baru"
 
-#: Z_ChangeCustomerCode.php:156
+#: Z_ChangeCustomerCode.php:155
 msgid "The SQL to insert new customer branch records failed"
 msgstr "SQL gagal memasukkan data cabang baru"
 
-#: Z_ChangeCustomerCode.php:158
+#: Z_ChangeCustomerCode.php:157
 msgid "Changing debtor transaction records"
 msgstr "Mengubah data transaksi debitur"
 
-#: Z_ChangeCustomerCode.php:162
+#: Z_ChangeCustomerCode.php:161
 msgid "The SQL to update debtor transaction records failed"
 msgstr "SQL gagal memperbarui data transaksi debitur"
 
-#: Z_ChangeCustomerCode.php:169 Z_ChangeStockCategory.php:79
-#: Z_ChangeStockCode.php:154
+#: Z_ChangeCustomerCode.php:168 Z_ChangeStockCategory.php:79
+#: Z_ChangeStockCode.php:164
 msgid "The SQL to update Sales Analysis records failed"
 msgstr "SQL gagal memperbarui data Analisa Penjualan"
 
-#: Z_ChangeCustomerCode.php:174 Z_ChangeStockCode.php:161
+#: Z_ChangeCustomerCode.php:173 Z_ChangeStockCode.php:171
 msgid "The SQL to update order delivery differences records failed"
 msgstr "SQL gagal memperbarui data perbedaan pengiriman order"
 
-#: Z_ChangeCustomerCode.php:181 Z_ChangeStockCode.php:168
+#: Z_ChangeCustomerCode.php:180 Z_ChangeStockCode.php:178
 msgid "The SQL to update the pricing records failed"
 msgstr "SQL gagal memperbarui data harga"
 
-#: Z_ChangeCustomerCode.php:187 Z_ChangeCustomerCode.php:192
-#: Z_ChangeStockCode.php:175
+#: Z_ChangeCustomerCode.php:186 Z_ChangeCustomerCode.php:191
+#: Z_ChangeStockCode.php:185
 msgid "The SQL to update the sales order header records failed"
 msgstr "SQL gagal memperbarui data header order penjualan"
 
-#: Z_ChangeCustomerCode.php:201
+#: Z_ChangeCustomerCode.php:200
 msgid "Changing the customer code in contract header records"
 msgstr "Mengubah kode customer dalam data header kontrak"
 
-#: Z_ChangeCustomerCode.php:204
+#: Z_ChangeCustomerCode.php:203
 msgid "The SQL to update contract header records failed"
 msgstr "SQL gagal memperbarui data header kontrak"
 
-#: Z_ChangeCustomerCode.php:209
+#: Z_ChangeCustomerCode.php:208
 msgid "Deleting the old customer branch records from the CustBranch table"
 msgstr "Menghapus data lama cabang customer dari table CustBranch"
 
-#: Z_ChangeCustomerCode.php:211
+#: Z_ChangeCustomerCode.php:210
 msgid ""
 "The SQL to delete the old CustBranch records for the old debtor record failed"
 msgstr "SQL gagal menghapus data lama CustBranch dari data lama debitur"
 
-#: Z_ChangeCustomerCode.php:215
+#: Z_ChangeCustomerCode.php:214
 msgid "Deleting the customer code from the DebtorsMaster table"
 msgstr "Mengapus kode customer dari tabel DebtorsMaster"
 
-#: Z_ChangeCustomerCode.php:218
+#: Z_ChangeCustomerCode.php:217
 msgid "The SQL to delete the old debtor record failed"
 msgstr "SQL gagal menghapus data lama debitur"
 
-#: Z_ChangeCustomerCode.php:231
+#: Z_ChangeCustomerCode.php:232
 msgid "Existing Debtor Code"
 msgstr "Kode Debitur Yang Ada"
 
-#: Z_ChangeCustomerCode.php:234
+#: Z_ChangeCustomerCode.php:236
 msgid "New Debtor Code"
 msgstr "Kode Baru Debitur"
 
@@ -32151,21 +32179,21 @@ msgstr "SQL untuk memasukkan catatan saham baru kategori gagal"
 
 #: Z_ChangeStockCategory.php:66 Z_ChangeStockCategory.php:71
 #: Z_ChangeStockCategory.php:76 Z_ChangeStockCategory.php:81
-#: Z_ChangeStockCategory.php:89 Z_ChangeStockCode.php:95
-#: Z_ChangeStockCode.php:101 Z_ChangeStockCode.php:107
-#: Z_ChangeStockCode.php:114 Z_ChangeStockCode.php:122
-#: Z_ChangeStockCode.php:132 Z_ChangeStockCode.php:141
-#: Z_ChangeStockCode.php:149 Z_ChangeStockCode.php:156
-#: Z_ChangeStockCode.php:163 Z_ChangeStockCode.php:170
-#: Z_ChangeStockCode.php:177 Z_ChangeStockCode.php:184
-#: Z_ChangeStockCode.php:191 Z_ChangeStockCode.php:197
-#: Z_ChangeStockCode.php:203 Z_ChangeStockCode.php:209
-#: Z_ChangeStockCode.php:216 Z_ChangeStockCode.php:223
-#: Z_ChangeStockCode.php:230 Z_ChangeStockCode.php:237
-#: Z_ChangeStockCode.php:243 Z_ChangeStockCode.php:248
-#: Z_ChangeStockCode.php:255 Z_ChangeStockCode.php:265
-#: Z_ChangeStockCode.php:270 Z_ChangeStockCode.php:277
-#: Z_ChangeStockCode.php:289 Z_ChangeStockCode.php:300
+#: Z_ChangeStockCategory.php:89 Z_ChangeStockCode.php:107
+#: Z_ChangeStockCode.php:113 Z_ChangeStockCode.php:119
+#: Z_ChangeStockCode.php:126 Z_ChangeStockCode.php:132
+#: Z_ChangeStockCode.php:142 Z_ChangeStockCode.php:151
+#: Z_ChangeStockCode.php:159 Z_ChangeStockCode.php:166
+#: Z_ChangeStockCode.php:173 Z_ChangeStockCode.php:180
+#: Z_ChangeStockCode.php:187 Z_ChangeStockCode.php:194
+#: Z_ChangeStockCode.php:201 Z_ChangeStockCode.php:207
+#: Z_ChangeStockCode.php:213 Z_ChangeStockCode.php:219
+#: Z_ChangeStockCode.php:226 Z_ChangeStockCode.php:233
+#: Z_ChangeStockCode.php:240 Z_ChangeStockCode.php:247
+#: Z_ChangeStockCode.php:253 Z_ChangeStockCode.php:258
+#: Z_ChangeStockCode.php:265 Z_ChangeStockCode.php:275
+#: Z_ChangeStockCode.php:280 Z_ChangeStockCode.php:287
+#: Z_ChangeStockCode.php:299 Z_ChangeStockCode.php:310
 msgid "completed"
 msgstr "selesai"
 
@@ -32193,15 +32221,15 @@ msgstr "Menghapus catatan stok lama kategori"
 msgid "The SQL to delete the old stock category record failed"
 msgstr "SQL untuk menghapus catatan stok lama kategori gagal"
 
-#: Z_ChangeStockCategory.php:90 Z_ChangeStockCode.php:303
+#: Z_ChangeStockCategory.php:90 Z_ChangeStockCode.php:313
 msgid "was successfully changed to"
 msgstr "telah berhasil diubah ke"
 
-#: Z_ChangeStockCategory.php:95
+#: Z_ChangeStockCategory.php:98
 msgid "Existing Inventory Category Code"
 msgstr "Kode yang ada Persediaan Kategori"
 
-#: Z_ChangeStockCategory.php:97
+#: Z_ChangeStockCategory.php:102
 msgid "New Inventory Category Code"
 msgstr "New Persediaan Kategori Kode"
 
@@ -32233,195 +32261,195 @@ msgstr "kode stok unik harus dimasukkan untuk kode yang baru"
 msgid "Adding the new stock master record"
 msgstr "Menambahkan data master stok baru"
 
-#: Z_ChangeStockCode.php:93
+#: Z_ChangeStockCode.php:105
 msgid "The SQL to insert the new stock master record failed"
 msgstr "SQL gagal memasukkan data master stok baru"
 
-#: Z_ChangeStockCode.php:97
+#: Z_ChangeStockCode.php:109
 msgid "Changing stock location records"
 msgstr "Mengubah data lokasi stok"
 
-#: Z_ChangeStockCode.php:99
+#: Z_ChangeStockCode.php:111
 msgid "The SQL to update stock location records failed"
 msgstr "SQL gagal memperbarui data lokasi stok"
 
-#: Z_ChangeStockCode.php:105
+#: Z_ChangeStockCode.php:117
 msgid "The SQL to update stock movement transaction records failed"
 msgstr "SQL gagal memperbarui data transaksi perpindahan stok"
 
-#: Z_ChangeStockCode.php:109
+#: Z_ChangeStockCode.php:121
 msgid "Changing location transfer information"
 msgstr "Mengubah informasi perpindahan lokasi"
 
-#: Z_ChangeStockCode.php:112
+#: Z_ChangeStockCode.php:124
 msgid "The SQL to update the loctransfers records failed"
 msgstr "SQL gagal untuk memperbarui data loctransfers"
 
-#: Z_ChangeStockCode.php:118
+#: Z_ChangeStockCode.php:128
 msgid "Changing MRP demands information"
 msgstr "Mengubah informasi permintaan MRP"
 
-#: Z_ChangeStockCode.php:120
+#: Z_ChangeStockCode.php:130
 msgid "The SQL to update the mrpdemands records failed"
 msgstr "SQL gagal memperbarui data mrpdemands"
 
-#: Z_ChangeStockCode.php:128
+#: Z_ChangeStockCode.php:138
 msgid "Changing MRP planned orders information"
 msgstr "Mengubah informasi order yang terencana MRP"
 
-#: Z_ChangeStockCode.php:130
+#: Z_ChangeStockCode.php:140
 msgid "The SQL to update the mrpplannedorders records failed"
 msgstr "SQL gagal memperbarui data mrpplannedorders"
 
-#: Z_ChangeStockCode.php:137
+#: Z_ChangeStockCode.php:147
 msgid "Changing MRP requirements information"
 msgstr "Mengubah informasi kebutuhan MRP"
 
-#: Z_ChangeStockCode.php:139
+#: Z_ChangeStockCode.php:149
 msgid "The SQL to update the mrprequirements records failed"
 msgstr "SQL gagal memperbarui data mrprequirements"
 
-#: Z_ChangeStockCode.php:145
+#: Z_ChangeStockCode.php:155
 msgid "Changing MRP supplies information"
 msgstr "Mengubah informasi persediaan MRP"
 
-#: Z_ChangeStockCode.php:147
+#: Z_ChangeStockCode.php:157
 msgid "The SQL to update the mrpsupplies records failed"
 msgstr "SQL gagal untuk memperbarui data mrpsupplies"
 
-#: Z_ChangeStockCode.php:173
+#: Z_ChangeStockCode.php:183
 msgid "Changing sales orders detail records"
 msgstr "Mengubah data perincian order penjualan"
 
-#: Z_ChangeStockCode.php:180
+#: Z_ChangeStockCode.php:190
 msgid "Changing purchase order details records"
 msgstr "Mengubah data perincian order pembelian"
 
-#: Z_ChangeStockCode.php:182
+#: Z_ChangeStockCode.php:192
 msgid "The SQL to update the purchase order detail records failed"
 msgstr "SQL gagal memperbarui data perincian order pembelian"
 
-#: Z_ChangeStockCode.php:187
+#: Z_ChangeStockCode.php:197
 msgid "Changing purchasing data records"
 msgstr "Mengubah data pembelian"
 
-#: Z_ChangeStockCode.php:189
+#: Z_ChangeStockCode.php:199
 msgid "The SQL to update the purchasing data records failed"
 msgstr "SQL gagal memperbarui data pembelian"
 
-#: Z_ChangeStockCode.php:193
+#: Z_ChangeStockCode.php:203
 msgid "Changing the stock code in shipment charges records"
 msgstr "Mengubah kode stok pada data biaya pengiriman"
 
-#: Z_ChangeStockCode.php:195
+#: Z_ChangeStockCode.php:205
 msgid "The SQL to update Shipment Charges records failed"
 msgstr "SQL gagal memperbarui data Biaya Pengiriman"
 
-#: Z_ChangeStockCode.php:199
+#: Z_ChangeStockCode.php:209
 msgid "Changing the stock check freeze file records"
 msgstr "Mengubah data file freeze stok opname"
 
-#: Z_ChangeStockCode.php:201
+#: Z_ChangeStockCode.php:211
 msgid "The SQL to update stock check freeze records failed"
 msgstr "SQL gagal memperbarui data freeze stok opname"
 
-#: Z_ChangeStockCode.php:205
+#: Z_ChangeStockCode.php:215
 msgid "Changing the stock counts table records"
 msgstr "Mengubah data tabel penghitungan stok"
 
-#: Z_ChangeStockCode.php:207
+#: Z_ChangeStockCode.php:217
 msgid "The SQL to update stock counts records failed"
 msgstr "SQL gagal memperbarui data penghitungan stok"
 
-#: Z_ChangeStockCode.php:212
+#: Z_ChangeStockCode.php:222
 msgid "Changing the GRNs table records"
 msgstr "Mengubah data tabel GRN"
 
-#: Z_ChangeStockCode.php:214
+#: Z_ChangeStockCode.php:224
 msgid "The SQL to update GRN records failed"
 msgstr "SQL gagal memperbarui data GRN"
 
-#: Z_ChangeStockCode.php:219
+#: Z_ChangeStockCode.php:229
 msgid "Changing the contract BOM table records"
 msgstr "Mengubah data tabel BOM kontrak"
 
-#: Z_ChangeStockCode.php:221
+#: Z_ChangeStockCode.php:231
 msgid "The SQL to contract BOM records failed"
 msgstr "SQL untuk kontrak BOM catatan gagal"
 
-#: Z_ChangeStockCode.php:226 Z_ChangeStockCode.php:233
+#: Z_ChangeStockCode.php:236 Z_ChangeStockCode.php:243
 msgid "Changing the BOM table records"
 msgstr "Mengubah data tabel BOM"
 
-#: Z_ChangeStockCode.php:226
+#: Z_ChangeStockCode.php:236
 msgid "components"
 msgstr "komponen"
 
-#: Z_ChangeStockCode.php:228
+#: Z_ChangeStockCode.php:238
 msgid "The SQL to update the BOM records failed"
 msgstr "SQL gagal memperbarui data BOM"
 
-#: Z_ChangeStockCode.php:233 Z_ChangeStockCode.php:251
+#: Z_ChangeStockCode.php:243 Z_ChangeStockCode.php:261
 msgid "parents"
 msgstr "induk"
 
-#: Z_ChangeStockCode.php:235
+#: Z_ChangeStockCode.php:245
 msgid "The SQL to update the BOM parent records failed"
 msgstr "SQL gagal memperbarui data induk BOM"
 
-#: Z_ChangeStockCode.php:239
+#: Z_ChangeStockCode.php:249
 msgid "Changing any image files"
 msgstr "Mengubah semua file gambar"
 
-#: Z_ChangeStockCode.php:251
+#: Z_ChangeStockCode.php:261
 msgid "Changing the item properties table records"
 msgstr "Mengubah data tabel ciri barang"
 
-#: Z_ChangeStockCode.php:253
+#: Z_ChangeStockCode.php:263
 msgid "The SQL to update the item properties records failed"
 msgstr "SQL gagal memperbarui data ciri barang"
 
-#: Z_ChangeStockCode.php:260
+#: Z_ChangeStockCode.php:270
 msgid "Changing work order requirements information"
 msgstr "Mengubah informasi kebutuhan order produksi"
 
-#: Z_ChangeStockCode.php:263
+#: Z_ChangeStockCode.php:273
 msgid "The SQL to update the stockid worequirements records failed"
 msgstr "SQL gagal memperbarui data worequirements stockid"
 
-#: Z_ChangeStockCode.php:268
+#: Z_ChangeStockCode.php:278
 msgid "The SQL to update the parent stockid worequirements records failed"
 msgstr "SQL gagal memperbarui data worequirements stockid induk"
 
-#: Z_ChangeStockCode.php:272
+#: Z_ChangeStockCode.php:282
 msgid "Changing work order information"
 msgstr "Mengubah informasi order produksi"
 
-#: Z_ChangeStockCode.php:275
+#: Z_ChangeStockCode.php:285
 msgid "The SQL to update the woitem records failed"
 msgstr "SQL gagal untuk memperbarui data woitem"
 
-#: Z_ChangeStockCode.php:280
+#: Z_ChangeStockCode.php:290
 msgid "Changing any serialised item information"
 msgstr "Mengubah semua informasi barang berseri"
 
-#: Z_ChangeStockCode.php:284 Z_ChangeStockCode.php:287
+#: Z_ChangeStockCode.php:294 Z_ChangeStockCode.php:297
 msgid "The SQL to update the stockserialitem records failed"
 msgstr "SQL gagal untuk memperbarui data stockserialitem"
 
-#: Z_ChangeStockCode.php:296
+#: Z_ChangeStockCode.php:306
 msgid "Deleting the old stock master record"
 msgstr "Menghapus data master stok lama"
 
-#: Z_ChangeStockCode.php:298
+#: Z_ChangeStockCode.php:308
 msgid "The SQL to delete the old stock master record failed"
 msgstr "SQL gagal menghapus data master stok lama"
 
-#: Z_ChangeStockCode.php:312
+#: Z_ChangeStockCode.php:323
 msgid "Existing Inventory Code"
 msgstr "Kode Inventori Yang Ada"
 
-#: Z_ChangeStockCode.php:315
+#: Z_ChangeStockCode.php:327
 msgid "New Inventory Code"
 msgstr "Kode Inventori Yang Baru"
 
@@ -32429,19 +32457,19 @@ msgstr "Kode Inventori Yang Baru"
 msgid "Identify Allocation Stuff Ups"
 msgstr "Identifikasi Alokasi Bermasalah"
 
-#: Z_CheckAllocationsFrom.php:28 Z_CheckAllocationsFrom.php:51
+#: Z_CheckAllocationsFrom.php:34 Z_CheckAllocationsFrom.php:59
 msgid "Ov Amt"
 msgstr "Jumlah Terlambat"
 
-#: Z_CheckAllocationsFrom.php:30 Z_CheckAllocationsFrom.php:53
+#: Z_CheckAllocationsFrom.php:36 Z_CheckAllocationsFrom.php:61
 msgid "Tot Allcns"
 msgstr "Total Alokasi"
 
-#: Z_CheckAllocationsFrom.php:59
+#: Z_CheckAllocationsFrom.php:67
 msgid "There are no inconsistent allocations"
 msgstr "Tidak ada alokasi yang tidak konsisten"
 
-#: Z_CheckAllocationsFrom.php:59 Z_CheckAllocs.php:28
+#: Z_CheckAllocationsFrom.php:67 Z_CheckAllocs.php:28
 msgid "all is well"
 msgstr "semuanya baik"
 
@@ -32509,15 +32537,16 @@ msgstr "Periksa Rekening Pengawasan Buku Besar Penjualan Periode"
 msgid "UTILITY PAGE To Copy a BOM"
 msgstr "HALAMAN FASILITAS Untuk Menyalin BOM"
 
-#: Z_CopyBOM.php:115
+#: Z_CopyBOM.php:116
 msgid "From Stock ID"
 msgstr "Dari ID Stok"
 
-#: Z_CopyBOM.php:120
-msgid " To New Stock ID"
+#: Z_CopyBOM.php:122
+#, fuzzy
+msgid "To New Stock ID"
 msgstr " Ke ID Stok"
 
-#: Z_CopyBOM.php:128
+#: Z_CopyBOM.php:134
 msgid "To Existing Stock ID"
 msgstr "Ke ID Stok Yang Ada"
 
@@ -32543,21 +32572,21 @@ msgstr "Perincian Kode Akun telah berhasil Dibuat"
 msgid "No additional chart details were required to be added"
 msgstr "Tidak ada perincian kode akun ekstra yang perlu ditambahkan"
 
-#: Z_CreateCompany.php:9
+#: Z_CreateCompany.php:8
 msgid ""
 "UTILITY PAGE That sets up a new blank company record if not already existing"
 msgstr "HALAMAN FASILITAS Yang membuat data perusahaan kosong jika belum ada"
 
-#: Z_CreateCompany.php:21
+#: Z_CreateCompany.php:20
 msgid ""
 "An existing company record is set up already. No alterations have been made"
 msgstr "Data perusahaan sudah ada. Tidak ada perubahan"
 
-#: Z_CreateCompany.php:98
+#: Z_CreateCompany.php:97
 msgid "Company record is now available for modification by clicking"
 msgstr "Data perusahaan sekarang ada untuk perubahan dengan meng-klik"
 
-#: Z_CreateCompany.php:98
+#: Z_CreateCompany.php:97
 msgid "this link"
 msgstr "link ini"
 
@@ -32622,11 +32651,11 @@ msgstr "Saldo Debitur Per Mata Uang"
 msgid "Debtors Balances By Currency Totals"
 msgstr "Total Saldo Debitur Per Mata Uang"
 
-#: Z_CurrencyDebtorsBalances.php:26
+#: Z_CurrencyDebtorsBalances.php:30
 msgid "Total Debtor Balances in"
 msgstr "Total Saldo Debitur dalam"
 
-#: Z_CurrencyDebtorsBalances.php:34 Z_CurrencySuppliersBalances.php:32
+#: Z_CurrencyDebtorsBalances.php:40 Z_CurrencySuppliersBalances.php:38
 msgid "Total Balances in local currency"
 msgstr "Total Saldo Debitur dalam mata uang lokal"
 
@@ -32634,7 +32663,7 @@ msgstr "Total Saldo Debitur dalam mata uang lokal"
 msgid "Suppliers Balances By Currency Totals"
 msgstr "Total Saldo Supplier Per Mata Uang"
 
-#: Z_CurrencySuppliersBalances.php:24
+#: Z_CurrencySuppliersBalances.php:28
 msgid "Total Supplier Balances in"
 msgstr "Total Saldo Supplier dalam"
 
@@ -32905,7 +32934,7 @@ msgstr "Hapus Transaksi Penjualan"
 msgid "Deleting sales analysis records"
 msgstr "Menghapus data analisa penjualan"
 
-#: Z_DeleteSalesTransActions.php:17 Z_DeleteSalesTransActions.php:112
+#: Z_DeleteSalesTransActions.php:17 Z_DeleteSalesTransActions.php:110
 msgid "The SQL to delete Sales Analysis records failed because"
 msgstr "SQL untuk menghapus data Analisa Penjualan gagal karena"
 
@@ -32947,31 +32976,31 @@ msgstr "Membuat stok untuk semua barang dan lokasi kosong"
 msgid "The SQL to make all stocks zero failed because"
 msgstr "SQL gagal membuat semua stok 0 karena"
 
-#: Z_DeleteSalesTransActions.php:75
+#: Z_DeleteSalesTransActions.php:73
 msgid "Making the quantity invoiced zero on all orders"
 msgstr "Membuat jumlah difakturkan 0 untuk semua order"
 
-#: Z_DeleteSalesTransActions.php:78
+#: Z_DeleteSalesTransActions.php:76
 msgid "The SQL to un-invoice all sales orders failed"
 msgstr "SQL gagal me-non-fakturkan semua order penjualan"
 
-#: Z_DeleteSalesTransActions.php:84
+#: Z_DeleteSalesTransActions.php:82
 msgid "Deleting all sales related GL Transactions"
 msgstr "Menghapus semua Transaksi GL yang berhubungan dengan penjualan"
 
-#: Z_DeleteSalesTransActions.php:86
+#: Z_DeleteSalesTransActions.php:84
 msgid "The SQL to delete sales related GL Transactions failed"
 msgstr "SQL gagal menghapus Transaksi GL yang berhubungan dengan penjualan"
 
-#: Z_DeleteSalesTransActions.php:92
+#: Z_DeleteSalesTransActions.php:90
 msgid "Deleting all stock related GL Transactions"
 msgstr "Menghapus semua Transaksi GL yang berhubungan dengan stok"
 
-#: Z_DeleteSalesTransActions.php:95
+#: Z_DeleteSalesTransActions.php:93
 msgid "The SQL to delete stock related GL Transactions failed"
 msgstr "SQL gagal menghapus Transaksi GL yang berhubungan dengan stok"
 
-#: Z_DeleteSalesTransActions.php:101
+#: Z_DeleteSalesTransActions.php:99
 msgid ""
 "Zeroing all purchase order quantities received and uncompleting all purchase "
 "orders"
@@ -32979,7 +33008,7 @@ msgstr ""
 "Me-nol-kan semua jumlah order pembelian yang diterima dan men-tidak-selesai-"
 "kan semua order penjualan"
 
-#: Z_DeleteSalesTransActions.php:104
+#: Z_DeleteSalesTransActions.php:102
 msgid ""
 "The SQL to zero quantity received for all purchase orders line items and "
 "uncompleted all purchase order line items because"
@@ -32988,29 +33017,29 @@ msgstr ""
 "order pembelian dan men-tidak-selesai-kan semua item baris order penjualan "
 "karena"
 
-#: Z_DeleteSalesTransActions.php:110
+#: Z_DeleteSalesTransActions.php:108
 msgid "Deleting all GRN records"
 msgstr "Menghapus semua data GRN"
 
-#: Z_DeleteSalesTransActions.php:115 Z_DeleteSalesTransActions.php:128
+#: Z_DeleteSalesTransActions.php:113 Z_DeleteSalesTransActions.php:126
 msgid ""
 "The SQL to update the transaction number of stock receipts has failed because"
 msgstr "SQL gagal memperbarui nomor transaksi dari penerimaan stok karena"
 
-#: Z_DeleteSalesTransActions.php:120
+#: Z_DeleteSalesTransActions.php:118
 msgid "Deleting all Purchase Orders"
 msgstr "Menghapus semua Order Pembelian"
 
-#: Z_DeleteSalesTransActions.php:122
+#: Z_DeleteSalesTransActions.php:120
 msgid ""
 "The SQL to delete all purchase order details failed, the SQL statement was"
 msgstr "Perintah SQL yang gagal menghapus semua order pembelian adalah"
 
-#: Z_DeleteSalesTransActions.php:125
+#: Z_DeleteSalesTransActions.php:123
 msgid "The SQL to delete all purchase orders failed because"
 msgstr "SQL gagal menghapus semua order pembelian karena"
 
-#: Z_DeleteSalesTransActions.php:134
+#: Z_DeleteSalesTransActions.php:132
 msgid ""
 "It is necessary to re-post the remaining general ledger transactions for the "
 "general ledger to get back in sync with the transactions that remain. This "
@@ -33020,55 +33049,55 @@ msgstr ""
 "dapat sinkron dengan sisa transaksi yang ada. Pilihan ini ada di halaman "
 "Z_index.php"
 
-#: Z_DeleteSalesTransActions.php:141
+#: Z_DeleteSalesTransActions.php:140
 msgid "Delete All Sales Analysis"
 msgstr "Hapus Semua Analisa Penjualan"
 
-#: Z_DeleteSalesTransActions.php:144
+#: Z_DeleteSalesTransActions.php:143
 msgid "Delete All statement transactions"
 msgstr "Hapus Semua transaksi rekening"
 
-#: Z_DeleteSalesTransActions.php:147
+#: Z_DeleteSalesTransActions.php:146
 msgid "Zero All stock balances"
 msgstr "Reset Semua Saldo Stok"
 
-#: Z_DeleteSalesTransActions.php:150
+#: Z_DeleteSalesTransActions.php:149
 msgid "Make Invoiced Qty Of All Sales Orders Nil"
 msgstr "Ubah Jumlah Semua Faktur Order Penjualan ke Nol"
 
-#: Z_DeleteSalesTransActions.php:153
+#: Z_DeleteSalesTransActions.php:152
 msgid "Delete All Sales Orders"
 msgstr "Hapus Semua Order Penjualan"
 
-#: Z_DeleteSalesTransActions.php:156
+#: Z_DeleteSalesTransActions.php:155
 msgid "Zero Received Qty of all purchase orders"
 msgstr "Reset Jumlah yang Diterima untuk semua order pembelian"
 
-#: Z_DeleteSalesTransActions.php:159
+#: Z_DeleteSalesTransActions.php:158
 msgid "Delete All Purchase Orders"
 msgstr "Hapus Semua Order Pembelian"
 
-#: Z_DeleteSalesTransActions.php:162
+#: Z_DeleteSalesTransActions.php:161
 msgid "Delete All Sales related stock movements"
 msgstr "Hapus Semua perpindahan stok yang berhubungan dengan Penjualan"
 
-#: Z_DeleteSalesTransActions.php:165
+#: Z_DeleteSalesTransActions.php:164
 msgid "Delete All Stock Receipt stock movements"
 msgstr "Hapus Semua perpindahan stok atas Penerimaan Stok"
 
-#: Z_DeleteSalesTransActions.php:168
+#: Z_DeleteSalesTransActions.php:167
 msgid "Delete All Sales GL Transactions"
 msgstr "Hapus Semua transaksi GL Penjualan"
 
-#: Z_DeleteSalesTransActions.php:171
+#: Z_DeleteSalesTransActions.php:170
 msgid "Delete All Stock GL Transactions"
 msgstr "Hapus Semua Transaksi GL Stok"
 
-#: Z_DeleteSalesTransActions.php:174
+#: Z_DeleteSalesTransActions.php:173
 msgid "Delete All PO Goods Received (GRNs)"
 msgstr "Hapus Semua Barang PO yang Diterima (GRN)"
 
-#: Z_DeleteSalesTransActions.php:179
+#: Z_DeleteSalesTransActions.php:178
 msgid "Are You Really REALLY Sure?"
 msgstr "Apakah Anda Benar BENAR Yakin?"
 
