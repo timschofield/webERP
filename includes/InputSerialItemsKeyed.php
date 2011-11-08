@@ -55,9 +55,9 @@ foreach ($LineItem->SerialItems as $Bundle){
 		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
-
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
-
+	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'&identifier='.$identifier.'">'. _('Delete'). '</a></td>
+		</tr>';
+	
 	$TotalQuantity += $Bundle->BundleQty;
 }
 
@@ -84,7 +84,7 @@ echo '<table class="selection">';
 echo $tableheader;
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" name="Ga6uF5Wa" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier.'" name="Ga6uF5Wa" method="post">
       <input type=hidden name="LineNo" value="' . $LineNo . '">
       <input type=hidden name="StockID" value="' . $StockID . '">
       <input type=hidden name="EntryType" value="KEYED">';
@@ -101,7 +101,8 @@ $StartAddingAt = 0;
 if ($EditControlled){
 	foreach ($LineItem->SerialItems as $Bundle){
 
-		echo '<tr><td valign=top><input type="text" name="SerialNo'. $StartAddingAt .'" value="' .$Bundle->BundleRef.'" size="21"  maxlength="20" /></td>';
+		echo '<tr>
+				<td valign=top><input type="text" name="SerialNo'. $StartAddingAt .'" value="' .$Bundle->BundleRef.'" size="21"  maxlength="20" /></td>';
 
 		/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 		into the form for entry of quantities manually */
@@ -110,10 +111,10 @@ if ($EditControlled){
 			echo '<input type=hidden name="Qty' . $StartAddingAt .'" Value=1></TR>';
 		} else if ($LineItem->Serialised==0 and $Perishable==1) {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
+				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10"></tr>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size=11
-				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength=10></tr>';
+				value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10"></tr>';
 		}
 
 		$StartAddingAt++;
@@ -138,13 +139,22 @@ for ($i=0;$i < 10;$i++){
 	}
 }
 
-echo '</table>';
-echo '<br /><div class=centre><input type="submit" name="AddBatches" value="'. _('Enter'). '"></div>';
-echo '</form></td><td valign="top">';
+echo '</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="AddBatches" value="'. _('Enter'). '" />
+		</div>
+		
+		</form>
+		</td>
+		<td valign="top">';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
 }
-echo '</td></tr></table><script type="text/javascript">
+echo '</td>
+	</tr>
+	</table>
+	<script type="text/javascript">
 //<![CDATA[
 document.Ga6uF5Wa.SerialNo0.focus();
 //]]>

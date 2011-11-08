@@ -1,5 +1,9 @@
 webERP Change Log
 
+8/11/11 Phil: includes/GetConfig.php no longer casts the VersionNumber to a double - issue highlighted by Tim
+8/11/11 Felix Lim: includes/InputSerialItems.php and InputSerialItemsKeyed.php now sends $identifier
+8/11/11 Phil: fixed bugs reported by Ron Wong and Don SelectSupplier.php sql error missed "s" off suppliers and CustomerReceipt.php - had not populated new class variable (property) of CurrDecimalPlaces
+
 6/11/11 Release 4.06RC1
 
 30/10/11 Exson: Modification to Stocks.php to avoid losing PanSize and ShrinkFactor

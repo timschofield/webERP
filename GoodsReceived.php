@@ -83,7 +83,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>'. _('Date Goods/Service Received'). ':</td>
-				<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'] .'" maxlength=10 size=10 onChange="return isDate(this, this.value, '."'".
+				<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'] .'" maxlength="10" size="10" onChange="return isDate(this, this.value, '."'".
 			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_POST['DefaultReceivedDate'] . '"></td>
 			</tr>
 		</table>

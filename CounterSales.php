@@ -39,7 +39,6 @@ if (isset($_POST['SelectingOrderItems'])){
 	foreach ($_POST as $FormVariable => $Quantity) {
 		if (mb_strpos($FormVariable,'OrderQty')!==false) {
 			$NewItemArray[$_POST['StockID' . mb_substr($FormVariable,8)]] = filter_number_format($Quantity);
-			echo '<br/> The quantitiy entered was ' .  filter_number_format($Quantity) . ' the quantity for ' . $_POST['StockID' . mb_substr($FormVariable,8)] . ' unfiltered was: ' . $Quantity;
 		}
 	}
 }
@@ -2022,7 +2021,7 @@ if (!isset($_POST['ProcessSale'])){
 			echo $TableHeader;
 			$i = 0;
 			$j = 1;
-			$k=0; //row colour counter
+			$k = 0; //row colour counter
 
 			while ($myrow=DB_fetch_array($result2)) {
 	// This code needs sorting out, but until then :
@@ -2097,15 +2096,16 @@ if (!isset($_POST['ProcessSale'])){
 				$OnOrder = $PurchQty + $WoQty;
 
 				$Available = $QOH - $DemandQty + $OnOrder;
-
+				
 				printf('<td>%s</font></td>
 						<td>%s</td>
 						<td>%s</td>
-						<td style="text-align:center">%s</td>
-						<td style="text-align:center">%s</td>
-						<td style="text-align:center">%s</td>
-						<td style="text-align:center">%s</td>
-						<td><font size=1><input class="number" tabindex="'.strval($j+7).'" type="textbox" size="6" name="OrderQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" />
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td><input class="number" tabindex="'.strval($j+7).'" type="text" size="6" name="OrderQty%s" value="0" />
+							<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>',
 						$myrow['stockid'],
@@ -2189,10 +2189,13 @@ if (!isset($_POST['ProcessSale'])){
 			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID .'identifier='.$identifier . '" method="post" name="orderform">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<tr><td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
-			echo '<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
-			$TableHeader = '<tr><th>' . _('Code') . '</th>
+			echo '<tr>
+					<td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
+					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
+					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
+				</tr>';
+			$TableHeader = '<tr>
+								<th>' . _('Code') . '</th>
 					   			<th>' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
 					   			<th>' . _('On Hand') . '</th>
@@ -2284,7 +2287,7 @@ if (!isset($_POST['ProcessSale'])){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><font size="1"><input class="number"  tabindex="'.strval($j+7).'" type="textbox" size="6" name="OrderQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
+						<td><input class="number"  tabindex="'.strval($j+7).'" type="text" size="6" name="OrderQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>',
 						$myrow['stockid'],
 						$myrow['description'],
@@ -2300,6 +2303,7 @@ if (!isset($_POST['ProcessSale'])){
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
 				$j++;
+				$i++;
 	#end of page full new headings if
 			}
 	#end of while loop

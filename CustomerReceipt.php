@@ -33,11 +33,11 @@ if ((isset($_POST['BatchInput'])
 		
 	echo '<br />';
 	prnMsg(_('A bank account must be selected for this receipt'), 'warn');
-	$BankAccountEmpty=TRUE;
+	$BankAccountEmpty=true;
 } else if(isset($_GET['NewReceipt'])) {
-	$BankAccountEmpty=TRUE;
+	$BankAccountEmpty=true;
 } else {
-	$BankAccountEmpty=FALSE;
+	$BankAccountEmpty=false;
 }
 
 if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ 
@@ -47,17 +47,21 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 	/*Get the bank account currency and set that too */
 
 	$SQL = "SELECT bankaccountname, 
-					currcode 
+					currcode,
+					decimalplaces 
 			FROM bankaccounts 
+			INNER JOIN currencies
+			ON bankaccounts.currcode=currencies.currabrev
 			WHERE accountcode='" . $_POST['BankAccount']."'";
 			
 	$ErrMsg =_('The bank account name cannot be retrieved because');
 	$result= DB_query($SQL,$db,$ErrMsg);
 
 	if (DB_num_rows($result)==1){
-		$myrow = DB_fetch_row($result);
-		$_SESSION['ReceiptBatch']->BankAccountName = $myrow[0];
-		$_SESSION['ReceiptBatch']->AccountCurrency=$myrow[1];
+		$myrow = DB_fetch_array($result);
+		$_SESSION['ReceiptBatch']->BankAccountName = $myrow['bankaccountname'];
+		$_SESSION['ReceiptBatch']->AccountCurrency=$myrow['currcode'];
+		$_SESSION['ReceiptBatch']->CurrDecimalPlaces=$myrow['decimalplaces'];
 		unset($result);
 	} elseif (DB_num_rows($result)==0 AND !$BankAccountEmpty){
 		prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');

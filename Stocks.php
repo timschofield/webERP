@@ -754,7 +754,9 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 					discountcategory,
 					taxcatid,
 					decimalplaces,
-					nextserialno
+					nextserialno,
+					pansize,
+					shrinkfactor
 			FROM stockmaster
 			WHERE stockid = '".$StockID."'";
 	

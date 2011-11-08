@@ -321,7 +321,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 		} else {
 			echo '<div class="centre"><br />';
 			echo '<tr><td colspan="2">';
-			echo '<table width=45% colspan=2 border=2 cellpadding=4>';
+			echo '<table width="45%" class="selection">';
 			echo '<tr><th width=33%>' . _('Supplier Mapping') . '</th></tr>';
 			echo '</td><td valign=top>'; /* Mapping */
 			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
@@ -338,13 +338,13 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 							suppliersince,
 							currencies.decimalplaces AS currdecimalplaces
 					FROM suppliers INNER JOIN currencies
-					ON supplier.currcode=currencies.currabrev
+					ON suppliers.currcode=currencies.currabrev
 					WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$DataResult = DB_query($sql, $db, $ErrMsg);
 			$myrow = DB_fetch_array($DataResult);
 			// Select some more data about the supplier
-			$SQL = "SELECT sum(-ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' and type != '20'";
+			$SQL = "SELECT SUM(-ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' and type != '20'";
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
 			echo '<br />';

@@ -8,12 +8,12 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($sql,$db,$ErrMsg);
-	while( $myrow = DB_fetch_row($ConfigResult) ) {
-		if (is_numeric($myrow[1]) and $myrow[0]!='DefaultPriceList'){
+	while( $myrow = DB_fetch_array($ConfigResult) ) {
+		if (is_numeric($myrow['confvalue']) AND $myrow['confname']!='DefaultPriceList' AND $myrow['confname']!='VersionNumber'){
 			//the variable name is given by $myrow[0]
-			$_SESSION[$myrow[0]] = (double) $myrow[1];
+			$_SESSION[$myrow['confname']] = (double) $myrow['confvalue'];
 		} else {
-			$_SESSION[$myrow[0]] =  $myrow[1];
+			$_SESSION[$myrow['confname']] =  $myrow['confvalue'];
 		}
 	} //end loop through all config variables
 	$_SESSION['CompanyDefaultsLoaded'] = true;
