@@ -858,6 +858,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	} elseif (mb_strpos ($TransDate,'.')) {
 		$Date_Array = explode('.',$TransDate);
 	}
+	
 	if (($_SESSION['DefaultDateFormat']=='d/m/Y') or ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		$TransDate = mktime(0,0,0,$Date_Array[1],$Date_Array[0],$Date_Array[2]);
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
@@ -879,6 +880,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 	$result = DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
+	
 	if (is_null($myrow[0])){
 		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db,_('Could not insert first period'));
 		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",$db,_('Could not insert second period'));
@@ -886,7 +888,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
 	} else {
 		$Date_Array = explode('-', $myrow[0]);
-		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
+		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+1,0,(int)$Date_Array[0]);
 		$LastPeriod = $myrow[1];
 	}
 	/* Find the unix timestamp of the first period end date in periods table */
@@ -900,20 +902,20 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	/* If the period number doesn't exist */
 	if (!PeriodExists($TransDate, $db)) {
 		/* if the transaction is after the last period */
+		
 		if ($TransDate > $LastPeriodEnd) {
+			
 			$PeriodEnd = mktime(0,0,0,Date('m', $TransDate)+1, 0, Date('Y', $TransDate));
-			$Period = $LastPeriod + 1;
+			
 			while ($PeriodEnd >= $LastPeriodEnd) {
-				CreatePeriod($Period, $LastPeriodEnd, $db);
-				$Period++;
 				if (Date('m', $LastPeriodEnd)<=13) {
 					$LastPeriodEnd = mktime(0,0,0,Date('m', $LastPeriodEnd)+2, 0, Date('Y', $LastPeriodEnd));
 				} else {
 					$LastPeriodEnd = mktime(0,0,0,2, 0, Date('Y', $LastPeriodEnd)+1);
 				}
+				$LastPeriod++;
+				CreatePeriod($LastPeriod, $LastPeriodEnd, $db);
 			}
-			$PeriodEnd = mktime(0,0,0,Date('m', $LastPeriodEnd)+1, 0, Date('Y', $LastPeriodEnd));
-			CreatePeriod($Period, $PeriodEnd, $db);
 		} else {
 		/* The transaction is before the first period */
 			$PeriodEnd = mktime(0,0,0,Date('m', $TransDate), 0, Date('Y', $TransDate));

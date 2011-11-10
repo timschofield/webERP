@@ -1,5 +1,7 @@
 webERP Change Log
 
+10/11/11 Phil: includes/DateFunctions.inc fixed GetPeriod function to create new period when just one month ahead of last period - worried about this can't see how it could have been like this so long without a bug report?
+10/11/11 Phil: includes/LanguageSetup.php now sets LC_NUMERIC locale category after LC_ALL to ensure SQL compliant calculations
 8/11/11 Phil: includes/GetConfig.php no longer casts the VersionNumber to a double - issue highlighted by Tim
 8/11/11 Felix Lim: includes/InputSerialItems.php and InputSerialItemsKeyed.php now sends $identifier
 8/11/11 Phil: fixed bugs reported by Ron Wong and Don SelectSupplier.php sql error missed "s" off suppliers and CustomerReceipt.php - had not populated new class variable (property) of CurrDecimalPlaces

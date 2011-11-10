@@ -1,8 +1,6 @@
 <?php
 /* $Id$*/
 
-//$PageSecurity = 11;
-
 include('includes/session.inc');
 $title = _('Database table details');
 include('includes/header.inc');

@@ -63,8 +63,9 @@ if (!function_exists('gettext')) {
 	include('includes/LanguagesArray.php');
 } else {
 	include('includes/LanguagesArray.php');
-	$LocaleSet = setlocale (LC_NUMERIC, 'en_US','english-us');
+	
 	$LocaleSet = setlocale (LC_ALL, $_SESSION['Language'],$LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
+	$LocaleSet = setlocale (LC_NUMERIC, 'C','en_GB.utf8','en_GB','en_US','english-us');
 	
 	if (defined('LC_MESSAGES')){ //it's a unix/linux server
 		$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
@@ -73,6 +74,7 @@ if (!function_exists('gettext')) {
 	if ($_SESSION['Language']=='tr_TR.utf8') {
 		$Locale = setlocale(LC_CTYPE, 'C');
 	}
+	
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);

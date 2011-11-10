@@ -239,31 +239,31 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units,
-                                        stockmaster.decmimalplaces   
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-				AND stockmaster.mbflag <>'G'
-				AND stockmaster.controlled <> 1
-				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-				AND stockmaster.discontinued=0
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units,
+						stockmaster.decmimalplaces   
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
+					AND stockmaster.controlled <> 1
+					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.discontinued=0
+					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units,
-                                        stockmaster.decimalplaces 
-				FROM stockmaster INNER JOIN stockcategory
-				ON  stockmaster.categoryid=stockcategory.categoryid
-				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-				AND stockmaster.mbflag <>'G'
-				AND stockmaster.controlled <> 1
-				AND stockmaster.discontinued=0
-				AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units,
+						stockmaster.decimalplaces 
+					FROM stockmaster INNER JOIN stockcategory
+					ON  stockmaster.categoryid=stockcategory.categoryid
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
+					AND stockmaster.controlled <> 1
+					AND stockmaster.discontinued=0
+					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 
 	} else if (mb_strlen($_POST['StockCode'])>0){
@@ -273,59 +273,59 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units,
-                                        stockmaster.decimalplaces
-				FROM stockmaster INNER JOIN stockcategory
-				  ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-				AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-				AND stockmaster.mbflag <>'G'
-				AND stockmaster.controlled <> 1
-				AND stockmaster.discontinued=0
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units,
+						stockmaster.decimalplaces
+					FROM stockmaster INNER JOIN stockcategory
+					  ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.mbflag <>'G'
+					AND stockmaster.controlled <> 1
+					AND stockmaster.discontinued=0
+					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units,
-                                        stockmaster.decimalplaces
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-				AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
-				AND stockmaster.mbflag <>'G'
-				AND stockmaster.controlled <> 1
-				AND stockmaster.discontinued=0
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units,
+						stockmaster.decimalplaces
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.mbflag <>'G'
+					AND stockmaster.controlled <> 1
+					AND stockmaster.discontinued=0
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 
 	} else {
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units,
-                                        stockmaster.decimalplaces
-				FROM stockmaster INNER JOIN stockcategory
-				ON  stockmaster.categoryid=stockcategory.categoryid
-				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-				AND stockmaster.mbflag <>'G'
-				AND stockmaster.controlled <> 1
-				AND stockmaster.discontinued=0
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units,
+						stockmaster.decimalplaces
+					FROM stockmaster INNER JOIN stockcategory
+					ON  stockmaster.categoryid=stockcategory.categoryid
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
+					AND stockmaster.controlled <> 1
+					AND stockmaster.discontinued=0
+					ORDER BY stockmaster.stockid";
         	} else {
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units,
-                                        stockmaster.decimalplaces           
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-				AND stockmaster.mbflag <>'G'
-				AND stockmaster.controlled <> 1
-				AND stockmaster.discontinued=0
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units,
+						stockmaster.decimalplaces           
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND stockmaster.mbflag <>'G'
+					AND stockmaster.controlled <> 1
+					AND stockmaster.discontinued=0
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		  }
 	}
 
@@ -465,6 +465,8 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 				prnMsg(_('Phantom assemblies cannot be sold, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the order:') . ' ' . $NewItem, 'warn');
 			} else if ($myrow['controlled']==1){
 				prnMsg(_('The system does not currently cater for counter sales of lot controlled or serialised items'),'warn');
+			} else if ($NewItemQty<=0) {
+				prnMsg(_('Only items entered with a positive quantity can be added to the sale'),'warn');
 			} else { /*Its not a kit set item*/
 				include('includes/SelectOrderItems_IntoCart.inc');
 				$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));

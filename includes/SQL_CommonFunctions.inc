@@ -330,4 +330,35 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") 
 
 }
 
+/*Ensures general ledger entries balance for a given transaction */
+function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
+	
+	$result = DB_query("SELECT SUM(amount) 
+						FROM gltrans 
+						WHERE type = '" . $TransType . "'
+						AND typeno = '" . $TransTypeNo . "'",
+						$db);
+	$myrow = DB_fetch_row($result);
+	$Difference = $myrow[0];
+	if (abs($Difference)!=0){
+		if (abs($Difference)>0.1){
+			prnMsg(_('The general ledger entries created do not balance. See your system administrator'),'error');
+		} else {
+			$result = DB_query("SELECT counterindex,
+										MAX(amount) 
+								FROM gltrans 
+								WHERE type = '" . $TransType . "'
+								AND typeno = '" . $TransTypeNo . "'
+								GROUP BY counterindex",
+								$db);
+			$myrow = DB_fetch_array($result);
+			$TransToAmend = $myrow['counterindex'];
+			$result = DB_query("UPDATE gltrans SET amount = amount - " . $Difference . "
+								WHERE counterindex = '" . $TransToAmend . "'",
+								$db);
+			
+		}
+	}
+}
+
 ?>

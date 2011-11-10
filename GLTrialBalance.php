@@ -40,7 +40,8 @@ if ((! isset($_POST['FromPeriod'])
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
-	$period=GetPeriod($FromDate, $db);
+	/*GetPeriod function creates periods if need be the return value is not used */
+	$NotUsedPeriodNo = GetPeriod($FromDate, $db);
 
 	/*Show a form to allow input of criteria for TB to show */
 	echo '<table class="selection">
@@ -75,14 +76,7 @@ if ((! isset($_POST['FromPeriod'])
 	echo '</select></td>
 		</tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$lastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
-		$sql = "SELECT periodno
-				FROM periods
-				WHERE lastdate_in_period = '" . $lastDate . "'";
-		$MaxPrd = DB_query($sql,$db);
-		$MaxPrdrow = DB_fetch_row($MaxPrd);
-		$DefaultToPeriod = (int) ($MaxPrdrow[0]);
-
+		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'],mktime(0,0,0,Date('m')+1,0,Date('Y'))),$db);
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}

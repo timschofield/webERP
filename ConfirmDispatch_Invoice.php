@@ -225,7 +225,7 @@ set all the necessary session variables changed by the POST  */
 				$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 			}
 		} else if (is_numeric(filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched' ])) AND filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched']) <= ($_SESSION['Items']->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyInv)){
-			$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched = filter_number_format($_POST[$Itm->LineNumber  . '_QtyDispatched']);
+			$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$Itm->LineNumber  . '_QtyDispatched']),$Itm->DecimalPlaces);
 		}
 		foreach ($Itm->Taxes as $TaxLine) {
 			if (isset($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
@@ -395,7 +395,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	echo '</tr>';
 	if (mb_strlen($LnItm->Narrative)>1){
 		$Narrative=str_replace('\r\n','<br />', $LnItm->Narrative);
-		echo $RowStarter . '<td colspan=12>' . stripslashes($Narrative) . '</td></tr>';
+		echo $RowStarter . '<td colspan="12">' . stripslashes($Narrative) . '</td></tr>';
 	}
 }//end foreach ($line)
 
@@ -523,7 +523,7 @@ $DisplaySubTotal = locale_number_format(($_SESSION['Items']->total + $_POST['Cha
 
 
 /* round the totals to avoid silly entries */
-$TaxTotal = round($TaxTotal,2);
+$TaxTotal = round($TaxTotal,$_SESSION['Items']->CurrDecimalPlaces);
 $_SESSION['Items']->total = round($_SESSION['Items']->total,$_SESSION['Items']->CurrDecimalPlaces);
 $_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],$_SESSION['Items']->CurrDecimalPlaces);
 
@@ -770,9 +770,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									'" . $TaxTotal . "',
 									'" . filter_number_format($_POST['ChargeFreightCost']) . "',
 									'" . $_SESSION['CurrencyRate'] . "',
-									'" . DB_escape_string($_POST['InvoiceText']) . "',
+									'" . $_POST['InvoiceText'] . "',
 									'" . $_SESSION['Items']->ShipVia . "',
-									'"  . DB_escape_string($_POST['Consignment']) . "'	)";
+									'" . $_POST['Consignment'] . "'	)";
 
 	$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 	$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
@@ -829,30 +829,29 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			if (($OrderLine->Quantity - $OrderLine->QtyDispatched)>0){
 
-				$SQL = "INSERT INTO orderdeliverydifferenceslog ( orderno,
+				$SQL = "INSERT INTO orderdeliverydifferenceslog (orderno,
 															invoiceno,
 															stockid,
 															quantitydiff,
 															debtorno,
 															branch,
-															can_or_bo )
+															can_or_bo)
 														VALUES (
 															'" . $_SESSION['ProcessingOrder'] . "',
 															'" . $InvoiceNo . "',
 															'" . $OrderLine->StockID . "',
-															'" . $OrderLine->Quantity - $OrderLine->QtyDispatched . "',
+															'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "',
 															'" . $_SESSION['Items']->DebtorNo . "',
 															'" . $_SESSION['Items']->Branch . "',
 															'CAN')";
-
+				
 				$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The order delivery differences log record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the order delivery differences record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 
-
-
-		} elseif (($OrderLine->Quantity - $OrderLine->QtyDispatched) >0 AND DateDiff(ConvertSQLDate($DefaultDispatchDate),$_SESSION['Items']->DeliveryDate,'d') > 0) {
+		} elseif (($OrderLine->Quantity - $OrderLine->QtyDispatched)>0 
+				AND DateDiff(ConvertSQLDate($DefaultDispatchDate),$_SESSION['Items']->DeliveryDate,'d')>0) {
 
 		/*The order is being short delivered after the due date - need to insert a delivery differnce log */
 
@@ -919,9 +918,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				/* Need to get the current location quantity
 				will need it later for the stock movement */
                	$SQL="SELECT locstock.quantity
-				FROM locstock
-				WHERE locstock.stockid='" . $OrderLine->StockID . "'
-				AND loccode= '" . $_SESSION['Items']->Location . "'";
+						FROM locstock
+						WHERE locstock.stockid='" . $OrderLine->StockID . "'
+						AND loccode= '" . $_SESSION['Items']->Location . "'";
 				$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve current location stock');
 				$Result = DB_query($SQL, $db, $ErrMsg);
 
@@ -933,7 +932,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$QtyOnHandPrior = 0;
 				}
 
-				$SQL = "UPDATE locstock	SET quantity = locstock.quantity - " . $OrderLine->QtyDispatched . "
+				$SQL = "UPDATE locstock	
+						SET quantity = locstock.quantity - " . $OrderLine->QtyDispatched . "
 						WHERE locstock.stockid = '" . $OrderLine->StockID . "'
 						AND loccode = '" . $_SESSION['Items']->Location . "'";
 	
@@ -949,10 +949,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$SQL = "SELECT bom.component,
 								bom.quantity,
 								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
-							FROM bom,
-								stockmaster
-							WHERE bom.component=stockmaster.stockid
-							AND bom.parent='" . $OrderLine->StockID . "'
+							FROM bom INNER JOIN stockmaster
+							ON bom.component=stockmaster.stockid
+							WHERE bom.parent='" . $OrderLine->StockID . "'
 							AND bom.effectiveto >= '" . Date('Y-m-d') . "'
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 		
@@ -1031,7 +1030,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			} /* end of its an assembly */
 
 			// Insert stock movements - with unit cost
-			$LocalCurrencyPrice = ($OrderLine->Price / $_SESSION['CurrencyRate']);
+			$LocalCurrencyPrice = round(($OrderLine->Price / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']);
 
 			if (empty($OrderLine->StandardCost)) {
 				$OrderLine->StandardCost=0;
@@ -1205,10 +1204,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			if ($myrow[0]>0){  /*Update the existing record that already exists */
 
-				$SQL = "UPDATE salesanalysis SET amt=amt+" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
-												cost=cost+" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
+				$SQL = "UPDATE salesanalysis SET amt=amt+" . round(($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . ",
+												cost=cost+" . round(($OrderLine->StandardCost * $OrderLine->QtyDispatched),$_SESSION['CompanyRecord']['decimalplaces']) . ",
 												qty=qty +" . $OrderLine->QtyDispatched . ",
-												disc=disc+" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "
+												disc=disc+" . round(($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "
 								WHERE salesanalysis.area='" . $myrow[5] . "'
 								AND salesanalysis.salesperson='" . $myrow[8] . "'
 								AND typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "'
@@ -1236,12 +1235,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												stkcategory )
 								SELECT '" . $_SESSION['Items']->DefaultSalesType . "',
 										'" . $PeriodNo . "',
-										'" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "',
-										'" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "',
+										'" . round(($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "',
+										'" . round(($OrderLine->StandardCost * $OrderLine->QtyDispatched),$_SESSION['CompanyRecord']['decimalplaces']) . "',
 										'" . $_SESSION['Items']->DebtorNo . "',
 										'" . $_SESSION['Items']->Branch . "',
 										'" . ($OrderLine->QtyDispatched) . "',
-										'" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "',
+										'" . round(($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "',
 										'" . $OrderLine->StockID . "',
 										custbranch.area,
 										1,
@@ -1278,7 +1277,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $PeriodNo . "',
 										'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db) . "',
 										'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-										'" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "')";
+										'" . round(($OrderLine->StandardCost * $OrderLine->QtyDispatched),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1301,7 +1300,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $PeriodNo . "',
 										'" . $StockGLCode['stockact'] . "',
 										'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-										'" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . "')";
+										'" . round((-$OrderLine->StandardCost * $OrderLine->QtyDispatched),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the cost of sales GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1328,7 +1327,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $PeriodNo . "',
 											'" . $SalesGLAccounts['salesglcode'] . "',
 											'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
-											'" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . "')";
+											'" . round((-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
 					$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
@@ -1350,7 +1349,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 													'" . $PeriodNo . "',
 													'" . $SalesGLAccounts['discountglcode'] . "',
 													'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-													'" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . "')";
+													'" . round(($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1462,7 +1461,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $PeriodNo . "',
 										'" . $DisposalRow['disposalact'] . "',
 										'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('disposal') . "',
-										'" . (-$OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "')";
+										'" . round((-$OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 	
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal proceeds GL posting could not be inserted because');
 				$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
@@ -1490,14 +1489,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												'" . $PeriodNo . "',
 												'" . Date('Y-m-d') . "',
 												'disposal',
-												'" . ($OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "',
+												'" . round(($OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "',
 												'" . $DefaultDispatchDate . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The fixed asset transaction could not be inserted because');
 				$DbgMsg = '<br />' ._('The following SQL to insert the fixed asset transaction record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				$SQL = "UPDATE fixedassets 
-						SET disposalproceeds ='" . ($OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "',
+						SET disposalproceeds ='" . round(($OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "',
 							disposaldate ='" . $DefaultDispatchDate . "'
 						WHERE assetid ='" . $AssetNumber . "'";
 
@@ -1528,7 +1527,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 										'" . $_SESSION['Items']->DebtorNo . "',
-										'" . (($_SESSION['Items']->total + $_SESSION['Items']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . "')";
+										'" . round((($_SESSION['Items']->total + $_SESSION['Items']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
@@ -1553,7 +1552,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['freightact'] . "',
 					'" . $_SESSION['Items']->DebtorNo . "',
-					'" . (-$_SESSION['Items']->FreightCost/$_SESSION['CurrencyRate']) . "')";
+					'" . round((-$_SESSION['Items']->FreightCost/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1575,13 +1574,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $PeriodNo . "',
 											'" . $TaxGLCodes[$TaxAuthID] . "',
 											'" . $_SESSION['Items']->DebtorNo . "',
-											'" . (-$TaxAmount/$_SESSION['CurrencyRate']) . "')";
+											'" . round((-$TaxAmount/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 					
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 		}
+		EnsureGLEntriesBalance(10,$InvoiceNo,$db);
 	} /*end of if Sales and GL integrated */
 
 	DB_Txn_Commit($db);
@@ -1617,36 +1617,39 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		$_POST['InvoiceText']='';
 	}
 	$j++;
-	echo '<table class=selection><tr>
-		<td>' ._('Date On Invoice'). ':</td>
-	<td><input tabindex='.$j.' type="text" maxlength="10" size="15"
-	name="DispatchDate" value="'.$DefaultDispatchDate.'" id="datepicker"
-	alt="'.$_SESSION['DefaultDateFormat'].'" class="date"></td>
-	</tr>';
+	echo '<table class="selection">
+		<tr>
+			<td>' ._('Date On Invoice'). ':</td>
+			<td><input tabindex='.$j.' type="text" maxlength="10" size="15" name="DispatchDate" value="'.$DefaultDispatchDate.'" id="datepicker" alt="'.$_SESSION['DefaultDateFormat'].'" class="date"></td>
+		</tr>';
 	$j++;
 	echo '<tr>
-		<td>' . _('Consignment Note Ref'). ':</td>
-		<td><input tabindex='.$j.' type="text" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '"></td>
-	</tr>';
+			<td>' . _('Consignment Note Ref'). ':</td>
+			<td><input tabindex='.$j.' type="text" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '"></td>
+		</tr>';
 	$j++;
 	echo '<tr>
-		<td>'._('Action For Balance'). ':</td>
-		<td><select tabindex='.$j.' name="BOPolicy"><option selected value="BO">'._('Automatically put balance on back order').'</option><option value="CAN">'._('Cancel any quantities not delivered').'</option></select></td>
-	</tr>';
+			<td>'._('Action For Balance'). ':</td>
+			<td><select tabindex='.$j.' name="BOPolicy"><option selected value="BO">'._('Automatically put balance on back order').'</option><option value="CAN">'._('Cancel any quantities not delivered').'</option></select></td>
+		</tr>';
 	$j++;
 	echo '<tr>
-		<td>' ._('Invoice Text'). ':</td>
-		<td><textarea tabindex="'.$j.'" name="InvoiceText" cols="31" rows="5">' . reverse_escape($_POST['InvoiceText']) . '</textarea></td>
-	</tr>';
-
+			<td>' ._('Invoice Text'). ':</td>
+			<td><textarea tabindex="'.$j.'" name="InvoiceText" cols="31" rows="5">' . reverse_escape($_POST['InvoiceText']) . '</textarea></td>
+		</tr>';
+	
 	$j++;
 	echo '</table>
-	<br /><div class="centre">
-	<input type=submit tabindex='.$j.' name="Update" value=' . _('Update'). '><br />';
+		<br />
+		<div class="centre">
+			<input type="submit" tabindex="'.$j.'" name="Update" value="' . _('Update'). '" />
+			<br />';
 
 	$j++;
-	echo '<br /><input type=submit tabindex='.$j.' name="ProcessInvoice" value="'._('Process Invoice').'"</div>';
-	echo '<input type=hidden name="ShipVia" value="' . $_SESSION['Items']->ShipVia . '">';
+	echo '<br />
+			<input type="submit" tabindex="'.$j.'" name="ProcessInvoice" value="'._('Process Invoice').'" />
+		</div>
+		<input type="hidden" name="ShipVia" value="' . $_SESSION['Items']->ShipVia . '" />';
 }
 
 echo '</form>';
