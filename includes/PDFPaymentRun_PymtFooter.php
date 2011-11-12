@@ -10,14 +10,14 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,
 $TotalPayments += $AccumBalance;
 $TotalAccumDiffOnExch += $AccumDiffOnExch;
 
-$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,locale_number_format($AccumBalance,2), 'right');
-$LeftOvers = $pdf->addTextWrap(405,$YPos,60,$FontSize,locale_number_format($AccumDiffOnExch,2), 'right');
+$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,locale_number_format($AccumBalance,$CurrDecimalPlaces), 'right');
+$LeftOvers = $pdf->addTextWrap(405,$YPos,60,$FontSize,locale_number_format($AccumDiffOnExch,$CurrDecimalPlaces), 'right');
 
 
 if (isset($_POST['PrintPDFAndProcess'])){
 
-	if (is_numeric($_POST['Ref'])) {
-		$PaytReference = $_POST['Ref'] + $RefCounter;
+	if (is_numeric(filter_number_format($_POST['Ref']))) {
+		$PaytReference = filter_number_format($_POST['Ref']) + $RefCounter;
 	} else {
 		$PaytReference = $_POST['Ref'] . ($RefCounter + 1);
 	}
@@ -36,8 +36,8 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					rate,
 					ovamount,
 					diffonexch,
-					alloc) ";
-	$SQL = $SQL .  "VALUES (22,
+					alloc) 
+			VALUES (22,
 				'" . $SuppPaymentNo . "',
 				'" . $PaytReference . "',
 				'" . $SupplierID . "',
@@ -45,18 +45,20 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 				'" . date('Y-m-d H-i-s') . "',
 				1,
-				'" . $_POST['ExRate'] . "',
+				'" . filter_number_format($_POST['ExRate']) . "',
 				'" . -$AccumBalance . "',
 				'" . -$AccumDiffOnExch . "',
 				'" . -$AccumBalance . "')";
+				
 	$ProcessResult = DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db) !=0) {
 		$title = _('Payment Processing - Problem Report');
 		include('header.inc');
 		prnMsg(_('None of the payments will be processed because the payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
-		echo "<BR><A HREF='$rootpath/index.php'>" . _("Back to the menu") . "</A>";
+		echo '<br>
+				<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
-			prnMsg(_("The SQL that failed was") . ' ' . $SQL,'error');
+			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
 		$ProcessResult = DB_Txn_Rollback($db);
 		include('footer.inc');
@@ -84,7 +86,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
-			echo '<BR><A HREF="' . $rootpath . '/index.php">' . _('Back to the menu') . '</A>';
+			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . $SQL,'error');
 			}
@@ -104,7 +106,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					amount) ";
    	$SQL = $SQL .  "VALUES ( " . $_POST['BankAccount'] . ",
 				'" . $PaytReference . " " . $SupplierID . "',
-				" . $_POST['ExRate'] . ",
+				" . filter_number_format($_POST['ExRate']) . ",
 				'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 				'" . $_POST['PaytType'] . "',
 				" .  -$AccumBalance . ")";
@@ -113,7 +115,8 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		$title = _('Payment Processing - Problem Report');
 		include('header.inc');
 		prnMsg(_('None of the payments will be processed because the bank account payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
-		echo "<BR><A HREF='$rootpath/index.php'>" . _("Back to the menu") . "</A>";
+		echo '<br />
+				<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
@@ -142,16 +145,17 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . $PeriodNo . "',
 					'" . $_POST['BankAccount'] . "',
 					'" . $SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
-					'" . (-$AccumBalance/ $_POST['ExRate']) . "')";
+					'" . (-$AccumBalance/ filter_number_format($_POST['ExRate'])) . "')";
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
-			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
+			echo '<br />
+					<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				prnMsg(_('The SQL that failed was') . ':<BR>' . $SQL, 'error');
+				prnMsg(_('The SQL that failed was') . ':<br />' . $SQL, 'error');
 			}
 			$ProcessResult = DB_Txn_Rollback($db);
 			include('footer.inc');
@@ -173,19 +177,18 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
 					'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
-					'" . ($AccumBalance/ $_POST['ExRate']  + $AccumDiffOnExch) . "')";
+					'" . ($AccumBalance/ filter_number_format($_POST['ExRate'])  + $AccumDiffOnExch) . "')";
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report');
 			include('header.inc');
-			echo '<BR>' . _('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db);
-			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
+			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
+			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . ':<BR>' . $SQL,'error');
 			}
 			$ProcessResult = DB_Txn_Rollback($db);
-
 			include('footer.inc');
 			exit;
 		}
@@ -193,12 +196,12 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		/*Do the GL trans for the exch diff */
 		if ($AccumDiffOnExch != 0){
 			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount )
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount )
 						VALUES (22,
 							'" . $SuppPaymentNo . "',
 							'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
@@ -212,7 +215,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				$title = _('Payment Processing - Problem Report');
 				include('header.inc');
 				prnMsg(_('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . _('could not be inserted because') .' - ' . DB_error_msg($db),'error');
-				echo "<br /><a href='$rootpath/index.php'>" . _('Back to the menu') . '</a>';
+				echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 				if ($debug==1){
 					prnMsg(_('The SQL that failed was: ') . '<br />' . $SQL,'error');
 				}
@@ -221,6 +224,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				exit;
 			}
 		}
+		EnsureGLEntriesBalance(22,$SuppPaymentNo,$db);
 	} /*end if GL linked to creditors */
 
 

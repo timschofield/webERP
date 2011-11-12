@@ -38,7 +38,7 @@ if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO'.
 			AND !isset($_POST['Update'])) {
 /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
 
-	$_GET['ModifyOrderNumber'] = (int)$_GET['PONumber'];
+	$_GET['ModifyOrderNumber'] = intval($_GET['PONumber']);
 	include('includes/PO_ReadInOrder.inc');
 } elseif (isset($_POST['Update']) 
 			OR isset($_POST['ProcessGoodsReceived'])) {
@@ -47,7 +47,7 @@ if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO'.
  set from the post to the quantity to be received */
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $Line) {
-		$RecvQty = filter_number_format($_POST['RecvQty_' . $Line->LineNo]);
+		$RecvQty = round(filter_number_format($_POST['RecvQty_' . $Line->LineNo]),$Line->DecimalPlaces);
 		if (!is_numeric($RecvQty)){
 			$RecvQty = 0;
 		}
@@ -612,7 +612,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											'" . $_POST['DefaultReceivedDate'] . "',
 											'" . $PeriodNo . "',
 											'" . Date('Y-m-d') . "',
-											'cost',
+											'" . _('cost') . "',
 											'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
@@ -662,7 +662,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $OrderLine->GLCode . "',
 										'PO: " . $_SESSION['PO'.$identifier]->OrderNo . " " . $_SESSION['PO'.$identifier]->SupplierID . " - " . $OrderLine->StockID
 												. " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " .
-													locale_number_format($CurrentStandardCost,2) . "',
+													locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . "',
 										'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "'
 										)";
 
@@ -685,7 +685,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $_POST['DefaultReceivedDate'] . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['grnact'] . "',
-										'" . _('PO'.$identifier) . ': ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,2) . "',
+										'" . _('PO'.$identifier) . ': ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']) . "',
 										'" . -$UnitCost * $OrderLine->ReceiveQty . "'
 										)";
 
@@ -705,7 +705,10 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 				WHERE orderno='" . $_SESSION['PO'.$identifier]->OrderNo . "'";
 		$result=DB_query($sql,$db);
 	}
-
+	
+	if ($_SESSION['PO'.$identifier]->GLLink==1) {
+		EnsureGLEntriesBalance(25, $GRN,$db);
+	}
 
 	$Result = DB_Txn_Commit($db);
 	$PONo = $_SESSION['PO'.$identifier]->OrderNo;
@@ -714,7 +717,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 	unset($_POST['ProcessGoodsReceived']);
 
 	echo '<br />
-		<div class=centre>
+		<div class="centre">
 			'. prnMsg(_('GRN number'). ' '. $GRN .' '. _('has been processed'),'success') . '
 			<br />
 			<br />

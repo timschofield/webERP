@@ -1553,7 +1553,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
 				}
 
-     				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement record to write the stock off could not be inserted because');
+     			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement record to write the stock off could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement to write off the stock was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
@@ -1823,9 +1823,9 @@ then debit the expense account the stock is to written off to */
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				    }
 
-			   } /* end of if GL and stock integrated and standard cost !=0 */
+				} /* end of if GL and stock integrated and standard cost !=0 */
 
-			   if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $CreditLine->Price !=0){
+				if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $CreditLine->Price !=0){
 
 //Post sales transaction to GL credit sales
 				    $SalesGLAccounts = GetSalesGLAccount($Area,
@@ -1849,49 +1849,49 @@ then debit the expense account the stock is to written off to */
 											'" . (($CreditLine->Price * $CreditLine->Quantity)/$_SESSION['CurrencyRate']) . "'
 											)";
 					
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-
-				if ($CreditLine->DiscountPercent !=0){
-
-					$SQL = "INSERT INTO gltrans (type,
-												typeno,
-												trandate,
-												periodno,
-												account,
-												narrative,
-												amount)
-								VALUES (11,
-									'" . $CreditNo . "',
-									'" . $SQLCreditDate . "',
-									'" . $PeriodNo . "',
-									'" . $SalesGLAccounts['discountglcode'] . "',
-									'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " @ " . ($CreditLine->DiscountPercent * 100) . "%',
-									'" . -(($CreditLine->Price * $CreditLine->Quantity * $CreditLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "'
-									)";
-		
-
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note discount GL posting could not be inserted because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-				}/* end of if discount not equal to 0 */
-			   } /*end of if sales integrated with debtors */
+	
+					if ($CreditLine->DiscountPercent !=0){
+	
+						$SQL = "INSERT INTO gltrans (type,
+													typeno,
+													trandate,
+													periodno,
+													account,
+													narrative,
+													amount)
+									VALUES (11,
+										'" . $CreditNo . "',
+										'" . $SQLCreditDate . "',
+										'" . $PeriodNo . "',
+										'" . $SalesGLAccounts['discountglcode'] . "',
+										'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " @ " . ($CreditLine->DiscountPercent * 100) . "%',
+										'" . -(($CreditLine->Price * $CreditLine->Quantity * $CreditLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "'
+										)";
+			
+	
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note discount GL posting could not be inserted because');
+						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+					}/* end of if discount not equal to 0 */
+				} /*end of if sales integrated with debtors */
 		  } /*Quantity credited is more than 0 */
-	 } /*end of CreditLine loop */
+	} /*end of CreditLine loop */
 
 
-	 if ($_SESSION['CompanyRecord']['gllink_debtors']==1){
+	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){
 
 /*Post credit note transaction to GL credit debtors, debit freight re-charged and debit sales */
-		  if (($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost + $TaxTotal) !=0) {
-				$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
+		if (($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost + $TaxTotal) !=0) {
+			$SQL = "INSERT INTO gltrans (type,
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
 							VALUES (11,
 								'" . $CreditNo . "',
 								'" . $SQLCreditDate . "',
@@ -1903,8 +1903,8 @@ then debit the expense account the stock is to written off to */
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting for the credit note could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-		  }
-		  if ($_SESSION['CreditItems'.$identifier]->FreightCost !=0) {
+		}
+		if ($_SESSION['CreditItems'.$identifier]->FreightCost !=0) {
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -1946,7 +1946,10 @@ then debit the expense account the stock is to written off to */
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 		}
-	 } /*end of if Sales and GL integrated */
+		
+		EnsureGLEntriesBalance(11,$CreditNo,$db);
+		
+	} /*end of if Sales and GL integrated */
 	
 	DB_Txn_Commit($db);
 	

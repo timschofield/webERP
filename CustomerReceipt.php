@@ -534,6 +534,7 @@ if (isset($_POST['CommitBatch'])){
 			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		} //end if there is some discount
+		EnsureGLEntriesBalance(12,$_SESSION['ReceiptBatch']->BatchNo,$db);
 	} //end if there is GL work to be done - ie config is to link to GL
 
 

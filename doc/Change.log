@@ -1,9 +1,13 @@
 webERP Change Log
 
+12/11/11 Phil: Purchase order Order_Value in includes/DefinePOClass.php now only looks at the value of lines left on the order after deleted lines
+12/11/11 Phil: Removed old Numbers to words class code - this code was not in keeping with the rest of the system and not PHP 5 compatible anyway. Replaced with a much simpler function. This code is only used for pre-printed cheques - so it is in that script only. The new function may not effective for other languages but will be easily adapted as needed. The PrintCheque.php script needs to be modified specifically for the business stationery.
+10/11/11 Phil: added a function in includes/SQL_CommonFunctions.inc EnsureGLTransBalance that looks at the gltrans entries for a given transaction type and type number and if the total is not zero and less than 0.05 it fudges the largest gltrans record to make the gltrans balance in total - added to ConfirmDispatch_Invoice.php Credit_Invoice.php SelectCreditItems.php CounterSales.php Payments.php CustomerReceipt.php
 10/11/11 Phil: includes/DateFunctions.inc fixed GetPeriod function to create new period when just one month ahead of last period - worried about this can't see how it could have been like this so long without a bug report?
 10/11/11 Phil: includes/LanguageSetup.php now sets LC_NUMERIC locale category after LC_ALL to ensure SQL compliant calculations
 8/11/11 Phil: includes/GetConfig.php no longer casts the VersionNumber to a double - issue highlighted by Tim
 8/11/11 Felix Lim: includes/InputSerialItems.php and InputSerialItemsKeyed.php now sends $identifier
+8/11/11 Phil: CustomerReceipt.php now shows entries made with decimal places of the currency being entered
 8/11/11 Phil: fixed bugs reported by Ron Wong and Don SelectSupplier.php sql error missed "s" off suppliers and CustomerReceipt.php - had not populated new class variable (property) of CurrDecimalPlaces
 
 6/11/11 Release 4.06RC1

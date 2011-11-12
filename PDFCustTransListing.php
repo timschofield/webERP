@@ -130,7 +130,7 @@ while ($myrow=DB_fetch_array($result)){
 
 $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format($TotalAmount,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,_('Total') . '  ' . _('Transactions') . ' ' . $_SESSION['CompanyRecord']['CurrencyDefault'], 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,_('Total') . '  ' . _('Transactions') . ' ' . $_SESSION['CompanyRecord']['currencydefault'], 'left');
 
 $ReportFileName = $_SESSION['DatabaseName'] . '_CustTransListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);

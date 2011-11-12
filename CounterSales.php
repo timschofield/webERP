@@ -1432,37 +1432,36 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$OrderLine->StandardCost=0;
 			}
 			if ($MBFlag=='B' OR $MBFlag=='M'){
-				$SQL = "INSERT INTO stockmoves (
-														stockid,
-														type,
-														transno,
-														loccode,
-														trandate,
-														debtorno,
-														branchcode,
-														price,
-														prd,
-														reference,
-														qty,
-														discountpercent,
-														standardcost,
-														newqoh,
-														narrative )
-								VALUES ('" . $OrderLine->StockID . "',
-												10,
-												'" . $InvoiceNo . "',
-												'" . $_SESSION['Items'.$identifier]->Location . "',
-												'" . $DefaultDispatchDate . "',
-												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-												'" . $_SESSION['Items'.$identifier]->Branch . "',
-												'" . $LocalCurrencyPrice . "',
-												'" . $PeriodNo . "',
-												'" . $OrderNo . "',
-												'" . -$OrderLine->Quantity . "',
-												'" . $OrderLine->DiscountPercent . "',
-												'" . $OrderLine->StandardCost . "',
-												'" . ($QtyOnHandPrior - $OrderLine->Quantity) . "',
-												'" . DB_escape_string($OrderLine->Narrative) . "' )";
+				$SQL = "INSERT INTO stockmoves (stockid,
+												type,
+												transno,
+												loccode,
+												trandate,
+												debtorno,
+												branchcode,
+												price,
+												prd,
+												reference,
+												qty,
+												discountpercent,
+												standardcost,
+												newqoh,
+												narrative )
+						VALUES ('" . $OrderLine->StockID . "',
+								10,
+								'" . $InvoiceNo . "',
+								'" . $_SESSION['Items'.$identifier]->Location . "',
+								'" . $DefaultDispatchDate . "',
+								'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+								'" . $_SESSION['Items'.$identifier]->Branch . "',
+								'" . $LocalCurrencyPrice . "',
+								'" . $PeriodNo . "',
+								'" . $OrderNo . "',
+								'" . -$OrderLine->Quantity . "',
+								'" . $OrderLine->DiscountPercent . "',
+								'" . $OrderLine->StandardCost . "',
+								'" . ($QtyOnHandPrior - $OrderLine->Quantity) . "',
+								'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			} else {
 			// its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				if (empty($OrderLine->StandardCost)) {
@@ -1688,13 +1687,13 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		/*now the stock entry*/
 				$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
 
-				$SQL = "INSERT INTO gltrans (	type,
-												typeno,
-												trandate,
-												periodno,
-												account,
-												narrative,
-												amount )
+				$SQL = "INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount )
 										VALUES ( 10,
 											'" . $InvoiceNo . "',
 											'" . $DefaultDispatchDate . "',
@@ -1713,14 +1712,13 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		//Post sales transaction to GL credit sales
 				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
 
-				$SQL = "INSERT INTO gltrans (	type,
-												typeno,
-												trandate,
-												periodno,
-												account,
-												narrative,
-												amount
-											)
+				$SQL = "INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount )
 										VALUES ( 10,
 											'" . $InvoiceNo . "',
 											'" . $DefaultDispatchDate . "',
@@ -1735,14 +1733,13 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 
 				if ($OrderLine->DiscountPercent !=0){
 
-					$SQL = "INSERT INTO gltrans (	type,
-													typeno,
-													trandate,
-													periodno,
-													account,
-													narrative,
-													amount
-												)
+					$SQL = "INSERT INTO gltrans (type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount )
 												VALUES ( 10,
 													'" . $InvoiceNo . "',
 													'" . $DefaultDispatchDate . "',
@@ -1805,6 +1802,9 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				}
 			}
+		
+			EnsureGLEntriesBalance(10,$InvoiceNo,$db);
+
 			/*Also if GL is linked to debtors need to process the debit to bank and credit to debtors for the payment */
 			/*Need to figure out the cross rate between customer currency and bank account currency */
 
@@ -1847,6 +1847,9 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}//amount paid we not zero
+			
+			EnsureGLEntriesBalance(12,$ReceiptNumber,$db);
+			
 		} /*end of if Sales and GL integrated */
 		if ($_POST['AmountPaid']!=0){
 			if (!isset($ReceiptNumber)){

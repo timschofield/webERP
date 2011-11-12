@@ -41,10 +41,23 @@ Class Payment {
 
 	}
 
-	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName, $tag, $cheque){
+	function Add_To_GLAnalysis($Amount, 
+								$Narrative, 
+								$GLCode, 
+								$GLActName, 
+								$Tag, 
+								$Cheque){
+									
 		if (isset($GLCode) AND $Amount!=0){
-			$this->GLItems[$this->GLItemCounter] = new PaymentGLAnalysis($Amount, $Narrative, $this->GLItemCounter, $GLCode, $GLActName, $tag, $cheque);
+			$this->GLItems[$this->GLItemCounter] = new PaymentGLAnalysis($Amount, 
+																		$Narrative, 
+																		$this->GLItemCounter, 
+																		$GLCode, 
+																		$GLActName, 
+																		$Tag, 
+																		$Cheque);
 			$this->GLItemCounter++;
+			$this->Amount += $Amount;
 			Return 1;
 		}
 		Return 0;
@@ -63,10 +76,16 @@ Class PaymentGLAnalysis {
 	var $GLCode;
 	var $GLActName;
 	var $ID;
-	var $tag;
-	var $cheque;
+	var $Tag;
+	var $Cheque;
 
-	function PaymentGLAnalysis ($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $cheque){
+	function PaymentGLAnalysis ($Amt, 
+								$Narr, 
+								$id, 
+								$GLCode, 
+								$GLActName, 
+								$Tag, 
+								$Cheque){
 
 /* Constructor function to add a new PaymentGLAnalysis object with passed params */
 		$this->Amount =$Amt;
@@ -74,8 +93,8 @@ Class PaymentGLAnalysis {
 		$this->GLCode = $GLCode;
 		$this->GLActName = $GLActName;
 		$this->ID = $id;
-		$this->tag = $tag;
-		$this->cheque = $cheque;
+		$this->Tag = $Tag;
+		$this->Cheque = $Cheque;
 	}
 }
 

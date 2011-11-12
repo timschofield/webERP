@@ -205,10 +205,11 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	} /* end while there are suppliers to retrieve transactions for */
 
 	if ($SupplierID!=''){
-
+		/*All the payment processing is in the below file */
 		include('includes/PDFPaymentRun_PymtFooter.php');
 
-		$ProcessResult = DB_Txn_Commit($db);
+		$ProcessResult = DB_Txn_Commit($db); 
+		
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
@@ -228,7 +229,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	}
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d') . '.pdf');
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
 	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */

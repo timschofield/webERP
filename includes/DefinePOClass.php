@@ -146,7 +146,7 @@ Class PurchOrder {
 		/* Checks if there have been deliveries or invoiced entered against any of the line items */
 		if (count($this->LineItems)>0){
 		   foreach ($this->LineItems as $OrderedItems) {
-			if ($OrderedItems->QtyReceived !=0 OR $OrderedItems->QtyInvoiced !=0){
+			if ($OrderedItems->QtyReceived !=0 OR $OrderedItems->QtyInv !=0){
 				return 1;
 			}
 		   }
@@ -167,7 +167,9 @@ Class PurchOrder {
 	function Order_Value() {
 		$TotalValue=0;
 		foreach ($this->LineItems as $OrderedItems) {
-			$TotalValue += ($OrderedItems->Price)*($OrderedItems->Quantity);
+			if ($OrderedItems->Deleted = False){
+				$TotalValue += ($OrderedItems->Price)*($OrderedItems->Quantity);
+			}
 		}
 		return $TotalValue;
 	}

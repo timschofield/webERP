@@ -238,7 +238,6 @@ function wikiLink($type, $id) {
 }//wikiLink
 
 
-
 //  Lindsay debug stuff
 function LogBackTrace( $dest = 0 ) {
     error_log( "***BEGIN STACK BACKTRACE***", $dest );
@@ -334,4 +333,6 @@ function filter_number_format($Number) {
 	global $ThousandsSeparator;
 	return str_replace($DecimalPoint,'.',str_replace($ThousandsSeparator,'',trim($Number)));
 }
+
+
 ?>

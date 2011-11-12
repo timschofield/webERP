@@ -20,11 +20,11 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 	exit;
 
 } elseif (isset($_GET['InvoiceNumber'])) {
-	$_GET['InvoiceNumber']=(int)$_GET['InvoiceNumber'];
+	$_GET['InvoiceNumber']=intval($_GET['InvoiceNumber']);
 	unset($_SESSION['CreditItems']->LineItems);
 	unset($_SESSION['CreditItems']);
 
-	$_SESSION['ProcessingCredit'] = $_GET['InvoiceNumber'];
+	$_SESSION['ProcessingCredit'] = intval($_GET['InvoiceNumber']);
 	$_SESSION['CreditItems'] = new cart;
 
 /*read in all the guff from the selected invoice into the Items cart	*/
@@ -61,7 +61,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 							AND stockmoves.type=debtortrans.type
 							INNER JOIN locations ON
 							stockmoves.loccode = locations.loccode
-							WHERE debtortrans.transno = '" . $_GET['InvoiceNumber'] . "'
+							WHERE debtortrans.transno = '" . intval($_GET['InvoiceNumber']) . "'
 							AND stockmoves.type=10";
 
 	$ErrMsg = _('A credit cannot be produced for the selected invoice') . '. ' . _('The invoice details cannot be retrieved because');
@@ -1414,6 +1414,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 		}
+
+		EnsureGLEntriesBalance(11,$CreditNo,$db);
+
 	} /*end of if Sales and GL integrated */
 
 	$Result = DB_Txn_Commit($db);
