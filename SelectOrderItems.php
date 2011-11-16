@@ -294,7 +294,9 @@ if (isset($_POST['ChangeCustomer']) AND $_POST['ChangeCustomer']!=''){
 }
 
 //Customer logins are not allowed to select other customers henc in_array(2,$_SESSION['AllowedPageSecurityTokens'])
-if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
+if (isset($_POST['SearchCust']) 
+	AND $_SESSION['RequireCustomerSelection']==1 
+	AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
 		prnMsg(_('At least one Customer Branch Name keyword OR an extract of a Customer Branch Code or Branch Phone Number must be entered for the search'), 'warn');
@@ -339,7 +341,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 
 if (isset($_POST['JustSelectedACustomer'])){
 	/*Need to figure out the number of the form variable that the user clicked on */
-	for ($i=1;$i<count($_POST);$i++){ //loop through the returned customers
+	for ($i=0;$i<count($_POST);$i++){ //loop through the returned customers
 		if(isset($_POST['SubmitCustomerSelection'.$i])){
 			break;
 		}
@@ -547,20 +549,20 @@ if (isset($SelectedCustomer)) {
 		$DbgMsg = _('SQL used to retrieve the branch details was');
 		$result =DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
-		$myrow = DB_fetch_row($result);
-		$_SESSION['Items'.$identifier]->DeliverTo = $myrow[0];
-		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow[1];
-		$_SESSION['Items'.$identifier]->DelAdd2 = $myrow[2];
-		$_SESSION['Items'.$identifier]->DelAdd3 = $myrow[3];
-		$_SESSION['Items'.$identifier]->DelAdd4 = $myrow[4];
-		$_SESSION['Items'.$identifier]->DelAdd5 = $myrow[5];
-		$_SESSION['Items'.$identifier]->DelAdd6 = $myrow[6];
-		$_SESSION['Items'.$identifier]->PhoneNo = $myrow[7];
-		$_SESSION['Items'.$identifier]->Email = $myrow[8];
-		$_SESSION['Items'.$identifier]->Location = $myrow[9];
-		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow[10];
-		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow[11];
-		$_SESSION['Items'.$identifier]->LocationName = $myrow[12];
+		$myrow = DB_fetch_array($result);
+		$_SESSION['Items'.$identifier]->DeliverTo = $myrow['brname'];
+		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
+		$_SESSION['Items'.$identifier]->DelAdd2 = $myrow['braddress2'];
+		$_SESSION['Items'.$identifier]->DelAdd3 = $myrow['braddress3'];
+		$_SESSION['Items'.$identifier]->DelAdd4 = $myrow['braddress4'];
+		$_SESSION['Items'.$identifier]->DelAdd5 = $myrow['braddress5'];
+		$_SESSION['Items'.$identifier]->DelAdd6 = $myrow['braddress6'];
+		$_SESSION['Items'.$identifier]->PhoneNo = $myrow['phoneno'];
+		$_SESSION['Items'.$identifier]->Email = $myrow['email'];
+		$_SESSION['Items'.$identifier]->Location = $myrow['defaultlocation'];
+		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
+		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
+		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
 	} else {
 		prnMsg(_('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');
 		include('includes/footer.inc');
@@ -581,21 +583,21 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<table cellpadding="3" colspan="4" class="selection">
 			<tr>
 			<td><h5>' . _('Part of the Customer Branch Name') . ':</h5></td>
-			<td><input tabindex=1 type="Text" name="CustKeywords" size=20	maxlength=25></td>
+			<td><input tabindex="1" type="text" name="CustKeywords" size="20" maxlength="25" /></td>
 			<td><h2><b>' . _('OR') . '</b></h2></td>
 			<td><h5>' . _('Part of the Customer Branch Code') . ':</h5></td>
-			<td><input tabindex=2 type="text" name="CustCode" size=15	maxlength=18></td>
+			<td><input tabindex=2 type="text" name="CustCode" size="15" maxlength="18" /></td>
 			<td><h2><b>' . _('OR') . '</b></h2></td>
 			<td><h5>' . _('Part of the Branch Phone Number') . ':</h5></td>
-			<td><input tabindex=3 type="text" name="CustPhone" size=15 maxlength=18></td>
+			<td><input tabindex=3 type="text" name="CustPhone" size="15" maxlength="18" /></td>
 			</tr>
 		</table>
-	<br /><div class="centre"><input tabindex=4 type="submit" name="SearchCust" value="' . _('Search Now') . '" />
-	<input tabindex=5 type="submit" action="reset" value="' .  _('Reset') . '"></div>';
+	<br /><div class="centre"><input tabindex="4" type="submit" name="SearchCust" value="' . _('Search Now') . '" />
+	<input tabindex=5 type="submit" action="reset" value="' .  _('Reset') . '" /></div>';
 
 	if (isset($result_CustSelect)) {
 
-		echo '<table cellpadding=2 colspan=7>';
+		echo '<table class="selection">';
 
 		$TableHeader = '<br /><tr>
 				<th>' . _('Customer') . '</th>
@@ -625,8 +627,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex='.($j+5).' type=submit name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '"></td>
-					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'"><input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" />
+			echo '<td><input tabindex="'.strval($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '" /></td>
+					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
+					<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" />
 					<td>'.$myrow['contactname'].'</td>
 					<td>'.$myrow['phoneno'].'</td>
 					<td>'.$myrow['faxno'].'</td>
@@ -636,7 +639,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 //end of page full new headings if
 		}
 //end of while loop
-		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes">';
+		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 		echo '</table></form>';
 
 	}//end if results to show
@@ -1094,7 +1097,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					prnMsg( _('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . _('The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
 				} elseif ($OrderLine->Quantity !=$Quantity
 							OR $OrderLine->Price != $Price
-							OR ABS($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001
+							OR ABS($OrderLine->DiscountPercent - $DiscountPercentage/100) >0.001
 							OR $OrderLine->Narrative != $Narrative
 							OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
 							OR $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
@@ -1356,17 +1359,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo $RowStarter;
 			if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){ //show the input field only if required
-				echo '<td><input tabindex=1 type="text" name="POLine_' . $OrderLine->LineNumber . '" size=20 maxlength=20 value=' . $OrderLine->POLine . '></td>';
+				echo '<td><input tabindex="1" type="text" name="POLine_' . $OrderLine->LineNumber . '" size="20" maxlength="20" value="' . $OrderLine->POLine . '" /></td>';
 			} else {
-				echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="">';
+				echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="" />';
 			}
 
 			echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td>' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" tabindex=2 type=tect name="Quantity_' . $OrderLine->LineNumber . '" size=6 maxlength=6 value=' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '>';
+			echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" />';
 			if ($QtyRemain != $QtyOrdered){
-				echo '<br />'.locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' of '.locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' invoiced';
+				echo '<br />'.locale_number_format($OrderLine->QtyInv,$OrderLine->DecimalPlaces) .' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces).' ' . _('invoiced');
 			}
 			echo '</td>
 					<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
@@ -1374,12 +1377,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
-				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size=16 maxlength=16 value=' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '></td>
-					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size=5 maxlength=4 value=' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '></td>
-					<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size=3 maxlength=40 value=' . locale_number_format($OrderLine->GPPercent,2) . '></td>';
+				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" /></td>
+					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
+					<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
 			} else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td><td></td>';
-				echo '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '" value=' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '>';
+				echo '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" />';
 			}
 			if ($_SESSION['Items'.$identifier]->Some_Already_Delivered($OrderLine->LineNumber)){
 				$RemTxt = _('Clear Remaining');
@@ -1434,8 +1437,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		echo '<br />
 				<div class="centre">
-				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '">
-				<input type="submit" name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '">
+				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
+				<input type="submit" name="DeliveryDetails" value="' . _('Enter Delivery Details and Confirm Order') . '" />
 				</div>
 				<hr />';
 	} # end of if lines

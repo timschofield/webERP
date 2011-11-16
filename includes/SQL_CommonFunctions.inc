@@ -128,7 +128,7 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 	if (DB_num_rows($GetAccountBalanceResult)==1){
 
 		$myrow = DB_fetch_array($GetAccountBalanceResult);
-		$CreditAvailable = filter_number_format($myrow['creditlimit'] - $myrow['balance']);
+		$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
 	} else {
 		$sql = "SELECT creditlimit
 				FROM debtorsmaster
@@ -180,7 +180,7 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 							'" . $PeriodNo . "',
 							'" . $StockGLCode['adjglact'] . "',
 							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
-							'" . filter_number_format(-$ValueOfChange) . "')";
+							'" . -$ValueOfChange . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -199,7 +199,7 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 							'" . $PeriodNo . "',
 							'" . $StockGLCode['stockact'] . "',
 							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
-							'" . filter_number_format($ValueOfChange) . "')";
+							'" . $ValueOfChange . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -248,7 +248,7 @@ function UpdateCost($db, $Item) {
 }
 
 /* Accepts work order information and iterates through the bom, inserting real components (dissolving phantom assemblies) */
-function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") {
+function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 
 	// remember, 'G' is for ghost (phantom part type)
 
@@ -267,7 +267,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID="") 
 			SELECT '" . $WO . "',
 				'" . $ParentID . "',
 				bom.component,
-				bom.quantity*" . filter_number_format($Qty) . ",
+				bom.quantity*" . $Qty . ",
 				materialcost+labourcost+overheadcost,
 				bom.autoissue
 			FROM bom INNER JOIN stockmaster
