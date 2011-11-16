@@ -95,9 +95,16 @@ $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $Perishable=$myrow['perishable'];
 if ($LineItem->Serialised==1){
-	$tableheader .= '<tr>
-			<th>'. _('Serial No').'</th>
-			</tr>';
+	if ($Perishable==0) {
+		$tableheader .= '<tr>
+				<th>'. _('Serial No'). '</th>
+				</tr>';
+	} else {
+		$tableheader .= '<tr>
+				<th>'. _('Serial No'). '</th>
+				<th>'. _('Expiry Date'). '<th>
+				</tr>';
+	}
 } else if ($LineItem->Serialised==0 AND $Perishable==1){
 	$tableheader = '<tr>
 			<th>'. _('Batch/Roll/Bundle'). ' #</th>

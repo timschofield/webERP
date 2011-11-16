@@ -583,18 +583,8 @@ function GenerateCSVFile($Data, $Prefs) {
 function GeneratePDFFile($Data, $Prefs) {
 	$pdf=new PDF();
 	$pdf->ReportTable($Data);
-	$pdfcode = $pdf->output();
-	$len = mb_strlen($pdfcode);
 	$ReportName = ReplaceNonAllowedCharacters($Prefs['reportname']) .'.pdf';
-
-	header('Content-type: application/pdf');
-	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename="' . $ReportName . '"');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	$pdf->Stream($ReportName);
+	$pdf->OutputD($ReportName);
 	exit(); // needs to be here to properly render the pdf file.
 }
 

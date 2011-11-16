@@ -49,10 +49,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 	echo '<td>' . $Bundle->BundleRef . '</td>';
 
-	if ($LineItem->Serialised==0 and $Perishable==0){
+	if ($LineItem->Serialised==0){
 		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
-	} else if ($LineItem->Serialised==0 and $Perishable==1){
-		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+	}
+	if ($Perishable==1){
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
 	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'&identifier='.$identifier.'">'. _('Delete'). '</a></td>
@@ -129,7 +129,12 @@ for ($i=0;$i < 10;$i++){
 	into the form for entry of quantities manually */
 
 	if ($LineItem->Serialised==1){
-		echo '<input type=hidden name="Qty' . ($StartAddingAt+$i) .'" value=1></td></tr>';
+		if ($Perishable==0) {
+			echo '<input type="hidden" name="Qty' . ($StartAddingAt+$i) .'" value="1" /></tr>';
+		} else {
+			echo '<td><input type="hidden" name="Qty' . ($StartAddingAt+$i) .'" value="1" /><input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11"
+		 value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" /></td></tr>';
+		}
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size=11  maxlength="10" /></td>';
 		echo '<td><input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size=11

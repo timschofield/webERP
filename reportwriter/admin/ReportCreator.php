@@ -1,5 +1,4 @@
 <?php
-/* $Revision: 1.6 $ */
 
 /*
 This script has the responsibility to gather basic information necessary to retrieve data for reports. 

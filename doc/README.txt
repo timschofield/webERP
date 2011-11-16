@@ -4,7 +4,7 @@ webERP README
 
 Version  4.x of webERP
 
-Now fully utf-8 compatible. Now reports can be created in any language using the utf-8 character set, the resultant pdf reports  use Adobe CID fonts and the fonts that come with the Adobe Acrobat reader on client computers. This avoids the problem of large pdf downloads on the creation of reports as the alternative is to bundle the enormous utf-8 fonts with the reports. 
+Now fully utf-8 compatible. Now reports can be created in any language using the utf-8 character set, the resultant pdf reports use Adobe CID fonts and the fonts that come with the Adobe Acrobat reader on client computers. This avoids the problem of large pdf downloads on the creation of reports as the alternative is to bundle the enormous utf-8 fonts with the reports. 
 
 Also, this release comes with an automated database upgrade system, so that database changes in later versions will be applied automatically on upgrade of the scripts.
 
@@ -38,7 +38,7 @@ Feedback, wants and gripes are encouraged in the interests of improving the appl
 
 DEVELOPING
 
-Contributions of code are documents including HOW-TOs with screen-shots etc are encouraged. Contributions in the form of bug reports or other feedback through the mainling lists above are also encouraged.
+Contributions of code are documents including HOW-TOs with screen-shots etc are encouraged. This can be done directly on the wiki at http://www.weberp.org by any registered user of the wiki. Contributions in the form of bug reports or other feedback through the mainling lists above are also encouraged.
 Guidelines for contributing code are in the document at http://www.weberp.org/wikidocs/ContributingtowebERP developers should read this document carefully and follow the guidelines therein. Standards and conventions used in the code are rigorously applied in the interests of consistency and readability. Code submitted that does not conform to these standards will be changed so it does where possible. If the job to make the code conform to webERP standards is too large then the code will not be included.
 
 TRANSLATIONS

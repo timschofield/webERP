@@ -73,6 +73,7 @@ if (isset($_SESSION['DatabaseName'])){
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 
+
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 	
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */

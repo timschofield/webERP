@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF'])
 						THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 					END
 				) AS due,
-				Sum(
+				SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 					THEN
 						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
@@ -57,7 +57,7 @@ if (isset($_POST['PrintPDF'])
 						ELSE 0 END
 					END
 				) AS overdue1,
-				Sum(
+				SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 					THEN
 						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ")
@@ -92,7 +92,7 @@ if (isset($_POST['PrintPDF'])
 					holdreasons.dissallowinvoices,
 					holdreasons.reasondescription
 				HAVING
-					Sum(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) <>0";
+					ABS(SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)) >0.005";
 
 	} elseif ($_POST['All_Or_Overdues']=='OverduesOnly') {
 
@@ -165,7 +165,7 @@ if (isset($_POST['PrintPDF'])
 	      			debtorsmaster.creditlimit,
 	      			holdreasons.dissallowinvoices,
 	      			holdreasons.reasondescription
-			HAVING Sum(
+			HAVING SUM(
 				CASE WHEN (paymentterms.daysbeforedue > 0)
 	      				THEN
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
@@ -176,7 +176,7 @@ if (isset($_POST['PrintPDF'])
 	      					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 	      					ELSE 0 END
 					END
-	      			) > 0";
+	      			) > 0.01";
 
 	} elseif ($_POST['All_Or_Overdues']=='HeldOnly'){
 
@@ -254,13 +254,12 @@ if (isset($_POST['PrintPDF'])
 		debtorsmaster.creditlimit,
 		holdreasons.dissallowinvoices,
 		holdreasons.reasondescription
-		HAVING Sum(
+		HAVING ABS(SUM(
 			debtortrans.ovamount +
 			debtortrans.ovgst +
 			debtortrans.ovfreight +
 			debtortrans.ovdiscount -
-			debtortrans.alloc
-		) <>0";
+			debtortrans.alloc)) >0.005";
 	}
 	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
 

@@ -27,7 +27,8 @@ if (isset($_GET['StockID'])){
 	$result = DB_query("SELECT description, 
 							controlled, 
 							serialised, 
-							decimalplaces 
+							decimalplaces,
+							perishable
 						FROM stockmaster 
 						WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'",$db);
 	$myrow = DB_fetch_array($result);
@@ -213,13 +214,14 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 														loccode,
 														serialno,
 														qualitytext,
-														quantity)
+														quantity,
+														expirationdate)
 											VALUES ('" . $_SESSION['Adjustment']->StockID . "',
 											'" . $_SESSION['Adjustment']->StockLocation . "',
 											'" . $Item->BundleRef . "',
 											'',
-											'" . $Item->BundleQty . "'
-											)";
+											'" . $Item->BundleQty . "',
+											'" . FormatDateForSQL($Item->ExpiryDate) ."')";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg =  _('The following SQL to update the serial stock item record was used');

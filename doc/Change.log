@@ -1,5 +1,11 @@
 webERP Change Log
 
+16/11/11 Phil: Prices_Customer.php sql error had neglected to include currencies table to get the number of decimalplaces to show
+16/11/11 Phil: reportwriter/WriteReport.inc modified to use OutputD function in class.pdf.inc
+15/11/11 Phil: includes/LanguageSetup.php was not including LanguagesArray.php in reportwriter as PathPrefix was not prepended
+14/11/11 Don Grames: AgedDebtors.php now ignores balances with an absolute value of < 0.005
+14/11/11 Dafydd Crosby: Allow serialised perishible items to have expiration dates.
+
 13/11/11 Release 4.06RC2
 
 12/11/11 Phil: Purchase order Order_Value in includes/DefinePOClass.php now only looks at the value of lines left on the order after deleted lines

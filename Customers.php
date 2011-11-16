@@ -501,18 +501,27 @@ if (!isset($DebtorNo)) {
 				<td><input tabindex=10 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size=12 maxlength=10></td></tr>';
 	
 	echo '</table></td>
-			<td><table class="selection">';
-			
-	echo '<tr><td>' . _('Discount Percent') . ':</td>
-		<td><input tabindex=11 type="textbox" class="number" name="Discount" value=0 size=5 maxlength=4></td></tr>';
-	echo '<tr><td>' . _('Discount Code') . ':</td>
-		<td><input tabindex=12 type="text" name="DiscountCode" size=3 maxlength=2></td></tr>';
-	echo '<tr><td>' . _('Payment Discount Percent') . ':</td>
-		<td><input tabindex=13 type="textbox" class ="number" name="PymtDiscount" value=0 size=5 maxlength=4></td></tr>';
-	echo '<tr><td>' . _('Credit Limit') . ':</td>
-		<td><input tabindex=14 type="text" class="number" name="CreditLimit" value=' . $_SESSION['DefaultCreditLimit'] . ' size=16 maxlength=14></td></tr>';
-	echo '<tr><td>' . _('Tax Reference') . ':</td>
-		<td><input tabindex=15 type="text" name="TaxRef" size=22 maxlength=20></td></tr>';
+			<td><table class="selection">
+				<tr>
+					<td>' . _('Discount Percent') . ':</td>
+					<td><input tabindex="11" type="textbox" class="number" name="Discount" value=0 size="5" maxlength="4" /></td>
+				</tr>
+				<tr>
+					<td>' . _('Discount Code') . ':</td>
+					<td><input tabindex="12" type="text" name="DiscountCode" size="3" maxlength="2" /></td>
+				</tr>
+				<tr>
+					<td>' . _('Payment Discount Percent') . ':</td>
+					<td><input tabindex="13" type="textbox" class ="number" name="PymtDiscount" value="0" size="5" maxlength="4" /></td>
+				</tr>
+				<tr>
+					<td>' . _('Credit Limit') . ':</td>
+					<td><input tabindex="14" type="text" class="number" name="CreditLimit" value="' . locale_number_format($_SESSION['DefaultCreditLimit'],0) . '" size="16" maxlength="14" /></td>
+				</tr>
+				<tr>
+					<td>' . _('Tax Reference') . ':</td>
+					<td><input tabindex=15 type="text" name="TaxRef" size="22" maxlength="20" /></td>
+				</tr>';
 
 	$result=DB_query("SELECT terms, termsindicator FROM paymentterms",$db);
 	if (DB_num_rows($result)==0){
@@ -520,8 +529,9 @@ if (!isset($DebtorNo)) {
 		echo '<tr><td colspan=2>' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></tr>';
 	} else {
 
-		echo '<tr><td>' . _('Payment Terms') . ':</td>
-			<td><select tabindex=15 name="PaymentTerms">';
+		echo '<tr>
+				<td>' . _('Payment Terms') . ':</td>
+				<td><select tabindex=15 name="PaymentTerms">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
@@ -530,12 +540,16 @@ if (!isset($DebtorNo)) {
 
 		echo '</select></td></tr>';
 	}
-	echo '<tr><td>' . _('Credit Status') . ':</td><td><select tabindex=16 name="HoldReason">';
+	echo '<tr>
+			<td>' . _('Credit Status') . ':</td>
+			<td><select tabindex="16" name="HoldReason">';
 
 	$result=DB_query("SELECT reasoncode, reasondescription FROM holdreasons",$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
-		echo '<tr><td colspan=2>' . prnMsg(_('There are no credit statuses currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></tr>';
+		echo '<tr>
+				<td colspan="2">' . prnMsg(_('There are no credit statuses currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td>
+			</tr>';
 	} else {
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="'. $myrow['reasoncode'] . '">' . $myrow['reasondescription'] . '</option>';
@@ -547,7 +561,9 @@ if (!isset($DebtorNo)) {
 	$result=DB_query("SELECT currency, currabrev FROM currencies",$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
-		echo '<tr><td colspan=2>' . prnMsg(_('There are no currencies currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></tr>';
+		echo '<tr>
+				<td colspan="2">' . prnMsg(_('There are no currencies currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td>
+			</tr>';
 	} else {
 		if (!isset($_POST['CurrCode'])){
 			$CurrResult = DB_query("SELECT currencydefault FROM companies WHERE coycode=1",$db);
@@ -573,8 +589,8 @@ if (!isset($DebtorNo)) {
 	echo '<tr>
 			<td>' . _('Customer PO Line on SO') . ':</td>
 			<td><select tabindex="18" name="CustomerPOLine">
-				<option selected value=0>' . _('No') . '</option>
-				<option value=1>' . _('Yes') . '</option>
+				<option selected value="0">' . _('No') . '</option>
+				<option value="1">' . _('Yes') . '</option>
 				</select>
 			</td>
 		</tr>
@@ -957,11 +973,11 @@ if (!isset($DebtorNo)) {
 				<td>' . _('Invoice Addressing') . ':</td>
 				<td><select name="AddrInvBranch">';
 		if ($_POST['InvAddrBranch']==0){
-			echo '<option selected value=0>' . _('Address to HO') . '</option>';
-			echo '<option value=1>' . _('Address to Branch') . '</option>';
+			echo '<option selected value="0">' . _('Address to HO') . '</option>';
+			echo '<option value="1">' . _('Address to Branch') . '</option>';
 		} else {
-			echo '<option value=0>' . _('Address to HO') . '</option>';
-			echo '<option selected value=1>' . _('Address to Branch') . '</option>';
+			echo '<option value="0">' . _('Address to HO') . '</option>';
+			echo '<option selected value="1">' . _('Address to Branch') . '</option>';
 		}
 	}
 
@@ -1009,7 +1025,7 @@ if (!isset($DebtorNo)) {
 				<th>' . _('Email') . '</th>
 				<th>' . _('Notes') . '</th>
 				<th>' . _('Edit') . '</th>
-				<th colspan="2"><input type="Submit" name="AddContact" value="' . _('Add Contact') . '" /></th>
+				<th colspan="2"><input type="submit" name="AddContact" value="' . _('Add Contact') . '" /></th>
 			</tr>';
 	}
 	$k=0; //row colour counter

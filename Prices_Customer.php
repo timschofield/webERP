@@ -7,7 +7,8 @@ $result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
 							debtorsmaster.salestype,
 							currencies.decimalplaces AS currdecimalplaces
-					 FROM debtorsmaster
+					 FROM debtorsmaster INNER JOIN currencies
+					 ON debtorsmaster.currcode=currencies.currabrev
 					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_array($result);
 
@@ -267,15 +268,16 @@ if (DB_num_rows($result) == 0) {
 		$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 	}
 	echo '<tr bgcolor="#CCCCCC">
-		<td class="number">'.locale_number_format($myrow['price'],$CurrDecimalPlaces).'</td>
-		<td>' . $Branch.'</td>
-		<td>'.$myrow['units'].'</td>
-		<td class="number">'.$myrow['conversionfactor'].'</td>
-		<td>'.ConvertSQLDate($myrow['startdate']).'</td>
-		<td>'.$EndDateDisplay.'</td>
- 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']).'?Item='.$Item.'&Price='.$myrow['price'].'&Branch='.$myrow['branchcode'].
-			'&StartDate='.$myrow['startdate'].'&EndDate='.$myrow['enddate'].'&Edit=1">' . _('Edit') . '</td>
-		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']).'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td></tr>';
+			<td class="number">'.locale_number_format($myrow['price'],$CurrDecimalPlaces).'</td>
+			<td>' . $Branch.'</td>
+			<td>'.$myrow['units'].'</td>
+			<td class="number">'.$myrow['conversionfactor'].'</td>
+			<td>'.ConvertSQLDate($myrow['startdate']).'</td>
+			<td>'.$EndDateDisplay.'</td>
+	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']).'?Item='.$Item.'&Price='.$myrow['price'].'&Branch='.$myrow['branchcode'].
+				'&StartDate='.$myrow['startdate'].'&EndDate='.$myrow['enddate'].'&Edit=1">' . _('Edit') . '</td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']).'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td>
+		</tr>';
 	
 	}
 //END WHILE LIST LOOP

@@ -60,9 +60,9 @@ if (!function_exists('gettext')) {
 			return $text;
 		}
 	}
-	include('includes/LanguagesArray.php');
+	include($PathPrefix . 'includes/LanguagesArray.php');
 } else {
-	include('includes/LanguagesArray.php');
+	include($PathPrefix . 'includes/LanguagesArray.php');
 	
 	$LocaleSet = setlocale (LC_ALL, $_SESSION['Language'],$LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
 	$LocaleSet = setlocale (LC_NUMERIC, 'C','en_GB.utf8','en_GB','en_US','english-us');
