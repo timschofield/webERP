@@ -331,7 +331,16 @@ function locale_number_format($Number, $DecimalPlaces=0) {
 function filter_number_format($Number) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
-	return str_replace($DecimalPoint,'.',str_replace($ThousandsSeparator,'',trim($Number)));
+	$SQLFormatNumber = str_replace($DecimalPoint,'.',str_replace($ThousandsSeparator,'',trim($Number)));
+	/*It is possible if the user entered the $DecimalPoint as a thousands separator and the $DecimalPoint is a comma that the result of this could contain several periods "." so need to ditch all but the last "." */
+	if (mb_substr_count($SQLFormatNumber,'.')>1){
+		return  str_replace('.','',mb_substr($SQLFormatNumber,0,mb_strrpos($SQLFormatNumber,'.'))) . mb_substr($SQLFormatNumber,mb_strrpos($SQLFormatNumber,'.'));
+		
+		echo '<br /> Number of periods: ' . $NumberOfPeriods . ' $SQLFormatNumber = ' . $SQLFormatNumber;
+
+	} else {
+		return $SQLFormatNumber;
+	}
 }
 
 

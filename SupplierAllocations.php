@@ -51,15 +51,18 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
 	for ($AllocCounter=0; $AllocCounter < $_POST['TotalNumberOfAllocs']; $AllocCounter++){
 
-		if (!is_numeric(filter_number_format($_POST['Amt' . $AllocCounter]))){
+		$_POST['Amt' . $AllocCounter] = filter_number_format($_POST['Amt' . $AllocCounter]);
+		
+		if (!is_numeric($_POST['Amt' . $AllocCounter])){
 		      $_POST['Amt' . $AllocCounter] = 0;
 		 }
-		 if (filter_number_format($_POST['Amt' . $AllocCounter]) < 0){
+		 if ($_POST['Amt' . $AllocCounter] < 0){
 			prnMsg(_('The entry for the amount to allocate was negative') . '. ' . _('A positive allocation amount is expected'),'error');
 			$_POST['Amt' . $AllocCounter] = 0;
 		 }
 
 		if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == True){
+			/* $_POST['YetToAlloc...] is a hidden item on the form not locale_number_formatted */
 			$_POST['Amt' . $AllocCounter] = $_POST['YetToAlloc' . $AllocCounter];
 
 		 }
@@ -67,29 +70,26 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 		  /*Now check to see that the AllocAmt is no greater than the
 		 amount left to be allocated against the transaction under review */
 
-		 if (filter_number_format($_POST['Amt' . $AllocCounter]) > filter_number_format($_POST['YetToAlloc' . $AllocCounter])){
+		 if ($_POST['Amt' . $AllocCounter] > $_POST['YetToAlloc' . $AllocCounter]){
 		     $_POST['Amt' . $AllocCounter] = $_POST['YetToAlloc' . $AllocCounter];
 		 }
 
-
-
-		 $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->AllocAmt = filter_number_format($_POST['Amt' . $AllocCounter]);
+		 $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->AllocAmt = $_POST['Amt' . $AllocCounter];
 
 		 /*recalcuate the new difference on exchange
 		 (a +positive amount is a gain -ve a loss)*/
 
-		 $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->DiffOnExch = (filter_number_format($_POST['Amt' . $AllocCounter]) / $_SESSION['Alloc']->TransExRate) - (filter_number_format($_POST['Amt' . $AllocCounter]) / $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->ExRate);
+		 $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->DiffOnExch = ($_POST['Amt' . $AllocCounter] / $_SESSION['Alloc']->TransExRate) - ($_POST['Amt' . $AllocCounter] / $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->ExRate);
 
 		 $TotalDiffOnExch += $_SESSION['Alloc']->Allocs[$_POST['AllocID' . $AllocCounter]]->DiffOnExch;
-		 $TotalAllocated += filter_number_format($_POST['Amt' . $AllocCounter]);
+		 $TotalAllocated += $_POST['Amt' . $AllocCounter];
 
 	} /*end of the loop to set the new allocation amounts,
 	recalc diff on exchange and add up total allocations */
 
 	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > 0.005){
 		echo '<br />';
-		prnMsg(_('These allocations cannot be processed because the amount allocated is more than the amount of the') . ' ' . $_SESSION['Alloc']->TransTypeName  . ' ' . _('being allocated') . '
-			<br />' . _('Total allocated') . ' = ' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . ' ' . _('and the total amount of the Credit/payment was') . ' ' . locale_number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) ,'error');
+		prnMsg(_('These allocations cannot be processed because the amount allocated is more than the amount of the') . ' ' . $_SESSION['Alloc']->TransTypeName  . ' ' . _('being allocated') . '<br />' . _('Total allocated') . ' = ' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . ' ' . _('and the total amount of the Credit/payment was') . ' ' . locale_number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) ,'error');
 		echo '<br />';
 		$InputError = 1;
 	}
@@ -374,7 +374,7 @@ If (isset($_GET['AllocTrans'])){
 												$myrow['diffonexch'],
 												$myrow['alloc'],
 												'NA');
-}
+	}
 
 	/* Now get trans that might have previously been allocated to by this trans
 	NB existing entries where still some of the trans outstanding entered from
@@ -448,8 +448,8 @@ if (isset($_POST['AllocTrans'])){
 
     /*Now display the potential and existing allocations put into the array above */
 
-        echo '<table class="selection">';
-	  	  $TableHeader = '<tr>
+		echo '<table class="selection">';
+	  	$TableHeader = '<tr>
 							<th>' . _('Type') . '</th>
 				 			<th>' . _('Trans') . '<br />' . _('Number') . '</th>
 							<th>' . _('Trans') .'<br />' . _('Date') . '</th>
@@ -458,12 +458,12 @@ if (isset($_POST['AllocTrans'])){
 							<th>' . _('Yet to') . '<br />' . _('Allocate') . '</th>
 							<th>' . _('This') . '<br />' . _('Allocation') . '</th>
 						</tr>';
-        $k = 0;
-	$Counter = 0;
-	$RowCounter = 0;
-        $TotalAllocated = 0;
+		$k = 0;
+		$Counter = 0;
+		$RowCounter = 0;
+		$TotalAllocated = 0;
 
-        foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
+		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
 
 	    /*Alternate the background colour for each potential allocation line */
 
@@ -489,7 +489,7 @@ if (isset($_POST['AllocTrans'])){
 			<td>' . $AllocnItem->TransDate . '</td>
 			<td>' . $AllocnItem->SuppRef . '</td>
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value=' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '></td>';
+			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value="' . $YetToAlloc . '" /></td>';
 		 if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
 			echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" value=' . true . ' />';
 	    } else {

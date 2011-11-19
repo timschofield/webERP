@@ -120,8 +120,9 @@ if (isset($_POST['DoUpgrade'])){
 				case '4.05.1':
 				case '4.05.2':
 				case '4.05.3':
-					$SQLScripts[] = './sql/mysql/upgrade4.05-4.06.sql';
 				case '4.06':
+					$SQLScripts[] = './sql/mysql/upgrade4.05-4.06.sql';
+				case '4.06.1':
 					break;
 			} //end switch
 		}	
@@ -169,6 +170,9 @@ if (isset($_POST['DoUpgrade'])){
 					switch (DB_error_no($db)) {
 						case 0:
 							echo '<td bgcolor="green">'._('Success').'</td></tr>';
+							break;
+						case 1025:
+							echo '<td bgcolor="yellow">'._('Note').' - '. _('Foreign Key already removed').'</td></tr>';
 							break;
 						case 1050:
 							echo '<td bgcolor="yellow">'._('Note').' - '. _('Table has already been created').'</td></tr>';

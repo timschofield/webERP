@@ -10,6 +10,14 @@ $title = _('Specify Dispatched Controlled Items');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 
+
+if (empty($_GET['identifier'])) {
+	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
+	$identifier=date('U');
+} else {
+	$identifier=$_GET['identifier'];
+}
+
 if (isset($_GET['LineNo'])){
         $LineNo = (int)$_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){

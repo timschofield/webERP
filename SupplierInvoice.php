@@ -848,7 +848,7 @@ then do the updates and inserts to process the invoice entered */
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 						$DbgMsg = _('The following SQL to insert the GL transaction was used');
-						$Result = DB_query($SQL, $db, $ErrMsg, $Dbg, True);
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 					}
 
 					$PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
@@ -881,8 +881,6 @@ then do the updates and inserts to process the invoice entered */
 								$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								$QtyRow = DB_fetch_row($Result);
 								$TotalQuantityOnHand = $QtyRow[0];
-
-								echo '<br /> ' . _('Total Qty On hand') . ' = ' . $TotalQuantityOnHand;
 
 								/*The cost adjustment is the price variance / the total quantity in stock
 								But that is only provided that the total quantity in stock is greater than the quantity charged on this invoice

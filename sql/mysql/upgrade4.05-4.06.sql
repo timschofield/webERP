@@ -4,4 +4,5 @@ INSERT INTO  `config` (`confname` ,`confvalue`)
 VALUES ('InventoryManagerEmail',  '');
 ALTER TABLE `banktrans` ADD INDEX ( `ref` );
 ALTER TABLE  `pcexpenses` ADD  `tag` TINYINT( 4 ) NOT NULL DEFAULT  '0';
-UPDATE config SET confvalue='4.06' WHERE confname='VersionNumber'; 
+ALTER TABLE `debtortrans` DROP FOREIGN KEY `debtortrans_ibfk_1`;
+UPDATE config SET confvalue='4.06.1' WHERE confname='VersionNumber'; 

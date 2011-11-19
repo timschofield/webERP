@@ -488,27 +488,35 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 
 		if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 			
-			$Quantity = filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]);
+			$Quantity = round(filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]),$OrderLine->DecimalPlaces);
 
-			if (abs($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
-				$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
-				$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
-			} else if (abs($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.001) {
-				//then do a recalculation of the price at this new GP Percentage
-				$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
-			} else {
-				$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
-			}
-			$DiscountPercentage = filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]);
-			if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
-				$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
-			} else {
-				$Narrative = '';
-			}
+				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
+					/*There is a new price being input for the line item */
+					
+					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
+					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
+					
+				} elseif (ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.01) {
+					/* A GP % has been input so need to do a recalculation of the price at this new GP Percentage */
+					
+					
+					prnMsg(_('Recalculated the price from the GP % entered - the GP % was') . ' ' . $OrderLine->GPPercent . '  the new GP % is ' . filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]),'info');
+					
+					
+					$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
+				} else {
+					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
+				}
+				$DiscountPercentage = filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]);
+				if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
+					$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
+				} else {
+					$Narrative = '';
+				}
 
-			if (!isset($OrderLine->DiscountPercent)) {
-				$OrderLine->DiscountPercent = 0;
-			}
+				if (!isset($OrderLine->DiscountPercent)) {
+					$OrderLine->DiscountPercent = 0;
+				}
 
 			if ($Quantity<0 or $Price <0 or $DiscountPercentage >100 or $DiscountPercentage <0){
 				prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
@@ -871,7 +879,9 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 
 	$BankAccountsResult = DB_query("SELECT bankaccountname, accountcode FROM bankaccounts",$db);
 
-	echo '<tr><td>' . _('Banked to') . ':</td><td><select name="BankAccount">';
+	echo '<tr>
+			<td>' . _('Banked to') . ':</td>
+			<td><select name="BankAccount">';
 	while ($BankAccountsRow = DB_fetch_array($BankAccountsResult)){
 		if (isset($_POST['BankAccount']) AND $_POST['BankAccount']	== $BankAccountsRow['accountcode']){
 			echo '<option selected="True" value="' . $BankAccountsRow['accountcode'] . '">' . $BankAccountsRow['bankaccountname'] . '</option>';
@@ -879,12 +889,13 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 			echo '<option value="' . $BankAccountsRow['accountcode'] . '">' . $BankAccountsRow['bankaccountname'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select></td>
+		</tr>';
 
 	if (!isset($_POST['AmountPaid'])){
 		$_POST['AmountPaid'] =0;
 	}
-	echo '<tr><td>' . _('Amount Paid') . ':</td><td><input type="text" class="number" name="AmountPaid" maxlength="12" size="12" value="' . filter_number_format($_POST['AmountPaid']) . '" /></td></tr>';
+	echo '<tr><td>' . _('Amount Paid') . ':</td><td><input type="text" class="number" name="AmountPaid" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td></tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table
 	echo '</th></tr></table>';	//end of column/row/master table

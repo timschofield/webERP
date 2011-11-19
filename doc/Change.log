@@ -1,5 +1,12 @@
 webERP Change Log
 
+19/11/11 Release 4.06RC3 - 4.06.1
+
+19/11/11 Phil: SupplierAllocations.php fixes for number_formatting
+19/11/11 Phil: CounterSales.php fixes as made to SelectOrderItems.php for discount/price - also AmountPaid not run through filter_number_format on display only when the value is used.
+19/11/11 Phil: Fixes to SelectOrderItems.php and associated scripts to prevent issues with discount entry and price modifications
+19/11/11 Phil: ConfirmDispatch_Invoice.php and ConfirmDispatchControlled_Invoice.php now use $idenfier in the $SESSION name to avoid $_SESSION conflicts.
+19/11/11 Phil: MiscFunctions.php filter_number_format now checks for several . in numbers and removes all exlcuding the last to ensure SQL compliant numbers returned.
 16/11/11 Phil: Prices_Customer.php sql error had neglected to include currencies table to get the number of decimalplaces to show
 16/11/11 Phil: reportwriter/WriteReport.inc modified to use OutputD function in class.pdf.inc
 15/11/11 Phil: includes/LanguageSetup.php was not including LanguagesArray.php in reportwriter as PathPrefix was not prepended

@@ -211,7 +211,7 @@ Class Cart {
 
 	function remove_from_cart($LineNumber, $UpdateDB='No'){
 
-		if (!isset($LineNumber) || $LineNumber=='' || $LineNumber < 0){ /* over check it */
+		if (!isset($LineNumber) OR $LineNumber=='' OR $LineNumber < 0){ /* over check it */
 			prnMsg(_('No Line Number passed to remove_from_cart, so nothing has been removed.'), 'error');
 			return;
 		}

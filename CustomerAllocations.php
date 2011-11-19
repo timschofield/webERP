@@ -582,17 +582,17 @@ if (isset($_POST['AllocTrans'])) {
 	if (!isset($Balance)) {
 		$Balance=0;
 	}
-	echo '<tr class="OddTableRows">
-			<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces) .'</b></td>
-			<td><b>' . $CurrCode . '</b></td>
-			<td><b>' . _('Balance') . '</b></td>
-		</tr>
-		</table>
-		<br />';
-
 	if ($NoOfUnallocatedTrans == 0) {
 		prnMsg(_('There are no allocations to be done'),'info');
+	} else {
+		echo '<tr class="OddTableRows">
+				<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces) .'</b></td>
+				<td><b>' . $CurrCode . '</b></td>
+				<td><b>' . _('Balance') . '</b></td>
+			</tr>';
 	}
+	echo '</table>
+		<br />';
 }
 
 echo '</td>
