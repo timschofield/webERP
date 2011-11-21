@@ -106,6 +106,11 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 						_('Prices cannot be altered for lines that have already been received') .' '.
 						_('and quantities cannot be reduced below the quantity already received'),'warn');
 				}
+				$ShipmentExists = $_SESSION['PO'.$identifier]->Any_Lines_On_A_Shipment();
+				if ($ShipmentExists != false){
+					$OKToUpdateStatus = 0; //not ok to update the status
+					prnMsg( _('This order cannot be cancelled or rejected because there is at least one line that is allocated to a shipment') . '. ' . _('See shipment number') . ' '  . $ShipmentExists,'warn'); 
+				}
 			}
 			if ($OKToUpdateStatus==1){ // none of the order has been received
 				if ($AuthorityLevel>$OrderTotal) {

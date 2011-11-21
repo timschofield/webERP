@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (mb_strlen($_POST['UserID'])<3){
+	if (mb_strlen($_POST['UserID'])<4){
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID']) OR mb_strstr($_POST['UserID'],' ')) {

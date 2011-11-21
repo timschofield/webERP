@@ -1,5 +1,8 @@
 webERP Change Log
 
+21/11/11 Phil: UserSettings.php now checks for at least 5 character passwords WWW_Users.php CustLoginSetup.php and SupplierLoginSetup.php now also check for 4 character userids
+21/11/11 Felix Lim: WWW_users.php malfomed <input type="hidden" - with no closing >
+
 19/11/11 Release 4.06RC3 - 4.06.1
 
 19/11/11 Phil: SupplierAllocations.php fixes for number_formatting

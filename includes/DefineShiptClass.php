@@ -4,17 +4,17 @@
 
 Class Shipment {
 
-	Var $ShiptRef; /*unqique identifier for the shipment */
-
+	var $ShiptRef; /*unqique identifier for the shipment */
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
-	Var $SupplierID;
+	var $SupplierID;
 	var $SupplierName;
 	var $CurrCode;
 	var $VoyageRef;
-	Var $Vessel;
-	Var $ETA;
-	Var $StockLocation;
-	Var $Closed;
+	var $Vessel;
+	var $ETA;
+	var $StockLocation;
+	var $Closed;
+	var $CurrDecimalPlaces;
 
 	function Shipment(){
 	/*Constructor function initialises a new Shipment object */
@@ -23,20 +23,32 @@ Class Shipment {
 		$this->Closed =0;
 	}
 
-	function add_to_shipment($PODetailItem,
-					$OrderNo,
-					$StockID,
-					$ItemDescr,
-					$QtyInvoiced,
-					$UnitPrice,
-					$UOM,
-					$DelDate,
-					$QuantityOrd,
-					$QuantityRecd,
-					$StdCostUnit,
-					&$db){
+	function Add_To_Shipment($PODetailItem,
+							$OrderNo,
+							$StockID,
+							$ItemDescr,
+							$QtyInvoiced,
+							$UnitPrice,
+							$UOM,
+							$DelDate,
+							$QuantityOrd,
+							$QuantityRecd,
+							$StdCostUnit,
+							$DecimalPlaces,
+							&$db){
 
-		$this->LineItems[$PODetailItem]= new LineDetails($PODetailItem,$OrderNo,$StockID,$ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit);
+		$this->LineItems[$PODetailItem]= new LineDetails($PODetailItem,
+														$OrderNo,
+														$StockID,
+														$ItemDescr, 
+														$QtyInvoiced, 
+														$UnitPrice, 
+														$UOM, 
+														$DelDate, 
+														$QuantityOrd, 
+														$QuantityRecd, 
+														$StdCostUnit,
+														$DecimalPlaces);
 
 		$sql = "UPDATE purchorderdetails SET shiptref = '" . $this->ShiptRef . "'
 			WHERE podetailitem = '" . $PODetailItem . "'";
@@ -47,7 +59,7 @@ Class Shipment {
 	}
 
 
-	function remove_from_shipment($PODetailItem,&$db){
+	function Remove_From_Shipment($PODetailItem,&$db){
 
 		if ($this->LineItems[$PODetailItem]->QtyInvoiced==0){
 
@@ -63,20 +75,32 @@ Class Shipment {
 
 Class LineDetails {
 
-	Var $PODetailItem;
-	Var $OrderNo;
-	Var $StockID;
-	Var $ItemDescription;
-	Var $QtyInvoiced;
-	Var $UnitPrice;
-	Var $UOM;
-	Var $DelDate;
-	Var $QuantityOrd;
-	Var $QuantityRecd;
-	Var $StdCostUnit;
+	var $PODetailItem;
+	var $OrderNo;
+	var $StockID;
+	var $ItemDescription;
+	var $QtyInvoiced;
+	var $UnitPrice;
+	var $UOM;
+	var $DelDate;
+	var $QuantityOrd;
+	var $QuantityRecd;
+	var $StdCostUnit;
+	var $DecimalPlaces;
 
 
-	function LineDetails ($PODetailItem, $OrderNo, $StockID, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit){
+	function LineDetails ($PODetailItem, 
+							$OrderNo, 
+							$StockID, 
+							$ItemDescr, 
+							$QtyInvoiced, 
+							$UnitPrice, 
+							$UOM, 
+							$DelDate, 
+							$QuantityOrd, 
+							$QuantityRecd, 
+							$StdCostUnit,
+							$DecimalPlaces=2){
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->PODetailItem = $PODetailItem;
@@ -90,6 +114,7 @@ Class LineDetails {
 		$this->QuantityRecd = $QuantityRecd;
 		$this->QuantityOrd = $QuantityOrd;
 		$this->StdCostUnit = $StdCostUnit;
+		$this->DecimalPlaces = $DecimalPlaces;
 	}
 }
 

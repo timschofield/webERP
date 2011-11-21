@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (mb_strlen($_POST['UserID'])<3){
+	if (mb_strlen($_POST['UserID'])<4){
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID'])) {
@@ -391,19 +391,23 @@ if (isset($SelectedUser)) {
 	$_POST['Blocked'] = $myrow['blocked'];
 	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
 
-	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" /';
+	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
 	echo '<input type="hidden" name="ModulesAllowed" value="' . $_POST['ModulesAllowed'] . '" />';
 
-	echo '<table class=selection> <tr><td>' . _('User code') . ':</td><td>';
-	echo $_POST['UserID'] . '</td></tr>';
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('User code') . ':</td>
+				<td>' . $_POST['UserID'] . '</td>
+			</tr>';
 
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input type="text" name="UserID" size="22" maxlength="20" /></td></tr>';
+				<td><input type="text" name="UserID" size="22" maxlength="20" /></td>
+			</tr>';
 
 	/*set the default modules to show to all
 	this had trapped a few people previously*/

@@ -34,27 +34,34 @@ if (isset($_POST['Modify'])) {
 		prnMsg(_('Cannot change password in the demo or others would be locked out!'),'warn');
 	}
  */
- 	$update_pw = 'N';
-	if ($_POST['pass'] != ''){
-		if ($_POST['pass'] != $_POST['passcheck']){
+ 	$UpdatePassword = 'N';
+	if ($_POST['Password'] != ''){
+		if ($_POST['Password'] != $_POST['PasswordCheck']){
 			$InputError = 1;
 			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
 		}else{
-			$update_pw = 'Y';
+			$UpdatePassword = 'Y';
 		}
 	}
-	if ($_POST['passcheck'] != ''){
-		if ($_POST['pass'] != $_POST['passcheck']){
+	if ($_POST['PasswordCheck'] != ''){
+		if ($_POST['Password'] != $_POST['PasswordCheck']){
 			$InputError = 1;
 			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
 		}else{
-			$update_pw = 'Y';
+			$UpdatePassword = 'Y';
 		}
+	}
+	if (mb_strlen($_POST['Password'])<5){
+		$InputError = 1;
+		prnMsg(_('The password entered must be at least 5 characters long'),'error');
+	} elseif (mb_strstr($_POST['Password'],$_SESSION['UserID'])!= False){
+		$InputError = 1;
+		prnMsg(_('The password cannot contain the user id'),'error');
 	}
 
 	if ($InputError != 1) {
 		// no errors
-		if ($update_pw != 'Y'){
+		if ($UpdatePassword != 'Y'){
 			$sql = "UPDATE www_users
 				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 					theme='" . $_POST['Theme'] . "',
@@ -76,7 +83,7 @@ if (isset($_POST['Modify'])) {
 					language='" . $_POST['Language'] . "',
 					email='". $_POST['email'] ."',
 					pdflanguage='" . $_POST['PDFLanguage'] . "',
-					password='" . CryptPass($_POST['pass']) . "'
+					password='" . CryptPass($_POST['Password']) . "'
 				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
 			$ErrMsg =  _('The user alterations could not be processed because');
@@ -161,20 +168,20 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 
-if (!isset($_POST['passcheck'])) {
-	$_POST['passcheck']='';
+if (!isset($_POST['PasswordCheck'])) {
+	$_POST['PasswordCheck']='';
 }
-if (!isset($_POST['pass'])) {
-	$_POST['pass']='';
+if (!isset($_POST['Password'])) {
+	$_POST['Password']='';
 }
 echo '</select></td></tr>
 	<tr>
 		<td>' . _('New Password') . ':</td>
-		<td><input type="password" name="pass" size=20 value="' .  $_POST['pass'] . '"></td>
+		<td><input type="password" name="Password" size="20" value="' .  $_POST['Password'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Confirm Password') . ':</td>
-		<td><input type="password" name="passcheck" size="20"  value="' . $_POST['passcheck'] . '"></td>
+		<td><input type="password" name="PasswordCheck" size="20"  value="' . $_POST['PasswordCheck'] . '" /></td>
 	</tr>
 	<tr>
 		<td colspan=2 align="center"><i>' . _('If you leave the password boxes empty your password will not change') . '</i></td>
@@ -189,7 +196,7 @@ if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
 
-echo '<td><input type="text" name="email" size=40 value="' . $_POST['email'] . '"></td>
+echo '<td><input type="text" name="email" size=40 value="' . $_POST['email'] . '" /></td>
 	</tr>';
 
 if (!isset($_POST['PDFLanguage'])){

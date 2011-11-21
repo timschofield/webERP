@@ -154,7 +154,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 
 		//Now Display LineItem
-		echo '<td>' . $LnItm->StockID . '</td>
+		
+		echo '<td><a href="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" target="_blank">'. $LnItm->StockID . '</a></td>
 			<td>' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . $DisplaySupplierQtyOrd . '</td>
 			<td>' . $LnItm->SuppliersUnit . '</td>

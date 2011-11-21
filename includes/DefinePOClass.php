@@ -154,6 +154,17 @@ Class PurchOrder {
 		return 0;
 	}
 
+	function Any_Lines_On_A_Shipment(){
+		/* Checks if any of the line items are on a shipment */
+		if (count($this->LineItems)>0){
+		   foreach ($this->LineItems as $OrderedItems) {
+			if ($OrderedItems->ShiptRef !=''){
+				return $OrderedItems->ShiptRef;
+			}
+		   }
+		}
+		return 0;
+	}
 	function Some_Already_Received($LineNo){
 		/* Checks if there have been deliveries or amounts invoiced against a specific line item */
 		if (count($this->LineItems)>0 and isset($this->LineItems[$LineNo])){

@@ -138,7 +138,7 @@ echo '<tr>
 	</table>
 	<br />
 	<div class="centre">
-		<input tabindex=5 type="submit" name="submit" value="' . _('Enter Information') . '">
+		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
 	<br />';
 
@@ -155,7 +155,7 @@ $sql = "SELECT sales_type,
 
 $result = DB_query($sql,$db);
 
-echo '<table class=selection>';
+echo '<table class="selection">';
 echo '<tr>
 		<th>' . _('Sales Type') . '</th>
 		<th>' . _('Discount Category') . '</th>
