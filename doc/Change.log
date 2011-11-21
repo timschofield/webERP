@@ -1,7 +1,11 @@
 webERP Change Log
 
+
 21/11/11 Phil: UserSettings.php now checks for at least 5 character passwords WWW_Users.php CustLoginSetup.php and SupplierLoginSetup.php now also check for 4 character userids
 21/11/11 Felix Lim: WWW_users.php malfomed <input type="hidden" - with no closing >
+20/11/11 Phil: Shipments.php now only allows purchase order items to be added to a shipment where the shipment is authorised. Completed, rejected, cancelled orders no longer show.
+20/11/11 Phil: Shipments.php now shows quantities to the number of decimal places defined in the stock master and amounts in the currency of the purchase order.
+20/11/11 Phil: PO_Header.php purchase orders cannot be cancelled now if they are on a shipment - need to remove from the shipment first
 
 19/11/11 Release 4.06RC3 - 4.06.1
 
