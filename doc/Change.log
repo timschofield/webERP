@@ -1,6 +1,7 @@
 webERP Change Log
 
-
+23/11/11 Phil: StockCategories number_formatting of minumum and maximum values of stock category properties
+23/11/11 Felix Lim: StockSerialItems.php closing quote typo.
 21/11/11 Phil: UserSettings.php now checks for at least 5 character passwords WWW_Users.php CustLoginSetup.php and SupplierLoginSetup.php now also check for 4 character userids
 21/11/11 Felix Lim: WWW_users.php malfomed <input type="hidden" - with no closing >
 20/11/11 Phil: Shipments.php now only allows purchase order items to be added to a shipment where the shipment is authorised. Completed, rejected, cancelled orders no longer show.

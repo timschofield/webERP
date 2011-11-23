@@ -150,7 +150,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		echo '<th></th>';
 	} else if ($Serialised == 1 and $Perishable==1) {
 		echo '<td>'.$myrow['serialno'].'</td>
-		echo '<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>';
+				<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>';
 	} else if ($Serialised == 0 and $Perishable==0) {
 		echo '<td>'.$myrow['serialno'].'</td>
 			<td class="number">'.locale_number_format($myrow['quantity'],$DecimalPlaces).'</td>';
@@ -158,8 +158,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	} else if ($Serialised == 0 and $Perishable==1){
 		echo '<td>'.$myrow['serialno'].'</td>
 			<td class="number">'.locale_number_format($myrow['quantity'],$DecimalPlaces). '</td>
-			<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>';
-		echo '<th></th>';
+			<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>
+			<th></th>';
 	}
 	$j++;
 	If ($j == 36){

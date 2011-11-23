@@ -21,6 +21,7 @@ if (isset($_GET['ParentCategory'])){
 } else if (isset($_POST['ParentCategory'])){
 	$ParentCategory = mb_strtoupper($_POST['ParentCategory']);
 }
+
 if(isset($ParentCategory) AND $ParentCategory == 0 ) {
 	unset($ParentCategory);
 }
@@ -164,7 +165,7 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 $CategoryPath = '<a href="'.htmlspecialchars($_SERVER['PHP_SELF']) . '?ParentCategory=0">' . _('Main') . '</a>' . "&nbsp;\\&nbsp;";
 
 $TempPath = '';
-if (isset($ParentCategory)){
+if (!isset($ParentCategory)){
 	$ParentCategory=0;
 }
 
