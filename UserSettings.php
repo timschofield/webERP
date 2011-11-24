@@ -35,15 +35,15 @@ if (isset($_POST['Modify'])) {
 	}
  */
  	$UpdatePassword = 'N';
-	if ($_POST['Password'] != ''){
-		if ($_POST['Password'] != $_POST['PasswordCheck']){
-			$InputError = 1;
-			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
-		}else{
-			$UpdatePassword = 'Y';
-		}
-	}
+	
 	if ($_POST['PasswordCheck'] != ''){
+		if (mb_strlen($_POST['Password'])<5){
+			$InputError = 1;
+			prnMsg(_('The password entered must be at least 5 characters long'),'error');
+		} elseif (mb_strstr($_POST['Password'],$_SESSION['UserID'])!= False){
+			$InputError = 1;
+			prnMsg(_('The password cannot contain the user id'),'error');
+		}
 		if ($_POST['Password'] != $_POST['PasswordCheck']){
 			$InputError = 1;
 			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
@@ -51,13 +51,7 @@ if (isset($_POST['Modify'])) {
 			$UpdatePassword = 'Y';
 		}
 	}
-	if (mb_strlen($_POST['Password'])<5){
-		$InputError = 1;
-		prnMsg(_('The password entered must be at least 5 characters long'),'error');
-	} elseif (mb_strstr($_POST['Password'],$_SESSION['UserID'])!= False){
-		$InputError = 1;
-		prnMsg(_('The password cannot contain the user id'),'error');
-	}
+	
 
 	if ($InputError != 1) {
 		// no errors
