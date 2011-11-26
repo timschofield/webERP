@@ -655,7 +655,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							</tr>',
 							$Sections[$Section],
 							locale_number_format($SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']));
-					$TotalIncome -= $SectionPrdActual;
+
 				} else {
 					echo '<tr>
 							<td colspan="2"></td>
@@ -669,6 +669,10 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							$Sections[$Section],
 							locale_number_format($SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']));
 				}
+				if ($Section==1) {
+					$TotalIncome+=$SectionPrdActual;
+				}
+
 				if ($Section==2){ /*Cost of Sales - need sub total for Gross Profit*/
 					echo '<tr>
 							<td colspan="2"></td>

@@ -1,5 +1,11 @@
 webERP Change Log
 
+27/11/11 Tim: GLTagProfit_Loss Gross Profit calculation error was = COGS - fixed
+26/11/11 Phil: SupplierInvoice.php attempt to update salesanalysis cost if goods sold prior to purchase invoice being entered
+26/11/11 Phil: Added missing images to aguapop theme - for customer inquiry
+26/11/11 Phil: ConfirmDispatchControlledInvoice.php now uses $identifier in session variable name to ensure uniqueness
+26/11/11 Phil: PcAssignCashToTab.php removed unecssary DB_escape_string() calls
+26/11/11 Phil: StockCostUpdate.php fix link to StockStatus.php
 23/11/11 Phil: UserSettings.php - now only checks password if != ''
 22/11/11 Phil: StockCategories number_formatting of minumum and maximum values of stock category properties
 22/11/11 Felix Lim: StockSerialItems.php closing quote typo.
