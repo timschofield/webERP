@@ -131,7 +131,11 @@ if (isset($_POST['SearchParts'])) {
 */
 
 if (!isset($OrderNumber) or $OrderNumber=='' ){
-	echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
+	if (isset($SelectedSupplier)){
+		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
+	} else {
+		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
+	}
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
 	echo '<table class=selection>
 			<tr>

@@ -305,7 +305,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$Success = 1; //assume the best and email goes - has to be set to 1 to allow update status
 	if ($MakePDFThenDisplayIt){
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf');
-		$pdf->__destruct(); //UldisN
+		$pdf->__destruct(); 
 	} else { /* must be MakingPDF to email it */
 		
 		$PdfFileName = $_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' .date('Y-m-d') . '.pdf';

@@ -82,8 +82,8 @@ if (isset($_POST['submit'])) {
 				SET date = '".FormatDateForSQL($_POST['Date'])."',
 					amount = '" . filter_number_format($_POST['Amount']) . "',
 					authorized = '0000-00-00',
-					notes = '" . DB_escape_string($_POST['Notes']) . "',
-					receipt = '" . DB_escape_string($_POST['Receipt']) . "'
+					notes = '" . $_POST['Notes'] . "',
+					receipt = '" . $_POST['Receipt'] . "'
 				WHERE counterindex = '" . $SelectedIndex . "'";
 		$msg = _('Assignment of cash to PC Tab ') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
 
@@ -106,8 +106,8 @@ if (isset($_POST['submit'])) {
 					'" . filter_number_format($_POST['Amount']) . "',
 					authorized = '0000-00-00',
 					'0',
-					'" . DB_escape_string($_POST['Notes']) . "',
-					'" . DB_escape_string($_POST['Receipt']) . "'
+					'" . $_POST['Notes'] . "',
+					'" . $_POST['Receipt'] . "'
 					)";
 		$msg = _('Assignment of cash to PC Tab ') . ' ' . $_POST['SelectedTabs'] .  ' ' . _('has been created');
 	}
@@ -173,8 +173,8 @@ if (!isset($SelectedTabs)){
    	echo '</td></tr></table>'; // close main table
 	echo '<p>
 		<div class="centre">
-			<input type=submit name="process" value="' . _('Accept') . '" />
-			<input type=submit name="Cancel" value="' . _('Cancel') . '" />
+			<input type="submit" name="process" value="' . _('Accept') . '" />
+			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 	echo '</form>';
 }
@@ -321,10 +321,10 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			$_POST['Notes']  = $myrow['notes'];
 			$_POST['Receipt']  = $myrow['receipt'];
 
-			echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
-			echo '<input type=hidden name="SelectedIndex" value="' . $SelectedIndex. '">';
-			echo '<input type=hidden name="CurrentAmount" value="' . $Amount[0]. '">';
-			echo '<input type=hidden name="Days" value="' . $Days . '">';
+			echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
+			echo '<input type=hidden name="SelectedIndex" value="' . $SelectedIndex. '" />';
+			echo '<input type=hidden name="CurrentAmount" value="' . $Amount[0]. '" />';
+			echo '<input type=hidden name="Days" value="' . $Days . '" />';
 		}
 
 /* Ricard: needs revision of this date initialization */

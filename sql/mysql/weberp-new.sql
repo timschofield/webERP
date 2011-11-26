@@ -140,9 +140,12 @@ CREATE TABLE `banktrans` (
   KEY `CurrCode` (`currcode`),
   KEY `ref` (`ref`),
   KEY `ref_2` (`ref`),
+  KEY `ref_3` (`ref`),
+  KEY `ref_4` (`ref`),
+  KEY `ref_5` (`ref`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -413,7 +416,7 @@ CREATE TABLE `custallocns` (
   KEY `TransID_AllocTo` (`transid_allocto`),
   CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`id`),
   CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -602,10 +605,9 @@ CREATE TABLE `debtortrans` (
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
   KEY `EDISent` (`edisent`),
-  CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -966,7 +968,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2294,7 +2296,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2377,7 +2379,7 @@ CREATE TABLE `suppallocs` (
   KEY `DateAlloc` (`datealloc`),
   CONSTRAINT `suppallocs_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `supptrans` (`id`),
   CONSTRAINT `suppallocs_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `supptrans` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2497,7 +2499,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2799,7 +2801,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-13 10:47:21
+-- Dump completed on 2011-11-19 17:06:10
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3052,23 +3054,23 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',6);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',4);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',1);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
-INSERT INTO `systypes` VALUES (12,'Receipt',2);
+INSERT INTO `systypes` VALUES (12,'Receipt',3);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',23);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',26);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',18);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',23);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',24);
 INSERT INTO `systypes` VALUES (21,'Debit Note',7);
-INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
+INSERT INTO `systypes` VALUES (22,'Creditors Payment',5);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
 INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',36);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',6);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',11);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',34);
+INSERT INTO `systypes` VALUES (30,'Sales Order',36);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',18);
@@ -3139,7 +3141,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-11-12 16:19:37','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','fr_FR.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-11-19 16:37:39','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','fr_FR.utf8',0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -3364,7 +3366,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.06');
+INSERT INTO `config` VALUES ('VersionNumber','4.06.1');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -3825,7 +3827,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-13 10:47:21
+-- Dump completed on 2011-11-19 17:06:10
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

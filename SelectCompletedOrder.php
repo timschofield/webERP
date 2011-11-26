@@ -235,68 +235,35 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 
 	//figure out the SQL required from the inputs available
 	if (isset($OrderNumber)) {
-          if (isset($SelectedCustomer)) {
-          		$SQL = "SELECT salesorders.orderno,
-								debtorsmaster.name,
-								custbranch.brname,
-								salesorders.customerref,
-								salesorders.orddate,
-								salesorders.deliverydate,
-								salesorders.deliverto,
-								currencies.decimalplaces AS currdecimalplaces, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
-							FROM salesorders INNER JOIN salesorderdetails
-							ON salesorders.orderno = salesorderdetails.orderno
-							INNER JOIN debtorsmaster 
-							ON salesorders.debtorno = debtorsmaster.debtorno 
-							INNER JOIN custbranch 
-							ON salesorders.branchcode = custbranch.branchcode 
-							AND salesorders.debtorno = custbranch.debtorno 
-							INNER JOIN currencies 
-							ON debtorsmaster.currcode = currencies.currabrev
-							WHERE salesorders.debtorno='" . $SelectedCustomer ."'
-							AND salesorders.orderno='". $OrderNumber ."'
-							AND salesorders.quotation=0
-							AND salesorderdetails.completed".$Completed."
-							GROUP BY salesorders.orderno,
-								debtorsmaster.name,
-								custbranch.brname,
-								salesorders.customerref,
-								salesorders.orddate,
-								salesorders.deliverydate,
-								currencies.decimalplaces,
-								salesorders.deliverto
-							ORDER BY salesorders.orderno";
-		} else { //Set order number and SelectedCustomer not set
-			$SQL = "SELECT salesorders.orderno,
-							debtorsmaster.name,
-							custbranch.brname,
-							salesorders.customerref,
-							salesorders.orddate,
-							salesorders.deliverydate,
-							salesorders.deliverto,
-							currencies.decimalplaces AS currdecimalplaces, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
-						FROM salesorders INNER JOIN salesorderdetails
-							ON salesorders.orderno = salesorderdetails.orderno
-							INNER JOIN debtorsmaster 
-							ON salesorders.debtorno = debtorsmaster.debtorno 
-							INNER JOIN custbranch 
-							ON salesorders.branchcode = custbranch.branchcode 
-							AND salesorders.debtorno = custbranch.debtorno 
-							INNER JOIN currencies 
-							ON debtorsmaster.currcode = currencies.currabrev
-						WHERE salesorders.orderno='". $OrderNumber ."'
-						AND salesorders.quotation=0
-						AND salesorderdetails.completed " . $Completed ."
-						GROUP BY salesorders.orderno,
-							debtorsmaster.name,
-							currencies.decimalplaces,
-							custbranch.brname,
-							salesorders.customerref,
-							salesorders.orddate,
-							salesorders.deliverydate,
-							salesorders.deliverto
-						ORDER BY salesorders.orderno";
-		}
+		$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverydate,
+						salesorders.deliverto,
+						currencies.decimalplaces AS currdecimalplaces, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+					FROM salesorders INNER JOIN salesorderdetails
+						ON salesorders.orderno = salesorderdetails.orderno
+						INNER JOIN debtorsmaster 
+						ON salesorders.debtorno = debtorsmaster.debtorno 
+						INNER JOIN custbranch 
+						ON salesorders.branchcode = custbranch.branchcode 
+						AND salesorders.debtorno = custbranch.debtorno 
+						INNER JOIN currencies 
+						ON debtorsmaster.currcode = currencies.currabrev
+					WHERE salesorders.orderno='". $OrderNumber ."'
+					AND salesorders.quotation=0
+					AND salesorderdetails.completed " . $Completed ."
+					GROUP BY salesorders.orderno,
+						debtorsmaster.name,
+						currencies.decimalplaces,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverydate,
+						salesorders.deliverto
+					ORDER BY salesorders.orderno";
 	} elseif (isset($CustomerRef)) {
 		if (isset($SelectedCustomer)) {
 			$SQL = "SELECT salesorders.orderno,

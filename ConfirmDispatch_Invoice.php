@@ -232,8 +232,12 @@ set all the necessary session variables changed by the POST  */
 			foreach ($Itm->SerialItems as $SerialItem) { //calculate QtyDispatched from bundle quantities
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 			}
-		} else if (is_numeric(filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched' ])) AND filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched']) <= ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)){
-			$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$Itm->LineNumber  . '_QtyDispatched']),$Itm->DecimalPlaces);
+		} else if (isset($_POST[$Itm->LineNumber .  '_QtyDispatched' ])){
+			if (is_numeric(filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched' ])) 
+				AND filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched']) <= ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)){
+					
+				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$Itm->LineNumber  . '_QtyDispatched']),$Itm->DecimalPlaces);
+			}
 		}
 		foreach ($Itm->Taxes as $TaxLine) {
 			if (isset($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
@@ -449,7 +453,7 @@ if(!isset($_SESSION['Items'.$identifier]->FreightCost)) {
 	}
 }
 
-if (isset($_POST['ChargeFreightCost']) and !is_numeric(filter_number_format($_POST['ChargeFreightCost']))){
+if (isset($_POST['ChargeFreightCost']) AND !is_numeric(filter_number_format($_POST['ChargeFreightCost']))){
 	$_POST['ChargeFreightCost'] = 0;
 }
 
@@ -467,7 +471,10 @@ $j++;
 if (!isset($_POST['ChargeFreightCost'])) {
 	$_POST['ChargeFreightCost']=0;
 }
-if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1 and (!isset($_SESSION['Items'.$identifier]->FreightCost) or $_POST['ChargeFreightCost']==0)) {
+if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1 
+	AND (!isset($_SESSION['Items'.$identifier]->FreightCost) 
+		OR $_POST['ChargeFreightCost']==0)) {
+			
 	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>
 		<td><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0"></td>';
 	$_SESSION['Items'.$identifier]->FreightCost=0;
@@ -478,7 +485,7 @@ if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1 and (!isset($_SES
 	} else {
 		echo '<td class="number"><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 	}
-	$_POST['ChargeFreightCost'] = $_SESSION['Items'.$identifier]->FreightCost;
+	$_POST['ChargeFreightCost'] = locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 }
 
 $FreightTaxTotal =0; //initialise tax total

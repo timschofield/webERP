@@ -22,6 +22,8 @@ Other than the re-engineering of pdf reporting using the TCPDF pdf report creati
 
 6. A significant push has been made to try to reduce the number of bugs, with a great deal of testing from all quarters.
 
+7. Numbers can now be entered in the language format the user has selected and all numbers now display in the users language format - as of version 4.06.1
+
 The change log shows descriptions and dates of all changes made.
 
 Installation instructions are in the file INSTALL.txt in the doc directory. It is important to read the INSTALL.txt file in its entirety before proceeding. A printout is recommended.

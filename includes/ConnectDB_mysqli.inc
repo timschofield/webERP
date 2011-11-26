@@ -69,11 +69,6 @@ function DB_query ($SQL,
 	global $debug;
 	global $PathPrefix;
 
-/* PeterMoulding.com
-20071102 Change from mysql to mysqli;
-	$result=mysql_query($SQL,$Conn);
-*/
-
 	$result=mysqli_query($Conn, $SQL);
 	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
 

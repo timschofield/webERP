@@ -62,12 +62,20 @@ if (isset($_POST['ModifyGRN'])){
 	} else {
 		$Complete = False;
 	}
+	
+	/* It is not logical to allow being charged for more than was received  - and doing so would leave the goods received suspense account out of balance */
+	/*
 	if ($_SESSION['Check_Qty_Charged_vs_Del_Qty']==True) {
 		if ((filter_number_format($_POST['This_QuantityInv'])+ $_POST['Prev_QuantityInv'])/($_POST['QtyRecd'] ) > (1+ ($_SESSION['OverChargeProportion'] / 100))){
 			prnMsg(_('The quantity being invoiced is more than the outstanding quantity by more than') . ' ' . $_SESSION['OverChargeProportion'] . ' ' .
 			 _('percent. The system is set up to prohibit this so will put this invoice on hold until it is authorised'),'warn');
 			$Hold = True;
 		}
+	}
+	*/
+	if (filter_number_format($_POST['This_QuantityInv'])+$_POST['Prev_QuantityInv']-$_POST['QtyRecd'] > 0){
+		prnMsg(_('The quantity being invoiced is more than the outstanding quantity that was delivered. It is not possible to enter an invoice for a quantity more than was received into stock'),'warn');
+		$InputError = True;
 	}
 	if (!is_numeric(filter_number_format($_POST['ChgPrice'])) AND filter_number_format($_POST['ChgPrice'])<0){
 		$InputError = True;

@@ -141,10 +141,9 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 	$sql = "SELECT SUM(salesorderdetails.unitprice *
 				(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) *
 				(1 - salesorderdetails.discountpercent)) AS ordervalue
-				FROM salesorders,
-					salesorderdetails
-				WHERE salesorders.orderno = salesorderdetails.orderno
-				AND salesorders.debtorno = '" . $DebtorNo . "'
+				FROM salesorders INNER JOIN salesorderdetails
+				ON salesorders.orderno = salesorderdetails.orderno
+				WHERE salesorders.debtorno = '" . $DebtorNo . "'
 				AND salesorderdetails.completed = 0
 				AND salesorders.quotation = 0";
 
@@ -154,7 +153,7 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 	$myrow = DB_fetch_array($GetOSOrdersResult);
 	$CreditAvailable -= $myrow['ordervalue'];
 
-	Return $CreditAvailable;
+	return $CreditAvailable;
 }
 
 function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
