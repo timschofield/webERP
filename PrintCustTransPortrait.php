@@ -76,8 +76,8 @@ If (isset($PrintPDF)
 	nobble the invoice reprints */
 
 	// check if the user has set a default bank account for invoices, if not leave it blank
-		$sql = "SELECT bankaccounts.invoice, 
-					bankaccounts.bankaccountnumber, 
+		$sql = "SELECT bankaccounts.invoice,
+					bankaccounts.bankaccountnumber,
 					bankaccounts.bankaccountcode
 				FROM bankaccounts
 				WHERE bankaccounts.invoice = '1'";
@@ -146,22 +146,22 @@ If (isset($PrintPDF)
 							debtortrans.debtorno,
 							debtortrans.branchcode,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster 
-						ON debtortrans.debtorno=debtorsmaster.debtorno 
-						INNER JOIN custbranch 
-						ON debtortrans.debtorno=custbranch.debtorno 
+						FROM debtortrans INNER JOIN debtorsmaster
+						ON debtortrans.debtorno=debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON debtortrans.debtorno=custbranch.debtorno
 						AND debtortrans.branchcode=custbranch.branchcode
-						INNER JOIN salesorders 
+						INNER JOIN salesorders
 						ON debtortrans.order_ = salesorders.orderno
-						INNER JOIN shippers 
-						ON debtortrans.shipvia=shippers.shipper_id 
-						INNER JOIN salesman 
-						ON custbranch.salesman=salesman.salesmancode 
-						INNER JOIN locations 
-						ON salesorders.fromstkloc=locations.loccode 
-						INNER JOIN paymentterms 
+						INNER JOIN shippers
+						ON debtortrans.shipvia=shippers.shipper_id
+						INNER JOIN salesman
+						ON custbranch.salesman=salesman.salesmancode
+						INNER JOIN locations
+						ON salesorders.fromstkloc=locations.loccode
+						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
-						INNER JOIN currencies 
+						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
 						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
@@ -205,16 +205,16 @@ If (isset($PrintPDF)
 							debtortrans.branchcode,
 							paymentterms.terms,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster 
-						ON debtortrans.debtorno=debtorsmaster.debtorno 
-						INNER JOIN custbranch 
-						ON debtortrans.debtorno=custbranch.debtorno 
+						FROM debtortrans INNER JOIN debtorsmaster
+						ON debtortrans.debtorno=debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON debtortrans.debtorno=custbranch.debtorno
 						AND debtortrans.branchcode=custbranch.branchcode
-						INNER JOIN salesman 
-						ON custbranch.salesman=salesman.salesmancode 
-						INNER JOIN paymentterms 
+						INNER JOIN salesman
+						ON custbranch.salesman=salesman.salesmancode
+						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
-						INNER JOIN currencies 
+						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
 						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
@@ -257,7 +257,7 @@ If (isset($PrintPDF)
 						stockmaster.units,
 						stockmoves.stkmoveno,
 						stockmaster.decimalplaces
-					FROM stockmoves INNER JOIN stockmaster 
+					FROM stockmoves INNER JOIN stockmaster
 					ON stockmoves.stockid = stockmaster.stockid
 					WHERE stockmoves.type=10
 					AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
@@ -276,7 +276,7 @@ If (isset($PrintPDF)
 						stockmaster.units,
 						stockmoves.stkmoveno,
 						stockmaster.decimalplaces
-					FROM stockmoves INNER JOIN stockmaster 
+					FROM stockmoves INNER JOIN stockmaster
 					ON stockmoves.stockid = stockmaster.stockid
 					WHERE stockmoves.type=11
 					AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
@@ -332,7 +332,7 @@ If (isset($PrintPDF)
 
 				if ($myrow2['controlled']==1){
 
-					$GetControlMovts = DB_query("SELECT moveqty, 
+					$GetControlMovts = DB_query("SELECT moveqty,
 														serialno
 												 FROM stockserialmoves
 												 WHERE stockmoveno='" . $myrow2['stkmoveno'] . "'",$db);
@@ -493,7 +493,7 @@ If (isset($PrintPDF)
 		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
 		$pdf->Output($FileName,'F');
 		$mail = new htmlMimeMail();
-		
+
 		$Attachment = $mail->getFile($FileName);
 		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $_GET['FromTransNo'] );
 		$mail->SetSubject($InvOrCredit . ' ' . $_GET['FromTransNo']);
@@ -511,7 +511,7 @@ If (isset($PrintPDF)
 
 	} else { //its not an email just print the invoice to PDF
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf');
-		
+
 	}
 	$pdf->__destruct();
 } else { /*The option to print PDF was not hit */
@@ -525,14 +525,14 @@ If (isset($PrintPDF)
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		
+
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Portrait Mode)') . '</p>';
-		
+
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Print Invoices or Credit Notes') . '</td>
 					<td><select name="InvOrCredit">';
-					
+
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
 		   echo '<option selected value="Invoice">' . _('Invoices') . '</option>';
@@ -547,7 +547,7 @@ If (isset($PrintPDF)
 		echo '<tr>
 				<td>' . _('Print EDI Transactions') . '</td>
 				<td><select name="PrintEDI">';
-				
+
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
 		   echo '<option selected value="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
@@ -639,22 +639,22 @@ If (isset($PrintPDF)
 							salesman.salesmanname,
 							debtortrans.debtorno,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster 
-						ON debtortrans.debtorno=debtorsmaster.debtorno 
-						INNER JOIN custbranch 
-						ON debtortrans.debtorno=custbranch.debtorno 
+						FROM debtortrans INNER JOIN debtorsmaster
+						ON debtortrans.debtorno=debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON debtortrans.debtorno=custbranch.debtorno
 						AND debtortrans.branchcode=custbranch.branchcode
-						INNER JOIN salesorders 
+						INNER JOIN salesorders
 						ON debtortrans.order_ = salesorders.orderno
-						INNER JOIN shippers 
-						ON debtortrans.shipvia=shippers.shipper_id 
-						INNER JOIN salesman 
-						ON custbranch.salesman=salesman.salesmancode 
-						INNER JOIN locations 
-						ON salesorders.fromstkloc=locations.loccode 
-						INNER JOIN paymentterms 
+						INNER JOIN shippers
+						ON debtortrans.shipvia=shippers.shipper_id
+						INNER JOIN salesman
+						ON custbranch.salesman=salesman.salesmancode
+						INNER JOIN locations
+						ON salesorders.fromstkloc=locations.loccode
+						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
-						INNER JOIN currencies 
+						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
 						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
@@ -685,16 +685,16 @@ If (isset($PrintPDF)
 							salesman.salesmanname,
 							debtortrans.debtorno,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster 
-						ON debtortrans.debtorno=debtorsmaster.debtorno 
-						INNER JOIN custbranch 
-						ON debtortrans.debtorno=custbranch.debtorno 
+						FROM debtortrans INNER JOIN debtorsmaster
+						ON debtortrans.debtorno=debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON debtortrans.debtorno=custbranch.debtorno
 						AND debtortrans.branchcode=custbranch.branchcode
-						INNER JOIN salesman 
-						ON custbranch.salesman=salesman.salesmancode 
-						INNER JOIN paymentterms 
+						INNER JOIN salesman
+						ON custbranch.salesman=salesman.salesmancode
+						INNER JOIN paymentterms
 						ON debtorsmaster.paymentterms=paymentterms.termsindicator
-						INNER JOIN currencies 
+						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
 						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
@@ -763,14 +763,14 @@ If (isset($PrintPDF)
 						</tr>
 						<tr>
 							<td bgcolor="#eee">';
-				echo $myrow['name'] . 
-					'<br />' . $myrow['address1'] . 
-					'<br />' . $myrow['address2'] . 
-					'<br />' . $myrow['address3'] . 
-					'<br />' . $myrow['address4'] . 
-					'<br />' . $myrow['address5'] . 
+				echo $myrow['name'] .
+					'<br />' . $myrow['address1'] .
+					'<br />' . $myrow['address2'] .
+					'<br />' . $myrow['address3'] .
+					'<br />' . $myrow['address4'] .
+					'<br />' . $myrow['address5'] .
 					'<br />' . $myrow['address6'];
-				
+
 				echo '</td>
 					</tr>
 					</table>';
@@ -789,22 +789,22 @@ If (isset($PrintPDF)
 							<td align=left bgcolor="#bbb"><b>' . _('Delivered To') . ':</b></td>
 						</tr>';
 				   echo '<tr>
-				   		<td bgcolor="#eee">' .$myrow['brname'] . 
-									'<br />' . $myrow['braddress1'] . 
-									'<br />' . $myrow['braddress2'] . 
-									'<br />' . $myrow['braddress3'] . 
-									'<br />' . $myrow['braddress4'] . 
-									'<br />' . $myrow['braddress5'] . 
-									'<br />' . $myrow['braddress6'] . 
+				   		<td bgcolor="#eee">' .$myrow['brname'] .
+									'<br />' . $myrow['braddress1'] .
+									'<br />' . $myrow['braddress2'] .
+									'<br />' . $myrow['braddress3'] .
+									'<br />' . $myrow['braddress4'] .
+									'<br />' . $myrow['braddress5'] .
+									'<br />' . $myrow['braddress6'] .
 						'</td>';
 
-				   echo '<td bgcolor="#eee">' . $myrow['deliverto'] . 
-									'<br />' . $myrow['deladd1'] . 
-									'<br />' . $myrow['deladd2'] . 
-									'<br />' . $myrow['deladd3'] . 
-									'<br />' . $myrow['deladd4'] . 
-									'<br />' . $myrow['deladd5'] . 
-									'<br />' . $myrow['deladd6'] . 
+				   echo '<td bgcolor="#eee">' . $myrow['deliverto'] .
+									'<br />' . $myrow['deladd1'] .
+									'<br />' . $myrow['deladd2'] .
+									'<br />' . $myrow['deladd3'] .
+									'<br />' . $myrow['deladd4'] .
+									'<br />' . $myrow['deladd5'] .
+									'<br />' . $myrow['deladd6'] .
 						'</td>';
 				   echo '</tr>
 				   </table><hr>';
@@ -844,7 +844,7 @@ If (isset($PrintPDF)
 							WHERE stockmoves.type=10
 							AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
 							AND stockmoves.show_on_inv_crds=1";
-		
+
 				} else { /* then its a credit note */
 
 				   echo '<table width="50%">
@@ -852,13 +852,13 @@ If (isset($PrintPDF)
 							<td align=left bgcolor="#BBBBBB"><b>' . _('Branch') . ':</b></td>
 						</tr>';
 				   echo '<tr>
-							<td bgcolor="#EEEEEE">' . $myrow['brname'] . 
-										'<br />' . $myrow['braddress1'] . 
-										'<br />' . $myrow['braddress2'] . 
-										'<br />' . $myrow['braddress3'] . 
-										'<br />' . $myrow['braddress4'] . 
-										'<br />' . $myrow['braddress5'] . 
-										'<br />' . $myrow['braddress6'] . 
+							<td bgcolor="#EEEEEE">' . $myrow['brname'] .
+										'<br />' . $myrow['braddress1'] .
+										'<br />' . $myrow['braddress2'] .
+										'<br />' . $myrow['braddress3'] .
+										'<br />' . $myrow['braddress4'] .
+										'<br />' . $myrow['braddress5'] .
+										'<br />' . $myrow['braddress6'] .
 								'</td>
 					</tr></table>';
 				   echo '<hr>
@@ -953,9 +953,9 @@ If (isset($PrintPDF)
 									$DisplayPrice,
 									$DisplayDiscount,
 									$DisplayNet);
-	
+
 					      if (mb_strlen($myrow2['narrative'])>1){
-					      		echo $RowStarter . 
+					      		echo $RowStarter .
 									'<td></td>
 									<td colspan=6>' . $myrow2['narrative'] . '</td>
 									</tr>';
@@ -974,7 +974,7 @@ If (isset($PrintPDF)
 								<tr>
 									<td valign="top"><img src="' . $_SESSION['LogoFile'] . '"></td>
 									<td bgcolor="#bbb"><b>';
-									
+
 						   if ($InvOrCredit=='Invoice') {
 							    echo '<font size="4">' . _('TAX INVOICE') . ' ';
 						   } else {
@@ -997,7 +997,7 @@ If (isset($PrintPDF)
 						    echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br />';
 						    echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
 						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
-						    echo '</td><td class+"number">' . _('Page') . ': ' .  $PageNumber . '</td>
+						    echo '</td><td class="number">' . _('Page') . ': ' .  $PageNumber . '</td>
 								</tr>
 								</table>';
 						    echo '<table class="table1">
@@ -1054,7 +1054,7 @@ If (isset($PrintPDF)
 					echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<br />';
 					echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<br />';
 					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
-					echo '</td><td class+"number">' . _('Page') . ': ' . $PageNumber . '</td>
+					echo '</td><td class="number">' . _('Page') . ': ' . $PageNumber . '</td>
 						</tr>
 						</table>';
 					echo '<table class="table1">
@@ -1108,7 +1108,7 @@ If (isset($PrintPDF)
 				     echo '<tr><td class="number"><b>' . _('TOTAL INVOICE') . '</b></td>
 				     	<td class="number" bgcolor="#EEEEEE"><U><b>' . $DisplayTotal . '</b></U></td></tr>';
 				} else {
-				     echo '<tr><td class+"number"><font color=RED><b>' . _('TOTAL CREDIT') . '</b></font></td>
+				     echo '<tr><td class="number"><font color=RED><b>' . _('TOTAL CREDIT') . '</b></font></td>
 				     		<td class="number" bgcolor="#EEEEEE"><font color="red"><U><b>' . $DisplayTotal . '</b></u></font></td></tr>';
 				}
 				echo '</table>';
