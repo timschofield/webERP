@@ -1120,7 +1120,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 									'" . -$TaxTotal . "',
 								  	'" . -$_SESSION['CreditItems'.$identifier]->FreightCost . "',
 									'" . $_SESSION['CurrencyRate'] . "',
-									'" . DB_escape_string($_POST['CreditText']) . "'
+									'" . $_POST['CreditText'] . "'
 									)";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The customer credit note transaction could not be added to the database because');
@@ -1200,7 +1200,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 											'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
 											'" . $LocalCurrencyPrice . "',
 											'" . $PeriodNo . "',
-											'" . DB_escape_string($_POST['CreditText']) . "',
+											'" . $_POST['CreditText'] . "',
 											'" . $CreditLine->Quantity . "',
 											'" . $CreditLine->DiscountPercent . "',
 											'" . $CreditLine->StandardCost . "',
@@ -1243,7 +1243,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . $CreditLine->Quantity . "',
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
-													'" . DB_escape_string($_POST['CreditText']) . "',
+													'" . $_POST['CreditText'] . "',
 													'" . ($QtyOnHandPrior + $CreditLine->Quantity) . "',
 													'" . $CreditLine->Narrative . "'
 												)";
@@ -1276,7 +1276,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . $CreditLine->Quantity . "',
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
-													'" . DB_escape_string($_POST['CreditText']) . "',
+													'" . $_POST['CreditText'] . "',
 													'" . $CreditLine->Narrative . "'
 													)";
 			    	}
@@ -1513,7 +1513,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . -$CreditLine->Quantity . "',
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
-													'" . DB_escape_string($_POST['CreditText']) . "',
+													'" . $_POST['CreditText'] . "',
 													0,
 													'" . $QtyOnHandPrior . "',
 													'" . $CreditLine->Narrative . "'
@@ -1548,7 +1548,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . -$CreditLine->Quantity . "',
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
-													'" . DB_escape_string($_POST['CreditText']) . "',
+													'" . $_POST['CreditText'] . "',
 													0)";
 
 				}

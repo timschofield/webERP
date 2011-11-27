@@ -572,7 +572,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							'" . -$TaxTotal . "',
 							'" . -$_SESSION['CreditItems']->FreightCost . "',
 							'" . $_SESSION['CurrencyRate'] . "',
-							'" . DB_escape_string($_POST['CreditText']) . "',
+							'" . $_POST['CreditText'] . "',
 							'" . -$Allocate_amount . "',
 							'" . $Settled . "')";
 
@@ -836,7 +836,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
 													'" .  ($QtyOnHandPrior + $CreditLine->QtyDispatched) . "',
-													'" . DB_escape_string($CreditLine->Narrative) . "')";
+													'" . $CreditLine->Narrative . "')";
 				} else {
 
 					$SQL = "INSERT INTO stockmoves (stockid,
@@ -866,7 +866,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 													'" . $CreditLine->QtyDispatched . "',
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
-													'" . DB_escape_string($CreditLine->Narrative) . "')";
+													'" . $CreditLine->Narrative . "')";
 				}
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
@@ -882,7 +882,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						$SQL = "SELECT quantity from stockserialitems
 								WHERE stockid='" . $CreditLine->StockID . "'
 								AND loccode='" . $_SESSION['CreditItems']->Location . "'
-								AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+								AND serialno='" . $Item->BundleRef . "'";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be selected because');
 						$DbgMsg = _('The following SQL to select the serial stock item record was used');
@@ -896,7 +896,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											VALUES
 														('" . $CreditLine->StockID . "',
 														 '" . $_SESSION['CreditItems']->Location . "',
-														 '" . DB_escape_string($Item->BundleRef) . "',
+														 '" . $Item->BundleRef . "',
 														 '". $Item->BundleQty ."')";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
@@ -908,7 +908,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 								SET quantity= quantity + " . $Item->BundleQty . "
 								WHERE stockid='" . $CreditLine->StockID . "'
 								AND loccode='" . $_SESSION['CreditItems']->Location . "'
-								AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+								AND serialno='" . $Item->BundleRef . "'";
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 							$DbgMsg = _('The following SQL to update the serial stock item record was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -922,7 +922,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 																moveqty)
 													VALUES ('" . $StkMoveNo . "',
 															'" . $CreditLine->StockID . "',
-															'" . DB_escape_string($Item->BundleRef) . "',
+															'" . $Item->BundleRef . "',
 															'" . $Item->BundleQty . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
@@ -965,7 +965,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											'" . $CreditLine->DiscountPercent . "',
 											'" . $CreditLine->StandardCost . "',
 											'" . ($QtyOnHandPrior + $CreditLine->QtyDispatched)  . "',
-											'" . DB_escape_string($CreditLine->Narrative) . "')";
+											'" . $CreditLine->Narrative . "')";
 						
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
@@ -1003,7 +1003,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											'" . $CreditLine->StandardCost . "',
 											0,
 											'" . $QtyOnHandPrior . "',
-											'" . DB_escape_string($CreditLine->Narrative) . "')";
+											'" . $CreditLine->Narrative . "')";
 						
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
@@ -1042,7 +1042,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											'" . $CreditLine->StandardCost . "',
 											'" . $QtyOnHandPrior  . "',
 											1,
-											'" . DB_escape_string($CreditLine->Narrative) . "')";
+											'" . $CreditLine->Narrative . "')";
 						
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');

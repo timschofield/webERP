@@ -119,7 +119,7 @@ if(isset($_POST['ProcessTransfer'])){
 							WHERE
 							stockid='" . $TrfLine->StockID . "'
 							AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'
-							AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+							AND serialno='" . $Item->BundleRef . "'";
 
 						$Result = DB_query($SQL,$db,'<br />' . _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
@@ -131,7 +131,7 @@ if(isset($_POST['ProcessTransfer'])){
 								WHERE
 								stockid='" . $TrfLine->StockID . "'
 								AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'
-								AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+								AND serialno='" . $Item->BundleRef . "'";
 
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 							$DbgMsg = _('The following SQL to update the serial stock item record was used');
@@ -144,7 +144,7 @@ if(isset($_POST['ProcessTransfer'])){
 												quantity)
 								VALUES ('" . $TrfLine->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationFrom . "',
-								'" . DB_escape_string($Item->BundleRef) . "',
+								'" . $Item->BundleRef . "',
 								'" . -$Item->BundleQty . "')";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item for the stock being transferred out of the existing location could not be inserted because');
@@ -163,7 +163,7 @@ if(isset($_POST['ProcessTransfer'])){
 							) VALUES (
 								'" . $StkMoveNo . "',
 								'" . $TrfLine->StockID . "',
-								'" . DB_escape_string($Item->BundleRef) . "',
+								'" . $Item->BundleRef . "',
 								'" . -$Item->BundleQty . "'
 							)";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
@@ -232,7 +232,7 @@ if(isset($_POST['ProcessTransfer'])){
 							WHERE
 							stockid='" . $TrfLine->StockID . "'
 							AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'
-							AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+							AND serialno='" . $Item->BundleRef . "'";
 
 						$Result = DB_query($SQL,$db,'<br />'. _('Could not determine if the serial item exists') );
 						$SerialItemExistsRow = DB_fetch_row($Result);
@@ -245,7 +245,7 @@ if(isset($_POST['ProcessTransfer'])){
 								WHERE
 								stockid='" . $TrfLine->StockID . "'
 								AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'
-								AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+								AND serialno='" . $Item->BundleRef . "'";
 
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated for the quantity coming in because');
 							$DbgMsg =  _('The following SQL to update the serial stock item record was used');
@@ -258,7 +258,7 @@ if(isset($_POST['ProcessTransfer'])){
 											quantity)
 								VALUES ('" . $TrfLine->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationTo . "',
-								'" . DB_escape_string($Item->BundleRef) . "',
+								'" . $Item->BundleRef . "',
 								'" . $Item->BundleQty . "')";
 
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record for the stock coming in could not be added because');
@@ -276,7 +276,7 @@ if(isset($_POST['ProcessTransfer'])){
 											moveqty)
 								VALUES (" . $StkMoveNo . ",
 									'" . $TrfLine->StockID . "',
-									'" . DB_escape_string($Item->BundleRef) . "',
+									'" . $Item->BundleRef . "',
 									'" . $Item->BundleQty . "')";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock movement records was used');

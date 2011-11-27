@@ -135,7 +135,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 			$typeno = GetNextTransNo($type,$db);
 
 			//build narrative
-			$narrative= _('PettyCash') . ' - '.$myrow['tabcode'] . ' - ' . $myrow['codeexpense'] . ' - ' . $myrow['notes'] . ' - ' . $myrow['receipt'];
+			$Narrative= _('PettyCash') . ' - '. $myrow['tabcode'] . ' - ' . $myrow['codeexpense'] . ' - ' . DB_escape_string($myrow['notes']) . ' - ' . $myrow['receipt'];
 			//insert to gltrans
 			DB_Txn_Begin($db);
 
@@ -158,7 +158,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 											'".$myrow['date']."',
 											'".$PeriodNo."',
 											'".$AccountFrom."',
-											'". DB_escape_string($narrative) ."',
+											'". $Narrative ."',
 											'".-$Amount."',
 											0,
 											'',
@@ -185,7 +185,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 										'".$myrow['date']."',
 										'".$PeriodNo."',
 										'".$AccountTo."',
-										'" . DB_escape_string($narrative) . "',
+										'" . $Narrative . "',
 										'".$Amount."',
 										0,
 										'',
@@ -209,7 +209,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 										VALUES ('". $ReceiptTransNo . "',
 											1,
 											'" . $AccountFrom . "',
-											'" . DB_escape_string($narrative) . "',
+											'" . $Narrative . "',
 											1,
 											'" . $myrow['rate'] . "',
 											'" . $myrow['date'] . "',

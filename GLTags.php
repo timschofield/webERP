@@ -37,12 +37,12 @@ if (isset($_GET['SelectedTag'])) {
 }
 
 if (isset($_POST['submit'])) {
-	$sql = "INSERT INTO tags values(NULL, '" . DB_escape_string($_POST['Description']) . "')";
+	$sql = "INSERT INTO tags values(NULL, '" . $_POST['Description'] . "')";
 	$result= DB_query($sql,$db);
 }
 
 if (isset($_POST['update'])) {
-	$sql = "UPDATE tags SET tagdescription='".DB_escape_string($_POST['Description']). "' 
+	$sql = "UPDATE tags SET tagdescription='" . $_POST['Description'] . "' 
 		WHERE tagref='".$_POST['reference']."'";
 	$result= DB_query($sql,$db);
 }

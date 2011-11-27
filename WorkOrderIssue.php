@@ -241,7 +241,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 						$SQL = "SELECT COUNT(*) FROM stockserialitems
 								WHERE stockid='" .$_POST['IssueItem'] . "'
 								AND loccode = '" . $_POST['FromLocation'] . "'
-								AND serialno = '" . DB_escape_string($_POST['BatchRef' .$i]) . "'";
+								AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch/lot reference for the item already exists because');
 						$DbgMsg =  _('The following SQL to test for an already existing controlled item was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -251,7 +251,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							$SQL = "UPDATE stockserialitems SET quantity = quantity - " . $_POST['Qty' . $i] . "
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode = '" . $_POST['FromLocation'] . "'
-										AND serialno = '" . DB_escape_string($_POST['BatchRef' .$i]) . "'";
+										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						} else {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
@@ -260,7 +260,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 												quantity)
 												VALUES ('" . $_POST['IssueItem'] . "',
 												'" . $_POST['FromLocation'] . "',
-												'" . DB_escape_string($_POST['BatchRef' . $i]) . "',
+												'" . $_POST['BatchRef' . $i] . "',
 												'',
 												'" . -(filter_number_format($_POST['Qty'.$i])) . "')";
 						}
@@ -278,7 +278,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 											moveqty)
 									VALUES ('" . $StkMoveNo . "',
 											'" . $_POST['IssueItem'] . "',
-											'" . DB_escape_string($_POST['BatchRef'.$i])  . "',
+											'" . $_POST['BatchRef'.$i]  . "',
 											'" . filter_number_format($_POST['Qty'.$i])  . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');

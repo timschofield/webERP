@@ -1,5 +1,7 @@
 webERP Change Log
 
+27/11/11 Phil: Removed a load of DB_escape_string() calls as no longer required now the entire $_POST and $_GET array are DB_escape_string()'ed
+27/11/11 Tim: PrintCustTransPortrait.php added bank account code
 27/11/11 Tim: GLTagProfit_Loss Gross Profit calculation error was = COGS - fixed
 26/11/11 Phil: SupplierInvoice.php attempt to update salesanalysis cost if goods sold prior to purchase invoice being entered
 26/11/11 Phil: Added missing images to aguapop theme - for customer inquiry

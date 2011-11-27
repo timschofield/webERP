@@ -168,7 +168,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										'" . $_SESSION['Adjustment']->StockLocation . "',
 										'" . $SQLAdjustmentDate . "',
 										'" . $PeriodNo . "',
-										'" . DB_escape_string($_SESSION['Adjustment']->Narrative) ."',
+										'" . $_SESSION['Adjustment']->Narrative ."',
 										'" . $_SESSION['Adjustment']->Quantity . "',
 										'" . ($QtyOnHandPrior + $_SESSION['Adjustment']->Quantity) . "'
 									)";

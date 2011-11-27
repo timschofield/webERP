@@ -76,7 +76,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 					'" . $PeriodNo . "',
 					'" . $JournalItem->GLCode . "',
-					'" . DB_escape_string($JournalItem->Narrative)  . "',
+					'" . $JournalItem->Narrative  . "',
 					'" . $JournalItem->Amount . "',
 					'" . $JournalItem->tag."'
 					)";
@@ -98,7 +98,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						'" . ($PeriodNo + 1) . "',
 						'" . $JournalItem->GLCode . "',
-						'" . _('Reversal') . " - " . DB_escape_string($JournalItem->Narrative) . "',
+						'" . _('Reversal') . " - " . $JournalItem->Narrative . "',
 						'" . -($JournalItem->Amount) ."',
 						'".$JournalItem->tag."'
 						)";
@@ -111,7 +111,7 @@ if (isset($_POST['CommitBatch']) AND $_POST['CommitBatch']==_('Accept and Proces
 
 
 	$ErrMsg = _('Cannot commit the changes');
-	$result= DB_Txn_Begin($db);
+	$result= DB_Txn_Commit($db);
 
 	prnMsg(_('Journal').' ' . $TransNo . ' '._('has been successfully entered'),'success');
 

@@ -72,8 +72,8 @@ if (isset($_POST['submit'])) {
 			SET date = '".FormatDateForSQL($_POST['Date'])."',
 			codeexpense = '" . $_POST['SelectedExpense'] . "',
 			amount = '" .-filter_number_format($_POST['amount']) . "',
-			notes = '" . DB_escape_string($_POST['Notes']) . "',
-			receipt = '" . DB_escape_string($_POST['Receipt']) . "'
+			notes = '" . $_POST['Notes'] . "',
+			receipt = '" . $_POST['Receipt'] . "'
 			WHERE counterindex = '".$SelectedIndex."'";
 
 		$msg = _('The Expense Claim on Tab') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
@@ -98,8 +98,8 @@ if (isset($_POST['submit'])) {
 										'" . -filter_number_format($_POST['amount']) . "',
 										'',
 										'',
-										'" . DB_escape_string($_POST['Notes']) . "',
-										'" . DB_escape_string($_POST['Receipt']) . "'
+										'" . $_POST['Notes'] . "',
+										'" . $_POST['Receipt'] . "'
 										)";
 
 		$msg = _('The Expense Claim on Tab') . ' ' . $_POST['SelectedTabs'] .  ' ' . _('has been created');

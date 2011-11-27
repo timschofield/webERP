@@ -138,13 +138,13 @@ if (isset($_POST['submit'])) {
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
 		}
 
-		$sql = "UPDATE www_users SET realname='" . DB_escape_string($_POST['RealName']) . "',
-						customerid='" . DB_escape_string($_POST['Cust']) ."',
-						phone='" . DB_escape_string($_POST['Phone']) ."',
-						email='" . DB_escape_string($_POST['Email']) ."',
+		$sql = "UPDATE www_users SET realname='" . $_POST['RealName'] . "',
+						customerid='" . $_POST['Cust'] ."',
+						phone='" . $_POST['Phone'] ."',
+						email='" . $_POST['Email'] ."',
 						" . $UpdatePassword . "
-						branchcode='" . DB_escape_string($_POST['BranchCode']) . "',
-						supplierid='" . DB_escape_string($_POST['SupplierID']) . "',
+						branchcode='" . $_POST['BranchCode'] . "',
+						supplierid='" . $_POST['SupplierID'] . "',
 						salesman='" . $_POST['Salesman'] . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess='" . $_POST['Access'] . "',

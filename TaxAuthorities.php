@@ -36,11 +36,11 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE taxauthorities
 					SET taxglcode ='" . $_POST['TaxGLCode'] . "',
 					purchtaxglaccount ='" . $_POST['PurchTaxGLCode'] . "',
-					description = '" . DB_escape_string($_POST['Description']) . "',
+					description = '" . $_POST['Description'] . "',
 					bank = '" . $_POST['Bank'] . "',
 					bankacctype = '". $_POST['BankAccType'] . "',
-					bankacc = '". DB_escape_string($_POST['BankAcc']) . "',
-					bankswift = '". DB_escape_string($_POST['BankSwift']) . "'
+					bankacc = '". $_POST['BankAcc'] . "',
+					bankswift = '". $_POST['BankSwift'] . "'
 				WHERE taxid = '" . $SelectedTaxAuthID . "'";
 
 		$ErrMsg = _('The update of this tax authority failed because');
@@ -63,11 +63,11 @@ if (isset($_POST['submit'])) {
 			VALUES (
 				'" . $_POST['TaxGLCode'] . "',
 				'" . $_POST['PurchTaxGLCode'] . "',
-				'" . DB_escape_string($_POST['Description']) . "',
+				'" . $_POST['Description'] . "',
 				'" . $_POST['Bank'] . "',
 				'" . $_POST['BankAccType'] . "',
-				'" . DB_escape_string($_POST['BankAcc']) . "',
-				'" . DB_escape_string($_POST['BankSwift']) . "'
+				'" . $_POST['BankAcc'] . "',
+				'" . $_POST['BankSwift'] . "'
 				)";
 
 		$Errmsg = _('The addition of this tax authority failed because');

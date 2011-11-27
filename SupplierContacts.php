@@ -59,11 +59,11 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedContact could also exist if submit had not been clicked this code would not run in this case 'cos submit is false of course see the delete code below*/
 
-		$sql = "UPDATE suppliercontacts SET position='" . DB_escape_string($_POST['Position']) . "',
-											tel='" . DB_escape_string($_POST['Tel']) . "',
-											fax='" . DB_escape_string($_POST['Fax']) . "',
-											email='" . DB_escape_string($_POST['Email']) . "',
-											mobile = '". DB_escape_string($_POST['Mobile']) . "'
+		$sql = "UPDATE suppliercontacts SET position='" . $_POST['Position'] . "',
+											tel='" . $_POST['Tel'] . "',
+											fax='" . $_POST['Fax'] . "',
+											email='" . $_POST['Email'] . "',
+											mobile = '". $_POST['Mobile'] . "'
 				WHERE contact='".$SelectedContact."' 
 				AND supplierid='".$SupplierID."'";
 
@@ -81,12 +81,12 @@ if (isset($_POST['submit'])) {
 											email,
 											mobile)
 				VALUES ('" . $SupplierID . "',
-					'" . DB_escape_string($_POST['Contact']) . "',
-					'" . DB_escape_string($_POST['Position']) . "',
-					'" . DB_escape_string($_POST['Tel']) . "',
-					'" . DB_escape_string($_POST['Fax']) . "',
-					'" . DB_escape_string($_POST['Email']) . "',
-					'" . DB_escape_string($_POST['Mobile']) . "')";
+					'" . $_POST['Contact'] . "',
+					'" . $_POST['Position'] . "',
+					'" . $_POST['Tel'] . "',
+					'" . $_POST['Fax'] . "',
+					'" . $_POST['Email'] . "',
+					'" . $_POST['Mobile'] . "')";
 
 		$msg = _('The new supplier contact has been added to the database');
 	}

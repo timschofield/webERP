@@ -259,7 +259,7 @@ if ( isset($_POST['EnterTransfer']) ){
 							expirationdate='" . FormatDateForSQL($Item->ExpiryDate) . "'
 							WHERE stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 							AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'
-							AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+							AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
@@ -273,7 +273,7 @@ if ( isset($_POST['EnterTransfer']) ){
 										quantity)
 						VALUES ('" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
 						'" . $_SESSION['Transfer']->StockLocationFrom . "',
-						'" . DB_escape_string($Item->BundleRef) . "',
+						'" . $Item->BundleRef . "',
 						'" . FormatDateForSQL($Item->ExpiryDate) . "',
 						'" . -$Item->BundleQty . "')";
 
@@ -293,7 +293,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						VALUES (
 							'" . $StkMoveNo . "',
 							'" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
-							'" . DB_escape_string($Item->BundleRef) . "',
+							'" . $Item->BundleRef . "',
 							'" . $Item->BundleQty . "'
 							)";
 
@@ -372,7 +372,7 @@ if ( isset($_POST['EnterTransfer']) ){
 								expirationdate='" . FormatDateForSQL($Item->ExpiryDate) . "'
 							WHERE stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 							AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'
-							AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+							AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
@@ -386,7 +386,7 @@ if ( isset($_POST['EnterTransfer']) ){
 														quantity)
 						VALUES ('" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationTo . "',
-								'" . DB_escape_string($Item->BundleRef) . "',
+								'" . $Item->BundleRef . "',
 								'" . FormatDateForSQL($Item->ExpiryDate) . "',
 								'" . $Item->BundleQty . "')";
 		
@@ -404,7 +404,7 @@ if ( isset($_POST['EnterTransfer']) ){
 									moveqty)
 							VALUES ('" . $StkMoveNo . "',
 								'" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
-								'" . DB_escape_string($Item->BundleRef) . "',
+								'" . $Item->BundleRef . "',
 								'" . $Item->BundleQty . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');

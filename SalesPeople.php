@@ -85,10 +85,10 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE salesman SET salesmanname='" . DB_escape_string($_POST['SalesmanName']) . "',
+		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
 						commissionrate1='" . filter_number_format($_POST['CommissionRate1']) . "',
-						smantel='" . DB_escape_string($_POST['SManTel']) . "',
-						smanfax='" . DB_escape_string($_POST['SManFax']) . "',
+						smantel='" . $_POST['SManTel'] . "',
+						smanfax='" . $_POST['SManFax'] . "',
 						breakpoint='" . filter_number_format($_POST['Breakpoint']) . "',
 						commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
 						current='" . $_POST['Current'] . "'
@@ -107,13 +107,13 @@ if (isset($_POST['submit'])) {
 						smantel,
 						smanfax,
 						current)
-				VALUES ('" . DB_escape_string($_POST['SalesmanCode']) . "',
-					'" . DB_escape_string($_POST['SalesmanName']) . "',
+				VALUES ('" . $_POST['SalesmanCode'] . "',
+					'" . $_POST['SalesmanName'] . "',
 					'" . filter_number_format($_POST['CommissionRate1']) . "',
 					'" . filter_number_format($_POST['CommissionRate2']) . "',
 					'" . filter_number_format($_POST['Breakpoint']) . "',
-					'" . DB_escape_string($_POST['SManTel']) . "',
-					'" . DB_escape_string($_POST['SManFax']) . "',
+					'" . $_POST['SManTel'] . "',
+					'" . $_POST['SManFax'] . "',
 					'" . $_POST['Current'] . "'
 					)";
 
@@ -280,7 +280,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['SManTel'] = $myrow['smantel'];
 		$_POST['SManFax'] = $myrow['smanfax'];
 		$_POST['CommissionRate1']  = locale_number_format($myrow['commissionrate1'],'Variable');
-		$_POST['Breakpoint'] = locale_number_format($myrow['breakpoint'],'Variable');
+		$_POST['Breakpoint'] = locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$_POST['CommissionRate2']  = locale_number_format($myrow['commissionrate2'],'Variable');
 		$_POST['Current']  = $myrow['current'];
 
@@ -290,14 +290,15 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Salesperson code') . ':</td>
-					<td>' . $_POST['SalesmanCode'] . '</td></tr>';
+					<td>' . $_POST['SalesmanCode'] . '</td>
+				</tr>';
 
 	} else { //end of if $SelectedSalesPerson only do the else when a new record is being entered
 
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Salesperson code') . ':</td>
-					<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size=3 maxlength=3></td>
+					<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size="3" maxlength="3" /></td>
 				</tr>';
 	}
 	if (!isset($_POST['SalesmanName'])){
@@ -324,27 +325,27 @@ if (! isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Salesperson Name') . ':</td>
-			<td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size=30 maxlength=30 value="' . $_POST['SalesmanName'] . '"></td>
+			<td><input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size="30" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="SManTel" size=20 maxlength=20 value="' . $_POST['SManTel'] . '"></td>
+			<td><input type="text" name="SManTel" size="20" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Facsimile No') . ':</td>
-			<td><input type="text" name="SManFax" size=20 maxlength=20 value="' . $_POST['SManFax'] . '"></td>
+			<td><input type="text" name="SManFax" size="20" maxlength="20" value="' . $_POST['SManFax'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Commission Rate 1') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate1" size="5" maxlength="5" value="' . $_POST['CommissionRate1'] . '"></td>
+			<td><input type="text" class="number" name="CommissionRate1" size="5" maxlength="5" value="' . $_POST['CommissionRate1'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Breakpoint') . ':</td>
-			<td><input type="text" class="number" name="Breakpoint" size="6" maxlength="6" value="' . $_POST['Breakpoint'] . '"></td>
+			<td><input type="text" class="number" name="Breakpoint" size="6" maxlength="6" value="' . $_POST['Breakpoint'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Commission Rate 2') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate2" size="5" maxlength="5" value="' . $_POST['CommissionRate2']. '"></td>
+			<td><input type="text" class="number" name="CommissionRate2" size="5" maxlength="5" value="' . $_POST['CommissionRate2']. '" /></td>
 		</tr>';
 
 	echo '<tr>

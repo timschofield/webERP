@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO mrpdemandtypes (mrpdemandtype,
 						description)
 					VALUES ('" . trim(mb_strtoupper($_POST['MRPDemandType'])) . "',
-						'" . DB_escape_string($_POST['Description']) . "'
+						'" . $_POST['Description'] . "'
 						)";
 		$msg = _('The new demand type has been added to the database');
 	}

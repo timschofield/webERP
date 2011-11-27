@@ -114,19 +114,19 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		 */
 		for($i=0;$i<$_POST['CountOfInputs'];$i++){
 		//need to test if the serialised item exists first already
-			if (trim($_POST['SerialNo' .$i]) != "" AND  ($_SESSION['DefineControlledOnWOEntry']==0
+			if (trim($_POST['SerialNo' .$i]) != '' AND  ($_SESSION['DefineControlledOnWOEntry']==0
 					OR ($_SESSION['DefineControlledOnWOEntry']==1 AND $_POST['CheckedItem'.$i]==true))){
 					$SQL = "SELECT COUNT(*) FROM stockserialitems
 							WHERE stockid='" . $_POST['StockID'] . "'
 							AND loccode = '" . $_POST['IntoLocation'] . "'
-							AND serialno = '" . DB_escape_string($_POST['SerialNo' .$i]) . "'";
+							AND serialno = '" . $_POST['SerialNo' .$i] . "'";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a serial number for the stock item already exists because');
 					$DbgMsg =  _('The following SQL to test for an already existing serialised stock item was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 					$AlreadyExistsRow = DB_fetch_row($Result);
 
 					if ($AlreadyExistsRow[0]>0){
-						prnMsg(_('The serial number entered already exists. Duplicate serial numbers are prohibited. The duplicate item is:') . ' ' . DB_escape_string($_POST['SerialNo'.$i]) ,'error');
+						prnMsg(_('The serial number entered already exists. Duplicate serial numbers are prohibited. The duplicate item is:') . ' ' . $_POST['SerialNo'.$i] ,'error');
 						$InputError = true;
 					}
 			}
@@ -488,9 +488,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 																	qualitytext)
 											VALUES ('" . $_POST['StockID'] . "',
 													'" . $_POST['IntoLocation'] . "',
-													'" . DB_escape_string($_POST['SerialNo' . $i]) . "',
+													'" . $_POST['SerialNo' . $i] . "',
 													1,
-													'" . DB_escape_string($QualityText) . "')";
+													'" . $QualityText . "')";
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 							$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -504,7 +504,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 																	moveqty)
 										VALUES ('" . $StkMoveNo . "',
 												'" . $_POST['StockID'] . "',
-												'" . DB_escape_string($_POST['SerialNo' .$i]) . "',
+												'" . $_POST['SerialNo' .$i] . "',
 												1)";
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
@@ -515,7 +515,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$SQL = "DELETE FROM	woserialnos
 											WHERE wo='" . $_POST['WO'] . "'
 											AND stockid='" . $_POST['StockID'] ."'
-											AND serialno='" . DB_escape_string($_POST['SerialNo'.$i]) . "'";
+											AND serialno='" . $_POST['SerialNo'.$i] . "'";
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The predefined serial number record could not be deleted because');
 								$DbgMsg = _('The following SQL to delete the predefined work order serial number record was used');
 								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -534,7 +534,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 						$SQL = "SELECT COUNT(*) FROM stockserialitems
 								WHERE stockid='" . $_POST['StockID'] . "'
 								AND loccode = '" . $_POST['IntoLocation'] . "'
-								AND serialno = '" . DB_escape_string($_POST['BatchRef' .$i]) . "'";
+								AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a serial number for the stock item already exists because');
 						$DbgMsg =  _('The following SQL to test for an already existing serialised stock item was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -546,10 +546,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 						}
 						if ($AlreadyExistsRow[0]>0){
 							$SQL = "UPDATE stockserialitems SET quantity = quantity + " . filter_number_format($_POST['Qty' . $i]) . ",
-																qualitytext = '" . DB_escape_string($QualityText) . "'
+																qualitytext = '" . $QualityText . "'
 										WHERE stockid='" . $_POST['StockID'] . "'
 										AND loccode = '" . $_POST['IntoLocation'] . "'
-										AND serialno = '" . DB_escape_string($_POST['BatchRef' .$i]) . "'";
+										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						} else {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
@@ -558,9 +558,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 																qualitytext)
 										VALUES ('" . $_POST['StockID'] . "',
 												'" . $_POST['IntoLocation'] . "',
-												'" . DB_escape_string($_POST['BatchRef' . $i]) . "',
+												'" . $_POST['BatchRef' . $i] . "',
 												'" . filter_number_format($_POST['Qty'.$i]) . "',
-												'" . DB_escape_string($_POST['QualityText']) . "')";
+												'" . $_POST['QualityText'] . "')";
 						}
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
@@ -575,7 +575,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 														moveqty)
 									VALUES ('" . $StkMoveNo . "',
 											'" . $_POST['StockID'] . "',
-											'" . DB_escape_string($_POST['BatchRef'.$i])  . "',
+											'" . $_POST['BatchRef'.$i]  . "',
 											'" . filter_number_format($_POST['Qty'.$i])  . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
@@ -587,7 +587,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										INNER JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
 										WHERE stockmoves.type=26
 										AND stockserialmoves.stockid='" . $_POST['StockID'] . "'
-										AND stockserialmoves.serialno='" . 	DB_escape_string($_POST['BatchRef'.$i]) . "'";
+										AND stockserialmoves.serialno='" . 	$_POST['BatchRef'.$i] . "'";
 
 							$BatchTotQtyResult = DB_query($SQL,$db);
 							$BatchTotQtyRow = DB_fetch_row($BatchTotQtyResult);
@@ -596,7 +596,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$SQL = "DELETE FROM	woserialnos
 										WHERE wo='" . $_POST['WO'] . "'
 										AND stockid='" . $_POST['StockID'] ."'
-										AND serialno='" . DB_escape_string($_POST['BatchRef'.$i]) . "'";
+										AND serialno='" . $_POST['BatchRef'.$i] . "'";
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The predefined batch/lot/bundle record could not be deleted because');
 								$DbgMsg = _('The following SQL to delete the predefined work order batch/bundle/lot record was used');
 								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -838,6 +838,9 @@ if($WORow['controlled']==1){ //controlled
 				echo '" /></td>';
 
 			}
+		}
+		if (!isset($i)){
+			$i=0;
 		}
 		echo '</tr>';
 		echo '<input type="hidden" name="CountOfInputs" value="' . $i . '" />';

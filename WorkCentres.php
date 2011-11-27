@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		delete code below*/
 
 		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
-						description = '" . DB_escape_string($_POST['Description']) . "',
+						description = '" . $_POST['Description'] . "',
 						overheadrecoveryact ='" . $_POST['OverheadRecoveryAct'] . "',
 						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
 				WHERE code = '" . $SelectedWC . "'";
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 										overheadperhour)
 					VALUES ('" . $_POST['Code'] . "',
 						'" . $_POST['Location'] . "',
-						'" . DB_escape_string($_POST['Description']) . "',
+						'" . $_POST['Description'] . "',
 						'" . $_POST['OverheadRecoveryAct'] . "',
 						'" . $_POST['OverheadPerHour'] . "'
 						)";

@@ -390,13 +390,13 @@ if (isset($_POST['submit'])) {
 					if ($_POST['PropNumeric' .$i]==1){
 						$_POST['PropValue' . $i]=filter_number_format($_POST['PropValue' . $i]);
 					} else {
-						$_POST['PropValue' . $i]=DB_escape_string($_POST['PropValue' . $i]);
+						$_POST['PropValue' . $i]=$_POST['PropValue' . $i];
 					}
 					$result = DB_query("INSERT INTO stockitemproperties (stockid,
 																		stkcatpropid,
 																		value)
 														VALUES ('" . $StockID . "',
-																'" . DB_escape_string($_POST['PropID' . $i]) . "',
+																'" . $_POST['PropID' . $i] . "',
 																'" . $_POST['PropValue' . $i] . "')",
 										$db,$ErrMsg,$DbgMsg,true);
 				} //end of loop around properties defined for the category

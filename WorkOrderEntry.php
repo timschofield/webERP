@@ -319,13 +319,13 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 					$Cost = $CostRow[0];
 				}
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". filter_number_format($_POST['OutputQty' . $i]) . "',
-												 nextlotsnref = '". DB_escape_string($_POST['NextLotSNRef'.$i]) ."',
+												 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
 												 stdcost ='" . $Cost . "'
 								  WHERE wo='" . $_POST['WO'] . "'
 								  AND stockid='" . $_POST['OutputItem'.$i] . "'";
   			} elseif (isset($_POST['HasWOSerialNos'.$i]) and $_POST['HasWOSerialNos'.$i]==false) {
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". filter_number_format($_POST['OutputQty' . $i]) . "',
-												 nextlotsnref = '". DB_escape_string($_POST['NextLotSNRef'.$i]) ."'
+												 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
 								  WHERE wo='" . $_POST['WO'] . "'
 								  AND stockid='" . $_POST['OutputItem'.$i] . "'";
 			}

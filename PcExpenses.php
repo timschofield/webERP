@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedExpense) AND $InputError !=1) {
 
 		$sql = "UPDATE pcexpenses 
-				SET description = '" . DB_escape_string($_POST['Description']) . "',
+				SET description = '" . $_POST['Description'] . "',
 					glaccount = '" . $_POST['GLAccount'] . "',
 					tag = '" . $_POST['Tag'] . "'
 				WHERE codeexpense = '" . $SelectedExpense . "'";
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 			 			 glaccount,
 			 			 tag)
 				VALUES ('" . $_POST['CodeExpense'] . "',
-						'" . DB_escape_string($_POST['Description']) . "',
+						'" . $_POST['Description'] . "',
 						'" . $_POST['GLAccount'] . "',
 						'" . $_POST['Tag'] . "')";
 						

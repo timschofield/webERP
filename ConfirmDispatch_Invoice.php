@@ -1080,7 +1080,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 														'" . $OrderLine->DiscountPercent . "',
 														'" . $OrderLine->StandardCost . "',
 														'" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . "',
-														'" . DB_escape_string($OrderLine->Narrative) . "' )";
+														'" . $OrderLine->Narrative . "' )";
 			} else {
             // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				if (empty($OrderLine->StandardCost)) {
@@ -1113,7 +1113,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 												'" . -$OrderLine->QtyDispatched . "',
 												'" . $OrderLine->DiscountPercent . "',
 												'" . $OrderLine->StandardCost . "',
-												'" . DB_escape_string($OrderLine->Narrative) . "')";
+												'" . $OrderLine->Narrative . "')";
 			}
 
 
@@ -1153,7 +1153,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$SQL = "UPDATE stockserialitems	SET quantity= quantity - " . $Item->BundleQty . "
 							WHERE stockid='" . $OrderLine->StockID . "'
 							AND loccode='" . $_SESSION['Items'.$identifier]->Location . "'
-							AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+							AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
@@ -1167,7 +1167,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 														moveqty)
 									VALUES ('" . $StkMoveNo . "',
 											'" . $OrderLine->StockID . "',
-											'" . DB_escape_string($Item->BundleRef) . "',
+											'" . $Item->BundleRef . "',
 											'" . -$Item->BundleQty . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');

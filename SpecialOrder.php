@@ -359,11 +359,11 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										revised,
 										deliverydate)
 							VALUES ('" . $_SESSION['SPL']->SupplierID . "',
-							 		'" . DB_escape_string($_SESSION['SPL']->Comments) . "',
+							 		'" . $_SESSION['SPL']->Comments . "',
 									'" . Date('Y-m-d') . "',
 									'" . $_SESSION['SPL']->SuppCurrExRate . "',
-									'" . DB_escape_string($_SESSION['SPL']->Initiator) . "',
-									'" . DB_escape_string($_SESSION['SPL']->QuotationRef) . "',
+									'" . $_SESSION['SPL']->Initiator . "',
+									'" . $_SESSION['SPL']->QuotationRef . "',
 									'" . $_SESSION['SPL']->StkLocation . "',
 									'" . DB_escape_string($StkLocAddress['deladd1']) . "',
 									'" . DB_escape_string($StkLocAddress['deladd2']) . "',
@@ -373,7 +373,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . DB_escape_string($StkLocAddress['deladd6']) . "',
 									'" . DB_escape_string($StkLocAddress['contact']) . "',
 									'" . $_SESSION['SPL']->Status . "',
-									'" . DB_escape_string($StatusComment) . "',
+									'" . $StatusComment . "',
 									'" . $_SESSION['SPL']->AllowPrintPO . "',
 									'" . Date('Y-m-d') . "',
 									'" . Date('Y-m-d') . "')";
@@ -417,10 +417,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							description,
 							longdescription,
 							materialcost)
-					VALUES ('" . DB_escape_string($PartCode) . "',
+					VALUES ('" . $PartCode . "',
 						'" . $SPLLine->StkCat . "',
-						'" . DB_escape_string($SPLLine->ItemDescription) . "',
-						'" .  DB_escape_string($SPLLine->ItemDescription) . "',
+						'" . $SPLLine->ItemDescription . "',
+						'" .  $SPLLine->ItemDescription . "',
 						'" . $SPLLine->Cost . "')";
 
 
@@ -430,7 +430,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 			$sql = "INSERT INTO locstock (loccode, stockid) 
-					SELECT loccode,'" . DB_escape_string($PartCode) . "' FROM locations";
+					SELECT loccode,'" . $PartCode . "' FROM locations";
 			$ErrMsg = _('The item stock locations for the special order line') . " " . $SPLLine->LineNo . " " ._('could not be created because');
 			$DbgMsg = _('The SQL statement used to insert the location stock records and failed was');
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -455,9 +455,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 								quantityord)
 					VALUES ('";
 			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . "',
-					'" . DB_escape_string($PartCode) . "',
+					'" . $PartCode . "',
 					'" . $OrderDate . "',
-					'" . DB_escape_string($SPLLine->ItemDescription) . "',
+					'" . $SPLLine->ItemDescription . "',
 					'" . $GLCode . "',
 					'" . $SPLLine->Cost . "',
 					'" . $SPLLine->Quantity . "')";
@@ -517,7 +517,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					VALUES ('" . $OrderNo."',
 							'" . $_SESSION['SPL']->CustomerID . "',
 							'" . $_SESSION['SPL']->BranchCode . "',
-							'" . DB_escape_string($_SESSION['SPL']->CustRef) ."',
+							'" . $_SESSION['SPL']->CustRef ."',
 							'" . Date('Y-m-d') . "',
 							'" . $BranchDetails['salestype'] . "',
 							'" . $BranchDetails['defaultshipvia'] ."',
@@ -548,7 +548,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		foreach ($_SESSION['SPL']->LineItems as $StockItem) {
 
 			$LineItemsSQL = $StartOf_LineItemsSQL . ", 
-							'" . DB_escape_string($StockItem->PartCode) . "',
+							'" . $StockItem->PartCode . "',
 							'". $StockItem->Price . "', 
 							'" . $StockItem->Quantity . "', 
 							'" . $StockItem->LineNo . "')";

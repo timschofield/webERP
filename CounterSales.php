@@ -1031,12 +1031,12 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 												'" . $OrderNo . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 												'" . $_SESSION['Items'.$identifier]->Branch . "',
-												'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
-												'". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."',
-												'" . Date("Y-m-d H:i") . "',
+												'". $_SESSION['Items'.$identifier]->CustRef ."',
+												'". $_SESSION['Items'.$identifier]->Comments ."',
+												'" . Date('Y-m-d H:i') . "',
 												'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 												'" . $_SESSION['Items'.$identifier]->ShipVia . "',
-												'". DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
+												'". $_SESSION['Items'.$identifier]->DeliverTo . "',
 												'" . _('Counter Sale') . "',
 												'" . $_SESSION['Items'.$identifier]->PhoneNo . "',
 												'" . $_SESSION['Items'.$identifier]->Email . "',
@@ -1071,7 +1071,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 					'". $StockItem->Price . "',
 					'" . $StockItem->Quantity . "',
 					'" . floatval($StockItem->DiscountPercent) . "',
-					'" . DB_escape_string($StockItem->Narrative) . "',
+					'" . $StockItem->Narrative . "',
 					'" . Date('Y-m-d') . "',
 					'" . Date('Y-m-d') . "',
 					'" . $StockItem->Quantity . "',
@@ -1279,13 +1279,13 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				'" . $DefaultDispatchDate . "',
 				'" . date('Y-m-d H-i-s') . "',
 				'" . $PeriodNo . "',
-				'" . DB_escape_string($_SESSION['Items'.$identifier]->CustRef)  . "',
+				'" . $_SESSION['Items'.$identifier]->CustRef  . "',
 				'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 				'" . $OrderNo . "',
 				'" . $_SESSION['Items'.$identifier]->total . "',
 				'" . filter_number_format($_POST['TaxTotal']) . "',
 				'" . $ExRate . "',
-				'" . DB_escape_string($_SESSION['Items'.$identifier]->Comments) . "',
+				'" . $_SESSION['Items'.$identifier]->Comments . "',
 				'" . $_SESSION['Items'.$identifier]->ShipVia . "',
 				'" . ($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['TaxTotal'])) . "')";
 
@@ -1472,7 +1472,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 								'" . $OrderLine->DiscountPercent . "',
 								'" . $OrderLine->StandardCost . "',
 								'" . ($QtyOnHandPrior - $OrderLine->Quantity) . "',
-								'" . DB_escape_string($OrderLine->Narrative) . "' )";
+								'" . $OrderLine->Narrative . "' )";
 			} else {
 			// its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				if (empty($OrderLine->StandardCost)) {
@@ -1505,7 +1505,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 										'" . -$OrderLine->Quantity . "',
 										'" . $OrderLine->DiscountPercent . "',
 										'" . $OrderLine->StandardCost . "',
-										'" . DB_escape_string($OrderLine->Narrative) . "')";
+										'" . $OrderLine->Narrative . "')";
 			}
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
