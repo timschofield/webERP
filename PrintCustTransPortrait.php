@@ -164,7 +164,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
-						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
+						AND debtortrans.transno='" . $FromTransNo . "'";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
@@ -217,7 +217,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
-						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
+						AND debtortrans.transno='" . $FromTransNo . "'";
 
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
@@ -260,7 +260,7 @@ If (isset($PrintPDF)
 					FROM stockmoves INNER JOIN stockmaster
 					ON stockmoves.stockid = stockmaster.stockid
 					WHERE stockmoves.type=10
-					AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
+					AND stockmoves.transno='" . $FromTransNo . "'
 					AND stockmoves.show_on_inv_crds=1";
 			} else {
 				/* only credit notes to be retrieved */
@@ -279,7 +279,7 @@ If (isset($PrintPDF)
 					FROM stockmoves INNER JOIN stockmaster
 					ON stockmoves.stockid = stockmaster.stockid
 					WHERE stockmoves.type=11
-					AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
+					AND stockmoves.transno='" . $FromTransNo . "'
 					AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
@@ -657,7 +657,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
-						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
+						AND debtortrans.transno='" . $FromTransNo . "'";
 			} else { //its a credit note
 
 			   $sql = "SELECT debtortrans.trandate,
@@ -697,7 +697,7 @@ If (isset($PrintPDF)
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
-						AND debtortrans.transno='" . filter_number_format($FromTransNo) . "'";
+						AND debtortrans.transno='" . $FromTransNo . "'";
 
 			}
 
@@ -842,7 +842,7 @@ If (isset($PrintPDF)
 							FROM stockmoves INNER JOIN stockmaster
 							ON stockmoves.stockid = stockmaster.stockid
 							WHERE stockmoves.type=10
-							AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
+							AND stockmoves.transno='" . $FromTransNo . "'
 							AND stockmoves.show_on_inv_crds=1";
 
 				} else { /* then its a credit note */
@@ -885,7 +885,7 @@ If (isset($PrintPDF)
 							FROM stockmoves INNER JOIN stockmaster
 							ON stockmoves.stockid = stockmaster.stockid
 							WHERE stockmoves.type=11
-							AND stockmoves.transno='" . filter_number_format($FromTransNo) . "'
+							AND stockmoves.transno='" . $FromTransNo . "'
 							AND stockmoves.show_on_inv_crds=1";
 				}
 
@@ -1037,7 +1037,7 @@ If (isset($PrintPDF)
 					}
 					echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font>
 							<br />
-							<font size=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
+							<font size="1">' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</font></td>
 						</tr>
 						</table>';
 
@@ -1093,23 +1093,23 @@ If (isset($PrintPDF)
 				} else {
 				   $DisplaySubTot = locale_number_format(-$myrow['ovamount'],$myrow['decimalplaces']);
 				   $DisplayFreight = locale_number_format(-$myrow['ovfreight'],$myrow['decimalplaces']);
-				   $DisplayTax = locale_number_format(-$myrow['ovgst'],2);
+				   $DisplayTax = locale_number_format(-$myrow['ovgst'],$myrow['decimalplaces']);
 				   $DisplayTotal = locale_number_format(-$myrow['ovfreight']-$myrow['ovgst']-$myrow['ovamount'],$myrow['decimalplaces']);
 				}
 	/*Print out the invoice text entered */
 				echo '<table class="table1"><tr>
 					<td class="number">' . _('Sub Total') . '</td>
-					<td class="number" bgcolor="#EEEEEE" WIDTH="15%">' . $DisplaySubTot . '</td></tr>';
+					<td class="number" bgcolor="#EEEEEE" width="15%">' . $DisplaySubTot . '</td></tr>';
 				echo '<tr><td class="number">' . _('Freight') . '</td>
 					<td class="number" bgcolor="#EEEEEE">' . $DisplayFreight . '</td></tr>';
 				echo '<tr><td class="number">' . _('Tax') . '</td>
 					<td class="number" bgcolor="#EEEEEE">' . $DisplayTax . '</td></tr>';
 				if ($InvOrCredit=='Invoice'){
 				     echo '<tr><td class="number"><b>' . _('TOTAL INVOICE') . '</b></td>
-				     	<td class="number" bgcolor="#EEEEEE"><U><b>' . $DisplayTotal . '</b></U></td></tr>';
+				     	<td class="number" bgcolor="#EEEEEE"><u><b>' . $DisplayTotal . '</b></u></td></tr>';
 				} else {
-				     echo '<tr><td class="number"><font color=RED><b>' . _('TOTAL CREDIT') . '</b></font></td>
-				     		<td class="number" bgcolor="#EEEEEE"><font color="red"><U><b>' . $DisplayTotal . '</b></u></font></td></tr>';
+				     echo '<tr><td class="number"><font color="red"><b>' . _('TOTAL CREDIT') . '</b></font></td>
+				     		<td class="number" bgcolor="#EEEEEE"><font color="red"><u><b>' . $DisplayTotal . '</b></u></font></td></tr>';
 				}
 				echo '</table>';
 			} /* end of check to see that there was an invoice record to print */
