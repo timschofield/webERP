@@ -96,7 +96,7 @@
 			$_SESSION['PO'.$identifier]->Version = $myrow['version'];
 			$_SESSION['PO'.$identifier]->Port = $myrow['port'];
 			$_SESSION['PO'.$identifier]->Status = $myrow['status'];
-			$_SESSION['PO'.$identifier]->StatusComments = $myrow['stat_comment'];
+			$_SESSION['PO'.$identifier]->StatusComments = html_entity_decode($myrow['stat_comment'],ENT_QUOTES,'UTF-8');
 			$_SESSION['PO'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 			$_SESSION['ExistingOrder'] = $_SESSION['PO'.$identifier]->OrderNo;
 			$_SESSION['PO'.$identifier]->PaymentTerms= $myrow['paymentterms'];

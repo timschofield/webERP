@@ -293,29 +293,33 @@ else {
 
 	if (isset($OrderNumber) AND $OrderNumber !='') {
 		$SQL = "SELECT purchorders.orderno,
-				suppliers.suppname,
-				purchorders.orddate,
-				purchorders.deliverydate,
-				purchorders.initiator,
-				purchorders.status,
-				purchorders.requisitionno,
-				purchorders.allowprint,
-				suppliers.currcode,
-				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-			FROM purchorders INNER JOIN purchorderdetails
-			ON purchorders.orderno=purchorderdetails.orderno
-			INNER JOIN suppliers
-			ON purchorders.supplierno = suppliers.supplierid
-			WHERE purchorderdetails.completed=0
-			AND purchorders.orderno='". $OrderNumber ."'
-			GROUP BY purchorders.orderno ASC,
-				suppliers.suppname,
-				purchorders.orddate,
-				purchorders.status,
-				purchorders.initiator,
-				purchorders.requisitionno,
-				purchorders.allowprint,
-				suppliers.currcode";
+						purchorders.realorderno,
+						suppliers.suppname,
+						purchorders.orddate,
+						purchorders.deliverydate,
+						purchorders.initiator,
+						purchorders.status,
+						purchorders.requisitionno,
+						purchorders.allowprint,
+						suppliers.currcode,
+						currencies.decimalplaces AS currdecimalplaces,
+						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+				FROM purchorders INNER JOIN purchorderdetails
+				ON purchorders.orderno=purchorderdetails.orderno
+				INNER JOIN suppliers
+				ON purchorders.supplierno = suppliers.supplierid
+				INNER JOIN currencies
+				ON suppliers.currcode=currencies.currabrev 
+				WHERE purchorderdetails.completed=0
+				AND purchorders.orderno='". $OrderNumber ."'
+				GROUP BY purchorders.orderno ASC,
+					suppliers.suppname,
+					purchorders.orddate,
+					purchorders.status,
+					purchorders.initiator,
+					purchorders.requisitionno,
+					purchorders.allowprint,
+					suppliers.currcode";
 	} else {
 
 		  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */

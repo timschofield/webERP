@@ -94,7 +94,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$AuthRow=DB_fetch_array($AuthResult);
 			
 			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $_SESSION['PO'.$identifier]->Order_Value()) { //user has authority to authrorise as well as create the order
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . '<br />'.$_SESSION['PO'.$identifier]->StatusComments.'<br />';
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . '<br />'. $_SESSION['PO'.$identifier]->StatusComments.'<br />';
 				$_SESSION['PO'.$identifier]->AllowPrintPO=1;
 				$_SESSION['PO'.$identifier]->Status = 'Authorised';
 			} else { // no authority to authorise this order
@@ -111,7 +111,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					_('The order will be created with a status of pending and will require authorisation'), 'warn');
 					
 				$_SESSION['PO'.$identifier]->AllowPrintPO=0;
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . '<br />'.$_SESSION['PO'.$identifier]->StatusComments.'<br />';
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails . '<br />' . $_SESSION['PO'.$identifier]->StatusComments.'<br />';
 				$_SESSION['PO'.$identifier]->Status = 'Pending';
 			}
 		} else { //auto authorise is set to off
@@ -186,7 +186,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . Date('Y-m-d') . "',
 									'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
 									'" . $_SESSION['PO'.$identifier]->Status . "',
-									'" . $StatusComment . "',
+									'" . htmlentities($StatusComment,ENT_QUOTES,'UTF-8') . "',
 									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
 									'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
 									'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "' )";
@@ -244,12 +244,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			}
 			if ($Completed){
 				$_SESSION['PO'.$identifier]->Status = 'Completed';
-				if (IsEmailAddress($_SESSION['UserEmail'])){
-					$UserChangedStatus = ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
-				} else {
-					$UserChangedStatus = ' ' . $_SESSION['UsersRealName'] . ' ';
-				}
-				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Order completed by') . $UserChangedStatus  . '<br />' .$_SESSION['PO'.$identifier]->StatusComments;
+				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Order completed by') . $UserDetails  . '<br />' . $_SESSION['PO'.$identifier]->StatusComments;
+			} else {
+				$_SESSION['PO'.$identifier]->StatusComments = date($_SESSION['DefaultDateFormat']).' - ' . _('Order modified by') . $UserDetails  . '<br />' . $_SESSION['PO'.$identifier]->StatusComments;
 			}
 		     /*Update the purchase order header with any changes */
 
@@ -282,7 +279,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
 										allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
 										status = '" . $_SESSION['PO'.$identifier]->Status . "',
-										stat_comment = '" . $_SESSION['PO'.$identifier]->StatusComments . "' 
+										stat_comment = '" . htmlentities($_SESSION['PO'.$identifier]->StatusComments,ENT_QUOTES,'UTF-8') . "' 
 										WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 			$ErrMsg =  _('The purchase order could not be updated because');
@@ -375,6 +372,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			if ($_SESSION['PO'.$identifier]->AllowPrintPO==1 
 					AND ($_SESSION['PO'.$identifier]->Status=='Authorised'
 					OR $_SESSION['PO'.$identifier]->Status=='Printed')){
+						
 				echo '<br /><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a>';
 			}
 		} /*end of if its a new order or an existing one */

@@ -125,7 +125,9 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 
 		$POHeader = DB_fetch_array($result);
 		
-		if ($POHeader['status'] != 'Authorised' AND $POHeader['status'] != 'Printed') {
+		if ($POHeader['status'] != 'Authorised' 
+			AND $POHeader['status'] != 'Printed') {
+				
 			include('includes/header.inc');
 			prnMsg( _('Purchase orders can only be printed once they have been authorised') . '. ' . _('This order is currently at a status of') . ' ' . _($POHeader['status']),'warn');
 			include('includes/footer.inc');
@@ -333,12 +335,12 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		}
 	}
 	if ($ViewingOnly==0 AND $Success==1) {
-		$StatusComment =  date($_SESSION['DefaultDateFormat']) .' - ' . _('Printed by') . '<a href="mailto:'.$_SESSION['UserEmail'] .'">'.$_SESSION['UsersRealName']. '</a><br />' . $POHeader['stat_comment'];
+		$StatusComment =  date($_SESSION['DefaultDateFormat']) .' - ' . _('Printed by') . ' <a href="mailto:'.$_SESSION['UserEmail'] .'">'.$_SESSION['UsersRealName']. '</a><br />' . html_entity_decode($POHeader['stat_comment'],ENT_QUOTES,'UTF-8');
 		
 		$sql = "UPDATE purchorders	SET	allowprint =  0,
 										dateprinted  = '" . Date('Y-m-d') . "',
 										status = 'Printed',
-										stat_comment = '" . DB_escape_string($StatusComment) . "'
+										stat_comment = '" . htmlentities($StatusComment,ENT_QUOTES,'UTF-8') . "'
 				WHERE purchorders.orderno = '" .  $OrderNo ."'";
 		$result = DB_query($sql,$db);
 	}

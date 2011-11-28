@@ -302,7 +302,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$AuthResult=DB_query($AuthSQL,$db);
 			$AuthRow=DB_fetch_array($AuthResult);
 			
-			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $_SESSION['SPL']->Order_Value()) { //user has authority to authrorise as well as create the order
+			if (DB_num_rows($AuthResult) > 0 
+				AND $AuthRow['authlevel'] > $_SESSION['SPL']->Order_Value()) { //user has authority to authrorise as well as create the order
 				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . '<br />';
 				$_SESSION['SPL']->AllowPrintPO=1;
 				$_SESSION['SPL']->Status = 'Authorised';
@@ -373,7 +374,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . DB_escape_string($StkLocAddress['deladd6']) . "',
 									'" . DB_escape_string($StkLocAddress['contact']) . "',
 									'" . $_SESSION['SPL']->Status . "',
-									'" . $StatusComment . "',
+									'" . htmlentities($StatusComment, ENT_QUOTES,'UTF-8')  . "',
 									'" . $_SESSION['SPL']->AllowPrintPO . "',
 									'" . Date('Y-m-d') . "',
 									'" . Date('Y-m-d') . "')";

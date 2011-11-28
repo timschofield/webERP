@@ -152,7 +152,7 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 			}
 			$SQL = "UPDATE purchorders SET status='" . $_POST['Status']. "',
 							stat_comment='" . $_SESSION['PO'.$identifier]->StatusComments ."',
-							allowprint='".$AllowPrint."'
+							allowprint='" . $AllowPrint . "'
 					WHERE purchorders.orderno ='" . $_SESSION['ExistingOrder'] ."'";
 		
 			$ErrMsg = _('The order status could not be updated because');
@@ -161,7 +161,6 @@ if ((isset($_POST['UpdateStatus']) AND $_POST['UpdateStatus']!='') ) {
 	} //end if there is actually a status change the class Status != the POST['Status']
 }
 
-/*New order initiated by user clicking on supplier purchasing data from items page */
 if (isset($_GET['NewOrder']) 
 	AND isset($_GET['StockID']) 
 	AND isset($_GET['SelectedSupplier'])) {
@@ -179,7 +178,7 @@ if (isset($_GET['NewOrder'])
 		$_SESSION['PO'.$identifier]->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 		/* set the SupplierID we got */
 		$_SESSION['PO'.$identifier]->SupplierID = $_GET['SelectedSupplier'];
-		$_SESSION['PO'.$identifier]->DeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']), 'd', $_GET['LeadTime']);
+		$_SESSION['PO'.$identifier]->DeliveryDate = date($_SESSION['DefaultDateFormat']);
 		
 		$_SESSION['RequireSupplierSelection'] = 0;
 		$_POST['Select'] = $_GET['SelectedSupplier'];
@@ -732,7 +731,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber'] != '') {
 		$_SESSION['PO'.$identifier]->Version += 1;
 		$_POST['Version'] =  $_SESSION['PO'.$identifier]->Version;
-	} elseif (isset($_SESSION['PO'.$identifier]->Version) and $_SESSION['PO'.$identifier]->Version != '') {
+	} elseif (isset($_SESSION['PO'.$identifier]->Version) AND $_SESSION['PO'.$identifier]->Version != '') {
 		$_POST['Version'] =  $_SESSION['PO'.$identifier]->Version;
 	} else {
 		$_POST['Version']='1';
@@ -762,7 +761,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 			<td><input type="text" name="Requisition" size="16" maxlength="15" value="' . $_POST['Requisition'] . '" /></td></tr>';
 
 	echo '<tr><td>' . _('Date Printed') . ':</td><td>';
-	if (isset($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted) AND mb_strlen($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted)>6){
+	if (isset($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted) 
+		AND mb_strlen($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted)>6){
+			
 		echo ConvertSQLDate($_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted);
 		$Printed = True;
 	} else {
