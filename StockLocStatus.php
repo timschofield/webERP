@@ -263,7 +263,7 @@ if (isset($_POST['ShowStatus'])){
     					<td class="number">%s</td>
     					<td class="number">%s</td>
     					<td class="number">%s</td>
-    					<td class="number"><a target="_blank" href="' . $rootpath . 'SelectProduct.php?StockID=%s">%s</a></td>
+    					<td class="number"><a target="_blank" href="' . $rootpath . '/SelectProduct.php?StockID=%s">%s</a></td>
     					<td class="number">%s</td>
     					</tr>',
     					mb_strtoupper($myrow['stockid']),
@@ -295,7 +295,7 @@ if (isset($_POST['ShowStatus'])){
     					<td class="number">%s</td>
     					<td class="number">%s</td>
     					<td class="number">%s</td>
-    					<td class="number"><a target="_blank" href="' . $rootpath . 'SelectProduct.php?StockID=%s">%s</a></td>
+    					<td class="number"><a target="_blank" href="' . $rootpath . '/SelectProduct.php?StockID=%s">%s</a></td>
     					<td class="number">%s</td>',
     					mb_strtoupper($myrow['stockid']),
     					mb_strtoupper($myrow['stockid']),
