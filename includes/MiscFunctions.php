@@ -316,14 +316,17 @@ function http_file_exists($url)  {
 function locale_number_format($Number, $DecimalPlaces=0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
-	
-	if (!is_numeric($DecimalPlaces) AND $DecimalPlaces == 'Variable'){
-		$DecimalPlaces = mb_strlen($Number) - mb_strlen(intval($Number));
-		if ($DecimalPlaces > 0){
-			$DecimalPlaces--;
+	if ($_SESSION['Language']=='hi_IN.utf8' OR $_SESSION['Language']=='en_IN.utf8'){
+		return indian_number_format($Number,$DecimalPlaces);
+	} else {
+		if (!is_numeric($DecimalPlaces) AND $DecimalPlaces == 'Variable'){
+			$DecimalPlaces = mb_strlen($Number) - mb_strlen(intval($Number));
+			if ($DecimalPlaces > 0){
+				$DecimalPlaces--;
+			}
 		}
+		return number_format($Number,$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
 	}
-	return number_format($Number,$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
 }
 
 /* and to parse the input of the user into useable number */
@@ -343,5 +346,32 @@ function filter_number_format($Number) {
 	}
 }
 
+
+function indian_number_format($Number,$DecimalPlaces){ 
+	$IntegerNumber = intval($Number);
+	$DecimalValue = $Number - $IntegerNumber;
+	if ($DecimalPlaces !='Variable'){
+		$DecimalValue= round($DecimalValue,$DecimalPlaces);
+	}
+	if (strlen(substr($DecimalValue,2))>0){
+		$DecimalValue = substr($DecimalValue,1);
+	} else {
+		$DecimalValue ='';
+	}
+	if(strlen($IntegerNumber)>3){ 
+		$LastThreeNumbers = substr($IntegerNumber, strlen($IntegerNumber)-3, strlen($IntegerNumber)); 
+		$RestUnits = substr($IntegerNumber, 0, strlen($IntegerNumber)-3); // extracts the last three digits 
+		$RestUnits = (strlen($RestUnits)%2 == 1)?'0'.$RestUnits:$RestUnits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping. 
+		$FirstPart ='';
+		$ExplodedUnits = str_split($RestUnits, 2); 
+		for($i=0; $i<sizeof($ExplodedUnits); $i++){ 
+			$FirstPart .= intval($ExplodedUnits[$i]).','; // creates each of the 2's group and adds a comma to the end 
+		}    
+	
+		return $FirstPart.$LastThreeNumbers.$DecimalValue; 
+	} else { 
+		return $IntegerNumber. $DecimalValue;
+	} 
+} 
 
 ?>
