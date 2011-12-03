@@ -20,7 +20,7 @@
 
      echo '<tr>
 				<td class="footer"> </td>
-				<td class="footer">webERP v' . $_SESSION['VersionNumber'] . ' ' . _('Copyright') . ' &copy; weberp.org - '.date('Y').'</td>
+				<td class="footer">webERP v' . $_SESSION['VersionNumber'] . ' ' . _('Copyright') . ' &copy; weberp.org 2002 - '.date('Y').'</td>
 			</tr>';
 
      if(http_file_exists('http://sflogo.sourceforge.net/sflogo.php')) {

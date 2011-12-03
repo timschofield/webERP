@@ -1,5 +1,8 @@
 webERP Change Log
 
+3/12/11 Release 4.06.2
+
+2/12/11 Phil: Added indian_number_format for specific unusal number formatting 00,00,000.00 for India and apparently South Asian countries. Kicks in for en_IN.utf8 and hi_IN.utf8
 27/11/11 Phil: Removed a load of DB_escape_string() calls as no longer required now the entire $_POST and $_GET array are DB_escape_string()'ed
 27/11/11 Tim: PrintCustTransPortrait.php added bank account code
 27/11/11 Tim: GLTagProfit_Loss Gross Profit calculation error was = COGS - fixed

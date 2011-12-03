@@ -145,6 +145,7 @@ CREATE TABLE `banktrans` (
   KEY `ref_3` (`ref`),
   KEY `ref_4` (`ref`),
   KEY `ref_5` (`ref`),
+  KEY `ref_6` (`ref`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
@@ -609,7 +610,7 @@ CREATE TABLE `debtortrans` (
   KEY `EDISent` (`edisent`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -970,7 +971,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -997,7 +998,7 @@ CREATE TABLE `grns` (
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`podetailitem`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1506,7 +1507,7 @@ CREATE TABLE `purchorderdetails` (
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1558,7 +1559,7 @@ CREATE TABLE `purchorders` (
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1696,7 +1697,7 @@ CREATE TABLE `reportheaders` (
   `lower4` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1827,7 +1828,7 @@ CREATE TABLE `salesanalysis` (
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2298,7 +2299,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2501,7 +2502,7 @@ CREATE TABLE `supptrans` (
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2803,7 +2804,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-19 17:06:10
+-- Dump completed on 2011-12-03 16:31:59
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -2903,11 +2904,6 @@ INSERT INTO `bom` VALUES ('DVD_ACTION','DVD-UNSG2','ASS','MEL','2007-06-12','203
 INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990101','ASS','MEL','2005-06-04','2035-06-05',1,0);
 INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990102','ASS','MEL','2005-02-12','2037-06-13',1,0);
 INSERT INTO `bom` VALUES ('SLICE','BREAD','ASS','MEL','2007-06-19','2037-06-20',0.1,1);
-
---
--- Dumping data for table `buckets`
---
-
 
 --
 -- Dumping data for table `chartdetails`
@@ -4417,7 +4413,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-10-22');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2011-11-27');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultCustomerType','1');
@@ -4481,7 +4477,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.06.1');
+INSERT INTO `config` VALUES ('VersionNumber','4.06.2');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -4568,6 +4564,7 @@ INSERT INTO `debtortrans` VALUES (1,1,10,'ANGRY','ANGRY','2011-11-12 00:00:00','
 INSERT INTO `debtortrans` VALUES (2,2,12,'ANGRY','','2011-11-12 00:00:00','2011-11-12 22:41:16',0,1,'1','',0,0.85,-3.9,0,0,0,0,-3.9,'Melbourne Counter Sale',0,0,'');
 INSERT INTO `debtortrans` VALUES (3,2,10,'ANGRY','ANGRY','2011-11-19 00:00:00','2011-11-19 15:17:16',0,1,'','DE',36,0.85,2894.849124,0,0,0,0,2894.849124,'',1,0,'');
 INSERT INTO `debtortrans` VALUES (4,3,12,'ANGRY','','2011-11-19 00:00:00','2011-11-19 15:17:16',0,1,'2','',0,0.85,-2894.85,0,0,0,0,-2894.85,'Melbourne Counter Sale',0,0,'');
+INSERT INTO `debtortrans` VALUES (5,3,10,'QUICK','QUIC','2011-11-28 00:00:00','2011-11-26 20:47:13',1,0,'','DE',37,0.85,319,31.9,0,0,0,0,'',1,0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -4575,6 +4572,7 @@ INSERT INTO `debtortrans` VALUES (4,3,12,'ANGRY','','2011-11-19 00:00:00','2011-
 
 INSERT INTO `debtortranstaxes` VALUES (1,13,0);
 INSERT INTO `debtortranstaxes` VALUES (3,13,0);
+INSERT INTO `debtortranstaxes` VALUES (5,1,37.529411764706);
 
 --
 -- Dumping data for table `debtortype`
@@ -4872,6 +4870,18 @@ INSERT INTO `gltrans` VALUES (36,22,5,0,'2011-11-19',0,4900,'BINGO-',-1198.16854
 INSERT INTO `gltrans` VALUES (37,22,5,0,'2011-11-19',0,1030,'BINGO-',-1197.65381853,0,'',0);
 INSERT INTO `gltrans` VALUES (38,22,5,0,'2011-11-19',0,5200,'diff Exch',-413.01942882354,0,'',0);
 INSERT INTO `gltrans` VALUES (39,22,5,0,'2011-11-19',0,2100,'Exch Diff',413.01942882354,0,'',0);
+INSERT INTO `gltrans` VALUES (40,10,3,0,'2011-11-28',1,5000,'QUICK - DVD-UNSG x 20 @ 5.0000',100,0,'',0);
+INSERT INTO `gltrans` VALUES (41,10,3,0,'2011-11-28',1,1460,'QUICK - DVD-UNSG x 20 @ 5.0000',-100,0,'',0);
+INSERT INTO `gltrans` VALUES (42,10,3,0,'2011-11-28',1,4100,'QUICK - DVD-UNSG x 20 @ 15.95',-375.29,0,'',0);
+INSERT INTO `gltrans` VALUES (43,10,3,0,'2011-11-28',1,1100,'QUICK',412.82,0,'',0);
+INSERT INTO `gltrans` VALUES (44,10,3,0,'2011-11-28',1,2300,'QUICK',-37.53,0,'',0);
+INSERT INTO `gltrans` VALUES (45,25,37,0,'2011-11-26',1,1460,'PO: 19 WHYNOT - DVD-UNSG - Under Siege Linked x 10 @ 5.00',50,0,'',0);
+INSERT INTO `gltrans` VALUES (46,25,37,0,'2011-11-26',1,2150,'PO1322293990: 19 WHYNOT - DVD-UNSG - Under Siege Linked x 10 @ 5.00',-50,0,'',0);
+INSERT INTO `gltrans` VALUES (47,20,25,0,'2011-11-25',1,2150,'WHYNOT - GRN 4 - DVD-UNSG x 10 @  std cost of 5',50,0,'',0);
+INSERT INTO `gltrans` VALUES (48,20,25,0,'2011-11-25',1,5000,'WHYNOT - GRN 4 - DVD-UNSG x 20 x  price var of 3',60,0,'',0);
+INSERT INTO `gltrans` VALUES (49,20,25,0,'2011-11-25',1,1460,'WHYNOT - Average Cost Adj - DVD-UNSG x -10 x 3',-30,0,'',0);
+INSERT INTO `gltrans` VALUES (50,20,25,0,'2011-11-25',1,2310,'WHYNOT - Inv 9775 Australian GST 10.00% AUD8 @ exch rate 1',8,0,'',0);
+INSERT INTO `gltrans` VALUES (51,20,25,0,'2011-11-25',1,2100,'WHYNOT - Inv 9775 AUD88.00 @ a rate of 1',-88,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -4880,6 +4890,7 @@ INSERT INTO `gltrans` VALUES (39,22,5,0,'2011-11-19',0,2100,'Exch Diff',413.0194
 INSERT INTO `grns` VALUES (34,1,4,'BREAD','2011-11-12','Bread',10.3,10.3,'BINGO',0.5625);
 INSERT INTO `grns` VALUES (35,2,23,'DVD-CASE','2011-11-12','CrystalCase50 - Crystal Cases 50 Pack',98,0,'WHYNOT',0.3);
 INSERT INTO `grns` VALUES (36,3,22,'DVD-CASE','2011-11-12','CrystalCase50 - Crystal Cases 50 Pack',64,0,'WHYNOT',0.3);
+INSERT INTO `grns` VALUES (37,4,28,'DVD-UNSG','2011-11-26','Under Siege Linked',10,10,'WHYNOT',5);
 
 --
 -- Dumping data for table `holdreasons`
@@ -4913,7 +4924,7 @@ INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',162,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',0,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',0,3);
 INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG',0,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG',10,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG2',0,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD_ACTION',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FLOUR',0,1);
@@ -4935,7 +4946,7 @@ INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-DHWV',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-LTWP',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-TOPGUN',0,0);
-INSERT INTO `locstock` VALUES ('TOR','DVD-UNSG',0,0);
+INSERT INTO `locstock` VALUES ('TOR','DVD-UNSG',-20,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-UNSG2',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD_ACTION',0,0);
 INSERT INTO `locstock` VALUES ('TOR','FLOUR',0,0);
@@ -5062,6 +5073,7 @@ INSERT INTO `periods` VALUES (-2,'2011-09-30');
 INSERT INTO `periods` VALUES (-1,'2011-10-31');
 INSERT INTO `periods` VALUES (0,'2011-11-30');
 INSERT INTO `periods` VALUES (1,'2011-12-31');
+INSERT INTO `periods` VALUES (2,'2012-01-31');
 
 --
 -- Dumping data for table `pickinglistdetails`
@@ -5131,7 +5143,7 @@ INSERT INTO `purchorderdetails` VALUES (6,4,'FUJI9901ASS','2011-02-18','Fujitsu 
 INSERT INTO `purchorderdetails` VALUES (8,6,'','2011-03-08','Fish or ships',1,0,75,0,0,1,0,0,'',0,'each','',0,1);
 INSERT INTO `purchorderdetails` VALUES (9,6,'BIGEARS12','2011-03-08','Big Ears and Noddy episodes on DVD',1460,0,0,0,0,2,0,0,'0',0,'each','1',0,1);
 INSERT INTO `purchorderdetails` VALUES (10,7,'','2011-03-08','fddsasd',1090,0,2.5,0,0,1,0,0,'',0,'each','',0,1);
-INSERT INTO `purchorderdetails` VALUES (11,7,'BREAD','2011-03-08','Bread',1460,0,0,0,0,2,0,0,'0',0,'each','1',0,1);
+INSERT INTO `purchorderdetails` VALUES (11,7,'BREAD','2011-03-08','Bread',1460,0,15.95,0,0,2,0,0,'0',0,'each','1',0,1);
 INSERT INTO `purchorderdetails` VALUES (12,8,'','2011-03-08','fddfdf',1400,0,95.5,0,0,10,0,0,'',0,'each','',0,1);
 INSERT INTO `purchorderdetails` VALUES (13,8,'DVD-TOPGUN','2011-03-08','Top Gun DVD',1460,0,7.99,0,0,2,0,0,'0',0,'each','1',0,1);
 INSERT INTO `purchorderdetails` VALUES (18,12,'DVD-CASE','2011-03-27',' - ',1460,0,1.975,0,0,200,0,0,'0',0,'each','1',0,2);
@@ -5142,6 +5154,7 @@ INSERT INTO `purchorderdetails` VALUES (24,17,'DVD-CASE','2011-06-26','webERP De
 INSERT INTO `purchorderdetails` VALUES (25,17,'DVD-TOPGUN','2011-06-26','Top Gun DVD',1460,0,0,0,0,5000,0,0,'0',0,'','',0,1);
 INSERT INTO `purchorderdetails` VALUES (26,18,'BREAD','2011-10-09','  Loaf of bread',1460,0,1.58,0,0,0.5,0,0,'',0,'','',0,1);
 INSERT INTO `purchorderdetails` VALUES (27,13,'DVD-DHWV','2011-04-12','Die Hard With A Vengeance Linked',1460,0,6.95,0,0,3,0,0,'0',0,'each','',0,1);
+INSERT INTO `purchorderdetails` VALUES (28,19,'DVD-UNSG','2011-11-26','Under Siege Linked',1460,10,8,8,5,10,10,0,'0',1,'each','',0,1);
 
 --
 -- Dumping data for table `purchorders`
@@ -5152,7 +5165,7 @@ INSERT INTO `purchorders` VALUES (2,'GOTSTUFF','','2009-02-05 00:00:00',1,NULL,1
 INSERT INTO `purchorders` VALUES (3,'BINGO','','2010-08-14 00:00:00',0.85,'2010-08-14 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','1.00','2010-08-14','','1','2010-08-14','Completed','12/11/2011 - Order Completed on entry of GRN<br />14/08/2010 - Printed by <a href=\"mailto:\">admin</a><br>14/08/2010 - Authorised by <a href=\"mailto:\">admin</a><br>14/08/2010 - Order Created by &lt;a href=&quot;mailto:&quot;&gt;admin&lt;/a&gt; - &lt;br&gt;','30','');
 INSERT INTO `purchorders` VALUES (4,'BINGO','','2011-02-18 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','3.00','2011-02-18','','1','2011-02-18','Authorised','18/02/2011 - Order Created and Authorised by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - <br />','30','');
 INSERT INTO `purchorders` VALUES (6,'CAMPBELL','','2011-03-08 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 9882','Ottowa Rise','','','','','','','Jack Roberts','1.00','2011-03-08','','1','2011-03-08','Authorised','08/03/2011 - Order Created and Authorised by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - <br />','30','');
-INSERT INTO `purchorders` VALUES (7,'BINGO','','2011-03-08 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','2.00','2011-03-27','','1','2011-03-08','Authorised','08/03/2011 - Order Created and Authorised by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - <br />','30','');
+INSERT INTO `purchorders` VALUES (7,'BINGO','','2011-03-08 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','3.00','2011-12-03','','1','2011-03-08','Authorised','03/12/2011 - Order modified by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;','30','');
 INSERT INTO `purchorders` VALUES (8,'CRUISE','','2011-03-08 00:00:00',0.8,'2011-03-26 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 2001','Ft Lauderdale, Florida','','','','','Barry Toad','','Jack Roberts','1.00','2011-03-08','','1','2011-03-08','Rejected','27/03/2011 - Rejected by <a href=\"mailto:info@weberp.org\">Demonstration user</a><br>27/03/2011 - Order set to pending status by &lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br&gt;26/03/2011 - Printed by&lt;a href=&quot;mailto:info@weberp.org&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;08/03/2011 - Order Created and Authorised by &lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt; - &lt;br /&gt;','30','');
 INSERT INTO `purchorders` VALUES (9,'BINGO','','2011-03-26 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','2.00','2011-03-26','','1','2011-03-26','Authorised','26/03/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','30','');
 INSERT INTO `purchorders` VALUES (10,'BINGO','','2011-03-26 00:00:00',0.85,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Box 3499','Gardenier','San Fransisco','California 54424','','','','','Jack Roberts','2.00','2011-03-26','','1','2011-03-26','Authorised','26/03/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','30','');
@@ -5162,8 +5175,9 @@ INSERT INTO `purchorders` VALUES (13,'WHYNOT','','2011-04-12 00:00:00',1,NULL,1,
 INSERT INTO `purchorders` VALUES (14,'WHYNOT','','2011-04-18 00:00:00',1,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Authorised','18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
 INSERT INTO `purchorders` VALUES (15,'WHYNOT','','2011-04-18 00:00:00',1,'2011-04-18 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Printed','18/04/2011 - Printed by<a href=\"mailto:info@weberp.org\">Demonstration user</a><br />18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
 INSERT INTO `purchorders` VALUES (16,'WHYNOT','','2011-04-18 00:00:00',1,'2011-04-18 00:00:00',1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','1.00','2011-04-18','','1','2011-04-18','Completed','12/11/2011 - Order Completed on entry of GRN<br />18/04/2011 - Printed by<a href=\"mailto:info@weberp.org\">Demonstration user</a><br />18/04/2011 - Order Created and Authorised by <a href=\"mailto:info@weberp.org\">Demonstration user</a> - <br />','20','');
-INSERT INTO `purchorders` VALUES (17,'CRUISE','','2011-06-26 00:00:00',0.8,NULL,1,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 2001','Ft Lauderdale, Florida','','','','','Barry Toad','','Jack Roberts','1.00','2011-06-26','','1','2011-06-26','Authorised','26/06/2011 - Order Created and Authorised by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - <br />','30','');
+INSERT INTO `purchorders` VALUES (17,'CRUISE','','2011-06-26 00:00:00',0.8,NULL,0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','Box 2001','Ft Lauderdale, Florida','','','','','Barry Toad','','Jack Roberts','1.00','2011-06-26','','1','2011-06-26','Cancelled','03/12/2011 - Cancelled by <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a><br />','30','');
 INSERT INTO `purchorders` VALUES (18,'GOTSTUFF',NULL,'2011-10-08 00:00:00',0.85,NULL,0,'Demonstrat',NULL,'MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','',' Australia','+61 3 56789012','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','','','','','1.00','2011-10-08','','1','2011-10-08','Pending','08/10/2011 - Order Created by  <a href=\"mailto:phil@logicworks.co.nz\">Demonstration user</a> - Auto created from sales orders<br />','20','');
+INSERT INTO `purchorders` VALUES (19,'WHYNOT','','2011-11-26 00:00:00',1,'2011-11-26 00:00:00',0,'admin','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','+61 3 56789012','+61 3 56789012','Well I will ','If I','Want ','To','','','','12323','Jack Roberts','2.00','2011-11-26','','1','2011-11-26','Completed','26/11/2011 - Order Completed on entry of GRN<br />26/11/2011 - Printed by&lt;a href=&quot;mailto:phil@logicworks.co.nz&quot;&gt;Demonstration user&lt;/a&gt;&lt;br /&gt;','20','');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -5208,6 +5222,8 @@ INSERT INTO `recurrsalesorderdetails` VALUES (14,'DVD-TOPGUN',5.33,2,0,'');
 
 INSERT INTO `reportcolumns` VALUES (1,1,'Value','',0,0,7,'Net Value',0,0,'',1,'N',0);
 INSERT INTO `reportcolumns` VALUES (1,2,'Gross','Profit',0,0,14,'Gross Profit',0,0,'',1,'N',0);
+INSERT INTO `reportcolumns` VALUES (2,1,'Cost','Dec',0,1,1,'Cost',0,0,'',1,'N',0);
+INSERT INTO `reportcolumns` VALUES (2,2,'Qty','Dec',0,1,1,'Quantity',0,0,'',1,'N',0);
 
 --
 -- Dumping data for table `reportfields`
@@ -5227,6 +5243,7 @@ INSERT INTO `reportfields` VALUES (1804,135,'sortlist',1,'stockmaster.stockid','
 --
 
 INSERT INTO `reportheaders` VALUES (1,'Test report','Sales Area',0,'0','zzzzz','Customer Code',0,'1','zzzzzzzzzz','Product Code',0,'1','zzzzzzzzz','Not Used',0,'','');
+INSERT INTO `reportheaders` VALUES (2,'Sales DVD-UNS','Product Code',0,'DVD-UN','DVD-UNZZZZ','Not Used',0,'','','Not Used',0,'','','Not Used',0,'','');
 
 --
 -- Dumping data for table `reportlinks`
@@ -6148,6 +6165,7 @@ INSERT INTO `reports` VALUES (135,'Currency Price List','rpt','inv','1','A4:210:
 --
 
 INSERT INTO `salesanalysis` VALUES ('DE',0,3536.01176470592,2.8125,'ANGRY','ANGRY',5,125.71867764706,'BREAD','TR',1,'ERI','FOOD',1);
+INSERT INTO `salesanalysis` VALUES ('DE',1,375.29,130,'QUICK','QUIC',20,0,'DVD-UNSG','FL',1,'ERI','DVD',2);
 
 --
 -- Dumping data for table `salescat`
@@ -6182,7 +6200,7 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',5.5,'10001',2.95,1);
 INSERT INTO `salesorderdetails` VALUES (0,6,'BREAD',0,6.9,3,0,0.1,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,7,'BREAD',0,6.9,3,0,0.1,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,8,'BREAD',0,6.9,4,0,0.0552,'2011-09-19 00:00:00',0,'','2010-05-31','',0,0);
-INSERT INTO `salesorderdetails` VALUES (0,9,'BREAD',0,6.9,4,0,0.15,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (0,9,'BREAD',0,6.9,198000,0,0.15,'2010-05-31 00:00:00',0,'','2010-05-31','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,10,'BREAD',0,12,2,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,11,'BREAD',0,5.9386337209302,5,0,0,'2011-09-12 00:00:00',0,'','2010-05-31','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,12,'SALT',0,25,2,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
@@ -6200,6 +6218,7 @@ INSERT INTO `salesorderdetails` VALUES (0,31,'DVD-TOPGUN',0,7544.99,2.4,0,0,'000
 INSERT INTO `salesorderdetails` VALUES (0,32,'DVD-TOPGUN',0,10.8,2,0,0,'0000-00-00 00:00:00',0,'','2011-09-23','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,33,'SLICE',0,0.12,5,0,0,'0000-00-00 00:00:00',0,'5 slices of bread','2011-10-08','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,34,'BREAD',2,1.95,2,0,0,'2011-11-12 00:00:00',1,'','2011-11-12',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (0,37,'DVD-UNSG',20,15.95,20,0,0,'2011-11-28 00:00:00',1,'','2011-11-26','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,6,'SALT',0,3.25,3,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,7,'SALT',0,3.25,3,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,8,'SALT',0,3.25,3.659,0,0.0225,'2011-09-19 00:00:00',0,'','2010-05-31','',0,0);
@@ -6242,6 +6261,7 @@ INSERT INTO `salesorders` VALUES (32,'QUARTER','QUARTER','','',' Inv 18','2011-0
 INSERT INTO `salesorders` VALUES (33,'JOLOMU','JOLOMU','','','','2011-10-08','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2011-10-10','2011-10-10',0,'0000-00-00',0,'2011-10-10',1);
 INSERT INTO `salesorders` VALUES (34,'ANGRY','ANGRY','',NULL,' Invoice: 1','2011-11-12','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2011-11-12','2011-11-12',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (36,'ANGRY','ANGRY','',NULL,' Invoice: 2','2011-11-19','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2011-11-19','2011-11-19',0,'0000-00-00',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (37,'QUICK','QUIC','','',' Inv 3','2011-11-26','DE',1,'Fox Street','Jumped Over','The Lazy Dog','','','','','','Quick Brown PLC',1,0,'TOR','2011-11-28','2011-11-28',0,'0000-00-00',0,'2011-11-28',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -6738,7 +6758,7 @@ INSERT INTO `stockmaster` VALUES ('DVD-CASE','DVD','webERP Demo DVD Case','webER
 INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). &lt;br /&gt;Languages: English, Deutsch. &lt;br /&gt;Subtitles: English, Deutsch, Spanish. &lt;br /&gt;Audio: Dolby Surround 5.1. &lt;br /&gt;Picture Format: 16:9 Wide-Screen. &lt;br /&gt;Length: (approx) 122 minutes. &lt;br /&gt;Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','0.0000','5.5000','2.3200','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'0',0,0,0,0,0,'0.0000','0000-00-00');
 INSERT INTO `stockmaster` VALUES ('DVD-LTWP','AIRCON','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','0.0000','2.6600','2.7000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000','0000-00-00');
 INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000','0000-00-00');
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000','0000-00-00');
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','0.0000','5.0000','8.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000','0000-00-00');
 INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,0,0,0,'0.0000','0000-00-00');
 INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','0.0000','0.0000','16.2200','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,0,0,0,'0.0000','0000-00-00');
 INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,1,0,0,0,'0.0000','0000-00-00');
@@ -6762,6 +6782,8 @@ INSERT INTO `stockmoves` VALUES (2,'DVD-CASE',25,35,'MEL','2011-11-12','','','30
 INSERT INTO `stockmoves` VALUES (3,'DVD-CASE',25,36,'MEL','2011-11-12','','','30.0000',0,'WHYNOT (Why not add a new supplier) - 15',64,0,0.3,1,162,0,NULL);
 INSERT INTO `stockmoves` VALUES (4,'BREAD',10,1,'MEL','2011-11-12','ANGRY','ANGRY','2.2941',0,'34',-2,0,0.5625,1,8.3,0,'');
 INSERT INTO `stockmoves` VALUES (5,'BREAD',10,2,'MEL','2011-11-19','ANGRY','ANGRY','1177.1412',0,'36',-3,0.0356,0.5625,1,5.3,0,'');
+INSERT INTO `stockmoves` VALUES (6,'DVD-UNSG',10,3,'TOR','2011-11-28','QUICK','QUIC','18.7600',1,'37',-20,0,5,1,-20,0,'');
+INSERT INTO `stockmoves` VALUES (7,'DVD-UNSG',25,37,'MEL','2011-11-26','','','8.0000',1,'WHYNOT (Why not add a new supplier) - 19',10,0,5,1,10,0,NULL);
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -6769,6 +6791,7 @@ INSERT INTO `stockmoves` VALUES (5,'BREAD',10,2,'MEL','2011-11-19','ANGRY','ANGR
 
 INSERT INTO `stockmovestaxes` VALUES (4,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (5,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (6,1,0.1,0,1);
 
 --
 -- Dumping data for table `stockserialitems`
@@ -6818,12 +6841,14 @@ INSERT INTO `suppliertype` VALUES (2,'Others');
 
 INSERT INTO `supptrans` VALUES (24,20,'BINGO','1231143','2011-11-18','2011-12-31','2011-11-19 00:00:00',0,0.85,3594.71,359.471,-413.01942882354,1210.95,'',0,1);
 INSERT INTO `supptrans` VALUES (5,22,'BINGO','Direct Credit','2011-11-19','0000-00-00','2011-11-19 16:39:43',0,1.1970313622217,-2001.47,0,413.01942882354,-1210.95,'',0,2);
+INSERT INTO `supptrans` VALUES (25,20,'WHYNOT','9775','2011-11-25','2011-12-22','2011-11-26 00:00:00',0,1,80,8,0,0,'',0,3);
 
 --
 -- Dumping data for table `supptranstaxes`
 --
 
 INSERT INTO `supptranstaxes` VALUES (1,1,359.471);
+INSERT INTO `supptranstaxes` VALUES (3,1,8);
 
 --
 -- Dumping data for table `systypes`
@@ -6833,23 +6858,23 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',6);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',4);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',3);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
 INSERT INTO `systypes` VALUES (12,'Receipt',3);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',23);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',26);
-INSERT INTO `systypes` VALUES (18,'Purchase Order',18);
+INSERT INTO `systypes` VALUES (18,'Purchase Order',19);
 INSERT INTO `systypes` VALUES (19,'Picking List',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',24);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',25);
 INSERT INTO `systypes` VALUES (21,'Debit Note',7);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',5);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',36);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',37);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',6);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',11);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',36);
+INSERT INTO `systypes` VALUES (30,'Sales Order',37);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',18);
@@ -6975,7 +7000,7 @@ INSERT INTO `workorders` VALUES (18,'MEL','2011-11-12','2011-11-12',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-11-19 16:37:39','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','fr_FR.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-12-03 15:38:47','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_IN.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -6983,5 +7008,5 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-19 17:06:11
+-- Dump completed on 2011-12-03 16:31:59
 SET FOREIGN_KEY_CHECKS = 1;
