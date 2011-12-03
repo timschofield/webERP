@@ -353,10 +353,20 @@ function indian_number_format($Number,$DecimalPlaces){
 	if ($DecimalPlaces !='Variable'){
 		$DecimalValue= round($DecimalValue,$DecimalPlaces);
 	}
-	if (strlen(substr($DecimalValue,2))>0){
+	if ($DecimalPlaces!='Variable' AND strlen(substr($DecimalValue,2))>0){
+		/*If the DecimalValue is longer than '0.' then chop off the leading 0*/
 		$DecimalValue = substr($DecimalValue,1);
+		if ($DecimalPlaces > 0){
+			$DecimalValue = str_pad($DecimalValue,$DecimalPlaces,'0');
+		} else {
+			$DecimalValue ='';
+		}
 	} else {
-		$DecimalValue ='';
+		if ($DecimalPlaces!='Variable' AND $DecimalPlaces > 0){
+			$DecimalValue = '.' . str_pad($DecimalValue,$DecimalPlaces,'0');
+		} elseif($DecimalPlaces==0) {
+			$DecimalValue ='';
+		}
 	}
 	if(strlen($IntegerNumber)>3){ 
 		$LastThreeNumbers = substr($IntegerNumber, strlen($IntegerNumber)-3, strlen($IntegerNumber)); 

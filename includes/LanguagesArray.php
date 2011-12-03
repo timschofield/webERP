@@ -11,6 +11,11 @@ $LanguagesArray['en_GB.utf8']['WindowsLocale'] = 'english-uk';
 $LanguagesArray['en_GB.utf8']['DecimalPoint'] = '.';
 $LanguagesArray['en_GB.utf8']['ThousandsSeparator'] = ',';
 
+$LanguagesArray['en_IN.utf8']['LanguageName'] = _('English India');
+$LanguagesArray['en_IN.utf8']['WindowsLocale'] = 'english-in';
+$LanguagesArray['en_IN.utf8']['DecimalPoint'] = '.';
+$LanguagesArray['en_IN.utf8']['ThousandsSeparator'] = ',';
+
 $LanguagesArray['cz_CZ.utf8']['LanguageName'] = _('Czech');
 $LanguagesArray['cz_CZ.utf8']['WindowsLocale'] = 'czech';
 $LanguagesArray['cz_CZ.utf8']['DecimalPoint'] = ',';
