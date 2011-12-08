@@ -276,7 +276,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 
 	fclose($FileHandle);
 
-} elseif ( isset($_POST['gettemplate']) || isset($_GET['gettemplate']) ) { //download an import template
+} elseif ( isset($_POST['gettemplate']) OR isset($_GET['gettemplate']) ) { //download an import template
 
 	echo '<br /><br /><br />"'. implode('","',$FieldNames). '"<br /><br /><br />';
 
@@ -288,7 +288,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		<br />
 		<br />
 	';
-	echo '<form enctype="multipart/form-data" action="Z_ImportFixedAssets.php" method=post>';
+	echo '<form enctype="multipart/form-data" action="Z_ImportFixedAssets.php" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '">';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000">';

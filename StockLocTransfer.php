@@ -33,26 +33,23 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
     	//loop through file rows
     	while ( ($myrow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
 
-    		//check for correct number of fields
-    		$FieldCount = count($myrow);
-    		if ($FieldCount != 2)){
-    			prnMsg (_('File contains') . ' '. $FieldCount . ' ' . _('columns, but only 2 columns are expected. The comma separated file should have just two columns the first for the item code and the second for the quantity to transfer'),'error');
+    		if (count($myrow) != 2){
+    			prnMsg (_('File contains') . ' '. count($myrow) . ' ' . _('columns, but only 2 columns are expected. The comma separated file should have just two columns the first for the item code and the second for the quantity to transfer'),'error');
     			fclose($FileHandle);
     			include('includes/footer.inc');
     			exit;
     		}
 
     		// cleanup the data (csv files often import with empty strings and such)
+    		$StockID='';
+    		$Quantity=0;
     		for ($i=0; $i<count($myrow);$i++) {
-    			$StockID='';
-    			$Quantity=0;
-                $myrow[$i] = trim($myrow[$i]);
     			switch ($i) {
     				case 0:
     					$StockID = trim(mb_strtoupper($myrow[$i]));
                         $result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
-            			$myrow = DB_fetch_row($result);
-            			if ($myrow[0]==0){
+            			$StockIDCheck = DB_fetch_row($result);
+            			if ($StockIDCheck[0]==0){
             				$InputError = True;
             				$ErrorMessage .= _('The part code entered of'). ' ' . $StockID . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
            				}
@@ -73,76 +70,77 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
             							AND loccode='".$_POST['FromStockLocation']."'",
             							$db);
                     $CheckStockRow = DB_fetch_array($result);
-            		if ($myrow['quantity'] < $Quantity){
+            		if ($CheckStockRow['quantity'] < $Quantity){
             			$InputError = True;
-            			$ErrorMessage .= _('The item'). ' ' . $StockID . ' ' . _('does not have enough stock available (') . ' ' . $myrow['quantity'] . ')' . ' ' . _('The quantity required to transfer was') .  ' ' . $Quantity . '.<br />';
+            			$ErrorMessage .= _('The item'). ' ' . $StockID . ' ' . _('does not have enough stock available (') . ' ' . $CheckStockRow['quantity'] . ')' . ' ' . _('The quantity required to transfer was') .  ' ' . $Quantity . '.<br />';
                     }
                 }
-
-                if ($StockID!='' AND $Quantity!=0){
-                   $_POST['StockID' . $RowCounter] = $StockID;
-                   $_POST['StockQTY' . $RowCounter] = $Quantity;
-                }
             } // end for loop through the columns on the row being processed
-            $TotalItems++;
-            $_POST['LinesCounter']=$TotalItems;
+			if ($StockID!='' AND $Quantity!=0){
+				$_POST['StockID' . $TotalItems] = $StockID;
+				$_POST['StockQTY' . $TotalItems] = $Quantity;
+				$StockID='';
+				$Quantity=0;
+				$TotalItems++;
+			}
           } //end while there are lines in the CSV file
+          $_POST['LinesCounter']=$TotalItems;
        } //end if there is a CSV file to import
           else { // process the manually input lines
-        	$ErrorMessage='';
-        	for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
-        		if (isset($_POST['StockID' . $i]) AND $_POST['StockID' . $i]!=''){
-        			$_POST['StockID' . $i]=trim(mb_strtoupper($_POST['StockID' . $i]));
-        			$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
-        			$myrow = DB_fetch_row($result);
-        			if ($myrow[0]==0){
-        				$InputError = True;
-        				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
-        				$_POST['LinesCounter'] -= 10;
-        			}
-        			DB_free_result( $result );
-        			if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
-        				$InputError = True;
-        				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<br />';
-        				$_POST['LinesCounter'] -= 10;
-        			}
-        			if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
-        				$InputError = True;
-        				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<br />';
-        				$_POST['LinesCounter'] -= 10;
-        			}
-        			if ($_SESSION['ProhibitNegativeStock']==1){
-                        // Only if stock exists at this location
-            			$result = DB_query("SELECT quantity
-            								FROM locstock
-            								WHERE stockid='" . $_POST['StockID' . $i] . "'
-            								AND loccode='".$_POST['FromStockLocation']."'",
-            								$db);
-
-            			$myrow = DB_fetch_row($result);
-            			if ($myrow[0] < filter_number_format($_POST['StockQTY' . $i])){
-            				$InputError = True;
-            				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have enough stock available for transfer.') . '.<br />';
-            				$_POST['LinesCounter'] -= 10;
-            			}
- 			        }
-        			DB_free_result( $result );
-        			$TotalItems++;
-        		}
-        	}//for all LinesCounter
-        }
-
-    	if ($TotalItems == 0){
-    		$InputError = True;
-    		$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<br />';
-    	}
-
-    /*Ship location and Receive location are different */
-    	if ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
-    		$InputError=True;
-    		$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from');
-    	}
-   	 } //end if the transfer is not a duplicated
+			$ErrorMessage='';
+			for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
+				if (isset($_POST['StockID' . $i]) AND $_POST['StockID' . $i]!=''){
+					$_POST['StockID' . $i]=trim(mb_strtoupper($_POST['StockID' . $i]));
+					$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
+					$myrow = DB_fetch_row($result);
+					if ($myrow[0]==0){
+						$InputError = True;
+						$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
+						$_POST['LinesCounter'] -= 10;
+					}
+					DB_free_result( $result );
+					if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
+						$InputError = True;
+						$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<br />';
+						$_POST['LinesCounter'] -= 10;
+					}
+					if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
+						$InputError = True;
+						$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<br />';
+						$_POST['LinesCounter'] -= 10;
+					}
+					if ($_SESSION['ProhibitNegativeStock']==1){
+						// Only if stock exists at this location
+						$result = DB_query("SELECT quantity
+											FROM locstock
+											WHERE stockid='" . $_POST['StockID' . $i] . "'
+											AND loccode='".$_POST['FromStockLocation']."'",
+											$db);
+	
+						$myrow = DB_fetch_row($result);
+						if ($myrow[0] < filter_number_format($_POST['StockQTY' . $i])){
+							$InputError = True;
+							$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have enough stock available for transfer.') . '.<br />';
+							$_POST['LinesCounter'] -= 10;
+						}
+					}
+					DB_free_result( $result );
+					$TotalItems++;
+				}
+			}//for all LinesCounter
+		}
+	
+		if ($TotalItems == 0){
+			$InputError = True;
+			$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<br />';
+		}
+	
+	/*Ship location and Receive location are different */
+		if ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
+			$InputError=True;
+			$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from');
+		}
+	 } //end if the transfer is not a duplicated
 }
 
 if(isset($_POST['Submit']) AND $InputError==False){
@@ -203,7 +201,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
+	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
@@ -252,11 +250,11 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '</select></td></tr>';
 
 	echo '<tr>
-              <td>' . _('Upload CSV file of Transfer Items and Quantites') . ':</td>
-              <td><input name="SelectedTransferFile" type="file" /></td>
-          </tr>
-          </table>';
-
+			<td>' . _('Upload CSV file of Transfer Items and Quantites') . ':</td>
+			<td><input name="SelectedTransferFile" type="file" /></td>
+		  </tr>
+		  </table>';
+	
 	echo '<table class="selection">';
 
 	$tableheader = '<tr><th>'. _('Item Code'). '</th>
