@@ -70,14 +70,14 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 								currencies.decimalplaces,
 								custbranch.defaultshipvia,
 								custbranch.specialinstructions
-						FROM salesorders INNER JOIN debtorsmaster 
+						FROM salesorders INNER JOIN debtorsmaster
 						ON salesorders.debtorno = debtorsmaster.debtorno
-						INNER JOIN custbranch 
+						INNER JOIN custbranch
 						ON salesorders.branchcode = custbranch.branchcode
 						AND salesorders.debtorno = custbranch.debtorno
-						INNER JOIN currencies 
-						ON debtorsmaster.currcode = currencies.currabrev 
-						INNER JOIN locations 
+						INNER JOIN currencies
+						ON debtorsmaster.currcode = currencies.currabrev
+						INNER JOIN locations
 						ON locations.loccode=salesorders.fromstkloc
 						WHERE salesorders.orderno = '" . $_GET['OrderNumber']."'";
 
@@ -233,9 +233,9 @@ set all the necessary session variables changed by the POST  */
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 			}
 		} else if (isset($_POST[$Itm->LineNumber .  '_QtyDispatched' ])){
-			if (is_numeric(filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched' ])) 
+			if (is_numeric(filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched' ]))
 				AND filter_number_format($_POST[$Itm->LineNumber .  '_QtyDispatched']) <= ($_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyInv)){
-					
+
 				$_SESSION['Items'.$identifier]->LineItems[$Itm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$Itm->LineNumber  . '_QtyDispatched']),$Itm->DecimalPlaces);
 			}
 		}
@@ -471,10 +471,10 @@ $j++;
 if (!isset($_POST['ChargeFreightCost'])) {
 	$_POST['ChargeFreightCost']=0;
 }
-if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1 
-	AND (!isset($_SESSION['Items'.$identifier]->FreightCost) 
+if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1
+	AND (!isset($_SESSION['Items'.$identifier]->FreightCost)
 		OR $_POST['ChargeFreightCost']==0)) {
-			
+
 	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>
 		<td><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0"></td>';
 	$_SESSION['Items'.$identifier]->FreightCost=0;
@@ -670,7 +670,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				FROM salesorderdetails
 				WHERE completed=0
 				AND orderno = '" . $_SESSION['ProcessingOrder']."'";
-	
+
 	$Result = DB_query($SQL,$db);
 
 	if (DB_num_rows($Result) != count($_SESSION['Items'.$identifier]->LineItems)){
@@ -696,13 +696,13 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	while ($myrow = DB_fetch_array($Result)) {
 
-		if ($_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity != $myrow['quantity'] 
+		if ($_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity != $myrow['quantity']
 			OR $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->QtyInv != $myrow['qtyinvoiced']) {
 
 			echo '<br />'. _('Orig order for'). ' ' . $myrow['orderlineno'] . ' '. _('has a quantity of'). ' ' . $myrow['quantity'] . ' '. _('and an invoiced qty of'). ' ' . $myrow['qtyinvoiced'] . ' '. _('the session shows quantity of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->Quantity . ' ' . _('and quantity invoice of'). ' ' . $_SESSION['Items'.$identifier]->LineItems[$myrow['orderlineno']]->QtyInv;
 
 			prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . ' ' . _('Processing halted.') . ' ' . _('To enter and confirm this dispatch, it must be re-selected and re-read again to update the changes made by the other user'), 'error');
-			
+
 			echo '<br />';
 
 			echo '<div class="centre"><a href="'. $rootpath . '/SelectSalesOrder.php">'. _('Select a sales order for confirming deliveries and invoicing'). '</a></div>';
@@ -859,13 +859,13 @@ invoices can have a zero amount but there must be a quantity to invoice */
 															'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 															'" . $_SESSION['Items'.$identifier]->Branch . "',
 															'CAN')";
-				
+
 				$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The order delivery differences log record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the order delivery differences record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 
-		} elseif (($OrderLine->Quantity - $OrderLine->QtyDispatched)>0 
+		} elseif (($OrderLine->Quantity - $OrderLine->QtyDispatched)>0
 				AND DateDiff(ConvertSQLDate($DefaultDispatchDate),$_SESSION['Items'.$identifier]->DeliveryDate,'d')>0) {
 
 		/*The order is being short delivered after the due date - need to insert a delivery differnce log */
@@ -882,7 +882,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 													'" . $_SESSION['ProcessingOrder'] . "',
 													'" . $InvoiceNo . "',
 													'" . $OrderLine->StockID . "',
-													'" . $OrderLine->Quantity - $OrderLine->QtyDispatched . "',
+													'" . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . "',
 													'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 													'" . $_SESSION['Items'.$identifier]->Branch . "',
 													'BO'
@@ -899,14 +899,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			// Test above to see if the line is completed or not
 			if ($OrderLine->QtyDispatched>=($OrderLine->Quantity - $OrderLine->QtyInv) OR $_POST['BOPolicy']=='CAN'){
-				$SQL = "UPDATE salesorderdetails	
+				$SQL = "UPDATE salesorderdetails
 							SET qtyinvoiced = qtyinvoiced + " . $OrderLine->QtyDispatched . ",
 								actualdispatchdate = '" . $DefaultDispatchDate .  "',
 								completed=1
 							WHERE orderno = '" . $_SESSION['ProcessingOrder'] . "'
 							AND orderlineno = '" . $OrderLine->LineNumber . "'";
 			} else {
-				$SQL = "UPDATE salesorderdetails 	
+				$SQL = "UPDATE salesorderdetails
 							SET qtyinvoiced = qtyinvoiced + " . $OrderLine->QtyDispatched . ",
 								actualdispatchdate = '" . $DefaultDispatchDate .  "'
 							WHERE orderno = '" . $_SESSION['ProcessingOrder'] . "'
@@ -947,11 +947,11 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$QtyOnHandPrior = 0;
 				}
 
-				$SQL = "UPDATE locstock	
+				$SQL = "UPDATE locstock
 						SET quantity = locstock.quantity - " . $OrderLine->QtyDispatched . "
 						WHERE locstock.stockid = '" . $OrderLine->StockID . "'
 						AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-	
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Location stock record could not be updated because');
 				$DbgMsg = _('The following SQL to update the location stock record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -969,7 +969,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							WHERE bom.parent='" . $OrderLine->StockID . "'
 							AND bom.effectiveto >= '" . Date('Y-m-d') . "'
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
-		
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not retrieve assembly components from the database for'). ' '. $OrderLine->StockID . _('because').' ';
 				$DbgMsg = _('The SQL that failed was');
 				$AssResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1009,7 +1009,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 													qty,
 													standardcost,
 													show_on_inv_crds,
-													newqoh) 
+													newqoh)
 										VALUES ('" . $AssParts['component'] . "',
 												 10,
 												 '" . $InvoiceNo . "',
@@ -1477,7 +1477,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $DisposalRow['disposalact'] . "',
 										'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('disposal') . "',
 										'" . round((-$OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
-	
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal proceeds GL posting could not be inserted because');
 				$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1510,7 +1510,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$DbgMsg = '<br />' ._('The following SQL to insert the fixed asset transaction record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-				$SQL = "UPDATE fixedassets 
+				$SQL = "UPDATE fixedassets
 						SET disposalproceeds ='" . round(($OrderLine->Price * $OrderLine->QtyDispatched* (1 - $OrderLine->DiscountPercent)/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "',
 							disposaldate ='" . $DefaultDispatchDate . "'
 						WHERE assetid ='" . $AssetNumber . "'";
@@ -1590,7 +1590,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $TaxGLCodes[$TaxAuthID] . "',
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 											'" . round((-$TaxAmount/$_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
-					
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -1652,7 +1652,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			<td>' ._('Invoice Text'). ':</td>
 			<td><textarea tabindex="'.$j.'" name="InvoiceText" cols="31" rows="5">' . reverse_escape($_POST['InvoiceText']) . '</textarea></td>
 		</tr>';
-	
+
 	$j++;
 	echo '</table>
 		<br />
