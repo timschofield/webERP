@@ -15,26 +15,27 @@ echo '<div class="page_help_text">' . _('Select the month to show daily sales fo
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
+if (!isset($_POST['MonthToShow'])){
+	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+	echo 'Got Month to show of: ' .$_POST['MonthToShow'];
+	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['MonthToShow'] . "'",$db);
+	$myrow = DB_fetch_array($Result);
+	$EndDateSQL = $myrow['lastdate_in_period'];
+}
+
 echo '<table class="selection">
 	<tr>
 		<td>' . _('Month to Show') . ':</td>
 		<td><select tabindex="1" name="MonthToShow">';
 
-if (!isset($_POST['MonthToShow'])){
-	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
-	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE period='" . $_POST['MonthToShow'] . "'",$db);
-	$myrow = DB_fetch_array($Result);
-	$EndDateSQL = $myrow['lastdate_in_period'];
-}
-
 $PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods",$db);
 
 while ($PeriodRow = DB_fetch_array($PeriodsResult)){
 	if ($_POST['MonthToShow']==$PeriodRow['periodno']) {
-	     echo '<option selected value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
-		 $EndDateSQL = $PeriodRow['lastdate_in_period'];
+		echo '<option selected value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
+		$EndDateSQL = $PeriodRow['lastdate_in_period'];
 	} else {
-	     echo '<option value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
+		echo '<option value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
 	}
 }
 echo '</select></td>
@@ -51,9 +52,9 @@ if (!isset($_POST['Salesperson'])){
 while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
 
 	if ($_POST['Salesperson']==$SalespersonRow['salesmancode']) {
-	     echo '<option selected value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
+		echo '<option selected value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
 	} else {
-	     echo '<option Value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
+		echo '<option Value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
 	}
 }
 echo '</select></td>';
@@ -116,7 +117,7 @@ $CumulativeTotalCost = 0;
 $BilledDays = 0;
 $DaySalesArray = array();
 while ($DaySalesRow=DB_fetch_array($SalesResult)) {
-	$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])] = new Cart;
+
 	if ($DaySalesRow['salesvalue'] > 0) {
 		$DaySalesArray[DayOfMonthFromSQLDate($DaySalesRow['trandate'])]->Sales = $DaySalesRow['salesvalue'];
 	} else {

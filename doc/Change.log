@@ -1,5 +1,9 @@
 webERP Change Log
 
+11/12/11 Phil: SupplierInvoice.php attempts to post back any cost variances where there is no stock left to apportion the variances to - posting back to stockmoves (so the DailySales.php and other sales inquiry scripts reflect the appropriate GP) and the salesanalysis tables
+11/12/11 Phil: DailySalesInquiry.php removed incorrect call to establish new cart object??
+10/12/11 Brian May: ConfirmDispatch_Invoice.php corrected SQL that was not calculating the difference to go to the orderdeliverydifferences log in parenthesis first before casting/concatenating to string for the SQL.
+
 3/12/11 Release 4.06.2
 
 2/12/11 Phil: Added indian_number_format for specific unusal number formatting 00,00,000.00 for India and apparently South Asian countries. Kicks in for en_IN.utf8 and hi_IN.utf8

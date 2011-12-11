@@ -646,7 +646,14 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 }
 
 function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
-
+	/*Takes 
+	 * DateToAddTo in $_SESSION['DefaultDateFormat'] format 
+	 * $PeriodString is one of:
+	 * d - days
+	 * w - weeks
+	 * m - months
+	 * y - years 
+	 * $NumberPeriods is an integer positve or negative */
   $DateToAddTo = trim($DateToAddTo);
 
 	if (mb_strpos($DateToAddTo,'/')) {
