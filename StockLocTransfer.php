@@ -88,7 +88,18 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
        } //end if there is a CSV file to import
           else { // process the manually input lines
 			$ErrorMessage='';
+			if (isset($_POST['ClearAll'])){
+				unset($_POST['EnterMoreItems']);
+				for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
+					unset($_POST['StockID' . $i]);
+					unset($_POST['StockQTY' . $i]);
+				}
+			}
 			for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
+				if (isset($_POST['Delete' . $i])){
+					unset($_POST['StockID' . $i]);
+					unset($_POST['StockQTY' . $i]);
+				}
 				if (isset($_POST['StockID' . $i]) AND $_POST['StockID' . $i]!=''){
 					$_POST['StockID' . $i]=trim(mb_strtoupper($_POST['StockID' . $i]));
 					$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
@@ -257,25 +268,36 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	
 	echo '<table class="selection">';
 
-	$tableheader = '<tr><th>'. _('Item Code'). '</th>
-						<th>'. _('Quantity'). '</th></tr>';
-	echo $tableheader;
+	$TableHeader = '<tr>
+						<th>'. _('Item Code'). '</th>
+						<th>'. _('Quantity'). '</th>
+						<th>' . _('Clear All') . ':<input type="checkbox" name="ClearAll" /></th> 
+					</tr>';
+	echo $TableHeader;
 
-	$k=0; /* row counter */
+	$k=0; /* page heading row counter */
+	$j=0; /* row counter for reindexing */
 	if(isset($_POST['LinesCounter'])){
 
-		for ($i=0;$i < $_POST['LinesCounter'] AND $_POST['StockID' . $i] !='';$i++){
-
+		for ($i=0;$i < $_POST['LinesCounter'];$i++){
+			if (!isset($_POST['StockID'. $i])){
+				continue;
+			}
+			if ($_POST['StockID' . $i] ==''){
+				break;
+			}
 			if ($k==18){
-				echo $tableheader;
+				echo $TableHeader;
 				$k=0;
 			}
 			$k++;
 			
 			echo '<tr>
-				<td><input type="text" name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
-				<td><input type="text" name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
+				<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
+				<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
+				<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j .'" /></td>
 			</tr>';
+			$j++;
 		}
 	}else {
 		$i = 0;

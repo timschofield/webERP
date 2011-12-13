@@ -311,7 +311,7 @@ UNTIL ONLINE CREDIT CARD PROCESSING IS PERFORMED ASSUME OK TO PROCESS
 	} #end if else freight charge not altered
 } #end if process order
 
-if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder'.$identifier]==0){
+if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder'.$identifier]==0){
 
 /* finally write the order header to the database and then the order line details */
 
