@@ -50,7 +50,7 @@ if (isset($_GET['NewOrder'])){
 		unset ($_SESSION['Items'.$identifier]);
 	}
 
-	$_SESSION['ExistingOrder']=0;
+	$_SESSION['ExistingOrder'.$identifier]=0;
 	$_SESSION['Items'.$identifier] = new cart;
 
 	if (count($_SESSION['AllowedPageSecurityTokens'])==1){ //its a customer logon
@@ -72,7 +72,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		unset ($_SESSION['Items'.$identifier]->LineItems);
 		unset ($_SESSION['Items'.$identifier]);
 	}
-	$_SESSION['ExistingOrder']=$_GET['ModifyOrderNumber'];
+	$_SESSION['ExistingOrder'.$identifier]=$_GET['ModifyOrderNumber'];
 	$_SESSION['RequireCustomerSelection'] = 0;
 	$_SESSION['Items'.$identifier] = new cart;
 
@@ -267,7 +267,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	set to 1. The delivery check screen is where the details of the order are either updated or
 	inserted depending on the value of ExistingOrder */
 
-	$_SESSION['ExistingOrder']=0;
+	$_SESSION['ExistingOrder'.$identifier]=0;
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['PrintedPackingSlip'] =0; /*Of course cos the order aint even started !!*/
 
@@ -651,11 +651,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
  	if (isset($_POST['CancelOrder'])) {
 		$OK_to_delete=1;	//assume this in the first instance
 
-		if($_SESSION['ExistingOrder']!=0) { //need to check that not already dispatched
+		if($_SESSION['ExistingOrder'.$identifier]!=0) { //need to check that not already dispatched
 
 			$sql = "SELECT qtyinvoiced
 							FROM salesorderdetails
-							WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
+							WHERE orderno='" . $_SESSION['ExistingOrder'.$identifier] . "'
 							AND qtyinvoiced>0";
 
 			$InvQties = DB_query($sql,$db);
@@ -669,17 +669,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 
 		if ($OK_to_delete==1){
-			if($_SESSION['ExistingOrder']!=0){
+			if($_SESSION['ExistingOrder'.$identifier]!=0){
 
-				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . $_SESSION['ExistingOrder'] . "'";
+				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . $_SESSION['ExistingOrder'.$identifier] . "'";
 				$ErrMsg =_('The order detail lines could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
-				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'] . "'";
+				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'.$identifier] . "'";
 				$ErrMsg = _('The order header could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
-				$_SESSION['ExistingOrder']=0;
+				$_SESSION['ExistingOrder'.$identifier]=0;
 			}
 
 			unset($_SESSION['Items'.$identifier]->LineItems);
