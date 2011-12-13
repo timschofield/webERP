@@ -134,7 +134,7 @@ if (isset($_POST['ProcessStockChange'])){
 		//check if MRP tables exist before assuming 
 		
 		$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",$db,'','',false,false);
-		if ($DB_error_no==0) {
+		if ($DB_error_no($db)==0) {
 			echo '<br />' . _('Changing MRP planned orders information');
 			$sql = "UPDATE mrpplannedorders SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
 			$ErrMsg = _('The SQL to update the mrpplannedorders records failed');
@@ -238,7 +238,8 @@ if (isset($_POST['ProcessStockChange'])){
 		$ErrMsg = _('The SQL to update the BOM records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-	
+		
+		DB_IgnoreForeignKeys($db);
 	
 		echo '<br />' . _('Changing the BOM table records') . ' - ' . _('parents');
 		$sql = "UPDATE bom SET parent='" . $_POST['NewStockID'] . "' WHERE parent='" . $_POST['OldStockID'] . "'";
@@ -264,8 +265,6 @@ if (isset($_POST['ProcessStockChange'])){
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 	
-		$sql = 'SET FOREIGN_KEY_CHECKS=0';
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	
 		echo '<br />' . _('Changing work order requirements information');
 	
@@ -297,10 +296,9 @@ if (isset($_POST['ProcessStockChange'])){
 		$ErrMsg = _('The SQL to update the stockserialitem records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-	
-		$sql = 'SET FOREIGN_KEY_CHECKS=1';
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-	
+		
+		DB_ReinstateForeignKeys($db);
+		
 		$result = DB_Txn_Commit($db);
 	
 		echo '<br />' . _('Deleting the old stock master record');
