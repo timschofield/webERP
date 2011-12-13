@@ -128,22 +128,22 @@ if (isset($_GET['NewRecurringOrder'])){
 
 				while ($myrow=db_fetch_array($LineItemsResult)) {
 					$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
-								$myrow['quantity'],
-								$myrow['description'],
-								$myrow['unitprice'],
-								$myrow['discountpercent'],
-								$myrow['units'],
-								$myrow['volume'],
-								$myrow['kgs'],
-								$myrow['qohatloc'],
-								$myrow['mbflag'],
-								'',
-								0,
-								$myrow['discountcategory'],
-								0,	/*Controlled*/
-								0,	/*Serialised */
-								$myrow['decimalplaces'],
-								$myrow['narrative']);
+																$myrow['quantity'],
+																$myrow['description'],
+																$myrow['unitprice'],
+																$myrow['discountpercent'],
+																$myrow['units'],
+																$myrow['volume'],
+																$myrow['kgs'],
+																$myrow['qohatloc'],
+																$myrow['mbflag'],
+																'',
+																0,
+																$myrow['discountcategory'],
+																0,	/*Controlled*/
+																0,	/*Serialised */
+																$myrow['decimalplaces'],
+																$myrow['narrative']);
 					/*Just populating with existing order - no DBUpdates */
 
 				} /* line items from sales order details */

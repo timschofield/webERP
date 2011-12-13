@@ -67,7 +67,7 @@ Class Cart {
 		$this->total=0;
 		$this->ItemsOrdered=0;
 		$this->LineCounter=0;
-		$this->DefaultSalesType="";
+		$this->DefaultSalesType='';
 		$this->FreightCost =0;
 		$this->FreightTaxes = array();
 		$this->CurrDecimalPlaces=2; //default
@@ -99,7 +99,8 @@ Class Cart {
 							$StandardCost=0,
 							$EOQ=1,
 							$NextSerialNo=0,
-							$ExRate=1){
+							$ExRate=1,
+							$identifier=0){
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
 
@@ -157,7 +158,7 @@ Class Cart {
 														itemdue,
 														poline)
 													VALUES(" . $this->LineCounter . ",
-														" . $_SESSION['ExistingOrder'] . ",
+														" . $_SESSION['ExistingOrder' . $identifier] . ",
 														'" . trim(mb_strtoupper($StockID)) ."',
 														" . $Qty . ",
 														" . $Price . ",
@@ -209,7 +210,7 @@ Class Cart {
 		}
 	}
 
-	function remove_from_cart($LineNumber, $UpdateDB='No'){
+	function remove_from_cart($LineNumber, $UpdateDB='No', $identifier=0){
 
 		if (!isset($LineNumber) OR $LineNumber=='' OR $LineNumber < 0){ /* over check it */
 			prnMsg(_('No Line Number passed to remove_from_cart, so nothing has been removed.'), 'error');
@@ -220,12 +221,12 @@ Class Cart {
 			if ($this->Some_Already_Delivered($LineNumber)==0){
 				/* nothing has been delivered, delete it. */
 				$result = DB_query("DELETE FROM salesorderdetails
-									WHERE orderno='" . $_SESSION['ExistingOrder'] . "'
+									WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'
 									AND orderlineno='" . $LineNumber . "'",
 									$db,
 									_('The order line could not be deleted because')
 									);
-				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
+				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder' . $identifier], 'success');
 			} else {
 				/* something has been delivered. Clear the remaining Qty and Mark Completed */
 				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, 

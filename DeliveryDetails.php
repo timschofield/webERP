@@ -855,11 +855,11 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 		echo '<td>'.$StockItem->StockID.'</td>
 			<td>'.$StockItem->ItemDescription.'</td>
-			<td class=number>'.$DisplayQuantity.'</td>
+			<td class="number">'.$DisplayQuantity.'</td>
 			<td>'.$StockItem->Units.'</td>
-			<td class=number>'.$DisplayPrice.'</td>
-			<td class=number>'.$DisplayDiscount.'</td>
-			<td class=number>'.$DisplayLineTotal.'</td>
+			<td class="number">'.$DisplayPrice.'</td>
+			<td class="number">'.$DisplayDiscount.'</td>
+			<td class="number">'.$DisplayLineTotal.'</td>
 		</tr>';
 
 		$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
@@ -869,25 +869,30 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
 	echo '<tr class="EvenTableRows">
-		<td colspan=6 class=number><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
-		<td class=number>'.$DisplayTotal.'</td>
-	</tr></table>';
+			<td colspan="6" class="number"><b>'. _('TOTAL Excl Tax/Freight') .'</b></td>
+			<td class="number">'.$DisplayTotal.'</td>
+		</tr>
+		</table>';
 
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-	echo '<br /><table><tr class="EvenTableRows">
-		<td>'. _('Total Weight') .':</td>
-		<td class="number">'.$DisplayWeight.'</td>
-		<td>'. _('Total Volume') .':</td>
-		<td class="number">'.$DisplayVolume.'</td>
-	</tr></table>';
+	echo '<br />
+		<table>
+		<tr class="EvenTableRows">
+			<td>'. _('Total Weight') .':</td>
+			<td class="number">'.$DisplayWeight.'</td>
+			<td>'. _('Total Volume') .':</td>
+			<td class="number">'.$DisplayVolume.'</td>
+		</tr>
+		</table>';
 
 } else {
 
 /*Display the order without discount */
 
 	echo '<div class="centre"><b>' . _('Order Summary') . '</b></div>
-	<table cellpadding=2 colspan=7 border=1><tr>
+	<table class="selection">
+	<tr>
 		<th>'. _('Item Description') .'</th>
 		<th>'. _('Quantity') .'</th>
 		<th>'. _('Unit') .'</th>
@@ -914,10 +919,10 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			$k=1;
 		}
 		echo '<td>'.$StockItem->ItemDescription.'</td>
-			<td class=number>'. $DisplayQuantity.'</td>
+			<td class="number">'. $DisplayQuantity.'</td>
 			<td>'.$StockItem->Units.'</td>
-			<td class=number>'. $DisplayPrice.'</td>
-			<td class=number>'. $DisplayLineTotal .'</font></td>
+			<td class="number">'. $DisplayPrice.'</td>
+			<td class="number">'. $DisplayLineTotal .'</font></td>
 		</tr>';
 
 		$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
@@ -927,12 +932,14 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-	echo '<table class=selection><tr>
-		<td>'. _('Total Weight') .':</td>
-		<td>'.$DisplayWeight .'</td>
-		<td>'. _('Total Volume') .':</td>
-		<td>'.$DisplayVolume .'</td>
-	</tr></table>';
+	echo '<table class="selection">
+		<tr>
+			<td>'. _('Total Weight') .':</td>
+			<td>'.$DisplayWeight .'</td>
+			<td>'. _('Total Volume') .':</td>
+			<td>'.$DisplayVolume .'</td>
+		</tr>
+		</table>';
 
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
@@ -945,10 +952,12 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 }
 
-echo '<br /><table  class=selection><tr>
-	<td>'. _('Deliver To') .':</td>
-	<td><input type="text" size=42 maxlength=40 name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '"></td>
-</tr>';
+echo '<br />
+	<table class="selection">
+	<tr>
+		<td>'. _('Deliver To') .':</td>
+		<td><input type="text" size="42" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" /></td>
+	</tr>';
 
 echo '<tr>
 	<td>'. _('Deliver from the warehouse at') .':</td>
@@ -986,65 +995,58 @@ if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
-	<td>'. _('Estimated Delivery Date') .':</td>
-	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '"></td>
+		<td>'. _('Estimated Delivery Date') .':</td>
+		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '"></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
-	<td>'. _('Quote Date') .':</td>
-	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '"></td>
+		<td>'. _('Quote Date') .':</td>
+		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" /></td>
 	</tr>';
 // The date when the customer confirmed their order
 echo '<tr>
-	<td>'. _('Confirmed Order Date') .':</td>
-	<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '"></td>
+		<td>'. _('Confirmed Order Date') .':</td>
+		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Delivery Address 1') . ':</td>
+		<td><input type="text" size="42" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Delivery Address 2') . ':</td>
+		<td><input type="text" size="42" maxlength="40" name="BrAdd2" value="' . $_SESSION['Items'.$identifier]->DelAdd2 . '" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Delivery Address 3') . ':</td>
+		<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items'.$identifier]->DelAdd3 . '" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Delivery Address 4') . ':</td>
+		<td><input type="text" size="42" maxlength="40" name="BrAdd4" value="' . $_SESSION['Items'.$identifier]->DelAdd4 . '" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Delivery Address 5') . ':</td>
+		<td><input type="text" size="42" maxlength="40" name="BrAdd5" value="' . $_SESSION['Items'.$identifier]->DelAdd5 . '" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Delivery Address 6') . ':</td>
+		<td><input type="text" size="42" maxlength="40" name="BrAdd6" value="' . $_SESSION['Items'.$identifier]->DelAdd6 . '" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Contact Phone Number') .':</td>
+		<td><input type="text" size=25 maxlength=25 name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '"></td>
+	</tr>
+	<tr>
+		<td>' . _('Contact Email') . ':</td><td><input type="text" size=40 maxlength=38 name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '"></td>
+	</tr>
+	<tr>
+		<td>'. _('Customer Reference') .':</td>
+		<td><input type="text" size=25 maxlength=25 name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '"></td>
+	</tr>
+	<tr>
+		<td>'. _('Comments') .':</td>
+		<td><textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items'.$identifier]->Comments .'</textarea></td>
 	</tr>';
-
-echo '<tr>
-	<td>'. _('Delivery Address 1') . ':</td>
-	<td><input type="text" size=42 maxlength=40 name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '"></td>
-</tr>';
-
-echo '<tr>
-	<td>'. _('Delivery Address 2') . ':</td>
-	<td><input type="text" size=42 maxlength=40 name="BrAdd2" value="' . $_SESSION['Items'.$identifier]->DelAdd2 . '"></td>
-</tr>';
-
-echo '<tr>
-	<td>'. _('Delivery Address 3') . ':</td>
-	<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items'.$identifier]->DelAdd3 . '"></td>
-</tr>';
-
-echo '<tr>
-	<td>'. _('Delivery Address 4') . ':</td>
-	<td><input type="text" size=42 maxlength=40 name="BrAdd4" value="' . $_SESSION['Items'.$identifier]->DelAdd4 . '"></td>
-</tr>';
-
-echo '<tr>
-	<td>'. _('Delivery Address 5') . ':</td>
-	<td><input type="text" size=42 maxlength=40 name="BrAdd5" value="' . $_SESSION['Items'.$identifier]->DelAdd5 . '"></td>
-</tr>';
-
-echo '<tr>
-	<td>'. _('Delivery Address 6') . ':</td>
-	<td><input type="text" size=42 maxlength=40 name="BrAdd6" value="' . $_SESSION['Items'.$identifier]->DelAdd6 . '"></td>
-</tr>';
-
-echo '<tr>
-	<td>'. _('Contact Phone Number') .':</td>
-	<td><input type="text" size=25 maxlength=25 name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '"></td>
-</tr>';
-
-echo '<tr><td>' . _('Contact Email') . ':</td><td><input type="text" size=40 maxlength=38 name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '"></td></tr>';
-
-echo '<tr><td>'. _('Customer Reference') .':</td>
-	<td><input type="text" size=25 maxlength=25 name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '"></td>
-</tr>';
-
-echo '<tr>
-	<td>'. _('Comments') .':</td>
-	<td><textarea name="Comments" cols=31 rows=5>' . $_SESSION['Items'.$identifier]->Comments .'</textarea></td>
-</tr>';
 
 	/* This field will control whether or not to display the company logo and
 	address on the packlist */
@@ -1061,7 +1063,7 @@ echo '<tr>
 	}
 	echo '</select></td></tr>';
 
-if (isset($_SESSION['PrintedPackingSlip']) and $_SESSION['PrintedPackingSlip']==1){
+if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==1){
 
 	echo '<tr>
 		<td>'. _('Reprint packing slip') .':</td>
@@ -1073,19 +1075,22 @@ if (isset($_SESSION['PrintedPackingSlip']) and $_SESSION['PrintedPackingSlip']==
 	echo '<input type=hidden name="ReprintPackingSlip" value=0>';
 }
 
-echo '<tr><td>'. _('Charge Freight Cost inc tax') .':</td>';
-echo '<td><input type="text" class="number" size=10 maxlength=12 name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '"></td>';
+echo '<tr>
+		<td>'. _('Charge Freight Cost inc tax') .':</td>
+		<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" /></td>';
 
 if ($_SESSION['DoFreightCalc']==true){
-	echo '<td><input type=submit name="Update" value="' . _('Recalc Freight Cost') . '"></td></tr>';
+	echo '<td><input type=submit name="Update" value="' . _('Recalc Freight Cost') . '" /></td>
+		</tr>';
 }
 
 if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['Items'.$identifier]->ShipVia)){
 	$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
 }
 
-echo '<tr><td>'. _('Freight/Shipper Method') .':</td>
-			<td><select name="ShipVia">';
+echo '<tr>
+		<td>'. _('Freight/Shipper Method') .':</td>
+		<td><select name="ShipVia">';
 
 $ErrMsg = _('The shipper details could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
@@ -1123,7 +1128,7 @@ if ($_SESSION['ExistingOrder'.$identifier]==0){
 	echo '<br /><br /><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
 	echo '<br /><br /><input type=submit name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '">';
 } else {
-	echo '<br /><input type=submit name="ProcessOrder" value="' . _('Commit Order Changes') . '">';
+	echo '<br /><input type="submit" name="ProcessOrder" value="' . _('Commit Order Changes') . '">';
 }
 
 echo '</div></form>';

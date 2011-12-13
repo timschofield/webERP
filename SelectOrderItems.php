@@ -249,7 +249,8 @@ if (isset($_GET['ModifyOrderNumber'])
 																	$myrow['standardcost'],
 																	$myrow['eoq'],
 																	$myrow['nextserialno'],
-																	$ExRate );
+																	$ExRate,
+																	$identifier );
 
 				/*Just populating with existing order - no DBUpdates */
 					}
@@ -1046,7 +1047,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			//page called attempting to delete a line - GET['Delete'] = the line number to delete
 			$QuantityAlreadyDelivered = $_SESSION['Items'.$identifier]->Some_Already_Delivered($_GET['Delete']);
 			if($QuantityAlreadyDelivered == 0){
-				$_SESSION['Items'.$identifier]->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
+				$_SESSION['Items'.$identifier]->remove_from_cart($_GET['Delete'], 'Yes', $identifier);  /*Do update DB */
 			} else {
 				$_SESSION['Items'.$identifier]->LineItems[$_GET['Delete']]->Quantity = $QuantityAlreadyDelivered;
 			}

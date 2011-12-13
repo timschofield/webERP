@@ -5,7 +5,6 @@
 include('includes/session.inc');
 $title = _('Top Sales Inquiry');
 include('includes/header.inc');
-include('includes/DefineCartClass.php');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
 echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
@@ -214,13 +213,13 @@ if (isset($_POST['ShowSales'])){
 	echo '<table cellpadding=2 class="selection">';
 	
 	echo'<tr>
-		<th>' . _('Rank') . '</th>
-		<th>' . _('Item') . '</th>
-		<th>' . _('Category') . '</th>
-		<th>' . _('Sales Value') . '</th>
-		<th>' . _('Refunds') . '</th>
-		<th>' . _('Net Sales') . '</th>
-		<th>' . _('Sales') .'<br />' . _('Quantity') . '</th>
+			<th>' . _('Rank') . '</th>
+			<th>' . _('Item') . '</th>
+			<th>' . _('Category') . '</th>
+			<th>' . _('Sales Value') . '</th>
+			<th>' . _('Refunds') . '</th>
+			<th>' . _('Net Sales') . '</th>
+			<th>' . _('Sales') .'<br />' . _('Quantity') . '</th>
 		</tr>';
 	
 	$CumulativeTotalSales = 0;

@@ -156,8 +156,8 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 														'',
 														'',
 														'',
-														$myrow['standardcost']
-														);
+														$myrow['standardcost']);
+														
 				$_SESSION['CreditItems']->GetExistingTaxes($LineNumber, $myrow['stkmoveno']);
 
 				if ($myrow['controlled']==1){/* Populate the SerialItems array too*/
