@@ -2,7 +2,7 @@ webERP Change Log
 
 13/12/11 Vitaly Shevkunov: Z_ChangeStockCode.php fixed call to DB_error_no had missing ($db) - also turned off FOREIGN KEY CHECKS before updating the BOM.
 13/12/11 Exson: Fix SelectOrderItems.php and DeliveryDetails.php for where an order is modified while another order is being created in a different tab of the browser - $_SESSION['ExistingOrder'] now modified to $_SESSION['ExistingOrder' .$identifier] as suggested by Tim
-13/12/11 Phil: Fixed other scripts affected and send $identifier to add_to_cart function
+13/12/11 Phil: Fixed other scripts affected and send $identifier to add_to_cart and remove_from_cart functions
 11/12/11 Phil: SupplierInvoice.php attempts to post back any cost variances where there is no stock left to apportion the variances to - posting back to stockmoves (so the DailySales.php and other sales inquiry scripts reflect the appropriate GP) and the salesanalysis tables
 11/12/11 Phil: DailySalesInquiry.php removed incorrect call to establish new cart object??
 10/12/11 Brian May: ConfirmDispatch_Invoice.php corrected SQL that was not calculating the difference to go to the orderdeliverydifferences log in parenthesis first before casting/concatenating to string for the SQL.
