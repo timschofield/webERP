@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS=0;
 ALTER TABLE accountgroups CONVERT TO CHARACTER SET utf8;
 ALTER TABLE accountsection CONVERT TO CHARACTER SET utf8;
 ALTER TABLE areas  CONVERT TO CHARACTER SET utf8;
@@ -854,3 +855,4 @@ ALTER TABLE `purchorderdetails`
   DROP `total_amount`;
   UPDATE purchdata INNER JOIN unitsofmeasure  ON purchdata.suppliersuom=unitsofmeasure.unitid SET suppliersuom = unitsofmeasure.unitname;
 UPDATE config SET confvalue='4.03.8' WHERE confname='VersionNumber';
+SET FOREIGN_KEY_CHECKS=1;

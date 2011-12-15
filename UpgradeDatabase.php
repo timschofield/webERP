@@ -34,6 +34,10 @@ if (!isset($_POST['DoUpgrade'])){
 				</select></td>
 			</tr>
 		</table>';
+		prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br /><a target="_blank" href="' . $rootpath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
+		echo '<div class="centre">
+					<input type="submit" name="DoUpgrade" value="' . _('Perform Database Upgrade') . '" />
+				</div>';
 	} else {
 		if ($_SESSION['VersionNumber']=='4.00RC1'){
 			$_SESSION['VersionNumber']='3.12';
