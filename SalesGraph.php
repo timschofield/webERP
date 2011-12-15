@@ -270,7 +270,7 @@
 	}
 	$graph->SetXTickPos('none');
 	$graph->SetXTickLabelPos('none');
-	$graph->SetBackgroundColor('selection');
+	$graph->SetBackgroundColor('white');
 	$graph->SetTitleColor('blue');
 	$graph->SetFileFormat('png');
 	$graph->SetPlotType($_POST['GraphType']);
