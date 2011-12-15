@@ -312,7 +312,7 @@ echo '<tr>
 		<td>'. _('Vessel Name /Transport Agent'). ': </td>
 		<td colspan=3><input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
 		<td>'._('Voyage Ref / Consignment Note').': </td>
-		<td><input type="text name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
+		<td><input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
 	</tr>';
 
 if (isset($_SESSION['Shipment']->ETA)){
