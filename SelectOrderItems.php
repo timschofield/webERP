@@ -110,20 +110,20 @@ if (isset($_GET['ModifyOrderNumber'])
 							  locations.locationname,
 							  custbranch.estdeliverydays,
 							  custbranch.salesman
-						FROM salesorders 
-						INNER JOIN debtorsmaster 
+						FROM salesorders
+						INNER JOIN debtorsmaster
 						ON salesorders.debtorno = debtorsmaster.debtorno
-						INNER JOIN salestypes 
+						INNER JOIN salestypes
 						ON salesorders.ordertype=salestypes.typeabbrev
-						INNER JOIN custbranch 
-						ON salesorders.debtorno = custbranch.debtorno 
+						INNER JOIN custbranch
+						ON salesorders.debtorno = custbranch.debtorno
 						AND salesorders.branchcode = custbranch.branchcode
 						INNER JOIN paymentterms
-						ON debtorsmaster.paymentterms=paymentterms.termsindicator 
-						INNER JOIN locations  
-						ON locations.loccode=salesorders.fromstkloc 
+						ON debtorsmaster.paymentterms=paymentterms.termsindicator
+						INNER JOIN locations
+						ON locations.loccode=salesorders.fromstkloc
 						INNER JOIN currencies
-						ON debtorsmaster.currcode=currencies.currabrev 
+						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
@@ -272,8 +272,8 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['PrintedPackingSlip'] =0; /*Of course cos the order aint even started !!*/
 
-	if (in_array(2,$_SESSION['AllowedPageSecurityTokens']) 
-		AND ($_SESSION['Items'.$identifier]->DebtorNo=='' 
+	if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])
+		AND ($_SESSION['Items'.$identifier]->DebtorNo==''
 			OR !isset($_SESSION['Items'.$identifier]->DebtorNo))){
 
 	/* need to select a customer for the first time out if authorisation allows it and if a customer
@@ -295,8 +295,8 @@ if (isset($_POST['ChangeCustomer']) AND $_POST['ChangeCustomer']!=''){
 }
 
 //Customer logins are not allowed to select other customers henc in_array(2,$_SESSION['AllowedPageSecurityTokens'])
-if (isset($_POST['SearchCust']) 
-	AND $_SESSION['RequireCustomerSelection']==1 
+if (isset($_POST['SearchCust'])
+	AND $_SESSION['RequireCustomerSelection']==1
 	AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
@@ -305,7 +305,7 @@ if (isset($_POST['SearchCust'])
 		//insert wildcard characters in spaces
 		$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
 		$SearchString = str_replace(' ', '%', $_POST['CustKeywords']) ;
-				
+
 		$SQL = "SELECT custbranch.brname,
 						custbranch.contactname,
 						custbranch.phoneno,
@@ -316,9 +316,8 @@ if (isset($_POST['SearchCust'])
 					FROM custbranch
 					LEFT JOIN debtorsmaster
 					ON custbranch.debtorno=debtorsmaster.debtorno
-					WHERE custbranch.brname " . LIKE . " '%" . $SearchString . "%' 
-					AND custbranch.debtorno " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%' 
-					AND custbranch.branchcode " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%' 
+					WHERE custbranch.brname " . LIKE . " '%" . $SearchString . "%'
+					AND custbranch.branchcode " . LIKE . " '%" . mb_strtoupper(trim($_POST['CustCode'])) . "%'
 					AND custbranch.phoneno " . LIKE . " '%" . trim($_POST['CustPhone']) . "%'";
 
 			if ($_SESSION['SalesmanLogin']!=''){
@@ -372,11 +371,11 @@ if (isset($SelectedCustomer)) {
 					currencies.decimalplaces
 			FROM debtorsmaster INNER JOIN holdreasons
 			ON debtorsmaster.holdreason=holdreasons.reasoncode
-			INNER JOIN salestypes 
+			INNER JOIN salestypes
 			ON debtorsmaster.salestype=salestypes.typeabbrev
-			INNER JOIN paymentterms 
+			INNER JOIN paymentterms
 			ON debtorsmaster.paymentterms=paymentterms.termsindicator
-			INNER JOIN currencies 
+			INNER JOIN currencies
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo. "'";
 
@@ -426,7 +425,7 @@ if (isset($SelectedCustomer)) {
 					ON custbranch.defaultlocation=locations.loccode
 					WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
 					AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-	
+
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -470,7 +469,7 @@ if (isset($SelectedCustomer)) {
 		  prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
-		
+
 			$_SESSION['Items'.$identifier]->CreditAvailable = GetCreditAvailable($_SESSION['Items'.$identifier]->DebtorNo,$db);
 
 			if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
@@ -486,7 +485,7 @@ if (isset($SelectedCustomer)) {
 		prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently on hold please contact the credit control personnel to discuss'),'warn');
 	}
 
-} elseif (!$_SESSION['Items'.$identifier]->DefaultSalesType 
+} elseif (!$_SESSION['Items'.$identifier]->DefaultSalesType
 			OR $_SESSION['Items'.$identifier]->DefaultSalesType=='')	{
 
 #Possible that the check to ensure this account is not on hold has not been done
@@ -499,10 +498,10 @@ if (isset($SelectedCustomer)) {
 					debtorsmaster.currcode,
 					currencies.decimalplaces,
 					debtorsmaster.customerpoline
-			FROM debtorsmaster 
+			FROM debtorsmaster
 			INNER JOIN holdreasons
 			ON debtorsmaster.holdreason=holdreasons.reasoncode
-			INNER JOIN currencies 
+			INNER JOIN currencies
 			ON debtorsmaster.currcode=currencies.currabrev
 			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
@@ -857,7 +856,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$ExRate = 1;
 	}
 
-	
+
 	/*Process Quick Entry */
 	/* If enter is pressed on the quick entry screen, the default button may be Recalculate */
 	 if (isset($_POST['SelectingOrderItems'])
@@ -951,8 +950,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if ($_POST['AssetToDisposeOf'] == 'NoAssetSelected'){ //don't do anything unless an asset is disposed of
 			prnMsg(_('No asset was selected to dispose of. No assets have been added to this customer order'),'warn');
 		} else { //need to add the asset to the order
-			/*First need to create a stock ID to hold the asset and record the sale - as only stock items can be sold 
-			 * 		and before that we need to add a disposal stock category - if not already created 
+			/*First need to create a stock ID to hold the asset and record the sale - as only stock items can be sold
+			 * 		and before that we need to add a disposal stock category - if not already created
 			 * 		first off get the details about the asset being disposed of */
 			 $AssetDetailsResult = DB_query("SELECT  fixedassets.description,
 													fixedassets.longdescription,
@@ -963,13 +962,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 											ON fixedassetcategories.categoryid=fixedassets.assetcategoryid
 											WHERE fixedassets.assetid='" . $_POST['AssetToDisposeOf'] . "'",$db);
 			$AssetRow = DB_fetch_array($AssetDetailsResult);
-			
+
 			/* Check that the stock category for disposal "ASSETS" is defined already */
 			$AssetCategoryResult = DB_query("SELECT categoryid FROM stockcategory WHERE categoryid='ASSETS'",$db);
 			if (DB_num_rows($AssetCategoryResult)==0){
-				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible 
+				/*Although asset GL posting will come from the asset category - we should set the GL codes to something sensible
 				 * based on the category of the asset under review at the moment - this may well change for any other assets sold subsequentely */
-				 
+
 				/*OK now we can insert the stock category for this asset */
 				$InsertAssetStockCatResult = DB_query("INSERT INTO stockcategory ( categoryid,
 																				categorydescription,
@@ -977,19 +976,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 														VALUES ('ASSETS',
 																'" . _('Asset Disposals') . "',
 																'" . $AssetRow['costact'] . "')",$db);
-			} 
-			
+			}
+
 			/*First check to see that it doesn't exist already assets are of the format "ASSET-" . $AssetID
 			 */
-			 $TestAssetExistsAlreadyResult = DB_query("SELECT stockid 
-														FROM stockmaster 
+			 $TestAssetExistsAlreadyResult = DB_query("SELECT stockid
+														FROM stockmaster
 														WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . "'",
 														$db);
 			 $j=0;
 			while (DB_num_rows($TestAssetExistsAlreadyResult)==1) { //then it exists already ... bum
 				$j++;
-				$TestAssetExistsAlreadyResult = DB_query("SELECT stockid 
-														FROM stockmaster 
+				$TestAssetExistsAlreadyResult = DB_query("SELECT stockid
+														FROM stockmaster
 														WHERE stockid ='ASSET-" . $_POST['AssetToDisposeOf']  . '-' . $j . "'",
 														$db);
 			}
@@ -1025,7 +1024,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			/*not forgetting the location records too */
 			$InsertStkLocRecsResult = DB_query("INSERT INTO locstock (loccode,
 																	stockid)
-											SELECT loccode, '" . $AssetStockID . "' 
+											SELECT loccode, '" . $AssetStockID . "'
 											FROM locations",$db);
 			/*Now the asset has been added to the stock master we can add it to the sales order */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
@@ -1052,9 +1051,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items'.$identifier]->LineItems[$_GET['Delete']]->Quantity = $QuantityAlreadyDelivered;
 			}
 		}
-		
+
 		$AlreadyWarnedAboutCredit = false;
-		
+
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
@@ -1063,17 +1062,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
 					/*There is a new price being input for the line item */
-					
+
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
 					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
-					
+
 				} elseif (ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.01) {
 					/* A GP % has been input so need to do a recalculation of the price at this new GP Percentage */
-					
-					
+
+
 					prnMsg(_('Recalculated the price from the GP % entered - the GP % was') . ' ' . $OrderLine->GPPercent . '  the new GP % is ' . filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]),'info');
-					
-					
+
+
 					$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
 				} else {
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
@@ -1110,13 +1109,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							OR $OrderLine->Narrative != $Narrative
 							OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
 							OR $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
-					
+
 					$WithinCreditLimit = true;
-					
-					if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  
+
+					if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){
 						/*Check credit limits is 1 for warn breach their credit limit and 2 for prohibit sales */
 						$DifferenceInOrderValue = ($Quantity*$Price*(1-$DiscountPercentage/100)) - ($OrderLine->Quantity*$OrderLine->Price*(1-$OrderLine->DiscountPercent));
-						
+
 						$_SESSION['Items'.$identifier]->CreditAvailable -= $DifferenceInOrderValue;
 
 						if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
@@ -1129,7 +1128,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							$AlreadyWarnedAboutCredit = true;
 						}
 					}
-					
+
 					if ($WithinCreditLimit){
 						$_SESSION['Items'.$identifier]->update_cart_item($OrderLine->LineNumber,
 																		$Quantity,
@@ -1144,16 +1143,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				} //there are changes to the order line to process
 			} //page not called from itself - POST variables not set
 		} // Loop around all items on the order
-		
-		
+
+
 		/* Now Run through each line of the order again to work out the appropriate discount from the discount matrix */
 		$DiscCatsDone = array();
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
-	
+
 			if ($OrderLine->DiscCat !='' AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
 				$DiscCatsDone[]=$OrderLine->DiscCat;
 				$QuantityOfDiscCat = 0;
-	
+
 				foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine_2) {
 					/* add up total quantity of all lines of this DiscCat */
 					if ($OrderLine_2->DiscCat==$OrderLine->DiscCat){
@@ -1454,7 +1453,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* Now show the stock item selection search stuff below */
 
-	 if ((!isset($_POST['QuickEntry'])  
+	 if ((!isset($_POST['QuickEntry'])
 			AND !isset($_POST['SelectAsset']))){
 
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '" />';
@@ -1464,18 +1463,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 // Select the most recently ordered items for quick select
 			$SixMonthsAgo = DateAdd (Date($_SESSION['DefaultDateFormat']),'m',-6);
 
-			$SQL="SELECT stockmaster.units, 
-						stockmaster.description, 
-						stockmaster.stockid, 
+			$SQL="SELECT stockmaster.units,
+						stockmaster.description,
+						stockmaster.stockid,
 						salesorderdetails.stkcode,
-						SUM(qtyinvoiced) salesqty 
+						SUM(qtyinvoiced) salesqty
 					FROM `salesorderdetails`INNER JOIN `stockmaster`
 					ON  salesorderdetails.stkcode = stockmaster.stockid
 					WHERE ActualDispatchDate >= '" . FormatDateForSQL($SixMonthsAgo) . "'
 					GROUP BY stkcode
 					ORDER BY salesqty DESC
 					LIMIT " . $_SESSION['FrequentlyOrderedItems'];
-				  
+
 			$result2 = DB_query($SQL,$db);
 			echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 			echo _('Frequently Ordered Items') . '</p><br />';
@@ -1514,10 +1513,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
 							FROM salesorderdetails,
 								 salesorders
-							WHERE salesorders.orderno = salesorderdetails.orderno 
-							AND salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' 
-							AND salesorderdetails.completed=0 
-							AND salesorders.quotation=0 
+							WHERE salesorders.orderno = salesorderdetails.orderno
+							AND salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
+							AND salesorderdetails.completed=0
+							AND salesorders.quotation=0
 							AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
@@ -1617,7 +1616,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				FROM stockcategory
 				WHERE stocktype='F' OR stocktype='D'
 				ORDER BY categorydescription";
-						
+
 		$result1 = DB_query($SQL,$db);
 		while ($myrow1 = DB_fetch_array($result1)) {
 			if ($_POST['StockCat']==$myrow1['categoryid']){
@@ -1640,11 +1639,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo  $_POST['StockCode'];
 		}
 		echo '"></td></tr>';
-		
+
 		echo '<tr>
 			<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="' . _('Search Now') . '"></td>
 			<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
-		
+
 		if (!isset($_POST['PartSearch'])) {
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
 		}
@@ -1695,11 +1694,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails INNER JOIN salesorders 
-						ON salesorders.orderno = salesorderdetails.orderno 
-						 WHERE  salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "' 
-						 AND salesorderdetails.completed=0 
-						 AND salesorders.quotation=0 
+						FROM salesorderdetails INNER JOIN salesorders
+						ON salesorders.orderno = salesorderdetails.orderno
+						 WHERE  salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
+						 AND salesorderdetails.completed=0
+						 AND salesorders.quotation=0
 						 AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
@@ -1714,9 +1713,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo
-						 FROM purchorderdetails INNER JOIN purchorders 
+						 FROM purchorderdetails INNER JOIN purchorders
 						 ON purchorderdetails.orderno=purchorders.orderno
-						 WHERE purchorderdetails.completed=0 
+						 WHERE purchorderdetails.completed=0
 						 AND purchorders.status<>'Cancelled'
 						 AND purchorders.status<>'Rejected'
 						 AND purchorders.status<>'Pending'
@@ -1822,12 +1821,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
 
 	  	} elseif (isset($_POST['SelectAsset'])){
-		
+
 			echo '<div class="page_help_text"><b>' . _('Use this screen to select an asset to dispose of to this customer') . '</b></div><br />
 		 			<table border=1>';
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
-				echo	'<tr><td>' . _('PO Line') . '</td>	
+				echo	'<tr><td>' . _('PO Line') . '</td>
 							<td><input type="text" name="poline" size=21 maxlength=20></td></tr>';
 			}
 			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
@@ -1840,9 +1839,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '</select></td></tr></table>
 						<br /><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '">
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
-		
+
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
-		
+
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
 	  		echo '<br /><div class="centre"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
 		}
