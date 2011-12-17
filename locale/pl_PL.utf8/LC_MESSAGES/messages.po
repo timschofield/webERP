@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-03 16:31+1300\n"
+"POT-Creation-Date: 2011-12-10 09:04+1300\n"
 "PO-Revision-Date: 2011-02-06 02:09+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: <pl@li.org>\n"
@@ -890,7 +890,7 @@ msgstr "nie może być odtworzona ponieważ"
 #: ReverseGRN.php:374 SelectCreditItems.php:1408 SelectSalesOrder.php:189
 #: SelectSalesOrder.php:353 StockCheck.php:223 StockCostUpdate.php:77
 #: StockCostUpdate.php:87 StockLocStatus.php:153 StockMovements.php:87
-#: StockQuantityByDate.php:95 StockReorderLevel.php:40 StockStatus.php:265
+#: StockQuantityByDate.php:95 StockReorderLevel.php:40 StockStatus.php:263
 #: StockTransfers.php:191 StockUsageGraph.php:53 StockUsage.php:139
 #: SupplierInquiry.php:78 SupplierInquiry.php:100 SupplierInquiry.php:136
 #: SupplierInquiry.php:190 SupplierTransInquiry.php:95 SuppPaymentRun.php:114
@@ -1533,7 +1533,7 @@ msgstr "z"
 #: PrintCustTransPortrait.php:58 PrintCustTransPortrait.php:61
 #: SalesGraph.php:211 SalesGraph.php:240 SalesGraph.php:244
 #: StockLocTransferReceive.php:306 StockLocTransferReceive.php:423
-#: Stocks.php:266 Stocks.php:271 StockStatus.php:306 StockStatus.php:347
+#: Stocks.php:266 Stocks.php:271 StockStatus.php:304 StockStatus.php:345
 #: StockTransfers.php:436 includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
 #: includes/PDFChequeListingPageHeader.inc:17
@@ -1933,8 +1933,8 @@ msgstr "Część"
 #: SelectOrderItems.php:1675 SelectOrderItems.php:1802 ShipmentCosting.php:145
 #: ShipmentCosting.php:146 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:617
-#: StockCounts.php:98 StockLocMovements.php:92 StockLocTransfer.php:186
-#: StockMovements.php:97 StockStatus.php:310 StockUsageGraph.php:12
+#: StockCounts.php:98 StockLocMovements.php:92 StockLocTransfer.php:261
+#: StockMovements.php:97 StockStatus.php:308 StockUsageGraph.php:12
 #: SuppCreditGRNs.php:267 SuppCreditGRNs.php:268 SupplierCredit.php:317
 #: SupplierTenders.php:265 SupplierTenders.php:493 WOSerialNos.php:256
 #: WOSerialNos.php:296 includes/InputSerialItems.php:111
@@ -2313,7 +2313,7 @@ msgstr "podaj fragment"
 #: SalesInquiry.php:1204 SelectProduct.php:523 Shipt_Select.php:173
 #: StockAdjustments.php:85 StockAdjustments.php:359 StockCounts.php:97
 #: StockCounts.php:132 StockMovements.php:32 StockReorderLevel.php:46
-#: StockStatus.php:59 StockTransfers.php:47 StockTransfers.php:458
+#: StockStatus.php:57 StockTransfers.php:47 StockTransfers.php:458
 #: StockUsage.php:64 SupplierTenders.php:359 WorkOrderEntry.php:606
 #: WorkOrderIssue.php:667 Z_ChangeStockCategory.php:90
 #: Z_ChangeStockCode.php:313
@@ -2704,7 +2704,7 @@ msgstr "Poziom"
 #: PDFOrdersInvoiced.php:309 PDFOrderStatus.php:278
 #: ReorderLevelLocation.php:169 ReorderLevel.php:258 ReorderLevel.php:267
 #: StockCounts.php:133 StockReorderLevel.php:53 StockSerialItemResearch.php:80
-#: StockStatus.php:82 StockStatus.php:87 WhereUsedInquiry.php:72
+#: StockStatus.php:80 StockStatus.php:85 WhereUsedInquiry.php:72
 #: WorkCentres.php:128 WorkCentres.php:221
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
 #: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2258
@@ -3230,7 +3230,7 @@ msgstr "Ilości zafakturowane wymienione w"
 #: RecurringSalesOrders.php:318 ReorderLevelLocation.php:199 ReprintGRN.php:81
 #: ReverseGRN.php:384 SalesGraph.php:181 SelectCreditItems.php:671
 #: SelectOrderItems.php:1331 StockCostUpdate.php:123 StockLocMovements.php:87
-#: StockLocTransfer.php:185 StockLocTransferReceive.php:427
+#: StockLocTransfer.php:260 StockLocTransferReceive.php:427
 #: StockQuantityByDate.php:105 Stocks.php:729 Stocks.php:732 Stocks.php:787
 #: Stocks.php:794 SuppCreditGRNs.php:81 SuppCreditGRNs.php:175
 #: SuppInvGRNs.php:125 SuppInvGRNs.php:303 SupplierCredit.php:315
@@ -3297,7 +3297,7 @@ msgstr "Ta Wysyłka"
 #: PrintCustTransPortrait.php:1066 PurchData.php:165 PurchData.php:483
 #: RecurringSalesOrders.php:322 SelectCreditItems.php:675
 #: SelectOrderItems.php:1336 Shipments.php:405 StockLocMovements.php:94
-#: StockMovements.php:99 StockStatus.php:311 SuppCreditGRNs.php:181
+#: StockMovements.php:99 StockStatus.php:309 SuppCreditGRNs.php:181
 #: SuppCreditGRNs.php:269 SuppCreditGRNs.php:270 SupplierTenders.php:267
 #: SupplierTenders.php:494 SuppPriceList.php:292
 #: includes/DefineLabelClass.php:49 includes/PDFQuotationPageHeader.inc:104
@@ -3314,7 +3314,7 @@ msgstr "Cena"
 #: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:323
 #: SalesAnalReptCols.php:41 SalesAnalReptCols.php:43 SelectCreditItems.php:677
 #: SelectOrderItems.php:1339 StockLocMovements.php:95 StockMovements.php:100
-#: StockStatus.php:312 includes/PDFQuotationPageHeader.inc:105
+#: StockStatus.php:310 includes/PDFQuotationPageHeader.inc:105
 #: includes/PDFQuotationPortraitPageHeader.inc:105
 #: includes/PDFTransPageHeader.inc:211
 msgid "Discount"
@@ -3644,8 +3644,8 @@ msgstr "Użyta fraza SQL"
 #: ShipmentCosting.php:428 ShipmentCosting.php:447 ShipmentCosting.php:461
 #: StockAdjustments.php:177 StockAdjustments.php:208 StockAdjustments.php:226
 #: StockAdjustments.php:242 StockAdjustments.php:255 StockAdjustments.php:283
-#: StockAdjustments.php:305 StockDispatch.php:179 StockLocTransfer.php:79
-#: StockLocTransfer.php:101 StockLocTransfer.php:105
+#: StockAdjustments.php:305 StockDispatch.php:179 StockLocTransfer.php:148
+#: StockLocTransfer.php:170 StockLocTransfer.php:174
 #: StockLocTransferReceive.php:102 StockLocTransferReceive.php:136
 #: StockLocTransferReceive.php:150 StockLocTransferReceive.php:169
 #: StockLocTransferReceive.php:214 StockLocTransferReceive.php:250
@@ -4291,7 +4291,7 @@ msgid ""
 "the order"
 msgstr "BOM umowy nie można alterned ponieważ klient już za zamówienie"
 
-#: ContractBOM.php:175 PO_Items.php:538
+#: ContractBOM.php:175 PO_Items.php:538 StockLocTransfer.php:75
 #: includes/SelectOrderItems_IntoCart.inc:27
 #: includes/SelectOrderItems_IntoCart.inc:64
 msgid "The item"
@@ -5047,8 +5047,8 @@ msgstr "Zapis wybranego klienta"
 #: SelectOrderItems.php:548 SelectOrderItems.php:1523
 #: SelectOrderItems.php:1704 SpecialOrder.php:61 SpecialOrder.php:85
 #: StockCheck.php:221 StockLocStatus.php:183 StockLocStatus.php:206
-#: StockLocStatus.php:239 StockStatus.php:117 StockStatus.php:141
-#: StockStatus.php:161 StockStatus.php:181 StockStatus.php:198
+#: StockLocStatus.php:239 StockStatus.php:115 StockStatus.php:139
+#: StockStatus.php:159 StockStatus.php:179 StockStatus.php:196
 #: SupplierCredit.php:91 SupplierInvoice.php:70
 msgid "cannot be retrieved because"
 msgstr "nie mogą zostać wyświetlone ponieważ"
@@ -5816,19 +5816,19 @@ msgid "On Demand"
 msgstr "On Demand"
 
 #: CounterSales.php:2034 CounterSales.php:2219 SelectOrderItems.php:1489
-#: SelectOrderItems.php:1673 StockLocStatus.php:166 StockStatus.php:92
+#: SelectOrderItems.php:1673 StockLocStatus.php:166 StockStatus.php:90
 msgid "On Order"
 msgstr "Na Zamówienie"
 
 #: CounterSales.php:2035 CounterSales.php:2220 SelectOrderItems.php:1490
-#: SelectOrderItems.php:1674 StockLocStatus.php:165 StockStatus.php:91
+#: SelectOrderItems.php:1674 StockLocStatus.php:165 StockStatus.php:89
 #: includes/OutputSerialItems.php:37 includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
 msgstr "Dostępne"
 
 #: CounterSales.php:2064 CounterSales.php:2246 SelectOrderItems.php:1522
 #: SelectOrderItems.php:1704 StockCheck.php:221 StockLocStatus.php:183
-#: StockLocStatus.php:206 StockStatus.php:117 StockStatus.php:141
+#: StockLocStatus.php:206 StockStatus.php:115 StockStatus.php:139
 msgid "The demand for this product from"
 msgstr "Zapotrzebowanie na ten produkt z"
 
@@ -12701,7 +12701,7 @@ msgstr "Zakupy"
 #: ReorderLevel.php:164 SelectProduct.php:78 StockDispatch.php:221
 #: StockMovements.php:19 StockQties_csv.php:8 StockQuantityByDate.php:10
 #: StockReorderLevel.php:18 StockSerialItemResearch.php:9
-#: StockSerialItems.php:9 StockStatus.php:42 StockTransferControlled.php:14
+#: StockSerialItems.php:9 StockStatus.php:40 StockTransferControlled.php:14
 #: SuppLoginSetup.php:24 WWW_Users.php:16
 msgid "Inventory"
 msgstr "Magazyny"
@@ -12979,7 +12979,7 @@ msgstr "Cennik Dostawca"
 msgid "Bulk Inventory Transfer"
 msgstr "Zbiorowe Przeniesienie Międzymagazynowe"
 
-#: index.php:590 StockAdjustments.php:66 StockLocTransfer.php:132
+#: index.php:590 StockAdjustments.php:66 StockLocTransfer.php:201
 #: StockLocTransferReceive.php:411 StockLocTransferReceive.php:503
 #: StockTransfers.php:27 StockTransfers.php:446 StockUsage.php:28
 #: SuppCreditGRNs.php:19 SuppInvGRNs.php:16
@@ -14951,10 +14951,11 @@ msgstr ""
 
 #: MRPReport.php:724 SelectAsset.php:222 SelectCustomer.php:392
 #: SelectCustomer.php:473 SelectOrderItems.php:1380 SelectProduct.php:709
-#: SelectSupplier.php:235 SelectSupplier.php:297 SupplierTenders.php:146
-#: SupplierTenders.php:204 WorkOrderIssue.php:352 WorkOrderReceive.php:676
-#: includes/Add_SerialItemsOut.php:23 includes/Add_SerialItems.php:33
-#: includes/Add_SerialItems.php:184 includes/Add_SerialItems.php:281
+#: SelectSupplier.php:235 SelectSupplier.php:297 StockLocTransfer.php:61
+#: SupplierTenders.php:146 SupplierTenders.php:204 WorkOrderIssue.php:352
+#: WorkOrderReceive.php:676 includes/Add_SerialItemsOut.php:23
+#: includes/Add_SerialItems.php:33 includes/Add_SerialItems.php:184
+#: includes/Add_SerialItems.php:281
 #: includes/PDFBankingSummaryPageHeader.inc:19
 msgid "of"
 msgstr "z"
@@ -14988,7 +14989,7 @@ msgstr "Poprzednia"
 msgid "Total Qty On Hand"
 msgstr "Razem Na Stanie"
 
-#: MRPReport.php:750 SelectProduct.php:736 StockStatus.php:9
+#: MRPReport.php:750 SelectProduct.php:736 StockStatus.php:7
 msgid "Stock Status"
 msgstr "Stany Magazynowe"
 
@@ -15112,8 +15113,8 @@ msgstr ""
 msgid "Supply"
 msgstr "Zasilania"
 
-#: MRPShortages.php:351 StockLocStatus.php:164 StockStatus.php:83
-#: StockStatus.php:90
+#: MRPShortages.php:351 StockLocStatus.php:164 StockStatus.php:81
+#: StockStatus.php:88
 msgid "Demand"
 msgstr "Potrzeba"
 
@@ -19001,7 +19002,7 @@ msgid "Date Type"
 msgstr "Data Typ"
 
 #: POReport.php:516 POReport.php:1286 POReport.php:1515 SalesInquiry.php:780
-#: SalesInquiry.php:1087 StockStatus.php:309
+#: SalesInquiry.php:1087 StockStatus.php:307
 msgid "Date Range"
 msgstr "Zakres dat"
 
@@ -19115,7 +19116,7 @@ msgstr "Podsumowanie Typ"
 msgid "Run Inquiry"
 msgstr "Uruchom śledczej"
 
-#: PO_SelectOSPurchOrder.php:9 SelectProduct.php:408 StockStatus.php:357
+#: PO_SelectOSPurchOrder.php:9 SelectProduct.php:408 StockStatus.php:355
 #: StockUsage.php:200
 msgid "Search Outstanding Purchase Orders"
 msgstr "Wyszukaj Oczekujące Zamówienia Zakupu"
@@ -20626,7 +20627,7 @@ msgstr "Dodaj"
 
 #: PurchData.php:529 SelectProduct.php:402 StockAdjustments.php:464
 #: StockCostUpdate.php:189 StockLocStatus.php:108 StockMovements.php:201
-#: StockQuantityByDate.php:70 StockStatus.php:61 StockTransfers.php:559
+#: StockQuantityByDate.php:70 StockStatus.php:59 StockTransfers.php:559
 #: StockUsage.php:192
 msgid "Show Stock Status"
 msgstr "Pokaż Stany Magazynowe"
@@ -20639,14 +20640,14 @@ msgstr "Pokaż Zmiany Magazynowe"
 
 #: PurchData.php:531 SelectProduct.php:405 SelectSalesOrder.php:6
 #: StockAdjustments.php:470 StockCostUpdate.php:192 StockMovements.php:203
-#: StockReorderLevel.php:109 StockStatus.php:354 StockTransfers.php:565
+#: StockReorderLevel.php:109 StockStatus.php:352 StockTransfers.php:565
 #: StockUsage.php:196
 msgid "Search Outstanding Sales Orders"
 msgstr "Przegląd Oczekujących Zamówień"
 
 #: PurchData.php:532 SelectProduct.php:406 StockAdjustments.php:472
 #: StockCostUpdate.php:193 StockMovements.php:204 StockReorderLevel.php:110
-#: StockStatus.php:355 StockTransfers.php:567 StockUsage.php:198
+#: StockStatus.php:353 StockTransfers.php:567 StockUsage.php:198
 msgid "Search Completed Sales Orders"
 msgstr "Przegląd Zrealizowanych Zamówień"
 
@@ -20989,7 +20990,7 @@ msgid "Inventory Reorder Level Report"
 msgstr "Zmiana kolejności Raport o zapasach Poziom"
 
 #: ReorderLevel.php:175 SelectSalesOrder.php:496 StockDispatch.php:248
-#: StockLocMovements.php:18 StockLocStatus.php:32 StockLocTransfer.php:146
+#: StockLocMovements.php:18 StockLocStatus.php:32 StockLocTransfer.php:215
 #: StockMovements.php:34 StockTransfers.php:484 StockUsage.php:66
 msgid "From Stock Location"
 msgstr "Z magazynu"
@@ -23647,7 +23648,7 @@ msgstr ""
 #: SelectProduct.php:336 StockLocStatus.php:162 StockQuantityByDate.php:107
 #: StockReorderLevel.php:54 StockSerialItems.php:108 StockSerialItems.php:111
 #: StockSerialItems.php:114 StockSerialItems.php:119 StockSerialItems.php:123
-#: StockSerialItems.php:127 StockStatus.php:88
+#: StockSerialItems.php:127 StockStatus.php:86
 msgid "Quantity On Hand"
 msgstr "Ilość Na Stanie"
 
@@ -25003,7 +25004,7 @@ msgstr "Ilość Korygowana"
 msgid "Enter Stock Adjustment"
 msgstr "Wprowadź Korektę Stanu"
 
-#: StockAdjustments.php:466 StockStatus.php:352 StockTransfers.php:561
+#: StockAdjustments.php:466 StockStatus.php:350 StockTransfers.php:561
 msgid "Show Movements"
 msgstr "Pokaż Zmiany"
 
@@ -25432,7 +25433,7 @@ msgstr "Przegląd Wprowadzonych Ilości"
 msgid "The quantity entered for line"
 msgstr "Wprowadzona ilość dla linii"
 
-#: StockCounts.php:51 StockLocTransfer.php:40 StockLocTransferReceive.php:34
+#: StockCounts.php:51 StockLocTransfer.php:104 StockLocTransferReceive.php:34
 msgid "is not numeric"
 msgstr "nie jest numeryczna"
 
@@ -25522,7 +25523,7 @@ msgstr ""
 msgid "The stock dispatch did not have any items to list"
 msgstr "Czas wysyłki nie ma żadnych elementów do listy"
 
-#: StockDispatch.php:179 StockLocTransfer.php:101
+#: StockDispatch.php:179 StockLocTransfer.php:170
 msgid "Unable to enter Location Transfer record for"
 msgstr "Nie można wprowadzić przesunięcia magazynowego dla"
 
@@ -25570,7 +25571,7 @@ msgstr ""
 msgid "Dispatch Percent"
 msgstr "Procent Dispatch"
 
-#: StockDispatch.php:264 StockLocTransfer.php:165 StockTransfers.php:508
+#: StockDispatch.php:264 StockLocTransfer.php:234 StockTransfers.php:508
 msgid "To Stock Location"
 msgstr "Magazyn Docelowy"
 
@@ -25639,7 +25640,7 @@ msgstr "Pokaż Zmiany przed"
 msgid "But after"
 msgstr "ale po"
 
-#: StockLocMovements.php:82 StockMovements.php:86 StockStatus.php:264
+#: StockLocMovements.php:82 StockMovements.php:86 StockStatus.php:262
 msgid ""
 "The stock movements for the selected criteria could not be retrieved because"
 msgstr ""
@@ -25670,7 +25671,7 @@ msgstr "Tylko Poniżej przedmioty Re-order Ilość"
 msgid "Only items where stock is available"
 msgstr "Tylko przedmioty, gdzie czas jest dostępna"
 
-#: StockLocStatus.php:152 StockReorderLevel.php:39 StockStatus.php:73
+#: StockLocStatus.php:152 StockReorderLevel.php:39 StockStatus.php:71
 msgid "The stock held at each location cannot be retrieved because"
 msgstr "Towary na stanie w magazynachi nie mogą zostać odtworzone ponieważ"
 
@@ -25679,19 +25680,19 @@ msgstr "Towary na stanie w magazynachi nie mogą zostać odtworzone ponieważ"
 msgid "StockID"
 msgstr "KodTow"
 
-#: StockLocStatus.php:163 StockReorderLevel.php:55 StockStatus.php:89
+#: StockLocStatus.php:163 StockReorderLevel.php:55 StockStatus.php:87
 msgid "Re-Order Level"
 msgstr "Poziom Zamawiania"
 
-#: StockLocStatus.php:239 StockStatus.php:181
+#: StockLocStatus.php:239 StockStatus.php:179
 msgid "The quantity on order for this product to be received into"
 msgstr "Wysokość zamówienia dla tego produktu do przyjęcia do"
 
-#: StockLocStatus.php:281 StockLocStatus.php:311 StockStatus.php:222
+#: StockLocStatus.php:281 StockLocStatus.php:311 StockStatus.php:220
 msgid "Serial Numbers"
 msgstr "Numery Seryjne"
 
-#: StockLocStatus.php:283 StockLocStatus.php:313 StockStatus.php:224
+#: StockLocStatus.php:283 StockLocStatus.php:313 StockStatus.php:222
 #: WorkOrderEntry.php:541
 msgid "Batches"
 msgstr "Partie"
@@ -25708,82 +25709,112 @@ msgstr "Ta transakcja już została wprowadzona"
 msgid "Please start over now"
 msgstr "Zacznij teraz"
 
-#: StockLocTransfer.php:34 StockLocTransfer.php:58
+#: StockLocTransfer.php:37 Z_ImportFixedAssets.php:48
+msgid "File contains"
+msgstr "Plik zawiera"
+
+#: StockLocTransfer.php:37
+msgid ""
+"columns, but only 2 columns are expected. The comma separated file should "
+"have just two columns the first for the item code and the second for the "
+"quantity to transfer"
+msgstr ""
+
+#: StockLocTransfer.php:54 StockLocTransfer.php:98 StockLocTransfer.php:123
 msgid "The part code entered of"
 msgstr "Wprowadzony kod towaru"
 
-#: StockLocTransfer.php:34
+#: StockLocTransfer.php:54 StockLocTransfer.php:98
 msgid "is not set up in the database"
 msgstr "jest nieznany w bazie danych"
 
-#: StockLocTransfer.php:34
+#: StockLocTransfer.php:54 StockLocTransfer.php:98
 msgid "Only valid parts can be entered for transfers"
 msgstr "Tylko własciwe towary mogą być wybrane do przeniesienia"
 
-#: StockLocTransfer.php:40
-msgid "The quantity entered of"
-msgstr "Wprowadzona ilość"
-
-#: StockLocTransfer.php:40
-msgid "for part code"
-msgstr "dla kodu towaru"
-
-#: StockLocTransfer.php:40
-msgid "The quantity entered for transfers is expected to be numeric"
-msgstr "Wprowadzona ilość do przeniesienia musi być numeryczna"
-
-#: StockLocTransfer.php:45 StockLocTransferReceive.php:34
-#: StockLocTransferReceive.php:38
+#: StockLocTransfer.php:61 StockLocTransfer.php:109
+#: StockLocTransferReceive.php:34 StockLocTransferReceive.php:38
 msgid "The quantity entered for"
 msgstr "Ilość wprowadzona dla"
 
-#: StockLocTransfer.php:45
+#: StockLocTransfer.php:61
+#, fuzzy
+msgid "is not numeric."
+msgstr "nie jest numeryczna"
+
+#: StockLocTransfer.php:61 StockLocTransfer.php:104
+msgid "The quantity entered for transfers is expected to be numeric"
+msgstr "Wprowadzona ilość do przeniesienia musi być numeryczna"
+
+#: StockLocTransfer.php:75
+#, fuzzy
+msgid "does not have enough stock available ("
+msgstr "nie ma wystarczająco dużo zapasów dostępnych do transferu."
+
+#: StockLocTransfer.php:75
+#, fuzzy
+msgid "The quantity required to transfer was"
+msgstr "Użyta fraza SQL"
+
+#: StockLocTransfer.php:104
+msgid "The quantity entered of"
+msgstr "Wprowadzona ilość"
+
+#: StockLocTransfer.php:104
+msgid "for part code"
+msgstr "dla kodu towaru"
+
+#: StockLocTransfer.php:109
 msgid "is less than or equal to 0"
 msgstr "jest mniejsza lub równa 0"
 
-#: StockLocTransfer.php:45
+#: StockLocTransfer.php:109
 msgid "Please correct this or remove the item"
 msgstr "Skoryguj dane lub usuń pozycję"
 
-#: StockLocTransfer.php:58
+#: StockLocTransfer.php:123
 msgid "does not have enough stock available for transfer."
 msgstr "nie ma wystarczająco dużo zapasów dostępnych do transferu."
 
-#: StockLocTransfer.php:67
+#: StockLocTransfer.php:135
 msgid "You must enter at least 1 Stock Item to transfer"
 msgstr "Musisz wprowadzić co najmniej jeden towar do przeniesienia"
 
-#: StockLocTransfer.php:73
+#: StockLocTransfer.php:141
 msgid ""
 "The transfer must have a different location to receive into and location "
 "sent from"
 msgstr "Przeniesienie musi mieć różne magazyny źródłowy i docelowy"
 
-#: StockLocTransfer.php:79
+#: StockLocTransfer.php:148
 msgid "Unable to BEGIN Location Transfer transaction"
 msgstr "Nie można rozpocząć przesunięcia międzymagazynowego"
 
-#: StockLocTransfer.php:105
+#: StockLocTransfer.php:174
 msgid "Unable to COMMIT Location Transfer transaction"
 msgstr "Nie można zapamiętać przesunięcia międzymagazynowego w bazie"
 
-#: StockLocTransfer.php:108
+#: StockLocTransfer.php:177
 msgid "The inventory transfer records have been created successfully"
 msgstr "Przesunięcia magazynowe wykonane pomyślnie"
 
-#: StockLocTransfer.php:109
+#: StockLocTransfer.php:178
 msgid "Print the Transfer Docket"
 msgstr "Drukuj Dokument Mm"
 
-#: StockLocTransfer.php:140
+#: StockLocTransfer.php:209
 msgid "Inventory Location Transfer Shipment Reference"
 msgstr "Przesunięcie Międzymagazynowe"
 
-#: StockLocTransfer.php:229
+#: StockLocTransfer.php:253
+msgid "Upload CSV file of Transfer Items and Quantites"
+msgstr ""
+
+#: StockLocTransfer.php:304
 msgid "Add More Items"
 msgstr "Dodaj Więcej Pozycji"
 
-#: StockLocTransfer.php:230
+#: StockLocTransfer.php:305
 msgid "Create Transfer Shipment"
 msgstr "Zrób Wysyłkę Przesunięcia"
 
@@ -25970,7 +26001,7 @@ msgstr "Nie ma przychodzące przelewy do tej lokalizacji"
 msgid "Stock Movements"
 msgstr "Przesunięcia Międzymagazynowe"
 
-#: StockMovements.php:19 StockStatus.php:43 StockUsage.php:57
+#: StockMovements.php:19 StockStatus.php:41 StockUsage.php:57
 #: WhereUsedInquiry.php:33
 msgid "in units of"
 msgstr "w jednostkach"
@@ -26384,7 +26415,7 @@ msgstr ""
 msgid "The stock item could not be updated because"
 msgstr "Magazyn nie może być zaktualizowany ponieważ"
 
-#: Stocks.php:372 StockStatus.php:74
+#: Stocks.php:372 StockStatus.php:72
 msgid "The SQL that was used to update the stock item and failed was"
 msgstr "Użyta fraza SQL"
 
@@ -26671,47 +26702,47 @@ msgstr "Jeśli istnieją towar nie będzie usunięty"
 msgid "Delete This Item"
 msgstr "Usuń Towar"
 
-#: StockStatus.php:33
+#: StockStatus.php:31
 msgid "Could not retrieve the requested item"
 msgstr "Nie można określić czy żądany towar"
 
-#: StockStatus.php:34
+#: StockStatus.php:32
 msgid "The SQL used to retrieve the items was"
 msgstr "Użyta fraza SQL"
 
-#: StockStatus.php:48
+#: StockStatus.php:46
 msgid "This is a kitset part and cannot have a stock holding"
 msgstr "To jest zestaw i nie może posiadać stanu"
 
-#: StockStatus.php:48 StockStatus.php:51 StockStatus.php:54
+#: StockStatus.php:46 StockStatus.php:49 StockStatus.php:52
 msgid "only the total quantity on outstanding sales orders is shown"
 msgstr "pokazana jest tylko ogólna ilość na niezrealizowanych zamówieniach"
 
-#: StockStatus.php:51
+#: StockStatus.php:49
 msgid "This is an assembly part and cannot have a stock holding"
 msgstr "To jest komplet więc nie może mieć stanu magazynowego"
 
-#: StockStatus.php:54
+#: StockStatus.php:52
 msgid "This is an dummy part and cannot have a stock holding"
 msgstr "To jest towar niematerialny więc nie może mieć stanu magazynowego"
 
-#: StockStatus.php:161
+#: StockStatus.php:159
 msgid "The workorder component demand for this product from"
 msgstr "Popyt części workorder dla tego produktu od"
 
-#: StockStatus.php:198
+#: StockStatus.php:196
 msgid "The quantity on work orders for this product to be received into"
 msgstr "Ilość zleceń na ten produkt do otrzymania w"
 
-#: StockStatus.php:306
+#: StockStatus.php:304
 msgid "Pricing history for sales of"
 msgstr "Historia Ceny sprzedaży"
 
-#: StockStatus.php:347
+#: StockStatus.php:345
 msgid "No history of sales of"
 msgstr "Brak historii sprzedaży"
 
-#: StockStatus.php:353
+#: StockStatus.php:351
 msgid "Show Usage"
 msgstr "Pokaż Użycie"
 
@@ -33701,10 +33732,6 @@ msgstr "Plik do importu"
 #: Z_ImportFixedAssets.php:6
 msgid "Import Fixed Assets"
 msgstr "Import Trwałych"
-
-#: Z_ImportFixedAssets.php:48
-msgid "File contains"
-msgstr "Plik zawiera"
 
 #: Z_ImportFixedAssets.php:48
 msgid "columns, expected"

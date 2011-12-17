@@ -2802,7 +2802,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-12-03 16:31:59
+-- Dump completed on 2011-12-10  9:05:43
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3076,7 +3076,7 @@ INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',18);
 INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
-INSERT INTO `systypes` VALUES (40,'Work Order',18);
+INSERT INTO `systypes` VALUES (40,'Work Order',20);
 INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
 INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
 INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
@@ -3142,7 +3142,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-12-03 15:38:47','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_IN.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-12-04 10:35:00','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_IN.utf8',0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -3828,7 +3828,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-12-03 16:31:59
+-- Dump completed on 2011-12-10  9:05:44
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
