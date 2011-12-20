@@ -73,10 +73,11 @@ if (isset($_GET['NewTransfer'])){
 if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additional inputs */
 	$_POST['StockID'] = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){	/* initiate a new transfer only if the StockID is different to the previous entry */
-	if (isset($_SESSION['Transfer']) 
-		AND $_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
-		unset($_SESSION['Transfer']);
-		$NewTransfer = true;
+	if (isset($_SESSION['Transfer']->TransferItem[0])) {
+		if ($_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
+			unset($_SESSION['Transfer']);
+			$NewTransfer = true;
+		}
 	}
 }
 
@@ -223,7 +224,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $PeriodNo . "',
 						'To " . $_SESSION['Transfer']->StockLocationTo ."',
 						'" . round(-$_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)  . "',
-						'" . $QtyOnHandPrior - round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) ."'
+						'" . ($QtyOnHandPrior - round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces)) . "'
 						)";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');

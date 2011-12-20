@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/12/11 Phil: Fix StockTransfers.php missing brackets around calculation in parameter passed to SQL
 15/12/11 Phil: Fix to UpgradeDatabase.php the button to perform the upgrade was missing for older versions where the version was not stored in the DB.
 15/12/11 Phil: SalesGraph.php was trying to set background colour to 'selection' changed to white
 15/12/11 Vitaly Shevkunov: Shipments.php fixed missing quote in html
