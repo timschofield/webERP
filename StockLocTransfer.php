@@ -157,7 +157,9 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 if(isset($_POST['Submit']) AND $InputError==False){
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to BEGIN Location Transfer transaction');
+	
 	DB_Txn_Begin($db);
+	
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
 		if($_POST['StockID' . $i] != ''){
@@ -209,8 +211,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	}
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -222,9 +223,11 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
+	
 	echo '<tr>
-			<td>'._('From Stock Location').':</td>
+			<td>' . _('From Stock Location') . ':</td>
 			<td><select name="FromStockLocation">';
+			
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['FromStockLocation'])){
 			if ($myrow['loccode'] == $_POST['FromStockLocation']){
@@ -322,7 +325,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '</table>
 		<br />
 		<div class="centre">
-		<input type="hidden" name="LinesCounter" value="'. $i .'" />
+		<input type="hidden" name="LinesCounter" value="'. $j .'" />
 		<input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '" />
 		<input type="submit" name="Submit" value="'. _('Create Transfer Shipment'). '" />
 		<br />';

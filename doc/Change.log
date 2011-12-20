@@ -1,10 +1,11 @@
 webERP Change Log
 
+20/12/11 Phil: StockLocTransfer.php can now import a csv of items to transfer and each line can be checked to remove if required,
 20/12/11 Phil: Fix StockTransfers.php missing brackets around calculation in parameter passed to SQL
 15/12/11 Phil: Fix to UpgradeDatabase.php the button to perform the upgrade was missing for older versions where the version was not stored in the DB.
 15/12/11 Phil: SalesGraph.php was trying to set background colour to 'selection' changed to white
 15/12/11 Vitaly Shevkunov: Shipments.php fixed missing quote in html
-14/12/11 Tim Schofield: check_syntax.sh Script for checkeing syntax of all php scripts in webERP
+14/12/11 Tim Schofield: check_syntax.sh Script for checking syntax of all php scripts in webERP
 13/12/11 Vitaly Shevkunov: Z_ChangeStockCode.php fixed call to DB_error_no had missing ($db) - also turned off FOREIGN KEY CHECKS before updating the BOM.
 13/12/11 Exson: Fix SelectOrderItems.php and DeliveryDetails.php for where an order is modified while another order is being created in a different tab of the browser - $_SESSION['ExistingOrder'] now modified to $_SESSION['ExistingOrder' .$identifier] as suggested by Tim
 13/12/11 Phil: Fixed other scripts affected and send $identifier to add_to_cart and remove_from_cart functions
