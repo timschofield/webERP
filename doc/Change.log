@@ -1,5 +1,9 @@
 webERP Change Log
 
+22/12/11 Release 4.06.3
+
+22/12/11 Phil: Fix to install/save.php to use mysqli_connect_error to report the connection error
+22/12/11 Phil: Shipments.php was not retaining vessel and voyage
 20/12/11 Phil: StockLocTransfer.php can now import a csv of items to transfer and each line can be checked to remove if required,
 20/12/11 Phil: Fix StockTransfers.php missing brackets around calculation in parameter passed to SQL
 15/12/11 Phil: Fix to UpgradeDatabase.php the button to perform the upgrade was missing for older versions where the version was not stored in the DB.

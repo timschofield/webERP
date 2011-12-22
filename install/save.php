@@ -325,7 +325,7 @@ if (!$zp = fopen($path_to_root . '/config.php', 'w')){
 
 $db = mysqli_connect($_POST['database_host'], $_POST['database_username'], $_POST['database_password']);
 if (!$db){
-	set_error('Database host name, username and/or password incorrect. MySQL Error:<br />'. mysqli_error());
+	set_error('Database host name, username and/or password incorrect. MySQL Error:<br />'. mysqli_connect_error());
 }
 
 if($_POST['install_tables'] == true){
@@ -339,7 +339,7 @@ if($_POST['install_tables'] == true){
 		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-new.sql');
 	}
 	mysqli_query($db, 'CREATE DATABASE IF NOT EXISTS `' . mysqli_real_escape_string($db, $_POST['company_name']) . '`');
-	    mysqli_select_db($db, $_POST['company_name']);
+	mysqli_select_db($db, $_POST['company_name']);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 	$SQL ='';
 	$InAFunction = false;

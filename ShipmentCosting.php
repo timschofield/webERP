@@ -45,24 +45,27 @@ if (DB_num_rows($GetShiptHdrResult)==0) {
 }
 
 $HeaderData = DB_fetch_array($GetShiptHdrResult);
-echo '<br />';
-echo '<table class="selection">';
-echo '<tr><th colspan="4"><font size="3" color="navy">'._('Shipment Details').'</font></th></tr>';
-echo '<tr>
+echo '<br />
+	<table class="selection">
+	<tr>
+		<th colspan="4"><font size="3" color="navy">'._('Shipment Details').'</font></th>
+	</tr>
+	<tr>
 		<td><b>'. _('Shipment') .': </td>
 		<td><b>' . $_GET['SelectedShipment'] . '</b></td>
 		<td><b>'. _('From').' ' . $HeaderData['suppname'] . '</b></td>
-	</tr>';
-
-echo '<tr><td>' . _('Vessel'). ': </td>
-			<td>' . $HeaderData['vessel'] . '</td>
-			<td>'. _('Voyage Ref'). ': </td>
-			<td>' . $HeaderData['voyageref'] . '</td></tr>';
-
-echo '<tr><td>' . _('Expected Arrival Date (ETA)') . ': </td>
-	<td>' . ConvertSQLDate($HeaderData['eta']) . '</td></tr>';
-
-echo '</table>';
+	</tr>
+	<tr>
+		<td>' . _('Vessel'). ': </td>
+		<td>' . $HeaderData['vessel'] . '</td>
+		<td>'. _('Voyage Ref'). ': </td>
+		<td>' . $HeaderData['voyageref'] . '</td>
+	</tr>
+	<tr>
+		<td>' . _('Expected Arrival Date (ETA)') . ': </td>
+		<td>' . ConvertSQLDate($HeaderData['eta']) . '</td>
+	</tr>
+	</table>';
 
 /*Get the total non-stock item shipment charges */
 
@@ -75,7 +78,7 @@ $ErrMsg = _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('general cos
 $GetShiptCostsResult = DB_query($sql,$db, $ErrMsg);
 if (DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
-	prnMsg ( _('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
+	prnMsg (_('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
 	include ('includes/footer.inc');
 	exit;
 }
@@ -122,12 +125,12 @@ if (db_num_rows($LineItemsResult) > 0) {
 
 	if (isset($_POST['Close'])){
 		while ($myrow=DB_fetch_array($LineItemsResult)){
-					  if ($myrow['totqtyinvoiced'] < $myrow['totqtyrecd']){
-						 prnMsg(_('Cannot close a shipment where the quantity received is more than the quantity invoiced. Check the item') . ' ' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'],'warn');
-						 unset($_POST['Close']);
-					  }
-				}
-				DB_data_seek($LineItemsResult,0);
+		  if ($myrow['totqtyinvoiced'] < $myrow['totqtyrecd']){
+			 prnMsg(_('Cannot close a shipment where the quantity received is more than the quantity invoiced. Check the item') . ' ' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'],'warn');
+			 unset($_POST['Close']);
+		  }
+		}
+		DB_data_seek($LineItemsResult,0);
  	}
 
 
@@ -138,7 +141,8 @@ if (db_num_rows($LineItemsResult) > 0) {
 	}
 
 	echo '<br /><table cellpadding="2" colspan="7" class="selection">';
-	echo '<tr><th colspan=9><font color=navy size=3>' . _('Items on shipment'). '</font></th></tr>';
+	echo '<tr>
+			<th colspan="9"><font color="navy" size="3">' . _('Items on shipment'). '</font></th></tr>';
 
 	$TableHeader = '<tr>
 						<th>'. _('Item'). '</th>

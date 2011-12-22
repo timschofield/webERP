@@ -195,12 +195,12 @@ if (isset($_POST['Update'])
 		prnMsg(_('Cannot add purchase order lines to the shipment unless the shipment is first initiated - hit update to setup the shipment first'),'info');
 		$InputError = 1;
 	}
-
-/*The user hit the update the shipment button and there are some lines on the shipment*/
-	if ($InputError == 0 AND (count($_SESSION['Shipment']->LineItems) > 0 OR isset($_GET['Add']))){
-		
+	if ($InputError==0){
 		$_SESSION['Shipment']->Vessel = $_POST['Vessel'];
 		$_SESSION['Shipment']->VoyageRef = $_POST['VoyageRef'];
+	}
+/*The user hit the update the shipment button and there are some lines on the shipment*/
+	if ($InputError == 0 AND (count($_SESSION['Shipment']->LineItems) > 0 OR isset($_GET['Add']))){
 		
 		$sql = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
 		$result = DB_query($sql,$db);
