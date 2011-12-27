@@ -1,9 +1,8 @@
 <?php
 
 /* $Id$*/
-
-$title = _('Stock Location Transfer Docket Error');
 include('includes/session.inc');
+$title = _('Stock Location Transfer Docket Error');
 
 include('includes/PDFStarter.php');
 
