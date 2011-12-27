@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 2.9b\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-22 22:36+1300\n"
+"POT-Creation-Date: 2011-12-28 10:45+1300\n"
 "PO-Revision-Date: 2011-05-04 19:06+0000\n"
 "Last-Translator: Chertykov Denis <chertykov@gmail.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -203,8 +203,8 @@ msgstr "Не удалось получить группу счетов, так �
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:13
 #: BOMExtendedQty.php:261 BOMIndented.php:246 BOMIndentedReverse.php:235
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:213 BOMs.php:832
-#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2025
-#: CounterSales.php:2151 Credit_Invoice.php:255 CreditStatus.php:21
+#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2026
+#: CounterSales.php:2152 Credit_Invoice.php:255 CreditStatus.php:21
 #: Currencies.php:28 CustEDISetup.php:17 DailyBankTransactions.php:11
 #: DebtorsAtPeriodEnd.php:125 DiscountCategories.php:10
 #: DiscountCategories.php:131 DiscountMatrix.php:16 EDIMessageFormat.php:104
@@ -215,7 +215,7 @@ msgstr "Не удалось получить группу счетов, так �
 #: Labels.php:115 Labels.php:270 MRPReport.php:515 OutstandingGRNs.php:160
 #: PcAssignCashToTab.php:56 PcAssignCashToTab.php:130
 #: PcAssignCashToTab.php:146 PcAssignCashToTab.php:187 PDFPickingList.php:28
-#: PDFPrintLabel.php:140 PDFStockLocTransfer.php:17
+#: PDFPrintLabel.php:140 PDFStockLocTransfer.php:16
 #: PO_AuthorisationLevels.php:10 POReport.php:60 POReport.php:64
 #: POReport.php:68 PO_SelectOSPurchOrder.php:139 PricesBasedOnMarkUp.php:8
 #: Prices_Customer.php:35 Prices.php:30 PurchData.php:137 PurchData.php:258
@@ -224,8 +224,8 @@ msgstr "Не удалось получить группу счетов, так �
 #: SalesGraph.php:34 SalesPeople.php:20 SalesTypes.php:20 SelectAsset.php:45
 #: SelectCompletedOrder.php:11 SelectContract.php:78 SelectCreditItems.php:215
 #: SelectCreditItems.php:286 SelectCustomer.php:260 SelectGLAccount.php:17
-#: SelectGLAccount.php:77 SelectOrderItems.php:577 SelectOrderItems.php:1479
-#: SelectOrderItems.php:1603 SelectProduct.php:496 SelectSalesOrder.php:533
+#: SelectGLAccount.php:77 SelectOrderItems.php:577 SelectOrderItems.php:1480
+#: SelectOrderItems.php:1604 SelectProduct.php:496 SelectSalesOrder.php:533
 #: SelectSupplier.php:9 SelectSupplier.php:198 SelectWorkOrder.php:9
 #: SelectWorkOrder.php:151 ShipmentCosting.php:11 Shipments.php:17
 #: Shippers.php:122 Shippers.php:158 Shipt_Select.php:8
@@ -366,7 +366,7 @@ msgstr "Вы уверены, что хотите удалить этот фил�
 #: AddCustomerNotes.php:142 AddCustomerTypeNotes.php:129 Areas.php:165
 #: BankAccounts.php:224 BOMs.php:151 COGSGLPostings.php:109
 #: COGSGLPostings.php:207 ContractBOM.php:266 ContractOtherReqts.php:119
-#: CounterSales.php:821 Credit_Invoice.php:381 CreditStatus.php:175
+#: CounterSales.php:822 Credit_Invoice.php:381 CreditStatus.php:175
 #: Currencies.php:275 CustomerReceipt.php:918 Customers.php:1062
 #: CustomerTypes.php:203 DiscountCategories.php:219 DiscountMatrix.php:182
 #: EDIMessageFormat.php:151 FixedAssetCategories.php:187 FreightCosts.php:241
@@ -379,11 +379,11 @@ msgstr "Вы уверены, что хотите удалить этот фил�
 #: Prices.php:252 PurchData.php:205 SalesAnalReptCols.php:299
 #: SalesAnalRepts.php:303 SalesCategories.php:257 SalesGLPostings.php:133
 #: SalesGLPostings.php:246 SalesPeople.php:233 SalesTypes.php:207
-#: SecurityTokens.php:129 SelectCreditItems.php:764 SelectCustomer.php:613
+#: SecurityTokens.php:129 SelectCreditItems.php:765 SelectCustomer.php:613
 #: SelectCustomer.php:631 SelectCustomer.php:655 SelectCustomer.php:672
-#: SelectCustomer.php:696 SelectCustomer.php:713 SelectOrderItems.php:1398
+#: SelectCustomer.php:696 SelectCustomer.php:713 SelectOrderItems.php:1399
 #: Shipments.php:440 Shippers.php:144 SpecialOrder.php:656
-#: StockCategories.php:243 StockCategories.php:557 StockLocTransfer.php:301
+#: StockCategories.php:243 StockCategories.php:557 StockLocTransfer.php:302
 #: SuppContractChgs.php:99 SuppCreditGRNs.php:102 SuppFixedAssetChgs.php:87
 #: SuppInvGRNs.php:147 SupplierContacts.php:164 SupplierTypes.php:191
 #: SuppShiptChgs.php:90 SuppTransGLAnalysis.php:121 TaxAuthorities.php:175
@@ -695,10 +695,10 @@ msgid "Date"
 msgstr "Дата"
 
 #: AddCustomerNotes.php:122 AddCustomerTypeNotes.php:109 PcReportTab.php:173
-#: Stocks.php:1019 UpgradeDatabase.php:181 UpgradeDatabase.php:184
-#: UpgradeDatabase.php:187 UpgradeDatabase.php:190 UpgradeDatabase.php:193
-#: UpgradeDatabase.php:196 UpgradeDatabase.php:199 UpgradeDatabase.php:202
-#: UpgradeDatabase.php:205 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1019 UpgradeDatabase.php:182 UpgradeDatabase.php:185
+#: UpgradeDatabase.php:188 UpgradeDatabase.php:191 UpgradeDatabase.php:194
+#: UpgradeDatabase.php:197 UpgradeDatabase.php:200 UpgradeDatabase.php:203
+#: UpgradeDatabase.php:206 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -884,14 +884,14 @@ msgstr "не может быть получено потому, что"
 
 #: AgedDebtors.php:373 AgedSuppliers.php:201 Areas.php:95
 #: ConfirmDispatch_Invoice.php:160 ConfirmDispatch_Invoice.php:974
-#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1365
-#: CounterSales.php:1379 Credit_Invoice.php:697 Credit_Invoice.php:718
+#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1366
+#: CounterSales.php:1380 Credit_Invoice.php:697 Credit_Invoice.php:718
 #: CustomerReceipt.php:542 CustomerReceipt.php:681 CustomerReceipt.php:709
 #: CustomerTransInquiry.php:91 DeliveryDetails.php:393 GLProfit_Loss.php:596
 #: GLTagProfit_Loss.php:511 Payments.php:334 PDFRemittanceAdvice.php:85
 #: PurchData.php:86 PurchData.php:104 PurchData.php:245
 #: RecurringSalesOrders.php:256 ReverseGRN.php:191 ReverseGRN.php:205
-#: ReverseGRN.php:374 SelectCreditItems.php:1408 SelectSalesOrder.php:189
+#: ReverseGRN.php:374 SelectCreditItems.php:1409 SelectSalesOrder.php:189
 #: SelectSalesOrder.php:353 StockCheck.php:223 StockCostUpdate.php:77
 #: StockCostUpdate.php:87 StockLocStatus.php:153 StockMovements.php:87
 #: StockQuantityByDate.php:95 StockReorderLevel.php:40 StockStatus.php:263
@@ -1151,7 +1151,7 @@ msgid "User ID"
 msgstr "ID пользователя"
 
 #: AuditTrail.php:49 AuditTrail.php:62 ContractBOM.php:298
-#: CounterSales.php:2157 CounterSales.php:2160 CustomerTransInquiry.php:31
+#: CounterSales.php:2158 CounterSales.php:2161 CustomerTransInquiry.php:31
 #: DailySalesInquiry.php:48 DailySalesInquiry.php:50 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:167
 #: InventoryQuantities.php:193 InventoryQuantities.php:195 MRP.php:585
@@ -1161,8 +1161,8 @@ msgstr "ID пользователя"
 #: ReorderLevel.php:181 ReorderLevel.php:183 ReorderLevel.php:213
 #: ReorderLevel.php:215 SalesGraph.php:97 SalesGraph.php:99 SalesGraph.php:119
 #: SalesGraph.php:121 SalesGraph.php:143 SalesGraph.php:145 SalesGraph.php:179
-#: SalesInquiry.php:1078 SalesInquiry.php:1141 SelectCreditItems.php:952
-#: SelectOrderItems.php:1609 SelectOrderItems.php:1612 SelectProduct.php:504
+#: SalesInquiry.php:1078 SalesInquiry.php:1141 SelectCreditItems.php:953
+#: SelectOrderItems.php:1610 SelectOrderItems.php:1613 SelectProduct.php:504
 #: SelectProduct.php:506 StockDispatch.php:298 StockDispatch.php:300
 #: StockLocStatus.php:69 StockLocStatus.php:71 StockLocStatus.php:89
 #: StockLocStatus.php:93 StockLocStatus.php:97 StockQuantityByDate.php:24
@@ -1647,7 +1647,7 @@ msgstr "Ссылка"
 #: Payments.php:1046 PcAssignCashToTab.php:222 PcAssignCashToTab.php:345
 #: PcAuthorizeExpenses.php:90 PcClaimExpensesFromTab.php:212
 #: PcClaimExpensesFromTab.php:365 PcReportTab.php:172 PcReportTab.php:326
-#: PrintCheque.php:77 PrintCheque.php:91 SelectCreditItems.php:681
+#: PrintCheque.php:77 PrintCheque.php:91 SelectCreditItems.php:682
 #: SuppContractChgs.php:79 SuppContractChgs.php:163 SuppFixedAssetChgs.php:76
 #: SuppFixedAssetChgs.php:149 SupplierAllocations.php:457
 #: SupplierCredit.php:352 SupplierCredit.php:385 SupplierCredit.php:421
@@ -1850,8 +1850,8 @@ msgstr ""
 "счета. Важно, что обменный курс выше отражает текущее значение "
 "валютыбанковского счета"
 
-#: BankReconciliation.php:354 CounterSales.php:821 Customers.php:1091
-#: SelectOrderItems.php:1409 Stocks.php:1204 WorkOrderCosting.php:540
+#: BankReconciliation.php:354 CounterSales.php:822 Customers.php:1091
+#: SelectOrderItems.php:1410 Stocks.php:1204 WorkOrderCosting.php:540
 #: WorkOrderEntry.php:569
 msgid "Are You Sure?"
 msgstr "Вы уверены?"
@@ -1920,8 +1920,8 @@ msgstr "Часть"
 #: BOMIndentedReverse.php:295 BOMInquiry.php:200 BOMs.php:532 BOMs.php:709
 #: ContractBOM.php:237 ContractBOM.php:349 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:94
-#: Contracts.php:961 Contracts.php:997 CounterSales.php:741
-#: CounterSales.php:2036 CounterSales.php:2221 CounterSales.php:2347
+#: Contracts.php:961 Contracts.php:997 CounterSales.php:742
+#: CounterSales.php:2037 CounterSales.php:2222 CounterSales.php:2348
 #: Credit_Invoice.php:273 DeliveryDetails.php:827 DeliveryDetails.php:897
 #: GoodsReceived.php:100 GoodsReceived.php:104 GoodsReceived.php:107
 #: InventoryPlanningPrefSupplier.php:78 InventoryQuantities.php:246
@@ -1936,12 +1936,12 @@ msgstr "Часть"
 #: ReorderLevel.php:268 ReverseGRN.php:387 ReverseGRN.php:388
 #: SalesAnalReptCols.php:16 SalesAnalReptCols.php:18 SalesGraph.php:188
 #: SalesGraph.php:269 SalesInquiry.php:980 SalesTopItemsInquiry.php:222
-#: SelectCreditItems.php:673 SelectCreditItems.php:1034
-#: SelectOrderItems.php:1333 SelectOrderItems.php:1491
-#: SelectOrderItems.php:1675 SelectOrderItems.php:1802 ShipmentCosting.php:149
+#: SelectCreditItems.php:674 SelectCreditItems.php:1035
+#: SelectOrderItems.php:1334 SelectOrderItems.php:1492
+#: SelectOrderItems.php:1676 SelectOrderItems.php:1803 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:617
-#: StockCounts.php:98 StockLocMovements.php:92 StockLocTransfer.php:276
+#: StockCounts.php:98 StockLocMovements.php:92 StockLocTransfer.php:277
 #: StockMovements.php:97 StockStatus.php:308 StockUsageGraph.php:12
 #: SuppCreditGRNs.php:267 SuppCreditGRNs.php:268 SupplierCredit.php:317
 #: SupplierTenders.php:265 SupplierTenders.php:493 WOSerialNos.php:256
@@ -2100,10 +2100,10 @@ msgid "Build"
 msgstr "Build"
 
 #: BOMExtendedQty.php:331 BOMInquiry.php:114 BOMs.php:856
-#: CounterSales.php:2032 CounterSales.php:2217 PO_SelectOSPurchOrder.php:236
+#: CounterSales.php:2033 CounterSales.php:2218 PO_SelectOSPurchOrder.php:236
 #: PO_SelectPurchOrder.php:213 ReorderLevelLocation.php:70
 #: ReorderLevelLocation.php:71 SelectCompletedOrder.php:551
-#: SelectOrderItems.php:1487 SelectOrderItems.php:1671
+#: SelectOrderItems.php:1488 SelectOrderItems.php:1672
 #: SelectSalesOrder.php:582 SelectWorkOrder.php:193 Shipt_Select.php:191
 #: TopItems.php:182 includes/PDFTopItemsHeader.inc:54
 msgid "On Hand"
@@ -2173,8 +2173,8 @@ msgstr "Один уровень"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:113
 #: BOMInquiry.php:199 BOMs.php:529 BOMs.php:855 ContractBOM.php:236
-#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2030
-#: CounterSales.php:2215 CreditStatus.php:152 CreditStatus.php:241
+#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2031
+#: CounterSales.php:2216 CreditStatus.php:152 CreditStatus.php:241
 #: EmailConfirmation.php:192 FixedAssetCategories.php:163
 #: FixedAssetDepreciation.php:86 FixedAssetRegister.php:83
 #: FixedAssetRegister.php:372 FixedAssetTransfer.php:50
@@ -2191,8 +2191,8 @@ msgstr "Один уровень"
 #: ReverseGRN.php:385 SalesCategories.php:422 SecurityTokens.php:94
 #: SecurityTokens.php:103 SecurityTokens.php:118 SelectAsset.php:243
 #: SelectCompletedOrder.php:550 SelectContract.php:153
-#: SelectCreditItems.php:988 SelectOrderItems.php:1485
-#: SelectOrderItems.php:1669 SelectProduct.php:516 SelectProduct.php:733
+#: SelectCreditItems.php:989 SelectOrderItems.php:1486
+#: SelectOrderItems.php:1670 SelectProduct.php:516 SelectProduct.php:733
 #: SelectSalesOrder.php:581 SelectWorkOrder.php:192 Shipt_Select.php:190
 #: StockCategories.php:216 StockDispatch.php:375 StockDispatch.php:382
 #: StockLocStatus.php:161 StockQuantityByDate.php:106 SuppCreditGRNs.php:82
@@ -2292,7 +2292,7 @@ msgid "description"
 msgstr "описание"
 
 #: BOMInquiry.php:30 BOMs.php:839 ContractBOM.php:324 ContractBOM.php:329
-#: Contracts.php:756 Contracts.php:759 CounterSales.php:2182
+#: Contracts.php:756 Contracts.php:759 CounterSales.php:2183
 #: CustomerReceipt.php:1106 CustomerReceipt.php:1109
 #: DiscountCategories.php:104 DiscountCategories.php:106
 #: DiscountCategories.php:110 DiscountCategories.php:112
@@ -2300,10 +2300,10 @@ msgstr "описание"
 #: MRPReport.php:542 PO_Header.php:538 PO_Items.php:1050 PO_Items.php:1054
 #: PO_SelectOSPurchOrder.php:217 PO_SelectPurchOrder.php:194 PurchData.php:268
 #: SelectAsset.php:94 SelectCompletedOrder.php:529 SelectCreditItems.php:222
-#: SelectCreditItems.php:971 SelectCustomer.php:269 SelectCustomer.php:279
+#: SelectCreditItems.php:972 SelectCustomer.php:269 SelectCustomer.php:279
 #: SelectCustomer.php:288 SelectCustomer.php:298 SelectCustomer.php:344
 #: SelectGLAccount.php:90 SelectOrderItems.php:587 SelectOrderItems.php:590
-#: SelectOrderItems.php:1637 SelectProduct.php:523 SelectSalesOrder.php:565
+#: SelectOrderItems.php:1638 SelectProduct.php:523 SelectSalesOrder.php:565
 #: SelectSupplier.php:209 SelectWorkOrder.php:179 Shipt_Select.php:173
 #: SuppFixedAssetChgs.php:122 SupplierTenders.php:359 WorkOrderEntry.php:606
 #: WorkOrderIssue.php:667
@@ -2332,11 +2332,11 @@ msgid "Stock Code"
 msgstr "Код товара"
 
 #: BOMInquiry.php:37 BOMs.php:844 ContractBOM.php:334 Contracts.php:764
-#: CounterSales.php:2186 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
+#: CounterSales.php:2187 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
 #: MRPDemands.php:338 MRPReport.php:554 PO_Header.php:545 PO_Items.php:1058
-#: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:978
+#: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:979
 #: SelectCustomer.php:369 SelectGLAccount.php:96 SelectOrderItems.php:595
-#: SelectOrderItems.php:1644 SelectProduct.php:531 SelectSupplier.php:219
+#: SelectOrderItems.php:1645 SelectProduct.php:531 SelectSupplier.php:219
 #: SelectSupplier.php:252 SupplierTenders.php:367 WorkOrderEntry.php:610
 #: WorkOrderIssue.php:672
 msgid "Search Now"
@@ -2367,15 +2367,15 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "SQL поиска выбранных частей завершился неудачей с сообщением"
 
 #: BOMInquiry.php:112 BOMs.php:528 BOMs.php:854 ContractBOM.php:345
-#: CounterSales.php:2029 CounterSales.php:2214 CustomerBranches.php:367
+#: CounterSales.php:2030 CounterSales.php:2215 CustomerBranches.php:367
 #: CustomerReceipt.php:1127 GLCodesInquiry.php:26 MRPDemands.php:90
 #: MRPPlannedWorkOrders.php:256 MRPReport.php:746 PDFOrdersInvoiced.php:347
 #: PDFOrderStatus.php:318 PDFPrintLabel.php:247 PO_Header.php:555
 #: PO_Items.php:1070 PO_SelectOSPurchOrder.php:234 PO_SelectPurchOrder.php:211
 #: PricesByCost.php:151 PurchData.php:350 ReorderLevelLocation.php:66
-#: SalesPeople.php:199 SelectCompletedOrder.php:549 SelectCreditItems.php:987
-#: SelectCustomer.php:412 SelectGLAccount.php:103 SelectOrderItems.php:1484
-#: SelectOrderItems.php:1668 SelectProduct.php:732 SelectSalesOrder.php:580
+#: SalesPeople.php:199 SelectCompletedOrder.php:549 SelectCreditItems.php:988
+#: SelectCustomer.php:412 SelectGLAccount.php:103 SelectOrderItems.php:1485
+#: SelectOrderItems.php:1669 SelectProduct.php:732 SelectSalesOrder.php:580
 #: SelectSupplier.php:258 SelectWorkOrder.php:191 Shipt_Select.php:189
 #: SpecialOrder.php:142 SupplierTenders.php:489 SuppPriceList.php:289
 #: TopItems.php:177 WorkOrderEntry.php:622 WorkOrderIssue.php:691
@@ -2385,12 +2385,12 @@ msgid "Code"
 msgstr "Код"
 
 #: BOMInquiry.php:115 BOMs.php:857 ConfirmDispatch_Invoice.php:280
-#: ContractBOM.php:347 CounterSales.php:2031 CounterSales.php:2216
+#: ContractBOM.php:347 CounterSales.php:2032 CounterSales.php:2217
 #: Credit_Invoice.php:272 GoodsReceived.php:101 GoodsReceived.php:105
 #: MRPReport.php:749 OffersReceived.php:106 PO_Items.php:1074
 #: PO_SelectOSPurchOrder.php:238 PO_SelectPurchOrder.php:215
-#: SelectCompletedOrder.php:554 SelectCreditItems.php:989
-#: SelectOrderItems.php:1486 SelectOrderItems.php:1670 SelectProduct.php:117
+#: SelectCompletedOrder.php:554 SelectCreditItems.php:990
+#: SelectOrderItems.php:1487 SelectOrderItems.php:1671 SelectProduct.php:117
 #: SelectProduct.php:735 SelectSalesOrder.php:583 SelectWorkOrder.php:194
 #: Shipments.php:402 Shipments.php:489 Shipt_Select.php:193
 #: StockLocTransferReceive.php:432 SupplierTenders.php:491 TopItems.php:180
@@ -2674,8 +2674,8 @@ msgstr "Не удалось получить описание части, так
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr "SQL получения описания родительской части"
 
-#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1413
-#: Credit_Invoice.php:753 Credit_Invoice.php:781 SelectCreditItems.php:1453
+#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
+#: Credit_Invoice.php:753 Credit_Invoice.php:781 SelectCreditItems.php:1454
 #: Stocks.php:940 Stocks.php:942
 msgid "Assembly"
 msgstr "Сборка"
@@ -3068,7 +3068,7 @@ msgstr "Создать GL записей для операций с товаро
 #: MRPCalendar.php:314 Payments.php:898 PcAuthorizeExpenses.php:288
 #: PO_AuthoriseMyOrders.php:138 PricesByCost.php:221 PurchData.php:522
 #: ReorderLevelLocation.php:148 SecurityTokens.php:97
-#: SelectCreditItems.php:923 SMTPServer.php:63 StockCostUpdate.php:184
+#: SelectCreditItems.php:924 SMTPServer.php:63 StockCostUpdate.php:184
 #: StockReorderLevel.php:103 Stocks.php:1198 SystemParameters.php:1032
 #: TaxAuthorityRates.php:83 WorkOrderEntry.php:566 WOSerialNos.php:332
 msgid "Update"
@@ -3124,7 +3124,7 @@ msgstr ""
 msgid "Back to Confirmation of Dispatch"
 msgstr "Назад к подтверждения отправки"
 
-#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1250
+#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1251
 #: DeliveryDetails.php:583 DeliveryDetails.php:788 EmailCustTrans.php:9
 #: PaymentAllocations.php:31 SelectSalesOrder.php:830 SelectSalesOrder.php:901
 #: SelectSalesOrder.php:928 Z_SalesIntegrityCheck.php:46
@@ -3239,16 +3239,16 @@ msgid "Invoice amounts stated in"
 msgstr "Количество в счете указано в"
 
 #: ConfirmDispatch_Invoice.php:277 ContractBOM.php:235 ContractCosting.php:79
-#: ContractCosting.php:85 Contracts.php:959 CounterSales.php:739
-#: CounterSales.php:2346 Credit_Invoice.php:269 DeliveryDetails.php:825
+#: ContractCosting.php:85 Contracts.php:959 CounterSales.php:740
+#: CounterSales.php:2347 Credit_Invoice.php:269 DeliveryDetails.php:825
 #: GoodsReceived.php:98 OrderDetails.php:162 PO_Items.php:658
 #: PO_OrderDetails.php:146 PrintCustTrans.php:860 PrintCustTrans.php:949
 #: PrintCustTrans.php:998 PrintCustTransPortrait.php:907
 #: PrintCustTransPortrait.php:1005 PrintCustTransPortrait.php:1062
 #: RecurringSalesOrders.php:318 ReorderLevelLocation.php:199 ReprintGRN.php:81
-#: ReverseGRN.php:384 SalesGraph.php:181 SelectCreditItems.php:671
-#: SelectOrderItems.php:1331 StockCostUpdate.php:123 StockLocMovements.php:87
-#: StockLocTransfer.php:275 StockLocTransferReceive.php:427
+#: ReverseGRN.php:384 SalesGraph.php:181 SelectCreditItems.php:672
+#: SelectOrderItems.php:1332 StockCostUpdate.php:123 StockLocMovements.php:87
+#: StockLocTransfer.php:276 StockLocTransferReceive.php:427
 #: StockQuantityByDate.php:105 Stocks.php:729 Stocks.php:732 Stocks.php:787
 #: Stocks.php:794 SuppCreditGRNs.php:81 SuppCreditGRNs.php:175
 #: SuppInvGRNs.php:125 SuppInvGRNs.php:303 SupplierCredit.php:315
@@ -3264,14 +3264,14 @@ msgid "Item Code"
 msgstr "Код товара"
 
 #: ConfirmDispatch_Invoice.php:278 ContractCosting.php:80
-#: ContractCosting.php:86 Contracts.php:960 CounterSales.php:740
+#: ContractCosting.php:86 Contracts.php:960 CounterSales.php:741
 #: Credit_Invoice.php:270 DeliveryDetails.php:826 DeliveryDetails.php:896
 #: OrderDetails.php:163 PO_Items.php:733 PO_OrderDetails.php:147
 #: PrintCustTrans.php:861 PrintCustTrans.php:950 PrintCustTrans.php:999
 #: PrintCustTransPortrait.php:908 PrintCustTransPortrait.php:1006
 #: PrintCustTransPortrait.php:1063 RecurringSalesOrders.php:319
 #: ReprintGRN.php:82 SalesInquiry.php:821 SalesInquiry.php:839
-#: SalesInquiry.php:938 SelectCreditItems.php:672 SelectOrderItems.php:1332
+#: SalesInquiry.php:938 SelectCreditItems.php:673 SelectOrderItems.php:1333
 #: SpecialOrder.php:615 StockLocTransferReceive.php:428
 #: includes/PDFOrderPageHeader_generic.inc:92
 #: includes/PDFPickingListHeader.inc:73
@@ -3304,7 +3304,7 @@ msgstr "Отправлено"
 msgid "This Dispatch"
 msgstr "Эта отправка"
 
-#: ConfirmDispatch_Invoice.php:283 CounterSales.php:744 Credit_Invoice.php:274
+#: ConfirmDispatch_Invoice.php:283 CounterSales.php:745 Credit_Invoice.php:274
 #: DeliveryDetails.php:829 DeliveryDetails.php:899 GoodsReceived.php:111
 #: OffersReceived.php:107 OffersReceived.php:215 OffersReceived.php:260
 #: OrderDetails.php:166 PDFOrdersInvoiced.php:391 PDFPriceList.php:365
@@ -3313,8 +3313,8 @@ msgstr "Эта отправка"
 #: PrintCustTrans.php:864 PrintCustTrans.php:953 PrintCustTrans.php:1002
 #: PrintCustTransPortrait.php:911 PrintCustTransPortrait.php:1009
 #: PrintCustTransPortrait.php:1066 PurchData.php:165 PurchData.php:483
-#: RecurringSalesOrders.php:322 SelectCreditItems.php:675
-#: SelectOrderItems.php:1336 Shipments.php:405 StockLocMovements.php:94
+#: RecurringSalesOrders.php:322 SelectCreditItems.php:676
+#: SelectOrderItems.php:1337 Shipments.php:405 StockLocMovements.php:94
 #: StockMovements.php:99 StockStatus.php:309 SuppCreditGRNs.php:181
 #: SuppCreditGRNs.php:269 SuppCreditGRNs.php:270 SupplierTenders.php:267
 #: SupplierTenders.php:494 SuppPriceList.php:292
@@ -3325,13 +3325,13 @@ msgstr "Эта отправка"
 msgid "Price"
 msgstr "Цена"
 
-#: ConfirmDispatch_Invoice.php:284 CounterSales.php:745 Credit_Invoice.php:275
+#: ConfirmDispatch_Invoice.php:284 CounterSales.php:746 Credit_Invoice.php:275
 #: CustomerReceipt.php:898 DeliveryDetails.php:830 OrderDetails.php:167
 #: PrintCustTrans.php:865 PrintCustTrans.php:954 PrintCustTrans.php:1003
 #: PrintCustTransPortrait.php:912 PrintCustTransPortrait.php:1010
 #: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:323
-#: SalesAnalReptCols.php:41 SalesAnalReptCols.php:43 SelectCreditItems.php:677
-#: SelectOrderItems.php:1339 StockLocMovements.php:95 StockMovements.php:100
+#: SalesAnalReptCols.php:41 SalesAnalReptCols.php:43 SelectCreditItems.php:678
+#: SelectOrderItems.php:1340 StockLocMovements.php:95 StockMovements.php:100
 #: StockStatus.php:310 includes/PDFQuotationPageHeader.inc:105
 #: includes/PDFQuotationPortraitPageHeader.inc:105
 #: includes/PDFTransPageHeader.inc:211
@@ -3339,7 +3339,7 @@ msgid "Discount"
 msgstr "Скидка"
 
 #: ConfirmDispatch_Invoice.php:285 ConfirmDispatch_Invoice.php:289
-#: CounterSales.php:749 CounterSales.php:836 Credit_Invoice.php:276
+#: CounterSales.php:750 CounterSales.php:837 Credit_Invoice.php:276
 #: Credit_Invoice.php:280 CustomerAllocations.php:331
 #: CustomerAllocations.php:364 CustomerInquiry.php:201 DeliveryDetails.php:831
 #: DeliveryDetails.php:900 GLBalanceSheet.php:183 GLBalanceSheet.php:192
@@ -3353,8 +3353,8 @@ msgstr "Скидка"
 #: PDFSuppTransListing.php:128 RecurringSalesOrders.php:324
 #: SalesByTypePeriodInquiry.php:373 SalesByTypePeriodInquiry.php:408
 #: SalesByTypePeriodInquiry.php:443 SalesByTypePeriodInquiry.php:478
-#: SalesByTypePeriodInquiry.php:539 SelectCreditItems.php:678
-#: SelectCreditItems.php:682 SelectOrderItems.php:1342
+#: SalesByTypePeriodInquiry.php:539 SelectCreditItems.php:679
+#: SelectCreditItems.php:683 SelectOrderItems.php:1343
 #: SuppContractChgs.php:107 SuppFixedAssetChgs.php:94
 #: SupplierAllocations.php:457 SupplierAllocations.php:569
 #: SupplierAllocations.php:644 SupplierCredit.php:406 SupplierInquiry.php:210
@@ -3368,12 +3368,12 @@ msgid "Total"
 msgstr "Всего"
 
 #: ConfirmDispatch_Invoice.php:285 Credit_Invoice.php:276
-#: SelectCreditItems.php:678
+#: SelectCreditItems.php:679
 msgid "Excl Tax"
 msgstr "Искл. налоги"
 
 #: ConfirmDispatch_Invoice.php:286 Credit_Invoice.php:277
-#: SelectCreditItems.php:679 SupplierInvoice.php:236 TaxGroups.php:285
+#: SelectCreditItems.php:680 SupplierInvoice.php:236 TaxGroups.php:285
 msgid "Tax Authority"
 msgstr "Налоговые органы"
 
@@ -3381,16 +3381,16 @@ msgstr "Налоговые органы"
 msgid "Tax %"
 msgstr "% налога"
 
-#: ConfirmDispatch_Invoice.php:288 CounterSales.php:748 Credit_Invoice.php:278
+#: ConfirmDispatch_Invoice.php:288 CounterSales.php:749 Credit_Invoice.php:278
 #: Credit_Invoice.php:279 PrintCustTrans.php:395 PrintCustTrans.php:1041
 #: PrintCustTransPortrait.php:455 PrintCustTransPortrait.php:1105
-#: SelectCreditItems.php:680 SelectCreditItems.php:681
+#: SelectCreditItems.php:681 SelectCreditItems.php:682
 #: includes/PDFTaxPageHeader.inc:40
 msgid "Tax"
 msgstr "Налог"
 
-#: ConfirmDispatch_Invoice.php:289 CounterSales.php:749 Credit_Invoice.php:280
-#: SelectCreditItems.php:682
+#: ConfirmDispatch_Invoice.php:289 CounterSales.php:750 Credit_Invoice.php:280
+#: SelectCreditItems.php:683
 msgid "Incl Tax"
 msgstr "Включая налоги"
 
@@ -3460,7 +3460,7 @@ msgstr "В этом заказе не найдено позиций для вы�
 msgid "No further processing has been done"
 msgstr "Дальнейшая обработка не была проведена"
 
-#: ConfirmDispatch_Invoice.php:594 CounterSales.php:937
+#: ConfirmDispatch_Invoice.php:594 CounterSales.php:938
 msgid ""
 "Could not retrieve the quantity left at the location once this order is "
 "invoiced (for the purposes of checking that stock will not go negative "
@@ -3469,7 +3469,7 @@ msgstr ""
 "Не удалось получить остаток товаров в данном месте если на заказ была "
 "выписана счет-фактура"
 
-#: ConfirmDispatch_Invoice.php:599 CounterSales.php:942
+#: ConfirmDispatch_Invoice.php:599 CounterSales.php:943
 msgid ""
 "Invoicing the selected order would result in negative stock. The system "
 "parameters are set to prohibit negative stocks from occurring. This invoice "
@@ -3481,11 +3481,11 @@ msgstr ""
 "складе."
 
 #: ConfirmDispatch_Invoice.php:599 ConfirmDispatch_Invoice.php:622
-#: CounterSales.php:942 CounterSales.php:965 WorkOrderReceive.php:157
+#: CounterSales.php:943 CounterSales.php:966 WorkOrderReceive.php:157
 msgid "Negative Stock Prohibited"
 msgstr "Запрещенно отрицательное значение наличия товара"
 
-#: ConfirmDispatch_Invoice.php:618 CounterSales.php:961
+#: ConfirmDispatch_Invoice.php:618 CounterSales.php:962
 msgid ""
 "Could not retrieve the component quantity left at the location once the "
 "assembly item on this order is invoiced (for the purposes of checking that "
@@ -3495,7 +3495,7 @@ msgstr ""
 "элемент сборки по этому заказу был оприходован (для проверки того, что "
 "значения наличия товара не будут отрицательными)"
 
-#: ConfirmDispatch_Invoice.php:622 CounterSales.php:965
+#: ConfirmDispatch_Invoice.php:622 CounterSales.php:966
 msgid ""
 "Invoicing the selected order would result in negative stock for a component "
 "of an assembly item on the order. The system parameters are set to prohibit "
@@ -3622,12 +3622,12 @@ msgstr "SQL обновления настроек филиала по умолч
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1252 CounterSales.php:1292
-#: CounterSales.php:1308 CounterSales.php:1345 CounterSales.php:1364
-#: CounterSales.php:1378 CounterSales.php:1419 CounterSales.php:1429
-#: CounterSales.php:1511 CounterSales.php:1532 CounterSales.php:1694
-#: CounterSales.php:1716 CounterSales.php:1741 CounterSales.php:1762
-#: CounterSales.php:1788 CounterSales.php:1811 Credit_Invoice.php:191
+#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
+#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
+#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
+#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
+#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
+#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:191
 #: Credit_Invoice.php:538 Credit_Invoice.php:579 Credit_Invoice.php:596
 #: Credit_Invoice.php:612 Credit_Invoice.php:662 Credit_Invoice.php:675
 #: Credit_Invoice.php:787 Credit_Invoice.php:797 Credit_Invoice.php:872
@@ -3650,25 +3650,25 @@ msgstr "SQL обновления настроек филиала по умолч
 #: RecurringSalesOrdersProcess.php:692 ReverseGRN.php:55 ReverseGRN.php:128
 #: ReverseGRN.php:139 ReverseGRN.php:148 ReverseGRN.php:155 ReverseGRN.php:219
 #: ReverseGRN.php:248 ReverseGRN.php:306 ReverseGRN.php:328
-#: SelectCreditItems.php:1065 SelectCreditItems.php:1126
-#: SelectCreditItems.php:1143 SelectCreditItems.php:1211
-#: SelectCreditItems.php:1284 SelectCreditItems.php:1305
-#: SelectCreditItems.php:1322 SelectCreditItems.php:1341
-#: SelectCreditItems.php:1350 SelectCreditItems.php:1365
-#: SelectCreditItems.php:1386 SelectCreditItems.php:1460
-#: SelectCreditItems.php:1470 SelectCreditItems.php:1556
-#: SelectCreditItems.php:1574 SelectCreditItems.php:1590
-#: SelectCreditItems.php:1772 SelectCreditItems.php:1798
-#: SelectCreditItems.php:1821 SelectCreditItems.php:1852
-#: SelectCreditItems.php:1875 SelectCreditItems.php:1903
-#: SelectCreditItems.php:1923 SelectCreditItems.php:1944
+#: SelectCreditItems.php:1066 SelectCreditItems.php:1127
+#: SelectCreditItems.php:1144 SelectCreditItems.php:1212
+#: SelectCreditItems.php:1285 SelectCreditItems.php:1306
+#: SelectCreditItems.php:1323 SelectCreditItems.php:1342
+#: SelectCreditItems.php:1351 SelectCreditItems.php:1366
+#: SelectCreditItems.php:1387 SelectCreditItems.php:1461
+#: SelectCreditItems.php:1471 SelectCreditItems.php:1557
+#: SelectCreditItems.php:1575 SelectCreditItems.php:1591
+#: SelectCreditItems.php:1773 SelectCreditItems.php:1799
+#: SelectCreditItems.php:1822 SelectCreditItems.php:1853
+#: SelectCreditItems.php:1876 SelectCreditItems.php:1904
+#: SelectCreditItems.php:1924 SelectCreditItems.php:1945
 #: ShipmentCosting.php:249 ShipmentCosting.php:294 ShipmentCosting.php:314
 #: ShipmentCosting.php:328 ShipmentCosting.php:374 ShipmentCosting.php:397
 #: ShipmentCosting.php:432 ShipmentCosting.php:451 ShipmentCosting.php:465
 #: StockAdjustments.php:177 StockAdjustments.php:208 StockAdjustments.php:226
 #: StockAdjustments.php:242 StockAdjustments.php:255 StockAdjustments.php:283
-#: StockAdjustments.php:305 StockDispatch.php:179 StockLocTransfer.php:159
-#: StockLocTransfer.php:183 StockLocTransfer.php:187
+#: StockAdjustments.php:305 StockDispatch.php:179 StockLocTransfer.php:160
+#: StockLocTransfer.php:184 StockLocTransfer.php:188
 #: StockLocTransferReceive.php:102 StockLocTransferReceive.php:136
 #: StockLocTransferReceive.php:150 StockLocTransferReceive.php:169
 #: StockLocTransferReceive.php:214 StockLocTransferReceive.php:250
@@ -3733,12 +3733,12 @@ msgstr "КРИТИЧЕСКАЯ ОШИБКА"
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1252 CounterSales.php:1292
-#: CounterSales.php:1308 CounterSales.php:1345 CounterSales.php:1364
-#: CounterSales.php:1378 CounterSales.php:1419 CounterSales.php:1429
-#: CounterSales.php:1511 CounterSales.php:1532 CounterSales.php:1694
-#: CounterSales.php:1716 CounterSales.php:1741 CounterSales.php:1762
-#: CounterSales.php:1788 CounterSales.php:1811 Credit_Invoice.php:538
+#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
+#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
+#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
+#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
+#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
+#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:538
 #: Credit_Invoice.php:579 Credit_Invoice.php:596 Credit_Invoice.php:612
 #: Credit_Invoice.php:662 Credit_Invoice.php:675 Credit_Invoice.php:787
 #: Credit_Invoice.php:797 Credit_Invoice.php:872 Credit_Invoice.php:887
@@ -3761,18 +3761,18 @@ msgstr "КРИТИЧЕСКАЯ ОШИБКА"
 #: RecurringSalesOrdersProcess.php:692 ReverseGRN.php:55 ReverseGRN.php:128
 #: ReverseGRN.php:139 ReverseGRN.php:148 ReverseGRN.php:155 ReverseGRN.php:219
 #: ReverseGRN.php:248 ReverseGRN.php:306 ReverseGRN.php:328
-#: SelectCreditItems.php:1065 SelectCreditItems.php:1126
-#: SelectCreditItems.php:1143 SelectCreditItems.php:1211
-#: SelectCreditItems.php:1284 SelectCreditItems.php:1305
-#: SelectCreditItems.php:1322 SelectCreditItems.php:1341
-#: SelectCreditItems.php:1350 SelectCreditItems.php:1365
-#: SelectCreditItems.php:1386 SelectCreditItems.php:1460
-#: SelectCreditItems.php:1470 SelectCreditItems.php:1556
-#: SelectCreditItems.php:1574 SelectCreditItems.php:1590
-#: SelectCreditItems.php:1772 SelectCreditItems.php:1798
-#: SelectCreditItems.php:1821 SelectCreditItems.php:1852
-#: SelectCreditItems.php:1875 SelectCreditItems.php:1903
-#: SelectCreditItems.php:1923 SelectCreditItems.php:1944
+#: SelectCreditItems.php:1066 SelectCreditItems.php:1127
+#: SelectCreditItems.php:1144 SelectCreditItems.php:1212
+#: SelectCreditItems.php:1285 SelectCreditItems.php:1306
+#: SelectCreditItems.php:1323 SelectCreditItems.php:1342
+#: SelectCreditItems.php:1351 SelectCreditItems.php:1366
+#: SelectCreditItems.php:1387 SelectCreditItems.php:1461
+#: SelectCreditItems.php:1471 SelectCreditItems.php:1557
+#: SelectCreditItems.php:1575 SelectCreditItems.php:1591
+#: SelectCreditItems.php:1773 SelectCreditItems.php:1799
+#: SelectCreditItems.php:1822 SelectCreditItems.php:1853
+#: SelectCreditItems.php:1876 SelectCreditItems.php:1904
+#: SelectCreditItems.php:1924 SelectCreditItems.php:1945
 #: ShipmentCosting.php:249 ShipmentCosting.php:294 ShipmentCosting.php:314
 #: ShipmentCosting.php:328 ShipmentCosting.php:374 ShipmentCosting.php:397
 #: ShipmentCosting.php:432 ShipmentCosting.php:451 ShipmentCosting.php:465
@@ -3824,35 +3824,35 @@ msgstr "КРИТИЧЕСКАЯ ОШИБКА"
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
 msgstr "ЗАПИШИТЕ ЭТУ ОШИБКУ И ОБРАТИТЕСЬ К СПЕЦИАЛИСТУ"
 
-#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1252
+#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1253
 #: RecurringSalesOrdersProcess.php:637
 msgid "The sales order header could not be updated with the invoice number"
 msgstr "Не удалось обновить номер счета в заголовке заказа на продажу"
 
-#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1253
+#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1254
 #: RecurringSalesOrdersProcess.php:638
 msgid "The following SQL to update the sales order was used"
 msgstr "SQL обновления заказа на продажу"
 
-#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1292
+#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1293
 #: RecurringSalesOrdersProcess.php:678
 msgid "The debtor transaction record could not be inserted because"
 msgstr "Невозможно добавить запись о транзакциях дебитора"
 
-#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1293
+#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1294
 #: RecurringSalesOrdersProcess.php:679
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr "SQL вставки данных о транзакциях должника"
 
-#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1308
+#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1309
 #: Credit_Invoice.php:596 RecurringSalesOrdersProcess.php:692
-#: SelectCreditItems.php:1143
+#: SelectCreditItems.php:1144
 msgid "The debtor transaction taxes records could not be inserted because"
 msgstr "Данные о налогах транзакций должника не могут быть вставлены в базу"
 
-#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1309
+#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1310
 #: Credit_Invoice.php:597 RecurringSalesOrdersProcess.php:693
-#: SelectCreditItems.php:1144
+#: SelectCreditItems.php:1145
 msgid ""
 "The following SQL to insert the debtor transaction taxes record was used"
 msgstr "SQL­-запрос вставки данных о налогах транзакций должника"
@@ -3884,51 +3884,51 @@ msgstr "SQL-запрос вставки расхождений в доставк
 msgid "Cannot retrieve the mbflag"
 msgstr "Не удалось получить mbflag"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1329
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
 #: FixedAssetItems.php:627 SalesAnalReptCols.php:328 Stocks.php:1201
 #: Suppliers.php:965 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "ВНИМАНИЕ"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1329
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
 msgid "Could not retrieve current location stock"
 msgstr "Не удалось найти склад в текущем местоположении"
 
-#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1345
-#: Credit_Invoice.php:675 SelectCreditItems.php:1386
+#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1346
+#: Credit_Invoice.php:675 SelectCreditItems.php:1387
 msgid "Location stock record could not be updated because"
 msgstr "Не удалось изменить данные о складе в местоположении"
 
 #: ConfirmDispatch_Invoice.php:956 ContractCosting.php:331
-#: CounterSales.php:1346 Credit_Invoice.php:676 GoodsReceived.php:486
-#: ReverseGRN.php:220 SelectCreditItems.php:1387 StockTransfers.php:423
+#: CounterSales.php:1347 Credit_Invoice.php:676 GoodsReceived.php:486
+#: ReverseGRN.php:220 SelectCreditItems.php:1388 StockTransfers.php:423
 #: StockTransfers.php:432 WorkOrderIssue.php:161 WorkOrderReceive.php:321
 #: WorkOrderReceive.php:428
 msgid "The following SQL to update the location stock record was used"
 msgstr "SQL обновления данных о складе в местоположении"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1364
-#: Credit_Invoice.php:696 SelectCreditItems.php:1407
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
+#: Credit_Invoice.php:696 SelectCreditItems.php:1408
 msgid "Could not retrieve assembly components from the database for"
 msgstr "Не удалось получить данные о компонентах сборки из базы данных для"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1364
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
 #: Credit_Invoice.php:696 EDIMessageFormat.php:43 EDISendInvoices.php:105
 #: FixedAssetCategories.php:90 FixedAssetCategories.php:109
 #: PricesBasedOnMarkUp.php:334 PricesBasedOnMarkUp.php:350
-#: SelectCreditItems.php:1407 SpecialOrder.php:494 StockCategories.php:23
+#: SelectCreditItems.php:1408 SpecialOrder.php:494 StockCategories.php:23
 #: StockCategories.php:84 StockCategories.php:155 Z_ReApplyCostToSA.php:62
 #: Z_ReApplyCostToSA.php:74
 msgid "because"
 msgstr "потому, что"
 
-#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1378
+#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1379
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr ""
 "Не удалось получить данных о количествах компонентов в месоположении, так "
 "как "
 
-#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1413
+#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
 #: CustomerInquiry.php:200 CustomerTransInquiry.php:105
 #: DeliveryDetails.php:593 DeliveryDetails.php:599 DeliveryDetails.php:606
 #: DeliveryDetails.php:792 MRPReport.php:412 PDFOrdersInvoiced.php:304
@@ -3940,13 +3940,13 @@ msgstr ""
 msgid "Order"
 msgstr "Заказ"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1419
-#: Credit_Invoice.php:787 SelectCreditItems.php:1460
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: Credit_Invoice.php:787 SelectCreditItems.php:1461
 msgid "Stock movement records for the assembly components of"
 msgstr "Данные о перемещении товара для компонентов сборки"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1419
-#: Credit_Invoice.php:787 SelectCreditItems.php:1460 ShipmentCosting.php:397
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: Credit_Invoice.php:787 SelectCreditItems.php:1461 ShipmentCosting.php:397
 #: SupplierAllocations.php:139 includes/PDFPaymentRun_PymtFooter.php:57
 #: includes/PDFPaymentRun_PymtFooter.php:88
 #: includes/PDFPaymentRun_PymtFooter.php:117
@@ -3956,22 +3956,22 @@ msgstr "Данные о перемещении товара для компон�
 msgid "could not be inserted because"
 msgstr "не могут быть вставлены, так как"
 
-#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1420
-#: Credit_Invoice.php:788 SelectCreditItems.php:1461
+#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1421
+#: Credit_Invoice.php:788 SelectCreditItems.php:1462
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
 "was used"
 msgstr "SQL вставки записей о перемещении компонентов сборки"
 
-#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1429
-#: Credit_Invoice.php:797 SelectCreditItems.php:1470
+#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1430
+#: Credit_Invoice.php:797 SelectCreditItems.php:1471
 msgid ""
 "Location stock record could not be updated for an assembly component because"
 msgstr ""
 "Запись о месторасположении товара  не может быть модифицирована для "
 "компонента сборки, так как"
 
-#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1430
+#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1431
 msgid ""
 "The following SQL to update the locations stock record for the component was "
 "used"
@@ -3979,23 +3979,23 @@ msgstr ""
 "Следующие SQL для обновления записи местах запас для компонента были "
 "использованы"
 
-#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1511
+#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1512
 #: Credit_Invoice.php:872 Credit_Invoice.php:970 Credit_Invoice.php:1008
 #: Credit_Invoice.php:1048 RecurringSalesOrdersProcess.php:361
-#: ReverseGRN.php:248 SelectCreditItems.php:1211 SelectCreditItems.php:1284
+#: ReverseGRN.php:248 SelectCreditItems.php:1212 SelectCreditItems.php:1285
 msgid "Stock movement records could not be inserted because"
 msgstr "Данные о перемещении товара не могут быть добавлены, так как"
 
 #: ConfirmDispatch_Invoice.php:1121 ContractCosting.php:360
-#: CounterSales.php:1512 Credit_Invoice.php:873 Credit_Invoice.php:971
+#: CounterSales.php:1513 Credit_Invoice.php:873 Credit_Invoice.php:971
 #: Credit_Invoice.php:1009 GoodsReceived.php:517
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
-#: SelectCreditItems.php:1285 WorkOrderIssue.php:192 WorkOrderReceive.php:350
+#: SelectCreditItems.php:1286 WorkOrderIssue.php:192 WorkOrderReceive.php:350
 #: WorkOrderReceive.php:458
 msgid "The following SQL to insert the stock movement records was used"
 msgstr "SQL вставки данных о перемещении товара"
 
-#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1532
+#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1533
 #: RecurringSalesOrdersProcess.php:382
 msgid ""
 "Taxes and rates applicable to this invoice line item could not be inserted "
@@ -4004,23 +4004,23 @@ msgstr ""
 "Налоги и ставки, применяемых к этому счету-фактуре не могут быть вставлены, "
 "так как"
 
-#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1533
+#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1534
 #: Credit_Invoice.php:1072 RecurringSalesOrdersProcess.php:383
-#: SelectCreditItems.php:1306
+#: SelectCreditItems.php:1307
 msgid ""
 "The following SQL to insert the stock movement tax detail records was used"
 msgstr "SQL вставки о налогах на перемещение товаров"
 
 #: ConfirmDispatch_Invoice.php:1158 Credit_Invoice.php:902
-#: Credit_Invoice.php:912 SelectCreditItems.php:1350 StockAdjustments.php:208
+#: Credit_Invoice.php:912 SelectCreditItems.php:1351 StockAdjustments.php:208
 #: StockAdjustments.php:226 StockLocTransferReceive.php:136
 #: StockTransfers.php:265 StockTransfers.php:378
 msgid "The serial stock item record could not be updated because"
 msgstr "Данные о серийном товаре не могут быть обновлены, так как"
 
 #: ConfirmDispatch_Invoice.php:1159 Credit_Invoice.php:903
-#: Credit_Invoice.php:913 SelectCreditItems.php:1351
-#: SelectCreditItems.php:1575 StockAdjustments.php:209
+#: Credit_Invoice.php:913 SelectCreditItems.php:1352
+#: SelectCreditItems.php:1576 StockAdjustments.php:209
 #: StockAdjustments.php:227 StockLocTransferReceive.php:137
 #: StockLocTransferReceive.php:151 StockLocTransferReceive.php:251
 #: StockLocTransferReceive.php:265 StockTransfers.php:266
@@ -4029,7 +4029,7 @@ msgid "The following SQL to update the serial stock item record was used"
 msgstr "SQL обновления данных о серийном товаре"
 
 #: ConfirmDispatch_Invoice.php:1173 Credit_Invoice.php:927
-#: GoodsReceived.php:580 SelectCreditItems.php:1365 StockAdjustments.php:242
+#: GoodsReceived.php:580 SelectCreditItems.php:1366 StockAdjustments.php:242
 #: StockLocTransferReceive.php:169 StockLocTransferReceive.php:281
 #: StockTransfers.php:301 StockTransfers.php:410 WorkOrderIssue.php:228
 #: WorkOrderIssue.php:283 WorkOrderReceive.php:509 WorkOrderReceive.php:580
@@ -4044,32 +4044,32 @@ msgstr "Не удалось вставить данные о перемещен�
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr "SQL вставки данных о перемещении товара"
 
-#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1611
+#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1612
 #: RecurringSalesOrdersProcess.php:421
 msgid "The count of existing Sales analysis records could not run because"
 msgstr ""
 "Подсчет числа строк анализа существующих продаж не может быть запущен, так "
 "как"
 
-#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1612
+#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1613
 #: Credit_Invoice.php:1101 RecurringSalesOrdersProcess.php:422
-#: SelectCreditItems.php:1629
+#: SelectCreditItems.php:1630
 msgid "SQL to count the no of sales analysis records"
 msgstr "SQL подсчета числа записей о продажах"
 
-#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1669
+#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1670
 #: RecurringSalesOrdersProcess.php:480
 msgid "Sales analysis record could not be added or updated because"
 msgstr ""
 "Данные об анализе продаж не может быть добавлены или обновлены, так как"
 
-#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1670
+#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1671
 #: Credit_Invoice.php:1213 RecurringSalesOrdersProcess.php:481
-#: SelectCreditItems.php:1739
+#: SelectCreditItems.php:1740
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr "SQL вставки данных об анализе продаж"
 
-#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1694
+#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1695
 #: Credit_Invoice.php:1243
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr ""
@@ -4081,17 +4081,17 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:1416 ConfirmDispatch_Invoice.php:1438
 #: ConfirmDispatch_Invoice.php:1460 ConfirmDispatch_Invoice.php:1482
 #: ConfirmDispatch_Invoice.php:1573 ConfirmDispatch_Invoice.php:1595
-#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1695
-#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
-#: CounterSales.php:1812 Credit_Invoice.php:1244 Credit_Invoice.php:1284
+#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1696
+#: CounterSales.php:1718 CounterSales.php:1743 CounterSales.php:1764
+#: CounterSales.php:1813 Credit_Invoice.php:1244 Credit_Invoice.php:1284
 #: Credit_Invoice.php:1311 Credit_Invoice.php:1332 Credit_Invoice.php:1361
 #: Credit_Invoice.php:1387 Credit_Invoice.php:1413
 #: RecurringSalesOrdersProcess.php:509 RecurringSalesOrdersProcess.php:536
-#: RecurringSalesOrdersProcess.php:629 SelectCreditItems.php:1773
-#: SelectCreditItems.php:1799 SelectCreditItems.php:1822
-#: SelectCreditItems.php:1853 SelectCreditItems.php:1876
-#: SelectCreditItems.php:1904 SelectCreditItems.php:1924
-#: SelectCreditItems.php:1945 SupplierAllocations.php:216
+#: RecurringSalesOrdersProcess.php:629 SelectCreditItems.php:1774
+#: SelectCreditItems.php:1800 SelectCreditItems.php:1823
+#: SelectCreditItems.php:1854 SelectCreditItems.php:1877
+#: SelectCreditItems.php:1905 SelectCreditItems.php:1925
+#: SelectCreditItems.php:1946 SupplierAllocations.php:216
 #: SupplierAllocations.php:239 WorkOrderCosting.php:363
 #: WorkOrderCosting.php:384 WorkOrderCosting.php:403 WorkOrderCosting.php:440
 #: WorkOrderCosting.php:459 WorkOrderCosting.php:482 WorkOrderCosting.php:501
@@ -4100,18 +4100,18 @@ msgstr ""
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr "SQL вставки записи о транзакции в главной книге"
 
-#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1716
+#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1717
 msgid ""
 "The stock side of the cost of sales GL posting could not be inserted because"
 msgstr ""
 "Не удалось вставить данные о  товаре при записи в главную книгу, так как"
 
-#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1741
+#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1742
 #: RecurringSalesOrdersProcess.php:508
 msgid "The sales GL posting could not be inserted because"
 msgstr "Не удалось вставить проводку в главную книгу, так как"
 
-#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1762
+#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1763
 #: RecurringSalesOrdersProcess.php:535
 msgid "The sales discount GL posting could not be inserted because"
 msgstr ""
@@ -4175,14 +4175,14 @@ msgstr ""
 msgid "The following SQL to update the fixed asset record was used"
 msgstr "Для обновления данных об основных средствах был использован SQL"
 
-#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1788
+#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1789
 #: RecurringSalesOrdersProcess.php:602
 msgid "The total debtor GL posting could not be inserted because"
 msgstr ""
 "Проводка в главной книге оо общей дебиторской зажожности не может быть "
 "вставлена"
 
-#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1789
+#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1790
 #: RecurringSalesOrdersProcess.php:603
 msgid ""
 "The following SQL to insert the total debtors control GLTrans record was used"
@@ -4194,28 +4194,28 @@ msgstr ""
 msgid "The freight GL posting could not be inserted because"
 msgstr "Не удалось вставить в главную книгу данные о фрахте"
 
-#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1811
+#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1812
 #: Credit_Invoice.php:1412 RecurringSalesOrdersProcess.php:575
-#: SelectCreditItems.php:1944
+#: SelectCreditItems.php:1945
 msgid "The tax GL posting could not be inserted because"
 msgstr "Не удалось вставить проводки о налогах в главную книгу, так как"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1979
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
 #: RecurringSalesOrdersProcess.php:698 Z_DeleteInvoice.php:146
 msgid "Invoice number"
 msgstr "Номер счета"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1979
-#: RecurringSalesOrdersProcess.php:698 SelectCreditItems.php:1959
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
+#: RecurringSalesOrdersProcess.php:698 SelectCreditItems.php:1960
 msgid "processed"
 msgstr "обработано"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: ContractBOM.php:293 CounterSales.php:1984 CounterSales.php:1986
+#: ContractBOM.php:293 CounterSales.php:1985 CounterSales.php:1987
 #: CustomerReceipt.php:547 DeliveryDetails.php:574 DeliveryDetails.php:578
 #: DeliveryDetails.php:781 DeliveryDetails.php:784 GLBalanceSheet.php:18
 #: GLProfit_Loss.php:22 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:519
-#: GLTags.php:51 GLTransInquiry.php:36 PDFStockLocTransfer.php:28
+#: GLTags.php:51 GLTransInquiry.php:36 PDFStockLocTransfer.php:27
 #: PO_OrderDetails.php:115 PO_PDFPurchOrder.php:367 PO_PDFPurchOrder.php:370
 #: PO_PDFPurchOrder.php:373 PO_SelectOSPurchOrder.php:495
 #: PO_SelectOSPurchOrder.php:517 PrintCustStatements.php:83
@@ -4226,16 +4226,16 @@ msgid "Print"
 msgstr "Печать"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: CounterSales.php:1984 CounterSales.php:1986
+#: CounterSales.php:1985 CounterSales.php:1987
 msgid "Print this invoice"
 msgstr "Печатать этот счет"
 
-#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1984
+#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1985
 #: SystemParameters.php:455
 msgid "Landscape"
 msgstr "Пейзаж"
 
-#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1986
+#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1987
 #: SystemParameters.php:456
 msgid "Portrait"
 msgstr "Портрет"
@@ -4292,7 +4292,7 @@ msgstr ""
 #: Contracts.php:94 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: EmailCustTrans.php:22 EmailCustTrans.php:26 GLAccountCSV.php:261
 #: PO_Header.php:245 POReport.php:1486 SalesAnalysis_UserDefined.php:46
-#: SelectOrderItems.php:1187 StockQties_csv.php:43 StockUsage.php:21
+#: SelectOrderItems.php:1188 StockQties_csv.php:43 StockUsage.php:21
 #: SupplierCredit.php:210 SupplierCredit.php:221 SupplierCredit.php:233
 #: SupplierCredit.php:243 SupplierCredit.php:253 SupplierInvoice.php:190
 #: SupplierInvoice.php:199 SupplierInvoice.php:207 SupplierInvoice.php:215
@@ -4304,7 +4304,7 @@ msgstr "нажмите здесь"
 #: ContractBOM.php:39 ContractOtherReqts.php:43 Contracts.php:85
 #: Contracts.php:94 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: PO_Header.php:245 SalesAnalysis_UserDefined.php:46
-#: SelectOrderItems.php:1187 StockUsage.php:21 SupplierCredit.php:210
+#: SelectOrderItems.php:1188 StockUsage.php:21 SupplierCredit.php:210
 #: SupplierCredit.php:221 SupplierCredit.php:233 SupplierCredit.php:243
 #: SupplierCredit.php:253 SupplierInvoice.php:190 SupplierInvoice.php:199
 #: SupplierInvoice.php:207 SupplierInvoice.php:215 SupplierInvoice.php:225
@@ -4355,7 +4355,7 @@ msgstr ""
 msgid "The item details could not be retrieved"
 msgstr "Данные о товаре не могут быть получены"
 
-#: ContractBOM.php:191 PO_Items.php:558 SelectCreditItems.php:623
+#: ContractBOM.php:191 PO_Items.php:558 SelectCreditItems.php:624
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "SQL получения данных о товаре"
 
@@ -4418,13 +4418,13 @@ msgid "Search For Stock Items"
 msgstr "Искать товар"
 
 #: ContractBOM.php:319 PO_Items.php:1043 SelectCompletedOrder.php:524
-#: SelectCreditItems.php:968
+#: SelectCreditItems.php:969
 msgid "Enter text extracts in the description"
 msgstr "Введите части текста в описание"
 
-#: ContractBOM.php:324 CounterSales.php:2182 PO_Items.php:1050
-#: SelectCompletedOrder.php:529 SelectCreditItems.php:971
-#: SelectOrderItems.php:1637 SelectSalesOrder.php:565 SelectWorkOrder.php:179
+#: ContractBOM.php:324 CounterSales.php:2183 PO_Items.php:1050
+#: SelectCompletedOrder.php:529 SelectCreditItems.php:972
+#: SelectOrderItems.php:1638 SelectSalesOrder.php:565 SelectWorkOrder.php:179
 msgid "Enter extract of the Stock Code"
 msgstr "Введите часть кода товара"
 
@@ -4437,10 +4437,10 @@ msgstr "Создать новый товар"
 msgid "Image"
 msgstr "изображение"
 
-#: ContractBOM.php:368 CounterSales.php:2044 FixedAssetItems.php:485
+#: ContractBOM.php:368 CounterSales.php:2045 FixedAssetItems.php:485
 #: FixedAssetItems.php:489 PO_Items.php:1096 SalesCategories.php:249
-#: SelectCreditItems.php:1017 SelectOrderItems.php:1500
-#: SelectOrderItems.php:1678 Stocks.php:834 Stocks.php:838
+#: SelectCreditItems.php:1018 SelectOrderItems.php:1501
+#: SelectOrderItems.php:1679 Stocks.php:834 Stocks.php:838
 #: SupplierTenders.php:518 WorkOrderEntry.php:643 WorkOrderIssue.php:709
 #, php-format
 msgid "No Image"
@@ -4509,12 +4509,12 @@ msgid "Inventory Required"
 msgstr "Инвентаризации обязательно"
 
 #: ContractCosting.php:82 ContractCosting.php:88 Contracts.php:962
-#: CounterSales.php:743 DeliveryDetails.php:828 DeliveryDetails.php:898
+#: CounterSales.php:744 DeliveryDetails.php:828 DeliveryDetails.php:898
 #: OrderDetails.php:165 PO_Items.php:765 PrintCustTrans.php:863
 #: PrintCustTrans.php:952 PrintCustTrans.php:1001
 #: PrintCustTransPortrait.php:910 PrintCustTransPortrait.php:1008
 #: PrintCustTransPortrait.php:1065 RecurringSalesOrders.php:321
-#: SelectCreditItems.php:674 SelectOrderItems.php:1335
+#: SelectCreditItems.php:675 SelectOrderItems.php:1336
 #: includes/PDFTopItemsHeader.inc:52 includes/PO_PDFOrderPageHeader.inc:79
 msgid "Unit"
 msgstr "Единица"
@@ -4768,7 +4768,7 @@ msgstr "Если этого не произойдет"
 
 #: Contracts.php:85 Contracts.php:93 Customers.php:265 DeliveryDetails.php:259
 #: DeliveryDetails.php:268 EmailCustTrans.php:22 PO_Header.php:244
-#: SelectOrderItems.php:1186 StockUsage.php:20 SupplierCredit.php:210
+#: SelectOrderItems.php:1187 StockUsage.php:20 SupplierCredit.php:210
 #: SupplierCredit.php:221 SupplierCredit.php:233 SupplierCredit.php:243
 #: SupplierCredit.php:253 SupplierInvoice.php:189 SupplierInvoice.php:198
 #: SupplierInvoice.php:206 SupplierInvoice.php:214 SupplierInvoice.php:224
@@ -5085,11 +5085,11 @@ msgid "The customer record selected"
 msgstr "Покупатель выбран"
 
 #: Contracts.php:714 CounterSales.php:120 CounterSales.php:154
-#: CounterSales.php:2065 CounterSales.php:2246 DeliveryDetails.php:146
+#: CounterSales.php:2066 CounterSales.php:2247 DeliveryDetails.php:146
 #: PO_Header.php:407 PO_Header.php:478 SelectCreditItems.php:179
 #: SelectOrderItems.php:382 SelectOrderItems.php:429 SelectOrderItems.php:508
-#: SelectOrderItems.php:548 SelectOrderItems.php:1523
-#: SelectOrderItems.php:1704 SpecialOrder.php:61 SpecialOrder.php:85
+#: SelectOrderItems.php:548 SelectOrderItems.php:1524
+#: SelectOrderItems.php:1705 SpecialOrder.php:61 SpecialOrder.php:85
 #: StockCheck.php:221 StockLocStatus.php:183 StockLocStatus.php:206
 #: StockLocStatus.php:239 StockStatus.php:115 StockStatus.php:139
 #: StockStatus.php:159 StockStatus.php:179 StockStatus.php:196
@@ -5247,7 +5247,7 @@ msgstr "только формат"
 msgid "Required Date"
 msgstr "Требуемый срок"
 
-#: Contracts.php:898 CounterSales.php:856 DeliveryDetails.php:1043
+#: Contracts.php:898 CounterSales.php:857 DeliveryDetails.php:1043
 #: OrderDetails.php:73 RecurringSalesOrders.php:404
 msgid "Customer Reference"
 msgstr "Ссылка на клиента"
@@ -5448,12 +5448,12 @@ msgstr ""
 msgid "This sale has been cancelled as requested"
 msgstr "Эта продажа была отменена в соответствии с просьбой"
 
-#: CounterSales.php:215 CounterSales.php:1988
+#: CounterSales.php:215 CounterSales.php:1989
 msgid "Start a new Counter Sale"
 msgstr "Начать новую встречную продажу"
 
-#: CounterSales.php:222 CounterSales.php:1040 CounterSales.php:1836
-#: CounterSales.php:1855 CounterSales.php:1905 CounterSales.php:1940
+#: CounterSales.php:222 CounterSales.php:1041 CounterSales.php:1837
+#: CounterSales.php:1856 CounterSales.php:1906 CounterSales.php:1941
 msgid "Counter Sale"
 msgstr "Встречная продажа"
 
@@ -5500,16 +5500,16 @@ msgstr "Дата"
 msgid "must be in the format"
 msgstr "должно быть в формате"
 
-#: CounterSales.php:436 CounterSales.php:552 CounterSales.php:598
-#: CounterSales.php:650 SelectOrderItems.php:912 SelectOrderItems.php:1199
-#: SelectOrderItems.php:1248
+#: CounterSales.php:436 CounterSales.php:553 CounterSales.php:599
+#: CounterSales.php:651 SelectOrderItems.php:912 SelectOrderItems.php:1200
+#: SelectOrderItems.php:1249
 msgid ""
 "Could not determine if the part being ordered was a kitset or not because"
 msgstr ""
 "Не удалось определить, является ли заказываемая часть множеством комплектов "
 "или нет, так как"
 
-#: CounterSales.php:437 CounterSales.php:553 SelectOrderItems.php:913
+#: CounterSales.php:437 CounterSales.php:554 SelectOrderItems.php:913
 msgid ""
 "The sql that was used to determine if the part being ordered was a kitset or "
 "not was "
@@ -5522,9 +5522,9 @@ msgid ""
 "could not be retrieved from the database and has not been added to the order"
 msgstr "не могли быть получены из базы данных и не был добавлены к заказу"
 
-#: CounterSales.php:452 CounterSales.php:564 CounterSales.php:614
-#: CounterSales.php:666 SelectOrderItems.php:928 SelectOrderItems.php:1215
-#: SelectOrderItems.php:1264
+#: CounterSales.php:452 CounterSales.php:565 CounterSales.php:615
+#: CounterSales.php:667 SelectOrderItems.php:928 SelectOrderItems.php:1216
+#: SelectOrderItems.php:1265
 msgid "Could not retrieve kitset components from the database because"
 msgstr "Не удалось получить комплект компонентов из базы данных, так как"
 
@@ -5563,29 +5563,29 @@ msgstr ""
 "Товар не может быть обновлен, потому что вы пытаетесь установить заказанное "
 "количество меньше 0 или цена меньше 0 или скидки более чем 100% или меньше 0%"
 
-#: CounterSales.php:742 InventoryPlanningPrefSupplier.php:90
-#: SelectOrderItems.php:1334 StockDispatch.php:388 StockDispatch.php:390
+#: CounterSales.php:743 InventoryPlanningPrefSupplier.php:90
+#: SelectOrderItems.php:1335 StockDispatch.php:388 StockDispatch.php:390
 #: includes/PDFInventoryPlanPageHeader.inc:68
 #: includes/PDFStockCheckPageHeader.inc:38
 #: includes/PDFStockComparisonPageHeader.inc:34
 msgid "QOH"
 msgstr "QOH"
 
-#: CounterSales.php:746 PricesByCost.php:158 SelectOrderItems.php:1340
+#: CounterSales.php:747 PricesByCost.php:158 SelectOrderItems.php:1341
 msgid "GP %"
 msgstr "П.%"
 
-#: CounterSales.php:747 PrintCustTrans.php:866 PrintCustTrans.php:955
+#: CounterSales.php:748 PrintCustTrans.php:866 PrintCustTrans.php:955
 #: PrintCustTrans.php:1004 PrintCustTransPortrait.php:913
 #: PrintCustTransPortrait.php:1011 PrintCustTransPortrait.php:1068
 #: includes/PDFTaxPageHeader.inc:39
 msgid "Net"
 msgstr "Нетто"
 
-#: CounterSales.php:825 CustomerReceipt.php:874 CustomerReceipt.php:901
+#: CounterSales.php:826 CustomerReceipt.php:874 CustomerReceipt.php:901
 #: CustomerReceipt.php:1084 GLAccountInquiry.php:155 GLAccountReport.php:341
 #: GLJournal.php:364 GLJournal.php:388 Payments.php:1048
-#: SelectOrderItems.php:1413 SuppContractChgs.php:80 SuppContractChgs.php:167
+#: SelectOrderItems.php:1414 SuppContractChgs.php:80 SuppContractChgs.php:167
 #: SupplierCredit.php:420 SupplierCredit.php:459 SupplierInvoice.php:412
 #: SupplierInvoice.php:456 SupplierTransInquiry.php:172
 #: SuppTransGLAnalysis.php:107 SuppTransGLAnalysis.php:199
@@ -5593,19 +5593,19 @@ msgstr "Нетто"
 msgid "Narrative"
 msgstr "Сужение"
 
-#: CounterSales.php:846
+#: CounterSales.php:847
 msgid "Picked Up By"
 msgstr "Собранные"
 
-#: CounterSales.php:850 DeliveryDetails.php:1036 RecurringSalesOrders.php:398
+#: CounterSales.php:851 DeliveryDetails.php:1036 RecurringSalesOrders.php:398
 msgid "Contact Phone Number"
 msgstr "Контактный телефон"
 
-#: CounterSales.php:854 DeliveryDetails.php:1040 RecurringSalesOrders.php:401
+#: CounterSales.php:855 DeliveryDetails.php:1040 RecurringSalesOrders.php:401
 msgid "Contact Email"
 msgstr "Контактный адрес электронной почты"
 
-#: CounterSales.php:861 CustomerInquiry.php:199 CustomerTransInquiry.php:104
+#: CounterSales.php:862 CustomerInquiry.php:199 CustomerTransInquiry.php:104
 #: DeliveryDetails.php:1047 OrderDetails.php:119 PO_Header.php:1114
 #: PO_OrderDetails.php:124 RecurringSalesOrders.php:408 SpecialOrder.php:602
 #: SupplierCredit.php:599 SupplierInquiry.php:213 SupplierInvoice.php:577
@@ -5615,31 +5615,31 @@ msgstr "Контактный адрес электронной почты"
 msgid "Comments"
 msgstr "Комментарии"
 
-#: CounterSales.php:870 SuppPaymentRun.php:350
+#: CounterSales.php:871 SuppPaymentRun.php:350
 msgid "Payment Type"
 msgstr "Способ оплаты"
 
-#: CounterSales.php:883
+#: CounterSales.php:884
 msgid "Banked to"
 msgstr "Накопленные к"
 
-#: CounterSales.php:898
+#: CounterSales.php:899
 msgid "Amount Paid"
 msgstr "Сумма, выплаченная"
 
-#: CounterSales.php:902 SelectOrderItems.php:1448
+#: CounterSales.php:903 SelectOrderItems.php:1449
 msgid "Re-Calculate"
 msgstr "Пересчитать"
 
-#: CounterSales.php:903
+#: CounterSales.php:904
 msgid "Process The Sale"
 msgstr "Обработать продажу"
 
-#: CounterSales.php:916
+#: CounterSales.php:917
 msgid "There are no lines on this sale. Please enter lines to invoice first"
 msgstr "Нет позиций на продажу. Пожалуйста, сначала введите строки для счета"
 
-#: CounterSales.php:920
+#: CounterSales.php:921
 msgid ""
 "The amount entered as payment does not equal the amount of the invoice. "
 "Please ensure the customer has paid the correct amount and re-enter"
@@ -5647,7 +5647,7 @@ msgstr ""
 "Введенное в качестве оплаты не равна сумме счета. Пожалуйста, убедитесь, "
 "клиент заплатил правильную сумму и введите правильную сумму"
 
-#: CounterSales.php:974
+#: CounterSales.php:975
 msgid ""
 "The parameter to prohibit negative stock is set and invoicing this sale "
 "would result in negative stock. No futher processing can be performed. Alter "
@@ -5659,7 +5659,7 @@ msgstr ""
 "Измените продажу путем указания других количесвто товара или удалите строки, "
 "для которых нет товара."
 
-#: CounterSales.php:991
+#: CounterSales.php:992
 msgid ""
 "We were unable to load the area where the sale is to from the custbranch "
 "table"
@@ -5667,7 +5667,7 @@ msgstr ""
 "Нам не удалось загрузить область, куда предназначается продажа, из таблицы "
 "custbranch"
 
-#: CounterSales.php:1002
+#: CounterSales.php:1003
 msgid ""
 "The company information and preferences could not be retrieved. See your "
 "system administrator"
@@ -5675,28 +5675,28 @@ msgstr ""
 "Информация о компании и предпочтения не могут быть получены. Обратитесь к "
 "администратору системы"
 
-#: CounterSales.php:1048 DeliveryDetails.php:378
+#: CounterSales.php:1049 DeliveryDetails.php:378
 #: RecurringSalesOrdersProcess.php:144
 msgid "The order cannot be added because"
 msgstr "Невозможно добавить заказ, так как"
 
-#: CounterSales.php:1064
+#: CounterSales.php:1065
 msgid "Trouble inserting a line of a sales order. The SQL that failed was"
 msgstr "Проблема вставки строки заказа на продажу. SQL"
 
-#: CounterSales.php:1080 DeliveryDetails.php:407
+#: CounterSales.php:1081 DeliveryDetails.php:407
 msgid "Unable to add the sales order line"
 msgstr "Невозможно добавить строку заказа"
 
-#: CounterSales.php:1150 DeliveryDetails.php:479 DeliveryDetails.php:666
+#: CounterSales.php:1151 DeliveryDetails.php:479 DeliveryDetails.php:666
 msgid "Unable to insert a new work order for the sales order item"
 msgstr "Невозможно вставить новый наряд на работу для пункта заказа"
 
-#: CounterSales.php:1170 DeliveryDetails.php:499 DeliveryDetails.php:685
+#: CounterSales.php:1171 DeliveryDetails.php:499 DeliveryDetails.php:685
 msgid "In automatically creating a work order for"
 msgstr "Во время автоматического создания наряда на работу для"
 
-#: CounterSales.php:1170 DeliveryDetails.php:499 DeliveryDetails.php:685
+#: CounterSales.php:1171 DeliveryDetails.php:499 DeliveryDetails.php:685
 msgid ""
 "an item on this sales order, the cost of this item as accumulated from the "
 "sum of the component costs is nil. This could be because there is no bill of "
@@ -5706,33 +5706,33 @@ msgstr ""
 "сумма стоимостей его компонентов, равна нулю. Это может быть, потому что не "
 "создана накладная на материалы ... вы можете проверить это двойным щелчком"
 
-#: CounterSales.php:1184 DeliveryDetails.php:513 DeliveryDetails.php:706
+#: CounterSales.php:1185 DeliveryDetails.php:513 DeliveryDetails.php:706
 #: WorkOrderEntry.php:239
 msgid "The work order item could not be added"
 msgstr "Наряд на работу не может быть добавлен"
 
-#: CounterSales.php:1190 DeliveryDetails.php:519
+#: CounterSales.php:1191 DeliveryDetails.php:519
 msgid "A new work order has been created for"
 msgstr "Наряд на работу был создан для"
 
-#: CounterSales.php:1192 DeliveryDetails.php:521
+#: CounterSales.php:1193 DeliveryDetails.php:521
 msgid "These are for"
 msgstr "Они предназначены для"
 
-#: CounterSales.php:1192 DeliveryDetails.php:521
+#: CounterSales.php:1193 DeliveryDetails.php:521
 msgid "there order ref"
 msgstr "там ссылка на заказ"
 
-#: CounterSales.php:1192 DeliveryDetails.php:521
+#: CounterSales.php:1193 DeliveryDetails.php:521
 msgid "our order number"
 msgstr "номер нашего заказа"
 
-#: CounterSales.php:1196 DeliveryDetails.php:525
+#: CounterSales.php:1197 DeliveryDetails.php:525
 msgid "The following serial numbers have been reserved for this work order"
 msgstr ""
 "Следующие серийные номера были зарезервированы для этого наряда на работу"
 
-#: CounterSales.php:1205 DeliveryDetails.php:534
+#: CounterSales.php:1206 DeliveryDetails.php:534
 msgid ""
 "This automatically generated serial number already exists - it cannot be "
 "added to the work order"
@@ -5740,26 +5740,26 @@ msgstr ""
 "Это автоматически сгенерированный серийный номер уже существует - он не "
 "может быть добавлен в наряд на работу"
 
-#: CounterSales.php:1213 DeliveryDetails.php:542
+#: CounterSales.php:1214 DeliveryDetails.php:542
 msgid "The serial number for the work order item could not be added"
 msgstr "Серийный номер для товара в наряде на работу не может быть добавлен"
 
-#: CounterSales.php:1219 DeliveryDetails.php:548
+#: CounterSales.php:1220 DeliveryDetails.php:548
 msgid "Could not update the new next serial number for the item"
 msgstr "Не удалось обновить новый следующий серийный номер для товара"
 
-#: CounterSales.php:1224 DeliveryDetails.php:552
+#: CounterSales.php:1225 DeliveryDetails.php:552
 msgid "New Work Order Number"
 msgstr "Номер нового наряда на работу"
 
-#: CounterSales.php:1224 DeliveryDetails.php:552 EDIMessageFormat.php:127
+#: CounterSales.php:1225 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:205 Prices_Customer.php:37
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:336 SpecialOrder.php:116
 #: SpecialOrder.php:119
 msgid "for"
 msgstr "для"
 
-#: CounterSales.php:1233 DeliveryDetails.php:564 DeliveryDetails.php:776
+#: CounterSales.php:1234 DeliveryDetails.php:564 DeliveryDetails.php:776
 #: EmailConfirmation.php:169 FTP_RadioBeacon.php:185 FTP_RadioBeacon.php:288
 #: PO_AuthoriseMyOrders.php:58 PO_OrderDetails.php:27 POReport.php:490
 #: POReport.php:499 POReport.php:735 POReport.php:1264 POReport.php:1273
@@ -5773,12 +5773,12 @@ msgstr "для"
 msgid "Order Number"
 msgstr "Номер заказах"
 
-#: CounterSales.php:1233 DeliveryDetails.php:562 DeliveryDetails.php:564
+#: CounterSales.php:1234 DeliveryDetails.php:562 DeliveryDetails.php:564
 #: SpecialOrder.php:560
 msgid "has been entered"
 msgstr "был введен"
 
-#: CounterSales.php:1838
+#: CounterSales.php:1839
 msgid ""
 "The SQL that failed to insert the GL transaction for the bank account debit "
 "was"
@@ -5786,44 +5786,44 @@ msgstr ""
 "Завершившийся неудачей SQL вставки данных о GL-транзакции для дебета "
 "банковского счета"
 
-#: CounterSales.php:1839 CustomerReceipt.php:460
+#: CounterSales.php:1840 CustomerReceipt.php:460
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "Не удалось вставить GL-транзакцию для дебета банковского счета"
 
-#: CounterSales.php:1857 CustomerReceipt.php:509
+#: CounterSales.php:1858 CustomerReceipt.php:509
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
 msgstr ""
 "SQL, которому не удалось вставить GL-транзакции для дебета банковского счета"
 
-#: CounterSales.php:1858 CustomerReceipt.php:510
+#: CounterSales.php:1859 CustomerReceipt.php:510
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr ""
 "Не удалось вставить проводку в главную книгу для кредита счета дебиторов"
 
-#: CounterSales.php:1913 CustomerReceipt.php:487
+#: CounterSales.php:1914 CustomerReceipt.php:487
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "Завершившийся неудачей SQL вставки проводки для счета"
 
-#: CounterSales.php:1914 CustomerReceipt.php:488
+#: CounterSales.php:1915 CustomerReceipt.php:488
 msgid "Cannot insert a bank transaction"
 msgstr "Невозможно вставить пустую транзакцию"
 
-#: CounterSales.php:1942 CustomerReceipt.php:419
+#: CounterSales.php:1943 CustomerReceipt.php:419
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "Завершившийся неудачей SQL вставки транзакции о банковской квитанции"
 
-#: CounterSales.php:1943 CustomerReceipt.php:420
+#: CounterSales.php:1944 CustomerReceipt.php:420
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr "Невозможно вставить проводку о банковской квитанции клиента, так как"
 
-#: CounterSales.php:1952 CustomerReceipt.php:428
+#: CounterSales.php:1953 CustomerReceipt.php:428
 msgid "The SQL that failed to update the date of the last payment received was"
 msgstr ""
 "Завершившийся неудачей SQL обновления даты последнего полученного платежа"
 
-#: CounterSales.php:1953 CustomerReceipt.php:429
+#: CounterSales.php:1954 CustomerReceipt.php:429
 msgid ""
 "Cannot update the customer record for the date of the last payment received "
 "because"
@@ -5831,27 +5831,27 @@ msgstr ""
 "Не удалось обновить запись клиента на дату последнего полученного платежа, "
 "потому что"
 
-#: CounterSales.php:1966
+#: CounterSales.php:1967
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the invoice "
 "was"
 msgstr "SQL, которому не удалось вставить размещение получения счета-фактуры"
 
-#: CounterSales.php:1967
+#: CounterSales.php:1968
 msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr "Не удается установить р получения счета-фактуры, поскольку"
 
-#: CounterSales.php:2005 SelectCreditItems.php:937 SelectOrderItems.php:1459
+#: CounterSales.php:2006 SelectCreditItems.php:938 SelectOrderItems.php:1460
 msgid "Yes Please"
 msgstr "Да, пожалуйста"
 
-#: CounterSales.php:2026 CounterSales.php:2027 SelectOrderItems.php:1480
-#: SelectOrderItems.php:1481 SystemParameters.php:405
+#: CounterSales.php:2027 CounterSales.php:2028 SelectOrderItems.php:1481
+#: SelectOrderItems.php:1482 SystemParameters.php:405
 msgid "Frequently Ordered Items"
 msgstr "Часто заказаваемые товары"
 
-#: CounterSales.php:2027 SelectOrderItems.php:1481
+#: CounterSales.php:2028 SelectOrderItems.php:1482
 msgid ""
 ", shows the most frequently ordered items in the last 6 months.  You can "
 "choose from this list, or search further for other items"
@@ -5859,43 +5859,43 @@ msgstr ""
 ", Показывает наиболее часто заказываемые товары за последние 6 месяцев. Вы "
 "можете выбрать из этого списка, или искать дальше по другим пунктам"
 
-#: CounterSales.php:2033 CounterSales.php:2218 SelectOrderItems.php:1488
-#: SelectOrderItems.php:1672
+#: CounterSales.php:2034 CounterSales.php:2219 SelectOrderItems.php:1489
+#: SelectOrderItems.php:1673
 msgid "On Demand"
 msgstr "По требованию"
 
-#: CounterSales.php:2034 CounterSales.php:2219 SelectOrderItems.php:1489
-#: SelectOrderItems.php:1673 StockLocStatus.php:166 StockStatus.php:90
+#: CounterSales.php:2035 CounterSales.php:2220 SelectOrderItems.php:1490
+#: SelectOrderItems.php:1674 StockLocStatus.php:166 StockStatus.php:90
 msgid "On Order"
 msgstr "По заказу"
 
-#: CounterSales.php:2035 CounterSales.php:2220 SelectOrderItems.php:1490
-#: SelectOrderItems.php:1674 StockLocStatus.php:165 StockStatus.php:89
+#: CounterSales.php:2036 CounterSales.php:2221 SelectOrderItems.php:1491
+#: SelectOrderItems.php:1675 StockLocStatus.php:165 StockStatus.php:89
 #: includes/OutputSerialItems.php:37 includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
 msgstr "Доступно"
 
-#: CounterSales.php:2064 CounterSales.php:2246 SelectOrderItems.php:1522
-#: SelectOrderItems.php:1704 StockCheck.php:221 StockLocStatus.php:183
+#: CounterSales.php:2065 CounterSales.php:2247 SelectOrderItems.php:1523
+#: SelectOrderItems.php:1705 StockCheck.php:221 StockLocStatus.php:183
 #: StockLocStatus.php:206 StockStatus.php:115 StockStatus.php:139
 msgid "The demand for this product from"
 msgstr "Требование для этого продукта от"
 
-#: CounterSales.php:2082 CounterSales.php:2096 CounterSales.php:2264
-#: CounterSales.php:2278 SelectOrderItems.php:1540 SelectOrderItems.php:1554
-#: SelectOrderItems.php:1724 SelectOrderItems.php:1738
+#: CounterSales.php:2083 CounterSales.php:2097 CounterSales.php:2265
+#: CounterSales.php:2279 SelectOrderItems.php:1541 SelectOrderItems.php:1555
+#: SelectOrderItems.php:1725 SelectOrderItems.php:1739
 msgid "The order details for this product cannot be retrieved because"
 msgstr "Данные о заказе данного продукта не могут быть получены, так как"
 
-#: CounterSales.php:2145 CounterSales.php:2210 CounterSales.php:2333
+#: CounterSales.php:2146 CounterSales.php:2211 CounterSales.php:2334
 msgid "Add to Sale"
 msgstr "Добавить в продажу"
 
-#: CounterSales.php:2152 CounterSales.php:2153
+#: CounterSales.php:2153 CounterSales.php:2154
 msgid "Search for Items"
 msgstr "Поиск по товарам"
 
-#: CounterSales.php:2153 SelectOrderItems.php:1605
+#: CounterSales.php:2154 SelectOrderItems.php:1606
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -5904,58 +5904,58 @@ msgstr ""
 "выбрав категорию товара, или просто ввести частичное описание товара или "
 "частичный код товара"
 
-#: CounterSales.php:2154 SelectOrderItems.php:1606
+#: CounterSales.php:2155 SelectOrderItems.php:1607
 msgid "Select a Stock Category"
 msgstr "Выберите категорию товара"
 
-#: CounterSales.php:2179 SelectOrderItems.php:1630
+#: CounterSales.php:2180 SelectOrderItems.php:1631
 msgid "Enter partial Description"
 msgstr "Введите частичное описание"
 
-#: CounterSales.php:2187 SelectOrderItems.php:1645
+#: CounterSales.php:2188 SelectOrderItems.php:1646
 msgid "Use Quick Entry"
 msgstr "Использовать быструю строку"
 
-#: CounterSales.php:2198 SelectOrderItems.php:1658
+#: CounterSales.php:2199 SelectOrderItems.php:1659
 msgid ""
 "Select an item by entering the quantity required.  Click Order when ready."
 msgstr ""
 "Выберите пункт, указав требуемое количество. Нажмите Заказать когда будете "
 "готовы."
 
-#: CounterSales.php:2209 CounterSales.php:2332 SelectOrderItems.php:1664
-#: SelectOrderItems.php:1784
+#: CounterSales.php:2210 CounterSales.php:2333 SelectOrderItems.php:1665
+#: SelectOrderItems.php:1785
 msgid "Prev"
 msgstr "Предыдущая"
 
-#: CounterSales.php:2211 CounterSales.php:2334 MRPReport.php:738
+#: CounterSales.php:2212 CounterSales.php:2335 MRPReport.php:738
 #: SelectAsset.php:236 SelectCustomer.php:406 SelectCustomer.php:487
-#: SelectOrderItems.php:1666 SelectOrderItems.php:1786 SelectProduct.php:723
+#: SelectOrderItems.php:1667 SelectOrderItems.php:1787 SelectProduct.php:723
 #: SelectSupplier.php:249 SelectSupplier.php:311
 msgid "Next"
 msgstr "Следующ."
 
-#: CounterSales.php:2342
+#: CounterSales.php:2343
 msgid "Use this form to add items quickly if the item codes are already known"
 msgstr ""
 "Используйте эту форму для быстрого добавления товаров, если коды товаров уже "
 "известны"
 
-#: CounterSales.php:2367 SelectCreditItems.php:980 SelectCreditItems.php:1031
-#: SelectOrderItems.php:1794 SelectOrderItems.php:1820
+#: CounterSales.php:2368 SelectCreditItems.php:981 SelectCreditItems.php:1032
+#: SelectOrderItems.php:1795 SelectOrderItems.php:1821
 msgid "Quick Entry"
 msgstr "Быстрая строка"
 
-#: CounterSales.php:2368 SelectCreditItems.php:1049 SelectOrderItems.php:1821
-#: SelectOrderItems.php:1841
+#: CounterSales.php:2369 SelectCreditItems.php:1050 SelectOrderItems.php:1822
+#: SelectOrderItems.php:1842
 msgid "Search Parts"
 msgstr "Искать части"
 
-#: CounterSales.php:2372
+#: CounterSales.php:2373
 msgid "Cancel Sale"
 msgstr "Отменить продажу"
 
-#: CounterSales.php:2372
+#: CounterSales.php:2373
 msgid "Are you sure you wish to cancel this sale?"
 msgstr "Вы уверены, что хотите отменить эту сделку?"
 
@@ -6086,11 +6086,11 @@ msgstr "Расходы на фрахт по счету"
 msgid "Credit Freight Cost"
 msgstr "Кредитовать стоимость фрахта"
 
-#: Credit_Invoice.php:445 SelectCreditItems.php:829
+#: Credit_Invoice.php:445 SelectCreditItems.php:830
 msgid "Credit Totals"
 msgstr "Итого для кредита"
 
-#: Credit_Invoice.php:457 SelectCreditItems.php:919
+#: Credit_Invoice.php:457 SelectCreditItems.php:920
 msgid ""
 "The GL code to write off the credit value to must be specified. Please "
 "select the appropriate GL code for the selection box"
@@ -6110,15 +6110,15 @@ msgstr ""
 msgid "The following SQL to update the invoice allocation was used"
 msgstr "SQL обновления распределения счета-фактуры"
 
-#: Credit_Invoice.php:579 SelectCreditItems.php:1126
+#: Credit_Invoice.php:579 SelectCreditItems.php:1127
 msgid ""
 "The customer credit note transaction could not be added to the database "
 "because"
 msgstr ""
 "Не удалось добавить транзакцию о кредит-ноте клиента в базу данных, так как"
 
-#: Credit_Invoice.php:580 SelectCreditItems.php:1066
-#: SelectCreditItems.php:1127
+#: Credit_Invoice.php:580 SelectCreditItems.php:1067
+#: SelectCreditItems.php:1128
 msgid "The following SQL to insert the customer credit note was used"
 msgstr "SQL вставки кредит-ноты клиента"
 
@@ -6182,14 +6182,14 @@ msgstr "SQL выбора серийной записи о товаре"
 msgid "Written off ex Inv"
 msgstr "Списано бывших Inv"
 
-#: Credit_Invoice.php:1049 SelectCreditItems.php:1212
+#: Credit_Invoice.php:1049 SelectCreditItems.php:1213
 msgid ""
 "The following SQL to insert the stock movement records for the purpose of "
 "display on the credit note was used"
 msgstr ""
 "SQL вставки записи о движении запасов с целью отображения в кредит-ноте"
 
-#: Credit_Invoice.php:1071 SelectCreditItems.php:1305
+#: Credit_Invoice.php:1071 SelectCreditItems.php:1306
 msgid ""
 "Taxes and rates applicable to this credit note line item could not be "
 "inserted because"
@@ -6197,14 +6197,14 @@ msgstr ""
 "Налоги и ставки, применяемых к этой кредит-ноте не могут быть вставлены в "
 "базу, так как"
 
-#: Credit_Invoice.php:1100 SelectCreditItems.php:1628
+#: Credit_Invoice.php:1100 SelectCreditItems.php:1629
 msgid ""
 "The count to check for existing Sales analysis records could not run because"
 msgstr ""
 "Кол для проверки существующих анализ продаж записей не мжет быть заущен, так "
 "как"
 
-#: Credit_Invoice.php:1212 SelectCreditItems.php:1738
+#: Credit_Invoice.php:1212 SelectCreditItems.php:1739
 msgid ""
 "The sales analysis record for this credit note could not be added because"
 msgstr ""
@@ -6216,27 +6216,27 @@ msgid ""
 "inserted because"
 msgstr "Не удалось вставить проводку о товаре или списании в главной книге"
 
-#: Credit_Invoice.php:1310 SelectCreditItems.php:1852
+#: Credit_Invoice.php:1310 SelectCreditItems.php:1853
 msgid "The credit note GL posting could not be inserted because"
 msgstr "Не удалось вставить в главную книгу проводку о кредит-ноте"
 
-#: Credit_Invoice.php:1331 SelectCreditItems.php:1875
+#: Credit_Invoice.php:1331 SelectCreditItems.php:1876
 msgid "The credit note discount GL posting could not be inserted because"
 msgstr "Не удалось вставить проводку в главной книге о скидке для кредит-ноты"
 
-#: Credit_Invoice.php:1360 SelectCreditItems.php:1903
+#: Credit_Invoice.php:1360 SelectCreditItems.php:1904
 msgid ""
 "The total debtor GL posting for the credit note could not be inserted because"
 msgstr "Не удалось вставить проводку в главную книгу о задолжности, так как"
 
-#: Credit_Invoice.php:1386 SelectCreditItems.php:1923
+#: Credit_Invoice.php:1386 SelectCreditItems.php:1924
 msgid ""
 "The freight GL posting for this credit note could not be inserted because"
 msgstr ""
 "Не удалось добавить проводку о фрахте в главную книгу для этой кредит-ноты, "
 "так как"
 
-#: Credit_Invoice.php:1428 SelectCreditItems.php:1959
+#: Credit_Invoice.php:1428 SelectCreditItems.php:1960
 msgid "Credit Note number"
 msgstr "Номер кредит-ноты"
 
@@ -6250,17 +6250,17 @@ msgstr "был обработан"
 msgid "Print this credit note"
 msgstr "Напечатать кредит-ноту"
 
-#: Credit_Invoice.php:1442 SelectCreditItems.php:842
+#: Credit_Invoice.php:1442 SelectCreditItems.php:843
 msgid "Credit Note Type"
 msgstr "Тип кредит-ноты"
 
 #: Credit_Invoice.php:1446 Credit_Invoice.php:1451 Credit_Invoice.php:1455
-#: SelectCreditItems.php:846 SelectCreditItems.php:851
+#: SelectCreditItems.php:847 SelectCreditItems.php:852
 msgid "Goods returned to store"
 msgstr "Товары, возвращенные на склад"
 
 #: Credit_Invoice.php:1447 Credit_Invoice.php:1450 Credit_Invoice.php:1454
-#: SelectCreditItems.php:847 SelectCreditItems.php:850
+#: SelectCreditItems.php:848 SelectCreditItems.php:851
 msgid "Goods written off"
 msgstr "Списанные товары"
 
@@ -6272,7 +6272,7 @@ msgstr "Обратный ререрасход"
 msgid "Goods returned to location"
 msgstr "Товары, возвращенные в местоположение"
 
-#: Credit_Invoice.php:1486 SelectCreditItems.php:887
+#: Credit_Invoice.php:1486 SelectCreditItems.php:888
 msgid "Write off the cost of the goods to"
 msgstr "Списать стоимость товаров к"
 
@@ -6997,7 +6997,7 @@ msgstr "Провести распределения"
 #: PcAuthorizeExpenses.php:323 PcClaimExpensesFromTab.php:167
 #: PcClaimExpensesFromTab.php:385 PcExpenses.php:344 PcExpensesTypeTab.php:140
 #: PcExpensesTypeTab.php:228 PcTabs.php:466 PcTypeTabs.php:236
-#: SalesTypes.php:273 SelectCreditItems.php:924 Z_CheckDebtorsControl.php:69
+#: SalesTypes.php:273 SelectCreditItems.php:925 Z_CheckDebtorsControl.php:69
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -8569,7 +8569,7 @@ msgstr ""
 #: SelectCompletedOrder.php:72 SelectCompletedOrder.php:77
 #: SelectCompletedOrder.php:83 SelectCompletedOrder.php:231
 #: SelectContract.php:29 SelectSalesOrder.php:407 SelectSalesOrder.php:411
-#: SelectWorkOrder.php:113 Shipt_Select.php:47 Stocks.php:1155
+#: SelectWorkOrder.php:113 Shipt_Select.php:47 Stocks.php:1155 Z_test.php:81
 #: includes/PDFBOMListingPageHeader.inc:21
 #: includes/PDFCustomerListPageHeader.inc:31
 #: includes/PDFCustomerListPageHeader.inc:53
@@ -8932,17 +8932,17 @@ msgid "Order Summary"
 msgstr "Итого по заказу"
 
 #: DeliveryDetails.php:872 OrderDetails.php:210 RecurringSalesOrders.php:365
-#: SelectOrderItems.php:1431
+#: SelectOrderItems.php:1432
 msgid "TOTAL Excl Tax/Freight"
 msgstr "Всего (исключая налоги/фрахт)"
 
 #: DeliveryDetails.php:882 DeliveryDetails.php:937 DeliveryDetails.php:947
-#: OrderDetails.php:218 SelectOrderItems.php:1438
+#: OrderDetails.php:218 SelectOrderItems.php:1439
 msgid "Total Weight"
 msgstr "Общий вес"
 
 #: DeliveryDetails.php:884 DeliveryDetails.php:939 DeliveryDetails.php:949
-#: OrderDetails.php:220 SelectOrderItems.php:1440
+#: OrderDetails.php:220 SelectOrderItems.php:1441
 msgid "Total Volume"
 msgstr "Общий объем"
 
@@ -9925,8 +9925,8 @@ msgstr ""
 msgid "Delivered To"
 msgstr "Доставить"
 
-#: EmailConfirmation.php:189 SelectOrderItems.php:1328
-#: SelectOrderItems.php:1799 SelectOrderItems.php:1829
+#: EmailConfirmation.php:189 SelectOrderItems.php:1329
+#: SelectOrderItems.php:1800 SelectOrderItems.php:1830
 msgid "PO Line"
 msgstr "Строка PO"
 
@@ -9938,7 +9938,7 @@ msgstr "Заказанное количество"
 #: EmailConfirmation.php:194 MRPDemands.php:295 MRPDemands.php:394
 #: MRPPlannedPurchaseOrders.php:322 MRPPlannedWorkOrders.php:259
 #: MRPPlannedWorkOrders.php:379 MRPReport.php:414 MRPReport.php:420
-#: SelectOrderItems.php:1343 SelectOrderItems.php:1803
+#: SelectOrderItems.php:1344 SelectOrderItems.php:1804
 #: SupplierTransInquiry.php:106
 msgid "Due Date"
 msgstr "Срок сдачи"
@@ -13117,7 +13117,7 @@ msgstr "Прайс-лист поставщика"
 msgid "Bulk Inventory Transfer"
 msgstr "Массовое перемещение товара"
 
-#: index.php:590 StockAdjustments.php:66 StockLocTransfer.php:214
+#: index.php:590 StockAdjustments.php:66 StockLocTransfer.php:215
 #: StockLocTransferReceive.php:411 StockLocTransferReceive.php:503
 #: StockTransfers.php:27 StockTransfers.php:447 StockUsage.php:28
 #: SuppCreditGRNs.php:19 SuppInvGRNs.php:16
@@ -15097,7 +15097,7 @@ msgstr ""
 "критерии, чтобы попытаться снова."
 
 #: MRPReport.php:724 SelectAsset.php:222 SelectCustomer.php:392
-#: SelectCustomer.php:473 SelectOrderItems.php:1380 SelectProduct.php:709
+#: SelectCustomer.php:473 SelectOrderItems.php:1381 SelectProduct.php:709
 #: SelectSupplier.php:235 SelectSupplier.php:297 StockLocTransfer.php:61
 #: SupplierTenders.php:146 SupplierTenders.php:204 WorkOrderIssue.php:352
 #: WorkOrderReceive.php:676 includes/Add_SerialItemsOut.php:23
@@ -17917,35 +17917,35 @@ msgstr "Не подгонять системный товар к Nil"
 msgid "Stock Location Transfer Docket Error"
 msgstr "Ошибка описи перемещения товара"
 
-#: PDFStockLocTransfer.php:18
+#: PDFStockLocTransfer.php:17
 msgid "Reprint transfer docket"
 msgstr "Перепечатать квитанцию о передаче"
 
-#: PDFStockLocTransfer.php:23
+#: PDFStockLocTransfer.php:22
 msgid "Transfer docket to reprint"
 msgstr "Передать квитанцию на перепечатку"
 
-#: PDFStockLocTransfer.php:33 PDFStockLocTransfer.php:34
+#: PDFStockLocTransfer.php:32 PDFStockLocTransfer.php:33
 msgid "Inventory Location Transfer BOL"
 msgstr "Коносамент передачи товара в местоположение"
 
-#: PDFStockLocTransfer.php:39
+#: PDFStockLocTransfer.php:38
 msgid "An error occurred retrieving the items on the transfer"
 msgstr "Возникла ошибка получения позиций для передачи"
 
-#: PDFStockLocTransfer.php:39
+#: PDFStockLocTransfer.php:38
 msgid "This page must be called with a location transfer reference number"
 msgstr "Страница должна быть вызвана с номером ссылки перемещения товара"
 
-#: PDFStockLocTransfer.php:40
+#: PDFStockLocTransfer.php:39
 msgid "The SQL that failed while retrieving the items on the transfer was"
 msgstr "Завершившийся неудачей SQL получения элементов передачи"
 
-#: PDFStockLocTransfer.php:62
+#: PDFStockLocTransfer.php:61
 msgid "The transfer reference selected does not appear to be set up"
 msgstr "Ссылка на выбранную передачу не сконфигурирована"
 
-#: PDFStockLocTransfer.php:62
+#: PDFStockLocTransfer.php:61
 msgid "enter the items to be transferred first"
 msgstr "сначала введите позиции, которые должны быть перемещены"
 
@@ -19357,7 +19357,7 @@ msgstr ""
 "Для поиска заказов на покупку конкретной части используйте выбор части ниже."
 
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:180
-#: SelectCompletedOrder.php:512 SelectCreditItems.php:950
+#: SelectCompletedOrder.php:512 SelectCreditItems.php:951
 #: SelectSalesOrder.php:552 SelectWorkOrder.php:167 Shipt_Select.php:157
 #: WorkOrderEntry.php:582 WorkOrderIssue.php:644
 msgid "Select a stock category"
@@ -19973,11 +19973,11 @@ msgstr "Номер производителя"
 msgid "Cheque No."
 msgstr "Номер чека"
 
-#: PrintCheque.php:107
+#: PrintCheque.php:107 Z_test.php:19
 msgid "Number is out of the range of numbers that can be expressed in words"
 msgstr ""
 
-#: PrintCheque.php:108
+#: PrintCheque.php:108 Z_test.php:20
 #, fuzzy
 msgid "error"
 msgstr "Доклад MRP"
@@ -19987,143 +19987,143 @@ msgstr "Доклад MRP"
 msgid "million"
 msgstr "Отправка по e-mail"
 
-#: PrintCheque.php:127
+#: PrintCheque.php:127 Z_test.php:39
 #, fuzzy
 msgid "thousand"
 msgstr "предстоящий"
 
-#: PrintCheque.php:131
+#: PrintCheque.php:131 Z_test.php:43
 msgid "hundred"
 msgstr ""
 
-#: PrintCheque.php:135
+#: PrintCheque.php:135 Z_test.php:47
 #, fuzzy
 msgid "one"
 msgstr "Никто"
 
-#: PrintCheque.php:136
+#: PrintCheque.php:136 Z_test.php:48
 #, fuzzy
 msgid "two"
 msgstr "кому"
 
-#: PrintCheque.php:137
+#: PrintCheque.php:137 Z_test.php:49
 #, fuzzy
 msgid "three"
 msgstr "Размера"
 
-#: PrintCheque.php:138
+#: PrintCheque.php:138 Z_test.php:50
 #, fuzzy
 msgid "four"
 msgstr "для"
 
-#: PrintCheque.php:139
+#: PrintCheque.php:139 Z_test.php:51
 #, fuzzy
 msgid "five"
 msgstr "не удалось"
 
-#: PrintCheque.php:140
+#: PrintCheque.php:140 Z_test.php:52
 msgid "six"
 msgstr ""
 
-#: PrintCheque.php:141
+#: PrintCheque.php:141 Z_test.php:53
 #, fuzzy
 msgid "seven"
 msgstr "Уровень"
 
-#: PrintCheque.php:142
+#: PrintCheque.php:142 Z_test.php:54
 #, fuzzy
 msgid "eight"
 msgstr "Высота"
 
-#: PrintCheque.php:143
+#: PrintCheque.php:143 Z_test.php:55
 #, fuzzy
 msgid "nine"
 msgstr "Никто"
 
-#: PrintCheque.php:144
+#: PrintCheque.php:144 Z_test.php:56
 #, fuzzy
 msgid "ten"
 msgstr "Размера"
 
-#: PrintCheque.php:145
+#: PrintCheque.php:145 Z_test.php:57
 #, fuzzy
 msgid "eleven"
 msgstr "Удалить"
 
-#: PrintCheque.php:146
+#: PrintCheque.php:146 Z_test.php:58
 msgid "twelve"
 msgstr ""
 
-#: PrintCheque.php:147
+#: PrintCheque.php:147 Z_test.php:59
 msgid "thirteen"
 msgstr ""
 
-#: PrintCheque.php:148
+#: PrintCheque.php:148 Z_test.php:60
 msgid "fourteen"
 msgstr ""
 
-#: PrintCheque.php:149
+#: PrintCheque.php:149 Z_test.php:61
 msgid "fifteen"
 msgstr ""
 
-#: PrintCheque.php:150
+#: PrintCheque.php:150 Z_test.php:62
 msgid "sixteen"
 msgstr ""
 
-#: PrintCheque.php:151
+#: PrintCheque.php:151 Z_test.php:63
 msgid "seventeen"
 msgstr ""
 
-#: PrintCheque.php:152
+#: PrintCheque.php:152 Z_test.php:64
 #, fuzzy
 msgid "eighteen"
 msgstr "Высота"
 
-#: PrintCheque.php:153
+#: PrintCheque.php:153 Z_test.php:65
 msgid "nineteen"
 msgstr ""
 
-#: PrintCheque.php:157
+#: PrintCheque.php:157 Z_test.php:69
 #, fuzzy
 msgid "twenty"
 msgstr "Отправлено"
 
-#: PrintCheque.php:158
+#: PrintCheque.php:158 Z_test.php:70
 #, fuzzy
 msgid "thirty"
 msgstr "Город"
 
-#: PrintCheque.php:159
+#: PrintCheque.php:159 Z_test.php:71
 #, fuzzy
 msgid "forty"
 msgstr "для"
 
-#: PrintCheque.php:160
+#: PrintCheque.php:160 Z_test.php:72
 #, fuzzy
 msgid "fifty"
 msgstr "Город"
 
-#: PrintCheque.php:161
+#: PrintCheque.php:161 Z_test.php:73
 #, fuzzy
 msgid "sixty"
 msgstr "Город"
 
-#: PrintCheque.php:162
+#: PrintCheque.php:162 Z_test.php:74
 #, fuzzy
 msgid "seventy"
 msgstr "Опись"
 
-#: PrintCheque.php:163
+#: PrintCheque.php:163 Z_test.php:75
 #, fuzzy
 msgid "eighty"
 msgstr "Высота"
 
-#: PrintCheque.php:164
+#: PrintCheque.php:164 Z_test.php:76
 #, fuzzy
 msgid "ninety"
 msgstr "Опись"
 
-#: PrintCheque.php:184
+#: PrintCheque.php:184 Z_test.php:96
 #, fuzzy
 msgid "zero"
 msgstr "Период"
@@ -21095,8 +21095,8 @@ msgstr ""
 "Не удалось получить налоговую область места, откуда был заполнен заказ, так "
 "как:"
 
-#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:311
-#: includes/DefineCartClass.php:348 includes/DefineCartClass.php:399
+#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:312
+#: includes/DefineCartClass.php:349 includes/DefineCartClass.php:400
 #: includes/DefineSuppTransClass.php:72
 msgid "The taxes and rates for this item could not be retrieved because"
 msgstr "Налоги и тарифы на этот товар не могут быть получены, так как"
@@ -21203,7 +21203,7 @@ msgid "Inventory Reorder Level Report"
 msgstr "Отчет о уровне переупорядочения инвентаря"
 
 #: ReorderLevel.php:175 SelectSalesOrder.php:496 StockDispatch.php:248
-#: StockLocMovements.php:18 StockLocStatus.php:32 StockLocTransfer.php:228
+#: StockLocMovements.php:18 StockLocStatus.php:32 StockLocTransfer.php:229
 #: StockMovements.php:34 StockTransfers.php:485 StockUsage.php:66
 msgid "From Stock Location"
 msgstr "Из местоположения товара"
@@ -23123,7 +23123,7 @@ msgid ""
 msgstr ""
 "не существует в базе данных и поэтому не могут быть добавлены к кредит-ноте"
 
-#: SelectCreditItems.php:601
+#: SelectCreditItems.php:602
 msgid ""
 "The item selected is already on this credit the system will not allow the "
 "same item on the credit note more than once. However you can change the "
@@ -23133,76 +23133,76 @@ msgstr ""
 "того же товара в кредит-ноте более одного раза. Однако вы можете изменить "
 "количество дляуже существующих в кредит-ноте, если необходимо."
 
-#: SelectCreditItems.php:622
+#: SelectCreditItems.php:623
 msgid "The item details could not be retrieved because"
 msgstr "Данные о товаре не могут быть получены, поскольку"
 
-#: SelectCreditItems.php:676
+#: SelectCreditItems.php:677
 msgid "Gross"
 msgstr "Брутто"
 
-#: SelectCreditItems.php:680
+#: SelectCreditItems.php:681
 msgid "Rate"
 msgstr "Ставка"
 
-#: SelectCreditItems.php:764
+#: SelectCreditItems.php:765
 msgid "Are you sure you wish to delete this line item from the credit note?"
 msgstr "Вы уверены, что хотите удалить эту позицию из кредит-ноты ?"
 
-#: SelectCreditItems.php:783
+#: SelectCreditItems.php:784
 msgid "Credit Freight"
 msgstr "Фрахт кредита"
 
-#: SelectCreditItems.php:848 SelectCreditItems.php:852
+#: SelectCreditItems.php:849 SelectCreditItems.php:853
 msgid "Reverse an Overcharge"
 msgstr "Вернуть переплату"
 
-#: SelectCreditItems.php:854
+#: SelectCreditItems.php:855
 msgid "Reverse Overcharge Only"
 msgstr "Только возвращение платы"
 
-#: SelectCreditItems.php:855
+#: SelectCreditItems.php:856
 msgid "Goods Returned To Store"
 msgstr "Товары, возвращенные в хранилище"
 
-#: SelectCreditItems.php:856
+#: SelectCreditItems.php:857
 msgid "Good written off"
 msgstr "Списанные товары"
 
-#: SelectCreditItems.php:866
+#: SelectCreditItems.php:867
 msgid "Goods Returned to Location"
 msgstr "Товары, возвращенные в местоположение"
 
-#: SelectCreditItems.php:911
+#: SelectCreditItems.php:912
 msgid "Credit Note Text"
 msgstr "Текст кредит-ноты"
 
-#: SelectCreditItems.php:924
+#: SelectCreditItems.php:925
 msgid "Are you sure you wish to cancel the whole of this credit note?"
 msgstr "Вы уверены, что хотите отменить всю кредит-ноту ?"
 
-#: SelectCreditItems.php:926
+#: SelectCreditItems.php:927
 msgid "Process Credit Note"
 msgstr "Обработать кредит-ноту"
 
-#: SelectCreditItems.php:979 SelectOrderItems.php:1651
+#: SelectCreditItems.php:980 SelectOrderItems.php:1652
 msgid "Change Customer"
 msgstr "Изменить клиента"
 
-#: SelectCreditItems.php:1033 SelectOrderItems.php:1801
+#: SelectCreditItems.php:1034 SelectOrderItems.php:1802
 #: Z_ImportPartCodes.php:29
 msgid "Part Code"
 msgstr "Код части"
 
-#: SelectCreditItems.php:1048
+#: SelectCreditItems.php:1049
 msgid "Process Entries"
 msgstr "Обработать записи"
 
-#: SelectCreditItems.php:1065
+#: SelectCreditItems.php:1066
 msgid "The area cannot be determined for this customer"
 msgstr "Область не может быть определена для этого заказчика"
 
-#: SelectCreditItems.php:1080
+#: SelectCreditItems.php:1081
 msgid ""
 "For credit notes created to write off the stock a general ledger account is "
 "required to be selected. Please select an account to write the cost of the "
@@ -23212,85 +23212,85 @@ msgstr ""
 "главной книге.Пожалуйста, выберите счет для записи стоимости запасов и затем "
 "нажмите еще раз Обработать."
 
-#: SelectCreditItems.php:1322
+#: SelectCreditItems.php:1323
 msgid ""
 "The existence of the serial stock item record could not be determined because"
 msgstr "Не найдена запись о серийном товаре, так как"
 
-#: SelectCreditItems.php:1323
+#: SelectCreditItems.php:1324
 msgid ""
 "The following SQL to find out if the serial stock item record existed "
 "already was used"
 msgstr "SQL определения существования записи о товаре"
 
-#: SelectCreditItems.php:1341
+#: SelectCreditItems.php:1342
 msgid "The new serial stock item record could not be inserted because"
 msgstr "Данные о новом серийном товаре не могут быть вставлены, так как"
 
-#: SelectCreditItems.php:1342
+#: SelectCreditItems.php:1343
 msgid "The following SQL to insert the new serial stock item record was used"
 msgstr "SQL вставки данных о новом серийном товаре"
 
-#: SelectCreditItems.php:1366
+#: SelectCreditItems.php:1367
 msgid "The following SQL to insert the serial stock movement record was used"
 msgstr "SQL вставки данных  о перемещении серийного товара"
 
-#: SelectCreditItems.php:1471
+#: SelectCreditItems.php:1472
 msgid ""
 "The following SQL to update the component location stock record was used"
 msgstr "SQL обновления данных о местоположении товара"
 
-#: SelectCreditItems.php:1556
+#: SelectCreditItems.php:1557
 msgid ""
 "Stock movement record to write the stock off could not be inserted because"
 msgstr "Данные о движении товара для списания не могут быть добавлены, так как"
 
-#: SelectCreditItems.php:1557
+#: SelectCreditItems.php:1558
 msgid ""
 "The following SQL to insert the stock movement to write off the stock was "
 "used"
 msgstr "SQL вставки данных о движении запасов для списания"
 
-#: SelectCreditItems.php:1574
+#: SelectCreditItems.php:1575
 msgid ""
 "The serial stock item record could not be updated for the write off because"
 msgstr "Данные о серийном товаре не могут быть обновлены для списания, так как"
 
-#: SelectCreditItems.php:1590
+#: SelectCreditItems.php:1591
 msgid ""
 "The serial stock movement record for the write off could not be inserted "
 "because"
 msgstr ""
 "Данные о движении запасов для списания не может быть вставлены, так как"
 
-#: SelectCreditItems.php:1591
+#: SelectCreditItems.php:1592
 msgid ""
 "The following SQL to insert the serial stock movement write off record was "
 "used"
 msgstr "SQL вставик данных о перемещении запасов для списания"
 
-#: SelectCreditItems.php:1772 SelectCreditItems.php:1798
+#: SelectCreditItems.php:1773 SelectCreditItems.php:1799
 msgid "The cost of the stock credited GL posting could not be inserted because"
 msgstr ""
 "Невозможно добавить данные о стоимости кредитованного товара в главную "
 "книгу, так как"
 
-#: SelectCreditItems.php:1821
+#: SelectCreditItems.php:1822
 msgid ""
 "The stock side (or write off) of the cost of sales GL posting could not be "
 "inserted because"
 msgstr ""
 "Невозможно вставить проводку о товаре для списания в главную книгу, так как"
 
-#: SelectCreditItems.php:1960
+#: SelectCreditItems.php:1961
 msgid "Show this Credit Note on screen"
 msgstr "Показать кредит-ноту на экране"
 
-#: SelectCreditItems.php:1962 SelectCreditItems.php:1964
+#: SelectCreditItems.php:1963 SelectCreditItems.php:1965
 msgid "Print this Credit Note"
 msgstr "Печатать кредит-ноту"
 
-#: SelectCreditItems.php:1966
+#: SelectCreditItems.php:1967
 msgid "Enter Another Credit Note"
 msgstr "Ввести другую кредит-ноту"
 
@@ -23733,18 +23733,18 @@ msgid ""
 "This change would put the customer over their credit limit and is prohibited"
 msgstr ""
 
-#: SelectOrderItems.php:1186
+#: SelectOrderItems.php:1187
 msgid ""
 "You should automatically be forwarded to the entry of the delivery details "
 "page"
 msgstr ""
 "Вы должны быть автоматически перенаправлены на страницу данных о доставки"
 
-#: SelectOrderItems.php:1186
+#: SelectOrderItems.php:1187
 msgid "if this does not happen"
 msgstr "если этого не произойдет"
 
-#: SelectOrderItems.php:1330
+#: SelectOrderItems.php:1331
 msgid ""
 "Quantity (required) - Enter the number of units ordered.  Price (required) - "
 "Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP"
@@ -23757,61 +23757,61 @@ msgstr ""
 "прибыли (GP), чтобы добавить к стоимости единицы. Дата(факультативно) - "
 "введите дату доставки."
 
-#: SelectOrderItems.php:1380
+#: SelectOrderItems.php:1381
 #, fuzzy
 msgid "invoiced"
 msgstr "Счет-фактура"
 
-#: SelectOrderItems.php:1396
+#: SelectOrderItems.php:1397
 msgid "Clear Remaining"
 msgstr "Очистить оставшееся"
 
-#: SelectOrderItems.php:1449
+#: SelectOrderItems.php:1450
 msgid "Enter Delivery Details and Confirm Order"
 msgstr "Введите подробности доставки и заказ на подтверждение"
 
-#: SelectOrderItems.php:1599 SelectOrderItems.php:1665
-#: SelectOrderItems.php:1785
+#: SelectOrderItems.php:1600 SelectOrderItems.php:1666
+#: SelectOrderItems.php:1786
 msgid "Add to Sales Order"
 msgstr "Добавить в заказ на продажу"
 
-#: SelectOrderItems.php:1604 SelectOrderItems.php:1605
+#: SelectOrderItems.php:1605 SelectOrderItems.php:1606
 msgid "Search for Order Items"
 msgstr "Поиск позиций заказа"
 
-#: SelectOrderItems.php:1652
+#: SelectOrderItems.php:1653
 msgid "Fixed Asset Disposal"
 msgstr "Удаление основных активов"
 
-#: SelectOrderItems.php:1794
+#: SelectOrderItems.php:1795
 msgid "Use this screen for the "
 msgstr "Используйте этот экран для "
 
-#: SelectOrderItems.php:1794
+#: SelectOrderItems.php:1795
 msgid " of products to be ordered"
 msgstr " заказанных продуктов"
 
-#: SelectOrderItems.php:1825
+#: SelectOrderItems.php:1826
 msgid "Use this screen to select an asset to dispose of to this customer"
 msgstr "Используйте этот экран для выбора актива для продажи для этого клиента"
 
-#: SelectOrderItems.php:1832
+#: SelectOrderItems.php:1833
 msgid "Asset to Dispose Of"
 msgstr "Актив к продаже"
 
-#: SelectOrderItems.php:1835
+#: SelectOrderItems.php:1836
 msgid "Select Asset To Dispose of From the List Below"
 msgstr "Выберите продаваемый актив из списка ниже"
 
-#: SelectOrderItems.php:1840
+#: SelectOrderItems.php:1841
 msgid "Add Asset To Order"
 msgstr "Добавить актив в заказ"
 
-#: SelectOrderItems.php:1846
+#: SelectOrderItems.php:1847
 msgid "Cancel Whole Order"
 msgstr "Отменить заказ"
 
-#: SelectOrderItems.php:1846
+#: SelectOrderItems.php:1847
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr "Вы уверены, что хотите отменить весь этот заказ?"
 
@@ -25701,7 +25701,7 @@ msgstr "Просмотр введенных подтсчетов"
 msgid "The quantity entered for line"
 msgstr "введенное количество для строки"
 
-#: StockCounts.php:51 StockLocTransfer.php:115 StockLocTransferReceive.php:34
+#: StockCounts.php:51 StockLocTransfer.php:116 StockLocTransferReceive.php:34
 msgid "is not numeric"
 msgstr "не числовой"
 
@@ -25791,7 +25791,7 @@ msgstr "Отчет об отправке товара не может быть �
 msgid "The stock dispatch did not have any items to list"
 msgstr "Отправка товара не содержит позиции для показа"
 
-#: StockDispatch.php:179 StockLocTransfer.php:183
+#: StockDispatch.php:179 StockLocTransfer.php:184
 msgid "Unable to enter Location Transfer record for"
 msgstr "Невозможно ввести запись"
 
@@ -25840,7 +25840,7 @@ msgstr ""
 msgid "Dispatch Percent"
 msgstr "Процент отправки"
 
-#: StockDispatch.php:264 StockLocTransfer.php:248 StockTransfers.php:509
+#: StockDispatch.php:264 StockLocTransfer.php:249 StockTransfers.php:509
 msgid "To Stock Location"
 msgstr "К расположению склада"
 
@@ -25991,19 +25991,19 @@ msgid ""
 "quantity to transfer"
 msgstr ""
 
-#: StockLocTransfer.php:54 StockLocTransfer.php:109 StockLocTransfer.php:134
+#: StockLocTransfer.php:54 StockLocTransfer.php:110 StockLocTransfer.php:135
 msgid "The part code entered of"
 msgstr "Введенный код части"
 
-#: StockLocTransfer.php:54 StockLocTransfer.php:109
+#: StockLocTransfer.php:54 StockLocTransfer.php:110
 msgid "is not set up in the database"
 msgstr "Не установлено в базе данных"
 
-#: StockLocTransfer.php:54 StockLocTransfer.php:109
+#: StockLocTransfer.php:54 StockLocTransfer.php:110
 msgid "Only valid parts can be entered for transfers"
 msgstr "Только действительные части могут быть введены для перевода"
 
-#: StockLocTransfer.php:61 StockLocTransfer.php:120
+#: StockLocTransfer.php:61 StockLocTransfer.php:121
 #: StockLocTransferReceive.php:34 StockLocTransferReceive.php:38
 msgid "The quantity entered for"
 msgstr "Введено количество для"
@@ -26013,7 +26013,7 @@ msgstr "Введено количество для"
 msgid "is not numeric."
 msgstr "не числовой"
 
-#: StockLocTransfer.php:61 StockLocTransfer.php:115
+#: StockLocTransfer.php:61 StockLocTransfer.php:116
 msgid "The quantity entered for transfers is expected to be numeric"
 msgstr "Введенное количество для переводов должно быть числовым"
 
@@ -26027,70 +26027,70 @@ msgstr "не имеет достаточный запас для передач�
 msgid "The quantity required to transfer was"
 msgstr "SQL на восстановление перевода"
 
-#: StockLocTransfer.php:115
+#: StockLocTransfer.php:116
 msgid "The quantity entered of"
 msgstr "Введенное количество"
 
-#: StockLocTransfer.php:115
+#: StockLocTransfer.php:116
 msgid "for part code"
 msgstr "для кода части"
 
-#: StockLocTransfer.php:120
+#: StockLocTransfer.php:121
 msgid "is less than or equal to 0"
 msgstr "меньше или равно нулю"
 
-#: StockLocTransfer.php:120
+#: StockLocTransfer.php:121
 msgid "Please correct this or remove the item"
 msgstr "Пожалуйста, исправьте или удалите этот товар."
 
-#: StockLocTransfer.php:134
+#: StockLocTransfer.php:135
 msgid "does not have enough stock available for transfer."
 msgstr "не имеет достаточный запас для передачи."
 
-#: StockLocTransfer.php:146
+#: StockLocTransfer.php:147
 msgid "You must enter at least 1 Stock Item to transfer"
 msgstr "Вы должны ввести как минимум 1 товар для передачи"
 
-#: StockLocTransfer.php:152
+#: StockLocTransfer.php:153
 msgid ""
 "The transfer must have a different location to receive into and location "
 "sent from"
 msgstr "Передача должна иметь различающиеся места отправки и получения"
 
-#: StockLocTransfer.php:159
+#: StockLocTransfer.php:160
 msgid "Unable to BEGIN Location Transfer transaction"
 msgstr "Невозможно начать операцию перевода"
 
-#: StockLocTransfer.php:187
+#: StockLocTransfer.php:188
 msgid "Unable to COMMIT Location Transfer transaction"
 msgstr "Невозможно совершить операции"
 
-#: StockLocTransfer.php:190
+#: StockLocTransfer.php:191
 msgid "The inventory transfer records have been created successfully"
 msgstr "Записи перевода инвентаря были успешно созданы"
 
-#: StockLocTransfer.php:191
+#: StockLocTransfer.php:192
 msgid "Print the Transfer Docket"
 msgstr "Распечатать выписку по переводу"
 
-#: StockLocTransfer.php:221
+#: StockLocTransfer.php:222
 msgid "Inventory Location Transfer Shipment Reference"
 msgstr "Ссылка перевода на расположение инвентаря"
 
-#: StockLocTransfer.php:267
+#: StockLocTransfer.php:268
 msgid "Upload CSV file of Transfer Items and Quantites"
 msgstr ""
 
-#: StockLocTransfer.php:277
+#: StockLocTransfer.php:278
 #, fuzzy
 msgid "Clear All"
 msgstr "Очистить"
 
-#: StockLocTransfer.php:329
+#: StockLocTransfer.php:330
 msgid "Add More Items"
 msgstr "Добавить больше товаров"
 
-#: StockLocTransfer.php:330
+#: StockLocTransfer.php:331
 msgid "Create Transfer Shipment"
 msgstr "Создать передачу отгрузки"
 
@@ -31217,11 +31217,6 @@ msgstr "Редактировать / Обзор налоговой группи�
 msgid "Edit/Review Tax Categories"
 msgstr "Редактировать / Обзор налоговой Категории"
 
-#: test.php:6
-#, fuzzy
-msgid "Test script"
-msgstr "Описание условий"
-
 #: TopItems.php:8
 msgid "Top Items Searching"
 msgstr "Лучшие элементы поиска"
@@ -31478,7 +31473,7 @@ msgstr ""
 "администратором. Пожалуйста, прочитайте внимательно все заметки, чтобы "
 "убедится в их содержании."
 
-#: UpgradeDatabase.php:136
+#: UpgradeDatabase.php:137
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
@@ -31486,65 +31481,65 @@ msgstr ""
 "Только MySQL обновления выполняются легко в это время. Вашу базу данных "
 "необходимо обновить вручную."
 
-#: UpgradeDatabase.php:150
+#: UpgradeDatabase.php:151
 msgid "Applying"
 msgstr "Применение"
 
-#: UpgradeDatabase.php:178 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:179 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Успех"
 
-#: UpgradeDatabase.php:181
+#: UpgradeDatabase.php:182
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:185 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Таблица уже создана"
 
-#: UpgradeDatabase.php:187
+#: UpgradeDatabase.php:188
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Колонка уже создана"
 
-#: UpgradeDatabase.php:190 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:191 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Колонка уже создана"
 
-#: UpgradeDatabase.php:193 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:194 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Индекс уже существует"
 
-#: UpgradeDatabase.php:196 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:197 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Внесение уже сделано"
 
-#: UpgradeDatabase.php:199
+#: UpgradeDatabase.php:200
 msgid "SQL syntax error. The SQL error message is"
 msgstr "Синтаксические ошибки SQL. Сообщение ошибки SQL"
 
-#: UpgradeDatabase.php:202 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:203 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "Первичный ключ уже существует"
 
-#: UpgradeDatabase.php:205
+#: UpgradeDatabase.php:206
 msgid "Index already dropped previously"
 msgstr "Индекс уже упал ранее"
 
-#: UpgradeDatabase.php:208 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Неудача"
 
-#: UpgradeDatabase.php:208 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Номер ошибки"
@@ -35221,6 +35216,11 @@ msgstr "Налоговое внесение"
 msgid "Sales Integrity Check completed."
 msgstr "Проверка целостности продаж завершена"
 
+#: Z_test.php:6
+#, fuzzy
+msgid "Test Script"
+msgstr "Описание условий"
+
 #: Z_UpdateChartDetailsBFwd.php:6
 msgid "Recalculation of Brought Forward Balances in Chart Details Table"
 msgstr "Пересчет остатков, перенесенных на другой счет в таблице подробностей"
@@ -35558,49 +35558,49 @@ msgstr "строка заказа для"
 msgid "could not be inserted"
 msgstr "не может быть вставлен"
 
-#: includes/DefineCartClass.php:209
+#: includes/DefineCartClass.php:210
 msgid "The order line number"
 msgstr "Номер строки заказа"
 
-#: includes/DefineCartClass.php:209
+#: includes/DefineCartClass.php:210
 msgid "could not be updated"
 msgstr "не может быть обновлен"
 
-#: includes/DefineCartClass.php:216
+#: includes/DefineCartClass.php:217
 msgid "No Line Number passed to remove_from_cart, so nothing has been removed."
 msgstr ""
 "Номер строки не передается remove_from_cart, так что ничего не было удалено."
 
-#: includes/DefineCartClass.php:227
+#: includes/DefineCartClass.php:228
 msgid "The order line could not be deleted because"
 msgstr "Строка заказа не может быть удалена, поскольку"
 
-#: includes/DefineCartClass.php:229
+#: includes/DefineCartClass.php:230
 msgid "Deleted Line Number"
 msgstr "Номер удаленной строки"
 
-#: includes/DefineCartClass.php:229
+#: includes/DefineCartClass.php:230
 msgid "from existing Order Number"
 msgstr "из существующего номера заказа"
 
-#: includes/DefineCartClass.php:237
+#: includes/DefineCartClass.php:238
 msgid "The order line could not be updated as completed because"
 msgstr "Строка заказа не может быть обновлена как завершенная, так как"
 
-#: includes/DefineCartClass.php:239
+#: includes/DefineCartClass.php:240
 msgid "Removed Remaining Quantity and set Line Number "
 msgstr "Удалено оставшееся количество и установлен номер строки "
 
-#: includes/DefineCartClass.php:239
+#: includes/DefineCartClass.php:240
 msgid "as Completed for existing Order Number"
 msgstr "как завершенное для существующего номера заказа"
 
-#: includes/DefineCartClass.php:352
+#: includes/DefineCartClass.php:353
 msgid ""
 "It appears that taxes are not defined correctly for this customer tax group"
 msgstr ""
 
-#: includes/DefineCartClass.php:380
+#: includes/DefineCartClass.php:381
 msgid "Cannot find tax category Freight which must always be defined"
 msgstr ""
 "Не могу найти налоговые категории по грузам, которые всегда должны быть "

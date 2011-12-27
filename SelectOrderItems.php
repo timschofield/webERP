@@ -1024,8 +1024,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			/*not forgetting the location records too */
 			$InsertStkLocRecsResult = DB_query("INSERT INTO locstock (loccode,
 																	stockid)
-											SELECT loccode, '" . $AssetStockID . "'
-											FROM locations",$db);
+												SELECT loccode, '" . $AssetStockID . "'
+												FROM locations",$db);
 			/*Now the asset has been added to the stock master we can add it to the sales order */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			if (isset($_POST['POLine'])){
@@ -1138,7 +1138,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																		'Yes', /*Update DB */
 																		$_POST['ItemDue_' . $OrderLine->LineNumber],
 																		$_POST['POLine_' . $OrderLine->LineNumber],
-																		filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]));
+																		filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]),
+																		$identifier);
 					} //within credit limit so make changes
 				} //there are changes to the order line to process
 			} //page not called from itself - POST variables not set

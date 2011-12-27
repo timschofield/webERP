@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebERP 3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-22 22:36+1300\n"
+"POT-Creation-Date: 2011-12-28 10:45+1300\n"
 "PO-Revision-Date: 2011-02-01 13:12+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -204,8 +204,8 @@ msgstr "HESAP GRUPLARI GÖSTERILEMIYOR:"
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:13
 #: BOMExtendedQty.php:261 BOMIndented.php:246 BOMIndentedReverse.php:235
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:213 BOMs.php:832
-#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2025
-#: CounterSales.php:2151 Credit_Invoice.php:255 CreditStatus.php:21
+#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2026
+#: CounterSales.php:2152 Credit_Invoice.php:255 CreditStatus.php:21
 #: Currencies.php:28 CustEDISetup.php:17 DailyBankTransactions.php:11
 #: DebtorsAtPeriodEnd.php:125 DiscountCategories.php:10
 #: DiscountCategories.php:131 DiscountMatrix.php:16 EDIMessageFormat.php:104
@@ -216,7 +216,7 @@ msgstr "HESAP GRUPLARI GÖSTERILEMIYOR:"
 #: Labels.php:115 Labels.php:270 MRPReport.php:515 OutstandingGRNs.php:160
 #: PcAssignCashToTab.php:56 PcAssignCashToTab.php:130
 #: PcAssignCashToTab.php:146 PcAssignCashToTab.php:187 PDFPickingList.php:28
-#: PDFPrintLabel.php:140 PDFStockLocTransfer.php:17
+#: PDFPrintLabel.php:140 PDFStockLocTransfer.php:16
 #: PO_AuthorisationLevels.php:10 POReport.php:60 POReport.php:64
 #: POReport.php:68 PO_SelectOSPurchOrder.php:139 PricesBasedOnMarkUp.php:8
 #: Prices_Customer.php:35 Prices.php:30 PurchData.php:137 PurchData.php:258
@@ -225,8 +225,8 @@ msgstr "HESAP GRUPLARI GÖSTERILEMIYOR:"
 #: SalesGraph.php:34 SalesPeople.php:20 SalesTypes.php:20 SelectAsset.php:45
 #: SelectCompletedOrder.php:11 SelectContract.php:78 SelectCreditItems.php:215
 #: SelectCreditItems.php:286 SelectCustomer.php:260 SelectGLAccount.php:17
-#: SelectGLAccount.php:77 SelectOrderItems.php:577 SelectOrderItems.php:1479
-#: SelectOrderItems.php:1603 SelectProduct.php:496 SelectSalesOrder.php:533
+#: SelectGLAccount.php:77 SelectOrderItems.php:577 SelectOrderItems.php:1480
+#: SelectOrderItems.php:1604 SelectProduct.php:496 SelectSalesOrder.php:533
 #: SelectSupplier.php:9 SelectSupplier.php:198 SelectWorkOrder.php:9
 #: SelectWorkOrder.php:151 ShipmentCosting.php:11 Shipments.php:17
 #: Shippers.php:122 Shippers.php:158 Shipt_Select.php:8
@@ -367,7 +367,7 @@ msgstr "BU SUBEYI SILMEK ISTEDIGINIZE EMIN MISINIZ?"
 #: AddCustomerNotes.php:142 AddCustomerTypeNotes.php:129 Areas.php:165
 #: BankAccounts.php:224 BOMs.php:151 COGSGLPostings.php:109
 #: COGSGLPostings.php:207 ContractBOM.php:266 ContractOtherReqts.php:119
-#: CounterSales.php:821 Credit_Invoice.php:381 CreditStatus.php:175
+#: CounterSales.php:822 Credit_Invoice.php:381 CreditStatus.php:175
 #: Currencies.php:275 CustomerReceipt.php:918 Customers.php:1062
 #: CustomerTypes.php:203 DiscountCategories.php:219 DiscountMatrix.php:182
 #: EDIMessageFormat.php:151 FixedAssetCategories.php:187 FreightCosts.php:241
@@ -380,11 +380,11 @@ msgstr "BU SUBEYI SILMEK ISTEDIGINIZE EMIN MISINIZ?"
 #: Prices.php:252 PurchData.php:205 SalesAnalReptCols.php:299
 #: SalesAnalRepts.php:303 SalesCategories.php:257 SalesGLPostings.php:133
 #: SalesGLPostings.php:246 SalesPeople.php:233 SalesTypes.php:207
-#: SecurityTokens.php:129 SelectCreditItems.php:764 SelectCustomer.php:613
+#: SecurityTokens.php:129 SelectCreditItems.php:765 SelectCustomer.php:613
 #: SelectCustomer.php:631 SelectCustomer.php:655 SelectCustomer.php:672
-#: SelectCustomer.php:696 SelectCustomer.php:713 SelectOrderItems.php:1398
+#: SelectCustomer.php:696 SelectCustomer.php:713 SelectOrderItems.php:1399
 #: Shipments.php:440 Shippers.php:144 SpecialOrder.php:656
-#: StockCategories.php:243 StockCategories.php:557 StockLocTransfer.php:301
+#: StockCategories.php:243 StockCategories.php:557 StockLocTransfer.php:302
 #: SuppContractChgs.php:99 SuppCreditGRNs.php:102 SuppFixedAssetChgs.php:87
 #: SuppInvGRNs.php:147 SupplierContacts.php:164 SupplierTypes.php:191
 #: SuppShiptChgs.php:90 SuppTransGLAnalysis.php:121 TaxAuthorities.php:175
@@ -693,10 +693,10 @@ msgid "Date"
 msgstr "TARIH"
 
 #: AddCustomerNotes.php:122 AddCustomerTypeNotes.php:109 PcReportTab.php:173
-#: Stocks.php:1019 UpgradeDatabase.php:181 UpgradeDatabase.php:184
-#: UpgradeDatabase.php:187 UpgradeDatabase.php:190 UpgradeDatabase.php:193
-#: UpgradeDatabase.php:196 UpgradeDatabase.php:199 UpgradeDatabase.php:202
-#: UpgradeDatabase.php:205 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1019 UpgradeDatabase.php:182 UpgradeDatabase.php:185
+#: UpgradeDatabase.php:188 UpgradeDatabase.php:191 UpgradeDatabase.php:194
+#: UpgradeDatabase.php:197 UpgradeDatabase.php:200 UpgradeDatabase.php:203
+#: UpgradeDatabase.php:206 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -882,14 +882,14 @@ msgstr "ALINAMADI:"
 
 #: AgedDebtors.php:373 AgedSuppliers.php:201 Areas.php:95
 #: ConfirmDispatch_Invoice.php:160 ConfirmDispatch_Invoice.php:974
-#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1365
-#: CounterSales.php:1379 Credit_Invoice.php:697 Credit_Invoice.php:718
+#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1366
+#: CounterSales.php:1380 Credit_Invoice.php:697 Credit_Invoice.php:718
 #: CustomerReceipt.php:542 CustomerReceipt.php:681 CustomerReceipt.php:709
 #: CustomerTransInquiry.php:91 DeliveryDetails.php:393 GLProfit_Loss.php:596
 #: GLTagProfit_Loss.php:511 Payments.php:334 PDFRemittanceAdvice.php:85
 #: PurchData.php:86 PurchData.php:104 PurchData.php:245
 #: RecurringSalesOrders.php:256 ReverseGRN.php:191 ReverseGRN.php:205
-#: ReverseGRN.php:374 SelectCreditItems.php:1408 SelectSalesOrder.php:189
+#: ReverseGRN.php:374 SelectCreditItems.php:1409 SelectSalesOrder.php:189
 #: SelectSalesOrder.php:353 StockCheck.php:223 StockCostUpdate.php:77
 #: StockCostUpdate.php:87 StockLocStatus.php:153 StockMovements.php:87
 #: StockQuantityByDate.php:95 StockReorderLevel.php:40 StockStatus.php:263
@@ -1149,7 +1149,7 @@ msgid "User ID"
 msgstr "KULLANICI ADI"
 
 #: AuditTrail.php:49 AuditTrail.php:62 ContractBOM.php:298
-#: CounterSales.php:2157 CounterSales.php:2160 CustomerTransInquiry.php:31
+#: CounterSales.php:2158 CounterSales.php:2161 CustomerTransInquiry.php:31
 #: DailySalesInquiry.php:48 DailySalesInquiry.php:50 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:167
 #: InventoryQuantities.php:193 InventoryQuantities.php:195 MRP.php:585
@@ -1159,8 +1159,8 @@ msgstr "KULLANICI ADI"
 #: ReorderLevel.php:181 ReorderLevel.php:183 ReorderLevel.php:213
 #: ReorderLevel.php:215 SalesGraph.php:97 SalesGraph.php:99 SalesGraph.php:119
 #: SalesGraph.php:121 SalesGraph.php:143 SalesGraph.php:145 SalesGraph.php:179
-#: SalesInquiry.php:1078 SalesInquiry.php:1141 SelectCreditItems.php:952
-#: SelectOrderItems.php:1609 SelectOrderItems.php:1612 SelectProduct.php:504
+#: SalesInquiry.php:1078 SalesInquiry.php:1141 SelectCreditItems.php:953
+#: SelectOrderItems.php:1610 SelectOrderItems.php:1613 SelectProduct.php:504
 #: SelectProduct.php:506 StockDispatch.php:298 StockDispatch.php:300
 #: StockLocStatus.php:69 StockLocStatus.php:71 StockLocStatus.php:89
 #: StockLocStatus.php:93 StockLocStatus.php:97 StockQuantityByDate.php:24
@@ -1640,7 +1640,7 @@ msgstr "REF."
 #: Payments.php:1046 PcAssignCashToTab.php:222 PcAssignCashToTab.php:345
 #: PcAuthorizeExpenses.php:90 PcClaimExpensesFromTab.php:212
 #: PcClaimExpensesFromTab.php:365 PcReportTab.php:172 PcReportTab.php:326
-#: PrintCheque.php:77 PrintCheque.php:91 SelectCreditItems.php:681
+#: PrintCheque.php:77 PrintCheque.php:91 SelectCreditItems.php:682
 #: SuppContractChgs.php:79 SuppContractChgs.php:163 SuppFixedAssetChgs.php:76
 #: SuppFixedAssetChgs.php:149 SupplierAllocations.php:457
 #: SupplierCredit.php:352 SupplierCredit.php:385 SupplierCredit.php:421
@@ -1841,8 +1841,8 @@ msgstr ""
 "kebir dergi yaratacaktır. Bu döviz kuru üzerinde banka hesabına para "
 "biriminin geçerli değerini yansıtan önemli olduğunu"
 
-#: BankReconciliation.php:354 CounterSales.php:821 Customers.php:1091
-#: SelectOrderItems.php:1409 Stocks.php:1204 WorkOrderCosting.php:540
+#: BankReconciliation.php:354 CounterSales.php:822 Customers.php:1091
+#: SelectOrderItems.php:1410 Stocks.php:1204 WorkOrderCosting.php:540
 #: WorkOrderEntry.php:569
 msgid "Are You Sure?"
 msgstr "EMIN MISINIZ?"
@@ -1909,8 +1909,8 @@ msgstr "Bölüm"
 #: BOMIndentedReverse.php:295 BOMInquiry.php:200 BOMs.php:532 BOMs.php:709
 #: ContractBOM.php:237 ContractBOM.php:349 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:94
-#: Contracts.php:961 Contracts.php:997 CounterSales.php:741
-#: CounterSales.php:2036 CounterSales.php:2221 CounterSales.php:2347
+#: Contracts.php:961 Contracts.php:997 CounterSales.php:742
+#: CounterSales.php:2037 CounterSales.php:2222 CounterSales.php:2348
 #: Credit_Invoice.php:273 DeliveryDetails.php:827 DeliveryDetails.php:897
 #: GoodsReceived.php:100 GoodsReceived.php:104 GoodsReceived.php:107
 #: InventoryPlanningPrefSupplier.php:78 InventoryQuantities.php:246
@@ -1925,12 +1925,12 @@ msgstr "Bölüm"
 #: ReorderLevel.php:268 ReverseGRN.php:387 ReverseGRN.php:388
 #: SalesAnalReptCols.php:16 SalesAnalReptCols.php:18 SalesGraph.php:188
 #: SalesGraph.php:269 SalesInquiry.php:980 SalesTopItemsInquiry.php:222
-#: SelectCreditItems.php:673 SelectCreditItems.php:1034
-#: SelectOrderItems.php:1333 SelectOrderItems.php:1491
-#: SelectOrderItems.php:1675 SelectOrderItems.php:1802 ShipmentCosting.php:149
+#: SelectCreditItems.php:674 SelectCreditItems.php:1035
+#: SelectOrderItems.php:1334 SelectOrderItems.php:1492
+#: SelectOrderItems.php:1676 SelectOrderItems.php:1803 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:617
-#: StockCounts.php:98 StockLocMovements.php:92 StockLocTransfer.php:276
+#: StockCounts.php:98 StockLocMovements.php:92 StockLocTransfer.php:277
 #: StockMovements.php:97 StockStatus.php:308 StockUsageGraph.php:12
 #: SuppCreditGRNs.php:267 SuppCreditGRNs.php:268 SupplierCredit.php:317
 #: SupplierTenders.php:265 SupplierTenders.php:493 WOSerialNos.php:256
@@ -2089,10 +2089,10 @@ msgid "Build"
 msgstr "Kurmak"
 
 #: BOMExtendedQty.php:331 BOMInquiry.php:114 BOMs.php:856
-#: CounterSales.php:2032 CounterSales.php:2217 PO_SelectOSPurchOrder.php:236
+#: CounterSales.php:2033 CounterSales.php:2218 PO_SelectOSPurchOrder.php:236
 #: PO_SelectPurchOrder.php:213 ReorderLevelLocation.php:70
 #: ReorderLevelLocation.php:71 SelectCompletedOrder.php:551
-#: SelectOrderItems.php:1487 SelectOrderItems.php:1671
+#: SelectOrderItems.php:1488 SelectOrderItems.php:1672
 #: SelectSalesOrder.php:582 SelectWorkOrder.php:193 Shipt_Select.php:191
 #: TopItems.php:182 includes/PDFTopItemsHeader.inc:54
 msgid "On Hand"
@@ -2161,8 +2161,8 @@ msgstr "Bir Düzey"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:113
 #: BOMInquiry.php:199 BOMs.php:529 BOMs.php:855 ContractBOM.php:236
-#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2030
-#: CounterSales.php:2215 CreditStatus.php:152 CreditStatus.php:241
+#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2031
+#: CounterSales.php:2216 CreditStatus.php:152 CreditStatus.php:241
 #: EmailConfirmation.php:192 FixedAssetCategories.php:163
 #: FixedAssetDepreciation.php:86 FixedAssetRegister.php:83
 #: FixedAssetRegister.php:372 FixedAssetTransfer.php:50
@@ -2179,8 +2179,8 @@ msgstr "Bir Düzey"
 #: ReverseGRN.php:385 SalesCategories.php:422 SecurityTokens.php:94
 #: SecurityTokens.php:103 SecurityTokens.php:118 SelectAsset.php:243
 #: SelectCompletedOrder.php:550 SelectContract.php:153
-#: SelectCreditItems.php:988 SelectOrderItems.php:1485
-#: SelectOrderItems.php:1669 SelectProduct.php:516 SelectProduct.php:733
+#: SelectCreditItems.php:989 SelectOrderItems.php:1486
+#: SelectOrderItems.php:1670 SelectProduct.php:516 SelectProduct.php:733
 #: SelectSalesOrder.php:581 SelectWorkOrder.php:192 Shipt_Select.php:190
 #: StockCategories.php:216 StockDispatch.php:375 StockDispatch.php:382
 #: StockLocStatus.php:161 StockQuantityByDate.php:106 SuppCreditGRNs.php:82
@@ -2278,7 +2278,7 @@ msgid "description"
 msgstr "AÇIKLAMA"
 
 #: BOMInquiry.php:30 BOMs.php:839 ContractBOM.php:324 ContractBOM.php:329
-#: Contracts.php:756 Contracts.php:759 CounterSales.php:2182
+#: Contracts.php:756 Contracts.php:759 CounterSales.php:2183
 #: CustomerReceipt.php:1106 CustomerReceipt.php:1109
 #: DiscountCategories.php:104 DiscountCategories.php:106
 #: DiscountCategories.php:110 DiscountCategories.php:112
@@ -2286,10 +2286,10 @@ msgstr "AÇIKLAMA"
 #: MRPReport.php:542 PO_Header.php:538 PO_Items.php:1050 PO_Items.php:1054
 #: PO_SelectOSPurchOrder.php:217 PO_SelectPurchOrder.php:194 PurchData.php:268
 #: SelectAsset.php:94 SelectCompletedOrder.php:529 SelectCreditItems.php:222
-#: SelectCreditItems.php:971 SelectCustomer.php:269 SelectCustomer.php:279
+#: SelectCreditItems.php:972 SelectCustomer.php:269 SelectCustomer.php:279
 #: SelectCustomer.php:288 SelectCustomer.php:298 SelectCustomer.php:344
 #: SelectGLAccount.php:90 SelectOrderItems.php:587 SelectOrderItems.php:590
-#: SelectOrderItems.php:1637 SelectProduct.php:523 SelectSalesOrder.php:565
+#: SelectOrderItems.php:1638 SelectProduct.php:523 SelectSalesOrder.php:565
 #: SelectSupplier.php:209 SelectWorkOrder.php:179 Shipt_Select.php:173
 #: SuppFixedAssetChgs.php:122 SupplierTenders.php:359 WorkOrderEntry.php:606
 #: WorkOrderIssue.php:667
@@ -2318,11 +2318,11 @@ msgid "Stock Code"
 msgstr "STOK KODU"
 
 #: BOMInquiry.php:37 BOMs.php:844 ContractBOM.php:334 Contracts.php:764
-#: CounterSales.php:2186 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
+#: CounterSales.php:2187 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
 #: MRPDemands.php:338 MRPReport.php:554 PO_Header.php:545 PO_Items.php:1058
-#: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:978
+#: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:979
 #: SelectCustomer.php:369 SelectGLAccount.php:96 SelectOrderItems.php:595
-#: SelectOrderItems.php:1644 SelectProduct.php:531 SelectSupplier.php:219
+#: SelectOrderItems.php:1645 SelectProduct.php:531 SelectSupplier.php:219
 #: SelectSupplier.php:252 SupplierTenders.php:367 WorkOrderEntry.php:610
 #: WorkOrderIssue.php:672
 msgid "Search Now"
@@ -2353,15 +2353,15 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "ISLEM BASARISIZ!"
 
 #: BOMInquiry.php:112 BOMs.php:528 BOMs.php:854 ContractBOM.php:345
-#: CounterSales.php:2029 CounterSales.php:2214 CustomerBranches.php:367
+#: CounterSales.php:2030 CounterSales.php:2215 CustomerBranches.php:367
 #: CustomerReceipt.php:1127 GLCodesInquiry.php:26 MRPDemands.php:90
 #: MRPPlannedWorkOrders.php:256 MRPReport.php:746 PDFOrdersInvoiced.php:347
 #: PDFOrderStatus.php:318 PDFPrintLabel.php:247 PO_Header.php:555
 #: PO_Items.php:1070 PO_SelectOSPurchOrder.php:234 PO_SelectPurchOrder.php:211
 #: PricesByCost.php:151 PurchData.php:350 ReorderLevelLocation.php:66
-#: SalesPeople.php:199 SelectCompletedOrder.php:549 SelectCreditItems.php:987
-#: SelectCustomer.php:412 SelectGLAccount.php:103 SelectOrderItems.php:1484
-#: SelectOrderItems.php:1668 SelectProduct.php:732 SelectSalesOrder.php:580
+#: SalesPeople.php:199 SelectCompletedOrder.php:549 SelectCreditItems.php:988
+#: SelectCustomer.php:412 SelectGLAccount.php:103 SelectOrderItems.php:1485
+#: SelectOrderItems.php:1669 SelectProduct.php:732 SelectSalesOrder.php:580
 #: SelectSupplier.php:258 SelectWorkOrder.php:191 Shipt_Select.php:189
 #: SpecialOrder.php:142 SupplierTenders.php:489 SuppPriceList.php:289
 #: TopItems.php:177 WorkOrderEntry.php:622 WorkOrderIssue.php:691
@@ -2371,12 +2371,12 @@ msgid "Code"
 msgstr "KOD"
 
 #: BOMInquiry.php:115 BOMs.php:857 ConfirmDispatch_Invoice.php:280
-#: ContractBOM.php:347 CounterSales.php:2031 CounterSales.php:2216
+#: ContractBOM.php:347 CounterSales.php:2032 CounterSales.php:2217
 #: Credit_Invoice.php:272 GoodsReceived.php:101 GoodsReceived.php:105
 #: MRPReport.php:749 OffersReceived.php:106 PO_Items.php:1074
 #: PO_SelectOSPurchOrder.php:238 PO_SelectPurchOrder.php:215
-#: SelectCompletedOrder.php:554 SelectCreditItems.php:989
-#: SelectOrderItems.php:1486 SelectOrderItems.php:1670 SelectProduct.php:117
+#: SelectCompletedOrder.php:554 SelectCreditItems.php:990
+#: SelectOrderItems.php:1487 SelectOrderItems.php:1671 SelectProduct.php:117
 #: SelectProduct.php:735 SelectSalesOrder.php:583 SelectWorkOrder.php:194
 #: Shipments.php:402 Shipments.php:489 Shipt_Select.php:193
 #: StockLocTransferReceive.php:432 SupplierTenders.php:491 TopItems.php:180
@@ -2655,8 +2655,8 @@ msgstr "ISLEM BASARISIZ!"
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr "SQL KOMUTU:"
 
-#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1413
-#: Credit_Invoice.php:753 Credit_Invoice.php:781 SelectCreditItems.php:1453
+#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
+#: Credit_Invoice.php:753 Credit_Invoice.php:781 SelectCreditItems.php:1454
 #: Stocks.php:940 Stocks.php:942
 msgid "Assembly"
 msgstr "MONTAJ"
@@ -3049,7 +3049,7 @@ msgstr "STOK ISLEMLERI IÇIN MUHASEBE GIRISLERI YARATILSIN MI?"
 #: MRPCalendar.php:314 Payments.php:898 PcAuthorizeExpenses.php:288
 #: PO_AuthoriseMyOrders.php:138 PricesByCost.php:221 PurchData.php:522
 #: ReorderLevelLocation.php:148 SecurityTokens.php:97
-#: SelectCreditItems.php:923 SMTPServer.php:63 StockCostUpdate.php:184
+#: SelectCreditItems.php:924 SMTPServer.php:63 StockCostUpdate.php:184
 #: StockReorderLevel.php:103 Stocks.php:1198 SystemParameters.php:1032
 #: TaxAuthorityRates.php:83 WorkOrderEntry.php:566 WOSerialNos.php:332
 msgid "Update"
@@ -3105,7 +3105,7 @@ msgstr ""
 msgid "Back to Confirmation of Dispatch"
 msgstr "GÖNDERI ONAYINA GERI DÖN"
 
-#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1250
+#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1251
 #: DeliveryDetails.php:583 DeliveryDetails.php:788 EmailCustTrans.php:9
 #: PaymentAllocations.php:31 SelectSalesOrder.php:830 SelectSalesOrder.php:901
 #: SelectSalesOrder.php:928 Z_SalesIntegrityCheck.php:46
@@ -3218,16 +3218,16 @@ msgid "Invoice amounts stated in"
 msgstr "FATURA TUTARLARI"
 
 #: ConfirmDispatch_Invoice.php:277 ContractBOM.php:235 ContractCosting.php:79
-#: ContractCosting.php:85 Contracts.php:959 CounterSales.php:739
-#: CounterSales.php:2346 Credit_Invoice.php:269 DeliveryDetails.php:825
+#: ContractCosting.php:85 Contracts.php:959 CounterSales.php:740
+#: CounterSales.php:2347 Credit_Invoice.php:269 DeliveryDetails.php:825
 #: GoodsReceived.php:98 OrderDetails.php:162 PO_Items.php:658
 #: PO_OrderDetails.php:146 PrintCustTrans.php:860 PrintCustTrans.php:949
 #: PrintCustTrans.php:998 PrintCustTransPortrait.php:907
 #: PrintCustTransPortrait.php:1005 PrintCustTransPortrait.php:1062
 #: RecurringSalesOrders.php:318 ReorderLevelLocation.php:199 ReprintGRN.php:81
-#: ReverseGRN.php:384 SalesGraph.php:181 SelectCreditItems.php:671
-#: SelectOrderItems.php:1331 StockCostUpdate.php:123 StockLocMovements.php:87
-#: StockLocTransfer.php:275 StockLocTransferReceive.php:427
+#: ReverseGRN.php:384 SalesGraph.php:181 SelectCreditItems.php:672
+#: SelectOrderItems.php:1332 StockCostUpdate.php:123 StockLocMovements.php:87
+#: StockLocTransfer.php:276 StockLocTransferReceive.php:427
 #: StockQuantityByDate.php:105 Stocks.php:729 Stocks.php:732 Stocks.php:787
 #: Stocks.php:794 SuppCreditGRNs.php:81 SuppCreditGRNs.php:175
 #: SuppInvGRNs.php:125 SuppInvGRNs.php:303 SupplierCredit.php:315
@@ -3243,14 +3243,14 @@ msgid "Item Code"
 msgstr "STOK KODU"
 
 #: ConfirmDispatch_Invoice.php:278 ContractCosting.php:80
-#: ContractCosting.php:86 Contracts.php:960 CounterSales.php:740
+#: ContractCosting.php:86 Contracts.php:960 CounterSales.php:741
 #: Credit_Invoice.php:270 DeliveryDetails.php:826 DeliveryDetails.php:896
 #: OrderDetails.php:163 PO_Items.php:733 PO_OrderDetails.php:147
 #: PrintCustTrans.php:861 PrintCustTrans.php:950 PrintCustTrans.php:999
 #: PrintCustTransPortrait.php:908 PrintCustTransPortrait.php:1006
 #: PrintCustTransPortrait.php:1063 RecurringSalesOrders.php:319
 #: ReprintGRN.php:82 SalesInquiry.php:821 SalesInquiry.php:839
-#: SalesInquiry.php:938 SelectCreditItems.php:672 SelectOrderItems.php:1332
+#: SalesInquiry.php:938 SelectCreditItems.php:673 SelectOrderItems.php:1333
 #: SpecialOrder.php:615 StockLocTransferReceive.php:428
 #: includes/PDFOrderPageHeader_generic.inc:92
 #: includes/PDFPickingListHeader.inc:73
@@ -3283,7 +3283,7 @@ msgstr "GÖNDERILDI"
 msgid "This Dispatch"
 msgstr "BU GÖNDERI"
 
-#: ConfirmDispatch_Invoice.php:283 CounterSales.php:744 Credit_Invoice.php:274
+#: ConfirmDispatch_Invoice.php:283 CounterSales.php:745 Credit_Invoice.php:274
 #: DeliveryDetails.php:829 DeliveryDetails.php:899 GoodsReceived.php:111
 #: OffersReceived.php:107 OffersReceived.php:215 OffersReceived.php:260
 #: OrderDetails.php:166 PDFOrdersInvoiced.php:391 PDFPriceList.php:365
@@ -3292,8 +3292,8 @@ msgstr "BU GÖNDERI"
 #: PrintCustTrans.php:864 PrintCustTrans.php:953 PrintCustTrans.php:1002
 #: PrintCustTransPortrait.php:911 PrintCustTransPortrait.php:1009
 #: PrintCustTransPortrait.php:1066 PurchData.php:165 PurchData.php:483
-#: RecurringSalesOrders.php:322 SelectCreditItems.php:675
-#: SelectOrderItems.php:1336 Shipments.php:405 StockLocMovements.php:94
+#: RecurringSalesOrders.php:322 SelectCreditItems.php:676
+#: SelectOrderItems.php:1337 Shipments.php:405 StockLocMovements.php:94
 #: StockMovements.php:99 StockStatus.php:309 SuppCreditGRNs.php:181
 #: SuppCreditGRNs.php:269 SuppCreditGRNs.php:270 SupplierTenders.php:267
 #: SupplierTenders.php:494 SuppPriceList.php:292
@@ -3304,13 +3304,13 @@ msgstr "BU GÖNDERI"
 msgid "Price"
 msgstr "FIYAT"
 
-#: ConfirmDispatch_Invoice.php:284 CounterSales.php:745 Credit_Invoice.php:275
+#: ConfirmDispatch_Invoice.php:284 CounterSales.php:746 Credit_Invoice.php:275
 #: CustomerReceipt.php:898 DeliveryDetails.php:830 OrderDetails.php:167
 #: PrintCustTrans.php:865 PrintCustTrans.php:954 PrintCustTrans.php:1003
 #: PrintCustTransPortrait.php:912 PrintCustTransPortrait.php:1010
 #: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:323
-#: SalesAnalReptCols.php:41 SalesAnalReptCols.php:43 SelectCreditItems.php:677
-#: SelectOrderItems.php:1339 StockLocMovements.php:95 StockMovements.php:100
+#: SalesAnalReptCols.php:41 SalesAnalReptCols.php:43 SelectCreditItems.php:678
+#: SelectOrderItems.php:1340 StockLocMovements.php:95 StockMovements.php:100
 #: StockStatus.php:310 includes/PDFQuotationPageHeader.inc:105
 #: includes/PDFQuotationPortraitPageHeader.inc:105
 #: includes/PDFTransPageHeader.inc:211
@@ -3318,7 +3318,7 @@ msgid "Discount"
 msgstr "ISKONTO"
 
 #: ConfirmDispatch_Invoice.php:285 ConfirmDispatch_Invoice.php:289
-#: CounterSales.php:749 CounterSales.php:836 Credit_Invoice.php:276
+#: CounterSales.php:750 CounterSales.php:837 Credit_Invoice.php:276
 #: Credit_Invoice.php:280 CustomerAllocations.php:331
 #: CustomerAllocations.php:364 CustomerInquiry.php:201 DeliveryDetails.php:831
 #: DeliveryDetails.php:900 GLBalanceSheet.php:183 GLBalanceSheet.php:192
@@ -3332,8 +3332,8 @@ msgstr "ISKONTO"
 #: PDFSuppTransListing.php:128 RecurringSalesOrders.php:324
 #: SalesByTypePeriodInquiry.php:373 SalesByTypePeriodInquiry.php:408
 #: SalesByTypePeriodInquiry.php:443 SalesByTypePeriodInquiry.php:478
-#: SalesByTypePeriodInquiry.php:539 SelectCreditItems.php:678
-#: SelectCreditItems.php:682 SelectOrderItems.php:1342
+#: SalesByTypePeriodInquiry.php:539 SelectCreditItems.php:679
+#: SelectCreditItems.php:683 SelectOrderItems.php:1343
 #: SuppContractChgs.php:107 SuppFixedAssetChgs.php:94
 #: SupplierAllocations.php:457 SupplierAllocations.php:569
 #: SupplierAllocations.php:644 SupplierCredit.php:406 SupplierInquiry.php:210
@@ -3347,12 +3347,12 @@ msgid "Total"
 msgstr "TOPLAM"
 
 #: ConfirmDispatch_Invoice.php:285 Credit_Invoice.php:276
-#: SelectCreditItems.php:678
+#: SelectCreditItems.php:679
 msgid "Excl Tax"
 msgstr "VERGI HARIÇ"
 
 #: ConfirmDispatch_Invoice.php:286 Credit_Invoice.php:277
-#: SelectCreditItems.php:679 SupplierInvoice.php:236 TaxGroups.php:285
+#: SelectCreditItems.php:680 SupplierInvoice.php:236 TaxGroups.php:285
 msgid "Tax Authority"
 msgstr "VERGI DAIRESI"
 
@@ -3360,16 +3360,16 @@ msgstr "VERGI DAIRESI"
 msgid "Tax %"
 msgstr "VERGI %"
 
-#: ConfirmDispatch_Invoice.php:288 CounterSales.php:748 Credit_Invoice.php:278
+#: ConfirmDispatch_Invoice.php:288 CounterSales.php:749 Credit_Invoice.php:278
 #: Credit_Invoice.php:279 PrintCustTrans.php:395 PrintCustTrans.php:1041
 #: PrintCustTransPortrait.php:455 PrintCustTransPortrait.php:1105
-#: SelectCreditItems.php:680 SelectCreditItems.php:681
+#: SelectCreditItems.php:681 SelectCreditItems.php:682
 #: includes/PDFTaxPageHeader.inc:40
 msgid "Tax"
 msgstr "VERGI"
 
-#: ConfirmDispatch_Invoice.php:289 CounterSales.php:749 Credit_Invoice.php:280
-#: SelectCreditItems.php:682
+#: ConfirmDispatch_Invoice.php:289 CounterSales.php:750 Credit_Invoice.php:280
+#: SelectCreditItems.php:683
 msgid "Incl Tax"
 msgstr "VERGI DAHIL"
 
@@ -3439,7 +3439,7 @@ msgstr "Bu sırada herhangi bir satır fatura için bir miktar var"
 msgid "No further processing has been done"
 msgstr "ISLEMIN DEVAMI YAPILMADI"
 
-#: ConfirmDispatch_Invoice.php:594 CounterSales.php:937
+#: ConfirmDispatch_Invoice.php:594 CounterSales.php:938
 msgid ""
 "Could not retrieve the quantity left at the location once this order is "
 "invoiced (for the purposes of checking that stock will not go negative "
@@ -3448,7 +3448,7 @@ msgstr ""
 "Bu sırada (negatif çünkü geçmeyeceği stok kontrol amaçları için) fatura bir "
 "kez yerde kalan miktar alınamadı"
 
-#: ConfirmDispatch_Invoice.php:599 CounterSales.php:942
+#: ConfirmDispatch_Invoice.php:599 CounterSales.php:943
 msgid ""
 "Invoicing the selected order would result in negative stock. The system "
 "parameters are set to prohibit negative stocks from occurring. This invoice "
@@ -3459,11 +3459,11 @@ msgstr ""
 "stok düzeltilinceye kadar bu fatura oluşturulamaz."
 
 #: ConfirmDispatch_Invoice.php:599 ConfirmDispatch_Invoice.php:622
-#: CounterSales.php:942 CounterSales.php:965 WorkOrderReceive.php:157
+#: CounterSales.php:943 CounterSales.php:966 WorkOrderReceive.php:157
 msgid "Negative Stock Prohibited"
 msgstr "Yasak Negatif Hazır"
 
-#: ConfirmDispatch_Invoice.php:618 CounterSales.php:961
+#: ConfirmDispatch_Invoice.php:618 CounterSales.php:962
 msgid ""
 "Could not retrieve the component quantity left at the location once the "
 "assembly item on this order is invoiced (for the purposes of checking that "
@@ -3472,7 +3472,7 @@ msgstr ""
 "(Negatif çünkü geçmeyeceği stok kontrol amaçları için) fatura ve bu sipariş "
 "üzerine montaj madde kez yerde sol bileşen miktarı alınamadı"
 
-#: ConfirmDispatch_Invoice.php:622 CounterSales.php:965
+#: ConfirmDispatch_Invoice.php:622 CounterSales.php:966
 msgid ""
 "Invoicing the selected order would result in negative stock for a component "
 "of an assembly item on the order. The system parameters are set to prohibit "
@@ -3596,12 +3596,12 @@ msgstr "KULLANILAN KOMUT:"
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1252 CounterSales.php:1292
-#: CounterSales.php:1308 CounterSales.php:1345 CounterSales.php:1364
-#: CounterSales.php:1378 CounterSales.php:1419 CounterSales.php:1429
-#: CounterSales.php:1511 CounterSales.php:1532 CounterSales.php:1694
-#: CounterSales.php:1716 CounterSales.php:1741 CounterSales.php:1762
-#: CounterSales.php:1788 CounterSales.php:1811 Credit_Invoice.php:191
+#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
+#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
+#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
+#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
+#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
+#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:191
 #: Credit_Invoice.php:538 Credit_Invoice.php:579 Credit_Invoice.php:596
 #: Credit_Invoice.php:612 Credit_Invoice.php:662 Credit_Invoice.php:675
 #: Credit_Invoice.php:787 Credit_Invoice.php:797 Credit_Invoice.php:872
@@ -3624,25 +3624,25 @@ msgstr "KULLANILAN KOMUT:"
 #: RecurringSalesOrdersProcess.php:692 ReverseGRN.php:55 ReverseGRN.php:128
 #: ReverseGRN.php:139 ReverseGRN.php:148 ReverseGRN.php:155 ReverseGRN.php:219
 #: ReverseGRN.php:248 ReverseGRN.php:306 ReverseGRN.php:328
-#: SelectCreditItems.php:1065 SelectCreditItems.php:1126
-#: SelectCreditItems.php:1143 SelectCreditItems.php:1211
-#: SelectCreditItems.php:1284 SelectCreditItems.php:1305
-#: SelectCreditItems.php:1322 SelectCreditItems.php:1341
-#: SelectCreditItems.php:1350 SelectCreditItems.php:1365
-#: SelectCreditItems.php:1386 SelectCreditItems.php:1460
-#: SelectCreditItems.php:1470 SelectCreditItems.php:1556
-#: SelectCreditItems.php:1574 SelectCreditItems.php:1590
-#: SelectCreditItems.php:1772 SelectCreditItems.php:1798
-#: SelectCreditItems.php:1821 SelectCreditItems.php:1852
-#: SelectCreditItems.php:1875 SelectCreditItems.php:1903
-#: SelectCreditItems.php:1923 SelectCreditItems.php:1944
+#: SelectCreditItems.php:1066 SelectCreditItems.php:1127
+#: SelectCreditItems.php:1144 SelectCreditItems.php:1212
+#: SelectCreditItems.php:1285 SelectCreditItems.php:1306
+#: SelectCreditItems.php:1323 SelectCreditItems.php:1342
+#: SelectCreditItems.php:1351 SelectCreditItems.php:1366
+#: SelectCreditItems.php:1387 SelectCreditItems.php:1461
+#: SelectCreditItems.php:1471 SelectCreditItems.php:1557
+#: SelectCreditItems.php:1575 SelectCreditItems.php:1591
+#: SelectCreditItems.php:1773 SelectCreditItems.php:1799
+#: SelectCreditItems.php:1822 SelectCreditItems.php:1853
+#: SelectCreditItems.php:1876 SelectCreditItems.php:1904
+#: SelectCreditItems.php:1924 SelectCreditItems.php:1945
 #: ShipmentCosting.php:249 ShipmentCosting.php:294 ShipmentCosting.php:314
 #: ShipmentCosting.php:328 ShipmentCosting.php:374 ShipmentCosting.php:397
 #: ShipmentCosting.php:432 ShipmentCosting.php:451 ShipmentCosting.php:465
 #: StockAdjustments.php:177 StockAdjustments.php:208 StockAdjustments.php:226
 #: StockAdjustments.php:242 StockAdjustments.php:255 StockAdjustments.php:283
-#: StockAdjustments.php:305 StockDispatch.php:179 StockLocTransfer.php:159
-#: StockLocTransfer.php:183 StockLocTransfer.php:187
+#: StockAdjustments.php:305 StockDispatch.php:179 StockLocTransfer.php:160
+#: StockLocTransfer.php:184 StockLocTransfer.php:188
 #: StockLocTransferReceive.php:102 StockLocTransferReceive.php:136
 #: StockLocTransferReceive.php:150 StockLocTransferReceive.php:169
 #: StockLocTransferReceive.php:214 StockLocTransferReceive.php:250
@@ -3707,12 +3707,12 @@ msgstr "KRITIK HATA!!"
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1252 CounterSales.php:1292
-#: CounterSales.php:1308 CounterSales.php:1345 CounterSales.php:1364
-#: CounterSales.php:1378 CounterSales.php:1419 CounterSales.php:1429
-#: CounterSales.php:1511 CounterSales.php:1532 CounterSales.php:1694
-#: CounterSales.php:1716 CounterSales.php:1741 CounterSales.php:1762
-#: CounterSales.php:1788 CounterSales.php:1811 Credit_Invoice.php:538
+#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
+#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
+#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
+#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
+#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
+#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:538
 #: Credit_Invoice.php:579 Credit_Invoice.php:596 Credit_Invoice.php:612
 #: Credit_Invoice.php:662 Credit_Invoice.php:675 Credit_Invoice.php:787
 #: Credit_Invoice.php:797 Credit_Invoice.php:872 Credit_Invoice.php:887
@@ -3735,18 +3735,18 @@ msgstr "KRITIK HATA!!"
 #: RecurringSalesOrdersProcess.php:692 ReverseGRN.php:55 ReverseGRN.php:128
 #: ReverseGRN.php:139 ReverseGRN.php:148 ReverseGRN.php:155 ReverseGRN.php:219
 #: ReverseGRN.php:248 ReverseGRN.php:306 ReverseGRN.php:328
-#: SelectCreditItems.php:1065 SelectCreditItems.php:1126
-#: SelectCreditItems.php:1143 SelectCreditItems.php:1211
-#: SelectCreditItems.php:1284 SelectCreditItems.php:1305
-#: SelectCreditItems.php:1322 SelectCreditItems.php:1341
-#: SelectCreditItems.php:1350 SelectCreditItems.php:1365
-#: SelectCreditItems.php:1386 SelectCreditItems.php:1460
-#: SelectCreditItems.php:1470 SelectCreditItems.php:1556
-#: SelectCreditItems.php:1574 SelectCreditItems.php:1590
-#: SelectCreditItems.php:1772 SelectCreditItems.php:1798
-#: SelectCreditItems.php:1821 SelectCreditItems.php:1852
-#: SelectCreditItems.php:1875 SelectCreditItems.php:1903
-#: SelectCreditItems.php:1923 SelectCreditItems.php:1944
+#: SelectCreditItems.php:1066 SelectCreditItems.php:1127
+#: SelectCreditItems.php:1144 SelectCreditItems.php:1212
+#: SelectCreditItems.php:1285 SelectCreditItems.php:1306
+#: SelectCreditItems.php:1323 SelectCreditItems.php:1342
+#: SelectCreditItems.php:1351 SelectCreditItems.php:1366
+#: SelectCreditItems.php:1387 SelectCreditItems.php:1461
+#: SelectCreditItems.php:1471 SelectCreditItems.php:1557
+#: SelectCreditItems.php:1575 SelectCreditItems.php:1591
+#: SelectCreditItems.php:1773 SelectCreditItems.php:1799
+#: SelectCreditItems.php:1822 SelectCreditItems.php:1853
+#: SelectCreditItems.php:1876 SelectCreditItems.php:1904
+#: SelectCreditItems.php:1924 SelectCreditItems.php:1945
 #: ShipmentCosting.php:249 ShipmentCosting.php:294 ShipmentCosting.php:314
 #: ShipmentCosting.php:328 ShipmentCosting.php:374 ShipmentCosting.php:397
 #: ShipmentCosting.php:432 ShipmentCosting.php:451 ShipmentCosting.php:465
@@ -3798,35 +3798,35 @@ msgstr "KRITIK HATA!!"
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
 msgstr "BU HATAYI BIR YERE NOT EDIN VE YARDIM ISTEYIN"
 
-#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1252
+#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1253
 #: RecurringSalesOrdersProcess.php:637
 msgid "The sales order header could not be updated with the invoice number"
 msgstr "Satış siparişi başlık fatura numarası ile güncellenen olamazdı"
 
-#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1253
+#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1254
 #: RecurringSalesOrdersProcess.php:638
 msgid "The following SQL to update the sales order was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1292
+#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1293
 #: RecurringSalesOrdersProcess.php:678
 msgid "The debtor transaction record could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1293
+#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1294
 #: RecurringSalesOrdersProcess.php:679
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1308
+#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1309
 #: Credit_Invoice.php:596 RecurringSalesOrdersProcess.php:692
-#: SelectCreditItems.php:1143
+#: SelectCreditItems.php:1144
 msgid "The debtor transaction taxes records could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1309
+#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1310
 #: Credit_Invoice.php:597 RecurringSalesOrdersProcess.php:693
-#: SelectCreditItems.php:1144
+#: SelectCreditItems.php:1145
 msgid ""
 "The following SQL to insert the debtor transaction taxes record was used"
 msgstr "KULLANILAN KOMUT:"
@@ -3858,49 +3858,49 @@ msgstr "KULLANILAN KOMUT:"
 msgid "Cannot retrieve the mbflag"
 msgstr "mbflag alınamıyor"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1329
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
 #: FixedAssetItems.php:627 SalesAnalReptCols.php:328 Stocks.php:1201
 #: Suppliers.php:965 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "UYARI"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1329
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
 msgid "Could not retrieve current location stock"
 msgstr "MEVCUT LOKASYONUN STOGUNU GÖSTERILEMIYOR:"
 
-#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1345
-#: Credit_Invoice.php:675 SelectCreditItems.php:1386
+#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1346
+#: Credit_Invoice.php:675 SelectCreditItems.php:1387
 msgid "Location stock record could not be updated because"
 msgstr "DEPO STOK KAYDI GÜNCELLENEMEDI:"
 
 #: ConfirmDispatch_Invoice.php:956 ContractCosting.php:331
-#: CounterSales.php:1346 Credit_Invoice.php:676 GoodsReceived.php:486
-#: ReverseGRN.php:220 SelectCreditItems.php:1387 StockTransfers.php:423
+#: CounterSales.php:1347 Credit_Invoice.php:676 GoodsReceived.php:486
+#: ReverseGRN.php:220 SelectCreditItems.php:1388 StockTransfers.php:423
 #: StockTransfers.php:432 WorkOrderIssue.php:161 WorkOrderReceive.php:321
 #: WorkOrderReceive.php:428
 msgid "The following SQL to update the location stock record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1364
-#: Credit_Invoice.php:696 SelectCreditItems.php:1407
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
+#: Credit_Invoice.php:696 SelectCreditItems.php:1408
 msgid "Could not retrieve assembly components from the database for"
 msgstr "veritabanı için gelen montaj parçaları alınamadı"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1364
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
 #: Credit_Invoice.php:696 EDIMessageFormat.php:43 EDISendInvoices.php:105
 #: FixedAssetCategories.php:90 FixedAssetCategories.php:109
 #: PricesBasedOnMarkUp.php:334 PricesBasedOnMarkUp.php:350
-#: SelectCreditItems.php:1407 SpecialOrder.php:494 StockCategories.php:23
+#: SelectCreditItems.php:1408 SpecialOrder.php:494 StockCategories.php:23
 #: StockCategories.php:84 StockCategories.php:155 Z_ReApplyCostToSA.php:62
 #: Z_ReApplyCostToSA.php:74
 msgid "because"
 msgstr "ÇÜNKÜ"
 
-#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1378
+#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1379
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr "ISLEM BASARISIZ! "
 
-#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1413
+#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
 #: CustomerInquiry.php:200 CustomerTransInquiry.php:105
 #: DeliveryDetails.php:593 DeliveryDetails.php:599 DeliveryDetails.php:606
 #: DeliveryDetails.php:792 MRPReport.php:412 PDFOrdersInvoiced.php:304
@@ -3912,13 +3912,13 @@ msgstr "ISLEM BASARISIZ! "
 msgid "Order"
 msgstr "SIPARIS"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1419
-#: Credit_Invoice.php:787 SelectCreditItems.php:1460
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: Credit_Invoice.php:787 SelectCreditItems.php:1461
 msgid "Stock movement records for the assembly components of"
 msgstr "montaj parçaları için Stok hareket kayıtları"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1419
-#: Credit_Invoice.php:787 SelectCreditItems.php:1460 ShipmentCosting.php:397
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: Credit_Invoice.php:787 SelectCreditItems.php:1461 ShipmentCosting.php:397
 #: SupplierAllocations.php:139 includes/PDFPaymentRun_PymtFooter.php:57
 #: includes/PDFPaymentRun_PymtFooter.php:88
 #: includes/PDFPaymentRun_PymtFooter.php:117
@@ -3928,65 +3928,65 @@ msgstr "montaj parçaları için Stok hareket kayıtları"
 msgid "could not be inserted because"
 msgstr "GIRILEMEDI:"
 
-#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1420
-#: Credit_Invoice.php:788 SelectCreditItems.php:1461
+#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1421
+#: Credit_Invoice.php:788 SelectCreditItems.php:1462
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
 "was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1429
-#: Credit_Invoice.php:797 SelectCreditItems.php:1470
+#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1430
+#: Credit_Invoice.php:797 SelectCreditItems.php:1471
 msgid ""
 "Location stock record could not be updated for an assembly component because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1430
+#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1431
 msgid ""
 "The following SQL to update the locations stock record for the component was "
 "used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1511
+#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1512
 #: Credit_Invoice.php:872 Credit_Invoice.php:970 Credit_Invoice.php:1008
 #: Credit_Invoice.php:1048 RecurringSalesOrdersProcess.php:361
-#: ReverseGRN.php:248 SelectCreditItems.php:1211 SelectCreditItems.php:1284
+#: ReverseGRN.php:248 SelectCreditItems.php:1212 SelectCreditItems.php:1285
 msgid "Stock movement records could not be inserted because"
 msgstr "STOK ISLEMI GIRILEMEDI:"
 
 #: ConfirmDispatch_Invoice.php:1121 ContractCosting.php:360
-#: CounterSales.php:1512 Credit_Invoice.php:873 Credit_Invoice.php:971
+#: CounterSales.php:1513 Credit_Invoice.php:873 Credit_Invoice.php:971
 #: Credit_Invoice.php:1009 GoodsReceived.php:517
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
-#: SelectCreditItems.php:1285 WorkOrderIssue.php:192 WorkOrderReceive.php:350
+#: SelectCreditItems.php:1286 WorkOrderIssue.php:192 WorkOrderReceive.php:350
 #: WorkOrderReceive.php:458
 msgid "The following SQL to insert the stock movement records was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1532
+#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1533
 #: RecurringSalesOrdersProcess.php:382
 msgid ""
 "Taxes and rates applicable to this invoice line item could not be inserted "
 "because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1533
+#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1534
 #: Credit_Invoice.php:1072 RecurringSalesOrdersProcess.php:383
-#: SelectCreditItems.php:1306
+#: SelectCreditItems.php:1307
 msgid ""
 "The following SQL to insert the stock movement tax detail records was used"
 msgstr "KULLANILAN KOMUT:"
 
 #: ConfirmDispatch_Invoice.php:1158 Credit_Invoice.php:902
-#: Credit_Invoice.php:912 SelectCreditItems.php:1350 StockAdjustments.php:208
+#: Credit_Invoice.php:912 SelectCreditItems.php:1351 StockAdjustments.php:208
 #: StockAdjustments.php:226 StockLocTransferReceive.php:136
 #: StockTransfers.php:265 StockTransfers.php:378
 msgid "The serial stock item record could not be updated because"
 msgstr "ISLEM BASARISIZ! SERILENMIS STOK ÜRÜNÜ GÜNCELLENEMEDI:"
 
 #: ConfirmDispatch_Invoice.php:1159 Credit_Invoice.php:903
-#: Credit_Invoice.php:913 SelectCreditItems.php:1351
-#: SelectCreditItems.php:1575 StockAdjustments.php:209
+#: Credit_Invoice.php:913 SelectCreditItems.php:1352
+#: SelectCreditItems.php:1576 StockAdjustments.php:209
 #: StockAdjustments.php:227 StockLocTransferReceive.php:137
 #: StockLocTransferReceive.php:151 StockLocTransferReceive.php:251
 #: StockLocTransferReceive.php:265 StockTransfers.php:266
@@ -3995,7 +3995,7 @@ msgid "The following SQL to update the serial stock item record was used"
 msgstr "KULLANILAN KOMUT:"
 
 #: ConfirmDispatch_Invoice.php:1173 Credit_Invoice.php:927
-#: GoodsReceived.php:580 SelectCreditItems.php:1365 StockAdjustments.php:242
+#: GoodsReceived.php:580 SelectCreditItems.php:1366 StockAdjustments.php:242
 #: StockLocTransferReceive.php:169 StockLocTransferReceive.php:281
 #: StockTransfers.php:301 StockTransfers.php:410 WorkOrderIssue.php:228
 #: WorkOrderIssue.php:283 WorkOrderReceive.php:509 WorkOrderReceive.php:580
@@ -4010,29 +4010,29 @@ msgstr "ISLEM BASARISIZ!"
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1611
+#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1612
 #: RecurringSalesOrdersProcess.php:421
 msgid "The count of existing Sales analysis records could not run because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1612
+#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1613
 #: Credit_Invoice.php:1101 RecurringSalesOrdersProcess.php:422
-#: SelectCreditItems.php:1629
+#: SelectCreditItems.php:1630
 msgid "SQL to count the no of sales analysis records"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1669
+#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1670
 #: RecurringSalesOrdersProcess.php:480
 msgid "Sales analysis record could not be added or updated because"
 msgstr "SATIS ANALIZ KAYDI EKLENEMEDI/GÜNCELLENEMEDI:"
 
-#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1670
+#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1671
 #: Credit_Invoice.php:1213 RecurringSalesOrdersProcess.php:481
-#: SelectCreditItems.php:1739
+#: SelectCreditItems.php:1740
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1694
+#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1695
 #: Credit_Invoice.php:1243
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
@@ -4042,17 +4042,17 @@ msgstr "ISLEM BASARISIZ!"
 #: ConfirmDispatch_Invoice.php:1416 ConfirmDispatch_Invoice.php:1438
 #: ConfirmDispatch_Invoice.php:1460 ConfirmDispatch_Invoice.php:1482
 #: ConfirmDispatch_Invoice.php:1573 ConfirmDispatch_Invoice.php:1595
-#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1695
-#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
-#: CounterSales.php:1812 Credit_Invoice.php:1244 Credit_Invoice.php:1284
+#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1696
+#: CounterSales.php:1718 CounterSales.php:1743 CounterSales.php:1764
+#: CounterSales.php:1813 Credit_Invoice.php:1244 Credit_Invoice.php:1284
 #: Credit_Invoice.php:1311 Credit_Invoice.php:1332 Credit_Invoice.php:1361
 #: Credit_Invoice.php:1387 Credit_Invoice.php:1413
 #: RecurringSalesOrdersProcess.php:509 RecurringSalesOrdersProcess.php:536
-#: RecurringSalesOrdersProcess.php:629 SelectCreditItems.php:1773
-#: SelectCreditItems.php:1799 SelectCreditItems.php:1822
-#: SelectCreditItems.php:1853 SelectCreditItems.php:1876
-#: SelectCreditItems.php:1904 SelectCreditItems.php:1924
-#: SelectCreditItems.php:1945 SupplierAllocations.php:216
+#: RecurringSalesOrdersProcess.php:629 SelectCreditItems.php:1774
+#: SelectCreditItems.php:1800 SelectCreditItems.php:1823
+#: SelectCreditItems.php:1854 SelectCreditItems.php:1877
+#: SelectCreditItems.php:1905 SelectCreditItems.php:1925
+#: SelectCreditItems.php:1946 SupplierAllocations.php:216
 #: SupplierAllocations.php:239 WorkOrderCosting.php:363
 #: WorkOrderCosting.php:384 WorkOrderCosting.php:403 WorkOrderCosting.php:440
 #: WorkOrderCosting.php:459 WorkOrderCosting.php:482 WorkOrderCosting.php:501
@@ -4061,17 +4061,17 @@ msgstr "ISLEM BASARISIZ!"
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1716
+#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1717
 msgid ""
 "The stock side of the cost of sales GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1741
+#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1742
 #: RecurringSalesOrdersProcess.php:508
 msgid "The sales GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1762
+#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1763
 #: RecurringSalesOrdersProcess.php:535
 msgid "The sales discount GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
@@ -4128,12 +4128,12 @@ msgstr "Sabit kıymet kaydı imha çünkü güncelledi olamazdı"
 msgid "The following SQL to update the fixed asset record was used"
 msgstr "Aşağıdaki SQL sabit kıymet kaydı kullanılan güncelleme"
 
-#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1788
+#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1789
 #: RecurringSalesOrdersProcess.php:602
 msgid "The total debtor GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1789
+#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1790
 #: RecurringSalesOrdersProcess.php:603
 msgid ""
 "The following SQL to insert the total debtors control GLTrans record was used"
@@ -4143,28 +4143,28 @@ msgstr "KULLANILAN KOMUT:"
 msgid "The freight GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1811
+#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1812
 #: Credit_Invoice.php:1412 RecurringSalesOrdersProcess.php:575
-#: SelectCreditItems.php:1944
+#: SelectCreditItems.php:1945
 msgid "The tax GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1979
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
 #: RecurringSalesOrdersProcess.php:698 Z_DeleteInvoice.php:146
 msgid "Invoice number"
 msgstr "FATURA NO"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1979
-#: RecurringSalesOrdersProcess.php:698 SelectCreditItems.php:1959
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
+#: RecurringSalesOrdersProcess.php:698 SelectCreditItems.php:1960
 msgid "processed"
 msgstr "ISLENDI"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: ContractBOM.php:293 CounterSales.php:1984 CounterSales.php:1986
+#: ContractBOM.php:293 CounterSales.php:1985 CounterSales.php:1987
 #: CustomerReceipt.php:547 DeliveryDetails.php:574 DeliveryDetails.php:578
 #: DeliveryDetails.php:781 DeliveryDetails.php:784 GLBalanceSheet.php:18
 #: GLProfit_Loss.php:22 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:519
-#: GLTags.php:51 GLTransInquiry.php:36 PDFStockLocTransfer.php:28
+#: GLTags.php:51 GLTransInquiry.php:36 PDFStockLocTransfer.php:27
 #: PO_OrderDetails.php:115 PO_PDFPurchOrder.php:367 PO_PDFPurchOrder.php:370
 #: PO_PDFPurchOrder.php:373 PO_SelectOSPurchOrder.php:495
 #: PO_SelectOSPurchOrder.php:517 PrintCustStatements.php:83
@@ -4175,16 +4175,16 @@ msgid "Print"
 msgstr "YAZDIR"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: CounterSales.php:1984 CounterSales.php:1986
+#: CounterSales.php:1985 CounterSales.php:1987
 msgid "Print this invoice"
 msgstr "BU FATURAYI YAZDIR"
 
-#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1984
+#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1985
 #: SystemParameters.php:455
 msgid "Landscape"
 msgstr "Peyzaj"
 
-#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1986
+#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1987
 #: SystemParameters.php:456
 msgid "Portrait"
 msgstr "Portre"
@@ -4241,7 +4241,7 @@ msgstr ""
 #: Contracts.php:94 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: EmailCustTrans.php:22 EmailCustTrans.php:26 GLAccountCSV.php:261
 #: PO_Header.php:245 POReport.php:1486 SalesAnalysis_UserDefined.php:46
-#: SelectOrderItems.php:1187 StockQties_csv.php:43 StockUsage.php:21
+#: SelectOrderItems.php:1188 StockQties_csv.php:43 StockUsage.php:21
 #: SupplierCredit.php:210 SupplierCredit.php:221 SupplierCredit.php:233
 #: SupplierCredit.php:243 SupplierCredit.php:253 SupplierInvoice.php:190
 #: SupplierInvoice.php:199 SupplierInvoice.php:207 SupplierInvoice.php:215
@@ -4253,7 +4253,7 @@ msgstr "TIKLAYIN"
 #: ContractBOM.php:39 ContractOtherReqts.php:43 Contracts.php:85
 #: Contracts.php:94 DeliveryDetails.php:259 DeliveryDetails.php:268
 #: PO_Header.php:245 SalesAnalysis_UserDefined.php:46
-#: SelectOrderItems.php:1187 StockUsage.php:21 SupplierCredit.php:210
+#: SelectOrderItems.php:1188 StockUsage.php:21 SupplierCredit.php:210
 #: SupplierCredit.php:221 SupplierCredit.php:233 SupplierCredit.php:243
 #: SupplierCredit.php:253 SupplierInvoice.php:190 SupplierInvoice.php:199
 #: SupplierInvoice.php:207 SupplierInvoice.php:215 SupplierInvoice.php:225
@@ -4301,7 +4301,7 @@ msgstr ""
 msgid "The item details could not be retrieved"
 msgstr "Öğe detayları alınamadı"
 
-#: ContractBOM.php:191 PO_Items.php:558 SelectCreditItems.php:623
+#: ContractBOM.php:191 PO_Items.php:558 SelectCreditItems.php:624
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "HATAYA YOL AÇAN KOMUT:"
 
@@ -4361,13 +4361,13 @@ msgid "Search For Stock Items"
 msgstr "ÜRÜN ARA"
 
 #: ContractBOM.php:319 PO_Items.php:1043 SelectCompletedOrder.php:524
-#: SelectCreditItems.php:968
+#: SelectCreditItems.php:969
 msgid "Enter text extracts in the description"
 msgstr "ARANACAK >> AÇIKLAMA"
 
-#: ContractBOM.php:324 CounterSales.php:2182 PO_Items.php:1050
-#: SelectCompletedOrder.php:529 SelectCreditItems.php:971
-#: SelectOrderItems.php:1637 SelectSalesOrder.php:565 SelectWorkOrder.php:179
+#: ContractBOM.php:324 CounterSales.php:2183 PO_Items.php:1050
+#: SelectCompletedOrder.php:529 SelectCreditItems.php:972
+#: SelectOrderItems.php:1638 SelectSalesOrder.php:565 SelectWorkOrder.php:179
 msgid "Enter extract of the Stock Code"
 msgstr ">> STOK KODU"
 
@@ -4380,10 +4380,10 @@ msgstr "Yeni Hazır Öğe oluşturma"
 msgid "Image"
 msgstr "FOTOGRAF"
 
-#: ContractBOM.php:368 CounterSales.php:2044 FixedAssetItems.php:485
+#: ContractBOM.php:368 CounterSales.php:2045 FixedAssetItems.php:485
 #: FixedAssetItems.php:489 PO_Items.php:1096 SalesCategories.php:249
-#: SelectCreditItems.php:1017 SelectOrderItems.php:1500
-#: SelectOrderItems.php:1678 Stocks.php:834 Stocks.php:838
+#: SelectCreditItems.php:1018 SelectOrderItems.php:1501
+#: SelectOrderItems.php:1679 Stocks.php:834 Stocks.php:838
 #: SupplierTenders.php:518 WorkOrderEntry.php:643 WorkOrderIssue.php:709
 #, php-format
 msgid "No Image"
@@ -4453,12 +4453,12 @@ msgid "Inventory Required"
 msgstr "Envanter Gerekli"
 
 #: ContractCosting.php:82 ContractCosting.php:88 Contracts.php:962
-#: CounterSales.php:743 DeliveryDetails.php:828 DeliveryDetails.php:898
+#: CounterSales.php:744 DeliveryDetails.php:828 DeliveryDetails.php:898
 #: OrderDetails.php:165 PO_Items.php:765 PrintCustTrans.php:863
 #: PrintCustTrans.php:952 PrintCustTrans.php:1001
 #: PrintCustTransPortrait.php:910 PrintCustTransPortrait.php:1008
 #: PrintCustTransPortrait.php:1065 RecurringSalesOrders.php:321
-#: SelectCreditItems.php:674 SelectOrderItems.php:1335
+#: SelectCreditItems.php:675 SelectOrderItems.php:1336
 #: includes/PDFTopItemsHeader.inc:52 includes/PO_PDFOrderPageHeader.inc:79
 msgid "Unit"
 msgstr "Birim"
@@ -4707,7 +4707,7 @@ msgstr "Bu olmazsa"
 
 #: Contracts.php:85 Contracts.php:93 Customers.php:265 DeliveryDetails.php:259
 #: DeliveryDetails.php:268 EmailCustTrans.php:22 PO_Header.php:244
-#: SelectOrderItems.php:1186 StockUsage.php:20 SupplierCredit.php:210
+#: SelectOrderItems.php:1187 StockUsage.php:20 SupplierCredit.php:210
 #: SupplierCredit.php:221 SupplierCredit.php:233 SupplierCredit.php:243
 #: SupplierCredit.php:253 SupplierInvoice.php:189 SupplierInvoice.php:198
 #: SupplierInvoice.php:206 SupplierInvoice.php:214 SupplierInvoice.php:224
@@ -5019,11 +5019,11 @@ msgid "The customer record selected"
 msgstr "Seçilen müşteri kaydı"
 
 #: Contracts.php:714 CounterSales.php:120 CounterSales.php:154
-#: CounterSales.php:2065 CounterSales.php:2246 DeliveryDetails.php:146
+#: CounterSales.php:2066 CounterSales.php:2247 DeliveryDetails.php:146
 #: PO_Header.php:407 PO_Header.php:478 SelectCreditItems.php:179
 #: SelectOrderItems.php:382 SelectOrderItems.php:429 SelectOrderItems.php:508
-#: SelectOrderItems.php:548 SelectOrderItems.php:1523
-#: SelectOrderItems.php:1704 SpecialOrder.php:61 SpecialOrder.php:85
+#: SelectOrderItems.php:548 SelectOrderItems.php:1524
+#: SelectOrderItems.php:1705 SpecialOrder.php:61 SpecialOrder.php:85
 #: StockCheck.php:221 StockLocStatus.php:183 StockLocStatus.php:206
 #: StockLocStatus.php:239 StockStatus.php:115 StockStatus.php:139
 #: StockStatus.php:159 StockStatus.php:179 StockStatus.php:196
@@ -5181,7 +5181,7 @@ msgstr "Yalnızca biçimi"
 msgid "Required Date"
 msgstr "Gerekli Tarihi"
 
-#: Contracts.php:898 CounterSales.php:856 DeliveryDetails.php:1043
+#: Contracts.php:898 CounterSales.php:857 DeliveryDetails.php:1043
 #: OrderDetails.php:73 RecurringSalesOrders.php:404
 msgid "Customer Reference"
 msgstr "MÜSTERI REF."
@@ -5380,12 +5380,12 @@ msgstr ""
 msgid "This sale has been cancelled as requested"
 msgstr "Bu satış olarak talep iptal edildi"
 
-#: CounterSales.php:215 CounterSales.php:1988
+#: CounterSales.php:215 CounterSales.php:1989
 msgid "Start a new Counter Sale"
 msgstr "yeni bir Counter Satılık Başlat"
 
-#: CounterSales.php:222 CounterSales.php:1040 CounterSales.php:1836
-#: CounterSales.php:1855 CounterSales.php:1905 CounterSales.php:1940
+#: CounterSales.php:222 CounterSales.php:1041 CounterSales.php:1837
+#: CounterSales.php:1856 CounterSales.php:1906 CounterSales.php:1941
 msgid "Counter Sale"
 msgstr "Counter Satılık"
 
@@ -5432,14 +5432,14 @@ msgstr "Tarih girişi"
 msgid "must be in the format"
 msgstr "formatında olmalıdır"
 
-#: CounterSales.php:436 CounterSales.php:552 CounterSales.php:598
-#: CounterSales.php:650 SelectOrderItems.php:912 SelectOrderItems.php:1199
-#: SelectOrderItems.php:1248
+#: CounterSales.php:436 CounterSales.php:553 CounterSales.php:599
+#: CounterSales.php:651 SelectOrderItems.php:912 SelectOrderItems.php:1200
+#: SelectOrderItems.php:1249
 msgid ""
 "Could not determine if the part being ordered was a kitset or not because"
 msgstr "SIPARIS EDILEN PARÇANIN KIT-SETI OLUP OLMADIGI BELIRLENEMEDI:"
 
-#: CounterSales.php:437 CounterSales.php:553 SelectOrderItems.php:913
+#: CounterSales.php:437 CounterSales.php:554 SelectOrderItems.php:913
 msgid ""
 "The sql that was used to determine if the part being ordered was a kitset or "
 "not was "
@@ -5452,9 +5452,9 @@ msgid ""
 "could not be retrieved from the database and has not been added to the order"
 msgstr "VERITABANINDAN ALINAMADI VE SIPARISE EKLENEMEDI"
 
-#: CounterSales.php:452 CounterSales.php:564 CounterSales.php:614
-#: CounterSales.php:666 SelectOrderItems.php:928 SelectOrderItems.php:1215
-#: SelectOrderItems.php:1264
+#: CounterSales.php:452 CounterSales.php:565 CounterSales.php:615
+#: CounterSales.php:667 SelectOrderItems.php:928 SelectOrderItems.php:1216
+#: SelectOrderItems.php:1265
 msgid "Could not retrieve kitset components from the database because"
 msgstr "KIT-SETI KOMPONENTLERI VERITABANINDAN ALINAMADI:"
 
@@ -5492,29 +5492,29 @@ msgstr ""
 "ÜRÜN GÜNCELLENEMIYOR, OLASILIKLAR: 1)SIPARIS MIKTARI 0'DAN KÜÇÜK, 2)FIYAT "
 "0'DAN KÜÇÜK, 3)ISKONTO ORANI %0'DAN KÜÇÜK veya %100'DEN BÜYÜK"
 
-#: CounterSales.php:742 InventoryPlanningPrefSupplier.php:90
-#: SelectOrderItems.php:1334 StockDispatch.php:388 StockDispatch.php:390
+#: CounterSales.php:743 InventoryPlanningPrefSupplier.php:90
+#: SelectOrderItems.php:1335 StockDispatch.php:388 StockDispatch.php:390
 #: includes/PDFInventoryPlanPageHeader.inc:68
 #: includes/PDFStockCheckPageHeader.inc:38
 #: includes/PDFStockComparisonPageHeader.inc:34
 msgid "QOH"
 msgstr "QOH"
 
-#: CounterSales.php:746 PricesByCost.php:158 SelectOrderItems.php:1340
+#: CounterSales.php:747 PricesByCost.php:158 SelectOrderItems.php:1341
 msgid "GP %"
 msgstr "GP%"
 
-#: CounterSales.php:747 PrintCustTrans.php:866 PrintCustTrans.php:955
+#: CounterSales.php:748 PrintCustTrans.php:866 PrintCustTrans.php:955
 #: PrintCustTrans.php:1004 PrintCustTransPortrait.php:913
 #: PrintCustTransPortrait.php:1011 PrintCustTransPortrait.php:1068
 #: includes/PDFTaxPageHeader.inc:39
 msgid "Net"
 msgstr "NET"
 
-#: CounterSales.php:825 CustomerReceipt.php:874 CustomerReceipt.php:901
+#: CounterSales.php:826 CustomerReceipt.php:874 CustomerReceipt.php:901
 #: CustomerReceipt.php:1084 GLAccountInquiry.php:155 GLAccountReport.php:341
 #: GLJournal.php:364 GLJournal.php:388 Payments.php:1048
-#: SelectOrderItems.php:1413 SuppContractChgs.php:80 SuppContractChgs.php:167
+#: SelectOrderItems.php:1414 SuppContractChgs.php:80 SuppContractChgs.php:167
 #: SupplierCredit.php:420 SupplierCredit.php:459 SupplierInvoice.php:412
 #: SupplierInvoice.php:456 SupplierTransInquiry.php:172
 #: SuppTransGLAnalysis.php:107 SuppTransGLAnalysis.php:199
@@ -5522,19 +5522,19 @@ msgstr "NET"
 msgid "Narrative"
 msgstr "AÇIKLAMA"
 
-#: CounterSales.php:846
+#: CounterSales.php:847
 msgid "Picked Up By"
 msgstr "Tarafından Up Picked"
 
-#: CounterSales.php:850 DeliveryDetails.php:1036 RecurringSalesOrders.php:398
+#: CounterSales.php:851 DeliveryDetails.php:1036 RecurringSalesOrders.php:398
 msgid "Contact Phone Number"
 msgstr "IRTIBAT TELEFONU"
 
-#: CounterSales.php:854 DeliveryDetails.php:1040 RecurringSalesOrders.php:401
+#: CounterSales.php:855 DeliveryDetails.php:1040 RecurringSalesOrders.php:401
 msgid "Contact Email"
 msgstr "IRTIBAT EMAIL"
 
-#: CounterSales.php:861 CustomerInquiry.php:199 CustomerTransInquiry.php:104
+#: CounterSales.php:862 CustomerInquiry.php:199 CustomerTransInquiry.php:104
 #: DeliveryDetails.php:1047 OrderDetails.php:119 PO_Header.php:1114
 #: PO_OrderDetails.php:124 RecurringSalesOrders.php:408 SpecialOrder.php:602
 #: SupplierCredit.php:599 SupplierInquiry.php:213 SupplierInvoice.php:577
@@ -5544,31 +5544,31 @@ msgstr "IRTIBAT EMAIL"
 msgid "Comments"
 msgstr "YORUMLAR"
 
-#: CounterSales.php:870 SuppPaymentRun.php:350
+#: CounterSales.php:871 SuppPaymentRun.php:350
 msgid "Payment Type"
 msgstr "ÖDEME TÜRÜ"
 
-#: CounterSales.php:883
+#: CounterSales.php:884
 msgid "Banked to"
 msgstr "için banked"
 
-#: CounterSales.php:898
+#: CounterSales.php:899
 msgid "Amount Paid"
 msgstr "Ödenen miktar"
 
-#: CounterSales.php:902 SelectOrderItems.php:1448
+#: CounterSales.php:903 SelectOrderItems.php:1449
 msgid "Re-Calculate"
 msgstr "TEKRAR HESAPLA"
 
-#: CounterSales.php:903
+#: CounterSales.php:904
 msgid "Process The Sale"
 msgstr "Süreç Satılık"
 
-#: CounterSales.php:916
+#: CounterSales.php:917
 msgid "There are no lines on this sale. Please enter lines to invoice first"
 msgstr "Bu satışa hiç hattı bulunmaktadır. fatura ilk satırları girin"
 
-#: CounterSales.php:920
+#: CounterSales.php:921
 msgid ""
 "The amount entered as payment does not equal the amount of the invoice. "
 "Please ensure the customer has paid the correct amount and re-enter"
@@ -5576,7 +5576,7 @@ msgstr ""
 "Miktar fatura miktarı eşit değildir ödeme olarak girdi. Doğru miktar ödedi "
 "müşteri emin olun ve yeniden girmek"
 
-#: CounterSales.php:974
+#: CounterSales.php:975
 msgid ""
 "The parameter to prohibit negative stock is set and invoicing this sale "
 "would result in negative stock. No futher processing can be performed. Alter "
@@ -5587,41 +5587,41 @@ msgstr ""
 "olumsuz hazır olmasına neden olur. Daha fazla işlem yapılabilir. Satılık ilk "
 "değişen miktarlarda ya da yeterli stok yok silme çizgileri Alter."
 
-#: CounterSales.php:991
+#: CounterSales.php:992
 msgid ""
 "We were unable to load the area where the sale is to from the custbranch "
 "table"
 msgstr "Biz satış custbranch tablosundan için bölgede yük koyamadık"
 
-#: CounterSales.php:1002
+#: CounterSales.php:1003
 msgid ""
 "The company information and preferences could not be retrieved. See your "
 "system administrator"
 msgstr "Şirket bilgileri ve tercihler alınamadı. Sistem yöneticinize başvurun"
 
-#: CounterSales.php:1048 DeliveryDetails.php:378
+#: CounterSales.php:1049 DeliveryDetails.php:378
 #: RecurringSalesOrdersProcess.php:144
 msgid "The order cannot be added because"
 msgstr "BU SIPARIS EKLENEMEDI:"
 
-#: CounterSales.php:1064
+#: CounterSales.php:1065
 msgid "Trouble inserting a line of a sales order. The SQL that failed was"
 msgstr "Sorun bir satış siparişi bir satır ekler. oldu başarısız SQL"
 
-#: CounterSales.php:1080 DeliveryDetails.php:407
+#: CounterSales.php:1081 DeliveryDetails.php:407
 msgid "Unable to add the sales order line"
 msgstr "satış siparişi satır eklenemiyor"
 
-#: CounterSales.php:1150 DeliveryDetails.php:479 DeliveryDetails.php:666
+#: CounterSales.php:1151 DeliveryDetails.php:479 DeliveryDetails.php:666
 msgid "Unable to insert a new work order for the sales order item"
 msgstr ""
 "eklemek için satış sipariş öğesi için yeni bir çalışma düzeni kurulamıyor"
 
-#: CounterSales.php:1170 DeliveryDetails.php:499 DeliveryDetails.php:685
+#: CounterSales.php:1171 DeliveryDetails.php:499 DeliveryDetails.php:685
 msgid "In automatically creating a work order for"
 msgstr "otomatik olarak bir iş emri oluşturulurken"
 
-#: CounterSales.php:1170 DeliveryDetails.php:499 DeliveryDetails.php:685
+#: CounterSales.php:1171 DeliveryDetails.php:499 DeliveryDetails.php:685
 msgid ""
 "an item on this sales order, the cost of this item as accumulated from the "
 "sum of the component costs is nil. This could be because there is no bill of "
@@ -5631,32 +5631,32 @@ msgstr ""
 "toplamından birikmiş sıfırdır. kurmak malzeme hiçbir fatura olmadığından bu "
 "olabilir ... Bu onay çift isteyebilirsiniz"
 
-#: CounterSales.php:1184 DeliveryDetails.php:513 DeliveryDetails.php:706
+#: CounterSales.php:1185 DeliveryDetails.php:513 DeliveryDetails.php:706
 #: WorkOrderEntry.php:239
 msgid "The work order item could not be added"
 msgstr "Iş emri kalemi ilave edilemedi"
 
-#: CounterSales.php:1190 DeliveryDetails.php:519
+#: CounterSales.php:1191 DeliveryDetails.php:519
 msgid "A new work order has been created for"
 msgstr "Yeni bir çalışma düzeni için yaratıldı"
 
-#: CounterSales.php:1192 DeliveryDetails.php:521
+#: CounterSales.php:1193 DeliveryDetails.php:521
 msgid "These are for"
 msgstr "Bu içindir"
 
-#: CounterSales.php:1192 DeliveryDetails.php:521
+#: CounterSales.php:1193 DeliveryDetails.php:521
 msgid "there order ref"
 msgstr "orada sipariş ref"
 
-#: CounterSales.php:1192 DeliveryDetails.php:521
+#: CounterSales.php:1193 DeliveryDetails.php:521
 msgid "our order number"
 msgstr "Sipariş numarası"
 
-#: CounterSales.php:1196 DeliveryDetails.php:525
+#: CounterSales.php:1197 DeliveryDetails.php:525
 msgid "The following serial numbers have been reserved for this work order"
 msgstr "Aşağıdaki seri numaraları bu iş için tahsis edilmiştir"
 
-#: CounterSales.php:1205 DeliveryDetails.php:534
+#: CounterSales.php:1206 DeliveryDetails.php:534
 msgid ""
 "This automatically generated serial number already exists - it cannot be "
 "added to the work order"
@@ -5664,26 +5664,26 @@ msgstr ""
 "Bu otomatik olarak oluşturulan seri numarası zaten var - o iş emri için "
 "eklenemez"
 
-#: CounterSales.php:1213 DeliveryDetails.php:542
+#: CounterSales.php:1214 DeliveryDetails.php:542
 msgid "The serial number for the work order item could not be added"
 msgstr "iş emri öğe için seri numarası eklenemedi"
 
-#: CounterSales.php:1219 DeliveryDetails.php:548
+#: CounterSales.php:1220 DeliveryDetails.php:548
 msgid "Could not update the new next serial number for the item"
 msgstr "öğesi için yeni bir sonraki seri numarası güncelleme Couldn&#39;t"
 
-#: CounterSales.php:1224 DeliveryDetails.php:552
+#: CounterSales.php:1225 DeliveryDetails.php:552
 msgid "New Work Order Number"
 msgstr "Yeni İş Emri Numarası"
 
-#: CounterSales.php:1224 DeliveryDetails.php:552 EDIMessageFormat.php:127
+#: CounterSales.php:1225 DeliveryDetails.php:552 EDIMessageFormat.php:127
 #: EDIMessageFormat.php:205 Prices_Customer.php:37
 #: RecurringSalesOrdersProcess.php:88 ReverseGRN.php:336 SpecialOrder.php:116
 #: SpecialOrder.php:119
 msgid "for"
 msgstr "için"
 
-#: CounterSales.php:1233 DeliveryDetails.php:564 DeliveryDetails.php:776
+#: CounterSales.php:1234 DeliveryDetails.php:564 DeliveryDetails.php:776
 #: EmailConfirmation.php:169 FTP_RadioBeacon.php:185 FTP_RadioBeacon.php:288
 #: PO_AuthoriseMyOrders.php:58 PO_OrderDetails.php:27 POReport.php:490
 #: POReport.php:499 POReport.php:735 POReport.php:1264 POReport.php:1273
@@ -5697,78 +5697,78 @@ msgstr "için"
 msgid "Order Number"
 msgstr "SIPARIS NO"
 
-#: CounterSales.php:1233 DeliveryDetails.php:562 DeliveryDetails.php:564
+#: CounterSales.php:1234 DeliveryDetails.php:562 DeliveryDetails.php:564
 #: SpecialOrder.php:560
 msgid "has been entered"
 msgstr "GIRILDI"
 
-#: CounterSales.php:1838
+#: CounterSales.php:1839
 msgid ""
 "The SQL that failed to insert the GL transaction for the bank account debit "
 "was"
 msgstr "banka hesabınızdan tahsil için eklemek GL işlem başarısız SQL oldu"
 
-#: CounterSales.php:1839 CustomerReceipt.php:460
+#: CounterSales.php:1840 CustomerReceipt.php:460
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "banka hesabınızdan tahsil için GL işlem eklemek Can&#39;t"
 
-#: CounterSales.php:1857 CustomerReceipt.php:509
+#: CounterSales.php:1858 CustomerReceipt.php:509
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
 msgstr "borçlular hesabı kredi eklemek için GL işlem başarısız SQL oldu"
 
-#: CounterSales.php:1858 CustomerReceipt.php:510
+#: CounterSales.php:1859 CustomerReceipt.php:510
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr "eklemek borçlular için bir GL işlem Can&#39;t kredi hesabı"
 
-#: CounterSales.php:1913 CustomerReceipt.php:487
+#: CounterSales.php:1914 CustomerReceipt.php:487
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "SQL bu banka hesabına işlem olduğunu eklemek için başarısız"
 
-#: CounterSales.php:1914 CustomerReceipt.php:488
+#: CounterSales.php:1915 CustomerReceipt.php:488
 msgid "Cannot insert a bank transaction"
 msgstr "BANKA ISLEMI GIRILEMEDI"
 
-#: CounterSales.php:1942 CustomerReceipt.php:419
+#: CounterSales.php:1943 CustomerReceipt.php:419
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "SQL ki müşteri makbuz işlem olduğunu eklemek için başarısız"
 
-#: CounterSales.php:1943 CustomerReceipt.php:420
+#: CounterSales.php:1944 CustomerReceipt.php:420
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr "ISLEM BASARISIZ!"
 
-#: CounterSales.php:1952 CustomerReceipt.php:428
+#: CounterSales.php:1953 CustomerReceipt.php:428
 msgid "The SQL that failed to update the date of the last payment received was"
 msgstr "Alınan son ödeme tarihine güncelleme başarısız SQL oldu"
 
-#: CounterSales.php:1953 CustomerReceipt.php:429
+#: CounterSales.php:1954 CustomerReceipt.php:429
 msgid ""
 "Cannot update the customer record for the date of the last payment received "
 "because"
 msgstr "ISLEM BASARISIZ!"
 
-#: CounterSales.php:1966
+#: CounterSales.php:1967
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the invoice "
 "was"
 msgstr "faturaya eklemek için makbuz tahsisi başarısız SQL oldu"
 
-#: CounterSales.php:1967
+#: CounterSales.php:1968
 msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr "eklemek fatura çünkü alındığı müşteri tahsisi Can&#39;t"
 
-#: CounterSales.php:2005 SelectCreditItems.php:937 SelectOrderItems.php:1459
+#: CounterSales.php:2006 SelectCreditItems.php:938 SelectOrderItems.php:1460
 msgid "Yes Please"
 msgstr "EVET, LÜTFEN"
 
-#: CounterSales.php:2026 CounterSales.php:2027 SelectOrderItems.php:1480
-#: SelectOrderItems.php:1481 SystemParameters.php:405
+#: CounterSales.php:2027 CounterSales.php:2028 SelectOrderItems.php:1481
+#: SelectOrderItems.php:1482 SystemParameters.php:405
 msgid "Frequently Ordered Items"
 msgstr "Sık sık Öğeler Sıralı"
 
-#: CounterSales.php:2027 SelectOrderItems.php:1481
+#: CounterSales.php:2028 SelectOrderItems.php:1482
 msgid ""
 ", shows the most frequently ordered items in the last 6 months.  You can "
 "choose from this list, or search further for other items"
@@ -5776,43 +5776,43 @@ msgstr ""
 ", Son 6 ay içinde en sık sipariş öğeleri gösterir. Eğer bu listeden "
 "seçebilirsiniz veya diğer öğeler için daha fazla arama"
 
-#: CounterSales.php:2033 CounterSales.php:2218 SelectOrderItems.php:1488
-#: SelectOrderItems.php:1672
+#: CounterSales.php:2034 CounterSales.php:2219 SelectOrderItems.php:1489
+#: SelectOrderItems.php:1673
 msgid "On Demand"
 msgstr "On Demand"
 
-#: CounterSales.php:2034 CounterSales.php:2219 SelectOrderItems.php:1489
-#: SelectOrderItems.php:1673 StockLocStatus.php:166 StockStatus.php:90
+#: CounterSales.php:2035 CounterSales.php:2220 SelectOrderItems.php:1490
+#: SelectOrderItems.php:1674 StockLocStatus.php:166 StockStatus.php:90
 msgid "On Order"
 msgstr "SIPARISTE"
 
-#: CounterSales.php:2035 CounterSales.php:2220 SelectOrderItems.php:1490
-#: SelectOrderItems.php:1674 StockLocStatus.php:165 StockStatus.php:89
+#: CounterSales.php:2036 CounterSales.php:2221 SelectOrderItems.php:1491
+#: SelectOrderItems.php:1675 StockLocStatus.php:165 StockStatus.php:89
 #: includes/OutputSerialItems.php:37 includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
 msgstr "MEVCUT"
 
-#: CounterSales.php:2064 CounterSales.php:2246 SelectOrderItems.php:1522
-#: SelectOrderItems.php:1704 StockCheck.php:221 StockLocStatus.php:183
+#: CounterSales.php:2065 CounterSales.php:2247 SelectOrderItems.php:1523
+#: SelectOrderItems.php:1705 StockCheck.php:221 StockLocStatus.php:183
 #: StockLocStatus.php:206 StockStatus.php:115 StockStatus.php:139
 msgid "The demand for this product from"
 msgstr "BU ÜRÜNE TALEP:"
 
-#: CounterSales.php:2082 CounterSales.php:2096 CounterSales.php:2264
-#: CounterSales.php:2278 SelectOrderItems.php:1540 SelectOrderItems.php:1554
-#: SelectOrderItems.php:1724 SelectOrderItems.php:1738
+#: CounterSales.php:2083 CounterSales.php:2097 CounterSales.php:2265
+#: CounterSales.php:2279 SelectOrderItems.php:1541 SelectOrderItems.php:1555
+#: SelectOrderItems.php:1725 SelectOrderItems.php:1739
 msgid "The order details for this product cannot be retrieved because"
 msgstr "Bu ürün için sipariş ayrıntıları çünkü alınamaz"
 
-#: CounterSales.php:2145 CounterSales.php:2210 CounterSales.php:2333
+#: CounterSales.php:2146 CounterSales.php:2211 CounterSales.php:2334
 msgid "Add to Sale"
 msgstr "Satılık ekle"
 
-#: CounterSales.php:2152 CounterSales.php:2153
+#: CounterSales.php:2153 CounterSales.php:2154
 msgid "Search for Items"
 msgstr "Öğeler ara"
 
-#: CounterSales.php:2153 SelectOrderItems.php:1605
+#: CounterSales.php:2154 SelectOrderItems.php:1606
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -5821,55 +5821,55 @@ msgstr ""
 "sonuçları daraltabilirsiniz sadece kısmi bir öğe açıklama veya kısmi ürün "
 "kodu girin"
 
-#: CounterSales.php:2154 SelectOrderItems.php:1606
+#: CounterSales.php:2155 SelectOrderItems.php:1607
 msgid "Select a Stock Category"
 msgstr "Hisse Senedi Kategori Seçiniz"
 
-#: CounterSales.php:2179 SelectOrderItems.php:1630
+#: CounterSales.php:2180 SelectOrderItems.php:1631
 msgid "Enter partial Description"
 msgstr "kısmi Açıklama girin"
 
-#: CounterSales.php:2187 SelectOrderItems.php:1645
+#: CounterSales.php:2188 SelectOrderItems.php:1646
 msgid "Use Quick Entry"
 msgstr "HIZLI GIRISI KULLAN"
 
-#: CounterSales.php:2198 SelectOrderItems.php:1658
+#: CounterSales.php:2199 SelectOrderItems.php:1659
 msgid ""
 "Select an item by entering the quantity required.  Click Order when ready."
 msgstr "Gerekli miktar girerek bir öğe seçin. ne zaman hazır Sipariş tıklayın."
 
-#: CounterSales.php:2209 CounterSales.php:2332 SelectOrderItems.php:1664
-#: SelectOrderItems.php:1784
+#: CounterSales.php:2210 CounterSales.php:2333 SelectOrderItems.php:1665
+#: SelectOrderItems.php:1785
 msgid "Prev"
 msgstr "Önceki"
 
-#: CounterSales.php:2211 CounterSales.php:2334 MRPReport.php:738
+#: CounterSales.php:2212 CounterSales.php:2335 MRPReport.php:738
 #: SelectAsset.php:236 SelectCustomer.php:406 SelectCustomer.php:487
-#: SelectOrderItems.php:1666 SelectOrderItems.php:1786 SelectProduct.php:723
+#: SelectOrderItems.php:1667 SelectOrderItems.php:1787 SelectProduct.php:723
 #: SelectSupplier.php:249 SelectSupplier.php:311
 msgid "Next"
 msgstr "SONRAKI"
 
-#: CounterSales.php:2342
+#: CounterSales.php:2343
 msgid "Use this form to add items quickly if the item codes are already known"
 msgstr ""
 "madde kodları zaten bilinen eğer hızlı öğeler eklemek için bu formu kullanın"
 
-#: CounterSales.php:2367 SelectCreditItems.php:980 SelectCreditItems.php:1031
-#: SelectOrderItems.php:1794 SelectOrderItems.php:1820
+#: CounterSales.php:2368 SelectCreditItems.php:981 SelectCreditItems.php:1032
+#: SelectOrderItems.php:1795 SelectOrderItems.php:1821
 msgid "Quick Entry"
 msgstr "HIZLI GIRIS"
 
-#: CounterSales.php:2368 SelectCreditItems.php:1049 SelectOrderItems.php:1821
-#: SelectOrderItems.php:1841
+#: CounterSales.php:2369 SelectCreditItems.php:1050 SelectOrderItems.php:1822
+#: SelectOrderItems.php:1842
 msgid "Search Parts"
 msgstr "PARÇA ARA"
 
-#: CounterSales.php:2372
+#: CounterSales.php:2373
 msgid "Cancel Sale"
 msgstr "Iptal Satılık"
 
-#: CounterSales.php:2372
+#: CounterSales.php:2373
 msgid "Are you sure you wish to cancel this sale?"
 msgstr "Eğer bu satış iptal etmek istediğinizden emin misiniz?"
 
@@ -5990,11 +5990,11 @@ msgstr "FATURADAKI NAKLIYE MALIYETI"
 msgid "Credit Freight Cost"
 msgstr "NAKLIYE MALIYETI"
 
-#: Credit_Invoice.php:445 SelectCreditItems.php:829
+#: Credit_Invoice.php:445 SelectCreditItems.php:830
 msgid "Credit Totals"
 msgstr "TOPLAM"
 
-#: Credit_Invoice.php:457 SelectCreditItems.php:919
+#: Credit_Invoice.php:457 SelectCreditItems.php:920
 msgid ""
 "The GL code to write off the credit value to must be specified. Please "
 "select the appropriate GL code for the selection box"
@@ -6012,14 +6012,14 @@ msgstr "ISLEM BASARISIZ!"
 msgid "The following SQL to update the invoice allocation was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: Credit_Invoice.php:579 SelectCreditItems.php:1126
+#: Credit_Invoice.php:579 SelectCreditItems.php:1127
 msgid ""
 "The customer credit note transaction could not be added to the database "
 "because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:580 SelectCreditItems.php:1066
-#: SelectCreditItems.php:1127
+#: Credit_Invoice.php:580 SelectCreditItems.php:1067
+#: SelectCreditItems.php:1128
 msgid "The following SQL to insert the customer credit note was used"
 msgstr "KULLANILAN KOMUT:"
 
@@ -6079,24 +6079,24 @@ msgstr "Aşağıdaki SQL seri stok kalemi rekor kullanılan seçmek için"
 msgid "Written off ex Inv"
 msgstr "eski Inv kapalı yazıldı"
 
-#: Credit_Invoice.php:1049 SelectCreditItems.php:1212
+#: Credit_Invoice.php:1049 SelectCreditItems.php:1213
 msgid ""
 "The following SQL to insert the stock movement records for the purpose of "
 "display on the credit note was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: Credit_Invoice.php:1071 SelectCreditItems.php:1305
+#: Credit_Invoice.php:1071 SelectCreditItems.php:1306
 msgid ""
 "Taxes and rates applicable to this credit note line item could not be "
 "inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:1100 SelectCreditItems.php:1628
+#: Credit_Invoice.php:1100 SelectCreditItems.php:1629
 msgid ""
 "The count to check for existing Sales analysis records could not run because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:1212 SelectCreditItems.php:1738
+#: Credit_Invoice.php:1212 SelectCreditItems.php:1739
 msgid ""
 "The sales analysis record for this credit note could not be added because"
 msgstr "ISLEM BASARISIZ!"
@@ -6107,25 +6107,25 @@ msgid ""
 "inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:1310 SelectCreditItems.php:1852
+#: Credit_Invoice.php:1310 SelectCreditItems.php:1853
 msgid "The credit note GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:1331 SelectCreditItems.php:1875
+#: Credit_Invoice.php:1331 SelectCreditItems.php:1876
 msgid "The credit note discount GL posting could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:1360 SelectCreditItems.php:1903
+#: Credit_Invoice.php:1360 SelectCreditItems.php:1904
 msgid ""
 "The total debtor GL posting for the credit note could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:1386 SelectCreditItems.php:1923
+#: Credit_Invoice.php:1386 SelectCreditItems.php:1924
 msgid ""
 "The freight GL posting for this credit note could not be inserted because"
 msgstr "ISLEM BASARISIZ!"
 
-#: Credit_Invoice.php:1428 SelectCreditItems.php:1959
+#: Credit_Invoice.php:1428 SelectCreditItems.php:1960
 msgid "Credit Note number"
 msgstr "Kredi notu numarası"
 
@@ -6139,17 +6139,17 @@ msgstr "ISLENDI"
 msgid "Print this credit note"
 msgstr "Baskı bu kredi notu"
 
-#: Credit_Invoice.php:1442 SelectCreditItems.php:842
+#: Credit_Invoice.php:1442 SelectCreditItems.php:843
 msgid "Credit Note Type"
 msgstr "BELGE TIPI"
 
 #: Credit_Invoice.php:1446 Credit_Invoice.php:1451 Credit_Invoice.php:1455
-#: SelectCreditItems.php:846 SelectCreditItems.php:851
+#: SelectCreditItems.php:847 SelectCreditItems.php:852
 msgid "Goods returned to store"
 msgstr "MAGAZAYA DÖNMÜS MALLAR"
 
 #: Credit_Invoice.php:1447 Credit_Invoice.php:1450 Credit_Invoice.php:1454
-#: SelectCreditItems.php:847 SelectCreditItems.php:850
+#: SelectCreditItems.php:848 SelectCreditItems.php:851
 msgid "Goods written off"
 msgstr "Mal düşülen"
 
@@ -6161,7 +6161,7 @@ msgstr "abartma Ters"
 msgid "Goods returned to location"
 msgstr "DEPOYA GERI DÖNEN MALLAR"
 
-#: Credit_Invoice.php:1486 SelectCreditItems.php:887
+#: Credit_Invoice.php:1486 SelectCreditItems.php:888
 msgid "Write off the cost of the goods to"
 msgstr "malların maliyeti kapalı yaz"
 
@@ -6874,7 +6874,7 @@ msgstr "TAHSISLERI ISLE"
 #: PcAuthorizeExpenses.php:323 PcClaimExpensesFromTab.php:167
 #: PcClaimExpensesFromTab.php:385 PcExpenses.php:344 PcExpensesTypeTab.php:140
 #: PcExpensesTypeTab.php:228 PcTabs.php:466 PcTypeTabs.php:236
-#: SalesTypes.php:273 SelectCreditItems.php:924 Z_CheckDebtorsControl.php:69
+#: SalesTypes.php:273 SelectCreditItems.php:925 Z_CheckDebtorsControl.php:69
 msgid "Cancel"
 msgstr "VAZGEÇ"
 
@@ -8403,7 +8403,7 @@ msgstr ""
 #: SelectCompletedOrder.php:72 SelectCompletedOrder.php:77
 #: SelectCompletedOrder.php:83 SelectCompletedOrder.php:231
 #: SelectContract.php:29 SelectSalesOrder.php:407 SelectSalesOrder.php:411
-#: SelectWorkOrder.php:113 Shipt_Select.php:47 Stocks.php:1155
+#: SelectWorkOrder.php:113 Shipt_Select.php:47 Stocks.php:1155 Z_test.php:81
 #: includes/PDFBOMListingPageHeader.inc:21
 #: includes/PDFCustomerListPageHeader.inc:31
 #: includes/PDFCustomerListPageHeader.inc:53
@@ -8759,17 +8759,17 @@ msgid "Order Summary"
 msgstr "SIPARIS ÖZETI"
 
 #: DeliveryDetails.php:872 OrderDetails.php:210 RecurringSalesOrders.php:365
-#: SelectOrderItems.php:1431
+#: SelectOrderItems.php:1432
 msgid "TOTAL Excl Tax/Freight"
 msgstr "TOPLAM (NAKLIYE VE VERGI HARIÇ)"
 
 #: DeliveryDetails.php:882 DeliveryDetails.php:937 DeliveryDetails.php:947
-#: OrderDetails.php:218 SelectOrderItems.php:1438
+#: OrderDetails.php:218 SelectOrderItems.php:1439
 msgid "Total Weight"
 msgstr "TOPLAM AGIRLIK"
 
 #: DeliveryDetails.php:884 DeliveryDetails.php:939 DeliveryDetails.php:949
-#: OrderDetails.php:220 SelectOrderItems.php:1440
+#: OrderDetails.php:220 SelectOrderItems.php:1441
 msgid "Total Volume"
 msgstr "TOPLAM m3"
 
@@ -9748,8 +9748,8 @@ msgstr ""
 msgid "Delivered To"
 msgstr "SEVK YERI"
 
-#: EmailConfirmation.php:189 SelectOrderItems.php:1328
-#: SelectOrderItems.php:1799 SelectOrderItems.php:1829
+#: EmailConfirmation.php:189 SelectOrderItems.php:1329
+#: SelectOrderItems.php:1800 SelectOrderItems.php:1830
 msgid "PO Line"
 msgstr "PO Hattı"
 
@@ -9761,7 +9761,7 @@ msgstr "Miktar Sıralı"
 #: EmailConfirmation.php:194 MRPDemands.php:295 MRPDemands.php:394
 #: MRPPlannedPurchaseOrders.php:322 MRPPlannedWorkOrders.php:259
 #: MRPPlannedWorkOrders.php:379 MRPReport.php:414 MRPReport.php:420
-#: SelectOrderItems.php:1343 SelectOrderItems.php:1803
+#: SelectOrderItems.php:1344 SelectOrderItems.php:1804
 #: SupplierTransInquiry.php:106
 msgid "Due Date"
 msgstr "Bitiş Tarihi"
@@ -12917,7 +12917,7 @@ msgstr "Tedarikçi Fiyat Listesi"
 msgid "Bulk Inventory Transfer"
 msgstr "TOPLU STOK TRANSFERI"
 
-#: index.php:590 StockAdjustments.php:66 StockLocTransfer.php:214
+#: index.php:590 StockAdjustments.php:66 StockLocTransfer.php:215
 #: StockLocTransferReceive.php:411 StockLocTransferReceive.php:503
 #: StockTransfers.php:27 StockTransfers.php:447 StockUsage.php:28
 #: SuppCreditGRNs.php:19 SuppInvGRNs.php:16
@@ -14866,7 +14866,7 @@ msgstr ""
 "DENEYEBILIRSINIZ"
 
 #: MRPReport.php:724 SelectAsset.php:222 SelectCustomer.php:392
-#: SelectCustomer.php:473 SelectOrderItems.php:1380 SelectProduct.php:709
+#: SelectCustomer.php:473 SelectOrderItems.php:1381 SelectProduct.php:709
 #: SelectSupplier.php:235 SelectSupplier.php:297 StockLocTransfer.php:61
 #: SupplierTenders.php:146 SupplierTenders.php:204 WorkOrderIssue.php:352
 #: WorkOrderReceive.php:676 includes/Add_SerialItemsOut.php:23
@@ -17648,35 +17648,35 @@ msgstr "SISTEM STOK SEVIYESINI AYARLAMA (Nil)"
 msgid "Stock Location Transfer Docket Error"
 msgstr "Stok yeri Transfer Docket Hata"
 
-#: PDFStockLocTransfer.php:18
+#: PDFStockLocTransfer.php:17
 msgid "Reprint transfer docket"
 msgstr "Reprint transfer hulasa"
 
-#: PDFStockLocTransfer.php:23
+#: PDFStockLocTransfer.php:22
 msgid "Transfer docket to reprint"
 msgstr "reprint Transfer hulasa"
 
-#: PDFStockLocTransfer.php:33 PDFStockLocTransfer.php:34
+#: PDFStockLocTransfer.php:32 PDFStockLocTransfer.php:33
 msgid "Inventory Location Transfer BOL"
 msgstr "DEPO TRANSFERI (BOL)"
 
-#: PDFStockLocTransfer.php:39
+#: PDFStockLocTransfer.php:38
 msgid "An error occurred retrieving the items on the transfer"
 msgstr "Bir hata transfer öğeleri almak oluştu"
 
-#: PDFStockLocTransfer.php:39
+#: PDFStockLocTransfer.php:38
 msgid "This page must be called with a location transfer reference number"
 msgstr "BU SAYFA BIR DEPO TRANSFER REFERANS NO ILE ÇAGRILMALIDIR"
 
-#: PDFStockLocTransfer.php:40
+#: PDFStockLocTransfer.php:39
 msgid "The SQL that failed while retrieving the items on the transfer was"
 msgstr "oldu transfer öğeleri almak ise başarısız SQL"
 
-#: PDFStockLocTransfer.php:62
+#: PDFStockLocTransfer.php:61
 msgid "The transfer reference selected does not appear to be set up"
 msgstr "görünmüyor seçilen transfer referans kurulacak"
 
-#: PDFStockLocTransfer.php:62
+#: PDFStockLocTransfer.php:61
 msgid "enter the items to be transferred first"
 msgstr "ÖNCE TRANSFER EDILECEK ÜRÜNLERI GIRIN"
 
@@ -19066,7 +19066,7 @@ msgstr ""
 "alma siparişleri aramak için"
 
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:180
-#: SelectCompletedOrder.php:512 SelectCreditItems.php:950
+#: SelectCompletedOrder.php:512 SelectCreditItems.php:951
 #: SelectSalesOrder.php:552 SelectWorkOrder.php:167 Shipt_Select.php:157
 #: WorkOrderEntry.php:582 WorkOrderIssue.php:644
 msgid "Select a stock category"
@@ -19676,11 +19676,11 @@ msgstr "Satıcı No"
 msgid "Cheque No."
 msgstr "Çek No"
 
-#: PrintCheque.php:107
+#: PrintCheque.php:107 Z_test.php:19
 msgid "Number is out of the range of numbers that can be expressed in words"
 msgstr ""
 
-#: PrintCheque.php:108
+#: PrintCheque.php:108 Z_test.php:20
 #, fuzzy
 msgid "error"
 msgstr "MRP Raporu"
@@ -19690,142 +19690,142 @@ msgstr "MRP Raporu"
 msgid "million"
 msgstr "EMAIL GÖNDERILIYOR"
 
-#: PrintCheque.php:127
+#: PrintCheque.php:127 Z_test.php:39
 #, fuzzy
 msgid "thousand"
 msgstr "TAMAMLANMAMIS"
 
-#: PrintCheque.php:131
+#: PrintCheque.php:131 Z_test.php:43
 msgid "hundred"
 msgstr ""
 
-#: PrintCheque.php:135
+#: PrintCheque.php:135 Z_test.php:47
 #, fuzzy
 msgid "one"
 msgstr "Hiçbiri"
 
-#: PrintCheque.php:136
+#: PrintCheque.php:136 Z_test.php:48
 #, fuzzy
 msgid "two"
 msgstr "-"
 
-#: PrintCheque.php:137
+#: PrintCheque.php:137 Z_test.php:49
 #, fuzzy
 msgid "three"
 msgstr "SOKAK/CADDE"
 
-#: PrintCheque.php:138
+#: PrintCheque.php:138 Z_test.php:50
 #, fuzzy
 msgid "four"
 msgstr "için"
 
-#: PrintCheque.php:139
+#: PrintCheque.php:139 Z_test.php:51
 #, fuzzy
 msgid "five"
 msgstr "BASARISIZ"
 
-#: PrintCheque.php:140
+#: PrintCheque.php:140 Z_test.php:52
 msgid "six"
 msgstr ""
 
-#: PrintCheque.php:141
+#: PrintCheque.php:141 Z_test.php:53
 #, fuzzy
 msgid "seven"
 msgstr "Düzeyi"
 
-#: PrintCheque.php:142
+#: PrintCheque.php:142 Z_test.php:54
 #, fuzzy
 msgid "eight"
 msgstr "Yükseklik"
 
-#: PrintCheque.php:143
+#: PrintCheque.php:143 Z_test.php:55
 #, fuzzy
 msgid "nine"
 msgstr "Hiçbiri"
 
-#: PrintCheque.php:144
+#: PrintCheque.php:144 Z_test.php:56
 msgid "ten"
 msgstr ""
 
-#: PrintCheque.php:145
+#: PrintCheque.php:145 Z_test.php:57
 #, fuzzy
 msgid "eleven"
 msgstr "SIL"
 
-#: PrintCheque.php:146
+#: PrintCheque.php:146 Z_test.php:58
 msgid "twelve"
 msgstr ""
 
-#: PrintCheque.php:147
+#: PrintCheque.php:147 Z_test.php:59
 msgid "thirteen"
 msgstr ""
 
-#: PrintCheque.php:148
+#: PrintCheque.php:148 Z_test.php:60
 msgid "fourteen"
 msgstr ""
 
-#: PrintCheque.php:149
+#: PrintCheque.php:149 Z_test.php:61
 msgid "fifteen"
 msgstr ""
 
-#: PrintCheque.php:150
+#: PrintCheque.php:150 Z_test.php:62
 msgid "sixteen"
 msgstr ""
 
-#: PrintCheque.php:151
+#: PrintCheque.php:151 Z_test.php:63
 msgid "seventeen"
 msgstr ""
 
-#: PrintCheque.php:152
+#: PrintCheque.php:152 Z_test.php:64
 #, fuzzy
 msgid "eighteen"
 msgstr "Yükseklik"
 
-#: PrintCheque.php:153
+#: PrintCheque.php:153 Z_test.php:65
 msgid "nineteen"
 msgstr ""
 
-#: PrintCheque.php:157
+#: PrintCheque.php:157 Z_test.php:69
 #, fuzzy
 msgid "twenty"
 msgstr "GÖNDERILDI"
 
-#: PrintCheque.php:158
+#: PrintCheque.php:158 Z_test.php:70
 #, fuzzy
 msgid "thirty"
 msgstr "SEHIR"
 
-#: PrintCheque.php:159
+#: PrintCheque.php:159 Z_test.php:71
 #, fuzzy
 msgid "forty"
 msgstr "için"
 
-#: PrintCheque.php:160
+#: PrintCheque.php:160 Z_test.php:72
 #, fuzzy
 msgid "fifty"
 msgstr "SEHIR"
 
-#: PrintCheque.php:161
+#: PrintCheque.php:161 Z_test.php:73
 #, fuzzy
 msgid "sixty"
 msgstr "SEHIR"
 
-#: PrintCheque.php:162
+#: PrintCheque.php:162 Z_test.php:74
 #, fuzzy
 msgid "seventy"
 msgstr "STOK"
 
-#: PrintCheque.php:163
+#: PrintCheque.php:163 Z_test.php:75
 #, fuzzy
 msgid "eighty"
 msgstr "Yükseklik"
 
-#: PrintCheque.php:164
+#: PrintCheque.php:164 Z_test.php:76
 #, fuzzy
 msgid "ninety"
 msgstr "STOK"
 
-#: PrintCheque.php:184
+#: PrintCheque.php:184 Z_test.php:96
 #, fuzzy
 msgid "zero"
 msgstr "PERIYOD"
@@ -20780,8 +20780,8 @@ msgid ""
 "fulfilled because:"
 msgstr "sipariş çünkü yerine yerden yerin vergi il alınamadı:"
 
-#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:311
-#: includes/DefineCartClass.php:348 includes/DefineCartClass.php:399
+#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:312
+#: includes/DefineCartClass.php:349 includes/DefineCartClass.php:400
 #: includes/DefineSuppTransClass.php:72
 msgid "The taxes and rates for this item could not be retrieved because"
 msgstr "Vergiler ve oranları, bu madde nedeniyle alınamadı"
@@ -20885,7 +20885,7 @@ msgid "Inventory Reorder Level Report"
 msgstr "Envanter Reorder Düzeyi Raporu"
 
 #: ReorderLevel.php:175 SelectSalesOrder.php:496 StockDispatch.php:248
-#: StockLocMovements.php:18 StockLocStatus.php:32 StockLocTransfer.php:228
+#: StockLocMovements.php:18 StockLocStatus.php:32 StockLocTransfer.php:229
 #: StockMovements.php:34 StockTransfers.php:485 StockUsage.php:66
 msgid "From Stock Location"
 msgstr "[ GÖNDEREN DEPO ]"
@@ -22766,7 +22766,7 @@ msgid ""
 "note"
 msgstr "ve veritabanında yoksa bu nedenle kredi notu eklenemez"
 
-#: SelectCreditItems.php:601
+#: SelectCreditItems.php:602
 msgid ""
 "The item selected is already on this credit the system will not allow the "
 "same item on the credit note more than once. However you can change the "
@@ -22776,76 +22776,76 @@ msgstr ""
 "izin vermez zaten. Ancak gerekirse mevcut hattın kredi miktarı "
 "değiştirebilirsiniz."
 
-#: SelectCreditItems.php:622
+#: SelectCreditItems.php:623
 msgid "The item details could not be retrieved because"
 msgstr "ÜRÜN DETAYLARI GÖSTERILEMIYOR:"
 
-#: SelectCreditItems.php:676
+#: SelectCreditItems.php:677
 msgid "Gross"
 msgstr "BRÜT"
 
-#: SelectCreditItems.php:680
+#: SelectCreditItems.php:681
 msgid "Rate"
 msgstr "ORAN"
 
-#: SelectCreditItems.php:764
+#: SelectCreditItems.php:765
 msgid "Are you sure you wish to delete this line item from the credit note?"
 msgstr "BU SATIRI SILMEK ISTEDIGINIZE EMIN MISINIZ"
 
-#: SelectCreditItems.php:783
+#: SelectCreditItems.php:784
 msgid "Credit Freight"
 msgstr "NAKLIYE"
 
-#: SelectCreditItems.php:848 SelectCreditItems.php:852
+#: SelectCreditItems.php:849 SelectCreditItems.php:853
 msgid "Reverse an Overcharge"
 msgstr "Aşırı bir Ters"
 
-#: SelectCreditItems.php:854
+#: SelectCreditItems.php:855
 msgid "Reverse Overcharge Only"
 msgstr "Abartma Ters Sadece"
 
-#: SelectCreditItems.php:855
+#: SelectCreditItems.php:856
 msgid "Goods Returned To Store"
 msgstr "MAGAZAYA GERI DÖNMÜS ÜRÜNLER"
 
-#: SelectCreditItems.php:856
+#: SelectCreditItems.php:857
 msgid "Good written off"
 msgstr "Iyi düşülen"
 
-#: SelectCreditItems.php:866
+#: SelectCreditItems.php:867
 msgid "Goods Returned to Location"
 msgstr "ÜRÜNLERIN GERI DÖNDÜGÜ DEPO"
 
-#: SelectCreditItems.php:911
+#: SelectCreditItems.php:912
 msgid "Credit Note Text"
 msgstr "NOTLAR"
 
-#: SelectCreditItems.php:924
+#: SelectCreditItems.php:925
 msgid "Are you sure you wish to cancel the whole of this credit note?"
 msgstr "Eğer bu kredi notu tamamı iptal etmek istediğinizden emin misiniz?"
 
-#: SelectCreditItems.php:926
+#: SelectCreditItems.php:927
 msgid "Process Credit Note"
 msgstr "ISLE"
 
-#: SelectCreditItems.php:979 SelectOrderItems.php:1651
+#: SelectCreditItems.php:980 SelectOrderItems.php:1652
 msgid "Change Customer"
 msgstr "MÜSTERI DEGISTIR"
 
-#: SelectCreditItems.php:1033 SelectOrderItems.php:1801
+#: SelectCreditItems.php:1034 SelectOrderItems.php:1802
 #: Z_ImportPartCodes.php:29
 msgid "Part Code"
 msgstr "PARÇA KODU"
 
-#: SelectCreditItems.php:1048
+#: SelectCreditItems.php:1049
 msgid "Process Entries"
 msgstr "GIRISLERI ISLE"
 
-#: SelectCreditItems.php:1065
+#: SelectCreditItems.php:1066
 msgid "The area cannot be determined for this customer"
 msgstr "Alan bu müşteri için tespit edilemez"
 
-#: SelectCreditItems.php:1080
+#: SelectCreditItems.php:1081
 msgid ""
 "For credit notes created to write off the stock a general ledger account is "
 "required to be selected. Please select an account to write the cost of the "
@@ -22855,67 +22855,67 @@ msgstr ""
 "seçilmiş olması gereklidir. sonra yeniden Süreci tıklayın stok off maliyet "
 "yazmak için bir hesap seçiniz"
 
-#: SelectCreditItems.php:1322
+#: SelectCreditItems.php:1323
 msgid ""
 "The existence of the serial stock item record could not be determined because"
 msgstr "seri stok kalemi kaydının varlığı nedeniyle tespit edilemedi"
 
-#: SelectCreditItems.php:1323
+#: SelectCreditItems.php:1324
 msgid ""
 "The following SQL to find out if the serial stock item record existed "
 "already was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SelectCreditItems.php:1341
+#: SelectCreditItems.php:1342
 msgid "The new serial stock item record could not be inserted because"
 msgstr "YENI SERILENMIS ÜRÜN GIRILEMEDI:"
 
-#: SelectCreditItems.php:1342
+#: SelectCreditItems.php:1343
 msgid "The following SQL to insert the new serial stock item record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SelectCreditItems.php:1366
+#: SelectCreditItems.php:1367
 msgid "The following SQL to insert the serial stock movement record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SelectCreditItems.php:1471
+#: SelectCreditItems.php:1472
 msgid ""
 "The following SQL to update the component location stock record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SelectCreditItems.php:1556
+#: SelectCreditItems.php:1557
 msgid ""
 "Stock movement record to write the stock off could not be inserted because"
 msgstr "kapalı stok yazmak Stok hareket kaydından dolayı takılı olamazdı"
 
-#: SelectCreditItems.php:1557
+#: SelectCreditItems.php:1558
 msgid ""
 "The following SQL to insert the stock movement to write off the stock was "
 "used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SelectCreditItems.php:1574
+#: SelectCreditItems.php:1575
 msgid ""
 "The serial stock item record could not be updated for the write off because"
 msgstr "Seri stok kalemi kayıt çünkü hurdahaş için güncelleştirilmiş olamazdı"
 
-#: SelectCreditItems.php:1590
+#: SelectCreditItems.php:1591
 msgid ""
 "The serial stock movement record for the write off could not be inserted "
 "because"
 msgstr "hurdahaş için seri stok hareketleri kayıt çünkü takılı olamazdı"
 
-#: SelectCreditItems.php:1591
+#: SelectCreditItems.php:1592
 msgid ""
 "The following SQL to insert the serial stock movement write off record was "
 "used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SelectCreditItems.php:1772 SelectCreditItems.php:1798
+#: SelectCreditItems.php:1773 SelectCreditItems.php:1799
 msgid "The cost of the stock credited GL posting could not be inserted because"
 msgstr "stok maliyeti alacak GL çünkü takılı olamazdı gönderme"
 
-#: SelectCreditItems.php:1821
+#: SelectCreditItems.php:1822
 msgid ""
 "The stock side (or write off) of the cost of sales GL posting could not be "
 "inserted because"
@@ -22923,15 +22923,15 @@ msgstr ""
 "ilanıyla satış GL maliyetinin hisse senedi tarafında (ya da hurdahaş) çünkü "
 "takılı olamazdı"
 
-#: SelectCreditItems.php:1960
+#: SelectCreditItems.php:1961
 msgid "Show this Credit Note on screen"
 msgstr "ekranda bu Kredi Notu göster"
 
-#: SelectCreditItems.php:1962 SelectCreditItems.php:1964
+#: SelectCreditItems.php:1963 SelectCreditItems.php:1965
 msgid "Print this Credit Note"
 msgstr "Bu baskı Kredi Notu"
 
-#: SelectCreditItems.php:1966
+#: SelectCreditItems.php:1967
 msgid "Enter Another Credit Note"
 msgstr "Başka Kredi Notu girin"
 
@@ -23370,17 +23370,17 @@ msgid ""
 "This change would put the customer over their credit limit and is prohibited"
 msgstr ""
 
-#: SelectOrderItems.php:1186
+#: SelectOrderItems.php:1187
 msgid ""
 "You should automatically be forwarded to the entry of the delivery details "
 "page"
 msgstr "Otomatik teslimat bilgileri sayfanın girişine iletilmelidir"
 
-#: SelectOrderItems.php:1186
+#: SelectOrderItems.php:1187
 msgid "if this does not happen"
 msgstr "Bu olmaz ise"
 
-#: SelectOrderItems.php:1330
+#: SelectOrderItems.php:1331
 msgid ""
 "Quantity (required) - Enter the number of units ordered.  Price (required) - "
 "Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP"
@@ -23392,61 +23392,61 @@ msgstr ""
 "bağlı) - birim maliyet eklemek için bir yüzdesi Brüt Kar (GP) girin. Bitiş "
 "Tarihi (isteğe bağlı) - teslimat için bir tarih girin."
 
-#: SelectOrderItems.php:1380
+#: SelectOrderItems.php:1381
 #, fuzzy
 msgid "invoiced"
 msgstr "FATURA"
 
-#: SelectOrderItems.php:1396
+#: SelectOrderItems.php:1397
 msgid "Clear Remaining"
 msgstr "Net Kalan"
 
-#: SelectOrderItems.php:1449
+#: SelectOrderItems.php:1450
 msgid "Enter Delivery Details and Confirm Order"
 msgstr "SEVKIYAT DETAYLARINI GIR VE SIPARISI ONAYLA"
 
-#: SelectOrderItems.php:1599 SelectOrderItems.php:1665
-#: SelectOrderItems.php:1785
+#: SelectOrderItems.php:1600 SelectOrderItems.php:1666
+#: SelectOrderItems.php:1786
 msgid "Add to Sales Order"
 msgstr "Satış Siparişe Ekle"
 
-#: SelectOrderItems.php:1604 SelectOrderItems.php:1605
+#: SelectOrderItems.php:1605 SelectOrderItems.php:1606
 msgid "Search for Order Items"
 msgstr "Sipariş Öğeler ara"
 
-#: SelectOrderItems.php:1652
+#: SelectOrderItems.php:1653
 msgid "Fixed Asset Disposal"
 msgstr "Sabit Kıymet Bertaraf"
 
-#: SelectOrderItems.php:1794
+#: SelectOrderItems.php:1795
 msgid "Use this screen for the "
 msgstr "için bu ekranı kullanın "
 
-#: SelectOrderItems.php:1794
+#: SelectOrderItems.php:1795
 msgid " of products to be ordered"
 msgstr " ürün sipariş edilmelidir"
 
-#: SelectOrderItems.php:1825
+#: SelectOrderItems.php:1826
 msgid "Use this screen to select an asset to dispose of to this customer"
 msgstr "Bu müşteri için atılması bir varlık seçmek için bu ekranı kullanın"
 
-#: SelectOrderItems.php:1832
+#: SelectOrderItems.php:1833
 msgid "Asset to Dispose Of"
 msgstr "Varlık Of talimatlarına"
 
-#: SelectOrderItems.php:1835
+#: SelectOrderItems.php:1836
 msgid "Select Asset To Dispose of From the List Below"
 msgstr "Seçmek Varlık Listesi From Below imha etmek"
 
-#: SelectOrderItems.php:1840
+#: SelectOrderItems.php:1841
 msgid "Add Asset To Order"
 msgstr "Sipariş etmek için Varlık ekle"
 
-#: SelectOrderItems.php:1846
+#: SelectOrderItems.php:1847
 msgid "Cancel Whole Order"
 msgstr "SIPARISIN TÜMÜNÜ IPTAL ET"
 
-#: SelectOrderItems.php:1846
+#: SelectOrderItems.php:1847
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr "BU SIPARISIN TÜMÜNÜ IPTAL ETMEK ISTEDIGINIZE EMIN MISINIZ?"
 
@@ -25314,7 +25314,7 @@ msgstr "Görüntüleme Sayısı Giren"
 msgid "The quantity entered for line"
 msgstr "GIRILEN SATIRIN MIKTARI"
 
-#: StockCounts.php:51 StockLocTransfer.php:115 StockLocTransferReceive.php:34
+#: StockCounts.php:51 StockLocTransfer.php:116 StockLocTransferReceive.php:34
 msgid "is not numeric"
 msgstr "NÜMERIK DEGIL"
 
@@ -25403,7 +25403,7 @@ msgstr "Hazır Dispatch rapor SQL çünkü tarafından alınamadı"
 msgid "The stock dispatch did not have any items to list"
 msgstr "Stok listesi için bir ürün yoktu sevk"
 
-#: StockDispatch.php:179 StockLocTransfer.php:183
+#: StockDispatch.php:179 StockLocTransfer.php:184
 msgid "Unable to enter Location Transfer record for"
 msgstr "için yeri Transfer kayıt girilemedi"
 
@@ -25443,7 +25443,7 @@ msgstr ""
 msgid "Dispatch Percent"
 msgstr "Sevk Yüzde"
 
-#: StockDispatch.php:264 StockLocTransfer.php:248 StockTransfers.php:509
+#: StockDispatch.php:264 StockLocTransfer.php:249 StockTransfers.php:509
 msgid "To Stock Location"
 msgstr "ALICI DEPO"
 
@@ -25591,19 +25591,19 @@ msgid ""
 "quantity to transfer"
 msgstr ""
 
-#: StockLocTransfer.php:54 StockLocTransfer.php:109 StockLocTransfer.php:134
+#: StockLocTransfer.php:54 StockLocTransfer.php:110 StockLocTransfer.php:135
 msgid "The part code entered of"
 msgstr "GIRILEN PARÇA KODU:"
 
-#: StockLocTransfer.php:54 StockLocTransfer.php:109
+#: StockLocTransfer.php:54 StockLocTransfer.php:110
 msgid "is not set up in the database"
 msgstr "VERITABANINDA TANIMLI DEGIL."
 
-#: StockLocTransfer.php:54 StockLocTransfer.php:109
+#: StockLocTransfer.php:54 StockLocTransfer.php:110
 msgid "Only valid parts can be entered for transfers"
 msgstr "TRANSFER IÇIN SADECE GEÇERLI PARÇALAR GIRILEBILIR"
 
-#: StockLocTransfer.php:61 StockLocTransfer.php:120
+#: StockLocTransfer.php:61 StockLocTransfer.php:121
 #: StockLocTransferReceive.php:34 StockLocTransferReceive.php:38
 msgid "The quantity entered for"
 msgstr "GIRILEN MIKTAR:"
@@ -25613,7 +25613,7 @@ msgstr "GIRILEN MIKTAR:"
 msgid "is not numeric."
 msgstr "NÜMERIK DEGIL"
 
-#: StockLocTransfer.php:61 StockLocTransfer.php:115
+#: StockLocTransfer.php:61 StockLocTransfer.php:116
 msgid "The quantity entered for transfers is expected to be numeric"
 msgstr "TARASFER IÇIN GIRILEN MIKTAR NÜMERIK OLMALI"
 
@@ -25627,70 +25627,70 @@ msgstr "yeterli stok transferi için mevcut bulunmamaktadır."
 msgid "The quantity required to transfer was"
 msgstr "KULLANILAN KOMUT:"
 
-#: StockLocTransfer.php:115
+#: StockLocTransfer.php:116
 msgid "The quantity entered of"
 msgstr "GİRİLEN MIKTAR:"
 
-#: StockLocTransfer.php:115
+#: StockLocTransfer.php:116
 msgid "for part code"
 msgstr "PARÇA KODU:"
 
-#: StockLocTransfer.php:120
+#: StockLocTransfer.php:121
 msgid "is less than or equal to 0"
 msgstr "SIFIRDAN KÜÇÜK VEYA 0"
 
-#: StockLocTransfer.php:120
+#: StockLocTransfer.php:121
 msgid "Please correct this or remove the item"
 msgstr "LÜTFEN BUNU DÜZELTIN VEYA SILIN"
 
-#: StockLocTransfer.php:134
+#: StockLocTransfer.php:135
 msgid "does not have enough stock available for transfer."
 msgstr "yeterli stok transferi için mevcut bulunmamaktadır."
 
-#: StockLocTransfer.php:146
+#: StockLocTransfer.php:147
 msgid "You must enter at least 1 Stock Item to transfer"
 msgstr "TRANSFER YAPMAK IÇIN EN AZ 1 ÜRÜN GIRMELISINIZ"
 
-#: StockLocTransfer.php:152
+#: StockLocTransfer.php:153
 msgid ""
 "The transfer must have a different location to receive into and location "
 "sent from"
 msgstr "TRANSFER YAPMAK IÇIN IKI FARKLI DEPO SEÇMELISINIZ"
 
-#: StockLocTransfer.php:159
+#: StockLocTransfer.php:160
 msgid "Unable to BEGIN Location Transfer transaction"
 msgstr "DEPOLAR ARASI STOK TRANSFERI BASLATILAMIYOR"
 
-#: StockLocTransfer.php:187
+#: StockLocTransfer.php:188
 msgid "Unable to COMMIT Location Transfer transaction"
 msgstr "DEPO TRANSFERI ISLENEMEDI!"
 
-#: StockLocTransfer.php:190
+#: StockLocTransfer.php:191
 msgid "The inventory transfer records have been created successfully"
 msgstr "DEPO TRANSFER KAYITLARI BASARIYLA OLUSTURULDU"
 
-#: StockLocTransfer.php:191
+#: StockLocTransfer.php:192
 msgid "Print the Transfer Docket"
 msgstr "Baskı Transfer Docket"
 
-#: StockLocTransfer.php:221
+#: StockLocTransfer.php:222
 msgid "Inventory Location Transfer Shipment Reference"
 msgstr "DEPOLAR ARASI STOK TRANSFERI REF."
 
-#: StockLocTransfer.php:267
+#: StockLocTransfer.php:268
 msgid "Upload CSV file of Transfer Items and Quantites"
 msgstr ""
 
-#: StockLocTransfer.php:277
+#: StockLocTransfer.php:278
 #, fuzzy
 msgid "Clear All"
 msgstr "TEMIZLE"
 
-#: StockLocTransfer.php:329
+#: StockLocTransfer.php:330
 msgid "Add More Items"
 msgstr "DAHA FAZLA ÜRÜN EKLE"
 
-#: StockLocTransfer.php:330
+#: StockLocTransfer.php:331
 msgid "Create Transfer Shipment"
 msgstr "TRANSFER SEVKIYATI OLUSTUR"
 
@@ -30630,11 +30630,6 @@ msgstr "VERGI GRUBU INCELE/DÜZELT"
 msgid "Edit/Review Tax Categories"
 msgstr "VERGI KATEGORISI INCELE/DÜZELT"
 
-#: test.php:6
-#, fuzzy
-msgid "Test script"
-msgstr "VADE AÇIKLAMASI"
-
 #: TopItems.php:8
 msgid "Top Items Searching"
 msgstr "Üst Öğeleri Arama"
@@ -30876,71 +30871,71 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:136
+#: UpgradeDatabase.php:137
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:150
+#: UpgradeDatabase.php:151
 msgid "Applying"
 msgstr "Uygulayarak"
 
-#: UpgradeDatabase.php:178 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:179 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Başarı"
 
-#: UpgradeDatabase.php:181
+#: UpgradeDatabase.php:182
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:184 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:185 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tablo zaten yaratıldı"
 
-#: UpgradeDatabase.php:187
+#: UpgradeDatabase.php:188
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Sütun zaten yaratıldı"
 
-#: UpgradeDatabase.php:190 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:191 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Sütun zaten yaratıldı"
 
-#: UpgradeDatabase.php:193 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:194 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Endeks zaten var"
 
-#: UpgradeDatabase.php:196 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:197 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Girdisi zaten yapıldı"
 
-#: UpgradeDatabase.php:199
+#: UpgradeDatabase.php:200
 msgid "SQL syntax error. The SQL error message is"
 msgstr "SQL sözdizimi hatası. SQL hata mesajı"
 
-#: UpgradeDatabase.php:202 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:203 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "Birincil anahtar zaten var"
 
-#: UpgradeDatabase.php:205
+#: UpgradeDatabase.php:206
 msgid "Index already dropped previously"
 msgstr "Endeks zaten önceden düştü"
 
-#: UpgradeDatabase.php:208 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Başarısızlık"
 
-#: UpgradeDatabase.php:208 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Hata numarası"
@@ -34501,6 +34496,11 @@ msgstr "Vergi Giriş"
 msgid "Sales Integrity Check completed."
 msgstr "Satış Bütünlük kontrol tamamladı."
 
+#: Z_test.php:6
+#, fuzzy
+msgid "Test Script"
+msgstr "VADE AÇIKLAMASI"
+
 #: Z_UpdateChartDetailsBFwd.php:6
 msgid "Recalculation of Brought Forward Balances in Chart Details Table"
 msgstr "Getirdi İleri tekrar hesaplanması Grafik Detayları Tablo Teraziler"
@@ -34819,49 +34819,49 @@ msgstr "SIPARIS SATIRI:"
 msgid "could not be inserted"
 msgstr "GIRILEMEDI"
 
-#: includes/DefineCartClass.php:209
+#: includes/DefineCartClass.php:210
 msgid "The order line number"
 msgstr "SIPARIS SATIR NO"
 
-#: includes/DefineCartClass.php:209
+#: includes/DefineCartClass.php:210
 msgid "could not be updated"
 msgstr "GÜNCELLENEMEDI"
 
-#: includes/DefineCartClass.php:216
+#: includes/DefineCartClass.php:217
 msgid "No Line Number passed to remove_from_cart, so nothing has been removed."
 msgstr ""
 "Hiçbir Hat Numarası remove_from_cart geçti, bu yüzden hiçbir şey kaldırıldı."
 
-#: includes/DefineCartClass.php:227
+#: includes/DefineCartClass.php:228
 msgid "The order line could not be deleted because"
 msgstr "SIPARIS SATIRI SILINEMEDI"
 
-#: includes/DefineCartClass.php:229
+#: includes/DefineCartClass.php:230
 msgid "Deleted Line Number"
 msgstr "Silinmiş Hat Numarası"
 
-#: includes/DefineCartClass.php:229
+#: includes/DefineCartClass.php:230
 msgid "from existing Order Number"
 msgstr "Sipariş sayısı varolan"
 
-#: includes/DefineCartClass.php:237
+#: includes/DefineCartClass.php:238
 msgid "The order line could not be updated as completed because"
 msgstr "Sipariş hattı olarak çünkü tamamlanmış güncelledi olamazdı"
 
-#: includes/DefineCartClass.php:239
+#: includes/DefineCartClass.php:240
 msgid "Removed Remaining Quantity and set Line Number "
 msgstr "Kalan Miktar ve set Line Number Kaldırıldı "
 
-#: includes/DefineCartClass.php:239
+#: includes/DefineCartClass.php:240
 msgid "as Completed for existing Order Number"
 msgstr "olarak Sipariş Numarası mevcut için Tamamlandı"
 
-#: includes/DefineCartClass.php:352
+#: includes/DefineCartClass.php:353
 msgid ""
 "It appears that taxes are not defined correctly for this customer tax group"
 msgstr ""
 
-#: includes/DefineCartClass.php:380
+#: includes/DefineCartClass.php:381
 msgid "Cannot find tax category Freight which must always be defined"
 msgstr "daima tanımlanmış olmalıdır vergi kategori Navlun bulunamıyor"
 

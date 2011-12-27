@@ -535,7 +535,8 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 																'Yes', /*Update DB */
 																$_POST['ItemDue_' . $OrderLine->LineNumber],
 																$_POST['POLine_' . $OrderLine->LineNumber],
-																filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]));
+																filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]),
+																$identifier);
 			}
 		} //page not called from itself - POST variables not set
 	}

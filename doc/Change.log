@@ -1,6 +1,9 @@
 webERP Change Log
 
-27/12/11 Phil: PDFStockLocTransfer.php now has include('includes/session.inc') above the title.
+28/12/11 Release 4.06.4
+
+28/12/11 Phil: SelectCreditItems.php SelectOrderItems.php CounterSales.php includes/DefineCartClass.php fixes for ExistingOrder . $identifier
+27/12/11 Phil: PDFStockLocTransfer.php now has include('includes/session.inc') above the title. Fixes to allow manual entry.
 
 22/12/11 Release 4.06.3
 

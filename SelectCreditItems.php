@@ -574,7 +574,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																			'No', 
 																			$LineItem->ItemDue, 
 																			$LineItem->POLine, 
-																			0);
+																			0,
+																			$identifier);
 				}
 			}
 

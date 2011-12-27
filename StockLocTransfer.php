@@ -88,6 +88,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
        } //end if there is a CSV file to import
           else { // process the manually input lines
 			$ErrorMessage='';
+			
 			if (isset($_POST['ClearAll'])){
 				unset($_POST['EnterMoreItems']);
 				for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
@@ -96,7 +97,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				}
 			}
 			for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
-				if (isset($_POST['Delete' . $i])){
+				if (isset($_POST['Delete' . $i])){ //check box to delete the item is set
 					unset($_POST['StockID' . $i]);
 					unset($_POST['StockQTY' . $i]);
 				}
@@ -303,23 +304,23 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			$j++;
 		}
 	}else {
-		$i = 0;
+		$j = 0;
 	}
 	// $i is incremented an extra time, so 9 to get 10...
-	$z=($i + 9);
+	$z=($j + 9);
 
-	while($i < $z) {
-		if (!isset($_POST['StockID' . $i])) {
-			$_POST['StockID' . $i]='';
+	while($j < $z) {
+		if (!isset($_POST['StockID' . $j])) {
+			$_POST['StockID' . $j]='';
 		}
-		if (!isset($_POST['StockQTY' . $i])) {
-			$_POST['StockQTY' . $i]=0;
+		if (!isset($_POST['StockQTY' . $j])) {
+			$_POST['StockQTY' . $j]=0;
 		}
 		echo '<tr>
-			<td><input type="text" name="StockID' . $i .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
-			<td><input type="text" name="StockQTY' . $i .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i]) . '" /></td>
+			<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
+			<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
 		</tr>';
-		$i++;
+		$j++;
 	}
 
 	echo '</table>
