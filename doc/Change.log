@@ -1,5 +1,8 @@
 webERP Change Log
 
+
+29/12/11 Phil: includes/SelectOrderItems_intoCart.inc and includes/DefineCartClass.php fix line numbers for order lines
+
 28/12/11 Release 4.06.4
 
 28/12/11 Phil: SelectCreditItems.php SelectOrderItems.php CounterSales.php includes/DefineCartClass.php fixes for ExistingOrder . $identifier
