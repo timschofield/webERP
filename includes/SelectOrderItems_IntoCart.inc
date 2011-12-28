@@ -78,9 +78,9 @@ if ($AlreadyOnThisOrder!=1){
 
 		   	if ($_SESSION['ExistingOrder' . $identifier]!=0){
 				$UpdateDB = 'Yes';
-				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'",$db);
+				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM salesorderdetails WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'",$db);
 				$MaxNumRow = DB_fetch_row($result);
-				if ($MaxNumRow[0] != '' AND $MaxNumRow[0] > 0) {
+				if ($MaxNumRow[0] != '' AND $MaxNumRow[0] >= 0) {
 					$NewLineNo = $MaxNumRow[0]+1;
 				} else {
 					$NewLineNo = 0;
@@ -89,7 +89,7 @@ if ($AlreadyOnThisOrder!=1){
 				$UpdateDB = 'No';
 				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
 			}
-
+			
 			if (isset($StockItem) and $myItemRow['discountcategory'] != '' ){
 				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
 				$QuantityOfDiscCat =0;
@@ -115,8 +115,8 @@ if ($AlreadyOnThisOrder!=1){
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 			  	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
             }
-			if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  /*Check credit limits is 1 for warn
-											and 2 for prohibit sales */
+			if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  
+				/*Check credit limits is 1 for warn	and 2 for prohibit sales */
 				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
@@ -156,7 +156,8 @@ if ($AlreadyOnThisOrder!=1){
 															$myItemRow['standardcost'],
 															$myItemRow['eoq'],
 															$myItemRow['nextserialno'],
-															$ExRate);
+															$ExRate,
+															$identifier);
 
 			}
          } else {

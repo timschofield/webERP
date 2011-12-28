@@ -1008,7 +1008,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 	// *************************************************************************
 	//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-
+		$result = DB_Txn_Begin($db);
 	/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30, $db);
 
@@ -1086,7 +1086,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			 * 			and it is a real order (not just a quotation)*/
 
 			if ($StockItem->MBflag=='M'
-				and $_SESSION['AutoCreateWOs']==1){ //oh yeah its all on!
+				AND $_SESSION['AutoCreateWOs']==1){ //oh yeah its all on!
 
 				//now get the data required to test to see if we need to make a new WO
 				$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'",$db);
@@ -1229,8 +1229,6 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 			}//end if auto create WOs in on
 		} /* end inserted line items into sales order details */
 
-		$result = DB_Txn_Commit($db);
-
 		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
 
 	/* End of insertion of new sales order */
@@ -1240,10 +1238,6 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 
 		$InvoiceNo = GetNextTransNo(10, $db);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
-
-	/*Start an SQL transaction */
-
-		DB_Txn_Begin($db);
 
 		$DefaultDispatchDate = Date('Y-m-d');
 

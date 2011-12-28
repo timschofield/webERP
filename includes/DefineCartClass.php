@@ -60,6 +60,7 @@ Class Cart {
 	var $TaxTotals;
 	var $TaxGLCodes;
 	var $BuyerName;
+	var $SpecialInstructions;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
@@ -157,7 +158,7 @@ Class Cart {
 														discountpercent,
 														itemdue,
 														poline)
-													VALUES(" . $this->LineCounter . ",
+													VALUES(" . $LineNumber . ",
 														" . $_SESSION['ExistingOrder' . $identifier] . ",
 														'" . trim(mb_strtoupper($StockID)) ."',
 														" . $Qty . ",
