@@ -2806,7 +2806,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-12-28 10:47:33
+-- Dump completed on 2012-01-03 19:41:51
 -- MySQL dump 10.13  Distrib 5.1.47-MariaDB, for pc-linux-gnu (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -6205,12 +6205,12 @@ INSERT INTO `salesorderdetails` VALUES (0,7,'BREAD',0,6.9,3,0,0.1,'2010-05-31 00
 INSERT INTO `salesorderdetails` VALUES (0,8,'BREAD',0,6.9,4,0,0.0552,'2011-09-19 00:00:00',0,'','2010-05-31','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,9,'BREAD',0,6.9,198000,0,0.15,'2010-05-31 00:00:00',0,'','2010-05-31','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,10,'BREAD',0,12,2,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
-INSERT INTO `salesorderdetails` VALUES (0,11,'BREAD',0,5.9386337209302,5,0,0,'2011-09-12 00:00:00',0,'','2010-05-31','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,11,'BREAD',0,5.95,2,0,0,'2011-09-12 00:00:00',0,'','2011-12-29','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,12,'SALT',0,25,2,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
-INSERT INTO `salesorderdetails` VALUES (0,13,'SALT',0,25,2,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (0,13,'SALT',0,2.95,2,0,0,'2010-05-31 00:00:00',0,'','2011-12-29','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,15,'BREAD',0,5,1,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
-INSERT INTO `salesorderdetails` VALUES (0,16,'BREAD',0,5,1,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
-INSERT INTO `salesorderdetails` VALUES (0,17,'BREAD',0,5,1,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (0,16,'BREAD',0,4.43,1,0,0,'2010-05-31 00:00:00',0,'','2010-05-31','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,17,'BREAD',0,2.95,5,0,0,'2010-05-31 00:00:00',0,'','2010-05-31','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,22,'BIGEARS12',0,5369.2307692308,1,0,0,'0000-00-00 00:00:00',0,'','2010-10-15','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,23,'BIRTHDAYCAKECONSTRUC',0,2500,1,0,0,'0000-00-00 00:00:00',0,'','2010-08-15','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,25,'FROAYLANDO',0,41.603614285714,1,0,0,'0000-00-00 00:00:00',0,NULL,'2011-03-25','87755',0,0);
@@ -6223,11 +6223,17 @@ INSERT INTO `salesorderdetails` VALUES (0,33,'SLICE',0,0.12,5,0,0,'0000-00-00 00
 INSERT INTO `salesorderdetails` VALUES (0,34,'BREAD',2,1.95,2,0,0,'2011-11-12 00:00:00',1,'','2011-11-12',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (0,37,'DVD-UNSG',20,15.95,20,0,0,'2011-11-28 00:00:00',1,'','2011-11-26','',0,0);
 INSERT INTO `salesorderdetails` VALUES (0,38,'BREAD',0,6.5,3,0,0,'0000-00-00 00:00:00',0,'','2012-01-17','',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,39,'FLOUR',0,0,4,0,0,'0000-00-00 00:00:00',0,'','2011-12-29','0',0,0);
+INSERT INTO `salesorderdetails` VALUES (0,40,'BREAD',0,2.5,4,0,0,'0000-00-00 00:00:00',0,'','2011-12-29','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,6,'SALT',0,3.25,3,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,7,'SALT',0,3.25,3,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,8,'SALT',0,3.25,3.659,0,0.0225,'2011-09-19 00:00:00',0,'','2010-05-31','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,9,'SALT',0,2.99,1,0,0.015,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (1,11,'BREAD',0,0,2,0,0,'0000-00-00 00:00:00',0,NULL,'0000-00-00','0',0,0);
+INSERT INTO `salesorderdetails` VALUES (1,13,'BREAD',0,0,2,0,0,'0000-00-00 00:00:00',0,NULL,'0000-00-00','0',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,14,'BREAD',0,5.25,2,0,0,'2010-05-31 00:00:00',0,'','2010-05-31',NULL,0,0);
+INSERT INTO `salesorderdetails` VALUES (1,16,'SALT',0,6.98,0.35,0,0,'0000-00-00 00:00:00',0,'','2011-12-29','',0,0);
+INSERT INTO `salesorderdetails` VALUES (1,17,'BREAD',0,8.5,2,0,0,'0000-00-00 00:00:00',0,'','2011-12-29','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,26,'FLOUR',0,6.95,2,0,0,'2011-05-30 00:00:00',0,'test','2011-03-26','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,27,'BREAD',0,5,2,0,0,'0000-00-00 00:00:00',0,'','2011-04-12','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,29,'FUJI990101',0,0,1,0,0,'0000-00-00 00:00:00',0,'','2011-05-28','0',0,0);
@@ -6235,7 +6241,10 @@ INSERT INTO `salesorderdetails` VALUES (1,31,'SALT',0,2.65,1.23,0,0,'0000-00-00 
 INSERT INTO `salesorderdetails` VALUES (1,32,'SALT',0,5.65,1.335,0,0,'2011-09-19 00:00:00',0,'','2011-09-23','',0,0);
 INSERT INTO `salesorderdetails` VALUES (1,36,'BREAD',3,1000.57,3,0,0.0356,'2011-11-19 00:00:00',1,'','2011-11-19',NULL,0,0);
 INSERT INTO `salesorderdetails` VALUES (1,38,'SALT',0,8.45,0.443,0,0,'0000-00-00 00:00:00',0,'','2012-01-17','',0,0);
+INSERT INTO `salesorderdetails` VALUES (1,40,'FLOUR',0,8.97,1.5,0,0,'0000-00-00 00:00:00',0,'','2011-12-29','',0,0);
 INSERT INTO `salesorderdetails` VALUES (2,8,'DVD-TOPGUN',0,95.42,3,0,0,'2011-09-19 00:00:00',0,'','2011-09-17','',0,0);
+INSERT INTO `salesorderdetails` VALUES (2,13,'SALT',0,0,1,0,0,'0000-00-00 00:00:00',0,NULL,'0000-00-00','0',0,0);
+INSERT INTO `salesorderdetails` VALUES (3,13,'DVD-UNSG',0,9.5,1,0,0,'0000-00-00 00:00:00',0,'','2011-12-29','',0,0);
 
 --
 -- Dumping data for table `salesorders`
@@ -6246,7 +6255,7 @@ INSERT INTO `salesorders` VALUES (7,'ANGRY','ANGRY','',NULL,'Testing comments','
 INSERT INTO `salesorders` VALUES (8,'ANGRY','ANGRY','','Aaron Sharkie','Testing comments Invoice: 4 Inv 19','2010-05-31','DE',1,'Counter Sale','','','','','','0422 2245 2213','graville@angry.com','Sir Galahad Radeon',1,0,'MEL','2010-05-31','2011-09-19',1,'2011-04-12',0,'2011-09-19',0);
 INSERT INTO `salesorders` VALUES (9,'ANGRY','ANGRY','211547',NULL,' Invoice: 5','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','0422 2245 2213','graville@angry.com','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (10,'ANGRY','ANGRY','',NULL,' Invoice: 6','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',1,'2011-09-24',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRY','','',' Invoice: 7 Inv 17','2010-05-31','DE',1,'Counter Sale','','','','','','','','Ferdinand',1,0,'MEL','2010-05-31','2011-09-12',1,'2011-09-24',0,'2011-09-12',0);
+INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRY','','',' Invoice: 7 Inv 17','2010-05-31','DE',1,'Counter Sale','','','','','','','','Ferdinand',1,0,'MEL','2010-05-31','2011-12-29',1,'2011-09-24',0,'2011-12-29',0);
 INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','',NULL,'','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (13,'ANGRY','ANGRY','',NULL,' Invoice: 9','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (14,'ANGRY','ANGRY','',NULL,' Invoice: 10','2010-05-31','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2010-05-31','2010-05-31',0,'0000-00-00',0,'0000-00-00',0);
@@ -6268,6 +6277,8 @@ INSERT INTO `salesorders` VALUES (34,'ANGRY','ANGRY','',NULL,' Invoice: 1','2011
 INSERT INTO `salesorders` VALUES (36,'ANGRY','ANGRY','',NULL,' Invoice: 2','2011-11-19','DE',1,'Counter Sale','','',NULL,'','','','','',0,0,'MEL','2011-11-19','2011-11-19',0,'0000-00-00',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (37,'QUICK','QUIC','','',' Inv 3','2011-11-26','DE',1,'Fox Street','Jumped Over','The Lazy Dog','','','','','','Quick Brown PLC',1,0,'TOR','2011-11-28','2011-11-28',0,'0000-00-00',0,'2011-11-28',0);
 INSERT INTO `salesorders` VALUES (38,'JOLOMU','JOLOMU','',NULL,'','2011-12-28','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2011-12-28','2011-12-28',0,'0000-00-00',0,'2011-12-28',0);
+INSERT INTO `salesorders` VALUES (39,'QUICK','SLOW','',NULL,'','2011-12-29','DE',1,'Hunstman Road','Woofton','','','','','','','Slow Dog',1,0,'TOR','2011-12-29','2011-12-29',0,'0000-00-00',0,'2011-12-29',0);
+INSERT INTO `salesorders` VALUES (40,'QUARTER','QUARTER','',NULL,'','2011-12-29','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2011-12-29','2011-12-29',0,'0000-00-00',0,'2011-12-29',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -6880,12 +6891,12 @@ INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',37);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',6);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',11);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',38);
+INSERT INTO `systypes` VALUES (30,'Sales Order',40);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (32,'Contract Close',6);
 INSERT INTO `systypes` VALUES (35,'Cost Update',18);
 INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
-INSERT INTO `systypes` VALUES (40,'Work Order',21);
+INSERT INTO `systypes` VALUES (40,'Work Order',22);
 INSERT INTO `systypes` VALUES (41,'Asset Addition',1);
 INSERT INTO `systypes` VALUES (42,'Asset Category Change',1);
 INSERT INTO `systypes` VALUES (43,'Delete w/down asset',1);
@@ -6979,6 +6990,7 @@ INSERT INTO `woitems` VALUES (18,'BREAD',31.2,0,0.5625,'');
 INSERT INTO `woitems` VALUES (19,'BREAD',125,0,0.5625,'');
 INSERT INTO `woitems` VALUES (20,'BREAD',1453.95,0,0.5625,'');
 INSERT INTO `woitems` VALUES (21,'BREAD',196411.55,0,0.5625,'');
+INSERT INTO `woitems` VALUES (22,'BREAD',11,0,0.5625,'');
 
 --
 -- Dumping data for table `worequirements`
@@ -6992,6 +7004,8 @@ INSERT INTO `worequirements` VALUES (20,'BREAD','SALT',0.025,2.5,1);
 INSERT INTO `worequirements` VALUES (20,'BREAD','YEAST',0.1,5,0);
 INSERT INTO `worequirements` VALUES (21,'BREAD','SALT',0.025,2.5,1);
 INSERT INTO `worequirements` VALUES (21,'BREAD','YEAST',0.1,5,0);
+INSERT INTO `worequirements` VALUES (22,'BREAD','SALT',0.025,2.5,1);
+INSERT INTO `worequirements` VALUES (22,'BREAD','YEAST',0.1,5,0);
 
 --
 -- Dumping data for table `workcentres`
@@ -7008,6 +7022,7 @@ INSERT INTO `workorders` VALUES (18,'MEL','2011-11-12','2011-11-12',0,0);
 INSERT INTO `workorders` VALUES (19,'MEL','2011-12-03','2011-12-03',0,0);
 INSERT INTO `workorders` VALUES (20,'MEL','2011-12-04','2011-12-04',0,0);
 INSERT INTO `workorders` VALUES (21,'MEL','2011-12-28','2011-12-28',0,0);
+INSERT INTO `workorders` VALUES (22,'MEL','2011-12-29','2011-12-29',0,0);
 
 --
 -- Dumping data for table `woserialnos`
@@ -7018,7 +7033,7 @@ INSERT INTO `workorders` VALUES (21,'MEL','2011-12-28','2011-12-28',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-12-28 09:45:00','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_IN.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','phil@logicworks.co.nz','MEL',8,'2011-12-31 14:01:02','','A4','1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_IN.utf8',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -7026,5 +7041,5 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-12-28 10:47:33
+-- Dump completed on 2012-01-03 19:41:51
 SET FOREIGN_KEY_CHECKS = 1;

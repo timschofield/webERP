@@ -29,8 +29,8 @@
 	function xmlrpc_Login($xmlrpcmsg) {
 		ob_start('ob_file_callback');
 		$rtn = new xmlrpcresp(php_xmlrpc_encode(LoginAPI($xmlrpcmsg->getParam(0)->scalarval(),
-																										$xmlrpcmsg->getParam(1)->scalarval(),
-																										$xmlrpcmsg->getParam(2)->scalarval())));
+														$xmlrpcmsg->getParam(1)->scalarval(),
+														$xmlrpcmsg->getParam(2)->scalarval())));
 		ob_end_flush();
 		return  $rtn;
 	}
@@ -73,8 +73,8 @@
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-/*E*/	$InsertCustomer_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
-/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+/*E*/$InsertCustomer_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/						array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$InsertCustomer_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_InsertCustomer($xmlrpcmsg){
@@ -109,7 +109,7 @@
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-/*E*/	$InsertBranch_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*E*/$InsertBranch_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$InsertBranch_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
@@ -358,19 +358,17 @@
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-/*E*/	$GetCurrencyList_sig = array(array($xmlrpcStruct),
-/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+/*E*/$GetCurrencyList_sig = array(array($xmlrpcStruct),
+/*x*/						array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$GetCurrencyList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_GetCurrencyList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
-/*x*/		} else {
-/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList( '', '')));
-/*x*/		}
+/*x*/	if ($xmlrpcmsg->getNumParams() == 2)	{
+/*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/	} else {
+/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList( '', '')));
+/*x*/	}
 		ob_end_flush();
 		return $rtn;
 	}

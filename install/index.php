@@ -2,6 +2,12 @@
 /* $Id$*/
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
+
+if (file_exists('../config.php')) {
+	echo '<br />A configuration webERP installation already exists - the file config.php in the webERP installation has been created and must be removed before this utility can be re-run';
+	exit;
+}
+
 // Start a session
 if(!defined('SESSION_STARTED')) {
         session_name('ba_session_id');

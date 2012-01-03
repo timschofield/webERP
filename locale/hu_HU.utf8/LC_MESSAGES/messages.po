@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-28 10:45+1300\n"
+"POT-Creation-Date: 2012-01-03 19:41+1300\n"
 "PO-Revision-Date: 2011-06-04 08:54+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: HUNGARIAN <LL@li.org>\n"
@@ -198,8 +198,8 @@ msgstr "Számlaosztály nem hívható le mert"
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:13
 #: BOMExtendedQty.php:261 BOMIndented.php:246 BOMIndentedReverse.php:235
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:213 BOMs.php:832
-#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2026
-#: CounterSales.php:2152 Credit_Invoice.php:255 CreditStatus.php:21
+#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2020
+#: CounterSales.php:2146 Credit_Invoice.php:255 CreditStatus.php:21
 #: Currencies.php:28 CustEDISetup.php:17 DailyBankTransactions.php:11
 #: DebtorsAtPeriodEnd.php:125 DiscountCategories.php:10
 #: DiscountCategories.php:131 DiscountMatrix.php:16 EDIMessageFormat.php:104
@@ -685,10 +685,10 @@ msgid "Date"
 msgstr "Dátum"
 
 #: AddCustomerNotes.php:122 AddCustomerTypeNotes.php:109 PcReportTab.php:173
-#: Stocks.php:1019 UpgradeDatabase.php:182 UpgradeDatabase.php:185
-#: UpgradeDatabase.php:188 UpgradeDatabase.php:191 UpgradeDatabase.php:194
-#: UpgradeDatabase.php:197 UpgradeDatabase.php:200 UpgradeDatabase.php:203
-#: UpgradeDatabase.php:206 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1019 UpgradeDatabase.php:183 UpgradeDatabase.php:186
+#: UpgradeDatabase.php:189 UpgradeDatabase.php:192 UpgradeDatabase.php:195
+#: UpgradeDatabase.php:198 UpgradeDatabase.php:201 UpgradeDatabase.php:204
+#: UpgradeDatabase.php:207 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -874,8 +874,8 @@ msgstr "nem elérhető mert"
 
 #: AgedDebtors.php:373 AgedSuppliers.php:201 Areas.php:95
 #: ConfirmDispatch_Invoice.php:160 ConfirmDispatch_Invoice.php:974
-#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1366
-#: CounterSales.php:1380 Credit_Invoice.php:697 Credit_Invoice.php:718
+#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1360
+#: CounterSales.php:1374 Credit_Invoice.php:697 Credit_Invoice.php:718
 #: CustomerReceipt.php:542 CustomerReceipt.php:681 CustomerReceipt.php:709
 #: CustomerTransInquiry.php:91 DeliveryDetails.php:393 GLProfit_Loss.php:596
 #: GLTagProfit_Loss.php:511 Payments.php:334 PDFRemittanceAdvice.php:85
@@ -1141,7 +1141,7 @@ msgid "User ID"
 msgstr "Felhasználói azonosító"
 
 #: AuditTrail.php:49 AuditTrail.php:62 ContractBOM.php:298
-#: CounterSales.php:2158 CounterSales.php:2161 CustomerTransInquiry.php:31
+#: CounterSales.php:2152 CounterSales.php:2155 CustomerTransInquiry.php:31
 #: DailySalesInquiry.php:48 DailySalesInquiry.php:50 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:167
 #: InventoryQuantities.php:193 InventoryQuantities.php:195 MRP.php:585
@@ -1207,8 +1207,8 @@ msgstr "Típus"
 msgid "Table"
 msgstr "Engedélyezve"
 
-#: AuditTrail.php:167 api/api_xml-rpc.php:314 api/api_xml-rpc.php:729
-#: api/api_xml-rpc.php:1914
+#: AuditTrail.php:167 api/api_xml-rpc.php:314 api/api_xml-rpc.php:727
+#: api/api_xml-rpc.php:1912
 msgid "Field Name"
 msgstr "Körzet neve"
 
@@ -1903,7 +1903,7 @@ msgstr "itt"
 #: ContractBOM.php:237 ContractBOM.php:349 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:94
 #: Contracts.php:961 Contracts.php:997 CounterSales.php:742
-#: CounterSales.php:2037 CounterSales.php:2222 CounterSales.php:2348
+#: CounterSales.php:2031 CounterSales.php:2216 CounterSales.php:2342
 #: Credit_Invoice.php:273 DeliveryDetails.php:827 DeliveryDetails.php:897
 #: GoodsReceived.php:100 GoodsReceived.php:104 GoodsReceived.php:107
 #: InventoryPlanningPrefSupplier.php:78 InventoryQuantities.php:246
@@ -1943,8 +1943,8 @@ msgstr "itt"
 #: includes/PDFStockCheckPageHeader.inc:44
 #: includes/PDFStockNegativesHeader.inc:33
 #: includes/PDFStockTransferHeader.inc:39 includes/PDFTransPageHeader.inc:209
-#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2260
-#: api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
+#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2258
+#: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
 msgid "Quantity"
 msgstr "Mennyiség"
 
@@ -2082,7 +2082,7 @@ msgid "Build"
 msgstr "Épít"
 
 #: BOMExtendedQty.php:331 BOMInquiry.php:114 BOMs.php:856
-#: CounterSales.php:2033 CounterSales.php:2218 PO_SelectOSPurchOrder.php:236
+#: CounterSales.php:2027 CounterSales.php:2212 PO_SelectOSPurchOrder.php:236
 #: PO_SelectPurchOrder.php:213 ReorderLevelLocation.php:70
 #: ReorderLevelLocation.php:71 SelectCompletedOrder.php:551
 #: SelectOrderItems.php:1488 SelectOrderItems.php:1672
@@ -2154,8 +2154,8 @@ msgstr "Utánrendelés szintek karbantartása"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:113
 #: BOMInquiry.php:199 BOMs.php:529 BOMs.php:855 ContractBOM.php:236
-#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2031
-#: CounterSales.php:2216 CreditStatus.php:152 CreditStatus.php:241
+#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2025
+#: CounterSales.php:2210 CreditStatus.php:152 CreditStatus.php:241
 #: EmailConfirmation.php:192 FixedAssetCategories.php:163
 #: FixedAssetDepreciation.php:86 FixedAssetRegister.php:83
 #: FixedAssetRegister.php:372 FixedAssetTransfer.php:50
@@ -2190,7 +2190,7 @@ msgstr "Utánrendelés szintek karbantartása"
 #: includes/PDFStockLocTransferHeader.inc:49
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
 #: includes/PDFTransPageHeader.inc:207
-#: includes/PDFTransPageHeaderPortrait.inc:262 api/api_xml-rpc.php:3046
+#: includes/PDFTransPageHeaderPortrait.inc:262 api/api_xml-rpc.php:3044
 msgid "Description"
 msgstr "Leírás"
 
@@ -2271,7 +2271,7 @@ msgid "description"
 msgstr "leírás"
 
 #: BOMInquiry.php:30 BOMs.php:839 ContractBOM.php:324 ContractBOM.php:329
-#: Contracts.php:756 Contracts.php:759 CounterSales.php:2183
+#: Contracts.php:756 Contracts.php:759 CounterSales.php:2177
 #: CustomerReceipt.php:1106 CustomerReceipt.php:1109
 #: DiscountCategories.php:104 DiscountCategories.php:106
 #: DiscountCategories.php:110 DiscountCategories.php:112
@@ -2311,7 +2311,7 @@ msgid "Stock Code"
 msgstr "Termékkód"
 
 #: BOMInquiry.php:37 BOMs.php:844 ContractBOM.php:334 Contracts.php:764
-#: CounterSales.php:2187 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
+#: CounterSales.php:2181 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
 #: MRPDemands.php:338 MRPReport.php:554 PO_Header.php:545 PO_Items.php:1058
 #: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:979
 #: SelectCustomer.php:369 SelectGLAccount.php:96 SelectOrderItems.php:595
@@ -2346,7 +2346,7 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "SQL üzenet"
 
 #: BOMInquiry.php:112 BOMs.php:528 BOMs.php:854 ContractBOM.php:345
-#: CounterSales.php:2030 CounterSales.php:2215 CustomerBranches.php:367
+#: CounterSales.php:2024 CounterSales.php:2209 CustomerBranches.php:367
 #: CustomerReceipt.php:1127 GLCodesInquiry.php:26 MRPDemands.php:90
 #: MRPPlannedWorkOrders.php:256 MRPReport.php:746 PDFOrdersInvoiced.php:347
 #: PDFOrderStatus.php:318 PDFPrintLabel.php:247 PO_Header.php:555
@@ -2364,7 +2364,7 @@ msgid "Code"
 msgstr "Kód"
 
 #: BOMInquiry.php:115 BOMs.php:857 ConfirmDispatch_Invoice.php:280
-#: ContractBOM.php:347 CounterSales.php:2032 CounterSales.php:2217
+#: ContractBOM.php:347 CounterSales.php:2026 CounterSales.php:2211
 #: Credit_Invoice.php:272 GoodsReceived.php:101 GoodsReceived.php:105
 #: MRPReport.php:749 OffersReceived.php:106 PO_Items.php:1074
 #: PO_SelectOSPurchOrder.php:238 PO_SelectPurchOrder.php:215
@@ -2645,7 +2645,7 @@ msgstr "Nem elérhető az apa alkatrész, mert"
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr "SQL üzenet"
 
-#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
+#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1408
 #: Credit_Invoice.php:753 Credit_Invoice.php:781 SelectCreditItems.php:1454
 #: Stocks.php:940 Stocks.php:942
 msgid "Assembly"
@@ -2695,8 +2695,8 @@ msgstr "Szint"
 #: StockStatus.php:80 StockStatus.php:85 WhereUsedInquiry.php:72
 #: WorkCentres.php:128 WorkCentres.php:221
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
-#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2258
-#: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
+#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2256
+#: api/api_xml-rpc.php:2302 api/api_xml-rpc.php:2498
 msgid "Location"
 msgstr "Hely"
 
@@ -2814,7 +2814,7 @@ msgstr "Termék kategória"
 #: DiscountMatrix.php:160 PricesByCost.php:262 Prices.php:223
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:224 SalesGLPostings.php:354 SelectOrderItems.php:713
-#: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
+#: api/api_xml-rpc.php:929 api/api_xml-rpc.php:972
 msgid "Sales Type"
 msgstr "Eladás típus"
 
@@ -3093,7 +3093,7 @@ msgstr ""
 msgid "Back to Confirmation of Dispatch"
 msgstr "Vissza a feldolgozás jóváhagyáshoz"
 
-#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1251
+#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1245
 #: DeliveryDetails.php:583 DeliveryDetails.php:788 EmailCustTrans.php:9
 #: PaymentAllocations.php:31 SelectSalesOrder.php:830 SelectSalesOrder.php:901
 #: SelectSalesOrder.php:928 Z_SalesIntegrityCheck.php:46
@@ -3208,7 +3208,7 @@ msgstr "Számla összege"
 
 #: ConfirmDispatch_Invoice.php:277 ContractBOM.php:235 ContractCosting.php:79
 #: ContractCosting.php:85 Contracts.php:959 CounterSales.php:740
-#: CounterSales.php:2347 Credit_Invoice.php:269 DeliveryDetails.php:825
+#: CounterSales.php:2341 Credit_Invoice.php:269 DeliveryDetails.php:825
 #: GoodsReceived.php:98 OrderDetails.php:162 PO_Items.php:658
 #: PO_OrderDetails.php:146 PrintCustTrans.php:860 PrintCustTrans.php:949
 #: PrintCustTrans.php:998 PrintCustTransPortrait.php:907
@@ -3289,7 +3289,7 @@ msgstr "Ez a felsolgozás"
 #: includes/DefineLabelClass.php:49 includes/PDFQuotationPageHeader.inc:104
 #: includes/PDFQuotationPortraitPageHeader.inc:104
 #: includes/PDFTransPageHeaderPortrait.inc:267
-#: includes/PO_PDFOrderPageHeader.inc:81 api/api_xml-rpc.php:933
+#: includes/PO_PDFOrderPageHeader.inc:81 api/api_xml-rpc.php:931
 msgid "Price"
 msgstr "Ár"
 
@@ -3584,12 +3584,12 @@ msgstr "SQL üzenet"
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
-#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
-#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
-#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
-#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
-#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:191
+#: ContractCosting.php:415 CounterSales.php:1247 CounterSales.php:1287
+#: CounterSales.php:1303 CounterSales.php:1340 CounterSales.php:1359
+#: CounterSales.php:1373 CounterSales.php:1414 CounterSales.php:1424
+#: CounterSales.php:1506 CounterSales.php:1527 CounterSales.php:1689
+#: CounterSales.php:1711 CounterSales.php:1736 CounterSales.php:1757
+#: CounterSales.php:1783 CounterSales.php:1806 Credit_Invoice.php:191
 #: Credit_Invoice.php:538 Credit_Invoice.php:579 Credit_Invoice.php:596
 #: Credit_Invoice.php:612 Credit_Invoice.php:662 Credit_Invoice.php:675
 #: Credit_Invoice.php:787 Credit_Invoice.php:797 Credit_Invoice.php:872
@@ -3695,12 +3695,12 @@ msgstr "KRITIKUS HIBA"
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
-#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
-#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
-#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
-#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
-#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:538
+#: ContractCosting.php:415 CounterSales.php:1247 CounterSales.php:1287
+#: CounterSales.php:1303 CounterSales.php:1340 CounterSales.php:1359
+#: CounterSales.php:1373 CounterSales.php:1414 CounterSales.php:1424
+#: CounterSales.php:1506 CounterSales.php:1527 CounterSales.php:1689
+#: CounterSales.php:1711 CounterSales.php:1736 CounterSales.php:1757
+#: CounterSales.php:1783 CounterSales.php:1806 Credit_Invoice.php:538
 #: Credit_Invoice.php:579 Credit_Invoice.php:596 Credit_Invoice.php:612
 #: Credit_Invoice.php:662 Credit_Invoice.php:675 Credit_Invoice.php:787
 #: Credit_Invoice.php:797 Credit_Invoice.php:872 Credit_Invoice.php:887
@@ -3786,33 +3786,33 @@ msgstr "KRITIKUS HIBA"
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
 msgstr "JEGYEZZE FEL EZT A HIBAÜZENETET ÉS ÉRTESíTSE A RENDSZERADMINISZTRÁTORT"
 
-#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1253
+#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1247
 #: RecurringSalesOrdersProcess.php:637
 msgid "The sales order header could not be updated with the invoice number"
 msgstr "A megrendelésfej nem frissíthető a számlaszámmal"
 
-#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1254
+#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1248
 #: RecurringSalesOrdersProcess.php:638
 msgid "The following SQL to update the sales order was used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1293
+#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1287
 #: RecurringSalesOrdersProcess.php:678
 msgid "The debtor transaction record could not be inserted because"
 msgstr "A vevő tranzakció rekordja nem rögzíthető, mert"
 
-#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1294
+#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1288
 #: RecurringSalesOrdersProcess.php:679
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1309
+#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1303
 #: Credit_Invoice.php:596 RecurringSalesOrdersProcess.php:692
 #: SelectCreditItems.php:1144
 msgid "The debtor transaction taxes records could not be inserted because"
 msgstr "A vevő tranzakció adó rekordja nem rögzíthető, mert"
 
-#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1310
+#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1304
 #: Credit_Invoice.php:597 RecurringSalesOrdersProcess.php:693
 #: SelectCreditItems.php:1145
 msgid ""
@@ -3846,35 +3846,35 @@ msgstr "SQL üzenet"
 msgid "Cannot retrieve the mbflag"
 msgstr "Nem lehet letölteni a mbflag"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1324
 #: FixedAssetItems.php:627 SalesAnalReptCols.php:328 Stocks.php:1201
 #: Suppliers.php:965 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "FIGYELMEZTETÉS"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1324
 msgid "Could not retrieve current location stock"
 msgstr "Nem elérhető a megadott készlet"
 
-#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1346
+#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1340
 #: Credit_Invoice.php:675 SelectCreditItems.php:1387
 msgid "Location stock record could not be updated because"
 msgstr "A megadott készlet rekord nem frissíthető, mert"
 
 #: ConfirmDispatch_Invoice.php:956 ContractCosting.php:331
-#: CounterSales.php:1347 Credit_Invoice.php:676 GoodsReceived.php:486
+#: CounterSales.php:1341 Credit_Invoice.php:676 GoodsReceived.php:486
 #: ReverseGRN.php:220 SelectCreditItems.php:1388 StockTransfers.php:423
 #: StockTransfers.php:432 WorkOrderIssue.php:161 WorkOrderReceive.php:321
 #: WorkOrderReceive.php:428
 msgid "The following SQL to update the location stock record was used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1359
 #: Credit_Invoice.php:696 SelectCreditItems.php:1408
 msgid "Could not retrieve assembly components from the database for"
 msgstr "Nem elérhetők az összeépítés alkatrészei az adatbázisban"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1359
 #: Credit_Invoice.php:696 EDIMessageFormat.php:43 EDISendInvoices.php:105
 #: FixedAssetCategories.php:90 FixedAssetCategories.php:109
 #: PricesBasedOnMarkUp.php:334 PricesBasedOnMarkUp.php:350
@@ -3884,11 +3884,11 @@ msgstr "Nem elérhetők az összeépítés alkatrészei az adatbázisban"
 msgid "because"
 msgstr "mert"
 
-#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1379
+#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1373
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr "Nem elérhetők az összeépítés alkatrészei (mennyiség), mert "
 
-#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
+#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1408
 #: CustomerInquiry.php:200 CustomerTransInquiry.php:105
 #: DeliveryDetails.php:593 DeliveryDetails.php:599 DeliveryDetails.php:606
 #: DeliveryDetails.php:792 MRPReport.php:412 PDFOrdersInvoiced.php:304
@@ -3900,12 +3900,12 @@ msgstr "Nem elérhetők az összeépítés alkatrészei (mennyiség), mert "
 msgid "Order"
 msgstr "Megrendelés"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1414
 #: Credit_Invoice.php:787 SelectCreditItems.php:1461
 msgid "Stock movement records for the assembly components of"
 msgstr "Összeépítés készletmozgásai"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1414
 #: Credit_Invoice.php:787 SelectCreditItems.php:1461 ShipmentCosting.php:397
 #: SupplierAllocations.php:139 includes/PDFPaymentRun_PymtFooter.php:57
 #: includes/PDFPaymentRun_PymtFooter.php:88
@@ -3916,26 +3916,26 @@ msgstr "Összeépítés készletmozgásai"
 msgid "could not be inserted because"
 msgstr "nem rögzíthető, mert"
 
-#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1421
+#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1415
 #: Credit_Invoice.php:788 SelectCreditItems.php:1462
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
 "was used"
 msgstr "SQL üzent"
 
-#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1430
+#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1424
 #: Credit_Invoice.php:797 SelectCreditItems.php:1471
 msgid ""
 "Location stock record could not be updated for an assembly component because"
 msgstr "Megadott készletrekord nem frissíthető, mert"
 
-#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1431
+#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1425
 msgid ""
 "The following SQL to update the locations stock record for the component was "
 "used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1512
+#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1506
 #: Credit_Invoice.php:872 Credit_Invoice.php:970 Credit_Invoice.php:1008
 #: Credit_Invoice.php:1048 RecurringSalesOrdersProcess.php:361
 #: ReverseGRN.php:248 SelectCreditItems.php:1212 SelectCreditItems.php:1285
@@ -3943,7 +3943,7 @@ msgid "Stock movement records could not be inserted because"
 msgstr "Készletmozgás rekord nem rögzíthető, mert"
 
 #: ConfirmDispatch_Invoice.php:1121 ContractCosting.php:360
-#: CounterSales.php:1513 Credit_Invoice.php:873 Credit_Invoice.php:971
+#: CounterSales.php:1507 Credit_Invoice.php:873 Credit_Invoice.php:971
 #: Credit_Invoice.php:1009 GoodsReceived.php:517
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
 #: SelectCreditItems.php:1286 WorkOrderIssue.php:192 WorkOrderReceive.php:350
@@ -3951,14 +3951,14 @@ msgstr "Készletmozgás rekord nem rögzíthető, mert"
 msgid "The following SQL to insert the stock movement records was used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1533
+#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1527
 #: RecurringSalesOrdersProcess.php:382
 msgid ""
 "Taxes and rates applicable to this invoice line item could not be inserted "
 "because"
 msgstr "Adók és egyebek a tételsorhoz nem rögzíthetők, mert"
 
-#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1534
+#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1528
 #: Credit_Invoice.php:1072 RecurringSalesOrdersProcess.php:383
 #: SelectCreditItems.php:1307
 msgid ""
@@ -3998,29 +3998,29 @@ msgstr "A készletmozgás rekord nem rögzíthető, mert"
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1612
+#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1606
 #: RecurringSalesOrdersProcess.php:421
 msgid "The count of existing Sales analysis records could not run because"
 msgstr "A megadott Eladás analízis rekord nem elérhető, mert"
 
-#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1613
+#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1607
 #: Credit_Invoice.php:1101 RecurringSalesOrdersProcess.php:422
 #: SelectCreditItems.php:1630
 msgid "SQL to count the no of sales analysis records"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1670
+#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1664
 #: RecurringSalesOrdersProcess.php:480
 msgid "Sales analysis record could not be added or updated because"
 msgstr "Eladás analízis rekord nem rögzíthető, mert"
 
-#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1671
+#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1665
 #: Credit_Invoice.php:1213 RecurringSalesOrdersProcess.php:481
 #: SelectCreditItems.php:1740
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1695
+#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1689
 #: Credit_Invoice.php:1243
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr "Eladás költségei főkönyvi feladás sikertelen, mert"
@@ -4030,9 +4030,9 @@ msgstr "Eladás költségei főkönyvi feladás sikertelen, mert"
 #: ConfirmDispatch_Invoice.php:1416 ConfirmDispatch_Invoice.php:1438
 #: ConfirmDispatch_Invoice.php:1460 ConfirmDispatch_Invoice.php:1482
 #: ConfirmDispatch_Invoice.php:1573 ConfirmDispatch_Invoice.php:1595
-#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1696
-#: CounterSales.php:1718 CounterSales.php:1743 CounterSales.php:1764
-#: CounterSales.php:1813 Credit_Invoice.php:1244 Credit_Invoice.php:1284
+#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1690
+#: CounterSales.php:1712 CounterSales.php:1737 CounterSales.php:1758
+#: CounterSales.php:1807 Credit_Invoice.php:1244 Credit_Invoice.php:1284
 #: Credit_Invoice.php:1311 Credit_Invoice.php:1332 Credit_Invoice.php:1361
 #: Credit_Invoice.php:1387 Credit_Invoice.php:1413
 #: RecurringSalesOrdersProcess.php:509 RecurringSalesOrdersProcess.php:536
@@ -4049,17 +4049,17 @@ msgstr "Eladás költségei főkönyvi feladás sikertelen, mert"
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr "SQL üzenet"
 
-#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1717
+#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1711
 msgid ""
 "The stock side of the cost of sales GL posting could not be inserted because"
 msgstr "A készlet az eladás költségei főkönyvi feladáshoz nem rögzítheő, mert"
 
-#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1742
+#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1736
 #: RecurringSalesOrdersProcess.php:508
 msgid "The sales GL posting could not be inserted because"
 msgstr "Az eladás főkönyvi feladás nem rögzíthető, mert"
 
-#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1763
+#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1757
 #: RecurringSalesOrdersProcess.php:535
 msgid "The sales discount GL posting could not be inserted because"
 msgstr "Az eladás kedvezménye főkönyvi feladás sikertelen, mert"
@@ -4126,12 +4126,12 @@ msgstr ""
 msgid "The following SQL to update the fixed asset record was used"
 msgstr "Az alábbi SQL frissíteni a tárgyi eszköz nyilvántartás használták"
 
-#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1789
+#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1783
 #: RecurringSalesOrdersProcess.php:602
 msgid "The total debtor GL posting could not be inserted because"
 msgstr "A vevői összes főkönyvi feladás sikertelen, mert"
 
-#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1790
+#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1784
 #: RecurringSalesOrdersProcess.php:603
 msgid ""
 "The following SQL to insert the total debtors control GLTrans record was used"
@@ -4141,24 +4141,24 @@ msgstr "SQL üzenet"
 msgid "The freight GL posting could not be inserted because"
 msgstr "A fuvarozás főkönyvi feladás sikertelen, mert"
 
-#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1812
+#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1806
 #: Credit_Invoice.php:1412 RecurringSalesOrdersProcess.php:575
 #: SelectCreditItems.php:1945
 msgid "The tax GL posting could not be inserted because"
 msgstr "Az adó főkönyvi feladás sikertelen, mert"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1974
 #: RecurringSalesOrdersProcess.php:698 Z_DeleteInvoice.php:146
 msgid "Invoice number"
 msgstr "Számla szám"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1974
 #: RecurringSalesOrdersProcess.php:698 SelectCreditItems.php:1960
 msgid "processed"
 msgstr "feldolgozva"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: ContractBOM.php:293 CounterSales.php:1985 CounterSales.php:1987
+#: ContractBOM.php:293 CounterSales.php:1979 CounterSales.php:1981
 #: CustomerReceipt.php:547 DeliveryDetails.php:574 DeliveryDetails.php:578
 #: DeliveryDetails.php:781 DeliveryDetails.php:784 GLBalanceSheet.php:18
 #: GLProfit_Loss.php:22 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:519
@@ -4173,16 +4173,16 @@ msgid "Print"
 msgstr "Nyomtatás"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: CounterSales.php:1985 CounterSales.php:1987
+#: CounterSales.php:1979 CounterSales.php:1981
 msgid "Print this invoice"
 msgstr "Számla nyomtatás"
 
-#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1985
+#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1979
 #: SystemParameters.php:455
 msgid "Landscape"
 msgstr "Táj"
 
-#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1987
+#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1981
 #: SystemParameters.php:456
 msgid "Portrait"
 msgstr "Portré"
@@ -4306,7 +4306,7 @@ msgstr "Az SQL használt letölteni a tétel adatait, de nem sikerült volt,"
 
 #: ContractBOM.php:204 CounterSales.php:442 PO_Items.php:629
 #: SelectOrderItems.php:918 includes/SelectOrderItems_IntoCart.inc:59
-#: includes/SelectOrderItems_IntoCart.inc:163
+#: includes/SelectOrderItems_IntoCart.inc:164
 msgid "The item code"
 msgstr "Termék kód"
 
@@ -4365,7 +4365,7 @@ msgstr "Keresés a Stock elemek"
 msgid "Enter text extracts in the description"
 msgstr "Írja be a szöveget kivonatok a leírásban"
 
-#: ContractBOM.php:324 CounterSales.php:2183 PO_Items.php:1050
+#: ContractBOM.php:324 CounterSales.php:2177 PO_Items.php:1050
 #: SelectCompletedOrder.php:529 SelectCreditItems.php:972
 #: SelectOrderItems.php:1638 SelectSalesOrder.php:565 SelectWorkOrder.php:179
 msgid "Enter extract of the Stock Code"
@@ -4380,7 +4380,7 @@ msgstr "Termékkód"
 msgid "Image"
 msgstr "Kép"
 
-#: ContractBOM.php:368 CounterSales.php:2045 FixedAssetItems.php:485
+#: ContractBOM.php:368 CounterSales.php:2039 FixedAssetItems.php:485
 #: FixedAssetItems.php:489 PO_Items.php:1096 SalesCategories.php:249
 #: SelectCreditItems.php:1018 SelectOrderItems.php:1501
 #: SelectOrderItems.php:1679 Stocks.php:834 Stocks.php:838
@@ -5016,7 +5016,7 @@ msgid "The customer record selected"
 msgstr "A telephely rekord törlése sikertelen"
 
 #: Contracts.php:714 CounterSales.php:120 CounterSales.php:154
-#: CounterSales.php:2066 CounterSales.php:2247 DeliveryDetails.php:146
+#: CounterSales.php:2060 CounterSales.php:2241 DeliveryDetails.php:146
 #: PO_Header.php:407 PO_Header.php:478 SelectCreditItems.php:179
 #: SelectOrderItems.php:382 SelectOrderItems.php:429 SelectOrderItems.php:508
 #: SelectOrderItems.php:548 SelectOrderItems.php:1524
@@ -5380,12 +5380,12 @@ msgstr ""
 msgid "This sale has been cancelled as requested"
 msgstr "Feldolgozás megszakítva"
 
-#: CounterSales.php:215 CounterSales.php:1989
+#: CounterSales.php:215 CounterSales.php:1983
 msgid "Start a new Counter Sale"
 msgstr "Indítson egy új Counter Eladás"
 
-#: CounterSales.php:222 CounterSales.php:1041 CounterSales.php:1837
-#: CounterSales.php:1856 CounterSales.php:1906 CounterSales.php:1941
+#: CounterSales.php:222 CounterSales.php:1041 CounterSales.php:1831
+#: CounterSales.php:1850 CounterSales.php:1900 CounterSales.php:1935
 msgid "Counter Sale"
 msgstr "Vevő név"
 
@@ -5684,7 +5684,7 @@ msgstr "Megrendelés szám"
 msgid "for"
 msgstr "A"
 
-#: CounterSales.php:1234 DeliveryDetails.php:564 DeliveryDetails.php:776
+#: CounterSales.php:1232 DeliveryDetails.php:564 DeliveryDetails.php:776
 #: EmailConfirmation.php:169 FTP_RadioBeacon.php:185 FTP_RadioBeacon.php:288
 #: PO_AuthoriseMyOrders.php:58 PO_OrderDetails.php:27 POReport.php:490
 #: POReport.php:499 POReport.php:735 POReport.php:1264 POReport.php:1273
@@ -5698,79 +5698,79 @@ msgstr "A"
 msgid "Order Number"
 msgstr "Megrendelés szám"
 
-#: CounterSales.php:1234 DeliveryDetails.php:562 DeliveryDetails.php:564
+#: CounterSales.php:1232 DeliveryDetails.php:562 DeliveryDetails.php:564
 #: SpecialOrder.php:560
 msgid "has been entered"
 msgstr "megadva"
 
-#: CounterSales.php:1839
+#: CounterSales.php:1833
 msgid ""
 "The SQL that failed to insert the GL transaction for the bank account debit "
 "was"
 msgstr "SQL üzenet"
 
-#: CounterSales.php:1840 CustomerReceipt.php:460
+#: CounterSales.php:1834 CustomerReceipt.php:460
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "Nem rögzíthető főkönyvi tranzakció a banki terheléshez"
 
-#: CounterSales.php:1858 CustomerReceipt.php:509
+#: CounterSales.php:1852 CustomerReceipt.php:509
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
 msgstr "Sql üzenet"
 
-#: CounterSales.php:1859 CustomerReceipt.php:510
+#: CounterSales.php:1853 CustomerReceipt.php:510
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr "Nem rögzíthető főkönyvi feladás a vevői jóváíráshoz"
 
-#: CounterSales.php:1914 CustomerReceipt.php:487
+#: CounterSales.php:1908 CustomerReceipt.php:487
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "SQL üzenet"
 
-#: CounterSales.php:1915 CustomerReceipt.php:488
+#: CounterSales.php:1909 CustomerReceipt.php:488
 msgid "Cannot insert a bank transaction"
 msgstr "Nem rögzíthető a banki tranzakció"
 
-#: CounterSales.php:1943 CustomerReceipt.php:419
+#: CounterSales.php:1937 CustomerReceipt.php:419
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "SQL üzenet"
 
-#: CounterSales.php:1944 CustomerReceipt.php:420
+#: CounterSales.php:1938 CustomerReceipt.php:420
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr "Nem rögzíthető a bevétel a vevőhüz, mert"
 
-#: CounterSales.php:1953 CustomerReceipt.php:428
+#: CounterSales.php:1947 CustomerReceipt.php:428
 msgid "The SQL that failed to update the date of the last payment received was"
 msgstr "SQL üzenet"
 
-#: CounterSales.php:1954 CustomerReceipt.php:429
+#: CounterSales.php:1948 CustomerReceipt.php:429
 msgid ""
 "Cannot update the customer record for the date of the last payment received "
 "because"
 msgstr "A vevő utolső fizetési rekordja nem módosítható, mert"
 
-#: CounterSales.php:1967
+#: CounterSales.php:1961
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the invoice "
 "was"
 msgstr "SQL üzenet"
 
-#: CounterSales.php:1968
+#: CounterSales.php:1962
 msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr ""
 "Főkönyvi feladás tranzakció nem rögzíthető a szállítói kifizetésekhez, mert"
 
-#: CounterSales.php:2006 SelectCreditItems.php:938 SelectOrderItems.php:1460
+#: CounterSales.php:2000 SelectCreditItems.php:938 SelectOrderItems.php:1460
 msgid "Yes Please"
 msgstr "Igen Kérem"
 
-#: CounterSales.php:2027 CounterSales.php:2028 SelectOrderItems.php:1481
+#: CounterSales.php:2021 CounterSales.php:2022 SelectOrderItems.php:1481
 #: SelectOrderItems.php:1482 SystemParameters.php:405
 msgid "Frequently Ordered Items"
 msgstr "Rendelt tétel módosítás"
 
-#: CounterSales.php:2028 SelectOrderItems.php:1482
+#: CounterSales.php:2022 SelectOrderItems.php:1482
 msgid ""
 ", shows the most frequently ordered items in the last 6 months.  You can "
 "choose from this list, or search further for other items"
@@ -5778,43 +5778,43 @@ msgstr ""
 ", Mutatja a leggyakrabban megrendelt az elmúlt 6 hónapban. Választhat a "
 "listából, vagy keressen további egyéb tételekkel"
 
-#: CounterSales.php:2034 CounterSales.php:2219 SelectOrderItems.php:1489
+#: CounterSales.php:2028 CounterSales.php:2213 SelectOrderItems.php:1489
 #: SelectOrderItems.php:1673
 msgid "On Demand"
 msgstr "Készleten"
 
-#: CounterSales.php:2035 CounterSales.php:2220 SelectOrderItems.php:1490
+#: CounterSales.php:2029 CounterSales.php:2214 SelectOrderItems.php:1490
 #: SelectOrderItems.php:1674 StockLocStatus.php:166 StockStatus.php:90
 msgid "On Order"
 msgstr "Rendelésre"
 
-#: CounterSales.php:2036 CounterSales.php:2221 SelectOrderItems.php:1491
+#: CounterSales.php:2030 CounterSales.php:2215 SelectOrderItems.php:1491
 #: SelectOrderItems.php:1675 StockLocStatus.php:165 StockStatus.php:89
 #: includes/OutputSerialItems.php:37 includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
 msgstr "Álló"
 
-#: CounterSales.php:2065 CounterSales.php:2247 SelectOrderItems.php:1523
+#: CounterSales.php:2059 CounterSales.php:2241 SelectOrderItems.php:1523
 #: SelectOrderItems.php:1705 StockCheck.php:221 StockLocStatus.php:183
 #: StockLocStatus.php:206 StockStatus.php:115 StockStatus.php:139
 msgid "The demand for this product from"
 msgstr "A kereslet a termék"
 
-#: CounterSales.php:2083 CounterSales.php:2097 CounterSales.php:2265
-#: CounterSales.php:2279 SelectOrderItems.php:1541 SelectOrderItems.php:1555
+#: CounterSales.php:2077 CounterSales.php:2091 CounterSales.php:2259
+#: CounterSales.php:2273 SelectOrderItems.php:1541 SelectOrderItems.php:1555
 #: SelectOrderItems.php:1725 SelectOrderItems.php:1739
 msgid "The order details for this product cannot be retrieved because"
 msgstr "A tételsorok nem elérhetők, mert"
 
-#: CounterSales.php:2146 CounterSales.php:2211 CounterSales.php:2334
+#: CounterSales.php:2140 CounterSales.php:2205 CounterSales.php:2328
 msgid "Add to Sale"
 msgstr "Vevői megrendelések"
 
-#: CounterSales.php:2153 CounterSales.php:2154
+#: CounterSales.php:2147 CounterSales.php:2148
 msgid "Search for Items"
 msgstr "Rendelt tétel módosítás"
 
-#: CounterSales.php:2154 SelectOrderItems.php:1606
+#: CounterSales.php:2148 SelectOrderItems.php:1606
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -5823,58 +5823,58 @@ msgstr ""
 "kiválasztásával állomány kategóriába, vagy csak meg egy részleges tétel "
 "leírását vagy részleges tétel kódja"
 
-#: CounterSales.php:2155 SelectOrderItems.php:1607
+#: CounterSales.php:2149 SelectOrderItems.php:1607
 msgid "Select a Stock Category"
 msgstr "Termék kategória"
 
-#: CounterSales.php:2180 SelectOrderItems.php:1631
+#: CounterSales.php:2174 SelectOrderItems.php:1631
 msgid "Enter partial Description"
 msgstr "Tétel leírás"
 
-#: CounterSales.php:2188 SelectOrderItems.php:1646
+#: CounterSales.php:2182 SelectOrderItems.php:1646
 msgid "Use Quick Entry"
 msgstr "Használja a Gyors bevitel"
 
-#: CounterSales.php:2199 SelectOrderItems.php:1659
+#: CounterSales.php:2193 SelectOrderItems.php:1659
 msgid ""
 "Select an item by entering the quantity required.  Click Order when ready."
 msgstr ""
 "Válasszon ki egy tételt beírja a szükséges mennyiséget. Kattintson a Rend, "
 "ha kész."
 
-#: CounterSales.php:2210 CounterSales.php:2333 SelectOrderItems.php:1665
+#: CounterSales.php:2204 CounterSales.php:2327 SelectOrderItems.php:1665
 #: SelectOrderItems.php:1785
 msgid "Prev"
 msgstr "Ár"
 
-#: CounterSales.php:2212 CounterSales.php:2335 MRPReport.php:738
+#: CounterSales.php:2206 CounterSales.php:2329 MRPReport.php:738
 #: SelectAsset.php:236 SelectCustomer.php:406 SelectCustomer.php:487
 #: SelectOrderItems.php:1667 SelectOrderItems.php:1787 SelectProduct.php:723
 #: SelectSupplier.php:249 SelectSupplier.php:311
 msgid "Next"
 msgstr "Következő"
 
-#: CounterSales.php:2343
+#: CounterSales.php:2337
 msgid "Use this form to add items quickly if the item codes are already known"
 msgstr ""
 "Használja ezt az űrlapot hozzá elemeket gyorsan, ha az elem kódokat már "
 "ismert"
 
-#: CounterSales.php:2368 SelectCreditItems.php:981 SelectCreditItems.php:1032
+#: CounterSales.php:2362 SelectCreditItems.php:981 SelectCreditItems.php:1032
 #: SelectOrderItems.php:1795 SelectOrderItems.php:1821
 msgid "Quick Entry"
 msgstr "Gyors bevitel"
 
-#: CounterSales.php:2369 SelectCreditItems.php:1050 SelectOrderItems.php:1822
+#: CounterSales.php:2363 SelectCreditItems.php:1050 SelectOrderItems.php:1822
 #: SelectOrderItems.php:1842
 msgid "Search Parts"
 msgstr "Keresés Alkatrész"
 
-#: CounterSales.php:2373
+#: CounterSales.php:2367
 msgid "Cancel Sale"
 msgstr "Törölve"
 
-#: CounterSales.php:2373
+#: CounterSales.php:2367
 msgid "Are you sure you wish to cancel this sale?"
 msgstr "Biztosan törölni akarja ezt a telephelyet?"
 
@@ -14013,7 +14013,7 @@ msgid ""
 msgstr "Nincs beállítva helyi adó. Ellenőrizze a beállított helyi adókat"
 
 #: Locations.php:358 Locations.php:463 Locations.php:475
-#: api/api_xml-rpc.php:828
+#: api/api_xml-rpc.php:826
 msgid "Location Code"
 msgstr "Hely kód"
 
@@ -20786,8 +20786,8 @@ msgid ""
 "fulfilled because:"
 msgstr "Nem elérhető az apa alkatrész, mert"
 
-#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:312
-#: includes/DefineCartClass.php:349 includes/DefineCartClass.php:400
+#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:313
+#: includes/DefineCartClass.php:350 includes/DefineCartClass.php:401
 #: includes/DefineSuppTransClass.php:72
 msgid "The taxes and rates for this item could not be retrieved because"
 msgstr "Az adók és mértékek nem elérhetők, mert"
@@ -22187,7 +22187,7 @@ msgstr "Tranz"
 msgid "Salesman Code"
 msgstr "Eladó"
 
-#: SalesInquiry.php:965 api/api_xml-rpc.php:1609
+#: SalesInquiry.php:965 api/api_xml-rpc.php:1607
 msgid "Salesman Name"
 msgstr "Eladó"
 
@@ -23972,7 +23972,7 @@ msgstr "Keresés a megrendelések"
 msgid "The work order number entered MUST be numeric"
 msgstr "A mennyiségnek számnak kell lennie"
 
-#: SelectWorkOrder.php:26 api/api_xml-rpc.php:2300 api/api_xml-rpc.php:2496
+#: SelectWorkOrder.php:26 api/api_xml-rpc.php:2298 api/api_xml-rpc.php:2494
 msgid "Work Order Number"
 msgstr "Megrendelés szám"
 
@@ -25647,7 +25647,7 @@ msgid "The stock held at each location cannot be retrieved because"
 msgstr "A tulajdonában lévő valamennyi helyszínen nem lehet letölteni, mert"
 
 #: StockLocStatus.php:160 StockSerialItemResearch.php:75
-#: api/api_xml-rpc.php:2043
+#: api/api_xml-rpc.php:2041
 msgid "StockID"
 msgstr "StockID"
 
@@ -28719,11 +28719,11 @@ msgstr "Ön megkapta a következő ajánlatot"
 msgid "Items to offer from"
 msgstr "Tételek ajánlata"
 
-#: SupplierTenders.php:263 api/api_xml-rpc.php:696 api/api_xml-rpc.php:764
-#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:826 api/api_xml-rpc.php:865
-#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
-#: api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302
-#: api/api_xml-rpc.php:2498 api/api_xml-rpc.php:2662
+#: SupplierTenders.php:263 api/api_xml-rpc.php:694 api/api_xml-rpc.php:762
+#: api/api_xml-rpc.php:793 api/api_xml-rpc.php:824 api/api_xml-rpc.php:863
+#: api/api_xml-rpc.php:894 api/api_xml-rpc.php:925 api/api_xml-rpc.php:968
+#: api/api_xml-rpc.php:2218 api/api_xml-rpc.php:2254 api/api_xml-rpc.php:2300
+#: api/api_xml-rpc.php:2496 api/api_xml-rpc.php:2660
 msgid "Stock ID"
 msgstr "Termékkód"
 
@@ -31075,71 +31075,71 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:137
+#: UpgradeDatabase.php:138
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:151
+#: UpgradeDatabase.php:152
 msgid "Applying"
 msgstr "Alkalmazása"
 
-#: UpgradeDatabase.php:179 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Siker"
 
-#: UpgradeDatabase.php:182
+#: UpgradeDatabase.php:183
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:185 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:186 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:188
+#: UpgradeDatabase.php:189
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:191 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:192 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:194 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:197 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:198 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:200
+#: UpgradeDatabase.php:201
 msgid "SQL syntax error. The SQL error message is"
 msgstr "SQL szintaktikai hiba. Az SQL hibaüzenet"
 
-#: UpgradeDatabase.php:203 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:204 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "már eladva"
 
-#: UpgradeDatabase.php:206
+#: UpgradeDatabase.php:207
 msgid "Index already dropped previously"
 msgstr "Index már korábban esett"
 
-#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:210 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Hiba"
 
-#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:210 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Megrendelés szám"
@@ -33628,7 +33628,7 @@ msgstr "Are You Really igazán biztos?"
 msgid "Database table details"
 msgstr "Adatbázis SQL hiba"
 
-#: Z_DescribeTable.php:12 api/api_xml-rpc.php:2184 api/api_xml-rpc.php:2352
+#: Z_DescribeTable.php:12 api/api_xml-rpc.php:2182 api/api_xml-rpc.php:2350
 msgid "Field name"
 msgstr "Felhasználó"
 
@@ -35050,56 +35050,56 @@ msgid ""
 "was"
 msgstr "SQL sor"
 
-#: includes/DefineCartClass.php:170
+#: includes/DefineCartClass.php:171
 msgid "The order line for"
 msgstr "Megrendelés sor"
 
-#: includes/DefineCartClass.php:170
+#: includes/DefineCartClass.php:171
 msgid "could not be inserted"
 msgstr "nem rögzíthető"
 
-#: includes/DefineCartClass.php:210
+#: includes/DefineCartClass.php:211
 msgid "The order line number"
 msgstr "Megrendelés tétel sorszám"
 
-#: includes/DefineCartClass.php:210
+#: includes/DefineCartClass.php:211
 msgid "could not be updated"
 msgstr "nem frissíthető"
 
-#: includes/DefineCartClass.php:217
+#: includes/DefineCartClass.php:218
 msgid "No Line Number passed to remove_from_cart, so nothing has been removed."
 msgstr "No Line száma át remove_from_cart, így nem törölték."
 
-#: includes/DefineCartClass.php:228
+#: includes/DefineCartClass.php:229
 msgid "The order line could not be deleted because"
 msgstr "A megrendelés tételsor nem törölhető, mert"
 
-#: includes/DefineCartClass.php:230
+#: includes/DefineCartClass.php:231
 msgid "Deleted Line Number"
 msgstr "Telefon"
 
-#: includes/DefineCartClass.php:230
+#: includes/DefineCartClass.php:231
 msgid "from existing Order Number"
 msgstr "Megrendelés átnézés"
 
-#: includes/DefineCartClass.php:238
+#: includes/DefineCartClass.php:239
 msgid "The order line could not be updated as completed because"
 msgstr "A megrendelés tételsor nem törölhető, mert"
 
-#: includes/DefineCartClass.php:240
+#: includes/DefineCartClass.php:241
 msgid "Removed Remaining Quantity and set Line Number "
 msgstr "Eltávolított fennmaradó mennyiség és állítsa vonal száma "
 
-#: includes/DefineCartClass.php:240
+#: includes/DefineCartClass.php:241
 msgid "as Completed for existing Order Number"
 msgstr "A befejezett meglévő rendelési száma"
 
-#: includes/DefineCartClass.php:353
+#: includes/DefineCartClass.php:354
 msgid ""
 "It appears that taxes are not defined correctly for this customer tax group"
 msgstr ""
 
-#: includes/DefineCartClass.php:381
+#: includes/DefineCartClass.php:382
 msgid "Cannot find tax category Freight which must always be defined"
 msgstr "Nem találom a adónem Freight amelyeket mindig meg kell határozni"
 
@@ -35524,30 +35524,30 @@ msgstr "Cég"
 #: includes/Login.php:57 api/api_xml-rpc.php:18 api/api_xml-rpc.php:68
 #: api/api_xml-rpc.php:104 api/api_xml-rpc.php:141 api/api_xml-rpc.php:178
 #: api/api_xml-rpc.php:211 api/api_xml-rpc.php:246 api/api_xml-rpc.php:283
-#: api/api_xml-rpc.php:320 api/api_xml-rpc.php:353 api/api_xml-rpc.php:385
-#: api/api_xml-rpc.php:414 api/api_xml-rpc.php:446 api/api_xml-rpc.php:480
-#: api/api_xml-rpc.php:511 api/api_xml-rpc.php:541 api/api_xml-rpc.php:570
-#: api/api_xml-rpc.php:600 api/api_xml-rpc.php:631 api/api_xml-rpc.php:664
-#: api/api_xml-rpc.php:698 api/api_xml-rpc.php:733 api/api_xml-rpc.php:766
-#: api/api_xml-rpc.php:797 api/api_xml-rpc.php:832 api/api_xml-rpc.php:867
-#: api/api_xml-rpc.php:898 api/api_xml-rpc.php:935 api/api_xml-rpc.php:976
-#: api/api_xml-rpc.php:1017 api/api_xml-rpc.php:1050 api/api_xml-rpc.php:1084
-#: api/api_xml-rpc.php:1118 api/api_xml-rpc.php:1153 api/api_xml-rpc.php:1188
-#: api/api_xml-rpc.php:1219 api/api_xml-rpc.php:1251 api/api_xml-rpc.php:1283
-#: api/api_xml-rpc.php:1311 api/api_xml-rpc.php:1340 api/api_xml-rpc.php:1369
-#: api/api_xml-rpc.php:1399 api/api_xml-rpc.php:1428 api/api_xml-rpc.php:1458
-#: api/api_xml-rpc.php:1489 api/api_xml-rpc.php:1522 api/api_xml-rpc.php:1550
-#: api/api_xml-rpc.php:1580 api/api_xml-rpc.php:1611 api/api_xml-rpc.php:1644
-#: api/api_xml-rpc.php:1672 api/api_xml-rpc.php:1702 api/api_xml-rpc.php:1731
-#: api/api_xml-rpc.php:1761 api/api_xml-rpc.php:1794 api/api_xml-rpc.php:1826
-#: api/api_xml-rpc.php:1853 api/api_xml-rpc.php:1883 api/api_xml-rpc.php:1918
-#: api/api_xml-rpc.php:1954 api/api_xml-rpc.php:1984 api/api_xml-rpc.php:2014
-#: api/api_xml-rpc.php:2047 api/api_xml-rpc.php:2083 api/api_xml-rpc.php:2120
-#: api/api_xml-rpc.php:2153 api/api_xml-rpc.php:2188 api/api_xml-rpc.php:2224
-#: api/api_xml-rpc.php:2264 api/api_xml-rpc.php:2312 api/api_xml-rpc.php:2356
-#: api/api_xml-rpc.php:2393 api/api_xml-rpc.php:2429 api/api_xml-rpc.php:2465
-#: api/api_xml-rpc.php:2506 api/api_xml-rpc.php:2544 api/api_xml-rpc.php:2573
-#: api/api_xml-rpc.php:2602 api/api_xml-rpc.php:2631 api/api_xml-rpc.php:2664
+#: api/api_xml-rpc.php:320 api/api_xml-rpc.php:353 api/api_xml-rpc.php:383
+#: api/api_xml-rpc.php:412 api/api_xml-rpc.php:444 api/api_xml-rpc.php:478
+#: api/api_xml-rpc.php:509 api/api_xml-rpc.php:539 api/api_xml-rpc.php:568
+#: api/api_xml-rpc.php:598 api/api_xml-rpc.php:629 api/api_xml-rpc.php:662
+#: api/api_xml-rpc.php:696 api/api_xml-rpc.php:731 api/api_xml-rpc.php:764
+#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:830 api/api_xml-rpc.php:865
+#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:933 api/api_xml-rpc.php:974
+#: api/api_xml-rpc.php:1015 api/api_xml-rpc.php:1048 api/api_xml-rpc.php:1082
+#: api/api_xml-rpc.php:1116 api/api_xml-rpc.php:1151 api/api_xml-rpc.php:1186
+#: api/api_xml-rpc.php:1217 api/api_xml-rpc.php:1249 api/api_xml-rpc.php:1281
+#: api/api_xml-rpc.php:1309 api/api_xml-rpc.php:1338 api/api_xml-rpc.php:1367
+#: api/api_xml-rpc.php:1397 api/api_xml-rpc.php:1426 api/api_xml-rpc.php:1456
+#: api/api_xml-rpc.php:1487 api/api_xml-rpc.php:1520 api/api_xml-rpc.php:1548
+#: api/api_xml-rpc.php:1578 api/api_xml-rpc.php:1609 api/api_xml-rpc.php:1642
+#: api/api_xml-rpc.php:1670 api/api_xml-rpc.php:1700 api/api_xml-rpc.php:1729
+#: api/api_xml-rpc.php:1759 api/api_xml-rpc.php:1792 api/api_xml-rpc.php:1824
+#: api/api_xml-rpc.php:1851 api/api_xml-rpc.php:1881 api/api_xml-rpc.php:1916
+#: api/api_xml-rpc.php:1952 api/api_xml-rpc.php:1982 api/api_xml-rpc.php:2012
+#: api/api_xml-rpc.php:2045 api/api_xml-rpc.php:2081 api/api_xml-rpc.php:2118
+#: api/api_xml-rpc.php:2151 api/api_xml-rpc.php:2186 api/api_xml-rpc.php:2222
+#: api/api_xml-rpc.php:2262 api/api_xml-rpc.php:2310 api/api_xml-rpc.php:2354
+#: api/api_xml-rpc.php:2391 api/api_xml-rpc.php:2427 api/api_xml-rpc.php:2463
+#: api/api_xml-rpc.php:2504 api/api_xml-rpc.php:2542 api/api_xml-rpc.php:2571
+#: api/api_xml-rpc.php:2600 api/api_xml-rpc.php:2629 api/api_xml-rpc.php:2662
 msgid "User name"
 msgstr "Felhasználó"
 
@@ -36511,7 +36511,7 @@ msgid ""
 "at or over their credit limit"
 msgstr "Több tétel nem rögzíthető, mert a vevő hitel limitje nem engedi"
 
-#: includes/SelectOrderItems_IntoCart.inc:163
+#: includes/SelectOrderItems_IntoCart.inc:164
 msgid ""
 "does not have a cost set up and order entry is set up to prohibit sales of "
 "items with no cost data entered"
@@ -37295,17 +37295,17 @@ msgstr "Adatbázis hiba"
 msgid "The name of the database to use for the transactions to come. "
 msgstr "Az adatbázis művelet sikertelen "
 
-#: api/api_xml-rpc.php:19 api/api_xml-rpc.php:601 api/api_xml-rpc.php:632
-#: api/api_xml-rpc.php:665 api/api_xml-rpc.php:699 api/api_xml-rpc.php:734
-#: api/api_xml-rpc.php:868 api/api_xml-rpc.php:899 api/api_xml-rpc.php:936
-#: api/api_xml-rpc.php:977 api/api_xml-rpc.php:1018 api/api_xml-rpc.php:1051
-#: api/api_xml-rpc.php:1220 api/api_xml-rpc.php:1252 api/api_xml-rpc.php:1284
-#: api/api_xml-rpc.php:1341 api/api_xml-rpc.php:1400 api/api_xml-rpc.php:1459
-#: api/api_xml-rpc.php:1490 api/api_xml-rpc.php:1523 api/api_xml-rpc.php:1581
-#: api/api_xml-rpc.php:1612 api/api_xml-rpc.php:1645 api/api_xml-rpc.php:1703
-#: api/api_xml-rpc.php:1762 api/api_xml-rpc.php:1795 api/api_xml-rpc.php:1827
-#: api/api_xml-rpc.php:1884 api/api_xml-rpc.php:1919 api/api_xml-rpc.php:1955
-#: api/api_xml-rpc.php:2015 api/api_xml-rpc.php:2048
+#: api/api_xml-rpc.php:19 api/api_xml-rpc.php:599 api/api_xml-rpc.php:630
+#: api/api_xml-rpc.php:663 api/api_xml-rpc.php:697 api/api_xml-rpc.php:732
+#: api/api_xml-rpc.php:866 api/api_xml-rpc.php:897 api/api_xml-rpc.php:934
+#: api/api_xml-rpc.php:975 api/api_xml-rpc.php:1016 api/api_xml-rpc.php:1049
+#: api/api_xml-rpc.php:1218 api/api_xml-rpc.php:1250 api/api_xml-rpc.php:1282
+#: api/api_xml-rpc.php:1339 api/api_xml-rpc.php:1398 api/api_xml-rpc.php:1457
+#: api/api_xml-rpc.php:1488 api/api_xml-rpc.php:1521 api/api_xml-rpc.php:1579
+#: api/api_xml-rpc.php:1610 api/api_xml-rpc.php:1643 api/api_xml-rpc.php:1701
+#: api/api_xml-rpc.php:1760 api/api_xml-rpc.php:1793 api/api_xml-rpc.php:1825
+#: api/api_xml-rpc.php:1882 api/api_xml-rpc.php:1917 api/api_xml-rpc.php:1953
+#: api/api_xml-rpc.php:2013 api/api_xml-rpc.php:2046
 msgid ""
 "A valid weberp username. This user should have security access to this data."
 msgstr ""
@@ -37315,60 +37315,60 @@ msgstr ""
 #: api/api_xml-rpc.php:20 api/api_xml-rpc.php:70 api/api_xml-rpc.php:106
 #: api/api_xml-rpc.php:143 api/api_xml-rpc.php:180 api/api_xml-rpc.php:213
 #: api/api_xml-rpc.php:248 api/api_xml-rpc.php:285 api/api_xml-rpc.php:322
-#: api/api_xml-rpc.php:355 api/api_xml-rpc.php:387 api/api_xml-rpc.php:416
-#: api/api_xml-rpc.php:448 api/api_xml-rpc.php:482 api/api_xml-rpc.php:513
-#: api/api_xml-rpc.php:543 api/api_xml-rpc.php:572 api/api_xml-rpc.php:602
-#: api/api_xml-rpc.php:633 api/api_xml-rpc.php:666 api/api_xml-rpc.php:700
-#: api/api_xml-rpc.php:735 api/api_xml-rpc.php:768 api/api_xml-rpc.php:799
-#: api/api_xml-rpc.php:834 api/api_xml-rpc.php:869 api/api_xml-rpc.php:900
-#: api/api_xml-rpc.php:937 api/api_xml-rpc.php:978 api/api_xml-rpc.php:1019
-#: api/api_xml-rpc.php:1052 api/api_xml-rpc.php:1086 api/api_xml-rpc.php:1120
-#: api/api_xml-rpc.php:1155 api/api_xml-rpc.php:1190 api/api_xml-rpc.php:1221
-#: api/api_xml-rpc.php:1253 api/api_xml-rpc.php:1285 api/api_xml-rpc.php:1313
-#: api/api_xml-rpc.php:1342 api/api_xml-rpc.php:1371 api/api_xml-rpc.php:1401
-#: api/api_xml-rpc.php:1430 api/api_xml-rpc.php:1460 api/api_xml-rpc.php:1491
-#: api/api_xml-rpc.php:1524 api/api_xml-rpc.php:1552 api/api_xml-rpc.php:1582
-#: api/api_xml-rpc.php:1613 api/api_xml-rpc.php:1646 api/api_xml-rpc.php:1674
-#: api/api_xml-rpc.php:1704 api/api_xml-rpc.php:1733 api/api_xml-rpc.php:1763
-#: api/api_xml-rpc.php:1796 api/api_xml-rpc.php:1828 api/api_xml-rpc.php:1855
-#: api/api_xml-rpc.php:1885 api/api_xml-rpc.php:1920 api/api_xml-rpc.php:1956
-#: api/api_xml-rpc.php:1986 api/api_xml-rpc.php:2016 api/api_xml-rpc.php:2049
-#: api/api_xml-rpc.php:2085 api/api_xml-rpc.php:2122 api/api_xml-rpc.php:2155
-#: api/api_xml-rpc.php:2190 api/api_xml-rpc.php:2226 api/api_xml-rpc.php:2266
-#: api/api_xml-rpc.php:2314 api/api_xml-rpc.php:2358 api/api_xml-rpc.php:2395
-#: api/api_xml-rpc.php:2431 api/api_xml-rpc.php:2467 api/api_xml-rpc.php:2508
-#: api/api_xml-rpc.php:2546 api/api_xml-rpc.php:2575 api/api_xml-rpc.php:2604
-#: api/api_xml-rpc.php:2633 api/api_xml-rpc.php:2666
+#: api/api_xml-rpc.php:355 api/api_xml-rpc.php:385 api/api_xml-rpc.php:414
+#: api/api_xml-rpc.php:446 api/api_xml-rpc.php:480 api/api_xml-rpc.php:511
+#: api/api_xml-rpc.php:541 api/api_xml-rpc.php:570 api/api_xml-rpc.php:600
+#: api/api_xml-rpc.php:631 api/api_xml-rpc.php:664 api/api_xml-rpc.php:698
+#: api/api_xml-rpc.php:733 api/api_xml-rpc.php:766 api/api_xml-rpc.php:797
+#: api/api_xml-rpc.php:832 api/api_xml-rpc.php:867 api/api_xml-rpc.php:898
+#: api/api_xml-rpc.php:935 api/api_xml-rpc.php:976 api/api_xml-rpc.php:1017
+#: api/api_xml-rpc.php:1050 api/api_xml-rpc.php:1084 api/api_xml-rpc.php:1118
+#: api/api_xml-rpc.php:1153 api/api_xml-rpc.php:1188 api/api_xml-rpc.php:1219
+#: api/api_xml-rpc.php:1251 api/api_xml-rpc.php:1283 api/api_xml-rpc.php:1311
+#: api/api_xml-rpc.php:1340 api/api_xml-rpc.php:1369 api/api_xml-rpc.php:1399
+#: api/api_xml-rpc.php:1428 api/api_xml-rpc.php:1458 api/api_xml-rpc.php:1489
+#: api/api_xml-rpc.php:1522 api/api_xml-rpc.php:1550 api/api_xml-rpc.php:1580
+#: api/api_xml-rpc.php:1611 api/api_xml-rpc.php:1644 api/api_xml-rpc.php:1672
+#: api/api_xml-rpc.php:1702 api/api_xml-rpc.php:1731 api/api_xml-rpc.php:1761
+#: api/api_xml-rpc.php:1794 api/api_xml-rpc.php:1826 api/api_xml-rpc.php:1853
+#: api/api_xml-rpc.php:1883 api/api_xml-rpc.php:1918 api/api_xml-rpc.php:1954
+#: api/api_xml-rpc.php:1984 api/api_xml-rpc.php:2014 api/api_xml-rpc.php:2047
+#: api/api_xml-rpc.php:2083 api/api_xml-rpc.php:2120 api/api_xml-rpc.php:2153
+#: api/api_xml-rpc.php:2188 api/api_xml-rpc.php:2224 api/api_xml-rpc.php:2264
+#: api/api_xml-rpc.php:2312 api/api_xml-rpc.php:2356 api/api_xml-rpc.php:2393
+#: api/api_xml-rpc.php:2429 api/api_xml-rpc.php:2465 api/api_xml-rpc.php:2506
+#: api/api_xml-rpc.php:2544 api/api_xml-rpc.php:2573 api/api_xml-rpc.php:2602
+#: api/api_xml-rpc.php:2631 api/api_xml-rpc.php:2664
 msgid "User password"
 msgstr "jelszóval"
 
 #: api/api_xml-rpc.php:21 api/api_xml-rpc.php:71 api/api_xml-rpc.php:107
 #: api/api_xml-rpc.php:144 api/api_xml-rpc.php:181 api/api_xml-rpc.php:214
 #: api/api_xml-rpc.php:249 api/api_xml-rpc.php:286 api/api_xml-rpc.php:323
-#: api/api_xml-rpc.php:356 api/api_xml-rpc.php:388 api/api_xml-rpc.php:417
-#: api/api_xml-rpc.php:449 api/api_xml-rpc.php:483 api/api_xml-rpc.php:514
-#: api/api_xml-rpc.php:544 api/api_xml-rpc.php:573 api/api_xml-rpc.php:603
-#: api/api_xml-rpc.php:634 api/api_xml-rpc.php:667 api/api_xml-rpc.php:701
-#: api/api_xml-rpc.php:736 api/api_xml-rpc.php:769 api/api_xml-rpc.php:800
-#: api/api_xml-rpc.php:835 api/api_xml-rpc.php:870 api/api_xml-rpc.php:901
-#: api/api_xml-rpc.php:938 api/api_xml-rpc.php:979 api/api_xml-rpc.php:1020
-#: api/api_xml-rpc.php:1053 api/api_xml-rpc.php:1087 api/api_xml-rpc.php:1121
-#: api/api_xml-rpc.php:1156 api/api_xml-rpc.php:1191 api/api_xml-rpc.php:1222
-#: api/api_xml-rpc.php:1254 api/api_xml-rpc.php:1286 api/api_xml-rpc.php:1314
-#: api/api_xml-rpc.php:1343 api/api_xml-rpc.php:1372 api/api_xml-rpc.php:1402
-#: api/api_xml-rpc.php:1431 api/api_xml-rpc.php:1461 api/api_xml-rpc.php:1492
-#: api/api_xml-rpc.php:1525 api/api_xml-rpc.php:1553 api/api_xml-rpc.php:1583
-#: api/api_xml-rpc.php:1614 api/api_xml-rpc.php:1647 api/api_xml-rpc.php:1675
-#: api/api_xml-rpc.php:1705 api/api_xml-rpc.php:1734 api/api_xml-rpc.php:1764
-#: api/api_xml-rpc.php:1797 api/api_xml-rpc.php:1829 api/api_xml-rpc.php:1856
-#: api/api_xml-rpc.php:1886 api/api_xml-rpc.php:1921 api/api_xml-rpc.php:1957
-#: api/api_xml-rpc.php:1987 api/api_xml-rpc.php:2017 api/api_xml-rpc.php:2050
-#: api/api_xml-rpc.php:2086 api/api_xml-rpc.php:2123 api/api_xml-rpc.php:2156
-#: api/api_xml-rpc.php:2191 api/api_xml-rpc.php:2227 api/api_xml-rpc.php:2267
-#: api/api_xml-rpc.php:2315 api/api_xml-rpc.php:2359 api/api_xml-rpc.php:2396
-#: api/api_xml-rpc.php:2432 api/api_xml-rpc.php:2468 api/api_xml-rpc.php:2509
-#: api/api_xml-rpc.php:2547 api/api_xml-rpc.php:2576 api/api_xml-rpc.php:2605
-#: api/api_xml-rpc.php:2634 api/api_xml-rpc.php:2667
+#: api/api_xml-rpc.php:356 api/api_xml-rpc.php:386 api/api_xml-rpc.php:415
+#: api/api_xml-rpc.php:447 api/api_xml-rpc.php:481 api/api_xml-rpc.php:512
+#: api/api_xml-rpc.php:542 api/api_xml-rpc.php:571 api/api_xml-rpc.php:601
+#: api/api_xml-rpc.php:632 api/api_xml-rpc.php:665 api/api_xml-rpc.php:699
+#: api/api_xml-rpc.php:734 api/api_xml-rpc.php:767 api/api_xml-rpc.php:798
+#: api/api_xml-rpc.php:833 api/api_xml-rpc.php:868 api/api_xml-rpc.php:899
+#: api/api_xml-rpc.php:936 api/api_xml-rpc.php:977 api/api_xml-rpc.php:1018
+#: api/api_xml-rpc.php:1051 api/api_xml-rpc.php:1085 api/api_xml-rpc.php:1119
+#: api/api_xml-rpc.php:1154 api/api_xml-rpc.php:1189 api/api_xml-rpc.php:1220
+#: api/api_xml-rpc.php:1252 api/api_xml-rpc.php:1284 api/api_xml-rpc.php:1312
+#: api/api_xml-rpc.php:1341 api/api_xml-rpc.php:1370 api/api_xml-rpc.php:1400
+#: api/api_xml-rpc.php:1429 api/api_xml-rpc.php:1459 api/api_xml-rpc.php:1490
+#: api/api_xml-rpc.php:1523 api/api_xml-rpc.php:1551 api/api_xml-rpc.php:1581
+#: api/api_xml-rpc.php:1612 api/api_xml-rpc.php:1645 api/api_xml-rpc.php:1673
+#: api/api_xml-rpc.php:1703 api/api_xml-rpc.php:1732 api/api_xml-rpc.php:1762
+#: api/api_xml-rpc.php:1795 api/api_xml-rpc.php:1827 api/api_xml-rpc.php:1854
+#: api/api_xml-rpc.php:1884 api/api_xml-rpc.php:1919 api/api_xml-rpc.php:1955
+#: api/api_xml-rpc.php:1985 api/api_xml-rpc.php:2015 api/api_xml-rpc.php:2048
+#: api/api_xml-rpc.php:2084 api/api_xml-rpc.php:2121 api/api_xml-rpc.php:2154
+#: api/api_xml-rpc.php:2189 api/api_xml-rpc.php:2225 api/api_xml-rpc.php:2265
+#: api/api_xml-rpc.php:2313 api/api_xml-rpc.php:2357 api/api_xml-rpc.php:2394
+#: api/api_xml-rpc.php:2430 api/api_xml-rpc.php:2466 api/api_xml-rpc.php:2507
+#: api/api_xml-rpc.php:2545 api/api_xml-rpc.php:2574 api/api_xml-rpc.php:2603
+#: api/api_xml-rpc.php:2632 api/api_xml-rpc.php:2665
 msgid "The weberp password associated with this user name. "
 msgstr "A weberp tartozó jelszót a felhasználói nevet. "
 
@@ -37404,10 +37404,10 @@ msgid "Customer Details"
 msgstr "Vevő név"
 
 #: api/api_xml-rpc.php:63 api/api_xml-rpc.php:100 api/api_xml-rpc.php:136
-#: api/api_xml-rpc.php:173 api/api_xml-rpc.php:476 api/api_xml-rpc.php:1079
-#: api/api_xml-rpc.php:1114 api/api_xml-rpc.php:1148 api/api_xml-rpc.php:1183
-#: api/api_xml-rpc.php:2079 api/api_xml-rpc.php:2115 api/api_xml-rpc.php:2389
-#: api/api_xml-rpc.php:2425 api/api_xml-rpc.php:2461
+#: api/api_xml-rpc.php:173 api/api_xml-rpc.php:474 api/api_xml-rpc.php:1077
+#: api/api_xml-rpc.php:1112 api/api_xml-rpc.php:1146 api/api_xml-rpc.php:1181
+#: api/api_xml-rpc.php:2077 api/api_xml-rpc.php:2113 api/api_xml-rpc.php:2387
+#: api/api_xml-rpc.php:2423 api/api_xml-rpc.php:2459
 msgid ""
 "A set of key/value pairs where the key must be identical to the name of the "
 "field to be updated. "
@@ -37416,37 +37416,37 @@ msgstr ""
 "mező nevét, hogy frissíteni kell. "
 
 #: api/api_xml-rpc.php:64 api/api_xml-rpc.php:101 api/api_xml-rpc.php:137
-#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:477
-#: api/api_xml-rpc.php:1011 api/api_xml-rpc.php:1080 api/api_xml-rpc.php:1115
-#: api/api_xml-rpc.php:1149 api/api_xml-rpc.php:1184 api/api_xml-rpc.php:2080
-#: api/api_xml-rpc.php:2116 api/api_xml-rpc.php:2390 api/api_xml-rpc.php:2426
-#: api/api_xml-rpc.php:2462
+#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:475
+#: api/api_xml-rpc.php:1009 api/api_xml-rpc.php:1078 api/api_xml-rpc.php:1113
+#: api/api_xml-rpc.php:1147 api/api_xml-rpc.php:1182 api/api_xml-rpc.php:2078
+#: api/api_xml-rpc.php:2114 api/api_xml-rpc.php:2388 api/api_xml-rpc.php:2424
+#: api/api_xml-rpc.php:2460
 msgid "The field names can be found "
 msgstr "nem elérhetők az adtabázisban "
 
 #: api/api_xml-rpc.php:64 api/api_xml-rpc.php:101 api/api_xml-rpc.php:137
-#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:477
-#: api/api_xml-rpc.php:1011 api/api_xml-rpc.php:1080 api/api_xml-rpc.php:1115
-#: api/api_xml-rpc.php:1149 api/api_xml-rpc.php:1184 api/api_xml-rpc.php:2080
-#: api/api_xml-rpc.php:2116 api/api_xml-rpc.php:2390 api/api_xml-rpc.php:2426
-#: api/api_xml-rpc.php:2462
+#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:475
+#: api/api_xml-rpc.php:1009 api/api_xml-rpc.php:1078 api/api_xml-rpc.php:1113
+#: api/api_xml-rpc.php:1147 api/api_xml-rpc.php:1182 api/api_xml-rpc.php:2078
+#: api/api_xml-rpc.php:2114 api/api_xml-rpc.php:2388 api/api_xml-rpc.php:2424
+#: api/api_xml-rpc.php:2460
 msgid "here "
 msgstr "Ott van "
 
 #: api/api_xml-rpc.php:65 api/api_xml-rpc.php:102 api/api_xml-rpc.php:138
-#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:317 api/api_xml-rpc.php:478
-#: api/api_xml-rpc.php:1012 api/api_xml-rpc.php:1081 api/api_xml-rpc.php:1116
-#: api/api_xml-rpc.php:1150 api/api_xml-rpc.php:1185 api/api_xml-rpc.php:2081
-#: api/api_xml-rpc.php:2117 api/api_xml-rpc.php:2391 api/api_xml-rpc.php:2427
-#: api/api_xml-rpc.php:2463
+#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:317 api/api_xml-rpc.php:476
+#: api/api_xml-rpc.php:1010 api/api_xml-rpc.php:1079 api/api_xml-rpc.php:1114
+#: api/api_xml-rpc.php:1148 api/api_xml-rpc.php:1183 api/api_xml-rpc.php:2079
+#: api/api_xml-rpc.php:2115 api/api_xml-rpc.php:2389 api/api_xml-rpc.php:2425
+#: api/api_xml-rpc.php:2461
 msgid "and are case sensitive. "
 msgstr "és nagybetűk. "
 
 #: api/api_xml-rpc.php:65 api/api_xml-rpc.php:102 api/api_xml-rpc.php:138
-#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:478 api/api_xml-rpc.php:1012
-#: api/api_xml-rpc.php:1081 api/api_xml-rpc.php:1116 api/api_xml-rpc.php:1150
-#: api/api_xml-rpc.php:1185 api/api_xml-rpc.php:2081 api/api_xml-rpc.php:2117
-#: api/api_xml-rpc.php:2391 api/api_xml-rpc.php:2427 api/api_xml-rpc.php:2463
+#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:476 api/api_xml-rpc.php:1010
+#: api/api_xml-rpc.php:1079 api/api_xml-rpc.php:1114 api/api_xml-rpc.php:1148
+#: api/api_xml-rpc.php:1183 api/api_xml-rpc.php:2079 api/api_xml-rpc.php:2115
+#: api/api_xml-rpc.php:2389 api/api_xml-rpc.php:2425 api/api_xml-rpc.php:2461
 msgid ""
 "The values should be of the correct type, and the api will check them before "
 "updating the database. "
@@ -37455,10 +37455,10 @@ msgstr ""
 "adatbázis frissítését. "
 
 #: api/api_xml-rpc.php:66 api/api_xml-rpc.php:103 api/api_xml-rpc.php:139
-#: api/api_xml-rpc.php:176 api/api_xml-rpc.php:479 api/api_xml-rpc.php:1016
-#: api/api_xml-rpc.php:1083 api/api_xml-rpc.php:1117 api/api_xml-rpc.php:1152
-#: api/api_xml-rpc.php:1187 api/api_xml-rpc.php:2082 api/api_xml-rpc.php:2118
-#: api/api_xml-rpc.php:2392 api/api_xml-rpc.php:2428 api/api_xml-rpc.php:2464
+#: api/api_xml-rpc.php:176 api/api_xml-rpc.php:477 api/api_xml-rpc.php:1014
+#: api/api_xml-rpc.php:1081 api/api_xml-rpc.php:1115 api/api_xml-rpc.php:1150
+#: api/api_xml-rpc.php:1185 api/api_xml-rpc.php:2080 api/api_xml-rpc.php:2116
+#: api/api_xml-rpc.php:2390 api/api_xml-rpc.php:2426 api/api_xml-rpc.php:2462
 msgid ""
 "It is not necessary to include all the fields in this parameter, the "
 "database default value will be used if the field is not given."
@@ -37479,19 +37479,19 @@ msgstr ""
 #: api/api_xml-rpc.php:69 api/api_xml-rpc.php:105 api/api_xml-rpc.php:142
 #: api/api_xml-rpc.php:179 api/api_xml-rpc.php:212 api/api_xml-rpc.php:247
 #: api/api_xml-rpc.php:284 api/api_xml-rpc.php:321 api/api_xml-rpc.php:354
-#: api/api_xml-rpc.php:386 api/api_xml-rpc.php:415 api/api_xml-rpc.php:447
-#: api/api_xml-rpc.php:481 api/api_xml-rpc.php:512 api/api_xml-rpc.php:542
-#: api/api_xml-rpc.php:571 api/api_xml-rpc.php:767 api/api_xml-rpc.php:798
-#: api/api_xml-rpc.php:833 api/api_xml-rpc.php:1085 api/api_xml-rpc.php:1119
-#: api/api_xml-rpc.php:1154 api/api_xml-rpc.php:1189 api/api_xml-rpc.php:1312
-#: api/api_xml-rpc.php:1370 api/api_xml-rpc.php:1429 api/api_xml-rpc.php:1551
-#: api/api_xml-rpc.php:1673 api/api_xml-rpc.php:1732 api/api_xml-rpc.php:1854
-#: api/api_xml-rpc.php:1985 api/api_xml-rpc.php:2084 api/api_xml-rpc.php:2121
-#: api/api_xml-rpc.php:2154 api/api_xml-rpc.php:2189 api/api_xml-rpc.php:2225
-#: api/api_xml-rpc.php:2265 api/api_xml-rpc.php:2313 api/api_xml-rpc.php:2357
-#: api/api_xml-rpc.php:2394 api/api_xml-rpc.php:2430 api/api_xml-rpc.php:2466
-#: api/api_xml-rpc.php:2507 api/api_xml-rpc.php:2545 api/api_xml-rpc.php:2574
-#: api/api_xml-rpc.php:2603 api/api_xml-rpc.php:2632 api/api_xml-rpc.php:2665
+#: api/api_xml-rpc.php:384 api/api_xml-rpc.php:413 api/api_xml-rpc.php:445
+#: api/api_xml-rpc.php:479 api/api_xml-rpc.php:510 api/api_xml-rpc.php:540
+#: api/api_xml-rpc.php:569 api/api_xml-rpc.php:765 api/api_xml-rpc.php:796
+#: api/api_xml-rpc.php:831 api/api_xml-rpc.php:1083 api/api_xml-rpc.php:1117
+#: api/api_xml-rpc.php:1152 api/api_xml-rpc.php:1187 api/api_xml-rpc.php:1310
+#: api/api_xml-rpc.php:1368 api/api_xml-rpc.php:1427 api/api_xml-rpc.php:1549
+#: api/api_xml-rpc.php:1671 api/api_xml-rpc.php:1730 api/api_xml-rpc.php:1852
+#: api/api_xml-rpc.php:1983 api/api_xml-rpc.php:2082 api/api_xml-rpc.php:2119
+#: api/api_xml-rpc.php:2152 api/api_xml-rpc.php:2187 api/api_xml-rpc.php:2223
+#: api/api_xml-rpc.php:2263 api/api_xml-rpc.php:2311 api/api_xml-rpc.php:2355
+#: api/api_xml-rpc.php:2392 api/api_xml-rpc.php:2428 api/api_xml-rpc.php:2464
+#: api/api_xml-rpc.php:2505 api/api_xml-rpc.php:2543 api/api_xml-rpc.php:2572
+#: api/api_xml-rpc.php:2601 api/api_xml-rpc.php:2630 api/api_xml-rpc.php:2663
 msgid ""
 "A valid weberp username. This user should have security access  to this data."
 msgstr ""
@@ -37499,26 +37499,26 @@ msgstr ""
 "hozzáférhetnek az adatokhoz."
 
 #: api/api_xml-rpc.php:72 api/api_xml-rpc.php:108 api/api_xml-rpc.php:145
-#: api/api_xml-rpc.php:182 api/api_xml-rpc.php:484 api/api_xml-rpc.php:635
-#: api/api_xml-rpc.php:668 api/api_xml-rpc.php:1021 api/api_xml-rpc.php:2087
-#: api/api_xml-rpc.php:2124 api/api_xml-rpc.php:2397 api/api_xml-rpc.php:2433
-#: api/api_xml-rpc.php:2469
+#: api/api_xml-rpc.php:182 api/api_xml-rpc.php:482 api/api_xml-rpc.php:633
+#: api/api_xml-rpc.php:666 api/api_xml-rpc.php:1019 api/api_xml-rpc.php:2085
+#: api/api_xml-rpc.php:2122 api/api_xml-rpc.php:2395 api/api_xml-rpc.php:2431
+#: api/api_xml-rpc.php:2467
 msgid "This function returns an array of integers. "
 msgstr "Ez a függvény visszaadja egy tömbben egész számokat. "
 
 #: api/api_xml-rpc.php:73 api/api_xml-rpc.php:109 api/api_xml-rpc.php:146
 #: api/api_xml-rpc.php:183 api/api_xml-rpc.php:325 api/api_xml-rpc.php:358
-#: api/api_xml-rpc.php:419 api/api_xml-rpc.php:485 api/api_xml-rpc.php:636
-#: api/api_xml-rpc.php:669 api/api_xml-rpc.php:2088 api/api_xml-rpc.php:2125
-#: api/api_xml-rpc.php:2398 api/api_xml-rpc.php:2434 api/api_xml-rpc.php:2470
+#: api/api_xml-rpc.php:417 api/api_xml-rpc.php:483 api/api_xml-rpc.php:634
+#: api/api_xml-rpc.php:667 api/api_xml-rpc.php:2086 api/api_xml-rpc.php:2123
+#: api/api_xml-rpc.php:2396 api/api_xml-rpc.php:2432 api/api_xml-rpc.php:2468
 msgid "If the first element is zero then the function was successful. "
 msgstr "Ha az első elem nulla, akkor a függvény sikeres volt. "
 
 #: api/api_xml-rpc.php:74 api/api_xml-rpc.php:110 api/api_xml-rpc.php:184
-#: api/api_xml-rpc.php:326 api/api_xml-rpc.php:359 api/api_xml-rpc.php:420
-#: api/api_xml-rpc.php:486 api/api_xml-rpc.php:637 api/api_xml-rpc.php:1023
-#: api/api_xml-rpc.php:2089 api/api_xml-rpc.php:2399 api/api_xml-rpc.php:2435
-#: api/api_xml-rpc.php:2471
+#: api/api_xml-rpc.php:326 api/api_xml-rpc.php:359 api/api_xml-rpc.php:418
+#: api/api_xml-rpc.php:484 api/api_xml-rpc.php:635 api/api_xml-rpc.php:1021
+#: api/api_xml-rpc.php:2087 api/api_xml-rpc.php:2397 api/api_xml-rpc.php:2433
+#: api/api_xml-rpc.php:2469
 msgid ""
 "Otherwise an array of error codes is returned and no insertion takes place. "
 msgstr ""
@@ -37546,7 +37546,7 @@ msgstr ""
 msgid "The debtorno must already exist in the weberp database."
 msgstr "A számlaosztály neve nem tartalmazhat betüt"
 
-#: api/api_xml-rpc.php:147 api/api_xml-rpc.php:670 api/api_xml-rpc.php:2126
+#: api/api_xml-rpc.php:147 api/api_xml-rpc.php:668 api/api_xml-rpc.php:2124
 msgid ""
 "Otherwise an array of error codes is returned and no modification takes "
 "place. "
@@ -37596,10 +37596,10 @@ msgid "If the first element is zero then the function was successful."
 msgstr "Ha az első elem nulla, akkor a függvény sikeres volt."
 
 #: api/api_xml-rpc.php:217 api/api_xml-rpc.php:254 api/api_xml-rpc.php:289
-#: api/api_xml-rpc.php:704 api/api_xml-rpc.php:2159 api/api_xml-rpc.php:2193
-#: api/api_xml-rpc.php:2269 api/api_xml-rpc.php:2317 api/api_xml-rpc.php:2361
-#: api/api_xml-rpc.php:2511 api/api_xml-rpc.php:2549 api/api_xml-rpc.php:2578
-#: api/api_xml-rpc.php:2607 api/api_xml-rpc.php:2636 api/api_xml-rpc.php:2669
+#: api/api_xml-rpc.php:702 api/api_xml-rpc.php:2157 api/api_xml-rpc.php:2191
+#: api/api_xml-rpc.php:2267 api/api_xml-rpc.php:2315 api/api_xml-rpc.php:2359
+#: api/api_xml-rpc.php:2509 api/api_xml-rpc.php:2547 api/api_xml-rpc.php:2576
+#: api/api_xml-rpc.php:2605 api/api_xml-rpc.php:2634 api/api_xml-rpc.php:2667
 msgid "Otherwise an array of error codes is returned. "
 msgstr "Ellenkező esetben egy sor hibakódok vissza. "
 
@@ -37688,97 +37688,97 @@ msgstr "Ez a függvény egy listát a valuta rövidítések."
 msgid "This function returns an array of currency abbreviations. "
 msgstr "Ez a függvény visszaadja egy tömbben valuta rövidítések. "
 
-#: api/api_xml-rpc.php:382
+#: api/api_xml-rpc.php:380
 msgid ""
 "This function takes a currency abbreviation and returns details of that "
 "currency."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:383
+#: api/api_xml-rpc.php:381
 msgid "Currency abbreviation"
 msgstr "Deviza rövidítés"
 
-#: api/api_xml-rpc.php:384
+#: api/api_xml-rpc.php:382
 msgid "A currency abbreviation as returned by the GetCurrencyList function."
 msgstr "A pénznem rövidítése által visszaadott GetCurrencyList funkciót."
 
-#: api/api_xml-rpc.php:389
+#: api/api_xml-rpc.php:387
 msgid "This function returns an array of currency details."
 msgstr "Ez a függvény visszaadja egy tömbben valuta részleteket."
 
-#: api/api_xml-rpc.php:413
+#: api/api_xml-rpc.php:411
 msgid "This function returns a list of sales type abbreviations."
 msgstr "Ez a függvény egy kiválasztott értékesítési típusú rövidítések."
 
-#: api/api_xml-rpc.php:418
+#: api/api_xml-rpc.php:416
 msgid "This function returns an array of sales type abbreviations. "
 msgstr "Ez a függvény egy tömbbel tér vissza az eladások típusú rövidítések. "
 
-#: api/api_xml-rpc.php:443
+#: api/api_xml-rpc.php:441
 msgid ""
 "This function takes a sales type abbreviation and returns details of that "
 "sales type."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:444
+#: api/api_xml-rpc.php:442
 msgid "Sales type abbreviation"
 msgstr "Deviza rövidítés"
 
-#: api/api_xml-rpc.php:445
+#: api/api_xml-rpc.php:443
 msgid "A sales type abbreviation as returned by the GetSalesTypeList function."
 msgstr ""
 "Az értékesítési típusú rövidítése által visszaadott GetSalesTypeList "
 "funkciót."
 
-#: api/api_xml-rpc.php:450
+#: api/api_xml-rpc.php:448
 msgid "This function returns an array of sales type details."
 msgstr "Ez a függvény egy tömbbel tér vissza az eladások típusú részleteket."
 
-#: api/api_xml-rpc.php:474
+#: api/api_xml-rpc.php:472
 msgid ""
 "This function is used to insert sales type details into the webERP database."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:475
+#: api/api_xml-rpc.php:473
 msgid "Sales Type Details"
 msgstr "Eladás típusok"
 
-#: api/api_xml-rpc.php:510
+#: api/api_xml-rpc.php:508
 msgid "This function returns a list of hold reason codes."
 msgstr "Ez a függvény egy listát tart oka kódokat."
 
-#: api/api_xml-rpc.php:515
+#: api/api_xml-rpc.php:513
 msgid "This function returns an array of hold reason codes."
 msgstr "Ez a függvény visszaadja egy tömbben tartani oka kódokat."
 
-#: api/api_xml-rpc.php:538
+#: api/api_xml-rpc.php:536
 msgid ""
 "This function takes a hold reason code and returns details of that hold "
 "reason."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:539 api/api_xml-rpc.php:598
+#: api/api_xml-rpc.php:537 api/api_xml-rpc.php:596
 msgid "Hold reason code"
 msgstr "körzetkód"
 
-#: api/api_xml-rpc.php:540
+#: api/api_xml-rpc.php:538
 msgid ""
 "A hold reason abbreviation as returned by the GetHoldReasonList function."
 msgstr "A tartsa oka rövidítése által visszaadott GetHoldReasonList funkciót."
 
-#: api/api_xml-rpc.php:545
+#: api/api_xml-rpc.php:543
 msgid "This function returns an array of hold reason details."
 msgstr "Ez a függvény visszaadja egy tömbben tartani oka részleteket."
 
-#: api/api_xml-rpc.php:569
+#: api/api_xml-rpc.php:567
 msgid "This function returns a list of payment terms abbreviations."
 msgstr "Ez a függvény egy listát a fizetési feltételek rövidítések."
 
-#: api/api_xml-rpc.php:574
+#: api/api_xml-rpc.php:572
 msgid "This function returns an array of payment terms abbreviations."
 msgstr "Ez a függvény visszaadja egy tömbben fizetési feltételek rövidítések."
 
-#: api/api_xml-rpc.php:597
+#: api/api_xml-rpc.php:595
 msgid ""
 "This function takes a payment terms abbreviation and returns details of that "
 "payment terms type."
@@ -37786,18 +37786,18 @@ msgstr ""
 "Ez a funkció a fizetési feltételek rövidítése, és visszaadja részleteket, "
 "hogy a fizetési feltételek típus."
 
-#: api/api_xml-rpc.php:599
+#: api/api_xml-rpc.php:597
 msgid ""
 "A payment terms abbreviation as returned by the GetPaymentTermsList function."
 msgstr ""
 "A fizetési feltételek rövidítése által visszaadott GetPaymentTermsList "
 "funkciót."
 
-#: api/api_xml-rpc.php:604
+#: api/api_xml-rpc.php:602
 msgid "This function returns an array of payment terms details."
 msgstr "Ez a függvény visszaadja egy tömbben fizetési feltételek részleteit."
 
-#: api/api_xml-rpc.php:628
+#: api/api_xml-rpc.php:626
 msgid ""
 "This function inserts a new stock item into webERP, including updating the "
 "locstock table."
@@ -37805,11 +37805,11 @@ msgstr ""
 "Ez a funkció beszúr egy új állomány elemet webERP, beleértve frissítése "
 "locstock asztalra."
 
-#: api/api_xml-rpc.php:629 api/api_xml-rpc.php:662
+#: api/api_xml-rpc.php:627 api/api_xml-rpc.php:660
 msgid "Stock Item Details"
 msgstr "Rendelt tétel módosítás"
 
-#: api/api_xml-rpc.php:630
+#: api/api_xml-rpc.php:628
 msgid ""
 "Key/value pairs of data to insert. The key must be identical with the "
 "database field name."
@@ -37817,15 +37817,15 @@ msgstr ""
 "Kulcs / érték pár adatot beszúrni. A kulcs azonosnak kell lennie az "
 "adatbázis mező nevét."
 
-#: api/api_xml-rpc.php:661
+#: api/api_xml-rpc.php:659
 msgid "This function modifies a stock item that already exists in webERP."
 msgstr "Ez a funkció módosítja az állomány elem már létezik webERP."
 
-#: api/api_xml-rpc.php:663
+#: api/api_xml-rpc.php:661
 msgid "Key/value pairs of data to modify."
 msgstr "Kulcs / érték párokat az adatok módosítására."
 
-#: api/api_xml-rpc.php:694
+#: api/api_xml-rpc.php:692
 msgid ""
 "This function takes a stock item code and returns an array of key/value "
 "pairs."
@@ -37833,7 +37833,7 @@ msgstr ""
 "Ez a funkció a készlet tétel kódot, és egy tömbbel tér vissza a kulcs / "
 "érték párokat."
 
-#: api/api_xml-rpc.php:695
+#: api/api_xml-rpc.php:693
 msgid ""
 "The keys represent the database field names, and the values are the value of "
 "that field."
@@ -37841,17 +37841,17 @@ msgstr ""
 "A kulcsok képviseli az adatbázis mezők nevét, és az értékek értéke ezen a "
 "területen."
 
-#: api/api_xml-rpc.php:697 api/api_xml-rpc.php:928 api/api_xml-rpc.php:971
+#: api/api_xml-rpc.php:695 api/api_xml-rpc.php:926 api/api_xml-rpc.php:969
 msgid "The StockID code to identify the item in the database."
 msgstr "A megadott főkönyvi számla nem található az adatbázisban"
 
-#: api/api_xml-rpc.php:702
+#: api/api_xml-rpc.php:700
 msgid ""
 "If successful this function returns a set of key/value pairs containing the "
 "details of this stock item. "
 msgstr "felhasználók akiknek ez az alapértelezett telephely "
 
-#: api/api_xml-rpc.php:703
+#: api/api_xml-rpc.php:701
 msgid ""
 "The key will be identical with field name from the stockmaster table. All "
 "fields will be in the set regardless of whether the value was set."
@@ -37859,7 +37859,7 @@ msgstr ""
 "A kulcs meg fog egyezni a mező nevét a stockmaster asztalra. Minden mező "
 "lesz a készletbe függetlenül attól, hogy az értéket hoztak."
 
-#: api/api_xml-rpc.php:728
+#: api/api_xml-rpc.php:726
 msgid ""
 "This function searches the stockmaster table and returns an array of stock "
 "items matching that criteria."
@@ -37867,19 +37867,19 @@ msgstr ""
 "Ez a funkció megkeresi a stockmaster asztal és egy tömbbel tér vissza a "
 "készlet elem felelt meg a kritériumoknak."
 
-#: api/api_xml-rpc.php:730 api/api_xml-rpc.php:1915
+#: api/api_xml-rpc.php:728 api/api_xml-rpc.php:1913
 msgid "The field name to search on."
 msgstr "nem elérhetők az adtabázisban"
 
-#: api/api_xml-rpc.php:731 api/api_xml-rpc.php:1916 api/api_xml-rpc.php:1952
+#: api/api_xml-rpc.php:729 api/api_xml-rpc.php:1914 api/api_xml-rpc.php:1950
 msgid "Match Criteria"
 msgstr "Match kritériumai"
 
-#: api/api_xml-rpc.php:732 api/api_xml-rpc.php:1917 api/api_xml-rpc.php:1953
+#: api/api_xml-rpc.php:730 api/api_xml-rpc.php:1915 api/api_xml-rpc.php:1951
 msgid "The SQL search pattern to select items in the database."
 msgstr "A számlaosztály neve nem tartalmazhat betüt"
 
-#: api/api_xml-rpc.php:737
+#: api/api_xml-rpc.php:735
 msgid ""
 "Returns an array of stock codes matching the criteria send, or an array of "
 "error codes"
@@ -37887,9 +37887,9 @@ msgstr ""
 "Visszaad egy tömböt a készlet kód felel meg a feltételeknek küldeni, vagy "
 "egy tömb hibakódok"
 
-#: api/api_xml-rpc.php:765 api/api_xml-rpc.php:796 api/api_xml-rpc.php:827
-#: api/api_xml-rpc.php:2221 api/api_xml-rpc.php:2257 api/api_xml-rpc.php:2303
-#: api/api_xml-rpc.php:2499
+#: api/api_xml-rpc.php:763 api/api_xml-rpc.php:794 api/api_xml-rpc.php:825
+#: api/api_xml-rpc.php:2219 api/api_xml-rpc.php:2255 api/api_xml-rpc.php:2301
+#: api/api_xml-rpc.php:2497
 msgid ""
 "A string field containing a valid stockid that must already be setup in the "
 "stockmaster table. The api will check this before making the enquiry."
@@ -37897,7 +37897,7 @@ msgstr ""
 "Egy karakterlánc tartalmazó mező érvényes stockid, hogy kell már beállít a "
 "stockmaster táblázatban. Az api ellenőrzi ezt, mielőtt a vizsgálat."
 
-#: api/api_xml-rpc.php:770
+#: api/api_xml-rpc.php:768
 msgid ""
 "This function returns an array of stock quantities by location for this "
 "stock item. "
@@ -37905,7 +37905,7 @@ msgstr ""
 "Ez a függvény visszaadja egy tömbben állomány mennyiségek helyet ennek az "
 "állománynak tétel. "
 
-#: api/api_xml-rpc.php:801
+#: api/api_xml-rpc.php:799
 msgid ""
 "This function returns an array of stock reorder levels by location for this "
 "stock item."
@@ -37913,8 +37913,8 @@ msgstr ""
 "Ez a függvény visszaadja egy tömbben állomány átrendezni szintek helyet "
 "ennek az állománynak tétel."
 
-#: api/api_xml-rpc.php:829 api/api_xml-rpc.php:2259 api/api_xml-rpc.php:2305
-#: api/api_xml-rpc.php:2501
+#: api/api_xml-rpc.php:827 api/api_xml-rpc.php:2257 api/api_xml-rpc.php:2303
+#: api/api_xml-rpc.php:2499
 msgid ""
 "A string field containing a valid location code that must already be setup "
 "in the locations table. The api will check this before making the enquiry."
@@ -37922,11 +37922,11 @@ msgstr ""
 "Egy karakterlánc tartalmazó mező érvényes helyet kódot kell már beállít a "
 "helyeken táblázatban. Az api ellenőrzi ezt, mielőtt a vizsgálat."
 
-#: api/api_xml-rpc.php:830
+#: api/api_xml-rpc.php:828
 msgid "Reorder level"
 msgstr "Utánrendelés szintek karbantartása"
 
-#: api/api_xml-rpc.php:831
+#: api/api_xml-rpc.php:829
 msgid ""
 "A numeric field containing the reorder level for this stockid/location "
 "combination."
@@ -37934,7 +37934,7 @@ msgstr ""
 "A numerikus mezőt tartalmazó utánrendelési szintje részben stockid / hely "
 "kombinációt."
 
-#: api/api_xml-rpc.php:836
+#: api/api_xml-rpc.php:834
 msgid ""
 "This function returns zero if the transaction was successful or an array of "
 "error codes if not. "
@@ -37942,19 +37942,19 @@ msgstr ""
 "Ez a függvény nulla, ha a tranzakció sikeres volt, vagy egy tömb a "
 "hibakódok, ha nem. "
 
-#: api/api_xml-rpc.php:864
+#: api/api_xml-rpc.php:862
 msgid ""
 "This function returns the quantity allocated of the stock item id sent as a "
 "parameter."
 msgstr ""
 "Ez a függvény a kiadott mennyiség az állomány elem id küldött egy paraméter."
 
-#: api/api_xml-rpc.php:866
+#: api/api_xml-rpc.php:864
 msgid "The StockID code to identify items ordered but not yet shipped."
 msgstr ""
 "A StockID kóddal azonosítja tételeket megrendelt, de még nem szállították."
 
-#: api/api_xml-rpc.php:871
+#: api/api_xml-rpc.php:869
 msgid ""
 "This function returns an integer value of the quantity allocated or an array "
 "of error codes if not. "
@@ -37962,7 +37962,7 @@ msgstr ""
 "Ez a függvény egy egész számot, a mennyiségnek, vagy egy tömb a hibakódok, "
 "ha nem. "
 
-#: api/api_xml-rpc.php:895
+#: api/api_xml-rpc.php:893
 msgid ""
 "This function takes a stock ID and returns the quantity of this stock that "
 "is currently on outstanding purchase orders."
@@ -37970,7 +37970,7 @@ msgstr ""
 "Ez a funkció az állomány azonosítója, és visszaadja a mennyiséget állomány, "
 "amely jelenleg a kiemelkedő megrendelések."
 
-#: api/api_xml-rpc.php:897
+#: api/api_xml-rpc.php:895
 msgid ""
 "The StockID code to identify items in the database on order, but not yet "
 "received."
@@ -37978,7 +37978,7 @@ msgstr ""
 "A StockID kóddal azonosítja elem az adatbázisban megrendelt, de még nem "
 "kapott."
 
-#: api/api_xml-rpc.php:902
+#: api/api_xml-rpc.php:900
 msgid ""
 "This function returns an integer value of the quantity on order or an array "
 "of error codes if not."
@@ -37986,7 +37986,7 @@ msgstr ""
 "Ez a függvény egy egész számot a mennyiséget érdekében, vagy egy tömb a "
 "hibakódok, ha nem."
 
-#: api/api_xml-rpc.php:926
+#: api/api_xml-rpc.php:924
 msgid ""
 "This function sets the sales price for a stock ID in the sales type and "
 "currency passed to the function"
@@ -37994,27 +37994,27 @@ msgstr ""
 "Ez a funkció határozza meg az eladási árat a készlet azonosítót az "
 "értékesítési típusú és valuta át a függvény"
 
-#: api/api_xml-rpc.php:929 api/api_xml-rpc.php:972
+#: api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
 msgid "Currency Code"
 msgstr "Deviza név"
 
-#: api/api_xml-rpc.php:930 api/api_xml-rpc.php:973
+#: api/api_xml-rpc.php:928 api/api_xml-rpc.php:971
 msgid "The currency involved."
 msgstr "A valuta szó."
 
-#: api/api_xml-rpc.php:932
+#: api/api_xml-rpc.php:930
 msgid "The sales type to identify the item in the database."
 msgstr "A megadott főkönyvi számla nem található az adatbázisban"
 
-#: api/api_xml-rpc.php:934
+#: api/api_xml-rpc.php:932
 msgid "The price to apply to this item."
 msgstr "Az ár vonatkozik ez a tétel."
 
-#: api/api_xml-rpc.php:939
+#: api/api_xml-rpc.php:937
 msgid "Returns a zero if successful or else an array of error codes"
 msgstr "Visszaadja a nulla, ha sikeres, egyébként egy sor hibakódok"
 
-#: api/api_xml-rpc.php:969
+#: api/api_xml-rpc.php:967
 msgid ""
 "This function gets the sales price for a stock ID in the sales type and "
 "currency passed to the function"
@@ -38022,18 +38022,18 @@ msgstr ""
 "Ez a funkció kerül az eladási ár a készlet azonosítót az értékesítési típusú "
 "és valuta át a függvény"
 
-#: api/api_xml-rpc.php:975
+#: api/api_xml-rpc.php:973
 msgid "The sales type of the item in the database."
 msgstr "A megadott főkönyvi számla nem található az adatbázisban"
 
-#: api/api_xml-rpc.php:980
+#: api/api_xml-rpc.php:978
 msgid ""
 "Returns the sales price for he stock item whose ID is passed in the function"
 msgstr ""
 "Visszaadja az eladási árat úgy állomány elem, amelynek azonosítója telt el a "
 "funkciót"
 
-#: api/api_xml-rpc.php:1008
+#: api/api_xml-rpc.php:1006
 msgid ""
 "Inserts a sales invoice into the debtortrans table and does the relevant GL "
 "entries"
@@ -38041,15 +38041,15 @@ msgstr ""
 "Beszúr egy kereskedelmi számla a debtortrans asztalra, és nem a megfelelő GL "
 "bejegyzések"
 
-#: api/api_xml-rpc.php:1009
+#: api/api_xml-rpc.php:1007
 msgid "Invoice Details"
 msgstr "Számla összegek"
 
-#: api/api_xml-rpc.php:1010
+#: api/api_xml-rpc.php:1008
 msgid "An array of index/value items describing the invoice."
 msgstr "Tömb index / érték tételek leírja a számla."
 
-#: api/api_xml-rpc.php:1013
+#: api/api_xml-rpc.php:1011
 msgid ""
 "The transno key is generated by this call, and if a value is supplied, it "
 "will be ignored. "
@@ -38057,19 +38057,19 @@ msgstr ""
 "A transno kulcs által generált e felhívás, és ha az érték megadva, akkor "
 "figyelmen kívül hagyja. "
 
-#: api/api_xml-rpc.php:1014
+#: api/api_xml-rpc.php:1012
 msgid ""
 "Two additional fields are required. \"partcode\" needs to be a genuine part "
 "number, though it appears to serve no real purpose. "
 msgstr "Két további mezők kitöltése kötelező. \\ "
 
-#: api/api_xml-rpc.php:1015
+#: api/api_xml-rpc.php:1013
 msgid ""
 "\"salesarea\" also is required, though again it appears to serve no useful "
 "purpose. "
 msgstr "\\ "
 
-#: api/api_xml-rpc.php:1022
+#: api/api_xml-rpc.php:1020
 msgid ""
 "If the first element is zero then the function was successful, and the "
 "second element is the invoice number. "
@@ -38077,24 +38077,24 @@ msgstr ""
 "Ha az első elem nulla, akkor a függvény sikeres volt, a második elem a "
 "számla számát. "
 
-#: api/api_xml-rpc.php:1046 api/api_xml-rpc.php:1215 api/api_xml-rpc.php:1246
-#: api/api_xml-rpc.php:1278 api/api_xml-rpc.php:1517 api/api_xml-rpc.php:1639
-#: api/api_xml-rpc.php:1789 api/api_xml-rpc.php:1821 api/api_xml-rpc.php:1911
-#: api/api_xml-rpc.php:1947
+#: api/api_xml-rpc.php:1044 api/api_xml-rpc.php:1213 api/api_xml-rpc.php:1244
+#: api/api_xml-rpc.php:1276 api/api_xml-rpc.php:1515 api/api_xml-rpc.php:1637
+#: api/api_xml-rpc.php:1787 api/api_xml-rpc.php:1819 api/api_xml-rpc.php:1909
+#: api/api_xml-rpc.php:1945
 #, fuzzy
 msgid "Return Value Descriptions go here"
 msgstr "Fiz. mód leírás"
 
-#: api/api_xml-rpc.php:1047
+#: api/api_xml-rpc.php:1045
 msgid ""
 "This function is used to insert a new Sales Credit to the webERP database."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1048
+#: api/api_xml-rpc.php:1046
 msgid "Credit Details"
 msgstr "Összes jóváírás"
 
-#: api/api_xml-rpc.php:1049
+#: api/api_xml-rpc.php:1047
 msgid ""
 "An array of index/value items describing the credit.  All values must be "
 "negative."
@@ -38102,11 +38102,11 @@ msgstr ""
 "Tömb index / érték tételek leírja a hitel. Minden értéket negatívnak kell "
 "lennie."
 
-#: api/api_xml-rpc.php:1078
+#: api/api_xml-rpc.php:1076
 msgid "Insert Sales Order Header"
 msgstr "Vevői megrendelések"
 
-#: api/api_xml-rpc.php:1082
+#: api/api_xml-rpc.php:1080
 msgid ""
 "The orderno key is generated by this call, and if a value is supplied, it "
 "will be ignored. "
@@ -38114,7 +38114,7 @@ msgstr ""
 "A orderno kulcs által generált e felhívás, és ha az érték megadva, akkor "
 "figyelmen kívül hagyja. "
 
-#: api/api_xml-rpc.php:1088
+#: api/api_xml-rpc.php:1086
 msgid ""
 "If successful this function returns a two element array; the first element "
 "is 0 for success or an error code, while the second element is the order "
@@ -38123,11 +38123,11 @@ msgstr ""
 "Siker esetén ezt a függvény a két elem tömb, az első elem a 0 a siker vagy a "
 "hiba kódja, míg a második elem a megrendelés számát."
 
-#: api/api_xml-rpc.php:1113
+#: api/api_xml-rpc.php:1111
 msgid "Modify Sales Order Header Details"
 msgstr "Szállítások adatai"
 
-#: api/api_xml-rpc.php:1122
+#: api/api_xml-rpc.php:1120
 msgid ""
 "If successful this function returns a single element array with the value 0; "
 "otherwise, it contains all error codes encountered during the update."
@@ -38135,15 +38135,15 @@ msgstr ""
 "Siker esetén ezt a függvény egyetlen elem tömb értéke 0, ellenkező esetben "
 "tartalmazza az összes hibakódok felmerült a frissítés során."
 
-#: api/api_xml-rpc.php:1147
+#: api/api_xml-rpc.php:1145
 msgid "Insert Sales Order Line"
 msgstr "Vissza a megrendelésekhez"
 
-#: api/api_xml-rpc.php:1151
+#: api/api_xml-rpc.php:1149
 msgid "The orderno key must be one of these values. "
 msgstr "A szállítás dátumát a következő formában kell megadni "
 
-#: api/api_xml-rpc.php:1157 api/api_xml-rpc.php:1192
+#: api/api_xml-rpc.php:1155 api/api_xml-rpc.php:1190
 msgid ""
 "This function returns an array; the first element is 0 for success; "
 "otherwise the array contains a list of all errors encountered."
@@ -38151,125 +38151,125 @@ msgstr ""
 "Ez a függvény egy tömböt, az első elem a 0 a sikerhez, különben a tömb "
 "tartalmazza az összes hibát talált."
 
-#: api/api_xml-rpc.php:1182
+#: api/api_xml-rpc.php:1180
 msgid "Modify Sales Order Line"
 msgstr "Megrendelés sor módosítás"
 
-#: api/api_xml-rpc.php:1186
+#: api/api_xml-rpc.php:1184
 msgid "The orderno and stkcode keys must be one of these values. "
 msgstr "A orderno és stkcode kulcsok közül kell ezeket az értékeket. "
 
-#: api/api_xml-rpc.php:1216 api/api_xml-rpc.php:1247 api/api_xml-rpc.php:1279
-#: api/api_xml-rpc.php:1518 api/api_xml-rpc.php:1640 api/api_xml-rpc.php:1790
-#: api/api_xml-rpc.php:1822 api/api_xml-rpc.php:1912 api/api_xml-rpc.php:1948
+#: api/api_xml-rpc.php:1214 api/api_xml-rpc.php:1245 api/api_xml-rpc.php:1277
+#: api/api_xml-rpc.php:1516 api/api_xml-rpc.php:1638 api/api_xml-rpc.php:1788
+#: api/api_xml-rpc.php:1820 api/api_xml-rpc.php:1910 api/api_xml-rpc.php:1946
 #, fuzzy
 msgid "Function Description go here"
 msgstr "Szakasz leírás"
 
-#: api/api_xml-rpc.php:1217
+#: api/api_xml-rpc.php:1215
 msgid "Account Details"
 msgstr "Számlaosztályok"
 
-#: api/api_xml-rpc.php:1218
+#: api/api_xml-rpc.php:1216
 msgid ""
 "An array of index/value items describing the GL Account and fields to set."
 msgstr "Tömb index / érték tételeket leíró GL Számla és mezőket beállítva."
 
-#: api/api_xml-rpc.php:1249
+#: api/api_xml-rpc.php:1247
 msgid "Account Section Details"
 msgstr "Számlaosztályok"
 
-#: api/api_xml-rpc.php:1250
+#: api/api_xml-rpc.php:1248
 msgid "An array of index/value items describing the account section to insert."
 msgstr "Tömb index / érték tételek leírja a számla részben beszúrni."
 
-#: api/api_xml-rpc.php:1281
+#: api/api_xml-rpc.php:1279
 msgid "Account Group Details"
 msgstr "Számlacsoportok"
 
-#: api/api_xml-rpc.php:1282
+#: api/api_xml-rpc.php:1280
 msgid "An array of index/value items describing the account group to insert."
 msgstr "Hiba a deviza rekord elérésénél"
 
-#: api/api_xml-rpc.php:1310
+#: api/api_xml-rpc.php:1308
 msgid "This function returns a list of stock location ids."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1315
+#: api/api_xml-rpc.php:1313
 msgid "This function returns an array of stock location ids."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1337
+#: api/api_xml-rpc.php:1335
 msgid ""
 "This function takes a stock location id and returns details of that stock "
 "location."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1338
+#: api/api_xml-rpc.php:1336
 msgid "Stock Location Code"
 msgstr "Hely kód"
 
-#: api/api_xml-rpc.php:1339
+#: api/api_xml-rpc.php:1337
 msgid "A stock location code as returned by the GetLocationList function."
 msgstr "A készlet helye kód által visszaadott GetLocationList funkciót."
 
-#: api/api_xml-rpc.php:1344
+#: api/api_xml-rpc.php:1342
 msgid "This function returns an array of stock location details."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1368
+#: api/api_xml-rpc.php:1366
 msgid "This function returns a list of stock shipper ids."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1373
+#: api/api_xml-rpc.php:1371
 msgid "This function returns an array of stock shipper ids."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1396
+#: api/api_xml-rpc.php:1394
 msgid ""
 "This function takes a stock shipper id and returns details of that shipper."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1397
+#: api/api_xml-rpc.php:1395
 msgid "Stock Shipper ID"
 msgstr "Termékkód"
 
-#: api/api_xml-rpc.php:1398
+#: api/api_xml-rpc.php:1396
 msgid "A stock shipper ID as returned by the GetShippersList function."
 msgstr ""
 "A készlet feladó azonosító által visszaadott a GetShippersList funkciót."
 
-#: api/api_xml-rpc.php:1403
+#: api/api_xml-rpc.php:1401
 msgid "This function returns an array of stock shipper details."
 msgstr "Ez a függvény visszaadja egy tömbben állomány feladó adatait."
 
-#: api/api_xml-rpc.php:1427
+#: api/api_xml-rpc.php:1425
 msgid "This function returns a list of sales area codes."
 msgstr "Ez a függvény egy kiválasztott értékesítési terület kódokat."
 
-#: api/api_xml-rpc.php:1432
+#: api/api_xml-rpc.php:1430
 msgid "This function returns an array of sales area codes."
 msgstr "Ez a függvény visszaadja egy tömbben értékesítési terület kódokat."
 
-#: api/api_xml-rpc.php:1455
+#: api/api_xml-rpc.php:1453
 msgid ""
 "This function takes a sales area code and returns details of that sales area."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1456 api/api_xml-rpc.php:1578
+#: api/api_xml-rpc.php:1454 api/api_xml-rpc.php:1576
 msgid "Sales Area Code"
 msgstr "Értékesítési terület"
 
-#: api/api_xml-rpc.php:1457
+#: api/api_xml-rpc.php:1455
 msgid "A sales area code as returned by the GetSalesAreasList function."
 msgstr ""
 "Az értékesítési terület kód által visszaadott GetSalesAreasList funkciót."
 
-#: api/api_xml-rpc.php:1462 api/api_xml-rpc.php:1493
+#: api/api_xml-rpc.php:1460 api/api_xml-rpc.php:1491
 msgid "This function returns an array of sales area details."
 msgstr "Ez a függvény visszaadja egy tömbben értékesítési terület részleteket."
 
-#: api/api_xml-rpc.php:1486
+#: api/api_xml-rpc.php:1484
 msgid ""
 "This function takes a sales area description and returns details of that "
 "sales area."
@@ -38277,133 +38277,133 @@ msgstr ""
 "Ez a funkció értékesítési területtel leírása és visszatér adatait, hogy az "
 "értékesítés területén."
 
-#: api/api_xml-rpc.php:1487
+#: api/api_xml-rpc.php:1485
 msgid "Sales Area Description"
 msgstr "Leírás"
 
-#: api/api_xml-rpc.php:1488
+#: api/api_xml-rpc.php:1486
 msgid "A sales area description of the sales area of interest."
 msgstr "Az értékesítési terület leírása, az értékesítési területen a kamat."
 
-#: api/api_xml-rpc.php:1520
+#: api/api_xml-rpc.php:1518
 msgid "Sales Area Details"
 msgstr "Eladási helyek"
 
-#: api/api_xml-rpc.php:1521
+#: api/api_xml-rpc.php:1519
 msgid "An array of index/value items describing the sales area to insert."
 msgstr "Tömb index / érték tételek leírja az értékesítési területen beszúrni."
 
-#: api/api_xml-rpc.php:1549
+#: api/api_xml-rpc.php:1547
 msgid "This function returns a list of salesman codes."
 msgstr "Ez a függvény egy listát ügynök kód."
 
-#: api/api_xml-rpc.php:1554
+#: api/api_xml-rpc.php:1552
 msgid "This function returns an array of salesman codes."
 msgstr "Ez a függvény visszaadja egy tömbben eladó kódokat."
 
-#: api/api_xml-rpc.php:1577
+#: api/api_xml-rpc.php:1575
 msgid ""
 "This function takes a salesman code and returns details of that salesman."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1579
+#: api/api_xml-rpc.php:1577
 msgid "A salesman code as returned by the GetSalesmanList function."
 msgstr "Egy ügynök kód által visszaadott GetSalesmanList funkciót."
 
-#: api/api_xml-rpc.php:1584 api/api_xml-rpc.php:1615
+#: api/api_xml-rpc.php:1582 api/api_xml-rpc.php:1613
 msgid "This function returns an array of salesman details."
 msgstr "Ez a függvény visszaadja egy tömbben eladó adatai."
 
-#: api/api_xml-rpc.php:1608
+#: api/api_xml-rpc.php:1606
 msgid ""
 "This function takes a salesman's name and returns details of that salesman."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1610
+#: api/api_xml-rpc.php:1608
 msgid "The name of the salesman of interest."
 msgstr "A neve az eladó érdekeit."
 
-#: api/api_xml-rpc.php:1642
+#: api/api_xml-rpc.php:1640
 msgid "Salesman Details"
 msgstr "Bank adatok"
 
-#: api/api_xml-rpc.php:1643
+#: api/api_xml-rpc.php:1641
 msgid "An array of index/value items describing the salesman to insert."
 msgstr "Tömb index / érték tételek leírja az ügynök beszúrni."
 
-#: api/api_xml-rpc.php:1671
+#: api/api_xml-rpc.php:1669
 msgid "This function returns a list of tax group IDs."
 msgstr "Ez a függvény egy listát adó csoport azonosítókat."
 
-#: api/api_xml-rpc.php:1676
+#: api/api_xml-rpc.php:1674
 msgid "This function returns an array of tax group IDs."
 msgstr "Ez a függvény visszaadja egy tömbben adó csoport azonosítókat."
 
-#: api/api_xml-rpc.php:1699
+#: api/api_xml-rpc.php:1697
 msgid ""
 "This function takes a tax group ID and returns details of that tax group."
 msgstr ""
 "Ez a funkció egy adó-csoport azonosítót, és visszaadja adatait, adó csoport."
 
-#: api/api_xml-rpc.php:1700
+#: api/api_xml-rpc.php:1698
 msgid "Tax Group ID"
 msgstr "Adó típus"
 
-#: api/api_xml-rpc.php:1701
+#: api/api_xml-rpc.php:1699
 msgid "A tax group ID as returned by the GetTaxgroupList function."
 msgstr "Egy adó csoportazonosító által visszaadott a GetTaxgroupList funkciót."
 
-#: api/api_xml-rpc.php:1706
+#: api/api_xml-rpc.php:1704
 msgid "This function returns an array of tax group details."
 msgstr "Ez a függvény visszaadja egy tömbben adó csoport adatait."
 
-#: api/api_xml-rpc.php:1730
+#: api/api_xml-rpc.php:1728
 msgid "This function returns a list of customer types."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1735
+#: api/api_xml-rpc.php:1733
 msgid "This function returns an array of customer types."
 msgstr "Vevőkód (ig)"
 
-#: api/api_xml-rpc.php:1758
+#: api/api_xml-rpc.php:1756
 msgid ""
 "This function takes a customer type ID and returns details of that customer "
 "type."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1759
+#: api/api_xml-rpc.php:1757
 msgid "Customer Type ID"
 msgstr "Vevő név"
 
-#: api/api_xml-rpc.php:1760
+#: api/api_xml-rpc.php:1758
 msgid "A customer type ID as returned by the GetCustomerTypeList function."
 msgstr "Egy ügyfél ID típusú által visszaadott a GetCustomerTypeList funkciót."
 
-#: api/api_xml-rpc.php:1765
+#: api/api_xml-rpc.php:1763
 msgid "This function returns an array of customer type details."
 msgstr "Ez a függvény egy tömbbel tér vissza az ügyfél típusú részleteket."
 
-#: api/api_xml-rpc.php:1792 api/api_xml-rpc.php:1824
+#: api/api_xml-rpc.php:1790 api/api_xml-rpc.php:1822
 msgid "Category Details"
 msgstr "Vevő név"
 
-#: api/api_xml-rpc.php:1793
+#: api/api_xml-rpc.php:1791
 msgid "An array of index/value items describing the stock category to insert."
 msgstr "Tömb index / érték tételeket leíró állomány kategóriába beilleszteni."
 
-#: api/api_xml-rpc.php:1825
+#: api/api_xml-rpc.php:1823
 msgid "An array of index/value items describing the stock category to modify."
 msgstr "Tömb index / érték tételeket leíró állomány kategóriában módosítani."
 
-#: api/api_xml-rpc.php:1852
+#: api/api_xml-rpc.php:1850
 msgid "This function returns a list of stock category abbreviations."
 msgstr "Ez a függvény egy listát állomány kategóriában rövidítések."
 
-#: api/api_xml-rpc.php:1857
+#: api/api_xml-rpc.php:1855
 msgid "If successful, this function returns an array of stock category ids. "
 msgstr "Ha beválik, a függvény egy tömböt állomány kategória azonosítók. "
 
-#: api/api_xml-rpc.php:1858
+#: api/api_xml-rpc.php:1856
 msgid ""
 "Otherwise an array of error codes is returned and no stock categories are "
 "returned. "
@@ -38411,41 +38411,41 @@ msgstr ""
 "Ellenkező esetben egy sor hibakódok vissza, és nem rendelkeznek raktárral "
 "kategóriák vissza. "
 
-#: api/api_xml-rpc.php:1880
+#: api/api_xml-rpc.php:1878
 msgid ""
 "This function takes a stock category ID and returns details of that stock "
 "category type."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1881
+#: api/api_xml-rpc.php:1879
 msgid "Stock Category ID"
 msgstr "Termék kategória"
 
-#: api/api_xml-rpc.php:1882
+#: api/api_xml-rpc.php:1880
 msgid "A Stock Category ID as returned by the *WHAT* function."
 msgstr "A Stock kategória ID által visszaadott a * MI * funkciót."
 
-#: api/api_xml-rpc.php:1887
+#: api/api_xml-rpc.php:1885
 msgid "This function returns an array of stock category details."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:1950
+#: api/api_xml-rpc.php:1948
 msgid "Label Name"
 msgstr "Körzet neve"
 
-#: api/api_xml-rpc.php:1951
+#: api/api_xml-rpc.php:1949
 msgid "The category label to search on."
 msgstr "A kategória címke keresés."
 
-#: api/api_xml-rpc.php:1983
+#: api/api_xml-rpc.php:1981
 msgid "This function returns a list of general ledger account codes."
 msgstr "nincs beállítva mint érvényes bankszámla, főkönyvi hivatkozással"
 
-#: api/api_xml-rpc.php:1988
+#: api/api_xml-rpc.php:1986
 msgid "This function returns an array of general ledger account codes."
 msgstr "nincs beállítva mint érvényes bankszámla, főkönyvi hivatkozással"
 
-#: api/api_xml-rpc.php:2011
+#: api/api_xml-rpc.php:2009
 msgid ""
 "This function takes a general ledger account code and returns details of "
 "that account."
@@ -38453,20 +38453,20 @@ msgstr ""
 "Ez a funkció egy főkönyvi számla kódot és visszaadja adatait, hogy "
 "figyelembe."
 
-#: api/api_xml-rpc.php:2012
+#: api/api_xml-rpc.php:2010
 msgid "General Ledger Account Code"
 msgstr "Főkönyv"
 
-#: api/api_xml-rpc.php:2013
+#: api/api_xml-rpc.php:2011
 msgid ""
 "A general ledger account code as returned by the GetGLAccountList function."
 msgstr "Nincs elérhető főkönyvi számla (SQL), mert"
 
-#: api/api_xml-rpc.php:2018 api/api_xml-rpc.php:2051
+#: api/api_xml-rpc.php:2016 api/api_xml-rpc.php:2049
 msgid "This function returns an array of general ledger account details."
 msgstr "nincs beállítva mint érvényes bankszámla, főkönyvi hivatkozással"
 
-#: api/api_xml-rpc.php:2042
+#: api/api_xml-rpc.php:2040
 msgid ""
 "This function takes a stock code ID and a tax authority code and returns the "
 "relevant tax rate."
@@ -38474,28 +38474,28 @@ msgstr ""
 "Ez a funkció az állomány kódot azonosítóval és adóhatósági kódot, és "
 "visszaadja a vonatkozó adókulcs."
 
-#: api/api_xml-rpc.php:2044
+#: api/api_xml-rpc.php:2042
 msgid "The stock ID of the item whose tax rate is desired."
 msgstr "Az állomány azonosítója a tétel, amelynek adókulcs kívánt."
 
-#: api/api_xml-rpc.php:2045
+#: api/api_xml-rpc.php:2043
 msgid "Tax Authority Code"
 msgstr "Adószám"
 
-#: api/api_xml-rpc.php:2046
+#: api/api_xml-rpc.php:2044
 msgid "The code identifying the tax authority of interest."
 msgstr "A kód azonosítja az adóhatóság az érdeklődés."
 
-#: api/api_xml-rpc.php:2077
+#: api/api_xml-rpc.php:2075
 msgid ""
 "This function is used to insert a new supplier into the webERP database."
 msgstr "Ez a funkció beszúrni egy új szállító az webERP adatbázisban."
 
-#: api/api_xml-rpc.php:2078 api/api_xml-rpc.php:2114
+#: api/api_xml-rpc.php:2076 api/api_xml-rpc.php:2112
 msgid "Supplier Details"
 msgstr "Szállító"
 
-#: api/api_xml-rpc.php:2113
+#: api/api_xml-rpc.php:2111
 msgid ""
 "This function is used to modify a supplier which is already setup in the "
 "webERP database."
@@ -38503,21 +38503,21 @@ msgstr ""
 "Ez a funkció segítségével módosíthatja a szolgáltató, amely már beállít a "
 "webERP adatbázisban."
 
-#: api/api_xml-rpc.php:2119
+#: api/api_xml-rpc.php:2117
 msgid "The supplierid must already exist in the weberp database."
 msgstr "A megadott főkönyvi számla nem található az adatbázisban"
 
-#: api/api_xml-rpc.php:2150 api/api_xml-rpc.php:2183
+#: api/api_xml-rpc.php:2148 api/api_xml-rpc.php:2181
 msgid ""
 "This function is used to retrieve the details of a supplier from the webERP "
 "database."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:2151
+#: api/api_xml-rpc.php:2149
 msgid "Supplier ID"
 msgstr "Szállító"
 
-#: api/api_xml-rpc.php:2152
+#: api/api_xml-rpc.php:2150
 msgid ""
 "This is a string value. It must be a valid supplier id that is already in "
 "the webERP database."
@@ -38525,7 +38525,7 @@ msgstr ""
 "Ez egy string értéket. Meg kell egy érvényes azonosító, hogy a szállító már "
 "a webERP adatbázisban."
 
-#: api/api_xml-rpc.php:2157
+#: api/api_xml-rpc.php:2155
 msgid ""
 "If successful this function returns a set of key/value pairs containing the "
 "details of this supplier. "
@@ -38533,7 +38533,7 @@ msgstr ""
 "Siker esetén ezt a függvény egy sor kulcs / érték párokat tartalmazó "
 "részleteit beszállító. "
 
-#: api/api_xml-rpc.php:2158
+#: api/api_xml-rpc.php:2156
 msgid ""
 "The key will be identical with field name from the suppliers table. All "
 "fields will be in the set regardless of whether the value was set."
@@ -38541,7 +38541,7 @@ msgstr ""
 "A kulcs meg fog egyezni a mező nevét a beszállítók asztalra. Minden mező "
 "lesz a készletbe függetlenül attól, hogy az értéket hoztak."
 
-#: api/api_xml-rpc.php:2185
+#: api/api_xml-rpc.php:2183
 msgid ""
 "This is a string value. It must be a valid field in the suppliers table. "
 "This is case sensitive"
@@ -38549,12 +38549,12 @@ msgstr ""
 "Ez egy string értéket. Meg kell egy érvényes mezőt a szállítók táblázatban. "
 "Ez a kis-és nagybetűket"
 
-#: api/api_xml-rpc.php:2186 api/api_xml-rpc.php:2222 api/api_xml-rpc.php:2354
+#: api/api_xml-rpc.php:2184 api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2352
 msgid "Criteria"
 msgstr "Kritériumok"
 
-#: api/api_xml-rpc.php:2187 api/api_xml-rpc.php:2223 api/api_xml-rpc.php:2263
-#: api/api_xml-rpc.php:2309 api/api_xml-rpc.php:2355 api/api_xml-rpc.php:2505
+#: api/api_xml-rpc.php:2185 api/api_xml-rpc.php:2221 api/api_xml-rpc.php:2261
+#: api/api_xml-rpc.php:2307 api/api_xml-rpc.php:2353 api/api_xml-rpc.php:2503
 msgid ""
 "This is a string value. It holds the string that is searched for in the "
 "given field. It will search for all or part of the field."
@@ -38562,24 +38562,24 @@ msgstr ""
 "Ez egy string értéket. Azon a karakterláncot keresi a az adott területen. "
 "Meg fogja keresni a részben vagy egészben a területen."
 
-#: api/api_xml-rpc.php:2192
+#: api/api_xml-rpc.php:2190
 msgid "If successful this function returns an array of supplier ids. "
 msgstr "Siker esetén ezt a függvény egy tömböt szállító azonosítók. "
 
-#: api/api_xml-rpc.php:2219
+#: api/api_xml-rpc.php:2217
 msgid "This function is used to retrieve the details of stock batches."
 msgstr "Hiba az árazás adatok elérésénél (SQL)"
 
-#: api/api_xml-rpc.php:2228
+#: api/api_xml-rpc.php:2226
 msgid "Returns a two dimensional array of stock batch details. "
 msgstr "Visszaadja a két dimenziós tömb állomány tétel részleteket. "
 
-#: api/api_xml-rpc.php:2229
+#: api/api_xml-rpc.php:2227
 msgid "The fields returned are stockid, loccode, batchno, quantity, itemcost. "
 msgstr ""
 "A visszaadott mezők vannak stockid, loccode, batchno, mennyiség, itemcost. "
 
-#: api/api_xml-rpc.php:2255
+#: api/api_xml-rpc.php:2253
 msgid ""
 "Adjust the stock balance for the given stock code at the given location by "
 "the amount given."
@@ -38587,7 +38587,7 @@ msgstr ""
 "Állítsa be a készlet egyenlege az adott állomány kódot a megadott helyre a "
 "megadott összeget."
 
-#: api/api_xml-rpc.php:2261 api/api_xml-rpc.php:2307 api/api_xml-rpc.php:2503
+#: api/api_xml-rpc.php:2259 api/api_xml-rpc.php:2305 api/api_xml-rpc.php:2501
 msgid ""
 "This is an integer value. It holds the amount of stock to be adjusted. "
 "Should be negative if is stock is to be reduced"
@@ -38595,19 +38595,19 @@ msgstr ""
 "Ez egy egész számot. Ez tartja az áru mennyiségét ki kell igazítani. Ha "
 "negatív lesz, ha az állomány, hogy csökkenteni kell"
 
-#: api/api_xml-rpc.php:2262 api/api_xml-rpc.php:2308 api/api_xml-rpc.php:2504
+#: api/api_xml-rpc.php:2260 api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
 msgid "Transaction Date"
 msgstr "Tranzakciók"
 
-#: api/api_xml-rpc.php:2268 api/api_xml-rpc.php:2316 api/api_xml-rpc.php:2510
+#: api/api_xml-rpc.php:2266 api/api_xml-rpc.php:2314 api/api_xml-rpc.php:2508
 msgid "If successful this function returns 0. "
 msgstr "Siker esetén ezt a függvény 0. "
 
-#: api/api_xml-rpc.php:2299
+#: api/api_xml-rpc.php:2297
 msgid "Issues stock to a given work order from the given location"
 msgstr "Kérdések állomány egy adott munka érdekében az adott helyen"
 
-#: api/api_xml-rpc.php:2301 api/api_xml-rpc.php:2497
+#: api/api_xml-rpc.php:2299 api/api_xml-rpc.php:2495
 msgid ""
 "A string field containing a valid work order number that has already been "
 "created. The api will check this before making the enquiry."
@@ -38615,11 +38615,11 @@ msgstr ""
 "Egy karakterlánc tartalmazó mező érvényes munkavállalási tételszám, hogy már "
 "létrejött. Az api ellenőrzi ezt, mielőtt a vizsgálat."
 
-#: api/api_xml-rpc.php:2310
+#: api/api_xml-rpc.php:2308
 msgid "Batch number"
 msgstr "szám"
 
-#: api/api_xml-rpc.php:2311
+#: api/api_xml-rpc.php:2309
 msgid ""
 "This is a string value. It holds the reference to the batch number for the "
 "product being issued. If the stockid is not batch controlled this is ignored."
@@ -38628,14 +38628,14 @@ msgstr ""
 "kiállításának. Ha a stockid nem tétel ellenőrzi a rendszer figyelmen kívül "
 "hagyja."
 
-#: api/api_xml-rpc.php:2351
+#: api/api_xml-rpc.php:2349
 msgid ""
 "This function is used to retrieve the details of a work order from the "
 "webERP database."
 msgstr ""
 "Ez a funkció letölteni az adatokat a munka érdekében a webERP adatbázisból."
 
-#: api/api_xml-rpc.php:2353
+#: api/api_xml-rpc.php:2351
 msgid ""
 "This is a string value. It must be a valid field in the workorders table. "
 "This is case sensitive"
@@ -38643,27 +38643,27 @@ msgstr ""
 "Ez egy string értéket. Meg kell egy érvényes mezőt a workorders táblázatban. "
 "Ez a kis-és nagybetűket"
 
-#: api/api_xml-rpc.php:2360
+#: api/api_xml-rpc.php:2358
 msgid "If successful this function returns an array of work order numbers. "
 msgstr "Siker esetén ezt a függvény egy tömböt a munka megrendelési számot. "
 
-#: api/api_xml-rpc.php:2387
+#: api/api_xml-rpc.php:2385
 msgid ""
 "This function is used to insert new purchasing data into the webERP database."
 msgstr ""
 "Ez a funkció, hogy helyezze be az új beszerzési adatokat a webERP "
 "adatbázisban."
 
-#: api/api_xml-rpc.php:2388 api/api_xml-rpc.php:2424
+#: api/api_xml-rpc.php:2386 api/api_xml-rpc.php:2422
 msgid "Purchasing data"
 msgstr "Beszerzés"
 
-#: api/api_xml-rpc.php:2423
+#: api/api_xml-rpc.php:2421
 msgid ""
 "This function is used to modify purchasing data into the webERP database."
 msgstr "Ez a funkció módosítása beszerzési adatokat a webERP adatbázisban."
 
-#: api/api_xml-rpc.php:2459
+#: api/api_xml-rpc.php:2457
 msgid ""
 "This function is used to insert a new work order into the webERP database. "
 "Currently this works only for single line orders."
@@ -38671,19 +38671,19 @@ msgstr ""
 "Ez a funkció be egy új munka érdekében a webERP adatbázisban. Jelenleg ez "
 "csak akkor működik, egyszer line."
 
-#: api/api_xml-rpc.php:2460
+#: api/api_xml-rpc.php:2458
 msgid "Work order details"
 msgstr "sorrendben"
 
-#: api/api_xml-rpc.php:2495
+#: api/api_xml-rpc.php:2493
 msgid "Receives stock from a given work order from the given location"
 msgstr "Fogadja a készlet egy adott munka érdekében az adott helyen"
 
-#: api/api_xml-rpc.php:2543
+#: api/api_xml-rpc.php:2541
 msgid "Returns the webERP default date format"
 msgstr "Visszaadja a webERP alapértelmezett dátumformátum"
 
-#: api/api_xml-rpc.php:2548
+#: api/api_xml-rpc.php:2546
 msgid ""
 "If successful this function returns a string contain the default date "
 "format. "
@@ -38691,20 +38691,20 @@ msgstr ""
 "Siker esetén ezt a függvény egy karakterláncot tartalmazza az "
 "alapértelmezett dátumformátum. "
 
-#: api/api_xml-rpc.php:2572
+#: api/api_xml-rpc.php:2570
 msgid "Returns the webERP default location"
 msgstr "Visszaadja a webERP alapértelmezett hely"
 
-#: api/api_xml-rpc.php:2577
+#: api/api_xml-rpc.php:2575
 msgid ""
 "If successful this function returns a string contain the default location. "
 msgstr "felhasználók akiknek ez az alapértelezett telephely "
 
-#: api/api_xml-rpc.php:2601
+#: api/api_xml-rpc.php:2599
 msgid "Returns the webERP default price list"
 msgstr "Visszaadja az webERP alapértelmezett árlista"
 
-#: api/api_xml-rpc.php:2606
+#: api/api_xml-rpc.php:2604
 msgid ""
 "If successful this function returns a string contain the default price list "
 "code. "
@@ -38712,11 +38712,11 @@ msgstr ""
 "Siker esetén ezt a függvény egy karakterláncot tartalmazza az "
 "alapértelmezett árlista kódot. "
 
-#: api/api_xml-rpc.php:2630
+#: api/api_xml-rpc.php:2628
 msgid "Returns the webERP currency code"
 msgstr "Visszaadja a webERP valuta kód"
 
-#: api/api_xml-rpc.php:2635
+#: api/api_xml-rpc.php:2633
 msgid ""
 "If successful this function returns a string contain the default currency "
 "code. "
@@ -38724,7 +38724,7 @@ msgstr ""
 "Siker esetén ezt a függvény egy karakterláncot tartalmazza az "
 "alapértelmezett pénznem kódját. "
 
-#: api/api_xml-rpc.php:2659
+#: api/api_xml-rpc.php:2657
 msgid ""
 "Returns the value of the specified stock category property for the specified "
 "stock item category"
@@ -38732,40 +38732,40 @@ msgstr ""
 "Értékét adja vissza a megadott állomány kategóriában ingatlan a megadott "
 "állomány kategórián belül"
 
-#: api/api_xml-rpc.php:2660
+#: api/api_xml-rpc.php:2658
 msgid "Property"
 msgstr "Nyereség"
 
-#: api/api_xml-rpc.php:2661
+#: api/api_xml-rpc.php:2659
 msgid "The name of the specific property to be returned."
 msgstr "Az elnevezés a jellegzetes tulajdonsága, hogy vissza."
 
-#: api/api_xml-rpc.php:2663
+#: api/api_xml-rpc.php:2661
 msgid ""
 "The ID of the stock item for which the value of the above property is "
 "required. "
 msgstr ""
 "Az azonosító állomány elem, amelyre az értéke a fenti ingatlan van szükség. "
 
-#: api/api_xml-rpc.php:2668
+#: api/api_xml-rpc.php:2666
 msgid ""
 "If successful this function returns zero, and the value of the requested "
 "property. "
 msgstr "felhasználók akiknek ez az alapértelezett telephely "
 
-#: api/api_xml-rpc.php:2695
+#: api/api_xml-rpc.php:2693
 msgid "Returns (possibly translated) error text from error codes"
 msgstr "Visszaadja (esetleg fordított) error szöveget hibakódok"
 
-#: api/api_xml-rpc.php:2696
+#: api/api_xml-rpc.php:2694
 msgid "Error codes"
 msgstr "Hiba"
 
-#: api/api_xml-rpc.php:2697
+#: api/api_xml-rpc.php:2695
 msgid "An array of error codes to change into text messages. "
 msgstr "Tömb hibakódok megváltoztatni a szöveges üzenetek. "
 
-#: api/api_xml-rpc.php:2698
+#: api/api_xml-rpc.php:2696
 msgid ""
 "An array of two element arrays, one per error code. The second array has the "
 "error code in element 0 and the error string in element 1. "
@@ -38773,11 +38773,11 @@ msgstr ""
 "Egy sor két elem tömb, egy egy hibakódot. A második tömb a hibakódok elem 0 "
 "és a hibás sztringet elem 1. "
 
-#: api/api_xml-rpc.php:3047
+#: api/api_xml-rpc.php:3045
 msgid "Parameters"
 msgstr "Fizetési határidő"
 
-#: api/api_xml-rpc.php:3052
+#: api/api_xml-rpc.php:3050
 msgid "Return Value"
 msgstr "Alapértelmezett csomagjegyzék"
 

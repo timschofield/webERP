@@ -100,7 +100,7 @@ function GetAPIErrorMessages( $errcodes )
  *  function should be called when a successful login occurs.
  */
 
-function  DoSetup()
+function DoSetup()
 {
     global  $PathPrefix;
     if (isset($_SESSION['db']) AND $_SESSION['db'] != '' )

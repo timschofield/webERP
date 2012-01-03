@@ -3,8 +3,12 @@
 /* $Id: ManualAPIFunctions.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
 
 $PageSecurity = 1;
-$PathPrefix= $_SERVER['HTTP_HOST'].$rootpath.'/../../';
-//include('../../includes/session.inc');
+
+//$PathPrefix= $_SERVER['HTTP_HOST'].$rootpath.'/../../';
+//$PathPrefix= '/../';
+
+include('../../includes/session.inc');
+
 include('../../xmlrpc/lib/xmlrpc.inc');
 include('../../api/api_errorcodes.php');
 

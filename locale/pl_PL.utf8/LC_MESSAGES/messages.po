@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-28 10:45+1300\n"
+"POT-Creation-Date: 2012-01-03 19:41+1300\n"
 "PO-Revision-Date: 2011-02-06 02:09+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: <pl@li.org>\n"
@@ -201,8 +201,8 @@ msgstr "Nie mogę pobrać grup kont ponieważ"
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:13
 #: BOMExtendedQty.php:261 BOMIndented.php:246 BOMIndentedReverse.php:235
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:213 BOMs.php:832
-#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2026
-#: CounterSales.php:2152 Credit_Invoice.php:255 CreditStatus.php:21
+#: COGSGLPostings.php:18 CompanyPreferences.php:153 CounterSales.php:2020
+#: CounterSales.php:2146 Credit_Invoice.php:255 CreditStatus.php:21
 #: Currencies.php:28 CustEDISetup.php:17 DailyBankTransactions.php:11
 #: DebtorsAtPeriodEnd.php:125 DiscountCategories.php:10
 #: DiscountCategories.php:131 DiscountMatrix.php:16 EDIMessageFormat.php:104
@@ -691,10 +691,10 @@ msgid "Date"
 msgstr "Data"
 
 #: AddCustomerNotes.php:122 AddCustomerTypeNotes.php:109 PcReportTab.php:173
-#: Stocks.php:1019 UpgradeDatabase.php:182 UpgradeDatabase.php:185
-#: UpgradeDatabase.php:188 UpgradeDatabase.php:191 UpgradeDatabase.php:194
-#: UpgradeDatabase.php:197 UpgradeDatabase.php:200 UpgradeDatabase.php:203
-#: UpgradeDatabase.php:206 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1019 UpgradeDatabase.php:183 UpgradeDatabase.php:186
+#: UpgradeDatabase.php:189 UpgradeDatabase.php:192 UpgradeDatabase.php:195
+#: UpgradeDatabase.php:198 UpgradeDatabase.php:201 UpgradeDatabase.php:204
+#: UpgradeDatabase.php:207 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -880,8 +880,8 @@ msgstr "nie może być odtworzona ponieważ"
 
 #: AgedDebtors.php:373 AgedSuppliers.php:201 Areas.php:95
 #: ConfirmDispatch_Invoice.php:160 ConfirmDispatch_Invoice.php:974
-#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1366
-#: CounterSales.php:1380 Credit_Invoice.php:697 Credit_Invoice.php:718
+#: ConfirmDispatch_Invoice.php:988 Contracts.php:580 CounterSales.php:1360
+#: CounterSales.php:1374 Credit_Invoice.php:697 Credit_Invoice.php:718
 #: CustomerReceipt.php:542 CustomerReceipt.php:681 CustomerReceipt.php:709
 #: CustomerTransInquiry.php:91 DeliveryDetails.php:393 GLProfit_Loss.php:596
 #: GLTagProfit_Loss.php:511 Payments.php:334 PDFRemittanceAdvice.php:85
@@ -1149,7 +1149,7 @@ msgid "User ID"
 msgstr "Identyfikator użytkownika"
 
 #: AuditTrail.php:49 AuditTrail.php:62 ContractBOM.php:298
-#: CounterSales.php:2158 CounterSales.php:2161 CustomerTransInquiry.php:31
+#: CounterSales.php:2152 CounterSales.php:2155 CustomerTransInquiry.php:31
 #: DailySalesInquiry.php:48 DailySalesInquiry.php:50 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:167
 #: InventoryQuantities.php:193 InventoryQuantities.php:195 MRP.php:585
@@ -1215,8 +1215,8 @@ msgstr "Typ"
 msgid "Table"
 msgstr "Tabela"
 
-#: AuditTrail.php:167 api/api_xml-rpc.php:314 api/api_xml-rpc.php:729
-#: api/api_xml-rpc.php:1914
+#: AuditTrail.php:167 api/api_xml-rpc.php:314 api/api_xml-rpc.php:727
+#: api/api_xml-rpc.php:1912
 msgid "Field Name"
 msgstr "Nazwa pola"
 
@@ -1913,7 +1913,7 @@ msgstr "Część"
 #: ContractBOM.php:237 ContractBOM.php:349 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:94
 #: Contracts.php:961 Contracts.php:997 CounterSales.php:742
-#: CounterSales.php:2037 CounterSales.php:2222 CounterSales.php:2348
+#: CounterSales.php:2031 CounterSales.php:2216 CounterSales.php:2342
 #: Credit_Invoice.php:273 DeliveryDetails.php:827 DeliveryDetails.php:897
 #: GoodsReceived.php:100 GoodsReceived.php:104 GoodsReceived.php:107
 #: InventoryPlanningPrefSupplier.php:78 InventoryQuantities.php:246
@@ -1953,8 +1953,8 @@ msgstr "Część"
 #: includes/PDFStockCheckPageHeader.inc:44
 #: includes/PDFStockNegativesHeader.inc:33
 #: includes/PDFStockTransferHeader.inc:39 includes/PDFTransPageHeader.inc:209
-#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2260
-#: api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
+#: includes/PO_PDFOrderPageHeader.inc:78 api/api_xml-rpc.php:2258
+#: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
 msgid "Quantity"
 msgstr "Ilość"
 
@@ -2092,7 +2092,7 @@ msgid "Build"
 msgstr "Buduj"
 
 #: BOMExtendedQty.php:331 BOMInquiry.php:114 BOMs.php:856
-#: CounterSales.php:2033 CounterSales.php:2218 PO_SelectOSPurchOrder.php:236
+#: CounterSales.php:2027 CounterSales.php:2212 PO_SelectOSPurchOrder.php:236
 #: PO_SelectPurchOrder.php:213 ReorderLevelLocation.php:70
 #: ReorderLevelLocation.php:71 SelectCompletedOrder.php:551
 #: SelectOrderItems.php:1488 SelectOrderItems.php:1672
@@ -2165,8 +2165,8 @@ msgstr "Jeden poziom"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:113
 #: BOMInquiry.php:199 BOMs.php:529 BOMs.php:855 ContractBOM.php:236
-#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2031
-#: CounterSales.php:2216 CreditStatus.php:152 CreditStatus.php:241
+#: ContractBOM.php:346 ContractOtherReqts.php:93 CounterSales.php:2025
+#: CounterSales.php:2210 CreditStatus.php:152 CreditStatus.php:241
 #: EmailConfirmation.php:192 FixedAssetCategories.php:163
 #: FixedAssetDepreciation.php:86 FixedAssetRegister.php:83
 #: FixedAssetRegister.php:372 FixedAssetTransfer.php:50
@@ -2201,7 +2201,7 @@ msgstr "Jeden poziom"
 #: includes/PDFStockLocTransferHeader.inc:49
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
 #: includes/PDFTransPageHeader.inc:207
-#: includes/PDFTransPageHeaderPortrait.inc:262 api/api_xml-rpc.php:3046
+#: includes/PDFTransPageHeaderPortrait.inc:262 api/api_xml-rpc.php:3044
 msgid "Description"
 msgstr "Opis"
 
@@ -2281,7 +2281,7 @@ msgid "description"
 msgstr "Opis"
 
 #: BOMInquiry.php:30 BOMs.php:839 ContractBOM.php:324 ContractBOM.php:329
-#: Contracts.php:756 Contracts.php:759 CounterSales.php:2183
+#: Contracts.php:756 Contracts.php:759 CounterSales.php:2177
 #: CustomerReceipt.php:1106 CustomerReceipt.php:1109
 #: DiscountCategories.php:104 DiscountCategories.php:106
 #: DiscountCategories.php:110 DiscountCategories.php:112
@@ -2321,7 +2321,7 @@ msgid "Stock Code"
 msgstr "Kod Towaru"
 
 #: BOMInquiry.php:37 BOMs.php:844 ContractBOM.php:334 Contracts.php:764
-#: CounterSales.php:2187 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
+#: CounterSales.php:2181 CustomerReceipt.php:1116 FixedAssetTransfer.php:72
 #: MRPDemands.php:338 MRPReport.php:554 PO_Header.php:545 PO_Items.php:1058
 #: SelectAsset.php:102 SelectCreditItems.php:229 SelectCreditItems.php:979
 #: SelectCustomer.php:369 SelectGLAccount.php:96 SelectOrderItems.php:595
@@ -2356,7 +2356,7 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "Użyta fraza SQL:"
 
 #: BOMInquiry.php:112 BOMs.php:528 BOMs.php:854 ContractBOM.php:345
-#: CounterSales.php:2030 CounterSales.php:2215 CustomerBranches.php:367
+#: CounterSales.php:2024 CounterSales.php:2209 CustomerBranches.php:367
 #: CustomerReceipt.php:1127 GLCodesInquiry.php:26 MRPDemands.php:90
 #: MRPPlannedWorkOrders.php:256 MRPReport.php:746 PDFOrdersInvoiced.php:347
 #: PDFOrderStatus.php:318 PDFPrintLabel.php:247 PO_Header.php:555
@@ -2374,7 +2374,7 @@ msgid "Code"
 msgstr "Kod"
 
 #: BOMInquiry.php:115 BOMs.php:857 ConfirmDispatch_Invoice.php:280
-#: ContractBOM.php:347 CounterSales.php:2032 CounterSales.php:2217
+#: ContractBOM.php:347 CounterSales.php:2026 CounterSales.php:2211
 #: Credit_Invoice.php:272 GoodsReceived.php:101 GoodsReceived.php:105
 #: MRPReport.php:749 OffersReceived.php:106 PO_Items.php:1074
 #: PO_SelectOSPurchOrder.php:238 PO_SelectPurchOrder.php:215
@@ -2657,7 +2657,7 @@ msgstr "Nie mozna odtworzyć opisu produktu ponieważ"
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr "Użyta fraza SQL:"
 
-#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
+#: BOMs.php:405 ConfirmDispatch_Invoice.php:1021 CounterSales.php:1408
 #: Credit_Invoice.php:753 Credit_Invoice.php:781 SelectCreditItems.php:1454
 #: Stocks.php:940 Stocks.php:942
 msgid "Assembly"
@@ -2707,8 +2707,8 @@ msgstr "Poziom"
 #: StockStatus.php:80 StockStatus.php:85 WhereUsedInquiry.php:72
 #: WorkCentres.php:128 WorkCentres.php:221
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
-#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2258
-#: api/api_xml-rpc.php:2304 api/api_xml-rpc.php:2500
+#: includes/PDFStockNegativesHeader.inc:31 api/api_xml-rpc.php:2256
+#: api/api_xml-rpc.php:2302 api/api_xml-rpc.php:2498
 msgid "Location"
 msgstr "Lokacja"
 
@@ -2827,7 +2827,7 @@ msgstr "Grupa Towarowa"
 #: DiscountMatrix.php:160 PricesByCost.php:262 Prices.php:223
 #: SalesAnalRepts.php:32 SalesAnalRepts.php:34 SalesGLPostings.php:112
 #: SalesGLPostings.php:224 SalesGLPostings.php:354 SelectOrderItems.php:713
-#: api/api_xml-rpc.php:931 api/api_xml-rpc.php:974
+#: api/api_xml-rpc.php:929 api/api_xml-rpc.php:972
 msgid "Sales Type"
 msgstr "Typ Sprzedaży"
 
@@ -3106,7 +3106,7 @@ msgstr ""
 msgid "Back to Confirmation of Dispatch"
 msgstr "Powrót do Zatwierdzenia Wysyłki"
 
-#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1251
+#: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1245
 #: DeliveryDetails.php:583 DeliveryDetails.php:788 EmailCustTrans.php:9
 #: PaymentAllocations.php:31 SelectSalesOrder.php:830 SelectSalesOrder.php:901
 #: SelectSalesOrder.php:928 Z_SalesIntegrityCheck.php:46
@@ -3222,7 +3222,7 @@ msgstr "Ilości zafakturowane wymienione w"
 
 #: ConfirmDispatch_Invoice.php:277 ContractBOM.php:235 ContractCosting.php:79
 #: ContractCosting.php:85 Contracts.php:959 CounterSales.php:740
-#: CounterSales.php:2347 Credit_Invoice.php:269 DeliveryDetails.php:825
+#: CounterSales.php:2341 Credit_Invoice.php:269 DeliveryDetails.php:825
 #: GoodsReceived.php:98 OrderDetails.php:162 PO_Items.php:658
 #: PO_OrderDetails.php:146 PrintCustTrans.php:860 PrintCustTrans.php:949
 #: PrintCustTrans.php:998 PrintCustTransPortrait.php:907
@@ -3303,7 +3303,7 @@ msgstr "Ta Wysyłka"
 #: includes/DefineLabelClass.php:49 includes/PDFQuotationPageHeader.inc:104
 #: includes/PDFQuotationPortraitPageHeader.inc:104
 #: includes/PDFTransPageHeaderPortrait.inc:267
-#: includes/PO_PDFOrderPageHeader.inc:81 api/api_xml-rpc.php:933
+#: includes/PO_PDFOrderPageHeader.inc:81 api/api_xml-rpc.php:931
 msgid "Price"
 msgstr "Cena"
 
@@ -3599,12 +3599,12 @@ msgstr "Użyta fraza SQL"
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
-#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
-#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
-#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
-#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
-#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:191
+#: ContractCosting.php:415 CounterSales.php:1247 CounterSales.php:1287
+#: CounterSales.php:1303 CounterSales.php:1340 CounterSales.php:1359
+#: CounterSales.php:1373 CounterSales.php:1414 CounterSales.php:1424
+#: CounterSales.php:1506 CounterSales.php:1527 CounterSales.php:1689
+#: CounterSales.php:1711 CounterSales.php:1736 CounterSales.php:1757
+#: CounterSales.php:1783 CounterSales.php:1806 Credit_Invoice.php:191
 #: Credit_Invoice.php:538 Credit_Invoice.php:579 Credit_Invoice.php:596
 #: Credit_Invoice.php:612 Credit_Invoice.php:662 Credit_Invoice.php:675
 #: Credit_Invoice.php:787 Credit_Invoice.php:797 Credit_Invoice.php:872
@@ -3710,12 +3710,12 @@ msgstr "BŁĄD KRYTYCZNY"
 #: ConfirmDispatch_Invoice.php:1594 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterSales.php:1253 CounterSales.php:1293
-#: CounterSales.php:1309 CounterSales.php:1346 CounterSales.php:1365
-#: CounterSales.php:1379 CounterSales.php:1420 CounterSales.php:1430
-#: CounterSales.php:1512 CounterSales.php:1533 CounterSales.php:1695
-#: CounterSales.php:1717 CounterSales.php:1742 CounterSales.php:1763
-#: CounterSales.php:1789 CounterSales.php:1812 Credit_Invoice.php:538
+#: ContractCosting.php:415 CounterSales.php:1247 CounterSales.php:1287
+#: CounterSales.php:1303 CounterSales.php:1340 CounterSales.php:1359
+#: CounterSales.php:1373 CounterSales.php:1414 CounterSales.php:1424
+#: CounterSales.php:1506 CounterSales.php:1527 CounterSales.php:1689
+#: CounterSales.php:1711 CounterSales.php:1736 CounterSales.php:1757
+#: CounterSales.php:1783 CounterSales.php:1806 Credit_Invoice.php:538
 #: Credit_Invoice.php:579 Credit_Invoice.php:596 Credit_Invoice.php:612
 #: Credit_Invoice.php:662 Credit_Invoice.php:675 Credit_Invoice.php:787
 #: Credit_Invoice.php:797 Credit_Invoice.php:872 Credit_Invoice.php:887
@@ -3801,33 +3801,33 @@ msgstr "BŁĄD KRYTYCZNY"
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
 msgstr "ZANOTUJ TEN BŁĄD I WEZWIJ POMOC"
 
-#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1253
+#: ConfirmDispatch_Invoice.php:750 CounterSales.php:1247
 #: RecurringSalesOrdersProcess.php:637
 msgid "The sales order header could not be updated with the invoice number"
 msgstr "Nie można dopisać numeru faktury do nagłówka zamówienia ponieważ"
 
-#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1254
+#: ConfirmDispatch_Invoice.php:751 CounterSales.php:1248
 #: RecurringSalesOrdersProcess.php:638
 msgid "The following SQL to update the sales order was used"
 msgstr "Użyta fraza SQL:"
 
-#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1293
+#: ConfirmDispatch_Invoice.php:792 CounterSales.php:1287
 #: RecurringSalesOrdersProcess.php:678
 msgid "The debtor transaction record could not be inserted because"
 msgstr "Nie można zapisać transakcji dłużnika ponieważ"
 
-#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1294
+#: ConfirmDispatch_Invoice.php:793 CounterSales.php:1288
 #: RecurringSalesOrdersProcess.php:679
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr "Użyta fraza SQL:"
 
-#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1309
+#: ConfirmDispatch_Invoice.php:808 CounterSales.php:1303
 #: Credit_Invoice.php:596 RecurringSalesOrdersProcess.php:692
 #: SelectCreditItems.php:1144
 msgid "The debtor transaction taxes records could not be inserted because"
 msgstr "Nie można zapisać kwoty podatku na koncie dłużnika ponieważ"
 
-#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1310
+#: ConfirmDispatch_Invoice.php:809 CounterSales.php:1304
 #: Credit_Invoice.php:597 RecurringSalesOrdersProcess.php:693
 #: SelectCreditItems.php:1145
 msgid ""
@@ -3861,35 +3861,35 @@ msgstr "Użyta fraza SQL:"
 msgid "Cannot retrieve the mbflag"
 msgstr "Nie można pobrać mbflag"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1324
 #: FixedAssetItems.php:627 SalesAnalReptCols.php:328 Stocks.php:1201
 #: Suppliers.php:965 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "UWAGA"
 
-#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1330
+#: ConfirmDispatch_Invoice.php:939 CounterSales.php:1324
 msgid "Could not retrieve current location stock"
 msgstr "Nie można odtworzyć aktualnej lokalizacji towaru"
 
-#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1346
+#: ConfirmDispatch_Invoice.php:955 CounterSales.php:1340
 #: Credit_Invoice.php:675 SelectCreditItems.php:1387
 msgid "Location stock record could not be updated because"
 msgstr "Lokalizacja towaru nie może być zaktualizowana ponieważ"
 
 #: ConfirmDispatch_Invoice.php:956 ContractCosting.php:331
-#: CounterSales.php:1347 Credit_Invoice.php:676 GoodsReceived.php:486
+#: CounterSales.php:1341 Credit_Invoice.php:676 GoodsReceived.php:486
 #: ReverseGRN.php:220 SelectCreditItems.php:1388 StockTransfers.php:423
 #: StockTransfers.php:432 WorkOrderIssue.php:161 WorkOrderReceive.php:321
 #: WorkOrderReceive.php:428
 msgid "The following SQL to update the location stock record was used"
 msgstr "Użyta fraza SQL"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1359
 #: Credit_Invoice.php:696 SelectCreditItems.php:1408
 msgid "Could not retrieve assembly components from the database for"
 msgstr "Nie mogę odtworzyć elementów składowych kompletu z bazy danych dla"
 
-#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1365
+#: ConfirmDispatch_Invoice.php:973 CounterSales.php:1359
 #: Credit_Invoice.php:696 EDIMessageFormat.php:43 EDISendInvoices.php:105
 #: FixedAssetCategories.php:90 FixedAssetCategories.php:109
 #: PricesBasedOnMarkUp.php:334 PricesBasedOnMarkUp.php:350
@@ -3899,11 +3899,11 @@ msgstr "Nie mogę odtworzyć elementów składowych kompletu z bazy danych dla"
 msgid "because"
 msgstr "ponieważ"
 
-#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1379
+#: ConfirmDispatch_Invoice.php:987 CounterSales.php:1373
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr "Nie można odtworzyć ilości magazynowych komponentów kompletu ponieważ "
 
-#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1414
+#: ConfirmDispatch_Invoice.php:1021 CounterSales.php:1408
 #: CustomerInquiry.php:200 CustomerTransInquiry.php:105
 #: DeliveryDetails.php:593 DeliveryDetails.php:599 DeliveryDetails.php:606
 #: DeliveryDetails.php:792 MRPReport.php:412 PDFOrdersInvoiced.php:304
@@ -3915,12 +3915,12 @@ msgstr "Nie można odtworzyć ilości magazynowych komponentów kompletu poniewa
 msgid "Order"
 msgstr "Nr Zam"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1414
 #: Credit_Invoice.php:787 SelectCreditItems.php:1461
 msgid "Stock movement records for the assembly components of"
 msgstr "Zapisy przesunięć dla komponentów kompletu"
 
-#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1420
+#: ConfirmDispatch_Invoice.php:1027 CounterSales.php:1414
 #: Credit_Invoice.php:787 SelectCreditItems.php:1461 ShipmentCosting.php:397
 #: SupplierAllocations.php:139 includes/PDFPaymentRun_PymtFooter.php:57
 #: includes/PDFPaymentRun_PymtFooter.php:88
@@ -3931,14 +3931,14 @@ msgstr "Zapisy przesunięć dla komponentów kompletu"
 msgid "could not be inserted because"
 msgstr "nie mogą zostać zapisane ponieważ"
 
-#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1421
+#: ConfirmDispatch_Invoice.php:1028 CounterSales.php:1415
 #: Credit_Invoice.php:788 SelectCreditItems.php:1462
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
 "was used"
 msgstr "Użyta fraza SQL:"
 
-#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1430
+#: ConfirmDispatch_Invoice.php:1037 CounterSales.php:1424
 #: Credit_Invoice.php:797 SelectCreditItems.php:1471
 msgid ""
 "Location stock record could not be updated for an assembly component because"
@@ -3946,13 +3946,13 @@ msgstr ""
 "Nie można zaktualizować lokalizacji magazynowych dla komponentu kompletu "
 "ponieważ"
 
-#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1431
+#: ConfirmDispatch_Invoice.php:1038 CounterSales.php:1425
 msgid ""
 "The following SQL to update the locations stock record for the component was "
 "used"
 msgstr "Użyta fraza SQL:"
 
-#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1512
+#: ConfirmDispatch_Invoice.php:1120 CounterSales.php:1506
 #: Credit_Invoice.php:872 Credit_Invoice.php:970 Credit_Invoice.php:1008
 #: Credit_Invoice.php:1048 RecurringSalesOrdersProcess.php:361
 #: ReverseGRN.php:248 SelectCreditItems.php:1212 SelectCreditItems.php:1285
@@ -3960,7 +3960,7 @@ msgid "Stock movement records could not be inserted because"
 msgstr "Nie można zapisać przesunięć magazynowych ponieważ"
 
 #: ConfirmDispatch_Invoice.php:1121 ContractCosting.php:360
-#: CounterSales.php:1513 Credit_Invoice.php:873 Credit_Invoice.php:971
+#: CounterSales.php:1507 Credit_Invoice.php:873 Credit_Invoice.php:971
 #: Credit_Invoice.php:1009 GoodsReceived.php:517
 #: RecurringSalesOrdersProcess.php:362 ReverseGRN.php:249
 #: SelectCreditItems.php:1286 WorkOrderIssue.php:192 WorkOrderReceive.php:350
@@ -3968,14 +3968,14 @@ msgstr "Nie można zapisać przesunięć magazynowych ponieważ"
 msgid "The following SQL to insert the stock movement records was used"
 msgstr "Użyta fraza SQL"
 
-#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1533
+#: ConfirmDispatch_Invoice.php:1141 CounterSales.php:1527
 #: RecurringSalesOrdersProcess.php:382
 msgid ""
 "Taxes and rates applicable to this invoice line item could not be inserted "
 "because"
 msgstr "Nie można zaksięgować podatków dla tej linii faktury ponieważ"
 
-#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1534
+#: ConfirmDispatch_Invoice.php:1142 CounterSales.php:1528
 #: Credit_Invoice.php:1072 RecurringSalesOrdersProcess.php:383
 #: SelectCreditItems.php:1307
 msgid ""
@@ -4015,29 +4015,29 @@ msgstr "Przesunięcie towarów kontrolowanych nie może być zapisane ponieważ"
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr "Użyta fraza SQL"
 
-#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1612
+#: ConfirmDispatch_Invoice.php:1214 CounterSales.php:1606
 #: RecurringSalesOrdersProcess.php:421
 msgid "The count of existing Sales analysis records could not run because"
 msgstr "Nie można zliczyć rekordów analizy sprzedaży ponieważ:"
 
-#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1613
+#: ConfirmDispatch_Invoice.php:1215 CounterSales.php:1607
 #: Credit_Invoice.php:1101 RecurringSalesOrdersProcess.php:422
 #: SelectCreditItems.php:1630
 msgid "SQL to count the no of sales analysis records"
 msgstr "Użyta fraza SQL:"
 
-#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1670
+#: ConfirmDispatch_Invoice.php:1271 CounterSales.php:1664
 #: RecurringSalesOrdersProcess.php:480
 msgid "Sales analysis record could not be added or updated because"
 msgstr "Rekord analizy sprzedaży nie może być dodany/zmieniony ponieważ:"
 
-#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1671
+#: ConfirmDispatch_Invoice.php:1272 CounterSales.php:1665
 #: Credit_Invoice.php:1213 RecurringSalesOrdersProcess.php:481
 #: SelectCreditItems.php:1740
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr "Użyta fraza SQL:"
 
-#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1695
+#: ConfirmDispatch_Invoice.php:1297 CounterSales.php:1689
 #: Credit_Invoice.php:1243
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr "Nie można zaksięgowac kosztów sprzedaży ponieważ"
@@ -4047,9 +4047,9 @@ msgstr "Nie można zaksięgowac kosztów sprzedaży ponieważ"
 #: ConfirmDispatch_Invoice.php:1416 ConfirmDispatch_Invoice.php:1438
 #: ConfirmDispatch_Invoice.php:1460 ConfirmDispatch_Invoice.php:1482
 #: ConfirmDispatch_Invoice.php:1573 ConfirmDispatch_Invoice.php:1595
-#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1696
-#: CounterSales.php:1718 CounterSales.php:1743 CounterSales.php:1764
-#: CounterSales.php:1813 Credit_Invoice.php:1244 Credit_Invoice.php:1284
+#: ContractCosting.php:249 ContractCosting.php:267 CounterSales.php:1690
+#: CounterSales.php:1712 CounterSales.php:1737 CounterSales.php:1758
+#: CounterSales.php:1807 Credit_Invoice.php:1244 Credit_Invoice.php:1284
 #: Credit_Invoice.php:1311 Credit_Invoice.php:1332 Credit_Invoice.php:1361
 #: Credit_Invoice.php:1387 Credit_Invoice.php:1413
 #: RecurringSalesOrdersProcess.php:509 RecurringSalesOrdersProcess.php:536
@@ -4066,18 +4066,18 @@ msgstr "Nie można zaksięgowac kosztów sprzedaży ponieważ"
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr "Użyta fraza SQL:"
 
-#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1717
+#: ConfirmDispatch_Invoice.php:1320 CounterSales.php:1711
 msgid ""
 "The stock side of the cost of sales GL posting could not be inserted because"
 msgstr ""
 "Strona magazynowa kosztów sprzedaży pozycji KG nie może być dodana ponieważ:"
 
-#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1742
+#: ConfirmDispatch_Invoice.php:1347 CounterSales.php:1736
 #: RecurringSalesOrdersProcess.php:508
 msgid "The sales GL posting could not be inserted because"
 msgstr "Koszty sprzedaży nie mogą zostać zapisane w KG ponieważ:"
 
-#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1763
+#: ConfirmDispatch_Invoice.php:1369 CounterSales.php:1757
 #: RecurringSalesOrdersProcess.php:535
 msgid "The sales discount GL posting could not be inserted because"
 msgstr "Upusty nie mogą być zapisane w KG ponieważ"
@@ -4140,12 +4140,12 @@ msgstr "Stały rejestr aktywów nie można zaktualizować do usuwania, ponieważ
 msgid "The following SQL to update the fixed asset record was used"
 msgstr "Poniżej SQL do aktualizacji stałych rekord aktywów był używany"
 
-#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1789
+#: ConfirmDispatch_Invoice.php:1547 CounterSales.php:1783
 #: RecurringSalesOrdersProcess.php:602
 msgid "The total debtor GL posting could not be inserted because"
 msgstr "Nie można wprowadzić wierzytelnosci do KG ponieważ"
 
-#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1790
+#: ConfirmDispatch_Invoice.php:1548 CounterSales.php:1784
 #: RecurringSalesOrdersProcess.php:603
 msgid ""
 "The following SQL to insert the total debtors control GLTrans record was used"
@@ -4155,24 +4155,24 @@ msgstr "Użyta fraza SQL:"
 msgid "The freight GL posting could not be inserted because"
 msgstr "Koszty transportu nie mogą być wprowadzone do KG ponieważ"
 
-#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1812
+#: ConfirmDispatch_Invoice.php:1594 CounterSales.php:1806
 #: Credit_Invoice.php:1412 RecurringSalesOrdersProcess.php:575
 #: SelectCreditItems.php:1945
 msgid "The tax GL posting could not be inserted because"
 msgstr "Podatek nie może być wprowadzony do KG ponieważ:"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1974
 #: RecurringSalesOrdersProcess.php:698 Z_DeleteInvoice.php:146
 msgid "Invoice number"
 msgstr "Numer faktury"
 
-#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1980
+#: ConfirmDispatch_Invoice.php:1611 CounterSales.php:1974
 #: RecurringSalesOrdersProcess.php:698 SelectCreditItems.php:1960
 msgid "processed"
 msgstr "przetworzony"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: ContractBOM.php:293 CounterSales.php:1985 CounterSales.php:1987
+#: ContractBOM.php:293 CounterSales.php:1979 CounterSales.php:1981
 #: CustomerReceipt.php:547 DeliveryDetails.php:574 DeliveryDetails.php:578
 #: DeliveryDetails.php:781 DeliveryDetails.php:784 GLBalanceSheet.php:18
 #: GLProfit_Loss.php:22 GLTagProfit_Loss.php:22 GLTagProfit_Loss.php:519
@@ -4187,16 +4187,16 @@ msgid "Print"
 msgstr "Drukuj"
 
 #: ConfirmDispatch_Invoice.php:1616 ConfirmDispatch_Invoice.php:1618
-#: CounterSales.php:1985 CounterSales.php:1987
+#: CounterSales.php:1979 CounterSales.php:1981
 msgid "Print this invoice"
 msgstr "Drukuj fakturę"
 
-#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1985
+#: ConfirmDispatch_Invoice.php:1616 CounterSales.php:1979
 #: SystemParameters.php:455
 msgid "Landscape"
 msgstr "Poziomy"
 
-#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1987
+#: ConfirmDispatch_Invoice.php:1618 CounterSales.php:1981
 #: SystemParameters.php:456
 msgid "Portrait"
 msgstr "Pionowy"
@@ -4320,7 +4320,7 @@ msgstr "Użyta fraza SQL"
 
 #: ContractBOM.php:204 CounterSales.php:442 PO_Items.php:629
 #: SelectOrderItems.php:918 includes/SelectOrderItems_IntoCart.inc:59
-#: includes/SelectOrderItems_IntoCart.inc:163
+#: includes/SelectOrderItems_IntoCart.inc:164
 msgid "The item code"
 msgstr "Kod towaru"
 
@@ -4379,7 +4379,7 @@ msgstr "Szukaj Towarów"
 msgid "Enter text extracts in the description"
 msgstr "Wprowadź fragment(y) tekstu z opisu"
 
-#: ContractBOM.php:324 CounterSales.php:2183 PO_Items.php:1050
+#: ContractBOM.php:324 CounterSales.php:2177 PO_Items.php:1050
 #: SelectCompletedOrder.php:529 SelectCreditItems.php:972
 #: SelectOrderItems.php:1638 SelectSalesOrder.php:565 SelectWorkOrder.php:179
 msgid "Enter extract of the Stock Code"
@@ -4394,7 +4394,7 @@ msgstr "Utwórz nowy element fotografii"
 msgid "Image"
 msgstr "Obrazek"
 
-#: ContractBOM.php:368 CounterSales.php:2045 FixedAssetItems.php:485
+#: ContractBOM.php:368 CounterSales.php:2039 FixedAssetItems.php:485
 #: FixedAssetItems.php:489 PO_Items.php:1096 SalesCategories.php:249
 #: SelectCreditItems.php:1018 SelectOrderItems.php:1501
 #: SelectOrderItems.php:1679 Stocks.php:834 Stocks.php:838
@@ -5044,7 +5044,7 @@ msgid "The customer record selected"
 msgstr "Zapis wybranego klienta"
 
 #: Contracts.php:714 CounterSales.php:120 CounterSales.php:154
-#: CounterSales.php:2066 CounterSales.php:2247 DeliveryDetails.php:146
+#: CounterSales.php:2060 CounterSales.php:2241 DeliveryDetails.php:146
 #: PO_Header.php:407 PO_Header.php:478 SelectCreditItems.php:179
 #: SelectOrderItems.php:382 SelectOrderItems.php:429 SelectOrderItems.php:508
 #: SelectOrderItems.php:548 SelectOrderItems.php:1524
@@ -5407,12 +5407,12 @@ msgstr ""
 msgid "This sale has been cancelled as requested"
 msgstr "Sprzedaż ta została anulowana, zgodnie z wnioskiem"
 
-#: CounterSales.php:215 CounterSales.php:1989
+#: CounterSales.php:215 CounterSales.php:1983
 msgid "Start a new Counter Sale"
 msgstr "Rozpocznij nowy Licznik sprzedaż"
 
-#: CounterSales.php:222 CounterSales.php:1041 CounterSales.php:1837
-#: CounterSales.php:1856 CounterSales.php:1906 CounterSales.php:1941
+#: CounterSales.php:222 CounterSales.php:1041 CounterSales.php:1831
+#: CounterSales.php:1850 CounterSales.php:1900 CounterSales.php:1935
 msgid "Counter Sale"
 msgstr "Sprzedam Licznik"
 
@@ -5718,7 +5718,7 @@ msgstr "Praca Nowy numer Zamówienie"
 msgid "for"
 msgstr "dla"
 
-#: CounterSales.php:1234 DeliveryDetails.php:564 DeliveryDetails.php:776
+#: CounterSales.php:1232 DeliveryDetails.php:564 DeliveryDetails.php:776
 #: EmailConfirmation.php:169 FTP_RadioBeacon.php:185 FTP_RadioBeacon.php:288
 #: PO_AuthoriseMyOrders.php:58 PO_OrderDetails.php:27 POReport.php:490
 #: POReport.php:499 POReport.php:735 POReport.php:1264 POReport.php:1273
@@ -5732,80 +5732,80 @@ msgstr "dla"
 msgid "Order Number"
 msgstr "Zamówienie"
 
-#: CounterSales.php:1234 DeliveryDetails.php:562 DeliveryDetails.php:564
+#: CounterSales.php:1232 DeliveryDetails.php:562 DeliveryDetails.php:564
 #: SpecialOrder.php:560
 msgid "has been entered"
 msgstr "zostało dodane"
 
-#: CounterSales.php:1839
+#: CounterSales.php:1833
 msgid ""
 "The SQL that failed to insert the GL transaction for the bank account debit "
 "was"
 msgstr "SQL, które nie wstawić GL transakcji polecenia zapłaty rachunku banku"
 
-#: CounterSales.php:1840 CustomerReceipt.php:460
+#: CounterSales.php:1834 CustomerReceipt.php:460
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "Nie można wprowadzić zapisu KG dla uznania konta bankowego"
 
-#: CounterSales.php:1858 CustomerReceipt.php:509
+#: CounterSales.php:1852 CustomerReceipt.php:509
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
 msgstr "Użyta fraza SQL"
 
-#: CounterSales.php:1859 CustomerReceipt.php:510
+#: CounterSales.php:1853 CustomerReceipt.php:510
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr ""
 "Nie można wprowadzić pozycji KG dla obciążenia konta  kredytowego dłużnika"
 
-#: CounterSales.php:1914 CustomerReceipt.php:487
+#: CounterSales.php:1908 CustomerReceipt.php:487
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "Użyta fraza SQL"
 
-#: CounterSales.php:1915 CustomerReceipt.php:488
+#: CounterSales.php:1909 CustomerReceipt.php:488
 msgid "Cannot insert a bank transaction"
 msgstr "Nie można wprowadzić oepracji bankowej"
 
-#: CounterSales.php:1943 CustomerReceipt.php:419
+#: CounterSales.php:1937 CustomerReceipt.php:419
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "Użyta fraza SQL"
 
-#: CounterSales.php:1944 CustomerReceipt.php:420
+#: CounterSales.php:1938 CustomerReceipt.php:420
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr "Nie można wprowadzić transakcji bankowej dla klienta ponieważ"
 
-#: CounterSales.php:1953 CustomerReceipt.php:428
+#: CounterSales.php:1947 CustomerReceipt.php:428
 msgid "The SQL that failed to update the date of the last payment received was"
 msgstr "Użyta fraza SQL"
 
-#: CounterSales.php:1954 CustomerReceipt.php:429
+#: CounterSales.php:1948 CustomerReceipt.php:429
 msgid ""
 "Cannot update the customer record for the date of the last payment received "
 "because"
 msgstr "Nie można zmienić daty ostatniej płatności klienta ponieważ"
 
-#: CounterSales.php:1967
+#: CounterSales.php:1961
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the invoice "
 "was"
 msgstr "SQL, które nie wstawić podział otrzymania faktury"
 
-#: CounterSales.php:1968
+#: CounterSales.php:1962
 msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr ""
 "Nie można wstawić podziału klientów od daty otrzymania faktury, ponieważ do"
 
-#: CounterSales.php:2006 SelectCreditItems.php:938 SelectOrderItems.php:1460
+#: CounterSales.php:2000 SelectCreditItems.php:938 SelectOrderItems.php:1460
 msgid "Yes Please"
 msgstr "Tak Proszę"
 
-#: CounterSales.php:2027 CounterSales.php:2028 SelectOrderItems.php:1481
+#: CounterSales.php:2021 CounterSales.php:2022 SelectOrderItems.php:1481
 #: SelectOrderItems.php:1482 SystemParameters.php:405
 msgid "Frequently Ordered Items"
 msgstr "Często zamówionych towarów"
 
-#: CounterSales.php:2028 SelectOrderItems.php:1482
+#: CounterSales.php:2022 SelectOrderItems.php:1482
 msgid ""
 ", shows the most frequently ordered items in the last 6 months.  You can "
 "choose from this list, or search further for other items"
@@ -5813,43 +5813,43 @@ msgstr ""
 ", Przedstawia najczęściej zamawianych pozycji w ciągu ostatnich 6 miesięcy. "
 "Możesz wybrać z listy, albo szukaj dalej na inne przedmioty"
 
-#: CounterSales.php:2034 CounterSales.php:2219 SelectOrderItems.php:1489
+#: CounterSales.php:2028 CounterSales.php:2213 SelectOrderItems.php:1489
 #: SelectOrderItems.php:1673
 msgid "On Demand"
 msgstr "On Demand"
 
-#: CounterSales.php:2035 CounterSales.php:2220 SelectOrderItems.php:1490
+#: CounterSales.php:2029 CounterSales.php:2214 SelectOrderItems.php:1490
 #: SelectOrderItems.php:1674 StockLocStatus.php:166 StockStatus.php:90
 msgid "On Order"
 msgstr "Na Zamówienie"
 
-#: CounterSales.php:2036 CounterSales.php:2221 SelectOrderItems.php:1491
+#: CounterSales.php:2030 CounterSales.php:2215 SelectOrderItems.php:1491
 #: SelectOrderItems.php:1675 StockLocStatus.php:165 StockStatus.php:89
 #: includes/OutputSerialItems.php:37 includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
 msgstr "Dostępne"
 
-#: CounterSales.php:2065 CounterSales.php:2247 SelectOrderItems.php:1523
+#: CounterSales.php:2059 CounterSales.php:2241 SelectOrderItems.php:1523
 #: SelectOrderItems.php:1705 StockCheck.php:221 StockLocStatus.php:183
 #: StockLocStatus.php:206 StockStatus.php:115 StockStatus.php:139
 msgid "The demand for this product from"
 msgstr "Zapotrzebowanie na ten produkt z"
 
-#: CounterSales.php:2083 CounterSales.php:2097 CounterSales.php:2265
-#: CounterSales.php:2279 SelectOrderItems.php:1541 SelectOrderItems.php:1555
+#: CounterSales.php:2077 CounterSales.php:2091 CounterSales.php:2259
+#: CounterSales.php:2273 SelectOrderItems.php:1541 SelectOrderItems.php:1555
 #: SelectOrderItems.php:1725 SelectOrderItems.php:1739
 msgid "The order details for this product cannot be retrieved because"
 msgstr "Szczegóły zamówienia na ten produkt nie może być przywrócony, ponieważ"
 
-#: CounterSales.php:2146 CounterSales.php:2211 CounterSales.php:2334
+#: CounterSales.php:2140 CounterSales.php:2205 CounterSales.php:2328
 msgid "Add to Sale"
 msgstr "Dodaj do sprzedaży"
 
-#: CounterSales.php:2153 CounterSales.php:2154
+#: CounterSales.php:2147 CounterSales.php:2148
 msgid "Search for Items"
 msgstr "Szukaj przedmioty"
 
-#: CounterSales.php:2154 SelectOrderItems.php:1606
+#: CounterSales.php:2148 SelectOrderItems.php:1606
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -5858,58 +5858,58 @@ msgstr ""
 "jedną z kategorii akcji, lub po prostu wprowadzić częściowy opis przedmiotu "
 "kod przedmiotu lub częściowego"
 
-#: CounterSales.php:2155 SelectOrderItems.php:1607
+#: CounterSales.php:2149 SelectOrderItems.php:1607
 msgid "Select a Stock Category"
 msgstr "Wybierz kategorię fotografii"
 
-#: CounterSales.php:2180 SelectOrderItems.php:1631
+#: CounterSales.php:2174 SelectOrderItems.php:1631
 msgid "Enter partial Description"
 msgstr "Wpisz częściowy Opis"
 
-#: CounterSales.php:2188 SelectOrderItems.php:1646
+#: CounterSales.php:2182 SelectOrderItems.php:1646
 msgid "Use Quick Entry"
 msgstr "Szybkie Wprowadzanie"
 
-#: CounterSales.php:2199 SelectOrderItems.php:1659
+#: CounterSales.php:2193 SelectOrderItems.php:1659
 msgid ""
 "Select an item by entering the quantity required.  Click Order when ready."
 msgstr ""
 "Wybierz pozycję przez wprowadzenie ilości. Kliknij Zamówienie gdy jest "
 "gotowy."
 
-#: CounterSales.php:2210 CounterSales.php:2333 SelectOrderItems.php:1665
+#: CounterSales.php:2204 CounterSales.php:2327 SelectOrderItems.php:1665
 #: SelectOrderItems.php:1785
 msgid "Prev"
 msgstr "Poprzedni"
 
-#: CounterSales.php:2212 CounterSales.php:2335 MRPReport.php:738
+#: CounterSales.php:2206 CounterSales.php:2329 MRPReport.php:738
 #: SelectAsset.php:236 SelectCustomer.php:406 SelectCustomer.php:487
 #: SelectOrderItems.php:1667 SelectOrderItems.php:1787 SelectProduct.php:723
 #: SelectSupplier.php:249 SelectSupplier.php:311
 msgid "Next"
 msgstr "Następna"
 
-#: CounterSales.php:2343
+#: CounterSales.php:2337
 msgid "Use this form to add items quickly if the item codes are already known"
 msgstr ""
 "Użyj tego formularza aby dodać elementy szybko, jeśli obiekt kody są już "
 "znane"
 
-#: CounterSales.php:2368 SelectCreditItems.php:981 SelectCreditItems.php:1032
+#: CounterSales.php:2362 SelectCreditItems.php:981 SelectCreditItems.php:1032
 #: SelectOrderItems.php:1795 SelectOrderItems.php:1821
 msgid "Quick Entry"
 msgstr "Szybkie Wprowadzanie"
 
-#: CounterSales.php:2369 SelectCreditItems.php:1050 SelectOrderItems.php:1822
+#: CounterSales.php:2363 SelectCreditItems.php:1050 SelectOrderItems.php:1822
 #: SelectOrderItems.php:1842
 msgid "Search Parts"
 msgstr "Szukaj Towarów"
 
-#: CounterSales.php:2373
+#: CounterSales.php:2367
 msgid "Cancel Sale"
 msgstr "Sprzedam Anuluj"
 
-#: CounterSales.php:2373
+#: CounterSales.php:2367
 msgid "Are you sure you wish to cancel this sale?"
 msgstr "Czy na pewno chcesz anulować tę sprzedaż?"
 
@@ -14107,7 +14107,7 @@ msgstr ""
 "lokacje sprzedaży mają ustawione kody obszarów podatkowych"
 
 #: Locations.php:358 Locations.php:463 Locations.php:475
-#: api/api_xml-rpc.php:828
+#: api/api_xml-rpc.php:826
 msgid "Location Code"
 msgstr "Kod Lokacji"
 
@@ -20880,8 +20880,8 @@ msgstr ""
 "Nie można pobrać prowincji podatkowych miejsca, z którego zlecenie zostało "
 "spełnione, ponieważ:"
 
-#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:312
-#: includes/DefineCartClass.php:349 includes/DefineCartClass.php:400
+#: RecurringSalesOrdersProcess.php:273 includes/DefineCartClass.php:313
+#: includes/DefineCartClass.php:350 includes/DefineCartClass.php:401
 #: includes/DefineSuppTransClass.php:72
 msgid "The taxes and rates for this item could not be retrieved because"
 msgstr "Podatków i opłat dla tej pozycji nie mógł zostać przywrócony, ponieważ"
@@ -22263,7 +22263,7 @@ msgstr "Trans. Nr"
 msgid "Salesman Code"
 msgstr "Sprzedawca Code"
 
-#: SalesInquiry.php:965 api/api_xml-rpc.php:1609
+#: SalesInquiry.php:965 api/api_xml-rpc.php:1607
 msgid "Salesman Name"
 msgstr "Nazwa Sprzedawca"
 
@@ -24023,7 +24023,7 @@ msgstr "Szukaj zleceń"
 msgid "The work order number entered MUST be numeric"
 msgstr "Numer zlecenia wprowadzone musi być liczbą"
 
-#: SelectWorkOrder.php:26 api/api_xml-rpc.php:2300 api/api_xml-rpc.php:2496
+#: SelectWorkOrder.php:26 api/api_xml-rpc.php:2298 api/api_xml-rpc.php:2494
 msgid "Work Order Number"
 msgstr "Numer zlecenia"
 
@@ -25676,7 +25676,7 @@ msgid "The stock held at each location cannot be retrieved because"
 msgstr "Towary na stanie w magazynachi nie mogą zostać odtworzone ponieważ"
 
 #: StockLocStatus.php:160 StockSerialItemResearch.php:75
-#: api/api_xml-rpc.php:2043
+#: api/api_xml-rpc.php:2041
 msgid "StockID"
 msgstr "KodTow"
 
@@ -28732,11 +28732,11 @@ msgstr "Otrzymaliśmy następującą ofertę z"
 msgid "Items to offer from"
 msgstr "Pozycje z oferty"
 
-#: SupplierTenders.php:263 api/api_xml-rpc.php:696 api/api_xml-rpc.php:764
-#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:826 api/api_xml-rpc.php:865
-#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
-#: api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2256 api/api_xml-rpc.php:2302
-#: api/api_xml-rpc.php:2498 api/api_xml-rpc.php:2662
+#: SupplierTenders.php:263 api/api_xml-rpc.php:694 api/api_xml-rpc.php:762
+#: api/api_xml-rpc.php:793 api/api_xml-rpc.php:824 api/api_xml-rpc.php:863
+#: api/api_xml-rpc.php:894 api/api_xml-rpc.php:925 api/api_xml-rpc.php:968
+#: api/api_xml-rpc.php:2218 api/api_xml-rpc.php:2254 api/api_xml-rpc.php:2300
+#: api/api_xml-rpc.php:2496 api/api_xml-rpc.php:2660
 msgid "Stock ID"
 msgstr "Fotografia ID"
 
@@ -31089,71 +31089,71 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:137
+#: UpgradeDatabase.php:138
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:151
+#: UpgradeDatabase.php:152
 msgid "Applying"
 msgstr "Zastosowanie"
 
-#: UpgradeDatabase.php:179 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Sukces"
 
-#: UpgradeDatabase.php:182
+#: UpgradeDatabase.php:183
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:185 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:186 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tabela została już utworzona"
 
-#: UpgradeDatabase.php:188
+#: UpgradeDatabase.php:189
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Kolumna została już utworzona"
 
-#: UpgradeDatabase.php:191 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:192 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Kolumna została już utworzona"
 
-#: UpgradeDatabase.php:194 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Indeks już istnieje"
 
-#: UpgradeDatabase.php:197 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:198 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Wejście zostało już zrobione"
 
-#: UpgradeDatabase.php:200
+#: UpgradeDatabase.php:201
 msgid "SQL syntax error. The SQL error message is"
 msgstr "Błąd składni SQL. Ten komunikat o błędzie SQL"
 
-#: UpgradeDatabase.php:203 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:204 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "Primary key już istnieje"
 
-#: UpgradeDatabase.php:206
+#: UpgradeDatabase.php:207
 msgid "Index already dropped previously"
 msgstr "Indeks spadł już wcześniej"
 
-#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:210 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Brak"
 
-#: UpgradeDatabase.php:209 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:210 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Numer błędu"
@@ -33697,7 +33697,7 @@ msgstr "Czy jesteś NAJZUPEŁNIEJ pewien co chcesz zrobić?"
 msgid "Database table details"
 msgstr "Baza danych tabeli"
 
-#: Z_DescribeTable.php:12 api/api_xml-rpc.php:2184 api/api_xml-rpc.php:2352
+#: Z_DescribeTable.php:12 api/api_xml-rpc.php:2182 api/api_xml-rpc.php:2350
 msgid "Field name"
 msgstr "Nazwa pola"
 
@@ -35115,58 +35115,58 @@ msgid ""
 "was"
 msgstr "SQL, który został użyty w celu pobrania innych WYMAGANIA umowy"
 
-#: includes/DefineCartClass.php:170
+#: includes/DefineCartClass.php:171
 msgid "The order line for"
 msgstr "Linia zamówienia dla"
 
-#: includes/DefineCartClass.php:170
+#: includes/DefineCartClass.php:171
 msgid "could not be inserted"
 msgstr "nie może zostać dodana"
 
-#: includes/DefineCartClass.php:210
+#: includes/DefineCartClass.php:211
 msgid "The order line number"
 msgstr "Linia zamówienia numer"
 
-#: includes/DefineCartClass.php:210
+#: includes/DefineCartClass.php:211
 msgid "could not be updated"
 msgstr "nie może być zmieniona"
 
-#: includes/DefineCartClass.php:217
+#: includes/DefineCartClass.php:218
 msgid "No Line Number passed to remove_from_cart, so nothing has been removed."
 msgstr ""
 "Do remove_line_card nie przekazano żadnego numeru pozycji, więc nic nie "
 "zostało usunięte"
 
-#: includes/DefineCartClass.php:228
+#: includes/DefineCartClass.php:229
 msgid "The order line could not be deleted because"
 msgstr "Pozycje zamówienia nie mogą być usunięte ponieważ"
 
-#: includes/DefineCartClass.php:230
+#: includes/DefineCartClass.php:231
 msgid "Deleted Line Number"
 msgstr "Usunięta linia numer"
 
-#: includes/DefineCartClass.php:230
+#: includes/DefineCartClass.php:231
 msgid "from existing Order Number"
 msgstr "z zamówienia numer"
 
-#: includes/DefineCartClass.php:238
+#: includes/DefineCartClass.php:239
 msgid "The order line could not be updated as completed because"
 msgstr "Pozycje zamówienia nie mogą być usunięte ponieważ"
 
-#: includes/DefineCartClass.php:240
+#: includes/DefineCartClass.php:241
 msgid "Removed Remaining Quantity and set Line Number "
 msgstr "Pozostała ilość usunięta i linia numer "
 
-#: includes/DefineCartClass.php:240
+#: includes/DefineCartClass.php:241
 msgid "as Completed for existing Order Number"
 msgstr "zaznaczona jako zrealizowana dla zamówienia numer"
 
-#: includes/DefineCartClass.php:353
+#: includes/DefineCartClass.php:354
 msgid ""
 "It appears that taxes are not defined correctly for this customer tax group"
 msgstr ""
 
-#: includes/DefineCartClass.php:381
+#: includes/DefineCartClass.php:382
 msgid "Cannot find tax category Freight which must always be defined"
 msgstr ""
 "Nie znaleziono kategorii podatkowej Freight, która zawsze musi być "
@@ -35595,30 +35595,30 @@ msgstr "Firma"
 #: includes/Login.php:57 api/api_xml-rpc.php:18 api/api_xml-rpc.php:68
 #: api/api_xml-rpc.php:104 api/api_xml-rpc.php:141 api/api_xml-rpc.php:178
 #: api/api_xml-rpc.php:211 api/api_xml-rpc.php:246 api/api_xml-rpc.php:283
-#: api/api_xml-rpc.php:320 api/api_xml-rpc.php:353 api/api_xml-rpc.php:385
-#: api/api_xml-rpc.php:414 api/api_xml-rpc.php:446 api/api_xml-rpc.php:480
-#: api/api_xml-rpc.php:511 api/api_xml-rpc.php:541 api/api_xml-rpc.php:570
-#: api/api_xml-rpc.php:600 api/api_xml-rpc.php:631 api/api_xml-rpc.php:664
-#: api/api_xml-rpc.php:698 api/api_xml-rpc.php:733 api/api_xml-rpc.php:766
-#: api/api_xml-rpc.php:797 api/api_xml-rpc.php:832 api/api_xml-rpc.php:867
-#: api/api_xml-rpc.php:898 api/api_xml-rpc.php:935 api/api_xml-rpc.php:976
-#: api/api_xml-rpc.php:1017 api/api_xml-rpc.php:1050 api/api_xml-rpc.php:1084
-#: api/api_xml-rpc.php:1118 api/api_xml-rpc.php:1153 api/api_xml-rpc.php:1188
-#: api/api_xml-rpc.php:1219 api/api_xml-rpc.php:1251 api/api_xml-rpc.php:1283
-#: api/api_xml-rpc.php:1311 api/api_xml-rpc.php:1340 api/api_xml-rpc.php:1369
-#: api/api_xml-rpc.php:1399 api/api_xml-rpc.php:1428 api/api_xml-rpc.php:1458
-#: api/api_xml-rpc.php:1489 api/api_xml-rpc.php:1522 api/api_xml-rpc.php:1550
-#: api/api_xml-rpc.php:1580 api/api_xml-rpc.php:1611 api/api_xml-rpc.php:1644
-#: api/api_xml-rpc.php:1672 api/api_xml-rpc.php:1702 api/api_xml-rpc.php:1731
-#: api/api_xml-rpc.php:1761 api/api_xml-rpc.php:1794 api/api_xml-rpc.php:1826
-#: api/api_xml-rpc.php:1853 api/api_xml-rpc.php:1883 api/api_xml-rpc.php:1918
-#: api/api_xml-rpc.php:1954 api/api_xml-rpc.php:1984 api/api_xml-rpc.php:2014
-#: api/api_xml-rpc.php:2047 api/api_xml-rpc.php:2083 api/api_xml-rpc.php:2120
-#: api/api_xml-rpc.php:2153 api/api_xml-rpc.php:2188 api/api_xml-rpc.php:2224
-#: api/api_xml-rpc.php:2264 api/api_xml-rpc.php:2312 api/api_xml-rpc.php:2356
-#: api/api_xml-rpc.php:2393 api/api_xml-rpc.php:2429 api/api_xml-rpc.php:2465
-#: api/api_xml-rpc.php:2506 api/api_xml-rpc.php:2544 api/api_xml-rpc.php:2573
-#: api/api_xml-rpc.php:2602 api/api_xml-rpc.php:2631 api/api_xml-rpc.php:2664
+#: api/api_xml-rpc.php:320 api/api_xml-rpc.php:353 api/api_xml-rpc.php:383
+#: api/api_xml-rpc.php:412 api/api_xml-rpc.php:444 api/api_xml-rpc.php:478
+#: api/api_xml-rpc.php:509 api/api_xml-rpc.php:539 api/api_xml-rpc.php:568
+#: api/api_xml-rpc.php:598 api/api_xml-rpc.php:629 api/api_xml-rpc.php:662
+#: api/api_xml-rpc.php:696 api/api_xml-rpc.php:731 api/api_xml-rpc.php:764
+#: api/api_xml-rpc.php:795 api/api_xml-rpc.php:830 api/api_xml-rpc.php:865
+#: api/api_xml-rpc.php:896 api/api_xml-rpc.php:933 api/api_xml-rpc.php:974
+#: api/api_xml-rpc.php:1015 api/api_xml-rpc.php:1048 api/api_xml-rpc.php:1082
+#: api/api_xml-rpc.php:1116 api/api_xml-rpc.php:1151 api/api_xml-rpc.php:1186
+#: api/api_xml-rpc.php:1217 api/api_xml-rpc.php:1249 api/api_xml-rpc.php:1281
+#: api/api_xml-rpc.php:1309 api/api_xml-rpc.php:1338 api/api_xml-rpc.php:1367
+#: api/api_xml-rpc.php:1397 api/api_xml-rpc.php:1426 api/api_xml-rpc.php:1456
+#: api/api_xml-rpc.php:1487 api/api_xml-rpc.php:1520 api/api_xml-rpc.php:1548
+#: api/api_xml-rpc.php:1578 api/api_xml-rpc.php:1609 api/api_xml-rpc.php:1642
+#: api/api_xml-rpc.php:1670 api/api_xml-rpc.php:1700 api/api_xml-rpc.php:1729
+#: api/api_xml-rpc.php:1759 api/api_xml-rpc.php:1792 api/api_xml-rpc.php:1824
+#: api/api_xml-rpc.php:1851 api/api_xml-rpc.php:1881 api/api_xml-rpc.php:1916
+#: api/api_xml-rpc.php:1952 api/api_xml-rpc.php:1982 api/api_xml-rpc.php:2012
+#: api/api_xml-rpc.php:2045 api/api_xml-rpc.php:2081 api/api_xml-rpc.php:2118
+#: api/api_xml-rpc.php:2151 api/api_xml-rpc.php:2186 api/api_xml-rpc.php:2222
+#: api/api_xml-rpc.php:2262 api/api_xml-rpc.php:2310 api/api_xml-rpc.php:2354
+#: api/api_xml-rpc.php:2391 api/api_xml-rpc.php:2427 api/api_xml-rpc.php:2463
+#: api/api_xml-rpc.php:2504 api/api_xml-rpc.php:2542 api/api_xml-rpc.php:2571
+#: api/api_xml-rpc.php:2600 api/api_xml-rpc.php:2629 api/api_xml-rpc.php:2662
 msgid "User name"
 msgstr "Użytkownik"
 
@@ -36602,7 +36602,7 @@ msgstr ""
 "Nie można dodać więcej pozycji zamówienia ze względu na przekroczenie limitu "
 "kredytu"
 
-#: includes/SelectOrderItems_IntoCart.inc:163
+#: includes/SelectOrderItems_IntoCart.inc:164
 msgid ""
 "does not have a cost set up and order entry is set up to prohibit sales of "
 "items with no cost data entered"
@@ -37394,17 +37394,17 @@ msgstr "Nazwa bazy danych"
 msgid "The name of the database to use for the transactions to come. "
 msgstr "Nazwa bazy danych, używać do transakcji w przyszłości. "
 
-#: api/api_xml-rpc.php:19 api/api_xml-rpc.php:601 api/api_xml-rpc.php:632
-#: api/api_xml-rpc.php:665 api/api_xml-rpc.php:699 api/api_xml-rpc.php:734
-#: api/api_xml-rpc.php:868 api/api_xml-rpc.php:899 api/api_xml-rpc.php:936
-#: api/api_xml-rpc.php:977 api/api_xml-rpc.php:1018 api/api_xml-rpc.php:1051
-#: api/api_xml-rpc.php:1220 api/api_xml-rpc.php:1252 api/api_xml-rpc.php:1284
-#: api/api_xml-rpc.php:1341 api/api_xml-rpc.php:1400 api/api_xml-rpc.php:1459
-#: api/api_xml-rpc.php:1490 api/api_xml-rpc.php:1523 api/api_xml-rpc.php:1581
-#: api/api_xml-rpc.php:1612 api/api_xml-rpc.php:1645 api/api_xml-rpc.php:1703
-#: api/api_xml-rpc.php:1762 api/api_xml-rpc.php:1795 api/api_xml-rpc.php:1827
-#: api/api_xml-rpc.php:1884 api/api_xml-rpc.php:1919 api/api_xml-rpc.php:1955
-#: api/api_xml-rpc.php:2015 api/api_xml-rpc.php:2048
+#: api/api_xml-rpc.php:19 api/api_xml-rpc.php:599 api/api_xml-rpc.php:630
+#: api/api_xml-rpc.php:663 api/api_xml-rpc.php:697 api/api_xml-rpc.php:732
+#: api/api_xml-rpc.php:866 api/api_xml-rpc.php:897 api/api_xml-rpc.php:934
+#: api/api_xml-rpc.php:975 api/api_xml-rpc.php:1016 api/api_xml-rpc.php:1049
+#: api/api_xml-rpc.php:1218 api/api_xml-rpc.php:1250 api/api_xml-rpc.php:1282
+#: api/api_xml-rpc.php:1339 api/api_xml-rpc.php:1398 api/api_xml-rpc.php:1457
+#: api/api_xml-rpc.php:1488 api/api_xml-rpc.php:1521 api/api_xml-rpc.php:1579
+#: api/api_xml-rpc.php:1610 api/api_xml-rpc.php:1643 api/api_xml-rpc.php:1701
+#: api/api_xml-rpc.php:1760 api/api_xml-rpc.php:1793 api/api_xml-rpc.php:1825
+#: api/api_xml-rpc.php:1882 api/api_xml-rpc.php:1917 api/api_xml-rpc.php:1953
+#: api/api_xml-rpc.php:2013 api/api_xml-rpc.php:2046
 msgid ""
 "A valid weberp username. This user should have security access to this data."
 msgstr ""
@@ -37414,60 +37414,60 @@ msgstr ""
 #: api/api_xml-rpc.php:20 api/api_xml-rpc.php:70 api/api_xml-rpc.php:106
 #: api/api_xml-rpc.php:143 api/api_xml-rpc.php:180 api/api_xml-rpc.php:213
 #: api/api_xml-rpc.php:248 api/api_xml-rpc.php:285 api/api_xml-rpc.php:322
-#: api/api_xml-rpc.php:355 api/api_xml-rpc.php:387 api/api_xml-rpc.php:416
-#: api/api_xml-rpc.php:448 api/api_xml-rpc.php:482 api/api_xml-rpc.php:513
-#: api/api_xml-rpc.php:543 api/api_xml-rpc.php:572 api/api_xml-rpc.php:602
-#: api/api_xml-rpc.php:633 api/api_xml-rpc.php:666 api/api_xml-rpc.php:700
-#: api/api_xml-rpc.php:735 api/api_xml-rpc.php:768 api/api_xml-rpc.php:799
-#: api/api_xml-rpc.php:834 api/api_xml-rpc.php:869 api/api_xml-rpc.php:900
-#: api/api_xml-rpc.php:937 api/api_xml-rpc.php:978 api/api_xml-rpc.php:1019
-#: api/api_xml-rpc.php:1052 api/api_xml-rpc.php:1086 api/api_xml-rpc.php:1120
-#: api/api_xml-rpc.php:1155 api/api_xml-rpc.php:1190 api/api_xml-rpc.php:1221
-#: api/api_xml-rpc.php:1253 api/api_xml-rpc.php:1285 api/api_xml-rpc.php:1313
-#: api/api_xml-rpc.php:1342 api/api_xml-rpc.php:1371 api/api_xml-rpc.php:1401
-#: api/api_xml-rpc.php:1430 api/api_xml-rpc.php:1460 api/api_xml-rpc.php:1491
-#: api/api_xml-rpc.php:1524 api/api_xml-rpc.php:1552 api/api_xml-rpc.php:1582
-#: api/api_xml-rpc.php:1613 api/api_xml-rpc.php:1646 api/api_xml-rpc.php:1674
-#: api/api_xml-rpc.php:1704 api/api_xml-rpc.php:1733 api/api_xml-rpc.php:1763
-#: api/api_xml-rpc.php:1796 api/api_xml-rpc.php:1828 api/api_xml-rpc.php:1855
-#: api/api_xml-rpc.php:1885 api/api_xml-rpc.php:1920 api/api_xml-rpc.php:1956
-#: api/api_xml-rpc.php:1986 api/api_xml-rpc.php:2016 api/api_xml-rpc.php:2049
-#: api/api_xml-rpc.php:2085 api/api_xml-rpc.php:2122 api/api_xml-rpc.php:2155
-#: api/api_xml-rpc.php:2190 api/api_xml-rpc.php:2226 api/api_xml-rpc.php:2266
-#: api/api_xml-rpc.php:2314 api/api_xml-rpc.php:2358 api/api_xml-rpc.php:2395
-#: api/api_xml-rpc.php:2431 api/api_xml-rpc.php:2467 api/api_xml-rpc.php:2508
-#: api/api_xml-rpc.php:2546 api/api_xml-rpc.php:2575 api/api_xml-rpc.php:2604
-#: api/api_xml-rpc.php:2633 api/api_xml-rpc.php:2666
+#: api/api_xml-rpc.php:355 api/api_xml-rpc.php:385 api/api_xml-rpc.php:414
+#: api/api_xml-rpc.php:446 api/api_xml-rpc.php:480 api/api_xml-rpc.php:511
+#: api/api_xml-rpc.php:541 api/api_xml-rpc.php:570 api/api_xml-rpc.php:600
+#: api/api_xml-rpc.php:631 api/api_xml-rpc.php:664 api/api_xml-rpc.php:698
+#: api/api_xml-rpc.php:733 api/api_xml-rpc.php:766 api/api_xml-rpc.php:797
+#: api/api_xml-rpc.php:832 api/api_xml-rpc.php:867 api/api_xml-rpc.php:898
+#: api/api_xml-rpc.php:935 api/api_xml-rpc.php:976 api/api_xml-rpc.php:1017
+#: api/api_xml-rpc.php:1050 api/api_xml-rpc.php:1084 api/api_xml-rpc.php:1118
+#: api/api_xml-rpc.php:1153 api/api_xml-rpc.php:1188 api/api_xml-rpc.php:1219
+#: api/api_xml-rpc.php:1251 api/api_xml-rpc.php:1283 api/api_xml-rpc.php:1311
+#: api/api_xml-rpc.php:1340 api/api_xml-rpc.php:1369 api/api_xml-rpc.php:1399
+#: api/api_xml-rpc.php:1428 api/api_xml-rpc.php:1458 api/api_xml-rpc.php:1489
+#: api/api_xml-rpc.php:1522 api/api_xml-rpc.php:1550 api/api_xml-rpc.php:1580
+#: api/api_xml-rpc.php:1611 api/api_xml-rpc.php:1644 api/api_xml-rpc.php:1672
+#: api/api_xml-rpc.php:1702 api/api_xml-rpc.php:1731 api/api_xml-rpc.php:1761
+#: api/api_xml-rpc.php:1794 api/api_xml-rpc.php:1826 api/api_xml-rpc.php:1853
+#: api/api_xml-rpc.php:1883 api/api_xml-rpc.php:1918 api/api_xml-rpc.php:1954
+#: api/api_xml-rpc.php:1984 api/api_xml-rpc.php:2014 api/api_xml-rpc.php:2047
+#: api/api_xml-rpc.php:2083 api/api_xml-rpc.php:2120 api/api_xml-rpc.php:2153
+#: api/api_xml-rpc.php:2188 api/api_xml-rpc.php:2224 api/api_xml-rpc.php:2264
+#: api/api_xml-rpc.php:2312 api/api_xml-rpc.php:2356 api/api_xml-rpc.php:2393
+#: api/api_xml-rpc.php:2429 api/api_xml-rpc.php:2465 api/api_xml-rpc.php:2506
+#: api/api_xml-rpc.php:2544 api/api_xml-rpc.php:2573 api/api_xml-rpc.php:2602
+#: api/api_xml-rpc.php:2631 api/api_xml-rpc.php:2664
 msgid "User password"
 msgstr "Hasło użytkownika"
 
 #: api/api_xml-rpc.php:21 api/api_xml-rpc.php:71 api/api_xml-rpc.php:107
 #: api/api_xml-rpc.php:144 api/api_xml-rpc.php:181 api/api_xml-rpc.php:214
 #: api/api_xml-rpc.php:249 api/api_xml-rpc.php:286 api/api_xml-rpc.php:323
-#: api/api_xml-rpc.php:356 api/api_xml-rpc.php:388 api/api_xml-rpc.php:417
-#: api/api_xml-rpc.php:449 api/api_xml-rpc.php:483 api/api_xml-rpc.php:514
-#: api/api_xml-rpc.php:544 api/api_xml-rpc.php:573 api/api_xml-rpc.php:603
-#: api/api_xml-rpc.php:634 api/api_xml-rpc.php:667 api/api_xml-rpc.php:701
-#: api/api_xml-rpc.php:736 api/api_xml-rpc.php:769 api/api_xml-rpc.php:800
-#: api/api_xml-rpc.php:835 api/api_xml-rpc.php:870 api/api_xml-rpc.php:901
-#: api/api_xml-rpc.php:938 api/api_xml-rpc.php:979 api/api_xml-rpc.php:1020
-#: api/api_xml-rpc.php:1053 api/api_xml-rpc.php:1087 api/api_xml-rpc.php:1121
-#: api/api_xml-rpc.php:1156 api/api_xml-rpc.php:1191 api/api_xml-rpc.php:1222
-#: api/api_xml-rpc.php:1254 api/api_xml-rpc.php:1286 api/api_xml-rpc.php:1314
-#: api/api_xml-rpc.php:1343 api/api_xml-rpc.php:1372 api/api_xml-rpc.php:1402
-#: api/api_xml-rpc.php:1431 api/api_xml-rpc.php:1461 api/api_xml-rpc.php:1492
-#: api/api_xml-rpc.php:1525 api/api_xml-rpc.php:1553 api/api_xml-rpc.php:1583
-#: api/api_xml-rpc.php:1614 api/api_xml-rpc.php:1647 api/api_xml-rpc.php:1675
-#: api/api_xml-rpc.php:1705 api/api_xml-rpc.php:1734 api/api_xml-rpc.php:1764
-#: api/api_xml-rpc.php:1797 api/api_xml-rpc.php:1829 api/api_xml-rpc.php:1856
-#: api/api_xml-rpc.php:1886 api/api_xml-rpc.php:1921 api/api_xml-rpc.php:1957
-#: api/api_xml-rpc.php:1987 api/api_xml-rpc.php:2017 api/api_xml-rpc.php:2050
-#: api/api_xml-rpc.php:2086 api/api_xml-rpc.php:2123 api/api_xml-rpc.php:2156
-#: api/api_xml-rpc.php:2191 api/api_xml-rpc.php:2227 api/api_xml-rpc.php:2267
-#: api/api_xml-rpc.php:2315 api/api_xml-rpc.php:2359 api/api_xml-rpc.php:2396
-#: api/api_xml-rpc.php:2432 api/api_xml-rpc.php:2468 api/api_xml-rpc.php:2509
-#: api/api_xml-rpc.php:2547 api/api_xml-rpc.php:2576 api/api_xml-rpc.php:2605
-#: api/api_xml-rpc.php:2634 api/api_xml-rpc.php:2667
+#: api/api_xml-rpc.php:356 api/api_xml-rpc.php:386 api/api_xml-rpc.php:415
+#: api/api_xml-rpc.php:447 api/api_xml-rpc.php:481 api/api_xml-rpc.php:512
+#: api/api_xml-rpc.php:542 api/api_xml-rpc.php:571 api/api_xml-rpc.php:601
+#: api/api_xml-rpc.php:632 api/api_xml-rpc.php:665 api/api_xml-rpc.php:699
+#: api/api_xml-rpc.php:734 api/api_xml-rpc.php:767 api/api_xml-rpc.php:798
+#: api/api_xml-rpc.php:833 api/api_xml-rpc.php:868 api/api_xml-rpc.php:899
+#: api/api_xml-rpc.php:936 api/api_xml-rpc.php:977 api/api_xml-rpc.php:1018
+#: api/api_xml-rpc.php:1051 api/api_xml-rpc.php:1085 api/api_xml-rpc.php:1119
+#: api/api_xml-rpc.php:1154 api/api_xml-rpc.php:1189 api/api_xml-rpc.php:1220
+#: api/api_xml-rpc.php:1252 api/api_xml-rpc.php:1284 api/api_xml-rpc.php:1312
+#: api/api_xml-rpc.php:1341 api/api_xml-rpc.php:1370 api/api_xml-rpc.php:1400
+#: api/api_xml-rpc.php:1429 api/api_xml-rpc.php:1459 api/api_xml-rpc.php:1490
+#: api/api_xml-rpc.php:1523 api/api_xml-rpc.php:1551 api/api_xml-rpc.php:1581
+#: api/api_xml-rpc.php:1612 api/api_xml-rpc.php:1645 api/api_xml-rpc.php:1673
+#: api/api_xml-rpc.php:1703 api/api_xml-rpc.php:1732 api/api_xml-rpc.php:1762
+#: api/api_xml-rpc.php:1795 api/api_xml-rpc.php:1827 api/api_xml-rpc.php:1854
+#: api/api_xml-rpc.php:1884 api/api_xml-rpc.php:1919 api/api_xml-rpc.php:1955
+#: api/api_xml-rpc.php:1985 api/api_xml-rpc.php:2015 api/api_xml-rpc.php:2048
+#: api/api_xml-rpc.php:2084 api/api_xml-rpc.php:2121 api/api_xml-rpc.php:2154
+#: api/api_xml-rpc.php:2189 api/api_xml-rpc.php:2225 api/api_xml-rpc.php:2265
+#: api/api_xml-rpc.php:2313 api/api_xml-rpc.php:2357 api/api_xml-rpc.php:2394
+#: api/api_xml-rpc.php:2430 api/api_xml-rpc.php:2466 api/api_xml-rpc.php:2507
+#: api/api_xml-rpc.php:2545 api/api_xml-rpc.php:2574 api/api_xml-rpc.php:2603
+#: api/api_xml-rpc.php:2632 api/api_xml-rpc.php:2665
 msgid "The weberp password associated with this user name. "
 msgstr "Hasło weberp związane z tą nazwą użytkownika. "
 
@@ -37501,10 +37501,10 @@ msgid "Customer Details"
 msgstr "Szczegóły klientów"
 
 #: api/api_xml-rpc.php:63 api/api_xml-rpc.php:100 api/api_xml-rpc.php:136
-#: api/api_xml-rpc.php:173 api/api_xml-rpc.php:476 api/api_xml-rpc.php:1079
-#: api/api_xml-rpc.php:1114 api/api_xml-rpc.php:1148 api/api_xml-rpc.php:1183
-#: api/api_xml-rpc.php:2079 api/api_xml-rpc.php:2115 api/api_xml-rpc.php:2389
-#: api/api_xml-rpc.php:2425 api/api_xml-rpc.php:2461
+#: api/api_xml-rpc.php:173 api/api_xml-rpc.php:474 api/api_xml-rpc.php:1077
+#: api/api_xml-rpc.php:1112 api/api_xml-rpc.php:1146 api/api_xml-rpc.php:1181
+#: api/api_xml-rpc.php:2077 api/api_xml-rpc.php:2113 api/api_xml-rpc.php:2387
+#: api/api_xml-rpc.php:2423 api/api_xml-rpc.php:2459
 msgid ""
 "A set of key/value pairs where the key must be identical to the name of the "
 "field to be updated. "
@@ -37513,37 +37513,37 @@ msgstr ""
 "aktualizacji. "
 
 #: api/api_xml-rpc.php:64 api/api_xml-rpc.php:101 api/api_xml-rpc.php:137
-#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:477
-#: api/api_xml-rpc.php:1011 api/api_xml-rpc.php:1080 api/api_xml-rpc.php:1115
-#: api/api_xml-rpc.php:1149 api/api_xml-rpc.php:1184 api/api_xml-rpc.php:2080
-#: api/api_xml-rpc.php:2116 api/api_xml-rpc.php:2390 api/api_xml-rpc.php:2426
-#: api/api_xml-rpc.php:2462
+#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:475
+#: api/api_xml-rpc.php:1009 api/api_xml-rpc.php:1078 api/api_xml-rpc.php:1113
+#: api/api_xml-rpc.php:1147 api/api_xml-rpc.php:1182 api/api_xml-rpc.php:2078
+#: api/api_xml-rpc.php:2114 api/api_xml-rpc.php:2388 api/api_xml-rpc.php:2424
+#: api/api_xml-rpc.php:2460
 msgid "The field names can be found "
 msgstr "Nazwy pól można znaleźć "
 
 #: api/api_xml-rpc.php:64 api/api_xml-rpc.php:101 api/api_xml-rpc.php:137
-#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:477
-#: api/api_xml-rpc.php:1011 api/api_xml-rpc.php:1080 api/api_xml-rpc.php:1115
-#: api/api_xml-rpc.php:1149 api/api_xml-rpc.php:1184 api/api_xml-rpc.php:2080
-#: api/api_xml-rpc.php:2116 api/api_xml-rpc.php:2390 api/api_xml-rpc.php:2426
-#: api/api_xml-rpc.php:2462
+#: api/api_xml-rpc.php:174 api/api_xml-rpc.php:316 api/api_xml-rpc.php:475
+#: api/api_xml-rpc.php:1009 api/api_xml-rpc.php:1078 api/api_xml-rpc.php:1113
+#: api/api_xml-rpc.php:1147 api/api_xml-rpc.php:1182 api/api_xml-rpc.php:2078
+#: api/api_xml-rpc.php:2114 api/api_xml-rpc.php:2388 api/api_xml-rpc.php:2424
+#: api/api_xml-rpc.php:2460
 msgid "here "
 msgstr "tutaj "
 
 #: api/api_xml-rpc.php:65 api/api_xml-rpc.php:102 api/api_xml-rpc.php:138
-#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:317 api/api_xml-rpc.php:478
-#: api/api_xml-rpc.php:1012 api/api_xml-rpc.php:1081 api/api_xml-rpc.php:1116
-#: api/api_xml-rpc.php:1150 api/api_xml-rpc.php:1185 api/api_xml-rpc.php:2081
-#: api/api_xml-rpc.php:2117 api/api_xml-rpc.php:2391 api/api_xml-rpc.php:2427
-#: api/api_xml-rpc.php:2463
+#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:317 api/api_xml-rpc.php:476
+#: api/api_xml-rpc.php:1010 api/api_xml-rpc.php:1079 api/api_xml-rpc.php:1114
+#: api/api_xml-rpc.php:1148 api/api_xml-rpc.php:1183 api/api_xml-rpc.php:2079
+#: api/api_xml-rpc.php:2115 api/api_xml-rpc.php:2389 api/api_xml-rpc.php:2425
+#: api/api_xml-rpc.php:2461
 msgid "and are case sensitive. "
 msgstr "i wielkość liter. "
 
 #: api/api_xml-rpc.php:65 api/api_xml-rpc.php:102 api/api_xml-rpc.php:138
-#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:478 api/api_xml-rpc.php:1012
-#: api/api_xml-rpc.php:1081 api/api_xml-rpc.php:1116 api/api_xml-rpc.php:1150
-#: api/api_xml-rpc.php:1185 api/api_xml-rpc.php:2081 api/api_xml-rpc.php:2117
-#: api/api_xml-rpc.php:2391 api/api_xml-rpc.php:2427 api/api_xml-rpc.php:2463
+#: api/api_xml-rpc.php:175 api/api_xml-rpc.php:476 api/api_xml-rpc.php:1010
+#: api/api_xml-rpc.php:1079 api/api_xml-rpc.php:1114 api/api_xml-rpc.php:1148
+#: api/api_xml-rpc.php:1183 api/api_xml-rpc.php:2079 api/api_xml-rpc.php:2115
+#: api/api_xml-rpc.php:2389 api/api_xml-rpc.php:2425 api/api_xml-rpc.php:2461
 msgid ""
 "The values should be of the correct type, and the api will check them before "
 "updating the database. "
@@ -37552,10 +37552,10 @@ msgstr ""
 "aktualizacją bazy danych. "
 
 #: api/api_xml-rpc.php:66 api/api_xml-rpc.php:103 api/api_xml-rpc.php:139
-#: api/api_xml-rpc.php:176 api/api_xml-rpc.php:479 api/api_xml-rpc.php:1016
-#: api/api_xml-rpc.php:1083 api/api_xml-rpc.php:1117 api/api_xml-rpc.php:1152
-#: api/api_xml-rpc.php:1187 api/api_xml-rpc.php:2082 api/api_xml-rpc.php:2118
-#: api/api_xml-rpc.php:2392 api/api_xml-rpc.php:2428 api/api_xml-rpc.php:2464
+#: api/api_xml-rpc.php:176 api/api_xml-rpc.php:477 api/api_xml-rpc.php:1014
+#: api/api_xml-rpc.php:1081 api/api_xml-rpc.php:1115 api/api_xml-rpc.php:1150
+#: api/api_xml-rpc.php:1185 api/api_xml-rpc.php:2080 api/api_xml-rpc.php:2116
+#: api/api_xml-rpc.php:2390 api/api_xml-rpc.php:2426 api/api_xml-rpc.php:2462
 msgid ""
 "It is not necessary to include all the fields in this parameter, the "
 "database default value will be used if the field is not given."
@@ -37576,19 +37576,19 @@ msgstr ""
 #: api/api_xml-rpc.php:69 api/api_xml-rpc.php:105 api/api_xml-rpc.php:142
 #: api/api_xml-rpc.php:179 api/api_xml-rpc.php:212 api/api_xml-rpc.php:247
 #: api/api_xml-rpc.php:284 api/api_xml-rpc.php:321 api/api_xml-rpc.php:354
-#: api/api_xml-rpc.php:386 api/api_xml-rpc.php:415 api/api_xml-rpc.php:447
-#: api/api_xml-rpc.php:481 api/api_xml-rpc.php:512 api/api_xml-rpc.php:542
-#: api/api_xml-rpc.php:571 api/api_xml-rpc.php:767 api/api_xml-rpc.php:798
-#: api/api_xml-rpc.php:833 api/api_xml-rpc.php:1085 api/api_xml-rpc.php:1119
-#: api/api_xml-rpc.php:1154 api/api_xml-rpc.php:1189 api/api_xml-rpc.php:1312
-#: api/api_xml-rpc.php:1370 api/api_xml-rpc.php:1429 api/api_xml-rpc.php:1551
-#: api/api_xml-rpc.php:1673 api/api_xml-rpc.php:1732 api/api_xml-rpc.php:1854
-#: api/api_xml-rpc.php:1985 api/api_xml-rpc.php:2084 api/api_xml-rpc.php:2121
-#: api/api_xml-rpc.php:2154 api/api_xml-rpc.php:2189 api/api_xml-rpc.php:2225
-#: api/api_xml-rpc.php:2265 api/api_xml-rpc.php:2313 api/api_xml-rpc.php:2357
-#: api/api_xml-rpc.php:2394 api/api_xml-rpc.php:2430 api/api_xml-rpc.php:2466
-#: api/api_xml-rpc.php:2507 api/api_xml-rpc.php:2545 api/api_xml-rpc.php:2574
-#: api/api_xml-rpc.php:2603 api/api_xml-rpc.php:2632 api/api_xml-rpc.php:2665
+#: api/api_xml-rpc.php:384 api/api_xml-rpc.php:413 api/api_xml-rpc.php:445
+#: api/api_xml-rpc.php:479 api/api_xml-rpc.php:510 api/api_xml-rpc.php:540
+#: api/api_xml-rpc.php:569 api/api_xml-rpc.php:765 api/api_xml-rpc.php:796
+#: api/api_xml-rpc.php:831 api/api_xml-rpc.php:1083 api/api_xml-rpc.php:1117
+#: api/api_xml-rpc.php:1152 api/api_xml-rpc.php:1187 api/api_xml-rpc.php:1310
+#: api/api_xml-rpc.php:1368 api/api_xml-rpc.php:1427 api/api_xml-rpc.php:1549
+#: api/api_xml-rpc.php:1671 api/api_xml-rpc.php:1730 api/api_xml-rpc.php:1852
+#: api/api_xml-rpc.php:1983 api/api_xml-rpc.php:2082 api/api_xml-rpc.php:2119
+#: api/api_xml-rpc.php:2152 api/api_xml-rpc.php:2187 api/api_xml-rpc.php:2223
+#: api/api_xml-rpc.php:2263 api/api_xml-rpc.php:2311 api/api_xml-rpc.php:2355
+#: api/api_xml-rpc.php:2392 api/api_xml-rpc.php:2428 api/api_xml-rpc.php:2464
+#: api/api_xml-rpc.php:2505 api/api_xml-rpc.php:2543 api/api_xml-rpc.php:2572
+#: api/api_xml-rpc.php:2601 api/api_xml-rpc.php:2630 api/api_xml-rpc.php:2663
 msgid ""
 "A valid weberp username. This user should have security access  to this data."
 msgstr ""
@@ -37596,27 +37596,27 @@ msgstr ""
 "danych."
 
 #: api/api_xml-rpc.php:72 api/api_xml-rpc.php:108 api/api_xml-rpc.php:145
-#: api/api_xml-rpc.php:182 api/api_xml-rpc.php:484 api/api_xml-rpc.php:635
-#: api/api_xml-rpc.php:668 api/api_xml-rpc.php:1021 api/api_xml-rpc.php:2087
-#: api/api_xml-rpc.php:2124 api/api_xml-rpc.php:2397 api/api_xml-rpc.php:2433
-#: api/api_xml-rpc.php:2469
+#: api/api_xml-rpc.php:182 api/api_xml-rpc.php:482 api/api_xml-rpc.php:633
+#: api/api_xml-rpc.php:666 api/api_xml-rpc.php:1019 api/api_xml-rpc.php:2085
+#: api/api_xml-rpc.php:2122 api/api_xml-rpc.php:2395 api/api_xml-rpc.php:2431
+#: api/api_xml-rpc.php:2467
 msgid "This function returns an array of integers. "
 msgstr "Funkcja ta zwraca tablicę liczb całkowitych. "
 
 #: api/api_xml-rpc.php:73 api/api_xml-rpc.php:109 api/api_xml-rpc.php:146
 #: api/api_xml-rpc.php:183 api/api_xml-rpc.php:325 api/api_xml-rpc.php:358
-#: api/api_xml-rpc.php:419 api/api_xml-rpc.php:485 api/api_xml-rpc.php:636
-#: api/api_xml-rpc.php:669 api/api_xml-rpc.php:2088 api/api_xml-rpc.php:2125
-#: api/api_xml-rpc.php:2398 api/api_xml-rpc.php:2434 api/api_xml-rpc.php:2470
+#: api/api_xml-rpc.php:417 api/api_xml-rpc.php:483 api/api_xml-rpc.php:634
+#: api/api_xml-rpc.php:667 api/api_xml-rpc.php:2086 api/api_xml-rpc.php:2123
+#: api/api_xml-rpc.php:2396 api/api_xml-rpc.php:2432 api/api_xml-rpc.php:2468
 msgid "If the first element is zero then the function was successful. "
 msgstr ""
 "Jeśli pierwszy element jest równy zero, to funkcja zakończyła się pomyślnie. "
 
 #: api/api_xml-rpc.php:74 api/api_xml-rpc.php:110 api/api_xml-rpc.php:184
-#: api/api_xml-rpc.php:326 api/api_xml-rpc.php:359 api/api_xml-rpc.php:420
-#: api/api_xml-rpc.php:486 api/api_xml-rpc.php:637 api/api_xml-rpc.php:1023
-#: api/api_xml-rpc.php:2089 api/api_xml-rpc.php:2399 api/api_xml-rpc.php:2435
-#: api/api_xml-rpc.php:2471
+#: api/api_xml-rpc.php:326 api/api_xml-rpc.php:359 api/api_xml-rpc.php:418
+#: api/api_xml-rpc.php:484 api/api_xml-rpc.php:635 api/api_xml-rpc.php:1021
+#: api/api_xml-rpc.php:2087 api/api_xml-rpc.php:2397 api/api_xml-rpc.php:2433
+#: api/api_xml-rpc.php:2469
 msgid ""
 "Otherwise an array of error codes is returned and no insertion takes place. "
 msgstr ""
@@ -37647,7 +37647,7 @@ msgstr ""
 msgid "The debtorno must already exist in the weberp database."
 msgstr "Debtorno musi już istnieć w bazie danych weberp."
 
-#: api/api_xml-rpc.php:147 api/api_xml-rpc.php:670 api/api_xml-rpc.php:2126
+#: api/api_xml-rpc.php:147 api/api_xml-rpc.php:668 api/api_xml-rpc.php:2124
 msgid ""
 "Otherwise an array of error codes is returned and no modification takes "
 "place. "
@@ -37704,10 +37704,10 @@ msgstr ""
 "Jeśli pierwszy element jest równy zero, to funkcja zakończyła się pomyślnie."
 
 #: api/api_xml-rpc.php:217 api/api_xml-rpc.php:254 api/api_xml-rpc.php:289
-#: api/api_xml-rpc.php:704 api/api_xml-rpc.php:2159 api/api_xml-rpc.php:2193
-#: api/api_xml-rpc.php:2269 api/api_xml-rpc.php:2317 api/api_xml-rpc.php:2361
-#: api/api_xml-rpc.php:2511 api/api_xml-rpc.php:2549 api/api_xml-rpc.php:2578
-#: api/api_xml-rpc.php:2607 api/api_xml-rpc.php:2636 api/api_xml-rpc.php:2669
+#: api/api_xml-rpc.php:702 api/api_xml-rpc.php:2157 api/api_xml-rpc.php:2191
+#: api/api_xml-rpc.php:2267 api/api_xml-rpc.php:2315 api/api_xml-rpc.php:2359
+#: api/api_xml-rpc.php:2509 api/api_xml-rpc.php:2547 api/api_xml-rpc.php:2576
+#: api/api_xml-rpc.php:2605 api/api_xml-rpc.php:2634 api/api_xml-rpc.php:2667
 msgid "Otherwise an array of error codes is returned. "
 msgstr "W przeciwnym wypadku tablica kodów błędów jest zwracany. "
 
@@ -37800,98 +37800,98 @@ msgstr "Funkcja zwraca listę skrótów waluty."
 msgid "This function returns an array of currency abbreviations. "
 msgstr "Funkcja ta zwraca tablicę skrótów waluty. "
 
-#: api/api_xml-rpc.php:382
+#: api/api_xml-rpc.php:380
 msgid ""
 "This function takes a currency abbreviation and returns details of that "
 "currency."
 msgstr "Funkcja ta pobiera skrót waluty i zwraca szczegóły tej walucie."
 
-#: api/api_xml-rpc.php:383
+#: api/api_xml-rpc.php:381
 msgid "Currency abbreviation"
 msgstr "skrót walut"
 
-#: api/api_xml-rpc.php:384
+#: api/api_xml-rpc.php:382
 msgid "A currency abbreviation as returned by the GetCurrencyList function."
 msgstr "Skrót waluty, zwrócone przez GetCurrencyList funkcji."
 
-#: api/api_xml-rpc.php:389
+#: api/api_xml-rpc.php:387
 msgid "This function returns an array of currency details."
 msgstr "Funkcja ta zwraca tablicę danych waluty."
 
-#: api/api_xml-rpc.php:413
+#: api/api_xml-rpc.php:411
 msgid "This function returns a list of sales type abbreviations."
 msgstr "Funkcja ta zwraca listę sprzedaży skróty typu."
 
-#: api/api_xml-rpc.php:418
+#: api/api_xml-rpc.php:416
 msgid "This function returns an array of sales type abbreviations. "
 msgstr "Funkcja ta zwraca tablicę sprzedaży skróty typu. "
 
-#: api/api_xml-rpc.php:443
+#: api/api_xml-rpc.php:441
 msgid ""
 "This function takes a sales type abbreviation and returns details of that "
 "sales type."
 msgstr ""
 "Funkcja ta pobiera typu sprzedaży skrót i zwraca dane z tego typu sprzedaży."
 
-#: api/api_xml-rpc.php:444
+#: api/api_xml-rpc.php:442
 msgid "Sales type abbreviation"
 msgstr "skrót typu sprzedaży"
 
-#: api/api_xml-rpc.php:445
+#: api/api_xml-rpc.php:443
 msgid "A sales type abbreviation as returned by the GetSalesTypeList function."
 msgstr "Rodzaj sprzedaży skrót zwrócone przez GetSalesTypeList funkcji."
 
-#: api/api_xml-rpc.php:450
+#: api/api_xml-rpc.php:448
 msgid "This function returns an array of sales type details."
 msgstr "Funkcja ta zwraca tablicę szczegółów sprzedaży typu."
 
-#: api/api_xml-rpc.php:474
+#: api/api_xml-rpc.php:472
 msgid ""
 "This function is used to insert sales type details into the webERP database."
 msgstr ""
 "Funkcja ta służy do szczegółów sprzedaży wstawić wpisz w webERP bazy danych."
 
-#: api/api_xml-rpc.php:475
+#: api/api_xml-rpc.php:473
 msgid "Sales Type Details"
 msgstr "Sprzedaż Szczegóły Typ"
 
-#: api/api_xml-rpc.php:510
+#: api/api_xml-rpc.php:508
 msgid "This function returns a list of hold reason codes."
 msgstr "Funkcja ta zwraca listę kodów przyczyn zawieszone."
 
-#: api/api_xml-rpc.php:515
+#: api/api_xml-rpc.php:513
 msgid "This function returns an array of hold reason codes."
 msgstr "Funkcja ta zwraca tablicę kodów przyczyny zawieszone."
 
-#: api/api_xml-rpc.php:538
+#: api/api_xml-rpc.php:536
 msgid ""
 "This function takes a hold reason code and returns details of that hold "
 "reason."
 msgstr ""
 "Funkcja ta ma posiadać kod przyczyny i zwraca dane, które posiadają powodu."
 
-#: api/api_xml-rpc.php:539 api/api_xml-rpc.php:598
+#: api/api_xml-rpc.php:537 api/api_xml-rpc.php:596
 msgid "Hold reason code"
 msgstr "Trzymaj kod przyczyny"
 
-#: api/api_xml-rpc.php:540
+#: api/api_xml-rpc.php:538
 msgid ""
 "A hold reason abbreviation as returned by the GetHoldReasonList function."
 msgstr "Przytrzymaj skrót powodu zwrócony przez GetHoldReasonList funkcji."
 
-#: api/api_xml-rpc.php:545
+#: api/api_xml-rpc.php:543
 msgid "This function returns an array of hold reason details."
 msgstr "Funkcja ta zwraca tablicę szczegóły powodu zawieszone."
 
-#: api/api_xml-rpc.php:569
+#: api/api_xml-rpc.php:567
 msgid "This function returns a list of payment terms abbreviations."
 msgstr "Funkcja zwraca listę skrótów warunki płatności."
 
-#: api/api_xml-rpc.php:574
+#: api/api_xml-rpc.php:572
 msgid "This function returns an array of payment terms abbreviations."
 msgstr "Funkcja ta zwraca tablicę skrótów warunki płatności."
 
-#: api/api_xml-rpc.php:597
+#: api/api_xml-rpc.php:595
 msgid ""
 "This function takes a payment terms abbreviation and returns details of that "
 "payment terms type."
@@ -37899,16 +37899,16 @@ msgstr ""
 "Funkcja ta pobiera dane i zwraca skrót warunków płatności tego typu warunki "
 "płatności."
 
-#: api/api_xml-rpc.php:599
+#: api/api_xml-rpc.php:597
 msgid ""
 "A payment terms abbreviation as returned by the GetPaymentTermsList function."
 msgstr "Skrót warunki płatności zwrócony przez GetPaymentTermsList funkcji."
 
-#: api/api_xml-rpc.php:604
+#: api/api_xml-rpc.php:602
 msgid "This function returns an array of payment terms details."
 msgstr "Funkcja ta zwraca tablicę szczegóły warunki płatności."
 
-#: api/api_xml-rpc.php:628
+#: api/api_xml-rpc.php:626
 msgid ""
 "This function inserts a new stock item into webERP, including updating the "
 "locstock table."
@@ -37916,11 +37916,11 @@ msgstr ""
 "Funkcja ta wstawia nowy element czas na webERP, w tym aktualizacji tabeli "
 "locstock."
 
-#: api/api_xml-rpc.php:629 api/api_xml-rpc.php:662
+#: api/api_xml-rpc.php:627 api/api_xml-rpc.php:660
 msgid "Stock Item Details"
 msgstr "Fotografia przedmiotu Szczegóły"
 
-#: api/api_xml-rpc.php:630
+#: api/api_xml-rpc.php:628
 msgid ""
 "Key/value pairs of data to insert. The key must be identical with the "
 "database field name."
@@ -37928,33 +37928,33 @@ msgstr ""
 "Par klucz / wartość danych wstawić. Klucz musi być identyczna z nazwą pola "
 "bazy danych."
 
-#: api/api_xml-rpc.php:661
+#: api/api_xml-rpc.php:659
 msgid "This function modifies a stock item that already exists in webERP."
 msgstr "Funkcja ta zmienia pozycję czas, który już istnieje w webERP."
 
-#: api/api_xml-rpc.php:663
+#: api/api_xml-rpc.php:661
 msgid "Key/value pairs of data to modify."
 msgstr "Par klucz / wartość danych zmodyfikować."
 
-#: api/api_xml-rpc.php:694
+#: api/api_xml-rpc.php:692
 msgid ""
 "This function takes a stock item code and returns an array of key/value "
 "pairs."
 msgstr ""
 "Funkcja ta pobiera kod z magazynu i zwraca tablicę par klucz / wartość."
 
-#: api/api_xml-rpc.php:695
+#: api/api_xml-rpc.php:693
 msgid ""
 "The keys represent the database field names, and the values are the value of "
 "that field."
 msgstr ""
 "Klawisze stanowią nazwy pól bazy danych, a wartości to wartość tego pola."
 
-#: api/api_xml-rpc.php:697 api/api_xml-rpc.php:928 api/api_xml-rpc.php:971
+#: api/api_xml-rpc.php:695 api/api_xml-rpc.php:926 api/api_xml-rpc.php:969
 msgid "The StockID code to identify the item in the database."
 msgstr "Kod StockID do określenia pozycji w bazie danych."
 
-#: api/api_xml-rpc.php:702
+#: api/api_xml-rpc.php:700
 msgid ""
 "If successful this function returns a set of key/value pairs containing the "
 "details of this stock item. "
@@ -37962,7 +37962,7 @@ msgstr ""
 "W przypadku powodzenia funkcja zwraca zbiór par klucz / wartość zawierające "
 "szczegóły tego magazynu. "
 
-#: api/api_xml-rpc.php:703
+#: api/api_xml-rpc.php:701
 msgid ""
 "The key will be identical with field name from the stockmaster table. All "
 "fields will be in the set regardless of whether the value was set."
@@ -37970,7 +37970,7 @@ msgstr ""
 "Kluczem będzie identyczna z nazwą pola w tabeli Stockmaster. Wszystkie pola "
 "będą w zbiorze, niezależnie od tego, czy wartość została ustalona."
 
-#: api/api_xml-rpc.php:728
+#: api/api_xml-rpc.php:726
 msgid ""
 "This function searches the stockmaster table and returns an array of stock "
 "items matching that criteria."
@@ -37978,19 +37978,19 @@ msgstr ""
 "Funkcja ta przeszukuje tabelę Stockmaster i zwraca tablicę elementów czas "
 "pasujące te kryteria."
 
-#: api/api_xml-rpc.php:730 api/api_xml-rpc.php:1915
+#: api/api_xml-rpc.php:728 api/api_xml-rpc.php:1913
 msgid "The field name to search on."
 msgstr "Nazwa pola do wyszukiwania."
 
-#: api/api_xml-rpc.php:731 api/api_xml-rpc.php:1916 api/api_xml-rpc.php:1952
+#: api/api_xml-rpc.php:729 api/api_xml-rpc.php:1914 api/api_xml-rpc.php:1950
 msgid "Match Criteria"
 msgstr "Spełniają kryteriów"
 
-#: api/api_xml-rpc.php:732 api/api_xml-rpc.php:1917 api/api_xml-rpc.php:1953
+#: api/api_xml-rpc.php:730 api/api_xml-rpc.php:1915 api/api_xml-rpc.php:1951
 msgid "The SQL search pattern to select items in the database."
 msgstr "Wzorzec wyszukiwania SQL, aby wybrać pozycje w bazie danych."
 
-#: api/api_xml-rpc.php:737
+#: api/api_xml-rpc.php:735
 msgid ""
 "Returns an array of stock codes matching the criteria send, or an array of "
 "error codes"
@@ -37998,9 +37998,9 @@ msgstr ""
 "Zwraca tablicę kody stad spełniających podane kryteria wysłać lub tablica "
 "kodów błędów"
 
-#: api/api_xml-rpc.php:765 api/api_xml-rpc.php:796 api/api_xml-rpc.php:827
-#: api/api_xml-rpc.php:2221 api/api_xml-rpc.php:2257 api/api_xml-rpc.php:2303
-#: api/api_xml-rpc.php:2499
+#: api/api_xml-rpc.php:763 api/api_xml-rpc.php:794 api/api_xml-rpc.php:825
+#: api/api_xml-rpc.php:2219 api/api_xml-rpc.php:2255 api/api_xml-rpc.php:2301
+#: api/api_xml-rpc.php:2497
 msgid ""
 "A string field containing a valid stockid that must already be setup in the "
 "stockmaster table. The api will check this before making the enquiry."
@@ -38008,14 +38008,14 @@ msgstr ""
 "Pole łańcuch zawierający ważne stockid, że musi już być skonfigurowane w "
 "tabeli Stockmaster. API to sprawdzić przed podjęciem badania."
 
-#: api/api_xml-rpc.php:770
+#: api/api_xml-rpc.php:768
 msgid ""
 "This function returns an array of stock quantities by location for this "
 "stock item. "
 msgstr ""
 "Funkcja ta zwraca tablicę magazynowych według lokalizacji dla tego magazynu. "
 
-#: api/api_xml-rpc.php:801
+#: api/api_xml-rpc.php:799
 msgid ""
 "This function returns an array of stock reorder levels by location for this "
 "stock item."
@@ -38023,8 +38023,8 @@ msgstr ""
 "Funkcja ta zwraca tablicę poziomów uporządkować zasoby wg lokalizacji dla "
 "tego magazynu."
 
-#: api/api_xml-rpc.php:829 api/api_xml-rpc.php:2259 api/api_xml-rpc.php:2305
-#: api/api_xml-rpc.php:2501
+#: api/api_xml-rpc.php:827 api/api_xml-rpc.php:2257 api/api_xml-rpc.php:2303
+#: api/api_xml-rpc.php:2499
 msgid ""
 "A string field containing a valid location code that must already be setup "
 "in the locations table. The api will check this before making the enquiry."
@@ -38032,11 +38032,11 @@ msgstr ""
 "Pole łańcuch zawierający prawidłowy kod miejsca, które muszą być już "
 "ustawione w tabeli miejscach. API to sprawdzić przed podjęciem badania."
 
-#: api/api_xml-rpc.php:830
+#: api/api_xml-rpc.php:828
 msgid "Reorder level"
 msgstr "Zmiana kolejności na poziomie"
 
-#: api/api_xml-rpc.php:831
+#: api/api_xml-rpc.php:829
 msgid ""
 "A numeric field containing the reorder level for this stockid/location "
 "combination."
@@ -38044,7 +38044,7 @@ msgstr ""
 "Pole liczbowe zawierające poziomie kolejność tego stockid kombinacji "
 "lokalizacji."
 
-#: api/api_xml-rpc.php:836
+#: api/api_xml-rpc.php:834
 msgid ""
 "This function returns zero if the transaction was successful or an array of "
 "error codes if not. "
@@ -38052,19 +38052,19 @@ msgstr ""
 "Ta funkcja zwraca zero, jeśli transakcja zakończyła się powodzeniem lub "
 "tablicy kodów błędów, jeśli nie. "
 
-#: api/api_xml-rpc.php:864
+#: api/api_xml-rpc.php:862
 msgid ""
 "This function returns the quantity allocated of the stock item id sent as a "
 "parameter."
 msgstr ""
 "Funkcja ta zwraca ilość przyznana pozycji czas id wysłany jako parametr."
 
-#: api/api_xml-rpc.php:866
+#: api/api_xml-rpc.php:864
 msgid "The StockID code to identify items ordered but not yet shipped."
 msgstr ""
 "Kod StockID identyfikację elementów zamówienia, ale jeszcze nie wysłane."
 
-#: api/api_xml-rpc.php:871
+#: api/api_xml-rpc.php:869
 msgid ""
 "This function returns an integer value of the quantity allocated or an array "
 "of error codes if not. "
@@ -38072,7 +38072,7 @@ msgstr ""
 "Funkcja ta zwraca wartość całkowitą przydzielonych ilości lub tablicy kodów "
 "błędów, czy nie. "
 
-#: api/api_xml-rpc.php:895
+#: api/api_xml-rpc.php:893
 msgid ""
 "This function takes a stock ID and returns the quantity of this stock that "
 "is currently on outstanding purchase orders."
@@ -38080,7 +38080,7 @@ msgstr ""
 "Funkcja ta pobiera ID czas i zwraca ilość tego gatunku, który jest obecnie "
 "na zaległe zamówienia."
 
-#: api/api_xml-rpc.php:897
+#: api/api_xml-rpc.php:895
 msgid ""
 "The StockID code to identify items in the database on order, but not yet "
 "received."
@@ -38088,7 +38088,7 @@ msgstr ""
 "Kod StockID określenia pozycji w bazie danych na zamówienie, ale jeszcze nie "
 "otrzymane."
 
-#: api/api_xml-rpc.php:902
+#: api/api_xml-rpc.php:900
 msgid ""
 "This function returns an integer value of the quantity on order or an array "
 "of error codes if not."
@@ -38096,7 +38096,7 @@ msgstr ""
 "Funkcja ta zwraca wartość całkowitą ilości na zamówienie lub tablicy kodów "
 "błędów, jeśli nie."
 
-#: api/api_xml-rpc.php:926
+#: api/api_xml-rpc.php:924
 msgid ""
 "This function sets the sales price for a stock ID in the sales type and "
 "currency passed to the function"
@@ -38104,27 +38104,27 @@ msgstr ""
 "Funkcja ta ustawia cenę sprzedaży ID czas w sprzedaży i rodzaj waluty "
 "przekazana do funkcji"
 
-#: api/api_xml-rpc.php:929 api/api_xml-rpc.php:972
+#: api/api_xml-rpc.php:927 api/api_xml-rpc.php:970
 msgid "Currency Code"
 msgstr "Kod waluty"
 
-#: api/api_xml-rpc.php:930 api/api_xml-rpc.php:973
+#: api/api_xml-rpc.php:928 api/api_xml-rpc.php:971
 msgid "The currency involved."
 msgstr "Waluta uczestniczących."
 
-#: api/api_xml-rpc.php:932
+#: api/api_xml-rpc.php:930
 msgid "The sales type to identify the item in the database."
 msgstr "Typ sprzedaży w identyfikacji pozycji w bazie danych."
 
-#: api/api_xml-rpc.php:934
+#: api/api_xml-rpc.php:932
 msgid "The price to apply to this item."
 msgstr "Cena stosuje się do tej pozycji."
 
-#: api/api_xml-rpc.php:939
+#: api/api_xml-rpc.php:937
 msgid "Returns a zero if successful or else an array of error codes"
 msgstr "Zwraca zero w przypadku powodzenia lub inny zestaw kodów błędów"
 
-#: api/api_xml-rpc.php:969
+#: api/api_xml-rpc.php:967
 msgid ""
 "This function gets the sales price for a stock ID in the sales type and "
 "currency passed to the function"
@@ -38132,33 +38132,33 @@ msgstr ""
 "Funkcja ta pobiera cenę sprzedaży ID czas w sprzedaży i rodzaj waluty "
 "przekazana do funkcji"
 
-#: api/api_xml-rpc.php:975
+#: api/api_xml-rpc.php:973
 msgid "The sales type of the item in the database."
 msgstr "Typ sprzedaży pozycji w bazie danych."
 
-#: api/api_xml-rpc.php:980
+#: api/api_xml-rpc.php:978
 msgid ""
 "Returns the sales price for he stock item whose ID is passed in the function"
 msgstr ""
 "Zwraca czas element ceny sprzedaży na tym, którego ID jest przekazywane do "
 "funkcji"
 
-#: api/api_xml-rpc.php:1008
+#: api/api_xml-rpc.php:1006
 msgid ""
 "Inserts a sales invoice into the debtortrans table and does the relevant GL "
 "entries"
 msgstr ""
 "Wstawia faktury sprzedaży do debtortrans tabeli i nie odpowiednie wpisy GL"
 
-#: api/api_xml-rpc.php:1009
+#: api/api_xml-rpc.php:1007
 msgid "Invoice Details"
 msgstr "Szczegóły faktury"
 
-#: api/api_xml-rpc.php:1010
+#: api/api_xml-rpc.php:1008
 msgid "An array of index/value items describing the invoice."
 msgstr "Tablica szt. / wartość wskaźnika opisującego faktury."
 
-#: api/api_xml-rpc.php:1013
+#: api/api_xml-rpc.php:1011
 msgid ""
 "The transno key is generated by this call, and if a value is supplied, it "
 "will be ignored. "
@@ -38166,7 +38166,7 @@ msgstr ""
 "Transno klucz jest generowany przez tego wezwania, a jeżeli wartość zostanie "
 "podana, zostanie zignorowany. "
 
-#: api/api_xml-rpc.php:1014
+#: api/api_xml-rpc.php:1012
 msgid ""
 "Two additional fields are required. \"partcode\" needs to be a genuine part "
 "number, though it appears to serve no real purpose. "
@@ -38174,7 +38174,7 @@ msgstr ""
 "Dwa dodatkowe pola są wymagane. \"kodu części \" musi być rzeczywista liczba "
 "części, choć wydaje się, że nie mają już żadnego prawdziwego celu. "
 
-#: api/api_xml-rpc.php:1015
+#: api/api_xml-rpc.php:1013
 msgid ""
 "\"salesarea\" also is required, though again it appears to serve no useful "
 "purpose. "
@@ -38182,7 +38182,7 @@ msgstr ""
 "\"powierzchni sprzedaży \" również nie jest wymagane, ale znowu wydaje się "
 "bezcelowe. "
 
-#: api/api_xml-rpc.php:1022
+#: api/api_xml-rpc.php:1020
 msgid ""
 "If the first element is zero then the function was successful, and the "
 "second element is the invoice number. "
@@ -38190,26 +38190,26 @@ msgstr ""
 "Jeśli pierwszy element jest równy zero, to funkcja zakończy się powodzeniem, "
 "a drugi element jest numer faktury. "
 
-#: api/api_xml-rpc.php:1046 api/api_xml-rpc.php:1215 api/api_xml-rpc.php:1246
-#: api/api_xml-rpc.php:1278 api/api_xml-rpc.php:1517 api/api_xml-rpc.php:1639
-#: api/api_xml-rpc.php:1789 api/api_xml-rpc.php:1821 api/api_xml-rpc.php:1911
-#: api/api_xml-rpc.php:1947
+#: api/api_xml-rpc.php:1044 api/api_xml-rpc.php:1213 api/api_xml-rpc.php:1244
+#: api/api_xml-rpc.php:1276 api/api_xml-rpc.php:1515 api/api_xml-rpc.php:1637
+#: api/api_xml-rpc.php:1787 api/api_xml-rpc.php:1819 api/api_xml-rpc.php:1909
+#: api/api_xml-rpc.php:1945
 #, fuzzy
 msgid "Return Value Descriptions go here"
 msgstr "Opis wymogu"
 
-#: api/api_xml-rpc.php:1047
+#: api/api_xml-rpc.php:1045
 msgid ""
 "This function is used to insert a new Sales Credit to the webERP database."
 msgstr ""
 "Funkcja ta jest używana w celu wstawienia nowego sprzedaży na kredyt do "
 "webERP bazy danych."
 
-#: api/api_xml-rpc.php:1048
+#: api/api_xml-rpc.php:1046
 msgid "Credit Details"
 msgstr "Szczegóły kredytowych"
 
-#: api/api_xml-rpc.php:1049
+#: api/api_xml-rpc.php:1047
 msgid ""
 "An array of index/value items describing the credit.  All values must be "
 "negative."
@@ -38217,11 +38217,11 @@ msgstr ""
 "Tablica szt. / wartość wskaźnika opisującego kredytowej. Wszystkie wartości "
 "muszą być negatywne."
 
-#: api/api_xml-rpc.php:1078
+#: api/api_xml-rpc.php:1076
 msgid "Insert Sales Order Header"
 msgstr "Wstaw nagłówek zlecenia sprzedaży"
 
-#: api/api_xml-rpc.php:1082
+#: api/api_xml-rpc.php:1080
 msgid ""
 "The orderno key is generated by this call, and if a value is supplied, it "
 "will be ignored. "
@@ -38229,7 +38229,7 @@ msgstr ""
 "Kluczem orderno jest generowany przez tego wezwania, a jeżeli wartość "
 "zostanie podana, zostanie zignorowany. "
 
-#: api/api_xml-rpc.php:1088
+#: api/api_xml-rpc.php:1086
 msgid ""
 "If successful this function returns a two element array; the first element "
 "is 0 for success or an error code, while the second element is the order "
@@ -38239,11 +38239,11 @@ msgstr ""
 "element to 0 dla sukcesu lub kod błędu, podczas gdy drugi element jest "
 "numerem porządkowym."
 
-#: api/api_xml-rpc.php:1113
+#: api/api_xml-rpc.php:1111
 msgid "Modify Sales Order Header Details"
 msgstr "Modyfikowanie nagłówka Szczegóły sprzedaży Zamówienie"
 
-#: api/api_xml-rpc.php:1122
+#: api/api_xml-rpc.php:1120
 msgid ""
 "If successful this function returns a single element array with the value 0; "
 "otherwise, it contains all error codes encountered during the update."
@@ -38251,15 +38251,15 @@ msgstr ""
 "W przypadku powodzenia funkcja zwraca jeden element tablicy o wartości 0, w "
 "przeciwnym razie, zawiera wszystkie kody błąd podczas aktualizacji."
 
-#: api/api_xml-rpc.php:1147
+#: api/api_xml-rpc.php:1145
 msgid "Insert Sales Order Line"
 msgstr "Insert Line zlecenia sprzedaży"
 
-#: api/api_xml-rpc.php:1151
+#: api/api_xml-rpc.php:1149
 msgid "The orderno key must be one of these values. "
 msgstr "Kluczem orderno musi być jednym z tych wartości. "
 
-#: api/api_xml-rpc.php:1157 api/api_xml-rpc.php:1192
+#: api/api_xml-rpc.php:1155 api/api_xml-rpc.php:1190
 msgid ""
 "This function returns an array; the first element is 0 for success; "
 "otherwise the array contains a list of all errors encountered."
@@ -38267,126 +38267,126 @@ msgstr ""
 "Funkcja ta zwraca tablicę, pierwszy element to 0 dla sukcesu, w przeciwnym "
 "wypadku tablica zawiera listę wszystkich błędów, które wystąpiły."
 
-#: api/api_xml-rpc.php:1182
+#: api/api_xml-rpc.php:1180
 msgid "Modify Sales Order Line"
 msgstr "Modyfikacja linii zlecenia sprzedaży"
 
-#: api/api_xml-rpc.php:1186
+#: api/api_xml-rpc.php:1184
 msgid "The orderno and stkcode keys must be one of these values. "
 msgstr "Orderno i stkcode kluczy musi być jednym z tych wartości. "
 
-#: api/api_xml-rpc.php:1216 api/api_xml-rpc.php:1247 api/api_xml-rpc.php:1279
-#: api/api_xml-rpc.php:1518 api/api_xml-rpc.php:1640 api/api_xml-rpc.php:1790
-#: api/api_xml-rpc.php:1822 api/api_xml-rpc.php:1912 api/api_xml-rpc.php:1948
+#: api/api_xml-rpc.php:1214 api/api_xml-rpc.php:1245 api/api_xml-rpc.php:1277
+#: api/api_xml-rpc.php:1516 api/api_xml-rpc.php:1638 api/api_xml-rpc.php:1788
+#: api/api_xml-rpc.php:1820 api/api_xml-rpc.php:1910 api/api_xml-rpc.php:1946
 #, fuzzy
 msgid "Function Description go here"
 msgstr "Opis Grupy"
 
-#: api/api_xml-rpc.php:1217
+#: api/api_xml-rpc.php:1215
 msgid "Account Details"
 msgstr "Szczegóły konta"
 
-#: api/api_xml-rpc.php:1218
+#: api/api_xml-rpc.php:1216
 msgid ""
 "An array of index/value items describing the GL Account and fields to set."
 msgstr ""
 "Tablica szt. / wartość wskaźnika opisującego GL konto i pola do ustawienia."
 
-#: api/api_xml-rpc.php:1249
+#: api/api_xml-rpc.php:1247
 msgid "Account Section Details"
 msgstr "Szczegóły konta sekcji"
 
-#: api/api_xml-rpc.php:1250
+#: api/api_xml-rpc.php:1248
 msgid "An array of index/value items describing the account section to insert."
 msgstr "Tablica szt. / wartość wskaźnika opisującego sekcji konto wstawić."
 
-#: api/api_xml-rpc.php:1281
+#: api/api_xml-rpc.php:1279
 msgid "Account Group Details"
 msgstr "Szczegóły konta Group"
 
-#: api/api_xml-rpc.php:1282
+#: api/api_xml-rpc.php:1280
 msgid "An array of index/value items describing the account group to insert."
 msgstr "Tablica szt. / wartość wskaźnika opisującego grupy kont wstawić."
 
-#: api/api_xml-rpc.php:1310
+#: api/api_xml-rpc.php:1308
 msgid "This function returns a list of stock location ids."
 msgstr "Funkcja zwraca listę identyfikatorów lokalizacji zapasów."
 
-#: api/api_xml-rpc.php:1315
+#: api/api_xml-rpc.php:1313
 msgid "This function returns an array of stock location ids."
 msgstr "Funkcja ta zwraca tablicę identyfikatorów lokalizacji zapasów."
 
-#: api/api_xml-rpc.php:1337
+#: api/api_xml-rpc.php:1335
 msgid ""
 "This function takes a stock location id and returns details of that stock "
 "location."
 msgstr "Funkcja ta ma miejsce czas id i zwraca informacje o tym miejscu czas."
 
-#: api/api_xml-rpc.php:1338
+#: api/api_xml-rpc.php:1336
 msgid "Stock Location Code"
 msgstr "Kodeks Lokalizacja fotografia"
 
-#: api/api_xml-rpc.php:1339
+#: api/api_xml-rpc.php:1337
 msgid "A stock location code as returned by the GetLocationList function."
 msgstr "Kod miejsca czas zwrócony przez GetLocationList funkcji."
 
-#: api/api_xml-rpc.php:1344
+#: api/api_xml-rpc.php:1342
 msgid "This function returns an array of stock location details."
 msgstr "Funkcja ta zwraca tablicę temat lokalizacji zasobów."
 
-#: api/api_xml-rpc.php:1368
+#: api/api_xml-rpc.php:1366
 msgid "This function returns a list of stock shipper ids."
 msgstr "Funkcja zwraca listę identyfikatorów nadawca czas."
 
-#: api/api_xml-rpc.php:1373
+#: api/api_xml-rpc.php:1371
 msgid "This function returns an array of stock shipper ids."
 msgstr "Funkcja ta zwraca tablicę identyfikatorów nadawca czas."
 
-#: api/api_xml-rpc.php:1396
+#: api/api_xml-rpc.php:1394
 msgid ""
 "This function takes a stock shipper id and returns details of that shipper."
 msgstr "Funkcja ta pobiera nadawcę czas id i zwraca informacje o tym nadawcę."
 
-#: api/api_xml-rpc.php:1397
+#: api/api_xml-rpc.php:1395
 msgid "Stock Shipper ID"
 msgstr "Nadawca fotografia ID"
 
-#: api/api_xml-rpc.php:1398
+#: api/api_xml-rpc.php:1396
 msgid "A stock shipper ID as returned by the GetShippersList function."
 msgstr "ID nadawcy czas zwrócony przez GetShippersList funkcji."
 
-#: api/api_xml-rpc.php:1403
+#: api/api_xml-rpc.php:1401
 msgid "This function returns an array of stock shipper details."
 msgstr "Funkcja ta zwraca tablicę danych nadawcy czas."
 
-#: api/api_xml-rpc.php:1427
+#: api/api_xml-rpc.php:1425
 msgid "This function returns a list of sales area codes."
 msgstr "Funkcja ta zwraca listę sprzedaży numery kierunkowe."
 
-#: api/api_xml-rpc.php:1432
+#: api/api_xml-rpc.php:1430
 msgid "This function returns an array of sales area codes."
 msgstr "Funkcja ta zwraca tablicę sprzedaży numery kierunkowe."
 
-#: api/api_xml-rpc.php:1455
+#: api/api_xml-rpc.php:1453
 msgid ""
 "This function takes a sales area code and returns details of that sales area."
 msgstr ""
 "Funkcja ta pobiera kod obszaru sprzedaży i zwraca informacje o tym "
 "powierzchni sprzedaży."
 
-#: api/api_xml-rpc.php:1456 api/api_xml-rpc.php:1578
+#: api/api_xml-rpc.php:1454 api/api_xml-rpc.php:1576
 msgid "Sales Area Code"
 msgstr "Code Area Sales"
 
-#: api/api_xml-rpc.php:1457
+#: api/api_xml-rpc.php:1455
 msgid "A sales area code as returned by the GetSalesAreasList function."
 msgstr "Powierzchni sprzedaży kod zwrócony przez GetSalesAreasList funkcji."
 
-#: api/api_xml-rpc.php:1462 api/api_xml-rpc.php:1493
+#: api/api_xml-rpc.php:1460 api/api_xml-rpc.php:1491
 msgid "This function returns an array of sales area details."
 msgstr "Funkcja ta zwraca tablicę szczegółów sprzedaży obszarze."
 
-#: api/api_xml-rpc.php:1486
+#: api/api_xml-rpc.php:1484
 msgid ""
 "This function takes a sales area description and returns details of that "
 "sales area."
@@ -38394,139 +38394,139 @@ msgstr ""
 "Funkcja ta pobiera powierzchni sprzedaży opis i zwraca informacje o tym "
 "powierzchni sprzedaży."
 
-#: api/api_xml-rpc.php:1487
+#: api/api_xml-rpc.php:1485
 msgid "Sales Area Description"
 msgstr "Opis Area Sales"
 
-#: api/api_xml-rpc.php:1488
+#: api/api_xml-rpc.php:1486
 msgid "A sales area description of the sales area of interest."
 msgstr "Powierzchni sprzedaży, opis powierzchni sprzedaży interesów."
 
-#: api/api_xml-rpc.php:1520
+#: api/api_xml-rpc.php:1518
 msgid "Sales Area Details"
 msgstr "Szczegóły Area Sales"
 
-#: api/api_xml-rpc.php:1521
+#: api/api_xml-rpc.php:1519
 msgid "An array of index/value items describing the sales area to insert."
 msgstr ""
 "Tablica szt. / wartość wskaźnika opisującego powierzchni sprzedaży wstawić."
 
-#: api/api_xml-rpc.php:1549
+#: api/api_xml-rpc.php:1547
 msgid "This function returns a list of salesman codes."
 msgstr "Funkcja ta zwraca listę kodów sprzedawcy."
 
-#: api/api_xml-rpc.php:1554
+#: api/api_xml-rpc.php:1552
 msgid "This function returns an array of salesman codes."
 msgstr "Funkcja ta zwraca tablicę kodów sprzedawcy."
 
-#: api/api_xml-rpc.php:1577
+#: api/api_xml-rpc.php:1575
 msgid ""
 "This function takes a salesman code and returns details of that salesman."
 msgstr ""
 "Funkcja ta pobiera kod sprzedawca i zwraca informacje o tym sprzedawcy."
 
-#: api/api_xml-rpc.php:1579
+#: api/api_xml-rpc.php:1577
 msgid "A salesman code as returned by the GetSalesmanList function."
 msgstr "Sprzedawca kod zwrócony przez GetSalesmanList funkcji."
 
-#: api/api_xml-rpc.php:1584 api/api_xml-rpc.php:1615
+#: api/api_xml-rpc.php:1582 api/api_xml-rpc.php:1613
 msgid "This function returns an array of salesman details."
 msgstr "Funkcja ta zwraca tablicę danych sprzedawcy."
 
-#: api/api_xml-rpc.php:1608
+#: api/api_xml-rpc.php:1606
 msgid ""
 "This function takes a salesman's name and returns details of that salesman."
 msgstr ""
 "Funkcja ta pobiera nazwę sprzedawcy i zwraca informacje o tym sprzedawcy."
 
-#: api/api_xml-rpc.php:1610
+#: api/api_xml-rpc.php:1608
 msgid "The name of the salesman of interest."
 msgstr "Nazwa sprzedawcy interesów."
 
-#: api/api_xml-rpc.php:1642
+#: api/api_xml-rpc.php:1640
 msgid "Salesman Details"
 msgstr "Szczegóły Sprzedawca"
 
-#: api/api_xml-rpc.php:1643
+#: api/api_xml-rpc.php:1641
 msgid "An array of index/value items describing the salesman to insert."
 msgstr "Tablica szt. / wartość wskaźnika opisującego sprzedawca wstawić."
 
-#: api/api_xml-rpc.php:1671
+#: api/api_xml-rpc.php:1669
 msgid "This function returns a list of tax group IDs."
 msgstr "Funkcja zwraca listę identyfikatorów grupy podatkowej."
 
-#: api/api_xml-rpc.php:1676
+#: api/api_xml-rpc.php:1674
 msgid "This function returns an array of tax group IDs."
 msgstr "Funkcja ta zwraca tablicę identyfikatorów grupy podatkowej."
 
-#: api/api_xml-rpc.php:1699
+#: api/api_xml-rpc.php:1697
 msgid ""
 "This function takes a tax group ID and returns details of that tax group."
 msgstr ""
 "Funkcja ta pobiera identyfikator grupy podatkowej i zeznaniu szczegóły tej "
 "grupy podatkowej."
 
-#: api/api_xml-rpc.php:1700
+#: api/api_xml-rpc.php:1698
 msgid "Tax Group ID"
 msgstr "Grupa NIP"
 
-#: api/api_xml-rpc.php:1701
+#: api/api_xml-rpc.php:1699
 msgid "A tax group ID as returned by the GetTaxgroupList function."
 msgstr "ID grupy podatkowej zwrócony przez GetTaxgroupList funkcji."
 
-#: api/api_xml-rpc.php:1706
+#: api/api_xml-rpc.php:1704
 msgid "This function returns an array of tax group details."
 msgstr "Funkcja ta zwraca tablicę danych grupy podatkowej."
 
-#: api/api_xml-rpc.php:1730
+#: api/api_xml-rpc.php:1728
 msgid "This function returns a list of customer types."
 msgstr "Funkcja ta zwraca listę typów klientów."
 
-#: api/api_xml-rpc.php:1735
+#: api/api_xml-rpc.php:1733
 msgid "This function returns an array of customer types."
 msgstr "Funkcja ta zwraca tablicę typów klientów."
 
-#: api/api_xml-rpc.php:1758
+#: api/api_xml-rpc.php:1756
 msgid ""
 "This function takes a customer type ID and returns details of that customer "
 "type."
 msgstr "Funkcja ta pobiera dane i zwraca typ ID klienta tego typu klientów."
 
-#: api/api_xml-rpc.php:1759
+#: api/api_xml-rpc.php:1757
 msgid "Customer Type ID"
 msgstr "Typ ID klienta"
 
-#: api/api_xml-rpc.php:1760
+#: api/api_xml-rpc.php:1758
 msgid "A customer type ID as returned by the GetCustomerTypeList function."
 msgstr "ID typu klienta zwracane przez GetCustomerTypeList funkcji."
 
-#: api/api_xml-rpc.php:1765
+#: api/api_xml-rpc.php:1763
 msgid "This function returns an array of customer type details."
 msgstr "Funkcja ta zwraca tablicę danych typu klienta."
 
-#: api/api_xml-rpc.php:1792 api/api_xml-rpc.php:1824
+#: api/api_xml-rpc.php:1790 api/api_xml-rpc.php:1822
 msgid "Category Details"
 msgstr "Szczegóły Kategoria"
 
-#: api/api_xml-rpc.php:1793
+#: api/api_xml-rpc.php:1791
 msgid "An array of index/value items describing the stock category to insert."
 msgstr "Tablica szt. / wartość wskaźnika opisującego kategorii czas wstawić."
 
-#: api/api_xml-rpc.php:1825
+#: api/api_xml-rpc.php:1823
 msgid "An array of index/value items describing the stock category to modify."
 msgstr "Tablica szt. / wartość wskaźnika opisującego kategorii czas zmienić."
 
-#: api/api_xml-rpc.php:1852
+#: api/api_xml-rpc.php:1850
 msgid "This function returns a list of stock category abbreviations."
 msgstr "Funkcja zwraca listę skrótów kategorii fotografia."
 
-#: api/api_xml-rpc.php:1857
+#: api/api_xml-rpc.php:1855
 msgid "If successful, this function returns an array of stock category ids. "
 msgstr ""
 "Jeśli to się powiedzie, funkcja ta zwraca tablicę identyfikatorów kategorii "
 "fotografia. "
 
-#: api/api_xml-rpc.php:1858
+#: api/api_xml-rpc.php:1856
 msgid ""
 "Otherwise an array of error codes is returned and no stock categories are "
 "returned. "
@@ -38534,7 +38534,7 @@ msgstr ""
 "W przeciwnym wypadku tablica kodów zwracany jest błąd i nie są zwracane "
 "kategorii fotografia. "
 
-#: api/api_xml-rpc.php:1880
+#: api/api_xml-rpc.php:1878
 msgid ""
 "This function takes a stock category ID and returns details of that stock "
 "category type."
@@ -38542,35 +38542,35 @@ msgstr ""
 "Funkcja ta pobiera dane ID kategorii i zwrotów zapasów tego typu kategorii "
 "fotografia."
 
-#: api/api_xml-rpc.php:1881
+#: api/api_xml-rpc.php:1879
 msgid "Stock Category ID"
 msgstr "Category Stock ID"
 
-#: api/api_xml-rpc.php:1882
+#: api/api_xml-rpc.php:1880
 msgid "A Stock Category ID as returned by the *WHAT* function."
 msgstr "Fotografia Identyfikator kategorii zwracaną przez funkcję * * JAKIE."
 
-#: api/api_xml-rpc.php:1887
+#: api/api_xml-rpc.php:1885
 msgid "This function returns an array of stock category details."
 msgstr "Funkcja ta zwraca tablicę danych kategorii akcji."
 
-#: api/api_xml-rpc.php:1950
+#: api/api_xml-rpc.php:1948
 msgid "Label Name"
 msgstr "Nazwa Wytwórnia"
 
-#: api/api_xml-rpc.php:1951
+#: api/api_xml-rpc.php:1949
 msgid "The category label to search on."
 msgstr "Etykieta kategorii poszukiwania."
 
-#: api/api_xml-rpc.php:1983
+#: api/api_xml-rpc.php:1981
 msgid "This function returns a list of general ledger account codes."
 msgstr "Funkcja ta zwraca listę ogólnych kodów kont księgi głównej."
 
-#: api/api_xml-rpc.php:1988
+#: api/api_xml-rpc.php:1986
 msgid "This function returns an array of general ledger account codes."
 msgstr "Funkcja ta zwraca tablicę ogólnych kodów kont księgi głównej."
 
-#: api/api_xml-rpc.php:2011
+#: api/api_xml-rpc.php:2009
 msgid ""
 "This function takes a general ledger account code and returns details of "
 "that account."
@@ -38578,21 +38578,21 @@ msgstr ""
 "Funkcja ta pobiera ogólnego kodeksu kont księgi głównej i zwraca informacje "
 "o tym koncie."
 
-#: api/api_xml-rpc.php:2012
+#: api/api_xml-rpc.php:2010
 msgid "General Ledger Account Code"
 msgstr "Kod konta Księgi Głównej"
 
-#: api/api_xml-rpc.php:2013
+#: api/api_xml-rpc.php:2011
 msgid ""
 "A general ledger account code as returned by the GetGLAccountList function."
 msgstr ""
 "Ogólnego kodeksu kont księgi głównej zwrócony przez GetGLAccountList funkcji."
 
-#: api/api_xml-rpc.php:2018 api/api_xml-rpc.php:2051
+#: api/api_xml-rpc.php:2016 api/api_xml-rpc.php:2049
 msgid "This function returns an array of general ledger account details."
 msgstr "Funkcja ta zwraca tablicę ogólne dane kont księgi głównej."
 
-#: api/api_xml-rpc.php:2042
+#: api/api_xml-rpc.php:2040
 msgid ""
 "This function takes a stock code ID and a tax authority code and returns the "
 "relevant tax rate."
@@ -38600,30 +38600,30 @@ msgstr ""
 "Funkcja ta pobiera kod ID czas i kod organu podatkowego i zwraca "
 "odpowiedniej stawki podatku."
 
-#: api/api_xml-rpc.php:2044
+#: api/api_xml-rpc.php:2042
 msgid "The stock ID of the item whose tax rate is desired."
 msgstr "ID czas pozycji, których stawka podatku jest pożądane."
 
-#: api/api_xml-rpc.php:2045
+#: api/api_xml-rpc.php:2043
 msgid "Tax Authority Code"
 msgstr "Kod organu podatkowego"
 
-#: api/api_xml-rpc.php:2046
+#: api/api_xml-rpc.php:2044
 msgid "The code identifying the tax authority of interest."
 msgstr "Kod identyfikujący organ podatkowy odsetek."
 
-#: api/api_xml-rpc.php:2077
+#: api/api_xml-rpc.php:2075
 msgid ""
 "This function is used to insert a new supplier into the webERP database."
 msgstr ""
 "Funkcja ta jest używana w celu wstawienia nowego dostawcę do webERP bazy "
 "danych."
 
-#: api/api_xml-rpc.php:2078 api/api_xml-rpc.php:2114
+#: api/api_xml-rpc.php:2076 api/api_xml-rpc.php:2112
 msgid "Supplier Details"
 msgstr "Dostawca Szczegóły"
 
-#: api/api_xml-rpc.php:2113
+#: api/api_xml-rpc.php:2111
 msgid ""
 "This function is used to modify a supplier which is already setup in the "
 "webERP database."
@@ -38631,22 +38631,22 @@ msgstr ""
 "Funkcja ta służy do zmiany dostawcy, który już w webERP konfiguracji bazy "
 "danych."
 
-#: api/api_xml-rpc.php:2119
+#: api/api_xml-rpc.php:2117
 msgid "The supplierid must already exist in the weberp database."
 msgstr "SupplierID musi już istnieć w bazie danych weberp."
 
-#: api/api_xml-rpc.php:2150 api/api_xml-rpc.php:2183
+#: api/api_xml-rpc.php:2148 api/api_xml-rpc.php:2181
 msgid ""
 "This function is used to retrieve the details of a supplier from the webERP "
 "database."
 msgstr ""
 "Funkcja ta służy do pobierania informacji z dostawcami z webERP bazy danych."
 
-#: api/api_xml-rpc.php:2151
+#: api/api_xml-rpc.php:2149
 msgid "Supplier ID"
 msgstr "Dostawca ID"
 
-#: api/api_xml-rpc.php:2152
+#: api/api_xml-rpc.php:2150
 msgid ""
 "This is a string value. It must be a valid supplier id that is already in "
 "the webERP database."
@@ -38654,7 +38654,7 @@ msgstr ""
 "To jest wartość ciągu. To musi być poprawny identyfikator dostawcy, który "
 "jest już w webERP bazy danych."
 
-#: api/api_xml-rpc.php:2157
+#: api/api_xml-rpc.php:2155
 msgid ""
 "If successful this function returns a set of key/value pairs containing the "
 "details of this supplier. "
@@ -38662,7 +38662,7 @@ msgstr ""
 "W przypadku powodzenia funkcja zwraca zbiór par klucz / wartość zawierające "
 "szczegóły tego dostawcy. "
 
-#: api/api_xml-rpc.php:2158
+#: api/api_xml-rpc.php:2156
 msgid ""
 "The key will be identical with field name from the suppliers table. All "
 "fields will be in the set regardless of whether the value was set."
@@ -38670,7 +38670,7 @@ msgstr ""
 "Kluczem będzie identyczna z nazwa pola z tabeli dostawców. Wszystkie pola "
 "będą w zbiorze, niezależnie od tego, czy wartość została ustalona."
 
-#: api/api_xml-rpc.php:2185
+#: api/api_xml-rpc.php:2183
 msgid ""
 "This is a string value. It must be a valid field in the suppliers table. "
 "This is case sensitive"
@@ -38678,12 +38678,12 @@ msgstr ""
 "To jest wartość ciągu. To musi być ważny pola w tabeli dostawców. To jest "
 "wielkość liter"
 
-#: api/api_xml-rpc.php:2186 api/api_xml-rpc.php:2222 api/api_xml-rpc.php:2354
+#: api/api_xml-rpc.php:2184 api/api_xml-rpc.php:2220 api/api_xml-rpc.php:2352
 msgid "Criteria"
 msgstr "Kryteria"
 
-#: api/api_xml-rpc.php:2187 api/api_xml-rpc.php:2223 api/api_xml-rpc.php:2263
-#: api/api_xml-rpc.php:2309 api/api_xml-rpc.php:2355 api/api_xml-rpc.php:2505
+#: api/api_xml-rpc.php:2185 api/api_xml-rpc.php:2221 api/api_xml-rpc.php:2261
+#: api/api_xml-rpc.php:2307 api/api_xml-rpc.php:2353 api/api_xml-rpc.php:2503
 msgid ""
 "This is a string value. It holds the string that is searched for in the "
 "given field. It will search for all or part of the field."
@@ -38691,24 +38691,24 @@ msgstr ""
 "To jest wartość ciągu. Posiada ciąg, który jest wyszukiwany w danej "
 "dziedzinie. będzie szukać wszystkich lub części pola."
 
-#: api/api_xml-rpc.php:2192
+#: api/api_xml-rpc.php:2190
 msgid "If successful this function returns an array of supplier ids. "
 msgstr ""
 "W przypadku powodzenia funkcja ta zwraca tablicę identyfikatorów dostawcy. "
 
-#: api/api_xml-rpc.php:2219
+#: api/api_xml-rpc.php:2217
 msgid "This function is used to retrieve the details of stock batches."
 msgstr "Funkcja ta służy do pobierania informacji z partii czas."
 
-#: api/api_xml-rpc.php:2228
+#: api/api_xml-rpc.php:2226
 msgid "Returns a two dimensional array of stock batch details. "
 msgstr "Zwraca dwuwymiarowej tablicy danych partii czas. "
 
-#: api/api_xml-rpc.php:2229
+#: api/api_xml-rpc.php:2227
 msgid "The fields returned are stockid, loccode, batchno, quantity, itemcost. "
 msgstr "Pola zwrócone są stockid, loccode, batchno, ilości, itemcost. "
 
-#: api/api_xml-rpc.php:2255
+#: api/api_xml-rpc.php:2253
 msgid ""
 "Adjust the stock balance for the given stock code at the given location by "
 "the amount given."
@@ -38716,7 +38716,7 @@ msgstr ""
 "Dostosowanie balansu czas dla danego kodu czas w danym miejscu przez daną "
 "kwotę."
 
-#: api/api_xml-rpc.php:2261 api/api_xml-rpc.php:2307 api/api_xml-rpc.php:2503
+#: api/api_xml-rpc.php:2259 api/api_xml-rpc.php:2305 api/api_xml-rpc.php:2501
 msgid ""
 "This is an integer value. It holds the amount of stock to be adjusted. "
 "Should be negative if is stock is to be reduced"
@@ -38724,19 +38724,19 @@ msgstr ""
 "To jest liczbą całkowitą. Posiada ilości zapasów powinny zostać dostosowane. "
 "Powinien być negatywny, jeśli jest czas ma być obniżona"
 
-#: api/api_xml-rpc.php:2262 api/api_xml-rpc.php:2308 api/api_xml-rpc.php:2504
+#: api/api_xml-rpc.php:2260 api/api_xml-rpc.php:2306 api/api_xml-rpc.php:2502
 msgid "Transaction Date"
 msgstr "Data transakcji"
 
-#: api/api_xml-rpc.php:2268 api/api_xml-rpc.php:2316 api/api_xml-rpc.php:2510
+#: api/api_xml-rpc.php:2266 api/api_xml-rpc.php:2314 api/api_xml-rpc.php:2508
 msgid "If successful this function returns 0. "
 msgstr "W przypadku powodzenia funkcja zwraca 0. "
 
-#: api/api_xml-rpc.php:2299
+#: api/api_xml-rpc.php:2297
 msgid "Issues stock to a given work order from the given location"
 msgstr "czas problemy do danego zlecenia z danej lokalizacji"
 
-#: api/api_xml-rpc.php:2301 api/api_xml-rpc.php:2497
+#: api/api_xml-rpc.php:2299 api/api_xml-rpc.php:2495
 msgid ""
 "A string field containing a valid work order number that has already been "
 "created. The api will check this before making the enquiry."
@@ -38744,11 +38744,11 @@ msgstr ""
 "Strun, zawierające prawidłowy numer zlecenia, który został już utworzony. "
 "API to sprawdzić przed podjęciem badania."
 
-#: api/api_xml-rpc.php:2310
+#: api/api_xml-rpc.php:2308
 msgid "Batch number"
 msgstr "Numer serii"
 
-#: api/api_xml-rpc.php:2311
+#: api/api_xml-rpc.php:2309
 msgid ""
 "This is a string value. It holds the reference to the batch number for the "
 "product being issued. If the stockid is not batch controlled this is ignored."
@@ -38756,14 +38756,14 @@ msgstr ""
 "To jest wartość ciągu. Posiada odniesienie do numeru partii produktu "
 "wydaniu. Jeśli nie jest partia stockid kontrolowali ten jest ignorowany."
 
-#: api/api_xml-rpc.php:2351
+#: api/api_xml-rpc.php:2349
 msgid ""
 "This function is used to retrieve the details of a work order from the "
 "webERP database."
 msgstr ""
 "Funkcja ta służy do pobierania szczegóły zlecenia od webERP bazy danych."
 
-#: api/api_xml-rpc.php:2353
+#: api/api_xml-rpc.php:2351
 msgid ""
 "This is a string value. It must be a valid field in the workorders table. "
 "This is case sensitive"
@@ -38771,27 +38771,27 @@ msgstr ""
 "To jest wartość ciągu. To musi być ważny pola w tabeli workorders. To jest "
 "wielkość liter"
 
-#: api/api_xml-rpc.php:2360
+#: api/api_xml-rpc.php:2358
 msgid "If successful this function returns an array of work order numbers. "
 msgstr "W przypadku powodzenia funkcja zwraca tablicę liczb zlecenia. "
 
-#: api/api_xml-rpc.php:2387
+#: api/api_xml-rpc.php:2385
 msgid ""
 "This function is used to insert new purchasing data into the webERP database."
 msgstr ""
 "Funkcja ta służy do wstawiania nowych danych nabywczej w webERP bazy danych."
 
-#: api/api_xml-rpc.php:2388 api/api_xml-rpc.php:2424
+#: api/api_xml-rpc.php:2386 api/api_xml-rpc.php:2422
 msgid "Purchasing data"
 msgstr "Zakup danych"
 
-#: api/api_xml-rpc.php:2423
+#: api/api_xml-rpc.php:2421
 msgid ""
 "This function is used to modify purchasing data into the webERP database."
 msgstr ""
 "Funkcja ta służy do modyfikowania danych nabywczej w webERP bazy danych."
 
-#: api/api_xml-rpc.php:2459
+#: api/api_xml-rpc.php:2457
 msgid ""
 "This function is used to insert a new work order into the webERP database. "
 "Currently this works only for single line orders."
@@ -38799,41 +38799,41 @@ msgstr ""
 "Funkcja ta jest używana w celu wstawienia nowego zlecenia do webERP bazy "
 "danych. Obecnie działa tylko na pojedyncze zlecenia line."
 
-#: api/api_xml-rpc.php:2460
+#: api/api_xml-rpc.php:2458
 msgid "Work order details"
 msgstr "szczegóły Work celu"
 
-#: api/api_xml-rpc.php:2495
+#: api/api_xml-rpc.php:2493
 msgid "Receives stock from a given work order from the given location"
 msgstr "czas otrzymuje od danego zlecenia z danej lokalizacji"
 
-#: api/api_xml-rpc.php:2543
+#: api/api_xml-rpc.php:2541
 msgid "Returns the webERP default date format"
 msgstr "Zwraca webERP domyślnego formatu daty"
 
-#: api/api_xml-rpc.php:2548
+#: api/api_xml-rpc.php:2546
 msgid ""
 "If successful this function returns a string contain the default date "
 "format. "
 msgstr ""
 "W przypadku powodzenia funkcja zwraca ciąg zawiera domyślny format daty. "
 
-#: api/api_xml-rpc.php:2572
+#: api/api_xml-rpc.php:2570
 msgid "Returns the webERP default location"
 msgstr "Zwraca webERP domyślną lokalizację"
 
-#: api/api_xml-rpc.php:2577
+#: api/api_xml-rpc.php:2575
 msgid ""
 "If successful this function returns a string contain the default location. "
 msgstr ""
 "W przypadku powodzenia funkcja zwraca ciąg znaków zawiera w domyślnej "
 "lokalizacji. "
 
-#: api/api_xml-rpc.php:2601
+#: api/api_xml-rpc.php:2599
 msgid "Returns the webERP default price list"
 msgstr "Zwraca webERP domyślnie cennik"
 
-#: api/api_xml-rpc.php:2606
+#: api/api_xml-rpc.php:2604
 msgid ""
 "If successful this function returns a string contain the default price list "
 "code. "
@@ -38841,11 +38841,11 @@ msgstr ""
 "W przypadku powodzenia funkcja zwraca ciąg zawierają cenę domyślną listą "
 "kodów. "
 
-#: api/api_xml-rpc.php:2630
+#: api/api_xml-rpc.php:2628
 msgid "Returns the webERP currency code"
 msgstr "Zwraca webERP kod waluty"
 
-#: api/api_xml-rpc.php:2635
+#: api/api_xml-rpc.php:2633
 msgid ""
 "If successful this function returns a string contain the default currency "
 "code. "
@@ -38853,7 +38853,7 @@ msgstr ""
 "W przypadku powodzenia funkcja zwraca ciąg znaków zawiera kod walutę "
 "domyślną. "
 
-#: api/api_xml-rpc.php:2659
+#: api/api_xml-rpc.php:2657
 msgid ""
 "Returns the value of the specified stock category property for the specified "
 "stock item category"
@@ -38861,15 +38861,15 @@ msgstr ""
 "Zwraca wartość podanej właściwości kategorii czas dla określonej kategorii z "
 "magazynu"
 
-#: api/api_xml-rpc.php:2660
+#: api/api_xml-rpc.php:2658
 msgid "Property"
 msgstr "Nieruchomości"
 
-#: api/api_xml-rpc.php:2661
+#: api/api_xml-rpc.php:2659
 msgid "The name of the specific property to be returned."
 msgstr "Nazwa konkretnej nieruchomości podlegają zwrotowi."
 
-#: api/api_xml-rpc.php:2663
+#: api/api_xml-rpc.php:2661
 msgid ""
 "The ID of the stock item for which the value of the above property is "
 "required. "
@@ -38877,27 +38877,27 @@ msgstr ""
 "Identyfikator z magazynu, w którym wartość powyższej nieruchomości jest "
 "wymagane. "
 
-#: api/api_xml-rpc.php:2668
+#: api/api_xml-rpc.php:2666
 msgid ""
 "If successful this function returns zero, and the value of the requested "
 "property. "
 msgstr ""
 "W przypadku powodzenia funkcja zwraca zero, a wartość żądanej własności. "
 
-#: api/api_xml-rpc.php:2695
+#: api/api_xml-rpc.php:2693
 msgid "Returns (possibly translated) error text from error codes"
 msgstr ""
 "Zwraca (ewentualnie przetłumaczone) tekst komunikatu błędu z kodów błędów"
 
-#: api/api_xml-rpc.php:2696
+#: api/api_xml-rpc.php:2694
 msgid "Error codes"
 msgstr "Kody błędów"
 
-#: api/api_xml-rpc.php:2697
+#: api/api_xml-rpc.php:2695
 msgid "An array of error codes to change into text messages. "
 msgstr "Tablica kodów błędów do zmian w wiadomości tekstowych. "
 
-#: api/api_xml-rpc.php:2698
+#: api/api_xml-rpc.php:2696
 msgid ""
 "An array of two element arrays, one per error code. The second array has the "
 "error code in element 0 and the error string in element 1. "
@@ -38905,11 +38905,11 @@ msgstr ""
 "Element tablicy z dwóch tablic, jednej na kod błędu. Druga tablica zawiera "
 "kod błędu w elemencie 0 i błędu w element 1. "
 
-#: api/api_xml-rpc.php:3047
+#: api/api_xml-rpc.php:3045
 msgid "Parameters"
 msgstr "Parametry"
 
-#: api/api_xml-rpc.php:3052
+#: api/api_xml-rpc.php:3050
 msgid "Return Value"
 msgstr "Wartość zwracana"
 
