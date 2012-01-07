@@ -584,11 +584,11 @@ if (!isset($_POST['PostInvoice'])){
 				<input type="submit" name="PostInvoice" value="' . _('Enter Invoice') . '" />
 			</div>';
 
-} else { //do the postings -and dont show the button to process
+} else { // $_POST['PostInvoice'] is set so do the postings -and dont show the button to process
 
 /*First do input reasonableness checks
 then do the updates and inserts to process the invoice entered */
-
+	$TaxTotal =0;
 	foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 		/*Set the tax rate to what was entered */
 		if (isset($_POST['TaxRate'  . $Tax->TaxCalculationOrder])){
@@ -596,22 +596,22 @@ then do the updates and inserts to process the invoice entered */
 		}
 		if ($_POST['OverRideTax']=='Auto' OR !isset($_POST['OverRideTax'])){
 			/*Now recaluclate the tax depending on the method */
+			/*Now recaluclate the tax depending on the method */
 			if ($Tax->TaxOnTax ==1){
+
 				$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
+
 			} else { /*Calculate tax without the tax on tax */
+
 				$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
+
 			}
 		} else { /*Tax being entered manually accept the taxamount entered as is*/
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = filter_number_format($_POST['TaxAmount'  . $Tax->TaxCalculationOrder]);
 		}
+		$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount;
 	}
 
-/*Need to recalc the taxtotal */
-
-	$TaxTotal=0;
-	foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
-		$TaxTotal +=  $Tax->TaxOvAmount;
-	}
 
 	$InputError = False;
 	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount < 0){

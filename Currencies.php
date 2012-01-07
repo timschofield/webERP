@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 	   prnMsg(_('The number of decimal places to display for amounts in this currency must be numeric'),'error');
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
-	}elseif (filter_number_format($_POST['DecimalPlaces'])<=0){
+	}elseif (filter_number_format($_POST['DecimalPlaces'])<0){
 		$InputError = 1;
 	   prnMsg(_('The number of decimal places to display for amounts in this currency must be positive or zero'),'error');
 		$Errors[$i] = 'DecimalPlaces';

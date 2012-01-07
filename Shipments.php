@@ -17,7 +17,7 @@ if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 	'" alt="" />' . ' ' . $title . '</p>';
 
-if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment'])){
+if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment']) AND !isset($_GET['SelectedShipment'])){
 	prnMsg( _('To set up a shipment') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'error');
         echo '<table class="selection">
                 <tr><td class="menu_group_item">
@@ -77,8 +77,6 @@ if (isset($_GET['SelectedShipment'])){
               $_SESSION['Shipment']->ETA = $myrow['eta'];
               $_SESSION['Shipment']->Vessel = $myrow['vessel'];
               $_SESSION['Shipment']->VoyageRef = $myrow['voyageref'];
-
-
 
 /*now populate the shipment details records */
 
@@ -195,7 +193,7 @@ if (isset($_POST['Update'])
 		prnMsg(_('Cannot add purchase order lines to the shipment unless the shipment is first initiated - hit update to setup the shipment first'),'info');
 		$InputError = 1;
 	}
-	if ($InputError==0){
+	if ($InputError==0 AND !isset($_GET['Add'])){ //don't update vessel and voyage on adding a new PO line to the shipment
 		$_SESSION['Shipment']->Vessel = $_POST['Vessel'];
 		$_SESSION['Shipment']->VoyageRef = $_POST['VoyageRef'];
 	}
@@ -289,6 +287,7 @@ if (isset($_GET['Add'])
 											$myrow['quantityord'],
 											$myrow['quantityrecd'],
 											$StandardCost,
+											$myrow['decimalplaces'],
 											$db);
 }
 
@@ -323,9 +322,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 
 echo '<tr><td>'. _('Expected Arrival Date (ETA)'). ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength="10" size="10" value="' . $ETA . '" /></td>';
+	echo '<td><input type="text" name="ETA" class="date" alt='.$_SESSION['DefaultDateFormat'].'  maxlength="10" size="10" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>'. _('Into').' ';
 
@@ -467,8 +466,8 @@ $sql = "SELECT purchorderdetails.podetailitem,
 				INNER JOIN stockmaster
 			ON purchorderdetails.itemcode=stockmaster.stockid
 			WHERE qtyinvoiced=0
-			AND purchorderdetails.completed=0
-			AND purchorders.status='Authorised'
+			AND purchorders.status <> 'Cancelled'
+			AND purchorders.status <> 'Rejected'
 			AND purchorders.supplierno ='" . $_SESSION['Shipment']->SupplierID . "'
 			AND purchorderdetails.shiptref=0
 			AND purchorders.intostocklocation='" . $_POST['StockLocation'] . "'";

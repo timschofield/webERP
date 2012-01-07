@@ -612,7 +612,7 @@ if (isset($_POST['PostCreditNote'])){
 
 /*First do input reasonableness checks
 then do the updates and inserts to process the credit note entered */
-
+	$TaxTotal =0;
 	foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 		/*Set the tax rate to what was entered */
@@ -637,12 +637,7 @@ then do the updates and inserts to process the credit note entered */
 
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = filter_number_format($_POST['TaxAmount'  . $Tax->TaxCalculationOrder]);
 		}
-	}
-
-/*Need to recalc the taxtotal */
-	$TaxTotal=0;
-	foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
-		$TaxTotal +=  $Tax->TaxOvAmount;
+		$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount
 	}
 
 	$InputError = False;
