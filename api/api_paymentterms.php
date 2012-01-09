@@ -45,12 +45,14 @@
  */
 	function GetPaymentMethodsList($User, $Password) {
 		$Errors = array();
-		$db = db($User, $Password);
-		if (gettype($db)=='integer') {
-			$Errors[0]=NoAuthorisation;
-			return $Errors;
+		if (!isset($db)) {
+			$db = db($User, $Password);
+			if (gettype($db)=='integer') {
+				$Errors[0]=NoAuthorisation;
+				return $Errors;
+			}
 		}
-		$sql = 'SELECT paymentid FROM paymentmethods';
+		$sql = "SELECT paymentid FROM paymentmethods";
 		$result = DB_query($sql, $db);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {

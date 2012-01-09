@@ -1731,19 +1731,17 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of tax group IDs.');
 
-/*E*/	$GetTaxgroupList_sig = array(array($xmlrpcStruct),
+/*E*/$GetTaxgroupList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$GetTaxgroupList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_GetTaxgroupList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
-/*x*/		} else {
-/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList( '', '')));
-/*x*/		}
+/*x*/	if ($xmlrpcmsg->getNumParams() == 2)	{
+/*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/	} else {
+/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList( '', '')));
+/*x*/	}
 		ob_end_flush();
 		return $rtn;
 	}
@@ -1761,20 +1759,19 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of tax group details.');
 
-/*E*/	$GetTaxgroupDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*E*/$GetTaxgroupDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
 	$GetTaxgroupDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_GetTaxgroupDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
+/*x*/	if ($xmlrpcmsg->getNumParams() == 3)	{
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
-/*x*/		} else {
+/*x*/		$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/		$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/	} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/		}
+/*x*/	}
 		ob_end_flush();
 		return $rtn;
 	}
@@ -1786,19 +1783,17 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of tax group IDs.');
 
-/*E*/	$GetTaxAuthorityList_sig = array(array($xmlrpcStruct),
+/*E*/$GetTaxAuthorityList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$GetTaxAuthorityList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_GetTaxAuthorityList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
-/*x*/		} else {
-/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityList( '', '')));
-/*x*/		}
+/*x*/	if ($xmlrpcmsg->getNumParams() == 2)	{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/	} else {
+/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityList( '', '')));
+/*x*/	}
 		ob_end_flush();
 		return $rtn;
 	}
@@ -1822,14 +1817,11 @@
 
 	function  xmlrpc_GetTaxAuthorityDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
-/*x*/		} else {
+/*x*/	if ($xmlrpcmsg->getNumParams() == 3)	{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ),	$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/	} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/		}
+/*x*/	}
 		ob_end_flush();
 		return $rtn;
 	}
@@ -1847,20 +1839,19 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of tax authority tax rates.');
 
-/*E*/	$GetTaxAuthorityRates_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*E*/$GetTaxAuthorityRates_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
 	$GetTaxAuthorityRates_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_GetTaxAuthorityRates($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityRates($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
-/*x*/		} else {
-/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityRates($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
-/*x*/		}
+/*x*/	if ($xmlrpcmsg->getNumParams() == 3)	{
+/*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityRates($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/		$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/		$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/	} else {
+/*e*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityRates($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/	}
 		ob_end_flush();
 		return $rtn;
 	}
@@ -1882,14 +1873,11 @@
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
 	$GetTaxGroupTaxes_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function  xmlrpc_GetTaxgroupDetails($xmlrpcmsg){
+	function  xmlrpc_GetTaxGroupTaxes($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupTaxes($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
-/*x*/		} else {
+/*x*/	if ($xmlrpcmsg->getNumParams() == 3)	{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupTaxes($xmlrpcmsg->getParam( 0 )->scalarval(  ), 	$xmlrpcmsg->getParam( 1 )->scalarval(  ), $xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/	} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupTaxes($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
 /*x*/		}
 		ob_end_flush();
@@ -1913,13 +1901,11 @@
 
 	function  xmlrpc_GetCustomerTypeList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
-/*x*/		} else {
-/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList( '', '')));
-/*x*/		}
+/*x*/	if ($xmlrpcmsg->getNumParams() == 2)	{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/	} else {
+/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetCustomerTypeList( '', '')));
+/*x*/	}
 		ob_end_flush();
 		return $rtn;
 	}

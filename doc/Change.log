@@ -3,6 +3,9 @@ webERP Change Log
 8/1/12 Phil: Added new api functions to get tax group taxes, list tax authorities, get tax authority details and get tax authority tax rates, also to list and get payment methods
 8/1/12 Paul Harness: PcAuthorizeExpenses.php Compare date against SQL raw date format, then convert for display when deciding to display authorize checkbox.
 8/1/12 Paul Harness: PcClaimExpensesFromTab.php Use DefaultDateFormat for date in expense entry.
+
+Release 4.06.6
+
 7/1/12 Phil: José Roberge (robergej) reported that purchase invoice tax on tax was not being processed correctly although it was appearing on the supplier invoice during entry of the invoice the processing was not calculating the tax on tax. Fixed SupplierInvoice.php
 7/1/12 Phil: Brian May reported that was unable to add completed (fully received) lines off a purchase order against a shipment. Removed trap to allow completed (fully received) lines to be added.
 5/1/12 Phil: Brian May reported issues with entering shipments discovered parameter DecimalPlaces missed off adding line to shipment also quotation error in entering shipment ETA date.
