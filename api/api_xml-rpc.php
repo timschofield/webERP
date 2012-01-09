@@ -4,7 +4,7 @@
 		 * Must be a better way of doing this, but at
 		 * least it works */
 	}
-
+    /* Note api_php.php includes api */
 	include 'api_php.php';
 
 	include '../xmlrpc/lib/xmlrpc.inc';
@@ -618,6 +618,64 @@
 		ob_end_flush();
 		return $rtn;
 	}
+
+    unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function returns a list of payment method codes.');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of payment method codes.');
+
+/*E*/$GetPaymentMethodsList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetPaymentmethodsList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+    function  xmlrpc_GetPaymentMethodsList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2) {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentMethodsList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentMethodsList( '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function takes a payment method code and returns details of that payment method.');
+	$Parameter[0]['name'] = _('Payment method code');
+	$Parameter[0]['description'] = _('A payment method code as returned by the GetPaymentMethodsList function.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of payment terms details.');
+
+/*E*/$GetPaymentMethodDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetPaymentMethodDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetPaymentMethodDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentMethodDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetPaymentMethodDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
 
 	unset($Description);
 	unset($Parameter);
@@ -1721,6 +1779,123 @@
 		return $rtn;
 	}
 
+	$Description = _('This function returns a list of tax authority IDs.');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of tax group IDs.');
+
+/*E*/	$GetTaxAuthorityList_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetTaxAuthorityList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetTaxAuthorityList($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityList( '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function takes a tax authority ID and returns details of that tax authority.');
+	$Parameter[0]['name'] = _('Tax Authority ID');
+	$Parameter[0]['description'] = _('A tax Authority ID as returned by the GetTaxAuthorityList function.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of tax authority details.');
+
+/*E*/$GetTaxAuthorityDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetTaxAuthorityDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetTaxAuthorityDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+    unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function takes a tax authority ID and returns the rates of tax for the authority.');
+	$Parameter[0]['name'] = _('Tax Authority ID');
+	$Parameter[0]['description'] = _('A tax Authority ID as returned by the GetTaxAuthorityList function.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of tax authority tax rates.');
+
+/*E*/	$GetTaxAuthorityRates_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetTaxAuthorityRates_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetTaxAuthorityRates($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityRates($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityRates($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+    unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function takes a tax group ID and returns the taxes that belong to that tax group.');
+	$Parameter[0]['name'] = _('Tax Group ID');
+	$Parameter[0]['description'] = _('A tax group ID as returned by the GetTaxgroupList function.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of tax group details.');
+
+/*E*/$GetTaxGroupTaxes_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetTaxGroupTaxes_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetTaxgroupDetails($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
+/*x*/		{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupTaxes($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupTaxes($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
@@ -2766,6 +2941,14 @@
 			"function" => "xmlrpc_GetPaymentTermsDetails",
 			"signature" => $GetPaymentTermsDetails_sig,
 			"docstring" => $GetPaymentTermsDetails_doc),
+		"weberp.xmlrpc_GetPaymentMethodsList" => array(
+			"function" => "xmlrpc_GetPaymentMethodsList",
+			"signature" => $GetPaymentMethodsList_sig,
+			"docstring" => $GetPaymentMethodsList_doc),
+		"weberp.xmlrpc_GetPaymentMethodsDetails" => array(
+			"function" => "xmlrpc_GetPaymentMethodsDetails",
+			"signature" => $GetPaymentMethodsDetails_sig,
+			"docstring" => $GetPaymentMrthodsDetails_doc),
 		"weberp.xmlrpc_InsertStockItem" => array(
 			"function" => "xmlrpc_InsertStockItem",
 			"signature" => $InsertStockItem_sig,
@@ -2918,6 +3101,22 @@
 			"function" => "xmlrpc_GetTaxgroupDetails",
 			"signature" => $GetTaxgroupDetails_sig,
 			"docstring" => $GetTaxgroupDetails_doc),
+		"weberp.xmlrpc_GetTaxGroupTaxes" => array(
+			"function" => "xmlrpc_GetTaxGroupTaxes",
+			"signature" => $GetTaxGroupTaxes_sig,
+			"docstring" => $GetTaxGroupTaxes_doc),
+		"weberp.xmlrpc_GetTaxAuthorityList" => array(
+			"function" => "xmlrpc_GetTaxAuthorityList",
+			"signature" => $GetTaxAuthorityList_sig,
+			"docstring" => $GetTaxAuthorityList_doc),
+		"weberp.xmlrpc_GetTaxAuthorityDetails" => array(
+			"function" => "xmlrpc_GetTaxAuthorityDetails",
+			"signature" => $GetTaxAuthorityDetails_sig,
+			"docstring" => $GetTaxAuthorityDetails_doc),
+		"weberp.xmlrpc_GetTaxAuthorityRates" => array(
+			"function" => "xmlrpc_GetTaxAuthorityRates",
+			"signature" => $GetTaxAuthorityRates_sig,
+			"docstring" => $GetTaxAuthorityRates_doc),
 		"weberp.xmlrpc_GetCustomerTypeList" => array(
 			"function" => "xmlrpc_GetCustomerTypeList",
 			"signature" => $GetCustomerTypeList_sig,
