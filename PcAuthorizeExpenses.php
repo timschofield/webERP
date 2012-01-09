@@ -253,8 +253,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		if (isset($_POST[$myrow['counterindex']])){
 			echo'<td>'.ConvertSQLDate(Date('Y-m-d')).'</td>';
 		}else{
-			$Authoriser=ConvertSQLDate($myrow['authorized']);
-			if(($Authoriser!='00/00/0000')){
+			//compare against raw SQL format date, then convert for display.
+			if(($myrow['authorized']!='0000-00-00')){
 				echo'<td>'.ConvertSQLDate($myrow['authorized']).'</td>';
 			}else{
 				echo '<td align=right><input type="checkbox" name="'.$myrow['counterindex'].'" /></td>';
