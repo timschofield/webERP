@@ -632,7 +632,7 @@
 
 /*E*/$GetPaymentMethodsList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
-	$GetPaymentmethodsList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+	$GetPaymentMethodsList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
     function  xmlrpc_GetPaymentMethodsList($xmlrpcmsg){
 		ob_start('ob_file_callback');
@@ -2931,10 +2931,10 @@
 			"function" => "xmlrpc_GetPaymentMethodsList",
 			"signature" => $GetPaymentMethodsList_sig,
 			"docstring" => $GetPaymentMethodsList_doc),
-		"weberp.xmlrpc_GetPaymentMethodsDetails" => array(
-			"function" => "xmlrpc_GetPaymentMethodsDetails",
-			"signature" => $GetPaymentMethodsDetails_sig,
-			"docstring" => $GetPaymentMrthodsDetails_doc),
+		"weberp.xmlrpc_GetPaymentMethodDetails" => array(
+			"function" => "xmlrpc_GetPaymentMethodDetails",
+			"signature" => $GetPaymentMethodDetails_sig,
+			"docstring" => $GetPaymentMethodDetails_doc),
 		"weberp.xmlrpc_InsertStockItem" => array(
 			"function" => "xmlrpc_InsertStockItem",
 			"signature" => $InsertStockItem_sig,
