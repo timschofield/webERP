@@ -122,16 +122,16 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		$sqloh="SELECT sum(quantity)as qty
 						FROM locstock
 						WHERE stockid='" . $myrow['stockid'] . "'";
-		$oh = db_query($sqloh,$db);
-		$ohRow = db_fetch_row($oh);
+		$oh = DB_query($sqloh,$db);
+		$ohRow = DB_fetch_row($oh);
 		
 		//get On Hand in Location
 		$sqlohin="SELECT SUM(quantity) AS qty
 						FROM `locstock`
 						WHERE stockid='" . $myrow['stockid'] . "'
 						AND locstock.loccode = '" . $_POST['StockLocation'] . "'";
-		$ohin = db_query($sqlohin,$db);
-		$ohinRow = db_fetch_row($ohin);
+		$ohin = DB_query($sqlohin,$db);
+		$ohinRow = DB_fetch_row($ohin);
 
 		echo'<td>'.$myrow['stockid'].'</td>
 			<td>'.$myrow['description'].'</td>

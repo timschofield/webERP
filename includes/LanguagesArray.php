@@ -41,8 +41,8 @@ $LanguagesArray['et_EE.utf8']['WindowsLocale'] = 'estonian';
 $LanguagesArray['et_EE.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['et_EE.utf8']['ThousandsSeparator'] = '.';
 
-$LanguagesArray['fa_IR.utf8']['LanguageName'] = _('Arabic');
-$LanguagesArray['fa_IR.utf8']['WindowsLocale'] = 'arabic';
+$LanguagesArray['fa_IR.utf8']['LanguageName'] = _('Persian');
+$LanguagesArray['fa_IR.utf8']['WindowsLocale'] = 'persian';
 $LanguagesArray['fa_IR.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['fa_IR.utf8']['ThousandsSeparator'] = '.';
 

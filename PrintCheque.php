@@ -15,7 +15,7 @@ $FontSize=10;
 $PageNumber=1;
 $line_height=12;
 
-$result = db_query("SELECT hundredsname, 
+$result = DB_query("SELECT hundredsname, 
                            decimalplaces,
                            currency
                     FROM currencies 
@@ -28,7 +28,7 @@ If (DB_num_rows($result) == 0){
 	exit;
 }
 
-$CurrencyRow = db_fetch_array($result);
+$CurrencyRow = DB_fetch_array($result);
 $HundredsName = $CurrencyRow['hundredsname'];
 $CurrDecimalPlaces = $CurrencyRow['decimalplaces'];
 $CurrencyName = mb_strtolower($CurrencyRow['currency']);

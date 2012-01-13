@@ -67,10 +67,10 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 
 	$ErrMsg =  _('The bill of material cannot be retrieved because');
 	$DbgMsg =  _('The SQL statement that was used to retrieve the contract bill of material was');
-	$ContractBOMResult = db_query($ContractBOMsql,$db,$ErrMsg,$DbgMsg);
+	$ContractBOMResult = DB_query($ContractBOMsql,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($ContractBOMResult) > 0) {
-		while ($myrow=db_fetch_array($ContractBOMResult)) {
+		while ($myrow=DB_fetch_array($ContractBOMResult)) {
 			$_SESSION['Contract'.$identifier]->Add_To_ContractBOM($myrow['stockid'], 
 																	$myrow['description'],
 																	$myrow['workcentreadded'],
@@ -91,10 +91,10 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 
 	$ErrMsg =  _('The other contract requirementscannot be retrieved because');
 	$DbgMsg =  _('The SQL statement that was used to retrieve the other contract requirments was');
-	$ContractReqtsResult = db_query($ContractReqtsSQL,$db,$ErrMsg,$DbgMsg);
+	$ContractReqtsResult = DB_query($ContractReqtsSQL,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($ContractReqtsResult) > 0) {
-		while ($myrow=db_fetch_array($ContractReqtsResult)) {
+		while ($myrow=DB_fetch_array($ContractReqtsResult)) {
 			$_SESSION['Contract'.$identifier]->Add_To_ContractRequirements($myrow['requirement'],
 																		   $myrow['quantity'],
 																		   $myrow['costperunit'],

@@ -123,10 +123,10 @@ if (isset($_GET['NewRecurringOrder'])){
 									AND recurrsalesorderdetails.recurrorderno ='" . $_GET['ModifyRecurringSalesOrder'] . "'";
 
 			$ErrMsg = _('The line items of the order cannot be retrieved because');
-			$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
-			if (db_num_rows($LineItemsResult)>0) {
+			$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg);
+			if (DB_num_rows($LineItemsResult)>0) {
 
-				while ($myrow=db_fetch_array($LineItemsResult)) {
+				while ($myrow=DB_fetch_array($LineItemsResult)) {
 					$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
 																$myrow['quantity'],
 																$myrow['description'],

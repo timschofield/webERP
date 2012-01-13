@@ -145,9 +145,9 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
 	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
-	$LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg, $DbgMsg);
+	$LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg, $DbgMsg);
 
-	if (db_num_rows($LineItemsResult)>0) {
+	if (DB_num_rows($LineItemsResult)>0) {
 
 		$OrderTotal = 0;
 		$OrderTotalVolume = 0;
@@ -170,7 +170,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th>' . _('Last Del') . '</th>
 			</tr>';
 		$k=0;
-		while ($myrow=db_fetch_array($LineItemsResult)) {
+		while ($myrow=DB_fetch_array($LineItemsResult)) {
 
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';

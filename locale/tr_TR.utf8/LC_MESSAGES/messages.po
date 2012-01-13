@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebERP 3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-03 19:41+1300\n"
+"POT-Creation-Date: 2012-01-07 14:17+1300\n"
 "PO-Revision-Date: 2011-02-01 13:12+0000\n"
 "Last-Translator: Tim Schofield <Unknown>\n"
 "Language-Team: WebERP Translation Team <web-erp-translation@lists."
@@ -383,7 +383,7 @@ msgstr "BU SUBEYI SILMEK ISTEDIGINIZE EMIN MISINIZ?"
 #: SecurityTokens.php:129 SelectCreditItems.php:765 SelectCustomer.php:613
 #: SelectCustomer.php:631 SelectCustomer.php:655 SelectCustomer.php:672
 #: SelectCustomer.php:696 SelectCustomer.php:713 SelectOrderItems.php:1399
-#: Shipments.php:440 Shippers.php:144 SpecialOrder.php:656
+#: Shipments.php:439 Shippers.php:144 SpecialOrder.php:656
 #: StockCategories.php:243 StockCategories.php:557 StockLocTransfer.php:302
 #: SuppContractChgs.php:99 SuppCreditGRNs.php:102 SuppFixedAssetChgs.php:87
 #: SuppInvGRNs.php:147 SupplierContacts.php:164 SupplierTypes.php:191
@@ -679,7 +679,7 @@ msgstr "Müşteri için notlar"
 #: PaymentAllocations.php:66 PcAssignCashToTab.php:220
 #: PcAuthorizeExpenses.php:88 PDFRemittanceAdvice.php:300
 #: PrintCustTrans.php:822 PrintCustTransPortrait.php:867 ReverseGRN.php:386
-#: ShipmentCosting.php:538 ShipmentCosting.php:615 Shipments.php:491
+#: ShipmentCosting.php:538 ShipmentCosting.php:615 Shipments.php:490
 #: StockDispatch.php:189 StockDispatch.php:201 StockLocMovements.php:90
 #: StockMovements.php:94 StockSerialItemResearch.php:81
 #: SupplierAllocations.php:455 SupplierAllocations.php:568
@@ -693,10 +693,10 @@ msgid "Date"
 msgstr "TARIH"
 
 #: AddCustomerNotes.php:122 AddCustomerTypeNotes.php:109 PcReportTab.php:173
-#: Stocks.php:1019 UpgradeDatabase.php:183 UpgradeDatabase.php:186
-#: UpgradeDatabase.php:189 UpgradeDatabase.php:192 UpgradeDatabase.php:195
-#: UpgradeDatabase.php:198 UpgradeDatabase.php:201 UpgradeDatabase.php:204
-#: UpgradeDatabase.php:207 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1019 UpgradeDatabase.php:184 UpgradeDatabase.php:187
+#: UpgradeDatabase.php:190 UpgradeDatabase.php:193 UpgradeDatabase.php:196
+#: UpgradeDatabase.php:199 UpgradeDatabase.php:202 UpgradeDatabase.php:205
+#: UpgradeDatabase.php:208 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -1928,8 +1928,8 @@ msgstr "Bölüm"
 #: SelectCreditItems.php:674 SelectCreditItems.php:1035
 #: SelectOrderItems.php:1334 SelectOrderItems.php:1492
 #: SelectOrderItems.php:1676 SelectOrderItems.php:1803 ShipmentCosting.php:149
-#: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
-#: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:617
+#: ShipmentCosting.php:150 Shipments.php:400 Shipments.php:402
+#: Shipments.php:403 Shipments.php:487 Shipments.php:489 SpecialOrder.php:617
 #: StockCounts.php:98 StockLocMovements.php:92 StockLocTransfer.php:277
 #: StockMovements.php:97 StockStatus.php:308 StockUsageGraph.php:12
 #: SuppCreditGRNs.php:267 SuppCreditGRNs.php:268 SupplierCredit.php:317
@@ -2378,7 +2378,7 @@ msgstr "KOD"
 #: SelectCompletedOrder.php:554 SelectCreditItems.php:990
 #: SelectOrderItems.php:1487 SelectOrderItems.php:1671 SelectProduct.php:117
 #: SelectProduct.php:735 SelectSalesOrder.php:583 SelectWorkOrder.php:194
-#: Shipments.php:402 Shipments.php:489 Shipt_Select.php:193
+#: Shipments.php:401 Shipments.php:488 Shipt_Select.php:193
 #: StockLocTransferReceive.php:432 SupplierTenders.php:491 TopItems.php:180
 #: WorkOrderCosting.php:90 WorkOrderEntry.php:624 WorkOrderIssue.php:693
 #: WorkOrderIssue.php:763 includes/DefineLabelClass.php:21
@@ -3263,8 +3263,8 @@ msgid "Item Description"
 msgstr "AÇIKLAMA"
 
 #: ConfirmDispatch_Invoice.php:279 GoodsReceived.php:100 GoodsReceived.php:104
-#: PDFOrdersInvoiced.php:349 PDFOrderStatus.php:320 Shipments.php:401
-#: Shipments.php:488
+#: PDFOrdersInvoiced.php:349 PDFOrderStatus.php:320 Shipments.php:400
+#: Shipments.php:487
 msgid "Ordered"
 msgstr "SIPARIS EDILMIS"
 
@@ -3293,7 +3293,7 @@ msgstr "BU GÖNDERI"
 #: PrintCustTransPortrait.php:911 PrintCustTransPortrait.php:1009
 #: PrintCustTransPortrait.php:1066 PurchData.php:165 PurchData.php:483
 #: RecurringSalesOrders.php:322 SelectCreditItems.php:676
-#: SelectOrderItems.php:1337 Shipments.php:405 StockLocMovements.php:94
+#: SelectOrderItems.php:1337 Shipments.php:404 StockLocMovements.php:94
 #: StockMovements.php:99 StockStatus.php:309 SuppCreditGRNs.php:181
 #: SuppCreditGRNs.php:269 SuppCreditGRNs.php:270 SupplierTenders.php:267
 #: SupplierTenders.php:494 SuppPriceList.php:292
@@ -3656,13 +3656,13 @@ msgstr "KULLANILAN KOMUT:"
 #: SupplierAllocations.php:117 SupplierAllocations.php:139
 #: SupplierAllocations.php:157 SupplierAllocations.php:181
 #: SupplierAllocations.php:215 SupplierAllocations.php:236
-#: SupplierCredit.php:730 SupplierCredit.php:759 SupplierCredit.php:784
-#: SupplierCredit.php:818 SupplierCredit.php:852 SupplierCredit.php:884
-#: SupplierCredit.php:921 SupplierCredit.php:946 SupplierCredit.php:958
-#: SupplierCredit.php:994 SupplierCredit.php:1034 SupplierCredit.php:1060
-#: SupplierCredit.php:1092 SupplierCredit.php:1116 SupplierCredit.php:1148
-#: SupplierCredit.php:1164 SupplierCredit.php:1177 SupplierCredit.php:1184
-#: SupplierCredit.php:1206 SupplierCredit.php:1260 SupplierCredit.php:1288
+#: SupplierCredit.php:725 SupplierCredit.php:754 SupplierCredit.php:779
+#: SupplierCredit.php:813 SupplierCredit.php:847 SupplierCredit.php:879
+#: SupplierCredit.php:916 SupplierCredit.php:941 SupplierCredit.php:953
+#: SupplierCredit.php:989 SupplierCredit.php:1029 SupplierCredit.php:1055
+#: SupplierCredit.php:1087 SupplierCredit.php:1111 SupplierCredit.php:1143
+#: SupplierCredit.php:1159 SupplierCredit.php:1172 SupplierCredit.php:1179
+#: SupplierCredit.php:1201 SupplierCredit.php:1255 SupplierCredit.php:1283
 #: SupplierInvoice.php:660 SupplierInvoice.php:733 SupplierInvoice.php:761
 #: SupplierInvoice.php:788 SupplierInvoice.php:820 SupplierInvoice.php:853
 #: SupplierInvoice.php:883 SupplierInvoice.php:919 SupplierInvoice.php:945
@@ -3764,14 +3764,14 @@ msgstr "KRITIK HATA!!"
 #: StockTransfers.php:431 SupplierAllocations.php:117
 #: SupplierAllocations.php:139 SupplierAllocations.php:157
 #: SupplierAllocations.php:181 SupplierAllocations.php:215
-#: SupplierAllocations.php:236 SupplierCredit.php:730 SupplierCredit.php:759
-#: SupplierCredit.php:784 SupplierCredit.php:818 SupplierCredit.php:852
-#: SupplierCredit.php:884 SupplierCredit.php:921 SupplierCredit.php:946
-#: SupplierCredit.php:958 SupplierCredit.php:994 SupplierCredit.php:1034
-#: SupplierCredit.php:1060 SupplierCredit.php:1092 SupplierCredit.php:1116
-#: SupplierCredit.php:1148 SupplierCredit.php:1164 SupplierCredit.php:1177
-#: SupplierCredit.php:1184 SupplierCredit.php:1206 SupplierCredit.php:1260
-#: SupplierCredit.php:1288 SupplierInvoice.php:660 SupplierInvoice.php:733
+#: SupplierAllocations.php:236 SupplierCredit.php:725 SupplierCredit.php:754
+#: SupplierCredit.php:779 SupplierCredit.php:813 SupplierCredit.php:847
+#: SupplierCredit.php:879 SupplierCredit.php:916 SupplierCredit.php:941
+#: SupplierCredit.php:953 SupplierCredit.php:989 SupplierCredit.php:1029
+#: SupplierCredit.php:1055 SupplierCredit.php:1087 SupplierCredit.php:1111
+#: SupplierCredit.php:1143 SupplierCredit.php:1159 SupplierCredit.php:1172
+#: SupplierCredit.php:1179 SupplierCredit.php:1201 SupplierCredit.php:1255
+#: SupplierCredit.php:1283 SupplierInvoice.php:660 SupplierInvoice.php:733
 #: SupplierInvoice.php:761 SupplierInvoice.php:788 SupplierInvoice.php:820
 #: SupplierInvoice.php:853 SupplierInvoice.php:883 SupplierInvoice.php:919
 #: SupplierInvoice.php:945 SupplierInvoice.php:967 SupplierInvoice.php:1004
@@ -3905,8 +3905,8 @@ msgstr "ISLEM BASARISIZ! "
 #: DeliveryDetails.php:593 DeliveryDetails.php:599 DeliveryDetails.php:606
 #: DeliveryDetails.php:792 MRPReport.php:412 PDFOrdersInvoiced.php:304
 #: PDFOrderStatus.php:274 SelectCompletedOrder.php:600 SelectContract.php:149
-#: SelectOrderItems.php:702 SelectProduct.php:386 Shipments.php:399
-#: Shipments.php:486 SuppCreditGRNs.php:174 SuppInvGRNs.php:302
+#: SelectOrderItems.php:702 SelectProduct.php:386 Shipments.php:398
+#: Shipments.php:485 SuppCreditGRNs.php:174 SuppInvGRNs.php:302
 #: TaxGroups.php:286 includes/PDFDeliveryDifferencesPageHeader.inc:41
 #: includes/PDFDIFOTPageHeader.inc:40 includes/PDFOstdgGRNsPageHeader.inc:37
 msgid "Order"
@@ -4115,7 +4115,7 @@ msgid "The fixed asset transaction could not be inserted because"
 msgstr "Sabit kıymet işlem çünkü takılı olamazdı"
 
 #: ConfirmDispatch_Invoice.php:1510 GoodsReceived.php:619 ReverseGRN.php:176
-#: SupplierCredit.php:1232 SupplierCredit.php:1320 SupplierInvoice.php:1383
+#: SupplierCredit.php:1227 SupplierCredit.php:1315 SupplierInvoice.php:1383
 #: SupplierInvoice.php:1470
 msgid "The following SQL to insert the fixed asset transaction record was used"
 msgstr "eklemek için aşağıdaki SQL sabit kıymet işlemi kaydetmek kullanıldı"
@@ -4922,9 +4922,9 @@ msgstr "SQL eklemek için kullanılan bu sözleşme madde olarak başarısız"
 msgid "The locations for the item"
 msgstr "ÜRÜNÜN BULUNDUGU DEPOLAR"
 
-#: Contracts.php:490 Factors.php:80 Stocks.php:560 SupplierCredit.php:759
-#: SupplierCredit.php:818 SupplierCredit.php:1206 SupplierCredit.php:1260
-#: SupplierCredit.php:1288 SupplierInvoice.php:762 SupplierInvoice.php:820
+#: Contracts.php:490 Factors.php:80 Stocks.php:560 SupplierCredit.php:754
+#: SupplierCredit.php:813 SupplierCredit.php:1201 SupplierCredit.php:1255
+#: SupplierCredit.php:1283 SupplierInvoice.php:762 SupplierInvoice.php:820
 #: SupplierInvoice.php:1185 SupplierInvoice.php:1410 SupplierInvoice.php:1439
 #: Suppliers.php:562 Z_ImportStocks.php:245
 msgid "could not be added because"
@@ -5967,7 +5967,7 @@ msgstr "belirtilen Kredi Notu miktarlarda"
 
 #: Credit_Invoice.php:271 PDFOrdersInvoiced.php:350 PDFOrderStatus.php:321
 #: ReverseGRN.php:388 SalesInquiry.php:836 ShipmentCosting.php:149
-#: ShipmentCosting.php:151 Shipments.php:404
+#: ShipmentCosting.php:151 Shipments.php:403
 msgid "Invoiced"
 msgstr "FATURALANDI"
 
@@ -6129,7 +6129,7 @@ msgstr "ISLEM BASARISIZ!"
 msgid "Credit Note number"
 msgstr "Kredi notu numarası"
 
-#: Credit_Invoice.php:1428 GoodsReceived.php:722 SupplierCredit.php:1333
+#: Credit_Invoice.php:1428 GoodsReceived.php:722 SupplierCredit.php:1328
 #: SupplierInvoice.php:1491 WorkOrderIssue.php:352 WorkOrderReceive.php:676
 #: Z_BottomUpCosts.php:33
 msgid "has been processed"
@@ -7366,7 +7366,7 @@ msgid "Total Balance"
 msgstr "TOPLAM BILANÇO"
 
 #: CustomerInquiry.php:137 CustomerReceipt.php:964 PrintCustStatements.php:358
-#: SalesPeople.php:206 Shipments.php:406 Stocks.php:979 Stocks.php:981
+#: SalesPeople.php:206 Shipments.php:405 Stocks.php:979 Stocks.php:981
 #: SupplierInquiry.php:143 includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
@@ -7729,8 +7729,8 @@ msgstr "-"
 
 #: CustomerReceipt.php:897 GoodsReceived.php:102 GoodsReceived.php:106
 #: GoodsReceived.php:112 POReport.php:629 POReport.php:1358 ReverseGRN.php:386
-#: ReverseGRN.php:387 ShipmentCosting.php:150 Shipments.php:403
-#: Shipments.php:490 StockDispatch.php:379 StockDispatch.php:386
+#: ReverseGRN.php:387 ShipmentCosting.php:150 Shipments.php:402
+#: Shipments.php:489 StockDispatch.php:379 StockDispatch.php:386
 #: SuppCreditGRNs.php:178
 msgid "Received"
 msgstr "ALINDI"
@@ -8146,7 +8146,7 @@ msgstr "raporlamak üzere işlemin hangi türünü seçin."
 #: CustomerTransInquiry.php:51 FixedAssetRegister.php:78
 #: FixedAssetRegister.php:349 PcReportTab.php:136 PcReportTab.php:256
 #: SalesAnalRepts.php:430 SalesAnalRepts.php:458 SalesAnalRepts.php:487
-#: SalesAnalRepts.php:506 ShipmentCosting.php:56 Shipments.php:308
+#: SalesAnalRepts.php:506 ShipmentCosting.php:56 Shipments.php:307
 #: StockDispatch.php:383 StockLocTransferReceive.php:209
 #: StockTransfers.php:340 SuppContractChgs.php:72 SuppCreditGRNs.php:168
 #: SuppFixedAssetChgs.php:70 SupplierTransInquiry.php:50 SuppShiptChgs.php:77
@@ -8344,7 +8344,7 @@ msgid "Alloc"
 msgstr "TAHSIS"
 
 #: CustWhereAlloc.php:128 EmailCustTrans.php:12 SalesInquiry.php:1080
-#: SupplierCredit.php:1113 Z_CheckAllocs.php:85
+#: SupplierCredit.php:1108 Z_CheckAllocs.php:85
 msgid "Credit Note"
 msgstr "Kredi Not"
 
@@ -8742,7 +8742,7 @@ msgstr "SIPARISDEKI SEVK MIKTARLARINI ONAYLAYIN VE FATURA OLUSTURUN"
 msgid "Select A Different Order"
 msgstr "BASKA BIR SIPARIS SEÇIN"
 
-#: DeliveryDetails.php:804 Shipments.php:491 SpecialOrder.php:616
+#: DeliveryDetails.php:804 Shipments.php:490 SpecialOrder.php:616
 msgid "Delivery"
 msgstr "SEVKIYAT"
 
@@ -8967,8 +8967,8 @@ msgstr "ISKONTO KATEGORISI"
 
 #: DiscountCategories.php:203 InventoryPlanningPrefSupplier.php:72
 #: PDFPriceList.php:358 SalesTopItemsInquiry.php:217 SelectWorkOrder.php:313
-#: ShipmentCosting.php:148 ShipmentCosting.php:539 Shipments.php:400
-#: Shipments.php:487 StockUsage.php:57 SuppCreditGRNs.php:266
+#: ShipmentCosting.php:148 ShipmentCosting.php:539 Shipments.php:399
+#: Shipments.php:486 StockUsage.php:57 SuppCreditGRNs.php:266
 #: SuppInvGRNs.php:254 WorkOrderCosting.php:87 WorkOrderCosting.php:119
 #: WorkOrderIssue.php:530 WorkOrderIssue.php:596 WorkOrderReceive.php:742
 #: WorkOrderStatus.php:49 WorkOrderStatus.php:95
@@ -12548,8 +12548,8 @@ msgstr "KULLANILAN KOMUT:"
 msgid "cost"
 msgstr "MALIYET"
 
-#: GoodsReceived.php:618 ReverseGRN.php:175 SupplierCredit.php:1231
-#: SupplierCredit.php:1319 SupplierInvoice.php:1382 SupplierInvoice.php:1469
+#: GoodsReceived.php:618 ReverseGRN.php:175 SupplierCredit.php:1226
+#: SupplierCredit.php:1314 SupplierInvoice.php:1382 SupplierInvoice.php:1469
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset "
 "transaction could not be inserted because"
@@ -20516,7 +20516,7 @@ msgstr "SIPARIS SONRASI GÜN SAYISI"
 msgid "Preferred Supplier"
 msgstr "TERCIH EDILEN TEDARIKCI MI?"
 
-#: PurchData.php:524 Shipments.php:523 StockAdjustments.php:426
+#: PurchData.php:524 Shipments.php:522 StockAdjustments.php:426
 #: TaxGroups.php:395 WOSerialNos.php:268 WWW_Access.php:233
 #, php-format
 msgid "Add"
@@ -21149,8 +21149,8 @@ msgid "To reverse a GRN that has been invoiced first it must be credited"
 msgstr "Bu hesaba olmalı ilk fatura edilmiş bir GRN ters çevirmek için"
 
 #: ReverseGRN.php:383 SuppCreditGRNs.php:80 SuppCreditGRNs.php:173
-#: SuppCreditGRNs.php:265 SupplierCredit.php:314 SupplierCredit.php:991
-#: SupplierCredit.php:1030 SupplierCredit.php:1056 SupplierInvoice.php:849
+#: SuppCreditGRNs.php:265 SupplierCredit.php:314 SupplierCredit.php:986
+#: SupplierCredit.php:1025 SupplierCredit.php:1051 SupplierInvoice.php:849
 #: SupplierInvoice.php:916 SupplierInvoice.php:964 SupplierInvoice.php:1001
 #: SupplierInvoice.php:1026 includes/PDFOstdgGRNsPageHeader.inc:36
 msgid "GRN"
@@ -23977,7 +23977,7 @@ msgstr ""
 #: ShipmentCosting.php:38 ShipmentCosting.php:42 ShipmentCosting.php:54
 #: ShipmentCosting.php:77 ShipmentCosting.php:97 ShipmentCosting.php:152
 #: ShipmentCosting.php:153 ShipmentCosting.php:704 Shipments.php:54
-#: Shipments.php:306 Shipt_Select.php:292 SupplierCredit.php:351
+#: Shipments.php:305 Shipt_Select.php:292 SupplierCredit.php:351
 #: SupplierInvoice.php:331 SuppShiptChgs.php:80
 msgid "Shipment"
 msgstr "SEVKIYAT"
@@ -24002,7 +24002,7 @@ msgstr "ALICI"
 msgid "Voyage Ref"
 msgstr "SEVKIYAT Ref"
 
-#: ShipmentCosting.php:65 Shipments.php:324
+#: ShipmentCosting.php:65 Shipments.php:323
 msgid "Expected Arrival Date (ETA)"
 msgstr "TAHMINI VARIS GÜNÜ"
 
@@ -24015,7 +24015,7 @@ msgid "No General Cost Records exist for Shipment"
 msgstr "SEVKIYATLA ILGILI GENEL MALIYET KAYDI YOK"
 
 #: ShipmentCosting.php:81 ShipmentCosting.php:101 Shipments.php:58
-#: Shipments.php:108
+#: Shipments.php:106
 msgid "in the database"
 msgstr "VERITABANINDA"
 
@@ -24052,12 +24052,12 @@ msgstr "Ücretleri"
 msgid "Variance"
 msgstr "VARYANS"
 
-#: ShipmentCosting.php:249 SupplierCredit.php:884 SupplierInvoice.php:883
+#: ShipmentCosting.php:249 SupplierCredit.php:879 SupplierInvoice.php:883
 #: SupplierInvoice.php:1233
 msgid "The quantity on hand could not be retrieved from the database"
 msgstr "yandan miktar veritabanından alınamadı"
 
-#: ShipmentCosting.php:250 SupplierCredit.php:885 SupplierInvoice.php:884
+#: ShipmentCosting.php:250 SupplierCredit.php:880 SupplierInvoice.php:884
 #: SupplierInvoice.php:1234
 msgid "The following SQL to retrieve the total stock quantity was used"
 msgstr "Aşağıdaki SQL toplam stok miktarı kullanılmıştır almak için"
@@ -24086,11 +24086,11 @@ msgstr "maliyet yaver avg sevkiyat"
 msgid "The GL entry for the shipment average cost adjustment for"
 msgstr "sevkiyat ortalama maliyet ayarlaması için GL giriş"
 
-#: ShipmentCosting.php:328 SupplierCredit.php:958 SupplierInvoice.php:1338
+#: ShipmentCosting.php:328 SupplierCredit.php:953 SupplierInvoice.php:1338
 msgid "The cost could not be updated because"
 msgstr "Maliyet nedeniyle güncelledi olamazdı"
 
-#: ShipmentCosting.php:329 SupplierCredit.php:959 SupplierInvoice.php:1339
+#: ShipmentCosting.php:329 SupplierCredit.php:954 SupplierInvoice.php:1339
 msgid "The following SQL to update the cost was used"
 msgstr "maliyet güncellemek için aşağıdaki SQL kullanıldı"
 
@@ -24241,34 +24241,34 @@ msgid ""
 "shipment are possible"
 msgstr "BU SEVKIYAT KAPATILMIS, ÜZERINDA DEGISIKLIK YAPAMAZSINIZ"
 
-#: Shipments.php:104
+#: Shipments.php:102
 msgid "The lines on the shipment cannot be retrieved because"
 msgstr "SEVKIYAT SATIRLARINA ULASILAMADI:"
 
-#: Shipments.php:108
+#: Shipments.php:106
 msgid "Unable to locate lines for Shipment"
 msgstr "SEVKIYAT SATIRLARINA ULASILAMADI"
 
-#: Shipments.php:157
+#: Shipments.php:155
 msgid "The supplier details for the shipment could not be retrieved because"
 msgstr "SEVKIYATIN TEDARIKÇI DETAYLARINA ULASILAMADI"
 
-#: Shipments.php:179
+#: Shipments.php:177
 msgid ""
 "The date of expected arrival of the shipment must be entered in the format"
 msgstr "TARIH SU FORMATTA GIRILMELI:"
 
-#: Shipments.php:182
+#: Shipments.php:180
 msgid "An expected arrival of the shipment must be a date after today"
 msgstr ""
 "SEVKIYATTAKI MUHTEMEK GELIS ZAMANI BUGÜNÜN TARIHINDEN SONRAKI BIR TARIH "
 "OLMALIDIR"
 
-#: Shipments.php:188
+#: Shipments.php:186
 msgid "A reference to the vessel of more than 2 characters is expected"
 msgstr "2&#39;den fazla karakter gemi bir başvuru bekleniyor"
 
-#: Shipments.php:191
+#: Shipments.php:189
 msgid ""
 "A reference to the voyage (or HAWB in the case of air-freight) of more than "
 "2 characters is expected"
@@ -24276,7 +24276,7 @@ msgstr ""
 "fazla 2 karakter (hava taşımacılığı durumunda veya HAWB) yolculuk bir "
 "başvuru bekleniyor"
 
-#: Shipments.php:195
+#: Shipments.php:193
 msgid ""
 "Cannot add purchase order lines to the shipment unless the shipment is first "
 "initiated - hit update to setup the shipment first"
@@ -24284,41 +24284,41 @@ msgstr ""
 "vurmak güncelleme ayarları için sevkiyat ilk - sevkiyat ilk başlatılan "
 "sürece Sevkiyat satınalma siparişi satır eklenemiyor"
 
-#: Shipments.php:244
+#: Shipments.php:242
 msgid ""
 "Updated the shipment record and delivery dates of order lines as necessary"
 msgstr ""
 "gerektiğinde sipariş hattı sevkiyat kayıt ve teslim tarihleri güncellendi"
 
-#: Shipments.php:312
+#: Shipments.php:311
 msgid "Vessel Name /Transport Agent"
 msgstr "Geminin Adı / Transport Agent"
 
-#: Shipments.php:314
+#: Shipments.php:313
 msgid "Voyage Ref / Consignment Note"
 msgstr "Yolculuk Ref / İrsaliye Not"
 
-#: Shipments.php:330
+#: Shipments.php:329
 msgid "Into"
 msgstr "ALICI"
 
-#: Shipments.php:355
+#: Shipments.php:354
 msgid "Stock Location"
 msgstr "DEPO"
 
-#: Shipments.php:396
+#: Shipments.php:395
 msgid "Order Lines On This Shipment"
 msgstr "BU SEVKIYATTAKI SIPARIS SATIRLARI"
 
-#: Shipments.php:406 includes/PDFOstdgGRNsPageHeader.inc:42
+#: Shipments.php:405 includes/PDFOstdgGRNsPageHeader.inc:42
 msgid "Std Cost"
 msgstr "STANDARD MALIYET"
 
-#: Shipments.php:448
+#: Shipments.php:447
 msgid "Update Shipment Details"
 msgstr "SEVKIYAT DETAYLARINI GÜNCELLE"
 
-#: Shipments.php:482
+#: Shipments.php:481
 msgid "Possible Order Lines To Add To This Shipment"
 msgstr "BU SEVKIYATA EKLENEBILECEK OLASI SIPARIS SATIRLARI"
 
@@ -27592,7 +27592,7 @@ msgstr "TOPLAM"
 msgid "Enter Credit Note"
 msgstr "TAMAM/ISLE"
 
-#: SupplierCredit.php:651
+#: SupplierCredit.php:646
 msgid ""
 "The credit note as entered cannot be processed because the total amount of "
 "the credit note is less than or equal to 0"
@@ -27600,11 +27600,11 @@ msgstr ""
 "Kredi notu olarak kredi notu toplam miktarından daha az ya da 0&#39;a eşit "
 "olduğu için işlenemez girdi"
 
-#: SupplierCredit.php:651
+#: SupplierCredit.php:646
 msgid "Credit notes are expected to be entered as positive amounts to credit"
 msgstr "Kredi notları kredi olumlu tutarlar olarak girilmesi bekleniyor"
 
-#: SupplierCredit.php:654
+#: SupplierCredit.php:649
 msgid ""
 "The credit note as entered cannot be processed because the there is no "
 "suppliers credit note number or reference entered"
@@ -27612,27 +27612,27 @@ msgstr ""
 "Hiçbir tedarikçi kredi notu numarası veya referans girmiş olduğu için kredi "
 "notu olarak işlenemez girdi"
 
-#: SupplierCredit.php:654
+#: SupplierCredit.php:649
 msgid "The supplier credit note number must be entered"
 msgstr "Tedarikçi kredi notu numarası girilmelidir"
 
-#: SupplierCredit.php:657
+#: SupplierCredit.php:652
 msgid ""
 "The credit note as entered cannot be processed because the date entered is "
 "not in the format"
 msgstr "tarih biçimde değil girilen çünkü kredi notu olarak işlenemez girdi"
 
-#: SupplierCredit.php:660
+#: SupplierCredit.php:655
 msgid ""
 "The credit note as entered cannot be processed because the date is after "
 "today"
 msgstr "Kredi notu olarak tarihe bugünden sonra olduğu için işlenemez girdi"
 
-#: SupplierCredit.php:660
+#: SupplierCredit.php:655
 msgid "Purchase credit notes are expected to have a date prior to or today"
 msgstr "Satın alma kredi notları önce veya bugün bir tarih olması beklenir"
 
-#: SupplierCredit.php:663
+#: SupplierCredit.php:658
 msgid ""
 "The credit note as entered cannot be processed because the exchange rate for "
 "the credit note has been entered as a negative or zero number"
@@ -27640,7 +27640,7 @@ msgstr ""
 "Kredi notu olarak kredi notu için döviz kuru bir veya sıfır sayı negatif "
 "olarak girildi çünkü işlenmiş olamaz girdi"
 
-#: SupplierCredit.php:663 SupplierInvoice.php:646
+#: SupplierCredit.php:658 SupplierInvoice.php:646
 msgid ""
 "The exchange rate is expected to show how many of the suppliers currency "
 "there are in 1 of the local currency"
@@ -27648,32 +27648,32 @@ msgstr ""
 "Döviz kuru yerel para biriminin 1 orada nasıl tedarikçilerin döviz birçok "
 "göstermesi bekleniyor"
 
-#: SupplierCredit.php:665
+#: SupplierCredit.php:660
 msgid ""
 "The credit note total as entered is less than the sum of the shipment charges"
 msgstr "Girilen kredi notu toplam gönderi ücretlerinin toplamından daha azdır"
 
-#: SupplierCredit.php:665
+#: SupplierCredit.php:660
 msgid "the general ledger entries (if any) and the charges for goods received"
 msgstr "defteri kebir kayıtları (varsa) ve mallar için ücret aldı"
 
-#: SupplierCredit.php:665
+#: SupplierCredit.php:660
 msgid "There must be a mistake somewhere"
 msgstr "HATA VAR"
 
-#: SupplierCredit.php:665
+#: SupplierCredit.php:660
 msgid "the credit note as entered will not be processed"
 msgstr "kredi notu olarak işleme alınmayacaktır girdi"
 
-#: SupplierCredit.php:730 SupplierCredit.php:852 SupplierCredit.php:1060
+#: SupplierCredit.php:725 SupplierCredit.php:847 SupplierCredit.php:1055
 #: SupplierInvoice.php:733 SupplierInvoice.php:853 SupplierInvoice.php:1029
 msgid "The general ledger transaction could not be added because"
 msgstr "MUHASEBE HAREKETI EKLENEMEDI:"
 
-#: SupplierCredit.php:732 SupplierCredit.php:760 SupplierCredit.php:785
-#: SupplierCredit.php:820 SupplierCredit.php:854 SupplierCredit.php:922
-#: SupplierCredit.php:947 SupplierCredit.php:995 SupplierCredit.php:1035
-#: SupplierCredit.php:1061 SupplierCredit.php:1094 SupplierCredit.php:1117
+#: SupplierCredit.php:727 SupplierCredit.php:755 SupplierCredit.php:780
+#: SupplierCredit.php:815 SupplierCredit.php:849 SupplierCredit.php:917
+#: SupplierCredit.php:942 SupplierCredit.php:990 SupplierCredit.php:1030
+#: SupplierCredit.php:1056 SupplierCredit.php:1089 SupplierCredit.php:1112
 #: SupplierInvoice.php:734 SupplierInvoice.php:764 SupplierInvoice.php:789
 #: SupplierInvoice.php:821 SupplierInvoice.php:854 SupplierInvoice.php:920
 #: SupplierInvoice.php:946 SupplierInvoice.php:968 SupplierInvoice.php:1006
@@ -27681,47 +27681,47 @@ msgstr "MUHASEBE HAREKETI EKLENEMEDI:"
 msgid "The following SQL to insert the GL transaction was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SupplierCredit.php:756
+#: SupplierCredit.php:751
 msgid "Shipment credit against"
 msgstr "Sevkiyat kredi karşı"
 
-#: SupplierCredit.php:759 SupplierInvoice.php:761
+#: SupplierCredit.php:754 SupplierInvoice.php:761
 msgid "The general ledger transaction for the shipment"
 msgstr "SEVKIYATIN MUHASEBE HAREKETI"
 
-#: SupplierCredit.php:782
+#: SupplierCredit.php:777
 msgid "Asset Credit"
 msgstr "Varlık Kredi"
 
-#: SupplierCredit.php:784 SupplierInvoice.php:788
+#: SupplierCredit.php:779 SupplierInvoice.php:788
 msgid ""
 "The general ledger transaction for the asset addition could not be added "
 "because"
 msgstr "Ayrıca varlık için defteri kebir işlem nedeniyle eklenemedi"
 
-#: SupplierCredit.php:815 SupplierInvoice.php:818
+#: SupplierCredit.php:810 SupplierInvoice.php:818
 msgid "Contract charge against"
 msgstr "Sözleşme ücret karşılığında"
 
-#: SupplierCredit.php:818 SupplierInvoice.php:820
+#: SupplierCredit.php:813 SupplierInvoice.php:820
 msgid "The general ledger transaction for the contract"
 msgstr "sözleşme için defteri kebir işlem"
 
-#: SupplierCredit.php:849 SupplierCredit.php:918
+#: SupplierCredit.php:844 SupplierCredit.php:913
 msgid "GRN Credit Note"
 msgstr "GRN Kredi Notu"
 
-#: SupplierCredit.php:849 SupplierInvoice.php:850
+#: SupplierCredit.php:844 SupplierInvoice.php:850
 msgid "std cost of"
 msgstr "STANDARD MALIYET:"
 
-#: SupplierCredit.php:918 SupplierCredit.php:991 SupplierInvoice.php:916
+#: SupplierCredit.php:913 SupplierCredit.php:986 SupplierInvoice.php:916
 #: SupplierInvoice.php:964
 msgid "price var of"
 msgstr "FIYAT VARYANSI:"
 
-#: SupplierCredit.php:921 SupplierCredit.php:946 SupplierCredit.php:994
-#: SupplierCredit.php:1034 SupplierInvoice.php:919 SupplierInvoice.php:945
+#: SupplierCredit.php:916 SupplierCredit.php:941 SupplierCredit.php:989
+#: SupplierCredit.php:1029 SupplierInvoice.php:919 SupplierInvoice.php:945
 #: SupplierInvoice.php:967 SupplierInvoice.php:1004
 msgid ""
 "The general ledger transaction could not be added for the price variance of "
@@ -27729,91 +27729,91 @@ msgid ""
 msgstr ""
 "Defteri kebir işlem stok kalemi nedeniyle fiyat sapması için eklenemedi"
 
-#: SupplierCredit.php:941 SupplierInvoice.php:940
+#: SupplierCredit.php:936 SupplierInvoice.php:940
 msgid "Average Cost Adj"
 msgstr "Ortalama Adj Maliyet"
 
-#: SupplierCredit.php:1030 SupplierInvoice.php:1001
+#: SupplierCredit.php:1025 SupplierInvoice.php:1001
 msgid "price var"
 msgstr "FIYAT VARYANSI"
 
-#: SupplierCredit.php:1056 SupplierCredit.php:1089 SupplierCredit.php:1113
+#: SupplierCredit.php:1051 SupplierCredit.php:1084 SupplierCredit.php:1108
 #: SupplierInvoice.php:1026 SupplierInvoice.php:1086
 msgid "a rate of"
 msgstr "ORAN :"
 
-#: SupplierCredit.php:1071
+#: SupplierCredit.php:1066
 msgid "The total posted to the credit accounts is"
 msgstr "Toplam kredi hesaplarına ilan"
 
-#: SupplierCredit.php:1071 SupplierInvoice.php:1039
+#: SupplierCredit.php:1066 SupplierInvoice.php:1039
 msgid "but the sum of OvAmount converted at ExRate"
 msgstr "ama OvAmount toplamı ExRate çevrilecektir"
 
-#: SupplierCredit.php:1089
+#: SupplierCredit.php:1084
 msgid "Credit note"
 msgstr "Kredi mektubu"
 
-#: SupplierCredit.php:1092 SupplierInvoice.php:1063
+#: SupplierCredit.php:1087 SupplierInvoice.php:1063
 msgid "The general ledger transaction for the tax could not be added because"
 msgstr "vergi defteri kebir işlem nedeniyle eklenemedi"
 
-#: SupplierCredit.php:1116 SupplierInvoice.php:1089
+#: SupplierCredit.php:1111 SupplierInvoice.php:1089
 msgid ""
 "The general ledger transaction for the control total could not be added "
 "because"
 msgstr "kontrol toplam defteri kebir işlem nedeniyle eklenemedi"
 
-#: SupplierCredit.php:1148
+#: SupplierCredit.php:1143
 msgid ""
 "The supplier credit note transaction could not be added to the database "
 "because"
 msgstr "Tedarikçi kredi notu işlem veritabanı nedeniyle ilave edilemedi"
 
-#: SupplierCredit.php:1149
+#: SupplierCredit.php:1144
 msgid "The following SQL to insert the supplier credit note was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SupplierCredit.php:1164 SupplierInvoice.php:1138
+#: SupplierCredit.php:1159 SupplierInvoice.php:1138
 msgid "The supplier transaction taxes records could not be inserted because"
 msgstr "Tedarikçi işlem vergileri kayıtları çünkü takılı olamazdı"
 
-#: SupplierCredit.php:1165 SupplierInvoice.php:1139
+#: SupplierCredit.php:1160 SupplierInvoice.php:1139
 msgid ""
 "The following SQL to insert the supplier transaction taxes record was used:"
 msgstr "KULLANILAN KOMUT:"
 
-#: SupplierCredit.php:1177
+#: SupplierCredit.php:1172
 msgid ""
 "The quantity credited of the purchase order line could not be updated because"
 msgstr ""
 "Satınalma siparişi hattının alacak miktarı nedeniyle güncelledi olamazdı"
 
-#: SupplierCredit.php:1178 SupplierInvoice.php:1158
+#: SupplierCredit.php:1173 SupplierInvoice.php:1158
 msgid "The following SQL to update the purchase order details was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SupplierCredit.php:1184
+#: SupplierCredit.php:1179
 msgid ""
 "The quantity credited off the goods received record could not be updated "
 "because"
 msgstr "Miktar mal kaydından dolayı güncellenir olamazdı alınan kapalı alacak"
 
-#: SupplierCredit.php:1185
+#: SupplierCredit.php:1180
 msgid "The following SQL to update the GRN quantity credited was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SupplierCredit.php:1206 SupplierCredit.php:1260 SupplierInvoice.php:1184
+#: SupplierCredit.php:1201 SupplierCredit.php:1255 SupplierInvoice.php:1184
 #: SupplierInvoice.php:1409
 msgid "The shipment charge record for the shipment"
 msgstr "sevkiyat için sevk ücret rekor"
 
-#: SupplierCredit.php:1207 SupplierCredit.php:1261 SupplierInvoice.php:1186
+#: SupplierCredit.php:1202 SupplierCredit.php:1256 SupplierInvoice.php:1186
 #: SupplierInvoice.php:1412
 msgid "The following SQL to insert the Shipment charge record was used"
 msgstr "KULLANILAN KOMUT:"
 
-#: SupplierCredit.php:1238
+#: SupplierCredit.php:1233
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost was not able to be updated because:"
@@ -27821,22 +27821,22 @@ msgstr ""
 "HATA KRİTİK! BU HATA AŞAĞI NOT VE YARDIM SEEK. Maddi duran varlık maliyeti "
 "nedeniyle güncellenmesi mümkün değildi:"
 
-#: SupplierCredit.php:1239
+#: SupplierCredit.php:1234
 msgid ""
 "The following SQL was used to attempt the update of the fixed asset cost:"
 msgstr ""
 "Aşağıdaki SQL sabit kıymet maliyet güncelleştirme girişimi için "
 "kullanılmıştır:"
 
-#: SupplierCredit.php:1288 SupplierInvoice.php:1439
+#: SupplierCredit.php:1283 SupplierInvoice.php:1439
 msgid "The contract charge record for contract"
 msgstr "sözleşme için sözleşme ücret rekor"
 
-#: SupplierCredit.php:1289 SupplierInvoice.php:1440
+#: SupplierCredit.php:1284 SupplierInvoice.php:1440
 msgid "The following SQL to insert the contract charge record was used"
 msgstr "eklemek için aşağıdaki SQL sözleşme ücret rekor kullanıldı"
 
-#: SupplierCredit.php:1326
+#: SupplierCredit.php:1321
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset "
 "cost  was not able to be updated because:"
@@ -27844,16 +27844,16 @@ msgstr ""
 "HATA KRİTİK! BU HATA AŞAĞI NOT VE YARDIM SEEK. Maddi duran varlık maliyeti "
 "nedeniyle güncellenmesi mümkün değildi:"
 
-#: SupplierCredit.php:1327 SupplierInvoice.php:1391
+#: SupplierCredit.php:1322 SupplierInvoice.php:1391
 msgid "The following SQL was used to attempt the update of the asset cost:"
 msgstr ""
 "Aşağıdaki SQL varlığın maliyet güncelleştirme girişimi için kullanılmıştır:"
 
-#: SupplierCredit.php:1333
+#: SupplierCredit.php:1328
 msgid "Supplier credit note number"
 msgstr "Tedarikçi kredi notu numarası"
 
-#: SupplierCredit.php:1334
+#: SupplierCredit.php:1329
 msgid "Enter another Credit Note for this Supplier"
 msgstr "Bu Tedarikçi için başka Kredi Notu girin"
 
@@ -30871,71 +30871,71 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:138
+#: UpgradeDatabase.php:139
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:152
+#: UpgradeDatabase.php:153
 msgid "Applying"
 msgstr "Uygulayarak"
 
-#: UpgradeDatabase.php:180 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:181 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Başarı"
 
-#: UpgradeDatabase.php:183
+#: UpgradeDatabase.php:184
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:186 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:187 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tablo zaten yaratıldı"
 
-#: UpgradeDatabase.php:189
+#: UpgradeDatabase.php:190
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Sütun zaten yaratıldı"
 
-#: UpgradeDatabase.php:192 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:193 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "Sütun zaten yaratıldı"
 
-#: UpgradeDatabase.php:195 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:196 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Endeks zaten var"
 
-#: UpgradeDatabase.php:198 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:199 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Girdisi zaten yapıldı"
 
-#: UpgradeDatabase.php:201
+#: UpgradeDatabase.php:202
 msgid "SQL syntax error. The SQL error message is"
 msgstr "SQL sözdizimi hatası. SQL hata mesajı"
 
-#: UpgradeDatabase.php:204 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:205 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "Birincil anahtar zaten var"
 
-#: UpgradeDatabase.php:207
+#: UpgradeDatabase.php:208
 msgid "Index already dropped previously"
 msgstr "Endeks zaten önceden düştü"
 
-#: UpgradeDatabase.php:210 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:211 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Başarısızlık"
 
-#: UpgradeDatabase.php:210 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:211 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Hata numarası"

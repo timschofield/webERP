@@ -36,14 +36,14 @@ If (isset($_POST['PrintPDF'])) {
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
 	$sqlfrom="SELECT locationname FROM `locations` where loccode='" . $_POST['FromLocation'] . "'";
-	$result = db_query($sqlfrom,$db,$ErrMsg);
-	$Row = db_fetch_row($result);
+	$result = DB_query($sqlfrom,$db,$ErrMsg);
+	$Row = DB_fetch_row($result);
 	$FromLocation=$Row['0'];
 
 	// to location
 	$sqlto="SELECT locationname FROM `locations` where loccode='" . $_POST['ToLocation'] .  "'";
-	$resultto = db_query($sqlto,$db,$ErrMsg);
-	$RowTo = db_fetch_row($resultto);
+	$resultto = DB_query($sqlto,$db,$ErrMsg);
+	$RowTo = DB_fetch_row($resultto);
 	$ToLocation=$RowTo['0'];
 
 	// Creates WHERE clause for stock categories. StockCat is defined as an array so can choose

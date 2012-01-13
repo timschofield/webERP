@@ -100,7 +100,7 @@ if (isset($_GET['SelectedShipment'])){
 								ON purchorderdetails.orderno=purchorders.orderno
 							WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'";
 	      $ErrMsg = _('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg($db);
-              $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
+              $LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
 
         if (DB_num_rows($GetShiptHdrResult)==0) {
                 prnMsg ( _('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
@@ -108,9 +108,9 @@ if (isset($_GET['SelectedShipment'])){
                 exit();
         }
 
-        if (db_num_rows($LineItemsResult) > 0) {
+        if (DB_num_rows($LineItemsResult) > 0) {
 
-			while ($myrow=db_fetch_array($LineItemsResult)) {
+			while ($myrow=DB_fetch_array($LineItemsResult)) {
 
 				if ($myrow['stdcostunit']==0){
 					$StandardCost =$myrow['stdcost'];

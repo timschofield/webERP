@@ -162,11 +162,11 @@
 
 			$ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
 			$DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
-			$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
+			$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
 
 		  if (DB_num_rows($LineItemsResult) > 0) {
 
-				while ($myrow=db_fetch_array($LineItemsResult)) {
+				while ($myrow=DB_fetch_array($LineItemsResult)) {
 
 					 if (is_null($myrow['glcode'])){
 						$GLCode = '';

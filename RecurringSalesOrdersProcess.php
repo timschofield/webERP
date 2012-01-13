@@ -158,11 +158,11 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						WHERE recurrsalesorderdetails.recurrorderno ='" . $RecurrOrderRow['recurrorderno'] . "'";
 
 	$ErrMsg = _('The line items of the recurring order cannot be retrieved because');
-	$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
+	$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg);
 
 	$LineCounter = 0;
 
-	if (db_num_rows($LineItemsResult)>0) {
+	if (DB_num_rows($LineItemsResult)>0) {
 
 		$OrderTotal =0; //intialise
 		$OrderLineTotal =0;

@@ -26,8 +26,8 @@ if (isset($_POST['PrintPDF'])) {
 				FROM suppliers INNER JOIN currencies 
 				ON suppliers.currcode=currencies.currabrev 
 				WHERE supplierid='" . $_POST['supplier'] . "'";
-	$resultsup = db_query($sqlsup,$db);
-	$RowSup = db_fetch_array($resultsup);
+	$resultsup = DB_query($sqlsup,$db);
+	$RowSup = DB_fetch_array($resultsup);
 	$SupplierName=$RowSup['suppname'];
 	$CurrCode =$RowSup['currcode'];
 	$CurrDecimalPlaces=$RowSup['currdecimalplaces'];
@@ -39,7 +39,7 @@ if (isset($_POST['PrintPDF'])) {
 				WHERE categoryid ='" . $_POST['category'] . "'";
 				
 		$resultcat = DB_query($sqlcat,$db);
-		$RowCat = db_fetch_row($resultcat);
+		$RowCat = DB_fetch_row($resultcat);
 		$Categoryname=$RowCat['0'];
 	} else {
 		$Categoryname='ALL';
