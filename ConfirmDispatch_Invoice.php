@@ -160,9 +160,9 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 		$DbgMsg = _('The SQL that failed was');
 		$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
 
-		if (db_num_rows($LineItemsResult)>0) {
+		if (DB_num_rows($LineItemsResult)>0) {
 
-			while ($myrow=db_fetch_array($LineItemsResult)) {
+			while ($myrow=DB_fetch_array($LineItemsResult)) {
 
 				$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
 											$myrow['quantity'],

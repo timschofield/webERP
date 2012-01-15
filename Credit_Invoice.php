@@ -127,9 +127,9 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 		$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg, $DbgMsg);
 
-		if (db_num_rows($LineItemsResult)>0) {
+		if (DB_num_rows($LineItemsResult)>0) {
 
-			while ($myrow=db_fetch_array($LineItemsResult)) {
+			while ($myrow=DB_fetch_array($LineItemsResult)) {
 
 				$LineNumber = $_SESSION['CreditItems']->LineCounter;
 
