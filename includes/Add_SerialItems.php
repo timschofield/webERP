@@ -112,7 +112,7 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
 		}
 		$SeqItems = DB_query($sql,$db);
 
-		while ($myrow=db_fetch_array($SeqItems)) {
+		while ($myrow=DB_fetch_array($SeqItems)) {
 			$LineItem->SerialItems[$myrow['serialno']] = new SerialItem ($myrow['serialno'], ($InOutModifier>0?1:-1) );
 			//force it to Keyed entry for cleanup & manual verification
 			$_POST['EntryType'] = 'KEYED';
