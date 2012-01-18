@@ -85,24 +85,24 @@ if (!isset($_POST['PageOffset'])) {
 		$_POST['PageOffset'] = 1;
 	}
 }
-if (isset($_POST['Search']) 
-	OR isset($_POST['CSV']) 
-	OR isset($_POST['Go']) 
-	OR isset($_POST['Next']) 
+if (isset($_POST['Search'])
+	OR isset($_POST['CSV'])
+	OR isset($_POST['Go'])
+	OR isset($_POST['Next'])
 	OR isset($_POST['Previous'])) {
-		
+
 	unset($_POST['JustSelectedACustomer']);
 	if (isset($_POST['Search'])) {
 		$_POST['PageOffset'] = 1;
 	}
-	
-	if (($_POST['Keywords'] == '') 
-		AND ($_POST['CustCode'] == '') 
-		AND ($_POST['CustPhone'] == '') 
-		AND ($_POST['CustType'] == 'ALL') 
-		AND ($_POST['Area'] == 'ALL') 
+
+	if (($_POST['Keywords'] == '')
+		AND ($_POST['CustCode'] == '')
+		AND ($_POST['CustPhone'] == '')
+		AND ($_POST['CustType'] == 'ALL')
+		AND ($_POST['Area'] == 'ALL')
 		AND ($_POST['CustAdd'] == '')) {
-			
+
 		//no criteria set then default to all customers
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -115,7 +115,8 @@ if (isset($_POST['Search'])
 					custbranch.contactname,
 					debtortype.typename,
 					custbranch.phoneno,
-					custbranch.faxno
+					custbranch.faxno,
+					custbranch.email
 				FROM debtorsmaster LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 				INNER JOIN debtortype
@@ -136,22 +137,23 @@ if (isset($_POST['Search'])
 						custbranch.contactname,
 						debtortype.typename,
 						custbranch.phoneno,
-						custbranch.faxno
+						custbranch.faxno,
+						custbranch.email
 					FROM debtorsmaster INNER JOIN debtortype
 						ON debtorsmaster.typeid = debtortype.typeid
-					LEFT JOIN custbranch 
+					LEFT JOIN custbranch
 						ON debtorsmaster.debtorno = custbranch.debtorno
-					WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%' 
-					AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' 
-					AND custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' 
+					WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%'
+					AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
+					AND custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
 					AND (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
 						OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
 						OR debtorsmaster.address3 "  . LIKE . " '%" . $_POST['CustAdd'] . "%'
 						OR debtorsmaster.address4 "  . LIKE . " '%" . $_POST['CustAdd'] . "%')";
-		
+
 		if (mb_strlen($_POST['CustType']) > 0 AND $_POST['CustType']!='ALL') {
 			$SQL .= " AND debtortype.typename = '" . $_POST['CustType'] . "'";
-		} 
+		}
 		if (mb_strlen($_POST['Area']) > 0 AND $_POST['Area']!='ALL') {
 			$SQL .= " AND custbranch.area = '" . $_POST['Area'] . "'";
 		}
@@ -428,7 +430,7 @@ if (isset($result)) {
 			echo '<br /><p class="page_title_text"><a href="' . $FileName . '">' . _('Click to view the csv Search Result') . '</p>';
 			$fp = fopen($FileName, 'w');
 			while ($myrow2 = DB_fetch_array($result)) {
-				fwrite($fp, $myrow2['debtorno'] . ',' . str_replace(',', '', $myrow2['name']) . ',' . str_replace(',', '', $myrow2['address1']) . ',' . str_replace(',', '', $myrow2['address2']) . ',' . str_replace(',', '', $myrow2['address3']) . ',' . str_replace(',', '', $myrow2['address4']) . ',' . str_replace(',', '', $myrow2['contactname']) . ',' . str_replace(',', '', $myrow2['typename']) . ',' . $myrow2['phoneno'] . ',' . $myrow2['faxno'] . "\n");
+				fwrite($fp, $myrow2['debtorno'] . ',' . str_replace(',', '', $myrow2['name']) . ',' . str_replace(',', '', $myrow2['address1']) . ',' . str_replace(',', '', $myrow2['address2']) . ',' . str_replace(',', '', $myrow2['address3']) . ',' . str_replace(',', '', $myrow2['address4']) . ',' . str_replace(',', '', $myrow2['contactname']) . ',' . str_replace(',', '', $myrow2['typename']) . ',' . $myrow2['phoneno'] . ',' . $myrow2['faxno'] . ',' . $myrow2['email'] . "\n");
 			}
 			echo '</div>';
 		}
@@ -517,7 +519,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	// Extended Customer Info only if selected in Configuration
 	if ($_SESSION['Extended_CustomerInfo'] == 1) {
 		if ($_SESSION['CustomerID'] != '') {
-			$sql = "SELECT debtortype.typeid, 
+			$sql = "SELECT debtortype.typeid,
 							debtortype.typename
 						FROM debtorsmaster INNER JOIN debtortype
 					ON debtorsmaster.typeid = debtortype.typeid
@@ -533,11 +535,11 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			$SQL = "SELECT debtorsmaster.clientsince,
 						(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.clientsince))) as customersincedays,
 						(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.lastpaiddate))) as lastpaiddays,
-						debtorsmaster.paymentterms, 
-						debtorsmaster.lastpaid, 
+						debtorsmaster.paymentterms,
+						debtorsmaster.lastpaid,
 						debtorsmaster.lastpaiddate,
 						currencies.decimalplaces AS currdecimalplaces
-					FROM debtorsmaster INNER JOIN currencies 
+					FROM debtorsmaster INNER JOIN currencies
 					ON debtorsmaster.currcode=currencies.currabrev
 					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
 			$DataResult = DB_query($SQL, $db);
