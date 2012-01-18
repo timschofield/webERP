@@ -418,6 +418,7 @@ if (isset($result)) {
 							<th>' . _('Type') . '</th>
 							<th>' . _('Phone') . '</th>
 							<th>' . _('Fax') . '</th>
+							<th>' . _('Email') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$j = 1;
@@ -454,7 +455,9 @@ if (isset($result)) {
 				<td><font size=1>' . $myrow['contactname'] . '</font></td>
 				<td><font size=1>' . $myrow['typename'] . '</font></td>
 				<td><font size=1>' . $myrow['phoneno'] . '</font></td>
-				<td><font size=1>' . $myrow['faxno'] . '</font></td></tr>';
+				<td><font size=1>' . $myrow['faxno'] . '</font></td>
+				<td><font size=1>' . $myrow['email'] . '</font></td>
+			</tr>';
 			$i++;
 			$j++;//row counter
 			if ($j == 11 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
