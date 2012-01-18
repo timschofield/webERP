@@ -274,7 +274,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 
 					<tr>
 					<td class="menu_group_items">
-						<table width="100%"class="table_index">
+						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/SelectSalesOrder.php">' . _('Select Order to Invoice') . '</a></p>'; ?>

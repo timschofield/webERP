@@ -342,11 +342,11 @@ if ($InputError ==0){
 	<tr><td><?php echo _('Price'); ?>:</td>
 	<td>
 	<input type="text" class="number" name="Price" size=12 maxlength=11 value=
-	<?php 
+	"<?php 
 	if(isset($_POST['Price'])) {
 		echo $_POST['Price'];
 	}
-	?> >
+	?>"> 
 
 	</td></tr>
 

@@ -1,5 +1,6 @@
 webERP Change Log
 
+17/1/12 Vitaly: Removed unused .table2 declaration from default.css. Fixed border settings in .table1.
 16/1/12 Phil: Made StockReorderLevel.php just update changed fields rather than update all locations even though they may not have changed.
 8/1/12 Phil: Added new api functions to get tax group taxes, list tax authorities, get tax authority details and get tax authority tax rates, also to list and get payment methods
 8/1/12 Paul Harness: PcAuthorizeExpenses.php Compare date against SQL raw date format, then convert for display when deciding to display authorize checkbox.

@@ -268,14 +268,7 @@ textarea:hover {
 .table1 {
 	width:90%;
 	background: whitesmoke;
-	border: 0px 0px 2px 2px darkslategray solid;
-	margin: 0 auto;
-}
-/* Table type is used for UI tables type 2 */
-.table2 {
-	width:90%;
-	background: whitesmoke;
-	border: 0px 0px 2px 2px darkslategray solid;
+	border: 1px solid darkslategray;
 	margin: 0 auto;
 }
 
