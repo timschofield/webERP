@@ -165,9 +165,9 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 		$AlreadyOnThisBOM = 0;
 		if (filter_number_format($_POST['Qty'.$i])>0){
 			if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
-	
+
 				foreach ($_SESSION['Contract'.$identifier]->ContractBOM AS $Component) {
-	
+
 				/* do a loop round the items on the order to see that the item
 				is not already on this order */
 					if ($Component->StockID == trim($_POST['StockID'.$i])) {
@@ -176,9 +176,9 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 					}
 				} /* end of the foreach loop to look for preexisting items of the same code */
 			}
-	
+
 			if ($AlreadyOnThisBOM!=1){
-	
+
 				$sql = "SELECT stockmaster.description,
 								stockmaster.stockid,
 								stockmaster.units,
@@ -186,13 +186,13 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 								stockmaster.materialcost+labourcost+overheadcost AS unitcost
 							FROM stockmaster
 							WHERE stockmaster.stockid = '". trim($_POST['StockID'.$i]) . "'";
-	
+
 				$ErrMsg = _('The item details could not be retrieved');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
 				$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	
+
 				if ($myrow = DB_fetch_array($result1)){
-	
+
 					$_SESSION['Contract'.$identifier]->Add_To_ContractBOM (trim($_POST['StockID'.$i]),
 																			$myrow['description'],
 																			'',
@@ -289,8 +289,9 @@ if (!isset($_GET['Edit'])) {
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
-		_('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') .
+		'</p>';
 	echo '<table class="selection">
 			<tr></tr>
 			<tr><td><select name="StockCat">';
@@ -363,7 +364,7 @@ if (isset($SearchResult)) {
 		}
 
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg') ) {
-			$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $myrow['stockid']. '&text=&width=50&height=50">';
+			$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $myrow['stockid']. '&text=&width=50&height=50" />';
 		} else {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
@@ -382,7 +383,7 @@ if (isset($SearchResult)) {
 		}
 #end of page full new headings if
 	}
-	
+
 #end of while loop
 	echo '</table>
 			<input type="hidden" name="CountOfItems" value="'. $i . '" />';
