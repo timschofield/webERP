@@ -27,7 +27,7 @@ if (!isset($_GET['TransferNo'])){
 			<input type="submit" name="Print" value="' . _('Print') .'">';
 	include ('includes/footer.inc');
 	exit;
-} 
+}
 
 $pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
 $pdf->addInfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
@@ -41,6 +41,7 @@ $sql = "SELECT loctransfers.reference,
 			   loctransfers.stockid,
 			   stockmaster.description,
 			   loctransfers.shipqty,
+			   loctransfers.recqty,
 			   loctransfers.shipdate,
 			   loctransfers.shiploc,
 			   locations.locationname as shiplocname,
@@ -74,6 +75,7 @@ do {
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$TransferRow['stockid'], 'left');
 	$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$TransferRow['description'], 'left');
 	$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($TransferRow['shipqty'],$TransferRow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,locale_number_format($TransferRow['recqty'],$TransferRow['decimalplaces']), 'right');
 
 	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 
