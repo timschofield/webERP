@@ -46,7 +46,7 @@ if ( isset($_POST['submit']) ) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE shippers SET shippername='" . $_POST['ShipperName'] . "' 
+		$sql = "UPDATE shippers SET shippername='" . $_POST['ShipperName'] . "'
 				WHERE shipper_id = '".$SelectedShipper."'";
 		$msg = _('The shipper record has been updated');
 	} elseif ($InputError !=1) {
@@ -119,8 +119,9 @@ if (!isset($SelectedShipper)) {
 then none of the above are true and the list of Shippers will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title .
+		'</p>';
 
 	$sql = "SELECT * FROM shippers ORDER BY shipper_id";
 	$result = DB_query($sql,$db);
@@ -155,8 +156,9 @@ or deletion of the records*/
 
 
 if (isset($SelectedShipper)) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title .
+		'</p>';
 	echo '<div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) . '">'._('REVIEW RECORDS').'</a></div>';
 }
 
@@ -176,8 +178,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['Shipper_ID'] = $myrow['shipper_id'];
 		$_POST['ShipperName']	= $myrow['shippername'];
 
-		echo '<input type=hidden name="SelectedShipper" VALUE='. $SelectedShipper .'>';
-		echo '<input type=hidden name="Shipper_ID" VALUE=' . $_POST['Shipper_ID'] . '>';
+		echo '<input type="hidden" name="SelectedShipper" value="'. $SelectedShipper .'" />';
+		echo '<input type="hidden" name="Shipper_ID" value="' . $_POST['Shipper_ID'] . '" />';
 		echo '<br /><table class="selection"><tr><td>'. _('Shipper Code').':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
 	} else {
 		echo '<br />
@@ -188,8 +190,9 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr><td>'. _('Shipper Name') .':</td>
-	<td><input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) .
-		' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" /></td>
+			<td>
+				<input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) . ' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" />
+			</td>
 		</tr>
 
 	</table>
