@@ -15,7 +15,7 @@ if (!isset($_SESSION['CustomerID'])){
 	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $rootpath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>','info');
 	include('includes/footer.inc');
 	exit;
-} 
+}
 
 
 echo '<a href="' . $rootpath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
@@ -28,8 +28,8 @@ $result=DB_query($sql, $db);
 $myrow=DB_fetch_array($result);
 $CustomerName=$myrow['name'];
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
-	'" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
+echo '<p class="page_title_text">
+		<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
 	'</p>
 	<br />';
 
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
-	
+
 	if ((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
 		$sql = "SELECT defaultlocation
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 			$myrow = DB_fetch_row($result);
 			$InventoryLocation = $myrow[0];
 	}
-	
+
 	if ($InputError !=1) {
 
 		$sql = "INSERT INTO www_users (userid,
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 											'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 											'" . $_POST['Theme'] . "',
 											'". $_POST['UserLanguage'] ."')";
-			
+
 			$ErrMsg = _('The user could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the new user and failed was');
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
