@@ -276,17 +276,17 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 		<table border="2" cellspacing="4" class="selection">
 			<tbody>
 			<tr>
-				<td align="center"><img src="'.$rootpath.'/css/paramsLabel.png" align="top" border="0"></td>
+				<td align="center"><img src="'.$rootpath.'/css/paramsLabel.png" align="top" border="0" ></td>
 				<td>'.$tableGD.'</td>
 			</tr>
-			<tr>
-				<td align="center"><IMG src="'.$rootpath.'/css/labelsDim.png" align="top" border="0"></td>
+			<tr>/
+				<td align="center"><IMG src="'.$rootpath.'/css/labelsDim.png" align="top" border="0" /></td>
 				<td>'.$tableLines.'</td>
 			</tr>
 			</tbody>
 		</table>
-		<br /><input type="submit" name="'.$name.'" value="'.$value.'">
-		<input type="submit" name="Cancel" value="'.$vCancel.'">
+		<br /><input type="submit" name="'.$name.'" value="'.$value.'" />
+		<input type="submit" name="Cancel" value="'.$vCancel.'" />
 	</form>';
 }
 
@@ -319,8 +319,7 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $readonly=fa
 			$ro='';
 			if ($readonly AND $specialTag==$iTag)
 				$ro='readonly ';
-			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'"
-				size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'"'. $ro .'>';
+			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'" size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'"'. $ro .' />';
 		}
 		if (!$iCol++)  // when zero begins a line
 			$html .= '
@@ -386,8 +385,7 @@ function setLineFields($tags, $data) {
 			$input .= '
 				</select>';
 		} else {
-			$input = '<INPUT type="text" name="'. $iTag .'[]" value="'. $vDat .'"
-				size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'">';
+			$input = '<input type="text" name="'. $iTag .'[]" value="'. $vDat .'" size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'" />';
 		}
 		$html .= '
 				<td align="center">' . $input . '</td>';
@@ -437,7 +435,7 @@ function showLabelsList($list) {
 				<th>'.$txt[0].'</th>
 				<th>'.$txt[1].'</th>
 				<th>'.$txt[2].'</th>
-				<th><input type="submit" name="new" onclick="submitForm(\'form1\',\'New\',\'\');" value="'.$txt[3].'">
+				<th><input type="submit" name="new" onclick="submitForm(\'form1\',\'New\',\'\');" value="'.$txt[3].'" />
 				</th>
 			</tr>
 		</thead>
@@ -448,12 +446,9 @@ function showLabelsList($list) {
 			<tr><td>'. $label->id . '</td>
 				<td>'. $label->description . '</td>
 				<td><div class="centre">'. $dim . '</div></td>
-				<td><input type="submit" onclick="submitForm('. "'form1','Edit','". $label->id . "');" .'" value="' .
-					$txt[4]. '">
-				<input type="submit" onclick="submitForm('. "'form1','Copy','". $label->id . "');" .'" value="' .
-					$txt[5]. '">
-				<input type="submit" onclick="areYouSure('. "'form1','Delete','". $label->id . "');" .'" value="' .
-					$txt[6]. '">
+				<td><input type="submit" onclick="submitForm('. "'form1','Edit','". $label->id . "');" .'" value="' . $txt[4]. '" />
+				<input type="submit" onclick="submitForm('. "'form1','Copy','". $label->id . "');" .'" value="' . $txt[5]. '" />
+				<input type="submit" onclick="areYouSure('. "'form1','Delete','". $label->id . "');" .'" value="' . $txt[6]. '" />
 				</td>
 			</tr>';
 	}
