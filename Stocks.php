@@ -417,7 +417,7 @@ if (isset($_POST['submit'])) {
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 												'" . $NewStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
-												'" . ($UnitCost* $StockQtyRow[0]) . "'";
+												'" . ($UnitCost* $StockQtyRow[0]) . "')";
 					$ErrMsg =  _('The stock cost journal could not be inserted because');
 					$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
 					$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
@@ -434,7 +434,7 @@ if (isset($_POST['submit'])) {
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 												'" . $OldStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
-												'" . (-$UnitCost* $StockQtyRow[0]) . "'";
+												'" . (-$UnitCost* $StockQtyRow[0]) . "')";
 					$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 				
 				} /* end if the stock category changed and forced a change in stock cost account */
@@ -472,7 +472,7 @@ if (isset($_POST['submit'])) {
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 													'" . $NewWIPAct . "',
 													'" . $StockID . ' ' . _('Change stock category') . "',
-													'" . $WIPValue . "'";
+													'" . $WIPValue . "')";
 						$ErrMsg =  _('The WIP cost journal could not be inserted because');
 						$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
 						$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
@@ -489,7 +489,7 @@ if (isset($_POST['submit'])) {
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
 													'" . $OldWIPAccount . "',
 													'" . $StockID . ' ' . _('Change stock category') . "',
-													'" . (-$WIPValue) . "'";
+													'" . (-$WIPValue) . "')";
 						$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 					}
 				} /* end if the stock category changed and forced a change in WIP account */

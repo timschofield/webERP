@@ -1,5 +1,6 @@
 webERP Change Log
 
+19/1/12 Vitaly: Added missing ')' at the end of some INSERT statements.
 19/1/12 Phil: Check on deletion of a location to see if any purchase orders exist prior to deletion
 19/1/12 Phil:StockCheck.php fixed error in SQL two ANDs in calculating quantity demand reported by Ricard
 19/1/12 Paul Harness: SelectOrderItems.php $i++ - in code for frequently ordered items.
