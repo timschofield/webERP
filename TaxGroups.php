@@ -237,7 +237,7 @@ if (!isset($_POST['GroupName'])) {
 }
 echo '<tr><td>' . _('Tax Group') . ':</td>
 		<td><input type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
-echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '"></td>
+echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '" /></td>
 	</tr>
 	</form>';
 
