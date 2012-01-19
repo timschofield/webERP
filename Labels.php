@@ -276,7 +276,7 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 		<table border="2" cellspacing="4" class="selection">
 			<tbody>
 			<tr>
-				<td align="center"><img src="'.$rootpath.'/css/paramsLabel.png" align="top" border="0" ></td>
+				<td align="center"><img src="'.$rootpath.'/css/paramsLabel.png" align="top" border="0" /></td>
 				<td>'.$tableGD.'</td>
 			</tr>
 			<tr>/
