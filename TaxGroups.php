@@ -38,14 +38,14 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 			$SuccessMsg = _('The tax group description was updated to') . ' ' . $_POST['GroupName'];
 		} else { // Add new tax group
 
-			$result = DB_query("SELECT taxgroupid 
-								FROM taxgroups 
+			$result = DB_query("SELECT taxgroupid
+								FROM taxgroups
 								WHERE taxgroupdescription='" . $_POST['GroupName'] . "'",$db);
 			if (DB_num_rows($result)==1){
 				prnMsg( _('A new tax group could not be added because a tax group already exists for') . ' ' . $_POST['GroupName'],'warn');
 				unset($sql);
 			} else {
-				$sql = "INSERT INTO taxgroups (taxgroupdescription) 
+				$sql = "INSERT INTO taxgroups (taxgroupdescription)
 						VALUES ('". $_POST['GroupName'] . "')";
 				$ErrMsg = _('The addition of the group failed because');
 				$SuccessMsg = _('Added the new tax group') . ' ' . $_POST['GroupName'];
@@ -115,8 +115,8 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		$myrow=DB_fetch_array($Result);
 		if ($myrow['taxontax']==1){
 			prnMsg(_('It is inappropriate to set tax on tax where the tax is the first in the calculation order. The system has changed it back to no tax on tax for this tax authority'),'warning');
-			$Result = DB_query("UPDATE taxgrouptaxes SET taxontax=0 
-								WHERE taxgroupid='" . $SelectedGroup . "' 
+			$Result = DB_query("UPDATE taxgrouptaxes SET taxontax=0
+								WHERE taxgroupid='" . $SelectedGroup . "'
 								AND taxauthid='" . $myrow['taxauthid'] . "'",$db);
 		}
 	}
@@ -131,7 +131,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		prnMsg( _('Cannot delete this tax group because some customer branches are setup using it'),'warn');
 		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer branches referring to this tax group');
 	} else {
-		$sql= "SELECT COUNT(*) FROM suppliers 
+		$sql= "SELECT COUNT(*) FROM suppliers
 				WHERE taxgroupid='" . $_GET['SelectedGroup'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -140,10 +140,10 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('suppliers referring to this tax group');
 		} else {
 
-			$sql="DELETE FROM taxgrouptaxes 
+			$sql="DELETE FROM taxgrouptaxes
 					WHERE taxgroupid='" . $_GET['SelectedGroup'] . "'";
 			$result = DB_query($sql,$db);
-			$sql="DELETE FROM taxgroups 
+			$sql="DELETE FROM taxgroups
 					WHERE taxgroupid='" . $_GET['SelectedGroup'] . "'";
 			$result = DB_query($sql,$db);
 			prnMsg( $_GET['GroupID'] . ' ' . _('tax group has been deleted') . '!','success');
@@ -236,7 +236,7 @@ if (!isset($_POST['GroupName'])) {
 	$_POST['GroupName']='';
 }
 echo '<tr><td>' . _('Tax Group') . ':</td>
-		<td><input type="text" name="GroupName" size=40 maxlength=40 value="' . $_POST['GroupName'] . '" /></td>';
+		<td><input type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
 echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '"></td>
 	</tr>
 	</form>';
@@ -276,10 +276,10 @@ if (isset($SelectedGroup)) {
 	if (count($TaxAuthsUsed)>0) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<input type=hidden name="SelectedGroup" value="' . $SelectedGroup .'" />';
+				<input type="hidden" name="SelectedGroup" value="' . $SelectedGroup .'" />';
 		echo '<table class="selection">
 				<tr>
-					<th colspan=3><font size="3" color="navy">'._('Calculation Order').'</font></th>
+					<th colspan="3"><font size="3" color="navy">'._('Calculation Order').'</font></th>
 				</tr>
 				<tr>
 					<th>'._('Tax Authority').'</th>
@@ -343,7 +343,7 @@ if (isset($SelectedGroup)) {
 
 	} else {
 		echo '<br />
-				<div class="centre">' . 
+				<div class="centre">' .
 					_('There are no tax authorities defined to allocate to this tax group').'
 				</div>';
 	}
