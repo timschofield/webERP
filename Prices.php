@@ -346,7 +346,7 @@ if ($InputError ==0){
 	if(isset($_POST['Price'])) {
 		echo $_POST['Price'];
 	}
-	?>"> 
+	?>" /> 
 
 	</td></tr>
 

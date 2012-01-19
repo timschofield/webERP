@@ -1593,6 +1593,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if ($j==1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm'.$myrow['stockid'].');}</script>';
 				}
+				$i++;
 				$j++;
 #end of page full new headings if
 			}

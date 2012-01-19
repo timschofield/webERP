@@ -290,7 +290,7 @@ if (isset($_POST['submit'])) {
 								$CancelDelete = 1;
 								prnMsg( _('Cannot delete this location because it is used by some work order records'),'warn');
 								echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('work orders using this location');
-							}else {
+							} else {
 								$sql= "SELECT COUNT(*) FROM custbranch 
 										WHERE custbranch.defaultlocation='" . $SelectedLocation . "'";
 								$result = DB_query($sql,$db);
@@ -299,6 +299,15 @@ if (isset($_POST['submit'])) {
 									$CancelDelete = 1;
 									prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
 									echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
+								} else {
+									$sql= "SELECT COUNT(*) FROM purchorders WHERE intostocklocation='" . $SelectedLocation . '";
+									$result = DB_query($sql,$db);
+									$myrow = DB_fetch_row($result);
+									if ($myrow[0]>0) {
+										$CancelDelete = 1;
+										prnMsg(_('Cannot delete this location because it is used by some purchase order records as the location to receive stock into'),'warn');
+										echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('purchase orders set up to use this location as the receiving location');
+									}
 								}
 							}
 						}

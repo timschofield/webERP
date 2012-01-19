@@ -31,8 +31,7 @@ If (isset($_POST['PrintPDF'])
 							  '" . Date('Y-m-d') . "'
 					   FROM locstock,
 							stockmaster
-					   WHERE locstock.stockid=stockmaster.stockid and
-					   locstock.loccode='" . $_POST['Location'] . "' AND
+					   WHERE locstock.stockid=stockmaster.stockid AND					   locstock.loccode='" . $_POST['Location'] . "' AND
 					   stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' AND
 					   stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
 					   stockmaster.mbflag!='A' AND
@@ -212,8 +211,8 @@ If (isset($_POST['PrintPDF'])
 						   INNER JOIN stockmaster 
 						   ON stockmaster.stockid=bom.parent
 						   WHERE salesorders.fromstkloc='" . $_POST['Location'] . "' 
-						   AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 AND
-						   bom.component='" . $InventoryCheckRow['stockid'] . "' AND
+						   AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 
+						   AND bom.component='" . $InventoryCheckRow['stockid'] . "' 
 						   AND stockmaster.mbflag='A'";
 
 			$DemandResult = DB_query($sql,$db,'','',false,false);
