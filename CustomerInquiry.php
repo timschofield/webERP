@@ -123,9 +123,11 @@ if ($NIL_BALANCE==True){
 }
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') .
-	' ' . $CustomerRecord['currency'] . ')<br /><br />' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '<br />' . _('Credit Limit') .
-	': ' . locale_number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '</p>';
+			<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')
+			<br />
+			<br />' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '
+			<br />' . _('Credit Limit') . ': ' . locale_number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '
+		</p>';
 
 if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<br /><font color="red" size="4"><b>' . _('ACCOUNT ON HOLD') . '</font></b><br />';
@@ -253,7 +255,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	<td><a href="%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit">' . _('Email') . ' <img src="%s/email.gif" title="' . _('Click to email the credit note') . '" /></a></td>';
 
 	/* assumed allowed page security token 3 allows the user to create credits for invoices */
-	if (in_array(3,$_SESSION['AllowedPageSecurityTokens']) && $myrow['type']==10){
+	if (in_array(3,$_SESSION['AllowedPageSecurityTokens']) AND $myrow['type']==10){
 		/*Show a link to allow an invoice to be credited */
 
 		/* assumed allowed page security token 8 allows the user to see GL transaction information */

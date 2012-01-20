@@ -41,11 +41,11 @@ $showList=true; // By default will show the tamplates list
  */
 if (isset($_POST['Update'])) {
 	// Get the data from the user input & validate it (not new)
-	$label=getData($_POST, false, $ok);
+	$Label=getData($_POST, false, $ok);
 	// If all OK try to update the requested label
-	if (!$ok OR !updateLabel($label)) {
+	if (!$ok OR !updateLabel($Label)) {
 		// show the data label from the input data as update data (id read only)}
-		showLabel($label, _('Correct data'), $theme, false);
+		showLabel($Label, _('Correct data'), $theme, false);
 		$showList=false;
 	}
 
@@ -54,9 +54,9 @@ if (isset($_POST['Update'])) {
  */
 } elseif (isset($_POST['Save'])) {
 	// Get the data from the user input & validate it for new id
-	$label=getData($_POST, true, $ok);
-	if (!$ok OR !createLabel($label)) { //
-		showLabel($label, _('Correct data'), $theme, false);
+	$Label=getData($_POST, true, $ok);
+	if (!$ok OR !createLabel($Label)) { //
+		showLabel($Label, _('Correct data'), $theme, false);
 		$showList=false;
 	}
 
@@ -64,17 +64,17 @@ if (isset($_POST['Update'])) {
  *  Get the data from an old one to create a new template?
  */
 } elseif (isset($_POST['Copy'])) {
-	$label=$allLabels->getLabel($_POST['labelID']);
-	$label->id = _('New ID');   // Well, where did I get it? of course from the user, but ..
-	showLabel($label, _('Edit data new label'), $theme, false);
+	$Label=$allLabels->getLabel($_POST['labelID']);
+	$Label->id = _('New ID');   // Well, where did I get it? of course from the user, but ..
+	showLabel($Label, _('Edit data new label'), $theme, false);
 	$showList=false;
 
 /**
  *  Change some data from an old template?
  */
 } elseif (isset($_POST['Edit'])) {
-	$label=$allLabels->getLabel($_POST['labelID']);
-	showLabel($label, _('Edit data label'), $theme, true);
+	$Label=$allLabels->getLabel($_POST['labelID']);
+	showLabel($Label, _('Edit data label'), $theme, true);
 	$showList=false;
 
 /**
@@ -247,14 +247,14 @@ function validData($data, $new) {
  *
  *  It shows the data label from the input $data as update data (id read only)
  *  if the third parameter is true or a fresh data label (new label). It is
- *  possible that the combination $data valid and $readonly false occurs when
+ *  possible that the combination $data valid and $ReadOnly false occurs when
  *  invalid data needs to be recaptured because an error in a new label capture.
  */
-function showLabel($label, $msg, $theme, $readonly=false) {
+function showLabel($Label, $msg, $theme, $ReadOnly=false) {
 	global $rootpath;
-	if ($label==null)
-		$label = newLabel();
-	if  ($readonly) {
+	if ($Label==null)
+		$Label = newLabel();
+	if  ($ReadOnly) {
 		$name = 'Update';
 		$value = _('Update');
 	} else {
@@ -264,8 +264,8 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 
 	$vCancel = _('Cancel');
 
-	$tableGD = setTableGD($label, $readonly);
-	$tableLines = setTableLines($label->data->line);
+	$TableGD = setTableGD($Label, $ReadOnly);
+	$TableLines = setTableLines($Label->data->line);
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $msg.'</p>';
 
@@ -277,11 +277,11 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 			<tbody>
 			<tr>
 				<td align="center"><img src="'.$rootpath.'/css/paramsLabel.png" align="top" border="0" /></td>
-				<td>'.$tableGD.'</td>
+				<td>'.$TableGD.'</td>
 			</tr>
-			<tr>/
+			<tr>
 				<td align="center"><IMG src="'.$rootpath.'/css/labelsDim.png" align="top" border="0" /></td>
-				<td>'.$tableLines.'</td>
+				<td>'.$TableLines.'</td>
 			</tr>
 			</tbody>
 		</table>
@@ -290,18 +290,17 @@ function showLabel($label, $msg, $theme, $readonly=false) {
 	</form>';
 }
 
-function setTableGD($label, $readonly) {
+function setTableGD($Label, $ReadOnly) {
 	global $GlobalTags, $DimensionTags;
-	$html='
-		<table border="0" cellspacing="1" class="selection">';
-	$html .= setDataFields($GlobalTags, 0, $label, $specialTag='id', $readonly);
-	$html .= setDataFields($DimensionTags, 1, $label->dimensions);
+	$html='<table border="0" cellspacing="1" class="selection">';
+	$html .= setDataFields($GlobalTags, 0, $Label, $specialTag='id', $ReadOnly);
+	$html .= setDataFields($DimensionTags, 1, $Label->dimensions);
 	$html .= '
 		</table>';
 	return $html;
 }
 
-function setDataFields($tags, $withTagId, $data, $specialTag=false, $readonly=false) {
+function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=false) {
 	$iCol=0;
 	$html = '';
 	foreach ($tags as $iTag=>$tag) {
@@ -317,7 +316,7 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $readonly=fa
 				</select>';
 		} else {
 			$ro='';
-			if ($readonly AND $specialTag==$iTag)
+			if ($ReadOnly AND $specialTag==$iTag)
 				$ro='readonly ';
 			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'" size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'"'. $ro .' />';
 		}
@@ -440,15 +439,15 @@ function showLabelsList($list) {
 			</tr>
 		</thead>
 		<tbody>';
-	foreach ($list as $label) {
-		$dim = (string)$label->dimensions->Rows. ' x '. (string)$label->dimensions->Cols;
+	foreach ($list as $Label) {
+		$dim = (string)$Label->dimensions->Rows. ' x '. (string)$Label->dimensions->Cols;
 		echo '
-			<tr><td>'. $label->id . '</td>
-				<td>'. $label->description . '</td>
+			<tr><td>'. $Label->id . '</td>
+				<td>'. $Label->description . '</td>
 				<td><div class="centre">'. $dim . '</div></td>
-				<td><input type="submit" onclick="submitForm('. "'form1','Edit','". $label->id . "');" .'" value="' . $txt[4]. '" />
-				<input type="submit" onclick="submitForm('. "'form1','Copy','". $label->id . "');" .'" value="' . $txt[5]. '" />
-				<input type="submit" onclick="areYouSure('. "'form1','Delete','". $label->id . "');" .'" value="' . $txt[6]. '" />
+				<td><input type="submit" onclick="submitForm('. "'form1','Edit','". $Label->id . "');" .'" value="' . $txt[4]. '" />
+				<input type="submit" onclick="submitForm('. "'form1','Copy','". $Label->id . "');" .'" value="' . $txt[5]. '" />
+				<input type="submit" onclick="areYouSure('. "'form1','Delete','". $Label->id . "');" .'" value="' . $txt[6]. '" />
 				</td>
 			</tr>';
 	}
@@ -463,24 +462,24 @@ function showLabelsList($list) {
 *  After the user gives the label data, this routine tries to insert
 *  the new label in the current list.
 *
-*  @param  $label The object label that will replace an old one
+*  @param  $Label The object label that will replace an old one
 *  @return True when the update was ok
 */
-function createLabel($label) {
+function createLabel($Label) {
 	global $allLabels;
 	$new = emptyList();
 	$done=false;
 	if ($allLabels!=null) {
 		foreach ($allLabels as $oldLabel) {
-			if (!$done AND (string)$oldLabel->id >= (string)$label->id) {
-				$new->addLabel($label);
+			if (!$done AND (string)$oldLabel->id >= (string)$Label->id) {
+				$new->addLabel($Label);
 				$done=true;
 			}
 			$new->addLabel($oldLabel);  // inser data in the list, replacing the old one
 		}
 	}
 	if (!$done)
-		$new->addLabel($label);
+		$new->addLabel($Label);
 	$allLabels = $new;
 	rewrite($allLabels);	 // rewrite it to the XML file
 	return true;
@@ -493,15 +492,15 @@ function createLabel($label) {
 *  If the label with the id of the new one is found, the object could
 *  be accepted in the list and written to the XML file.
 *
-*  @param  $label The object label that will replace an old one
+*  @param  $Label The object label that will replace an old one
 *  @return True when the update was ok
 */
-function updateLabel($label) {
+function updateLabel($Label) {
 	global $allLabels;
 	$new = emptyList();
 	foreach ($allLabels as $oldLabel) {
-		if ((string)$oldLabel->id == (string)$label->id)
-			$new->addLabel($label);
+		if ((string)$oldLabel->id == (string)$Label->id)
+			$new->addLabel($Label);
 		else
 			$new->addLabel($oldLabel);  // inser data in the list, replacing the old one
 	}
@@ -518,15 +517,15 @@ function updateLabel($label) {
  *  correct data, it would be unsual that some error exist, but it is
  *  included the code for the validation of some this strange case.
  *
- *  @param  $labelID is the identifier of the label to delete.
+ *  @param  $LabelID is the identifier of the label to delete.
  *  @see	$allLabels
  *  @return true in case of success
  */
-function deleteLabel($list, $labelID) {
+function deleteLabel($list, $LabelID) {
 	$new = emptyList();
-	foreach ($list as $label) {
-		if ((string)$label->id!=$labelID)
-			$new->addLabel($label);
+	foreach ($list as $Label) {
+		if ((string)$Label->id!=$LabelID)
+			$new->addLabel($Label);
 	}
 	rewrite($new);
 	return $new;

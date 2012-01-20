@@ -373,17 +373,17 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 		$SQL = "SELECT price,
 						startdate,
 						enddate
-					FROM prices
-					WHERE debtorno=''
-					AND stockid='" . $Item . "'
-					AND currabrev='" . $CurrAbbrev . "'
-					AND typeabbrev='" . $PriceList . "'
-					AND enddate <>'0000-00-00'
-					ORDER BY startdate, enddate";
+				FROM prices
+				WHERE debtorno=''
+				AND stockid='" . $Item . "'
+				AND currabrev='" . $CurrAbbrev . "'
+				AND typeabbrev='" . $PriceList . "'
+				AND enddate <>'0000-00-00'
+				ORDER BY startdate, enddate";
 		$result = DB_query($SQL,$db);
-		$NextStartDate = Date($_SESSION['DefaultDateFormat']);
+		unset($NextStartDate); 
 		unset($EndDate);
-		unset($NextStartDate);
+
 		while ($myrow = DB_fetch_array($result)){
 			if (isset($NextStartDate)){
 				if (Date1GreaterThanDate2(ConvertSQLDate($myrow['startdate']),$NextStartDate)){
