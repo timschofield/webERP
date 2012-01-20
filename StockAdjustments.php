@@ -58,13 +58,11 @@ if (isset($_GET['StockID'])){
 	$_SESSION['Adjustment']->Quantity = filter_number_format($_POST['Quantity']);
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-	_('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
 
 if (isset($_POST['CheckCode'])) {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid, 
@@ -352,27 +350,27 @@ if (!isset($_SESSION['Adjustment'])) {
 	$DecimalPlaces = $myrow['decimalplaces'];
 }
 echo '<br /><table class=selection>';
-echo '<tr><th colspan=4><font color=blue size=3>'._('Adjustment Details').'</font></th></tr>';
+echo '<tr><th colspan="4"><font color=blue size=3>'._('Adjustment Details').'</font></th></tr>';
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
 }
 echo '<tr><td>'. _('Stock Code'). ':</td><td>';
 if (isset($StockID)) {
-	echo '<input type="text" name="StockID" size=21 value="' . $StockID . '" maxlength=20></td></tr>';
+	echo '<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /></td></tr>';
 } else {
-	echo '<input type="text" name="StockID" size=21 value="" maxlength=20></td></tr>';
+	echo '<input type="text" name="StockID" size="21" value="" maxlength="20" /></td></tr>';
 }
 echo '<tr>
 		<td>'. _('Partial Description'). ':</td>
 		<td><input type="text" name="StockText" size="21" value="' . $_GET['Description'] .'" />&nbsp; &nbsp;'._('Partial Stock Code'). ':</td>
 		<td>';
 if (isset($StockID)) {
-	echo '<input type="text" name="StockCode" size=21 value="' . $StockID .'" maxlength="20" />';
+	echo '<input type="text" name="StockCode" size="21" value="' . $StockID .'" maxlength="20" />';
 } else {
-	echo '<input type="text" name="StockCode" size=21 value="" maxlength="20" />';
+	echo '<input type="text" name="StockCode" size="21" value="" maxlength="20" />';
 }
 echo '</td>
-		<td><input type="submit" name="CheckCode" value="'._('Check Part').'"></td>
+		<td><input type="submit" name="CheckCode" value="'._('Check Part').'" /></td>
 	</tr>';
 if (isset($_SESSION['Adjustment']) AND mb_strlen($_SESSION['Adjustment']->ItemDescription)>1){
 	echo '<tr>
@@ -453,7 +451,7 @@ echo '</select></td>';
 echo '</table>
 	<div class="centre">
 	<br />
-	<input type="submit" name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '">
+	<input type="submit" name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '" />
 	<br />';
 
 if (!isset($_POST['StockLocation'])) {

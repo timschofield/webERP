@@ -360,8 +360,8 @@ if (!isset($SelectedBranch)){
 	$TotalEnable = 0;
 	$TotalDisable = 0;
 	if ($myrow) {
-		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
-			'" alt="" />' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
+		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+                 ' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
 		echo '<table class=selection>';
 		
 		echo '<tr><th>'._('Code').'</th>
@@ -526,11 +526,11 @@ if (!isset($_GET['delete'])) {
 			$_POST['DeliverBlind'] = $myrow['deliverblind'];
 		}
 
-		echo '<input type=hidden name="SelectedBranch" value="' . $SelectedBranch . '" />';
-		echo '<input type=hidden name="BranchCode" value="' . $_POST['BranchCode'] . '" />';
+		echo '<input type="hidden" name="SelectedBranch" value="' . $SelectedBranch . '" />';
+		echo '<input type="hidden" name="BranchCode" value="' . $_POST['BranchCode'] . '" />';
 		
-		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
-			'" alt="">' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
+		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+                 ' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
 		if (isset($SelectedBranch)) {
 			echo '<div class="centre"><a href=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DebtorNo=' . $DebtorNo. '>' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
 		}
@@ -576,11 +576,11 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['BranchCode'])) {
 			$_POST['BranchCode']='';
 		}
-		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Add a Branch').'</p>';
+		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
 		echo '<table class=selection>
 				<tr>
 					<td>'._('Branch Code'). ':</td>
-					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex=1 type="text" name="BranchCode" size=12 maxlength=10 value="' . $_POST['BranchCode'] . '"></td>
+					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
@@ -592,12 +592,12 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>'._('Branch Name').':</td>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
-	echo '<td><input tabindex=2 type="text" name="BrName" size="41" maxlength="40" value="'. $_POST['BrName'].'"></td>
+	echo '<td><input tabindex="2" type="text" name="BrName" size="41" maxlength="40" value="'. $_POST['BrName'].'" /></td>
 		</tr>';
 	echo '<tr>
 			<td>'._('Branch Contact').':</td>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
-	echo '<td><input tabindex=3 type="text" name="ContactName" size="41" maxlength="40" value="'. $_POST['ContactName'].'" /></td>
+	echo '<td><input tabindex="3" type="text" name="ContactName" size="41" maxlength="40" value="'. $_POST['ContactName'].'" /></td>
 		</tr>';
 	echo '<tr><td>'._('Street Address 1 (Street)').':</td>';
 	if (!isset($_POST['BrAddress1'])) {
@@ -631,7 +631,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['BrAddress5'])) {
 		$_POST['BrAddress5']='';
 	}
-	echo '<td><input tabindex="8" type="text" name="BrAddress5" size="21" maxlength="20" value="'. $_POST['BrAddress5'].'"/></td>
+	echo '<td><input tabindex="8" type="text" name="BrAddress5" size="21" maxlength="20" value="'. $_POST['BrAddress5'].'" /></td>
 		</tr>
 		<tr>
 			<td>'._('Street Address 6').':</td>';
@@ -652,14 +652,14 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=0;
 	}
-	echo '<td><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="11" type="text" class=number name="EstDeliveryDays" size="4" maxlength="2" value='. $_POST['EstDeliveryDays'].'></td>
+	echo '<td><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="11" type="text" class=number name="EstDeliveryDays" size="4" maxlength="2" value='. $_POST['EstDeliveryDays'].' /></td>
 		</tr>
 		<tr>
 			<td>'._('Forward Date After (day in month)').':</td>';
 	if (!isset($_POST['FwdDate'])) {
 		$_POST['FwdDate']=0;
 	}
-	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="text" class=number name="FwdDate" size="4" maxlength="2" value='. $_POST['FwdDate'].'></td>
+	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="text" class=number name="FwdDate" size="4" maxlength="2" value='. $_POST['FwdDate'].' /></td>
 		</tr>';
 
 
@@ -805,7 +805,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>'._('Transactions on this branch') . ':</td>
-			<td><select tabindex=20 name="DisableTrans">';
+			<td><select tabindex="20" name="DisableTrans">';
 	if ($_POST['DisableTrans']==0){
 		echo '<option selected value=0>' . _('Enabled') . '</option>
 				<option value=1>' . _('Disabled') . '</option>';
@@ -828,7 +828,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>'._('Default freight/shipper method') . ':</td>
-			<td><select tabindex=21 name="DefaultShipVia">';
+			<td><select tabindex="21" name="DefaultShipVia">';
 	while ($myrow=DB_fetch_array($ShipperResults)){
 		if (isset($_POST['DefaultShipVia'])and $myrow['shipper_id']==$_POST['DefaultShipVia']){
 			echo '<option selected value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';

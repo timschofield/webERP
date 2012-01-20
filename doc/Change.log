@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/1/12 Vitaly: xhtml fixes in CustomerBranches.php StockAdjustments.php WorkOrderEntry.php
 20/1/12 Tim: Merge tendering system from Tim's branch
 20/1/12 Tim: Merge xhtml fixes from Tim's branch: Labels.php TaxGroups.php GLCodesInquiry.php CustomerInquiry.php SalesByTypePeriodInquiry.php ContractBOM.php Shippers.php MRPPlannedWorkOrders.php
 20/1/12 Tim: Added previously received quantity to stock transfer notes PDFStockLocTransfer.php

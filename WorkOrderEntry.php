@@ -8,8 +8,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title.'
+		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
 	</p>';
 
 if (isset($_GET['ReqDate'])){
@@ -533,7 +532,7 @@ if (isset($NumberOfOutputs)){
 		 echo '<td class="number"><input type="hidden" name="RecdQty' . $i . '" value="' . $_POST['RecdQty' .$i] . '" />' . $_POST['RecdQty' .$i] .'</td>
 		  		<td class="number">' . locale_number_format(($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]),$_POST['DecimalPlaces' . $i]) . '</td>';
 		if ($_POST['Controlled'.$i]==1){
-			echo '<td><input type="text" name="NextLotSNRef' .$i . '" value="' . $_POST['NextLotSNRef'.$i] . '"></td>';
+			echo '<td><input type="text" name="NextLotSNRef' .$i . '" value="' . $_POST['NextLotSNRef'.$i] . '" /></td>';
 			if ($_SESSION['DefineControlledOnWOEntry']==1){
 				if ($_POST['Serialised' . $i]==1){
 					$LotOrSN = _('S/Ns');
@@ -557,16 +556,16 @@ if (isset($NumberOfOutputs)){
 			echo '<input type="hidden" name="HasWOSerialNos' . $i .'" value="' . $_POST['HasWOSerialNos' . $i] . '" />';
 		}
 	}
-	echo '<input type=hidden name="NumberOfOutputs" value="' . ($i -1).'" />';
+	echo '<input type="hidden" name="NumberOfOutputs" value="' . ($i -1).'" />';
 }
 echo '</table>';
 
 echo '<div class="centre">
 		<br />
-		<input type=submit name="submit" value="' . _('Update') . '" />
+		<input type="submit" name="submit" value="' . _('Update') . '" />
 		<br />
 		<br />
-		<input type=submit name="delete" value="' . _('Delete This Work Order') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
+		<input type="submit" name="delete" value="' . _('Delete This Work Order') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
 		<br />
 	</div>';
 
@@ -600,11 +599,11 @@ while ($myrow1 = DB_fetch_array($result1)) {
 
 </select></td>
 <td><?php echo _('Enter text extracts in the'); ?> <b><?php echo _('description'); ?></b>:</td>
-<td><input type="text" name="Keywords" size=20 maxlength=25 value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></td>
+<td><input type="text" name="Keywords" size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
 </tr>
 <tr><td></td>
-	<td><font SIZE 3><b><?php echo _('OR'); ?> </b></font><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</td>
-	<td><input type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></td>
+	<td><b><?php echo _('OR'); ?> </b><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</td>
+	<td><input type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
 </tr>
 </table>
 <br /><div class="centre"><input type="submit" name="Search" value="<?php echo _('Search Now'); ?>" />
@@ -635,10 +634,10 @@ if (isset($SearchResult)) {
 
 			if (!in_array($myrow['stockid'],$ItemCodes)){
 				if (function_exists('imagecreatefrompng') ){
-					$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64">';
+					$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64" />';
 				} else {
 					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-						$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath .  '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
+						$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath .  '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" />';
 					} else {
 						$ImageSource = _('No Image');
 					}
@@ -652,9 +651,9 @@ if (isset($SearchResult)) {
 					$k=1;
 				}
 
-				printf('<td><font size=1>%s</font></td>
-						<td><font size=1>%s</font></td>
-						<td><font size=1>%s</font></td>
+				printf('<td><font size="1">%s</font></td>
+						<td><font size="1">%s</font></td>
+						<td><font size="1">%s</font></td>
 						<td>%s</td>
 						<td><font size=1><a href="%s">'
 						. _('Add to Work Order') . '</a></font></td>
