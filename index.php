@@ -27,7 +27,7 @@ include('includes/header.inc');
 
 if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 
-/* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on 
+/* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on
  * need to limit the menu to show only the customer accessible stuff this is what the page looks like for customers logging in
  */
 ?>
@@ -201,7 +201,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/SalesTopItemsInquiry.php">' . _('Top Sellers Inquiry') . '</a></p>'; ?>
 							</td>
 							</tr>
-							
+
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PDFDeliveryDifferences.php">' . _('Order Delivery Differences Report') . '</a></p>'; ?>
@@ -504,6 +504,16 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND $SupplierLogin==0){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<p>&bull; <a href="' . $rootpath . '/PO_Header.php?&NewOrder=Yes">' . _('Add Purchase Order') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SupplierTenderCreate.php?New=Yes">' . _('Create a New Tender') . '</a></p>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<p>&bull; <a href="' . $rootpath . '/SupplierTenderCreate.php?Edit=Yes">' . _('Edit Existing Tenders') . '</a></p>'; ?>
 							</td>
 							</tr>
 							<tr>

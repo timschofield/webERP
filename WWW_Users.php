@@ -34,9 +34,9 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/g
 // Make an array of the security roles
 $sql = "SELECT secroleid,
 				secrolename
-		FROM securityroles 
+		FROM securityroles
 		ORDER BY secroleid";
-		
+
 $Sec_Result = DB_query($sql, $db);
 $SecurityRoles = array();
 // Now load it into an a ray using Key/Value pairs
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
-	} elseif ((mb_strlen($_POST['Cust'])>0) 
+	} elseif ((mb_strlen($_POST['Cust'])>0)
 				AND (mb_strlen($_POST['BranchCode'])==0)) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('The user ID') . ' ' . $_POST['UserID'] . ' ' . _('already exists and cannot be used again'),'error');
 		}
 	}
-	
+
 	if ((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
 		$sql = "SELECT custbranch.debtorno
@@ -126,10 +126,10 @@ if (isset($_POST['submit'])) {
 
 /*SelectedUser could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		if (!isset($_POST['Cust']) 
-			OR $_POST['Cust']==NULL 
+		if (!isset($_POST['Cust'])
+			OR $_POST['Cust']==NULL
 			OR $_POST['Cust']==''){
-				
+
 			$_POST['Cust']='';
 			$_POST['BranchCode']='';
 		}
@@ -148,6 +148,7 @@ if (isset($_POST['submit'])) {
 						salesman='" . $_POST['Salesman'] . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess='" . $_POST['Access'] . "',
+						cancreatetender='" . $_POST['CanCreateTender'] . "',
 						theme='" . $_POST['Theme'] . "',
 						language ='" . $_POST['UserLanguage'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
@@ -170,6 +171,7 @@ if (isset($_POST['submit'])) {
 						email,
 						pagesize,
 						fullaccess,
+						cancreatetender,
 						defaultlocation,
 						modulesallowed,
 						displayrecordsmax,
@@ -187,6 +189,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Email'] ."',
 						'" . $_POST['PageSize'] ."',
 						'" . $_POST['Access'] . "',
+						'" . $_POST['CanCreateTender'] . "',
 						'" . $_POST['DefaultLocation'] ."',
 						'" . $ModulesAllowed . "',
 						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
@@ -213,6 +216,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Password']);
 		unset($_POST['PageSize']);
 		unset($_POST['Access']);
+		unset($_POST['CanCreateTender']);
 		unset($_POST['DefaultLocation']);
 		unset($_POST['ModulesAllowed']);
 		unset($_POST['Blocked']);
@@ -261,6 +265,7 @@ if (!isset($SelectedUser)) {
 					salesman,
 					lastvisitdate,
 					fullaccess,
+					cancreatetender,
 					pagesize,
 					theme,
 					language
@@ -282,7 +287,7 @@ if (!isset($SelectedUser)) {
 				<th>' . _('Theme') .'</th>
 				<th>' . _('Language') .'</th>
 			</tr>';
-		
+
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -362,6 +367,7 @@ if (isset($SelectedUser)) {
 			salesman,
 			pagesize,
 			fullaccess,
+			cancreatetender,
 			defaultlocation,
 			modulesallowed,
 			blocked,
@@ -384,6 +390,7 @@ if (isset($SelectedUser)) {
 	$_POST['Salesman'] = $myrow['salesman'];
 	$_POST['PageSize'] = $myrow['pagesize'];
 	$_POST['Access'] = $myrow['fullaccess'];
+	$_POST['CanCreateTender'] = $myrow['cancreatetender'];
 	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
 	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
 	$_POST['Theme'] = $myrow['theme'];
@@ -467,6 +474,17 @@ echo '</select></td>
 	</tr>';
 echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'">';
 
+echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
+
+if ($_POST['CanCreateTender']==0){
+	echo '<option selected="True" value=0>' . _('No') . '</option>';
+	echo '<option value=1>' . _('Yes') . '</option>';
+} else {
+ 	echo '<option selected="True" value=1>' . _('Yes') . '</option>';
+	echo '<option value=0>' . _('No') . '</option>';
+}
+echo '</select></td></tr>';
+
 echo '<tr>
 		<td>' . _('Default Location') . ':</td>
 		<td><select name="DefaultLocation">';
@@ -484,7 +502,7 @@ while ($myrow=DB_fetch_array($result)){
 
 echo '</select></td>
 	</tr>';
-	
+
 if (!isset($_POST['Cust'])) {
 	$_POST['Cust']='';
 }

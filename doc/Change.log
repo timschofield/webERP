@@ -1,6 +1,7 @@
 webERP Change Log
 
-20/1/12 Tim: xhtml fixes Labels.php TaxGroups.php GLCodesInquiry.php CustomerInquiry.php SalesByTypePeriodInquiry.php ContractBOM.php Shippers.php MRPPlannedWorkOrders.php
+20/1/12 Tim: Merge tendering system from Tim's branch
+20/1/12 Tim: Merge xhtml fixes from Tim's branch: Labels.php TaxGroups.php GLCodesInquiry.php CustomerInquiry.php SalesByTypePeriodInquiry.php ContractBOM.php Shippers.php MRPPlannedWorkOrders.php
 20/1/12 Tim: Added previously received quantity to stock transfer notes PDFStockLocTransfer.php
 19/1/12 Vitaly: Added missing ')' at the end of some INSERT statements Stocks.php.
 19/1/12 Phil: Check on deletion of a location to see if any purchase orders exist prior to deletion
@@ -104,7 +105,7 @@ Release 4.06.6
 22/9/11 Exson: fixed the bug in GLAccountReport.php for typename from the right table (systypes) in SQL and change locale_number_format for multinational.
 17/9/11 Phil: Added WindowsLocale element to LanguagesArray.php and modified UserSettings.php and WWW_Users.php to use the new array definition. Also modified includes/LanguageSetup.php to use the windows locale string in the LanguagesArray as required for proper setting of the locale under windows.
 17/9/11 Felix Lim: added serialised field into PrintCustTransPortrait.php to reinstate possiblity for printing serialised items on invoice - not possible in landscape version (PrintCustTrans.php)
-12/9/11-31/10/11 Phil/Exson/Tom: Change all scripts to allow display and input of numbers in the format of the selected users locale 
+12/9/11-31/10/11 Phil/Exson/Tom: Change all scripts to allow display and input of numbers in the format of the selected users locale
 5/9/11 Phil: Fixed supplier payment exchange rate ... was being calculated incorrectly from functional exchange rate and the exchange rate between the currency of the bank account and currency of payment.
 5/9/11 Phil: GLTransInquiry posted was not retrieved correctly - now fixed
 4/9/11 Phil: Removed the stock code from form entities in SelectOrderItems.php and PO_Items.php to prevent issues with some characters in stock codes as suggested by Tim
@@ -160,7 +161,7 @@ Release 4.06.6
 24/7/11 Version 4.04.5
 
 24/7/11 Phil: CustomerBranches.php check for existance of Shippers and TaxGroups
-24/7/11 Phil: CustLoginSetup.php and SuppLoginSetup can no longer edit user accounts - only add 
+24/7/11 Phil: CustLoginSetup.php and SuppLoginSetup can no longer edit user accounts - only add
 24/7/11 Phil: Updated Hungarian/German/Portuguese/Japanese translations from launchpad.
 22/7/11 Phil: Make link from SelectCustomer.php to CounterSales.php so that sales together with payment can be entered directly against a selected customer.
 22/7/11 Phil: Change SelectCreditItems.php and SelectCustomer.php to select customer and branch using form variables in the same way as SelectOrderItems.php to avoid difficulties with spaces and hyphens - and to be consistent.
@@ -186,7 +187,7 @@ Release 4.06.6
 26/6/11 Phil: Went back to no number_formatting on PO_Items.php price and quantity - Brian May still reporting issues
 25/6/11 Phil: Made PO_PDFPurchOrder.php have the description of the order item run over several lines where it exceeds the width of the space allowed for it
 22/6/11 Phil: Added message to AccountGroups.php to show that child account groups cannot have changes to their account section, their profit and loss or balance sheet and sequence in TB as these properties belong only to parent account groups and are inherited by the kids
-23/6/11 Phil: SelectOrderItems.php includes/DefineCartClass.php repaired credit checks 
+23/6/11 Phil: SelectOrderItems.php includes/DefineCartClass.php repaired credit checks
 19/6/11 Phil: Credit_Invoice.php typos in quoting changes preventing posting credits on write offs also sql on gl account selection for write off
 18/6/11 Phil: Made up a includes/LanguagesArray.php to contain a list of languages and the translated name of the language - updated WWW_Users.php and UserSettings.php and CustLoginSetup.php to use this array - so the selection of a language uses the language name rather than the locale codes
 14/6/11 Phil: Added email to custcontacts and updated AddCustomerContacts.php SelectCustomer.php and Customers.php
@@ -301,20 +302,20 @@ Release 4.06.6
 
 26/3/11 - Version 4.03 Release
 
-26/3/11: Phil: added some error trapping to codes of pcTabTypes 
+26/3/11: Phil: added some error trapping to codes of pcTabTypes
 24/3/11: Phil: rework PDFStockTransfer.php remove a few round trips to DB and added facility to be able to select a transfer number to reprint - added to main menu
 24/3/11: James wertthey@yahoo.com Added small image in middle of SelectProduct.php
-19/3/11: Phil: added country to packing slips 
-18/3/11: Marcos Garcia Trejo: Added Z_ChangeSupplierCode.php 
+19/3/11: Phil: added country to packing slips
+18/3/11: Marcos Garcia Trejo: Added Z_ChangeSupplierCode.php
 18/3/11: Ricard: add orderby transdate to DailyBankTransactions.php
 18/3/11: Phil: check for Customers.php CustomerBranches.php and Stocks.php  now traps codes containing spaces - as well as other illegal characters
 15/3/11: Phil: PricesByCost.php - made it update prices where there is already a price starting on today's date
 15/3/11: Phil: SelectOrderItems.php customer selection now done using a hidden $_POST rather than parsing debtorno hyphen branchcode.
 15/3/11: Phil: Locations.php new field for CounterSales branch code - instead of parsing it from a single field with a hyphen in it. CounterSales.php now uses the new field for customer branch
 14/3/11: Phil: SelectSalesOrder.php now lists with sales order value denominated in functional currency with total of listed outstadning sales orders (or quotations) shown at the bottom of the listing
-12/3/11: Tim: Now allow space in codes 
+12/3/11: Tim: Now allow space in codes
 12/3/11: SelectSalesOrder.php now allows any number of sales orders to be selected and purchase orders placed for the aggregate of items on the selected sales orders
-12/3/11: SuppPriceList.php removed a round trip to DB to get currency - fixed function to get pdf to new TCPDF Output 
+12/3/11: SuppPriceList.php removed a round trip to DB to get currency - fixed function to get pdf to new TCPDF Output
 12/3/11: Exson: fix all htmlentities to use ENTQUOTES, 'UTF-8' option so other character sets work with it
 10/3/11: Phil: fix pagination of PrintCustOrder_generic.php - second copy was not restarting page numbers
 10/3/11: Tims: launchpad fixes brought in MRP.php fix for table charset utf8 so joins work correctly; typeo in PO_Header preventing purchasing data being retrieved ($result not $Result); correct sql on searching for customer in SelectCreditItems.php; StockStatus.php pricing history bug resolved (4450); StockQuantityByDate.php now allowed to show for all categories - enclosed 'All' in gettext
@@ -329,7 +330,7 @@ Release 4.06.6
 27/2/11: Phil: fix units deletion issue reported by Exson in UnitsOfMeasure.php script - checked for none existant units field in contracts table - removed the check
 22/2/11: Phil: fix PDFTopItems.php for changed variable names - now using CamelCase tried to rework to conform
 22/2/11: Phil: remove options for PDFLanguage that are not unique in WWW_Users.php - make it default to the users settings in the SESSION for UserSettings.php
-18/2/11: Phil/Don Change PageSecurity array variable name to PageSecurityArray - caused problems with conflict with PageSecurity variable where register_globals = on; 
+18/2/11: Phil/Don Change PageSecurity array variable name to PageSecurityArray - caused problems with conflict with PageSecurity variable where register_globals = on;
 18/2/11: Phil: PO_Items.php make locale_number_format variables turn back into numbers for > 1000
 16/2/11: Phil: FixedAssetItems.php now checks for location before allowing additions
 16/2/11: Phil: Company preferences - changed wording of stock integration at cost removed the word standard as suggested by Exson
@@ -340,7 +341,7 @@ Release 4.06.6
 <p />
 15/2/11: Phil UpgradeDatabase.php fix to upgrade from 4.01RC1 !!
 15/2/11: Phil PrintCustTrans.php and PrintCustTransPortrait.php htmlspecialchars_decode($narrative) - conversion at the time of committing to DB needs to be unconverted. Also in ConfirmDispatch_Invoice.php
-15/2/11: Phil SelectCustomer.php removed showing blank message when $msg was empty 
+15/2/11: Phil SelectCustomer.php removed showing blank message when $msg was empty
 <p />
 13/2/11 Release 4.03RC1
 <p />
@@ -358,18 +359,18 @@ Release 4.06.6
 5/2/11: Phil PDFGrn.php rewrote - preview never used - simplified
 4/2/11: Tim CostUpdate.php allow cost update with appropriate permissions token 10 hard coded
 4/2/11: Phil SelectCustomer.php rejig selection options in more logical way. Used non-specific SQL to search by any part of the address
-2/2/11: Phil PDFTopItems.php and TopItems.php removed mysql specific SQL 
+2/2/11: Phil PDFTopItems.php and TopItems.php removed mysql specific SQL
 30/1/11: Phil GoodsReceived.php  rework for supplier units and conversion factor etc now in PO class
 30/1/11: Phil PDFGrn.php  rework for supplier units and conversion factor etc now in PO class
 30/1/11:Exson changed PDFLowGP report remove % from gettext string
-29/1/11:Tim fix reportwriter with tcpdf using parent::__construct rather than $this->Cpdf( 
+29/1/11:Tim fix reportwriter with tcpdf using parent::__construct rather than $this->Cpdf(
 24/1/11:Phil Depreciation fixes - SelectAsset by description fix
 23/1/11:Peter Otandeka: PDFTopItems.php  SQL quoting fixes
 23/1/11: Phil Fix Depreciation posting and dates of end of periods
 23/1/11:Phil changed back references throughout several MRP scripts from is_date to Is_Date - as Is_Date is used throughout the code and much bigger job to change all references to is_date
 20/1/11: Tim changed back addinfo calls to addInfo on PDF reports - Zhigio originally thought to be an issue with Turkish utf-8 pdfs but turned out to be a red herring. class.pdf call changed back to addInfo too - most of calls had not been changed to lower case info
 20/1/11: Tim changed PricesBasedOnMarkUp to have end date day before new prices effective from
-20/1/11: Phil FixedAssetRegister.php FixedAssetDepreciation.php fixes 
+20/1/11: Phil FixedAssetRegister.php FixedAssetDepreciation.php fixes
 19/1/11: Phil modified GLBudgets.php to allow entry of last years budget too
 17/1/11: Phil More purchasing work removing redundant queries rationalising code - new layout with supplier units
 15/1/11: Tim removed MX record check from IsEmail function in includes/MiscFunctions.php
@@ -377,7 +378,7 @@ Release 4.06.6
 14/1/11: Phil install scripts modified to copy over FormDesigns under the new company directory created
 14/1/11: Phil Updates to manual for security and supplier invoice entry
 13/1/11:Phil PO_Items.php remove redundant code, setup entry of lines in supplier units
-13/1/11:Tim Z_ChangeCustomerCode.php now has foreign key checks defeated when deleting the old customer record and custbranch record 
+13/1/11:Tim Z_ChangeCustomerCode.php now has foreign key checks defeated when deleting the old customer record and custbranch record
 13/1/11:Phil SupplierInvoice.php and SupplierCredit.php now check to ensure the total of contracts fixed asset charges goods received charges, shipment charges and GL charges are at least equal to the amount of the invoice or credit. It was possible when GL interface turned off to get strange results
 12/1/11:Phil DailyBankTransactions.php made it so a range of dates can be selected but defaults to just today
 11/1/11:Phil Fix choice of portrait or landscape invoices - fix landscape default form layout. Fix portrait invoice logo position
@@ -429,7 +430,7 @@ Release 4.06.6
 06/11/10 Tim: Selectproduct.php - Remove fixed assets from selections
 06/11/10 Tim: InventoryValuation.php - Ensure fixed assets dont get shown in valuation report
 06/11/10 Tim: FixedAssetItems.php - Fixed typo preventing Item code being shown
-06/11/10 Phil: StockCategory.php FixedAssetCategory.php attempt to add validation to depreciation rates by extending the stock category property logic with new fields for numericvalue, minimumvalue and maximumvalue. Then adding the depreciation rate percentage property to expect numeric values with a minimum of 0 and maximum of 100. 
+06/11/10 Phil: StockCategory.php FixedAssetCategory.php attempt to add validation to depreciation rates by extending the stock category property logic with new fields for numericvalue, minimumvalue and maximumvalue. Then adding the depreciation rate percentage property to expect numeric values with a minimum of 0 and maximum of 100.
 05/11/10 Tim: PurchData.php. Converted field name to lower case for consistency
 05/11/10 Tim: SelectProduct.php. Change the standard order quantities to agree with Minimum order qty
 05/11/10 Tim: PurchData.php. Make the Minimum order quantity field numeric only
@@ -455,7 +456,7 @@ Release 4.06.6
 26/10/10 Tim: Discountmatrix.php - Fix discount category bug
 26/10/10 Tim: Discountmatrix.php - Increase the number of decimal places that can be entered
 26/10/10 Tim: StockLocTransfer.php - Check there is sufficient stock for the transfer
-25/10/10 Marcos Garcia Trejo: New labelprinting functionality 
+25/10/10 Marcos Garcia Trejo: New labelprinting functionality
 25/10/10 ChenJohn: class.pdf.php - correctly display some html encoded special characters, to make them human readeable in pdf file.
 23/10/10 Phil: PurchData.php - search by name failed concatenation of SQL stuffed now repaired.
 
@@ -571,7 +572,7 @@ Version 4.0RC1
 11/09/10 Tim: PO_SelectPurchOrder.php - Correct the sql quoting, and various layout improvements
 11/09/10 Tim: PO_SelectOSPurchOrder.php - Correct the sql quoting
 11/09/10 Tim: PO_PDFPurchOrder.php - Correct the sql quoting
-11/09/10 Otandeka: PDFPriceList.php - Corrected undefined offset error 
+11/09/10 Otandeka: PDFPriceList.php - Corrected undefined offset error
 11/09/10 Phil: Manual changes - for utf-8 - language and PDFlanguage selection, also the installer and the new CounterSales.php script
 10/09/10 Tim: PO_OrderDetails.php - Layout improvements, links to SelectSuppliers.php and sql quoting corrections
 10/09/10 Tim: PO_Items.php - Layout improvements, and sql quoting corrections
@@ -599,7 +600,7 @@ Version 4.0RC1
 05/09/10 Tim: PDFStockTransListing.php - List stock transactions by transaction type.
 05/09/10 Ricard: upgrade3.11.1-3.12.sql - Database changes required for changes to report writer.
 31/08/10 Tim: StockLocTransfer.php - Change quantity input field to have more than 5 digits
-28/08/10 Marcos Garcia Trejo: Fix ConfirmDispatchInvoice.php assembly components new qty on hand 
+28/08/10 Marcos Garcia Trejo: Fix ConfirmDispatchInvoice.php assembly components new qty on hand
 27/08/10 Tim: Add in requisition number into purchase order prints.
 21/08/10 Phil: Fix bugs introduced by Paul's patch prnMsg= should be prnMsg() BOMs.php also did in Contracts.php
 21/08/10 Phil: Contract closing changes all the contracts scripts
@@ -653,7 +654,7 @@ Version 4.0RC1
 19/07/10 Tim: SelectAssetType.php - New script to choose an asset type for editing
 18/07/10 Tim: PCAssignCashToTab.php - Layout changes, sql quoting
 18/07/10 Tim: StockAdjustments.php - Provide option for tagging stock adjustments, change layout, allow for searching for a part code, and sql quoting
-18/07/10 Phil: CounterSales.php - was not retrieving ReceiptNumber if the debtor integration was disabled - also the correct period was not retrieved because the date format was not in the correct DateFormat because of a typo in SESSION['DefaultDateFormat'] 
+18/07/10 Phil: CounterSales.php - was not retrieving ReceiptNumber if the debtor integration was disabled - also the correct period was not retrieved because the date format was not in the correct DateFormat because of a typo in SESSION['DefaultDateFormat']
 18/07/10 Phil: New script ContractBOM.php to allow defining the bill of materials for a contract
 18/07/10 Phil: Further work on Contracts.php
 17/07/10 Tim: PaymentTerms.php - Bug fixes, SQL quoting and layout changes
@@ -735,12 +736,12 @@ Version 4.0RC1
 04/07/10 Tim: CompanyPreferences.php - Corrections to sql statements and layout changes
 04/07/10 Tim: COGSGLPostings.php - Corrections to sql statements and layout changes
 04/07/10 Tim: BOMs.php - Corrections to sql statements and layout changes
-03/07/10 Tim: BOMListing.php - Minor layout changes 
-03/07/10 Tim: BOMInquiry.php - Minor bug fixes and layout changes 
-03/07/10 Tim: BOMIndentedReverse.php - Layout changes 
-03/07/10 Tim: BOMIndented.php - Layout changes 
-03/07/10 Tim: BOMExtendedQty.php - Layout changes 
-03/07/10 Tim: BankReconciliation.php - Corrections to sql statements and layout changes 
+03/07/10 Tim: BOMListing.php - Minor layout changes
+03/07/10 Tim: BOMInquiry.php - Minor bug fixes and layout changes
+03/07/10 Tim: BOMIndentedReverse.php - Layout changes
+03/07/10 Tim: BOMIndented.php - Layout changes
+03/07/10 Tim: BOMExtendedQty.php - Layout changes
+03/07/10 Tim: BankReconciliation.php - Corrections to sql statements and layout changes
 03/07/10 Tim: BankMatching.php - Corrections to sql statements and layout changes
 03/07/10 Tim: BankAccounts.php - Layout changes
 03/07/10 Tim: AddCustomerTypeNotes.php - Layout changes and verify Type ID before query
@@ -822,7 +823,7 @@ Version 4.0RC1
 11/05/10 Tim: Exit MRP scripts gracefully if no MRP calculation has been done.
 08/05/10 Lindsay: API was broken after adding a test for global variable $DatabaseName in ConnectDB_mysql* for this variable being set and using it as DB name if so.  The variable of that name in the api_php.php has been changed to $api_DatabaseName.
 08/05/10 Phil: GetPrices.inc now uses the new price startdate and enddate to return the price which falls within the date range base on the current date. Changes to Prices.php and Prices_Customer.php to allow entry of effective from and effective to dates and updating/deleting of prices with appropriate error trapping and rescheduling of enddates where start and end dates would otherwise overlap.
-08/05/10 Phil: Found a bug in Date1GreaterThanDate2 function (in includes/DateFunction.inc) with SESSION['DefaultDateFormat'] = 'd/m/Y' this function had been broken  
+08/05/10 Phil: Found a bug in Date1GreaterThanDate2 function (in includes/DateFunction.inc) with SESSION['DefaultDateFormat'] = 'd/m/Y' this function had been broken
 06/05/10 Keith: session.inc : Correct SQL error on Currency updater
 06/05/10 Lindsay: Tracker 2929564: dates mangled via QuicK Entry format
 06/05/10 Matt Taylor: upgrade3.11.1-3.12.sql : Added default startdate to prices table.
@@ -1446,228 +1447,228 @@ Version 3.11
 30/06/09 Tim: sql/mysql/upgrade3.10-3.11.sql - New purchase order functionality
 27/06/09 Tim: sql/mysql/upgrade3.10-3.11.sql - Add in extra fields for purchase orders
 27/06/09 Tim: PO_AuthorisationLevels.php - New script to assign authorisation levels for purchase orders
-27/06/09 Tim: PDFDeliveryDifferences.php - Change to lower case html and remove 
-27/06/09 Tim: PDFCustomerList.php - Change to lower case html and remove 
-27/06/09 Tim: PDFChequeListing.php - Change to lower case html and remove 
-27/06/09 Tim: PDFBankingSummary.php - Change to lower case html and remove 
-27/06/09 Tim: PaymentTerms.php - Change to lower case html and remove 
-27/06/09 Tim: PaymentMethods.php - Change to lower case html and remove 
-27/06/09 Tim: PaymentAllocations.php - Change to lower case html and remove 
-27/06/09 Tim: OutstandingGRNs.php - Change to lower case html and remove 
-27/06/09 Tim: OrderDetails.php - Change to lower case html and remove 
-27/06/09 Tim: MRPShortages.php - Change to lower case html and remove 
-27/06/09 Tim: MRPReschedules.php - Change to lower case html and remove 
-27/06/09 Tim: MRPReport.php - Change to lower case html and remove 
-27/06/09 Tim: MRPPlannedWorkOrders.php - Change to lower case html and remove 
-27/06/09 Tim: MRPPlannedPurchaseOrders.php - Change to lower case html and remove 
-27/06/09 Tim: MRPDemandTypes.php - Change to lower case html and remove 
-27/06/09 Tim: MRPDemands.php - Change to lower case html and remove 
-27/06/09 Tim: MRPCreateDemands.php - Change to lower case html and remove 
-27/06/09 Tim: MRPCalendar.php - Change to lower case html and remove 
-27/06/09 Tim: MRP.php - Change to lower case html and remove 
-27/06/09 Tim: MailInventoryValuation.php - Change to lower case html and remove 
-27/06/09 Tim: Logout.php - Change to lower case html and remove 
-27/06/09 Tim: Locations.php - Change to lower case html and remove 
-27/06/09 Tim: InventoryValuation.php - Change to lower case html and remove 
-27/06/09 Tim: InventoryQuantities.php - Change to lower case html and remove 
-27/06/09 Tim: InventoryPlanningPrefSupplier.php - Change to lower case html and remove 
-27/06/09 Tim: InventoryPlanning.php - Change to lower case html and remove 
+27/06/09 Tim: PDFDeliveryDifferences.php - Change to lower case html and remove
+27/06/09 Tim: PDFCustomerList.php - Change to lower case html and remove
+27/06/09 Tim: PDFChequeListing.php - Change to lower case html and remove
+27/06/09 Tim: PDFBankingSummary.php - Change to lower case html and remove
+27/06/09 Tim: PaymentTerms.php - Change to lower case html and remove
+27/06/09 Tim: PaymentMethods.php - Change to lower case html and remove
+27/06/09 Tim: PaymentAllocations.php - Change to lower case html and remove
+27/06/09 Tim: OutstandingGRNs.php - Change to lower case html and remove
+27/06/09 Tim: OrderDetails.php - Change to lower case html and remove
+27/06/09 Tim: MRPShortages.php - Change to lower case html and remove
+27/06/09 Tim: MRPReschedules.php - Change to lower case html and remove
+27/06/09 Tim: MRPReport.php - Change to lower case html and remove
+27/06/09 Tim: MRPPlannedWorkOrders.php - Change to lower case html and remove
+27/06/09 Tim: MRPPlannedPurchaseOrders.php - Change to lower case html and remove
+27/06/09 Tim: MRPDemandTypes.php - Change to lower case html and remove
+27/06/09 Tim: MRPDemands.php - Change to lower case html and remove
+27/06/09 Tim: MRPCreateDemands.php - Change to lower case html and remove
+27/06/09 Tim: MRPCalendar.php - Change to lower case html and remove
+27/06/09 Tim: MRP.php - Change to lower case html and remove
+27/06/09 Tim: MailInventoryValuation.php - Change to lower case html and remove
+27/06/09 Tim: Logout.php - Change to lower case html and remove
+27/06/09 Tim: Locations.php - Change to lower case html and remove
+27/06/09 Tim: InventoryValuation.php - Change to lower case html and remove
+27/06/09 Tim: InventoryQuantities.php - Change to lower case html and remove
+27/06/09 Tim: InventoryPlanningPrefSupplier.php - Change to lower case html and remove
+27/06/09 Tim: InventoryPlanning.php - Change to lower case html and remove
 27/06/09 Tim: index.php - New menu items
-27/06/09 Tim: GoodsReceivedControlled.php - Change to lower case html and remove 
-27/06/09 Tim: GoodsReceived.php - Change to lower case html and remove 
-27/06/09 Tim: GLTrialBalance.php - Change to lower case html and remove 
-27/06/09 Tim: GLTransInquiry.php - Change to lower case html and remove 
-27/06/09 Tim: GLTags.php - Change to lower case html and remove 
+27/06/09 Tim: GoodsReceivedControlled.php - Change to lower case html and remove
+27/06/09 Tim: GoodsReceived.php - Change to lower case html and remove
+27/06/09 Tim: GLTrialBalance.php - Change to lower case html and remove
+27/06/09 Tim: GLTransInquiry.php - Change to lower case html and remove
+27/06/09 Tim: GLTags.php - Change to lower case html and remove
 27/06/09 Tim: GLTagProfit_Loss.php - Script for creating Profit and Loss accounts by Tag
-27/06/09 Tim: GLProfit_Loss.php - Change to lower case html and remove 
-27/06/09 Tim: GLJournal.php - Change to lower case html and remove 
-27/06/09 Tim: GLCodesInquiry.php - Change to lower case html and remove 
-27/06/09 Tim: GLBudgets.php - Change to lower case html and remove 
-27/06/09 Tim: GLBalanceSheet.php - Change to lower case html and remove 
-27/06/09 Tim: GLAccounts.php - Change to lower case html and remove 
-27/06/09 Tim: GLAccountInquiry.php - Change to lower case html and remove 
-27/06/09 Tim: GetStockImage.php - Change to lower case html and remove 
-26/06/09 Tim: GeocodeSetup.php - Change to lower case html and remove 
-26/06/09 Tim: geocode.php - Change to lower case html and remove 
-26/06/09 Tim: geo_displaymap_suppliers.php - Change to lower case html and remove 
-26/06/09 Tim: geo_displaymap_customers.php - Change to lower case html and remove 
-26/06/09 Tim: FTP_RadioBeacon.php - Change to lower case html and remove 
-26/06/09 Tim: FreightCosts.php - Change to lower case html and remove 
-26/06/09 Tim: Factors.php - Change to lower case html and remove 
-26/06/09 Tim: ExchangeRateTrend.php - Change to lower case html and remove 
-26/06/09 Tim: EmailCustTrans.php - Change to lower case html and remove 
-26/06/09 Tim: EmailConfirmation.php - Change to lower case html and remove 
-26/06/09 Tim: EDISendInvoices.php - Change to lower case html and remove 
-26/06/09 Tim: EDIProcessOrders.php - Change to lower case html and remove 
-26/06/09 Tim: EDIMessageFormat.php - Change to lower case html and remove 
-26/06/09 Tim: DiscountMatrix.php - Change to lower case html and remove 
-26/06/09 Tim: DiscountCategories.php - Change to lower case html and remove 
-26/06/09 Tim: DemandWorkOrders.php - Change to lower case html and remove 
-26/06/09 Tim: DeliveryDetails.php - Change to lower case html and remove 
-26/06/09 Tim: DebtorsAtPeriodEnd.php - Change to lower case html and remove 
-26/06/09 Tim: CustWhereAlloc.php - Change to lower case html and remove 
-26/06/09 Tim: CustomerTypes.php - Change to lower case html and remove 
-26/06/09 Tim: CustomerTransInquiry.php - Change to lower case html and remove 
-26/06/09 Tim: Customers.php - Change to lower case html and remove 
-26/06/09 Tim: CustomerReceipt.php - Change to lower case html and remove 
-26/06/09 Tim: CustomerInquiry.php - Change to lower case html and remove 
-26/06/09 Tim: CustomerBranches.php - Change to lower case html and remove 
-26/06/09 Tim: CustomerAllocations.php - Change to lower case html and remove 
-26/06/09 Tim: CustEDISetup.php - Change to lower case html and remove 
-26/06/09 Tim: Currencies.php - Change to lower case html and remove 
-26/06/09 Tim: CreditStatus.php - Change to lower case html and remove 
-26/06/09 Tim: CreditItemsControlled.php - Change to lower case html and remove 
-26/06/09 Tim: Credit_Invoice.php - Change to lower case html and remove 
-26/06/09 Tim: ConfirmDispatchControlled_Invoice.php - Change to lower case html and remove 
-26/06/09 Tim: CompanyPreferences.php - Change to lower case html and remove 
-26/06/09 Tim: COGSGLPostings.php - Change to lower case html and remove 
-26/06/09 Tim: BOMs.php - Change to lower case html and remove 
-26/06/09 Tim: BOMListing.php - Change to lower case html and remove 
-26/06/09 Tim: BOMInquiry.php - Change to lower case html and remove 
-26/06/09 Tim: BOMIndentedReverse.php - Change to lower case html and remove 
-26/06/09 Tim: BOMIndented.php - Change to lower case html and remove 
-26/06/09 Tim: BOMExtendedQty.php - Change to lower case html and remove 
-26/06/09 Tim: BankReconciliation.php - Change to lower case html and remove 
-26/06/09 Tim: BankMatching.php - Change to lower case html and remove 
-26/06/09 Tim: BankAccounts.php - Change to lower case html and remove 
-26/06/09 Tim: AuditTrail.php - Change to lower case html and remove 
-26/06/09 Tim: Areas.php - Change to lower case html and remove 
-26/06/09 Tim: AgedSuppliers.php - Change to lower case html and remove 
-26/06/09 Tim: AgedDebtors.php - Change to lower case html and remove 
-26/06/09 Tim: AddCustomerTypeNotes.php - Change to lower case html and remove 
-26/06/09 Tim: AddCustomerNotes.php - Change to lower case html and remove 
-26/06/09 Tim: AddCustomerContacts.php - Change to lower case html and remove 
+27/06/09 Tim: GLProfit_Loss.php - Change to lower case html and remove
+27/06/09 Tim: GLJournal.php - Change to lower case html and remove
+27/06/09 Tim: GLCodesInquiry.php - Change to lower case html and remove
+27/06/09 Tim: GLBudgets.php - Change to lower case html and remove
+27/06/09 Tim: GLBalanceSheet.php - Change to lower case html and remove
+27/06/09 Tim: GLAccounts.php - Change to lower case html and remove
+27/06/09 Tim: GLAccountInquiry.php - Change to lower case html and remove
+27/06/09 Tim: GetStockImage.php - Change to lower case html and remove
+26/06/09 Tim: GeocodeSetup.php - Change to lower case html and remove
+26/06/09 Tim: geocode.php - Change to lower case html and remove
+26/06/09 Tim: geo_displaymap_suppliers.php - Change to lower case html and remove
+26/06/09 Tim: geo_displaymap_customers.php - Change to lower case html and remove
+26/06/09 Tim: FTP_RadioBeacon.php - Change to lower case html and remove
+26/06/09 Tim: FreightCosts.php - Change to lower case html and remove
+26/06/09 Tim: Factors.php - Change to lower case html and remove
+26/06/09 Tim: ExchangeRateTrend.php - Change to lower case html and remove
+26/06/09 Tim: EmailCustTrans.php - Change to lower case html and remove
+26/06/09 Tim: EmailConfirmation.php - Change to lower case html and remove
+26/06/09 Tim: EDISendInvoices.php - Change to lower case html and remove
+26/06/09 Tim: EDIProcessOrders.php - Change to lower case html and remove
+26/06/09 Tim: EDIMessageFormat.php - Change to lower case html and remove
+26/06/09 Tim: DiscountMatrix.php - Change to lower case html and remove
+26/06/09 Tim: DiscountCategories.php - Change to lower case html and remove
+26/06/09 Tim: DemandWorkOrders.php - Change to lower case html and remove
+26/06/09 Tim: DeliveryDetails.php - Change to lower case html and remove
+26/06/09 Tim: DebtorsAtPeriodEnd.php - Change to lower case html and remove
+26/06/09 Tim: CustWhereAlloc.php - Change to lower case html and remove
+26/06/09 Tim: CustomerTypes.php - Change to lower case html and remove
+26/06/09 Tim: CustomerTransInquiry.php - Change to lower case html and remove
+26/06/09 Tim: Customers.php - Change to lower case html and remove
+26/06/09 Tim: CustomerReceipt.php - Change to lower case html and remove
+26/06/09 Tim: CustomerInquiry.php - Change to lower case html and remove
+26/06/09 Tim: CustomerBranches.php - Change to lower case html and remove
+26/06/09 Tim: CustomerAllocations.php - Change to lower case html and remove
+26/06/09 Tim: CustEDISetup.php - Change to lower case html and remove
+26/06/09 Tim: Currencies.php - Change to lower case html and remove
+26/06/09 Tim: CreditStatus.php - Change to lower case html and remove
+26/06/09 Tim: CreditItemsControlled.php - Change to lower case html and remove
+26/06/09 Tim: Credit_Invoice.php - Change to lower case html and remove
+26/06/09 Tim: ConfirmDispatchControlled_Invoice.php - Change to lower case html and remove
+26/06/09 Tim: CompanyPreferences.php - Change to lower case html and remove
+26/06/09 Tim: COGSGLPostings.php - Change to lower case html and remove
+26/06/09 Tim: BOMs.php - Change to lower case html and remove
+26/06/09 Tim: BOMListing.php - Change to lower case html and remove
+26/06/09 Tim: BOMInquiry.php - Change to lower case html and remove
+26/06/09 Tim: BOMIndentedReverse.php - Change to lower case html and remove
+26/06/09 Tim: BOMIndented.php - Change to lower case html and remove
+26/06/09 Tim: BOMExtendedQty.php - Change to lower case html and remove
+26/06/09 Tim: BankReconciliation.php - Change to lower case html and remove
+26/06/09 Tim: BankMatching.php - Change to lower case html and remove
+26/06/09 Tim: BankAccounts.php - Change to lower case html and remove
+26/06/09 Tim: AuditTrail.php - Change to lower case html and remove
+26/06/09 Tim: Areas.php - Change to lower case html and remove
+26/06/09 Tim: AgedSuppliers.php - Change to lower case html and remove
+26/06/09 Tim: AgedDebtors.php - Change to lower case html and remove
+26/06/09 Tim: AddCustomerTypeNotes.php - Change to lower case html and remove
+26/06/09 Tim: AddCustomerNotes.php - Change to lower case html and remove
+26/06/09 Tim: AddCustomerContacts.php - Change to lower case html and remove
 24/06/09 turbopt: SelectProduct.php - Correct field line up in inventory item display
-24/06/09 Tim: PeriodsInquiry.php - Change to lower case html and remove 
-24/06/09 Tim: PDFStockTransfer.php - Change to lower case html and remove 
-24/06/09 Tim: PDFStockNegatives.php - Change to lower case html and remove 
-24/06/09 Tim: PDFStockLocTransfer.php - Change to lower case html and remove 
-24/06/09 Tim: PDFStockCheckComparison.php - Change to lower case html and remove 
-24/06/09 Tim: PDFQuotation.php - Change to lower case html and remove 
-24/06/09 Tim: PDFPriceList.php - Change to lower case html and remove 
-24/06/09 Tim: PDFOrderStatus.php - Change to lower case html and remove 
-24/06/09 Tim: PDFOrdersInvoiced.php - Change to lower case html and remove 
-24/06/09 Tim: PDFLowGP.php - Change to lower case html and remove 
-24/06/09 Tim: PDFGrn.php - Change to lower case html and remove 
-24/06/09 Tim: PDFDIFOT.php - Change to lower case html and remove 
+24/06/09 Tim: PeriodsInquiry.php - Change to lower case html and remove
+24/06/09 Tim: PDFStockTransfer.php - Change to lower case html and remove
+24/06/09 Tim: PDFStockNegatives.php - Change to lower case html and remove
+24/06/09 Tim: PDFStockLocTransfer.php - Change to lower case html and remove
+24/06/09 Tim: PDFStockCheckComparison.php - Change to lower case html and remove
+24/06/09 Tim: PDFQuotation.php - Change to lower case html and remove
+24/06/09 Tim: PDFPriceList.php - Change to lower case html and remove
+24/06/09 Tim: PDFOrderStatus.php - Change to lower case html and remove
+24/06/09 Tim: PDFOrdersInvoiced.php - Change to lower case html and remove
+24/06/09 Tim: PDFLowGP.php - Change to lower case html and remove
+24/06/09 Tim: PDFGrn.php - Change to lower case html and remove
+24/06/09 Tim: PDFDIFOT.php - Change to lower case html and remove
 24/06/09 Tim: ConfirmDispatch_Invoice.php - Remove backslashes from narrative
 24/06/09 Tim: SelectOrderItems.php - Remove backslashes from narrative
 24/06/09 Tim: PrintCustTransPortrait.php - Remove backslashes from narrative
 24/06/09 Tim: PrintCustTrans.php - Remove backslashes from narrative
-21/06/09 Tim: ReverseGRN.php - Change to lower case html and remove 
-21/06/09 Tim: ReorderLevel.php - Change to lower case html and remove 
-21/06/09 Tim: RecurringSalesOrdersProcess.php - Change to lower case html and remove 
-21/06/09 Tim: RecurringSalesOrders.php - Change to lower case html and remove 
-21/06/09 Tim: PurchData.php - Change to lower case html and remove 
-21/06/09 Tim: PrintCustTransPortrait.php - Change to lower case html and remove 
-21/06/09 Tim: PrintCustStatements.php - Change to lower case html and remove 
-21/06/09 Tim: PrintCustOrder.php - Change to lower case html and remove 
-21/06/09 Tim: PricesBasedOnMarkUp.php - Change to lower case html and remove 
-21/06/09 Tim: Prices.php - Change to lower case html and remove 
-21/06/09 Tim: Prices_Customer.php - Change to lower case html and remove 
-21/06/09 Tim: POReport.php - Change to lower case html and remove 
+21/06/09 Tim: ReverseGRN.php - Change to lower case html and remove
+21/06/09 Tim: ReorderLevel.php - Change to lower case html and remove
+21/06/09 Tim: RecurringSalesOrdersProcess.php - Change to lower case html and remove
+21/06/09 Tim: RecurringSalesOrders.php - Change to lower case html and remove
+21/06/09 Tim: PurchData.php - Change to lower case html and remove
+21/06/09 Tim: PrintCustTransPortrait.php - Change to lower case html and remove
+21/06/09 Tim: PrintCustStatements.php - Change to lower case html and remove
+21/06/09 Tim: PrintCustOrder.php - Change to lower case html and remove
+21/06/09 Tim: PricesBasedOnMarkUp.php - Change to lower case html and remove
+21/06/09 Tim: Prices.php - Change to lower case html and remove
+21/06/09 Tim: Prices_Customer.php - Change to lower case html and remove
+21/06/09 Tim: POReport.php - Change to lower case html and remove
 21/06/09 Lindsay: PrintCustOrder_generic.php - Prevent blank line on second page
 21/06/09 Lindsay: PrintCustTrans.php - Prevent blank page being printed every second page
 21/06/09 Lindsay: Z_ChangeStockCode.php - Add in check for woitems table
 19/06/09 Murray: some improvements the html and css styles
-19/06/09 Tim: StockTransferControlled.php - Change to lower case html and remove 
-19/06/09 Tim: StockStatus.php - Change to lower case html and remove 
-19/06/09 Tim: StockSerialItems.php - Change to lower case html and remove 
-19/06/09 Tim: StockSerialItemResearch.php - Change to lower case html and remove 
-19/06/09 Tim: Stocks.php - Change to lower case html and remove 
-19/06/09 Tim: StockReorderLevel.php - Change to lower case html and remove 
-19/06/09 Tim: StockQuantityByDate.php - Change to lower case html and remove 
-19/06/09 Tim: StockQties_csv.php - Change to lower case html and remove 
-19/06/09 Tim: StockMovements.php - Change to lower case html and remove 
-19/06/09 Tim: StockLocTransferReceive.php - Change to lower case html and remove 
-19/06/09 Tim: StockLocTransfer.php - Change to lower case html and remove 
-19/06/09 Tim: StockLocStatus.php - Change to lower case html and remove 
-19/06/09 Tim: StockLocMovements.php - Change to lower case html and remove 
-19/06/09 Tim: StockCounts.php - Change to lower case html and remove 
-19/06/09 Tim: StockCostUpdate.php - Change to lower case html and remove 
-19/06/09 Tim: StockCheck.php - Change to lower case html and remove 
-19/06/09 Tim: StockCategories.php - Change to lower case html and remove 
-19/06/09 Tim: StockAdjustmentsControlled.php - Change to lower case html and remove 
-19/06/09 Tim: StockAdjustments.php - Change to lower case html and remove 
-19/06/09 Tim: SpecialOrder.php - Change to lower case html and remove 
-19/06/09 Tim: Shipt_Select.php - Change to lower case html and remove 
-19/06/09 Tim: Shippers.php - Change to lower case html and remove 
-19/06/09 Tim: Shipments.php - Change to lower case html and remove 
-19/06/09 Tim: ShipmentCosting.php - Change to lower case html and remove 
-19/06/09 Tim: SelectWorkOrder.php - Change to lower case html and remove 
-19/06/09 Tim: SelectSupplier.php - Change to lower case html and remove 
-19/06/09 Tim: SelectSalesOrder.php - Change to lower case html and remove 
-19/06/09 Tim: SelectRecurringSalesOrder.php - Change to lower case html and remove 
-19/06/09 Tim: SelectProduct.php - Change to lower case html and remove 
-19/06/09 Tim: SelectOrderItems.php - Change to lower case html and remove 
-19/06/09 Tim: SelectGLAccount.php - Change to lower case html and remove 
-19/06/09 Tim: SelectCustomer.php - Change to lower case html and remove 
-19/06/09 Tim: SelectCreditItems.php - Change to lower case html and remove 
-19/06/09 Tim: SalesTypes.php - Change to lower case html and remove 
-19/06/09 Tim: SalesPeople.php - Change to lower case html and remove 
-19/06/09 Tim: SalesInquiry.php - Change to lower case html and remove 
-19/06/09 Tim: SalesGraph.php - Change to lower case html and remove 
-19/06/09 Tim: SalesGLPostings.php - Change to lower case html and remove 
-19/06/09 Tim: SalesCategories.php - Change to lower case html and remove 
-19/06/09 Tim: SalesAnalysis_UserDefined.php - Change to lower case html and remove 
-19/06/09 Tim: SalesAnalRepts.php - Change to lower case html and remove 
-19/06/09 Tim: SalesAnalReptCols.php - Change to lower case html and remove 
+19/06/09 Tim: StockTransferControlled.php - Change to lower case html and remove
+19/06/09 Tim: StockStatus.php - Change to lower case html and remove
+19/06/09 Tim: StockSerialItems.php - Change to lower case html and remove
+19/06/09 Tim: StockSerialItemResearch.php - Change to lower case html and remove
+19/06/09 Tim: Stocks.php - Change to lower case html and remove
+19/06/09 Tim: StockReorderLevel.php - Change to lower case html and remove
+19/06/09 Tim: StockQuantityByDate.php - Change to lower case html and remove
+19/06/09 Tim: StockQties_csv.php - Change to lower case html and remove
+19/06/09 Tim: StockMovements.php - Change to lower case html and remove
+19/06/09 Tim: StockLocTransferReceive.php - Change to lower case html and remove
+19/06/09 Tim: StockLocTransfer.php - Change to lower case html and remove
+19/06/09 Tim: StockLocStatus.php - Change to lower case html and remove
+19/06/09 Tim: StockLocMovements.php - Change to lower case html and remove
+19/06/09 Tim: StockCounts.php - Change to lower case html and remove
+19/06/09 Tim: StockCostUpdate.php - Change to lower case html and remove
+19/06/09 Tim: StockCheck.php - Change to lower case html and remove
+19/06/09 Tim: StockCategories.php - Change to lower case html and remove
+19/06/09 Tim: StockAdjustmentsControlled.php - Change to lower case html and remove
+19/06/09 Tim: StockAdjustments.php - Change to lower case html and remove
+19/06/09 Tim: SpecialOrder.php - Change to lower case html and remove
+19/06/09 Tim: Shipt_Select.php - Change to lower case html and remove
+19/06/09 Tim: Shippers.php - Change to lower case html and remove
+19/06/09 Tim: Shipments.php - Change to lower case html and remove
+19/06/09 Tim: ShipmentCosting.php - Change to lower case html and remove
+19/06/09 Tim: SelectWorkOrder.php - Change to lower case html and remove
+19/06/09 Tim: SelectSupplier.php - Change to lower case html and remove
+19/06/09 Tim: SelectSalesOrder.php - Change to lower case html and remove
+19/06/09 Tim: SelectRecurringSalesOrder.php - Change to lower case html and remove
+19/06/09 Tim: SelectProduct.php - Change to lower case html and remove
+19/06/09 Tim: SelectOrderItems.php - Change to lower case html and remove
+19/06/09 Tim: SelectGLAccount.php - Change to lower case html and remove
+19/06/09 Tim: SelectCustomer.php - Change to lower case html and remove
+19/06/09 Tim: SelectCreditItems.php - Change to lower case html and remove
+19/06/09 Tim: SalesTypes.php - Change to lower case html and remove
+19/06/09 Tim: SalesPeople.php - Change to lower case html and remove
+19/06/09 Tim: SalesInquiry.php - Change to lower case html and remove
+19/06/09 Tim: SalesGraph.php - Change to lower case html and remove
+19/06/09 Tim: SalesGLPostings.php - Change to lower case html and remove
+19/06/09 Tim: SalesCategories.php - Change to lower case html and remove
+19/06/09 Tim: SalesAnalysis_UserDefined.php - Change to lower case html and remove
+19/06/09 Tim: SalesAnalRepts.php - Change to lower case html and remove
+19/06/09 Tim: SalesAnalReptCols.php - Change to lower case html and remove
 12/6/09  Mark: Added SalesInquiry.php - detailed or summarized inquiries on Sales Orders
-17/06/09 Tim: Z_UploadForm.php - Change to lower case html and remove 
-17/06/09 Tim: Z_Upgrade_3.09-3.10.php - Change to lower case html and remove 
-17/06/09 Tim: Z_Upgrade_3.08-3.09.php - Change to lower case html and remove 
-17/06/09 Tim: Z_Upgrade_3.07-3.08.php - Change to lower case html and remove 
-17/06/09 Tim: Z_Upgrade_3.05-3.06.php - Change to lower case html and remove 
-17/06/09 Tim: Z_Upgrade_3.04-3.05.php - Change to lower case html and remove 
-17/06/09 Tim: Z_UpdateChartDetailsBFwd.php - Change to lower case html and remove 
-17/06/09 Tim: Z_SalesIntegrityCheck.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ReverseSuppPaymentRun.php - Change to lower case html and remove 
-17/06/09 Tim: Z_RePostGLFromPeriod.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ReApplyCostToSA.php - Change to lower case html and remove 
-17/06/09 Tim: Z_PriceChanges.php - Change to lower case html and remove 
-17/06/09 Tim: Z_poRebuildDefault.php - Change to lower case html and remove 
-17/06/09 Tim: Z_poEditLangRemaining.php - Change to lower case html and remove 
-17/06/09 Tim: Z_poEditLangModule.php - Change to lower case html and remove 
-17/06/09 Tim: Z_poEditLangHeader.php - Change to lower case html and remove 
-17/06/09 Tim: Z_poAdmin.php - Change to lower case html and remove 
-17/06/09 Tim: Z_poAddLanguage.php - Change to lower case html and remove 
-17/06/09 Tim: Z_MakeStockLocns.php - Change to lower case html and remove 
-17/06/09 Tim: Z_MakeNewCompany.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ImportStocks.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ImportPartCodes.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ImportGLAccountSections.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ImportGLAccountGroups.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ImportChartOfAccounts.php - Change to lower case html and remove 
-17/06/09 Tim: Z_DescribeTable.php - Change to lower case html and remove 
-17/06/09 Tim: Z_DeleteSalesTransActions.php - Change to lower case html and remove 
-17/06/09 Tim: Z_DeleteInvoice.php - Change to lower case html and remove 
-17/06/09 Tim: Z_DeleteCreditNote.php - Change to lower case html and remove 
-17/06/09 Tim: Z_DataExport.php - Change to lower case html and remove 
-17/06/09 Tim: Z_CurrencySuppliersBalances.php - Change to lower case html and remove 
-17/06/09 Tim: Z_CurrencyDebtorsBalances.php - Change to lower case html and remove 
-17/06/09 Tim: Z_CreateCompany.php - Change to lower case html and remove 
-17/06/09 Tim: Z_CheckGLTransBalance.php - Change to lower case html and remove 
-17/06/09 Tim: Z_CheckDebtorsControl.php - Change to lower case html and remove 
-17/06/09 Tim: Z_CheckAllocs.php - Change to lower case html and remove 
-17/06/09 Tim: Z_CheckAllocationsFrom.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ChangeStockCode.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ChangeCustomerCode.php - Change to lower case html and remove 
-17/06/09 Tim: Z_ChangeBranchCode.php - Change to lower case html and remove 
-17/06/09 Tim: WWW_Users.php - Change to lower case html and remove 
-17/06/09 Tim: WWW_Access.php - Change to lower case html and remove 
-17/06/09 Tim: WOSerialNos.php - Change to lower case html and remove 
-17/06/09 Tim: WorkOrderStatus.php - Change to lower case html and remove 
-17/06/09 Tim: WorkOrderReceive.php - Change to lower case html and remove 
-17/06/09 Tim: WorkOrderIssue.php - Change to lower case html and remove 
-17/06/09 Tim: WorkOrderEntry.php - Change to lower case html and remove 
+17/06/09 Tim: Z_UploadForm.php - Change to lower case html and remove
+17/06/09 Tim: Z_Upgrade_3.09-3.10.php - Change to lower case html and remove
+17/06/09 Tim: Z_Upgrade_3.08-3.09.php - Change to lower case html and remove
+17/06/09 Tim: Z_Upgrade_3.07-3.08.php - Change to lower case html and remove
+17/06/09 Tim: Z_Upgrade_3.05-3.06.php - Change to lower case html and remove
+17/06/09 Tim: Z_Upgrade_3.04-3.05.php - Change to lower case html and remove
+17/06/09 Tim: Z_UpdateChartDetailsBFwd.php - Change to lower case html and remove
+17/06/09 Tim: Z_SalesIntegrityCheck.php - Change to lower case html and remove
+17/06/09 Tim: Z_ReverseSuppPaymentRun.php - Change to lower case html and remove
+17/06/09 Tim: Z_RePostGLFromPeriod.php - Change to lower case html and remove
+17/06/09 Tim: Z_ReApplyCostToSA.php - Change to lower case html and remove
+17/06/09 Tim: Z_PriceChanges.php - Change to lower case html and remove
+17/06/09 Tim: Z_poRebuildDefault.php - Change to lower case html and remove
+17/06/09 Tim: Z_poEditLangRemaining.php - Change to lower case html and remove
+17/06/09 Tim: Z_poEditLangModule.php - Change to lower case html and remove
+17/06/09 Tim: Z_poEditLangHeader.php - Change to lower case html and remove
+17/06/09 Tim: Z_poAdmin.php - Change to lower case html and remove
+17/06/09 Tim: Z_poAddLanguage.php - Change to lower case html and remove
+17/06/09 Tim: Z_MakeStockLocns.php - Change to lower case html and remove
+17/06/09 Tim: Z_MakeNewCompany.php - Change to lower case html and remove
+17/06/09 Tim: Z_ImportStocks.php - Change to lower case html and remove
+17/06/09 Tim: Z_ImportPartCodes.php - Change to lower case html and remove
+17/06/09 Tim: Z_ImportGLAccountSections.php - Change to lower case html and remove
+17/06/09 Tim: Z_ImportGLAccountGroups.php - Change to lower case html and remove
+17/06/09 Tim: Z_ImportChartOfAccounts.php - Change to lower case html and remove
+17/06/09 Tim: Z_DescribeTable.php - Change to lower case html and remove
+17/06/09 Tim: Z_DeleteSalesTransActions.php - Change to lower case html and remove
+17/06/09 Tim: Z_DeleteInvoice.php - Change to lower case html and remove
+17/06/09 Tim: Z_DeleteCreditNote.php - Change to lower case html and remove
+17/06/09 Tim: Z_DataExport.php - Change to lower case html and remove
+17/06/09 Tim: Z_CurrencySuppliersBalances.php - Change to lower case html and remove
+17/06/09 Tim: Z_CurrencyDebtorsBalances.php - Change to lower case html and remove
+17/06/09 Tim: Z_CreateCompany.php - Change to lower case html and remove
+17/06/09 Tim: Z_CheckGLTransBalance.php - Change to lower case html and remove
+17/06/09 Tim: Z_CheckDebtorsControl.php - Change to lower case html and remove
+17/06/09 Tim: Z_CheckAllocs.php - Change to lower case html and remove
+17/06/09 Tim: Z_CheckAllocationsFrom.php - Change to lower case html and remove
+17/06/09 Tim: Z_ChangeStockCode.php - Change to lower case html and remove
+17/06/09 Tim: Z_ChangeCustomerCode.php - Change to lower case html and remove
+17/06/09 Tim: Z_ChangeBranchCode.php - Change to lower case html and remove
+17/06/09 Tim: WWW_Users.php - Change to lower case html and remove
+17/06/09 Tim: WWW_Access.php - Change to lower case html and remove
+17/06/09 Tim: WOSerialNos.php - Change to lower case html and remove
+17/06/09 Tim: WorkOrderStatus.php - Change to lower case html and remove
+17/06/09 Tim: WorkOrderReceive.php - Change to lower case html and remove
+17/06/09 Tim: WorkOrderIssue.php - Change to lower case html and remove
+17/06/09 Tim: WorkOrderEntry.php - Change to lower case html and remove
 16/06/09 Tim: ConfirmDispatch_Invoice.php - Correctly show multiple lines of narrative
 16/06/09 Tim: PrintCustTransPortrait.php - Correctly show multiple lines of narrative
 16/06/09 Tim: PrintCustTrans.php - Correctly show multiple lines of narrative
-16/06/09 Tim: Payments.php - Change to lower case html and remove 
+16/06/09 Tim: Payments.php - Change to lower case html and remove
 16/06/09 Tim: SelectOrderItems.php - Change to lower case html and remove  and include javascript
-16/06/09 Tim: SelectSalesOrder.php - Change to lower case html and remove 
-16/06/09 Tim: ShiptsList.php - Change to lower case html and remove 
-16/06/09 Tim: StockAdjustments.php - Change to lower case html and remove 
+16/06/09 Tim: SelectSalesOrder.php - Change to lower case html and remove
+16/06/09 Tim: ShiptsList.php - Change to lower case html and remove
+16/06/09 Tim: StockAdjustments.php - Change to lower case html and remove
 16/06/09 Tim: SuppInvGRNs.php - Change to lower case html and and change to show GRN batch number and Purchase Order number
 16/06/09 Tim: WWW_Users.php - Change to lower case html and various changes for Opera compatability
 16/06/09 Tim: css/jelly/default.css - Correct typo in css
@@ -1734,7 +1735,7 @@ Version 3.11
 11/04/09 Tim: SelectProduct.php - Correct justification and show prices info when security is high enough
 10/04/09 Tim: SelectCustomer.php - Correctly change the customer when returning from OrderDetails.php
 10/04/09 Tim: includes/session.inc - Ensure last visit field is always updated
-10/04/09 Tim: Z_Upgrade3.10.php - Remove deprecated 
+10/04/09 Tim: Z_Upgrade3.10.php - Remove deprecated
 09/04/09 Tim: reportwriter/admin/forms/TplFrmTtl.html - Remove duplication of &lt;html&gt; and &lt;body&gt; tags
 09/04/09 Tim: reportwriter/admin/forms/TplFrmText.html - Remove duplication of &lt;html&gt; and &lt;body&gt; tags
 09/04/09 Tim: reportwriter/admin/forms/TplFrmTBlk.html - Remove duplication of &lt;html&gt; and &lt;body&gt; tags

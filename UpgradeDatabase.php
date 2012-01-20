@@ -8,10 +8,10 @@ $title = _('Upgrade webERP Database');
 include('includes/header.inc');
 
 if (!isset($_POST['DoUpgrade'])){
-	
+
 	echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	
+
 	if (!isset($_SESSION['VersionNumber'])){
 		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is not actually recorded at this version'),'info');
 		echo '<table class="selection">
@@ -46,29 +46,29 @@ if (!isset($_POST['DoUpgrade'])){
 			prnMsg(_('The database is up to date, there are no upgrades to perform'),'info');
 		} else {
 			prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $rootpath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
-				
+
 			echo '<input type="hidden" name="OldVersion" value="' . $_SESSION['VersionNumber'] . '" />';
 			echo '<div class="centre">
 					<input type="submit" name="DoUpgrade" value="' . _('Perform Database Upgrade') . '" />
 				</div>';
 		}
 	}
-	
+
 	echo '</form>';
 }
 
 if (isset($_POST['DoUpgrade'])){
-	
+
 	if ($dbType=='mysql' OR $dbType =='mysqli'){
-		
+
 		$SQLScripts = array();
-		
+
 		if ($_POST['OldVersion']=='Manual') {
 			prnMsg(_('No datbase updates have been done as you selected to apply these manually - upgrade SQL scripts are under sql/mysql/ directory in the distribution'),'info');
 		} else { //we are into automatically applying database upgrades
-		
+
 			prnMsg(_('If there are any failures then please check with your system administrator. Please read all notes carefully to ensure they are expected'),'info');
-			switch ($_POST['OldVersion']) { 
+			switch ($_POST['OldVersion']) {
 				//since there are no "break" statements subsequent upgrade scripts will be added to the array
 				case '3.00':
 					$SQLScripts[] = './sql/mysql/upgrade3.00-3.01.sql';
@@ -132,17 +132,19 @@ if (isset($_POST['DoUpgrade'])){
 				case '4.06.5':
 					$SQLScripts[] = './sql/mysql/upgrade4.05-4.06.sql';
 				case '4.06.6':
+					$SQLScripts[] = './sql/mysql/upgrade4.05-4.06.sql';
+				case '4.06.7':
 					break;
 			} //end switch
-		}	
+		}
 	} else { //dbType is not mysql or mysqli
 		prnMsg(_('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');
 	}
-	
+
 	$result = DB_IgnoreForeignKeys($db);
 
 	foreach ($SQLScripts AS $SQLScriptFile) {
-		
+
 		$SQLEntries = file($SQLScriptFile);
 		$ScriptFileEntries = sizeof($SQLEntries);
 		$sql ='';
@@ -154,16 +156,16 @@ if (isset($_POST['DoUpgrade'])){
 			</tr>';
 
 		for ($i=0; $i<=$ScriptFileEntries; $i++) {
-	
+
 			$SQLEntries[$i] = trim($SQLEntries[$i]);
 
 			if (mb_substr($SQLEntries[$i], 0, 2) != '--'
 				AND mb_substr($SQLEntries[$i], 0, 3) != 'USE'
 				AND mb_strstr($SQLEntries[$i],'/*')==FALSE
 				AND mb_strlen($SQLEntries[$i])>1){
-	
+
 				$sql .= ' ' . $SQLEntries[$i];
-	
+
 				//check if this line kicks off a function definition - pg chokes otherwise
 				if (mb_substr($SQLEntries[$i],0,15) == 'CREATE FUNCTION'){
 					$InAFunction = true;

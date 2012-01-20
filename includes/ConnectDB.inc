@@ -1,14 +1,14 @@
 <?php
 /* $Id$*/
-/* $Version is compared against the value for config.confvalue WHERE confname=VersionNumber in the database 
+/* $Version is compared against the value for config.confvalue WHERE confname=VersionNumber in the database
  * this value is saved in the $_SESSION['Versionumber'] when includes/GetConfig.php is run
  * if  VersionNumber is < $Version  then the DB update script is run */
 
-$Version='4.06.6'; //must update manually every time there is a DB change
+$Version='4.06.7'; //must update manually every time there is a DB change
 
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 
-if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the file structure 
+if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the file structure
 	if (isset($_POST['CompanyNameField'])){
 		if (ContainsIllegalCharacters($_POST['CompanyNameField'])){
 			prnMsg(_('The company database being logged into cannot contain any of the illegal characters'),'error');
@@ -26,7 +26,7 @@ if (!isset($_SESSION['DatabaseName'])){ //need to get the database name from the
 	} elseif (isset($DatabaseName)) { /* Scripts that do not require a login must have the $DatabaseName variable set in hard code */
 		$_SESSION['DatabaseName'] = $DatabaseName;
 		include_once ($PathPrefix . 'includes/ConnectDB_' . $dbType . '.inc');
-	} 
+	}
 } else {
  	include_once($PathPrefix .'includes/ConnectDB_' . $dbType . '.inc');
 }
