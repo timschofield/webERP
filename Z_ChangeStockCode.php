@@ -134,7 +134,7 @@ if (isset($_POST['ProcessStockChange'])){
 		//check if MRP tables exist before assuming 
 		
 		$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",$db,'','',false,false);
-		if ($DB_error_no($db)==0) {
+		if (DB_error_no($db)==0) {
 			echo '<br />' . _('Changing MRP planned orders information');
 			$sql = "UPDATE mrpplannedorders SET part='" . $_POST['NewStockID'] . "' WHERE part='" . $_POST['OldStockID'] . "'";
 			$ErrMsg = _('The SQL to update the mrpplannedorders records failed');
