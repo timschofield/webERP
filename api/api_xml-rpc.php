@@ -1048,7 +1048,7 @@
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 /*x*/					$xmlrpcmsg->getParam( 3 )->scalarval(  ),
 /*x*/						$xmlrpcmsg->getParam( 4 )->scalarval(  ))) );
-/*x*/		} else {
+/*x*/		} else { //only 3 parameters if login already in session
 		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*e*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ), '', '')));

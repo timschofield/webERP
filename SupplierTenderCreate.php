@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: SupplierTenderCreate.php 4821 2012-01-20 13:48:53Z tim_schofield $ */
 
 include('includes/DefineTenderClass.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -7,11 +7,11 @@ include('includes/session.inc');
 
 $Maximum_Number_Of_Parts_To_Show=50;
 
-if (isset($_GET['New']) and isset($_SESSION['tender'])) {
+if (isset($_GET['New']) AND isset($_SESSION['tender'])) {
 	unset($_SESSION['tender']);
 }
 
-if (isset($_GET['New']) and $_SESSION['CanCreateTender']==0) {
+if (isset($_GET['New']) AND $_SESSION['CanCreateTender']==0) {
 	$title = _('Authorisation Problem');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . $title . '" alt="" />  '.$title . '</p>';
@@ -21,7 +21,7 @@ if (isset($_GET['New']) and $_SESSION['CanCreateTender']==0) {
 	exit;
 }
 
-if (isset($_GET['Edit']) and $_SESSION['CanCreateTender']==0) {
+if (isset($_GET['Edit']) AND $_SESSION['CanCreateTender']==0) {
 	$title = _('Authorisation Problem');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . $title . '" alt="" />  '.$title . '</p>';
@@ -188,7 +188,7 @@ if (isset($_POST['SelectedSupplier'])) {
 	$ShowTender = 1;
 }
 
-if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
+if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
 	foreach ($_POST as $key => $value) {
 		if (mb_substr($key,0,7)=='StockID') {
 			$Index = mb_substr($key,7,mb_strlen($key)-7);
@@ -315,7 +315,7 @@ if (!isset($_SESSION['tender']) or isset($_POST['LookupDeliveryAddress']) or $Sh
 	$LocnResult = DB_query($sql,$db);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){
-		if ((isset($_SESSION['tender']->Location) and $_SESSION['tender']->Location == $LocnRow['loccode'])){
+		if ((isset($_SESSION['tender']->Location) AND $_SESSION['tender']->Location == $LocnRow['loccode'])){
 			echo '<option selected="True" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 		} else {
 			echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
@@ -402,7 +402,7 @@ if (!isset($_SESSION['tender']) or isset($_POST['LookupDeliveryAddress']) or $Sh
 
 	echo '<div class="centre"><input type="submit" name="Suppliers" value="' . _('Select Suppliers') . '" />';
 	echo '<input type="submit" name="Items" value="' . _('Select Item Details') . '" /></div><br />';
-	if ($_SESSION['tender']->LinesOnTender > 0 and $_SESSION['tender']->SuppliersOnTender > 0) {
+	if ($_SESSION['tender']->LinesOnTender > 0 AND $_SESSION['tender']->SuppliersOnTender > 0) {
 		echo '<div class="centre"><input type="submit" name="Save" value="' . _('Save Tender') . '" /></div>';
 	}
 	echo '</form>';
@@ -527,18 +527,20 @@ if (isset($_POST['SearchSupplier'])) {
 		echo '<br />';
 	}
 	echo '<input type="hidden" name="Search" value="' . _('Search Now') . '" />';
-	echo '<br /><br />';
-	echo '<br /><table cellpadding="2" colspan="7">';
-	$tableheader = '<tr>
-  		<th>' . _('Code') . '</th>
-		<th>' . _('Supplier Name') . '</th>
-		<th>' . _('Currency') . '</th>
-		<th>' . _('Address 1') . '</th>
-		<th>' . _('Address 2') . '</th>
-		<th>' . _('Address 3') . '</th>
-		<th>' . _('Address 4') . '</th>
-		</tr>';
-	echo $tableheader;
+	echo '<br />
+		<br />
+		<br />
+		<table cellpadding="2" colspan="7">';
+	$TableHeader = '<tr>
+				  		<th>' . _('Code') . '</th>
+						<th>' . _('Supplier Name') . '</th>
+						<th>' . _('Currency') . '</th>
+						<th>' . _('Address 1') . '</th>
+						<th>' . _('Address 2') . '</th>
+						<th>' . _('Address 3') . '</th>
+						<th>' . _('Address 4') . '</th>
+					</tr>';
+	echo $TableHeader;
 	$j = 1;
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
@@ -575,9 +577,9 @@ if (isset($_POST['Items'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 	$sql = "SELECT categoryid,
-			categorydescription
-		FROM stockcategory
-		ORDER BY categorydescription";
+				categorydescription
+			FROM stockcategory
+			ORDER BY categorydescription";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result) == 0) {
 		echo '<br /><font size="4" color="red">' . _('Problem Report') . ':</font><br />' .
@@ -585,11 +587,11 @@ if (isset($_POST['Items'])) {
 		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		exit;
 	}
-	echo '<table class="selection"><tr>';
-	echo '<td>' . _('In Stock Category') . ':';
-	echo '<select name="StockCat">';
+	echo '<table class="selection">
+		<tr>
+			<td>' . _('In Stock Category') . ':<select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
-		$_POST['StockCat'] = "";
+		$_POST['StockCat'] = '';
 	}
 	if ($_POST['StockCat'] == 'All') {
 		echo '<option selected="True" value="All">' . _('All') . '</option>';
@@ -603,25 +605,34 @@ if (isset($_POST['Items'])) {
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select>';
-	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+	echo '</select></td>
+		<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td>
+		<td>';
 	if (isset($_POST['Keywords'])) {
 		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 	} else {
 		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 	}
-	echo '</td></tr><tr><td></td>';
-	echo '<td><font size="3"><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
-	echo '<td>';
+	echo '</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><font size="3"><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
+			<td>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
 		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
 	}
-	echo '</td></tr></table><br />';
-	echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br /></form>';
+	echo '</td></tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+		</div>
+		<br />
+		</form>';
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-	echo '</form>';
 }
 
 if (isset($_POST['Search'])){  /*ie seach for stock items */
@@ -638,29 +649,29 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.description " . LIKE . " '$SearchString'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.description " . LIKE . " '$SearchString'
+					ORDER BY stockmaster.stockid";
 		} else {
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.description " . LIKE . " '$SearchString'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.description " . LIKE . " '$SearchString'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 
 	} elseif ($_POST['StockCode']){
@@ -669,55 +680,55 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					ORDER BY stockmaster.stockid";
 		} else {
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 
 	} else {
 		if ($_POST['StockCat']=='All'){
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					ORDER BY stockmaster.stockid";
 		} else {
 			$sql = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units
-				FROM stockmaster INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!='D'
-				AND stockmaster.mbflag!='A'
-				AND stockmaster.mbflag!='K'
-				and stockmaster.discontinued!=1
-				AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-				ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.units
+					FROM stockmaster INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE stockmaster.mbflag!='D'
+					AND stockmaster.mbflag!='A'
+					AND stockmaster.mbflag!='K'
+					AND stockmaster.discontinued!=1
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					ORDER BY stockmaster.stockid";
 		}
 	}
 
@@ -725,7 +736,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	$DbgMsg = _('The SQL statement that failed was');
 	$SearchResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($SearchResult)==0 and $debug==1){
+	if (DB_num_rows($SearchResult)==0 AND $debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
@@ -739,14 +750,14 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 		echo '<table cellpadding="1" colspan="7">';
 
-		$tableheader = '<tr>
-			<th>' . _('Code')  . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Units') . '</th>
-			<th>' . _('Image') . '</th>
-			<th>' . _('Quantity') . '</th>
-			</tr>';
-		echo $tableheader;
+		$TableHeader = '<tr>
+							<th>' . _('Code')  . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('Units') . '</th>
+							<th>' . _('Image') . '</th>
+							<th>' . _('Quantity') . '</th>
+						</tr>';
+		echo $TableHeader;
 
 		$i = 0;
 		$k = 0; //row colour counter
@@ -761,8 +772,8 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 				$k=1;
 			}
 
-			$filename = $myrow['stockid'] . '.jpg';
-			if (file_exists( $_SESSION['part_pics_dir'] . '/' . $filename) ) {
+			$FileName = $myrow['stockid'] . '.jpg';
+			if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
 
 				$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
 
@@ -770,14 +781,13 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 				$ImageSource = '<i>'._('No Image').'</i>';
 			}
 
-			$uom=$myrow['units'];
 
 			echo '<td>'.$myrow['stockid'].'</td>
 					<td>'.$myrow['description'].'</td>
-					<td>'.$uom.'</td>
+					<td>'.$myrow['units'].'</td>
 					<td>'.$ImageSource.'</td>
 					<td><input class="number" type="text" size="6" value="0" name="Qty'.$i.'" /></td>
-					<input type="hidden" value="'.$uom.'" name="UOM'.$i.'" />
+					<input type="hidden" value="'.$myrow['units'].'" name="UOM'.$i.'" />
 					<input type="hidden" value="'.$myrow['stockid'].'" name="StockID'.$i.'" />
 					</tr>';
 
@@ -797,7 +807,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' .
 				_('Please restrict your search to only the parts required'),'info');
 		}
-		echo '<a name="end"></a><br /><div class="centre"><input type="submit" name="NewItem" value="Add to Tender" /></div>';
+		echo '<a name="end"></a>
+			<br />
+			<div class="centre">
+				<input type="submit" name="NewItem" value="' . _('Add to Tender') . '" />
+			</div>';
 	}#end if SearchResults to show
 
 	echo '</form>';

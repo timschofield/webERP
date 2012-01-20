@@ -1,8 +1,7 @@
 <?php
-/* $Id$ */
+/* $Id: DefineTenderClass.php 4821 2012-01-20 13:48:53Z tim_schofield $ */
 /* Definition of the tender class to hold all the information for a supplier tender
 */
-
 
 Class Tender {
 
@@ -58,62 +57,55 @@ Class Tender {
 		 */
 		if ($this->TenderId=='') {
 			$this->TenderId = GetNextTransNo(37, $db);
-			$HeaderSQL="INSERT INTO tenders (
-									tenderid,
-									location,
-									address1,
-									address2,
-									address3,
-									address4,
-									address5,
-									address6,
-									telephone,
-									requiredbydate)
-								VALUES (
-									'" . $this->TenderId  . "',
-									'" . $this->Location  . "',
-									'" . $this->DelAdd1  . "',
-									'" . $this->DelAdd2  . "',
-									'" . $this->DelAdd3  . "',
-									'" . $this->DelAdd4  . "',
-									'" . $this->DelAdd5  . "',
-									'" . $this->DelAdd6  . "',
-									'" . $this->Telephone  . "',
-									'" . FormatDateForSQL($this->RequiredByDate) . "')";
+			$HeaderSQL="INSERT INTO tenders (tenderid,
+											location,
+											address1,
+											address2,
+											address3,
+											address4,
+											address5,
+											address6,
+											telephone,
+											requiredbydate)
+								VALUES ('" . $this->TenderId  . "',
+										'" . $this->Location  . "',
+										'" . $this->DelAdd1  . "',
+										'" . $this->DelAdd2  . "',
+										'" . $this->DelAdd3  . "',
+										'" . $this->DelAdd4  . "',
+										'" . $this->DelAdd5  . "',
+										'" . $this->DelAdd6  . "',
+										'" . $this->Telephone  . "',
+										'" . FormatDateForSQL($this->RequiredByDate) . "')";
 			foreach ($this->Suppliers as $Supplier) {
-				$SuppliersSQL[]="INSERT INTO tendersuppliers (
-									tenderid,
-									supplierid,
-									email)
-								VALUES (
-									'" . $this->TenderId . "',
-									'" . $Supplier->SupplierCode . "',
-									'" . $Supplier->EmailAddress . "')";
+				$SuppliersSQL[]="INSERT INTO tendersuppliers (tenderid,
+															supplierid,
+															email)
+								VALUES ('" . $this->TenderId . "',
+										'" . $Supplier->SupplierCode . "',
+										'" . $Supplier->EmailAddress . "')";
 			}
 			foreach ($this->LineItems as $LineItem) {
-				$ItemsSQL[]="INSERT INTO tenderitems (
-									tenderid,
-									stockid,
-									quantity,
-									units)
-								VALUES (
-									'" . $this->TenderId . "',
-									'" . $LineItem->StockID . "',
-									'" . $LineItem->Quantity . "',
-									'" . $LineItem->Units . "')";
+				$ItemsSQL[]="INSERT INTO tenderitems (tenderid,
+														stockid,
+														quantity,
+														units)
+											VALUES ('" . $this->TenderId . "',
+													'" . $LineItem->StockID . "',
+													'" . $LineItem->Quantity . "',
+													'" . $LineItem->Units . "')";
 			}
 		} else {
-			$HeaderSQL="UPDATE tenders
-								SET location='" . $this->Location  . "',
-									address1='" . $this->DelAdd1  . "',
-									address2='" . $this->DelAdd2  . "',
-									address3='" . $this->DelAdd3  . "',
-									address4='" . $this->DelAdd4  . "',
-									address5='" . $this->DelAdd5  . "',
-									address6='" . $this->DelAdd6  . "',
-									telephone='" . $this->Telephone  . "',
-									requiredbydate='" . FormatDateForSQL($this->RequiredByDate)  . "'
-								WHERE tenderid = '" . $this->TenderId  . "'";
+			$HeaderSQL="UPDATE tenders SET location='" . $this->Location  . "',
+											address1='" . $this->DelAdd1  . "',
+											address2='" . $this->DelAdd2  . "',
+											address3='" . $this->DelAdd3  . "',
+											address4='" . $this->DelAdd4  . "',
+											address5='" . $this->DelAdd5  . "',
+											address6='" . $this->DelAdd6  . "',
+											telephone='" . $this->Telephone  . "',
+											requiredbydate='" . FormatDateForSQL($this->RequiredByDate)  . "'
+						WHERE tenderid = '" . $this->TenderId  . "'";
 			foreach ($this->Suppliers as $Supplier) {
 				$sql="DELETE FROM tendersuppliers
 					WHERE  tenderid='" . $this->TenderId . "'";
@@ -122,25 +114,22 @@ Class Tender {
 									tenderid,
 									supplierid,
 									email)
-								VALUES (
-									'" . $this->TenderId . "',
-									'" . $Supplier->SupplierCode . "',
-									'" . $Supplier->EmailAddress . "')";
+								VALUES ('" . $this->TenderId . "',
+										'" . $Supplier->SupplierCode . "',
+										'" . $Supplier->EmailAddress . "')";
 			}
 			foreach ($this->LineItems as $LineItem) {
 				$sql="DELETE FROM tenderitems
-					WHERE  tenderid='" . $this->TenderId . "'";
+						WHERE  tenderid='" . $this->TenderId . "'";
 				$result=DB_query($sql, $db);
-				$ItemsSQL[]="INSERT INTO tenderitems (
-									tenderid,
-									stockid,
-									quantity,
-									units)
-								VALUES (
-									'" . $this->TenderId . "',
-									'" . $LineItem->StockID . "',
-									'" . $LineItem->Quantity . "',
-									'" . $LineItem->Units . "')";
+				$ItemsSQL[]="INSERT INTO tenderitems (tenderid,
+														stockid,
+														quantity,
+														units)
+								VALUES ('" . $this->TenderId . "',
+										'" . $LineItem->StockID . "',
+										'" . $LineItem->Quantity . "',
+										'" . $LineItem->Units . "')";
 			}
 		}
 		DB_Txn_Begin($db);
@@ -154,39 +143,36 @@ Class Tender {
 		DB_Txn_Commit($db);
 	}
 
-	function add_item_to_tender(
-				$LineNo,
-				$StockID,
-				$Qty,
-				$ItemDescr,
-				$UOM,
-				$DecimalPlaces,
-				$ExpiryDate){
-
+	function add_item_to_tender(	$LineNo,
+								$StockID,
+								$Qty,
+								$ItemDescr,
+								$UOM,
+								$DecimalPlaces,
+								$ExpiryDate){
+				
 		if (isset($Qty) and $Qty!=0){
 
 			$this->LineItems[$LineNo] = new LineDetails($LineNo,
-				$StockID,
-				$Qty,
-				$ItemDescr,
-				$UOM,
-				$DecimalPlaces,
-				$ExpiryDate);
+														$StockID,
+														$Qty,
+														$ItemDescr,
+														$UOM,
+														$DecimalPlaces,
+														$ExpiryDate);
 			$this->LinesOnTender++;
 			Return 1;
 		}
 		Return 0;
 	}
 
-	function add_supplier_to_tender(
-				$SupplierCode,
-				$SupplierName,
-				$Emailaddress){
+	function add_supplier_to_tender(	$SupplierCode,
+									$SupplierName,
+									$Emailaddress){
 
 		if (!isset($this->Suppliers[$SupplierCode])){
 
-			$this->Suppliers[$SupplierCode] = new Supplier($SupplierCode, $SupplierName,
-				$Emailaddress);
+			$this->Suppliers[$SupplierCode] = new Supplier($SupplierCode, $SupplierName, $Emailaddress);
 			$this->SuppliersOnTender++;
 			Return 1;
 		}
@@ -194,9 +180,9 @@ Class Tender {
 	}
 
 	function update_tender_item($LineNo,
-				$Qty,
-				$Price,
-				$ExpiryDate){
+								$Qty,
+								$Price,
+								$ExpiryDate){
 
 			$this->LineItems[$LineNo]->Quantity = $Qty;
 			$this->LineItems[$LineNo]->Price = $Price;
@@ -234,15 +220,13 @@ Class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function LineDetails (
-				$LineNo,
-				$StockItem,
-				$Qty,
-				$ItemDescr,
-				$UOM,
-				$DecimalPlaces,
-				$ExpiryDate)
-	{
+	function LineDetails ($LineNo,
+							$StockItem,
+							$Qty,
+							$ItemDescr,
+							$UOM,
+							$DecimalPlaces,
+							$ExpiryDate) {
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
@@ -263,16 +247,14 @@ Class Supplier {
 	var $EmailAddress;
 	var $Responded;
 
-	function Supplier (
-				$SupplierCode,
-				$SupplierName,
-				$EmailAddress) {
+	function Supplier ($SupplierCode,
+						$SupplierName,
+						$EmailAddress) {
 		$this->SupplierCode = $SupplierCode;
 		$this->SupplierName = $SupplierName;
 		$this->EmailAddress = $EmailAddress;
 		$this->Responded = 0;
 	}
-
 }
 
 ?>

@@ -30,32 +30,31 @@ Class Offer {
 				FROM suppliers
 				WHERE supplierid='" . $this->SupplierID . "'";
 		$result=DB_query($sql, $db);
-		$myrow=DB_fetch_row($result);
-		$this->SupplierName = $myrow[0];
-		$this->EmailAddress = $myrow[1];
-		$this->CurrCode = $myrow[2];
+		$myrow=DB_fetch_array($result);
+		$this->SupplierName = $myrow['suppname'];
+		$this->EmailAddress = $myrow['email'];
+		$this->CurrCode = $myrow['currcode'];
 	}
 
-	function add_to_offer(
-				$LineNo,
-				$StockID,
-				$Qty,
-				$ItemDescr,
-				$Price,
-				$UOM,
-				$DecimalPlaces,
-				$ExpiryDate){
+	function add_to_offer(	$LineNo,
+							$StockID,
+							$Qty,
+							$ItemDescr,
+							$Price,
+							$UOM,
+							$DecimalPlaces,
+							$ExpiryDate){
 
 		if (isset($Qty) and $Qty!=0){
 
 			$this->LineItems[$LineNo] = new LineDetails($LineNo,
-				$StockID,
-				$Qty,
-				$ItemDescr,
-				$Price,
-				$UOM,
-				$DecimalPlaces,
-				$ExpiryDate);
+														$StockID,
+														$Qty,
+														$ItemDescr,
+														$Price,
+														$UOM,
+														$DecimalPlaces,
+														$ExpiryDate);
 			$this->LinesOnOffer++;
 			Return 1;
 		}
@@ -74,25 +73,22 @@ Class Offer {
 		if ($Update=='') {
 			foreach ($this->LineItems as $LineItems) {
 				if ($LineItems->Deleted==False) {
-					$sql="INSERT INTO offers (
-							supplierid,
-							tenderid,
-							stockid,
-							quantity,
-							uom,
-							price,
-							expirydate,
-							currcode)
-						VALUES (
-							'".$this->SupplierID."',
-							'".$this->TenderID."',
-							'".$LineItems->StockID."',
-							'".$LineItems->Quantity."',
-							'".$LineItems->Units."',
-							'".$LineItems->Price."',
-							'".FormatDateForSQL($LineItems->ExpiryDate)."',
-							'".$this->CurrCode."'
-						)";
+					$sql="INSERT INTO offers (	supplierid,
+												tenderid,
+												stockid,
+												quantity,
+												uom,
+												price,
+												expirydate,
+												currcode)
+						VALUES ('".$this->SupplierID."',
+								'".$this->TenderID."',
+								'".$LineItems->StockID."',
+								'".$LineItems->Quantity."',
+								'".$LineItems->Units."',
+								'".$LineItems->Price."',
+								'".FormatDateForSQL($LineItems->ExpiryDate)."',
+								'".$this->CurrCode."')";
 					$ErrMsg =  _('The suppliers offer could not be inserted into the database because');
 					$DbgMsg = _('The SQL statement used to insert the suppliers offer record and failed was');
 					$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -109,11 +105,10 @@ Class Offer {
 			}
 		} else {
 			foreach ($_SESSION['offer']->LineItems as $LineItems) {
-				$sql="UPDATE offers SET
-						quantity='".$LineItems->Quantity."',
-						price='".$LineItems->Price."',
-						expirydate='".FormatDateForSQL($LineItems->ExpiryDate)."'
-					WHERE offerid='".$LineItems->LineNo . "'";
+				$sql="UPDATE offers SET quantity='".$LineItems->Quantity."',
+										price='".$LineItems->Price."',
+										expirydate='".FormatDateForSQL($LineItems->ExpiryDate)."'
+						WHERE offerid='".$LineItems->LineNo . "'";
 				$ErrMsg =  _('The suppliers offer could not be updated on the database because');
 				$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
 				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -140,9 +135,9 @@ Class Offer {
 	}
 
 	function update_offer_item($LineNo,
-				$Qty,
-				$Price,
-				$ExpiryDate){
+								$Qty,
+								$Price,
+								$ExpiryDate){
 
 			$this->LineItems[$LineNo]->Quantity = $Qty;
 			$this->LineItems[$LineNo]->Price = $Price;
@@ -175,23 +170,21 @@ Class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function LineDetails (
-				$LineNo,
-				$StockItem,
-				$Qty,
-				$ItemDescr,
-				$Prc,
-				$UOM,
-				$DecimalPlaces,
-				$ExpiryDate)
-	{
+	function LineDetails ($LineNo,
+							$StockItem,
+							$Qty,
+							$ItemDescr,
+							$Price,
+							$UOM,
+							$DecimalPlaces,
+							$ExpiryDate) {
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
 		$this->StockID =$StockItem;
 		$this->ItemDescription = $ItemDescr;
 		$this->Quantity = $Qty;
-		$this->Price = $Prc;
+		$this->Price = $Price;
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
