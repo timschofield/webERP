@@ -349,8 +349,11 @@ if (!isset($_SESSION['Adjustment'])) {
 	$_SESSION['Adjustment']->StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
 	$DecimalPlaces = $myrow['decimalplaces'];
 }
-echo '<br /><table class=selection>';
-echo '<tr><th colspan="4"><font color=blue size=3>'._('Adjustment Details').'</font></th></tr>';
+echo '<br />
+	<table class="selection">
+	<tr>
+		<th colspan="4"><font color=blue size="3">'._('Adjustment Details').'</font></th>
+	</tr>';
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
 }

@@ -85,9 +85,9 @@ if (isset($_POST['submit'])) {
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=1;
 	}
-	if (!isset($latitude)) {
-		$latitude=0.0;
-		$longitude=0.0;
+	if (!isset($Latitude)) {
+		$Latitude=0.0;
+		$Longitude=0.0;
 	}
 	if ($_SESSION['geocode_integration']==1 ){
 		// Get the lat/long from our geocoding host
@@ -110,8 +110,8 @@ if (isset($_POST['submit'])) {
 			$coordinates = $xml->Response->Placemark->Point->coordinates;
 			$coordinatesSplit = explode(",", $coordinates);
 			// Format: Longitude, Latitude, Altitude
-			$latitude = $coordinatesSplit[1];
-			$longitude = $coordinatesSplit[0];
+			$Latitude = $coordinatesSplit[1];
+			$Longitude = $coordinatesSplit[0];
 			
 			$status = $xml->Response->Status->code;
 			if (strcmp($status, '200') == 0) {
@@ -120,8 +120,8 @@ if (isset($_POST['submit'])) {
 				$coordinates = $xml->Response->Placemark->Point->coordinates;
 				$coordinatesSplit = explode(",", $coordinates);
 				// Format: Longitude, Latitude, Altitude
-				$latitude = $coordinatesSplit[1];
-				$longitude = $coordinatesSplit[0];
+				$Latitude = $coordinatesSplit[1];
+				$Longitude = $coordinatesSplit[0];
 			} else {
 				// failure to geocode
 				$geocode_pending = false;
@@ -141,8 +141,8 @@ if (isset($_POST['submit'])) {
 						braddress4 = '" . $_POST['BrAddress4'] . "',
 						braddress5 = '" . $_POST['BrAddress5'] . "',
 						braddress6 = '" . $_POST['BrAddress6'] . "',
-						lat = '" . $latitude . "',
-						lng = '" . $longitude . "',
+						lat = '" . $Latitude . "',
+						lng = '" . $Longitude . "',
 						specialinstructions = '" . $_POST['SpecialInstructions'] . "',
 						phoneno='" . $_POST['PhoneNo'] . "',
 						faxno='" . $_POST['FaxNo'] . "',
@@ -209,8 +209,8 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['BrAddress4'] . "',
 					'" . $_POST['BrAddress5'] . "',
 					'" . $_POST['BrAddress6'] . "',
-					'" . $latitude . "',
-					'" . $longitude . "',
+					'" . $Latitude . "',
+					'" . $Longitude . "',
 					'" . $_POST['SpecialInstructions'] . "',
 					'" . filter_number_format($_POST['EstDeliveryDays']) . "',
 					'" . $_POST['FwdDate'] . "',
@@ -362,9 +362,9 @@ if (!isset($SelectedBranch)){
 	if ($myrow) {
 		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
                  ' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
-		echo '<table class=selection>';
-		
-		echo '<tr><th>'._('Code').'</th>
+		echo '<table class="selection">
+			<tr>
+				<th>'._('Code').'</th>
 				<th>'._('Name').'</th>
 				<th>'._('Branch Contact').'</th>
 				<th>'._('Salesman').'</th>
@@ -373,7 +373,8 @@ if (!isset($SelectedBranch)){
 				<th>'._('Fax No').'</th>
 				<th>'._('Email').'</th>
 				<th>'._('Tax Group').'</th>
-				<th>'._('Enabled?').'</th></tr>';
+				<th>'._('Enabled?').'</th>
+			</tr>';
 
 		$k=0;
 		do {
@@ -425,10 +426,16 @@ if (!isset($SelectedBranch)){
 
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
-		echo '</table><br /><table class=selection><tr><td><div class="centre">';
+		echo '</table>
+			<br />
+			<table class="selection">
+			<tr>
+				<td><div class="centre">';
 		echo '<b>'.$TotalEnable.'</b> ' . _('Branches are enabled.') . '<br />';
 		echo '<b>'.$TotalDisable.'</b> ' . _('Branches are disabled.') . '<br />';
-		echo '<b>'.($TotalEnable+$TotalDisable). '</b> ' . _('Total Branches') . '</div></td></tr></table>';
+		echo '<b>'.($TotalEnable+$TotalDisable). '</b> ' . _('Total Branches') . '</div></td>
+			</tr>
+			</table>';
 	} else {
 		$sql = "SELECT debtorsmaster.name,
 						address1,
@@ -577,7 +584,7 @@ if (!isset($_GET['delete'])) {
 			$_POST['BranchCode']='';
 		}
 		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
-		echo '<table class=selection>
+		echo '<table class="selection">
 				<tr>
 					<td>'._('Branch Code'). ':</td>
 					<td><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="1" type="text" name="BranchCode" size="12" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>

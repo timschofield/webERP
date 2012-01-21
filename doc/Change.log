@@ -1,5 +1,6 @@
 webERP Change Log
 
+20/1/12 Phil: Fixed GetStockPrice API function for effectivty dates
 20/1/12 Vitaly: Changed $DB_error_no($db) to DB_error_no($db) in Z_ChangeStockCode.php
 20/1/12 Vitaly: xhtml fixes in CustomerBranches.php StockAdjustments.php WorkOrderEntry.php
 20/1/12 Tim: Merge tendering system from Tim's branch
