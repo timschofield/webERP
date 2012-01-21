@@ -740,10 +740,10 @@ echo '<div class="centre">
 		<input type="submit" name="EnterLine" value="' . _('Add Item to Order') . '" />
 		<br />
 		<br />
-		<input type="submit" name="Cancel" value="' . _('Start Again') . '">
+		<input type="submit" name="Cancel" value="' . _('Start Again') . '" />
 		<br />
 		<br />
-		<input type="submit" name="Commit" value="' . _('Process This Order') . '">
+		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
 	</div>
 	</form>';
 

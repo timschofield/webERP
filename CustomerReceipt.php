@@ -544,8 +544,8 @@ if (isset($_POST['CommitBatch'])){
 	echo '<br />';
 	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="">' . ' ' . '<a href="' . $rootpath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="' . $rootpath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch']->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="" />' . ' ' . '<a href="' . $rootpath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
 	echo '<p class="page_title_text"><a href="' . $rootpath . '/CustomerReceipt.php?NewReceipt=Yes&Type=Customer">' . _('Enter Receipts') . '</a>
 		</p>';
 
@@ -743,9 +743,9 @@ $DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 if (isset($_POST['GLEntry'])) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="">' . ' ' . _('General Ledger Receipt Entry') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="" />' . ' ' . _('General Ledger Receipt Entry') . '</p>';
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="">' . ' ' . _('Enter Customer Receipt') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="" />' . ' ' . _('Enter Customer Receipt') . '</p>';
 	echo '<div class="page_help_text">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</div>';
 }
 echo '<br />
@@ -782,7 +782,7 @@ if (!Is_Date($_SESSION['ReceiptBatch']->DateBanked)){
 
 echo '<tr>
 		<td>' . _('Date Banked') . ':</td>
-		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength="10" size="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '"></td>
+		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength="10" size="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Currency') . ':</td>
@@ -887,8 +887,8 @@ echo '<tr>
 if (isset($_SESSION['ReceiptBatch'])){
 	/* Now show the entries made so far */
 	if (!$BankAccountEmpty) {
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Banked') .
-			'" alt="">' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " .
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Banked') . '" alt="" />
+             ' . ' ' . $_SESSION['ReceiptBatch']->ReceiptType . ' - ' . _('Banked into the') . " " .
 				$_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</p>';
 	}
 
@@ -1072,7 +1072,7 @@ if (((isset($_SESSION['CustomerRecord'])
 				<td>' . _('Amount of Discount') . ':</td>
 				<td><input tabindex="10" type="text" name="Discount" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" /> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></tr>';
 	} else {
-		echo '<input tabindex=11 type="hidden" name="Discount" value="0" />';
+		echo '<input tabindex="11" type="hidden" name="Discount" value="0" />';
 	}
 
 	echo '<tr>
@@ -1080,7 +1080,7 @@ if (((isset($_SESSION['CustomerRecord'])
 			<td><input tabindex="12" type="text" name="PayeeBankDetail" maxlength="22" size="20" value="' . $_POST['PayeeBankDetail'] . '" /></td>
 		</tr>';
 //	echo '<tr><td>' . _('Narrative') . ':</td>
-//		<td><input tabindex=13 type="text" name="Narrative" maxlength=30 size=32 value="' . $_POST['Narrative'] . '"></td></tr>';
+//		<td><input tabindex="13" type="text" name="Narrative" maxlength="30" size="32" value="' . $_POST['Narrative'] . '" /></td></tr>';
 	echo '<td>' . _('Narrative') . ':</td>
 			<td><textarea name="Narrative"  cols="40" rows="1"></textarea></td>
 		</tr>
@@ -1098,7 +1098,7 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<br />';
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="">' . ' ' . _('Select a Customer') . '</b>
+			<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Select a Customer') . '</b>
 		<table class="selection">
 		<tr>
 			<td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>
@@ -1140,7 +1140,7 @@ if (((isset($_SESSION['CustomerRecord'])
 				echo '<tr class="EvenTableRows">';
 				$k=1;
 			}
-			printf('<td><font size=1><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="%s" /></font></td>
+			printf('<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="%s" /></td>
 					<td>%s</td>
 					</tr>',
 					$myrow['debtorno'],

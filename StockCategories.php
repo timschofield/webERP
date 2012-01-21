@@ -8,8 +8,7 @@ $title = _('Stock Category Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-	_('Inventory Adjustment') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . $title . '
 	</p>';
 
 if (isset($_GET['SelectedCategory'])){
@@ -350,7 +349,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Category Description') . ':</td>
-            <td><input type="text" name="CategoryDescription" size=22 maxlength=20 value="' . $_POST['CategoryDescription'] . '" /></td></tr>';
+            <td><input type="text" name="CategoryDescription" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td></tr>';
 
 
 	echo '<tr>
@@ -535,27 +534,25 @@ if (! isset($_GET['delete'])) {
 			} else {
 				echo '<option value="2">' . _('Check Box') . '</option>';
 			}
-			echo '</select></td>
-					<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" value="' . $myrow['defaultvalue'] . '"></td>
-					<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '"';
-
-			if ($myrow['numericvalue'] ==1){
-				echo 'checked';
-			}
-			echo '"></td>
-					<td><input type="textbox" class="number" name="PropMinimum' . $PropertyCounter . '" value="' . locale_number_format($myrow['minimumvalue'],'Variable') . '" /></td>
-					<td><input type="textbox" class="number" name="PropMaximum' . $PropertyCounter . '" value="' . locale_number_format($myrow['maximumvalue'],'Variable') . '" /></td>';
+			echo '</select></td>';
+            
+			echo '<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" value="' . $myrow['defaultvalue'] . '" /></td>';
+			echo '<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '"';
+                  if ($myrow['numericvalue'] == 1){
+				     echo ' checked="checked"';
+			      }
+			      echo ' /></td>';
+                    
+			echo '<td><input type="textbox" class="number" name="PropMinimum' . $PropertyCounter . '" value="' . locale_number_format($myrow['minimumvalue'],'Variable') . '" /></td>';
+			echo '<td><input type="textbox" class="number" name="PropMaximum' . $PropertyCounter . '" value="' . locale_number_format($myrow['maximumvalue'],'Variable') . '" /></td>';
 			echo '<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"';
-
-			if ($myrow['reqatsalesorder']==1){
-					echo 'checked';
-			} else {
-				echo '';
-			}
-
-			echo ' /></td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>
-				</tr>';
+			     if ($myrow['reqatsalesorder']==1){
+					echo ' checked="checked"';
+			     }
+                 echo ' /></td>';
+            
+			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>';
+			echo '</tr>';
 
 			$PropertyCounter++;
 		} //end loop around defined properties for this category

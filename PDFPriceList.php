@@ -251,8 +251,8 @@ If (isset($_POST['PrintPDF'])
 	$title= _('Price Listing');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
-		_('Price List') . '" alt="" />' . ' ' . _('Print a price list') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
+         ' . ' ' . _('Print a price list') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
@@ -302,7 +302,9 @@ If (isset($_POST['PrintPDF'])
 		echo '<option Value="Full Description">'. _('Full Description') . '</option>';
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Effective As At') . ':</td><td><input type="text" size=11 class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '">';
+		echo '<tr><td>' . _('Effective As At') . ':</td>';
+        echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+        echo '</td></tr>';
 
 		echo '</table><br /><div class="centre"><input type=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
 	}

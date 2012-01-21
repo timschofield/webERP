@@ -5,8 +5,7 @@ include('includes/session.inc');
 $title=_('Update Pricing');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') .
-		'" alt="" />' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $title.'</p>';
 
 echo '<br /><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br /><div class="centre">';
 
@@ -145,13 +144,13 @@ if (!isset($_POST['PriceEndDate'])) {
 }
 
 echo '<tr><td>' . _('Rounding Factor') . ':</td>
-                <td><input type="text" class=number name="RoundingFactor" size="6" maxlength="6" value=' . $_POST['RoundingFactor'] . '></td></tr>';
+                <td><input type="text" class="number" name="RoundingFactor" size="6" maxlength="6" value="' . $_POST['RoundingFactor'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('New Price To Be Effective From') . ':</td>
-                <td><input type="text" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" maxlength="10" value="' . $_POST['PriceStartDate'] . '"></td></tr>';
+                <td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('New Price To Be Effective To (Blank = No End Date)') . ':</td>
-                <td><input type="text" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" maxlength="10" value="' . $_POST['PriceEndDate'] . '"></td></tr>';
+                <td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td></tr>';
 
 if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;
@@ -161,7 +160,7 @@ echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . '
                 <td><input type="text" name="IncreasePercent" class="number" size="4" maxlength="4" value="' . $_POST['IncreasePercent'] . '"></td></tr></table>';
 
 
-echo '<p><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');"></div>';
+echo '<p><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
 
 echo '</form>';
 

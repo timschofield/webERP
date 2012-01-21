@@ -6,9 +6,8 @@ $title = _('Serial Item Research');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
-'" alt="" /><b>' . $title. '</b>
-	</p>';
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $title. '</b>
+	  </p>';
 
 
 //validate the submission

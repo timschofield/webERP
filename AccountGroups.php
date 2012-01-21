@@ -276,7 +276,7 @@ if (! isset($_GET['delete'])) {
 	echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-
+    echo '<table class="selection"><tr><td>';
 	if (isset($_GET['SelectedAccountGroup'])) {
 		//editing an existing account group
 
@@ -304,7 +304,6 @@ if (! isset($_GET['delete'])) {
 		$_POST['PandL']  = $myrow['pandl'];
 		$_POST['ParentGroupName'] = $myrow['parentgroupname'];
 
-		echo '<table class="selection"><tr><td>';
 		echo '<input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<input type="hidden" name="GroupName" value="' . $_POST['GroupName'] . '" />';
 
@@ -330,7 +329,6 @@ if (! isset($_GET['delete'])) {
 			$_POST['PandL']='';
 		}
 
-		echo '<br /><table class="selection"><tr><td>';
 		echo '<input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" />';
 		echo _('Account Group Name') . ':' . '</td><td>
 		<input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td></tr>';

@@ -218,7 +218,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 prnMsg(_('Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the webERP project'),'info');
 
-echo _('Enter the name of the template to be created') . ':<input type="text" name="TemplateName">';
+echo _('Enter the name of the template to be created') . ':<input type="text" name="TemplateName" />';
 
 prnMsg(_('Warning: All selected accounts will be exported - please de-select the accounts you do not wish to export to the new template file'),'warn');
 
@@ -233,14 +233,14 @@ $i = 0;
 while ($ChartRow = DB_fetch_array($ChartResult)){
      echo '<tr><td>' . $ChartRow['accountcode'] . '</td>
                <td>' . $ChartRow['accountname'] . '</td>
-               <td><input type="checkbox" name="IncludeAccount_' . $i . '" CHECKED></td>
+               <td><input type="checkbox" name="IncludeAccount_' . $i . '" checked="checked" /></td>
           </tr>';
      $i++;
 }
 
 echo '</table>';
 echo '<hr>';
-echo '<center><input type="submit" name="CreateTemplate" value="' . _('Create Template and Email') . '"></center>';
+echo '<center><input type="submit" name="CreateTemplate" value="' . _('Create Template and Email') . '" /></center>';
 
 echo '</form>';
 include('includes/footer.inc');
