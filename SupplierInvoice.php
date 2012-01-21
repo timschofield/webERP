@@ -26,7 +26,8 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="">' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
+     ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
 echo '</p>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
@@ -252,7 +253,7 @@ if (!isset($_POST['PostInvoice'])){
 
 	echo '<tr>
 			<td>' . _('Supplier Invoice Reference') . ':</td>
-			<td><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '"></td>';
+			<td><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 	if (!isset($_SESSION['SuppTrans']->TranDate)){
 		$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
@@ -491,7 +492,7 @@ if (!isset($_POST['PostInvoice'])){
 				<table class="selection">
 				<tr>
 					<td>' . _('Amount in supplier currency') . ':</td>
-					<td colspan=2 class="number"><input type="text" size="12" maxlength="10" name="OvAmount" value="' . locale_number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+					<td colspan="2" class="number"><input type="text" size="12" maxlength="10" name="OvAmount" value="' . locale_number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 				</tr>';
 	}
 

@@ -152,8 +152,8 @@ if (isset($_POST['module'])) {
 			} else {
 				echo '<tr>';
 				echo '<td VALIGN="top"><I>' . $DefaultText[$i] . '</I></td>';
-				echo '<td VALIGN="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" VALUE="' . $ModuleText[$i] . '"></td>';
-				echo '<td VALIGN="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" VALUE="' . $msgstr[$i] . '"></td>';
+				echo '<td VALIGN="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" VALUE="' . $ModuleText[$i] . '" /></td>';
+				echo '<td VALIGN="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" VALUE="' . $msgstr[$i] . '" /></td>';
 				echo '</tr>';
 				echo '<tr><th colspan="3"></th></tr>';
 			}
@@ -165,8 +165,8 @@ if (isset($_POST['module'])) {
 		echo '</td></tr>';
 		echo '</table>';
 		echo '<br /><div class="centre">';
-		echo '<input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
-		echo '<input type="hidden" name="module" VALUE="' . $_POST['module'] . '">';
+		echo '<input type="submit" name="submit" VALUE="' . _('Modify') . '" />&nbsp;&nbsp;';
+		echo '<input type="hidden" name="module" VALUE="' . $_POST['module'] . '" />';
 
 		echo '</form>';
 		echo '</div>';
@@ -229,8 +229,8 @@ else
 	echo '</tr></table>';
 	echo '<br />';
 	echo '<div class="centre">';
-	echo '<input type="Submit" name="proceed" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo '<br /><br /><input type="Submit" name="ReMergePO" VALUE="' . _('Refresh messages with latest strings') . '">';
+	echo '<input type="submit" name="proceed" VALUE="' . _('Proceed') . '" />&nbsp;&nbsp;';
+	echo '<br /><br /><input type="submit" name="ReMergePO" VALUE="' . _('Refresh messages with latest strings') . '">';
 	echo '</div>';
 	echo '</form>';
 	echo '</td></tr></table>';

@@ -19,7 +19,7 @@ if (!isset($_POST['Date'])){
 
 	echo '<div class="centre">
 			<p class="page_title_text">
-				<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="">' . ' ' . _('Customer Transaction Listing').
+				<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' ' . _('Customer Transaction Listing').
 			'</p>';
 
 	if ($InputError==1){
@@ -31,7 +31,7 @@ if (!isset($_POST['Date'])){
 	 echo '<table class="selection">
 	 		<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="Date" maxlength="10" size="10" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+				<td><input type="text" name="Date" maxlength="10" size="10" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 
 	echo '<tr><td>' . _('Transaction type') . '</td>
@@ -46,7 +46,7 @@ if (!isset($_POST['Date'])){
 			</table>
 			<br />
 			<div class="centre">
-				<input type="submit" name="Go" value="' . _('Create PDF') . '">
+				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
 
 	 include('includes/footer.inc');

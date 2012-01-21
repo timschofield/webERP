@@ -8,8 +8,8 @@ $title = _('Search All Sales Orders');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . _('Search Sales Orders') . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
+     ' . ' ' . _('Search Sales Orders') . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -60,8 +60,8 @@ if (isset($_POST['ResetPart'])) {
 }
 
 if (isset($OrderNumber)) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales Order') .
-		'" alt="" />' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales Order') . '" alt="" />
+         ' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
 	if (mb_strlen($_SESSION['UserBranch'])>1){
    	   echo _('For customer') . ': ' . $SelectedCustomer;
 	   echo '<input type="hidden" name="SelectedCustomer" value="' . $SelectedCustomer .'" />';
@@ -506,10 +506,10 @@ if (!isset($SelectedStockItem)) {
 						ORDER BY categorydescription",$db);
 
    echo '<br />';
-   echo '<div class="page_help_text"><font size=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . '   </font></div>';
+   echo '<div class="page_help_text">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
    echo '<br />
 		<table class="selection">';
-   echo '<tr><td><font size="1">' . _('Select a stock category') . ':</font>';
+   echo '<tr><td>' . _('Select a stock category') . ':';
    echo '<select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -521,15 +521,15 @@ if (!isset($SelectedStockItem)) {
 	}
 
    echo '</select>
-		<td><font size="1">' . _('Enter text extracts in the description') . ':</font></td>
+		<td>' . _('Enter text extracts in the description') . ':</td>
 		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><font size=3><b> ' ._('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . ':</font></td>
+		<td><b> ' ._('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
 		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
    </tr>
-   <tr><td colspan=4><div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />';
+   <tr><td colspan="4"><div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />';
 
    if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 		echo '<input type="submit" name="ResetPart" value="' . _('Show All') . '" /></div>';
@@ -569,12 +569,12 @@ If (isset($StockItemsResult)) {
 			$k++;
 		}
 
-		printf('<td><font size=1><input type="submit" name="SelectedStockItem" value="%s" /></font></td>
-				<td><font size=1>%s</font></td>
-				<td class="number"><font size=1>%s</font></td>
-				<td class="number"><font size=1>%s</font></td>
-				<td class="number"><font size=1>%s</font></td>
-				<td><font size=1>%s</font></td></tr>',
+		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td></tr>',
 				$myrow['stockid'],
 				$myrow['description'],
 				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),

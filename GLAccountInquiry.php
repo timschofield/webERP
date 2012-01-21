@@ -74,7 +74,7 @@ while ($myrow=DB_fetch_array($Periods,$db)){
 	}
 }
 echo '</select></td></tr><table>';
-echo '<p><div class="centre"><input type=submit name="Show" value="'._('Show Account Transactions').'"></div></form>';
+echo '<p><div class="centre"><input type="submit" name="Show" value="'._('Show Account Transactions').'" /></div></form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
@@ -145,7 +145,7 @@ if (isset($_POST['Show'])){
 
 	echo '<br /><table class=selection>';
 
-	echo '<tr><th colspan=8><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
+	echo '<tr><th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
 	$TableHeader = '<tr>
 			<th>' . _('Type') . '</th>
 			<th>' . _('Number') . '</th>
@@ -178,16 +178,16 @@ if (isset($_POST['Show'])){
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
 			echo '<tr bgcolor="#FDFEEF">
-				<td colspan=3><b>' . _('Brought Forward Balance') . '</b><td>
+				<td colspan="3"><b>' . _('Brought Forward Balance') . '</b><td>
 				</td></td>
-				<td class=number><b>' . locale_number_format(-$RunningTotal,2) . '</b></td>
+				<td class="number"><b>' . locale_number_format(-$RunningTotal,2) . '</b></td>
 				<td></td>
 				</tr>';
 		} else { //its a debit balance b/fwd
 			echo '<tr bgcolor="#FDFEEF">
-				<td colspan=3><b>' . _('Brought Forward Balance') . '</b></td>
-				<td class=number><b>' . locale_number_format($RunningTotal,2) . '</b></td>
-				<td colspan=2></td>
+				<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
+				<td class="number"><b>' . locale_number_format($RunningTotal,2) . '</b></td>
+				<td colspan="2"></td>
 				</tr>';
 		}
 	}
@@ -214,21 +214,21 @@ if (isset($_POST['Show'])){
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 				echo '<tr bgcolor="#FDFEEF">
-					<td colspan=3><b>' . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
+					<td colspan="3"><b>' . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
 					if ($PandLAccount==True) {
 						$RunningTotal = 0;
 					}
 					echo '<td></td>
-						<td class=number><b>' . locale_number_format(-$PeriodTotal,2) . '</b></td>
+						<td class="number"><b>' . locale_number_format(-$PeriodTotal,2) . '</b></td>
 						<td></td>
 						</tr>';
 				} else { //its a debit balance b/fwd
 					if ($PandLAccount==True) {
 						$RunningTotal = 0;
 					}
-					echo '<td class=number><b>' . locale_number_format($PeriodTotal,2) . '</b></td>
-						<td colspan=2></td>
+					echo '<td class="number"><b>' . locale_number_format($PeriodTotal,2) . '</b></td>
+						<td colspan="2"></td>
 						</tr>';
 				}
 				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . locale_number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . locale_number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal -$ChartDetailRow['actual'],3);
@@ -290,7 +290,7 @@ if (isset($_POST['Show'])){
 
 	}
 
-	echo '<tr bgcolor="#FDFEEF"><td colspan=3><b>';
+	echo '<tr bgcolor="#FDFEEF"><td colspan="3"><b>';
 	if ($PandLAccount==True){
 		echo _('Total Period Movement');
 	} else { /*its a balance sheet account*/
@@ -299,9 +299,9 @@ if (isset($_POST['Show'])){
 	echo '</b></td>';
 
 	if ($RunningTotal >0){
-		echo '<td class=number><b>' . locale_number_format(($RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
+		echo '<td class="number"><b>' . locale_number_format(($RunningTotal),2) . '</b></td><td colspan="2"></td></tr>';
 	}else {
-		echo '<td></td><td class=number><b>' . locale_number_format((-$RunningTotal),2) . '</b></td><td colspan=2></td></tr>';
+		echo '<td></td><td class="number"><b>' . locale_number_format((-$RunningTotal),2) . '</b></td><td colspan="2"></td></tr>';
 	}
 	echo '</table>';
 } /* end of if Show button hit */

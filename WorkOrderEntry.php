@@ -651,12 +651,11 @@ if (isset($SearchResult)) {
 					$k=1;
 				}
 
-				printf('<td><font size="1">%s</font></td>
-						<td><font size="1">%s</font></td>
-						<td><font size="1">%s</font></td>
+				printf('<td>%s</td>
 						<td>%s</td>
-						<td><font size=1><a href="%s">'
-						. _('Add to Work Order') . '</a></font></td>
+						<td>%s</td>
+						<td>%s</td>
+						<td><a href="%s">' . _('Add to Work Order') . '</a></td>
 						</tr>',
 						$myrow['stockid'],
 						$myrow['description'],

@@ -133,7 +133,7 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '">
+		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
 	</tr>
 	<tr>
 		<td>' . _('Full Name') . ':</td>

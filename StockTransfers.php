@@ -24,9 +24,9 @@ if (isset($_GET['From'])) {
 if (isset($_POST['CheckCode'])) {
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . _('Select Item to Transfer') . '
-		</p>';
+			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />
+            ' . ' ' . _('Select Item to Transfer') . '
+		  </p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid, 
@@ -444,9 +444,8 @@ if ( isset($_POST['EnterTransfer']) ){
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . $title . '
-	</p>';
+		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '
+	  </p>';
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -471,7 +470,7 @@ if (isset($_POST['StockID'])) {
 } else {
 	echo '<input type="text" name="StockCode" size="21" value="" maxlength="20" />';
 }
-echo '</td><td><input type=submit name="CheckCode" value="'._('Check Part').'" /></td></tr>';
+echo '</td><td><input type="submit" name="CheckCode" value="'._('Check Part').'" /></td></tr>';
 
 if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) 
 	AND mb_strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
@@ -536,9 +535,9 @@ if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 	
 	echo '<td class="number"><input type="hidden" name="Quantity" value=' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '/><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
 } elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)){
-	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value=' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '></td></tr>';
+	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /></td></tr>';
 } else {
-	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value="0"></td>
+	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value="0" /></td>
 		</tr>';
 }
 

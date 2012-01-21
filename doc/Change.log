@@ -1,5 +1,6 @@
 webERP Change Log
 
+21/1/12 Vitaly: xhtml fixes in multiple files.
 20/1/12 Phil: Fixed GetStockPrice API function for effectivty dates
 20/1/12 Vitaly: Changed $DB_error_no($db) to DB_error_no($db) in Z_ChangeStockCode.php
 20/1/12 Vitaly: xhtml fixes in CustomerBranches.php StockAdjustments.php WorkOrderEntry.php
