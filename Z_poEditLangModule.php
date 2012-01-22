@@ -20,7 +20,7 @@ include('includes/header.inc');
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
-echo "<br />&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo '<br />&nbsp;<a href="' . $rootpath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 echo '<br /><br />&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
@@ -130,12 +130,12 @@ if (isset($_POST['module'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '</div';
 		echo '<table>';
-		echo '<tr><th ALIGN="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</th></tr>';
-		echo '<tr><td ALIGN="center">' . _('Module') . ' "' . $_POST['module'] . '"</td></tr>';
+		echo '<tr><th align="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</th></tr>';
+		echo '<tr><td align="center">' . _('Module') . ' "' . $_POST['module'] . '"</td></tr>';
 		echo '<tr><td></td></tr>';
 		echo '<tr><td>';
 
-		echo '<table WIDTH="100%">';
+		echo '<table width="100%">';
 		echo '<tr>';
 		echo '<th>' . _('Default text') . '</th>';
 		echo '<th>' . _('Translation') . '</th>';
@@ -151,9 +151,9 @@ if (isset($_POST['module'])) {
 
 			} else {
 				echo '<tr>';
-				echo '<td VALIGN="top"><I>' . $DefaultText[$i] . '</I></td>';
-				echo '<td VALIGN="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" VALUE="' . $ModuleText[$i] . '" /></td>';
-				echo '<td VALIGN="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" VALUE="' . $msgstr[$i] . '" /></td>';
+				echo '<td valign="top"><i>' . $DefaultText[$i] . '</i></td>';
+				echo '<td valign="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>';
+				echo '<td valign="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" value="' . $msgstr[$i] . '" /></td>';
 				echo '</tr>';
 				echo '<tr><th colspan="3"></th></tr>';
 			}
@@ -165,8 +165,8 @@ if (isset($_POST['module'])) {
 		echo '</td></tr>';
 		echo '</table>';
 		echo '<br /><div class="centre">';
-		echo '<input type="submit" name="submit" VALUE="' . _('Modify') . '" />&nbsp;&nbsp;';
-		echo '<input type="hidden" name="module" VALUE="' . $_POST['module'] . '" />';
+		echo '<input type="submit" name="submit" value="' . _('Modify') . '" />&nbsp;&nbsp;';
+		echo '<input type="hidden" name="module" value="' . $_POST['module'] . '" />';
 
 		echo '</form>';
 		echo '</div>';
@@ -213,8 +213,11 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 }
 else
 {
-	echo '<br /><table><tr><td>';
-	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '>';
+	echo '<br />
+		<table>
+		<tr>
+			<td>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" >';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table>';
@@ -228,11 +231,13 @@ else
 
 	echo '</tr></table>';
 	echo '<br />';
-	echo '<div class="centre">';
-	echo '<input type="submit" name="proceed" VALUE="' . _('Proceed') . '" />&nbsp;&nbsp;';
-	echo '<br /><br /><input type="submit" name="ReMergePO" VALUE="' . _('Refresh messages with latest strings') . '">';
-	echo '</div>';
-	echo '</form>';
+	echo '<div class="centre">
+			<input type="submit" name="proceed" value="' . _('Proceed') . '" />&nbsp;&nbsp;
+			<br />
+			<br />
+			<input type="submit" name="ReMergePO" value="' . _('Refresh messages with latest strings') . '" />
+		</div>
+		</form>';
 	echo '</td></tr></table>';
 }
 }

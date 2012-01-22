@@ -180,13 +180,13 @@ if (isset($_POST['Show'])){
 			echo '<tr bgcolor="#FDFEEF">
 				<td colspan="3"><b>' . _('Brought Forward Balance') . '</b><td>
 				</td></td>
-				<td class="number"><b>' . locale_number_format(-$RunningTotal,2) . '</b></td>
+				<td class="number"><b>' . locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td></td>
 				</tr>';
 		} else { //its a debit balance b/fwd
 			echo '<tr bgcolor="#FDFEEF">
 				<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
-				<td class="number"><b>' . locale_number_format($RunningTotal,2) . '</b></td>
+				<td class="number"><b>' . locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td colspan="2"></td>
 				</tr>';
 		}
@@ -220,18 +220,18 @@ if (isset($_POST['Show'])){
 						$RunningTotal = 0;
 					}
 					echo '<td></td>
-						<td class="number"><b>' . locale_number_format(-$PeriodTotal,2) . '</b></td>
+						<td class="number"><b>' . locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 						<td></td>
 						</tr>';
 				} else { //its a debit balance b/fwd
 					if ($PandLAccount==True) {
 						$RunningTotal = 0;
 					}
-					echo '<td class="number"><b>' . locale_number_format($PeriodTotal,2) . '</b></td>
+					echo '<td class="number"><b>' . locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 						<td colspan="2"></td>
 						</tr>';
 				}
-				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . locale_number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . locale_number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal -$ChartDetailRow['actual'],3);
+				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Movement per ChartDetails record') . ': ' . locale_number_format($ChartDetailRow['actual'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal -$ChartDetailRow['actual'],3);
 
 				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01){
 					$ShowIntegrityReport = True;
@@ -253,10 +253,10 @@ if (isset($_POST['Show'])){
 		$PeriodTotal += $myrow['amount'];
 
 		if($myrow['amount']>=0){
-			$DebitAmount = locale_number_format($myrow['amount'],2);
+			$DebitAmount = locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 			$CreditAmount = '';
 		} else {
-			$CreditAmount = locale_number_format(-$myrow['amount'],2);
+			$CreditAmount = locale_number_format(-$myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 			$DebitAmount = '';
 		}
 
@@ -285,7 +285,7 @@ if (isset($_POST['Show'])){
 			$DebitAmount,
 			$CreditAmount,
 			$myrow['narrative'],
-			locale_number_format($RunningTotal,2),
+			locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']),
 			$tagrow['tagdescription']);
 
 	}
@@ -299,9 +299,9 @@ if (isset($_POST['Show'])){
 	echo '</b></td>';
 
 	if ($RunningTotal >0){
-		echo '<td class="number"><b>' . locale_number_format(($RunningTotal),2) . '</b></td><td colspan="2"></td></tr>';
+		echo '<td class="number"><b>' . locale_number_format(($RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td><td colspan="2"></td></tr>';
 	}else {
-		echo '<td></td><td class="number"><b>' . locale_number_format((-$RunningTotal),2) . '</b></td><td colspan="2"></td></tr>';
+		echo '<td></td><td class="number"><b>' . locale_number_format((-$RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td><td colspan="2"></td></tr>';
 	}
 	echo '</table>';
 } /* end of if Show button hit */
