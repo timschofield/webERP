@@ -12,6 +12,13 @@ if (isset($_GET['TenderType'])) {
 	$_POST['TenderType']=$_GET['TenderType'];
 }
 
+if (empty($_GET['identifier'])) {
+	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
+	$identifier=date('U');
+} else {
+	$identifier=$_GET['identifier'];
+}
+
 if (!isset($_POST['SupplierID'])) {
 	$sql="SELECT supplierid FROM www_users WHERE userid='" . $_SESSION['UserID'] . "'";
 	$result=DB_query($sql, $db);
@@ -26,9 +33,9 @@ if (!isset($_POST['SupplierID'])) {
 }
 
 if (isset($_GET['Delete'])) {
-	$_POST['SupplierID']=$_SESSION['offer']->SupplierID;
+	$_POST['SupplierID']=$_SESSION['offer'.$identifier]->SupplierID;
 	$_POST['TenderType']=$_GET['Type'];
-	$_SESSION['offer']->remove_from_offer($_GET['Delete']);
+	$_SESSION['offer'.$identifier]->remove_from_offer($_GET['Delete']);
 }
 
 $sql="SELECT suppname,
@@ -41,22 +48,22 @@ $Supplier=$myrow['suppname'];
 $Currency=$myrow['currcode'];
 
 if (isset($_POST['Confirm'])) {
-	$_SESSION['offer']->Save($db);
-	$_SESSION['offer']->EmailOffer();
+	$_SESSION['offer'.$identifier]->Save($db);
+	$_SESSION['offer'.$identifier]->EmailOffer();
 	$sql="UPDATE tendersuppliers
 			SET responded=1
-			WHERE supplierid='" . $_SESSION['offer']->SupplierID . "'
-			AND tenderid='" . $_SESSION['offer']->TenderID . "'";
+			WHERE supplierid='" . $_SESSION['offer'.$identifier]->SupplierID . "'
+			AND tenderid='" . $_SESSION['offer'.$identifier]->TenderID . "'";
 	$result=DB_query($sql, $db);
 }
 
 if (isset($_POST['Process'])) {
-	if (isset($_SESSION['offer'])) {
-		unset($_SESSION['offer']);
+	if (isset($_SESSION['offer'.$identifier])) {
+		unset($_SESSION['offer'.$identifier]);
 	}
-	$_SESSION['offer']=new Offer($_POST['SupplierID']);
-	$_SESSION['offer']->TenderID=$_POST['Tender'];
-	$_SESSION['offer']->CurrCode=$Currency;
+	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
+	$_SESSION['offer'.$identifier]->TenderID=$_POST['Tender'];
+	$_SESSION['offer'.$identifier]->CurrCode=$Currency;
 	$LineNo=0;
 	foreach ($_POST as $key=>$value) {
 		if (mb_substr($key,0,7)=='StockID') {
@@ -64,19 +71,20 @@ if (isset($_POST['Process'])) {
 			$ItemCode=$value;
 			$Quantity=$_POST['Qty'.$Index];
 			$Price=$_POST['Price'.$Index];
-			$_SESSION['offer']->add_to_offer($LineNo,
-											$ItemCode,
-											$Quantity,
-											$_POST['ItemDescription'.$Index],
-											$Price,
-											$_POST['UOM'.$Index],
-											$_POST['DecimalPlaces'.$Index],
-											$_POST['RequiredByDate'.$Index]);
+			$_SESSION['offer'.$identifier]->add_to_offer(
+				$LineNo,
+				$ItemCode,
+				$Quantity,
+				$_POST['ItemDescription'.$Index],
+				$Price,
+				$_POST['UOM'.$Index],
+				$_POST['DecimalPlaces'.$Index],
+				$_POST['RequiredByDate'.$Index]);
 			$LineNo++;
 		}
 	}
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Confirm the Response For Tender') . ' ' . $_SESSION['offer']->TenderID .'</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Confirm the Response For Tender') . ' ' . $_SESSION['offer'.$identifier]->TenderID .'</p>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<input type="hidden" name="TenderType" value="3" />';
@@ -93,10 +101,10 @@ if (isset($_POST['Process'])) {
 					INNER JOIN locations
 					ON tenders.location=locations.loccode
 					WHERE closed=0
-					AND tenderid='".$_SESSION['offer']->TenderID."'";
+					AND tenderid='".$_SESSION['offer'.$identifier]->TenderID."'";
 	$LocationResult=DB_query($LocationSQL, $db);
 	$MyLocationRow=DB_fetch_row($LocationResult);
-	$CurrencySQL="SELECT decimalplaces FROM currencies WHERE currabrev='".$_SESSION['offer']->CurrCode."'";
+	$CurrencySQL="SELECT decimalplaces from currencies WHERE currabrev='".$_SESSION['offer'.$identifier]->CurrCode."'";
 	$CurrencyResult=DB_query($CurrencySQL, $db);
 	$CurrencyRow=DB_fetch_array($CurrencyResult);
 	echo '<tr>
@@ -108,8 +116,8 @@ if (isset($_POST['Process'])) {
 		}
 	}
 	echo '</td>';
-	echo '<th colspan="8" style="vertical-align:top"><font size="2" color="#616161">' . _('Tender Number') . ': ' .$_SESSION['offer']->TenderID . '</font></th>';
-	echo '<input type="hidden" value="' . $_SESSION['offer']->TenderID . '" name="Tender" />';
+	echo '<th colspan="8" style="vertical-align:top"><font size="2" color="#616161">' . _('Tender Number') . ': ' .$_SESSION['offer'.$identifier]->TenderID . '</font></th>';
+	echo '<input type="hidden" value="' . $_SESSION['offer'.$identifier]->TenderID . '" name="Tender" />';
 	echo '<tr>
 			<th>' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' . _('Item Code') . '</th>
 			<th>' . _('Item Description') . '</th>
@@ -120,18 +128,16 @@ if (isset($_POST['Process'])) {
 			<th>' . _('Line Value') . '</th>
 			<th>' . _('Delivery By') . '</th>
 		</tr>';
-			
-	foreach ($_SESSION['offer']->LineItems as $LineItem)  {
-		echo '<tr>
-				<td>' . $LineItem->StockID . '</td>
-				<td>' . $LineItem->ItemDescription . '</td>
-				<td class="number"> ' .locale_number_format($LineItem->Quantity, $LineItem->DecimalPlaces) . '</td>
-				<td>' . $LineItem->Units . '</td>
-				<td>' . $_SESSION['offer']->CurrCode . '</td>
-				<td class="number">' . locale_number_format($LineItem->Price, $CurrencyRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($LineItem->Price*$LineItem->Quantity,$CurrencyRow['decimalplaces']) . '</td>
-				<td>' . $LineItem->ExpiryDate . '</td>
-			</tr>';
+
+	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItem)  {
+		echo '<tr><td>' . $LineItem->StockID . '</td>';
+		echo '<td>' . $LineItem->ItemDescription . '</td>';
+		echo '<td class="number"> ' .locale_number_format($LineItem->Quantity, $LineItem->DecimalPlaces) . '</td>';
+		echo '<td>' . $LineItem->Units . '</td>';
+		echo '<td>' . $_SESSION['offer'.$identifier]->CurrCode . '</td>';
+		echo '<td class="number">' . locale_number_format($LineItem->Price, $CurrencyRow['decimalplaces']) . '</td>';
+		echo '<td class="number">' . locale_number_format($LineItem->Price*$LineItem->Quantity,$CurrencyRow['decimalplaces']) . '</td>';
+		echo '<td>' . $LineItem->ExpiryDate . '</td>';
 	}
 	echo '</table>
 		<br />
@@ -150,10 +156,10 @@ if (isset($_POST['Process'])) {
  * set then the supplier must have just logged in so show them the choices.
  */
 if (isset($_POST['SupplierID']) AND empty($_POST['TenderType']) AND empty($_POST['Search']) AND empty($_POST['NewItem']) AND empty($_GET['Delete'])) {
-	if (isset($_SESSION['offer'])) {
-		unset($_SESSION['offer']);
+	if (isset($_SESSION['offer'.$identifier])) {
+		unset($_SESSION['offer'.$identifier]);
 	}
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Create or View Offers from') . ' '.$Supplier.'</p>';
 	echo '<table class="selection">';
@@ -189,7 +195,7 @@ if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
 				$sql="SELECT description, decimalplaces FROM stockmaster WHERE stockid='".$StockID."'";
 				$result=DB_query($sql, $db);
 				$myrow=DB_fetch_array($result);
-				$_SESSION['offer']->add_to_offer($_SESSION['offer']->LinesOnOffer,
+				$_SESSION['offer'.$identifier]->add_to_offer($_SESSION['offer'.$identifier]->LinesOnOffer,
 												$StockID,
 												$Quantity,
 												$myrow['description'],
@@ -213,10 +219,11 @@ if (isset($_POST['Refresh']) AND !isset($_POST['NewItem'])) {
 			$ExpiryDate=$_POST['expirydate'.$Index];
 		}
 		if (isset($ExpiryDate)) {
-			$_SESSION['offer']->update_offer_item($Index,
-													$Quantity,
-													$Price,
-													$ExpiryDate);
+			$_SESSION['offer'.$identifier]->update_offer_item(
+				$Index,
+				$Quantity,
+				$Price,
+				$ExpiryDate);
 			unset($ExpiryDate);
 		}
 	}
@@ -224,54 +231,56 @@ if (isset($_POST['Refresh']) AND !isset($_POST['NewItem'])) {
 
 if (isset($_POST['Update'])) {
 	foreach ($_POST as $key => $value) {
-		if (mb_substr($key,0,3)=='qty') {
+		if (mb_substr($key,0,3)=='Qty') {
 			$LineNo=mb_substr($key,3);
 			$Quantity=$value;
 		}
-		if (mb_substr($key,0,5)=='price') {
+		if (mb_substr($key,0,5)=='Price') {
 			$Price=$value;
 		}
 		if (mb_substr($key,0,10)=='expirydate') {
 			$ExpiryDate=$value;
 		}
 		if (isset($ExpiryDate)) {
-			$_SESSION['offer']->update_offer_item($LineNo,
-													$Quantity,
-													$Price,
-													$ExpiryDate);
+			$_SESSION['offer'.$identifier]->update_offer_item(
+				$LineNo,
+				$Quantity,
+				$Price,
+				$ExpiryDate);
 			unset($ExpiryDate);
 		}
 	}
-	$_SESSION['offer']->Save($db, 'Yes');
-	$_SESSION['offer']->EmailOffer();
-	unset($_SESSION['offer']);
+	$_SESSION['offer'.$identifier]->Save($db, 'Yes');
+	$_SESSION['offer'.$identifier]->EmailOffer();
+	unset($_SESSION['offer'.$identifier]);
 	include('includes/footer.inc');
 	exit;
 }
 
 if (isset($_POST['Save'])) {
 	foreach ($_POST as $key => $value) {
-		if (mb_substr($key,0,3)=='qty') {
+		if (mb_substr($key,0,3)=='Qty') {
 			$LineNo=mb_substr($key,3);
 			$Quantity=$value;
 		}
-		if (mb_substr($key,0,5)=='price') {
+		if (mb_substr($key,0,5)=='Price') {
 			$Price=$value;
 		}
 		if (mb_substr($key,0,10)=='expirydate') {
 			$ExpiryDate=$value;
 		}
 		if (isset($ExpiryDate)) {
-			$_SESSION['offer']->update_offer_item($LineNo,
-													$Quantity,
-													$Price,
-													$ExpiryDate);
+			$_SESSION['offer'.$identifier]->update_offer_item(
+				$LineNo,
+				$Quantity,
+				$Price,
+				$ExpiryDate);
 			unset($ExpiryDate);
 		}
 	}
-	$_SESSION['offer']->Save($db);
-	$_SESSION['offer']->EmailOffer();
-	unset($_SESSION['offer']);
+	$_SESSION['offer'.$identifier]->Save($db);
+	$_SESSION['offer'.$identifier]->EmailOffer();
+	unset($_SESSION['offer'.$identifier]);
 	include('includes/footer.inc');
 	exit;
 }
@@ -292,22 +301,23 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']==1 AND !isset($_POST['R
 				ON offers.stockid=stockmaster.stockid
 			WHERE offers.supplierid='" . $_POST['SupplierID'] . "'";
 	$result=DB_query($sql, $db);
-	$_SESSION['offer']=new Offer($_POST['SupplierID']);
-	$_SESSION['offer']->CurrCode=$Currency;
+	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
+	$_SESSION['offer'.$identifier]->CurrCode=$Currency;
 	while ($myrow=DB_fetch_array($result)) {
-		$_SESSION['offer']->add_to_offer($myrow['offerid'],
-											$myrow['stockid'],
-											$myrow['quantity'],
-											$myrow['description'],
-											$myrow['price'],
-											$myrow['uom'],
-											$myrow['decimalplaces'],
-											ConvertSQLDate($myrow['expirydate']));
+		$_SESSION['offer'.$identifier]->add_to_offer(
+				$myrow['offerid'],
+				$myrow['stockid'],
+				$myrow['quantity'],
+				$myrow['description'],
+				$myrow['price'],
+				$myrow['uom'],
+				$myrow['decimalplaces'],
+				ConvertSQLDate($myrow['expirydate']));
 	}
 }
 
-if (isset($_POST['TenderType']) AND $_POST['TenderType']!=3 AND isset($_SESSION['offer']) AND $_SESSION['offer']->LinesOnOffer>0 or isset($_POST['Update'])) {
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION['offer'.$identifier]) and $_SESSION['offer'.$identifier]->LinesOnOffer>0 or isset($_POST['Update'])) {
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Items to offer from').' '.$Supplier .'</p>';
 	echo '<table>
@@ -321,7 +331,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']!=3 AND isset($_SESSION[
 			<th>'._('Expiry Date').'</th>
 		</tr>';
 	$k=0;
-	foreach ($_SESSION['offer']->LineItems as $LineItems) {
+	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
 			if ($LineItems->ExpiryDate < date('Y-m-d')) {
 				echo '<tr bgcolor="#F7A9A9">';
@@ -332,7 +342,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']!=3 AND isset($_SESSION[
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			
+
 			echo '<input type="hidden" name="StockID'.$LineItems->LineNo.'" value="'.$LineItems->StockID.'" />';
 			echo '<td>'.$LineItems->StockID.'</td>
 					<td>'.$LineItems->ItemDescription.'</td>
@@ -341,7 +351,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']!=3 AND isset($_SESSION[
 					<td><input type="text" class="number" name="Price'.$LineItems->LineNo.'" value="'.locale_number_format($LineItems->Price,2,'.','').'" /></td>
 					<td class="number">'.locale_number_format($LineItems->Price*$LineItems->Quantity,2).'</td>
 					<td><input type="text" size="11" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="expirydate'.$LineItems->LineNo.'" value="'.$LineItems->ExpiryDate.'" /></td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier.'&Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
 				</tr>';
 		}
 	}
@@ -365,15 +375,15 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']!=3 AND isset($_SESSION[
 
 /*The supplier has chosen option 2
  */
-if (isset($_POST['TenderType']) 
-	AND $_POST['TenderType']==2 
-	AND !isset($_POST['Search']) 
+if (isset($_POST['TenderType'])
+	AND $_POST['TenderType']==2
+	AND !isset($_POST['Search'])
 	OR isset($_GET['Delete'])) {
-		
-	if (!isset($_SESSION['offer'])) {
-		$_SESSION['offer']=new Offer($_POST['SupplierID']);
+
+	if (!isset($_SESSION['offer'.$identifier])) {
+		$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 
@@ -442,11 +452,11 @@ if (isset($_POST['TenderType'])
 
 /*The supplier has chosen option 3
  */
-if (isset($_POST['TenderType']) 
-	AND $_POST['TenderType']==3 
-	AND !isset($_POST['Search']) 
+if (isset($_POST['TenderType'])
+	AND $_POST['TenderType']==3
+	AND !isset($_POST['Search'])
 	OR isset($_GET['Delete'])) {
-	
+
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Tenders Waiting For Offers').'</p>';
 	$sql="SELECT DISTINCT tendersuppliers.tenderid,
 				suppliers.currcode
@@ -540,7 +550,7 @@ if (isset($_POST['TenderType'])
 					<td class="number">' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '</td>
 					<td>' . $MyItemRow['units'] . '</td>
 					<td>' . ConvertSQLDate($MyItemRow['requiredbydate']) . '</td>';
-					
+
 			if ($MyItemRow['suppliersuom']=='') {
 				$MyItemRow['suppliersuom']=$MyItemRow['units'];
 			}
@@ -559,7 +569,7 @@ if (isset($_POST['TenderType'])
 }
 
 if (isset($_POST['Search'])){  /*ie seach for stock items */
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Select items to offer from').' '.$Supplier .'</p>';
 
