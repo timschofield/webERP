@@ -214,7 +214,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		echo '<tr><th colspan="8">' . _('Detail Of PC Tab Movements For Last') .': ';
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
 		echo '<input type="text" class="number" name="Days" value="' . $Days  . '" maxlength="3" size="4" /> ' . _('Days');
-		echo '<input type=submit name="Go" value="' . _('Go') . '" />';
+		echo '<input type="submit" name="Go" value="' . _('Go') . '" />';
 		echo '</th></tr></form>';
 		echo '<tr>
 				<th>' . _('Date') . '</th>
@@ -322,9 +322,9 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			$_POST['Receipt']  = $myrow['receipt'];
 
 			echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-			echo '<input type=hidden name="SelectedIndex" value="' . $SelectedIndex. '" />';
-			echo '<input type=hidden name="CurrentAmount" value="' . $Amount[0]. '" />';
-			echo '<input type=hidden name="Days" value="' . $Days . '" />';
+			echo '<input type="hidden" name="SelectedIndex" value="' . $SelectedIndex. '" />';
+			echo '<input type="hidden" name="CurrentAmount" value="' . $Amount[0]. '" />';
+			echo '<input type="hidden" name="Days" value="' . $Days . '" />';
 		}
 
 /* Ricard: needs revision of this date initialization */
@@ -362,9 +362,9 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 				<td><input type="text" name="Receipt" size="50" maxlength="49" value="' . $_POST['Receipt'] . '" /></td>
 			</tr>';
 
-		echo '<input type=hidden name="CurrentAmount" value="' . $Amount['0']. '" />';
-		echo '<input type=hidden name="SelectedTabs" value="' . $SelectedTabs . '" />';
-		echo '<input type=hidden name="Days" value="' .$Days. '" />';
+		echo '<input type="hidden" name="CurrentAmount" value="' . $Amount['0']. '" />';
+		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
+		echo '<input type="hidden" name="Days" value="' .$Days. '" />';
 
 		echo '</td></tr></table>'; // close main table
 

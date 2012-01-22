@@ -209,7 +209,7 @@ if (isset($_GET['Edit'])) {
 			<td>'._('Currency').'</td>
 			<td>' . $myrow['currency'] . '</td>
 		</tr>';
-	echo '<input type=hidden name="CurrCode" value="'.$Currency.'"';
+	echo '<input type="hidden" name="CurrCode" value="'.$Currency.'"';
 } else {
 	echo '<tr><td>'._('Currency').'</td><td><select name="CurrCode">';
 	$currencysql="SELECT currabrev,currency FROM currencies";
@@ -226,16 +226,16 @@ if (isset($_GET['Edit'])) {
 
 echo '<tr><td>'._('User can create orders').'</td>';
 if ($CanCreate==1) {
-	echo '<td><input type=checkbox name="CanCreate"></td></tr>';
+	echo '<td><input type="checkbox" name="CanCreate"></td></tr>';
 } else {
-	echo '<td><input type=checkbox checked name="CanCreate"></td></tr>';
+	echo '<td><input type="checkbox" checked name="CanCreate"></td></tr>';
 }
 
 echo '<tr><td>'._('User can release invoices').'</td>';
 if ($OffHold==1) {
-	echo '<td><input type=checkbox name="OffHold"></td></tr>';
+	echo '<td><input type="checkbox" name="OffHold"></td></tr>';
 } else {
-	echo '<td><input type=checkbox checked name="OffHold"></td></tr>';
+	echo '<td><input type="checkbox" checked name="OffHold"></td></tr>';
 }
 
 echo '<tr><td>'._('User can authorise orders up to :').'</td>';
@@ -243,9 +243,9 @@ echo '<td><input type=input name="AuthLevel" size=11 class="number" value="'  . 
 echo '</table>';
 
 if (isset($_GET['Edit'])) {
-	echo '<br /><div class="centre"><input type=submit name="Update" value="'._('Update Information').'"></div></form>';
+	echo '<br /><div class="centre"><input type="submit" name="Update" value="'._('Update Information').'"></div></form>';
 } else {
-	echo '<br /><div class="centre"><input type=submit name="Submit" value="'._('Enter Information').'"></div></form>';
+	echo '<br /><div class="centre"><input type="submit" name="Submit" value="'._('Enter Information').'"></div></form>';
 }
 include('includes/footer.inc');
 ?>

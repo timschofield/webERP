@@ -8,8 +8,8 @@ $title = _('Shipment Costing');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
+     ' . ' ' . $title . '</p>';
 
 if (isset($_GET['NewShipment']) AND $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']->LineItems);
@@ -484,7 +484,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 	}
 }
 echo '<tr>
-		<td colspan=3 class="number"><font color=BLUE><b>'. _('Total Shipment Charges'). '</b></font></td>
+		<td colspan="3" class="number"><b>'. _('Total Shipment Charges'). '</b></td>
 		<td class="number">' . locale_number_format($TotalInvoiceValueOfShipment,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($TotalCostsToApportion,$_SESSION['CompanyRecord']['decimalplaces']) .'</td>
 	</tr>';
@@ -670,7 +670,7 @@ if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to c
 		}
 	echo '<br />
 		<br />
-		<input type=submit name="Close" value="'. _('Confirm OK to Close'). '" />
+		<input type="submit" name="Close" value="'. _('Confirm OK to Close'). '" />
 		</form>
 		</div>';
 }

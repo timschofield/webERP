@@ -782,7 +782,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 					<option selected value="0">' . _('No') . '</option>
 					<option value="1">' . _('Yes') . '</option>
 				</select></td>';
-		echo '<td><input type=submit name="AllowRePrint" value="Update"></td></tr>';
+		echo '<td><input type="submit" name="AllowRePrint" value="Update"></td></tr>';
 	} elseif ($Printed) {
 		echo '<tr><td colspan=2><a target="_blank"  href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['ExistingOrder'] . '&identifier='.$identifier. '">' . _('Reprint Now') . '</a></td></tr>';
 	}

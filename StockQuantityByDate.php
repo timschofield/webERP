@@ -67,7 +67,7 @@ echo '<td>' . _('On-Hand On Date') . ':</td>
 echo '<tr>
 		<td colspan="6">
 		<div class="centre">
-		<input type=submit name="ShowStatus" value="' . _('Show Stock Status') .'" />
+		<input type="submit" name="ShowStatus" value="' . _('Show Stock Status') .'" />
 		</div></td>
 	</tr>
 	</table>

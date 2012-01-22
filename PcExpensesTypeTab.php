@@ -224,8 +224,8 @@ while ($myrow = DB_fetch_array($result)) {
 
 	   	echo '</td></tr></table>'; // close main table
 
-		echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '">
-									<input type=submit name="Cancel" value="' . _('Cancel') . '"></div>';
+		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '">
+									<input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 		echo '</form>';
 

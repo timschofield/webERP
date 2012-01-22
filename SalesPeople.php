@@ -285,8 +285,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['Current']  = $myrow['current'];
 
 
-		echo '<input type=hidden name="SelectedSalesPerson" value="' . $SelectedSalesPerson . '" />';
-		echo '<input type=hidden name="SalesmanCode" value="' . $_POST['SalesmanCode'] . '" />';
+		echo '<input type="hidden" name="SelectedSalesPerson" value="' . $SelectedSalesPerson . '" />';
+		echo '<input type="hidden" name="SalesmanCode" value="' . $_POST['SalesmanCode'] . '" />';
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Salesperson code') . ':</td>

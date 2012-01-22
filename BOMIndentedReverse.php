@@ -252,7 +252,7 @@ if (isset($_POST['PrintPDF'])) {
 		</table>
 		<p>
 		<div class="centre">
-			<input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
 		</p>';
 

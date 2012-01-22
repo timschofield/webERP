@@ -603,7 +603,7 @@ echo '<table class="selection">
 
 echo '<p>
 		<div class="centre">
-			<input type=submit name="PostCreditNote" value="' . _('Enter Credit Note') . '">
+			<input type="submit" name="PostCreditNote" value="' . _('Enter Credit Note') . '">
 		</div>
 	</p>';
 

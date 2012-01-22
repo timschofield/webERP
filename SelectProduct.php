@@ -724,7 +724,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			echo '<input type="hidden" name=Keywords value="'.$_POST['Keywords'].'">';
 			echo '<input type="hidden" name=StockCat value="'.$_POST['StockCat'].'">';
 			echo '<input type="hidden" name=StockCode value="'.$_POST['StockCode'].'">';
-//			echo '<input type=hidden name=Search value="Search">';
+//			echo '<input type="hidden" name=Search value="Search">';
 			echo '<p></div>';
 		}
 		echo '<table cellpadding="2" colspan="7">';

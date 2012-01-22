@@ -109,7 +109,7 @@ echo	' /></td>
 	</table>';
 
 
-echo '<br /><div class="centre"><input tabindex=4 type=submit name="ShowSales" value="' . _('Show Sales') . '">';
+echo '<br /><div class="centre"><input tabindex=4 type="submit" name="ShowSales" value="' . _('Show Sales') . '">';
 echo '</form></div>';
 echo '<br />';
 

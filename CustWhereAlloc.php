@@ -10,8 +10,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-	_('Customer Where Allocated'). '" alt="" />' . $title . '
+		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="" />' . $title . '
 	</p>
 	<table class="selection">
 	<tr>
@@ -96,7 +95,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 			echo '<tr>
 					<th colspan="6">
 					<div class="centre">
-						<font size=3 color="blue"><b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</font></b>
+						<b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
 					</div>
 					</th>
 				</tr>';

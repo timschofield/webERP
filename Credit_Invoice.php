@@ -315,7 +315,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 		if ($LnItm->Controlled==1){
 
-			echo '<td><input type=hidden name="Quantity_' . $LnItm->LineNumber .'"  value=' . $LnItm->QtyDispatched . '><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&CreditInvoice=Yes">' . $LnItm->QtyDispatched . '</a></td>';
+			echo '<td><input type="hidden" name="Quantity_' . $LnItm->LineNumber .'"  value=' . $LnItm->QtyDispatched . '><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&CreditInvoice=Yes">' . $LnItm->QtyDispatched . '</a></td>';
 
 		} else {
 

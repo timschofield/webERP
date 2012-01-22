@@ -285,7 +285,7 @@ if (isset($_POST['RunReport'])){
 
 	echo '</table><p>
 		<div class="centre">
-			<input type=submit name="RunReport" value="' ._('Run Report'). '"></div>
+			<input type="submit" name="RunReport" value="' ._('Run Report'). '"></div>
 			</form>';
 
 	include ('includes/footer.inc');

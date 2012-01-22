@@ -712,7 +712,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength="6" size="6" value=' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '></td>';
 			   } else {
 				echo '<td class="number"><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LineItem->LineNumber . '">' . locale_number_format($LineItem->Quantity,$LineItem->DecimalPlaces) . '</a>
-              <input type=hidden name="Quantity_' . $LineItem->LineNumber . '" value=' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '></td>';
+              <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value=' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '></td>';
 			   }
 
 			echo '<td>' . $LineItem->Units . '</td>
@@ -1012,7 +1012,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							$myrow['units'],
 							$myrow['stockid']);
 				} else { //don't try to show the image
-					printf('<td><font size=1><input type=submit name="NewItem" value="%s"></font></td>
+					printf('<td><font size=1><input type="submit" name="NewItem" value="%s"></font></td>
 						<td><font size=1>%s</font></td>
 						<td><font size=1>%s</font></td>
 						<td>' . _('No Image') . '</td></tr>',

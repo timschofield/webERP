@@ -180,8 +180,8 @@ if (!isset($StockID)) {
 	  		<td><input type="text" name="StockCode" size="15" maxlength="18"></td>
 	  	</tr>
 	  </table><br />';
-	echo '<div class=centre><input type=submit name="SearchParts" value="' . _('Search Items Now') . '">
-		<input type=submit name="ResetPart" value="' . _('Show All') . '"></div>';
+	echo '<div class=centre><input type="submit" name="SearchParts" value="' . _('Search Items Now') . '">
+		<input type="submit" name="ResetPart" value="' . _('Show All') . '"></div>';
 
 	if (isset($StockItemsResult)) {
 	

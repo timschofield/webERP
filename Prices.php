@@ -214,8 +214,8 @@ if ($InputError ==0){
 					<th colspan="7">
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . 
 					_('Pricing for part') . ':
-					<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20">
-					<input type=submit name="NewPart" value="' . _('Review Prices') . '"></th>
+					<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20" />
+					<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
 				</tr>
 			</form>';
 
@@ -269,10 +269,10 @@ if ($InputError ==0){
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($_GET['Edit'])){
-		echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'">';
-		echo '<input type="hidden" name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '">';
-		echo '<input type="hidden" name="OldStartDate" value="' . $_GET['StartDate'] . '">';
-		echo '<input type="hidden" name="OldEndDate" value="' . $_GET['EndDate'] . '">';
+		echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'" />';
+		echo '<input type="hidden" name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '" />';
+		echo '<input type="hidden" name="OldStartDate" value="' . $_GET['StartDate'] . '" />';
+		echo '<input type="hidden" name="OldEndDate" value="' . $_GET['EndDate'] . '" />';
 		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
 		/*the price sent with the get is sql format price so no need to filter */
@@ -332,31 +332,23 @@ if ($InputError ==0){
 		$_POST['EndDate'] = '';
 	}
 	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
-				<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size=10 maxlength=10 value="' . $_POST['StartDate'] . '"></td></tr>';
+				<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="10" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-				<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size=10 maxlength=10 value="' . $_POST['EndDate'] . '"></td></tr>';
+				<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
 	echo '<input type="hidden" name="Item" value="' . $Item.'" />';
-	?>
-
-
-	<tr><td><?php echo _('Price'); ?>:</td>
-	<td>
-	<input type="text" class="number" name="Price" size=12 maxlength=11 value=
-	"<?php 
-	if(isset($_POST['Price'])) {
-		echo $_POST['Price'];
-	}
-	?>" /> 
-
-	</td></tr>
-
+	echo '<tr><td>' . _('Price') . ':</td>
+	          <td>
+	          <input type="text" class="number" name="Price" size="12" maxlength="11" value='; 
+	          if (isset($_POST['Price'])) {
+		         echo $_POST['Price'];
+	          }
+	          echo '" /> 
+	     </td></tr>
 	</table>
 	<br /><div class="centre">
-	<input type="submit" name="submit" value="<?php echo _('Enter') . '/' . _('Amend Price'); ?>">
-	</div>
-
-<?php
- }
+	<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '">
+	</div>';
+}
 
 echo '</form>';
 include('includes/footer.inc');

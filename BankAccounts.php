@@ -276,8 +276,8 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$_POST['CurrCode'] = $myrow['currcode'];
 	$_POST['DefAccount'] = $myrow['invoice'];
 
-	echo '<input type=hidden name="SelectedBankAccount" value="' . $SelectedBankAccount . '">';
-	echo '<input type=hidden name="AccountCode" value="' . $_POST['AccountCode'] . '">';
+	echo '<input type="hidden" name="SelectedBankAccount" value="' . $SelectedBankAccount . '">';
+	echo '<input type="hidden" name="AccountCode" value="' . $_POST['AccountCode'] . '">';
 	echo '<table class="selection">
 			<tr><td>' . _('Bank Account GL Code') . ':</td>
 				<td>' . $_POST['AccountCode'] . '</td>

@@ -222,7 +222,7 @@ echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 echo '<table>
 		<tr>
 			<td><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
-				<input type=submit name="ResetPart" value="' . _('Show All') . '" /></td>
+				<input type="submit" name="ResetPart" value="' . _('Show All') . '" /></td>
 		</tr>
 	</table>';
 

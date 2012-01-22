@@ -158,7 +158,7 @@ echo '<div class="page_help_text">' . _('Enter the changes that you want in the 
 $Papers=array('A4_Landscape', 'A4_Portrait', 'A5_Landscape', 'A5_Portrait', 'A3_Landscape', 'A3_Portrait', 'letter_Portrait', 'letter_Landscape', 'legal_Portrait', 'legal_Landscape'); // Possible paper sizes/orientations
 echo '<form method="post" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<input name=FormName type=hidden value="'.$_POST['FormName'].'">';
+echo '<input name=FormName type="hidden" value="'.$_POST['FormName'].'">';
 echo '<table width=95% border=1>'; //Start of outer table
 echo '<tr><th width=33%>'._('Form Name').'<input type="text" name="formname" value="'.$FormDesign['name'].'"></th>';
 /* Select the paper size/orientation */

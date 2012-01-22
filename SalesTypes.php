@@ -242,8 +242,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeAbbrev'] = $myrow['typeabbrev'];
 		$_POST['Sales_Type']  = $myrow['sales_type'];
 
-		echo '<input type=hidden name="SelectedType" value="' . $SelectedType . '">';
-		echo '<input type=hidden name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '">';
+		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '">';
+		echo '<input type="hidden" name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '">';
 		echo '<table class="selection">';
 		echo '<tr><th colspan=4><font size=2 color=blue><b>' . _('Sales Type/Price List Setup') . '</b></font></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td><td>';

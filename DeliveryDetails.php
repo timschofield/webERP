@@ -1072,7 +1072,7 @@ if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==
 	echo '<option selected value=1>' . _('No') . '</option>';
 	echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
 } else {
-	echo '<input type=hidden name="ReprintPackingSlip" value=0>';
+	echo '<input type="hidden" name="ReprintPackingSlip" value=0>';
 }
 
 echo '<tr>
@@ -1080,7 +1080,7 @@ echo '<tr>
 		<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" /></td>';
 
 if ($_SESSION['DoFreightCalc']==true){
-	echo '<td><input type=submit name="Update" value="' . _('Recalc Freight Cost') . '" /></td>
+	echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>
 		</tr>';
 }
 
@@ -1122,11 +1122,11 @@ echo '</select></td></tr>';
 
 echo '</table>';
 
-echo '<br /><div class="centre"><input type=submit name="BackToLineDetails" value="' . _('Modify Order Lines') . '"><br />';
+echo '<br /><div class="centre"><input type="submit" name="BackToLineDetails" value="' . _('Modify Order Lines') . '"><br />';
 
 if ($_SESSION['ExistingOrder'.$identifier]==0){
-	echo '<br /><br /><input type=submit name="ProcessOrder" value="' . _('Place Order') . '">';
-	echo '<br /><br /><input type=submit name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '">';
+	echo '<br /><br /><input type="submit" name="ProcessOrder" value="' . _('Place Order') . '">';
+	echo '<br /><br /><input type="submit" name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '">';
 } else {
 	echo '<br /><input type="submit" name="ProcessOrder" value="' . _('Commit Order Changes') . '">';
 }

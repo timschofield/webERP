@@ -5,8 +5,7 @@ include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Tabs');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
-	. '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $title . '</p>';
 
 if (isset($_POST['SelectedTab'])){
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);
@@ -282,8 +281,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['GLAccountPcashTab']  = $myrow['glaccountpcash'];
 
 
-		echo '<input type=hidden name="SelectedTab" value="' . $SelectedTab . '">';
-		echo '<input type=hidden name="TabCode" value="' . $_POST['TabCode']. '">';
+		echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '" />';
+		echo '<input type="hidden" name="TabCode" value="' . $_POST['TabCode']. '" />';
 		echo '<table class="selection">
 				<tr>
 				<td>' . _('Tab Code') . ':</td>
@@ -293,7 +292,7 @@ if (!isset($_GET['delete'])) {
 		// This is a new type so the user may volunteer a type code
 		echo '<table class="selection">
 				<tr><td>' . _('Tab Code') . ':</td>
-					<td><input type="Text"' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' name="TabCode"></td></tr>';
+					<td><input type="text"' . (in_array('TypeTabCode',$Errors) ? 'class="inputerror"' : '' ) .' name="TabCode" /></td></tr>';
 
 	}
 
@@ -463,7 +462,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<p><div class="centre"><input type="submit" name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</form>';
 

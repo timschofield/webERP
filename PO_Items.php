@@ -768,7 +768,7 @@ if (isset($_POST['NonStockOrder'])) {
 						<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size=11 value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td></tr>';
 	echo '</table>';
 	echo '<div class="centre">
-			<input type=submit name="EnterLine" value="Enter Item" />
+			<input type="submit" name="EnterLine" value="Enter Item" />
 		</div>';
 }
 

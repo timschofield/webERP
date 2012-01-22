@@ -337,7 +337,7 @@ if (!isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ReportHeading" value="'.$ReportHeading.'" />';
-	echo '<input type=hidden name="ReportID" value="' . $ReportID . '" />';
+	echo '<input type="hidden" name="ReportID" value="' . $ReportID . '" />';
 	if (isset($SelectedCol)) {
 		//editing an existing Column
 
@@ -382,7 +382,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['BudgetOrActual']=$myrow['budgetoractual'];
 		$_POST['ValFormat']=$myrow['valformat'];
 
-		echo '<input type=hidden name="SelectedCol" value="' . $SelectedCol . '" />';
+		echo '<input type="hidden" name="SelectedCol" value="' . $SelectedCol . '" />';
 		echo '<table class="selection">';
 
 	} else {
@@ -477,11 +477,11 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '</select></td>
 			</tr>';
-		echo '<input type=hidden name="ValFormat" value="N" />
-				<input type=hidden name="ColNumerator" value="0" />
-				<input type=hidden name="ColDenominator" value="0" />
-				<input type=hidden name="CalcOperator" value="" />
-				<input type=hidden name="Constant" value="0" />';
+		echo '<input type="hidden" name="ValFormat" value="N" />
+				<input type="hidden" name="ColNumerator" value="0" />
+				<input type="hidden" name="ColDenominator" value="0" />
+				<input type="hidden" name="CalcOperator" value="" />
+				<input type="hidden" name="Constant" value="0" />';
 
 	} else {  /*it IS a calculated column */
 
@@ -539,10 +539,10 @@ if (!isset($_GET['delete'])) {
 		  	echo '<option selected value="P">' . _('Percentage') . '</option>';
 		}
 		echo '</select></td></tr>
-				<input type=hidden name="BudgetOrActual" value="0" />
-				<input type=hidden name="DataType" value="" />
-				<input type=hidden name="PeriodFrom" value="0" />
-				<input type=hidden name="PeriodTo" value="0" />';
+				<input type="hidden" name="BudgetOrActual" value="0" />
+				<input type="hidden" name="DataType" value="" />
+				<input type="hidden" name="PeriodFrom" value="0" />
+				<input type="hidden" name="PeriodTo" value="0" />';
 	}
 
 	echo '</table>';

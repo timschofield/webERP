@@ -206,7 +206,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 		</table>
 		<br />
 		<div class="centre">
-			<input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
 
 	include('includes/footer.inc');

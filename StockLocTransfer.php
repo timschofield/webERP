@@ -327,7 +327,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		<br />
 		<div class="centre">
 		<input type="hidden" name="LinesCounter" value="'. $j .'" />
-		<input type=submit name="EnterMoreItems" value="'. _('Add More Items'). '" />
+		<input type="submit" name="EnterMoreItems" value="'. _('Add More Items'). '" />
 		<input type="submit" name="Submit" value="'. _('Create Transfer Shipment'). '" />
 		<br />';
 		

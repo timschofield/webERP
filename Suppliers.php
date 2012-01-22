@@ -830,11 +830,11 @@ if (!isset($SupplierID)) {
 		$_POST['FactorID'] = $myrow['factorcompanyid'];
 		$_POST['TaxRef'] = $myrow['taxref'];
 
-		echo '<input type=hidden name="SupplierID" value="' . $SupplierID . '">';
+		echo '<input type="hidden" name="SupplierID" value="' . $SupplierID . '">';
 
 	} else {
 	// its a new supplier being added
-		echo '<input type=hidden name="New" value="Yes">';
+		echo '<input type="hidden" name="New" value="Yes">';
 		echo '<tr><td>' . _('Supplier Code') . ':</td>
 				<td><input '.(in_array('ID',$Errors) ? 'class="inputerror"' : '').' type="text" name="SupplierID" value="' . $SupplierID . '" size=12 maxlength=10></td></tr>';
 	}

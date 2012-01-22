@@ -236,7 +236,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromDate" VALUE="' . $_POST['FromDate'] . '">
-			<input type=hidden name="ToDate" value="' . $_POST['ToDate'] . '">';
+			<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '">';
 
 	$SqlTabs = "SELECT * FROM pctabs
 			WHERE tabcode='".$SelectedTabs."'";
@@ -396,7 +396,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Amount[0]=0;
 	}
 
-	echo '<tr><td colspan=2 style=text-align:right >' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
+	echo '<tr><td colspan=2 style="text"-align:right >' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
 				<td>'.locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']).' </td><td>'.$Tabs['currency'].'</td></tr>';
 
 	echo '</table>';

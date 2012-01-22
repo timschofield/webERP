@@ -191,9 +191,9 @@ if (!isset($_GET['delete'])) {
 		$_POST['date']  = $myrow['date'];
 		$_POST['priority']  = $myrow['priority'];
 		$_POST['debtorno']  = $myrow['debtorno'];
-		echo '<input type=hidden name="Id" value="'. $Id .'" />';
-		echo '<input type=hidden name="Con_ID" value="' . $_POST['noteid'] . '" />';
-		echo '<input type=hidden name="DebtorNo" value="' . $_POST['debtorno'] . '" />';
+		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
+		echo '<input type="hidden" name="Con_ID" value="' . $_POST['noteid'] . '" />';
+		echo '<input type="hidden" name="DebtorNo" value="' . $_POST['debtorno'] . '" />';
 		echo '<table class="selection">
 			<tr>
 				<td>'. _('Note ID').':</td>

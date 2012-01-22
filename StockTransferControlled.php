@@ -11,8 +11,7 @@ $title = _('Transfer Controlled Items');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
-	'" alt=""><b>' . $title . '</b></p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt=""><b>' . $title . '</b></p>';
 
 if (!isset($_SESSION['Transfer'])) {
 	/* This page can only be called when a stock Transfer is pending */

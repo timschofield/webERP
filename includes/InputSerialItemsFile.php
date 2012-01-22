@@ -143,11 +143,11 @@ if (!$LineItem->SerialItemsValid AND !$_SESSION['CurImportFile']['Processed']){
 
 	echo '<br /><form method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type=submit name="ValidateFile" value=' . _('Validate File') . '>
-			<input type=hidden name="LineNo" value="' . $LineNo . '">
-			<input type=hidden name="identifier" value="' . $identifier . '">
-			<input type=hidden name="StockID" value="' . $StockID . '">
-			<input type=hidden name="EntryType" value="FILE">
+	echo '<input type="submit" name="ValidateFile" value=' . _('Validate File') . '>
+			<input type="hidden" name="LineNo" value="' . $LineNo . '">
+			<input type="hidden" name="identifier" value="' . $identifier . '">
+			<input type="hidden" name="StockID" value="' . $StockID . '">
+			<input type="hidden" name="EntryType" value="FILE">
 			</form>
 			<p>'. _('1st 10 Lines of File'). '....
 			<hr width=15%>

@@ -385,8 +385,8 @@ if ((! isset($_POST['FromPeriod'])
 	include('includes/header.inc');
 	echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type=hidden name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
-			<input type=hidden name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
+	echo '<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
+			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
@@ -720,7 +720,7 @@ if ((! isset($_POST['FromPeriod'])
 			locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 	
 	echo '</table><br />';
-	echo '<div class="centre"><input type=submit Name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
+	echo '<div class="centre"><input type="submit" Name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
 
 echo '</form>';

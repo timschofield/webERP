@@ -100,14 +100,14 @@ if ($_GET['Action'] == 'Enter'){
 
 	for ($i=1;$i<=10;$i++){
 
-		echo "<tr>
-			<td><input type=TEXT name='StockID_" . $i . "' maxlength=20 size=20></td>
-			<td><input type=TEXT name='Qty_" . $i . "' maxlength=10 size=10></td>
-			<td><input type=TEXT name='Ref_" . $i . "' maxlength=20 size=20></td></tr>";
+		echo '<tr>
+			<td><input type="text" name='StockID_" . $i . "' maxlength=20 size=20></td>
+			<td><input type="text" name='Qty_" . $i . "' maxlength=10 size=10></td>
+			<td><input type="text" name='Ref_" . $i . "' maxlength=20 size=20></td></tr>';
 
 	}
 
-	echo "</table><br /><div class=centre><input type=submit name='EnterCounts' VALUE='" . _('Enter Above Counts') . "'></div>";
+	echo "</table><br /><div class=centre><input type="submit" name='EnterCounts' VALUE='" . _('Enter Above Counts') . "'></div>";
 
 //END OF action=ENTER
 } elseif ($_GET['Action']=='View'){
@@ -126,7 +126,7 @@ if ($_GET['Action'] == 'Enter'){
 	//START OF action=VIEW
 	$SQL = "select * from stockcounts";
 	$result = DB_query($SQL, $db);
-	echo '<input type=hidden name=Action Value="View">';
+	echo '<input type="hidden" name=Action Value="View">';
 	echo '<table cellpadding=2 class=selection>';
 	echo "<tr>
 		<th>" . _('Stock Code') . "</th>
@@ -143,7 +143,7 @@ if ($_GET['Action'] == 'Enter'){
 			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength=20 size=20></td></tr>";
 
 	}
-	echo "</table><br /><div class=centre><input type=submit name='SubmitChanges' VALUE='" . _('Save Changes') . "'></div>";
+	echo "</table><br /><div class=centre><input type="submit" name='SubmitChanges' VALUE='" . _('Save Changes') . "'></div>";
 
 //END OF action=VIEW
 }

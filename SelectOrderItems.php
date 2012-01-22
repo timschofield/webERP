@@ -1643,8 +1643,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '"></td></tr>';
 
 		echo '<tr>
-			<td style="text-align:center" colspan=1><input tabindex=4 type=submit name="Search" value="' . _('Search Now') . '"></td>
-			<td style="text-align:center" colspan=1><input tabindex=5 type=submit name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
+			<td style="text-align:center" colspan=1><input tabindex=4 type="submit" name="Search" value="' . _('Search Now') . '"></td>
+			<td style="text-align:center" colspan=1><input tabindex=5 type="submit" name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
 
 		if (!isset($_POST['PartSearch'])) {
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
@@ -1845,7 +1845,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
 
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-	  		echo '<br /><div class="centre"><input type=submit name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
+	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
 		}
 	}#end of else not selecting a customer
 

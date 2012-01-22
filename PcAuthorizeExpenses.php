@@ -319,7 +319,7 @@ echo '<tr><td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
 
 	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name="Process" value="' . _('Accept') . '">
+	echo '<p><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '">
 								<input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
 
 	echo '</form>';

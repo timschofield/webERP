@@ -325,7 +325,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 			</table>
 			<br />
 			<div class="centre">
-				<input tabindex="6" type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+				<input tabindex="6" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
 	}
 	include('includes/footer.inc');

@@ -58,7 +58,7 @@ $myrow = DB_fetch_row($TaxAuthDetail);
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<input type=hidden name="TaxAuthority" value="' . $TaxAuthority . '" />';
+echo '<input type="hidden" name="TaxAuthority" value="' . $TaxAuthority . '" />';
 
 $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 									taxcategories.taxcatname,

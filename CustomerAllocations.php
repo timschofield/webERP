@@ -338,7 +338,7 @@ if (isset($_POST['AllocTrans'])) {
 	// Page called with trans number
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type=hidden name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />';
+	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />';
 
 	// Show trans already allocated and potential new allocations
 
@@ -408,7 +408,7 @@ if (isset($_POST['AllocTrans'])) {
 				$balance += $YetToAlloc-$AllocnItem->AllocAmt;
 				$j++;
 				echo '<input tabindex="'.$j.'" type="text" class="number" name="Amt' . $Counter .'" maxlength="12" size="13" value="' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
-					<input type=hidden name="AllocID' . $Counter . '" value="' . $AllocnItem->ID . '" /></td>
+					<input type="hidden" name="AllocID' . $Counter . '" value="' . $AllocnItem->ID . '" /></td>
 					<td class="number">' . locale_number_format($balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 				</tr>';
 		}

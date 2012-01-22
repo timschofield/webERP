@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
 		echo '<br />';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<p><div class="centre"><input type=submit name=return value="' . _('Return to list of tab types') . '"></div>';
+		echo '<p><div class="centre"><input type="submit" name=return value="' . _('Return to list of tab types') . '"></div>';
 		echo '</form>';
 		include('includes/footer.inc');
 		exit;
@@ -233,7 +233,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type=submit name=submit value="' . _('Accept') . '"><input type=submit name="Cancel" VALUE="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '"><input type="submit" name="Cancel" VALUE="' . _('Cancel') . '"></div>';
 
 	echo '</form>';
 

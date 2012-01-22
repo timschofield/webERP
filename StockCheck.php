@@ -330,9 +330,9 @@ If (isset($_POST['PrintPDF'])
 				<td>';
 
 		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == false){
-				echo '<input type=checkbox name="ShowInfo" value=FALSE>';
+				echo '<input type="checkbox" name="ShowInfo" value=FALSE>';
 		} else {
-				echo '<input type=checkbox name="ShowInfo" value=TRUE>';
+				echo '<input type="checkbox" name="ShowInfo" value=TRUE>';
 		}
 		echo '</td>
 			</tr>';

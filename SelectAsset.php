@@ -99,7 +99,7 @@ if (isset($_POST['AssetCode'])) {
 	echo '<input type="text" name="AssetCode" size=15 maxlength=13>';
 }
 echo '</td></tr></table><br />';
-echo '<div class="centre"><input type=submit name="Search" value="' . _('Search Now') . '"></div><br /></form>';
+echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '"></div><br /></form>';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 echo '</form>';
 // query for list of record(s)
@@ -231,9 +231,9 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type=submit name="Go" value="' . _('Go') . '">
-				<input type=submit name="Previous" value="' . _('Previous') . '">
-				<input type=submit name="Next" value="' . _('Next') . '">';
+				<input type="submit" name="Go" value="' . _('Go') . '">
+				<input type="submit" name="Previous" value="' . _('Previous') . '">
+				<input type="submit" name="Next" value="' . _('Next') . '">';
 
 			echo '<p></div>';
 		}

@@ -292,7 +292,7 @@ if (isset($_POST['PrintPDF'])) {
 		<br />
 		<div class="centre">
 			<br />
-			<input type=submit name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
 
 	include('includes/footer.inc');

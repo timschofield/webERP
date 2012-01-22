@@ -537,7 +537,7 @@ if ($WorkOrderRow['closed']==0){
 	echo '<tr>
 			<td colspan="9">
 				<div class="centre">
-					<input type=submit name="Close" value="' . _('Close This Work Order') . '" onclick="return confirm(\'' . _('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . _('Are You Sure?') . '\');">
+					<input type="submit" name="Close" value="' . _('Close This Work Order') . '" onclick="return confirm(\'' . _('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . _('Are You Sure?') . '\');">
 				</div>
 			</td>
 		</tr>';

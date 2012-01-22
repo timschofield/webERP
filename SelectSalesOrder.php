@@ -530,7 +530,7 @@ if (!isset($StockID)) {
 		}
 
 		echo '</select> </td>
-				<td><input type=submit name="SearchOrders" value="' . _('Search') . '"></td>
+				<td><input type="submit" name="SearchOrders" value="' . _('Search') . '"></td>
 				<td><a href="' . $rootpath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
 			</tr>
 			</table>';

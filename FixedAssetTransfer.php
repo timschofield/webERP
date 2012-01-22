@@ -69,7 +69,7 @@ if (isset($_GET['AssetID'])) {
 
 	echo '</td></tr></table><br />';
 
-	echo '<div class="centre"><input type=submit name="Search" value="'. _('Search Now') . '"></div></form><br />';
+	echo '<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '"></div></form><br />';
 }
 
 if (isset($_POST['Search'])) {
