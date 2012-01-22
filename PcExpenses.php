@@ -264,13 +264,14 @@ if (! isset($_GET['delete'])) {
 		$_POST['GLAccount']  = $myrow['glaccount'];
 		$_POST['Tag']  = $myrow['tag'];
 
-		echo '<input type="hidden" name="SelectedExpense" value="' . $SelectedExpense . '">';
-		echo '<input type="hidden" name="CodeExpense" VALUE="' . $_POST['CodeExpense']. '">';
+		echo '<input type="hidden" name="SelectedExpense" value="' . $SelectedExpense . '" />';
+		echo '<input type="hidden" name="CodeExpense" value="' . $_POST['CodeExpense']. '" />';
 		// We dont allow the user to change an existing type code
 		echo '<table class="selection">
 				<tr>
-				<td>' . _('Code Of Expense') . ':</td>
-				<td>' . $_POST['CodeExpense'] . '</td></tr>';
+					<td>' . _('Code Of Expense') . ':</td>
+					<td>' . $_POST['CodeExpense'] . '</td>
+				</tr>';
 
 	} else 	{
 
@@ -278,8 +279,8 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class="selection">
 				<tr>
-				<td>' . _('Code Of Expense') . ':</td>
-				<td><input type="text"' . (in_array('CodeExpense',$Errors) ? 'class="inputerror"' : '' ) .' name="CodeExpense"></td>
+					<td>' . _('Code Of Expense') . ':</td>
+					<td><input type="text"' . (in_array('CodeExpense',$Errors) ? 'class="inputerror"' : '' ) .' name="CodeExpense" /></td>
 				</tr>';
 
 	}
@@ -289,7 +290,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description') . ':</td>
-			<td><input type="text" ' . (in_array('Description',$Errors) ? 'class="inputerror"' : '' ) . ' name="Description" size=50 maxlength=49 value="' . $_POST['Description'] . '"></td>
+			<td><input type="text" ' . (in_array('Description',$Errors) ? 'class="inputerror"' : '' ) . ' name="Description" size="50" maxlength="49" value="' . $_POST['Description'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -340,8 +341,11 @@ if (! isset($_GET['delete'])) {
 
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
-			<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="' . _('Accept') . '" />
+			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+		</div>';
 
 	echo '</form>';
 

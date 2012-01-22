@@ -53,11 +53,11 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	if(!isset ($Days)){
 		$Days=30;
 	}
-	echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '">';
+	echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
 	echo '<br /><table class=selection>';
 	echo '<tr><th colspan=7>' . _('Detail Of Movement For Last ') .': ';
 	echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength="3" size="4" />' . _('Days');
-	echo '<input type="submit" name="Go" value="' . _('Go') . '"></tr></th>';
+	echo '<input type="submit" name="Go" value="' . _('Go') . '" /></tr></th>';
 	echo '</form>';
 
 	$sql = "SELECT pcashdetails.counterindex,
@@ -285,7 +285,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 
 	// Do the postings
 	include ('includes/GLPostings.inc');
-	echo'</table><br /><div class="centre"><input type="submit" name="Submit" value=' . _('Update') . '></div></form>';
+	echo'</table><br /><div class="centre"><input type="submit" name="Submit" value="' . _('Update') . '" /></div></form>';
 
 
 } else { /*The option to submit was not hit so display form */
@@ -319,8 +319,8 @@ echo '<tr><td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
 
 	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '">
-								<input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
+								<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</form>';
 } /*end of else not submit */

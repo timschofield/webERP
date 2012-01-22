@@ -51,25 +51,25 @@ if (isset($_GET['AssetID'])) {
 
 
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" size=20 maxlength=25>';
+		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size=20 maxlength=25>';
+		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 	}
 
 	echo '</td></tr><tr><td></td>';
 
-	echo '<td><font size 3><b>' . _('OR').' ' . '</b></font>' . _('Enter partial') .' <b>'. _('Asset Code') . '</b>:</td>';
+	echo '<td><b>' . _('OR').' ' . '</b>' . _('Enter partial') .' <b>'. _('Asset Code') . '</b>:</td>';
 	echo '<td>';
 
 	if (isset($_POST['AssetID'])) {
-		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" size=15 maxlength=18>';
+		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" size="15" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="AssetID" size=15 maxlength=18>';
+		echo '<input type="text" name="AssetID" size="15" maxlength="18" />';
 	}
 
 	echo '</td></tr></table><br />';
 
-	echo '<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '"></div></form><br />';
+	echo '<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '" /></div></form><br />';
 }
 
 if (isset($_POST['Search'])) {
@@ -104,23 +104,26 @@ if (isset($_POST['Search'])) {
 				AND fixedassets.assetid " . LIKE . "'".$_POST['AssetID']."'
 				AND fixedassets.serialno " . LIKE . "'".$_POST['SerialNumber']."'";
 	$Result=DB_query($sql, $db);
-	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID .'" method=post><table class=selection>';
+	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
+			<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><th>'._('Asset ID') . '</th>
+	echo '<tr>
+			<th>'._('Asset ID') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Serial number') . '</th>
 			<th>' . _('Purchase Cost') . '</th>
 			<th>' . _('Total Depreciation') . '</th>
 			<th>' . _('Current Location') . '</th>
 			<th>' . _('Move To :') . '</th>
-			</tr>';
+		</tr>';
 
 	$locationsql="SELECT locationid, locationdescription from fixedassetlocations";
 	$LocationResult=DB_query($locationsql, $db);
 
 	while ($myrow=DB_fetch_array($Result)) {
 
-		echo '<tr><td>'.$myrow['assetid'].'</td>
+		echo '<tr>
+				<td>'.$myrow['assetid'].'</td>
 				<td>'.$myrow['description'].'</td>
 				<td>'.$myrow['serialno'].'</td>
 				<td class="number">'.locale_number_format($myrow['cost'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
@@ -137,11 +140,11 @@ if (isset($_POST['Search'])) {
 		}
 		DB_data_seek($LocationResult,0);
 		echo '</select></td>';
-		echo '<input type="hidden" name="AssetCat" value="' . $_POST['AssetCat'].'"';
-		echo '<input type="hidden" name="Keywords" value="' . $_POST['Keywords'].'"';
-		echo '<input type="hidden" name="AssetID" value="' . $_POST['AssetID'].'"';
-		echo '<input type="hidden" name="Search" value="' . $_POST['Search'].'"';
-		echo '<td><input type="submit" name="Move'.$myrow['assetid'].'" value="Move"></td>';
+		echo '<input type="hidden" name="AssetCat" value="' . $_POST['AssetCat'].'" />';
+		echo '<input type="hidden" name="Keywords" value="' . $_POST['Keywords'].'" />';
+		echo '<input type="hidden" name="AssetID" value="' . $_POST['AssetID'].'" />';
+		echo '<input type="hidden" name="Search" value="' . $_POST['Search'].'" />';
+		echo '<td><input type="submit" name="Move'.$myrow['assetid'].'" value="Move" /></td>';
 		echo '</tr>';
 	}
 	echo '</table></form>';

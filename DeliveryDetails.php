@@ -996,7 +996,7 @@ if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 		<td>'. _('Estimated Delivery Date') .':</td>
-		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '"></td>
+		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" /></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
@@ -1034,14 +1034,14 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>'. _('Contact Phone Number') .':</td>
-		<td><input type="text" size=25 maxlength=25 name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '"></td>
+		<td><input type="text" size=25 maxlength=25 name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Contact Email') . ':</td><td><input type="text" size=40 maxlength=38 name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '"></td>
+		<td>' . _('Contact Email') . ':</td><td><input type="text" size=40 maxlength=38 name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" /></td>
 	</tr>
 	<tr>
 		<td>'. _('Customer Reference') .':</td>
-		<td><input type="text" size=25 maxlength=25 name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '"></td>
+		<td><input type="text" size=25 maxlength=25 name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" /></td>
 	</tr>
 	<tr>
 		<td>'. _('Comments') .':</td>
@@ -1072,7 +1072,7 @@ if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==
 	echo '<option selected value=1>' . _('No') . '</option>';
 	echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
 } else {
-	echo '<input type="hidden" name="ReprintPackingSlip" value=0>';
+	echo '<input type="hidden" name="ReprintPackingSlip" value=0 />';
 }
 
 echo '<tr>
@@ -1122,13 +1122,13 @@ echo '</select></td></tr>';
 
 echo '</table>';
 
-echo '<br /><div class="centre"><input type="submit" name="BackToLineDetails" value="' . _('Modify Order Lines') . '"><br />';
+echo '<br /><div class="centre"><input type="submit" name="BackToLineDetails" value="' . _('Modify Order Lines') . '" /><br />';
 
 if ($_SESSION['ExistingOrder'.$identifier]==0){
-	echo '<br /><br /><input type="submit" name="ProcessOrder" value="' . _('Place Order') . '">';
-	echo '<br /><br /><input type="submit" name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '">';
+	echo '<br /><br /><input type="submit" name="ProcessOrder" value="' . _('Place Order') . '" />';
+	echo '<br /><br /><input type="submit" name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '" />';
 } else {
-	echo '<br /><input type="submit" name="ProcessOrder" value="' . _('Commit Order Changes') . '">';
+	echo '<br /><input type="submit" name="ProcessOrder" value="' . _('Commit Order Changes') . '" />';
 }
 
 echo '</div></form>';

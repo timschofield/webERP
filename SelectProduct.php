@@ -36,7 +36,7 @@ $SQL = "SELECT categoryid,
 		ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
-	echo '<p><font size=4 color=red>' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
+	echo '<p><font size="4" color="red">' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
 	echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 	exit;
 }
@@ -75,9 +75,13 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} else {
 		$ItemStatus = '';
 	}
-	echo '<table width="90%"><tr><th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' ' . $ItemStatus . '</b></th></tr>';
+	echo '<table width="90%">
+			<tr>
+				<th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' ' . $ItemStatus . '</b></th>
+			</tr>';
 	
-	echo '<tr><td width="40%" valign="top">
+	echo '<tr>
+			<td width="40%" valign="top">
 			<table align="left">'; //nested table
 	echo '<tr><th class="number">' . _('Item Type:') . '</th>
 			<td colspan="2" class="select">';
@@ -718,24 +722,24 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type="submit" name="Go" value="' . _('Go') . '">
-				<input type="submit" name="Previous" value="' . _('Previous') . '">
+				<input type="submit" name="Go" value="' . _('Go') . '" />
+				<input type="submit" name="Previous" value="' . _('Previous') . '" />
 				<input type="submit" name="Next" value="' . _('Next') . '">';
-			echo '<input type="hidden" name=Keywords value="'.$_POST['Keywords'].'">';
-			echo '<input type="hidden" name=StockCat value="'.$_POST['StockCat'].'">';
-			echo '<input type="hidden" name=StockCode value="'.$_POST['StockCode'].'">';
+			echo '<input type="hidden" name=Keywords value="'.$_POST['Keywords'].'" />';
+			echo '<input type="hidden" name=StockCat value="'.$_POST['StockCat'].'" />';
+			echo '<input type="hidden" name=StockCode value="'.$_POST['StockCode'].'" />';
 //			echo '<input type="hidden" name=Search value="Search">';
 			echo '<p></div>';
 		}
-		echo '<table cellpadding="2" colspan="7">';
-		$tableheader = '<tr>
-					<th>' . _('Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Total Qty On Hand') . '</th>
-					<th>' . _('Units') . '</th>
-					<th>' . _('Stock Status') . '</th>
-				</tr>';
-		echo $tableheader;
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th>' . _('Code') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('Total Qty On Hand') . '</th>
+							<th>' . _('Units') . '</th>
+							<th>' . _('Stock Status') . '</th>
+						</tr>';
+		echo $TableHeader;
 		$j = 1;
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
@@ -771,7 +775,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			$j++;
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
 				$j = 1;
-				echo $tableheader;
+				echo $TableHeader;
 			}
 			$RowIndex = $RowIndex + 1;
 			//end of page full new headings if

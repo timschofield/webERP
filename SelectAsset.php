@@ -67,11 +67,16 @@ echo '</select>';
 
 echo '<td>' . _('Enter partial description') . '</b>:</td><td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size=20 maxlength=25>';
+	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size=20 maxlength=25>';
+	echo '<input type="text" name="Keywords" size="20" maxlength="25"> /';
 }
-echo '</td></tr><tr><td>' . _('Asset Location') . ':</td><td><select name="AssetLocation">';
+echo '</td>
+	</tr>
+	<tr>
+		<td>' . _('Asset Location') . ':</td>
+		<td><select name="AssetLocation">';
+		
 if (!isset($_POST['AssetLocation'])) {
 	$_POST['AssetLocation'] = 'ALL';
 }
@@ -80,7 +85,7 @@ if ($_POST['AssetLocation']=='ALL'){
 } else {
 	echo '<option value="ALL">' . _('Any asset location') . '</option>';
 }
-$result = DB_query('SELECT locationid, locationdescription FROM fixedassetlocations',$db);
+$result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations",$db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['locationid'] == $_POST['AssetLocation']) {
@@ -94,14 +99,18 @@ echo '</select>';
 echo '  </td><td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . '</b>:</td>';
 echo '<td>';
 if (isset($_POST['AssetCode'])) {
-	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size=15 maxlength=13>';
+	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" maxlength="13" />';
 } else {
-	echo '<input type="text" name="AssetCode" size=15 maxlength=13>';
+	echo '<input type="text" name="AssetCode" size="15" maxlength="13" />';
 }
 echo '</td></tr></table><br />';
-echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '"></div><br /></form>';
+echo '<div class="centre">
+		<input type="submit" name="Search" value="' . _('Search Now') . '" />
+	</div>
+	<br />
+	</form>';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
-echo '</form>';
+
 // query for list of record(s)
 if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	$_POST['Search']='Search';
@@ -231,13 +240,13 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type="submit" name="Go" value="' . _('Go') . '">
-				<input type="submit" name="Previous" value="' . _('Previous') . '">
-				<input type="submit" name="Next" value="' . _('Next') . '">';
+				<input type="submit" name="Go" value="' . _('Go') . '" />
+				<input type="submit" name="Previous" value="' . _('Previous') . '" />
+				<input type="submit" name="Next" value="' . _('Next') . '" />';
 
 			echo '<p></div>';
 		}
-		echo '<table cellpadding=2 colspan=7 class=selection>';
+		echo '<table class="selection">';
 		$tableheader = '<tr>
 					<th>' . _('Asset Code') . '</th>
 					<th>' . _('Description') . '</th>
@@ -259,7 +268,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-			echo '<td><input type="submit" name="Select" value="' . $myrow['assetid'] .'"></td>
+			echo '<td><input type="submit" name="Select" value="' . $myrow['assetid'] .'" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['locationdescription'] . '</td>
 				<td>' . ConvertSQLDate($myrow['datepurchased']) . '</td>

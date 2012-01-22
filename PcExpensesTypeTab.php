@@ -136,8 +136,8 @@ or deletion of the records*/
 	   	echo '</table>'; // close table in first column
    	echo '</td></tr></table>'; // close main table
 
-	echo '<p><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '">
-				<input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
+				<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</form>';
 
@@ -150,7 +150,7 @@ if (isset($_POST['process'])OR isset($SelectedTab)) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '">';
+	echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '" />';
 
 	$sql = "SELECT pctabexpenses.codeexpense,
 					pcexpenses.description
@@ -224,8 +224,8 @@ while ($myrow = DB_fetch_array($result)) {
 
 	   	echo '</td></tr></table>'; // close main table
 
-		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '">
-									<input type="submit" name="Cancel" value="' . _('Cancel') . '"></div>';
+		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
+									<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 		echo '</form>';
 

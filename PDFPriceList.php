@@ -306,7 +306,7 @@ If (isset($_POST['PrintPDF'])
         echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
-		echo '</table><br /><div class="centre"><input type="submit" Name="PrintPDF" Value="'. _('Print PDF'). '"></div>';
+		echo '</table><br /><div class="centre"><input type="submit" Name="PrintPDF" Value="'. _('Print PDF'). '" /></div>';
 	}
 	include('includes/footer.inc');
 

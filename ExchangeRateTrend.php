@@ -48,7 +48,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 
    	echo '</table>'; /*close off the table in the third column */
 
-	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '"></div>';
+	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /></div>';
    	echo '</form>';
 
 // **************
@@ -59,9 +59,9 @@ if ( isset($_GET['CurrencyToShow']) ){
 	$graph = $CurrencyToShow. '/' . $FunctionalCurrency . $graph;
 	$image = 'http://www.x-rates.com/d/' . $graph;
 
-	echo '<p></div><table class=selection>';
-	echo '<tr><th><div class="centre"><font size=4 color=BLUE><b><U>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b></U></font></th></tr>';
-	echo '<tr><td><img src=' . $image . ' alt="' ._('Trend Currently Unavailable') . '"></td></tr>';
+	echo '<p></div><table class="selection">';
+	echo '<tr><th><div class="centre"><b><U>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b></U></th></tr>';
+	echo '<tr><td><img src=' . $image . ' alt="' ._('Trend Currently Unavailable') . '" /></td></tr>';
 	echo '</table>';
 
 

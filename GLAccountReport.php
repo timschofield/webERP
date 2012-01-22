@@ -283,10 +283,12 @@ if (isset($_POST['RunReport'])){
 	echo '</select></td></tr>';
 	// End select tag
 
-	echo '</table><p>
+	echo '</table>
+		<br />
 		<div class="centre">
-			<input type="submit" name="RunReport" value="' ._('Run Report'). '"></div>
-			</form>';
+			<input type="submit" name="RunReport" value="' ._('Run Report'). '" />
+		</div>
+		</form>';
 
 	include ('includes/footer.inc');
 	exit;

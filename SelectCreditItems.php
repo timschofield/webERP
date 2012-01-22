@@ -261,8 +261,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex='.($j+5).' type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '"></td>
-				<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'">
+			echo '<td><input tabindex='.($j+5).' type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '" /></td>
+				<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
 				<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" />
 				<td>'.$myrow['contactname'].'</td>
 				<td>'.$myrow['phoneno'].'</td>
@@ -709,16 +709,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 									<td>' . $LineItem->ItemDescription . '</td>';
 
 			   if ($LineItem->Controlled==0){
-			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength="6" size="6" value=' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '></td>';
+			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   } else {
 				echo '<td class="number"><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LineItem->LineNumber . '">' . locale_number_format($LineItem->Quantity,$LineItem->DecimalPlaces) . '</a>
-              <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value=' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '></td>';
+              <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   }
 
 			echo '<td>' . $LineItem->Units . '</td>
-			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size=10 maxlength=12 value=' . locale_number_format($LineItem->Price,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '></td>
-			<td><input type="CheckBox" name="Gross" value=False></td>
-			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size=3 maxlength=3 value=' . locale_number_format(($LineItem->DiscountPercent * 100),'Variable') . '>%</td>
+			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size="10" maxlength="12" value="' . locale_number_format($LineItem->Price,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>
+			<td><input type="CheckBox" name="Gross" value=False /></td>
+			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size="3" maxlength="3" value="' . locale_number_format(($LineItem->DiscountPercent * 100),'Variable') . '" />%</td>
 			<td class="number">' . $DisplayLineTotal . '</td>';
 
 
@@ -742,7 +742,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if ($i>0){
 					echo '<br />';
 				}
-				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '">';
+				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '" />';
 				$i++;
 				if ($Tax->TaxOnTax ==1){
 					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
@@ -782,7 +782,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<td colspan="5"></td>';
 
 		echo '<td colspan="2" class="number">'. _('Credit Freight').'</td>
-			<td><input type="text" class="number" size=6 maxlength=6 name="ChargeFreightCost" value="' . locale_number_format($_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>';
+			<td><input type="text" class="number" size="6" maxlength="6" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 
 		$FreightTaxTotal =0; //initialise tax total
 
@@ -977,8 +977,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<div class="centre">';
 
 		 echo '<input type="submit" name="Search" value="' . _('Search Now') .'" />
-				<input type="submit" Name="ChangeCustomer" value="' . _('Change Customer') . '" />
-				<input type="submit" Name="Quick" value="' . _('Quick Entry') . '" />
+				<input type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" />
+				<input type="submit" name="Quick" value="' . _('Quick Entry') . '" />
 				</div>';
 
 		 if (isset($SearchResult)) {
@@ -1003,7 +1003,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				    $k++;
 				}
 				if(file_exists($_SESSION['part_pics_dir'] . '/' .mb_strtoupper($myrow['stockid']).'.jpg') ) {
-					printf('<td><font size=1><input type="submit" name="NewItem" value="%s"></font></td>
+					printf('<td><font size=1><input type="submit" name="NewItem" value="%s" /></font></td>
 							<td><font size=1>%s</font></td>
 							<td><font size=1>%s</font></td>
 							<td><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=%s&text=&width=120&height=120"></td></tr>',
@@ -1012,7 +1012,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							$myrow['units'],
 							$myrow['stockid']);
 				} else { //don't try to show the image
-					printf('<td><font size=1><input type="submit" name="NewItem" value="%s"></font></td>
+					printf('<td><font size=1><input type="submit" name="NewItem" value="%s" /></font></td>
 						<td><font size=1>%s</font></td>
 						<td><font size=1>%s</font></td>
 						<td>' . _('No Image') . '</td></tr>',
@@ -1046,8 +1046,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	     echo '</table>
 				<br />
 				<div class="centre">
-				<input type="submit" name="QuickEntry" value="' . _('Process Entries') . '">
-				<input type="submit" name="PartSearch" value="' . _('Search Parts') . '">
+				<input type="submit" name="QuickEntry" value="' . _('Process Entries') . '" />
+				<input type="submit" name="PartSearch" value="' . _('Search Parts') . '" />
 				</div>';
 
 	}
