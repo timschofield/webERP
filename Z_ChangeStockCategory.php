@@ -105,7 +105,7 @@ echo '<br />
 	</table>
 	
 	<div class="centre">
-		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '">
+		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
 	</div>
 	
 	</form>';

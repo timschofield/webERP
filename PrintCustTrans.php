@@ -688,7 +688,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 				$PageNumber = 1;
 
 				echo '<table class="table1">
-						<tr><td VALIGN=TOP WIDTH=10%><img src="' . $_SESSION['LogoFile'] . '"></td>
+						<tr><td VALIGN=TOP WIDTH=10%><img src="' . $_SESSION['LogoFile'] . '" /></td>
 						<td bgcolor="#BBBBBB"><b>';
 
 				if ($InvOrCredit=='Invoice') {
@@ -908,7 +908,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 									$DisplayNet);
 		
 					      if (mb_strlen($myrow2['narrative'])>1){
-					      		echo $RowStarter . '<td></td><td colspan=6>' . $myrow2['narrative'] . '</td></tr>';
+					      		echo $RowStarter . '<td></td><td colspan="6">' . $myrow2['narrative'] . '</td></tr>';
 							$LineCounter++;
 					      }
 
@@ -921,7 +921,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						   $PageNumber++;
 						   echo '</table>
 								<table class="table1">
-								<tr><td valign=top><img src="' . $_SESSION['LogoFile'] . '"></td>
+								<tr><td valign=top><img src="' . $_SESSION['LogoFile'] . '" /></td>
 									<td bgcolor="#BBBBBB"><b>';
 
 						   if ($InvOrCredit=='Invoice') {
@@ -970,7 +970,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					/* head up a new invoice/credit note page */
 					$PageNumber++;
 					echo '<table class="table1">
-							<tr><td valign=top><img src="' . $_SESSION['LogoFile'] . '"></td>
+							<tr><td valign=top><img src="' . $_SESSION['LogoFile'] . '" /></td>
 							<td bgcolor="#BBBBBB"><b>';
 
 					if ($InvOrCredit=='Invoice') {

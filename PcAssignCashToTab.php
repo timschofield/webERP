@@ -334,7 +334,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<tr><td>' . _('Cash Assignation Date') . ':</td>';
 
-		echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="Date" size=10 maxlength=10 value=' . $_POST['Date'] . '></td></tr>';
+		echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="Date" size=10 maxlength=10 value=' . $_POST['Date'] . ' /></td></tr>';
 
 
 		if (!isset($_POST['Amount'])) {
@@ -343,7 +343,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<tr>
 				<td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '"></td>
+				<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 			</tr>';
 
 		if (!isset($_POST['Notes'])) {

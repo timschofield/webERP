@@ -203,7 +203,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			<br />
 			<p>
 			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Submit') . '">
+				<input type="submit" name="submit" value="' . _('Submit') . '" />
 			</div>
 			</p>';
 

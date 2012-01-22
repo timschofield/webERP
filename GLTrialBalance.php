@@ -436,8 +436,8 @@ if ((! isset($_POST['FromPeriod'])
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
 	echo '<table cellpadding="2" class="selection">';
-	echo '<tr><th colspan=6><font size=3 color=blue><b>'. _('Trial Balance for the month of ') . $PeriodToDate .
-		_(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></font></th></tr>';
+	echo '<tr><th colspan="6"><b>'. _('Trial Balance for the month of ') . $PeriodToDate .
+		_(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate .'</b></th></tr>';
 	$TableHeader = '<tr>
 					<th>' . _('Account') . '</th>
 					<th>' . _('Account Name') . '</th>
@@ -482,7 +482,7 @@ if ((! isset($_POST['FromPeriod'])
 					$ParentGroups[$Level]='';
 				} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
 					printf('<tr>
-						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
@@ -502,7 +502,7 @@ if ((! isset($_POST['FromPeriod'])
 				} else {
 					do {
 						printf('<tr>
-							<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+							<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
 							<td class="number"><I>%s</I></td>
 							<td class="number"><I>%s</I></td>
 							<td class="number"><I>%s</I></td>
@@ -526,7 +526,7 @@ if ((! isset($_POST['FromPeriod'])
 
 					if ($Level>0){
 						printf('<tr>
-						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
@@ -638,7 +638,7 @@ if ((! isset($_POST['FromPeriod'])
 			$ParentGroups[$Level]=$myrow['groupname'];
 		} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
 			printf('<tr>
-					<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+					<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
 					<td class="number"><I>%s</I></td>
 					<td class="number"><I>%s</I></td>
 					<td class="number"><I>%s</I></td>
@@ -658,7 +658,7 @@ if ((! isset($_POST['FromPeriod'])
 		} else {
 			do {
 				printf('<tr>
-						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
@@ -682,7 +682,7 @@ if ((! isset($_POST['FromPeriod'])
 
 			if ($Level >0){
 				printf('<tr>
-						<td colspan=2><font size=2><I>%s ' . _('Total') . ' </I></font></td>
+						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
 						<td class="number"><I>%s</I></td>
@@ -708,7 +708,7 @@ if ((! isset($_POST['FromPeriod'])
 
 
 	printf('<tr bgcolor="#ffffff">
-				<td colspan=2><font color=BLUE><b>' . _('Check Totals') . '</b></font></td>
+				<td colspan="2"><b>' . _('Check Totals') . '</b></td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>

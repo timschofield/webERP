@@ -472,7 +472,7 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 }
 echo '</select></td>
 	</tr>';
-echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'">';
+echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" />';
 
 echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
 

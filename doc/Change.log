@@ -1,5 +1,6 @@
 webERP Change Log
 
+22/1/12 Vitaly: Added quotes and missing closing tags in multiple files
 21/1/12 Vitaly: Added quotes to attributes in multiple files.
 21/1/12 Vitaly: xhtml fixes in multiple files.
 20/1/12 Phil: Fixed GetStockPrice API function for effectivty dates

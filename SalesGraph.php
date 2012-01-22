@@ -176,16 +176,16 @@
 		$_POST['ValueTo']='';
 	}
 	echo '<tr><td>' . _('Graph On:') . '</td><td>
-			<input type="radio"" name="GraphOn" value="All" CHECKED>' . _('All') . '<br />
-			<input type="radio"" name="GraphOn" value="Customer">' . _('Customer') . '<br />
-			<input type="radio"" name="GraphOn" value="StockID">' . _('Item Code') . '</td></tr>';
-	echo '<tr><td>' . _('From:') . ' <input type="text" name="ValueFrom" value=' . $_POST['ValueFrom'] . '></td>
-	 		<td>' . _('To:') . ' <input type="text" name="ValueTo" value=' . $_POST['ValueTo'] . '></td></tr>';
+			<input type="radio"" name="GraphOn" value="All" CHECKED />' . _('All') . '<br />
+			<input type="radio"" name="GraphOn" value="Customer" />' . _('Customer') . '<br />
+			<input type="radio"" name="GraphOn" value="StockID" />' . _('Item Code') . '</td></tr>';
+	echo '<tr><td>' . _('From:') . ' <input type="text" name="ValueFrom" value=' . $_POST['ValueFrom'] . ' /></td>
+	 		<td>' . _('To:') . ' <input type="text" name="ValueTo" value=' . $_POST['ValueTo'] . ' /></td></tr>';
 
 	echo '<tr><td>' . _('Graph Value:') . '</td><td>
-			<input type="radio"" name="GraphValue" value="Net" CHECKED>' . _('Net Sales Value') . '<br />
-			<input type="radio"" name="GraphValue" value="GP">' . _('Gross Profit') . '<br />
-			<input type="radio"" name="GraphValue" value="Quantity">' . _('Quantity') . '</td></tr>';
+			<input type="radio"" name="GraphValue" value="Net" CHECKED />' . _('Net Sales Value') . '<br />
+			<input type="radio"" name="GraphValue" value="GP" />' . _('Gross Profit') . '<br />
+			<input type="radio"" name="GraphValue" value="Quantity" />' . _('Quantity') . '</td></tr>';
 
 	echo '</table>';
 

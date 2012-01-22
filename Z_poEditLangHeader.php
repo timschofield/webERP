@@ -98,13 +98,13 @@ else
 
 		echo '<tr>';
 		echo '<td>' . _('Header Line') . ' # ' . $i . '</td>';
-		echo '<td><input type="text" size="80" name="Header_' . $i . '" VALUE="' . htmlentities($LanguageHeader[$i]) . '"></td>';
+		echo '<td><input type="text" size="80" name="Header_' . $i . '" VALUE="' . htmlentities($LanguageHeader[$i]) . '" /></td>';
 		echo '</tr>';
 	}
 
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
-	echo '<input type="hidden" name="language" VALUE="' . $_POST['language'] . '"></div>';
+	echo '<br /><div class="centre"><input type="Submit" name="submit" VALUE="' . _('Modify') . '" />&nbsp;&nbsp;';
+	echo '<input type="hidden" name="language" VALUE="' . $_POST['language'] . '" /></div>';
 	echo '</form>';
 }
 }

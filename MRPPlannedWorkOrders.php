@@ -334,7 +334,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	echo '<tr><td>' . _('Cut Off Date') . ':</td>
 			<td><input type ="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="cutoffdate" size="10" value="' .date($_SESSION['DefaultDateFormat']).'" /></td>
 		</tr>';
-	echo '</table><div class="centre"><input type="submit" name="Review" value="' . _('Review') . '"> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
+	echo '</table><div class="centre"><input type="submit" name="Review" value="' . _('Review') . '" /> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
 
 	include('includes/footer.inc');
 

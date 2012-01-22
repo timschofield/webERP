@@ -275,7 +275,7 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type="hidden" name="New" value="No">';
+	echo '<input type="hidden" name="New" value="No" />';
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('ID') . '</th>

@@ -30,7 +30,7 @@ if (!isset($_GET['TransferNo'])){
 			</table>';
 		echo '<br />
 			<div class="centre">
-				<input type="submit" name="Process" value="' . _('Print Transfer Note') . '">
+				<input type="submit" name="Process" value="' . _('Print Transfer Note') . '" />
 			</div>
 			</form>';
 		include('includes/footer.inc');

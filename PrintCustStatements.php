@@ -420,10 +420,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)'). '
 			</td><td><input type="text" max="6" size="7" name="FromCust" value="1" /></td></tr>
 			<tr><td>'. _('Ending Customer statement to print (Customer code)').'</td><td>
-				<input type="text" max="6" size="7" name="ToCust" value="zzzzzz"></td></tr></table>
+				<input type="text" max="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
 				<br /><div class="centre">
 				<input type="submit" name="PrintPDF" value="' .
-				_('Print All Statements in the Range Selected').'">
+                _('Print All Statements in the Range Selected').'" />
 			</div>';
 	}
 	echo '<br /><br /><br />';

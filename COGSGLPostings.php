@@ -248,7 +248,7 @@ if (isset($SelectedCOGSPostingID)) {
 	$_POST['StkCat']  = $myrow['stkcat'];
 	$_POST['SalesType'] = $myrow['salestype'];
 
-	echo '<input type="hidden" name="SelectedCOGSPostingID" value="' . $SelectedCOGSPostingID . '">';
+	echo '<input type="hidden" name="SelectedCOGSPostingID" value="' . $SelectedCOGSPostingID . '" />';
 
 }  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 

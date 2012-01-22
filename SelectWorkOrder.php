@@ -177,11 +177,11 @@ if (!isset($StockID)) {
 		</tr>
 	  	<tr><td></td>
 	  		<td><font size="3"><b>' . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . '</b>:</font></td>
-	  		<td><input type="text" name="StockCode" size="15" maxlength="18"></td>
+	  		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	  	</tr>
 	  </table><br />';
-	echo '<div class=centre><input type="submit" name="SearchParts" value="' . _('Search Items Now') . '">
-		<input type="submit" name="ResetPart" value="' . _('Show All') . '"></div>';
+	echo '<div class=centre><input type="submit" name="SearchParts" value="' . _('Search Items Now') . '" />
+        <input type="submit" name="ResetPart" value="' . _('Show All') . '" /></div>';
 
 	if (isset($StockItemsResult)) {
 	

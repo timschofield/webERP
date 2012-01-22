@@ -390,7 +390,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 /*If the page was called without $AssetID passed to page then assume a new asset is to be entered other wise the form showing the fields with the existing entries against the asset will show for editing with a hidden AssetID field. New is set to flag that the page may have called itself and still be entering a new asset, in which case the page needs to know not to go looking up details for an existing asset*/
 
 	$New = 1;
-	echo '<input type="hidden" name="New" value="">'. "\n";
+	echo '<input type="hidden" name="New" value="" /><br />';
 
 	$_POST['LongDescription'] = '';
 	$_POST['Description'] = '';
@@ -469,7 +469,7 @@ if (!isset($New) ) { //ie not new at all!
 	
 	echo '<tr>
 			<td>'. _('Image File (.jpg)') . ':</td>
-			<td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
+			<td><input type="file" id="ItemPicture" name="ItemPicture" /></td>';
 
 	if (function_exists('imagecreatefromjpg')){
 		$AssetImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
@@ -480,7 +480,7 @@ if (!isset($New) ) { //ie not new at all!
 			'" >';
 	} else {
 		if( isset($AssetID) and file_exists($_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg') ) {
-			$AssetImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg" >';
+			$AssetImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg" />';
 		} else {
 			$AssetImgLink = _('No Image');
 		}

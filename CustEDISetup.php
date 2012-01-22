@@ -150,13 +150,13 @@ echo '<tr><td>'._('FTP Server or Email Address') . ':</td>
 if ($myrow['editransport']=='ftp'){
 
 	echo '<tr><td>'._('FTP Server User Name') . ':</td>
-			<td><input tabindex=6 type="text" name="EDIServerUser" size=20 maxlength=20 value="' . $myrow['ediserveruser'] . '"></td></tr>';
+			<td><input tabindex=6 type="text" name="EDIServerUser" size=20 maxlength=20 value="' . $myrow['ediserveruser'] . '" /></td></tr>';
 	echo '<tr><td>'._('FTP Server Password') . ':</td>
-			<td><input tabindex=7 type="text" name="EDIServerPwd" size=20 maxlength=20 value="' . $myrow['ediserverpwd'] . '"></td></tr>';
+			<td><input tabindex=7 type="text" name="EDIServerPwd" size=20 maxlength=20 value="' . $myrow['ediserverpwd'] . '" /></td></tr>';
 }
 
 echo '</table>
-		<br /><div class="centre"><input tabindex=8 type="submit" name="submit" value="' ._('Update EDI Configuration'). '"></div>
+		<br /><div class="centre"><input tabindex=8 type="submit" name="submit" value="' ._('Update EDI Configuration'). '" /></div>
 	</form>';
 
 include('includes/footer.inc');

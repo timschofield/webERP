@@ -92,7 +92,7 @@ echo '<br />
 
 if (isset($_GET['Action']) and $_GET['Action']=='edit') {
 	echo '<td>'. _('Description') . '</td>
-		<td><input type="text" size="50" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'"></td>
+		<td><input type="text" size="50" maxlength="50" name="TokenDescription" value="'.$_POST['TokenDescription'] .'" /></td>
 		<td><input type="hidden" name="TokenID" value="'.$_GET['SelectedToken'].'" />
 			<input type="submit" name="Update" value="' . _('Update') . '" />';
 } else {

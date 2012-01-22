@@ -33,7 +33,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			</tr>';
 	 echo '<tr>
 			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" maxlength=10 size=10 value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" maxlength=10 size=10 value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>';
 
 	 if (!isset($_POST['DaysAcceptable'])){
@@ -42,7 +42,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	 echo '<tr>
 				<td>' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ':</td>
-				<td><input type="text" class="number" name="DaysAcceptable" maxlength=2 size=2 value="' . $_POST['DaysAcceptable'] . '"></td>
+				<td><input type="text" class="number" name="DaysAcceptable" maxlength=2 size=2 value="' . $_POST['DaysAcceptable'] . '" /></td>
 			</tr>';
 	 echo '<tr><td>' . _('Inventory Category') . '</td><td>';
 

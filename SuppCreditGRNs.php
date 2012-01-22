@@ -205,7 +205,7 @@ if (DB_num_rows($GRNResults)>0){
 				$myrow['decimalplaces'] =2;
 			}
 			echo '<tr>
-					<td><input type="submit" name="GRNNo" value="' . $myrow['grnno'] . '"></td>
+					<td><input type="submit" name="GRNNo" value="' . $myrow['grnno'] . '" /></td>
 					<td>' . $myrow['orderno'] . '</td>
 					<td>' . $myrow['itemcode'] . '</td>
 					<td>' . $myrow['itemdescription'] . '</td>
@@ -299,13 +299,13 @@ if (DB_num_rows($GRNResults)>0){
 				<input type="submit" name="AddGRNToTrans" value="' . _('Add to Credit Note') . '" />
 			</div>';
 		
-		echo '<input type="hidden" name="GRNNumber" value=' . $_POST['GRNNo'] . ' />';
+		echo '<input type="hidden" name="GRNNumber" value="' . $_POST['GRNNo'] . '" />';
 		echo '<input type="hidden" name="ItemCode" value="' . $myrow['itemcode'] . '" />';
 		echo '<input type="hidden" name="ItemDescription" value="' . $myrow['itemdescription'] . '" />';
-		echo '<input type="hidden" name="QtyRecd" value=' . $myrow['qtyrecd'] . '>';
-		echo '<input type="hidden" name="Prev_QuantityInv" value=' . $myrow['quantityinv'] . ' />';
-		echo '<input type="hidden" name="OrderPrice" value=' . $myrow['unitprice'] . ' />';
-		echo '<input type="hidden" name="StdCostUnit" value=' . $myrow['stdcostunit'] . ' />';
+		echo '<input type="hidden" name="QtyRecd" value="' . $myrow['qtyrecd'] . '" />';
+		echo '<input type="hidden" name="Prev_QuantityInv" value="' . $myrow['quantityinv'] . '" />';
+		echo '<input type="hidden" name="OrderPrice" value="' . $myrow['unitprice'] . '" />';
+		echo '<input type="hidden" name="StdCostUnit" value="' . $myrow['stdcostunit'] . '" />';
 	
 		echo '<input type="hidden" name="JobRef" value="' . $myrow['jobref'] . '" />';
 		echo '<input type="hidden" name="GLCode" value="' . $myrow['glcode'] . '" />';

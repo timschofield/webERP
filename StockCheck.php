@@ -330,9 +330,9 @@ If (isset($_POST['PrintPDF'])
 				<td>';
 
 		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == false){
-				echo '<input type="checkbox" name="ShowInfo" value=FALSE>';
+				echo '<input type="checkbox" name="ShowInfo" value="false" />';
 		} else {
-				echo '<input type="checkbox" name="ShowInfo" value=TRUE>';
+				echo '<input type="checkbox" name="ShowInfo" value="true" />';
 		}
 		echo '</td>
 			</tr>';
@@ -341,9 +341,9 @@ If (isset($_POST['PrintPDF'])
 				<td>' . _('Only print items with non zero quantities') . ':</td>
 				<td>';
 		if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly'] == false){
-				echo '<input type="checkbox" name="NonZerosOnly" value=false />';
+				echo '<input type="checkbox" name="NonZerosOnly" value="false" />';
 		} else {
-				echo '<input type="checkbox" name="NonZerosOnly" value=true />';
+				echo '<input type="checkbox" name="NonZerosOnly" value="true" />';
 		}
 
 		echo '</td>

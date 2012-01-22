@@ -120,7 +120,7 @@ echo '<tr>
 
 echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ':</td>
-	<td><input type="text" class="number" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '" ></td>
+	<td><input type="text" class="number" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
 	</tr>';
 
 
@@ -178,7 +178,7 @@ echo '</select></td></tr>
 		<td><input type="password" name="PasswordCheck" size="20"  value="' . $_POST['PasswordCheck'] . '" /></td>
 	</tr>
 	<tr>
-		<td colspan=2 align="center"><i>' . _('If you leave the password boxes empty your password will not change') . '</i></td>
+		<td colspan="2" align="center"><i>' . _('If you leave the password boxes empty your password will not change') . '</i></td>
 	</tr>
 	<tr>
 		<td>' . _('Email') . ':</td>';
@@ -212,7 +212,7 @@ echo '</select></td>
 	</tr>
 	</table>
 	<br />
-	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '"></div>
+	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>
 	</form>';
 
 include('includes/footer.inc');

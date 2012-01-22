@@ -628,7 +628,7 @@ if (isset($_POST['NewItem'])){
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
 					if ($debug==1){
-						echo '<br / >'.$sql;
+						echo '<br />'.$sql;
 					}
 					include('includes/footer.inc');
 					exit;
@@ -1041,7 +1041,7 @@ if (!isset($_GET['Edit'])) {
 
 	echo '</select></td>
 		<td>' . _('Enter text extracts in the description') . ':</td>
-		<td><input type="text" name="Keywords" size=20 maxlength=25 value="' . $_POST['Keywords'] . '"></td></tr>
+		<td><input type="text" name="Keywords" size=20 maxlength=25 value="' . $_POST['Keywords'] . '" /></td></tr>
 		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" name="SupplierItemsOnly" ';
 	if (isset($_POST['SupplierItemsOnly']) AND $_POST['SupplierItemsOnly']=='on'){
 		echo 'checked';
@@ -1072,7 +1072,7 @@ if (isset($SearchResult)) {
 						<th>' . _('Our Units') . '</th>
 						<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
 						<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>
-						<th colspan=2><a href="#end">'._('Go to end of list').'</a></th>
+						<th colspan="2"><a href="#end">'._('Go to end of list').'</a></th>
 					</tr>';
 	echo $TableHeader;
 
@@ -1091,7 +1091,7 @@ if (isset($SearchResult)) {
 
 		$FileName = $myrow['stockid'] . '.jpg';
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
-			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50">';
+			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
 		} else {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}

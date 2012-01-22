@@ -717,7 +717,7 @@ echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="
 	<tr><td>'; // Nested table
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<input type="hidden" name="New" value="'.$New.'">';
+echo '<input type="hidden" name="New" value="'.$New.'" />';
 
 if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 
@@ -727,7 +727,7 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 	if ($New==1) {
 		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text"
-			value="'.$StockID.'" name="StockID" size=21 maxlength=20 /></td></tr>';
+			value="'.$StockID.'" name="StockID" size="21" maxlength="20" /></td></tr>';
 	} else {
 		echo '<tr><td>'. _('Item Code'). ':</td>
 					<td>'.$StockID.'</td>
@@ -818,7 +818,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>'. _('Image File (.jpg)') . ':</td>
-		<td><input type="file" id="ItemPicture" name="ItemPicture"></td>';
+		<td><input type="file" id="ItemPicture" name="ItemPicture" /></td>';
 
  if (function_exists('imagecreatefromjpg')){
 	$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
@@ -829,7 +829,7 @@ echo '<tr>
 		'" >';
 } else {
 	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120">';
+		$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120" />';
 	} else {
 		$StockImgLink = _('No Image');
 	}
@@ -1024,7 +1024,7 @@ if ($_POST['Serialised']==1 AND $_POST['MBFlag']=='M'){
 			<td>' . _('Next Serial No (>0 for auto numbering)') . ':</td>
 			<td><input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size="15" maxlength="15" value="' . $_POST['NextSerialNo'] . '"><td></tr>';
 } else {
-	echo '<input type="hidden" name="NextSerialNo" value="0">';
+	echo '<input type="hidden" name="NextSerialNo" value="0" />';
 }
 
 echo '<tr>
@@ -1065,7 +1065,7 @@ if (isset($_POST['DiscountCategory'])) {
 }
 echo '<tr>
 		<td>' . _('Discount Category') . ':</td>
-		<td><input type="text" name="DiscountCategory" size="2" maxlength="2" value="' . $DiscountCategory . '"></td>
+		<td><input type="text" name="DiscountCategory" size="2" maxlength="2" value="' . $DiscountCategory . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -1091,11 +1091,11 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Pan Size') . ':</td>
-		<td><input type="text" class="number" name="Pansize" size="6" maxlength="6" value="' . locale_number_format($_POST['Pansize'],0) . '"></td>
+		<td><input type="text" class="number" name="Pansize" size="6" maxlength="6" value="' . locale_number_format($_POST['Pansize'],0) . '" /></td>
 	</tr>
 	 <tr>
 		<td>' . _('Shrinkage Factor') . ':</td>
-		<td><input type="text" class="number" name="ShrinkFactor" size="6" maxlength="6" value="' . locale_number_format($_POST['ShrinkFactor'],0) . '"></td>
+		<td><input type="text" class="number" name="ShrinkFactor" size="6" maxlength="6" value="' . locale_number_format($_POST['ShrinkFactor'],0) . '" /></td>
 	</tr>';
 
 echo '</table>

@@ -247,7 +247,7 @@ or deletion of the records*/
 		}
 
 		if ($myrow[1]!=$FunctionalCurrency){
-			printf('<td><img src="%s"></td>
+			printf('<td><img src="%s" /></td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -276,7 +276,7 @@ or deletion of the records*/
 					$rootpath,
 					'&CurrencyToShow=' . $myrow['currabrev']);
 		} else {
-			printf('<td><img src="%s"></td>
+			printf('<td><img src="%s" /></td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>

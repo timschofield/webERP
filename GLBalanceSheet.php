@@ -63,7 +63,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			</div>';
 	echo '<br />
 			<div class="centre">
-				<input type="submit" name="PrintPDF" value="'._('Produce PDF Report').'">
+				<input type="submit" name="PrintPDF" value="'._('Produce PDF Report').'" />
 			</div>
 		</form>';
 
@@ -364,7 +364,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	echo '<div class="invoice">
 			<table class="selection">
 			<tr>
-				<th colspan=6>
+				<th colspan="6">
 					<div class="centre"><font size="4" color="blue"><b>' .
 		_('Balance Sheet as at') . ' ' . $BalanceDate .'</b></font>
 					</div>
@@ -620,7 +620,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		</tr>';
 	} else {
 		echo '<tr>
-		<td colspan=3></td>
+		<td colspan="3"></td>
 		<td><hr></td>
 		<td></td>
 		<td><hr></td>
@@ -628,7 +628,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	}
 
 	printf('<tr>
-		<td colspan=3><font size=4>%s</font></td>
+		<td colspan="3">%s</td>
 		<td class="number">%s</td>
 		<td></td>
 		<td class="number">%s</td>

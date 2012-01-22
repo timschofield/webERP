@@ -312,8 +312,8 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-echo '<table cellpadding=2 colspan=7 class=selection>';
-echo '<tr><th colspan=7><font size=2 color=navy><b>'._('Order Line Details').'</b></font></th></tr>';
+echo '<table cellpadding="2" colspan="7" class="selection">';
+echo '<tr><th colspan="7"><b>'._('Order Line Details').'</b></th></tr>';
 echo '<tr>
 	<th>'. _('Item Code') .'</th>
 	<th>'. _('Item Description') .'</th>
@@ -420,7 +420,7 @@ if ($NewRecurringOrder=='Yes'){
 	echo '<tr>
 	<td>'. _('Last Recurrence') . ':</td>
 	<td>' . $_POST['StartDate'] . '</td></tr>';
-	echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '">';
+	echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '" />';
 }
 
 if (!isset($_POST['StopDate'])){
@@ -486,7 +486,7 @@ if ($_SESSION['Items'.$identifier]->AllDummyLineItems()==true){
 	}
 	echo '</select></td></tr>';
 } else {
-	echo '<input type="hidden" name="AutoInvoice" value=0>';
+	echo '<input type="hidden" name="AutoInvoice" value="0" />';
 }
 
 echo '</table>';
@@ -496,7 +496,7 @@ if ($NewRecurringOrder=='Yes'){
 	echo '<input type="hidden" name="NewRecurringOrder" value="Yes" />';
 	echo '<input type="submit" name="Process" value="' . _('Create Recurring Order') . '" />';
 } else {
-	echo '<input type="hidden" name="NewRecurringOrder" value="No">';
+	echo '<input type="hidden" name="NewRecurringOrder" value="No" />';
 	echo '<input type="hidden" name="ExistingRecurrOrderNo" value="' . $_POST['ExistingRecurrOrderNo'] . '" />';
 
 	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '" />';

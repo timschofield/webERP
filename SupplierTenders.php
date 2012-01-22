@@ -366,7 +366,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 	} else if ($_POST['TenderType']==2) {
 		echo '<br />
 				<div class="centre">
-					<input type="submit" name="Save" value="Save offer">
+					<input type="submit" name="Save" value="Save offer" />
 					<input type="submit" name="Refresh" value="Refresh screen" />
 				</div>';
 	}

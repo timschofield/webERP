@@ -24,7 +24,7 @@ if (!isset($_GET['TransferNo'])){
 			</tr>
 		</table>';
 	echo '<div class="centre">
-			<input type="submit" name="Print" value="' . _('Print') .'">';
+			<input type="submit" name="Print" value="' . _('Print') .'" />';
 	include ('includes/footer.inc');
 	exit;
 }

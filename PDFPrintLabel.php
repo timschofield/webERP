@@ -123,8 +123,8 @@ function showLabelOptions() {
 	if (!isset($_POST['EffectiveDate'])){
 		$_POST['EffectiveDate']=Date($_SESSION['DefaultDateFormat']);
 	}
-	$SendButton = '<br /><div class=centre><input type="submit" name="PrintPDF" value="'. _('Print labels') .'">&nbsp;&nbsp;&nbsp;
-		<input type="submit" name="PDFTest" value="'. _('Print labels with borders') .'"></div>';
+	$SendButton = '<br /><div class=centre><input type="submit" name="PrintPDF" value="'. _('Print labels') .'" />&nbsp;&nbsp;&nbsp;
+        <input type="submit" name="PDFTest" value="'. _('Print labels with borders') .'" /></div>';
 	$iTxt=0;
 
 	echo "<script type=\"text/javascript\">
@@ -151,7 +151,7 @@ function showLabelOptions() {
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
 				<td><input type="text" class=number name="QtyByItem" value="'.$_POST['QtyByItem'].'" size="2"
-					maxlength="4"></td>
+                    maxlength="4" /></td>
 		</tr>';
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
@@ -171,10 +171,10 @@ function showLabelOptions() {
 					</select> </td>
 			</tr>';
 	echo '<tr><td class="number">'.$txt[$iTxt++].':</td>
-			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EffectiveDate" size="11" maxlength="10" value=' . $_POST['EffectiveDate'] . '></td></tr>';
+			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EffectiveDate" size="11" maxlength="10" value=' . $_POST['EffectiveDate'] . ' /></td></tr>';
 	echo '<tr>
 				<th colspan="2">
-				<input type="submit" name="refresh" value="Refresh options">
+				<input type="submit" name="refresh" value="Refresh options" />
 				</th>';
 	echo '<tr>
 				<td colspan="2">
@@ -258,7 +258,7 @@ function tableItems($CategoryID, &$ok) {
 				<th>'.$txt[$ix++].'</th>
 				<th>'.$txt[$ix++].'</th>
 				<th colspan="2" align="center">'.$txt[$ix++].'
-					<input type="checkbox" checked onclick="setAll(this);">
+					<input type="checkbox" checked onclick="setAll(this);" />
 				</th>
 			</tr>
 		</thead>
@@ -276,7 +276,7 @@ function tableItems($CategoryID, &$ok) {
 				<td>{$myrow['description']}</td>
 				<td class="number">{$price}</td>
 				<td><div class="centre">
-					<INPUT type="checkbox" checked name="StockID[{$myrow['stockid']}]" id="item">
+					<input type="checkbox" checked name="StockID[{$myrow['stockid']}]" id="item" />
 					</div>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;</td>
@@ -292,7 +292,7 @@ ZZZ;
 function noneButton($msg) {
 	return '
 		<div class="centre">
-			<INPUT type="button" disabled name="None" value="'. $msg . '">
+			<input type="button" disabled name="None" value="'. $msg . '" />
 		</div>';
 }
 

@@ -339,14 +339,14 @@ while ($myrow=DB_fetch_array($result)) {
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" class="date" alt='.$_SESSION['DefaultDateFormat']. ' size="11" maxlength="10" value="' . $_POST['StartDate'] . '"></td>
+		<td><input type="text" name="StartDate" class="date" alt='.$_SESSION['DefaultDateFormat']. ' size="11" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('End Date') . ':</td>
 		<td><input type="text" name="EndDate" class=date alt='.$_SESSION['DefaultDateFormat']. ' size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('Price') . ':</td>
-          <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '"></td>
+          <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" /></td>
 		</tr>
 	</table>';
 

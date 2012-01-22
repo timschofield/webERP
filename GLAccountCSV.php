@@ -79,7 +79,7 @@ echo '</select></td></tr>';
 // End select tag
 
 echo '</table><p>
-		<div class="centre"><input type="submit" name="MakeCSV" value="'._('Make CSV File').'"></div>
+		<div class="centre"><input type="submit" name="MakeCSV" value="'._('Make CSV File').'" /></div>
 	</form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/

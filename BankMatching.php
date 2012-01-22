@@ -90,7 +90,7 @@ echo '<input type="hidden" name="Type" value="' . $Type . '" />';
 echo '<table class="selection">
 		<tr>
 			<td align="left">' . _('Bank Account') . ':</td>
-			<td colspan=3><select tabindex="1" name="BankAccount">';
+			<td colspan="3"><select tabindex="1" name="BankAccount">';
 
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);

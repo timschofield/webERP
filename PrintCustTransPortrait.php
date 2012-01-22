@@ -564,11 +564,11 @@ If (isset($PrintPDF)
 			</tr>';
 		echo '<tr>
 				<td>' . _('Start invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" max="6" size="7" name="FromTransNo"></td>
+				<td><input class="number" type="text" max="6" size="7" name="FromTransNo" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('End invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" max="6" size="7" name="ToTransNo"></td>
+				<td><input class="number" type="text" max="6" size="7" name="ToTransNo" /></td>
 			</tr>
 			</table>';
 		echo '<div class="centre">
@@ -724,7 +724,7 @@ If (isset($PrintPDF)
 
 				echo '<table class="table1">
 						<tr>
-							<td valign=top width=10%><img src="' . $_SESSION['LogoFile'] . '"></td>
+							<td valign=top width=10%><img src="' . $_SESSION['LogoFile'] . '" /></td>
 							<td bgcolor="#bbb"><b>';
 
 				if ($InvOrCredit=='Invoice') {
@@ -957,7 +957,7 @@ If (isset($PrintPDF)
 					      if (mb_strlen($myrow2['narrative'])>1){
 					      		echo $RowStarter .
 									'<td></td>
-									<td colspan=6>' . $myrow2['narrative'] . '</td>
+									<td colspan="6">' . $myrow2['narrative'] . '</td>
 									</tr>';
 							$LineCounter++;
 					      }
@@ -972,7 +972,7 @@ If (isset($PrintPDF)
 						   echo '</table>
 								<table class="table1">
 								<tr>
-									<td valign="top"><img src="' . $_SESSION['LogoFile'] . '"></td>
+									<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" /></td>
 									<td bgcolor="#bbb"><b>';
 
 						   if ($InvOrCredit=='Invoice') {
@@ -1028,7 +1028,7 @@ If (isset($PrintPDF)
 					$PageNumber++;
 					echo '<table class="table1">
 							<tr>
-								<td valign="top"><img src="' . $_SESSION['LogoFile'] . '"></td>
+								<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" /></td>
 								<td bgcolor="#bbb"><b>';
 					if ($InvOrCredit=='Invoice') {
 					      echo '<font size="4">' . _('TAX INVOICE') .' ';

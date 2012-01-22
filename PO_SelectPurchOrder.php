@@ -39,7 +39,7 @@ if (isset($OrderNumber) && $OrderNumber != "") {
 } else {
 	if (isset($SelectedSupplier)) {
 		echo _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
-		echo '<input type="hidden" name="SelectedSupplier" value=' . $SelectedSupplier . '>';
+		echo '<input type="hidden" name="SelectedSupplier" value="' . $SelectedSupplier . '" />';
 	}
 }
 if (isset($_POST['SearchParts'])) {
@@ -197,8 +197,8 @@ echo '</select></td>
 	<tr>
 		<td colspan="3">
 			<div class="centre">
-				<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '">
-				<input type="submit" name="ResetPart" value="' . _('Show All') . '">
+				<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
+                <input type="submit" name="ResetPart" value="' . _('Show All') . '" />
 			</div>
 		</td>
 	</tr>

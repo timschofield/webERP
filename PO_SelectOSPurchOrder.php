@@ -230,7 +230,7 @@ echo '<br />';
 
 if (isset($StockItemsResult)) {
 
-	echo '<table cellpadding=2 colspan=7 class=selection>';
+	echo '<table cellpadding="2" colspan="7" class="selection">';
 	$TableHeader = 	'<tr><th>' . _('Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('On Hand') . '</th>

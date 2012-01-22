@@ -213,7 +213,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Area Code') . ':</td>
-				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size="3" maxlength=3></td>
+				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size="3" maxlength=3 /></td>
 			</tr>';
 	}
 

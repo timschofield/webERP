@@ -335,8 +335,8 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 
 	}
 
-	echo '<tr><td colspan=5 class="number"><font color="red">' . _('Total Value of Goods Credited') . ':</font></td>
-		<td class="number"><font color=red><U>' . locale_number_format($TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td></tr>';
+	echo '<tr><td colspan="5" class="number">' . _('Total Value of Goods Credited') . ':</td>
+		<td class="number"><U>' . locale_number_format($TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></td></tr>';
 	echo '</table>
 		<br />';
 }
@@ -510,7 +510,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 			<tr>
 				<td><font color="red">' . _('Credit Amount in Supplier Currency') . ':</font></td>
 				<td colspan="2" class="number">' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td></tr>';
-	echo '<input type="hidden" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '">';
+	echo '<input type="hidden" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
 } else {
 	echo '<table class="selection">
 			<tr>
@@ -520,7 +520,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 }
 
 echo '<tr>
-		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Change Tax Calculation Method') .  '"></td>
+		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Change Tax Calculation Method') .  '" /></td>
 		<td><select name="OverRideTax" onChange="ReloadForm(form1.ToggleTaxMethod)">';
 
 if ($_POST['OverRideTax']=='Man'){
@@ -603,7 +603,7 @@ echo '<table class="selection">
 
 echo '<p>
 		<div class="centre">
-			<input type="submit" name="PostCreditNote" value="' . _('Enter Credit Note') . '">
+			<input type="submit" name="PostCreditNote" value="' . _('Enter Credit Note') . '" />
 		</div>
 	</p>';
 

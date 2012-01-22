@@ -437,29 +437,29 @@ if (!isset($DebtorNo)) {
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
 	if ($_SESSION['AutoDebtorNo']==0)  {
-		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex=1 type="text" name="DebtorNo" size=11 maxlength=10></td></tr>';
+		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex=1 type="text" name="DebtorNo" size=11 maxlength=10 /></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Customer Name') . ':</td>
-		<td><input tabindex=2 type="Text" name="CustName" size=42 maxlength=40></td></tr>';
+		<td><input tabindex=2 type="Text" name="CustName" size=42 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Telephone') . ':</td>
-		<td><input tabindex=2 type="Text" name="Phone" size=30 maxlength=40></td></tr>';
+		<td><input tabindex=2 type="Text" name="Phone" size=30 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td>
-		<td><input tabindex=2 type="Text" name="Fax" size=30 maxlength=40></td></tr>';
+		<td><input tabindex=2 type="Text" name="Fax" size=30 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-		<td><input tabindex=2 type="Text" name="Email" size=30 maxlength=40></td></tr>';
+		<td><input tabindex=2 type="Text" name="Email" size=30 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
-		<td><input tabindex=3 type="Text" name="Address1" size=42 maxlength=40></td></tr>';
+		<td><input tabindex=3 type="Text" name="Address1" size=42 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
-		<td><input tabindex=4 type="Text" name="Address2" size=42 maxlength=40></td></tr>';
+		<td><input tabindex=4 type="Text" name="Address2" size=42 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td>
-		<td><input tabindex=5 type="Text" name="Address3" size=42 maxlength=40></td></tr>';
+		<td><input tabindex=5 type="Text" name="Address3" size=42 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
-		<td><input tabindex=6 type="Text" name="Address4" size=42 maxlength=40></td></tr>';
+		<td><input tabindex=6 type="Text" name="Address4" size=42 maxlength=40 /></td></tr>';
 	echo '<tr><td>' . _('Address Line 5') . ':</td>
-		<td><input tabindex=7 type="Text" name="Address5" size=22 maxlength=20></td></tr>';
+		<td><input tabindex=7 type="Text" name="Address5" size=22 maxlength=20 /></td></tr>';
 	echo '<tr><td>' . _('Address Line 6') . ':</td>
-		<td><input tabindex=8 type="Text" name="Address6" size=17 maxlength=15></td></tr>';
+		<td><input tabindex=8 type="Text" name="Address6" size=17 maxlength=15 /></td></tr>';
 
 
 
@@ -467,10 +467,10 @@ if (!isset($DebtorNo)) {
 	$result=DB_query("SELECT typeabbrev, sales_type FROM salestypes ",$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
-		echo '<tr><td colspan=2>' . prnMsg(_('No sales types/price lists defined'),'error') . '<br /><a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a></td></tr>';
+		echo '<tr><td colspan="2">' . prnMsg(_('No sales types/price lists defined'),'error') . '<br /><a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a></td></tr>';
 	} else {
 		echo '<tr><td>' . _('Sales Type/Price List') . ':</td>
-			   <td><select tabindex=9 name="SalesType">';
+			   <td><select tabindex="9" name="SalesType">';
 
 		while ($myrow = DB_fetch_array($result)) {
 		   echo '<option value="'. $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
@@ -484,10 +484,10 @@ if (!isset($DebtorNo)) {
 	if (DB_num_rows($result)==0){
 	   $DataError =1;
 	   echo '<a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a>';
-	   echo '<tr><td colspan=2>' . prnMsg(_('No Customer types/price lists defined'),'error') . '</td></tr>';
+	   echo '<tr><td colspan="2">' . prnMsg(_('No Customer types/price lists defined'),'error') . '</td></tr>';
 	} else {
 		echo '<tr><td>' . _('Customer Type') . ':</td>
-				<td><select tabindex=9 name="typeid">';
+				<td><select tabindex="9" name="typeid">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="'. $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
@@ -498,7 +498,7 @@ if (!isset($DebtorNo)) {
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr><td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input tabindex=10 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size=12 maxlength=10></td></tr>';
+				<td><input tabindex=10 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size=12 maxlength=10 /></td></tr>';
 	
 	echo '</table></td>
 			<td><table class="selection">
@@ -520,13 +520,13 @@ if (!isset($DebtorNo)) {
 				</tr>
 				<tr>
 					<td>' . _('Tax Reference') . ':</td>
-					<td><input tabindex=15 type="text" name="TaxRef" size="22" maxlength="20" /></td>
+					<td><input tabindex="15" type="text" name="TaxRef" size="22" maxlength="20" /></td>
 				</tr>';
 
 	$result=DB_query("SELECT terms, termsindicator FROM paymentterms",$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
-		echo '<tr><td colspan=2>' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></tr>';
+		echo '<tr><td colspan="2">' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></tr>';
 	} else {
 
 		echo '<tr>

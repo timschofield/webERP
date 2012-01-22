@@ -492,7 +492,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="ProcessTransfer" value="'. _('Process Inventory Transfer'). '">
+			<input type="submit" name="ProcessTransfer" value="'. _('Process Inventory Transfer'). '" />
 			<br />
 		</div>
 		</form>';
@@ -523,7 +523,7 @@ if (isset($_SESSION['Transfer'])){
 		}
 	}
 	echo '</select>
-		<input type="submit" name="RefreshTransferList" value="' . _('Refresh Transfer List') . '"></td>
+		<input type="submit" name="RefreshTransferList" value="' . _('Refresh Transfer List') . '" /></td>
 		</tr>
 		</table>
 		<p />';

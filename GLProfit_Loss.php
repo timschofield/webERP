@@ -748,7 +748,7 @@ if ((!isset($_POST['FromPeriod'])
 				if ($Section==1) { /*Income*/
 
 					echo '<tr>
-							<td colspan=3></td>
+							<td colspan="3"></td>
       						<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
@@ -757,7 +757,7 @@ if ((!isset($_POST['FromPeriod'])
 						</tr>';
 
 					printf('<tr>
-							<td colspan="2"><font size=4>%s</font></td>
+							<td colspan="2">%s</td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -875,7 +875,7 @@ if ((!isset($_POST['FromPeriod'])
 			$ActGrp = $myrow['groupname'];
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
-					<th colspan=8><font size=3 color=BLUE><b>%s</b></font></th>
+					<th colspan="8"><b>%s</b></th>
 					</tr>',
 					$myrow['groupname']);
 					echo $TableHeader;
@@ -1051,7 +1051,7 @@ if ((!isset($_POST['FromPeriod'])
 		if ($Section==1) { /*Income*/
 
 			echo '<tr>
-					<td colspan=3></td>
+					<td colspan="3"></td>
 					<td><hr /></td>
 					<td></td>
 					<td><hr /></td>

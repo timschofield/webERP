@@ -220,7 +220,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 
 	} else {
 		echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />';
-		echo '<input type="hidden" name="ToDate" value=' . $_POST['ToDate'] . '>';
+		echo '<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';
 		echo '<input type="hidden" name="AssetCategory" value="' . $_POST['AssetCategory'] . '" />';
 		echo '<input type="hidden" name="AssetID" value="' . $_POST['AssetID'] . '" />';
 		echo '<input type="hidden" name="AssetLocation" value="' . $_POST['AssetLocation'] . '" />';

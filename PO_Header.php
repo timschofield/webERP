@@ -711,10 +711,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		$_POST['PaymentTerms']=$_SESSION['PO'.$identifier]->PaymentTerms;
 	}
 
-	echo '<br /><table colspan=1 width=80%>
+	echo '<br /><table colspan="1" width="80%">
 		<tr>
-			<th><font color="blue" size="4"><b>' . _('Order Initiation Details') . '</b></font></th>
-			<th><font color="blue" size="4"><b>' . _('Order Status') . '</b></font></th>
+			<th><b>' . _('Order Initiation Details') . '</b></th>
+			<th><b>' . _('Order Status') . '</b></th>
 		</tr>		
 		<tr><td style="width:50%">';
 //sub table starts
@@ -783,7 +783,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 				</select></td>';
 		echo '<td><input type="submit" name="AllowRePrint" value="Update" /></td></tr>';
 	} elseif ($Printed) {
-		echo '<tr><td colspan=2><a target="_blank"  href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['ExistingOrder'] . '&identifier='.$identifier. '">' . _('Reprint Now') . '</a></td></tr>';
+		echo '<tr><td colspan="2"><a target="_blank"  href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['ExistingOrder'] . '&identifier='.$identifier. '">' . _('Reprint Now') . '</a></td></tr>';
 	}
 
 	echo '</table>';

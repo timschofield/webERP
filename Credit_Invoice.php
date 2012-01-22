@@ -418,7 +418,7 @@ foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
 	}
 
 	if (!isset($_POST['ProcessCredit'])) {
-		echo  '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" maxlength="4" size="4" value=' . $FreightTaxLine->TaxRate * 100 . '>';
+		echo  '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" maxlength="4" size="4" value="' . $FreightTaxLine->TaxRate * 100 . '" />';
 	}
 	if ($FreightTaxLine->TaxOnTax ==1){
 		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems']->FreightCost + $FreightTaxTotal));
@@ -444,7 +444,7 @@ if (!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
 		<td colspan="7" class="number">' . _('Credit Totals') . '</td>
 		<td class="number"><hr><b>' . $DisplayTotal . '</b><hr></td>
-		<td colspan=2></td>
+		<td colspan="2"></td>
 		<td class="number"><hr><b>' . locale_number_format($TaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '<hr></td>
 		<td class="number"><hr><b>' . locale_number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),$_SESSION['CreditItems']->CurrDecimalPlaces) . '</b><hr></td>
 		</tr></table>';
@@ -1509,9 +1509,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	}
 	$j++;
 	echo '<tr><td>' . _('Credit note text') . '</td><td><textarea tabindex=' . $j . '  name="CreditText" cols="31" rows="5">' . $_POST['CreditText'] . '</textarea></td></tr>';
-	echo '</table><br /><div class="centre"><input tabindex=' . $j . ' type="submit" name="Update" value=' . _('Update') . '><p>';
+	echo '</table><br /><div class="centre"><input tabindex=' . $j . ' type="submit" name="Update" value=' . _('Update') . ' /><br />';
 	$j++;
-	echo '<input type="submit" tabindex='.$j++.' name="ProcessCredit" Value="' . _('Process Credit') .'"></div>';
+	echo '<input type="submit" tabindex='.$j++.' name="ProcessCredit" Value="' . _('Process Credit') .'" /></div>';
 }
 
 echo '</form>';

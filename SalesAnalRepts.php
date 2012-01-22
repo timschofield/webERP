@@ -428,7 +428,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Upper1'] = '';
 	}
 	echo '<td>' . _('From') . ': <input type="text" name="Lower1" size="10" maxlength="10" value="' . $_POST['Lower1'] . '" /></td>
-			<td>' . _('To') . ': <input type="text" name="Upper1" size="10" maxlength="10" value="' . $_POST['Upper1'] .'"></td>
+			<td>' . _('To') . ': <input type="text" name="Upper1" size="10" maxlength="10" value="' . $_POST['Upper1'] .'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Group By 2') . ': <select name="GroupByData2">';
@@ -504,14 +504,14 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<td>' . _('From') .': <input type="text" name="Lower4" size="10" maxlength="10" value="' . $_POST['Lower4'] . '" /></td>
-			<td>' . _('To') . ': <input type="text" name="Upper4" size=10 maxlength=10 value="' . $_POST['Upper4'] . '"></td>
+			<td>' . _('To') . ': <input type="text" name="Upper4" size=10 maxlength=10 value="' . $_POST['Upper4'] . '" /></td>
 		</tr>';
 
 	echo '</table>';
 
 	echo '<br />
 			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Enter Information') . '">
+				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 			</div>
 		</form>';
 

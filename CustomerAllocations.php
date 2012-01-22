@@ -397,7 +397,7 @@ if (isset($_POST['AllocTrans'])) {
 						<td class="number">' . locale_number_format($balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 					</tr>';
 		} else {
-				echo '<input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '"></td>';
+				echo '<input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" /></td>';
 				echo '<td class="number"><input tabindex="' . $j .'" type="checkbox" name="All' .  $Counter . '"';
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {

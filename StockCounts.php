@@ -80,7 +80,7 @@ if ($_GET['Action'] == 'Enter'){
 
 
 	echo '<table cellpadding=2 class=selection>';
-	echo '<tr><th colspan=3>'._('Stock Check Counts at Location') . ":<select name='Location'>";
+	echo '<tr><th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$result = DB_query($sql,$db);
 
@@ -101,13 +101,13 @@ if ($_GET['Action'] == 'Enter'){
 	for ($i=1;$i<=10;$i++){
 
 		echo '<tr>
-			<td><input type="text" name='StockID_" . $i . "' maxlength=20 size=20></td>
-			<td><input type="text" name='Qty_" . $i . "' maxlength=10 size=10></td>
-			<td><input type="text" name='Ref_" . $i . "' maxlength=20 size=20></td></tr>';
+			<td><input type="text" name='StockID_" . $i . "' maxlength=20 size=20 /></td>
+			<td><input type="text" name='Qty_" . $i . "' maxlength=10 size=10 /></td>
+			<td><input type="text" name='Ref_" . $i . "' maxlength=20 size=20 /></td></tr>';
 
 	}
 
-	echo "</table><br /><div class=centre><input type="submit" name='EnterCounts' VALUE='" . _('Enter Above Counts') . "'></div>";
+	echo "</table><br /><div class=centre><input type="submit" name='EnterCounts' VALUE='" . _('Enter Above Counts') . "' /></div>";
 
 //END OF action=ENTER
 } elseif ($_GET['Action']=='View'){
@@ -126,8 +126,8 @@ if ($_GET['Action'] == 'Enter'){
 	//START OF action=VIEW
 	$SQL = "select * from stockcounts";
 	$result = DB_query($SQL, $db);
-	echo '<input type="hidden" name=Action Value="View">';
-	echo '<table cellpadding=2 class=selection>';
+	echo '<input type="hidden" name=Action Value="View" />';
+	echo '<table cellpadding="2" class="selection">';
 	echo "<tr>
 		<th>" . _('Stock Code') . "</th>
 		<th>" . _('Location') . "</th>
@@ -140,10 +140,10 @@ if ($_GET['Action'] == 'Enter'){
 			<td>".$myrow['loccode']."</td>
 			<td>".$myrow['qtycounted']."</td>
 			<td>".$myrow['reference']."</td>
-			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength=20 size=20></td></tr>";
+			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength=20 size=20 /></td></tr>";
 
 	}
-	echo "</table><br /><div class=centre><input type="submit" name='SubmitChanges' VALUE='" . _('Save Changes') . "'></div>";
+	echo "</table><br /><div class=centre><input type="submit" name='SubmitChanges' VALUE='" . _('Save Changes') . "' /></div>";
 
 //END OF action=VIEW
 }

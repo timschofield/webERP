@@ -88,10 +88,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table><tr>';
 echo '<td>' . _('Full code of the new language in the format en_US') . '</td>';
-echo '<td><input type="text" size="5" name="NewLanguage">';
+echo '<td><input type="text" size="5" name="NewLanguage" />';
 echo '</td></tr></table>';
 
-echo '<br /><input type="Submit" name="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;&nbsp;&nbsp;';
+echo '<br /><input type="Submit" name="submit" VALUE="' . _('Proceed') . '" />&nbsp;&nbsp;&nbsp;&nbsp;';
 echo '</form>';
 
 include('includes/footer.inc');

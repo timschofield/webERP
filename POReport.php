@@ -508,7 +508,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		} else {
 			$SortBy_Display = $Detail_Array[$_POST['SortBy']];
 		}
-		echo '<tr><th colspan=2><font size=3 color=navy>'._('Header Details').'</font></th></tr>';
+		echo '<tr><th colspan="2">'._('Header Details').'</th></tr>';
 		echo '<tr><td>' . _('Purchase Order Report') . '</td>
 					<td>' . $_POST['ReportType'] . ' ' . _('By') . ' '.$SortBy_Display .'</td></tr>';
 		echo '<tr><td>' . _('Date Type') . '</td>
@@ -818,22 +818,22 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		echo '</table>';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<input type="hidden" name="ReportType" value="'.$_POST['ReportType'].'">';
-		echo '<input type="hidden" name="DateType" value="'.$_POST['DateType'].'">';
-		echo '<input type="hidden" name="FromDate" value="'.$_POST['FromDate'].'">';
-		echo '<input type="hidden" name="ToDate" value="'.$_POST['ToDate'].'">';
-		echo '<input type="hidden" name="PartNumberOp" value="'.$_POST['PartNumberOp'].'">';
-		echo '<input type="hidden" name="PartNumber" value="'.$_POST['PartNumber'].'">';
-		echo '<input type="hidden" name="SupplierIdOp" value="'.$_POST['SupplierIdOp'].'">';
-		echo '<input type="hidden" name="SupplierId" value="'.$_POST['SupplierId'].'">';
-		echo '<input type="hidden" name="SupplierNameOp" value="'.$_POST['SupplierNameOp'].'">';
-		echo '<input type="hidden" name="SupplierName" value="'.$_POST['SupplierName'].'">';
-		echo '<input type="hidden" name="OrderNo" value="'.$_POST['OrderNo'].'">';
-		echo '<input type="hidden" name="LineStatus" value="'.$_POST['LineStatus'].'">';
-		echo '<input type="hidden" name="Category" value="'.$_POST['Category'].'">';
-		echo '<input type="hidden" name="SortBy" value="'.$_POST['SortBy'].'">';
-		echo '<input type="hidden" name="SummaryType" value="'.$_POST['SummaryType'].'">';
-		echo '<br /><div class=centre><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '"></div>';
+		echo '<input type="hidden" name="ReportType" value="'.$_POST['ReportType'].'" />';
+		echo '<input type="hidden" name="DateType" value="'.$_POST['DateType'].'" />';
+		echo '<input type="hidden" name="FromDate" value="'.$_POST['FromDate'].'" />';
+		echo '<input type="hidden" name="ToDate" value="'.$_POST['ToDate'].'" />';
+		echo '<input type="hidden" name="PartNumberOp" value="'.$_POST['PartNumberOp'].'" />';
+		echo '<input type="hidden" name="PartNumber" value="'.$_POST['PartNumber'].'" />';
+		echo '<input type="hidden" name="SupplierIdOp" value="'.$_POST['SupplierIdOp'].'" />';
+		echo '<input type="hidden" name="SupplierId" value="'.$_POST['SupplierId'].'" />';
+		echo '<input type="hidden" name="SupplierNameOp" value="'.$_POST['SupplierNameOp'].'" />';
+		echo '<input type="hidden" name="SupplierName" value="'.$_POST['SupplierName'].'" />';
+		echo '<input type="hidden" name="OrderNo" value="'.$_POST['OrderNo'].'" />';
+		echo '<input type="hidden" name="LineStatus" value="'.$_POST['LineStatus'].'" />';
+		echo '<input type="hidden" name="Category" value="'.$_POST['Category'].'" />';
+		echo '<input type="hidden" name="SortBy" value="'.$_POST['SortBy'].'" />';
+		echo '<input type="hidden" name="SummaryType" value="'.$_POST['SummaryType'].'" />';
+		echo '<br /><div class=centre><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '" /></div>';
 		echo '</form>';
 	} // End of if inputerror != 1
 } // End of function submit()
@@ -1513,8 +1513,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo '<tr>
 		<td>' . _('Date Range') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'"> ' . _('To') . ':&nbsp&nbsp
-		<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '"></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp&nbsp
+        <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 
 	echo '<tr><td>' . _('Part Number') . ':</td>';
@@ -1523,8 +1523,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
 	echo '&nbsp&nbsp<input type="text" name="PartNumber" size="20" maxlength="20" value="';
-	if (isset($_POST['PartNumber'])) {
-		echo $_POST['PartNumber'] . '"></td></tr>';
+    if (isset($_POST['PartNumber'])) {
+        echo $_POST['PartNumber'] . '" /></td></tr>';
 	} else {
 		echo '"></td></tr>';
 	}
@@ -1535,8 +1535,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
 	echo '&nbsp&nbsp<input type="text" name="SupplierId" size=10 maxlength=10 value="';
-	if (isset($_POST['SupplierId'])) {
-		echo $_POST['SupplierId'] . '"></td></tr>';
+    if (isset($_POST['SupplierId'])) {
+        echo $_POST['SupplierId'] . '" /></td></tr>';
 	} else {
 		echo  '"></td></tr>';
 	}
@@ -1556,8 +1556,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr><td>' . _('Order Number') . ':</td>';
 	echo '<td>'._('Equals').':&nbsp&nbsp';
 	echo '<input type="text" name="OrderNo" size="10" maxlength="10" value="';
-	if (isset($_POST['OrderNo'])) {
-		echo $_POST['OrderNo'] . '"></td></tr>';
+    if (isset($_POST['OrderNo'])) {
+        echo $_POST['OrderNo'] . '" /></td></tr>';
 	} else {
 		echo  '"></td></tr>';
 	}
@@ -1601,10 +1601,10 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo '<tr><td>&nbsp</td></tr>
 		<tr>
-		<td colspan=4><div class=centre><input type="submit" name="submit" value="' . _('Run Inquiry') . '"></div></td>
+		<td colspan="4"><div class="centre"><input type="submit" name="submit" value="' . _('Run Inquiry') . '" /></div></td>
 	</tr>
 	<tr>
-		<td colspan=4><div class=centre><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '"></div></td>
+		<td colspan="4"><div class="centre"><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '" /></div></td>
 	</tr>
 	</table>
 	<br/>';

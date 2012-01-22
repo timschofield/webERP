@@ -252,7 +252,7 @@ IF(mail( $MailTo, $MailSubject, $MailMessage, $headers )){
 <title>Email Confirmation</title>
 </head>
 <body>
-<Table width='60%'>
+<table width='60%'>
 	<tr>
 		<td align='center' colspan='4'> <?php echo "<IMG src='" . $rootpath . '/' . $_SESSION['LogoFile'] . "' alt='Logo'" .
                  "width='500' height='100' align='center' border='0'>" ?>

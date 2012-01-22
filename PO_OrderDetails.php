@@ -108,7 +108,7 @@ echo '<tr><th style="text-align:left">' . _('Requisition Ref'). '.</td><td>' . $
 	<th style="text-align:left">' . _('Delivery Address 6'). '</td><td>' . $myrow['deladd6'] . '</td></tr>';
 
 
-echo '<tr><th style="text-align:left">'. _('Printing') . '</td><td colspan=3>';
+echo '<tr><th style="text-align:left">'. _('Printing') . '</td><td colspan="3">';
 
 if ($myrow['dateprinted'] == ''){
 	echo '<i>'. _('Not yet printed') . '</i> &nbsp; &nbsp; ';
@@ -121,7 +121,7 @@ if ($myrow['dateprinted'] == ''){
 echo  '</td></tr>';
 echo '<tr><th style="text-align:left">'. _('Status') . '</td><td>'. _($myrow['status']) . '</td></tr>';
 
-echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td colspan=3>' . $myrow['comments'] . '</td></tr>';
+echo '<tr><th style="text-align:left">' . _('Comments'). '</td><td colspan="3">' . $myrow['comments'] . '</td></tr>';
 
 echo '</table>';
 
@@ -204,11 +204,11 @@ while ($myrow=DB_fetch_array($LineItemsResult)) {
 
 echo '<tr><td><br /></td>
 	</tr>
-	<tr><td colspan=4 class="number">' . _('Total Order Value Excluding Tax') .'</td>
-	<td colspan=2 class="number">' . locale_number_format($OrderTotal,$CurrDecimalPlaces) . '</td></tr>';
+	<tr><td colspan="4" class="number">' . _('Total Order Value Excluding Tax') .'</td>
+	<td colspan="2" class="number">' . locale_number_format($OrderTotal,$CurrDecimalPlaces) . '</td></tr>';
 echo '<tr>
-	<td colspan=4 class="number">' . _('Total Order Value Received Excluding Tax') . '</td>
-	<td colspan=2 class="number">' . locale_number_format($RecdTotal,$CurrDecimalPlaces) . '</td></tr>';
+	<td colspan="4" class="number">' . _('Total Order Value Received Excluding Tax') . '</td>
+	<td colspan="2" class="number">' . locale_number_format($RecdTotal,$CurrDecimalPlaces) . '</td></tr>';
 echo '</table>';
 
 echo '<br />';

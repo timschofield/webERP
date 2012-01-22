@@ -157,7 +157,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 }
 
 echo '<tr>
-		<td colspan=5 align="right"><font size="2" color="navy">' . _('Total Value of Goods Charged') . ':</font></td>
+		<td colspan="5" align="right">' . _('Total Value of Goods Charged') . ':</td>
 		<td class="number"><font size="2" color="navy">' . locale_number_format($TotalValueCharged,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</font></td>
 	</tr>
 	</table>
@@ -272,7 +272,7 @@ if (isset($_GET['Modify'])){
 
 	echo '<div class="centre">
 			<p>
-			<input type="Submit" name="ModifyGRN" value="' . _('Modify Line') . '">
+			<input type="Submit" name="ModifyGRN" value="' . _('Modify Line') . '" />
 			</p>
 		</div>';
 
@@ -284,10 +284,10 @@ if (isset($_GET['Modify'])){
 	echo '<input type="hidden" name="Prev_QuantityInv" value="' . $GRNTmp->Prev_QuantityInv . '" />';
 	echo '<input type="hidden" name="OrderPrice" value="' . $GRNTmp->OrderPrice . '" />';
 	echo '<input type="hidden" name="StdCostUnit" value="' . $GRNTmp->StdCostUnit . '" />';
-	echo '<input type="hidden" name="JobRef" value="' . $GRNTmp->JobRef . '">';
-	echo '<input type="hidden" name="GLCode" value="' . $GRNTmp->GLCode . '">';
-	echo '<input type="hidden" name="PODetailItem" value="' . $GRNTmp->PODetailItem . '">';
-	echo '<input type="hidden" name="AssetID" value="' . $GRNTmp->AssetID . '">';
+	echo '<input type="hidden" name="JobRef" value="' . $GRNTmp->JobRef . '" />';
+	echo '<input type="hidden" name="GLCode" value="' . $GRNTmp->GLCode . '" />';
+	echo '<input type="hidden" name="PODetailItem" value="' . $GRNTmp->PODetailItem . '" />';
+	echo '<input type="hidden" name="AssetID" value="' . $GRNTmp->AssetID . '" />';
 }
 else {
 	if (count( $_SESSION['SuppTransTmp']->GRNs)>0){   /*if there are any outstanding GRNs then */

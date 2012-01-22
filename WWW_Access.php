@@ -159,7 +159,7 @@ echo '<br />';
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedRole'])) {
-	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '">';
+	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '" />';
 }
 echo '<table class="selection">';
 if (!isset($_POST['SecRoleName'])) {
@@ -197,7 +197,7 @@ if (isset($SelectedRole)) {
 
 	if (DB_num_rows($Result)>0 ) {
 		echo '<th colspan="3"><div class="centre">'._('Assigned Security Tokens').'</div></th>';
-		echo '<th colspan=3><div class="centre">'._('Available Security Tokens').'</div></th>';
+		echo '<th colspan="3"><div class="centre">'._('Available Security Tokens').'</div></th>';
 	}
 	echo '</tr>';
 

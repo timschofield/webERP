@@ -92,7 +92,7 @@ include('includes/header.inc');
 					<th colspan="5"><font size="2" color="navy">' . _('Material Requirements For this Work Order') . '</font></th>
 				</tr>';
 		echo '<tr>
-				<th colspan=2>' . _('Item') . '</th>
+				<th colspan="2">' . _('Item') . '</th>
 				<th>' . _('Qty Required') . '</th>
 				<th>' . _('Qty Issued') . '</th>
 			</tr>';

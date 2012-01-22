@@ -102,14 +102,14 @@ echo	' /></td>
 		</tr>
 		<tr>
 		<td>' . _('Number to Display') . ':</td>
-		<td><input type="text class="number" name="NoToDisplay" size="4" maxlength="4" value="' . $_POST['NoToDisplay'] .'" ></td>
+		<td><input type="text class="number" name="NoToDisplay" size="4" maxlength="4" value="' . $_POST['NoToDisplay'] .'"  /></td>
 		</tr>
 	</table>
 	</td></tr>
 	</table>';
 
 
-echo '<br /><div class="centre"><input tabindex=4 type="submit" name="ShowSales" value="' . _('Show Sales') . '">';
+echo '<br /><div class="centre"><input tabindex=4 type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
 echo '</form></div>';
 echo '<br />';
 

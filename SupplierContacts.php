@@ -253,7 +253,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['Email'] = '';
 	}
 
-	echo '<input type="hidden" name="SupplierID" value="' . $SupplierID . '">
+	echo '<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
 		<tr>
 			<td>' . _('Position') . ':</td>
 			<td><input type="text" name="Position" size="31" maxlength="30" value="' . $_POST['Position'] . '" /></td>
@@ -272,7 +272,7 @@ if (! isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td><a href="Mailto:' . $_POST['Email'] . '">' . _('Email') . ':</a></td>
-			<td><input type="text" name="Email" size="51" maxlength="50" value="' . $_POST['Email'] . '"></td>
+			<td><input type="text" name="Email" size="51" maxlength="50" value="' . $_POST['Email'] . '" /></td>
 		</tr>
 		</table>
 		<br />';

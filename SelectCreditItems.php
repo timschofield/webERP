@@ -766,7 +766,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				</tr>';
 
 			echo $RowStarter;
-			echo '<td colspan=11><textarea  name="Narrative_' . $LineItem->LineNumber . '" cols="100%" rows="1">' . $LineItem->Narrative . '</textarea><br /></td></tr>';
+			echo '<td colspan="11"><textarea  name="Narrative_' . $LineItem->LineNumber . '" cols="100%" rows="1">' . $LineItem->Narrative . '</textarea><br /></td></tr>';
 
 
 			$_SESSION['CreditItems'.$identifier]->total += $LineTotal;

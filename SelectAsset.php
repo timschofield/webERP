@@ -69,7 +69,7 @@ echo '<td>' . _('Enter partial description') . '</b>:</td><td>';
 if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" maxlength="25"> /';
+	echo '<input type="text" name="Keywords" size="20" maxlength="25" /> /';
 }
 echo '</td>
 	</tr>

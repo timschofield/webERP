@@ -32,7 +32,7 @@ if (DB_num_rows($ShiptsResult)==0){
 }
 /*show a table of the shipments returned by the SQL */
 
-echo '<table cellpadding=2 colspan=2 class=selection>';
+echo '<table cellpadding="2" colspan="2" class="selection">';
 echo '<tr>
 		<th>'. _('Reference'). '</a></th>
 		<th>'. _('Vessel'). '</th>

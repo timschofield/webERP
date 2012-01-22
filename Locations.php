@@ -466,7 +466,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="LocCode" value="' . $_POST['LocCode'] . '" />';
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan=2><font size=3 color=blue>'._('Amend Location details').'</font></th>
+				<th colspan="2">'._('Amend Location details').'</th>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Location Code') . ':</td>
@@ -603,7 +603,7 @@ if (!isset($_GET['delete'])) {
 	echo '</table>
 		<br />
 		<div class="centre">
-			<input type="Submit" name="submit" value="' .  _('Enter Information') . '">
+			<input type="Submit" name="submit" value="' .  _('Enter Information') . '" />
 		</div>
 		</form>';
 

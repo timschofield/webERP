@@ -299,7 +299,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		</table><br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Create Calendar') . '" />
-			<input type="submit" name="listall" value="' . _('List Date Range') . '">
+			<input type="submit" name="listall" value="' . _('List Date Range') . '" />
 		</div>';
 
 	if (!isset($_POST['ChangeDate'])) {

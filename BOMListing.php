@@ -117,7 +117,7 @@ If (isset($_POST['PrintPDF'])
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</font></td>
-				<td><input tabindex="1" type="text" name="FromCriteria" size="20" maxlength="20" value="1"></td>
+				<td><input tabindex="1" type="text" name="FromCriteria" size="20" maxlength="20" value="1" /></td>
 			</tr>';
 
 		echo '<tr><td>' . _('To Inventory Part Code') . ':' . '</td>
@@ -126,7 +126,7 @@ If (isset($_POST['PrintPDF'])
 
 
 		echo '</table>
-				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '"></div>';
+				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
 		echo '<script>defaultControl(document.forms[0].FromCriteria);</script>';
 	}
 	include('includes/footer.inc');;

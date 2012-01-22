@@ -78,7 +78,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			</table>
 			<br />
 			<div class="centre">
-				<input type="submit" name="Go" value="' . _('Create PDF') . '">
+				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
 
 	 if ($InputError==1){

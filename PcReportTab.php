@@ -396,7 +396,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Amount[0]=0;
 	}
 
-	echo '<tr><td colspan=2 style="text"-align:right >' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
+	echo '<tr><td colspan="2" style="text"-align:right >' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
 				<td>'.locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']).' </td><td>'.$Tabs['currency'].'</td></tr>';
 
 	echo '</table>';

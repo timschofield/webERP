@@ -1085,9 +1085,9 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo '<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size=10 maxlength=10 value="' . $_POST['FromDate'] . '"></td>
+			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size=10 maxlength=10 value="' . $_POST['FromDate'] . '" /></td>
 			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size=10 maxlength=10 value="' . $_POST['ToDate'] . '"></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size=10 maxlength=10 value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['PartNumber'])){
 		$_POST['PartNumber']='';
@@ -1099,7 +1099,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
 			<td>&nbsp</td>
-			<td><input type="text" name="PartNumber" size=20 maxlength=20 value="'. $_POST['PartNumber'] . '"></td>
+			<td><input type="text" name="PartNumber" size=20 maxlength=20 value="'. $_POST['PartNumber'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['DebtorNo'])){
 		$_POST['DebtorNo']='';
@@ -1111,7 +1111,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
 			<td>&nbsp</td>
-			<td><input type="text" name="DebtorNo" size=10 maxlength=10 value="' . $_POST['DebtorNo'] . '"></td>
+			<td><input type="text" name="DebtorNo" size=10 maxlength=10 value="' . $_POST['DebtorNo'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['DebtorName'])){
 		$_POST['DebtorName']='';
@@ -1123,7 +1123,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="Equals">' . _('Equals') . '</option>
 			</select></td>
 			<td>&nbsp</td>
-			<td><input type="text" name="DebtorName" size=30 maxlength=30 value="' . $_POST['DebtorName'] .'"></td>
+			<td><input type="text" name="DebtorName" size=30 maxlength=30 value="' . $_POST['DebtorName'] .'" /></td>
 		</tr>';
 	if (!isset($_POST['OrderNo'])){
 		$_POST['OrderNo']='';

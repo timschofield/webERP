@@ -162,11 +162,11 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		$k = 0; //row colour counter
 		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF']) .'" method="POST" name="update">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo'<input type="hidden" value=' . $_POST['StockCat'] . ' name="StockCat">
-			<input type="hidden" value=' . $_POST['Margin'] . ' name="Margin">
-			<input type="hidden" value=' . $_POST['CurrCode'] . ' name="CurrCode">
-			<input type="hidden" value=' . $_POST['Comparator'] . ' name="Comparator">
-			<input type="hidden" value=' . $_POST['SalesType'] . ' name="SalesType">';
+		echo'<input type="hidden" value=' . $_POST['StockCat'] . ' name="StockCat" />
+			<input type="hidden" value=' . $_POST['Margin'] . ' name="Margin" />
+			<input type="hidden" value=' . $_POST['CurrCode'] . ' name="CurrCode" />
+			<input type="hidden" value=' . $_POST['Comparator'] . ' name="Comparator" />
+			<input type="hidden" value=' . $_POST['SalesType'] . ' name="SalesType" />';
 
 		$PriceCounter =0;
 		while ($myrow = DB_fetch_array($result)) {
@@ -213,13 +213,13 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					<td class="number">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($CurrentGP, 1) . '%</td>
 					<td class="number">' . locale_number_format($ProposedPrice, $myrow['decimalplaces']) . '</td>
-					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength="14" size="10" value="' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '"></td>
+					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength="14" size="10" value="' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '" /></td>
 				</tr> ';
 			$PriceCounter++;
 		} //end of looping
 		echo '<tr>
-			<td style="text-align:right" colspan=4><input type="submit" name="submit" value=' . _('Update') . ' onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');"></td>
-			<td style="text-align:left" colspan=3><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '"><input type="submit" value="' . _('Back') . '"><a/></td>
+			<td style="text-align:right" colspan="4"><input type="submit" name="submit" value=' . _('Update') . ' onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
+			<td style="text-align:left" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '"><input type="submit" value="' . _('Back') . '" /></a></td>
 			 </tr></form>';
 	} else {
 		prnMsg(_('There were no prices meeting the criteria specified to review'),'info');
@@ -257,7 +257,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	if (!isset($_POST['Margin'])){
 		$_POST['Margin']=1;
 	}
-	echo '<td><input type="text" class="number" name="Margin" maxlength="8" size="8" value=' .$_POST['Margin'] . '></td></tr>';
+	echo '<td><input type="text" class="number" name="Margin" maxlength="8" size="8" value=' .$_POST['Margin'] . ' /></td></tr>';
 	$result = DB_query("SELECT typeabbrev, sales_type FROM salestypes", $db);
 	echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
 		<td><select name="SalesType">';
@@ -283,7 +283,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '</table>
-		<br /><p><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '"></div></p>';
+		<br /><p><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '" /></div></p>';
 } /*end of else not submit */
 include ('includes/footer.inc');
 ?>

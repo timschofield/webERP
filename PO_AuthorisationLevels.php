@@ -227,20 +227,20 @@ if (isset($_GET['Edit'])) {
 echo '<tr>
 		<td>'._('User can create orders').'</td>';
 if ($CanCreate==1) {
-	echo '<td><input type="checkbox" name="CanCreate"></td>
+	echo '<td><input type="checkbox" name="CanCreate" /></td>
 		</tr>';
 } else {
-	echo '<td><input type="checkbox" checked name="CanCreate"></td>
+	echo '<td><input type="checkbox" checked name="CanCreate" /></td>
 		</tr>';
 }
 
 echo '<tr>
 		<td>'._('User can release invoices').'</td>';
 if ($OffHold==1) {
-	echo '<td><input type="checkbox" name="OffHold"></td>
+	echo '<td><input type="checkbox" name="OffHold" /></td>
 		</tr>';
 } else {
-	echo '<td><input type="checkbox" checked name="OffHold"></td>
+	echo '<td><input type="checkbox" checked name="OffHold" /></td>
 		</tr>';
 }
 

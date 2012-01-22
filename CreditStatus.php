@@ -240,7 +240,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>'. _('Description') .':</td>
 			<td><input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
-			 ' tabindex=2 type="text" name="ReasonDescription" VALUE="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30"></td>
+			 ' tabindex=2 type="text" name="ReasonDescription" VALUE="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>'. _('Disallow Invoices') . '</td>';

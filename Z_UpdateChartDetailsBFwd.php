@@ -52,7 +52,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 	}
 	echo '</select></td></tr></table>';
 
-	echo '<div class="centre"><input type="submit" name="recalc" value="' . _('Do the Recalculation') . '"></div></form>';
+	echo '<div class="centre"><input type="submit" name="recalc" value="' . _('Do the Recalculation') . '" /></div></form>';
 
 } else {  /*OK do the updates */
 

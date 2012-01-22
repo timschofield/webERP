@@ -821,7 +821,7 @@ if($WORow['controlled']==1){ //controlled
 						echo '</tr>
 							<tr>';
 					}
-					echo '<td><input type="checkbox" name="CheckItem' . $i . '">'. $WOSNRow[0] .'<input type="hidden" name="SerialNo' . $i . '" value="' . $WOSNRow[0] . '"><input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[1] . '" /></td>';
+					echo '<td><input type="checkbox" name="CheckItem' . $i . '" />'. $WOSNRow[0] .'<input type="hidden" name="SerialNo' . $i . '" value="' . $WOSNRow[0] . '" /><input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[1] . '" /></td>';
 					$i++;
 				}
 			}
@@ -876,7 +876,7 @@ if($WORow['controlled']==1){ //controlled
 					echo '<td><input type="textbox" name="BatchRef' . $i . '" value="' . $WOSNRow[0] . '" /></td>
 						  <td><input type="textbox" class="number" name="Qty' . $i . '" />
 						  		<input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[2] . '" />
-						  		<input type="hidden" name="QtyReqd' . $i . '" value="' . locale_number_format($WOSNRow[1],'Variable') . '"></td>
+						  		<input type="hidden" name="QtyReqd' . $i . '" value="' . locale_number_format($WOSNRow[1],'Variable') . '" /></td>
 						  	</tr>';
 					$i++;
 				}
@@ -896,7 +896,7 @@ if($WORow['controlled']==1){ //controlled
 		echo '<input type="hidden" name="CountOfInputs" value="' . $i . '" /></table>';
 		echo '<br />
 			<div class="centre">
-				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '">
+				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 			</div>';
 	} //end of lot/batch control
 } else { //not controlled - an easy one!

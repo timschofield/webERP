@@ -57,8 +57,8 @@ echo '<br />
 	<table>
 	<tr>
 		<td>'. _('Description') . '</td>
-		<td><input type="text" size="30" maxlength="30" name="Description" value="'.$Description.'"></td>
-		<td><input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'">';
+		<td><input type="text" size="30" maxlength="30" name="Description" value="'.$Description.'" /></td>
+		<td><input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'" />';
 
 if (isset($_GET['Action']) AND $_GET['Action']=='edit') {
 	echo '<input type="submit" name="update" value="' . _('Update') . '" />';

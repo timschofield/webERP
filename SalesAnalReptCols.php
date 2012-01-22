@@ -392,7 +392,7 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<tr>
 				<td>' . _('Column Number') . ':</td>
-				<td><input type="text" class="number" name=ColID size=3 maxlength=3 value="' . $_POST['ColID'] . '">&nbsp;<font size=1>(' . _('A number between 1 and 10 is expected') . ')</font></td>
+				<td><input type="text" class="number" name=ColID size=3 maxlength=3 value="' . $_POST['ColID'] . '" />&nbsp;<font size=1 />(' . _('A number between 1 and 10 is expected') . ')</font></td>
 			</tr>';
 	}
 	if (!isset($_POST['Heading1'])) {
@@ -400,7 +400,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Heading line 1') . ':</td>
-			<td><input type="text" size=16 maxlength=15 name="Heading1" value="' . $_POST['Heading1'] . '"></td>
+			<td><input type="text" size=16 maxlength=15 name="Heading1" value="' . $_POST['Heading1'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['Heading2'])) {
 		$_POST['Heading2']='';

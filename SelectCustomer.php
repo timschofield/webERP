@@ -329,7 +329,7 @@ if (isset($_POST['CustType'])) {
 	if (DB_num_rows($result2) == 0) {
 		$DataError = 1;
 		echo '<a href="CustomerTypes.php" target="_parent">' . _('Setup Types') . '</a>';
-		echo '<tr><td colspan=2>' . prnMsg(_('No Customer types defined'), 'error') . '</td></tr>';
+		echo '<tr><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></tr>';
 	} else {
 		// if OK show select box with available options to choose
 		echo '<select name="CustType">
@@ -350,7 +350,7 @@ $result2 = DB_query("SELECT areacode, areadescription FROM areas", $db);
 if (DB_num_rows($result2) == 0) {
 	$DataError = 1;
 	echo '<a href="Areas.php" target="_parent">' . _('Setup Areas') . '</a>';
-	echo '<tr><td colspan=2>' . prnMsg(_('No Sales Areas defined'), 'error') . '</td></tr>';
+	echo '<tr><td colspan="2">' . prnMsg(_('No Sales Areas defined'), 'error') . '</td></tr>';
 } else {
 	// if OK show select box with available options to choose
 	echo '<select name="Area">';
@@ -448,7 +448,7 @@ if (isset($result)) {
 				$k = 1;
 			}
 			echo '<td><font size="1"><input type="submit" name="SubmitCustomerSelection' . $i .'" value="' . htmlentities($myrow['debtorno'].' '.$myrow['branchcode'],ENT_QUOTES,'UTF-8') . '" /></font></td>
-				<input type="hidden" name="SelectedCustomer' . $i . '" value="'.$myrow['debtorno'].'">
+				<input type="hidden" name="SelectedCustomer' . $i . '" value="'.$myrow['debtorno'].'" />
 				<input type="hidden" name="SelectedBranch' . $i . '" value="'. $myrow['branchcode'].'" />
 				<td><font size=1>' . $myrow['name'] . '</font></td>
 				<td><font size=1>' . $myrow['brname'] . '</font></td>
@@ -469,7 +469,7 @@ if (isset($result)) {
 		}
 		//end of while loop
 		echo '</table>';
-		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes">';
+		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 	}
 }
 //end if results to show
@@ -502,7 +502,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Customer.') . '</div>';
 		} else {
 			echo '<tr>
-					<td colspan=2>
+					<td colspan="2">
 					<table width="45%" colspan="2" cellpadding="4">
 						<tr>
 							<th width=33%>' . _('Customer Mapping') . '</th>
@@ -607,7 +607,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
 			echo '<table width="45%">';
-			echo '<br /><th colspan=7><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="">' . ' ' . _('Customer Contacts') . '</th>';
+			echo '<br /><th colspan="7"><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</th>';
 			echo '<tr>
 					<th>' . _('Name') . '</th>
 					<th>' . _('Role') . '</th>

@@ -251,7 +251,7 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td colspan="2">
 				<div class="centre">
-					<input type="submit" name="submit" value="' . _('Accept') . '">
+					<input type="submit" name="submit" value="' . _('Accept') . '" />
 				</div>
 			</td>
 		</tr>

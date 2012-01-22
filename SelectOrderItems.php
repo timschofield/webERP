@@ -1411,7 +1411,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
-				echo '<td colspan=10>' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1">' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
+				echo '<td colspan="10">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1">' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td></tr>';
 			} else {
 				echo '<input type="hidden" name="Narrative" value="" />';
 			}
@@ -1429,7 +1429,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$ColSpanNumber = 1;
 		}
 		echo '<tr class="EvenTableRows">
-				<td class="number" colspan=7><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+				<td class="number" colspan="7"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
 				<td colspan="' . $ColSpanNumber . '" class="number">' . $DisplayTotal . '</td>
 			</tr>
 			</table>';
@@ -1598,7 +1598,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 #end of page full new headings if
 			}
 #end of while loop for Frequently Ordered Items
-			echo '<td style="text-align:center" colspan=8><input type="hidden" name="SelectingOrderItems" value=1><input tabindex='.strval($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
+			echo '<td style="text-align:center" colspan="8"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex='.strval($j+8).' type="submit" value="'._('Add to Sales Order').'" /></td>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		echo '<p><div class="centre"><b><p>' . $msg . '</b></p>';
@@ -1631,27 +1631,27 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</select></td>
 			<td><b>' . _('Enter partial Description') . ':</b><input tabindex=2 type="Text" name="Keywords" size=20 maxlength=25 value="' ;
 
-		if (isset($_POST['Keywords'])) {
-			 echo $_POST['Keywords'] ;
-		}
-		echo '"></td>';
+        if (isset($_POST['Keywords'])) {
+             echo $_POST['Keywords'] ;
+        }
+        echo '" /></td>';
 
 		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex=3 type="Text" name="StockCode" size=15 maxlength=18 value="';
-		if (isset($_POST['StockCode'])) {
-			echo  $_POST['StockCode'];
-		}
-		echo '"></td></tr>';
+        if (isset($_POST['StockCode'])) {
+            echo  $_POST['StockCode'];
+        }
+        echo '" /></td></tr>';
 
 		echo '<tr>
-			<td style="text-align:center" colspan=1><input tabindex=4 type="submit" name="Search" value="' . _('Search Now') . '"></td>
-			<td style="text-align:center" colspan=1><input tabindex=5 type="submit" name="QuickEntry" value="' .  _('Use Quick Entry') . '"></td>';
+			<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
+			<td style="text-align:center" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' .  _('Use Quick Entry') . '" /></td>';
 
 		if (!isset($_POST['PartSearch'])) {
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
 		}
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){ //not a customer entry of own order
-			echo '<td style="text-align:center" colspan=1><input tabindex=6 type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '"></td>
-			<td style="text-align:center" colspan=1><input tabindex=7 type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '"></td>
+			echo '<td style="text-align:center" colspan="1"><input tabindex="6" type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" /></td>
+			<td style="text-align:center" colspan="1"><input tabindex="7" type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" /></td>
 			</tr></table><br />';
 		}
 
@@ -1663,9 +1663,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier . '" method=post name="orderform">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
-			echo '<tr><td colspan=><input type="hidden" name="previous" value='.strval($Offset-1).'><input tabindex='.strval($j+8).' type="submit" name="Prev" value="'._('Prev').'"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="SelectingOrderItems" value=1><input tabindex='.strval($j+9).' type="submit" value="'._('Add to Sales Order').'"></td>';
-			echo '<td colspan=><input type="hidden" name="nextlist" value='.strval($Offset+1).'><input tabindex='.strval($j+10).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
+			echo '<tr><td colspan="1"><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
+			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex='.strval($j+9).' type="submit" value="'._('Add to Sales Order').'" /></td>';
+			echo '<td colspan="1"><input type="hidden" name="nextlist" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+10).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
 			$TableHeader = '<tr>
 								<th>' . _('Code') . '</th>
 					   			<th>' . _('Description') . '</th>
@@ -1783,9 +1783,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr><td><input type="hidden" name="previous" value='. strval($Offset-1).'><input tabindex='. strval($j+7).' type="submit" name="Prev" value="'._('Prev').'"></td>';
-			echo '<td style="text-align:center" colspan=6><input type="hidden" name="SelectingOrderItems" value=1><input tabindex='. strval($j+8).' type="submit" value="'._('Add to Sales Order').'"></td>';
-			echo '<td><input type="hidden" name="nextlist" value='.strval($Offset+1).'><input tabindex='.strval($j+9).' type="submit" name="Next" value="'._('Next').'"></td></tr>';
+			echo '<tr><td><input type="hidden" name="previous" value='. strval($Offset-1).'><input tabindex='. strval($j+7).' type="submit" name="Prev" value="'._('Prev').'" /></td>';
+			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
+			echo '<td><input type="hidden" name="nextlist" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
 			echo '</table></form>';
 			echo $jsCall;
 
@@ -1810,17 +1810,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 		echo '<tr class="OddTableRow">';
 		 		/* Do not display colum unless customer requires po line number by sales order line*/
 		 		if($_SESSION['Items'.$identifier]->DefaultPOLine > 0){
-					echo '<td><input type="text" name="poline_' . $i . '" size=21 maxlength=20></td>';
+					echo '<td><input type="text" name="poline_' . $i . '" size=21 maxlength=20 /></td>';
 				}
-				echo '<td><input type="text" name="part_' . $i . '" size=21 maxlength=20></td>
-						<td><input type="text" name="qty_' . $i . '" size=6 maxlength=6></td>
+				echo '<td><input type="text" name="part_' . $i . '" size=21 maxlength=20 /></td>
+						<td><input type="text" name="qty_' . $i . '" size=6 maxlength=6 /></td>
 						<td><input type="text" class="date" name="itemdue_' . $i . '" size=25 maxlength=25
-						alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '"></td></tr>';
+                        alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" /></td></tr>';
 	   		}
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
-		 	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '">
-					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
+		 	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
+                     <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
 	  	} elseif (isset($_POST['SelectAsset'])){
 
@@ -1829,7 +1829,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){
 				echo	'<tr><td>' . _('PO Line') . '</td>
-							<td><input type="text" name="poline" size=21 maxlength=20></td></tr>';
+							<td><input type="text" name="poline" size=21 maxlength=20 /></td></tr>';
 			}
 			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
 						<td><select name="AssetToDisposeOf">';
@@ -1839,8 +1839,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<option value="' . $AssetRow['assetid'] . '">' . $AssetRow['assetid'] . ' - ' . $AssetRow['description'] . '</option>';
 			}
 			echo '</select></td></tr></table>
-						<br /><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '">
-					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '"></div>';
+						<br /><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '" />
+                     <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
 

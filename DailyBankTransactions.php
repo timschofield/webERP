@@ -141,7 +141,7 @@ if (!isset($_POST['Show'])) {
 	
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date'). '"></div>';
+	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date'). '" /></div>';
 	echo '</form>';
 }
 include('includes/footer.inc');

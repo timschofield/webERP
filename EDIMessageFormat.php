@@ -202,7 +202,7 @@ if (isset($SelectedMessageLine)) {
 echo '<table class=selection>';
 
 if ($myrow['messagetype']!='') {
-	echo '<tr><th colspan=2><font size=3>' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'].'</font></th></tr>';
+	echo '<tr><th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'].'</th></tr>';
 }
 
 echo '<tr><td>' . _('Section') . ':</td>';

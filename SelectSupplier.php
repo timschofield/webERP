@@ -143,7 +143,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
 	echo '<br />
-		<table width=90% colspan=2 cellpadding=4>
+		<table width="90%" colspan="2" cellpadding="4">
 		<tr>
 			<th width="33%">' . _('Supplier Inquiries') . '</th>
 			<th width="33%">' . _('Supplier Transactions') . '</th>
@@ -178,7 +178,7 @@ if (isset($_SESSION['SupplierID'])) {
 } else {
 	// Supplier is not selected yet
 	echo '<br />';
-	echo '<table width=90% colspan=2 cellpadding=4>
+	echo '<table width="90%" colspan="2" cellpadding="4">
 		<tr>
 			<th width="33%">' . _('Supplier Inquiries') . '</th>
 			<th width="33%">' . _('Supplier Transactions') . '</th>
@@ -216,7 +216,7 @@ if (isset($_POST['SupplierCode'])) {
 }
 echo '</td></tr>
 		</table>
-		<br /><div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '"></div>';
+		<br /><div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
 //if (isset($result) AND !isset($SingleSupplierReturned)) {
 if (isset($_POST['Search'])) {
 	$ListCount = DB_num_rows($result);

@@ -29,7 +29,7 @@ if (!isset($_POST['Date'])){
 	 echo '<table class="selection">
 	 			<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="Date" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '"></td>
+				<td><input type="text" name="Date" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			<tr>';
 
 	echo '<tr>
@@ -44,7 +44,7 @@ if (!isset($_POST['Date'])){
 	 echo '</table>
 			<br />
 			<div class="centre">
-				<input type="submit" name="Go" value="' . _('Create PDF') . '">
+				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
 
 	 include('includes/footer.inc');

@@ -43,7 +43,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 		</table>';
 	echo '<br />
 		<div class="centre">
-			<input type="submit" name="Process" value="' . _('Print Picking Lists') . '">
+			<input type="submit" name="Process" value="' . _('Print Picking Lists') . '" />
 		</div>
 		</form>';
 	include('includes/footer.inc');

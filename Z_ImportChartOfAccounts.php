@@ -76,8 +76,8 @@ if (isset($_POST['update'])) {
 	echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' .SID .'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr><td>'._('File to import').'</td>'.
-		'<td><input type="file" id="ImportFile" name="ImportFile"></td></tr></table>';
-	echo '<div class="centre"><input type="submit" name="update" value="Process"></div>';
+		'<td><input type="file" id="ImportFile" name="ImportFile" /></td></tr></table>';
+	echo '<div class="centre"><input type="submit" name="update" value="Process" /></div>';
 	echo '</form>';
 }
 

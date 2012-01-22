@@ -241,7 +241,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['ForReceipt'] = $myrow['receipttype'];
 			$_POST['UsePrePrintedStationery'] = $myrow['usepreprintedstationery'];
 
-			echo '<input type="hidden" name="SelectedPaymentID" value="' . $_POST['MethodID'] . '">';
+			echo '<input type="hidden" name="SelectedPaymentID" value="' . $_POST['MethodID'] . '" />';
 			echo '<table class="selection">';
 		}
 
@@ -279,7 +279,7 @@ if (! isset($_GET['delete'])) {
 	
 	echo '</table>';
 
-	echo '<br /><div class="centre"><input type="submit" name="submit" value=' . _('Enter Information') . '></div>';
+	echo '<br /><div class="centre"><input type="submit" name="submit" value=' . _('Enter Information') . ' /></div>';
 
 	echo '</form>';
 

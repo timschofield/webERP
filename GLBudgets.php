@@ -191,7 +191,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		echo '<td><input type="text" class="number" size=14 name="'.$i.'this" value="'. locale_number_format($Budget[$CurrentYearEndPeriod-(12-$i)],$_SESSION['CompanyRecord']['decimalplaces']) .'"></td>';
 		echo '<th>'. $PeriodEnd[$CurrentYearEndPeriod+($i)] .'</th>';
 		echo '<td bgcolor="d2e5e8" class="number">'.locale_number_format($Actual[$CurrentYearEndPeriod+$i],$_SESSION['CompanyRecord']['decimalplaces']).'</td>';
-		echo '<td><input type="text" class="number" size=14 name="'.$i.'next" value="'. locale_number_format($Budget[$CurrentYearEndPeriod+$i],$_SESSION['CompanyRecord']['decimalplaces']) .'"></td>';
+		echo '<td><input type="text" class="number" size=14 name="'.$i.'next" value="'. locale_number_format($Budget[$CurrentYearEndPeriod+$i],$_SESSION['CompanyRecord']['decimalplaces']) .'" /></td>';
 		echo '</tr>';
 		$LastYearActual=$LastYearActual+$Actual[$CurrentYearEndPeriod-(24-$i)];
 		$LastYearBudget=$LastYearBudget+$Budget[$CurrentYearEndPeriod-(24-$i)];
@@ -231,7 +231,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<script>defaultControl(document.form.1next);</script>';
 	echo '<br />
 		<div class="centre">
-			<input type="submit" name=update value="' . _('Update') . '">
+			<input type="submit" name=update value="' . _('Update') . '" />
 		</div>
 		
 		</form>';
