@@ -103,7 +103,7 @@ if (!isset($SelectedRole)) {
 		ORDER BY secroleid";
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	echo '<tr><th>' . _('Role') . '</th></tr>';
 
 	$k=0; //row colour counter
@@ -167,7 +167,7 @@ if (!isset($_POST['SecRoleName'])) {
 }
 echo '<tr>
 		<td>' . _('Role') . ':</td>
-		<td><input type="text" name="SecRoleName" size=40 maxlength=40 value="' . $_POST['SecRoleName'] . '" />
+		<td><input type="text" name="SecRoleName" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" />
 	</tr>';
 echo '</table>
 	<br />

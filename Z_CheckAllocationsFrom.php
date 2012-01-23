@@ -42,7 +42,7 @@ if (DB_num_rows($result)>0){
 
 		printf ('<tr>
 				<td>%s</td>
-				<td>%s<td class=number>%s</td>
+				<td>%s<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',

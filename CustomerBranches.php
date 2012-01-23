@@ -659,14 +659,14 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=0;
 	}
-	echo '<td><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="11" type="text" class=number name="EstDeliveryDays" size="4" maxlength="2" value='. $_POST['EstDeliveryDays'].' /></td>
+	echo '<td><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="11" type="text" class="number" name="EstDeliveryDays" size="4" maxlength="2" value="'. $_POST['EstDeliveryDays'].'" /></td>
 		</tr>
 		<tr>
 			<td>'._('Forward Date After (day in month)').':</td>';
 	if (!isset($_POST['FwdDate'])) {
 		$_POST['FwdDate']=0;
 	}
-	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="text" class=number name="FwdDate" size="4" maxlength="2" value='. $_POST['FwdDate'].' /></td>
+	echo '<td><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="text" class="number" name="FwdDate" size="4" maxlength="2" value="'. $_POST['FwdDate'].'" /></td>
 		</tr>';
 
 
@@ -814,11 +814,11 @@ if (!isset($_GET['delete'])) {
 			<td>'._('Transactions on this branch') . ':</td>
 			<td><select tabindex="20" name="DisableTrans">';
 	if ($_POST['DisableTrans']==0){
-		echo '<option selected value=0>' . _('Enabled') . '</option>
-				<option value=1>' . _('Disabled') . '</option>';
+		echo '<option selected value="0">' . _('Enabled') . '</option>
+				<option value="1">' . _('Disabled') . '</option>';
 	} else {
-		echo '<option selected value=1>' . _('Disabled') . '</option>
-				<option value=0>' . _('Enabled') . '</option>';
+		echo '<option selected value="1">' . _('Disabled') . '</option>
+				<option value="0">' . _('Enabled') . '</option>';
 	}
 
 	echo '	</select></td></tr>';

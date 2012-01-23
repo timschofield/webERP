@@ -208,7 +208,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		$result = DB_query($sql,$db);
 
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<tr><th colspan="8">' . _('Detail Of PC Tab Movements For Last') .': ';
@@ -303,9 +303,9 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<p><table class="selection">'; //Main table
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<tr><th colspan="2"><font color=blue size=3>'._('Update Cash Assignment').'</font></th></tr>';
+			echo '<tr><th colspan="2"><font color=blue size="3">'._('Update Cash Assignment').'</font></th></tr>';
 		} else {
-			echo '<tr><th colspan="2"><font color=blue size=3>'._('New Cash Assignment').'</font></th></tr>';
+			echo '<tr><th colspan="2"><font color=blue size="3">'._('New Cash Assignment').'</font></th></tr>';
 		}
 		if ( isset($_GET['edit'])) {
 
@@ -334,7 +334,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<tr><td>' . _('Cash Assignation Date') . ':</td>';
 
-		echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="Date" size=10 maxlength=10 value=' . $_POST['Date'] . ' /></td></tr>';
+		echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="Date" size="10" maxlength="10" value=' . $_POST['Date'] . ' /></td></tr>';
 
 
 		if (!isset($_POST['Amount'])) {
@@ -351,7 +351,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<tr><td>' . _('Notes') . ':</td>
-				<td><input type="text" name="Notes" size=50 maxlength=49 value="' . $_POST['Notes'] . '" /></td></tr>';
+				<td><input type="text" name="Notes" size="50" maxlength="49" value="' . $_POST['Notes'] . '" /></td></tr>';
 
 		if (!isset($_POST['Receipt'])) {
 			$_POST['Receipt']='';

@@ -231,7 +231,7 @@ or deletion of the records*/
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow[1]==$FunctionalCurrency){
-			echo '<tr bgcolor=#FFbbbb>';
+			echo '<tr bgcolor="#FFbbbb">';
 		} elseif ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;

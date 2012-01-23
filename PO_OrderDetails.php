@@ -24,7 +24,7 @@ if (isset($_GET['FromGRNNo'])){
 
 	$OrderRow = DB_fetch_row($OrderResult);
 	$_GET['OrderNo'] = $OrderRow[0];
-	echo '<br /><font size=4 color=BLUE>' . _('Order Number') . ' ' . $_GET['OrderNo'] . '</font>';
+	echo '<br /><font size="4" color=BLUE>' . _('Order Number') . ' ' . $_GET['OrderNo'] . '</font>';
 }
 
 if (!isset($_GET['OrderNo'])) {

@@ -198,7 +198,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>'. _('Date').':</td>
-			<td><input type="text" name="date" class=date alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date']. '" size="10" maxlength="10" /></td>
+			<td><input type="text" name="date" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date']. '" size="10" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>'. _('Priority').':</td>

@@ -245,7 +245,7 @@ if (!isset($SelectedTabs)){
 				// only movements NOT authorized can be modified or deleted
 				printf('<td>%s</td>
 					<td>%s</td>
-					<td class=number>%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>

@@ -252,7 +252,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '<tr><td>' . _('Tab Code') . '</td>
 				<td>:</td>
-				<td width=200>' . ''.$SelectedTabs.'</td>'  .
+				<td width="200">' . ''.$SelectedTabs.'</td>'  .
 				'<td>' . _('From') . '</td><td>:</td><td>' .
 			''.$_POST['FromDate'].'</td></tr>';
 
@@ -319,7 +319,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 				 _('No Petty Cash movements for this tab were returned by the SQL because'),
 				 _('The SQL that failed was:'));
 
-	echo '<br /><table class=selection>';
+	echo '<br /><table class="selection">';
 	echo '<tr>
 		<th>' . _('Date Of Expense') . '</th>
 		<th>' . _('Expense Description') . '</th>
@@ -355,7 +355,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	if ($myrow['5'] != '0000-00-00'){
 		printf("<td>%s</td>
 			<td>%s</td>
-			<td class=number>%s</td>
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -369,7 +369,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}else{
 		printf("<td>%s</td>
 			<td>%s</td>
-			<td class=number>%s</td>
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

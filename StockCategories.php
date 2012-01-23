@@ -495,7 +495,7 @@ if (! isset($_GET['delete'])) {
 /*		echo '<br />Number of rows returned by the sql = ' . DB_num_rows($result) .
 			'<br />The SQL was:<br />' . $sql;
 */
-		echo '<br /><table class=selection>';
+		echo '<br /><table class="selection">';
 		$TableHeader = '<tr>
 							<th>' . _('Property Label') . '</th>
 							<th>' . _('Control Type') . '</th>

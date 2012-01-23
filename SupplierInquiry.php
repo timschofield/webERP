@@ -138,7 +138,7 @@ if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 }
 
-echo '<table width=90% class="selection">
+echo '<table width="90%" class="selection">
 		<tr><th>' . _('Total Balance') . '</th>
 			<th>' . _('Current') . '</th>
 			<th>' . _('Now Due') . '</th>
@@ -317,9 +317,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
-						<td class=number>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 						<td align=left>%s</td>
 						<td><a href="%s?HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s">%s</a></td>
 						<td><a href="%s/PaymentAllocations.php?SuppID=%s&InvID=%s">' . _('View Payments') . '</a></tr>',

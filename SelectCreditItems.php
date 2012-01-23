@@ -717,7 +717,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo '<td>' . $LineItem->Units . '</td>
 			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size="10" maxlength="12" value="' . locale_number_format($LineItem->Price,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>
-			<td><input type="CheckBox" name="Gross" value=False /></td>
+			<td><input type="CheckBox" name="Gross" value="false" /></td>
 			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size="3" maxlength="3" value="' . locale_number_format(($LineItem->DiscountPercent * 100),'Variable') . '" />%</td>
 			<td class="number">' . $DisplayLineTotal . '</td>';
 
@@ -742,7 +742,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if ($i>0){
 					echo '<br />';
 				}
-				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '" />';
+				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '" />';
 				$i++;
 				if ($Tax->TaxOnTax ==1){
 					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
@@ -1003,18 +1003,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				    $k++;
 				}
 				if(file_exists($_SESSION['part_pics_dir'] . '/' .mb_strtoupper($myrow['stockid']).'.jpg') ) {
-					printf('<td><font size=1><input type="submit" name="NewItem" value="%s" /></font></td>
-							<td><font size=1>%s</font></td>
-							<td><font size=1>%s</font></td>
+					printf('<td><font size="1"><input type="submit" name="NewItem" value="%s" /></font></td>
+							<td><font size="1">%s</font></td>
+							<td><font size="1">%s</font></td>
 							<td><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=%s&text=&width=120&height=120"></td></tr>',
 							$myrow['stockid'],
 							$myrow['description'],
 							$myrow['units'],
 							$myrow['stockid']);
 				} else { //don't try to show the image
-					printf('<td><font size=1><input type="submit" name="NewItem" value="%s" /></font></td>
-						<td><font size=1>%s</font></td>
-						<td><font size=1>%s</font></td>
+					printf('<td><font size="1"><input type="submit" name="NewItem" value="%s" /></font></td>
+						<td><font size="1">%s</font></td>
+						<td><font size="1">%s</font></td>
 						<td>' . _('No Image') . '</td></tr>',
 						$myrow['stockid'],
 						$myrow['description'],

@@ -598,7 +598,7 @@ if (isset($_POST['submit'])) {
 
 	echo '<tr>
 			<td>' . _('Days Leeway') . ':</td>
-			<td><input type="text" name="Leeway" class=number size="4" value="' . $leeway . '" />
+			<td><input type="text" name="Leeway" class="number" size="4" value="' . $leeway . '" />
 		</tr>
 		<tr>
 			<td>' ._('Use MRP Demands?') . ':</td>

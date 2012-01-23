@@ -675,7 +675,7 @@ if ((!isset($_POST['FromPeriod'])
 								locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 					} else { /*Costs */
 						printf('<tr>
-								<td colspan="2"><font size=2><i>%s </i></font></td>
+								<td colspan="2"><font size="2"><i>%s </i></font></td>
 								<td class="number">%s</td>
 								<td></td>
 								<td class="number">%s</td>
@@ -707,7 +707,7 @@ if ((!isset($_POST['FromPeriod'])
 
 				if ($Section ==1){ /*Income */
 					printf('<tr>
-							<td colspan="2"><font size=2><i>%s </i></font></td>
+							<td colspan="2"><font size="2"><i>%s </i></font></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -721,7 +721,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				} else { /*Costs */
 					printf('<tr>
-							<td colspan="2"><font size=2><i>%s </i></font></td>
+							<td colspan="2"><font size="2"><i>%s </i></font></td>
 							<td class="number">%s</td>
 							<td></td>
 							<td class="number">%s</td>
@@ -782,7 +782,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td><hr /></td>
 							</tr>';
 							printf('<tr>
-							<td colspan="2"><font size=4>%s</font></td>
+							<td colspan="2"><font size="4">%s</font></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -801,7 +801,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr>
-							<td colspan="2"><font size=4>'._('Gross Profit').'</font></td>
+							<td colspan="2"><font size="4">'._('Gross Profit').'</font></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -833,7 +833,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr>
-							<td colspan="2"><font size=2><i>'._('Gross Profit Percent').'</i></font></td>
+							<td colspan="2"><font size="2"><i>'._('Gross Profit Percent').'</i></font></td>
 							<td></td>
 							<td class="number"><i>%s</i></td>
 							<td></td>
@@ -855,7 +855,7 @@ if ((!isset($_POST['FromPeriod'])
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
-					<td colspan="6"><font size=4 color=BLUE><b>%s</b></font></td>
+					<td colspan="6"><font size="4" color=BLUE><b>%s</b></font></td>
 					</tr>',
 					$Sections[$myrow['sectioninaccounts']]);
 			}
@@ -965,7 +965,7 @@ if ((!isset($_POST['FromPeriod'])
 				}
 				if ($Section ==1){ /*Income */
 					printf('<tr>
-								<td colspan="2"><font size=2><i>%s </i></font></td>
+								<td colspan="2"><font size="2"><i>%s </i></font></td>
 								<td></td>
 								<td class="number">%s</td>
 								<td></td>
@@ -979,7 +979,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format(-$GrpPrdLY[$Level]),$_SESSION['CompanyRecord']['decimalplaces']);
 				} else { /*Costs */
 					printf('<tr>
-								<td colspan="2"><font size=2><i>%s </i></font></td>
+								<td colspan="2"><font size="2"><i>%s </i></font></td>
 								<td class="number">%s</td>
 								<td></td>
 								<td class="number">%s</td>
@@ -1011,7 +1011,7 @@ if ((!isset($_POST['FromPeriod'])
 
 			if ($Section ==1){ /*Income */
 				printf('<tr>
-							<td colspan="2"><font size=2><i>%s </i></font></td>
+							<td colspan="2"><font size="2"><i>%s </i></font></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -1060,7 +1060,7 @@ if ((!isset($_POST['FromPeriod'])
 				</tr>';
 
 			printf('<tr>
-						<td colspan="2"><font size=4>%s</font></td>
+						<td colspan="2"><font size="4">%s</font></td>
 						<td></td>
 						<td class="number">%s</td>
 						<td></td>
@@ -1085,7 +1085,7 @@ if ((!isset($_POST['FromPeriod'])
 					<td><hr /></td>
 				</tr>';
 			printf('<tr>
-						<td colspan="2"><font size=4>%s</font></td>
+						<td colspan="2"><font size="4">%s</font></td>
 						<td></td>
 						<td class="number">%s</td>
 						<td></td>
@@ -1136,7 +1136,7 @@ if ((!isset($_POST['FromPeriod'])
 					<td colspan="6"><hr /></td>
 				</tr>';
 			printf('<tr>
-					<td colspan="2"><font size=2><i>'._('Gross Profit Percent').'</i></font></td>
+					<td colspan="2"><font size="2"><i>'._('Gross Profit Percent').'</i></font></td>
 					<td></td>
 					<td class="number"><i>%s</i></td>
 					<td></td>
@@ -1158,7 +1158,7 @@ if ((!isset($_POST['FromPeriod'])
 
 		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])){
 			printf('<tr>
-				<td colspan="6"><font size=4 color=BLUE><b>%s</b></font></td>
+				<td colspan="6"><font size="4" color=BLUE><b>%s</b></font></td>
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}

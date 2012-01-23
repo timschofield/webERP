@@ -75,7 +75,7 @@ if ($CreditLink == 'Credit_Invoice.php'){
 
 echo '<br /><a href="' . $rootpath . '/' . $CreditLink . '">'. _('Back to Credit Note Entry'). '</a>';
 
-echo '<br /><font size=2><b>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['CreditItems']->CustomerName . '</b></font></div>';
+echo '<br /><font size="2"<b>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['CreditItems']->CustomerName . '</b></font></div>';
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['CreditItems']->Location;

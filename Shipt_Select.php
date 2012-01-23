@@ -126,12 +126,12 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '</select>';
 	echo ' <select name="OpenOrClosed">';
 	if ($_POST['OpenOrClosed']==1){
-		echo '<option selected value=1>'. _('Closed Shipments Only')  . '</option>';
-		echo '<option value=0>'. _('Open Shipments Only')  . '</option>';
+		echo '<option selected value="1">'. _('Closed Shipments Only')  . '</option>';
+		echo '<option value="0">'. _('Open Shipments Only')  . '</option>';
 	} else {
 		$_POST['OpenOrClosed']=0;
-		echo '<option value=1>'. _('Closed Shipments Only')  . '</option>';
-		echo '<option selected value=0>'. _('Open Shipments Only')  . '</option>';
+		echo '<option value="1">'. _('Closed Shipments Only')  . '</option>';
+		echo '<option selected value="0">'. _('Open Shipments Only')  . '</option>';
 	}
 	echo '</select></td></tr></table>';
 

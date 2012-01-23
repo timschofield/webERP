@@ -440,7 +440,7 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 
 $result=DB_query($SQL,$db);
-echo '<option value=0>0 - ' . _('None') . '</option>';
+echo '<option value="0">0 - ' . _('None') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_SESSION['Adjustment']->tag) AND $_SESSION['Adjustment']->tag==$myrow['tagref']){
 		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';

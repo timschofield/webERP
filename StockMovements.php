@@ -29,7 +29,7 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 }
 echo '<br />
 		<table class="selection">';
-echo '<tr><th colspan="10">' . _('Stock Code') . ':<input type="text" name="StockID" size=21 value="' . $StockID . '" maxlength="20" />';
+echo '<tr><th colspan="10">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
 
 echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 

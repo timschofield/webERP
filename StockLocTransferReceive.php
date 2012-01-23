@@ -473,7 +473,7 @@ if (isset($_SESSION['Transfer'])){
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
 
-		echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=1 /></td>';
+		echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value="1" /></td>';
 
 
 		if ($TrfLine->Controlled==1){

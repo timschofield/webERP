@@ -77,7 +77,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
 		echo '<br />
-			<table width=80% cellspacing="1" class="selection">
+			<table width="80%" cellspacing="1" class="selection">
 			<tr>
 				<th>' . _('Asset ID') . '</th>
 				<th>' . _('Description') . '</th>
@@ -247,7 +247,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr>
 			<th>' . _('Asset Category') . '</th>
-			<td><select name=AssetCategory>
+			<td><select name="AssetCategory">
 				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetCategory']) and $myrow['categoryid'] == $_POST['AssetCategory']) {
@@ -297,7 +297,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 
 	echo '<tr>
 			<th>' . _(' From Date') . '</th>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength=10 size=11 value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		</tr>
 		<tr>
 			<th>' . _('To Date ') . '</th>
@@ -308,7 +308,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Show Assets') . '" />&nbsp;
 		<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;
-		<input type="Submit" name = "csv" value= "' . _('Print as CSV') . '" />
+		<input type="Submit" name = "csv" value="' . _('Print as CSV') . '" />
 	</div>
 	</form>';
 }

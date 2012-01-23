@@ -533,7 +533,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 				<td>' . $_POST['Category'] . '</td></tr></table>';
 
 		if ($_POST['ReportType'] == 'Detail') {
-			echo '<br /><table class="selection" width=98%>';
+			echo '<br /><table class="selection" width="98%">';
 			if ($_POST['DateType'] == 'Order') {
 				echo '<tr><th>' . _('Order No') . '</th>
 						<th>' . _('Part Number') . '</th>
@@ -1534,7 +1534,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected value="Equals">' . _('Equals') . '</option>';
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
-	echo '&nbsp&nbsp<input type="text" name="SupplierId" size=10 maxlength=10 value="';
+	echo '&nbsp&nbsp<input type="text" name="SupplierId" size="10" maxlength="10" value="';
     if (isset($_POST['SupplierId'])) {
         echo $_POST['SupplierId'] . '" /></td></tr>';
 	} else {
@@ -1546,7 +1546,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected value="LIKE">' . _('Begins With') . '</option>';
 	echo '<option value="Equals">' . _('Equals') . '</option>';
 	echo '</select>';
-	echo '&nbsp&nbsp<input type="text" name="SupplierName" size=30 maxlength=30 value="';
+	echo '&nbsp&nbsp<input type="text" name="SupplierName" size="30" maxlength="30" value="';
 	if (isset($_POST['SupplierName'])) {
 		echo $_POST['SupplierName'] . '" /></td></tr>';
 	} else {

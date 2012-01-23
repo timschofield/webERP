@@ -533,10 +533,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 	echo '<table cellpadding="3" colspan="4" class="selection">
 	<tr>
-	<td><font size=1>' . _('Enter text in the supplier name') . ':</font></td>
+	<td><font size="1">' . _('Enter text in the supplier name') . ':</font></td>
 	<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-	<td><font size=3><b>' . _('OR') . '</b></font></td>
-	<td><font size=1>' . _('Enter text extract in the supplier code') . ':</font></td>
+	<td><font size="3"><b>' . _('OR') . '</b></font></td>
+	<td><font size="1">' . _('Enter text extract in the supplier code') . ':</font></td>
 	<td><input type="text" name="SuppCode" size="15"	maxlength="18" /></td>
 	</tr>
 	</table>
@@ -849,11 +849,11 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	
 	echo '</tr></table></td>';
 
-	echo '<table width=80%>
+	echo '<table width="80%">
 		<tr>
-		<th><font color=blue size=4><b>' . _('Warehouse Info') . '</b></font></th>
-		<!--	<th><font color=blue size=4><b>' . _('Delivery To') . '</b></font></th> -->
-			<th><font color=blue size=4><b>' . _('Supplier Info') . '</b></font></th>
+		<th><font color=blue size="4"><b>' . _('Warehouse Info') . '</b></font></th>
+		<!--    <th><font color=blue size="4"><b>' . _('Delivery To') . '</b></font></th> -->
+			<th><font color=blue size="4"><b>' . _('Supplier Info') . '</b></font></th>
 		</tr>
 		<tr><td valign=top>';
 	/*nested table level1 */
@@ -986,7 +986,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		<td><input type="text" name="DelAdd5" size="16" maxlength="15" value="' . $_POST['DelAdd5'] . '" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Address') . ' 6 :</td>
-		<td><input type="text" name="DelAdd6" size="16" maxlength=15 value="' . $_POST['DelAdd6'] . '" /></td>
+		<td><input type="text" name="DelAdd6" size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Phone') . ':</td>
 		<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_SESSION['PO'.$identifier]->Tel . '" /></td>

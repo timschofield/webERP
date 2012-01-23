@@ -54,7 +54,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		$Days=30;
 	}
 	echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-	echo '<br /><table class=selection>';
+	echo '<br /><table class="selection">';
 	echo '<tr><th colspan="7">' . _('Detail Of Movement For Last ') .': ';
 	echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength="3" size="4" />' . _('Days');
 	echo '<input type="submit" name="Go" value="' . _('Go') . '" /></tr></th>';
@@ -281,7 +281,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	}
 
 	echo '<tr><td colspan="2" class="number">' . _('Current balance') . ':</td>
-				<td class=number>'.locale_number_format($Amount['0'],$CurrDecimalPlaces).'</td></tr>';
+				<td class="number">'.locale_number_format($Amount['0'],$CurrDecimalPlaces).'</td></tr>';
 
 	// Do the postings
 	include ('includes/GLPostings.inc');

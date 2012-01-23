@@ -213,7 +213,7 @@ If (!isset($SelectedBankAccount)) {
 	} elseif ($myrow['invoice']==2) {
 		$DefaultBankAccount=_('Currency Default');
 	}
-	printf('<td>%s<br /><font size=2>%s</font></td>
+	printf('<td>%s<br /><font size="2">%s</font></td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -324,9 +324,9 @@ if (!isset($_POST['BankAddress'])) {
 }
 
 echo '<tr><td>' . _('Bank Account Name') . ': </td>
-			<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size=40 maxlength=50 /></td></tr>
+			<td><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size="40" maxlength="50" /></td></tr>
 		<tr><td>' . _('Bank Account Code') . ': </td>
-			<td><input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size=40 maxlength=50 /></td></tr>
+			<td><input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size="40" maxlength="50" /></td></tr>
 		<tr><td>' . _('Bank Account Number') . ': </td>
 			<td><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size="40" maxlength="50" /></td></tr>
 		<tr><td>' . _('Bank Address') . ': </td>

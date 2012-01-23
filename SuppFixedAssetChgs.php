@@ -69,7 +69,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p></div>';
-echo '<table class=selection>';
+echo '<table class="selection">';
 $TableHeader = '<tr>
 					<th>' . _('Asset ID') . '</th>
 					<th>' . _('Description') . '</th>
@@ -83,7 +83,7 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 
 	echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
 		<td>' . $EnteredAsset->Description . '</td>
-		<td class=number>' . locale_number_format($EnteredAsset->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces). '</td>
+		<td class="number">' . locale_number_format($EnteredAsset->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces). '</td>
 		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $EnteredAsset->Counter . '">' . _('Delete') . '</a></td></tr>';
 
 	$TotalAssetValue +=  $EnteredAsset->Amount;

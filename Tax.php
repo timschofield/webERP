@@ -304,10 +304,10 @@ if (isset($_POST['TaxAuthority']) AND
 	echo '<tr>
 			<td>' . _('Return Covering') . ':</font></td>
 			<td><select name="NoOfPeriods">
-			<option value=1>' . _('One Month') . '</option>' .
-			'<option selected value=2>' ._('Two Months')  . '</option>' .
-			'<option value=3>' . _('Quarter') . '</option>' .
-			'<option value=6>' . _('Six Months')  . '</option>' .
+			<option value="1">' . _('One Month') . '</option>' .
+			'<option selected value="2">' ._('Two Months')  . '</option>' .
+			'<option value="3">' . _('Quarter') . '</option>' .
+			'<option value="6">' . _('Six Months')  . '</option>' .
 			'</select></td>
 		</tr>';
 

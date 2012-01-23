@@ -209,7 +209,7 @@ if ($InputError ==0){
 
 	if (DB_num_rows($result) > 0) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">
-				<table class=selection>
+				<table class="selection">
 				<tr>
 					<th colspan="7">
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . 

@@ -919,7 +919,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 			ORDER BY tagref";
 
 	$result=DB_query($SQL,$db);
-	echo '<option value=0></option>';
+	echo '<option value="0"></option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['Tag']) AND $_POST['Tag']==$myrow['tagref']){
 			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';

@@ -595,7 +595,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan=2>' . _('Image List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . _('Image List Export') . '</th></tr>';
 	echo '</table>';
 	echo "<div class='centre'><input type='Submit' name='imagelist' value='" . _('Export') . "' /></div>";
 	echo '</form><br />';

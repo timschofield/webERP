@@ -147,7 +147,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
 
 	if ($numrow > 0) { //the number of prices returned from the main prices query is
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		echo '<tr><th>' . _('Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Customer') . '</th>

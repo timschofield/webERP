@@ -284,9 +284,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<td>' . $myrow['description'] . '</td>
 				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>
 				<td>' . ConvertSQLDate($myrow['duedate']) . '</td>
-				<td class=number>' . locale_number_format($myrow['supplyquantity'],$myrow['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class=number>' . locale_number_format($myrow['supplyquantity'] * $myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+				<td class="number">' . locale_number_format($myrow['supplyquantity'],$myrow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($myrow['supplyquantity'] * $myrow['computedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 
 			if ($_POST['Consolidation']!='None') {
 				echo '<td class="number">' . $myrow['consolidatedcount'] . '</td>';

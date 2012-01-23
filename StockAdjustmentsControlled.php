@@ -41,7 +41,7 @@ echo '<div class="centre">';
 
 echo '<br /><a href="'.$rootpath.'/StockAdjustments.php">' . _('Back to Adjustment Screen') . '</a>';
 
-echo '<br /><font size=2><b>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
+echo '<br /><font size="2"><b>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['Adjustment']->StockLocation;

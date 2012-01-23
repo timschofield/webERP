@@ -724,7 +724,7 @@ If (isset($PrintPDF)
 
 				echo '<table class="table1">
 						<tr>
-							<td valign=top width=10%><img src="' . $_SESSION['LogoFile'] . '" /></td>
+							<td valign=top width="10%"><img src="' . $_SESSION['LogoFile'] . '" /></td>
 							<td bgcolor="#bbb"><b>';
 
 				if ($InvOrCredit=='Invoice') {
@@ -890,7 +890,7 @@ If (isset($PrintPDF)
 				}
 
 				echo '<hr>';
-				echo '<div class="centre"><font size=2>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</font></div>';
+				echo '<div class="centre"><font size="2">' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</font></div>';
 
 				$result=DB_query($sql,$db);
 				if (DB_error_no($db)!=0) {
@@ -980,14 +980,14 @@ If (isset($PrintPDF)
 						   } else {
 							    echo '<font color="red" size="4">' . _('TAX CREDIT NOTE') . ' ';
 						   }
-						   echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br /><font size=1>' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
+						   echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br /><font size="1">' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
 							</tr>
 							</table>';
 
 	/*Now print out company name and address */
 						    echo '<table class="table1">
 									<tr>
-										<td><font size=4 color="#333"><b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br />';
+										<td><font size="4" color="#333"><b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br />';
 						    echo $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
 						    echo $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
 						    echo $_SESSION['CompanyRecord']['regoffice3'] . '<br />';
@@ -1044,7 +1044,7 @@ If (isset($PrintPDF)
 	/*Print out the logo and company name and address */
 					echo '<table class="table1">
 							<tr>
-								<td><font size=4 color="#333"><b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br />';
+								<td><font size="4" color="#333"><b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br />';
 					echo $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
 					echo $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
 					echo $_SESSION['CompanyRecord']['regoffice3'] . '<br />';

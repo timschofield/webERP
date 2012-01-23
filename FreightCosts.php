@@ -198,7 +198,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 		
 	$result = DB_query($sql,$db);
 
-	echo '<br /><table class=selection>';
+	echo '<br /><table class="selection">';
 	$TableHeader = '<tr>
 					<th>' . _('Destination') . '</th>
 					<th>' . _('Cubic Rate') . '</th>
@@ -231,12 +231,12 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 
 
 		printf('<td>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
 			<td><a href="%s&SelectedFreightCost=%s&LocationFrom=%s&ShipperID=%s">' . _('Edit') . '</td>
 			<td><a href="%s&SelectedFreightCost=%s&LocationFrom=%s&ShipperID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this freight cost') . '\');">' . _('Delete') . '</td></tr>',
 			$myrow[1],
@@ -316,23 +316,23 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 	if (!isset($_POST['MAXKGs'])) {$_POST['MAXKGs']='';}
 	if (!isset($_POST['MAXCub'])) {$_POST['MAXCub']='';}
 
-	echo '<br /><table class=selection>';
+	echo '<br /><table class="selection">';
 	echo '<tr><th colspan="2">' . _('For Deliveries From') . ' ' . $LocationName . ' ' . _('using') . ' ' .
 		$ShipperName . '</th></tr>';
 	echo'<tr><td>' . _('Destination') . ':</td>
-		<td><input type="text" maxlength=20 size=20 name="Destination" value="' . $_POST['Destination'] . '" /></td></tr>';
+		<td><input type="text" maxlength="20" size="20" name="Destination" value="' . $_POST['Destination'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Rate per Cubic Metre') . ':</td>
-		<td><input type="text" name="CubRate" class="number" size=6 maxlength=5 value="' . $_POST['CubRate'] . '" /></td></tr>';
+		<td><input type="text" name="CubRate" class="number" size="6" maxlength="5" value="' . $_POST['CubRate'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Rate Per KG') . ':</td>
-		<td><input type="text" name="KGRate" class="number" size=6 maxlength=5 value="' . $_POST['KGRate'] . '" /></td></tr>';
+		<td><input type="text" name="KGRate" class="number" size="6" maxlength="5" value="' . $_POST['KGRate'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Maximum Weight Per Package (KGs)') . ':</a></td>
-		<td><input type="text" name="MAXKGs" class="number" size=8 maxlength=7 value="' . $_POST['MAXKGs'] . '" /></td></tr>';
+		<td><input type="text" name="MAXKGs" class="number" size="8" maxlength="7" value="' . $_POST['MAXKGs'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Maximum Volume Per Package (cubic metres)') . ':</a></td>
-		<td><input type="text" name="MAXCub" class="number" size=8 maxlength=7 value="' . $_POST['MAXCub'] . '" /></td></tr>';
+		<td><input type="text" name="MAXCub" class="number" size="8" maxlength="7" value="' . $_POST['MAXCub'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Fixed Price (zero if rate per KG or Cubic)') . ':</a></td>
-		<td><input type="text" name="FixedPrice" class="number" size=6 maxlength=5 value="' . $_POST['FixedPrice'] . '" /></td></tr>';
+		<td><input type="text" name="FixedPrice" class="number" size="6" maxlength="5" value="' . $_POST['FixedPrice'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Minimum Charge (0 is N/A)') . ':</a></td>
-		<td><input type="text" name="MinimumChg" class="number" size=6 maxlength=5 value="' . $_POST['MinimumChg'] . '" /></td></tr>';
+		<td><input type="text" name="MinimumChg" class="number" size="6" maxlength="5" value="' . $_POST['MinimumChg'] . '" /></td></tr>';
 
 	echo '</table><br />';
 

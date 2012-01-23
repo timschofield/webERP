@@ -212,11 +212,11 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $PhoneNo . _(' has been selected') . '</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br />';
 
-	echo '<table cellpadding=4 width=90% class="selection">
+	echo '<table cellpadding="4" width="90%" class="selection">
 			<tr>
-				<th width=33%>' . _('Customer Inquiries') . '</th>
-				<th width=33%>' . _('Customer Transactions') . '</th>
-				<th width=33%>' . _('Customer Maintenance') . '</th>
+				<th width="33%">' . _('Customer Inquiries') . '</th>
+				<th width="33%">' . _('Customer Transactions') . '</th>
+				<th width="33%">' . _('Customer Maintenance') . '</th>
 			</tr>';
 	echo '<tr><td valign=top class="select">';
 	/* Customer Inquiry Options */
@@ -239,11 +239,11 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 	echo '</td>';
 	echo '</tr></table><br />';
 } else {
-	echo '<table width=90%>
+	echo '<table width="90%">
 			<tr>
-				<th width=33%>' . _('Customer Inquiries') . '</th>
-				<th width=33%>' . _('Customer Transactions') . '</th>
-				<th width=33%>' . _('Customer Maintenance') . '</th>
+				<th width="33%">' . _('Customer Inquiries') . '</th>
+				<th width="33%">' . _('Customer Transactions') . '</th>
+				<th width="33%">' . _('Customer Maintenance') . '</th>
 			</tr>';
 	echo '<tr>
 			<td class="select"></td>
@@ -268,7 +268,7 @@ if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
 echo '</td>
-	<td><font size=3><b>' . _('OR') . '</b></font></td><td>' . _('Enter a partial Code') . ':</td>
+	<td><font size="3"><b>' . _('OR') . '</b></font></td><td>' . _('Enter a partial Code') . ':</td>
 	<td>';
 if (isset($_POST['CustCode'])) {
 	echo '<input type="text" name="CustCode" value="' . $_POST['CustCode'] . '" size="15" maxlength="18" />';
@@ -278,7 +278,7 @@ if (isset($_POST['CustCode'])) {
 echo '</td>
 	</tr>
 	<tr>
-		<td><font size=3><b>' . _('OR') . '</b></font></td>
+		<td><font size="3"><b>' . _('OR') . '</b></font></td>
 		<td>' . _('Enter a partial Phone Number') . ':</td>
 		<td>';
 if (isset($_POST['CustPhone'])) {
@@ -287,7 +287,7 @@ if (isset($_POST['CustPhone'])) {
 	echo '<input type="Text" name="CustPhone" size="15" maxlength="18" />';
 }
 echo '</td>';
-echo '<td><font size=3><b>' . _('OR') . '</b></font></td>
+echo '<td><font size="3"><b>' . _('OR') . '</b></font></td>
 		<td>' . _('Enter part of the Address') . ':</td>
 		<td>';
 if (isset($_POST['CustAdd'])) {
@@ -297,7 +297,7 @@ if (isset($_POST['CustAdd'])) {
 }
 echo '</td></tr>';
 echo '<tr>
-		<td><font size=3><b>' . _('OR') . '</b></font></td>
+		<td><font size="3"><b>' . _('OR') . '</b></font></td>
 		<td>' . _('Choose a Type') . ':</td>
 		<td>';
 if (isset($_POST['CustType'])) {
@@ -343,7 +343,7 @@ if (isset($_POST['CustType'])) {
 }
 
 /* Option to select a sales area */
-echo '<td><font size=3><b>' . _('OR') . '</b></font></td>
+echo '<td><font size="3"><b>' . _('OR') . '</b></font></td>
 		<td>' . _('Choose an Area') . ':</td><td>';
 $result2 = DB_query("SELECT areacode, areadescription FROM areas", $db);
 // Error if no sales areas setup
@@ -450,13 +450,13 @@ if (isset($result)) {
 			echo '<td><font size="1"><input type="submit" name="SubmitCustomerSelection' . $i .'" value="' . htmlentities($myrow['debtorno'].' '.$myrow['branchcode'],ENT_QUOTES,'UTF-8') . '" /></font></td>
 				<input type="hidden" name="SelectedCustomer' . $i . '" value="'.$myrow['debtorno'].'" />
 				<input type="hidden" name="SelectedBranch' . $i . '" value="'. $myrow['branchcode'].'" />
-				<td><font size=1>' . $myrow['name'] . '</font></td>
-				<td><font size=1>' . $myrow['brname'] . '</font></td>
-				<td><font size=1>' . $myrow['contactname'] . '</font></td>
-				<td><font size=1>' . $myrow['typename'] . '</font></td>
-				<td><font size=1>' . $myrow['phoneno'] . '</font></td>
-				<td><font size=1>' . $myrow['faxno'] . '</font></td>
-				<td><font size=1>' . $myrow['email'] . '</font></td>
+				<td><font size="1">' . $myrow['name'] . '</font></td>
+				<td><font size="1">' . $myrow['brname'] . '</font></td>
+				<td><font size="1">' . $myrow['contactname'] . '</font></td>
+				<td><font size="1">' . $myrow['typename'] . '</font></td>
+				<td><font size="1">' . $myrow['phoneno'] . '</font></td>
+				<td><font size="1">' . $myrow['faxno'] . '</font></td>
+				<td><font size="1">' . $myrow['email'] . '</font></td>
 			</tr>';
 			$i++;
 			$j++;//row counter
@@ -505,7 +505,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					<td colspan="2">
 					<table width="45%" colspan="2" cellpadding="4">
 						<tr>
-							<th width=33%>' . _('Customer Mapping') . '</th>
+							<th width="33%">' . _('Customer Mapping') . '</th>
 						</tr>
 					</td>
 					<th valign="top">
@@ -691,7 +691,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
 			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
-			echo '<table width=45%>';
+			echo '<table width="45%">';
 			echo '<tr>
 				 	<th>' . _('date') . '</th>
 				  	<th>' . _('note') . '</th>

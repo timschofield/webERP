@@ -39,9 +39,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 echo '<tr><td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
-	<td><input tabindex="1" type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" value="' .$_POST['FromDate']. '" /></td></tr>';
+	<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" value="' .$_POST['FromDate']. '" /></td></tr>';
 echo '<tr><td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
-	<td><input tabindex="2" type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td></tr>';
+	<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td></tr>';
 
 // Show user selections
 echo '<tr><td>'. _('User ID'). '</td>
@@ -159,7 +159,7 @@ if (isset($_POST['View'])) {
 	}
 	$result = DB_query($sql,$db);
 
-	echo '<table border=0 width="98%" class=selection>';
+	echo '<table border="0" width="98%" class="selection">';
 	echo '<tr><th>' . _('Date/Time') . '</th>
 				<th>' . _('User') . '</th>
 				<th>' . _('Type') . '</th>
@@ -206,7 +206,7 @@ if (isset($_POST['View'])) {
 					echo '</tr>';
 				}
 			}
-			echo '<tr bgcolor=black> <td colspan="6"></td> </tr>';
+			echo '<tr bgcolor="black"> <td colspan="6"></td> </tr>';
 		}
 		unset($_SESSION['SQLString']);
 	}

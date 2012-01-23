@@ -30,7 +30,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class=selection><tr><td>'._('Account').':</td><td><select Name="Account">';
+echo '<table class="selection"><tr><td>'._('Account').':</td><td><select Name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $Account = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($Account,$db)){
@@ -51,7 +51,7 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 
 $result=DB_query($SQL,$db);
-echo '<option value=0>0 - '._('All tags');
+echo '<option value="0">0 - '._('All tags');
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 		echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -143,7 +143,7 @@ if (isset($_POST['Show'])){
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$db,$ErrMsg);
 
-	echo '<br /><table class=selection>';
+	echo '<br /><table class="selection">';
 
 	echo '<tr><th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
 	$TableHeader = '<tr>
@@ -270,12 +270,12 @@ if (isset($_POST['Show'])){
 			$tagrow['tagdescription']=_('None');
 		}
 		printf('<td>%s</td>
-			<td class=number><a href="%s">%s</a></td>
+			<td class="number"><a href="%s">%s</a></td>
 			<td>%s</td>
-			<td class=number>%s</td>
-			<td class=number>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
 			<td>%s</td>
-			<td class=number><b>%s</b></td>
+			<td class="number"><b>%s</b></td>
 			<td>%s</td>
 			</tr>',
 			$myrow['typename'],

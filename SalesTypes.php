@@ -184,7 +184,7 @@ or deletion of the records*/
 	$sql = "SELECT * FROM salestypes";
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	echo '<tr>
 		<th>' . _('Type Code') . '</th>
 		<th>' . _('Type Name') . '</th>
@@ -224,7 +224,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" >';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class=selection>'; //Main table
+	echo '<p><table class="selection">'; //Main table
 
 
 	// The user wish to EDIT an existing type
@@ -259,7 +259,7 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">';
 		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td>
-				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size=3 maxlength=2 name="TypeAbbrev" /></td></tr>';
+				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size="3" maxlength="2" name="TypeAbbrev" /></td></tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {

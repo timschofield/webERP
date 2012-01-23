@@ -328,13 +328,13 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($StockID)) {
 		echo'</font><table cellpadding="3" colspan="4" class="selection"><tr>
-			<td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
+			<td><font size="1">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
 			<td><input tabindex="1" type="Text" name="Keywords" size="20" maxlength="25" /></td>
-			<td><font size=3><b>' . _('OR') . '</b></font></td>
-			<td><font size=1>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</font></td>
+			<td><font size="3"><b>' . _('OR') . '</b></font></td>
+			<td><font size="1">' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</font></td>
 			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" /></td>
-			<td><font size=3><b>' . _('OR') . '</b></font></td>
-			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF']) . '?listall=yes"><font size=3>' . _('List All Demands') .'</font></a></td></tr>
+			<td><font size="3"><b>' . _('OR') . '</b></font></td>
+			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF']) . '?listall=yes"><font size="3">' . _('List All Demands') .'</font></a></td></tr>
 			<tr><td colspan="7"><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') .
             '" /></div></td></tr></table>';
 	} else {

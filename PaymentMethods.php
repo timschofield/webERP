@@ -250,7 +250,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['ForPayment'] = 1; // Default is use for payment
 		$_POST['ForReceipt'] = 1; // Default is use for receipts
 		$_POST['UsePrePrintedStationery'] = 0; // Default is use for receipts
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 	}
 	echo '<tr>
 			<td>' . _('Payment Method') . ':' . '</td>

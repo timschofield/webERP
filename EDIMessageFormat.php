@@ -100,7 +100,7 @@ if (isset($msg)) {
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p><table border=0 width=100%>
+echo '<p><table border="0" width="100%">
 	<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title.'</p>';
 
@@ -124,7 +124,7 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan="5"><font size=3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode.'</font></th></tr>';
+	echo '<tr><th colspan="5"><font size="3">' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode.'</font></th></tr>';
 	$TableHeader = '<tr>
 					<th>' . _('Section') . '</th>
 					<th>' . _('Sequence') . '</th>
@@ -145,7 +145,7 @@ or deletion of the records*/
 
 
 		printf('<td>%s</td>
-				<td class=number>%s</td>
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td><a href="%s&SelectedMessageLine=%s">' . _('Edit') . '</a></td>
 				<td><a href="%s&delete=%s">' . _('Delete') . '</a></td>
@@ -162,7 +162,7 @@ or deletion of the records*/
 	echo '</table><p>';
 	if (DB_num_rows($result)==0){
 		echo '<div class="centre">
-				<input tabindex=1 type="submit" name="NewEDIInvMsg" value="' . _('Create New EDI Invoice Message From Default Template') . '" />
+				<input tabindex="1" type="submit" name="NewEDIInvMsg" value="' . _('Create New EDI Invoice Message From Default Template') . '" />
 			</div>
 			<br />';
 	}
@@ -199,7 +199,7 @@ if (isset($SelectedMessageLine)) {
 	echo '<input type="hidden" name="PartnerCode" value="' . $PartnerCode . '" />';
 }
 
-echo '<table class=selection>';
+echo '<table class="selection">';
 
 if ($myrow['messagetype']!='') {
 	echo '<tr><th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'].'</th></tr>';
@@ -207,7 +207,7 @@ if ($myrow['messagetype']!='') {
 
 echo '<tr><td>' . _('Section') . ':</td>';
 echo '<td>';
-echo '<select tabindex=2 name="Section">';
+echo '<select tabindex="2" name="Section">';
 
 if ($_POST['Section']=='Heading') {
 	echo '<option selected value="Heading">' . _('Heading') . '</option>';
@@ -235,17 +235,17 @@ if (!isset($_POST['LineText'])) {$_POST['LineText']='';}
 echo '</td></tr>';
 
 echo '<tr><td>Sequence Number:</td>';
-echo '<td><input tabindex=3 type="text" name=SequenceNo size=3 maxlength=3 value='.$_POST['SequenceNo'].' />';
+echo '<td><input tabindex="3" type="text" name="SequenceNo" size="3" maxlength="3" value='.$_POST['SequenceNo'].' />';
 echo '</td></tr>';
 echo '<tr><td>' .  _('Line Text') . ':' .'</td>';
 echo '<td>';
-echo '<input tabindex=4 type="text" name="LineText" size=50 maxlength=50 value='.$_POST['LineText'] .' />';
+echo '<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value='.$_POST['LineText'] .' />';
 echo '</td></tr>';
 echo '</table><br />';
 if (isset($_GET['SelectedMessageLine'])) {
-	echo '<div class="centre"><input tabindex=5 type="submit" name="update" value="'.  _('Update Information'). '" /></div>';
+	echo '<div class="centre"><input tabindex="5" type="submit" name="update" value="'.  _('Update Information'). '" /></div>';
 } else {
-	echo '<div class="centre"><input tabindex=5 type="submit" name="submit" value="'.  _('Enter Information'). '" /></div>';
+	echo '<div class="centre"><input tabindex="5" type="submit" name="submit" value="'.  _('Enter Information'). '" /></div>';
 }
 
 echo '</form>';

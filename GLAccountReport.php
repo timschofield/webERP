@@ -272,7 +272,7 @@ if (isset($_POST['RunReport'])){
 				ORDER BY tagref";
 
 	$result=DB_query($SQL,$db);
-	echo '<option value=0>0 - '._('All tags') . '</option>';
+	echo '<option value="0">0 - '._('All tags') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 		   echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription']  . '</option>';

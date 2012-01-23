@@ -11,7 +11,7 @@ $title = _('Sales Integrity');
 include('includes/header.inc');
 
 
-echo '<div class="centre"><font size=4 color=blue><U><b>' . _('Sales Integrity Check') . '</b></U></font></div>';
+echo '<div class="centre"><font size="4" color=blue><U><b>' . _('Sales Integrity Check') . '</b></U></font></div>';
 
 echo '<br /><br />'._('Check every Invoice has a Sales Order').'<br />';
 echo '<br /><br />'._('Check every Invoice has a Tax Entry').'<br />';

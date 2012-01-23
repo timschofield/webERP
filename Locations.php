@@ -550,7 +550,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' .  _('Delivery Address 4') . ':' . '</td>
-			<td><input type="text" name="DelAdd4" value="' . $_POST['DelAdd4'] . '" size="41" maxlength=40 /></td>
+			<td><input type="text" name="DelAdd4" value="' . $_POST['DelAdd4'] . '" size="41" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Delivery Address 5') . ':' . '</td>

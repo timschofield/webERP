@@ -336,7 +336,7 @@ $TableHeader = '<tr>
 
 if (isset($_POST['AllocTrans'])) {
 	// Page called with trans number
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method=post>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />';
 

@@ -17,7 +17,7 @@ if (!isset($_POST['DateRange'])){
 echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table cellpadding=2 class="selection">';
+echo '<table cellpadding="2" class="selection">';
 	
 echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
 		</tr>
@@ -71,7 +71,7 @@ if ($_POST['DateRange']=='Custom'){
 echo '</table>';
 
 
-echo '<br /><div class="centre"><input tabindex=4 type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
+echo '<br /><div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
 echo '</form></div>';
 echo '<br />';
 
@@ -155,7 +155,7 @@ if (isset($_POST['ShowSales'])){
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
 	$SalesResult = DB_query($sql,$db,$ErrMsg);
 	
-	echo '<table cellpadding=2 class="selection">';
+	echo '<table cellpadding="2" class="selection">';
 	
 	echo'<tr>
 		<th>' . _('Category') . '</th>

@@ -258,8 +258,8 @@ if (DB_num_rows($result)!=0){
 			<th>' . _('Prd From') . '</th>
 			<th>' . _('Prd To') . '</th>
 			<th>' . _('Data') . '</th>
-			<th>' . _('Col') . ' #<br /><font size=1>' . _('Numerator') . '</font></th>
-			<th>' . _('Col') . ' #<br /><font size=1>' . _('Denominator') . '</font></th>
+			<th>' . _('Col') . ' #<br /><font size="1">' . _('Numerator') . '</font></th>
+			<th>' . _('Col') . ' #<br /><font size="1">' . _('Denominator') . '</font></th>
 			<th>' . _('Operator') . '</th>
 			<th>' . _('Budget') . '<br />' . _('Or Actual') . '</th>
 		</tr>';
@@ -392,7 +392,7 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<tr>
 				<td>' . _('Column Number') . ':</td>
-				<td><input type="text" class="number" name=ColID size=3 maxlength=3 value="' . $_POST['ColID'] . '" />&nbsp;<font size=1 />(' . _('A number between 1 and 10 is expected') . ')</font></td>
+				<td><input type="text" class="number" name=ColID size="3" maxlength="3" value="' . $_POST['ColID'] . '" />&nbsp;<font size="1" />(' . _('A number between 1 and 10 is expected') . ')</font></td>
 			</tr>';
 	}
 	if (!isset($_POST['Heading1'])) {
@@ -400,7 +400,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Heading line 1') . ':</td>
-			<td><input type="text" size=16 maxlength=15 name="Heading1" value="' . $_POST['Heading1'] . '" /></td>
+			<td><input type="text" size="16" maxlength="15" name="Heading1" value="' . $_POST['Heading1'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['Heading2'])) {
 		$_POST['Heading2']='';

@@ -76,7 +76,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p>';
-echo '<table cellpadding=2 class=selection>';
+echo '<table cellpadding="2" class="selection">';
 $TableHeader = '<tr><th>' . _('Shipment') . '</th>
 		<th>' . _('Amount') . '</th></tr>';
 echo $TableHeader;
@@ -86,7 +86,7 @@ $TotalShiptValue = 0;
 foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 	echo '<tr><td>' . $EnteredShiptRef->ShiptRef . '</td>
-		<td class=number>' . locale_number_format($EnteredShiptRef->Amount,2) . '</td>
+		<td class="number">' . locale_number_format($EnteredShiptRef->Amount,2) . '</td>
 		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '&Delete=' . $EnteredShiptRef->Counter . '">' . _('Delete') . '</a></td></tr>';
 
 	$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
@@ -94,8 +94,8 @@ foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 }
 
 echo '<tr>
-	<td class=number><font size=2 color=navy>' . _('Total') . ':</font></td>
-	<td class=number><font size=2 color=navy><U>' . locale_number_format($TotalShiptValue,2) . '</U></font></td>
+	<td class="number"><font size="2" color=navy>' . _('Total') . ':</font></td>
+	<td class="number"><font size="2" color=navy><U>' . locale_number_format($TotalShiptValue,2) . '</U></font></td>
 </tr>
 </table><br />';
 

@@ -262,9 +262,9 @@ if (!isset($_POST['ProcessCredit'])) {
 
 	echo '<table cellpadding="2" colspan="7" class="selection"><tr>';
 	echo '<tr><th colspan="13">';
-	echo '<div class="centre"><font color=blue size=4><b>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</b>
-		<b>'.' - ' . $_SESSION['CreditItems']->CustomerName . '</b></font>
-		<font size=3 color=blue> - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems']->DefaultCurrency . '</div></font>';
+	echo '<div class="centre"><b>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</b>
+		<b>'.' - ' . $_SESSION['CreditItems']->CustomerName . '</b>
+		 - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems']->DefaultCurrency . '</div>';
 	echo '</th></tr>';
 	echo '<th>' . _('Item Code') . '</th>
 			<th>' . _('Item Description') . '</th>
@@ -315,19 +315,19 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 		if ($LnItm->Controlled==1){
 
-			echo '<td><input type="hidden" name="Quantity_' . $LnItm->LineNumber .'"  value=' . $LnItm->QtyDispatched . '><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&CreditInvoice=Yes">' . $LnItm->QtyDispatched . '</a></td>';
+			echo '<td><input type="hidden" name="Quantity_' . $LnItm->LineNumber .'"  value="' . $LnItm->QtyDispatched . '"><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&CreditInvoice=Yes">' . $LnItm->QtyDispatched . '</a></td>';
 
 		} else {
 
-			echo '<td><input tabindex=' . $j . ' type="text" class="number" name="Quantity_' . $LnItm->LineNumber .'" maxlength=6 size=6 value=' . $LnItm->QtyDispatched . '></td>';
+			echo '<td><input tabindex=' . $j . ' type="text" class="number" name="Quantity_' . $LnItm->LineNumber .'" maxlength="6" size="6" value="' . $LnItm->QtyDispatched . '"></td>';
 
 		}
 
 		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CreditItems']->CurrDecimalPlaces);
 
 		$j++;
-		echo '<td><input tabindex=' . $j . ' type="text" class="number" name="Price_' . $LnItm->LineNumber . '" maxlength=12 size=6 value=' . $LnItm->Price . '></td>
-		<td><input tabindex=' . $j . ' type="text" class="number" name="Discount_' . $LnItm->LineNumber . '" maxlength=3 size=3 value=' . ($LnItm->DiscountPercent * 100) . '></td>
+		echo '<td><input tabindex=' . $j . ' type="text" class="number" name="Price_' . $LnItm->LineNumber . '" maxlength="12" size="6" value="' . $LnItm->Price . '"></td>
+		<td><input tabindex=' . $j . ' type="text" class="number" name="Discount_' . $LnItm->LineNumber . '" maxlength="3" size="3" value="' . ($LnItm->DiscountPercent * 100) . '"></td>
 		<td class="number">' . $DisplayLineTotal . '</td>';
 
 		/*Need to list the taxes applicable to this line */
@@ -355,7 +355,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 			}
 			if (!isset($_POST['ProcessCredit'])) {
 				echo '<input type="text" class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder .
-					'_TaxRate" maxlength=4 size=4 value="' . $Tax->TaxRate*100 . '">';
+					'_TaxRate" maxlength="4" size="4" value="' . $Tax->TaxRate*100 . '">';
 			}
 			$i++;
 			if ($Tax->TaxOnTax ==1){
@@ -380,7 +380,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 			<td class="number">' . $DisplayGrossLineTotal . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $LnItm->LineNumber . '"  onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the credit?') . '\');">' . _('Delete') . '</a></td></tr>';
 
-		echo '<tr' . $RowStarter . '><td colspan="12"><textarea tabindex=' . $j .'  name="Narrative_' . $LnItm->LineNumber . '" cols=100% rows=1>' . $LnItm->Narrative . '</textarea><br /><hr></td></tr>';
+		echo '<tr' . $RowStarter . '><td colspan="12"><textarea tabindex=' . $j .'  name="Narrative_' . $LnItm->LineNumber . '" cols="100%" rows="1">' . $LnItm->Narrative . '</textarea><br /><hr></td></tr>';
 		$j++;
 	}
 } /*end foreach loop displaying the invoice lines to credit */
@@ -875,7 +875,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
 				/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
-				//echo "<div align=left><pre>"; var_dump($CreditLine); echo "</pre> </div>";
+				//echo "<div align="left"><pre>"; var_dump($CreditLine); echo "</pre> </div>";
 				if ($CreditLine->Controlled ==1){
 					foreach($CreditLine->SerialItems as $Item){
 						/*We need to add the StockSerialItem record and The StockSerialMoves as well */

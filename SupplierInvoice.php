@@ -287,7 +287,7 @@ if (!isset($_POST['PostInvoice'])){
 			<tr>
 				<th colspan="6">' . _('Purchase Order Charges') . '</th>
 			</tr>';
-		$tableheader = '<tr bgcolor=#800000>
+		$tableheader = '<tr bgcolor="#800000">
 							<th>' . _('Seq') . ' #</th>
 							<th>' . _('Item Code') . '</th>
 							<th>' . _('Description') . '</th>
@@ -465,7 +465,7 @@ if (!isset($_POST['PostInvoice'])){
 						<td>' . $EnteredGLCode->GLCode . '</td>
 						<td>' . $EnteredGLCode->GLActName . '</td>
 						<td>' . $EnteredGLCode->Narrative . '</td>
-						<td class=number>' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) .  '</td>
+						<td class="number">' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) .  '</td>
 					</tr>';
 
 				$TotalGLValue += $EnteredGLCode->Amount;
@@ -485,7 +485,7 @@ if (!isset($_POST['PostInvoice'])){
 				<table class="selection">
 				<tr>
 					<td>' . _('Amount in supplier currency') . ':</td>
-					<td colspan="2" class=number>' . locale_number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+					<td colspan="2" class="number">' . locale_number_format( $_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 				</tr>';
 	} else {
 		echo '<br />

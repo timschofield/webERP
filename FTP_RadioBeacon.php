@@ -46,16 +46,16 @@ $SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
 
 echo '<table cellpadding="2" colspan="7" width="100%">';
 $TableHeader =	'<tr>
-				<td class=tableheader>' . _('Modify') . '</td>
-				<td class=tableheader>' . _('Send to') . '<br />' . _('Radio Beacon') . '</td>
-				<td class=tableheader>' . _('Customer') . '</td>
-				<td class=tableheader>' . _('Branch') . '</td>
-				<td class=tableheader>' . _('Cust Order') . ' #</td>
-				<td class=tableheader>' . _('Order Date') . '</td>
-				<td class=tableheader>' . _('Req Del Date') . '</td>
-				<td class=tableheader>' . _('Delivery To') . '</td>
-				<td class=tableheader>' . _('Order Total') . '</td>
-				<td class=tableheader>' . _('Last Send') . '</td>
+				<td class="tableheader">' . _('Modify') . '</td>
+				<td class="tableheader">' . _('Send to') . '<br />' . _('Radio Beacon') . '</td>
+				<td class="tableheader">' . _('Customer') . '</td>
+				<td class="tableheader">' . _('Branch') . '</td>
+				<td class="tableheader">' . _('Cust Order') . ' #</td>
+				<td class="tableheader">' . _('Order Date') . '</td>
+				<td class="tableheader">' . _('Req Del Date') . '</td>
+				<td class="tableheader">' . _('Delivery To') . '</td>
+				<td class="tableheader">' . _('Order Total') . '</td>
+				<td class="tableheader">' . _('Last Send') . '</td>
 				</tr>';
 
 echo $TableHeader;
@@ -79,16 +79,16 @@ while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 	$ModifyPage = $rootpath . 'SelectOrderItems.php?' . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
 
 	if ($myrow['printedpackingslip'] ==1){
-		printf('<td><font size=2><a href="%s">%s</a></font></td>
-				<td><font color=RED size=2>' . _('Already') . '<br />' . _('Sent') . '</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td class=number><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td></tr>',
+		printf('<td><font size="2"><a href="%s">%s</a></font></td>
+				<td><font color=RED size="2">' . _('Already') . '<br />' . _('Sent') . '</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td class="number"><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td></tr>',
 				$ModifyPage,
 				$myrow['orderno'],
 				$myrow['name'],
@@ -100,16 +100,16 @@ while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 				$FormatedOrderValue,
 				$FormatedDateLastSent);
 	} else {
-		printf('<td><font size=2><a href="%s">%s</a></font></td>
-				<td><font size=2><a href="%s">' . _('Send') . '</a></font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td>
-				<td class=number><font size=2>%s</font></td>
-				<td><font size=2>%s</font></td></tr>',
+		printf('<td><font size="2"><a href="%s">%s</a></font></td>
+				<td><font size="2"><a href="%s">' . _('Send') . '</a></font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td>
+				<td class="number"><font size="2">%s</font></td>
+				<td><font size="2">%s</font></td></tr>',
 				$ModifyPage,
 				$myrow['orderno'],
 				$FTPDispatchNote,

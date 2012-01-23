@@ -26,7 +26,7 @@ if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){
 	$_GET['Action'] = 'Enter';
 }
 
-echo '<table class=selection><tr>';
+echo '<table class="selection"><tr>';
 if ($_GET['Action']=='View'){
 	echo '<td><a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
 } else {
@@ -79,7 +79,7 @@ if ($_GET['Action'] == 'Enter'){
 	} // end of if enter counts button hit
 
 
-	echo '<table cellpadding=2 class=selection>';
+	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$result = DB_query($sql,$db);
@@ -101,9 +101,9 @@ if ($_GET['Action'] == 'Enter'){
 	for ($i=1;$i<=10;$i++){
 
 		echo '<tr>
-			<td><input type="text" name='StockID_" . $i . "' maxlength=20 size=20 /></td>
-			<td><input type="text" name='Qty_" . $i . "' maxlength=10 size=10 /></td>
-			<td><input type="text" name='Ref_" . $i . "' maxlength=20 size=20 /></td></tr>';
+			<td><input type="text" name='StockID_" . $i . "' maxlength="20" size="20" /></td>
+			<td><input type="text" name='Qty_" . $i . "' maxlength="10" size="10" /></td>
+			<td><input type="text" name='Ref_" . $i . "' maxlength="20" size="20" /></td></tr>';
 
 	}
 
@@ -140,7 +140,7 @@ if ($_GET['Action'] == 'Enter'){
 			<td>".$myrow['loccode']."</td>
 			<td>".$myrow['qtycounted']."</td>
 			<td>".$myrow['reference']."</td>
-			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength=20 size=20 /></td></tr>";
+			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength="20" size="20" /></td></tr>";
 
 	}
 	echo "</table><br /><div class=centre><input type="submit" name='SubmitChanges' VALUE='" . _('Save Changes') . "' /></div>";

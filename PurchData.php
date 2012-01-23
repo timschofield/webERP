@@ -507,15 +507,15 @@ if (!isset($SuppliersResult)) {
         $_POST['LeadTime'] = 1;
     }
     echo '<tr><td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-	<td><input type="text" class=number name="LeadTime" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td></tr>';
+	<td><input type="text" class="number" name="LeadTime" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td></tr>';
     echo '<tr><td>' . _('Preferred Supplier') . ':</td>
 	<td><select name="Preferred">';
     if ($_POST['Preferred'] == 1) {
-        echo '<option selected value=1>' . _('Yes') . '</option>';
-        echo '<option value=0>' . _('No')  . '</option>';
+        echo '<option selected value="1">' . _('Yes') . '</option>';
+        echo '<option value="0">' . _('No')  . '</option>';
     } else {
-        echo '<option value=1>' . _('Yes')  . '</option>';
-        echo '<option selected value=0>' . _('No')  . '</option>';
+        echo '<option value="1">' . _('Yes')  . '</option>';
+        echo '<option selected value="0">' . _('No')  . '</option>';
     }
     echo '</select></td></tr></table><br /><div class="centre">';
     if (isset($_GET['Edit'])) {

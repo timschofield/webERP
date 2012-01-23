@@ -385,7 +385,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="ReportID" value="' . $ReportID . '" />';
 		echo '<table width="98%" colspan="4" class="selection">
 				<tr>
-					<th colspan="8"><font size=3 color="blue">' . _('Edit The Selected Report') . '</font></th>
+					<th colspan="8"><font size="3" color="blue">' . _('Edit The Selected Report') . '</font></th>
 				</tr>';
 	} else {
 		echo '<table width="98%" colspan="4" class="selection">
@@ -456,7 +456,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '</select></td>';
 	echo '<td>' . _('From') . ': <input type="text" name="Lower2" size="10" maxlength="10" value="' . $_POST['Lower2'] . '" /></td>
-			<td>' . _('To') . ': <input type="text" name="Upper2" size=10 maxlength=10 value="' . $_POST['Upper2'] . '" /></td>
+			<td>' . _('To') . ': <input type="text" name="Upper2" size="10" maxlength="10" value="' . $_POST['Upper2'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Group By 3') . ': <select name="GroupByData3">';
@@ -485,7 +485,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<td>' . _('From') . ': <input type="text" name="Lower3" size="10" maxlength="10" value="' . $_POST['Lower3'] . '" /></td>
-			<td>' . _('To') . ': <input type="text" name="Upper3" size=10 maxlength=10 value="' . $_POST['Upper3'] . '" /></td>
+			<td>' . _('To') . ': <input type="text" name="Upper3" size="10" maxlength="10" value="' . $_POST['Upper3'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Group By 4') . ': <select name="GroupByData4">';
@@ -504,7 +504,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<td>' . _('From') .': <input type="text" name="Lower4" size="10" maxlength="10" value="' . $_POST['Lower4'] . '" /></td>
-			<td>' . _('To') . ': <input type="text" name="Upper4" size=10 maxlength=10 value="' . $_POST['Upper4'] . '" /></td>
+			<td>' . _('To') . ': <input type="text" name="Upper4" size="10" maxlength="10" value="' . $_POST['Upper4'] . '" /></td>
 		</tr>';
 
 	echo '</table>';

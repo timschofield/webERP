@@ -272,7 +272,7 @@ if (!isset($SelectedUser)) {
 				FROM www_users";
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	echo '<tr><th>' . _('User Login') . '</th>
 				<th>' . _('Full Name') . '</th>
 				<th>' . _('Telephone') . '</th>
@@ -477,11 +477,11 @@ echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" />';
 echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
 
 if ($_POST['CanCreateTender']==0){
-	echo '<option selected="True" value=0>' . _('No') . '</option>';
-	echo '<option value=1>' . _('Yes') . '</option>';
+	echo '<option selected="True" value="0">' . _('No') . '</option>';
+	echo '<option value="1">' . _('Yes') . '</option>';
 } else {
- 	echo '<option selected="True" value=1>' . _('Yes') . '</option>';
-	echo '<option value=0>' . _('No') . '</option>';
+ 	echo '<option selected="True" value="1">' . _('Yes') . '</option>';
+	echo '<option value="0">' . _('No') . '</option>';
 }
 echo '</select></td></tr>';
 
@@ -514,17 +514,17 @@ if (!isset($_POST['SupplierID'])) {
 }
 echo '<tr>
 		<td>' . _('Customer Code') . ':</td>
-		<td><input type="text" name="Cust" size=10 maxlength=10 value="' . $_POST['Cust'] . '" /></td>
+		<td><input type="text" name="Cust" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Branch Code') . ':</td>
-		<td><input type="text" name="BranchCode" size=10 maxlength=10 VALUE="' . $_POST['BranchCode'] .'" /></td>
+		<td><input type="text" name="BranchCode" size="10" maxlength="10" VALUE="' . $_POST['BranchCode'] .'" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Supplier Code') . ':</td>
-		<td><input type="text" name="SupplierID" size=10 maxlength=10 VALUE="' . $_POST['SupplierID'] .'" /></td>
+		<td><input type="text" name="SupplierID" size="10" maxlength="10" VALUE="' . $_POST['SupplierID'] .'" /></td>
 	</tr>';
 
 echo '<tr>
@@ -650,11 +650,11 @@ foreach($ModuleList as $ModuleName){
 			<td>' . _('Display') . ' ' . $ModuleName . ' ' . _('options') . ': </td>
 			<td><select name="Module_' . $i . '">';
 	if ($ModulesAllowed[$i]==0){
-		echo '<option selected value=0>' . _('No') . '</option>';
-		echo '<option value=1>' . _('Yes') . '</option>';
+		echo '<option selected value="0">' . _('No') . '</option>';
+		echo '<option value="1">' . _('Yes') . '</option>';
 	} else {
-	 	echo '<option selected value=1>' . _('Yes') . '</option>';
-		echo '<option value=0>' . _('No') . '</option>';
+	 	echo '<option selected value="1">' . _('Yes') . '</option>';
+		echo '<option value="0">' . _('No') . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
@@ -681,11 +681,11 @@ echo '<tr>
 		<td>' . _('Account Status') . ':</td>
 		<td><select name="Blocked">';
 if ($_POST['Blocked']==0){
-	echo '<option selected value=0>' . _('Open') . '</option>';
-	echo '<option value=1>' . _('Blocked') . '</option>';
+	echo '<option selected value="0">' . _('Open') . '</option>';
+	echo '<option value="1">' . _('Blocked') . '</option>';
 } else {
- 	echo '<option selected value=1>' . _('Blocked') . '</option>';
-	echo '<option value=0>' . _('Open') . '</option>';
+ 	echo '<option selected value="1">' . _('Blocked') . '</option>';
+	echo '<option value="0">' . _('Open') . '</option>';
 }
 echo '</select></td>
 	</tr>';

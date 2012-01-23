@@ -200,7 +200,7 @@ $DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 echo '<table><tr><td valign=top>';
-echo '<table class=selection>';
+echo '<table class="selection">';
 
 if (DB_num_rows($result) == 0) {
 	echo '<tr><td>' . _('There are no default prices set up for this part') . '</td></tr>';

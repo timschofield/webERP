@@ -140,7 +140,7 @@ function showLabelOptions() {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' .$txt[$iTxt++].'</p>';
 	echo '<form name ="form1" action="'.htmlspecialchars($_SERVER['PHP_SELF']).'" method="POST" id="form1">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	echo '<tbody>';
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
@@ -150,7 +150,7 @@ function showLabelOptions() {
 		</tr>';
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
-				<td><input type="text" class=number name="QtyByItem" value="'.$_POST['QtyByItem'].'" size="2"
+				<td><input type="text" class="number" name="QtyByItem" value="'.$_POST['QtyByItem'].'" size="2"
                     maxlength="4" /></td>
 		</tr>';
 	echo '<tr>

@@ -765,7 +765,7 @@ if (isset($_POST['NonStockOrder'])) {
 				<tr><td>'._('Unit').'</td>
 						<td><input type="text" name="SuppliersUnit" size="10" value="' . _('each') . '" /></td></tr>
 				<tr><td>'._('Delivery Date').'</td>
-						<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size=11 value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td></tr>';
+						<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td></tr>';
 	echo '</table>';
 	echo '<div class="centre">
 			<input type="submit" name="EnterLine" value="Enter Item" />
@@ -1041,7 +1041,7 @@ if (!isset($_GET['Edit'])) {
 
 	echo '</select></td>
 		<td>' . _('Enter text extracts in the description') . ':</td>
-		<td><input type="text" name="Keywords" size=20 maxlength=25 value="' . $_POST['Keywords'] . '" /></td></tr>
+		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
 		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" name="SupplierItemsOnly" ';
 	if (isset($_POST['SupplierItemsOnly']) AND $_POST['SupplierItemsOnly']=='on'){
 		echo 'checked';
@@ -1051,7 +1051,7 @@ if (!isset($_GET['Edit'])) {
 		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr><td></td>
-		<td><font size=3><b>' . _('OR') . ' </b></font><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
+		<td><font size="3"><b>' . _('OR') . ' </b></font><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
 		</table>
 		<br />
 		

@@ -106,7 +106,7 @@ if (!isset($SelectedSalesPostingID)) {
 	if (DB_num_rows($result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
-		echo '<table class=selection>';
+		echo '<table class="selection">';
 		echo '<tr><th>' . _('Area') . '</th>
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
@@ -217,7 +217,7 @@ if (!isset($SelectedSalesPostingID)) {
 
 		$result = DB_query($SQL,$db);
 
-		echo '<table class=selection>
+		echo '<table class="selection">
 			<tr>
 			<th>' . _('Area') . '</th>
 			<th>' . _('Stock Category') . '</th>

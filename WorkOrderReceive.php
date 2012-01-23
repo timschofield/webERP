@@ -755,7 +755,7 @@ echo '<table class="selection">
 		</tr>
 		 <tr>
 			<td>' . _('Already Received') . ':</td>
-		 	<td class=number>' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+		 	<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
 			<td colspan="2">' . $WORow['units'] . '</td>
 		</tr>
 		 <tr>

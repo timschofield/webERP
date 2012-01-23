@@ -214,7 +214,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table><tr>';
 echo '<td>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</td>
-	<td><input type="TEXT" size="33" maxlength=32 name="NewCompany" /></td></tr>
+	<td><input type="TEXT" size="33" maxlength="32" name="NewCompany" /></td></tr>
 	<tr><td>'. _('Logo Image File (.jpg)') . ':</td><td><input type="FILE" ID="LogoFile" name="LogoFile" /></td></tr>
 	<tr><td>' . _('Create Database?') . '</td><td><input type="CHECKBOX" name="CreateDB" /></td></tr>
 	</table>';

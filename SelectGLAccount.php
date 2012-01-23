@@ -90,7 +90,7 @@ if (!isset($AccountID)) {
 
 	echo '<table class="selection">
 		<tr>
-			<td><font size=1>' . _('Enter extract of text in the Account name') .':</font></td>
+			<td><font size="1">' . _('Enter extract of text in the Account name') .':</font></td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 			<td><font size="3"><b>' .  _('OR') . '</b></font></td>
 			<td><font size="1">' . _('Enter Account No. to search from') . ':</font></td>
@@ -122,10 +122,10 @@ if (!isset($AccountID)) {
 		while ($myrow=DB_fetch_array($result)) {
 
 			printf('<tr>
-					<td><font size=1><input type="submit" name="Select" value="%s" /></font></td>
-	                <td><font size=1>%s</font></td>
-	                <td><font size=1>%s</font></td>
-	                <td><font size=1>%s</font></td>
+					<td><font size="1"><input type="submit" name="Select" value="%s" /></font></td>
+	                <td><font size="1">%s</font></td>
+	                <td><font size="1">%s</font></td>
+	                <td><font size="1">%s</font></td>
 	                </tr>',
 	                $myrow['accountcode'],
 	                $myrow['accountname'],

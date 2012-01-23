@@ -11,17 +11,17 @@ include('includes/header.inc');
 //
 
 	// Page Border
-	echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF">';
+	echo '<table border="1" width="100%"><tr><td bgcolor="#FFFFFF">';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	// Context Navigation and Title
-	echo '<table width=100%>
-			<td width=37% align=left><a href="'. $rootpath . '/index.php?&Application=AR">' . _('Back to Customers') . '</a></td>
-			<td align=left><font size=4 color=blue><u><b>' . _('Debtors Control Integrity') . '</b></u></font></td>
+	echo '<table width="100%">
+			<td width="37%" align=left><a href="'. $rootpath . '/index.php?&Application=AR">' . _('Back to Customers') . '</a></td>
+			<td align=left><font size="4" color=blue><u><b>' . _('Debtors Control Integrity') . '</b></u></font></td>
 	      </table><p>';
 
-	echo '<table border=1>'; //Main table
+	echo '<table border="1">'; //Main table
 	echo '<td><table>'; // First column
 
 	$DefaultFromPeriod = ( !isset($_POST['FromPeriod']) OR $_POST['FromPeriod']=='' ) ? 1 : $_POST['FromPeriod'];
@@ -73,7 +73,7 @@ include('includes/header.inc');
 		//
 		//========[ SHOW SYNOPSYS ]===========
 		//
-		echo '<p><table border=1>';
+		echo '<p><table border="1">';
 		echo '<tr>
 				<th>' . _('Period') . '</th>
 				<th>' . _('Bal B/F in GL') . '</th>

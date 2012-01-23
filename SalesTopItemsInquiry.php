@@ -109,7 +109,7 @@ echo	' /></td>
 	</table>';
 
 
-echo '<br /><div class="centre"><input tabindex=4 type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
+echo '<br /><div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
 echo '</form></div>';
 echo '<br />';
 
@@ -210,7 +210,7 @@ if (isset($_POST['ShowSales'])){
 	$SalesResult = DB_query($sql,$db,$ErrMsg);
 
 	
-	echo '<table cellpadding=2 class="selection">';
+	echo '<table cellpadding="2" class="selection">';
 	
 	echo'<tr>
 			<th>' . _('Rank') . '</th>

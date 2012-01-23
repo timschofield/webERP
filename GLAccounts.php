@@ -224,18 +224,18 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 		echo '<input type="hidden" name="AccountCode" VALUE="' . $_POST['AccountCode'] .'" />';
-		echo '<table class=selection>
+		echo '<table class="selection">
 				<tr><td>' . _('Account Code') . ':</td>
 					<td>' . $_POST['AccountCode'] . '</td></tr>';
 	} else {
-		echo "<table class=selection>";
+		echo "<table class="selection">";
 		echo '<tr><td>' . _('Account Code') . ':</td>
 					<td><input type="text" name="AccountCode" size="11" class="number" maxlength="10" /></td>
 				</tr>';
 	}
 
 	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
-	echo '<tr><td>' . _('Account Name') . ":</td><td><input type='Text' size=51 maxlength=50 name='AccountName' value='" . $_POST['AccountName'] . "' /></td></tr>";
+	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="Text" size="51" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
 
 	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
 	$result = DB_query($sql, $db);
@@ -285,7 +285,7 @@ or deletion of the records*/
 
 	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo '<br /><table class=selection>';
+	echo '<br /><table class="selection">';
 	echo '<tr>
 		<th>' . _('Account Code') . '</th>
 		<th>' . _('Account Name') . '</th>

@@ -165,7 +165,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			echo '<tr>
 					<td colspan="2"></td>
 					<td colspan="8">
-						<table class="selection" width=100%>';
+						<table class="selection" width="100%">';
 			echo '<tr>
 					<th colspan="2"><b>' . _('GL Account') . '</b></th>
 					<th><b>' . _('Local Amount') . '</b></th>

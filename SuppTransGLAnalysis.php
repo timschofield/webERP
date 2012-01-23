@@ -197,7 +197,7 @@ if (!isset($_POST['Narrative'])) {
 }
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
-		<td><textarea name="Narrative" cols=40 rows=2>' .  $_POST['Narrative'] . '</textarea></td>
+		<td><textarea name="Narrative" cols="40" rows="2">' .  $_POST['Narrative'] . '</textarea></td>
 	</tr>
 	</table>
 	<br />';

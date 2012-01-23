@@ -557,7 +557,7 @@ if (!isset($StockID)) {
 	}
 
 	echo '</select></td>
-			<td><font size=1>' . _('Enter text extract(s) in the description') . ':</font></td>
+			<td><font size="1">' . _('Enter text extract(s) in the description') . ':</font></td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
       	<tr>

@@ -280,7 +280,7 @@ echo '<br />
 		<table class="selection">';
 echo '<tr>
 		<td><font color="red">' . _('Supplier Credit Note Reference') . ':</font></td>
-		<td><font size="2"><input type="text" size=20 maxlength=20 name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+		<td><font size="2"><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
 	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
@@ -326,9 +326,9 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 		echo '<tr><td>' . $EnteredGRN->GRNNo . '</td>
 			<td>' . $EnteredGRN->ItemCode . '</td>
 			<td>' . $EnteredGRN->ItemDescription . '</td>
-			<td class=number>' . locale_number_format($EnteredGRN->This_QuantityInv,2) . '</td>
-			<td class=number>' . locale_number_format($EnteredGRN->ChgPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			<td class=number>' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($EnteredGRN->This_QuantityInv,2) . '</td>
+			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td></tr>';
 
 		$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
@@ -566,7 +566,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 		echo '<input type="hidden" name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . ' />';
 
-		echo '</td><td class=number>' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
+		echo '</td><td class="number">' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
 
 	} else { /*Tax being entered manually accept the taxamount entered as is*/
 		$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = filter_number_format($_POST['TaxAmount'  . $Tax->TaxCalculationOrder]);

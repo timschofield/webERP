@@ -272,7 +272,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="6"><font color=blue size=3>'._('New Payment Terms.').'</font></th>
+				<th colspan="6"><font color=blue size="3">'._('New Payment Terms.').'</font></th>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
@@ -293,7 +293,7 @@ if (!isset($_GET['delete'])) {
     echo '  /></td>
 		</tr>
 		<tr><td>'._('Days (Or Day In Following Month)').':</td>
-			<td><input type="text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class="number"  size=4 maxlength=3 value="';
+			<td><input type="text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class="number"  size="4" maxlength="3" value="';
 	if ($DaysBeforeDue !=0) {
 		echo locale_number_format($DaysBeforeDue,0);
 	} else {

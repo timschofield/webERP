@@ -322,7 +322,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<div class="centre"><br />';
 			echo '<tr><td colspan="2">';
 			echo '<table width="45%" class="selection">';
-			echo '<tr><th width=33%>' . _('Supplier Mapping') . '</th></tr>';
+			echo '<tr><th width="33%">' . _('Supplier Mapping') . '</th></tr>';
 			echo '</td><td valign=top>'; /* Mapping */
 			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
 			echo '<div class="centre" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div></div><br />';

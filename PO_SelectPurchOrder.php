@@ -175,9 +175,9 @@ echo '<br />
 		<table class="selection">
 		<tr>
 			<td>';
-echo '<font size=1>' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</font>';
+echo '<font size="1">' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</font>';
 echo '<tr>
-		<td><font size=1>' . _('Select a stock category') . ':</font><select name="StockCat">';
+		<td><font size="1">' . _('Select a stock category') . ':</font><select name="StockCat">';
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
 		echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -186,7 +186,7 @@ while ($myrow1 = DB_fetch_array($result1)) {
 	}
 }
 echo '</select></td>
-		<td><font size=1>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
+		<td><font size="1">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
 		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 	</tr>
 	<tr>

@@ -108,7 +108,7 @@ if (!isset($StockID)) {
 	 */
 
 	if (!isset($_REQUEST['WO']) or ($_REQUEST['WO']=='')){
-		echo '<table class=selection><tr><td>';
+		echo '<table class="selection"><tr><td>';
 		if (isset($_REQUEST['SelectedStockItem'])) {
 			echo _('For the item') . ': ' . $_REQUEST['SelectedStockItem'] . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $_REQUEST['SelectedStockItem'] . '" />';
 		}
@@ -176,7 +176,7 @@ if (!isset($StockID)) {
 	  		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
 	  	<tr><td></td>
-	  		<td><font size="3"><b>' . _('OR') . ' </b></font><font size=1>' . _('Enter extract of the Stock Code') . '</b>:</font></td>
+	  		<td><font size="3"><b>' . _('OR') . ' </b></font><font size="1">' . _('Enter extract of the Stock Code') . '</b>:</font></td>
 	  		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	  	</tr>
 	  </table><br />';

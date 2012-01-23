@@ -137,7 +137,7 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
 		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	}
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="">' . ' ' . $title.'</p>';
-	echo '<table class=selection>
+	echo '<table class="selection">
 			<tr>
 				<td>'._('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
 				<select name="StockLocation">';
@@ -193,7 +193,7 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
 $SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 
-echo '<br /><font size=1><div class="page_help_text">' ._('To search for purchase orders for a specific part use the part selection facilities below')
+echo '<br /><font size="1"><div class="page_help_text">' ._('To search for purchase orders for a specific part use the part selection facilities below')
 		.'</div> </font>';
 echo '<br />
 		<table class="selection">

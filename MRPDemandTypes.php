@@ -108,7 +108,7 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>
+	echo '<table class="selection">
 			<tr><th>' . _('Demand Type') . '</th>
 				<th>' . _('Description') . '</th>
 			</tr>';

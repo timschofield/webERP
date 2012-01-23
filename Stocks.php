@@ -976,14 +976,14 @@ echo '<tr>
 		<td><select name="Discontinued">';
 		
 if ($_POST['Discontinued']==0){
-	echo '<option selected value=0>' . _('Current') . '</option>';
+	echo '<option selected value="0">' . _('Current') . '</option>';
 } else {
-	echo '<option value=0>' . _('Current') . '</option>';
+	echo '<option value="0">' . _('Current') . '</option>';
 }
 if ($_POST['Discontinued']==1){
-	echo '<option selected value=1>' . _('Obsolete') . '</option>';
+	echo '<option selected value="1">' . _('Obsolete') . '</option>';
 } else {
-	echo '<option value=1>' . _('Obsolete') . '</option>';
+	echo '<option value="1">' . _('Obsolete') . '</option>';
 }
 echo '</select></td>
 		</tr>';
@@ -993,28 +993,28 @@ echo '<tr>
 		<td><select name="Controlled">';
 
 if ($_POST['Controlled']==0){
-	echo '<option selected value=0>' . _('No Control') . '</option>';
+	echo '<option selected value="0">' . _('No Control') . '</option>';
 } else {
-		echo '<option value=0>' . _('No Control') . '</option>';
+		echo '<option value="0">' . _('No Control') . '</option>';
 }
 if ($_POST['Controlled']==1){
-	echo '<option selected value=1>' . _('Controlled'). '</option>';
+	echo '<option selected value="1">' . _('Controlled'). '</option>';
 } else {
-	echo '<option value=1>' . _('Controlled'). '</option>';
+	echo '<option value="1">' . _('Controlled'). '</option>';
 }
 echo '</select></td></tr>';
 
 echo '<tr><td>' . _('Serialised') . ':</td><td><select ' . (in_array('Serialised',$Errors) ?  'class="selecterror"' : '' ) .'  name="Serialised">';
 
 if ($_POST['Serialised']==0){
-		echo '<Option selected value=0>' . _('No'). '</option>';
+		echo '<Option selected value="0">' . _('No'). '</option>';
 } else {
-		echo '<option value=0>' . _('No'). '</option>';
+		echo '<option value="0">' . _('No'). '</option>';
 }
 if ($_POST['Serialised']==1){
-		echo '<option selected value=1>' . _('Yes') . '</option>';
+		echo '<option selected value="1">' . _('Yes') . '</option>';
 } else {
-		echo '<option value=1>' . _('Yes'). '</option>';
+		echo '<option value="1">' . _('Yes'). '</option>';
 }
 echo '</select><i>' . _('Note') . ', ' . _('this has no effect if the item is not Controlled') . '</i></td>
 	</tr>';
@@ -1032,14 +1032,14 @@ echo '<tr>
 		<td><select name="Perishable">';
 
 if (!isset($_POST['Perishable']) or $_POST['Perishable']==0){
-		echo '<option selected value=0>' . _('No'). '</option>';
+		echo '<option selected value="0">' . _('No'). '</option>';
 } else {
-		echo '<option value=0>' . _('No'). '</option>';
+		echo '<option value="0">' . _('No'). '</option>';
 }
 if (isset($_POST['Perishable']) and $_POST['Perishable']==1){
-		echo '<option selected value=1>' . _('Yes'). '</option>';
+		echo '<option selected value="1">' . _('Yes'). '</option>';
 } else {
-		echo '<option value=1>' . _('Yes'). '</option>';
+		echo '<option value="1">' . _('Yes'). '</option>';
 }
 echo '</select></td></tr>';
 

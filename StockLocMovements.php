@@ -82,7 +82,7 @@ $sql = "SELECT stockmoves.stockid,
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($sql, $db,$ErrMsg);
 
-echo '<table cellpadding=5 cellspacing="4 "class="selection">';
+echo '<table cellpadding="5" cellspacing="4 "class="selection">';
 $tableheader = '<tr>
             		<th>' . _('Item Code') . '</th>
             		<th>' . _('Type') . '</th>

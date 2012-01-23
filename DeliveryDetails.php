@@ -588,20 +588,20 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder'.$
 
 		} else {
 			/*link to print the quotation */
-			echo '<br /><table class=selection>
+			echo '<br /><table class="selection">
 					<tr>
 						<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
 						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Landscape)') .'</a></td>
 					</tr>
 					</table>';
-			echo '<br /><table class=selection>
+			echo '<br /><table class="selection">
 					<tr>
 						<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
 						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation (Portrait)') .'</a></td>
 					</tr>
 					</table>';
 		}
-		echo '<br /><table class=selection>
+		echo '<br /><table class="selection">
 				<tr>
 					<td><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Order') . '" alt=""></td>
 					<td>' . ' ' . '<a href="'. $rootpath .'/SelectOrderItems.php?identifier='.$identifier . '&NewOrder=Yes">'. _('Add Another Sales Order') .'</a></td>
@@ -807,7 +807,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></p>';
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier  . '" method=post>';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier  . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -943,7 +943,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-	echo '<table class=selection><tr>
+	echo '<table class="selection"><tr>
 		<td>'. _('Total Weight') .':</td>
 		<td>'. $DisplayWeight .'</td>
 		<td>'. _('Total Volume') .':</td>
@@ -996,7 +996,7 @@ if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 		<td>'. _('Estimated Delivery Date') .':</td>
-		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size=15 maxlength=14 name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" /></td>
+		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" /></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
@@ -1034,14 +1034,14 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>'. _('Contact Phone Number') .':</td>
-		<td><input type="text" size=25 maxlength=25 name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" /></td>
+		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Contact Email') . ':</td><td><input type="text" size=40 maxlength=38 name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" /></td>
+		<td>' . _('Contact Email') . ':</td><td><input type="text" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" /></td>
 	</tr>
 	<tr>
 		<td>'. _('Customer Reference') .':</td>
-		<td><input type="text" size=25 maxlength=25 name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" /></td>
+		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" /></td>
 	</tr>
 	<tr>
 		<td>'. _('Comments') .':</td>
@@ -1068,11 +1068,11 @@ if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==
 	echo '<tr>
 		<td>'. _('Reprint packing slip') .':</td>
 		<td><select name="ReprintPackingSlip">';
-	echo '<option value=0>' . _('Yes') . '</option>';
-	echo '<option selected value=1>' . _('No') . '</option>';
+	echo '<option value="0">' . _('Yes') . '</option>';
+	echo '<option selected value="1">' . _('No') . '</option>';
 	echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
 } else {
-	echo '<input type="hidden" name="ReprintPackingSlip" value=0 />';
+	echo '<input type="hidden" name="ReprintPackingSlip" value="0" />';
 }
 
 echo '<tr>
@@ -1111,11 +1111,11 @@ echo '</select></td></tr>';
 echo '<tr><td>'. _('Quotation Only') .':</td>
 		<td><select name="Quotation">';
 if ($_SESSION['Items'.$identifier]->Quotation==1){
-	echo '<option selected value=1>' . _('Yes') . '</option>';
-	echo '<option value=0>' . _('No') . '</option>';
+	echo '<option selected value="1">' . _('Yes') . '</option>';
+	echo '<option value="0">' . _('No') . '</option>';
 } else {
-	echo '<option value=1>' . _('Yes') . '</option>';
-	echo '<option selected value=0>' . _('No') . '</option>';
+	echo '<option value="1">' . _('Yes') . '</option>';
+	echo '<option selected value="0">' . _('No') . '</option>';
 }
 echo '</select></td></tr>';
 

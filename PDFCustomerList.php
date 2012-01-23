@@ -402,7 +402,7 @@ if (isset($_POST['PrintPDF'])){
 				</select></td>
 			<td>';
 
-	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value=0 /></td>
+	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value="0" /></td>
 		</tr>';
 
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));

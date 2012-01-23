@@ -197,7 +197,7 @@ or deletion of the records*/
 				ORDER BY tabcode";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)>0){
-		echo '<br /><table class=selection>';
+		echo '<br /><table class="selection">';
 		echo '<tr>
 				<th>' . _('Tab Code') . '</th>
 				<th>' . _('User Name') . '</th>

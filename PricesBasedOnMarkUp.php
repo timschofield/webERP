@@ -16,7 +16,7 @@ $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
 $PricesResult = DB_query($SQL,$db);
 
-echo '<p><table class=selection>
+echo '<p><table class="selection">
              <tr>
           	   <td>' . _('Select the Price List to update') .':</td>
                <td><select name="PriceList">';
@@ -44,7 +44,7 @@ echo '<tr>
                             <td><select name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])){
-	echo '<option selected value=0>' . _('No Price List Currency Selected') . '</option>';
+	echo '<option selected value="0">' . _('No Price List Currency Selected') . '</option>';
 }
 
 while ($Currencies=DB_fetch_array($result)){
@@ -87,7 +87,7 @@ if (isset($_POST['CostType']) and $_POST['CostType']=='OtherPriceList'){
                             <td><select name="BasePriceList">';
 
 	if (!isset($_POST['BasePriceList']) OR $_POST['BasePriceList']=='0'){
-		echo '<option selected VALUE=0>' . _('No Price List Selected') . '</option>';
+		echo '<option selected VALUE="0">' . _('No Price List Selected') . '</option>';
 	}
 	while ($PriceLists=DB_fetch_array($PricesResult)){
 		if (isset($_POST['BasePriceList']) AND $_POST['BasePriceList']==$PriceLists['typeabbrev']){

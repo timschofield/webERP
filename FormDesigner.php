@@ -13,7 +13,7 @@ function SimpleTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes=FontSizes();
-	echo '<td class=number>'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
+	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
 			echo '<option selected value="'.$FontSize.'">'.$FontSize.'</option>';
@@ -23,9 +23,9 @@ function SimpleTextLine($key) {
 	}
 	echo '</select></td>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class=number>'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size=4 maxlength=4 value="'.$key->x.'"></td>';
+	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
 	/* Display the Y co-ordinate (mm from the top of the page) */
-	echo '<td class=number>'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size=4 maxlength=4 value="'.$key->y.'"></td>';
+	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'"></td>';
 }
 function MultiTextLine($key) {
 	/* Displays a table row containing the attributes for a
@@ -33,7 +33,7 @@ function MultiTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes=FontSizes();
-	echo '<td class=number>'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
+	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
 			echo '<option selected value="'.$FontSize.'">'.$FontSize.'</option>';
@@ -43,11 +43,11 @@ function MultiTextLine($key) {
 	}
 	echo '</select></td>';
 	/* Display the length of the field in mm */
-	echo '<td class=number>'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size=4 maxlength=4 value="'.$key->Length.'"></td></tr><tr>';
+	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'"></td></tr><tr>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class=number>'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size=4 maxlength=4 value="'.$key->x.'"></td>';
+	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
 	/* Display the Y co-ordinate (mm from the top of the page) */
-	echo '<td class=number>'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size=4 maxlength=4 value="'.$key->y.'"></td>';
+	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'"></td>';
 }
 function DataTextLine($key) {
 	/* Displays a table row containing the attributes for a
@@ -55,7 +55,7 @@ function DataTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes=FontSizes();
-	echo '<td class=number>'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
+	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
 			echo '<option selected value="'.$FontSize.'">'.$FontSize.'</option>';
@@ -65,9 +65,9 @@ function DataTextLine($key) {
 	}
 	echo '</select></td>';
 	/* Display the length of the field in mm */
-	echo '<td class=number>'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size=4 maxlength=4 value="'.$key->Length.'"></td>';
+	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'"></td>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class=number>'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size=4 maxlength=4 value="'.$key->x.'"></td>';
+	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
 }
 /* If the user has chosen to either preview the form, or
  * save it then we first have to get the POST values into a
@@ -177,7 +177,7 @@ foreach ($Papers as $Paper) {
 }
 echo '</select></th>';
 /* and the standard line height for the form */
-echo '<th width=33%>'._('Line Height').'<input type="text" class="number" name="LineHeight" size="3" maxlength="3" value="'.$FormDesign->LineHeight.'" /></th></tr><tr>';
+echo '<th width="33%">'._('Line Height').'<input type="text" class="number" name="LineHeight" size="3" maxlength="3" value="'.$FormDesign->LineHeight.'" /></th></tr><tr>';
 $counter=1; // Count how many sub tables are in the row
 foreach ($FormDesign as $key) {
 	switch ($key['type']) {

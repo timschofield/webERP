@@ -420,7 +420,7 @@ if (!isset($DebtorNo)) {
 	}
 
 	if ($SetupErrors>0) {
-		echo '<br /><div class=centre><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) .'" >'._('Click here to continue').'</a></div>';
+		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) .'" >'._('Click here to continue').'</a></div>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -431,35 +431,35 @@ if (!isset($DebtorNo)) {
 
 	$DataError =0;
 
-	echo '<table class="selection" cellspacing=4>
-			<tr><td valign=top><table class="selection">';
+	echo '<table class="selection" cellspacing="4">
+			<tr><td valign="top"><table class="selection">';
 
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
 	if ($_SESSION['AutoDebtorNo']==0)  {
-		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex=1 type="text" name="DebtorNo" size=11 maxlength=10 /></td></tr>';
+		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex="1" type="text" name="DebtorNo" size="11" maxlength="10" /></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Customer Name') . ':</td>
-		<td><input tabindex=2 type="Text" name="CustName" size=42 maxlength=40 /></td></tr>';
+		<td><input tabindex="2" type="Text" name="CustName" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Telephone') . ':</td>
-		<td><input tabindex=2 type="Text" name="Phone" size=30 maxlength=40 /></td></tr>';
+		<td><input tabindex="2" type="Text" name="Phone" size="30" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td>
-		<td><input tabindex=2 type="Text" name="Fax" size=30 maxlength=40 /></td></tr>';
+		<td><input tabindex="2" type="Text" name="Fax" size="30" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-		<td><input tabindex=2 type="Text" name="Email" size=30 maxlength=40 /></td></tr>';
+		<td><input tabindex="2" type="Text" name="Email" size="30" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
-		<td><input tabindex=3 type="Text" name="Address1" size=42 maxlength=40 /></td></tr>';
+		<td><input tabindex="3" type="Text" name="Address1" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
-		<td><input tabindex=4 type="Text" name="Address2" size=42 maxlength=40 /></td></tr>';
+		<td><input tabindex="4" type="Text" name="Address2" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td>
-		<td><input tabindex=5 type="Text" name="Address3" size=42 maxlength=40 /></td></tr>';
+		<td><input tabindex="5" type="Text" name="Address3" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
-		<td><input tabindex=6 type="Text" name="Address4" size=42 maxlength=40 /></td></tr>';
+		<td><input tabindex="6" type="Text" name="Address4" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 5') . ':</td>
-		<td><input tabindex=7 type="Text" name="Address5" size=22 maxlength=20 /></td></tr>';
+		<td><input tabindex="7" type="Text" name="Address5" size="22" maxlength="20" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 6') . ':</td>
-		<td><input tabindex=8 type="Text" name="Address6" size=17 maxlength=15 /></td></tr>';
+		<td><input tabindex="8" type="Text" name="Address6" size="17" maxlength="15" /></td></tr>';
 
 
 
@@ -498,13 +498,13 @@ if (!isset($DebtorNo)) {
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr><td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input tabindex=10 type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size=12 maxlength=10 /></td></tr>';
+				<td><input tabindex="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size="12" maxlength="10" /></td></tr>';
 	
 	echo '</table></td>
 			<td><table class="selection">
 				<tr>
 					<td>' . _('Discount Percent') . ':</td>
-					<td><input tabindex="11" type="textbox" class="number" name="Discount" value=0 size="5" maxlength="4" /></td>
+					<td><input tabindex="11" type="textbox" class="number" name="Discount" value="0" size="5" maxlength="4" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Discount Code') . ':</td>
@@ -531,7 +531,7 @@ if (!isset($DebtorNo)) {
 
 		echo '<tr>
 				<td>' . _('Payment Terms') . ':</td>
-				<td><select tabindex=15 name="PaymentTerms">';
+				<td><select tabindex="15" name="PaymentTerms">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
@@ -597,8 +597,8 @@ if (!isset($DebtorNo)) {
 		<tr>
 			<td>' . _('Invoice Addressing') . ':</td>
 			<td><select tabindex="19" name="AddrInvBranch">
-				<option selected value=0>' . _('Address to HO') . '</option>
-				<option value=1>' . _('Address to Branch') . '</option>
+				<option selected value="0">' . _('Address to HO') . '</option>
+				<option value="1">' . _('Address to Branch') . '</option>
 				</select>
 			</td>
 		</tr>
@@ -946,11 +946,11 @@ if (!isset($DebtorNo)) {
 				<td>' . _('Require Customer PO Line on SO') . ':</td>
 				<td><select name="CustomerPOLine">';
 		if ($_POST['CustomerPOLine']==0){
-			echo '<option selected value=0>' . _('No') . '</option>';
-			echo '<option value=1>' . _('Yes') . '</option>';
+			echo '<option selected value="0">' . _('No') . '</option>';
+			echo '<option value="1">' . _('Yes') . '</option>';
 		} else {
-			echo '<option value=0>' . _('No') . '</option>';
-			echo '<option selected value=1>' . _('Yes') . '</option>';
+			echo '<option value="0">' . _('No') . '</option>';
+			echo '<option selected value="1">' . _('Yes') . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
@@ -1008,7 +1008,7 @@ if (!isset($DebtorNo)) {
 			ORDER BY contid";
 	$result = DB_query($sql,$db);
 
-	echo '<table class=selection>';
+	echo '<table class="selection">';
 	if (isset($_GET['Modify'])) {
 		echo '<tr>
 				<th>' . _('Name') . '</th>

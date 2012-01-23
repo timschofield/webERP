@@ -200,7 +200,7 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FactorID" value="' . $FactorID .'" />
-		<table class=selection>
+		<table class="selection">
 		<input type="hidden" name="New" value="Yes" />
 		<tr>
 			<td>' . _('Factor company Name') . ':</td>
@@ -208,18 +208,18 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1') . ':</td>
-			<td><input tabindex=2 type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] .'" /></td>
+			<td><input tabindex="2" type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] .'" /></td>
 		</tr>
 		<tr><td>' . _('Address Line 2') . ':</td>
-			<td><input tabindex=3 type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] .'" /></td>
+			<td><input tabindex="3" type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] .'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 3') . ':</td>
-			<td><input tabindex=4 type="text" name="Address3" size="42" maxlength="40" value="' .$_POST['Address3'] .'" /></td>
+			<td><input tabindex="4" type="text" name="Address3" size="42" maxlength="40" value="' .$_POST['Address3'] .'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 4') . ':</td>
-			<td><input tabindex=5 type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'].'" /></td>
+			<td><input tabindex="5" type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'].'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 5') . ':</td>
@@ -239,11 +239,11 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		</tr>
 		<tr>
 			<td>' . _('Fax') . ':</td>
-			<td><input tabindex="10" type="text" name="Fax" value=0 size="20" maxlength="25" value="' . $_POST['Fax'] .'" /></td>
+			<td><input tabindex="10" type="text" name="Fax" value="0" size="20" maxlength="25" value="' . $_POST['Fax'] .'" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email') . ':</td>
-			<td><input tabindex="11" type="text" name="Email" size="55" maxlength=55 value="' . $_POST['Email'] . '" /></td>
+			<td><input tabindex="11" type="text" name="Email" size="55" maxlength="55" value="' . $_POST['Email'] . '" /></td>
 		</tr>
 		</table>';
 }

@@ -248,7 +248,7 @@ if (!isset($_GET['delete'])) {
 		echo '<td><input tabindex="3" type="checkbox" checked name="DisallowInvoices" /></td>
 			</tr>';
 	} else {
-		echo '<td><input tabindex=3 type="checkbox" name="DisallowInvoices" /></td>
+		echo '<td><input tabindex="3" type="checkbox" name="DisallowInvoices" /></td>
 			</tr>';
 	}
 	echo '</table>

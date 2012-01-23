@@ -176,8 +176,8 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 				<td class="number"><input type="text" class="number" name="MaterialCost" value="' . locale_number_format($myrow['materialcost'],4) . '" /></td>
 			</tr>';
 	} else 	{
-		echo '<input type="hidden" name="LabourCost" value=0 />';
-		echo '<input type="hidden" name="OverheadCost" value=0 />';
+		echo '<input type="hidden" name="LabourCost" value="0" />';
+		echo '<input type="hidden" name="OverheadCost" value="0" />';
 	}
     echo '</table>
          <br />
