@@ -520,13 +520,13 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		$_POST['StockCat'] = '';
 	}
 	if ($_POST['StockCat'] == 'All') {
-		echo '<option selected value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if ($myrow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
@@ -726,9 +726,9 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
-					echo '<option value=' . $ListPage . ' selected>' . $ListPage . '</option>';
+					echo '<option value="' . $ListPage . '" selected>' . $ListPage . '</option>';
 				} else {
-					echo '<option value=' . $ListPage . '>' . $ListPage . '</option>';
+					echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
 				}
 				$ListPage++;
 			}

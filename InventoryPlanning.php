@@ -424,7 +424,7 @@ if (isset($_POST['PrintPDF'])
 		echo '<tr>
 				<td>' . _('Stock Planning') . ':</td>
 				<td><select name="NumberMonthsHolding">
-					<option selected="True" value="1">' . _('One Month MAX') .'</option>
+					<option selected="selected" value="1">' . _('One Month MAX') .'</option>
 					<option value="1.5">' . _('One Month and a half MAX') .'</option>
 					<option value="2">' . _('Two Months MAX') .'</option>
 					<option value="2.5">' . _('Two Month and a half MAX') .'</option>

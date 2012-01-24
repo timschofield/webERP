@@ -162,7 +162,7 @@ if (!isset($SelectedTabs)){
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -334,7 +334,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<tr><td>' . _('Cash Assignation Date') . ':</td>';
 
-		echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="Date" size="10" maxlength="10" value=' . $_POST['Date'] . ' /></td></tr>';
+		echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="Date" size="10" maxlength="10" value="' . $_POST['Date'] . '" /></td></tr>';
 
 
 		if (!isset($_POST['Amount'])) {

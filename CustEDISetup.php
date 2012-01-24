@@ -101,11 +101,11 @@ echo '<tr><td>'._('Enable Sending of EDI Invoices').':</td>
 
 if ($myrow['ediinvoices']==0){
 
-	echo '<option selected value="0">'._('Disabled') . '</option>';
+	echo '<option selected="selected" value="0">'._('Disabled') . '</option>';
 	echo '<option value="1">'._('Enabled'). '</option>';
 } else {
 	echo '<option value="0">'._('Disabled') . '</option>';
-	echo '<option selected value="1">'._('Enabled') . '</option>';
+	echo '<option selected="selected" value="1">'._('Enabled') . '</option>';
 }
 
 echo '</select><a href="' . $rootpath . '/EDIMessageFormat.php?MessageType=INVOIC&PartnerCode=' . $_SESSION['CustomerID'] . '">'._('Create') . '/' . _('Edit Invoice Message Format').'</a></td>
@@ -116,11 +116,11 @@ echo '<tr><td>'._('Enable Receiving of EDI Orders') . ':</td>
 
 if ($myrow['ediorders']==0){
 
-	echo '<option selected value="0">'._('Disabled') . '</option>';
+	echo '<option selected="selected" value="0">'._('Disabled') . '</option>';
 	echo '<option value="1">'._('Enabled') . '</option>';
 } else {
 	echo '<option value="0">'._('Disabled') . '</option>';
-	echo '<option selected value="1">'._('Enabled') . '</option>';
+	echo '<option selected="selected" value="1">'._('Enabled') . '</option>';
 }
 
 echo '</select></td>
@@ -128,24 +128,24 @@ echo '</select></td>
 
 echo '<tr><td>'._('Customer EDI Reference') . ':</td>
 	<td><input ' . (in_array('EDIReference',$Errors) ?  'class="inputerror"' : '' ) .
-        ' tabindex=3 type="text" name="EDIReference" size="20" maxlength="20" value="' . $myrow['edireference'] . '"></td></tr>';
+        ' tabindex=3 type="text" name="EDIReference" size="20" maxlength="20" value="' . $myrow['edireference'] . '" /></td></tr>';
 
 echo '<tr><td>'._('EDI Communication Method') . ':</td>
 	<td><select tabindex="4" name="EDITransport" >';
 
 if ($myrow['editransport']=='email'){
-	echo '<option selected value="email">'._('Email Attachments') . '</option>';
+	echo '<option selected="selected" value="email">'._('Email Attachments') . '</option>';
 	echo '<option value="ftp">'._('File Transfer Protocol (FTP)') . '</option>';
 } else {
 	echo '<option value="email">'._('Email Attachments') . '</option>';
-	echo '<option selected value="ftp">'._('File Transfer Protocol (FTP)') . '</option>';
+	echo '<option selected="selected" value="ftp">'._('File Transfer Protocol (FTP)') . '</option>';
 }
 
 echo '</select></td></tr>';
 
 echo '<tr><td>'._('FTP Server or Email Address') . ':</td>
 	<td><input ' . (in_array('EDIAddress',$Errors) ?  'class="inputerror"' : '' ) .
-        ' tabindex=5 type="text" name="EDIAddress" size="42" maxlength="40" value="' . $myrow['ediaddress'] . '"></td></tr>';
+        ' tabindex=5 type="text" name="EDIAddress" size="42" maxlength="40" value="' . $myrow['ediaddress'] . '" /></td></tr>';
 
 if ($myrow['editransport']=='ftp'){
 

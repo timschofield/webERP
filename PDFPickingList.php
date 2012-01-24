@@ -36,7 +36,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 	echo '<tr><td>'._('From Warehouse').' : '.'</td>
 			<td><select name="loccode">';
 	while ($myrow=DB_fetch_array($result)) {
-		echo '<option value='.$myrow['loccode'].'>'.$myrow['locationname'].'</option>';
+		echo '<option value="'.$myrow['loccode'].'">'.$myrow['locationname'].'</option>';
 	}
 	echo '</select></td>
 		</tr>

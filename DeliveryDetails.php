@@ -974,7 +974,7 @@ $StkLocsResult = DB_query("SELECT locationname,loccode
 
 while ($myrow=DB_fetch_array($StkLocsResult)){
 	if ($_SESSION['Items'.$identifier]->Location==$myrow['loccode']){
-		echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	} else {
 		echo '<option value="'.$myrow['loccode'].'">'.$myrow['locationname'] . '</option>';
 	}
@@ -1056,9 +1056,9 @@ echo '<tr>
 			
 	if ($_SESSION['Items'.$identifier]->DeliverBlind ==2){
 		echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
-		echo '<option selected value="2">' . _('Hide Company Details/Logo') . '</option>';
+		echo '<option selected="selected" value="2">' . _('Hide Company Details/Logo') . '</option>';
 	} else {
-		echo '<option selected value="1">' . _('Show Company Details/Logo') . '</option>';
+		echo '<option selected="selected" value="1">' . _('Show Company Details/Logo') . '</option>';
 		echo '<option value="2">' . _('Hide Company Details/Logo') . '</option>';
 	}
 	echo '</select></td></tr>';
@@ -1069,7 +1069,7 @@ if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==
 		<td>'. _('Reprint packing slip') .':</td>
 		<td><select name="ReprintPackingSlip">';
 	echo '<option value="0">' . _('Yes') . '</option>';
-	echo '<option selected value="1">' . _('No') . '</option>';
+	echo '<option selected="selected" value="1">' . _('No') . '</option>';
 	echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
 } else {
 	echo '<input type="hidden" name="ReprintPackingSlip" value="0" />';
@@ -1099,9 +1099,9 @@ $sql = "SELECT shipper_id, shippername FROM shippers";
 $ShipperResults = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 while ($myrow=DB_fetch_array($ShipperResults)){
 	if ($myrow['shipper_id']==$_POST['ShipVia']){
-			echo '<option selected value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 	}else {
-		echo '<option value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
+		echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 	}
 }
 
@@ -1111,11 +1111,11 @@ echo '</select></td></tr>';
 echo '<tr><td>'. _('Quotation Only') .':</td>
 		<td><select name="Quotation">';
 if ($_SESSION['Items'.$identifier]->Quotation==1){
-	echo '<option selected value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {
 	echo '<option value="1">' . _('Yes') . '</option>';
-	echo '<option selected value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 }
 echo '</select></td></tr>';
 

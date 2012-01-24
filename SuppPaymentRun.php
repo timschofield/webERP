@@ -279,7 +279,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	while ($myrow=DB_fetch_array($result)){
 	if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-			echo '<option selected value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 	}
@@ -337,7 +337,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		      /*list the bank account names */
 
 			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
-				echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 			} else {
 				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 			}
@@ -356,7 +356,7 @@ Payment types can be modified by editing that file */
 	foreach ($PaytTypes as $PaytType) {
 
 	     if (isset($_POST['PaytType']) and $_POST['PaytType']==$PaytType){
-		   echo '<option selected value="' . $PaytType . '">' . $PaytType . '</option>';
+		   echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';
 	     } else {
 		   echo '<option value="' . $PaytType . '">' . $PaytType . '</option>';
 	     }

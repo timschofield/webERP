@@ -1,5 +1,6 @@
 webERP Change Log
 
+24/1/12 Vitaly: Added quotes to attributes in multiple files and changed option selected to selected="selected".
 23/1/12 Vitaly: Added quotes to attributes in multiple files.
 22/1/12 Vitaly: Added quotes and missing closing tags in multiple files
 21/1/12 Vitaly: Added quotes to attributes in multiple files.

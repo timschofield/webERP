@@ -99,7 +99,7 @@ echo '<select tabindex="1" name="SalesType">';
 
 while ($myrow = DB_fetch_array($result)){
 	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
-		echo '<option selected value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 	}
@@ -117,7 +117,7 @@ if (DB_num_rows($result) > 0) {
 
 	while ($myrow = DB_fetch_array($result)){
 		if ($myrow['discountcategory']==$_POST['DiscCat']){
-			echo '<option selected value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
 		}

@@ -49,7 +49,7 @@ echo '<tr><td>'. _('User ID'). '</td>
 echo '<option value="ALL">' . _('All') . '</option>';
 while ($users = DB_fetch_row($UserResult)) {
 	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
-		echo '<option selected value="' . $users[0] . '">' . $users[0] . '</option>';
+		echo '<option selected="selected" value="' . $users[0] . '">' . $users[0] . '</option>';
 	} else {
 		echo '<option value="' . $users[0] . '">' . $users[0] . '</option>';
 	}
@@ -62,9 +62,9 @@ echo '<tr><td>'. _('Table '). '</td>
 echo '<option value="ALL">' . _('All') . '</option>';
 while ($tables = DB_fetch_row($TableResult)) {
 	if (isset($_POST['SelectedTable']) and $tables[0]==$_POST['SelectedTable']) {
-		echo '<option selected value=' . $tables[0] . '>' . $tables[0] . '</option>';
+		echo '<option selected="selected" value="' . $tables[0] . '">' . $tables[0] . '</option>';
 	} else {
-		echo '<option value=' . $tables[0] . '>' . $tables[0] . '</option>';
+		echo '<option value="' . $tables[0] . '">' . $tables[0] . '</option>';
 	}
 }
 echo '</select></td></tr>';

@@ -40,7 +40,7 @@ while ($myrow=DB_fetch_array($result)) {
 	echo '<td><select name="'.$myrow['script'].'">';
 	while ($mytokenrow=DB_fetch_array($TokenResult)) {
 		if ($mytokenrow['tokenid']==$myrow['pagesecurity']) {
-			echo '<option selected="true" value="'.$mytokenrow['tokenid'].'">'.$mytokenrow['tokenname'].'</option>';
+			echo '<option selected="selected" value="'.$mytokenrow['tokenid'].'">'.$mytokenrow['tokenname'].'</option>';
 		} else {
 			echo '<option value="'.$mytokenrow['tokenid'].'">'.$mytokenrow['tokenname'].'</option>';
 		}

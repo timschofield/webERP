@@ -307,7 +307,7 @@ echo '<tr><td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}

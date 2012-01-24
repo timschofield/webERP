@@ -265,7 +265,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<table class="selection">';
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Inventory Category') . ':</td><td><select name="CategoryID">';
-	echo '<option selected value="All">' . _('All Stock Categories') .'</option>';
+	echo '<option selected="selected" value="All">' . _('All Stock Categories') .'</option>';
 	$sql = "SELECT categoryid,
 			categorydescription
 			FROM stockcategory";
@@ -275,7 +275,7 @@ if (isset($_POST['PrintPDF'])) {
 	} //end while loop
 	echo '<tr><td>' . _('Sort') . ':</td>
 			<td><select name="Sort">
-				<option selected value="extcost">' . _('Extended Shortage Dollars').'</option>
+				<option selected="selected" value="extcost">' . _('Extended Shortage Dollars').'</option>
 				<option value="stockid">' . _('Part Number').'</option>
 				</select>
 			</td>
@@ -283,7 +283,7 @@ if (isset($_POST['PrintPDF'])) {
 	
 	echo '<tr><td>' . _('Shortage-Excess Option') . ':</td>
 			<td><select name="ReportType">
-				<option selected value="Shortage">' . _('Report MRP Shortages').'</option>
+				<option selected="selected" value="Shortage">' . _('Report MRP Shortages').'</option>
 				<option value="Excess">' . _('Report MRP Excesses').'</option>
 				</select>
 			</td>
@@ -291,7 +291,7 @@ if (isset($_POST['PrintPDF'])) {
 	
 	echo '<tr><td>' . _('Print Option') . ':</td>
 			<td><select name="Fill">
-				<option selected value="yes">' . _('Print With Alternating Highlighted Lines').'</option>
+				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines').'</option>
 				<option value="no">' . _('Plain Print').'</option>
 				</select>
 			</td>

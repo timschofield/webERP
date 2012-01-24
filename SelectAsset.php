@@ -51,14 +51,14 @@ if (!isset($_POST['AssetCategory'])) {
 	$_POST['AssetCategory'] = '';
 }
 if ($_POST['AssetCategory']=='ALL'){
-	echo '<option selected value="ALL">' . _('Any asset category') . '</option>';
+	echo '<option selected="selected" value="ALL">' . _('Any asset category') . '</option>';
 } else {
 	echo '<option value="ALL">' . _('Any asset category') . '</option>';
 }
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['categoryid'] == $_POST['AssetCategory']) {
-		echo '<option selected value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
@@ -81,7 +81,7 @@ if (!isset($_POST['AssetLocation'])) {
 	$_POST['AssetLocation'] = 'ALL';
 }
 if ($_POST['AssetLocation']=='ALL'){
-	echo '<option selected value="ALL">' . _('Any asset location') . '</option>';
+	echo '<option selected="selected" value="ALL">' . _('Any asset location') . '</option>';
 } else {
 	echo '<option value="ALL">' . _('Any asset location') . '</option>';
 }
@@ -89,7 +89,7 @@ $result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocati
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['locationid'] == $_POST['AssetLocation']) {
-		echo '<option selected value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 	}

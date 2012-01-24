@@ -452,7 +452,7 @@ if (isset($_POST['Description'])) {
 
 echo '<tr>
 		<td>' . _('Asset Description') . ' (' . _('short') . '):</td>
-		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '"></td>
+		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
 	</tr>';
 
 if (isset($_POST['LongDescription'])) {
@@ -506,7 +506,7 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (!isset($_POST['AssetCategoryID']) or $myrow['categoryid']==$_POST['AssetCategoryID']){
-		echo '<option selected value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	} else {
 		echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription']. '</option>';
 	}
@@ -535,7 +535,7 @@ echo '<tr>
 		
 while ($myrow=DB_fetch_array($result)){
 	if ($_POST['AssetLocation']==$myrow['locationid']){
-		echo '<option selected value="' . $myrow['locationid'] .'">' . $myrow['locationdescription'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['locationid'] .'">' . $myrow['locationdescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['locationid'] .'">' . $myrow['locationdescription'] . '</option>';
 	}
@@ -559,11 +559,11 @@ if (!isset($_POST['DepnType'])){
 	$_POST['DepnType'] = 0; //0 = Straight line - 1 = Diminishing Value
 }
 if ($_POST['DepnType']==0){ //straight line
-	echo '<option selected value="0">' . _('Straight Line') . '</option>';
+	echo '<option selected="selected" value="0">' . _('Straight Line') . '</option>';
 	echo '<option value="1">' . _('Diminishing Value') . '</option>';
 } else {
 	echo '<option value="0">' . _('Straight Line') . '</option>';
-	echo '<option selected value="1">' . _('Diminishing Value') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Diminishing Value') . '</option>';
 }
 
 echo '</select></td>

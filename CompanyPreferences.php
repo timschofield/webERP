@@ -288,7 +288,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['CurrencyDefault']==$myrow['currabrev']){
-		echo '<option selected value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+		echo '<option selected="selected" value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency']. '</option>';
 	}
@@ -313,7 +313,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['DebtorsAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -330,7 +330,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['CreditorsAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="' . $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -347,7 +347,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PayrollAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -364,7 +364,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['GRNAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -380,7 +380,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['RetainedEarnings']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -405,7 +405,7 @@ $result=DB_query("SELECT accountcode,
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['FreightAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -422,7 +422,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['ExchangeDiffAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -439,7 +439,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PurchasesExchangeDiffAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option  value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -456,7 +456,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PytDiscountAct']==$myrow[0]){
-		echo '<option selected value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	} else {
 		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
 	}
@@ -472,10 +472,10 @@ echo '<tr>
 		<td><select tabindex="23" name="GLLink_Debtors">';
 
 if ($_POST['GLLink_Debtors']==0){
-	echo '<option selected value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes'). '</option>';
 } else {
-	echo '<option selected value="1">' . _('Yes'). '</option>';
+	echo '<option selected="selected" value="1">' . _('Yes'). '</option>';
 	echo '<option value="0">' . _('No'). '</option>';
 }
 
@@ -487,10 +487,10 @@ echo '<tr>
 		<td><select tabindex="24" name="GLLink_Creditors">';
 
 if ($_POST['GLLink_Creditors']==0){
-	echo '<option selected value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 } else {
-	echo '<option selected value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 }
 
@@ -502,10 +502,10 @@ echo '<tr>
 		<td><select tabindex="25" name="GLLink_Stock">';
 
 if ($_POST['GLLink_Stock']=='0'){
-	echo '<option selected value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 } else {
-	echo '<option selected value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 }
 

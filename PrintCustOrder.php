@@ -76,7 +76,7 @@ if (DB_num_rows($result)==0){
 
 	$title = _('Print Packing Slip Error');
         include('includes/header.inc');
-        echo '<div class=centre><br /><br /><br />';
+        echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
         echo '<br /><br /><br /><table class="table_index"><tr><td class="menu_group_item">
                 <li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>

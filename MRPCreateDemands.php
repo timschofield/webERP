@@ -209,7 +209,7 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</select></td></tr>';
 echo '<tr><td>' . _('Inventory Category') . ':</td>
 		<td><select name="CategoryID">';
-echo '<option selected value="All">' . _('All Stock Categories') . '</option>';
+echo '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
 $sql = "SELECT categoryid,
 			   categorydescription
 		FROM stockcategory";
@@ -221,7 +221,7 @@ echo '</select></td>
 		</tr>';
 echo '<tr><td>' . _('Inventory Location') . ':</td>
 		<td><select name="Location">';
-echo '<option selected value="All">' . _('All Locations') . '</option>';
+echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
 $result= DB_query("SELECT loccode,
 						   locationname
@@ -250,7 +250,7 @@ echo '<tr>
 	<tr>
 		<td>' . _('Distribution Period') . ':</td>
 		<td><select name="Period">
-			<option selected value="weekly">' . _('Weekly') . '</option>
+			<option selected="selected" value="weekly">' . _('Weekly') . '</option>
 			<option value="monthly">' . _('Monthly') .'</option>
 			</select></td>
 	</tr>

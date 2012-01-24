@@ -87,9 +87,9 @@ if ($_GET['Action'] == 'Enter'){
 	while ($myrow=DB_fetch_array($result)){
 
 		if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']){
-			echo "<option selected VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-			echo "<option VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
 	echo '</select></th></tr>';
@@ -101,13 +101,13 @@ if ($_GET['Action'] == 'Enter'){
 	for ($i=1;$i<=10;$i++){
 
 		echo '<tr>
-			<td><input type="text" name='StockID_" . $i . "' maxlength="20" size="20" /></td>
-			<td><input type="text" name='Qty_" . $i . "' maxlength="10" size="10" /></td>
-			<td><input type="text" name='Ref_" . $i . "' maxlength="20" size="20" /></td></tr>';
+			<td><input type="text" name="StockID_' . $i . '" maxlength="20" size="20" /></td>
+			<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
+			<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td></tr>';
 
 	}
 
-	echo "</table><br /><div class=centre><input type="submit" name='EnterCounts' VALUE='" . _('Enter Above Counts') . "' /></div>";
+	echo '</table><br /><div class="centre"><input type="submit" name="EnterCounts" value="' . _('Enter Above Counts') . '" /></div>';
 
 //END OF action=ENTER
 } elseif ($_GET['Action']=='View'){
@@ -140,10 +140,11 @@ if ($_GET['Action'] == 'Enter'){
 			<td>".$myrow['loccode']."</td>
 			<td>".$myrow['qtycounted']."</td>
 			<td>".$myrow['reference']."</td>
-			<td><input type=CHECKBOX name='DEL[" .$myrow['id']."]' maxlength="20" size="20" /></td></tr>";
+			<td>";
+        echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" maxlength="20" size="20" /></td></tr>';
 
 	}
-	echo "</table><br /><div class=centre><input type="submit" name='SubmitChanges' VALUE='" . _('Save Changes') . "' /></div>";
+	echo '</table><br /><div class="centre"><input type="submit" name="SubmitChanges" value="' . _('Save Changes') . '" /></div>';
 
 //END OF action=VIEW
 }

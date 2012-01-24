@@ -73,7 +73,7 @@ $result=DB_query($sql,$db, $ErrMsg);
 if (DB_num_rows($result)==0){
 	$title = _('Print Packing Slip Error');
 	include('includes/header.inc');
-	echo '<div class=centre><br /><br /><br />';
+	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 	echo '<br />
 			<br />

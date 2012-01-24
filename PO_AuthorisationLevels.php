@@ -177,7 +177,7 @@ if (isset($_GET['Edit'])) {
 	$userresult=DB_query($usersql,$db);
 	while ($myrow=DB_fetch_array($userresult)) {
 		if ($myrow['userid']==$UserID) {
-			echo '<option selected value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
+			echo '<option selected="selected" value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
 		} else {
 			echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
 		}
@@ -216,7 +216,7 @@ if (isset($_GET['Edit'])) {
 	$currencyresult=DB_query($currencysql,$db);
 	while ($myrow=DB_fetch_array($currencyresult)) {
 		if ($myrow['currabrev']==$Currency) {
-			echo '<option selected value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
+			echo '<option selected="selected" value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
 		} else {
 			echo '<option value="'.$myrow['currabrev'].'">'.$myrow['currency'].'</option>';
 		}

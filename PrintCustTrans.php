@@ -509,10 +509,10 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 				<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name=InvOrCredit>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
 
-			echo '<option selected value="Invoice">' . _('Invoices') . '</option>';
+			echo '<option selected="selected" value="Invoice">' . _('Invoices') . '</option>';
 			echo '<option value="Credit">' . _('Credit Notes') . '</option>';
 		} else {
-			echo '<option selected value="Credit">' . _('Credit Notes') . '</option>';
+			echo '<option selected="selected" value="Credit">' . _('Credit Notes') . '</option>';
 			echo '<option value="Invoice">' . _('Invoices') . '</option>';
 		}
 
@@ -521,13 +521,13 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
 
-			echo '<option selected value="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
+			echo '<option selected="selected" value="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
 			echo '<option value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
 
 		} else {
 
 			echo '<option value="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
-			echo '<option selected value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
+			echo '<option selected="selected" value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
 		}
 
 		echo '</select></td></tr>';

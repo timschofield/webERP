@@ -575,9 +575,9 @@ if (!isset($DebtorNo)) {
 				<td><select tabindex="17" name="CurrCode">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['CurrCode']==$myrow['currabrev']){
-				echo '<option selected value='. $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
+				echo '<option selected="selected" value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			} else {
-				echo '<option value='. $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
+				echo '<option value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			}
 		} //end while loop
 		DB_data_seek($result,0);
@@ -589,7 +589,7 @@ if (!isset($DebtorNo)) {
 	echo '<tr>
 			<td>' . _('Customer PO Line on SO') . ':</td>
 			<td><select tabindex="18" name="CustomerPOLine">
-				<option selected value="0">' . _('No') . '</option>
+				<option selected="selected" value="0">' . _('No') . '</option>
 				<option value="1">' . _('Yes') . '</option>
 				</select>
 			</td>
@@ -597,7 +597,7 @@ if (!isset($DebtorNo)) {
 		<tr>
 			<td>' . _('Invoice Addressing') . ':</td>
 			<td><select tabindex="19" name="AddrInvBranch">
-				<option selected value="0">' . _('Address to HO') . '</option>
+				<option selected="selected" value="0">' . _('Address to HO') . '</option>
 				<option value="1">' . _('Address to Branch') . '</option>
 				</select>
 			</td>
@@ -767,7 +767,7 @@ if (!isset($DebtorNo)) {
 			<td><select name="SalesType">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['SalesType']==$myrow['typeabbrev']){
-				echo '<option selected value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 			} else {
 				echo '<option value="'. $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 			}
@@ -790,7 +790,7 @@ if (!isset($DebtorNo)) {
 				<td><select name="typeid">';
 		while ($myrow = DB_fetch_array($result)) {
 				if ($_POST['typeid']==$myrow['typeid']){
-					echo '<option selected value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+					echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 				} else {
 					echo '<option value="'. $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 				}
@@ -842,11 +842,11 @@ if (!isset($DebtorNo)) {
 			</tr>
 			<tr>
 				<td>' . _('Discount Code') . ':</td>
-				<td><input ' . (in_array('DiscountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="DiscountCode" size="3" maxlength="2" value="' . $_POST['DiscountCode'] . '"></td>
+				<td><input ' . (in_array('DiscountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="DiscountCode" size="3" maxlength="2" value="' . $_POST['DiscountCode'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Payment Discount Percent') . ':</td>
-				<td><input ' . (in_array('PymtDiscount',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="PymtDiscount" size="5" maxlength="4" value="' . $_POST['PymtDiscount'] . '"></td>
+				<td><input ' . (in_array('PymtDiscount',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="PymtDiscount" size="5" maxlength="4" value="' . $_POST['PymtDiscount'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Credit Limit') . ':</td>
@@ -872,7 +872,7 @@ if (!isset($DebtorNo)) {
 				<td><select name="PaymentTerms">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['PaymentTerms']==$myrow['termsindicator']){
-				echo '<option selected value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
+				echo '<option selected="selected" value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
 			} else {
 				echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
 			}
@@ -896,7 +896,7 @@ if (!isset($DebtorNo)) {
 				<td><select name="HoldReason">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['HoldReason']==$myrow['reasoncode']){
-				echo '<option selected value="'. $myrow['reasoncode'] . '">' . $myrow['reasondescription'] . '</option>';
+				echo '<option selected="selected" value="'. $myrow['reasoncode'] . '">' . $myrow['reasondescription'] . '</option>';
 			} else {
 				echo '<option value="'. $myrow['reasoncode'] . '">' . $myrow['reasondescription'] . '</option>';
 			}
@@ -919,7 +919,7 @@ if (!isset($DebtorNo)) {
 				<td><select name="CurrCode">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['CurrCode']==$myrow['currabrev']){
-				echo '<option selected value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+				echo '<option selected="selected" value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			} else {
 				echo '<option value="'. $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			}
@@ -946,11 +946,11 @@ if (!isset($DebtorNo)) {
 				<td>' . _('Require Customer PO Line on SO') . ':</td>
 				<td><select name="CustomerPOLine">';
 		if ($_POST['CustomerPOLine']==0){
-			echo '<option selected value="0">' . _('No') . '</option>';
+			echo '<option selected="selected" value="0">' . _('No') . '</option>';
 			echo '<option value="1">' . _('Yes') . '</option>';
 		} else {
 			echo '<option value="0">' . _('No') . '</option>';
-			echo '<option selected value="1">' . _('Yes') . '</option>';
+			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
@@ -973,11 +973,11 @@ if (!isset($DebtorNo)) {
 				<td>' . _('Invoice Addressing') . ':</td>
 				<td><select name="AddrInvBranch">';
 		if ($_POST['InvAddrBranch']==0){
-			echo '<option selected value="0">' . _('Address to HO') . '</option>';
+			echo '<option selected="selected" value="0">' . _('Address to HO') . '</option>';
 			echo '<option value="1">' . _('Address to Branch') . '</option>';
 		} else {
 			echo '<option value="0">' . _('Address to HO') . '</option>';
-			echo '<option selected value="1">' . _('Address to Branch') . '</option>';
+			echo '<option selected="selected" value="1">' . _('Address to Branch') . '</option>';
 		}
 	}
 

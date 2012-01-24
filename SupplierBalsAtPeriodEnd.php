@@ -148,7 +148,7 @@ If (isset($_POST['PrintPDF'])
 	$Periods = DB_query($sql,$db,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
-		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1).'</option>';
+		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1).'</option>';
 	}
 	echo '</select></td>
 		</tr>';

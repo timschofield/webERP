@@ -132,7 +132,7 @@ $result = DB_query($sql, $db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['AssetSelection']) AND $myrow['AssetID']==$_POST['AssetSelection']) {
-		echo '<option selected value="';
+		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}

@@ -22,12 +22,12 @@ echo '<p><table class="selection">
                <td><select name="PriceList">';
 
 if (!isset($_POST['PriceList']) OR $_POST['PriceList']=='0'){
-	echo '<option selected VALUE="0">' . _('No Price List Selected');
+	echo '<option selected="selected" value="0">' . _('No Price List Selected');
 }
 
 while ($PriceLists=DB_fetch_array($PricesResult)){
 	if (isset($_POST['PriceList']) and $_POST['PriceList']==$PriceLists['typeabbrev']){
-		echo '<option selected value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
+		echo '<option selected="selected" value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
 	} else {
 		echo '<option value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
 	}
@@ -44,12 +44,12 @@ echo '<tr>
                             <td><select name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])){
-	echo '<option selected value="0">' . _('No Price List Currency Selected') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No Price List Currency Selected') . '</option>';
 }
 
 while ($Currencies=DB_fetch_array($result)){
 	if (isset($_POST['CurrCode']) and $_POST['CurrCode']==$Currencies['currabrev']) {
-		echo '<option selected value="' . $Currencies['currabrev'] . '">' . $Currencies['currency'] . '</option>';
+		echo '<option selected="selected" value="' . $Currencies['currabrev'] . '">' . $Currencies['currency'] . '</option>';
 	} else {
 		echo '<option value="' . $Currencies['currabrev'] . '">' . $Currencies['currency'] . '</option>';
 	}
@@ -66,17 +66,17 @@ if ($_SESSION['WeightedAverageCosting']==1){
 echo '<tr><td>' . _('Cost/Preferred Supplier Data Or Other Price List') . ':</td>
                 <td><select name="CostType">';
 if ($_POST['CostType']=='PreferredSupplier'){
-     echo ' <option selected value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
+     echo ' <option selected="selected" value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
             <option value="StandardCost">' . $CostingBasis . '</option>
             <option value="OtherPriceList">' . _('Another Price List') . '</option>';
 } elseif ($_POST['CostType']=='StandardCost'){
 	 echo ' <option value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
-            <option selected value="StandardCost">' . $CostingBasis . '</option>
+            <option selected="selected" value="StandardCost">' . $CostingBasis . '</option>
             <option value="OtherPriceList">' . _('Another Price List') . '</option>';
 } else {
 	echo ' <option value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
             <option value="StandardCost">' . $CostingBasis . '</option>
-            <option selected value="OtherPriceList">' . _('Another Price List') . '</option>';
+            <option selected="selected" value="OtherPriceList">' . _('Another Price List') . '</option>';
 }
 echo '</select></td></tr>';
 
@@ -87,11 +87,11 @@ if (isset($_POST['CostType']) and $_POST['CostType']=='OtherPriceList'){
                             <td><select name="BasePriceList">';
 
 	if (!isset($_POST['BasePriceList']) OR $_POST['BasePriceList']=='0'){
-		echo '<option selected VALUE="0">' . _('No Price List Selected') . '</option>';
+		echo '<option selected="selected" value="0">' . _('No Price List Selected') . '</option>';
 	}
 	while ($PriceLists=DB_fetch_array($PricesResult)){
 		if (isset($_POST['BasePriceList']) AND $_POST['BasePriceList']==$PriceLists['typeabbrev']){
-			echo '<option selected value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
+			echo '<option selected="selected" value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
 		} else {
 			echo '<option value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
 		}
@@ -110,7 +110,7 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid']==$_POST['StkCatFrom']){
-		echo '<option selected value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	}
@@ -124,7 +124,7 @@ echo '<tr><td>' . _('Stock Category To') . ':</td>
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid']==$_POST['StkCatTo']){
-		echo '<option selected value="'. $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="'. $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	} else {
 		echo '<option  value="'. $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	}

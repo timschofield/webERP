@@ -18,7 +18,7 @@ if (!isset($_POST['DoUpgrade'])){
 			<tr>
 				<td>' . _('Select the version you are upgrading from:') . '</td>
 				<td><select name="OldVersion" >
-					<option selected value="Manual">' . _('Apply database changes manually') . '</option>
+					<option selected="selected" value="Manual">' . _('Apply database changes manually') . '</option>
 					<option value="3.00">' . _('Version 3.00') . '</option>
 					<option value="3.01">' . _('Version 3.01') . '</option>
 					<option value="3.02">' . _('Version 3.02') . '</option>

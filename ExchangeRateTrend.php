@@ -38,9 +38,9 @@ if ( isset($_GET['CurrencyToShow']) ){
 	while ($myrow=DB_fetch_array($result)) {
 		if ($myrow['currabrev']!=$_SESSION['CompanyRecord']['currencydefault']){
 			if ( $CurrencyToShow==$myrow['currabrev'] )	{
-				echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
+				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
 			} else {
-				echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
+				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')'. '</option>';
 			}
 		}
 	}

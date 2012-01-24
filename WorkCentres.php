@@ -223,7 +223,7 @@ echo '<tr>
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
-		echo '<option selected value="';
+		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
@@ -252,7 +252,7 @@ $result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
-		echo '<option selected value=';
+		echo '<option selected="selected" value=';
 	} else {
 		echo '<option value=';
 	}

@@ -401,7 +401,7 @@ if (isset($_POST['AllocTrans'])) {
 				echo '<td class="number"><input tabindex="' . $j .'" type="checkbox" name="All' .  $Counter . '"';
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
-						echo ' value=' . True . ' />';
+						echo ' value="' . True . '" />';
 				} else {
 						echo ' />';
 				}

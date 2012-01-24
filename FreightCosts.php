@@ -51,7 +51,7 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	$LocationResults = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($LocationResults)){
-		echo '<option value=' . $myrow['loccode'] . '>' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 
 	echo '</select></td></tr>

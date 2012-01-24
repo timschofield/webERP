@@ -49,7 +49,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectedTabs']) and $myrow['tabcode']==$_POST['SelectedTabs']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -355,7 +355,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	if ($myrow['5'] != '0000-00-00'){
 		printf("<td>%s</td>
 			<td>%s</td>
-			<td class="number">%s</td>
+			<td class='number'>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -369,7 +369,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}else{
 		printf("<td>%s</td>
 			<td>%s</td>
-			<td class="number">%s</td>
+			<td class='number'>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

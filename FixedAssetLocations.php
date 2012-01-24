@@ -136,7 +136,7 @@ $result=DB_query($sql, $db);
 echo '<option value=""></option>';
 while ($myrow=DB_fetch_array($result)) {
 	if ($myrow['locationid']==$ParentLocationID) {
-		echo '<option selected value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'].'</option>';
+		echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'].'</option>';
 	} else {
 		echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 	}

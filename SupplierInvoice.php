@@ -502,9 +502,9 @@ if (!isset($_POST['PostInvoice'])){
 
 	if ($_POST['OverRideTax']=='Man'){
 		echo '<option value="Auto">' . _('Automatic') . '</option>
-				<option selected value="Man">' . _('Manual') . '</option>';
+				<option selected="selected" value="Man">' . _('Manual') . '</option>';
 	} else {
-		echo '<option selected value="Auto">' . _('Automatic') . '</option>
+		echo '<option selected="selected" value="Auto">' . _('Automatic') . '</option>
 				<option  value="Man">' . _('Manual') . '</option>';
 	}
 

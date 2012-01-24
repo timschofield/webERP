@@ -766,7 +766,7 @@ if (DB_num_rows($AccountsResults)==0){
 	while ($myrow=DB_fetch_array($AccountsResults)){
 	/*list the bank account names */
 		if (isset($_POST['BankAccount']) AND $_POST['BankAccount']==$myrow['accountcode']){
-			echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
 		}
@@ -794,9 +794,9 @@ if ($_SESSION['PaymentDetail']->SupplierID==''){
 	} else {
 		while ($myrow=DB_fetch_array($result)){
 			if ($_SESSION['PaymentDetail']->Currency==$myrow['currabrev']){
-				echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			} else {
-				echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
+				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			}
 		}
 		echo '</select></td>
@@ -869,7 +869,7 @@ payment methods can be modified from the setup tab of the main menu under paymen
 foreach ($PaytTypes as $PaytType) {
 
 	if (isset($_POST['Paymenttype']) AND $_POST['Paymenttype']==$PaytType){
-		echo '<option selected value="' . $PaytType . '">' . $PaytType . '</option>';
+		echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';
 	} else {
 		echo '<option value="' . $PaytType . '">' . $PaytType . '</option>';
 	}
@@ -922,9 +922,9 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	echo '<option value="0"></option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['Tag']) AND $_POST['Tag']==$myrow['tagref']){
-			echo '<option selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		} else {
-			echo '<option value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -935,7 +935,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	if (isset($_POST['GLManualCode'])) {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" class="number" name="GLManualCode" maxlength="12" size="12" onChange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' . ' value='. $_POST['GLManualCode'] .'   /></td>
+				<td><input type="text" class="number" name="GLManualCode" maxlength="12" size="12" onChange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' . ' value="'. $_POST['GLManualCode'] .'"   /></td>
 			</tr>';
 	} else {
 		echo '<tr>
@@ -960,7 +960,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		echo '<option value=""></option>';
 		while ($myrow=DB_fetch_array($result)){
 			if (isset($_POST['GLGroup']) AND ($_POST['GLGroup']==$myrow['groupname'])){
-				echo '<option selected value="' . $myrow['groupname'] . '">' . $myrow['groupname'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['groupname'] . '">' . $myrow['groupname'] . '</option>';
 			} else {
 				echo '<option value="' . $myrow['groupname'] . '">' . $myrow['groupname'] . '</option>';
 			}
@@ -996,9 +996,9 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		echo '<option value=""></option>';
 		while ($myrow=DB_fetch_array($result)){
 			if (isset($_POST['GLCode']) AND $_POST['GLCode']==$myrow['accountcode']){
-				echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 			} else {
-				echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 			}
 		}
 		echo '</select></td></tr>';
@@ -1089,7 +1089,7 @@ the fields for entry of receipt amt and disc */
 	echo '<table class="selection">
 		<tr>
 			<td>' . _('Amount of Payment') . ' ' . $_SESSION['PaymentDetail']->Currency . ':</td>
-			<td><input class="number" type="text" name="Amount" maxlength="12" size="13" value=' . $_SESSION['PaymentDetail']->Amount . '></td>
+			<td><input class="number" type="text" name="Amount" maxlength="12" size="13" value="' . $_SESSION['PaymentDetail']->Amount . '" /></td>
 		</tr>';
 
 	if (isset($_SESSION['PaymentDetail']->SupplierID)){ /*So it is a supplier payment so show the discount entry item */

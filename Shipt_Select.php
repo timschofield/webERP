@@ -111,13 +111,13 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 			$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-			echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 		} else {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 		}
@@ -126,12 +126,12 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '</select>';
 	echo ' <select name="OpenOrClosed">';
 	if ($_POST['OpenOrClosed']==1){
-		echo '<option selected value="1">'. _('Closed Shipments Only')  . '</option>';
+		echo '<option selected="selected" value="1">'. _('Closed Shipments Only')  . '</option>';
 		echo '<option value="0">'. _('Open Shipments Only')  . '</option>';
 	} else {
 		$_POST['OpenOrClosed']=0;
 		echo '<option value="1">'. _('Closed Shipments Only')  . '</option>';
-		echo '<option selected value="0">'. _('Open Shipments Only')  . '</option>';
+		echo '<option selected="selected" value="0">'. _('Open Shipments Only')  . '</option>';
 	}
 	echo '</select></td></tr></table>';
 
@@ -159,7 +159,7 @@ echo '<tr>
 
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
-		echo '<option selected value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
+		echo '<option selected="selected" value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
 	} else {
 		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
 	}

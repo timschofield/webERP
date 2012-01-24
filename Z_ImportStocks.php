@@ -295,7 +295,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 
 	echo "<input type='hidden' name='MAX_FILE_SIZE' value='1000000' />" .
 			_('Upload file') . ": <input name='userfile' type='file' />
-			<input type='submit' VALUE='" . _('Send File') . "' />
+			<input type='submit' value='" . _('Send File') . "' />
 		</form>
 	";
 

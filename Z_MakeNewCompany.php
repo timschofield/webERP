@@ -219,7 +219,7 @@ echo '<td>' . _('Enter up to 32 character lower case character abbreviation for 
 	<tr><td>' . _('Create Database?') . '</td><td><input type="CHECKBOX" name="CreateDB" /></td></tr>
 	</table>';
 
-echo '<br /><input type="SUBMIT" name="submit" VALUE="' . _('Proceed') . '" />&nbsp;&nbsp;&nbsp;&nbsp;';
+echo '<br /><input type="SUBMIT" name="submit" value="' . _('Proceed') . '" />&nbsp;&nbsp;&nbsp;&nbsp;';
 echo '</form>';
 echo '</div>';
 

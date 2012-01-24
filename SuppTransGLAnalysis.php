@@ -174,7 +174,7 @@ $result = DB_query($sql, $db);
 echo '<option value=""></option>';
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['accountcode'] == $_POST['AcctSelection']) {
-		echo '<option selected value="';
+		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}

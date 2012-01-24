@@ -263,7 +263,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		<td><select name="SalesType">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['SalesType'] == $myrow['typeabbrev']) {
-			echo '<option selected value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		}
@@ -275,7 +275,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $myrow['currabrev']) {
-			echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
+			echo '<option selected="selected" value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
 		} else {
 			echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
 		}

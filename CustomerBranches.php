@@ -692,11 +692,11 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Salesman']) and $myrow['salesmancode']==$_POST['Salesman']) {
-			echo '<option selected value=';
+			echo '<option selected="selected" value="';
 		} else {
-			echo '<option value=';
+			echo '<option value="';
 		}
-		echo $myrow['salesmancode'] . '>' . $myrow['salesmanname'] . '</option>';
+		echo $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 
 	} //end while loop
 
@@ -720,7 +720,7 @@ if (!isset($_GET['delete'])) {
 			<td><select tabindex="14" name="Area">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -750,7 +750,7 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['DefaultLocation']) and $myrow['loccode']==$_POST['DefaultLocation']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -800,7 +800,7 @@ if (!isset($_GET['delete'])) {
 			
 	while ($myrow = DB_fetch_array($TaxGroupResults)) {
 		if (isset($_POST['TaxGroup']) and $myrow['taxgroupid']==$_POST['TaxGroup']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -814,10 +814,10 @@ if (!isset($_GET['delete'])) {
 			<td>'._('Transactions on this branch') . ':</td>
 			<td><select tabindex="20" name="DisableTrans">';
 	if ($_POST['DisableTrans']==0){
-		echo '<option selected value="0">' . _('Enabled') . '</option>
+		echo '<option selected="selected" value="0">' . _('Enabled') . '</option>
 				<option value="1">' . _('Disabled') . '</option>';
 	} else {
-		echo '<option selected value="1">' . _('Disabled') . '</option>
+		echo '<option selected="selected" value="1">' . _('Disabled') . '</option>
 				<option value="0">' . _('Enabled') . '</option>';
 	}
 
@@ -838,9 +838,9 @@ if (!isset($_GET['delete'])) {
 			<td><select tabindex="21" name="DefaultShipVia">';
 	while ($myrow=DB_fetch_array($ShipperResults)){
 		if (isset($_POST['DefaultShipVia'])and $myrow['shipper_id']==$_POST['DefaultShipVia']){
-			echo '<option selected value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 		}else {
-			echo '<option value=' . $myrow['shipper_id'] . '>' . $myrow['shippername'] . '</option>';
+			echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 		}
 	}
 
@@ -855,9 +855,9 @@ if (!isset($_GET['delete'])) {
 			<td><select tabindex="22" name="DeliverBlind">';
 	if ($_POST['DeliverBlind']==2){
 		echo '<option value="1">' . _('Show company details and logo') . '</option>
-				<option selected  value="2">' . _('Hide company details and logo') . '</option>';
+				<option selected="selected"  value="2">' . _('Hide company details and logo') . '</option>';
 	} else {
-		echo '<option selected value="1">' . _('Show company details and logo') . '</option>
+		echo '<option selected="selected" value="1">' . _('Show company details and logo') . '</option>
 				<option value="2">' . _('Hide company details and logo') . '</option>';
 	}
 	

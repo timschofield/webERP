@@ -1608,7 +1608,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<table class="selection"><tr><td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';
 
 		if (!isset($_POST['StockCat'])){
-			echo '<option selected value="All">' . _('All');
+			echo '<option selected="selected" value="All">' . _('All');
 			$_POST['StockCat'] ='All';
 		} else {
 			echo '<option value="All">' . _('All');
@@ -1622,7 +1622,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$result1 = DB_query($SQL,$db);
 		while ($myrow1 = DB_fetch_array($result1)) {
 			if ($_POST['StockCat']==$myrow1['categoryid']){
-				echo '<option selected value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+				echo '<option selected="selected" value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 			} else {
 				echo '<option value='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 			}
@@ -1834,7 +1834,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
 						<td><select name="AssetToDisposeOf">';
 			$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'",$db);
-			echo '<option selected value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
+			echo '<option selected="selected" value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
 			while ($AssetRow = DB_fetch_array($AssetsResult)){
 				echo '<option value="' . $AssetRow['assetid'] . '">' . $AssetRow['assetid'] . ' - ' . $AssetRow['description'] . '</option>';
 			}
@@ -1845,7 +1845,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
 
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></div>';
+	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div>';
 		}
 	}#end of else not selecting a customer
 

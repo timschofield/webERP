@@ -306,7 +306,7 @@ if (! isset($_GET['delete'])) {
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['GLAccount']) and $myrow['accountcode']==$_POST['GLAccount']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -331,7 +331,7 @@ if (! isset($_GET['delete'])) {
 	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['Tag']) and $_POST['Tag']==$myrow['tagref']){
-			echo '<option selected value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
+			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
 		} else {
 			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		}

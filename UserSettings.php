@@ -134,9 +134,9 @@ if (!isset($_POST['Language'])){
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry){
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	} elseif (!isset($_POST['Language']) AND $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	} else {
 		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
 	}
@@ -155,7 +155,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
 		if ($_SESSION['Theme'] == $ThemeName){
-			echo '<option selected value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
@@ -203,7 +203,7 @@ echo '<tr>
 		
 for($i=0;$i<count($PDFLanguages);$i++){
 	if ($_POST['PDFLanguage']==$i){
-		echo '<option selected value=' . $i .'>' . $PDFLanguages[$i] . '</option>';
+		echo '<option selected="selected" value=' . $i .'>' . $PDFLanguages[$i] . '</option>';
 	} else {
 		echo '<option value=' . $i .'>' . $PDFLanguages[$i]. '</option>';
 	}

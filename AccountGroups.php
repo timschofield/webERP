@@ -339,7 +339,7 @@ if (! isset($_GET['delete'])) {
 	$sql = "SELECT groupname FROM accountgroups";
 	$groupresult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 	if (!isset($_POST['ParentGroupName'])){
-		echo '<option selected value="">' ._('Top Level Group').'</option>';
+		echo '<option selected="selected" value="">' ._('Top Level Group').'</option>';
 	} else {
 		echo '<option value="">' ._('Top Level Group').'</option>';
 	}

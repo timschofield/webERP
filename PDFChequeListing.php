@@ -59,7 +59,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	 echo '<tr>
 				<td>' . _('Email the report off') . ':</td>
 				<td><select name="Email">
-					<option selected value="No">' . _('No') . '</option>
+					<option selected="selected" value="No">' . _('No') . '</option>
 					<option value="Yes">' . _('Yes') . '</option>
 				</select></td>
 			</tr>

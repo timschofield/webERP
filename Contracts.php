@@ -852,7 +852,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	while ($myrow=DB_fetch_array($result)){
 		if (!isset($_SESSION['Contract'.$identifier]->CategoryID) or $myrow['categoryid']==$_SESSION['Contract'.$identifier]->CategoryID){
-			echo '<option selected="True" value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'].'</option>';
+			echo '<option selected="selected" value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'].'</option>';
 		} else {
 			echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'].'</option>';
 		}
@@ -869,7 +869,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 			<td><select name="LocCode" >';
 	while ($myrow=DB_fetch_array($result)){
 		if (!isset($_SESSION['Contract'.$identifier]->LocCode) or $myrow['loccode']==$_SESSION['Contract'.$identifier]->LocCode){
-			echo '<option selected="True" value="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected="selected" value="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
 			echo '<option value="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}

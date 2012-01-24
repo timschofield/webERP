@@ -347,7 +347,7 @@ $ThemeDirectory = dir('css/');
 while (false != ($ThemeName = $ThemeDirectory->read())){
 	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 		if ($_SESSION['DefaultTheme'] == $ThemeName) {
-			echo '<option selected value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
@@ -508,7 +508,7 @@ $result = DB_query($sql,$db,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Price List') . ':</td>';
 echo '<td><select name="X_DefaultPriceList">';
 if( DB_num_rows($result) == 0 ) {
-	echo '<option selected value="">'._('Unavailable');
+	echo '<option selected="selected" value="">'._('Unavailable');
 } else {
 	while( $row = DB_fetch_array($result) ) {
 		echo '<option '.($_SESSION['DefaultPriceList'] == $row['typeabbrev']?'selected ':'').'value="'.$row['typeabbrev'].'">'.$row['sales_type'];
@@ -524,7 +524,7 @@ $result = DB_query($sql,$db,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Shipper') . ':</td>';
 echo '<td><select name="X_Default_Shipper">';
 if( DB_num_rows($result) == 0 ) {
-	echo '<option selected value="">'._('Unavailable') . '</option>';
+	echo '<option selected="selected" value="">'._('Unavailable') . '</option>';
 } else {
 	while( $row = DB_fetch_array($result) ) {
 		echo '<option '.($_SESSION['Default_Shipper'] == $row['shipper_id']?'selected ':'').'value="'.$row['shipper_id'].'">'.$row['shippername'] . '</option>';
@@ -552,10 +552,10 @@ echo '<tr style="outline: 1px solid"><td>' . _('Create Debtor Codes Automaticall
 	<td><select name="X_AutoDebtorNo">';
 
 if ($_SESSION['AutoDebtorNo']==0) {
-	echo '<option selected value="0">' . _('Manual Entry') . '</option>';
+	echo '<option selected="selected" value="0">' . _('Manual Entry') . '</option>';
 	echo '<option value="1">' . _('Automatic') . '</option>';
 } else {
-	echo '<option selected value="1">' . _('Automatic') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Automatic') . '</option>';
 	echo '<option value="0">' . _('Manual Entry') . '</option>';
 }
 echo '</select></td>
@@ -568,7 +568,7 @@ $result = DB_query($sql,$db,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Default Tax Category') . ':</td>';
 echo '<td><select name="X_DefaultTaxCategory">';
 if( DB_num_rows($result) == 0 ) {
-	echo '<option selected value="">'._('Unavailable') . '</option>';
+	echo '<option selected="selected" value="">'._('Unavailable') . '</option>';
 } else {
 	while( $row = DB_fetch_array($result) ) {
 		echo '<option '.($_SESSION['DefaultTaxCategory'] == $row['taxcatid']?'selected ':'').'value="'.$row['taxcatid'].'">'.$row['taxcatname'] . '</option>';
@@ -590,7 +590,7 @@ $result = DB_query($sql,$db,$ErrMsg);
 echo '<tr style="outline: 1px solid"><td>' . _('Country Of Operation') . ':</td>';
 echo '<td><select name="X_CountryOfOperation">';
 if( DB_num_rows($result) == 0 ) {
-	echo '<option selected value="">'._('Unavailable') . '</option>';
+	echo '<option selected="selected" value="">'._('Unavailable') . '</option>';
 } else {
 	while( $row = DB_fetch_array($result) ) {
 		echo '<option '.($_SESSION['CountryOfOperation'] == $row['currabrev']?'selected ':'').'value="'.$row['currabrev'].'">'.$row['country'] . '</option>';
@@ -730,7 +730,7 @@ while ($DirEntry = $DirHandle->read() ){
 		AND $DirEntry != 'fonts'   ){
 
 		if ($_SESSION['part_pics_dir'] == $CompanyDirectory . $DirEntry){
-			echo '<option selected value="' . $DirEntry . '">' . $DirEntry . '</option>';
+			echo '<option selected="selected" value="' . $DirEntry . '">' . $DirEntry . '</option>';
 		} else {
 			echo '<option value="' . $DirEntry . '">' . $DirEntry  . '</option>';
 		}
@@ -763,7 +763,7 @@ while (false != ($DirEntry = $DirHandle->read())){
 		AND $DirEntry != 'fonts'      ){
 
 		if ($_SESSION['reports_dir'] == $CompanyDirectory . $DirEntry){
-			echo '<option selected value="' . $DirEntry . '">' . $DirEntry . '</option>';
+			echo '<option selected="selected" value="' . $DirEntry . '">' . $DirEntry . '</option>';
 		} else {
 			echo '<option value="' . $DirEntry . '">' . $DirEntry  . '</option>';
 		}
@@ -788,22 +788,22 @@ echo '<tr style="outline: 1px solid"><td>' . _('Only allow secure socket connect
 echo '<tr style="outline: 1px solid"><td>' . _('Perform Database Maintenance At Logon') . ':</td>
 	<td><select name="X_DB_Maintenance">';
 	if ($_SESSION['DB_Maintenance']=='1'){
-		echo '<option selected value="1">'._('Daily') . '</option>';
+		echo '<option selected="selected" value="1">'._('Daily') . '</option>';
 	} else {
 		echo '<option value="1">'._('Daily') . '</option>';
 	}
 	if ($_SESSION['DB_Maintenance']=='7'){
-		echo '<option selected value="7">'._('Weekly') . '</option>';
+		echo '<option selected="selected" value="7">'._('Weekly') . '</option>';
 	} else {
 		echo '<option value="7">'._('Weekly') . '</option>';
 	}
 	if ($_SESSION['DB_Maintenance']=='30'){
-		echo '<option selected value="30">'._('Monthly') . '</option>';
+		echo '<option selected="selected" value="30">'._('Monthly') . '</option>';
 	} else {
 		echo '<option value="30">'._('Monthly') . '</option>';
 	}
 	if ($_SESSION['DB_Maintenance']=='0'){
-		echo '<option selected value="0">'._('Never') . '</option>';
+		echo '<option selected="selected" value="0">'._('Never') . '</option>';
 	} else {
 		echo '<option value="0">'._('Never') . '</option>';
 	}
@@ -832,10 +832,10 @@ echo '<tr style="outline: 1px solid"><td>' . _('Wiki Path') . ':</td>
 echo '<tr style="outline: 1px solid"><td>' . _('Geocode Customers and Suppliers') . ':</td>
         <td><select name="X_geocode_integration">';
 if ($_SESSION['geocode_integration']==1){
-        echo  '<option selected value="1">' . _('Geocode Integration Enabled') . '</option>';
+        echo  '<option selected="selected" value="1">' . _('Geocode Integration Enabled') . '</option>';
         echo  '<option value="0">' . _('Geocode Integration Disabled') . '</option>';
 } else {
-        echo  '<option selected value="0">' . _('Geocode Integration Disabled') . '</option>';
+        echo  '<option selected="selected" value="0">' . _('Geocode Integration Disabled') . '</option>';
         echo  '<option value="1">' . _('Geocode Integration Enabled') . '</option>';
 }
 echo '</select></td>
@@ -844,10 +844,10 @@ echo '</select></td>
 echo '<tr style="outline: 1px solid"><td>' . _('Extended Customer Information') . ':</td>
         <td><select name="X_Extended_CustomerInfo">';
 if ($_SESSION['Extended_CustomerInfo']==1){
-        echo  '<option selected value="1">' . _('Extended Customer Info Enabled') . '</option>';
+        echo  '<option selected="selected" value="1">' . _('Extended Customer Info Enabled') . '</option>';
         echo  '<option value="0">' . _('Extended Customer Info Disabled') . '</option>';
 } else {
-        echo  '<option selected value="0">' . _('Extended Customer Info Disabled') . '</option>';
+        echo  '<option selected="selected" value="0">' . _('Extended Customer Info Disabled') . '</option>';
         echo  '<option value="1">' . _('Extended Customer Info Enabled') . '</option>';
 }
 echo '</select></td>
@@ -856,10 +856,10 @@ echo '</select></td>
 echo '<tr style="outline: 1px solid"><td>' . _('Extended Supplier Information') . ':</td>
         <td><select name="X_Extended_SupplierInfo">';
 if ($_SESSION['Extended_SupplierInfo']==1){
-        echo  '<option selected value="1">' . _('Extended Supplier Info Enabled') . '</option>';
+        echo  '<option selected="selected" value="1">' . _('Extended Supplier Info Enabled') . '</option>';
         echo  '<option value="0">' . _('Extended Supplier Info Disabled') . '</option>';
 } else {
-        echo  '<option selected value="0">' . _('Extended Supplier Info Disabled') . '</option>';
+        echo  '<option selected="selected" value="0">' . _('Extended Supplier Info Disabled') . '</option>';
         echo  '<option value="1">' . _('Extended Supplier Info Enabled') . '</option>';
 }
 echo '</select></td>
@@ -868,11 +868,11 @@ echo '</select></td>
 echo '<tr style="outline: 1px solid"><td>' . _('Prohibit GL Journals to Control Accounts') . ':</td>
 	<td><select name="X_ProhibitJournalsToControlAccounts">';
 if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
-		echo  '<option selected value="1">' . _('Prohibited') . '</option>';
+		echo  '<option selected="selected" value="1">' . _('Prohibited') . '</option>';
 		echo  '<option value="0">' . _('Allowed') . '</option>';
 } else {
 		echo  '<option value="1">' . _('Prohibited') . '</option>';
-		echo  '<option selected value="0">' . _('Allowed') . '</option>';
+		echo  '<option selected="selected" value="0">' . _('Allowed') . '</option>';
 }
 echo '</select></td><td>' . _('Setting this to prohibited prevents accidentally entering a journal to the automatically posted and reconciled control accounts for creditors (AP) and debtors (AR)') . '</td></tr>';
 
@@ -884,11 +884,11 @@ $sql = "SELECT lastdate_in_period FROM periods ORDER BY periodno DESC";
 $ErrMsg = _('Could not load periods table');
 $result = DB_query($sql,$db,$ErrMsg);
 if ($_SESSION['ProhibitPostingsBefore']=='' OR $_SESSION['ProhibitPostingsBefore']=='1900-01-01' OR !isset($_SESSION['ProhibitPostingsBefore'])){
-	echo '<option selected value="1900-01-01">' . ConvertSQLDate('1900-01-01') . '</option>';
+	echo '<option selected="selected" value="1900-01-01">' . ConvertSQLDate('1900-01-01') . '</option>';
 }
 while ($PeriodRow = DB_fetch_row($result)){
 	if ($_SESSION['ProhibitPostingsBefore']==$PeriodRow[0]){
-		echo  '<option selected value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
+		echo  '<option selected="selected" value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
 	} else {
 		echo  '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
 	}
@@ -899,10 +899,10 @@ echo '<tr style="outline: 1px solid"><td>' . _('Inventory Costing Method') . ':<
 	<td><select name="X_WeightedAverageCosting">';
 
 if ($_SESSION['WeightedAverageCosting']==1){
-	echo  '<option selected value="1">' . _('Weighted Average Costing') . '</option>';
+	echo  '<option selected="selected" value="1">' . _('Weighted Average Costing') . '</option>';
 	echo  '<option value="0">' . _('Standard Costing') . '</option>';
 } else {
-	echo  '<option selected value="0">' . _('Standard Costing') . '</option>';
+	echo  '<option selected="selected" value="0">' . _('Standard Costing') . '</option>';
 	echo  '<option value="1">' . _('Weighted Average Costing') . '</option>';
 }
 
@@ -912,10 +912,10 @@ echo '<tr style="outline: 1px solid"><td>' . _('Auto Issue Components') . ':</td
 		<td>
 		<select name="X_AutoIssue">';
 if ($_SESSION['AutoIssue']==0) {
-	echo '<option selected value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 } else {
-	echo '<option selected value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 	}
 echo '</select></td><td>' . _('When items are manufactured it is possible for the components of the item to be automatically decremented from stock in accordance with the Bill of Material setting') . '</td></tr>' ;
@@ -924,10 +924,10 @@ echo '<tr style="outline: 1px solid"><td>' . _('Prohibit Negative Stock') . ':</
 		<td>
 		<select name="X_ProhibitNegativeStock">';
 if ($_SESSION['ProhibitNegativeStock']==0) {
-	echo '<option selected value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 } else {
-	echo '<option selected value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 }
 echo '</select></td><td>' . _('Setting this parameter to Yes prevents invoicing and the issue of stock if this would result in negative stock. The stock problem must be corrected before the invoice or issue is allowed to be processed.') . '</td></tr>' ;
@@ -940,35 +940,35 @@ echo '<tr style="outline: 1px solid"><td>' . _('Months of Audit Trail to Retain'
 //Which messages to log
 echo '<tr style="outline: 1px solid"><td>' . _('Log Severity Level') . ':</td><td><select name="X_LogSeverity" >';
 if ($_SESSION['LogSeverity']==0) {
-	echo '<option selected value="0">' ._('None'). '</option>';
+	echo '<option selected="selected" value="0">' ._('None'). '</option>';
 	echo '<option value="1">' ._('Errors Only'). '</option>';
 	echo '<option value="2">' ._('Errors and Warnings'). '</option>';
 	echo '<option value="3">' ._('Errors, Warnings and Info'). '</option>';
 	echo '<option value="4">' ._('All'). '</option>';
 } else if ($_SESSION['LogSeverity']==1) {
 	echo '<option value="0">' ._('None'). '</option>';
-	echo '<option selected value="1">' ._('Errors Only'). '</option>';
+	echo '<option selected="selected" value="1">' ._('Errors Only'). '</option>';
 	echo '<option value="2">' ._('Errors and Warnings'). '</option>';
 	echo '<option value="3">' ._('Errors, Warnings and Info'). '</option>';
 	echo '<option value="4">' ._('All'). '</option>';
 } else if ($_SESSION['LogSeverity']==2) {
 	echo '<option value="0">' ._('None'). '</option>';
 	echo '<option value="1">' ._('Errors Only'). '</option>';
-	echo '<option selected value="2">' ._('Errors and Warnings'). '</option>';
+	echo '<option selected="selected" value="2">' ._('Errors and Warnings'). '</option>';
 	echo '<option value="3">' ._('Errors, Warnings and Info'). '</option>';
 	echo '<option value="4">' ._('All'). '</option>';
 } else if ($_SESSION['LogSeverity']==3) {
 	echo '<option value="0">' ._('None'). '</option>';
 	echo '<option value="1">' ._('Errors Only'). '</option>';
 	echo '<option value="2">' ._('Errors and Warnings'). '</option>';
-	echo '<option selected value="3">' ._('Errors, Warnings and Info'). '</option>';
+	echo '<option selected="selected" value="3">' ._('Errors, Warnings and Info'). '</option>';
 	echo '<option value="4">' ._('All'). '</option>';
 } else if ($_SESSION['LogSeverity']==4) {
 	echo '<option value="0">' ._('None'). '</option>';
 	echo '<option value="1">' ._('Errors Only'). '</option>';
 	echo '<option value="2">' ._('Errors andWarnings'). '</option>';
 	echo '<option value="3">' ._('Errors, Warnings and Info'). '</option>';
-	echo '<option selected value="4">' ._('All'). '</option>';
+	echo '<option selected="selected" value="4">' ._('All'). '</option>';
 }
 echo '</select></td>';
 echo '<td>' . _('Choose which Status messages to keep in your log file.') . '</td></tr>';
@@ -992,10 +992,10 @@ echo '<tr style="outline: 1px solid"><td>' . _('Auto Create Work Orders') . ':</
 		<select name="X_AutoCreateWOs">';
 
 if ($_SESSION['AutoCreateWOs']==0) {
-	echo '<option selected value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 } else {
-	echo '<option selected value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 }
 echo '</select></td><td>' . _('Setting this parameter to Yes will ensure that when a sales order is placed if there is insufficient stock then a new work order is created at the default factory location') . '</td></tr>' ;
@@ -1008,7 +1008,7 @@ $ErrMsg = _('Could not load locations table');
 $result = DB_query($sql,$db,$ErrMsg);
 while ($LocationRow = DB_fetch_array($result)){
 	if ($_SESSION['DefaultFactoryLocation']==$LocationRow['loccode']){
-		echo  '<option selected value="' . $LocationRow['loccode'] . '">' . $LocationRow['locationname'] . '</option>';
+		echo  '<option selected="selected" value="' . $LocationRow['loccode'] . '">' . $LocationRow['locationname'] . '</option>';
 	} else {
 		echo  '<option value="' .  $LocationRow['loccode'] . '">' . $LocationRow['locationname'] . '</option>';
 	}

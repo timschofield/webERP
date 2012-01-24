@@ -245,7 +245,7 @@ if (isset($_POST['PrintPDF'])) {
 		<tr>
 			<td>' . _('Print Option') . ':</td>
 			<td><select name="Fill">
-				<option selected value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
+				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
 			</select></td>
 		</tr>

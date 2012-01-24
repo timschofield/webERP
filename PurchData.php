@@ -511,11 +511,11 @@ if (!isset($SuppliersResult)) {
     echo '<tr><td>' . _('Preferred Supplier') . ':</td>
 	<td><select name="Preferred">';
     if ($_POST['Preferred'] == 1) {
-        echo '<option selected value="1">' . _('Yes') . '</option>';
+        echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
         echo '<option value="0">' . _('No')  . '</option>';
     } else {
         echo '<option value="1">' . _('Yes')  . '</option>';
-        echo '<option selected value="0">' . _('No')  . '</option>';
+        echo '<option selected="selected" value="0">' . _('No')  . '</option>';
     }
     echo '</select></td></tr></table><br /><div class="centre">';
     if (isset($_GET['Edit'])) {

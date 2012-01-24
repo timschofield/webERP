@@ -32,7 +32,7 @@ echo '<option value="All">' . _('All') . '</option>';
 while ($myrow=DB_fetch_array($resultTypes)){
 	if (isset($_POST['TransType'])){
 		if ($myrow['typeid'] == $_POST['TransType']){
-		     echo '<option selected value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		     echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 		} else {
 		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 		}

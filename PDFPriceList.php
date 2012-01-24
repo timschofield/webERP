@@ -266,7 +266,7 @@ If (isset($_POST['PrintPDF'])
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</select></td></tr>';
 
@@ -292,12 +292,12 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<tr><td>' . _('Show Gross Profit %') . ':</td>
                   <td><select name="ShowGPPercentages">';
-		echo '<option selected Value="No">'. _('Prices Only') . '</option>';
+		echo '<option selected="selected" Value="No">'. _('Prices Only') . '</option>';
 		echo '<option Value="Yes">'. _('Show GP % too') . '</option>';
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">';
-		echo '<option selected value="Sales Type Prices">'. _('Default Sales Type Prices');
+		echo '<option selected="selected" value="Sales Type Prices">'. _('Default Sales Type Prices');
 		echo '<option Value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>';
 		echo '<option Value="Full Description">'. _('Full Description') . '</option>';
 		echo '</select></td></tr>';

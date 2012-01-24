@@ -18,7 +18,7 @@ $SQL = "SELECT MonthName(lastdate_in_period) AS mnth,
 echo '<p><div class="centre">' . _('Select the Period to update the costs for') . ':<select name="PeriodNo">';
 $result = DB_query($SQL,$db);
 
-echo '<option selected value="0">' . _('No Period Selected') . '</option>';
+echo '<option selected="selected" value="0">' . _('No Period Selected') . '</option>';
 
 while ($PeriodInfo=DB_fetch_array($result)){
 

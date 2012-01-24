@@ -467,7 +467,7 @@ if (isset($_POST['PrintPDF'])
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>
 				<td><select tabindex="3" name="All_Or_Overdues">
-					<option selected value="All">' . _('All customers with balances') . '</option>
+					<option selected="selected" value="All">' . _('All customers with balances') . '</option>
 					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
 					<option value="HeldOnly">' . _('Held accounts only') . '</option>
 					</select>
@@ -495,7 +495,7 @@ if (isset($_POST['PrintPDF'])
 		$result=DB_query($sql,$db);
 		while ($myrow=DB_fetch_array($result)){
 		      if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-				echo '<option selected value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		      } else {
 			      echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		      }
@@ -505,7 +505,7 @@ if (isset($_POST['PrintPDF'])
 			<tr>
 				<td>' . _('Summary or detailed report') . ':' . '</td>
 				<td><select tabindex="6" name="DetailedReport">
-					<option selected value="No">' . _('Summary Report') . '</option>
+					<option selected="selected" value="No">' . _('Summary Report') . '</option>
 					<option value="Yes">' . _('Detailed Report') . '</option>
 					</select>
 				</td>

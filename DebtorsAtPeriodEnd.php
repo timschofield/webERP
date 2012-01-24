@@ -150,7 +150,7 @@ if (isset($_POST['PrintPDF'])
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 
-			echo '<option value=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 
 		}
 	}

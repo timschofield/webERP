@@ -1443,17 +1443,17 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			<td><select tabindex=' . $j .' name="CreditType">';
 
 	if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
-		echo '<option selected value="Return">' . _('Goods returned to store') . '</option>';
+		echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>';
 		echo '<option value="WriteOff">' . _('Goods written off') . '</option>';
 		echo '<option value="ReverseOverCharge">' . _('Reverse overcharge') . '</option>';
 	} elseif($_POST['CreditType']=='WriteOff') {
-		echo '<option selected value="WriteOff">' . _('Goods written off') . '</option>';
+		echo '<option selected="selected" value="WriteOff">' . _('Goods written off') . '</option>';
 		echo '<option value="Return">' . _('Goods returned to store') . '</option>';
 		echo '<option value="ReverseOverCharge">' . _('Reverse overcharge') . '</option>';
 	} else {
 		echo '<option value="WriteOff">' . _('Goods written off') . '</option>';
 		echo '<option value="Return">' . _('Goods returned to store') . '</option>';
-		echo '<option selected value="ReverseOverCharge">' . _('Reverse overcharge') . '</option>';
+		echo '<option selected="selected" value="ReverseOverCharge">' . _('Reverse overcharge') . '</option>';
 	}
 	echo '</select></td></tr>';
 	$j++;
@@ -1473,7 +1473,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		while ($myrow = DB_fetch_array($Result)) {
 
 			if ($_POST['Location']==$myrow['loccode']){
-				echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
@@ -1497,9 +1497,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		while ($myrow = DB_fetch_array($Result)) {
 
 			if ($_POST['WriteOffGLCode']==$myrow['accountcode']){
-				echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountname']. '</option>';
+				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountname']. '</option>';
 			} else {
-				echo '<option value=' . $myrow['accountcode'] . '>' . $myrow['accountname'] . '</option>';
+				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
 			}
 		}
 		echo '</select></td></tr>';
@@ -1509,7 +1509,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	}
 	$j++;
 	echo '<tr><td>' . _('Credit note text') . '</td><td><textarea tabindex=' . $j . '  name="CreditText" cols="31" rows="5">' . $_POST['CreditText'] . '</textarea></td></tr>';
-	echo '</table><br /><div class="centre"><input tabindex=' . $j . ' type="submit" name="Update" value=' . _('Update') . ' /><br />';
+	echo '</table><br /><div class="centre"><input tabindex=' . $j . ' type="submit" name="Update" value="' . _('Update') . '" /><br />';
 	$j++;
 	echo '<input type="submit" tabindex='.$j++.' name="ProcessCredit" Value="' . _('Process Credit') .'" /></div>';
 }

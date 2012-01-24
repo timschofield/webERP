@@ -129,7 +129,7 @@ $result = DB_query($sql, $db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['ShiptSelection']) and $myrow['shiptref']==$_POST['ShiptSelection']) {
-		echo '<option selected value=';
+		echo '<option selected="selected" value=';
 	} else {
 		echo '<option value=';
 	}
@@ -149,7 +149,7 @@ echo '<tr>
 	</table>';
 
 echo '<br />
-	<div class=centre>
+	<div class="centre">
 		<input type="submit" name="AddShiptChgToInvoice" value="' . _('Enter Shipment Charge') . '" />
 	</div>
 	</form>';

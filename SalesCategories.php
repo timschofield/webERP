@@ -311,7 +311,7 @@ if (isset($SelectedCategory)) {
 		$_POST['ParentCategory']  = $ParentCategory;
 	}
 	echo '<input type="hidden" name="ParentCategory" value="' .
-		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
+        (isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" />';
 	$FormCaps = _('New Sub Category');
 }
 echo '<input type="hidden" name="EditName" value="1" />';

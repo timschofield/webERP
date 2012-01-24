@@ -210,18 +210,18 @@ echo '<td>';
 echo '<select tabindex="2" name="Section">';
 
 if ($_POST['Section']=='Heading') {
-	echo '<option selected value="Heading">' . _('Heading') . '</option>';
+	echo '<option selected="selected" value="Heading">' . _('Heading') . '</option>';
 } else {
 	echo '<option value="Heading">' . _('Heading') . '</option>';
 }
 
 if (isset($_POST['Section']) AND $_POST['Section']=='Detail') {
-	echo '<option selected value="Detail">' . _('Detail') . '</option>';
+	echo '<option selected="selected" value="Detail">' . _('Detail') . '</option>';
 } else {
 	echo '<option value="Detail">' . _('Detail') . '</option>';
 }
 if (isset($_POST['Section']) AND $_POST['Section']=='Summary') {
-	echo '<option selected value="Summary">' . _('Summary') . '</option>';
+	echo '<option selected="selected" value="Summary">' . _('Summary') . '</option>';
 } else {
 	echo '<option value="Summary">' . _('Summary') . '</option>';
 }
@@ -235,11 +235,11 @@ if (!isset($_POST['LineText'])) {$_POST['LineText']='';}
 echo '</td></tr>';
 
 echo '<tr><td>Sequence Number:</td>';
-echo '<td><input tabindex="3" type="text" name="SequenceNo" size="3" maxlength="3" value='.$_POST['SequenceNo'].' />';
+echo '<td><input tabindex="3" type="text" name="SequenceNo" size="3" maxlength="3" value="'.$_POST['SequenceNo'].'" />';
 echo '</td></tr>';
 echo '<tr><td>' .  _('Line Text') . ':' .'</td>';
 echo '<td>';
-echo '<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value='.$_POST['LineText'] .' />';
+echo '<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value="'.$_POST['LineText'] .'" />';
 echo '</td></tr>';
 echo '</table><br />';
 if (isset($_GET['SelectedMessageLine'])) {

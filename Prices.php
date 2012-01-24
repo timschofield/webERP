@@ -27,8 +27,7 @@ if (!isset($_POST['CurrAbrev'])){
 	$_POST['CurrAbrev'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') .
-		'" alt="" />' . '</img>' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $title . '</p>';
 
 echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
 
@@ -296,7 +295,7 @@ if ($InputError ==0){
 			<td><select name="CurrAbrev">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['currabrev']==$_POST['CurrAbrev']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -314,7 +313,7 @@ if ($InputError ==0){
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['typeabbrev']==$_POST['TypeAbbrev']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -338,7 +337,7 @@ if ($InputError ==0){
 	echo '<input type="hidden" name="Item" value="' . $Item.'" />';
 	echo '<tr><td>' . _('Price') . ':</td>
 	          <td>
-	          <input type="text" class="number" name="Price" size="12" maxlength="11" value='; 
+	          <input type="text" class="number" name="Price" size="12" maxlength="11" value="'; 
 	          if (isset($_POST['Price'])) {
 		         echo $_POST['Price'];
 	          }
@@ -346,7 +345,7 @@ if ($InputError ==0){
 	     </td></tr>
 	</table>
 	<br /><div class="centre">
-	<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '">
+	<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />
 	</div>';
 }
 

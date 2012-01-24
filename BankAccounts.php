@@ -298,7 +298,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AccountCode']) and $myrow['accountcode']==$_POST['AccountCode']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -343,7 +343,7 @@ $result = DB_query("SELECT currabrev,
 					
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['currabrev']==$_POST['CurrCode']) {
-		echo '<option selected value="';
+		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
@@ -366,15 +366,15 @@ if (isset($SelectedBankAccount)) {
 						$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['invoice']== 1) {
-			echo '<option selected value="1">'._('Fall Back Default').'</option>
+			echo '<option selected="selected" value="1">'._('Fall Back Default').'</option>
 					<option value="2">'._('Currency Default') . '</option>
 					<option value="0">'._('No').'</option>';
 		} elseif ($myrow['invoice']== 2) {
 			echo '<option value="0">'._('No').'</option>
-					<option selected value="2">'._('Currency Default') . '</option>
+					<option selected="selected" value="2">'._('Currency Default') . '</option>
 					<option value="1">'._('Fall Back Default').'</option>';
 		} else {
-			echo '<option selected value="0">'._('No').'</option>
+			echo '<option selected="selected" value="0">'._('No').'</option>
 					<option  value="2">'._('Currency Default') . '</option>
 					<option value="1">'._('Fall Back Default').'</option>';
 		}

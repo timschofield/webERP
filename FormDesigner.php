@@ -16,7 +16,7 @@ function SimpleTextLine($key) {
 	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
-			echo '<option selected value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option selected="selected" value="'.$FontSize.'">'.$FontSize.'</option>';
 		} else {
 			echo '<option value="'.$FontSize.'">'.$FontSize.'</option>';
 		}
@@ -36,7 +36,7 @@ function MultiTextLine($key) {
 	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
-			echo '<option selected value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option selected="selected" value="'.$FontSize.'">'.$FontSize.'</option>';
 		} else {
 			echo '<option value="'.$FontSize.'">'.$FontSize.'</option>';
 		}
@@ -58,7 +58,7 @@ function DataTextLine($key) {
 	echo '<td class="number">'._('Font Size').' = '.'</td><td><select name="'.$key['id'].'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize==$key->FontSize) {
-			echo '<option selected value="'.$FontSize.'">'.$FontSize.'</option>';
+			echo '<option selected="selected" value="'.$FontSize.'">'.$FontSize.'</option>';
 		} else {
 			echo '<option value="'.$FontSize.'">'.$FontSize.'</option>';
 		}
@@ -170,7 +170,7 @@ foreach ($Papers as $Paper) {
 		$PaperValue=$Paper;
 	}
 	if ($PaperValue==$FormDesign->PaperSize) {
-		echo '<option selected value="'.$PaperValue.'">'.$Paper.'</option>';
+		echo '<option selected="selected" value="'.$PaperValue.'">'.$Paper.'</option>';
 	} else {
 		echo '<option value="'.$PaperValue.'">'.$Paper.'</option>';
 	}

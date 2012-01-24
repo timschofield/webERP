@@ -33,12 +33,12 @@ echo '<table class="selection">
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		     echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
 		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -65,13 +65,13 @@ if (!isset($_POST['StockCat'])){
 	$_POST['StockCat']='All';
 }
 if ($_POST['StockCat']=='All'){
-	echo '<option selected value="All">' . _('All') . '</option>';
+	echo '<option selected="selected" value="All">' . _('All') . '</option>';
 } else {
 	echo '<option value="All">' . _('All') . '</option>';
 }
 while ($myrow1 = DB_fetch_array($result1)) {
 	if ($myrow1['categoryid']==$_POST['StockCat']){
-		echo '<option selected value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
@@ -85,17 +85,17 @@ if (!isset($_POST['BelowReorderQuantity'])){
 	$_POST['BelowReorderQuantity']='All';
 }
 if ($_POST['BelowReorderQuantity']=='All'){
-	echo '<option selected value="All">' . _('All') . '</option>
+	echo '<option selected="selected" value="All">' . _('All') . '</option>
           <option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
           <option value="NotZero">' . _('Only items where stock is available') . '</option>';
 } else if ($_POST['BelowReorderQuantity']=='Below') {
 	echo '<option value="All">' . _('All') . '</option>
-          <option selected value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
+          <option selected="selected" value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
           <option value="NotZero">' . _('Only items where stock is available') . '</option>';
 } else  {
 	echo '<option value="All">' . _('All') . '</option>
           <option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
-          <option selected value="NotZero">' . _('Only items where stock is available') . '</option>';
+          <option selected="selected" value="NotZero">' . _('Only items where stock is available') . '</option>';
 }
 
 echo '</td>

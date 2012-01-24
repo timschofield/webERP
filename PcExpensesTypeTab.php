@@ -123,7 +123,7 @@ or deletion of the records*/
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($SelectedTab) and $myrow['typetabcode']==$SelectedTab) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -208,11 +208,11 @@ while ($myrow = DB_fetch_array($result)) {
 
 		$result = DB_query($SQL,$db);
 		if (!isset($_POST['SelectedExpense'])){
-			echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
+			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($_POST['SelectedExpense']) AND $myrow['codeexpense']==$_POST['SelectedExpense']) {
-				echo '<option selected value="';
+				echo '<option selected="selected" value="';
 			} else {
 				echo '<option value="';
 			}

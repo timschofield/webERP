@@ -224,7 +224,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td colspan="2">
 				<div class="centre">
-					<input tabindex="3" type="submit" name="submit" value=' . _('Enter Information') .' />
+					<input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') .'" />
 				</div>
 			</td>
 		</tr>

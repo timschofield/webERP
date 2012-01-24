@@ -48,7 +48,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 
 	 echo '<select name="CategoryID">
-			<option selected value="All">' . _('Over All Categories') . '</option>';
+			<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription']  . '</option>';
@@ -60,7 +60,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	 echo '<tr>
 			<td>' . _('Inventory Location') . ':</td>
 			<td><select name="Location">
-				<option selected value="All">' . _('All Locations')  . '</option>';
+				<option selected="selected" value="All">' . _('All Locations')  . '</option>';
 
 	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
 	while ($myrow=DB_fetch_array($result)){
@@ -71,7 +71,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	 echo '<tr>
 				<td>' . _('Email the report off') . ':</td>
 				<td><select name="Email">
-					<option selected value="No">' . _('No')  . '</option>
+					<option selected="selected" value="No">' . _('No')  . '</option>
 					<option value="Yes">' . _('Yes')  . '</option>
 					</select></td>
 			</tr>

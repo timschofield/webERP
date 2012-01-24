@@ -51,10 +51,10 @@ if (DB_num_rows($result)==0){
 	while ($myrow=DB_fetch_array($result)){
 		$Account = $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 		if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount==$myrow['accountcode']){
-			echo '<option selected value=' . $myrow['accountcode'] . '>' . $Account . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $Account . '</option>';
 			$PrevCode=$LastCode;
 		} else {
-			echo '<option value=' . $myrow['accountcode'] . '>' . $Account . '</option>';
+			echo '<option value="' . $myrow['accountcode'] . '">' . $Account . '</option>';
 			if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount == $LastCode) {
 				$NextCode=$myrow['accountcode'];
 			}

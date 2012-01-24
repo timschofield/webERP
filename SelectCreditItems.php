@@ -844,15 +844,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td><select name="CreditType" onChange="ReloadForm(MainForm.Update)" >';
 					
 		if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
-			   echo '<option selected value="Return">' . _('Goods returned to store') . '</option>
+			   echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>
 					<option value="WriteOff">' . _('Goods written off') . '</option>
 					<option value="ReverseOverCharge">' . _('Reverse an Overcharge') . '</option>';
 		} elseif ($_POST['CreditType']=='WriteOff') {
-			   echo '<option selected value="WriteOff">' . _('Goods written off') . '</option>
+			   echo '<option selected="selected" value="WriteOff">' . _('Goods written off') . '</option>
 					<option value="Return">' . _('Goods returned to store') . '</option>
 					<option value="ReverseOverCharge">' . _('Reverse an Overcharge') . '</option>';
 		} elseif($_POST['CreditType']=='ReverseOverCharge'){
-		  	echo '<option selected value="ReverseOverCharge">' . _('Reverse Overcharge Only') . '</option>
+		  	echo '<option selected="selected" value="ReverseOverCharge">' . _('Reverse Overcharge Only') . '</option>
 				<option value="Return">' . _('Goods Returned To Store') . '</option>
 				<option value="WriteOff">' . _('Good written off') . '</option>';
 		}
@@ -876,7 +876,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			while ($myrow = DB_fetch_array($Result)) {
 
 				if ($_POST['Location']==$myrow['loccode']){
-					echo '<option selected value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				} else {
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
@@ -899,7 +899,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			while ($myrow = DB_fetch_array($Result)) {
 
 				if ($_POST['WriteOffGLCode']==$myrow['accountcode']){
-					echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+					echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 				} else {
 					echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 				}
@@ -950,10 +950,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<tr>
 					<td>' . _('Select a stock category') . ':&nbsp;<select name="StockCat">';
 
-		 echo '<option selected value="All">' . _('All') . '</option>';
+		 echo '<option selected="selected" value="All">' . _('All') . '</option>';
 		 while ($myrow1 = DB_fetch_array($result1)) {
 			  if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-				   echo '<option selected value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+				   echo '<option selected="selected" value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 			  } else {
 				   echo '<option value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 			  }

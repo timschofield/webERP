@@ -233,7 +233,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<td align="left" width="60"><select name="PropValue' . $PropertyCounter . '">';
 		foreach($OptionValues as $PropertyOptionValue) {
 			if ($PropertyOptionValue == $PropertyValue) {
-				echo '<option selected="True" value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
+				echo '<option selected="selected" value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
 			} else {
 				echo '<option value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
 			}
@@ -505,13 +505,13 @@ if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] ='';
 }
 if ($_POST['StockCat'] == 'All') {
-	echo '<option selected="True" value="All">' . _('All').'</option>';
+	echo '<option selected="selected" value="All">' . _('All').'</option>';
 } else {
 	echo '<option value="All">' . _('All').'</option>';
 }
 while ($myrow1 = DB_fetch_array($result1)) {
 	if ($myrow1['categoryid'] == $_POST['StockCat']) {
-		echo '<option selected="True" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
+		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
 	} else {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'].'</option>';
 	}

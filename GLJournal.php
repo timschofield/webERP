@@ -263,11 +263,11 @@ echo '<table>
 							<td><select name="JournalType">';
 
 if ($_POST['JournalType'] == 'Reversing'){
-	echo '<option selected value = "Reversing">' . _('Reversing').'</option>';
+	echo '<option selected="selected" value = "Reversing">' . _('Reversing').'</option>';
 	echo '<option value = "Normal">' . _('Normal').'</option>';
 } else {
 	echo '<option value = "Reversing">' . _('Reversing').'</option>';
-	echo '<option selected value = "Normal">' . _('Normal') . '</option>';
+	echo '<option selected="selected" value = "Normal">' . _('Normal') . '</option>';
 }
 
 echo '</select></td>
@@ -307,7 +307,7 @@ $result=DB_query($SQL,$db);
 echo '<option value="0">0 - ' . _('None') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
-		echo '<option selected value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
+		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'].'</option>';
 	} else {
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	}
@@ -332,7 +332,7 @@ echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLMa
 echo '<option value="">' . _('Select a general ledger account code') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
-		echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'], ENT_QUOTES,'UTF-8') . '</option>';
+		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'], ENT_QUOTES,'UTF-8') . '</option>';
 	} else {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'].' - ' .htmlentities($myrow['accountname'], ENT_QUOTES,'UTF-8') .'</option>';
 	}

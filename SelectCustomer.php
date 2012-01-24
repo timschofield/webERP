@@ -314,7 +314,7 @@ if (isset($_POST['CustType'])) {
 				<option value="ALL">' . _('Any') . '</option>';
 		while ($myrow = DB_fetch_array($result2)) {
 			if ($_POST['CustType'] == $myrow['typename']) {
-				echo '<option selected value="' . $myrow['typename'] . '">' . $myrow['typename']  . '</option>';
+				echo '<option selected="selected" value="' . $myrow['typename'] . '">' . $myrow['typename']  . '</option>';
 			} else {
 				echo '<option value="' . $myrow['typename'] . '">' . $myrow['typename']  . '</option>';
 			}
@@ -323,7 +323,7 @@ if (isset($_POST['CustType'])) {
 		echo '</select></td>';
 	}
 } else {
-	// No option selected yet, so show Customer Type drop down list
+	// No option selected="selected" yet, so show Customer Type drop down list
 	$result2 = DB_query("SELECT typeid, typename FROM debtortype", $db);
 	// Error if no customer types setup
 	if (DB_num_rows($result2) == 0) {
@@ -357,7 +357,7 @@ if (DB_num_rows($result2) == 0) {
 	echo '<option value="ALL">' . _('Any') . '</option>';
 	while ($myrow = DB_fetch_array($result2)) {
 		if (isset($_POST['Area']) and $_POST['Area']==$myrow['areacode']) {
-			echo '<option selected value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 		}
@@ -391,7 +391,7 @@ if (isset($result)) {
 		}
 		echo '<input type="hidden" name="PageOffset" value="' . $_POST['PageOffset'] . '" />';
 		if ($ListPageMax > 1) {
-			echo '<p><div class=centre>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo '<p><div class="centre">&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 			echo '<select name="PageOffset1">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
@@ -475,7 +475,7 @@ if (isset($result)) {
 //end if results to show
 if (!isset($_POST['CSV'])) {
 	if (isset($ListPageMax) and $ListPageMax > 1) {
-		echo '<p><div class=centre>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+		echo '<p><div class="centre">&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 		echo '<select name="PageOffset2">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {

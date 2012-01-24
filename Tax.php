@@ -305,7 +305,7 @@ if (isset($_POST['TaxAuthority']) AND
 			<td>' . _('Return Covering') . ':</font></td>
 			<td><select name="NoOfPeriods">
 			<option value="1">' . _('One Month') . '</option>' .
-			'<option selected value="2">' ._('Two Months')  . '</option>' .
+			'<option selected="selected" value="2">' ._('Two Months')  . '</option>' .
 			'<option value="3">' . _('Quarter') . '</option>' .
 			'<option value="6">' . _('Six Months')  . '</option>' .
 			'</select></td>
@@ -327,7 +327,7 @@ if (isset($_POST['TaxAuthority']) AND
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
 		if ($myrow['periodno']==$DefaultPeriod){
-			echo '<option selected value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
 			echo '<option value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
@@ -340,7 +340,7 @@ if (isset($_POST['TaxAuthority']) AND
 			<td>' . _('Detail Or Summary Only') . ':</font></td>
 			<td><select name="DetailOrSummary">
 				<option value="Detail">' . _('Detail and Summary') . '</option> 
-				<option selected value="Summary">' . _('Summary Only') . '</option>
+				<option selected="selected" value="Summary">' . _('Summary Only') . '</option>
 			</select></td>
 		</tr>';
 

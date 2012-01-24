@@ -23,14 +23,14 @@ if (!isset($_POST['FromPeriod'])){
 	$Periods = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
-		echo '<option VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+		echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 	}
 
 	echo '</select></td>
              </tr>
              </table>';
 
-	echo "<div class='centre'><input type="submit" Name='recalc' value='" . _('Do the Recalculation') . "' onclick=\"return confirm('" . _('Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?') . '\');"></div></form>';
+	echo '<div class="centre"><input type="submit" Name="recalc" value="' . _('Do the Recalculation') . '" onclick="return confirm(\'' . _('Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?') . '\');"></div></form>';
 
 } else {  /*OK do the updates */
 

@@ -295,7 +295,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>
 				<td><select tabindex="3" name="All_Or_Overdues">
-					<option selected value="All">' . _('All suppliers with balances') . '</option>
+					<option selected="selected" value="All">' . _('All suppliers with balances') . '</option>
 					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
 					</select></td>
 			</tr>
@@ -308,7 +308,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 		while ($myrow=DB_fetch_array($result)){
 		      if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-				echo '<option selected value="' . $myrow['currabrev'] . '">' . $myrow['currency']  . '</option>';
+				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency']  . '</option>';
 		      } else {
 			      echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency']  . '</option>';
 		      }
@@ -318,7 +318,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 			<tr>
 				<td>' . _('Summary or Detailed Report') . ':' . '</td>
 				<td><select tabindex="5" name="DetailedReport">
-					<option selected value="No">' . _('Summary Report')  . '</option>
+					<option selected="selected" value="No">' . _('Summary Report')  . '</option>
 					<option value="Yes">' . _('Detailed Report')  . '</option>
 					</select></td>
 			</tr>

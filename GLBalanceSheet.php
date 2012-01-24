@@ -39,9 +39,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if( $myrow['periodno']== $periodno){
-			echo '<option selected value=' . $myrow['periodno'] . '>' . ConvertSQLDate($lastdate_in_period) . '</option>';
+			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . ConvertSQLDate($lastdate_in_period) . '</option>';
 		} else {
-			echo '<option value=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period'])  . '</option>';
+			echo '<option value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period'])  . '</option>';
 		}
 	}
 
@@ -51,7 +51,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			<td>'._('Detail Or Summary').':</td>
 			<td><select Name="Detail">
 				<option value="Summary">'._('Summary') . '</option>
-				<option selected value="Detailed">'._('All Accounts') . '</option>
+				<option selected="selected" value="Detailed">'._('All Accounts') . '</option>
 			</select></td>
 		</tr>';
 

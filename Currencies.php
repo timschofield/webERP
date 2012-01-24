@@ -392,7 +392,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate']='';
 	}
-	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="9" value="'. $_POST['ExchangeRate'].'"></td>
+	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="9" value="'. $_POST['ExchangeRate'].'" /></td>
 		</tr>
 		</table>';
 

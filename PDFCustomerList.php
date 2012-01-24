@@ -375,7 +375,7 @@ if (isset($_POST['PrintPDF'])){
 	$sql="SELECT areacode, areadescription FROM areas";
 	$AreasResult= DB_query($sql,$db);
 
-	echo '<option selected value="All">' . _('All Areas') . '</option>';
+	echo '<option selected="selected" value="All">' . _('All Areas') . '</option>';
 
 	While ($myrow = DB_fetch_array($AreasResult)){
 		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
@@ -384,7 +384,7 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<tr><td>' . _('For Sales folk'). ':</td>
 			<td><select name=SalesPeople[] multiple>
-				<option selected value="All">'. _('All sales folk') . '</option>';
+				<option selected="selected" value="All">'. _('All sales folk') . '</option>';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
 	$SalesFolkResult = DB_query($sql,$db);
@@ -396,7 +396,7 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<tr><td>' . _('Level Of Activity'). ':</td>
 			<td><select name="Activity">
-				<option selected value="All">'. _('All customers') . '</option>
+				<option selected="selected" value="All">'. _('All customers') . '</option>
 				<option value="GreaterThan">'. _('Sales Greater Than') . '</option>
 				<option value="LessThan">'. _('Sales Less Than') . '</option>
 				</select></td>

@@ -489,22 +489,22 @@ if (isset($_POST['PrintPDF'])){
 		$_POST['NumberMonthsHolding']=1;
 	}
 	if ($_POST['NumberMonthsHolding']==0.5){
-		echo '<option selected value="0.5">' . _('Two Weeks')  . '</option>';
+		echo '<option selected="selected" value="0.5">' . _('Two Weeks')  . '</option>';
 	} else {
 		echo '<option value="0.5">' . _('Two Weeks')  . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding']==1){
-		echo '<option selected value="1">' . _('One Month') . '</option>';
+		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
 	} else {
-		echo '<option selected value="1">' . _('One Month') . '</option>';
+		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding']==1.5){
-		echo '<option selected value="1.5">' . _('Six Weeks') . '</option>';
+		echo '<option selected="selected" value="1.5">' . _('Six Weeks') . '</option>';
 	} else {
 		echo '<option value="1.5">' . _('Six Weeks') . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding']==2){
-		echo '<option selected value="2">' . _('Two Months') . '</option>';
+		echo '<option selected="selected" value="2">' . _('Two Months') . '</option>';
 	} else {
 		echo '<option value="2">' . _('Two Months') . '</option>';
 	}

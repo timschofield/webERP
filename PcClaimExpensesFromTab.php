@@ -153,7 +153,7 @@ if (!isset($SelectedTabs)){
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
-			echo '<option selected value="';
+			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
@@ -348,7 +348,7 @@ if (!isset($SelectedTabs)){
 		echo '<option value="">' . _('Not Yet Selected') . '</option>';
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($_POST['SelectedExpense']) and $myrow['codeexpense']==$_POST['SelectedExpense']) {
-				echo '<option selected value="';
+				echo '<option selected="selected" value="';
 			} else {
 				echo '<option value="';
 			}

@@ -77,7 +77,7 @@ if (isset($_POST['selectchoice'])) {
 
 		while ($myrow = DB_fetch_array($result)){
 			if ($myrow['discountcategory']==$_POST['DiscCat']){
-				echo '<option selected value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory']  . '</option>';
+				echo '<option selected="selected" value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory']  . '</option>';
 			} else {
 				echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
 			}

@@ -115,7 +115,7 @@ if (DB_num_rows($AccountsResults)==0){
 	while ($myrow=DB_fetch_array($AccountsResults)){
 		/*list the bank account names */
 		if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
-			echo '<option selected value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 		}
@@ -342,13 +342,13 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		</tr>';
 
 	if (isset($_POST['DoExchangeDifference'])){
-		echo '<input type="hidden" name="DoExchangeDifference" value=' . $FXStatementBalance . ' />';
+		echo '<input type="hidden" name="DoExchangeDifference" value="' . $FXStatementBalance . '" />';
 		if (!isset($_POST['BankStatementBalance'])){
 			$_POST['BankStatementBalance'] =0;
 		}
 		echo '<tr>
 				<td colspan="6">' . _('Enter the actual bank statement balance') . ' (' . $CurrencyRow['currcode'] . ')</b></td>
-				<td class="number"><input type="text" name="BankStatementBalance" maxlength="15" size="15" value=' . locale_number_format($_POST['BankStatementBalance'],$CurrencyRow['currdecimalplaces']) . ' /><td>
+				<td class="number"><input type="text" name="BankStatementBalance" maxlength="15" size="15" value="' . locale_number_format($_POST['BankStatementBalance'],$CurrencyRow['currdecimalplaces']) . '" /><td>
 			</tr>
 			<tr>
 				<td colspan="7" align="center"><input type="submit" name="PostExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '" onclick="return confirm(\'' . _('This will create a general ledger journal to write off the exchange difference in the current balance of the account. It is important that the exchange rate above reflects the current value of the bank account currency') . ' - ' . _('Are You Sure?') . '\');" /></td>
