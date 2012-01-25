@@ -504,7 +504,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="">' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</div>';
+		echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</div>';
 		echo '<table class="table1">
 				<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name=InvOrCredit>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {

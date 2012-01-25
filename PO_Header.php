@@ -600,7 +600,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order') . '" alt="">
+			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />
 			' . $_SESSION['PO'.$identifier]->SupplierName . ' - ' . _('All amounts stated in') . '
 			' . $_SESSION['PO'.$identifier]->CurrCode . '<br />';
 

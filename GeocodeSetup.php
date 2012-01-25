@@ -226,7 +226,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedParam" value="' . $SelectedParam . '" />';
 		echo '<input type="hidden" name="GeoCodeID" value="' . $_POST['GeoCodeID'] . '" />';
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="">'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
 		echo '<table>
 				<tr><td>'. _('Geocode Code') .':</td>
 					<td>' . $_POST['GeoCodeID'] . '</td></tr>';

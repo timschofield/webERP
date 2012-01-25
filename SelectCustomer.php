@@ -639,7 +639,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '</table>';
 		} else {
 			if ($_SESSION['CustomerID'] != "") {
-				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt=""><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a></div>';
+				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" /><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a></div>';
 			}
 		}
 		// Customer Notes
@@ -649,7 +649,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
-			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="">' . ' ' . _('Customer Notes') . '</div><br />';
+			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
 					<th>' . _('date') . '</th>
@@ -680,7 +680,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '</table>';
 		} else {
 			if ($_SESSION['CustomerID'] != "") {
-				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt=""><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div>';
+				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" /><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div>';
 			}
 		}
 		// Custome Type Notes
@@ -690,7 +690,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
-			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="">' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
+			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
 				 	<th>' . _('date') . '</th>
@@ -721,7 +721,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '</table>';
 		} else {
 			if ($_SESSION['CustomerID'] != '') {
-				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Group Notes') . '" alt=""><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType  . '">' . ' ' . _('Add New Group Note') . '</a></div><br />';
+				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Group Notes') . '" alt="" /><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType  . '">' . ' ' . _('Add New Group Note') . '</a></div><br />';
 			}
 		}
 	}

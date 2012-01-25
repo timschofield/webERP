@@ -1006,7 +1006,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					printf('<td><font size="1"><input type="submit" name="NewItem" value="%s" /></font></td>
 							<td><font size="1">%s</font></td>
 							<td><font size="1">%s</font></td>
-							<td><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=%s&text=&width=120&height=120"></td></tr>',
+							<td><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=%s&text=&width=120&height=120" /></td></tr>',
 							$myrow['stockid'],
 							$myrow['description'],
 							$myrow['units'],

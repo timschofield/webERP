@@ -899,7 +899,7 @@ if (isset($StockItemsResult)
 				if ($AuthRow['cancreate']==0 AND $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
 				printf('<td><a href="%s">%s</a></td>
         				<td><a href="%s">' . _('Invoice') . '</a></td>
-        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Click for PDF') . '"></a></td>
+        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Click for PDF') . '" /></a></td>
         				<td>%s</td>
         				<td>%s</td>
         				<td>%s</td>
@@ -926,7 +926,7 @@ if (isset($StockItemsResult)
 				} else {  /*User is not authorised to create POs so don't even show the option */
 					printf('<td><a href="%s">%s</a></td>
 							<td><a href="%s">' . _('Invoice') . '</a></td>
-							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath . '/css/' . $theme .'/images/pdf.png" title="' . _('Click for PDF') . '"></a></td>
+							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath . '/css/' . $theme .'/images/pdf.png" title="' . _('Click for PDF') . '" /></a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
