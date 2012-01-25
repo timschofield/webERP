@@ -88,7 +88,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 		//variable for update data
 
-		echo'<input type="hidden" value=' . $_POST['order'] . ' name='. _('order').' />
+		echo'<input type="hidden" value="' . $_POST['order'] . '" name='. _('order').' />
 			<input type="hidden" value="' . $_POST['StockLocation'] . '" name="StockLocation" />
 			<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
 			<input type="hidden" value="' . locale_number_format($_POST['NumberOfDays'],0) . '" name="NumberOfDays" />';
@@ -145,7 +145,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 		$i++;
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan="7"><input type="submit" name="submit" value=' . _('Update') . ' /></td>
+			<td style="text-align:center" colspan="7"><input type="submit" name="submit" value="' . _('Update') . '" /></td>
 		</tr>
 		</form>';
 

@@ -262,11 +262,11 @@ echo '<table class="selection">
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['PurchTaxGLCode']) and $myrow['accountcode']==$_POST['PurchTaxGLCode']) {
-		echo '<option selected="selected" value=';
+		echo '<option selected="selected" value="';
 	} else {
-		echo '<option value=';
+		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
+	echo $myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
 
 } //end while loop
 

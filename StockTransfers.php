@@ -533,7 +533,7 @@ echo '<tr>
 if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled) 
 	AND $_SESSION['Transfer']->TransferItem[0]->Controlled==1){
 	
-	echo '<td class="number"><input type="hidden" name="Quantity" value=' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '/><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
+	echo '<td class="number"><input type="hidden" name="Quantity" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
 } elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)){
 	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /></td></tr>';
 } else {

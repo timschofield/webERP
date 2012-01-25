@@ -525,9 +525,9 @@ if (isset($NumberOfOutputs)){
 		echo '<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' . $_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>';
 		if ($_POST['Controlled'.$i]==1 AND $_SESSION['DefineControlledOnWOEntry']==1){
 			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . '</td>';
-			echo '<input type="hidden" name="OutputQty' . $i .'" value=' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . ' />';
+			echo '<input type="hidden" name="OutputQty' . $i .'" value="' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . '" />';
 		} else {
-		  	echo'<td><input type="text" class="number" name="OutputQty' . $i . '" value=' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . ' size="10" maxlength="10" /></td>';
+		  	echo'<td><input type="text" class="number" name="OutputQty' . $i . '" value="' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . '" size="10" maxlength="10" /></td>';
 		}
 		 echo '<td class="number"><input type="hidden" name="RecdQty' . $i . '" value="' . $_POST['RecdQty' .$i] . '" />' . $_POST['RecdQty' .$i] .'</td>
 		  		<td class="number">' . locale_number_format(($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]),$_POST['DecimalPlaces' . $i]) . '</td>';
@@ -590,9 +590,9 @@ if (!isset($_POST['StockCat'])){
 while ($myrow1 = DB_fetch_array($result1)) {
 
 	if ($_POST['StockCat']==$myrow1['categoryid']){
-		echo '<option selected="selected" value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	} else {
-		echo '<option value='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 }
 ?>

@@ -281,9 +281,9 @@ if (DB_num_rows($GRNResults)>0){
 				<td>' . $_POST['GRNNo'] . '</td>
 				<td>' . $myrow['itemcode'] . ' ' . $myrow['itemdescription'] . '</td>
 				<td class="number">' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '</td>
-				<td><input type="text" name="This_QuantityCredited" value=' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . ' size="11" maxlength="10" /></td>
+				<td><input type="text" name="This_QuantityCredited" value="' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '" size="11" maxlength="10" /></td>
 				<td class="number">' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-				<td><input type="text" name="ChgPrice" value=' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . ' size="11" maxlength="10" /></td>
+				<td><input type="text" name="ChgPrice" value="' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" maxlength="10" /></td>
 			</tr>
 			</table>';
 	

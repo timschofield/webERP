@@ -22,7 +22,7 @@ echo '<option selected="selected" value="0">' . _('No Period Selected') . '</opt
 
 while ($PeriodInfo=DB_fetch_array($result)){
 
-	echo '<option value=' . $PeriodInfo['periodno'] . '>' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'] . '</option>';
+	echo '<option value="' . $PeriodInfo['periodno'] . '">' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'] . '</option>';
 
 }
 

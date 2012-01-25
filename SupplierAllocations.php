@@ -491,7 +491,7 @@ if (isset($_POST['AllocTrans'])){
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value="' . $YetToAlloc . '" /></td>';
 		 if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
-			echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" value=' . true . ' />';
+			echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" checked="checked" />';
 	    } else {
 	    	echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" />';
 	    }

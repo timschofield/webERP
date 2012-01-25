@@ -331,9 +331,9 @@ echo '<table class="selection">
 			
 while ($myrow=DB_fetch_array($result)) {
 	if ($myrow['branchcode']==$_POST['branch']) {
-		echo '<option selected="selected" value='.$myrow['branchcode'].'>'.$myrow['brname'].'</option>';
+		echo '<option selected="selected" value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
 	} else {
-		echo '<option value='.$myrow['branchcode'].'>'.$myrow['brname'].'</option>';
+		echo '<option value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
 	}
 }
 echo '</select></td></tr>';

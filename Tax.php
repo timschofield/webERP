@@ -298,7 +298,7 @@ if (isset($_POST['TaxAuthority']) AND
 
 	$result = DB_query("SELECT taxid, description FROM taxauthorities",$db);
 	while ($myrow = DB_fetch_array($result)){
-		echo '<option Value=' . $myrow['taxid'] . '>' . $myrow['description'] . '</option>';
+		echo '<option value="' . $myrow['taxid'] . '">' . $myrow['description'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr>

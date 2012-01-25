@@ -203,9 +203,9 @@ echo '<tr>
 		
 for($i=0;$i<count($PDFLanguages);$i++){
 	if ($_POST['PDFLanguage']==$i){
-		echo '<option selected="selected" value=' . $i .'>' . $PDFLanguages[$i] . '</option>';
+		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
 	} else {
-		echo '<option value=' . $i .'>' . $PDFLanguages[$i]. '</option>';
+		echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
 	}
 }
 echo '</select></td>

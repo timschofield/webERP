@@ -240,7 +240,7 @@ if (DB_num_rows($result) == 0) {
 				'&text='.
 				'&width=32'.
 				'&height=32'.
-				'" >';
+				'" />';
 		} else {
 			if( file_exists($_SESSION['part_pics_dir'] . '/' .'cat_'.$myrow['salescatid'].'.jpg') ) {
 				$CatImgLink = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' .

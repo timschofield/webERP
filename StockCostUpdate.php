@@ -158,7 +158,7 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 } else {
 
 	if ($myrow['mbflag']=='M'){
-		echo '<input type="hidden" name="MaterialCost" value=' . $myrow['materialcost'] . ' />';
+		echo '<input type="hidden" name="MaterialCost" value="' . $myrow['materialcost'] . '" />';
 		echo '<tr><td>' . _('Standard Material Cost Per Unit') .':</td>
 				<td class="number">' . locale_number_format($myrow['materialcost'],4) . '</td>
 			</tr>';

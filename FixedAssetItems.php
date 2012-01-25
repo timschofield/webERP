@@ -477,7 +477,7 @@ if (!isset($New) ) { //ie not new at all!
 			'&text='.
 			'&width=64'.
 			'&height=64'.
-			'" >';
+			'" />';
 	} else {
 		if( isset($AssetID) and file_exists($_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg') ) {
 			$AssetImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/ASSET_' .$AssetID.'.jpg" />';

@@ -239,7 +239,7 @@ if (!isset($_GET['delete'])) {
 //			<tr>
 //				<td>'. _('Geocode Code') .":</td>
 //				<td><input " . (in_array('GeoCodeID',$Errors) ? 'class="inputerror"' : '' ) .
-//					" tabindex=1 type='Text' name='GeoCodeID' value='". $_POST['GeoCodeID'] ."' size="3" maxlength="2"></td>
+//					" tabindex="1" type='Text' name='GeoCodeID' value='". $_POST['GeoCodeID'] ."' size="3" maxlength="2"></td>
 //			</tr>";
 	}
 
@@ -249,7 +249,7 @@ if (!isset($_GET['delete'])) {
 	echo '<br /><tr>
 		<td>'. _('Geocode Key') .':</td>
 		<td><input ' . (in_array('GeoCode_Key',$Errors) ? 'class="inputerror"' : '' ) .
-         ' tabindex=2 type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" maxlength="300" />
+         ' tabindex="2" type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" maxlength="300" />
 		</td></tr>
 		
 		<tr><td>'. _('Geocode Center Long') . '</td>

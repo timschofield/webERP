@@ -550,7 +550,7 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td class="label">' . _('Date Material Issued') . ':</td>
-			<td><input type="text" name="IssuedDate" value=' . Date($_SESSION['DefaultDateFormat']) . ' class="date" size="10" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+			<td><input type="text" name="IssuedDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" class="date" size="10" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
 			<td class="label">' . _('Issued From') . ':</td>
 			<td>';
 
@@ -653,9 +653,9 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	while ($myrow1 = DB_fetch_array($result1)) {
 
 		if ($_POST['StockCat']==$myrow1['categoryid']){
-			echo '<option selected="selected" value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
 	?>

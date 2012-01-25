@@ -41,7 +41,7 @@ $CompanyPath = $PathToRoot. '/companies';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>WebERP Installation Wizard</title>
-<link href="../css/jelly/default.css" rel="stylesheet" type="text/css">
+<link href="../css/jelly/default.css" rel="stylesheet" type="text/css" />
 <script language="javascript" type="text/javascript">
 
 function change_os(type) {
@@ -111,7 +111,7 @@ function change_data(type) {
 		</tr>
 		<?php } ?>
 		<tr>
-			<td width="140" style="color: #666666;">PHP Version > 5.1.0</td>
+			<td width="140" style="color: #666666;">PHP Version &gt; 5.1.0</td>
 			<td width="35">
 				<?php
 				$phpversion = mb_substr(PHP_VERSION, 0, 6);
@@ -209,15 +209,14 @@ function change_data(type) {
 				<font style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</font>
 			</td>
 			<td>
-				<div name="file_perms_box" id="file_perms_box" style="margin: 0; padding: 0; display: 
+				
 				<?php 
 					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') {
-						echo 'none';
+						echo '<div id="file_perms_box" style="margin:0; padding:0; display:none">';
 					} else {
-						echo 'block';
+						echo '<div id="file_perms_box" style="margin:0; padding:0; display:block">';
 					}
 				?>
-				;">
 					<input type="checkbox" tabindex="42" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked'; } ?> />
 					<label for="world_writeable">
 						World-writeable file permissions (777)
@@ -275,7 +274,7 @@ function change_data(type) {
 																												 } ?> />
 				<label for="install_tables" style="color: #666666;">Install Tables</label>
 				<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span style="font-size: 10px; color: #666666;">(Please note: May remove existing tables and data)</span></td>
+				<span style="font-size: 10px; color: #666666;">(Please note: May remove existing tables and data)</span>
 			</td>
 		</tr>
 		<tr>
@@ -303,12 +302,12 @@ function change_data(type) {
 			</td>
 
 			<td width="180">
-				<SELECT name='timezone' tabindex="52">
+				<select name='timezone' tabindex="52">
 				<?php
 					include('timezone.php');
 					 ?>
 
-				</SELECT>
+				</select>
 			</td>
 		</tr>
 		<tr>
@@ -318,7 +317,7 @@ function change_data(type) {
 
 			<td width="180">
 			    <input type="hidden" name="MAX_FILE_SIZE" <?php echo "value=\"" . $_SESSION['MaxLogoSize'] . "\"" ?> />
-			    <input type="FILE" size="50" ID="LogoFile" name="LogoFile" tabindex="53">
+			    <input type="file" size="50" id="LogoFile" name="LogoFile" tabindex="53" />
 			</td>
 		</tr>
 		<tr>

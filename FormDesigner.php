@@ -23,9 +23,9 @@ function SimpleTextLine($key) {
 	}
 	echo '</select></td>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
+	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 	/* Display the Y co-ordinate (mm from the top of the page) */
-	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'"></td>';
+	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 }
 function MultiTextLine($key) {
 	/* Displays a table row containing the attributes for a
@@ -43,11 +43,11 @@ function MultiTextLine($key) {
 	}
 	echo '</select></td>';
 	/* Display the length of the field in mm */
-	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'"></td></tr><tr>';
+	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td></tr><tr>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
+	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 	/* Display the Y co-ordinate (mm from the top of the page) */
-	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'"></td>';
+	echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 }
 function DataTextLine($key) {
 	/* Displays a table row containing the attributes for a
@@ -65,9 +65,9 @@ function DataTextLine($key) {
 	}
 	echo '</select></td>';
 	/* Display the length of the field in mm */
-	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'"></td>';
+	echo '<td class="number">'._('Length').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'Length" size="4" maxlength="4" value="'.$key->Length.'" /></td>';
 	/* Display the X co-ordinate (mm from the left hand side of page) */
-	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
+	echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 }
 /* If the user has chosen to either preview the form, or
  * save it then we first have to get the POST values into a
@@ -183,10 +183,10 @@ foreach ($FormDesign as $key) {
 	switch ($key['type']) {
 		case 'image':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">'.$key['name'].'</th></tr>';
-			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
-			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'"></td>';
-			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'"></td>';
-			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'"></td>';
+			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
+			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
+			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
@@ -221,7 +221,7 @@ foreach ($FormDesign as $key) {
 						echo '<td>'.$subkey['name'].'</td>';
 						DataTextLine($subkey);
 					} elseif ($subkey['type']=='StartLine') {
-						echo '<td colspan="3">'.$subkey['name'].' = '.'</td><td><input type="text" class="number" name="StartLine" size="4" maxlength="4" value="'.$key->y.'"></td>';
+						echo '<td colspan="3">'.$subkey['name'].' = '.'</td><td><input type="text" class="number" name="StartLine" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 					}
 					echo '</tr>';
 				}
@@ -231,29 +231,29 @@ foreach ($FormDesign as $key) {
 			break;
 		case 'CurvedRectangle':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
-			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
-			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'"></td>';
-			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'"></td></tr><tr>';
-			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'"></td>';
-			echo '<td class="number">'._('Radius').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'radius" size="3" maxlength="3" value="'.$key->radius.'"></td>';
+			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
+			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td></tr><tr>';
+			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
+			echo '<td class="number">'._('Radius').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'radius" size="3" maxlength="3" value="'.$key->radius.'" /></td>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'Rectangle':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
-			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'"></td>';
-			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'"></td></tr><tr>';
-			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'"></td>';
-			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'"></td>';
+			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
+			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td></tr><tr>';
+			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
+			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'Line':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
-			echo '<td class="number">'._('Start x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'startx" size="4" maxlength="4" value="'.$key->startx.'"></td>';
-			echo '<td class="number">'._('Start y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'starty" size="4" maxlength="4" value="'.$key->starty.'"></td></tr><tr>';
-			echo '<td class="number">'._('End x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endx" size="4" maxlength="4" value="'.$key->endx.'"></td>';
-			echo '<td class="number">'._('End y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endy" size="4" maxlength="4" value="'.$key->endy.'"></td>';
+			echo '<td class="number">'._('Start x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'startx" size="4" maxlength="4" value="'.$key->startx.'" /></td>';
+			echo '<td class="number">'._('Start y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'starty" size="4" maxlength="4" value="'.$key->starty.'" /></td></tr><tr>';
+			echo '<td class="number">'._('End x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endx" size="4" maxlength="4" value="'.$key->endx.'" /></td>';
+			echo '<td class="number">'._('End y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endy" size="4" maxlength="4" value="'.$key->endy.'" /></td>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;

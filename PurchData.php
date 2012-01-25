@@ -481,7 +481,7 @@ if (!isset($SuppliersResult)) {
     echo '<tr><td>' . _('Currency') . ':</td>
 	<td><input type="hidden" name="CurrCode" . value="' . $CurrCode . '" />' . $CurrCode . '</td></tr>';
     echo '<tr><td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-	<td><input type="text" class="number" name="Price" maxlength="12" size="12" value=' . $_POST['Price'] . ' /></td></tr>';
+	<td><input type="text" class="number" name="Price" maxlength="12" size="12" value="' . $_POST['Price'] . '" /></td></tr>';
     echo '<tr><td>' . _('Date Updated') . ':</td>
 	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td></tr>';
     echo '<tr><td>' . _('Our Unit of Measure') . ':</td>';

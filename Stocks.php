@@ -826,7 +826,7 @@ echo '<tr>
 		'&text='.
 		'&width=64'.
 		'&height=64'.
-		'" >';
+		'" />';
 } else {
 	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120" />';
@@ -1080,9 +1080,9 @@ if (!isset($_POST['TaxCat'])){
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['TaxCat'] == $myrow['taxcatid']){
-		echo '<option selected="selected" value=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['taxcatid'] . '">' . $myrow['taxcatname'] . '</option>';
 	} else {
-		echo '<option value=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'] . '</option>';
+		echo '<option value="' . $myrow['taxcatid'] . '">' . $myrow['taxcatname'] . '</option>';
 	}
 } //end while loop
 

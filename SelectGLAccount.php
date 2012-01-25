@@ -100,7 +100,7 @@ if (!isset($AccountID)) {
 		<br />';
 
 	echo '<div class="centre">
-			<input type="submit" name="Search" value=' . _('Search Now') . '" />
+			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 			<input type="submit" action=reset value="' . _('Reset') .'" />
 		</div>';
 

@@ -261,7 +261,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex='.($j+5).' type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '" /></td>
+			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8'). '" /></td>
 				<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
 				<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" />
 				<td>'.$myrow['contactname'].'</td>
@@ -953,9 +953,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 echo '<option selected="selected" value="All">' . _('All') . '</option>';
 		 while ($myrow1 = DB_fetch_array($result1)) {
 			  if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-				   echo '<option selected="selected" value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+				   echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 			  } else {
-				   echo '<option value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
+				   echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 			  }
 		 }
 

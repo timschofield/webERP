@@ -476,14 +476,14 @@ if ($_SESSION['Items'.$identifier]->Any_Already_Delivered()==1
 		OR $_POST['ChargeFreightCost']==0)) {
 
 	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>
-		<td><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0" /></td>';
+		<td><input tabindex="'.$j.'" type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="0" /></td>';
 	$_SESSION['Items'.$identifier]->FreightCost=0;
 } else {
 	echo '<td colspan="2" class="number">'. _('Charge Freight Cost inc Tax').'</td>';
 	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 	} else {
-		echo '<td class="number"><input tabindex='.$j.' type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
+		echo '<td class="number"><input tabindex="'.$j.'" type="text" class="number" size="10" maxlength="12" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 	}
 	$_POST['ChargeFreightCost'] = locale_number_format($_SESSION['Items'.$identifier]->FreightCost,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 }
@@ -1635,17 +1635,17 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo '<table class="selection">
 		<tr>
 			<td>' ._('Date On Invoice'). ':</td>
-			<td><input tabindex='.$j.' type="text" maxlength="10" size="15" name="DispatchDate" value="'.$DefaultDispatchDate.'" id="datepicker" alt="'.$_SESSION['DefaultDateFormat'].'" class="date" /></td>
+			<td><input tabindex="'.$j.'" type="text" maxlength="10" size="15" name="DispatchDate" value="'.$DefaultDispatchDate.'" id="datepicker" alt="'.$_SESSION['DefaultDateFormat'].'" class="date" /></td>
 		</tr>';
 	$j++;
 	echo '<tr>
 			<td>' . _('Consignment Note Ref'). ':</td>
-			<td><input tabindex='.$j.' type="text" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
+			<td><input tabindex="'.$j.'" type="text" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
 		</tr>';
 	$j++;
 	echo '<tr>
 			<td>'._('Action For Balance'). ':</td>
-			<td><select tabindex='.$j.' name="BOPolicy"><option selected="selected" value="BO">'._('Automatically put balance on back order').'</option><option value="CAN">'._('Cancel any quantities not delivered').'</option></select></td>
+			<td><select tabindex="'.$j.'" name="BOPolicy"><option selected="selected" value="BO">'._('Automatically put balance on back order').'</option><option value="CAN">'._('Cancel any quantities not delivered').'</option></select></td>
 		</tr>';
 	$j++;
 	echo '<tr>

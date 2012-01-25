@@ -252,11 +252,11 @@ $result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
-		echo '<option selected="selected" value=';
+		echo '<option selected="selected" value="';
 	} else {
-		echo '<option value=';
+		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . '</option>';
+	echo $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
 
 } //end while loop
 DB_free_result($result);

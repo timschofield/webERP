@@ -726,7 +726,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
-					echo '<option value="' . $ListPage . '" selected>' . $ListPage . '</option>';
+					echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
 				} else {
 					echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
 				}

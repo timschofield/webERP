@@ -718,9 +718,9 @@ if (!isset($SupplierID)) {
 	echo '<option value="0">' . _('None');
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['FactorID']) AND $_POST['FactorID'] == $myrow['id']){
-		echo '<option selected="selected" value=' . $myrow['id'] . '>' . $myrow['coyname'] .'</option>';
+		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		} else {
-		echo '<option value=' . $myrow['id'] . '>' . $myrow['coyname'] .'</option>';
+		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -739,9 +739,9 @@ if (!isset($SupplierID)) {
 			<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']){
-			echo '<option selected="selected" value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		} else {
-			echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'] . '</option>';
+			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -764,9 +764,9 @@ if (!isset($SupplierID)) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $myrow['taxgroupid']){
-			echo '<option selected="selected" value=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['taxgroupid'] . '">' . $myrow['taxgroupdescription'] . '</option>';
 		} else {
-			echo '<option value=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'] . '</option>';
+			echo '<option value="' . $myrow['taxgroupid'] . '">' . $myrow['taxgroupdescription'] . '</option>';
 		}
 	} //end while loop
 
@@ -868,7 +868,7 @@ if (!isset($SupplierID)) {
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</td>
-			<td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  size="12" maxlength="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="SupplierSince" value=' . $_POST['SupplierSince'] . ' /></td></tr>';
+			<td><input '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  size="12" maxlength="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Bank Particulars') . ':</td>
 			<td><input type="text" name="BankPartics" size="13" maxlength="12" value="' . $_POST['BankPartics'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Bank Reference') . ':</td>
@@ -883,9 +883,9 @@ if (!isset($SupplierID)) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['PaymentTerms'] == $myrow['termsindicator']){
-		echo '<option selected="selected" value=' . $myrow['termsindicator'] . '>' . $myrow['terms'] .'</option>';
+		echo '<option selected="selected" value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
 		} else {
-		echo '<option value=' . $myrow['termsindicator'] . '>' . $myrow['terms'] .'</option>';
+		echo '<option value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -897,9 +897,9 @@ if (!isset($SupplierID)) {
 	echo '<option value="0">' . _('None');
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['FactorID'] == $myrow['id']){
-		echo '<option selected="selected" value=' . $myrow['id'] . '>' . $myrow['coyname'] .'</option>';
+		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		} else {
-		echo '<option value=' . $myrow['id'] . '>' . $myrow['coyname'] .'</option>';
+		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -912,9 +912,9 @@ if (!isset($SupplierID)) {
 			<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']){
-			echo '<option selected="selected" value=' . $myrow['currabrev'] . '>' . $myrow['currency'] .'</option>';
+			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] .'</option>';
 		} else {
-			echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'] .'</option>';
+			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] .'</option>';
 		}
 	} //end while loop
 	DB_data_seek($result, 0);

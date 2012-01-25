@@ -401,7 +401,7 @@ if (isset($_POST['AllocTrans'])) {
 				echo '<td class="number"><input tabindex="' . $j .'" type="checkbox" name="All' .  $Counter . '"';
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
-						echo ' value="' . True . '" />';
+						echo ' checked="checked" />';
 				} else {
 						echo ' />';
 				}
@@ -421,7 +421,7 @@ if (isset($_POST['AllocTrans'])) {
 			<td class="number"><b><u>' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</u></b></td>';
 	$j++;
 	echo '<td colspan="2">
-			<input tabindex='.$j.' type="submit" name="RefreshAllocTotal" value="' . _('Recalculate Total To Allocate') . '" /></td>
+			<input tabindex="'.$j.'" type="submit" name="RefreshAllocTotal" value="' . _('Recalculate Total To Allocate') . '" /></td>
 		<tr>
 			<td colspan="5" class="number"><b>'._('Left to allocate').'</b></td>
 			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt-$TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces).'</b></td>

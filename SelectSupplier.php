@@ -237,9 +237,9 @@ if (isset($_POST['Search'])) {
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {
-				echo '<option value=' . $ListPage . ' selected>' . $ListPage . '</option>';
+				echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
 			} else {
-				echo '<option value=' . $ListPage . '>' . $ListPage . '</option>';
+				echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
 			}
 			$ListPage++;
 		}
@@ -299,9 +299,9 @@ if (isset($ListPageMax) and $ListPageMax > 1) {
 	$ListPage = 1;
 	while ($ListPage <= $ListPageMax) {
 		if ($ListPage == $_POST['PageOffset']) {
-			echo '<option value=' . $ListPage . ' selected>' . $ListPage . '</option>';
+			echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
 		} else {
-			echo '<option value=' . $ListPage . '>' . $ListPage . '</option>';
+			echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
 		}
 		$ListPage++;
 	}

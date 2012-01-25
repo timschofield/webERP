@@ -182,11 +182,11 @@ if (!(isset($_POST['Search']))) {
 						<th>' . _('On Hand') . '</th>
 					</tr>';
 	echo $TableHeader;
-	echo '<input type="hidden" value=' . $_POST['Location'] . ' name="Location" />
-			<input type="hidden" value=' . $_POST['Sequence'] . ' name="Sequence" />
-			<input type="hidden" value=' . filter_number_format($_POST['NumberOfDays']) . ' name="NumberOfDays" />
-			<input type="hidden" value=' . $_POST['Customers'] . ' name="Customers" />
-			<input type="hidden" value=' . filter_number_format($_POST['NumberOfTopItems']) . ' name="NumberOfTopItems" />';
+	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
+			<input type="hidden" value="' . $_POST['Sequence'] . '" name="Sequence" />
+			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
+			<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />
+			<input type="hidden" value="' . filter_number_format($_POST['NumberOfTopItems']) . '" name="NumberOfTopItems" />';
 	$k = 0; //row colour counter
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {

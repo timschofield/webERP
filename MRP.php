@@ -582,7 +582,7 @@ if (isset($_POST['submit'])) {
 			<tr>
 				<td>' . _('Location') . '</td>
 				<td><select name="location[]" multiple>
-					<option value="All" selected>' . _('All') . '</option>';
+					<option value="All" selected="selected">' . _('All') . '</option>';
 	 $sql = "SELECT loccode,
 				locationname
 			   FROM locations";
