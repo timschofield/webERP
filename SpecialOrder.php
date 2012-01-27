@@ -11,12 +11,18 @@ $title = _('Special Order Entry');
 
 include('includes/header.inc');
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
+if (empty($_GET['identifier'])) {
+	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
+	$identifier=date('U');
+} else {
+	$identifier=$_GET['identifier'];
+}
+
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-
 if (isset($_GET['NewSpecial']) and $_GET['NewSpecial']=='yes'){
-	unset($_SESSION['SPL']);
+	unset($_SESSION['SPL'.$identifier]);
 }
 
 if (!isset($_SESSION['SupplierID'])){
@@ -27,7 +33,7 @@ if (!isset($_SESSION['SupplierID'])){
 	exit;
 }
 
-if (!isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==""){
+if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID']==''){
 	echo '<br />
 		<br />' . _('To set up a special') . ', ' . _('the customer must first be selected from the Select Customer page') . '
 		<br />
@@ -37,20 +43,20 @@ if (!isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==""){
 }
 
 if (isset($_POST['Cancel'])){
-	unset($_SESSION['SPL']);
+	unset($_SESSION['SPL'.$identifier]);
 }
 
 
-if (!isset($_SESSION['SPL'])){
-	/* It must be a new special order being created $_SESSION['SPL'] would be set up from the order modification code above if a modification to an existing order.  */
+if (!isset($_SESSION['SPL'.$identifier])){
+	/* It must be a new special order being created $_SESSION['SPL'.$identifier] would be set up from the order modification code above if a modification to an existing order.  */
 
-	$_SESSION['SPL'] = new SpecialOrder;
+	$_SESSION['SPL'.$identifier] = new SpecialOrder;
 
 }
 
 
 /*if not already done populate the SPL object with supplier data */
-if (!isset($_SESSION['SPL']->SupplierID)){
+if (!isset($_SESSION['SPL'.$identifier]->SupplierID)){
 	$sql = "SELECT suppliers.suppname,
 					suppliers.currcode,
 					currencies.rate,
@@ -63,13 +69,13 @@ if (!isset($_SESSION['SPL']->SupplierID)){
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_array($result);
-	$_SESSION['SPL']->SupplierID = $_SESSION['SupplierID'];
-	$_SESSION['SPL']->SupplierName = $myrow['suppname'];
-	$_SESSION['SPL']->SuppCurrCode = $myrow['currcode'];
-	$_SESSION['SPL']->SuppCurrExRate = $myrow['rate'];
-	$_SESSION['SPL']->SuppCurrDecimalPlaces = $myrow['decimalplaces'];
+	$_SESSION['SPL'.$identifier]->SupplierID = $_SESSION['SupplierID'];
+	$_SESSION['SPL'.$identifier]->SupplierName = $myrow['suppname'];
+	$_SESSION['SPL'.$identifier]->SuppCurrCode = $myrow['currcode'];
+	$_SESSION['SPL'.$identifier]->SuppCurrExRate = $myrow['rate'];
+	$_SESSION['SPL'.$identifier]->SuppCurrDecimalPlaces = $myrow['decimalplaces'];
 }
-if (!isset($_SESSION['SPL']->CustomerID)){
+if (!isset($_SESSION['SPL'.$identifier]->CustomerID)){
 	// Now check to ensure this account is not on hold */
 	$sql = "SELECT debtorsmaster.name,
 					holdreasons.dissallowinvoices,
@@ -78,7 +84,7 @@ if (!isset($_SESSION['SPL']->CustomerID)){
 					currencies.decimalplaces
 			FROM debtorsmaster INNER JOIN holdreasons
 			ON debtorsmaster.holdreason=holdreasons.reasoncode
-			INNER JOIN currencies 
+			INNER JOIN currencies
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
 
@@ -89,38 +95,38 @@ if (!isset($_SESSION['SPL']->CustomerID)){
 	$myrow = DB_fetch_array($result);
 	if ($myrow['dissallowinvoices'] != 1){
 		if ($myrow['dissallowinvoices']==2){
-			prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently flagged as an account that needs to be watched please contact the credit control personnel to discuss'),'warn');
+			prnMsg(_('The') . ' ' . $myrow['name'] . ' ' . _('account is currently flagged as an account that needs to be watched please contact the credit control personnel to discuss'),'warn');
 		}
 	}
-	$_SESSION['SPL']->CustomerID = $_SESSION['CustomerID'];
-	$_SESSION['SPL']->CustomerName = $myrow['name'];
-	$_SESSION['SPL']->CustCurrCode = $myrow['currcode'];
-	$_SESSION['SPL']->CustCurrExRate = $myrow['rate'];
-	$_SESSION['SPL']->CustCurrDecimalPlaces = $myrow['decimalplaces'];
+	$_SESSION['SPL'.$identifier]->CustomerID = $_SESSION['CustomerID'];
+	$_SESSION['SPL'.$identifier]->CustomerName = $myrow['name'];
+	$_SESSION['SPL'.$identifier]->CustCurrCode = $myrow['currcode'];
+	$_SESSION['SPL'.$identifier]->CustCurrExRate = $myrow['rate'];
+	$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces = $myrow['decimalplaces'];
 }
 
 if (isset($_POST['SelectBranch'])){
 
 	$sql = "SELECT brname
 			FROM custbranch
-			WHERE debtorno='" . $_SESSION['SPL']->CustomerID . "'
+			WHERE debtorno='" . $_SESSION['SPL'.$identifier]->CustomerID . "'
 			AND branchcode='" . $_POST['SelectBranch'] . "'";
 	$BranchResult = DB_query($sql,$db);
 	$myrow=DB_fetch_array($BranchResult);
-	$_SESSION['SPL']->BranchCode = $_POST['SelectBranch'];
-	$_SESSION['SPL']->BranchName = $myrow['brname'];
+	$_SESSION['SPL'.$identifier]->BranchCode = $_POST['SelectBranch'];
+	$_SESSION['SPL'.$identifier]->BranchName = $myrow['brname'];
 }
 echo '<div class="centre">';
-if (!isset($_SESSION['SPL']->BranchCode)){
+if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 	echo '<br />
-		<font size="4" color="blue">' . _('Purchase from') . ' ' . $_SESSION['SPL']->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL']->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL']->CustomerName . ' (' . $_SESSION['SPL']->CustCurrCode . ')';
+		<font size="4" color="blue">' . _('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ')';
 } else {
 	echo '<br />
-		<font size="4" color="blue">' . _('Purchase from') . ' ' . $_SESSION['SPL']->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL']->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL']->CustomerName . ' (' . $_SESSION['SPL']->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL']->BranchName . ' ' . _('branch');
+		<font size="4" color="blue">' . _('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL'.$identifier]->BranchName . ' ' . _('branch');
 }
 echo '</font></div>';
 /*if the branch details and delivery details have not been entered then select them from the list */
-if (!isset($_SESSION['SPL']->BranchCode)){
+if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 
 	$sql = "SELECT branchcode,
 					brname
@@ -128,7 +134,7 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 			WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 	$BranchResult = DB_query($sql,$db);
 
-	If (DB_num_rows($BranchResult)>0) {
+	if (DB_num_rows($BranchResult)>0) {
 
 		echo '<div class="centre">';
 		echo '<br />
@@ -159,8 +165,8 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 
 			printf('<td><input type="submit" name="SelectBranch" value="%s" /></td>
 					<td>%s</td>
-					</tr>', 
-				$myrow['branchcode'], 
+					</tr>',
+				$myrow['branchcode'],
 				$myrow['brname']);
 
 //end of page full new headings if
@@ -181,7 +187,7 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 
 
 If(isset($_GET['Delete'])){  /*User hit the delete link on a line */
-	$_SESSION['SPL']->remove_from_order($_GET['Delete']);
+	$_SESSION['SPL'.$identifier]->remove_from_order($_GET['Delete']);
 }
 
 
@@ -220,7 +226,7 @@ If(isset($_POST['EnterLine'])){
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The cost entered must be numeric'),'warn');
 	}
 
-	if (((filter_number_format($_POST['Price'])/$_SESSION['SPL']->CustCurrExRate)-(filter_number_format($_POST['Cost'])/$_SESSION['SPL']->SuppCurrExRate))<0){
+	if (((filter_number_format($_POST['Price'])/$_SESSION['SPL'.$identifier]->CustCurrExRate)-(filter_number_format($_POST['Cost'])/$_SESSION['SPL'.$identifier]->SuppCurrExRate))<0){
 		$AllowAdd = False;
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The sale is at a lower price than the cost'),'warn');
 	}
@@ -231,12 +237,12 @@ If(isset($_POST['EnterLine'])){
 	}
 	If ($AllowAdd == True){
 
-		$_SESSION['SPL']->add_to_order ($_POST['LineNo'], 
-										filter_number_format($_POST['Qty']), 
-										$_POST['ItemDescription'], 
-										filter_number_format($_POST['Price']), 
-										filter_number_format($_POST['Cost']), 
-										$_POST['StkCat'], 
+		$_SESSION['SPL'.$identifier]->add_to_order ($_POST['LineNo'],
+										filter_number_format($_POST['Qty']),
+										$_POST['ItemDescription'],
+										filter_number_format($_POST['Price']),
+										filter_number_format($_POST['Cost']),
+										$_POST['StkCat'],
 										$_POST['ReqDelDate']);
 
 		unset($_POST['Price']);
@@ -249,19 +255,19 @@ If(isset($_POST['EnterLine'])){
 }
 
 if (isset($_POST['StkLocation'])) {
-	$_SESSION['SPL']->StkLocation = $_POST['StkLocation'];
+	$_SESSION['SPL'.$identifier]->StkLocation = $_POST['StkLocation'];
 }
 if (isset($_POST['Initiator'])) {
-	$_SESSION['SPL']->Initiator = $_POST['Initiator'];
+	$_SESSION['SPL'.$identifier]->Initiator = $_POST['Initiator'];
 }
 if (isset($_POST['QuotationRef'])) {
-	$_SESSION['SPL']->QuotationRef = $_POST['QuotationRef'];
+	$_SESSION['SPL'.$identifier]->QuotationRef = $_POST['QuotationRef'];
 }
 if (isset($_POST['Comments'])) {
-	$_SESSION['SPL']->Comments = $_POST['Comments'];
+	$_SESSION['SPL'.$identifier]->Comments = $_POST['Comments'];
 }
 if (isset($_POST['CustRef'])) {
-	$_SESSION['SPL']->CustRef = $_POST['CustRef'];
+	$_SESSION['SPL'.$identifier]->CustRef = $_POST['CustRef'];
 }
 
 if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database */
@@ -269,13 +275,13 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  /*First do some validation
 	  Is the delivery information all entered*/
 	$InputError=0; /*Start off assuming the best */
-	if ($_SESSION['SPL']->StkLocation=='' 
-		OR ! isset($_SESSION['SPL']->StkLocation)){
+	if ($_SESSION['SPL'.$identifier]->StkLocation==''
+		or ! isset($_SESSION['SPL'.$identifier]->StkLocation)){
 		prnMsg( _('The purchase order can not be committed to the database because there is no stock location specified to book any stock items into'),'error');
 		$InputError=1;
-	} elseif ($_SESSION['SPL']->LinesOnOrder <=0){
+	} elseif ($_SESSION['SPL'.$identifier]->LinesOnOrder <=0){
 		$InputError=1;
-	     prnMsg(_('The purchase order can not be committed to the database because there are no lines entered on this order'),'error');
+		prnMsg(_('The purchase order can not be committed to the database because there are no lines entered on this order'),'error');
 	}elseif (mb_strlen($_POST['QuotationRef'])<3){
 		$InputError=1;
 		prnMsg( _('The reference for this order is less than 3 characters') . ' - ' . _('a reference more than 3 characters is required before the order can be added'),'error');
@@ -291,37 +297,37 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		} else {
 			$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
 		}
-		
-		if ($_SESSION['AutoAuthorisePO']==1) { 
+
+		if ($_SESSION['AutoAuthorisePO']==1) {
 			//if the user has authority to authorise the PO then it will automatically be authorised
 			$AuthSQL ="SELECT authlevel
 						FROM purchorderauth
 						WHERE userid='".$_SESSION['UserID']."'
-						AND currabrev='".$_SESSION['SPL']->SuppCurrCode."'";
+						AND currabrev='".$_SESSION['SPL'.$identifier]->SuppCurrCode."'";
 
 			$AuthResult=DB_query($AuthSQL,$db);
 			$AuthRow=DB_fetch_array($AuthResult);
-			
-			if (DB_num_rows($AuthResult) > 0 
-				AND $AuthRow['authlevel'] > $_SESSION['SPL']->Order_Value()) { //user has authority to authrorise as well as create the order
+
+			if (DB_num_rows($AuthResult) > 0
+				and $AuthRow['authlevel'] > $_SESSION['SPL'.$identifier]->Order_Value()) { //user has authority to authrorise as well as create the order
 				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . '<br />';
-				$_SESSION['SPL']->AllowPrintPO=1;
-				$_SESSION['SPL']->Status = 'Authorised';
+				$_SESSION['SPL'.$identifier]->AllowPrintPO=1;
+				$_SESSION['SPL'.$identifier]->Status = 'Authorised';
 			} else { // no authority to authorise this order
 				if (DB_num_rows($AuthResult) ==0){
-					$AuthMessage = _('Your authority to approve purchase orders in') . ' ' . $_SESSION['SPL']->SuppCurrCode . ' ' . _('has not yet been set up') . '<br />';
+					$AuthMessage = _('Your authority to approve purchase orders in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('has not yet been set up') . '<br />';
 				} else {
-					$AuthMessage = _('You can only authorise up to').' '.$_SESSION['SPL']->SuppCurrCode.' '.$AuthRow['authlevel'] .'.<br />';
+					$AuthMessage = _('You can only authorise up to').' '.$_SESSION['SPL'.$identifier]->SuppCurrCode.' '.$AuthRow['authlevel'] .'.<br />';
 				}
-				
-				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '. $_SESSION['SPL']->SuppCurrCode . ' '. $_SESSION['SPL']->Order_Value() .'. '. $AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />'. _('The order will be created with a status of pending and will require authorisation'), 'warn');
-					
+
+				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />'. _('This order is for').' '. $_SESSION['SPL'.$identifier]->SuppCurrCode . ' '. $_SESSION['SPL'.$identifier]->Order_Value() .'. '. $AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />'. _('The order will be created with a status of pending and will require authorisation'), 'warn');
+
 				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails;
-				$_SESSION['SPL']->Status = 'Pending';
+				$_SESSION['SPL'.$identifier]->Status = 'Pending';
 			}
 		} else { //auto authorise is set to off
 			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . $UserDetails;
-			$_SESSION['SPL']->Status = 'Pending';
+			$_SESSION['SPL'.$identifier]->Status = 'Pending';
 		}
 
 		$sql = "SELECT contact,
@@ -332,7 +338,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						deladd5,
 						deladd6
 				FROM locations
-				WHERE loccode='" . $_SESSION['SPL']->StkLocation . "'";
+				WHERE loccode='" . $_SESSION['SPL'.$identifier]->StkLocation . "'";
 
 		$StkLocAddResult = DB_query($sql,$db);
 		$StkLocAddress = DB_fetch_array($StkLocAddResult);
@@ -359,39 +365,39 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										allowprint,
 										revised,
 										deliverydate)
-							VALUES ('" . $_SESSION['SPL']->SupplierID . "',
-							 		'" . $_SESSION['SPL']->Comments . "',
+							VALUES ('" . $_SESSION['SPL'.$identifier]->SupplierID . "',
+							 		'" . $_SESSION['SPL'.$identifier]->Comments . "',
 									'" . Date('Y-m-d') . "',
-									'" . $_SESSION['SPL']->SuppCurrExRate . "',
-									'" . $_SESSION['SPL']->Initiator . "',
-									'" . $_SESSION['SPL']->QuotationRef . "',
-									'" . $_SESSION['SPL']->StkLocation . "',
-									'" . DB_escape_string($StkLocAddress['deladd1']) . "',
-									'" . DB_escape_string($StkLocAddress['deladd2']) . "',
-									'" . DB_escape_string($StkLocAddress['deladd3']) . "',
-									'" . DB_escape_string($StkLocAddress['deladd4']) . "',
-									'" . DB_escape_string($StkLocAddress['deladd5']) . "',
-									'" . DB_escape_string($StkLocAddress['deladd6']) . "',
-									'" . DB_escape_string($StkLocAddress['contact']) . "',
-									'" . $_SESSION['SPL']->Status . "',
+									'" . $_SESSION['SPL'.$identifier]->SuppCurrExRate . "',
+									'" . $_SESSION['SPL'.$identifier]->Initiator . "',
+									'" . $_SESSION['SPL'.$identifier]->QuotationRef . "',
+									'" . $_SESSION['SPL'.$identifier]->StkLocation . "',
+									'" . $StkLocAddress['deladd1'] . "',
+									'" . $StkLocAddress['deladd2'] . "',
+									'" . $StkLocAddress['deladd3'] . "',
+									'" . $StkLocAddress['deladd4'] . "',
+									'" . $StkLocAddress['deladd5'] . "',
+									'" . $StkLocAddress['deladd6'] . "',
+									'" . $StkLocAddress['contact'] . "',
+									'" . $_SESSION['SPL'.$identifier]->Status . "',
 									'" . htmlentities($StatusComment, ENT_QUOTES,'UTF-8')  . "',
-									'" . $_SESSION['SPL']->AllowPrintPO . "',
+									'" . $_SESSION['SPL'.$identifier]->AllowPrintPO . "',
 									'" . Date('Y-m-d') . "',
 									'" . Date('Y-m-d') . "')";
-					
+
 
 		$ErrMsg = _('The purchase order header record could not be inserted into the database because');
 		$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
  		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
- 		$_SESSION['SPL']->PurchOrderNo = GetNextTransNo(18, $db);
+ 		$_SESSION['SPL'.$identifier]->PurchOrderNo = GetNextTransNo(18, $db);
 
 		/*Insert the purchase order detail records */
-		foreach ($_SESSION['SPL']->LineItems as $SPLLine) {
+		foreach ($_SESSION['SPL'.$identifier]->LineItems as $SPLLine) {
 
 			/*Set up the part codes required for this order */
 
-			$PartCode = "*" . $_SESSION['SPL']->PurchOrderNo . "_" . $SPLLine->LineNo;
+			$PartCode = "*" . $_SESSION['SPL'.$identifier]->PurchOrderNo . "_" . $SPLLine->LineNo;
 
 			$PartAlreadyExists =True; /*assume the worst */
 			$Counter = 0;
@@ -402,7 +408,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				if ($PartCount[0]!=0){
 					$PartAlreadyExists =True;
 					if (mb_strlen($PartCode)==20){
-						$PartCode = "*" . mb_strtoupper(mb_substr($_SESSION['SPL']->PurchOrderNo,0,13)) . "_" . $SPLLine->LineNo;
+						$PartCode = '*' . mb_strtoupper(mb_substr($_SESSION['SPL'.$identifier]->PurchOrderNo,0,13)) . '_' . $SPLLine->LineNo;
 					}
 					$PartCode = $PartCode . $Counter;
 					$Counter++;
@@ -411,7 +417,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				}
 			}
 
-			$_SESSION['SPL']->LineItems[$SPLLine->LineNo]->PartCode = $PartCode;
+			$_SESSION['SPL'.$identifier]->LineItems[$SPLLine->LineNo]->PartCode = $PartCode;
 
 			$sql = "INSERT INTO stockmaster (stockid,
 							categoryid,
@@ -425,20 +431,20 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						'" . $SPLLine->Cost . "')";
 
 
-			$ErrMsg = _('The item record for line') . ' '  . $SPLLine->LineNo . ' '  . _('could not be create because');
+			$ErrMsg = _('The item record for line') . ' ' . $SPLLine->LineNo . ' ' . _('could not be create because');
 			$DbgMsg = _('The SQL statement used to insert the item and failed was');
 
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
-			$sql = "INSERT INTO locstock (loccode, stockid) 
+			$sql = "INSERT INTO locstock (loccode, stockid)
 					SELECT loccode,'" . $PartCode . "' FROM locations";
-			$ErrMsg = _('The item stock locations for the special order line') . " " . $SPLLine->LineNo . " " ._('could not be created because');
+			$ErrMsg = _('The item stock locations for the special order line') . ' ' . $SPLLine->LineNo . ' ' ._('could not be created because');
 			$DbgMsg = _('The SQL statement used to insert the location stock records and failed was');
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 			/*need to get the stock category GL information */
 			$sql = "SELECT stockact FROM stockcategory WHERE categoryid = '" . $SPLLine->StkCat . "'";
-			$ErrMsg = _('The item stock category information for the special order line') ." " . $SPLLine->LineNo . ' ' . _('could not be retrieved because');
+			$ErrMsg = _('The item stock category information for the special order line') . ' ' . $SPLLine->LineNo . ' ' . _('could not be retrieved because');
 			$DbgMsg = _('The SQL statement used to get the category information and that failed was');
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
@@ -455,7 +461,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 								unitprice,
 								quantityord)
 					VALUES ('";
-			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . "',
+			$sql = $sql . $_SESSION['SPL'.$identifier]->PurchOrderNo . "',
 					'" . $PartCode . "',
 					'" . $OrderDate . "',
 					'" . $SPLLine->ItemDescription . "',
@@ -469,8 +475,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		} /* end of the loop round the detail line items on the order */
 
-		
-		echo '<br /><a href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['SPL']->PurchOrderNo . '">' . _('Print Purchase Order') . '</a>';
+		echo '<br /><br />' . _('Purchase Order') . ' ' . $_SESSION['SPL'.$identifier]->PurchOrderNo . ' ' . _('on') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('has been created');
+		echo '<br /><a href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['SPL'.$identifier]->PurchOrderNo . '">' . _('Print Purchase Order') . '</a>';
 
 /*Now insert the sales order too */
 
@@ -488,15 +494,15 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					phoneno
 				FROM custbranch INNER JOIN debtorsmaster
 					ON custbranch.debtorno=debtorsmaster.debtorno
-				WHERE custbranch.debtorno='" . $_SESSION['SPL']->CustomerID . "'
-				AND custbranch.branchcode = '" . $_SESSION['SPL']->BranchCode . "'";
+				WHERE custbranch.debtorno='" . $_SESSION['SPL'.$identifier]->CustomerID . "'
+				AND custbranch.branchcode = '" . $_SESSION['SPL'.$identifier]->BranchCode . "'";
 
 		$ErrMsg = _('The delivery and sales type for the customer could not be retrieved for this special order') . ' ' . $SPLLine->LineNo . ' ' . _('because');
 		$DbgMsg = _('The SQL statement used to get the delivery details and that failed was');
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		$BranchDetails=DB_fetch_array($result);
-		$OrderNo=GetNextTransNo (30, $db);
+		$SalesOrderNo=GetNextTransNo (30, $db);
 		$HeaderSQL = "INSERT INTO salesorders (orderno,
 											debtorno,
 											branchcode,
@@ -515,10 +521,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 											contactemail,
 											fromstkloc,
 											deliverydate)
-					VALUES ('" . $OrderNo."',
-							'" . $_SESSION['SPL']->CustomerID . "',
-							'" . $_SESSION['SPL']->BranchCode . "',
-							'" . $_SESSION['SPL']->CustRef ."',
+					VALUES ('" . $SalesOrderNo."',
+							'" . $_SESSION['SPL'.$identifier]->CustomerID . "',
+							'" . $_SESSION['SPL'.$identifier]->BranchCode . "',
+							'" . $_SESSION['SPL'.$identifier]->CustRef ."',
 							'" . Date('Y-m-d') . "',
 							'" . $BranchDetails['salestype'] . "',
 							'" . $BranchDetails['defaultshipvia'] ."',
@@ -531,7 +537,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							'" . $BranchDetails['braddress6'] . "',
 							'" . $BranchDetails['phoneno'] . "',
 							'" . $BranchDetails['email'] . "',
-							'" . $_SESSION['SPL']->StkLocation ."',
+							'" . $_SESSION['SPL'.$identifier]->StkLocation ."',
 							'" . $OrderDate . "')";
 
 		$ErrMsg = _('The sales order cannot be added because');
@@ -542,33 +548,36 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 																unitprice,
 																quantity,
 																orderlineno)
-						VALUES ('" .  $OrderNo . "'";
+						VALUES ('" .  $SalesOrderNo . "'";
 
 		$ErrMsg = _('There was a problem inserting a line into the sales order because');
 
-		foreach ($_SESSION['SPL']->LineItems as $StockItem) {
+		foreach ($_SESSION['SPL'.$identifier]->LineItems as $StockItem) {
 
-			$LineItemsSQL = $StartOf_LineItemsSQL . ", 
+			$LineItemsSQL = $StartOf_LineItemsSQL . ",
 							'" . $StockItem->PartCode . "',
-							'". $StockItem->Price . "', 
-							'" . $StockItem->Quantity . "', 
+							'". $StockItem->Price . "',
+							'" . $StockItem->Quantity . "',
 							'" . $StockItem->LineNo . "')";
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg);
 
 		} /* inserted line items into sales order details */
 
-		prnMsg(_('Purchase Order') . ' ' . $_SESSION['SPL']->PurchOrderNo . ' ' . _('on') . ' ' . $_SESSION['SPL']->SupplierName . ' ' . _('has been created') .'<br/>' . _('Sales Order Number') . ' ' . $OrderNo . ' ' . _('has been entered') . '. <br/>' . _('Orders created on a cash sales account may need the delivery details for the order to be modified') . '<br />' . _('A freight charge may also be applicable'),'success');
+		unset($_SESSION['SPL'.$identifier]);
+		prnMsg(_('Sales Order Number') . ' ' . $SalesOrderNo . ' ' . _('has been entered') . '. <br />' .
+			_('Orders created on a cash sales account may need the delivery details for the order to be modified') . '. <br /><br />' .
+				_('A freight charge may also be applicable'),'success');
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 
 			/* Only allow print of packing slip for internal staff - customer logon's cannot go here */
-			echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $OrderNo . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')</a>';
-			echo '<p><a href="' . $rootpath . '/PrintCustOrder_generic.php?TransNo=' . $OrderNo . '">' . _('Print packing slip') . ' (' . _('Laser') . ')</a>';
+			echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $SalesOrderNo . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')</a></p>';
+			echo '<p><a href="' . $rootpath . '/PrintCustOrder_generic.php?TransNo=' . $SalesOrderNo . '">' . _('Print packing slip') . ' (' . _('Laser') . ')</a></p>';
 
 		}
 
-		 $Result = DB_Txn_Commit($db);
-		unset ($_SESSION['SPL']);
+		$Result = DB_Txn_Commit($db);
+		unset($_SESSION['SPL'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		echo '<br /><br /><a href="' . $rootpath . '/SpecialOrder.php">' . _('Enter A New Special Order') . '</a>';
 		exit;
 	} /*end if there were no input errors trapped */
@@ -581,60 +590,60 @@ echo '<table><tr><td>' . _('Receive Purchase Into and Sell From') . ': <select n
 
 $sql = "SELECT loccode, locationname FROM locations";
 $LocnResult = DB_query($sql,$db);
-if (!isset($_SESSION['SPL']->StkLocation) OR $_SESSION['SPL']->StkLocation==''){ /*If this is the first time the form loaded set up defaults */
-	$_SESSION['SPL']->StkLocation = $_SESSION['UserStockLocation'];
+if (!isset($_SESSION['SPL'.$identifier]->StkLocation) or $_SESSION['SPL'.$identifier]->StkLocation==''){ /*If this is the first time the form loaded set up defaults */
+	$_SESSION['SPL'.$identifier]->StkLocation = $_SESSION['UserStockLocation'];
 }
 
 while ($LocnRow=DB_fetch_array($LocnResult)){
-	if ($_SESSION['SPL']->StkLocation == $LocnRow['loccode']){
-		echo '<option selected="selected" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
+	if ($_SESSION['SPL'.$identifier]->StkLocation == $LocnRow['loccode']){
+		echo '<option selected="True" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname']  . '</option>';
+		echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 	}
 }
 echo '</select></td>';
 
-echo '<td>' . _('Initiated By') . ': <input type="text" name="Initiator" size="11" maxlength="10" value="' . $_SESSION['SPL']->Initiator . '" /></td>
-	<td>' . _('Special Ref') . ': <input type="text" name="QuotationRef" size="16" maxlength="15" value="' . $_SESSION['SPL']->QuotationRef . '" /></td>
-	<td>' . _('Customer Ref') . ': <input type="text" name="CustRef" size="11" maxlength="10" value="' . $_SESSION['SPL']->CustRef . '" /></td>
+echo '<td>' . _('Initiated By') . ': <input type="text" name="Initiator" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->Initiator . '" /></td>
+	<td>' . _('Special Ref') . ': <input type="text" name="QuotationRef" size="16" maxlength="15" value="' . $_SESSION['SPL'.$identifier]->QuotationRef . '" /></td>
+	<td>' . _('Customer Ref') . ': <input type="text" name="CustRef" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->CustRef . '" /></td>
 	</tr>
 	<tr>
-		<td valign="top" colspan="2">' . _('Comments') . ': <textarea name="Comments" cols="70" rows="2">' . $_SESSION['SPL']->Comments . '</textarea></td>
+		<td valign="top" colspan="2">' . _('Comments') . ': <textarea name="Comments" cols="70" rows="2">' . $_SESSION['SPL'.$identifier]->Comments . '</textarea></td>
 	</tr>
 </table>
 <hr>'; /* Rule off the header */
 
 /*Now show the order so far */
 
-if (count($_SESSION['SPL']->LineItems)>0){
+if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 
 	echo '<div class="centre"><b>' . _('Special Order Summary') . '</b></div>';
-	echo '<table class="selection">';
+	echo '<table class="selection" cellpadding="2" colspan="7" border="1">';
 
 	echo '<tr>
 			<th>' . _('Item Description') . '</th>
 			<th>' . _('Delivery') . '</th>
 			<th>' . _('Quantity') . '</th>
-			<th>' . _('Purchase Cost') . '<br />' . $_SESSION['SPL']->SuppCurrCode . '</th>
-			<th>' . _('Sell Price') . '<br />' . $_SESSION['SPL']->CustCurrCode . '</th>
-			<th>' . _('Total Cost') . '<br />' . $_SESSION['SPL']->SuppCurrCode .  '</th>
-			<th>' . _('Total Price') . '<br />' . $_SESSION['SPL']->CustCurrCode .  '</th>
+			<th>' . _('Purchase Cost') . '<br />' . $_SESSION['SPL'.$identifier]->SuppCurrCode . '</th>
+			<th>' . _('Sell Price') . '<br />' . $_SESSION['SPL'.$identifier]->CustCurrCode . '</th>
+			<th>' . _('Total Cost') . '<br />' . $_SESSION['SPL'.$identifier]->SuppCurrCode .  '</th>
+			<th>' . _('Total Price') . '<br />' . $_SESSION['SPL'.$identifier]->CustCurrCode .  '</th>
 			<th>' . _('Total Cost') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] .  '</th>
 			<th>' . _('Total Price') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] .  '</th>
 		</tr>';
 
-	$_SESSION['SPL']->total = 0;
+	$_SESSION['SPL'.$identifier]->total = 0;
 	$k = 0;  //row colour counter
-	foreach ($_SESSION['SPL']->LineItems as $SPLLine) {
+	foreach ($_SESSION['SPL'.$identifier]->LineItems as $SPLLine) {
 
 		$LineTotal = $SPLLine->Quantity * $SPLLine->Price;
 		$LineCostTotal = $SPLLine->Quantity * $SPLLine->Cost;
-		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['SPL']->CustCurrDecimalPlaces);
-		$DisplayLineCostTotal = locale_number_format($LineCostTotal,$_SESSION['SPL']->SuppCurrDecimalPlaces);
-		$DisplayLineTotalCurr = locale_number_format($LineTotal/$_SESSION['SPL']->CustCurrExRate,$_SESSION['CompanyRecord']['decimalplaces']);
-		$DisplayLineCostTotalCurr = locale_number_format($LineCostTotal/$_SESSION['SPL']->SuppCurrExRate,$_SESSION['CompanyRecord']['decimalplaces']);
-		$DisplayCost = locale_number_format($SPLLine->Cost,$_SESSION['SPL']->SuppCurrDecimalPlaces);
-		$DisplayPrice = locale_number_format($SPLLine->Price,$_SESSION['SPL']->CustCurrDecimalPlaces);
+		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces);
+		$DisplayLineCostTotal = locale_number_format($LineCostTotal,$_SESSION['SPL'.$identifier]->SuppCurrDecimalPlaces);
+		$DisplayLineTotalCurr = locale_number_format($LineTotal/$_SESSION['SPL'.$identifier]->CustCurrExRate,$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayLineCostTotalCurr = locale_number_format($LineCostTotal/$_SESSION['SPL'.$identifier]->SuppCurrExRate,$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayCost = locale_number_format($SPLLine->Cost,$_SESSION['SPL'.$identifier]->SuppCurrDecimalPlaces);
+		$DisplayPrice = locale_number_format($SPLLine->Price,$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces);
 		$DisplayQuantity = locale_number_format($SPLLine->Quantity,'Variable');
 
 		if ($k==1){
@@ -653,12 +662,13 @@ if (count($_SESSION['SPL']->LineItems)>0){
 			<td class="number">' . $DisplayLineTotal . '</td>
 			<td class="number">' . $DisplayLineCostTotalCurr . '</td>
 			<td class="number">' . $DisplayLineTotalCurr . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $SPLLine->LineNo . '">' . _('Delete') . '</a></td></tr>';
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=' . $SPLLine->LineNo . '">' . _('Delete') . '</a></td>
+		</tr>';
 
-		$_SESSION['SPL']->total += ($LineTotal/$_SESSION['SPL']->CustCurrExRate);
+		$_SESSION['SPL'.$identifier]->total += ($LineTotal/$_SESSION['SPL'.$identifier]->CustCurrExRate);
 	}
 
-	$DisplayTotal = locale_number_format($_SESSION['SPL']->total,$_SESSION['SPL']->CustCurrDecimalPlaces);
+	$DisplayTotal = locale_number_format($_SESSION['SPL'.$identifier]->total,$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces);
 	echo '<tr>
 		<td colspan="8" class="number">' . _('TOTAL Excl Tax') . '</td>
 		<td class="number"><b>' . $DisplayTotal . '</b></td>
@@ -671,7 +681,7 @@ if (count($_SESSION['SPL']->LineItems)>0){
 
 echo '<table>';
 
-echo '<input type="hidden" name="LineNo" value="' . ($_SESSION['SPL']->LinesOnOrder + 1) .'" />';
+echo '<input type="hidden" name="LineNo" value="' . ($_SESSION['SPL'.$identifier]->LinesOnOrder + 1) .'" />';
 
 if (!isset($_POST['ItemDescription'])) {
 	$_POST['ItemDescription']='';
@@ -680,7 +690,6 @@ echo '<tr>
 		<td>' . _('Ordered item Description') . ':</td>
 		<td><input type="text" name="ItemDescription" size="40" maxlength="40" value="' . $_POST['ItemDescription'] . '" /></td>
 	</tr>';
-
 
 echo '<tr>
 		<td>' . _('Category') . ':</td>
@@ -693,14 +702,13 @@ $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']){
-		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		echo '<option selected="True" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td>
 	</tr>';
-
 
 /*default the order quantity to 1 unit */
 $_POST['Qty'] = 1;
@@ -715,15 +723,15 @@ if (!isset($_POST['Cost'])) {
 }
 echo '<tr>
 		<td>' . _('Unit Cost') . ':</td>
-		<td><input type="text" class="number" size="15" maxlength="14" name="Cost" value="' . locale_number_format($_POST['Cost'],$_SESSION['SPL']->SuppCurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" size="15" maxlength="14" name="Cost" value="' . locale_number_format($_POST['Cost'],$_SESSION['SPL'.$identifier]->SuppCurrDecimalPlaces) . '" /></td>
 	</tr>';
 
-if (!isset($_POST['Price'])) { 
+if (!isset($_POST['Price'])) {
 	$_POST['Price']=0;
 }
 echo '<tr>
 		<td>' . _('Unit Price') . ':</td>
-		<td><input type="text" class="number" size="15" maxlength="14" name="Price" value="' . locale_number_format($_POST['Price'],$_SESSION['SPL']->CustCurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" size="15" maxlength="14" name="Price" value="' . locale_number_format($_POST['Price'],$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces) . '" /></td>
 	</tr>';
 
 /*Default the required delivery date to tomorrow as a starting point */
