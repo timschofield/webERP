@@ -1,5 +1,6 @@
 webERP Change Log
 
+28/1/12 Ahmed.Fawzy: StockCategories.php fixes for numericvalue not displaying and errored with "minimum value is not numeric"
 28/1/12 Phil: ConfirmDispatch_Invoice.php corrected link to ConfirmDispatchControlled_Invoice.php to send $identifier to get the correct session variable containing the order to invoice
 28/1/12 Tim: SpecialOrder.php added $identifier to session class variable to avoid overlapping sessions in multiple tabs.
 27/1/12 Phil: PO_AuthoriseMyOrders.php fixed html in hidden $_POST['StatusComments'] by using htmlentities($_POST['StatusComments'])

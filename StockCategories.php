@@ -485,7 +485,8 @@ if (! isset($_GET['delete'])) {
 						defaultvalue,
 						reqatsalesorder,
 						minimumvalue,
-						maximumvalue
+						maximumvalue,
+						numericvalue
                    FROM stockcatproperties
                    WHERE categoryid='" . $SelectedCategory . "'
                    ORDER BY stkcatpropid";
@@ -566,7 +567,7 @@ if (! isset($_GET['delete'])) {
 					</select></td>
 				<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" /></td>
 				<td><input type="checkbox" name="PropNumeric' . $PropertyCounter . '" /></td>
-				<td><input type="textbox" class="number" "name="PropMinimum' . $PropertyCounter . '" /></td>
+				<td><input type="textbox" class="number" name="PropMinimum' . $PropertyCounter . '" /></td>
 				<td><input type="textbox" class="number" name="PropMaximum' . $PropertyCounter . '" /></td>
 				<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'" /></td>
 				</tr>';
