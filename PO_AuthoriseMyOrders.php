@@ -20,8 +20,7 @@ if (isset($_POST['UpdateAll'])) {
 		if (mb_substr($key,0,6)=='status') {
 			$OrderNo=mb_substr($key,6);
 			$Status=$_POST['status'.$OrderNo];
-			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">'.$_SESSION['UserID'].'</a>
-					<br />' . $_POST['comment'];
+			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">'.$_SESSION['UserID'].'</a><br />' . $_POST['comment'];
 			$sql="UPDATE purchorders
 					SET status='".$Status."',
 						stat_comment='".$Comment."',
@@ -88,14 +87,14 @@ while ($myrow=DB_fetch_array($result)) {
 				<td>'.ConvertSQLDate($myrow['orddate']).'</td>
 				<td><a href="mailto:'.$myrow['email'].'">'.$myrow['realname'].'</td>
 				<td>'.ConvertSQLDate($myrow['deliverydate']).'</td>
-				<td><select name=status'.$myrow['orderno'].'>
+				<td><select name="status'.$myrow['orderno'].'">
 					<option selected="selected" value="Pending">'._('Pending').'</option>
 					<option value="Authorised">'._('Authorised').'</option>
 					<option value="Rejected">'._('Rejected').'</option>
 					<option value="Cancelled">'._('Cancelled').'</option>
 					</select></td>
 			</tr>';
-		echo '<input type="hidden" name="comment" value="' . $myrow['stat_comment'] . '" />';
+		echo '<input type="hidden" name="comment" value="' . htmlentities($myrow['stat_comment'], ENT_QUOTES,'UTF-8') . '" />';
 		$LineSQL="SELECT purchorderdetails.*,
 					stockmaster.description,
 					stockmaster.decimalplaces
@@ -131,10 +130,16 @@ while ($myrow=DB_fetch_array($result)) {
 					<td class="number">'.locale_number_format($LineRow['unitprice']*$LineRow['quantityord'],$myrow['currdecimalplaces']).'</td>
 				</tr>';
 		} // end while order line detail
-		echo '</table></td></tr>';
+		echo '</table>
+			</td>
+			</tr>';
 	}
 } //end while header loop
 echo '</table>';
-echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></form>';
+echo '<br />
+		<div class="centre">
+			<input type="submit" name="UpdateAll" value="' . _('Update'). '" />
+		</div>
+		</form>';
 include('includes/footer.inc');
 ?>

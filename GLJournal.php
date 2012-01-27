@@ -318,9 +318,7 @@ echo '</select></td>';
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode']='';
 }
-echo '<td><input class="number" type="text" Name="GLManualCode" Maxlength="12" size="12" onChange="inArray(this.value, GLCode.options,'.
-	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
-		' value="'. $_POST['GLManualCode'] .'"  /></td>';
+echo '<td><input class="number" type="text" name="GLManualCode" maxlength="12" size="12" onChange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
 
 $sql="SELECT accountcode,
 			accountname
