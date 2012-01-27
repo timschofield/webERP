@@ -395,7 +395,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 
 	if ($LnItm->Controlled==1){
 		if (!isset($_POST['ProcessInvoice'])) {
-			echo '<td><a href="' . $rootpath . '/ConfirmDispatchControlled_Invoice.php?LineNo='. $LnItm->LineNumber.'">';
+			echo '<td><a href="' . $rootpath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . $identifier . '&LineNo='. $LnItm->LineNumber.'">';
 			if ($LnItm->Serialised==1){
 				echo _('Enter Serial Numbers');
 			} else { /*Just batch/roll/lot control */
