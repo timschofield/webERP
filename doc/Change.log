@@ -1,5 +1,7 @@
 webERP Change Log
 
+29/1/12 Phil: Alterations to API to fix SQL and to start work on adding InvoiceSalesOrder method
+29/1/12 Phil: Z_ChangeStockCode.php now alters SalesCategories of items being changed
 28/1/12 Ahmed.Fawzy: StockCategories.php fixes for numericvalue not displaying and errored with "minimum value is not numeric"
 28/1/12 Phil: ConfirmDispatch_Invoice.php corrected link to ConfirmDispatchControlled_Invoice.php to send $identifier to get the correct session variable containing the order to invoice
 28/1/12 Tim: SpecialOrder.php added $identifier to session class variable to avoid overlapping sessions in multiple tabs.

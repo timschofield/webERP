@@ -285,6 +285,12 @@ if (isset($_POST['ProcessStockChange'])){
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 	
+		echo '<br />' . _('Changing sales category information');
+		$sql = "UPDATE salescatprod SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
+		$ErrMsg = _('The SQL to update the sales category records failed');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+		echo ' ... ' . _('completed');
+	
 	
 		echo '<br />' . _('Changing any serialised item information');
 	
@@ -296,6 +302,8 @@ if (isset($_POST['ProcessStockChange'])){
 		$ErrMsg = _('The SQL to update the stockserialitem records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
+		
+			
 		
 		DB_ReinstateForeignKeys($db);
 		
