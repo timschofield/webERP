@@ -14,7 +14,7 @@
 	/* Include SQL_CommonFunctions.inc, to use GetNextTransNo().*/
 	include($PathPrefix . 'includes/SQL_CommonFunctions.inc');
 	/* Required for creating invoices/credits */
-	include($PathPrefix . 'includes/GetSalesTransGLCode.inc');
+	include($PathPrefix . 'includes/GetSalesTransGLCodes.inc');
 
 /* Get weberp authentication, and return a valid database
    connection */
@@ -22,7 +22,7 @@
 		if (!isset($_SESSION['AccessLevel']) OR
 		           $_SESSION['AccessLevel'] == '') {
 			//  Login to default database = old clients.
-			if ($user != '' && $password != '') {
+			if ($user != '' AND $password != '') {
 			    global  $api_DatabaseName;
 			    $rc = LoginAPI ($api_DatabaseName, $user, $password);
 			    if ($rc[0] == UL_OK ) {

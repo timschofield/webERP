@@ -518,12 +518,10 @@
 
 	function  xmlrpc_GetHoldReasonList($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)	{
+/*x*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
 /*x*/		} else {
-/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList( '', '')));
+				$rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonList( '', '')));
 /*x*/		}
 		ob_end_flush();
 		return $rtn;
@@ -548,11 +546,8 @@
 
 	function  xmlrpc_GetHoldReasonDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-/*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3) {
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),	$xmlrpcmsg->getParam( 1 )->scalarval(  ),$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/		} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
 /*x*/		}
@@ -1149,8 +1144,7 @@
 
 	function  xmlrpc_InsertSalesOrderHeader($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3) {
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
@@ -1164,6 +1158,36 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
+
+	$Description = 'This function is used to invoice a sales order for the full quantity on the order assuming it is all dispatched. NB It does not deal with serialised/controlled items.';
+	$Parameter[0]['name'] = _('Sales Order to invoice');
+	$Parameter[0]['description'] = _('An integer representing the webERP sales order number');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the invoice number.');
+
+/*E*/$InvoiceSalesOrder_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$InvoiceSalesOrder_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_InvoiceSalesOrder($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3) {
+/*x*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(InvoiceSalesOrder($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ), $xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+			} else { //do it with the current login
+/*e*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(InvoiceSalesOrder($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+
 
 	$Description = 'This function is used to modify the header details of a sales order';
 	$Parameter[0]['name'] = _('Modify Sales Order Header Details');

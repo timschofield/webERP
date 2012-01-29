@@ -160,6 +160,12 @@
 	Define('BatchIsEmpty', 1155);
 	Define('NoSuchArea', 1156);
 	Define('NoSuchSalesMan', 1157);
+	Define('NoCompanyRecord',1158);
+	Define('NoReadOrder',1159);
+	Define('NoReadOrderLines',1160);
+	Define('NoTaxProvince',1161);
+	Define('TaxRatesFailed',1162);
+	
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -320,5 +326,10 @@
 	$ErrorDescription['1155'] = _('Batch is empty');
 	$ErrorDescription['1156'] = _('No such area');
 	$ErrorDescription['1157'] = _('No such salesman');
+	$ErrorDescription['1158'] = _('Unable to read company record');
+	$ErrorDescription['1159'] = _('Unable to read sales order');
+	$ErrorDescription['1160'] = _('Unable to read sales order lines');
+	$ErrorDescription['1161'] = _('Unable to get tax province of location');
+	$ErrorDescription['1162'] = _('Unable to read tax rates for this item and tax group');
 
 ?>
