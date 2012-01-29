@@ -37,10 +37,10 @@ function userLogin($Name, $Password, $db) {
 			return  UL_SHOWLOGIN;
 		}
 		$sql = "SELECT *
-						FROM www_users
-						WHERE www_users.userid='" . $Name . "'
-						AND (www_users.password='" . CryptPass($Password) . "'
-						OR  www_users.password='" . $Password . "')";
+				FROM www_users
+				WHERE www_users.userid='" . $Name . "'
+				AND (www_users.password='" . CryptPass($Password) . "'
+				OR  www_users.password='" . $Password . "')";
 		$ErrMsg = _('Could not retrieve user details on login because');
 		$debug =1;
 		$Auth_Result = DB_query($sql, $db,$ErrMsg);

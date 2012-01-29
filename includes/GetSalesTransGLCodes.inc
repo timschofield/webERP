@@ -167,11 +167,11 @@ Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
 	*/
 
 	$SQL = "SELECT salesglcode, 
-									discountglcode 
-					FROM salesglpostings 
-					WHERE area = '" . $Area . "' 
-					AND stkcat = '" . $StockCategory . "' 
-					AND salestype = '". $SalesType . "'";
+					discountglcode 
+			FROM salesglpostings 
+			WHERE area = '" . $Area . "' 
+			AND stkcat = '" . $StockCategory . "' 
+			AND salestype = '". $SalesType . "'";
 
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 

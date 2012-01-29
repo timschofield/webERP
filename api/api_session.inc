@@ -4,13 +4,7 @@
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
-if (!file_exists($PathPrefix . 'config.php')){
-	$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
-	if ($rootpath == '/' OR $rootpath == "\\") {
-		$rootpath = '';
-	}
-	header('Location:' . $rootpath . '/install/index.php');
-}
+
 include($PathPrefix . 'config.php');
 
 if (isset($SessionSavePath)){
@@ -51,40 +45,6 @@ if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 // value must be set in the script before header.inc is included. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
-if (isset($_SESSION['AllowedPageSecurityTokens']) AND !is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
-/*  NO HTML output - but may need an XMLRPC style error message here.
-	Lindsay: 12Jan10
-	$title = _('Account Error Report');
-	include($PathPrefix . 'includes/header.inc');
-	echo '<br /><br /><br />';
-	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'),'error');
-	include($PathPrefix . 'includes/footer.inc');
- */
-	exit;
-}
-
-if (!isset($AllowAnyone)){
-	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-/* NO HTML output - but need to return an appropriate error message
-	Lindsay: 12Jan10
-		$title = _('Security Permissions Problem');
-		include($PathPrefix . 'includes/header.inc');
-		echo '<tr>
-			<td class="menu_group_items">
-				<table width="100%" class="table_index">
-					<tr><td class="menu_group_item">';
-		echo '<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>';
-
-		echo '</td>
-		</tr>
-		</table>
-		</td>';
-
-		include($PathPrefix . 'includes/footer.inc');
- */
-		exit;
-	}
- }
 
 function CryptPass( $Password ) {
 	global $CryptFunction;
@@ -105,13 +65,11 @@ function api_DB_query( $sql, $db, $EMsg= '', $DMsg= '', $Transaction='', $TrapEr
     //  data.
 
     $result = DB_query($sql, $db, $Emsg, $Dmsg, $Transaction, $TrapErrors);
-    if (DB_error_no($db) != 0)
-    {
-	$_SESSION['db_err_msg'] = "SQL: " . $sql . "\nDB error message: " .
-					DB_error_msg($db) . "\n";
-    }
-    else
-	$_SESSION['db_err_msg'] = '';
+    if (DB_error_no($db) != 0) {
+		$_SESSION['db_err_msg'] = "SQL: " . $sql . "\nDB error message: " . DB_error_msg($db) . "\n";
+    } else {
+		$_SESSION['db_err_msg'] = '';
+	}
 
     return  $result;
 }

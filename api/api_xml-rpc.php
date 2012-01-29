@@ -2718,7 +2718,7 @@
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultDateFormat($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
 /*x*/		} else {
-/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultDateFormat( '', '')));
+/*e*/ 			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultDateFormat( '', '')));
 /*x*/		}
 		ob_end_flush();
 		return $rtn;
@@ -2727,6 +2727,37 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
+
+	$Description = _('Returns the webERP default shipper');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns an array of two elements the first should contain an integer of zero for successful and the second an associative arrat containing the key of confvalue the value of which is the Default_Shipper.')
+			._('Otherwise an array of error codes is returned. ');
+
+/*E*/$GetDefaultShipper_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetDefaultShipper_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetDefaultShipper($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
+/*x*/		{
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultShipper($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/ 			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultShipper( '', '')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+
 
 	$Description = _('Returns the webERP default location');
 	$Parameter[0]['name'] = _('User name');
@@ -3199,6 +3230,10 @@
 			"function" => "xmlrpc_GetDefaultDateFormat",
 			"signature" => $GetDefaultDateFormat_sig,
 			"docstring" => $GetDefaultDateFormat_doc),
+		"weberp.xmlrpc_GetDefaultShipper" => array(
+			"function" => "xmlrpc_GetDefaultShipper",
+			"signature" => $GetDefaultShipper_sig,
+			"docstring" => $GetDefaultShipper_doc),
 		"weberp.xmlrpc_GetDefaultCurrency" => array(
 			"function" => "xmlrpc_GetDefaultCurrency",
 			"signature" => $GetDefaultCurrency_sig,

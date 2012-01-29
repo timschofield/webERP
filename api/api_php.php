@@ -12,7 +12,9 @@
 
 	include('api_errorcodes.php');
 	/* Include SQL_CommonFunctions.inc, to use GetNextTransNo().*/
-	include($PathPrefix.'includes/SQL_CommonFunctions.inc');
+	include($PathPrefix . 'includes/SQL_CommonFunctions.inc');
+	/* Required for creating invoices/credits */
+	include($PathPrefix . 'includes/GetSalesTransGLCode.inc');
 
 /* Get weberp authentication, and return a valid database
    connection */

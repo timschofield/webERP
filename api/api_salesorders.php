@@ -340,13 +340,19 @@ $SOH_DateFields = array ('orddate',
 		$OrderHeader['orderno'] = GetNextTransNo(30,$db);
 		foreach ($OrderHeader as $key => $value) {
 			$FieldNames.=$key.', ';
-			if (in_array($key, $SOH_DateFields) )
+			if (in_array($key, $SOH_DateFields) ) {
 			    $value = FormatDateforSQL($value);	// Fix dates
-			$FieldValues.='"'.$value.'", ';
+			}
+			$FieldValues.="'".$value."', ";
 		}
 		$sql = 'INSERT INTO salesorders ('.mb_substr($FieldNames,0,-2).") 
-					VALUES ('" . mb_substr($FieldValues,0,-2). "')";
+					VALUES (" . mb_substr($FieldValues,0,-2). ")";
 		if (sizeof($Errors)==0) {
+			
+			/*debug info to file
+			$fp = fopen( '/root/Web-Server/apidebug/api-sql.sql', "w");
+			fputs($fp, $sql);
+			*/
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -436,8 +442,9 @@ $SOH_DateFields = array ('orddate',
 		global  $SOH_DateFields;
 		$sql='UPDATE salesorders SET ';
 		foreach ($OrderHeader as $key => $value) {
-			if (in_array($key, $SOH_DateFields) )
+			if (in_array($key, $SOH_DateFields) ) {
 			    $value = FormatDateforSQL($value);	// Fix dates
+			}
 			$sql .= $key.'="'.$value.'", ';
 		}
 		$sql = mb_substr($sql,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
@@ -495,12 +502,13 @@ $SOH_DateFields = array ('orddate',
 			$FieldNames.=$key.', ';
 			if ($key == 'actualdispatchdate') {
 			    $value = FormatDateWithTimeForSQL($value);
-			} elseif ($key == 'itemdue')
+			} elseif ($key == 'itemdue') {
 			    $value = FormatDateForSQL($value);
-			$FieldValues.='"'.$value.'", ';
+			}
+			$FieldValues.= "'" . $value . "', ";
 		}
-		$sql = 'INSERT INTO salesorderdetails (' . mb_substr($FieldNames,0,-2) . ") 
-			VALUES ('" . mb_substr($FieldValues,0,-2) . "')";
+		$sql = "INSERT INTO salesorderdetails (" . mb_substr($FieldNames,0,-2) . ") 
+			VALUES (" . mb_substr($FieldValues,0,-2) . ")";
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -620,4 +628,609 @@ $SOH_DateFields = array ('orddate',
 			return $Errors;
 		}
 	}
+	
+	
+	function InvoiceSalesOrder($OrderNo, $User, $Password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		/*Does not deal with assembly items or serialise/lot track items - for use by POS */
+		/*Get Company Defaults */
+		$ReadCoyResult = api_DB_query("SELECT debtorsact,
+												freightact,
+												gllink_debtors,
+												gllink_stock
+										FROM companies
+										WHERE coycode=1";,$db);
+
+		$CompanyRecord = DB_fetch_array($ReadCoyResult);
+
+		$OrderHeaderSQL = "SELECT salesorders.debtorno,
+			 				  debtorsmaster.name,
+							  salesorders.branchcode,
+							  salesorders.customerref,
+							  salesorders.orddate,
+							  salesorders.ordertype,
+							  salesorders.shipvia,
+							  custbranch.area,
+							  custbranch.taxgroupid,
+							  debtorsmaster.currcode,
+							  currencies.rate,
+							  salesorders.fromstkloc,
+							  custbranch.salesman
+						FROM salesorders
+						INNER JOIN debtorsmaster
+						ON salesorders.debtorno = debtorsmaster.debtorno
+						INNER JOIN custbranch
+						ON salesorders.debtorno = custbranch.debtorno
+						AND salesorders.branchcode = custbranch.branchcode
+						INNER JOIN locations
+						ON locations.loccode=salesorders.fromstkloc
+						INNER JOIN currencies
+						ON debtorsmaster.currcode=currencies.currabrev
+						WHERE salesorders.orderno = '" . $OrderNumber . "'";
+
+		$OrderHeaderResult = api_DB_query($OrderHeaderSQL,$db);
+		$OrderHeader = DB_fetch_array($OrderHeaderResult);
+		
+		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $OrderHeader['fromstkloc'] ."'",$db);
+		$Result = api_DB_query($SQL,$db);
+		$myrow = DB_fetch_row($Result);
+		$DispTaxProvinceID = $myrow[0];
+		
+		
+
+		$LineItemsSQL = "SELECT stkcode,
+								unitprice,
+								quantity,
+								discountpercent,
+								taxcatid
+						FROM salesorderdetails INNER JOIN stockmaster
+							ON salesorderdetails.stkcode = stockmaster.stockid
+						WHERE orderno ='" . $OrderNo . "'";
+
+		$LineItemsResult = api_DB_query($LineItemsSQL,$db);
+
+	/*Start an SQL transaction */
+		$result = DB_Txn_Begin($db);
+	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
+		$InvoiceNo = GetNextTransNo(10, $db);
+		$PeriodNo = GetCurrentPeriod($db);
+
+		$TotalFXNetInvoice = 0;
+		$TotalFXTax = 0;
+		$LineCounter =0;
+
+		while ($OrderLineRow = DB_fetch_array($LineItemsResult)) {
+
+			$LineNetAmount = $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] *(1- floatval($OrderLineRow['discountpercent']));
+
+			/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
+			and the taxprovince of the dispatch location */
+
+			$SQL = "SELECT taxgrouptaxes.calculationorder,
+							taxauthorities.description,
+							taxgrouptaxes.taxauthid,
+							taxauthorities.taxglcode,
+							taxgrouptaxes.taxontax,
+							taxauthrates.taxrate
+					FROM taxauthrates INNER JOIN taxgrouptaxes ON
+						taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+						INNER JOIN taxauthorities ON
+						taxauthrates.taxauthority=taxauthorities.taxid
+					WHERE taxgrouptaxes.taxgroupid='" . $OrderHeader['taxgroupid'] . "'
+					AND taxauthrates.dispatchtaxprovince='" . $DispTaxProvinceID . "'
+					AND taxauthrates.taxcatid = '" . $OrderLineRow['taxcatid'] . "'
+					ORDER BY taxgrouptaxes.calculationorder";
+
+			$GetTaxRatesResult = api_DB_query($SQL,$db,'','',true);
+
+			$LineTaxAmount = 0;
+			$TaxTotals =array();
+
+			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
+					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
+				}
+				$TaxAuthID=$myrow['taxauthid'];
+				$TaxTotals[$myrow['taxauthid']]['GLCode'] = $myrow['taxglcode'];
+				$TaxTotals[$myrow['taxauthid']]['TaxRate'] = $myrow['taxrate'];
+				$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
+
+				if ($myrow['taxontax'] ==1){
+					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+					  $TaxTotals[$myrow['taxauthid']]['FXAmount'] += ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+				} else {
+					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
+					$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $LineNetAmount * $myrow['taxrate'];
+				}
+
+				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
+				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
+				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
+												'TaxAuthID' =>$myrow['taxauthid'],
+												'TaxAuthDescription'=>$myrow['description'],
+												'TaxRate'=>$myrow['taxrate'],
+												'TaxOnTax'=>$myrow['taxontax'],
+												'TaxAuthAmount'=>$TaxAuthAmount);
+				$LineTaxAmount += $TaxAuthAmount;
+
+			}
+
+			$LineNetAmount = $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] *(1- floatval($OrderLineRow['discountpercent']));
+
+			$TotalFXNetInvoice += $LineNetAmount;
+			$TotalFXTax += $LineTaxAmount;
+
+			/*Now update SalesOrderDetails for the quantity invoiced and the actual dispatch dates. */
+			$SQL = "UPDATE salesorderdetails
+					SET qtyinvoiced = qtyinvoiced + " . $OrderLineRow['quantity'] . ",
+						actualdispatchdate = '" . $OrderHeader['orddate'].  "',
+						completed='1'
+				WHERE orderno = '" . $OrderNo . "'
+				AND stkcode = '" . $OrderLineRow['stkcode'] . "'";
+
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
+			$DbgMsg = _('The following SQL to update the sales order detail record was used');
+			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+			// Insert stock movements - with unit cost
+			$LocalCurrencyPrice= ($OrderLineRow['unitprice'] *(1- floatval($OrderLineRow['discountpercent'])))/ $OrderHeader['rate'];
+
+
+
+/*Can't assume dummy/service items need the cogs stuff here too */
+
+
+
+			// its a dummy item dummies always have nil stock (by definition so new qty on hand will be nil
+			$SQL = "INSERT INTO stockmoves (
+						stockid,
+						type,
+						transno,
+						loccode,
+						trandate,
+						debtorno,
+						branchcode,
+						price,
+						prd,
+						reference,
+						qty,
+						discountpercent,
+						standardcost)
+					VALUES (
+						'" . $OrderLineRow['stkcode'] . "',
+						'10',
+						'" . $InvoiceNo . "',
+						'" . $OrderHeader['fromstkloc'] . "',
+						'" . $OrderHeader['orddate'] . "',
+						'" . $OrderHeader['debtorno'] . "',
+						'" . $OrderHeader['branchcode'] . "',
+						'" . $LocalCurrencyPrice . "',
+						'" . $PeriodNo . "',
+						'" . $OrderNo . "',
+						'" . -$OrderLineRow['quantity'] . "',
+						'" . $OrderLineRow['discountpercent'] . "',
+						'0')";
+
+			$Result = api_DB_query($SQL,$db,'','',true);
+
+			/*Get the ID of the StockMove... */
+			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+
+			/*Insert the taxes that applied to this line */
+			foreach ($LineTaxes[$LineCounter] as $Tax) {
+
+				$SQL = "INSERT INTO stockmovestaxes (stkmoveno,
+									taxauthid,
+									taxrate,
+									taxcalculationorder,
+									taxontax)
+						VALUES ('" . $StkMoveNo . "',
+							'" . $Tax['TaxAuthID'] . "',
+							'" . $Tax['TaxRate'] . "',
+							'" . $Tax['TaxCalculationOrder'] . "',
+							'" . $Tax['TaxOnTax'] . "')";
+
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
+				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			}
+			/*Insert Sales Analysis records */
+
+			$SQL="SELECT COUNT(*),
+					salesanalysis.stkcategory,
+					salesanalysis.area,
+					salesanalysis.salesperson,
+					salesanalysis.periodno,
+					salesanalysis.typeabbrev,
+					salesanalysis.cust,
+					salesanalysis.custbranch,
+					salesanalysis.stockid
+				FROM salesanalysis,
+					custbranch,
+					stockmaster
+				WHERE salesanalysis.stkcategory=stockmaster.categoryid
+				AND salesanalysis.stockid=stockmaster.stockid
+				AND salesanalysis.cust=custbranch.debtorno
+				AND salesanalysis.custbranch=custbranch.branchcode
+				AND salesanalysis.area=custbranch.area
+				AND salesanalysis.salesperson=custbranch.salesman
+				AND salesanalysis.typeabbrev ='" . $OrderHeader['ordertype'] . "'
+				AND salesanalysis.periodno='" . $PeriodNo . "'
+				AND salesanalysis.cust " . LIKE . "  '" . $OrderHeader['debtorno'] . "'
+				AND salesanalysis.custbranch  " . LIKE . " '" . $OrderHeader['branchcode'] . "'
+				AND salesanalysis.stockid  " . LIKE . " '" . $OrderLineRow['stkcode'] . "'
+				AND salesanalysis.budgetoractual='1'
+				GROUP BY salesanalysis.stockid,
+					salesanalysis.stkcategory,
+					salesanalysis.cust,
+					salesanalysis.custbranch,
+					salesanalysis.area,
+					salesanalysis.periodno,
+					salesanalysis.typeabbrev,
+					salesanalysis.salesperson";
+
+			$ErrMsg = _('The count of existing Sales analysis records could not run because');
+			$DbgMsg = _('SQL to count the no of sales analysis records');
+			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+			$myrow = DB_fetch_row($Result);
+
+			if ($myrow[0]>0){  /*Update the existing record that already exists */
+
+				$SQL = "UPDATE salesanalysis
+						SET amt=amt+" . filter_number_format($OrderLineRow['unitprice'] * $OrderLineRow['quantity'] / $OrderHeader['rate']) . ",
+						qty=qty +" . $OrderLineRow['quantity'] . ",
+						disc=disc+" . filter_number_format($OrderLineRow['discountpercent'] * $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] / $OrderHeader['rate']) . "
+						WHERE salesanalysis.area='" . $myrow[2] . "'
+						AND salesanalysis.salesperson='" . $myrow[3] . "'
+						AND typeabbrev ='" . $OrderHeader['ordertype'] . "'
+						AND periodno = '" . $PeriodNo . "'
+						AND cust  " . LIKE . " '" . $OrderHeader['debtorno'] . "'
+						AND custbranch  " . LIKE . "  '" . $OrderHeader['branchcode'] . "'
+						AND stockid  " . LIKE . " '" . $OrderLineRow['stkcode'] . "'
+						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+						AND budgetoractual='1'";
+
+			} else { /* insert a new sales analysis record */
+
+				$SQL = "INSERT INTO salesanalysis (	typeabbrev,
+													periodno,
+													amt,
+													cost,
+													cust,
+													custbranch,
+													qty,
+													disc,
+													stockid,
+													area,
+													budgetoractual,
+													salesperson,
+													stkcategory )
+								SELECT '" . $OrderHeader['ordertype']. "',
+									'" . $PeriodNo . "',
+									'" . $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] / $OrderHeader['rate'] . "',
+									0,
+									'" . $OrderHeader['debtorno'] . "',
+									'" . $OrderHeader['branchcode'] . "',
+									'" . $OrderLineRow['quantity'] . "',
+									'" . $OrderLineRow['discountpercent'] * $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] / $OrderHeader['rate'] . "',
+									'" . $OrderLineRow['stkcode'] . "',
+									custbranch.area,
+									1,
+									custbranch.salesman,
+									stockmaster.categoryid
+								FROM stockmaster, custbranch
+								WHERE stockmaster.stockid = '" . $OrderLineRow['stkcode'] . "'
+								AND custbranch.debtorno = '" . $OrderHeader['debtorno'] . "'
+								AND custbranch.branchcode='" . $OrderHeader['branchcode'] . "'";
+			}
+			
+			$Result = api_DB_query($SQL,$db,'','',true);
+
+			if ($CompanyRecord['gllink_debtors']==1 AND $OrderLineRow['unitprice'] !=0){
+
+				//Post sales transaction to GL credit sales
+				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLineRow['stkcode'], $OrderHeader['ordertype'], $db);
+
+				$SQL = "INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount )
+					VALUES ('10',
+						'" . $InvoiceNo . "',
+						'" . $OrderHeader['orddate'] . "',
+						'" . $PeriodNo . "',
+						'" . $SalesGLAccounts['salesglcode'] . "',
+						'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $OrderLineRow['unitprice'] . "',
+						'" . -$OrderLineRow['unitprice'] * $OrderLineRow['quantity']/$OrderHeader['rate'] . "'
+					)";
+				$Result = api_DB_query($SQL,$db,'','',true);
+
+				/* We also need the COGS stuff in here */
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+				if ($OrderLineRow['discountpercent'] !=0){
+
+					$SQL = "INSERT INTO gltrans (type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount)
+						VALUES ('10',
+							'" . $InvoiceNo . "',
+							'" . $OrderHeader['orddate'] . "',
+							'" . $PeriodNo . "',
+							'" . $SalesGLAccounts['discountglcode'] . "',
+							'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . ' @ ' . ($OrderLineRow['discountpercent'] * 100) . "%',
+							'" . $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] * $OrderLineRow['discountpercent']/$OrderHeader['rate'] . "' )";
+
+					$Result = api_DB_query($SQL,$db,'','',true);
+
+				} /*end of if discount !=0 */
+
+			} /*end of if sales integrated with gl */
+
+			$LineCounter++;
+		} /*end of OrderLine loop */
+
+		$TotalInvLocalCurr = ($TotalFXNetInvoice + $TotalFXTax)/$OrderHeader['rate'];
+
+		if ($CompanyRecord['gllink_debtors']==1){
+
+			/*Now post the tax to the GL at local currency equivalent */
+			if ($CompanyRecord['gllink_debtors']==1 AND $TaxAuthAmount !=0) {
+
+
+				/*Loop through the tax authorities array to post each total to the taxauth glcode */
+				foreach ($TaxTotals as $Tax){
+					$SQL = "INSERT INTO gltrans (type,
+												typeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount )
+											VALUES (10,
+											'" . $InvoiceNo . "',
+											'" . $OrderHeader['orddate']. "',
+											'" . $PeriodNo . "',
+											'" . $Tax['GLCode'] . "',
+											'" . $OrderHeader['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
+											'" . -$Tax['FXAmount']/$OrderHeader['rate'] . "' )";
+
+					$Result = api_DB_query($SQL,$db,'','',true);
+				}
+			}
+
+			/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
+			if (($TotalInvLocalCurr) !=0) {
+				$SQL = "INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
+									VALUES ('10',
+										'" . $InvoiceNo . "',
+										'" . $OrderHeader['orddate'] . "',
+										'" . $PeriodNo . "',
+										'" . $CompanyRecord['debtorsact'] . "',
+										'" . $OrderHeader['debtorno'] . "',
+										'" . $TotalInvLocalCurr . "')";
+
+				$Result = api_DB_query($SQL,$db,'','',true);
+			}
+
+			
+		} /*end of if Sales and GL integrated */
+
+	/*Update order header for invoice charged on */
+		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= '" . $OrderNo . "'";
+		$Result = api_DB_query($SQL,$db,'','',true);
+
+	/*Now insert the DebtorTrans */
+
+		$SQL = "INSERT INTO debtortrans (transno,
+										type,
+										debtorno,
+										branchcode,
+										trandate,
+										inputdate,
+										prd,
+										reference,
+										tpe,
+										order_,
+										ovamount,
+										ovgst,
+										rate,
+										shipvia)
+									VALUES (
+										'". $InvoiceNo . "',
+										10,
+										'" . $OrderHeader['debtorno'] . "',
+										'" . $OrderHeader['branchcode'] . "',
+										'" . $OrderHeader['orddate'] . "',
+										'" . date('Y-m-d H-i-s') . "',
+										'" . $PeriodNo . "',
+										'" . $OrderHeader['customerref'] . "',
+										'" . $OrderHeader['sales_type'] . "',
+										'" . $OrderNo . "',
+										'" . $TotalFXNetInvoice . "',
+										'" . $TotalFXTax . "',
+										'" . $OrderHeader['rate'] . "',
+										'" . $OrderHeader['shipvia'] . "')";
+						
+		$Result = api_DB_query($SQL,$db,'','',true);
+
+		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+		
+		/*for each Tax - need to insert into debtortranstaxes */
+		
+		
+		
+		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
+							taxauthid,
+							taxamount)
+				VALUES ('" . $DebtorTransID . "',
+					'" . $TaxAuthID . "',
+					'" . $Tax['FXAmount']/$OrderHeader['rate'] . "')";
+
+		$Result = api_DB_query($SQL,$db,'','',true);
+
+		$Result = DB_Txn_Commit($db);
+		
+		if (sizeof($Errors)==0) {
+			$Errors[0]=0;
+			$Errors[1]=$InvoiceNo;
+		}
+		return $Errors;
+		
+		
+		
+	}
+	
+	
+	function GetCurrentPeriod (&$db) {
+		
+		$TransDate = mktime(); //The current date to find the period for
+		/* Find the unix timestamp of the last period end date in periods table */
+		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
+		$result = DB_query($sql, $db);
+		$myrow=DB_fetch_row($result);
+		
+		if (is_null($myrow[0])){
+			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db);
+			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",$db);
+			$LastPeriod=1;
+			$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
+		} else {
+			$Date_Array = explode('-', $myrow[0]);
+			$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+1,0,(int)$Date_Array[0]);
+			$LastPeriod = $myrow[1];
+		}
+		/* Find the unix timestamp of the first period end date in periods table */
+		$sql = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
+		$result = api_DB_query($sql, $db);
+		$myrow=DB_fetch_row($result);
+		$Date_Array = explode('-', $myrow[0]);
+		$FirstPeriodEnd = mktime(0,0,0,$Date_Array[1],0,(int)$Date_Array[0]);
+		$FirstPeriod = $myrow[1];
+	
+		/* If the period number doesn't exist */
+		if (!PeriodExists($TransDate, $db)) {
+			/* if the transaction is after the last period */
+			if ($TransDate > $LastPeriodEnd) {
+				
+				$PeriodEnd = mktime(0,0,0,Date('m', $TransDate)+1, 0, Date('Y', $TransDate));
+				
+				while ($PeriodEnd >= $LastPeriodEnd) {
+					if (Date('m', $LastPeriodEnd)<=13) {
+						$LastPeriodEnd = mktime(0,0,0,Date('m', $LastPeriodEnd)+2, 0, Date('Y', $LastPeriodEnd));
+					} else {
+						$LastPeriodEnd = mktime(0,0,0,2, 0, Date('Y', $LastPeriodEnd)+1);
+					}
+					$LastPeriod++;
+					CreatePeriod($LastPeriod, $LastPeriodEnd, $db);
+				}
+			} else {
+			/* The transaction is before the first period */
+				$PeriodEnd = mktime(0,0,0,Date('m', $TransDate), 0, Date('Y', $TransDate));
+				$Period = $FirstPeriod - 1;
+				while ($FirstPeriodEnd > $PeriodEnd) {
+					CreatePeriod($Period, $FirstPeriodEnd, $db);
+					$Period--;
+					if (Date('m', $FirstPeriodEnd)>0) {
+						$FirstPeriodEnd = mktime(0,0,0,Date('m', $FirstPeriodEnd), 0, Date('Y', $FirstPeriodEnd));
+					} else {
+						$FirstPeriodEnd = mktime(0,0,0,13, 0, Date('Y', $FirstPeriodEnd));
+					}
+				}
+			}
+		} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)), $db)) {
+			/* Make sure the following months period exists */
+			$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
+			$result = DB_query($sql, $db);
+			$myrow=DB_fetch_row($result);
+			$Date_Array = explode('-', $myrow[0]);
+			$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
+			$LastPeriod = $myrow[1];
+			CreatePeriod($LastPeriod+1, $LastPeriodEnd, $db);
+		}
+	
+		/* Now return the period number of the transaction */
+	
+		$MonthAfterTransDate = Mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate));
+		$GetPrdSQL = "SELECT periodno 
+						FROM periods 
+						WHERE lastdate_in_period < '" . Date('Y-m-d', $MonthAfterTransDate) . "' 
+						AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
+	
+		$ErrMsg = _('An error occurred in retrieving the period number');
+		$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);
+		$myrow = DB_fetch_row($GetPrdResult);
+	
+		return $myrow[0];
+	}
+
+	function PeriodExists($TransDate, &$db) {
+
+		/* Find the date a month on */
+		$MonthAfterTransDate = Mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate));
+	
+		$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" . Date('Y/m/d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y/m/d', $TransDate) . "'";
+
+		$GetPrdResult = api_DB_query($GetPrdSQL,$db,$ErrMsg);
+	
+		if (DB_num_rows($GetPrdResult)==0) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
+	function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
+		$InsertPrdSQL = "INSERT INTO periods (periodno,
+											lastdate_in_period)
+								VALUES ('" . $PeriodNo . "',
+										'" . Date('Y-m-d', $PeriodEnd) . "')";
+										
+		$InsertPrdResult = api_DB_query($InsertPrdSQL, $db);
+	}
+
+
 ?>

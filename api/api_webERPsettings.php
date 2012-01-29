@@ -73,4 +73,22 @@
 		return $ReturnValue;
 	}
 
+/* This function returns the default shipper in webERP.
+ */
+
+	function GetDefaultShipper($user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql = "SELECT confvalue from config WHERE confname='Default_Shipper'";
+		$result = DB_query($sql, $db);
+		$answer=DB_fetch_array($result);
+		$ReturnValue[0]=0;
+		$ReturnValue[1]=$answer;
+		return $ReturnValue;
+	}
+
 ?>
