@@ -83,10 +83,10 @@ if (isset($_POST['submit'])) {
 		echo prnMsg(_('A general ledger code must be selected for this expense'),'error');
 		echo '<br />';
 	}
-	
+
 	if (isset($SelectedExpense) AND $InputError !=1) {
 
-		$sql = "UPDATE pcexpenses 
+		$sql = "UPDATE pcexpenses
 				SET description = '" . $_POST['Description'] . "',
 					glaccount = '" . $_POST['GLAccount'] . "',
 					tag = '" . $_POST['Tag'] . "'
@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Description'] . "',
 						'" . $_POST['GLAccount'] . "',
 						'" . $_POST['Tag'] . "')";
-						
+
 			$msg = _('Expense ') . ' ' . $_POST['CodeExpense'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(codeexpense)
 						FROM pcexpenses";
@@ -207,7 +207,7 @@ or deletion of the records*/
 
 		$ResultDes = DB_query($sqldesc,$db);
 		$Description=DB_fetch_array($ResultDes);
-		
+
 		$SqlDescTag="SELECT tagdescription
 					FROM tags
 					WHERE tagref='". $myrow[3] . "'";
@@ -227,7 +227,7 @@ or deletion of the records*/
 				$myrow[1],
 				$myrow[2],
 				$Description['accountname'],
-				$DescriptionTag['tagdesciption'],
+				$DescriptionTag['tagdescription'],
 				htmlspecialchars($_SERVER['PHP_SELF']) . '?', $myrow[0],
 				htmlspecialchars($_SERVER['PHP_SELF']) . '?', $myrow[0]);
 	}
@@ -315,7 +315,7 @@ if (! isset($_GET['delete'])) {
 	} //end while loop
 
 	echo '</select></td></tr>';
-	
+
 	//Select the tag
 	DB_free_result($result);
 	echo '<tr>
