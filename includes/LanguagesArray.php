@@ -61,7 +61,7 @@ $LanguagesArray['hr_HR.utf8']['WindowsLocale'] = 'hungarian';
 $LanguagesArray['hr_HR.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['hr_HR.utf8']['ThousandsSeparator'] = ' ';
 
-$LanguagesArray['id_ID.utf8']['LanguageName'] = _('Indonisian');
+$LanguagesArray['id_ID.utf8']['LanguageName'] = _('Indonesian');
 $LanguagesArray['id_ID.utf8']['WindowsLocale'] = 'indonesian';
 $LanguagesArray['id_ID.utf8']['DecimalPoint'] = ',';
 $LanguagesArray['id_ID.utf8']['ThousandsSeparator'] = '.';
