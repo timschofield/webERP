@@ -278,7 +278,7 @@ if (isset($_POST['CommitBatch'])){
 	// it is a supplier payment by cheque and haven't printed yet so print cheque
 
 		echo '<br />
-			<a href="' . $rootpath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque using pre-printed stationery') . '</a>
+			<a href="' . $rootpath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&identifier=' . $identifier . '">' . _('Print Cheque using pre-printed stationery') . '</a>
 			<br />
 			<br />';
 
