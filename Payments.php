@@ -735,7 +735,7 @@ echo '<p><table class="selection">';
 echo '<tr><th colspan="4"><font size="3" color="blue">' . _('Payment');
 
 if ($_SESSION['PaymentDetail' . $identifier]->SupplierID!=''){
-	echo ' ' . _('to') . ' ' . $_SESSION['PaymentDetail' . $identifer]->SuppName;
+	echo ' ' . _('to') . ' ' . $_SESSION['PaymentDetail' . $identifier]->SuppName;
 }
 
 if ($_SESSION['PaymentDetail' . $identifier]->BankAccountName!=''){

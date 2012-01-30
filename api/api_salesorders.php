@@ -631,12 +631,12 @@ $SOH_DateFields = array ('orddate',
 	function InvoiceSalesOrder($OrderNo, $User, $Password) {
 		/*debug info to file */
 		$fp = fopen( '/root/Web-Server/apidebug/debuginfo.txt', "w");
-		fputs($fp, 'starting to invoice order ' . $OrderNo);
+		fputs($fp, 'Starting to invoice order ' . $OrderNo . "\n");
 		
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
-			$Errors[0]=NoAuthorisation;
+			$Errors[]=NoAuthorisation;
 			return $Errors;
 		}
 		$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors, $db);
@@ -682,23 +682,22 @@ $SOH_DateFields = array ('orddate',
 							ON locations.loccode=salesorders.fromstkloc
 							INNER JOIN currencies
 							ON debtorsmaster.currcode=currencies.currabrev
-							WHERE salesorders.orderno = '" . $OrderNumber . "'";
+							WHERE salesorders.orderno = '" . $OrderNo . "'";
 
 		$OrderHeaderResult = api_DB_query($OrderHeaderSQL,$db);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoReadOrder;
 		} 
 		
-		fputs($fp, 'Got order header' . "\n");
+		fputs($fp, "Got order header with the SQL:\n" . $OrderHeaderSQL . "\n");
 		
 		$OrderHeader = DB_fetch_array($OrderHeaderResult);
 		
 		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $OrderHeader['fromstkloc'] ."'",$db);
-		$Result = api_DB_query($SQL,$db);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoTaxProvince;
 		}
-		$myrow = DB_fetch_row($Result);
+		$myrow = DB_fetch_row($TaxProvResult);
 		$DispTaxProvinceID = $myrow[0];
 
 		$LineItemsSQL = "SELECT stkcode,
@@ -718,7 +717,7 @@ $SOH_DateFields = array ('orddate',
 			$Errors[] = NoReadOrderLines;
 			return $Errors;
 		}
-		fputs($fp, 'Got order line items' . "\n");
+		fputs($fp, "Got the order line items with the SQL:\n" .  $LineItemsSQL . "\n");
 		
 	/*Start an SQL transaction */
 		$result = DB_Txn_Begin($db);
@@ -735,7 +734,7 @@ $SOH_DateFields = array ('orddate',
 		while ($OrderLineRow = DB_fetch_array($LineItemsResult)) {
 			
 			$StandardCost = $OrderLineRow['standardcost'];
-			
+			$LocalCurrencyPrice= ($OrderLineRow['unitprice'] *(1- floatval($OrderLineRow['discountpercent'])))/ $OrderHeader['rate'];
 			$LineNetAmount = $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] *(1- floatval($OrderLineRow['discountpercent']));
 
 			/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
@@ -756,10 +755,14 @@ $SOH_DateFields = array ('orddate',
 					AND taxauthrates.taxcatid = '" . $OrderLineRow['taxcatid'] . "'
 					ORDER BY taxgrouptaxes.calculationorder";
 
-			$GetTaxRatesResult = api_DB_query($SQL,$db,'','',true);
+			$GetTaxRatesResult = api_DB_query($SQL,$db);
+			
 			if (DB_error_no($db) != 0) {
 				$Errors[] = TaxRatesFailed;
+			} else{
+				fputs($fp, "Got taxes using the following SQL:\n" . $SQL . "\n");
 			}
+			
 			$LineTaxAmount = 0;
 			$TaxTotals =array();
 
@@ -800,14 +803,16 @@ $SOH_DateFields = array ('orddate',
 			/*Now update SalesOrderDetails for the quantity invoiced and the actual dispatch dates. */
 			$SQL = "UPDATE salesorderdetails
 					SET qtyinvoiced = qtyinvoiced + " . $OrderLineRow['quantity'] . ",
-						actualdispatchdate = '" . $OrderHeader['orddate'].  "',
+						actualdispatchdate = '" . $OrderHeader['orddate'] .  "',
 						completed='1'
 					WHERE orderno = '" . $OrderNo . "'
 					AND stkcode = '" . $OrderLineRow['stkcode'] . "'";
 
 			$Result = api_DB_query($SQL,$db,'','',true);
-
-			if ($OrderHeader['mbflag']=='B' OR $OrderHeader['mbflag']=='M') {
+			
+			fputs($fp, "Updated order details for " . $OrderLineRow['stkcode'] . ' quantity of ' . $OrderLineRow['quantity'] . " invoiced using the following SQL\n" . $SQL);
+						
+			if ($OrderLineRow['mbflag']=='B' OR $OrderLineRow['mbflag']=='M') {
 				$Assembly = False;
 
 				/* Need to get the current location quantity
@@ -817,7 +822,7 @@ $SOH_DateFields = array ('orddate',
 						WHERE locstock.stockid='" . $OrderLineRow['stkcode'] . "'
 						AND loccode= '" . $OrderHeader['fromstkloc'] . "'";
 				$Result = api_DB_query($SQL, $db);
-
+				
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
@@ -831,7 +836,7 @@ $SOH_DateFields = array ('orddate',
 						WHERE locstock.stockid = '" . $OrderLineRow['stkcode'] . "'
 						AND loccode = '" . $OrderHeader['fromstkloc'] . "'";
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+								
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
 												transno,
@@ -862,8 +867,10 @@ $SOH_DateFields = array ('orddate',
 								'" . ($QtyOnHandPrior - $OrderLineRow['quantity']) . "' )";
 	
 				$Result = api_DB_query($SQL,$db,'','',true);
-
-			} else if ($OrderHeader['mbflag']=='A'){ /* its an assembly */
+				
+				fputs($fp, "Insert stock movement using the following SQL:\n" . $SQL . "\n");
+				
+			} else if ($OrderLineRow['mbflag']=='A'){ /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
 				$Assembly=True;
@@ -938,9 +945,8 @@ $SOH_DateFields = array ('orddate',
 				} /* end of assembly explosion and updates */
 			} /* end of its an assembly */
 
-			// Insert stock movements - with unit cost
-			$LocalCurrencyPrice= ($OrderLineRow['unitprice'] *(1- floatval($OrderLineRow['discountpercent'])))/ $OrderHeader['rate'];
-			if ($OrderHeader['mbflag']=='A' OR $OrderHeader['mbflag']=='D'){
+			
+			if ($OrderLineRow['mbflag']=='A' OR $OrderLineRow['mbflag']=='D'){
 				/*it's a Dummy/Service item or an Assembly item - still need stock movement record 
 				 * but quantites on hand are always nil */
 				$SQL = "INSERT INTO stockmoves (stockid,
@@ -992,41 +998,43 @@ $SOH_DateFields = array ('orddate',
 							'" . $Tax['TaxOnTax'] . "')";
 
 				$Result = DB_query($SQL,$db,'','',true);
+				fputs($fp, "Inserted stockmovestaxes using the following SQL:\n" . $SQL . "\n");
 			}
+			
 			/*Insert Sales Analysis records */
 
 			$SQL="SELECT COUNT(*),
-					salesanalysis.stkcategory,
-					salesanalysis.area,
-					salesanalysis.salesperson,
-					salesanalysis.periodno,
-					salesanalysis.typeabbrev,
-					salesanalysis.cust,
-					salesanalysis.custbranch,
-					salesanalysis.stockid
-				FROM salesanalysis,
-					custbranch,
-					stockmaster
-				WHERE salesanalysis.stkcategory=stockmaster.categoryid
-				AND salesanalysis.stockid=stockmaster.stockid
-				AND salesanalysis.cust=custbranch.debtorno
-				AND salesanalysis.custbranch=custbranch.branchcode
-				AND salesanalysis.area=custbranch.area
-				AND salesanalysis.salesperson=custbranch.salesman
-				AND salesanalysis.typeabbrev ='" . $OrderHeader['ordertype'] . "'
-				AND salesanalysis.periodno='" . $PeriodNo . "'
-				AND salesanalysis.cust " . LIKE . "  '" . $OrderHeader['debtorno'] . "'
-				AND salesanalysis.custbranch  " . LIKE . " '" . $OrderHeader['branchcode'] . "'
-				AND salesanalysis.stockid  " . LIKE . " '" . $OrderLineRow['stkcode'] . "'
-				AND salesanalysis.budgetoractual='1'
-				GROUP BY salesanalysis.stockid,
-					salesanalysis.stkcategory,
-					salesanalysis.cust,
-					salesanalysis.custbranch,
-					salesanalysis.area,
-					salesanalysis.periodno,
-					salesanalysis.typeabbrev,
-					salesanalysis.salesperson";
+						salesanalysis.stkcategory,
+						salesanalysis.area,
+						salesanalysis.salesperson,
+						salesanalysis.periodno,
+						salesanalysis.typeabbrev,
+						salesanalysis.cust,
+						salesanalysis.custbranch,
+						salesanalysis.stockid
+					FROM salesanalysis,
+						custbranch,
+						stockmaster
+					WHERE salesanalysis.stkcategory=stockmaster.categoryid
+					AND salesanalysis.stockid=stockmaster.stockid
+					AND salesanalysis.cust=custbranch.debtorno
+					AND salesanalysis.custbranch=custbranch.branchcode
+					AND salesanalysis.area=custbranch.area
+					AND salesanalysis.salesperson=custbranch.salesman
+					AND salesanalysis.typeabbrev ='" . $OrderHeader['ordertype'] . "'
+					AND salesanalysis.periodno='" . $PeriodNo . "'
+					AND salesanalysis.cust " . LIKE . "  '" . $OrderHeader['debtorno'] . "'
+					AND salesanalysis.custbranch  " . LIKE . " '" . $OrderHeader['branchcode'] . "'
+					AND salesanalysis.stockid  " . LIKE . " '" . $OrderLineRow['stkcode'] . "'
+					AND salesanalysis.budgetoractual='1'
+					GROUP BY salesanalysis.stockid,
+						salesanalysis.stkcategory,
+						salesanalysis.cust,
+						salesanalysis.custbranch,
+						salesanalysis.area,
+						salesanalysis.periodno,
+						salesanalysis.typeabbrev,
+						salesanalysis.salesperson";
 
 			$ErrMsg = _('The count of existing Sales analysis records could not run because');
 			$DbgMsg = _('SQL to count the no of sales analysis records');

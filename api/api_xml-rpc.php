@@ -1169,7 +1169,7 @@
 	$ReturnValue[0] = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the invoice number.');
 
 /*E*/$InvoiceSalesOrder_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
-/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+/*x*/					array($xmlrpcStruct,$xmlrpcInt,$xmlrpcString,$xmlrpcString));
 	$InvoiceSalesOrder_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_InvoiceSalesOrder($xmlrpcmsg){
@@ -3074,6 +3074,10 @@
 			"function" => "xmlrpc_ModifySalesOrderLine",
 			"signature" => $ModifySalesOrderLine_sig,
 			"docstring" => $ModifySalesOrderLine_doc),
+		"weberp.xmlrpc_InvoiceSalesOrder" => array(
+			"function" => "xmlrpc_InvoiceSalesOrder",
+			"signature" => $InvoiceSalesOrder_sig,
+			"docstring" => $InvoiceSalesOrder_doc),
 		"weberp.xmlrpc_InsertGLAccount" => array(
 			"function" => "xmlrpc_InsertGLAccount",
 			"signature" => $InsertGLAccount_sig,
