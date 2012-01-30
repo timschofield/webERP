@@ -50,7 +50,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			ON grns.podetailitem=purchorderdetails.podetailitem
 			INNER JOIN purchorders
 			ON purchorderdetails.orderno = purchorders.orderno 
-			WHERE AND grnno='" . $_GET['GRNNo'] . "'";
+			WHERE grnno='" . $_GET['GRNNo'] . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not get the details of the GRN selected for reversal because') . ' ';
 	$DbgMsg = _('The following SQL to retrieve the GRN details was used') . ':';
