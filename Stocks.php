@@ -415,7 +415,7 @@ if (isset($_POST['submit'])) {
 												'" . $JournalNo . "',
 												'" . Date('Y-m-d') . "',
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
-												'" . $NewStockAccount . "',
+												'" . $NewStockAct . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
 												'" . ($UnitCost* $StockQtyRow[0]) . "')";
 					$ErrMsg =  _('The stock cost journal could not be inserted because');

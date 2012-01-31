@@ -24,8 +24,6 @@ if (!isset($_SESSION['PO'.$identifier])){
 
 include('includes/header.inc');
 
-$Maximum_Number_Of_Parts_To_Show=50;
-
 if (!isset($_POST['Commit'])) {
 	echo '<a href="'.$rootpath.'/PO_Header.php?identifier=' . $identifier. '">' ._('Back To Purchase Order Header') . '</a><br />';
 }
@@ -1124,9 +1122,6 @@ if (isset($SearchResult)) {
 			</tr>';
 		$j++;
 		$PartsDisplayed++;
-		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
-			break;
-		}
 #end of page full new headings if
 	}
 #end of while loop
