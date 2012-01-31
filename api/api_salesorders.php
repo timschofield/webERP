@@ -226,15 +226,15 @@ $SOH_DateFields = array ('orddate',
 /* Check that the item due date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifyItemDueDate($itemdue, $i, $Errors, $db) {
+	function VerifyItemDueDate($ItemDue, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=api_DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];
-		if (mb_strstr($itemdue,'/')) {
-			$DateArray = explode('/',$itemdue);
-		} elseif (mb_strstr($itemdue,'.')) {
-			$DateArray = explode('.',$itemdue);
+		if (mb_strstr($ItemDue,'/')) {
+			$DateArray = explode('/',$ItemDue);
+		} elseif (mb_strstr($PeriodEnd,'.')) {
+			$DateArray = explode('.',$ItemDue);
 		}
 		if ($DateFormat=='d/m/Y') {
 			$Day=$DateArray[0];
@@ -487,9 +487,12 @@ $SOH_DateFields = array ('orddate',
 		if (isset($OrderLine['narrative'])){
 			$Errors=VerifyNarrative($OrderLine['narrative'], sizeof($Errors), $Errors);
 		}
+		/*
+		 * Not sure why the verification of itemdue doesn't work 
 		if (isset($OrderLine['itemdue'])){
 			$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
 		}
+		*/
 		if (isset($OrderLine['poline'])){
 			$Errors=VerifyPOLine($OrderLine['poline'], sizeof($Errors), $Errors);
 		}
@@ -504,8 +507,10 @@ $SOH_DateFields = array ('orddate',
 			}
 			$FieldValues.= "'" . $value . "', ";
 		}
+		
 		$sql = "INSERT INTO salesorderdetails (" . mb_substr($FieldNames,0,-2) . ") 
 			VALUES (" . mb_substr($FieldValues,0,-2) . ")";
+
 		if (sizeof($Errors)==0) {
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
@@ -629,9 +634,6 @@ $SOH_DateFields = array ('orddate',
 	
 	
 	function InvoiceSalesOrder($OrderNo, $User, $Password) {
-		/*debug info to file */
-		$fp = fopen( '/root/Web-Server/apidebug/debuginfo.txt', "w");
-		fputs($fp, 'Starting to invoice order ' . $OrderNo . "\n");
 		
 		$Errors = array();
 		$db = db($User, $Password);
@@ -656,8 +658,6 @@ $SOH_DateFields = array ('orddate',
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoCompanyRecord;
 		} 
-		
-		fputs($fp, 'Got company info' . "\n");
 		
 		$OrderHeaderSQL = "SELECT salesorders.debtorno,
 				 				  debtorsmaster.name,
@@ -689,8 +689,6 @@ $SOH_DateFields = array ('orddate',
 			$Errors[] = NoReadOrder;
 		} 
 		
-		fputs($fp, "Got order header with the SQL:\n" . $OrderHeaderSQL . "\n");
-		
 		$OrderHeader = DB_fetch_array($OrderHeaderResult);
 		
 		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $OrderHeader['fromstkloc'] ."'",$db);
@@ -717,7 +715,6 @@ $SOH_DateFields = array ('orddate',
 			$Errors[] = NoReadOrderLines;
 			return $Errors;
 		}
-		fputs($fp, "Got the order line items with the SQL:\n" .  $LineItemsSQL . "\n");
 		
 	/*Start an SQL transaction */
 		$result = DB_Txn_Begin($db);
@@ -725,8 +722,6 @@ $SOH_DateFields = array ('orddate',
 		$InvoiceNo = GetNextTransNo(10, $db);
 		$PeriodNo = GetCurrentPeriod($db);
 
-		fputs($fp, 'Got invoice number ' . $InvoiceNo . "\n and into PeriodNo " . $PeriodNo . "\n");
-		
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
 		$LineCounter =0;
@@ -759,9 +754,7 @@ $SOH_DateFields = array ('orddate',
 			
 			if (DB_error_no($db) != 0) {
 				$Errors[] = TaxRatesFailed;
-			} else{
-				fputs($fp, "Got taxes using the following SQL:\n" . $SQL . "\n");
-			}
+			} 
 			
 			$LineTaxAmount = 0;
 			$TaxTotals =array();
@@ -810,7 +803,6 @@ $SOH_DateFields = array ('orddate',
 
 			$Result = api_DB_query($SQL,$db,'','',true);
 			
-			fputs($fp, "Updated order details for " . $OrderLineRow['stkcode'] . ' quantity of ' . $OrderLineRow['quantity'] . " invoiced using the following SQL\n" . $SQL);
 						
 			if ($OrderLineRow['mbflag']=='B' OR $OrderLineRow['mbflag']=='M') {
 				$Assembly = False;
@@ -867,8 +859,6 @@ $SOH_DateFields = array ('orddate',
 								'" . ($QtyOnHandPrior - $OrderLineRow['quantity']) . "' )";
 	
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
-				fputs($fp, "Insert stock movement using the following SQL:\n" . $SQL . "\n");
 				
 			} else if ($OrderLineRow['mbflag']=='A'){ /* its an assembly */
 				/*Need to get the BOM for this part and make
@@ -982,7 +972,6 @@ $SOH_DateFields = array ('orddate',
 			}
 			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
-
 			/*Insert the taxes that applied to this line */
 			foreach ($LineTaxes[$LineCounter] as $Tax) {
 
@@ -998,7 +987,6 @@ $SOH_DateFields = array ('orddate',
 							'" . $Tax['TaxOnTax'] . "')";
 
 				$Result = DB_query($SQL,$db,'','',true);
-				fputs($fp, "Inserted stockmovestaxes using the following SQL:\n" . $SQL . "\n");
 			}
 			
 			/*Insert Sales Analysis records */
@@ -1041,7 +1029,7 @@ $SOH_DateFields = array ('orddate',
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			$myrow = DB_fetch_row($Result);
-
+			
 			if ($myrow[0]>0){  /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis
@@ -1057,7 +1045,7 @@ $SOH_DateFields = array ('orddate',
 						AND stockid  " . LIKE . " '" . $OrderLineRow['stkcode'] . "'
 						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
 						AND budgetoractual='1'";
-
+			
 			} else { /* insert a new sales analysis record */
 
 				$SQL = "INSERT INTO salesanalysis (	typeabbrev,
@@ -1090,6 +1078,7 @@ $SOH_DateFields = array ('orddate',
 								WHERE stockmaster.stockid = '" . $OrderLineRow['stkcode'] . "'
 								AND custbranch.debtorno = '" . $OrderHeader['debtorno'] . "'
 								AND custbranch.branchcode='" . $OrderHeader['branchcode'] . "'";
+			
 			}
 			
 			$Result = api_DB_query($SQL,$db,'','',true);
@@ -1114,7 +1103,7 @@ $SOH_DateFields = array ('orddate',
 										'" . ($StandardCost * $OrderLineRow['quantity']) . "')";
 
 				$Result = api_DB_query($SQL,$db,'','',true);
-
+				
 /*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
 				$StockGLCode = GetStockGLCode($OrderLineRow['stkcode'],$db);
 
@@ -1134,6 +1123,7 @@ $SOH_DateFields = array ('orddate',
 										'" . (-$StandardCost * $OrderLineRow['quantity']) . "')";
 
 				$Result = api_DB_query($SQL,$db,'','',true);
+				
 			} /* end of if GL and stock integrated and standard cost !=0  and not an asset */
 
 			if ($CompanyRecord['gllink_debtors']==1 AND $OrderLineRow['unitprice'] !=0){
@@ -1157,7 +1147,7 @@ $SOH_DateFields = array ('orddate',
 						'" . -$OrderLineRow['unitprice'] * $OrderLineRow['quantity']/$OrderHeader['rate'] . "'
 					)";
 				$Result = api_DB_query($SQL,$db,'','',true);
-
+				
 				if ($OrderLineRow['discountpercent'] !=0){
 
 					$SQL = "INSERT INTO gltrans (type,
@@ -1232,6 +1222,7 @@ $SOH_DateFields = array ('orddate',
 				$Result = api_DB_query($SQL,$db,'','',true);
 			}
 			EnsureGLEntriesBalance(10,$InvoiceNo,$db);
+			
 		} /*end of if Sales and GL integrated */
 
 	/*Update order header for invoice charged on */
@@ -1271,22 +1262,23 @@ $SOH_DateFields = array ('orddate',
 										'" . $OrderHeader['shipvia'] . "')";
 						
 		$Result = api_DB_query($SQL,$db,'','',true);
-
+		
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
 		
 		/*for each Tax - need to insert into debtortranstaxes */
-		foreach ($TaxTotals AS $TaxAuthID => $TaxAmount) {
-
+		foreach ($TaxTotals AS $TaxAuthID => $Tax) {
+			
 			$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 												taxauthid,
 												taxamount)
 								VALUES ('" . $DebtorTransID . "',
 										'" . $TaxAuthID . "',
-										'" . $TaxAmount/$OrderHeader['rate'] . "')";
+										'" . $Tax['FXAmount']/$OrderHeader['rate'] . "')";
 			$Result = api_DB_query($SQL,$db,'','',true);
 		}
 		
 		if (sizeof($Errors)==0) {
+			
 			$Result = DB_Txn_Commit($db);
 			$Errors[0]=0;
 			$Errors[1]=$InvoiceNo;
