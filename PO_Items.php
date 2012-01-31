@@ -1126,11 +1126,6 @@ if (isset($SearchResult)) {
 	}
 #end of while loop
 	echo '</table>';
-	if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
-		/*$Maximum_Number_Of_Parts_To_Show defined in config.php */
-		prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' .
-			_('Please restrict your search to only the parts required'),'info');
-	}
 	echo '<a name="end"></a><br /><div class="centre"><input type="submit" name="NewItem" value="Order some" /></div>';
 }#end if SearchResults to show
 
