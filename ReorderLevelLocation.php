@@ -139,7 +139,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			<td class="number">'.$QtyInvoice.'</td>
 			<td class="number">'.$ohRow['0'].'</td>
 			<td class="number">'.$ohinRow['0'].'</td>
-			<td><input type="text" class="number" name="ReorderLevel' . $i .'" maxlength="3" size="4" value="'. locale_number_format($myrow['reorderlevel'],0) .'" />
+			<td><input type="text" class="number" name="ReorderLevel' . $i .'" maxlength="10" size="10" value="'. locale_number_format($myrow['reorderlevel'],0) .'" />
 				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" /></td>
 			</tr> ';
 		$i++;

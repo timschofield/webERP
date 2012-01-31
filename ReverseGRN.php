@@ -221,7 +221,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 	/* If its a stock item .... Insert stock movements - with unit cost */
-
+        $NewQtyOnHand = $QtyOnHandPrior -  $QtyToReverse;
 		$SQL = "INSERT INTO stockmoves (stockid,
 										type,
 										transno,
@@ -242,7 +242,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 										'" . _('Reversal') . ' - ' . $_POST['SupplierID'] . ' - ' . $GRN['orderno'] . "',
 										'" . -$QtyToReverse . "',
 										'" . $GRN['stdcostunit'] . "',
-										'" . $QtyOnHandPrior - $QtyToReverse . "'
+										'" . $NewQtyOnHand . "'
 										)";
 
   		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');

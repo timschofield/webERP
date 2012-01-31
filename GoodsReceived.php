@@ -448,7 +448,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 							VALUES ('" . $GRN . "',
 								'" . $OrderLine->PODetailRec . "',
 								'" . $OrderLine->StockID . "',
-								'" . $OrderLine->ItemDescription . "',
+								'" . DB_escape_string($OrderLine->ItemDescription) . "',
 								'" . $_POST['DefaultReceivedDate'] . "',
 								'" . $OrderLine->ReceiveQty . "',
 								'" . $_SESSION['PO'.$identifier]->SupplierID . "',
@@ -507,7 +507,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $_POST['DefaultReceivedDate'] . "',
 										'" . $LocalCurrencyPrice . "',
 										'" . $PeriodNo . "',
-										'" . $_SESSION['PO'.$identifier]->SupplierID . " (" . $_SESSION['PO'.$identifier]->SupplierName . ") - " .$_SESSION['PO'.$identifier]->OrderNo . "',
+										'" . $_SESSION['PO'.$identifier]->SupplierID . " (" . DB_escape_string($_SESSION['PO'.$identifier]->SupplierName) . ") - " .$_SESSION['PO'.$identifier]->OrderNo . "',
 										'" . $OrderLine->ReceiveQty . "',
 										'" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost . "',
 										'" . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . "'
@@ -662,7 +662,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $PeriodNo . "',
 										'" . $OrderLine->GLCode . "',
 										'PO: " . $_SESSION['PO'.$identifier]->OrderNo . " " . $_SESSION['PO'.$identifier]->SupplierID . " - " . $OrderLine->StockID
-												. " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " .
+												. " - " . DB_escape_string($OrderLine->ItemDescription) . " x " . $OrderLine->ReceiveQty . " @ " .
 													locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . "',
 										'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "'
 										)";
@@ -686,7 +686,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 										'" . $_POST['DefaultReceivedDate'] . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['grnact'] . "',
-										'" . _('PO'.$identifier) . ': ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']) . "',
+										'" . _('PO'.$identifier) . ': ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']) . "',
 										'" . -$UnitCost * $OrderLine->ReceiveQty . "'
 										)";
 

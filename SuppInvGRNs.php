@@ -80,7 +80,7 @@ if (isset($_POST['ModifyGRN'])){
 	if (!is_numeric(filter_number_format($_POST['ChgPrice'])) AND filter_number_format($_POST['ChgPrice'])<0){
 		$InputError = True;
 		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be invoiced at this price'),'error');
-	} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price'] == True) {
+	} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price'] == True AND $_POST['OrderPrice'] != 0) {
 		if (filter_number_format($_POST['ChgPrice'])/$_POST['OrderPrice'] > (1+ ($_SESSION['OverChargeProportion'] / 100))){
 			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' .
 			_('The system is set up to prohibit this so will put this invoice on hold until it is authorised'),'warn');

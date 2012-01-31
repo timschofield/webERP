@@ -165,7 +165,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 }
 
 function DB_escape_string($String){
-	return mysql_real_escape_string(htmlspecialchars($String, ENT_COMPAT, 'utf-8'));
+	return mysql_real_escape_string(htmlspecialchars($String, ENT_COMPAT, 'utf-8', false));
 }
 
 function DB_show_tables(&$Conn){
