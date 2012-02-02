@@ -10,8 +10,10 @@ if ($allow_demo_mode == True and !isset($demo_text)) {
 	$demo_text = _('Please login here');
 }
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>webERP Login screen</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,9 +33,10 @@ if (get_magic_quotes_gpc()){
 <div id="container">
 	<div id="login_logo"></div>
 	<div id="login_box">
-	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" name="loginform" method="post">
-	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
+	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="loginform" method="post">
+	<p><input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span><?php echo _('Company'); ?>:</span>
+    
 	<?php
 		if ($AllowCompanySelectionBox == true){
 			echo '<select name="CompanyNameField">';
@@ -42,7 +45,7 @@ if (get_magic_quotes_gpc()){
 			foreach ($Companies as $CompanyEntry){
 				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
 					if ($CompanyEntry==$DefaultCompany) {
-						echo '<option selected value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
+						echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
 					} else {
 						echo '<option  value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
 					}
@@ -53,13 +56,13 @@ if (get_magic_quotes_gpc()){
 			echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 		}
 	?>
-	<br />
-	<span><?php echo _('User name'); ?>:</span><br />
-	<input type="text" name="UserNameEntryField"/><br />
-	<span><?php echo _('Password'); ?>:</span><br />
-	<input type="password" name="Password"><br />
+    
+	<span><?php echo _('User name'); ?>:</span>
+	<input type="text" name="UserNameEntryField" />
+	<span><?php echo _('Password'); ?>:</span>
+	<input type="password" name="Password" /></p>
 	<div id="demo_text"><?php echo $demo_text;?></div>
-	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
+	<p><input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" /></p>
 	</form>
 	</div>
 </div>
