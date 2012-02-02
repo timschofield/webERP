@@ -1354,7 +1354,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						'" . $PeriodNo . "',
 						'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 						'" . $_SESSION['CreditItems']->DebtorNo . "',
-						'" . -round($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost + $TaxTotal/$_SESSION['CurrencyRate'],$_SESSION['CompanyRecord']['decimalplaces']) . "'
+						'" . -round(($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate'],$_SESSION['CompanyRecord']['decimalplaces']) . "'
 					)";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting for the credit note could not be inserted because');
