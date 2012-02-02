@@ -165,7 +165,8 @@
 	Define('NoReadOrderLines',1160);
 	Define('NoTaxProvince',1161);
 	Define('TaxRatesFailed',1162);
-	
+	Define('NoReadCustomerBranch',1163);
+	Define('NoReadItem',1164);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -331,5 +332,7 @@
 	$ErrorDescription['1160'] = _('Unable to read sales order lines');
 	$ErrorDescription['1161'] = _('Unable to get tax province of location');
 	$ErrorDescription['1162'] = _('Unable to read tax rates for this item and tax group');
+	$ErrorDescription['1163'] = _('Unable to read customer and branch details');
+	$ErrorDescription['1164'] = _('Unable to read credit note item details');
 
 ?>

@@ -1056,6 +1056,35 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
+	$Description = _('Creates a credit note from header details associative array and line items');
+	$Parameter[0]['name'] = _('Credit Note Header Details');
+	$Parameter[0]['description'] = _('An associative array describing the credit note header with the fields debtorno, branchcode, trandate, tpe, fromstkloc, customerref, shipvia');
+	$Parameter[1]['name'] = _('Credit note line items');
+	$Parameter[1]['description'] = _('The lines of stock being returned on this credit note. Only stock returns can be dealt with using this API method. This is an array of associative arrays containing the fields, stockid, price, qty, discountpercent for the items returned');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful, and the second element is the credit note number. ')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+/*E*/$CreateCreditNote_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcArray,$xmlrpcString,$xmlrpcString));
+	$CreateCreditNote_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_CreateCreditNote($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	if ($xmlrpcmsg->getNumParams() == 4) {
+/*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(CreateCreditNote(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), php_xmlrpc_decode($xmlrpcmsg->getParam( 1 )), $xmlrpcmsg->getParam( 2 )->scalarval(  ),$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/	} else {
+/*e*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(CreateCreditNote(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),php_xmlrpc_decode($xmlrpcmsg->getParam( 1 )), '', '')));
+/*x*/	}
+		ob_end_flush();
+		return $rtn;
+	}
+
+
 	$Description = _('Inserts a sales invoice into the debtortrans table and does the relevant GL entries');
 	$Parameter[0]['name'] = _('Invoice Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the invoice.')
@@ -3038,6 +3067,10 @@
 			"function" => "xmlrpc_InsertSalesInvoice",
 			"signature" => $InsertSalesInvoice_sig,
 			"docstring" => $InsertSalesInvoice_doc),
+		"weberp.xmlrpc_CreateCreditNote" => array(
+			"function" => "xmlrpc_CreateCreditNote",
+			"signature" => $CreateCreditNote_sig,
+			"docstring" => $CreateCreditNote_doc),
 		"weberp.xmlrpc_InsertSalesCredit" => array(
 			"function" => "xmlrpc_InsertSalesCredit",
 			"signature" => $InsertSalesCredit_sig,
