@@ -178,7 +178,7 @@ Class PurchOrder {
 	function Order_Value() {
 		$TotalValue=0;
 		foreach ($this->LineItems as $OrderedItems) {
-			if ($OrderedItems->Deleted = False){
+			if ($OrderedItems->Deleted == False){
 				$TotalValue += ($OrderedItems->Price)*($OrderedItems->Quantity);
 			}
 		}

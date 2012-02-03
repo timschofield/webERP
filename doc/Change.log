@@ -1,5 +1,6 @@
 webERP Change Log
 
+3/2/12 Vitaly:Fixed bug that was not allowing PO lines to be deleted in OrderValue method of PO class was testing using asignment operator not comparison operator
 31/1/12 Vitaly: Added DB_escape_string before ItemDescription and SupplierName in GoodsReceived.php to prevent problems with '.
 31/1/12 Phil: Stocks.php error on changing a stock category the journal between the stock GL accounts was not working because $NewStockAccount should have been $NewStockAct
 31/1/12 Phil: PO_Items.php removed $Maximum_Number_Of_Parts_To_Show should exist when we are already limiting the output of the query based on the configuraiton option $_SESSION['DefaultDisplayRecordsMax'];
