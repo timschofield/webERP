@@ -263,41 +263,22 @@ function ConvertToSQLDate($DateEntry) {
 		return $myrow[0];
 	}
 
-/* Retrieves the next transaction number for the given type 
- * This function is already included from SQL_CommonFunctions.php????
-	Isn't it??
-	 
-	function GetNextTransactionNo($type, $db) {
-		$sql="SELECT typeno FROM systypes WHERE typeid='" . $type . "'";
-		$result=DB_query($sql, $db);
-		$myrow=DB_fetch_array($result);
-		$NextTransaction=$myrow[0]+1;
-		return $NextTransaction;
-	}
+	/* 
+	This function inserts a debtors receipts into a bank account/GL Postings and does the allocation and journals for difference on exchange
 
-*/
-/* Create a customer credit note in webERP.
- * Needs an associative array for the Header 
- * and an array of assocative arrays for the $LineDetails
- */
-	function CreateCreditNote($Header,$LineDetails, $User, $Password) {
-		
-		/* $Header contains an associative array in the format:
-		 * Header['debtorno']
-		 * Header['branchcode']
-		 * Header['trandate']
-		 * Header['tpe']
-		 * Header['fromstkloc']
-		 * Header['customerref']
-		 * Header['shipvia'] 
-		 * 
-		 * and $LineDetails contains an array of associative arrays of the format:
-		 * 
-		 * $LineDetails[0]['stockid']
-		 * $LineDetails[0]['price']
-		 * $LineDetails[0]['qty']
-		 * $LineDetails[0]['discountpercent']
-		 */
+	$Receipt contains an associative array in the format:
+		 * $Receipt['debtorno'] - the customer code
+		 * $Receipt['branchcode']  - the branch code
+		 * $Receipt['trandate'] - the date of the receipt
+		 * $Receipt['amountfx'] - the amount in FX
+		 * $Receipt['paymentmethod'] - the payment method of the receipt e.g. cash/EFTPOS/credit card
+		 * $Receipt['bankaccount'] - the webERP bank account
+		 * $Receipt['allocto_transid'] - the invoice to allocate against
+
+	*/
+
+	function InsertDebtorReceipt($Receipt, $User, $Password) {
+
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
@@ -308,7 +289,58 @@ function ConvertToSQLDate($DateEntry) {
 
 		$Errors=VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifyBranchNoExists($Header['debtorno'],$Header['branchcode'], sizeof($Errors), $Errors, $db);
-		/*Does not deal with assembly items or serialise/lot track items - for use by POS */
+
+
+
+
+
+	}
+/* Retrieves the next transaction number for the given type
+ * This function is already included from SQL_CommonFunctions.php????
+	Isn't it??
+
+	function GetNextTransactionNo($type, $db) {
+		$sql="SELECT typeno FROM systypes WHERE typeid='" . $type . "'";
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$NextTransaction=$myrow[0]+1;
+		return $NextTransaction;
+	}
+
+*/
+/* Create a customer credit note in webERP.
+ * Needs an associative array for the Header
+ * and an array of assocative arrays for the $LineDetails
+ */
+	function CreateCreditNote($Header,$LineDetails, $User, $Password) {
+
+		/* $Header contains an associative array in the format:
+		 * Header['debtorno'] - the customer code
+		 * Header['branchcode']  - the branch code
+		 * Header['trandate'] - the date of the credit note
+		 * Header['tpe'] - the sales type
+		 * Header['fromstkloc'] - the inventory location where the stock is put back into
+		 * Header['customerref'] - the customer's reference
+		 * Header['shipvia'] - the shipper required by webERP
+		 *
+		 * and $LineDetails contains an array of associative arrays of the format:
+		 *
+		 * $LineDetails[0]['stockid']
+		 * $LineDetails[0]['price']
+		 * $LineDetails[0]['qty'] - expected to be a negative quantity (a negative sale)
+		 * $LineDetails[0]['discountpercent']
+		 */
+		$Errors = array();
+		$db = db($User, $Password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		
+		
+		$Errors=VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyBranchNoExists($Header['debtorno'],$Header['branchcode'], sizeof($Errors), $Errors, $db);
+		/*Does not deal with serialised/lot track items - for use by POS */
 		/*Get Company Defaults */
 		$ReadCoyResult = api_DB_query("SELECT debtorsact,
 												freightact,
@@ -320,7 +352,7 @@ function ConvertToSQLDate($DateEntry) {
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoCompanyRecord;
-		} 
+		}
 		
 		$HeaderSQL = "SELECT custbranch.area,
 							 custbranch.taxgroupid,
@@ -335,13 +367,13 @@ function ConvertToSQLDate($DateEntry) {
 							WHERE custbranch.debtorno = '" . $Header['debtorno'] . "'
 							AND custbranch.branchcode='" . $Header['branchcode'] . "'";
 
-		$HeaderResult = api_DB_query($OrderHeaderSQL,$db);
+		$HeaderResult = api_DB_query($HeaderSQL,$db);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoReadCustomerBranch;
-		} 
-		
+		}
+
 		$CN_Header = DB_fetch_array($HeaderResult);
-		
+
 		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $Header['fromstkloc'] ."'",$db);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoTaxProvince;
@@ -357,10 +389,12 @@ function ConvertToSQLDate($DateEntry) {
 
 		$TotalFXNetCredit = 0;
 		$TotalFXTax = 0;
+
+		$TaxTotals =array();
 		$LineCounter =0;
 
-		foreach ($LineItems as $CN_Line) {
-			
+		foreach ($LineDetails as $CN_Line) {
+
 			$LineSQL = "SELECT taxcatid,
 								mbflag,
 								materialcost+labourcost+overheadcost AS standardcost
@@ -373,7 +407,7 @@ function ConvertToSQLDate($DateEntry) {
 				return $Errors;
 			}
 			$LineRow = DB_fetch_array($LineResult);
-			
+
 			$StandardCost = $LineRow['standardcost'];
 			$LocalCurrencyPrice= ($CN_Line['price'] *(1- floatval($CN_Line['discountpercent'])))/ $CN_Header['rate'];
 			$LineNetAmount = $CN_Line['price'] * $CN_Line['qty'] *(1- floatval($CN_Line['discountpercent']));
@@ -393,18 +427,17 @@ function ConvertToSQLDate($DateEntry) {
 						taxauthrates.taxauthority=taxauthorities.taxid
 					WHERE taxgrouptaxes.taxgroupid='" . $CN_Header['taxgroupid'] . "'
 					AND taxauthrates.dispatchtaxprovince='" . $DispTaxProvinceID . "'
-					AND taxauthrates.taxcatid = '" . $CN_Line['taxcatid'] . "'
+					AND taxauthrates.taxcatid = '" . $LineRow['taxcatid'] . "'
 					ORDER BY taxgrouptaxes.calculationorder";
 
 			$GetTaxRatesResult = api_DB_query($SQL,$db);
-			
+
 			if (DB_error_no($db) != 0) {
 				$Errors[] = TaxRatesFailed;
-			} 
-			
-			$LineTaxAmount = 0;
-			$TaxTotals =array();
+			}
 
+			$LineTaxAmount = 0;
+			
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
 					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
@@ -416,12 +449,11 @@ function ConvertToSQLDate($DateEntry) {
 
 				if ($myrow['taxontax'] ==1){
 					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
-					  $TaxTotals[$myrow['taxauthid']]['FXAmount'] += ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
 				} else {
 					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
-					$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $LineNetAmount * $myrow['taxrate'];
 				}
-
+				$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
+				
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
 				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
@@ -433,8 +465,6 @@ function ConvertToSQLDate($DateEntry) {
 				$LineTaxAmount += $TaxAuthAmount;
 
 			}//end loop around Taxes
-
-			$LineNetAmount = $CN_Line['price'] * $CN_Line['qty'] *(1- floatval($CN_Line['discountpercent']));
 
 			$TotalFXNetCredit += $LineNetAmount;
 			$TotalFXTax += $LineTaxAmount;
@@ -463,8 +493,9 @@ function ConvertToSQLDate($DateEntry) {
 						SET quantity = locstock.quantity - " . $CN_Line['qty'] . "
 						WHERE locstock.stockid = '" . $CN_Line['stockid'] . "'
 						AND loccode = '" . $Header['fromstkloc'] . "'";
+
 				$Result = api_DB_query($SQL,$db,'','',true);
-								
+
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
 												transno,
@@ -493,9 +524,9 @@ function ConvertToSQLDate($DateEntry) {
 								'" . $CN_Line['discountpercent'] . "',
 								'" . $StandardCost . "',
 								'" . ($QtyOnHandPrior - $CN_Line['qty']) . "' )";
-	
+
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 			} else if ($LineRow['mbflag']=='A'){ /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
@@ -554,7 +585,7 @@ function ConvertToSQLDate($DateEntry) {
 												 '" . $Header['debtorno'] . "',
 												 '" . $Header['branchcode'] . "',
 												 '" . $PeriodNo . "',
-												 '" . _('Assembly') . ': ' . $CN_Line['stkcode'] . ' ' . $Header['customerref'] . "',
+												 '" . _('Assembly') . ': ' . $CN_Line['stockid'] . ' ' . $Header['customerref'] . "',
 												 '" . (-$AssParts['quantity'] * $CN_Line['qty']) . "',
 												 '" . $AssParts['standard'] . "',
 												 0,
@@ -571,9 +602,9 @@ function ConvertToSQLDate($DateEntry) {
 				} /* end of assembly explosion and updates */
 			} /* end of its an assembly */
 
-			
-			if ($OrderLineRow['mbflag']=='A' OR $OrderLineRow['mbflag']=='D'){
-				/*it's a Dummy/Service item or an Assembly item - still need stock movement record 
+
+			if ($LineRow['mbflag']=='A' OR $LineRow['mbflag']=='D'){
+				/*it's a Dummy/Service item or an Assembly item - still need stock movement record
 				 * but quantites on hand are always nil */
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
@@ -603,7 +634,7 @@ function ConvertToSQLDate($DateEntry) {
 								'" . $CN_Line['discountpercent'] . "',
 								'" . $StandardCost . "',
 								'0' )";
-								
+
 				$Result = api_DB_query($SQL,$db,'','',true);
 			}
 			/*Get the ID of the StockMove... */
@@ -624,7 +655,7 @@ function ConvertToSQLDate($DateEntry) {
 
 				$Result = DB_query($SQL,$db,'','',true);
 			}
-			
+
 			/*Insert Sales Analysis records */
 
 			$SQL="SELECT COUNT(*),
@@ -660,12 +691,10 @@ function ConvertToSQLDate($DateEntry) {
 						salesanalysis.typeabbrev,
 						salesanalysis.salesperson";
 
-			$ErrMsg = _('The count of existing Sales analysis records could not run because');
-			$DbgMsg = _('SQL to count the no of sales analysis records');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			$Result = api_DB_query($SQL,$db,'','',true);
 
 			$myrow = DB_fetch_row($Result);
-			
+
 			if ($myrow[0]>0){  /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis
@@ -681,7 +710,7 @@ function ConvertToSQLDate($DateEntry) {
 						AND stockid  " . LIKE . " '" . $CN_Line['stockid'] . "'
 						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
 						AND budgetoractual='1'";
-			
+
 			} else { /* insert a new sales analysis record */
 
 				$SQL = "INSERT INTO salesanalysis (	typeabbrev,
@@ -714,9 +743,9 @@ function ConvertToSQLDate($DateEntry) {
 								WHERE stockmaster.stockid = '" . $CN_Line['stockid'] . "'
 								AND custbranch.debtorno = '" . $Header['debtorno'] . "'
 								AND custbranch.branchcode='" . $Header['branchcode'] . "'";
-			
+
 			}
-			
+
 			$Result = api_DB_query($SQL,$db,'','',true);
 
 			if ($CompanyRecord['gllink_stock']==1 AND $StandardCost !=0){
@@ -739,7 +768,7 @@ function ConvertToSQLDate($DateEntry) {
 										'" . ($StandardCost * $CN_Line['qty']) . "')";
 
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 /*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
 				$StockGLCode = GetStockGLCode($CN_Line['stockid'],$db);
 
@@ -759,7 +788,7 @@ function ConvertToSQLDate($DateEntry) {
 										'" . (-$StandardCost * $CN_Line['qty']) . "')";
 
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 			} /* end of if GL and stock integrated and standard cost !=0  and not an asset */
 
 			if ($CompanyRecord['gllink_debtors']==1 AND $CN_Line['price'] !=0){
@@ -783,7 +812,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . (-$CN_Line['price'] * $CN_Line['qty']/$CN_Header['rate']) . "'
 					)";
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 				if ($CN_Line['discountpercent'] !=0){
 
 					$SQL = "INSERT INTO gltrans (type,
@@ -799,7 +828,7 @@ function ConvertToSQLDate($DateEntry) {
 								'" . $PeriodNo . "',
 								'" . $SalesGLAccounts['discountglcode'] . "',
 								'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " @ " . ($CN_Line['discountpercent'] * 100) . "%',
-								'" . ($CN_Line['price'] * $CN_Line['quantity'] * $CN_Line['discountpercent']/$CN_Header['rate']) . "')";
+								'" . ($CN_Line['price'] * $CN_Line['qty'] * $CN_Line['discountpercent']/$CN_Header['rate']) . "')";
 
 					$Result = DB_query($SQL,$db,'','',true);
 				} /*end of if discount !=0 */
@@ -809,17 +838,12 @@ function ConvertToSQLDate($DateEntry) {
 			$LineCounter++; //needed for the array of taxes by line
 		} /*end of OrderLine loop */
 
-		$TotalCreditLocalCurr = ($TotalFXNetCredit + $TotalFXTax)/$OrderHeader['rate'];
-
-
-//To here
-
+		$TotalCreditLocalCurr = ($TotalFXNetCredit + $TotalFXTax)/$CN_Header['rate'];
 
 		if ($CompanyRecord['gllink_debtors']==1){
 
 			/*Now post the tax to the GL at local currency equivalent */
 			if ($CompanyRecord['gllink_debtors']==1 AND $TaxAuthAmount !=0) {
-
 
 				/*Loop through the tax authorities array to post each total to the taxauth glcode */
 				foreach ($TaxTotals as $Tax){
@@ -830,19 +854,19 @@ function ConvertToSQLDate($DateEntry) {
 												account,
 												narrative,
 												amount )
-											VALUES (10,
-											'" . $InvoiceNo . "',
-											'" . $OrderHeader['orddate']. "',
+											VALUES (11,
+											'" . $CreditNoteNo . "',
+											'" . $Header['trandate']. "',
 											'" . $PeriodNo . "',
 											'" . $Tax['GLCode'] . "',
-											'" . $OrderHeader['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
-											'" . -$Tax['FXAmount']/$OrderHeader['rate'] . "' )";
+											'" . $Header['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
+											'" . -$Tax['FXAmount']/$CN_Header['rate'] . "' )";
 
 					$Result = api_DB_query($SQL,$db,'','',true);
 				}
 			}
 
-			/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
+			/*Post debtors transaction to GL credit debtors, and debit sales */
 			if (($TotalCreditLocalCurr) !=0) {
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -851,23 +875,19 @@ function ConvertToSQLDate($DateEntry) {
 											account,
 											narrative,
 											amount)
-									VALUES ('10',
-										'" . $InvoiceNo . "',
-										'" . $OrderHeader['orddate'] . "',
+									VALUES ('11',
+										'" . $CreditNoteNo . "',
+										'" . $Header['trandate'] . "',
 										'" . $PeriodNo . "',
 										'" . $CompanyRecord['debtorsact'] . "',
-										'" . $OrderHeader['debtorno'] . "',
+										'" . $Header['debtorno'] . "',
 										'" . $TotalCreditLocalCurr . "')";
 
 				$Result = api_DB_query($SQL,$db,'','',true);
 			}
-			EnsureGLEntriesBalance(10,$InvoiceNo,$db);
-			
-		} /*end of if Sales and GL integrated */
+			EnsureGLEntriesBalance(11,$CreditNoteNo,$db);
 
-	/*Update order header for invoice charged on */
-		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= '" . $OrderNo . "'";
-		$Result = api_DB_query($SQL,$db,'','',true);
+		} /*end of if Sales and GL integrated */
 
 	/*Now insert the DebtorTrans */
 
@@ -880,51 +900,48 @@ function ConvertToSQLDate($DateEntry) {
 										prd,
 										reference,
 										tpe,
-										order_,
 										ovamount,
 										ovgst,
 										rate,
 										shipvia)
 									VALUES (
-										'". $InvoiceNo . "',
-										10,
-										'" . $OrderHeader['debtorno'] . "',
-										'" . $OrderHeader['branchcode'] . "',
-										'" . $OrderHeader['orddate'] . "',
+										'". $CreditNoteNo . "',
+										11,
+										'" . $Header['debtorno'] . "',
+										'" . $Header['branchcode'] . "',
+										'" . $Header['trandate'] . "',
 										'" . date('Y-m-d H-i-s') . "',
 										'" . $PeriodNo . "',
-										'" . $OrderHeader['customerref'] . "',
-										'" . $OrderHeader['sales_type'] . "',
-										'" . $OrderNo . "',
+										'" . $Header['customerref'] . "',
+										'" . $Header['tpe'] . "',
 										'" . $TotalFXNetCredit . "',
 										'" . $TotalFXTax . "',
-										'" . $OrderHeader['rate'] . "',
-										'" . $OrderHeader['shipvia'] . "')";
-						
+										'" . $CN_Header['rate'] . "',
+										'" . $Header['shipvia'] . "')";
+
 		$Result = api_DB_query($SQL,$db,'','',true);
-		
+
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-		
+
 		/*for each Tax - need to insert into debtortranstaxes */
 		foreach ($TaxTotals AS $TaxAuthID => $Tax) {
-			
+
 			$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 												taxauthid,
 												taxamount)
 								VALUES ('" . $DebtorTransID . "',
 										'" . $TaxAuthID . "',
-										'" . $Tax['FXAmount']/$OrderHeader['rate'] . "')";
+										'" . $Tax['FXAmount']/$CN_Header['rate'] . "')";
 			$Result = api_DB_query($SQL,$db,'','',true);
 		}
-		
+
 		if (sizeof($Errors)==0) {
-			
 			$Result = DB_Txn_Commit($db);
 			$Errors[0]=0;
-			$Errors[1]=$InvoiceNo;
+			$Errors[1]=$CreditNoteNo;
 		} else {
 			$Result = DB_Txn_Rollback($db);
-		}	
+		}
 		return $Errors;
 
 	} /*End of CreateCreditNote method */
@@ -932,9 +949,11 @@ function ConvertToSQLDate($DateEntry) {
 /* Create a customer invoice in webERP. This function will bypass the
  * normal procedure in webERP for creating a sales order first, and then
  * delivering it.
- * There are no stock updates no accounting for assemblies no updates
+
+ * NB: There are no stock updates no accounting for assemblies no updates
  * to sales analysis records - no cost of sales entries in GL
- * USE WITH CAUTION
+
+ ************ USE ONLY WITH CAUTION********************
  */
 	function InsertSalesInvoice($InvoiceDetails, $user, $password) {
 		$Errors = array();
@@ -1062,9 +1081,12 @@ function ConvertToSQLDate($DateEntry) {
 /* Create a customer credit note in webERP. This function will bypass the
  * normal procedure in webERP for creating a sales order first, and then
  * delivering it. All values should be sent as negatives.
- * stock is not updated and the method cannot deal with assembly items
+
+
+ * NB: Stock is not updated and the method cannot deal with assembly items
  * the sales analysis is not updated either
- * USE WITH CAUTION!!
+
+ ****************** USE WITH CAUTION!! **********************
  */
 	function InsertSalesCredit($CreditDetails, $user, $password) {
 		$Errors = array();

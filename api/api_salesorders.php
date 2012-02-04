@@ -634,7 +634,12 @@ $SOH_DateFields = array ('orddate',
 	
 	
 	function InvoiceSalesOrder($OrderNo, $User, $Password) {
-		
+
+
+$fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
+
+
+
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
@@ -706,7 +711,7 @@ $SOH_DateFields = array ('orddate',
 								mbflag,
 								materialcost+labourcost+overheadcost AS standardcost
 						FROM salesorderdetails INNER JOIN stockmaster
-							ON salesorderdetails.stkcode = stockmaster.stockid
+						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $OrderNo . "'
 						AND completed=0";
 
@@ -721,7 +726,9 @@ $SOH_DateFields = array ('orddate',
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10, $db);
 		$PeriodNo = GetCurrentPeriod($db);
-
+		
+		$TaxTotals =array();
+		
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
 		$LineCounter =0;
@@ -755,11 +762,9 @@ $SOH_DateFields = array ('orddate',
 			if (DB_error_no($db) != 0) {
 				$Errors[] = TaxRatesFailed;
 			} 
-			
 			$LineTaxAmount = 0;
-			$TaxTotals =array();
-
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+
 				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
 					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
 				}
@@ -769,13 +774,12 @@ $SOH_DateFields = array ('orddate',
 				$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
 
 				if ($myrow['taxontax'] ==1){
-					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
-					  $TaxTotals[$myrow['taxauthid']]['FXAmount'] += ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+					$TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
 				} else {
 					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
-					$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $LineNetAmount * $myrow['taxrate'];
 				}
-
+				$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
+				
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
 				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
@@ -787,8 +791,6 @@ $SOH_DateFields = array ('orddate',
 				$LineTaxAmount += $TaxAuthAmount;
 
 			}//end loop around Taxes
-
-			$LineNetAmount = $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] *(1- floatval($OrderLineRow['discountpercent']));
 
 			$TotalFXNetInvoice += $LineNetAmount;
 			$TotalFXTax += $LineTaxAmount;
@@ -1179,7 +1181,6 @@ $SOH_DateFields = array ('orddate',
 
 			/*Now post the tax to the GL at local currency equivalent */
 			if ($CompanyRecord['gllink_debtors']==1 AND $TaxAuthAmount !=0) {
-
 
 				/*Loop through the tax authorities array to post each total to the taxauth glcode */
 				foreach ($TaxTotals as $Tax){

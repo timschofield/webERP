@@ -64,7 +64,7 @@ function api_DB_query( $sql, $db, $EMsg= '', $DMsg= '', $Transaction='', $TrapEr
     //  query function,  and will remember any error message in the session
     //  data.
 
-    $result = DB_query($sql, $db, $Emsg, $Dmsg, $Transaction, $TrapErrors);
+    $result = DB_query($sql, $db, $EMsg, $DMsg, $Transaction, $TrapErrors);
     if (DB_error_no($db) != 0) {
 		$_SESSION['db_err_msg'] = "SQL: " . $sql . "\nDB error message: " . DB_error_msg($db) . "\n";
     } else {
