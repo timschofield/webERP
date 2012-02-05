@@ -265,11 +265,11 @@ if (!class_exists('Cpdf', false)) {
 	
 			}
 			$this->SetFontSize($Height);
-			$cw=&$this->CurrentFont['cw'];
+
 			if($Width==0) {
 				$Width=$this->w-$this->rMargin-$this->x;
 			}
-			$wmax=($Width-2*$this->cMargin)*1000/$this->FontSize;
+			$wmax=($Width-2*$this->cMargin);
 			$s=str_replace("\r",'',$Text);
 			$s=str_replace("\n",' ',$s);
 			$s = trim($s).' ';
@@ -295,6 +295,7 @@ if (!class_exists('Cpdf', false)) {
 			$i=0;
 			$l= $ls=0;
 			$ns=0;
+            $cw = $this->GetStringWidth($s, '', '', 0, true);
 			while($i<$nb) {
 				$c=$s{$i};
 				if($c==' ' AND $i>0) {
@@ -321,7 +322,7 @@ if (!class_exists('Cpdf', false)) {
 				$sep = $i;
 			} else {
 				if($Align=='J') {
-					$this->ws=($ns>1) ? ($wmax-$ls)/1000*$this->FontSize/($ns-1) : 0;
+					$this->ws=($ns>1) ? ($wmax-$ls)/($ns-1) : 0;
 					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
 				}
 			}
