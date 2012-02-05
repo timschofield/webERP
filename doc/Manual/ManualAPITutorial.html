@@ -37,7 +37,9 @@ error_reporting (E_ALL & ~E_NOTICE);
 include ("xmlrpc/lib/xmlrpc.inc");
 <br /><br />
 //if your webERP install is on a server at http://www.yourdomain.com/webERP
+<br /><br />
 $ServerURL = "http://www.yourdomain.com/webERP/api/api_xml-rpc.php";
+<br /><br />
 $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 <br /><br />
 $Parameters = array();
@@ -46,26 +48,39 @@ $Parameters = array();
 if one of the parameters required is an array then it needs to be processing into xml for the rpc call through php_xmlrpc_encode()*/
 <br /><br />
 $Parameters['StockID'] = xmlrpcval('DVD-TOPGUN'); //the stockid of the item we wish to know the balance for
+<br /><br />
 //assuming the demo username and password will work !
+<br /><br />
 $Parameters['Username'] = xmlrpcval('admin');
+<br /><br />
 $Parameters['Password'] = xmlrpcval('weberp');
 <br /><br />
 $msg = new xmlrpcmsg("weberp.xmlrpc_GetStockBalance", $Parameters);
 <br /><br />
 $client = new xmlrpc_client($ServerURL);
+<br /><br />
 $client->setDebug($DebugLevel);
+<br /><br />
 $response = $client->send($msg);
+<br /><br />
 $answer = php_xmlrpc_decode($response->value());
+<br /><br />
 if ($answer[0]!=0){ //then the API returned some errors need to figure out what went wrong
 <br /><br />
 //need to figure out how to return all the error descriptions associated with the codes
 <br /><br />
 } else { //all went well the returned data is in $answer[1]
+<br /><br />
 //answer will be an array of the locations and quantity on hand for DVD_TOPGUN so we need to run through the array to print out
+<br /><br />
 for ($i=0; $i < sizeof($answer[1]);$i++) {
+<br /><br />
   echo '<br>' . $answer[1][$i]['loccode'] . ' has ' . $answer[1][$i]['quantity'] . ' on hand';
+ <br /><br />
 }
+<br /><br />
 echo "</body></html>";
+<br /><br />
 </i>
 <hr />
 <br /><br />

@@ -1255,7 +1255,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 										'" . date('Y-m-d H-i-s') . "',
 										'" . $PeriodNo . "',
 										'" . $OrderHeader['customerref'] . "',
-										'" . $OrderHeader['sales_type'] . "',
+										'" . $OrderHeader['ordertype'] . "',
 										'" . $OrderNo . "',
 										'" . $TotalFXNetInvoice . "',
 										'" . $TotalFXTax . "',
@@ -1292,7 +1292,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 	
 	function GetCurrentPeriod (&$db) {
 		
-		$TransDate = mktime(); //The current date to find the period for
+		$TransDate = time(); //The current date to find the period for
 		/* Find the unix timestamp of the last period end date in periods table */
 		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 		$result = DB_query($sql, $db);

@@ -935,6 +935,63 @@ function ConvertToSQLDate($DateEntry) {
 			$Result = api_DB_query($SQL,$db,'','',true);
 		}
 
+		#Now figure out if there was an invoice in the same POS transaction to allocate against?
+		
+		$SQL = "SELECT id, 
+					ovamount+ovgst AS total, 
+					alloc 
+				FROM debtortrans 
+				WHERE customerref='" . $Header['customerref'] . "' 
+				AND type=10
+				AND settled=0";
+		$Result = api_DB_query($SQL,$db,'','',true);
+		
+		$TotalCreditFX = $TotalFXNetCredit + $TotalFXTax; #Should be negative number
+		$Allocated = 0;
+		if (DB_num_rows($Result)>0){
+			while ($InvoiceRow = DB_fetch_array($Result) AND $Allocated > $TotalCreditFX){
+				if ($InvoiceRow['total'] - $InvoiceRow['alloc'] + $TotalCreditFX - $Allocated>0) {
+					/*Then we can allocate all of the (remaining) credit against this invoice */
+					$AllocateAmount = $InvoiceRow['total'] - $InvoiceRow['alloc'] + $TotalCreditFX - $Allocated;
+				} elseif ($InvoiceRow['total'] - $InvoiceRow['alloc'] - $Allocated > 0){
+					$AllocateAmount = $InvoiceRow['total'] - $InvoiceRow['alloc'] - $Allocated;
+				} else {
+					$AllocateAmount = 0;
+				}
+				if ($AllocateAmount > 0) {	
+					$SQL = "INSERT INTO	custallocns (datealloc,
+													 amt,
+													 transid_allocfrom,
+													 transid_allocto) 
+							VALUES ('" . date('Y-m-d') . "',
+									'" . $AllocateAmount . "',
+									'" . $DebtorTransID . "',
+									'" . $InvoiceRow['id'] . "')";
+					$InsertAllocResult = api_DB_query($SQL,$db,'','',true);
+				}
+				if (abs($InvoiceRow['total'] - $InvoiceRow['alloc'] - $AllocateAmount)<0.005){
+					$Settled = 1;
+				} else {
+					$Settled =0;
+				}
+				$SQL = "UPDATE debtortrans SET alloc = alloc + " . $AllocateAmount . ",
+												settled = '" . $Settled . "'
+						WHERE id = '" . $InvoiceRow['id'] ."'";
+				$UpdateAllocResult = api_DB_query($SQL,$db,'','',true);
+								
+				$Allocated -= $AllocateAmount;
+			}
+			if (abs($TotalCreditFX - $Allocated)<0.005){
+				$Settled = 1;
+			} else {
+				$Settled =0;
+			}
+			$SQL = "UPDATE debtortrans SET alloc = alloc + " . $Allocated . ",
+												settled = '" . $Settled . "'
+					WHERE id = '" . $DebtorTransID  ."'";
+			$UpdateAllocResult = api_DB_query($SQL,$db,'','',true);
+		}
+		
 		if (sizeof($Errors)==0) {
 			$Result = DB_Txn_Commit($db);
 			$Errors[0]=0;
@@ -943,7 +1000,6 @@ function ConvertToSQLDate($DateEntry) {
 			$Result = DB_Txn_Rollback($db);
 		}
 		return $Errors;
-
 	} /*End of CreateCreditNote method */
 
 /* Create a customer invoice in webERP. This function will bypass the
