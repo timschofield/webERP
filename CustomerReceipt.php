@@ -436,6 +436,35 @@ if (isset($_POST['CommitBatch'])){
 	} /*end foreach $ReceiptItem */
 	echo '</table>';
 
+	/*now enter the BankTrans entry */
+
+	$SQL="INSERT INTO banktrans (type,
+								transno,
+								bankact,
+								ref,
+								exrate,
+								functionalexrate,
+								transdate,
+								banktranstype,
+								amount,
+								currcode)
+		VALUES (
+			12,
+			'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+			'" . $_SESSION['ReceiptBatch']->Account . "',
+			'" . $_SESSION['ReceiptBatch']->Narrative . "',
+			'" . $_SESSION['ReceiptBatch']->ExRate . "',
+			'" . $_SESSION['ReceiptBatch']->FunctionalExRate . "',
+			'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+			'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
+			'" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . "',
+			'" . $_SESSION['ReceiptBatch']->Currency . "'
+		)";
+	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
+	$ErrMsg = _('Cannot insert a bank transaction');
+	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+
 	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
 
 		if ($BatchReceiptsTotal!=0){
@@ -460,33 +489,7 @@ if (isset($_POST['CommitBatch'])){
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-			/*now enter the BankTrans entry */
-
-			$SQL="INSERT INTO banktrans (type,
-										transno,
-										bankact,
-										ref,
-										exrate,
-										functionalexrate,
-										transdate,
-										banktranstype,
-										amount,
-										currcode)
-				VALUES (
-					12,
-					'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-					'" . $_SESSION['ReceiptBatch']->Account . "',
-					'" . $_SESSION['ReceiptBatch']->Narrative . "',
-					'" . $_SESSION['ReceiptBatch']->ExRate . "',
-					'" . $_SESSION['ReceiptBatch']->FunctionalExRate . "',
-					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-					'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
-					'" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . "',
-					'" . $_SESSION['ReceiptBatch']->Currency . "'
-				)";
-			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			
 		}
 		if ($BatchDebtorTotal!=0){
 			/* Now Credit Debtors account with receipts + discounts */

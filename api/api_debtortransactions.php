@@ -268,11 +268,12 @@ function ConvertToSQLDate($DateEntry) {
 
 	$Receipt contains an associative array in the format:
 		 * $Receipt['debtorno'] - the customer code
-		 * $Receipt['branchcode']  - the branch code
 		 * $Receipt['trandate'] - the date of the receipt
 		 * $Receipt['amountfx'] - the amount in FX
 		 * $Receipt['paymentmethod'] - the payment method of the receipt e.g. cash/EFTPOS/credit card
 		 * $Receipt['bankaccount'] - the webERP bank account
+		 
+		 Maybe allocation a separate method...
 		 * $Receipt['allocto_transid'] - the invoice to allocate against
 
 	*/
@@ -288,26 +289,91 @@ function ConvertToSQLDate($DateEntry) {
 		$fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 
 		$Errors=VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors, $db);
-		$Errors=VerifyBranchNoExists($Header['debtorno'],$Header['branchcode'], sizeof($Errors), $Errors, $db);
+		/*Get Company Defaults */
+		$ReadCoyResult = api_DB_query("SELECT debtorsact,
+												gllink_debtors
+										FROM companies
+										WHERE coycode=1",$db);
 
+		$CompanyRecord = DB_fetch_array($ReadCoyResult);
+		if (DB_error_no($db) != 0) {
+			$Errors[] = NoCompanyRecord;
+		}
+		
+		$CustCurrencySQL = "SELECT debtorsmaster.currcode,
+							 rate,
+						FROM debtorsmaster
+						INNER JOIN currencies
+						ON debtorsmaster.currcode=currencies.currabrev
+						WHERE custbranch.debtorno = '" . $Receipt['debtorno'] . "'";
 
+		$CurrResult = api_DB_query($CustCurrencySQL,$db);
+		if (DB_error_no($db) != 0) {
+			$Errors[] = NoReadCustomerBranch;
+		}
 
+		$CustCurrRow = DB_fetch_array($CurrResult);
+		
+		
+		/*Get the currency and rate of the bank account transferring to*/
+		$SQL = "SELECT currcode, rate
+					FROM bankaccounts INNER JOIN currencies
+					ON bankaccounts.currcode = currencies.currabrev
+					WHERE accountcode='" . $ReceiptItem->GLCode."'";
+		$TrfFromAccountResult = api_DB_query($SQL,$db);
 
+		DB_Txn_Begin($db);
+
+		$ReceiptNo = GetNextTransNo(12,$db);
+		$PeriodNo = GetCurrentPeriod($db);
+/*now enter the BankTrans entry */
+
+		$SQL="INSERT INTO banktrans (type,
+									transno,
+									bankact,
+									ref,
+									exrate,
+									functionalexrate,
+									transdate,
+									banktranstype,
+									amount,
+									currcode)
+				VALUES (12,
+						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+						'" . $_SESSION['ReceiptBatch']->Account . "',
+						'" . $_SESSION['ReceiptBatch']->Narrative . "',
+						'" . $_SESSION['ReceiptBatch']->ExRate . "',
+						'" . $_SESSION['ReceiptBatch']->FunctionalExRate . "',
+						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+						'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
+						'" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . "',
+						'" . $_SESSION['ReceiptBatch']->Currency . "')";
+		
+		$result = api_DB_query($SQL,$db,'','',true);
+		
+		if ($CompanyRecord[['gllink_debtors']==1) {
+		/* Now Credit Debtors account with receipts + discounts */
+			$SQL="INSERT INTO gltrans ( type,
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
+					VALUES (
+						12,
+						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
+						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+						'" . $PeriodNo . "',
+						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
+						'" . $_SESSION['ReceiptBatch']->Narrative . "',
+						'" . -$BatchDebtorTotal . "')";
+		
+			$result = api_DB_query($SQL,$db,'','',true);
+		}
 
 	}
-/* Retrieves the next transaction number for the given type
- * This function is already included from SQL_CommonFunctions.php????
-	Isn't it??
 
-	function GetNextTransactionNo($type, $db) {
-		$sql="SELECT typeno FROM systypes WHERE typeid='" . $type . "'";
-		$result=DB_query($sql, $db);
-		$myrow=DB_fetch_array($result);
-		$NextTransaction=$myrow[0]+1;
-		return $NextTransaction;
-	}
-
-*/
 /* Create a customer credit note in webERP.
  * Needs an associative array for the Header
  * and an array of assocative arrays for the $LineDetails
