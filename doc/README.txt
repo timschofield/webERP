@@ -32,7 +32,7 @@ The user documentation contains a wealth of information and is installed under t
 
 SUPPORT
 
-The primary means of support queries is through the user mailing list.
+The primary means of support queries is through the forum at http://www.weberp.org/forum or the user mailing list.
 Please join the list at: http://lists.sourceforge.net/lists/listinfo/web-erp-users
 if you have queries. The archives of the mailing lists on sourceforge and the FAQ (see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation) contain the most common issues with respect to installation.
 

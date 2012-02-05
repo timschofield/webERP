@@ -35,13 +35,13 @@ while ($PriceLists=DB_fetch_array($PricesResult)){
 
 echo '</select></td></tr>';
 
-$SQL = 'SELECT currency, currabrev FROM currencies';
+$SQL = "SELECT currency, currabrev FROM currencies";
 
 $result = DB_query($SQL,$db);
 
 echo '<tr>
-        <td>' . _('Select the price list currency to update') . ':</td>
-                            <td><select name="CurrCode">';
+		<td>' . _('Select the price list currency to update') . ':</td>
+		<td><select name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])){
 	echo '<option selected="selected" value="0">' . _('No Price List Currency Selected') . '</option>';
@@ -102,7 +102,7 @@ if (isset($_POST['CostType']) and $_POST['CostType']=='OtherPriceList'){
 echo '<tr><td>' . _('Stock Category From') . ':</td>
                 <td><select name="StkCatFrom">';
 
-$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
+$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
@@ -119,8 +119,9 @@ echo '</select></td></tr>';
 
 DB_data_seek($result,0);
 
-echo '<tr><td>' . _('Stock Category To') . ':</td>
-                <td><select name="StkCatTo">';
+echo '<tr>
+		<td>' . _('Stock Category To') . ':</td>
+		<td><select name="StkCatTo">';
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid']==$_POST['StkCatTo']){
