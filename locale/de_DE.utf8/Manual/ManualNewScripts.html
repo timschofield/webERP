@@ -1,5 +1,4 @@
-<br /><br />
-<a name="NewScripts"><font size="+3"><b>Entwicklung - Grundlagen</b></font></a>
+<h1><a name="NewScripts">Entwicklung - Grundlagen</a></h1>
 <br /><br />
 <font size="+2"><b>Verzeichnisstruktur</b></font>
 <br /><br />
@@ -12,28 +11,22 @@ Bei der Erstellung neuer Skripte sollten Sie von der Verwendung der folgenden Ba
 Diese Seite muss auf jeder Seite eingebunden werden, nachdem die Variable $PageSecurity mit einem entsprechenden Wert versorgt wurde (siehe Abschnitt Sicherheitskonzept). Das Skript session.inc hat folgende Funktionen:
 <br /><br />
 <ul>
-<li>
-Es eröffnet eine Sitzung, wenn dies noch nicht geschehen ist und prüft, dass ein berechtigter Benutzer angemeldet ist. Wenn das der Fall ist, wird geprüft, ob der Benutzer die für die aufgerufene Seite die erforderliche Berechtigung besitzt, Grundlage ist der übergebene Wert in $PageSecurity.
-<li>
-Es bindet im Weiteren folgende Skripte ein:
-<li>
-config.php - Dieses Script beinhaltet alle Grundeinstellungen für das System. Zusammen mit der session.inc sorgt es dafür, dass zum Programmstart alle benötigten Systemvariablen belegt sind.
-<li>
-ConnectDB.inc - Dieses Skript stellt eine Datenbankverbindung her und enthält alle die Funktionen, die die Datenbank einbinden. Wenn mit der Datenbank kommuniziert wird, ruft das System nur die hier definierten Funktionen auf und keine MySQL-spezifischen Funktionen. Änderungen an der Datenbenk wären ansonsten sehr schwierig anzuwenden. Durch die Verwendung dieser Datei muss nur diese selbst angepasst werden, falls eine andere Datenbank verwendet werden soll.
+<li>Es eröffnet eine Sitzung, wenn dies noch nicht geschehen ist und prüft, dass ein berechtigter Benutzer angemeldet ist. Wenn das der Fall ist, wird geprüft, ob der Benutzer die für die aufgerufene Seite die erforderliche Berechtigung besitzt, Grundlage ist der übergebene Wert in $PageSecurity.</li>
+<li>Es bindet im Weiteren folgende Skripte ein:</li>
+<li>config.php - Dieses Script beinhaltet alle Grundeinstellungen für das System. Zusammen mit der session.inc sorgt es dafür, dass zum Programmstart alle benötigten Systemvariablen belegt sind.</li>
+<li>ConnectDB.inc - Dieses Skript stellt eine Datenbankverbindung her und enthält alle die Funktionen, die die Datenbank einbinden. Wenn mit der Datenbank kommuniziert wird, ruft das System nur die hier definierten Funktionen auf und keine MySQL-spezifischen Funktionen. Änderungen an der Datenbenk wären ansonsten sehr schwierig anzuwenden. Durch die Verwendung dieser Datei muss nur diese selbst angepasst werden, falls eine andere Datenbank verwendet werden soll.</li>
 </ul>
 <font size="+1"><b>header.inc</b></font>
 <br /><br />
 Diese Datei sollte eingebunden werden, nachdem die Variable $title mit dem Namen der Seite versorgt wurde. Sie setzt voraus, dass die config.php bereits geladen wurde ebenso muss die session.inc natürlich vor der header.inc eingebunden sein. Das Programm hat die folgenden Funktionen:
 <br /><br />
 <ul>
-<li>
-es gibt den Seitenkopf mit dem Menü (Hauptmenü, Kundensuche, Materialsuche, Lieferantensuche, Handbuch, Abmelden) aus.
-<li>
-es setzt das Cascaded-Style-Sheet, das das vom Benutzer ausgewählte Layout auf die folgenden Seiteninhalte anwendet.
+<li>es gibt den Seitenkopf mit dem Menü (Hauptmenü, Kundensuche, Materialsuche, Lieferantensuche, Handbuch, Abmelden) aus.</li>
+<li>es setzt das Cascaded-Style-Sheet, das das vom Benutzer ausgewählte Layout auf die folgenden Seiteninhalte anwendet.</li>
 </ul>
 <font size="+1"><b>footer.inc</b></font>
 <br /><br />
-Diese Datei enthält das Datum, ein kleines Logo, den Firmennamen, den Copyright-Hinweis und die abschließenden HTML-Tags </body></html>.
+Diese Datei enthält das Datum, ein kleines Logo, den Firmennamen, den Copyright-Hinweis und die abschließenden HTML-Tags &lt;/body&gt;&lt;/html&gt;.
 <br /><br />
 <font size="+1"><b>config.php</b></font>
 <br /><br />
@@ -52,14 +45,10 @@ Obwohl das System unter MySQL entwickelt wurde, wurde immer mit berücksichtigt, 
 Dieses Skript enthält eine Reihe von Funktionen für Datumsumwandlungen, die durch das System verwendet werden - die wichtigsten davon:
 <br /><br />
 <ul>
-<li>
-DateDiff - berechnet den Unterschied zwischen zwei Datumsangaben und hat einen Parameter für die Angabe in Tagen, Wochen oder Monaten.
-<li>
-FormatDateForSQL - wandelt das Datum von dem für webERP eingestellten Format $DefaultDateFormat in das für die Datenbank benötigte Format jjjj-mm-tt um.
-<li>
-ConvertSQLDate - wandelt das Datum vom SQL-Format jjjj-mm-tt in das für webERP eingestellt Datumsformat um.
-<li>
-GetPeriodNo - gibt die Periodennummer zu einem angegebenen Datum zurück und berücksichtigt dabei die Einstellungen zum Geschäftsjahr. Damit immer eine gültige Periode zurückgegeben wird, werden erforderlichenfalls neue Summensätze für die Sachkontenverkehrszahlen angelegt.
+<li>DateDiff - berechnet den Unterschied zwischen zwei Datumsangaben und hat einen Parameter für die Angabe in Tagen, Wochen oder Monaten.</li>
+<li>FormatDateForSQL - wandelt das Datum von dem für webERP eingestellten Format $DefaultDateFormat in das für die Datenbank benötigte Format jjjj-mm-tt um.</li>
+<li>ConvertSQLDate - wandelt das Datum vom SQL-Format jjjj-mm-tt in das für webERP eingestellt Datumsformat um.</li>
+<li>GetPeriodNo - gibt die Periodennummer zu einem angegebenen Datum zurück und berücksichtigt dabei die Einstellungen zum Geschäftsjahr. Damit immer eine gültige Periode zurückgegeben wird, werden erforderlichenfalls neue Summensätze für die Sachkontenverkehrszahlen angelegt.</li>
 </ul>
 <font size="+1"><b>SQL_CommonFuctions.inc</b></font>
 <br /><br />

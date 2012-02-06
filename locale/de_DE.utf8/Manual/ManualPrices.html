@@ -10,7 +10,7 @@ Preise werden für Umsatzarten und Währungen im System hinterlegt. Wenn ein Kunde
 <br /><br />
 <font size="+1"><b>Preise pflegen</b></font>
 <br /><br />
-Um Preise einzupflegen, muss jeweils zuerst das Material ausgewählt werden. Das kann über die Materialsuche oder über Hauptmenü -> Bestandsführung -> Datenpflege -> Materialstamm/Preise ändern/löschen geschehen. Wenn die für ein bestimmtes Material möglichen Bearbeitungsfunktionen angezeigt werden, wählen Sie "Preise pflegen". Die Seite Materialpreise wird angezeigt, die bereits definierten Preise je Umsatzart / Währung werden angezeigt. Die bereits definierten Preise können bearbeitet oder gelöscht und neue Preise können hinzugefügt werden. Es ist nicht möglich, mehrere Einträge für die gleiche Kombination Umsatzart / Währung einzugeben.	
+Um Preise einzupflegen, muss jeweils zuerst das Material ausgewählt werden. Das kann über die Materialsuche oder über Hauptmenü &rarr; Bestandsführung &rarr; Datenpflege &rarr; Materialstamm/Preise ändern/löschen geschehen. Wenn die für ein bestimmtes Material möglichen Bearbeitungsfunktionen angezeigt werden, wählen Sie "Preise pflegen". Die Seite Materialpreise wird angezeigt, die bereits definierten Preise je Umsatzart / Währung werden angezeigt. Die bereits definierten Preise können bearbeitet oder gelöscht und neue Preise können hinzugefügt werden. Es ist nicht möglich, mehrere Einträge für die gleiche Kombination Umsatzart / Währung einzugeben.	
 <br /><br />
 Um Preise für einen bestimmten Kunden / Niederlassung anzulegen, muss zuerst der Kunde ausgewählt werden (verwenden Sie die Kundensuche). Wenn Sie ein Materialauswählen, nachdem Sie einen Kunden ausgewählt haben, wird ein zusätzlicher Link Kundensonderpreise pflegen - Kundennummer angezeigt. Wenn Sie darauf klicken, bekommen Sie den normalen Preis für die Umsatzart / Währung angezeigt und die vorhandenen Sonderpreise für diese Kombination Kunde / Material. Wenn keine Sonderpreise festgelegt sind, zeigt das System nur den normalen Preis mit dem Hinweis an, dass noch keine Sonderpreise eingerichtet sind, und sie können einen neuen Sonderpreis festlegen. Wenn ein Sonderpreis existiert, kann er bearbeitet oder gelöscht werden. Ein Kunde mit mehreren Niederlassungen, kann unterschiedliche Sonderpreise für jede Niederlassung haben, oder es hat nur eine einzelne Niederlassung einen Sonderpreis zusätzlich zum Sonderpreis des Kunden. Ein Sonderpreis, der für eine bestimmte Niederlassung eingerichtet ist, gilt nicht für die anderen Niederlassungen. Wenn Sie das Feld Niederlassung leer lassen, gilt der Sonderpreis für alle Niederlassungen, wenn nicht für eine bestimmte Niederlassung ein gesonderter Eintrag vorhanden ist.
 <br /><br />
@@ -23,15 +23,11 @@ Das Skript heißt Z_PriceChanges.php und kann über das Servicemenü Z_index.php au
 Dieses Skript ermöglicht Massen-Preis-Erhöhungen oder -Verringerungen nach Prozent für eine oder einen Bereich von Warengruppen und bestimmte Umsatzarten. Es bietet die die Möglichkeit, Preise zu ändern:
 <br /><br />
 <ul>
-
-<li>
-alle Preise für  die Umsatzart innerhalb der ausgewähleten Warengruppen oder
-<li>
-nur den allgemeinen Preis für die Umsatzart innerhalb der ausgewählten Warengruppen oder
-<li>
-für die Sonderpreise des ausgewählten Kunden - vorausgesetzt der Kunde gehört zur ausgewählten Umsatzart.
+<li>alle Preise für  die Umsatzart innerhalb der ausgewähleten Warengruppen oder</li>
+<li>nur den allgemeinen Preis für die Umsatzart innerhalb der ausgewählten Warengruppen oder</li>
+<li>für die Sonderpreise des ausgewählten Kunden - vorausgesetzt der Kunde gehört zur ausgewählten Umsatzart.</li>
 </ul>
-Gleichermaßen flexible Optionen existieren für das Ausdrucken der Preislisten über Hauptmenü -> Aufträge -> Auswertung und Berichte -> Preislisten drucken.
+Gleichermaßen flexible Optionen existieren für das Ausdrucken der Preislisten über Hauptmenü &rarr; Aufträge &rarr; Auswertung und Berichte &rarr; Preislisten drucken.
 <br /><br />
 <font size="+1"><b>Rabattstaffel</b></font>
 <br /><br />
@@ -46,10 +42,8 @@ Wenn ein Kundenauftrag erfasst wird, liest das System automatisch die Rabattgrup
 Um eine Rabattstaffel einzurichten, gibt es zwei Elemente zu beachten:
 <br /><br />
 <ol>
-<li>
-Die Rabattgruppen müssen definiert werden. Einzelne Materialstammsätze können über die Materialstammänderung die Rabattgruppe zugeordnet bekommen. Zusätzlich haben Sie die Möglichkeit, über Hauptmenü -> Einstellungen -> Bestandsführung -> Rabattgruppen pflegen Materialnummern in einer Liste der Rabattgruppe zuzuordnen.
-<li>
-Die Rabattstaffel selbst. Diese werden über einen Link unter Hauptmenü -> Einstellungen -> Debitoren/Kreditoren gepflegt. Für jede Umsatzart/Preisliste muss die Mengengrenze und der anwendbare Rabatt gepflegt werden.
+<li>Die Rabattgruppen müssen definiert werden. Einzelne Materialstammsätze können über die Materialstammänderung die Rabattgruppe zugeordnet bekommen. Zusätzlich haben Sie die Möglichkeit, über Hauptmenü &rarr; Einstellungen &rarr; Bestandsführung &rarr; Rabattgruppen pflegen Materialnummern in einer Liste der Rabattgruppe zuzuordnen.</li>
+<li>Die Rabattstaffel selbst. Diese werden über einen Link unter Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren gepflegt. Für jede Umsatzart/Preisliste muss die Mengengrenze und der anwendbare Rabatt gepflegt werden.</li>
 </ol>
 
 <!-- Help End: Prices -->

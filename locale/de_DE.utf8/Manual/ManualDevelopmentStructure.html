@@ -23,20 +23,19 @@ Das Skript SelectOrderItems.php ermöglicht ebenso Änderungen bereits vorhandener
 <br /><br />
 Das Skript bietet zwei Möglichkeiten, Materialien zu einem Kundenauftrag hinzuzufügen:
 <br /><br />
-1. Durch Auswahl der Warengruppe oder eines Teiles der Materialnummer oder Beschreibung. Der Benutzer muss dann die Suchen-Taste anklicken, um die Suche einzuleiten. Die Seite zeigt die Auswahl der Materialien, die dem Selektionskriterium entsprechen.
-<br /><br />
-2. Durch die direkte Eingabe der Materialnummer und Menge. Das erlaubt die Schnellerfassung von Kundenaufträgen, sofern der Benutzer mit den einzelnen Materialnummern vertraut ist. Der Benutzer muss die Taste "Positionen erfassen" anklicken, um die Übernahme der Einträge in der Erfassungsmaske anzustoßen.
-<br /><br />
-
+<ol>
+<li>Durch Auswahl der Warengruppe oder eines Teiles der Materialnummer oder Beschreibung. Der Benutzer muss dann die Suchen-Taste anklicken, um die Suche einzuleiten. Die Seite zeigt die Auswahl der Materialien, die dem Selektionskriterium entsprechen.</li>
+<li>Durch die direkte Eingabe der Materialnummer und Menge. Das erlaubt die Schnellerfassung von Kundenaufträgen, sofern der Benutzer mit den einzelnen Materialnummern vertraut ist. Der Benutzer muss die Taste "Positionen erfassen" anklicken, um die Übernahme der Einträge in der Erfassungsmaske anzustoßen.</li>
+</ol>
 <font size="+2"><b>Preisfestlegung</b></font>
 
 <br /><br />
 Das Skript sucht die Preisfestlegung für den Kunden auf der Grundlage der Kundenwährung und der Umsatzart. So viele Umsatzarten wie nötig können eingerichtet werden, jeweils mit ihrer eigenen Preisliste. Sofern für die Umsatzart und die Währung des Kunden keine Preise festgelegt sind, stehen keine Materialien für das Hinzufügen zum Auftrag zur Verfügung. 
 <br /><br />
-<b>Bestellsatz-Materialien</B>
+<b>Bestellsatz-Materialien</b>
 können erfasst werden, diese werden beim Einrichten der Materialstammsätze festgelegt. Sie werden unmittelbar in ihre Komponenten aufgelöst und können im Kundenauftrag abgeändert werden. Sie sind als Abkürzung anstelle der Auswahl jedes einzelnen Teiles vorgesehen, wo sich nur ein Teil ändert. Beispiel: ein Computer mit Motherboard XYZ, Gehäuse, Tastatur, Maus, 256MB RAM usw. Das Bestellsatz-Material bringt alle diese Positionen mit einer Eingabe in den Auftrag, Sie können dann die 256MB RAM löschen und durch 512MB RAM ersetzen oder welche Änderungen auch immer nötig sind.
 <br /><br />
-<B>Sammelmaterialien</B>
+<b>Sammelmaterialien</b>
 können ebenso eingegeben werden, die auf einzelne Komponenten verweisen, welche aber als nur ein Artikel verkauft werden. Das Sammelmaterial wird nicht schon bei der Auftragserfassung in seine Komponenten aufgelöst wie ein Bestellsatz. Es existiert in den Kundenaufträgen und Umsatzauswertungen, nicht aber bei den Warenbeständen als ein Material, Warenbewegungen werden sowohl für das Sammelmaterial als Ganzes wie auch für die Komponenten fortgeschrieben.
 <br /><br />
 
@@ -58,14 +57,11 @@ Kundenaufträge können mit dem Skript
 SelectSalesOrders.php
 <br /><br />
 gesucht werden. Dieses Skript erlaubt mehrere Wege, einen offenen Kundenauftrag zu finden.
-<OL>
-	<LI>
-Nach Kundennummer. Für einen über die Kundensuche (das Skript SelectCustomer.php) ausgewählten Kunden kann dieses Skript aufgerufen werden und zeigt dann nur die offenen Aufträge für diesen ausgewählten Kunden.
-	<LI>
-Nach Materialnummer. Die Auswahl der Materialnummer erfolgt innerhalb des Skriptes. Zweifellos hätte man die Auswahl des Materials in die Materialsuche auslagern können, aber es scheint, dass die gewählte Möglichkeit eher dem intuitiven Herangehen des Benutzers entspricht.
-	<LI>
-Die Nummer des Kundenauftrages kann direkt eingegeben werden.
-</OL>
+<ol>
+<li>Nach Kundennummer. Für einen über die Kundensuche (das Skript SelectCustomer.php) ausgewählten Kunden kann dieses Skript aufgerufen werden und zeigt dann nur die offenen Aufträge für diesen ausgewählten Kunden.</li>
+<li>Nach Materialnummer. Die Auswahl der Materialnummer erfolgt innerhalb des Skriptes. Zweifellos hätte man die Auswahl des Materials in die Materialsuche auslagern können, aber es scheint, dass die gewählte Möglichkeit eher dem intuitiven Herangehen des Benutzers entspricht.</li>
+<li>Die Nummer des Kundenauftrages kann direkt eingegeben werden.</li>
+</ol>
 <br />
 Das Skript SelectSalesOrders.php
 <br /><br />
@@ -111,25 +107,20 @@ Weil von der Verwendung von Java oder einer client-seitigen Skriptabarbeitung ab
 <br /><br />
 Das Skript für den Debitorenausgleich kann aufgerufen werden:
 <br /><br />
-1) Ohne Parameter, in diesem Falle werden alle Zahlungseingänge und Gutschriften angezeigt, die noch nicht mit Rechnungen ausgeglichen sind.
-<br /><br />
-2) Mit einer Kundennummer, es werden alle Gutschriften und Zahlungseingänge angezeigt, die noch voll zugeordnet werden müssen.
-<br /><br />
-3) Mit einer Belegart 11 oder 12 und der Belegnummer, dabei werden der ausgewählte Beleg (Gutschrift oder Zahlungseingang) und der diesem bereits früher zugeordnete Betrag angezeigt und die noch nicht zugeordnteten Rechnungen stehen zur Auswahl zur Verfügung. Die vorhandenen Zuordnungen können nach Belieben verändert und neue Zuordnungen vorgenommen werden.
-<br /><br />
-
+<ol>
+<li>Ohne Parameter, in diesem Falle werden alle Zahlungseingänge und Gutschriften angezeigt, die noch nicht mit Rechnungen ausgeglichen sind.</li>
+<li>Mit einer Kundennummer, es werden alle Gutschriften und Zahlungseingänge angezeigt, die noch voll zugeordnet werden müssen.</li>
+<li>Mit einer Belegart 11 oder 12 und der Belegnummer, dabei werden der ausgewählte Beleg (Gutschrift oder Zahlungseingang) und der diesem bereits früher zugeordnete Betrag angezeigt und die noch nicht zugeordnteten Rechnungen stehen zur Auswahl zur Verfügung. Die vorhandenen Zuordnungen können nach Belieben verändert und neue Zuordnungen vorgenommen werden.</li>
+</ol>
 <font size="+2"><b>Umsatzauswertungen</b></font>
 
 <br /><br />
 Alle Rechnungen und Gutschriften fließen in die Summensätze der Ergebnisrechnung mit ein. Die Datensätze der Ergebnisrechnung gehen in ihrer Detaillierung hinab bis auf die Ebenen der Materialien. Es gibt eine gewisse Datenredundanz, weil diese Informationen in einer eigenen Tabelle doppelt gehalten werden. Der Gründe dafür sind:
-<UL>
-	<LI>
-Die Einfachheit der notwendigen Datenbankabfragen und folglich die Schnelligkeit beim Ausführen der Berichte zu verbessern.
-	<LI>
-Die Indexierung der häufig benötigten Felder und damit die Verbesserung der Performance bei Umsatzauswertungen zu ermöglichen.
-	<LI>
-Um Abhängigkeiten zwischen den Datenbanktabellen zu entfernen. Wenn Warenbewegungsdaten reorganisiert werden, könnte das sonst Probleme bei Umsatzauswertungen verursachen.
-</UL>
+<ul>
+<li>Die Einfachheit der notwendigen Datenbankabfragen und folglich die Schnelligkeit beim Ausführen der Berichte zu verbessern.</li>
+<li>Die Indexierung der häufig benötigten Felder und damit die Verbesserung der Performance bei Umsatzauswertungen zu ermöglichen.</li>
+<li>Um Abhängigkeiten zwischen den Datenbanktabellen zu entfernen. Wenn Warenbewegungsdaten reorganisiert werden, könnte das sonst Probleme bei Umsatzauswertungen verursachen.</li>
+</ul>
 Ergebnisberichte können für bis zu vier Sortierebenen definiert werden. Der Berichtsgenerator ist relativ einfach, bietet aber eine große Flexibilität. Berichtsdefinitionen können für die spätere Ausführung gespeichert werden. Die Berichte können im PDF-Format ausgedruckt oder für den Versand per Email oder das Archivieren lokal gespeichert werden. Alternativ können die Berichte in eine CSV-Datei (comma separated values) ausgegeben werden, was die Auswertung mit den gängigen Tabellenkalkulationen oder den Import in nutzerspezifische Datenbanken wie Bor1and Paradox oder Microsoft Access ermöglicht.
 <br /><br />
 Die Ergebnisberichte werden als eine Kopfinformation mit Selektions- und Sortiermerkmalen und Detaildatensätzen erstellt und abgelegt, die angeben, wie die Spalten im Bericht angezeigt werden.
@@ -147,37 +138,30 @@ POSelectOrders.php.
 Dieses erlaubt es, alle offenen Bestellungen anzuzeigen, für die noch Wareneingänge erwartet werden. Dabei kann ein bestimmter Lieferant ausgewählt werden oder Teile der Lieferantennummer eingegeben werden, damit nur die Bestellungen angezeigt werden, die dem Selektionskriterium entsprechen.
 <br /><br />
 Mit dem Skript werden auch Links angezeigt, um
-<OL>
-	<LI>
-die Bestellung in einem gewissen Rahmen zu ändern, zum Beispiel können Sie keine Bestellmengen unter die der bisherigen Wareneingänge dazu reduzieren. 
-	<LI>
-die Bestellung zu drucken. Dieser Link ist inaktiv, wenn die Bestellung bereits gedruckt wurde. Bestellungen können nachgedruckt werden, aber eine Warnung erscheint, damit die Bestellung nicht zufällig mehrfach an einen Lieferanten verschickt wird. 
-	<LI>
-Wareneingänge zu Bestellung zu erfassen.
-</OL>
+<ol>
+<li>die Bestellung in einem gewissen Rahmen zu ändern, zum Beispiel können Sie keine Bestellmengen unter die der bisherigen Wareneingänge dazu reduzieren.</li> 
+<li>die Bestellung zu drucken. Dieser Link ist inaktiv, wenn die Bestellung bereits gedruckt wurde. Bestellungen können nachgedruckt werden, aber eine Warnung erscheint, damit die Bestellung nicht zufällig mehrfach an einen Lieferanten verschickt wird.</li> 
+<li>Wareneingänge zu Bestellung zu erfassen.</li>
+</ol>
 
 <font size="+2"><b>Bestand</b></font>
 
 <br /><br />
 Warenbewegungen werden in Abhängigkeit von der Materialart jedesmal dann verbucht, wenn ein Artikel in Rechnung gestellt oder eine Gutschrift dazu erzeugt wird. Wenn eine Gutschrift erstellt und die Waren abgeschrieben werden, weil z. B. die Waren beim Transport beschädigt wurden, werden zwei Warenbewegungen angelegt:
-<OL>
-	<LI>
-um das Material zurückzugeben und den Kunden zu entlasten
-	<LI>
-um das Material auf das ausgewählte Hauptbuchkonto abzuschreiben.
-</OL>
+<ol>
+<li>um das Material zurückzugeben und den Kunden zu entlasten</li>
+<li>um das Material auf das ausgewählte Hauptbuchkonto abzuschreiben.</li>
+</ol>
 <br />
 Warenbewegungen werden auch gebucht, wenn Wareneingänge zur Bestellung erfasst werden.
 <br /><br />
 Jedesmal wenn eine Warenbewegung erfasst wird, ändert sich die Bestandsmenge in der jeweiligen Betriebsstätte.
 <br /><br />
 Die Materialbestandsführung ist deswegen voll mit dem Vertieb und dem Einkauf integegriert. Die einzigen Warenbewegungen, die eine direkte Erfassung notwendig machen, sind:
-<OL>
-	<LI>
-Umlagerungen zwischen Betriebsstätten
-	<LI>
-Bestandskorrekturen.
-</OL>
+<ol>
+<li>Umlagerungen zwischen Betriebsstätten</li>
+<li>Bestandskorrekturen.</li>
+</ol>
 <br />
 Es ist nicht möglich, diese zwei Arten von Warenbewegungen auf Dummymaterialien, Sammelmaterialien oder Bestellsätze anzuwenden, weil für diese Materialarten keine Bestände geführt werden.
 <br /><br />
@@ -186,16 +170,12 @@ Es ist nicht möglich, diese zwei Arten von Warenbewegungen auf Dummymaterialien,
 
 <br /><br />
 Die Materialsuche zeigt die für das gewählte Material möglichen Funktionen:
-<UL>
-	<LI>
-Bestandsverwendung anzeigen nach Lagerorten 
-	<LI>
-Bestandsstatus mit vorhandener Menge, bestellter Menge, Bedarf und Bestellpunkt anzeigen
-	<LI>
-Warenbewegungen anzeigen nach Lagerorten für einen vorgegebenen Zeitraum
-	<LI>
-Offene Kundenaufträge suchen
-</UL>
+<ul>
+<li>Bestandsverwendung anzeigen nach Lagerorten</li> 
+<li>Bestandsstatus mit vorhandener Menge, bestellter Menge, Bedarf und Bestellpunkt anzeigen</li>
+<li>Warenbewegungen anzeigen nach Lagerorten für einen vorgegebenen Zeitraum</li>
+<li>Offene Kundenaufträge suchen</li>
+</ul>
 <br />
 Alle Auswertungen folgen einem gleichen Format, das es erlaubt, die Materialnummer direkt einzugeben wenn die Benutzer mit den Materialnummern vertraut sind. Alternativ kann die Abfrage über die Materialsuche aufgerufen werden, die alle Möglichkeiten bietet, das gewünschte Material auszuwählen.
 <br /><br />

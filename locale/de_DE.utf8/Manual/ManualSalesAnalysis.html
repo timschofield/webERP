@@ -4,29 +4,23 @@
 
 <a name="SalesAnalysis"><font size="+3"><b>Umsatzauswertungen</b></font></a>
 <br /><br />
-Es gibt verschiedene Möglichkeiten, die Umsätze zu analysieren. Wenn eine schnelle Auswertung erforderlich ist, gibt es eine gewisse Flexibilität im Skript SalesGraph.php, das Sie über Hauptmenü -> Debitoren -> Auswertungen und Berichte -> Umsatzgrafik aufrufen, Es hängt natürlich von der Ebene ab, auf der Sie Planwerte hinterlegt haben, ob ein Plan-/Ist-Vergleich etwas Sinnvolles anzeigen wird. Wenn Sie einen Bericht zu den Istzahlen wünschen, so hat webERP einen Berichtsgenerator, mit dem Ergebnisberichte angelegt werden können. Die erzeugten Berichtsvorlagen können wiederholt ausgeführt oder aber abgeändert werden. Diese Berichte können sowohl eine PDF-Datei in Druckformatierung als auch csv-Dateien für die Verwendung in den meisten Tabellenkalkulationen ausgeben.
+Es gibt verschiedene Möglichkeiten, die Umsätze zu analysieren. Wenn eine schnelle Auswertung erforderlich ist, gibt es eine gewisse Flexibilität im Skript SalesGraph.php, das Sie über Hauptmenü &rarr; Debitoren &rarr; Auswertungen und Berichte &rarr; Umsatzgrafik aufrufen, Es hängt natürlich von der Ebene ab, auf der Sie Planwerte hinterlegt haben, ob ein Plan-/Ist-Vergleich etwas Sinnvolles anzeigen wird. Wenn Sie einen Bericht zu den Istzahlen wünschen, so hat webERP einen Berichtsgenerator, mit dem Ergebnisberichte angelegt werden können. Die erzeugten Berichtsvorlagen können wiederholt ausgeführt oder aber abgeändert werden. Diese Berichte können sowohl eine PDF-Datei in Druckformatierung als auch csv-Dateien für die Verwendung in den meisten Tabellenkalkulationen ausgeben.
 <br /><br />
-Sie wählen Hauptmenü -> Debitoren -> Auswertungen und Berichte -> Umsatzanalysen. Eine Liste aller bereits früher angelegten Berichte erscheint, einschließlich Links, über die Sie
+Sie wählen Hauptmenü &rarr; Debitoren &rarr; Auswertungen und Berichte &rarr; Umsatzanalysen. Eine Liste aller bereits früher angelegten Berichte erscheint, einschließlich Links, über die Sie
 <br /><br />
 <ul>
-<li>
-den Entwurf des Berichtskopfes ändern
-<li>
-in der Definition des Berichtes die Spalten festlegen
-<li>
-den Bericht ausführen und eine PDF-Datei erstellen
-<li>
-den Bericht ausführen und eine CSV-Datei erstellen, die mit einer Tabellenkalkulation gelesen werden kann.
+<li>den Entwurf des Berichtskopfes ändern</li>
+<li>in der Definition des Berichtes die Spalten festlegen</li>
+<li>den Bericht ausführen und eine PDF-Datei erstellen</li>
+<li>den Bericht ausführen und eine CSV-Datei erstellen, die mit einer Tabellenkalkulation gelesen werden kann.</li>
 </ul>
 Darüber hinaus können Sie im unteren Teil der Seite neue Berichte definieren, um die meisten Kombinationen von Umsatzdaten anzuseigen. Im System wird eine separate Tabelle von Umsatzdaten geführt, die es ermöglichen, dass diese Berichte so schnell wie möglich ausgeführt werden können.
 <br /><br />
 Ein Ergebnisbericht besteht aus
 <br /><br />
 <ul>
-<li>
-der Kopfdefinition
-<li>
-den Spaltendefinitionen
+<li>der Kopfdefinition</li>
+<li>den Spaltendefinitionen</li>
 </ul>
 <b>
 Kopf des Ergebnisberichtes
@@ -35,28 +29,19 @@ Kopf des Ergebnisberichtes
 Der erste Schritt beim Erstellen eines Ergebnisberichtes ist das Eingeben der Kopfinformationen. Diese beinhalten:
 <br /><br />
 <ul>
-<li>
-Die Berichtsüberschrift, eine Zeichenkette, die den Bericht beschreibt.
-<li>
-Bis zu vier Gruppenebenen und die Auswahlkriterien für jede Ebene.
+<li>Die Berichtsüberschrift, eine Zeichenkette, die den Bericht beschreibt.</li>
+<li>Bis zu vier Gruppenebenen und die Auswahlkriterien für jede Ebene.</li>
 </ul>
 Jede Gruppenebene besteht aus einer der folgenden Merkmale:
 <br /><br />
 <ul>
-<li>
-Vertriebsbereiche 
-<li>
-Materialnummer
-<li>
-Kundennummer
-<li>
-Umsatzart/Preisliste
-<li>
-Warengruppe
-<li>
-Kundenniederlassung
-<li>
-Verkäufer
+<li>Vertriebsbereiche</li> 
+<li>Materialnummer</li>
+<li>Kundennummer</li>
+<li>Umsatzart/Preisliste</li>
+<li>Warengruppe</li>
+<li>Kundenniederlassung</li>
+<li>Verkäufer</li>
 </ul>
 Der Bericht gruppiert die Daten auf jeder Ebene entsprechend der definierten Reihenfolge, wenn Sie z. B. einen Bericht definieren mit Materialnummer als Gruppenebene 1 und die Vertriebsbereiche als Gruppenebene 2, dann zeigt der Bericht die Materialnummern und darunter die Vertriebsbereiche, an die die Waren verkauft wurden. Meist würde es die logischere Reihenfolge sein, die Vertriebsbereiche als Gruppenebene 1 und die Materialnummer als Gruppenebene 2 anzuzeigen, damit der Bericht erläutert, aus welchen Produkten sich der Umsatz in einem Vertiebsbereich zusammensetzt.
 <br /><br />
@@ -66,47 +51,31 @@ Für jede Gruppenebene muss ein Von-Bis-Bereich als Selektion angegeben werden. A
 Spalten der Ergebnisberichte
 </b>
 <br /><br />
-Wenn Sie einen Kopf für den Bericht angelegt haben, dann können die Spalten definiert werden. Die Spalten vorhandener Berichte können jederzeit geändert werden. Aus der Seite Umsatzbericht pflegen (Hauptmenü -> Debitoren -> Auswertungen und Berichte -> Umsatzanalysen) ist bei jedem Bericht ein Link "Spalten festlegen". Über diesen Link werden die für den Bericht definierten Spalten angezeigt, zusammen mit einem Formular, in dem Sie neue Spalten anlegen können. Für jede definierte Spalte sind die folgenden Angaben nötig:
+Wenn Sie einen Kopf für den Bericht angelegt haben, dann können die Spalten definiert werden. Die Spalten vorhandener Berichte können jederzeit geändert werden. Aus der Seite Umsatzbericht pflegen (Hauptmenü &rarr; Debitoren &rarr; Auswertungen und Berichte &rarr; Umsatzanalysen) ist bei jedem Bericht ein Link "Spalten festlegen". Über diesen Link werden die für den Bericht definierten Spalten angezeigt, zusammen mit einem Formular, in dem Sie neue Spalten anlegen können. Für jede definierte Spalte sind die folgenden Angaben nötig:
 <br /><br />
 <ul>
-<li>
-Eine Spaltennummer zwischen 1 und 10. Die Nummer bestimmt, an welcher Stelle die Spalte auf der Seite ausgegeben wird. Die Spalte 1 ist am weitesten links und die Spalte 10 am rechten Rand der Seite.
-<li>
-Zwei Felder sind für die Spaltenüberschrift vorhanden. In jedes passt ein Text mit maximal 15 Zeichen Länge.
-<li>
-Ob es sich um eine Rechenspalte handelt oder nicht. Für Rechenspalten sind andere Angaben erforderlich, als für normale Datenspalten.
-<li>
-Für normale Datenspalten ist ein Periodenzeitraum für die anzuzeigenden Daten erforderlich. In die Felder Von Periode und Bis Periode muss jeweils eine Zahl eingegeben werden. Weil Perioden vom System annähernd unsichtbar im Hintergrund verwaltet werden, haben Sie über den Link "Perioden anzeigen" die Möglichkeit zu prüfen, in welchen Perioden irgendwelche Zahlen vorhanden sein können. Wenn ein einzelner Monat gewünscht ist, ist der Wert in Von Periode und Bis Periode gleich. 
-<li>
-Die Art der Daten, die in der Spalte angezeigt werden sollen kann aus der folgenden Auswahl festgelegt werden: Menge, Bruttoerlös, Nettoerlös (nach Rabatten), Bruttoergebnis, Kosten und Rabatt.  
-<li>
-Planwerte oder Istwerte.
+<li>Eine Spaltennummer zwischen 1 und 10. Die Nummer bestimmt, an welcher Stelle die Spalte auf der Seite ausgegeben wird. Die Spalte 1 ist am weitesten links und die Spalte 10 am rechten Rand der Seite.</li>
+<li>Zwei Felder sind für die Spaltenüberschrift vorhanden. In jedes passt ein Text mit maximal 15 Zeichen Länge.</li>
+<li>Ob es sich um eine Rechenspalte handelt oder nicht. Für Rechenspalten sind andere Angaben erforderlich, als für normale Datenspalten.</li>
+<li>Für normale Datenspalten ist ein Periodenzeitraum für die anzuzeigenden Daten erforderlich. In die Felder Von Periode und Bis Periode muss jeweils eine Zahl eingegeben werden. Weil Perioden vom System annähernd unsichtbar im Hintergrund verwaltet werden, haben Sie über den Link "Perioden anzeigen" die Möglichkeit zu prüfen, in welchen Perioden irgendwelche Zahlen vorhanden sein können. Wenn ein einzelner Monat gewünscht ist, ist der Wert in Von Periode und Bis Periode gleich.</li> 
+<li>Die Art der Daten, die in der Spalte angezeigt werden sollen kann aus der folgenden Auswahl festgelegt werden: Menge, Bruttoerlös, Nettoerlös (nach Rabatten), Bruttoergebnis, Kosten und Rabatt.</li>  
+<li>Planwerte oder Istwerte.</li>
 </ul>
 Wenn die Spalte als Rechenspalte definiert wird, ist weder die Angabe der Perioden erforderlich, noch die der Datenart und ob Plan oder ist. Wenn Sie das Feld Berechnung geändert haben, müssen Sie zunächst auf Speichern klicken, dadurch werden die für Rechenspalten notwendigen Felder angezeigt: 
 <br /><br />
 <ul>
-<li>
-Zählerspalte - Das ist die Spaltennummer für den ersten Operanden der Berechnung, diese Spalte muss immer angegeben werden.
-<li>
-Nennerspalte - Das ist die Spaltennummer für den zweiten Operanden der Berechnung, wenn die Berechnung über zwei Spalten erfolgen soll. Wenn die Berechnung mit einer Konstante durchgeführt werden soll, lassen Sie dieses Feld leer.
-<li>
-Das Rechenzeichen wird aus folgenden Angaben ausgewählt.
+<li>Zählerspalte - Das ist die Spaltennummer für den ersten Operanden der Berechnung, diese Spalte muss immer angegeben werden.</li>
+<li>Nennerspalte - Das ist die Spaltennummer für den zweiten Operanden der Berechnung, wenn die Berechnung über zwei Spalten erfolgen soll. Wenn die Berechnung mit einer Konstante durchgeführt werden soll, lassen Sie dieses Feld leer.</li>
+<li>Das Rechenzeichen wird aus folgenden Angaben ausgewählt.
 <ol>
-<li>
-Zählerspalte geteilt durch Nennerspalte
-<li>
-Zählerspalte geteilt durch Konstante
-<li>
-Zählerspalte x Kontstante
-<li>
-Zählerspalte plus Nennerspalte
-<li>
-Zählerspalte minus Nennerspalte
-</ol>
-<li>
-Die Kostante kann eine beliebige Zahl sein, die in der Berechnung verwendet wird.
-<li>
-Das Format erlaubt es, das Ergebnis als Zahl oder als Prozentwert auszugeben.
+<li>Zählerspalte geteilt durch Nennerspalte</li>
+<li>Zählerspalte geteilt durch Konstante</li>
+<li>Zählerspalte x Kontstante</li>
+<li>Zählerspalte plus Nennerspalte</li>
+<li>Zählerspalte minus Nennerspalte</li>
+</ol></li>
+<li>Die Kostante kann eine beliebige Zahl sein, die in der Berechnung verwendet wird.</li>
+<li>Das Format erlaubt es, das Ergebnis als Zahl oder als Prozentwert auszugeben.</li>
 </ul>
 Wenn Sie den Knopf Speichern drücken, wird die Spalte in die Berichtsdefinition eingefügt. Sie sollte dann in der Liste der definierten Spalten angezeigt werden und die Formularfelder sind wieder frei für die Erfassung einer neuen Spalte. Wenn Sie eine Spalte nicht mehr benötigen, gibt es auch einen Link zum Löschen.
 <br /><br />
