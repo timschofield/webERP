@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/2/12 Tim: Removed FUD as new API functions seem consistent with the rest of the API</p>
 6/2/12 Phil: Added new API function InsertDebtorReceipt in api_debtortransactions.php
 4/2/12 Vitaly: Fixed addTextWrap() in class.pdf.php. The length of the string was not calculated properly, causing long strings to print beyond the cell boundaries.
 4/2/12 Phil: Added new API function CreateCreditNote in api_debtortransactions.php
