@@ -263,23 +263,21 @@ function ConvertToSQLDate($DateEntry) {
 		return $myrow[0];
 	}
 
+
+	function InsertDebtorReceipt($Receipt, $User, $Password) {
+	
 	/* 
-	This function inserts a debtors receipts into a bank account/GL Postings and does the allocation and journals for difference on exchange
+	This function inserts a debtors receipt into a bank account/GL Postings and does the allocation and journals for difference on exchange
 
 	$Receipt contains an associative array in the format:
 		 * $Receipt['debtorno'] - the customer code
-		 * $Receipt['trandate'] - the date of the receipt
+		 * $Receipt['trandate'] - the date of the receipt in Y-m-d format
 		 * $Receipt['amountfx'] - the amount in FX
 		 * $Receipt['paymentmethod'] - the payment method of the receipt e.g. cash/EFTPOS/credit card
 		 * $Receipt['bankaccount'] - the webERP bank account
-		 
-		 Maybe allocation a separate method...
-		 * $Receipt['allocto_transid'] - the invoice to allocate against
+		 * $Receipt['reference']
 
 	*/
-
-	function InsertDebtorReceipt($Receipt, $User, $Password) {
-
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
@@ -288,7 +286,6 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		$fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 
-		$Errors=VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors, $db);
 		/*Get Company Defaults */
 		$ReadCoyResult = api_DB_query("SELECT debtorsact,
 												gllink_debtors
@@ -300,33 +297,59 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[] = NoCompanyRecord;
 		}
 		
-		$CustCurrencySQL = "SELECT debtorsmaster.currcode,
-							 rate,
-						FROM debtorsmaster
-						INNER JOIN currencies
-						ON debtorsmaster.currcode=currencies.currabrev
-						WHERE custbranch.debtorno = '" . $Receipt['debtorno'] . "'";
+		$CustCurrencySQL = "SELECT 	currcode,
+									rate
+							FROM debtorsmaster
+							INNER JOIN currencies
+							ON debtorsmaster.currcode=currencies.currabrev
+							WHERE debtorno = '" . $Receipt['debtorno'] . "'";
 
 		$CurrResult = api_DB_query($CustCurrencySQL,$db);
 		if (DB_error_no($db) != 0) {
-			$Errors[] = NoReadCustomerBranch;
+			$Errors[] = DebtorDoesntExist;
 		}
 
 		$CustCurrRow = DB_fetch_array($CurrResult);
-		
-		
+				
 		/*Get the currency and rate of the bank account transferring to*/
-		$SQL = "SELECT currcode, rate
+		$SQL = "SELECT currcode, 
+						rate
 					FROM bankaccounts INNER JOIN currencies
 					ON bankaccounts.currcode = currencies.currabrev
-					WHERE accountcode='" . $ReceiptItem->GLCode."'";
-		$TrfFromAccountResult = api_DB_query($SQL,$db);
-
+					WHERE accountcode='" . $Receipt['bankaccount'] ."'";
+		$BankActResult = api_DB_query($SQL,$db);
+		if (DB_error_no($db) != 0) {
+			$Errors[] = InvalidBankAccount;
+		}
+		
+		$BankActRow = DB_fetch_array($BankActResult);
+		
+		/*To illustrate the rates required
+		 * The money received is assumed to be in the currency of the customer account.
+		 * but it may be banked into a bank account that is denominated in a different currency - so we need to work out the amount of money that this would turn into when sold to the bank to deposit into this bank account - we call this the receipt ex rate. Normally this would be figured out at the time of entry so the actual currency banked agrees. However, we must use the system rates to automate this and the amounts may not agree to actual deposits.
+			Take an example functional currency NZD receipt from a customer in USD into an AUD bank account
+			1 NZD = 0.80 USD
+			1 NZD = 0.90 AUD
+			The FunctionalExRate = 0.90 - the rate between the functional currency and the bank account currency
+			The receipt ex rate is the rate at which one can sell the received currency and purchase the bank account currency in this case the AUD/USD cross rate
+			or 0.8/0.9 = 0.88889
+			So the receipt ex rate will always be 1 if the currency of the bank account is the same as the customer currency. 
+ 
+		*/
+		$ReceiptExRate = $CustCurrRow['rate']/$BankActRow['rate'];
+		$FunctionalExRate = $BankActRow['rate'];
+		
+fputs($fp, 'Receipt ex rate = ' . $ReceiptExRate . "\n");
+fputs($fp, 'Functional ex rate = ' . $FunctionalExRate . "\n");
+		
 		DB_Txn_Begin($db);
 
 		$ReceiptNo = GetNextTransNo(12,$db);
 		$PeriodNo = GetCurrentPeriod($db);
 /*now enter the BankTrans entry */
+
+fputs($fp, 'Receipt No = ' . $ReceiptNo . "\n");
+fputs($fp, 'Period No = ' . $PeriodNo . "\n");
 
 		$SQL="INSERT INTO banktrans (type,
 									transno,
@@ -339,20 +362,42 @@ function ConvertToSQLDate($DateEntry) {
 									amount,
 									currcode)
 				VALUES (12,
-						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-						'" . $_SESSION['ReceiptBatch']->Account . "',
-						'" . $_SESSION['ReceiptBatch']->Narrative . "',
-						'" . $_SESSION['ReceiptBatch']->ExRate . "',
-						'" . $_SESSION['ReceiptBatch']->FunctionalExRate . "',
-						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-						'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
-						'" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . "',
-						'" . $_SESSION['ReceiptBatch']->Currency . "')";
+						'" . $ReceiptNo . "',
+						'" . $Receipt['bankaccount'] . "',
+						'" . $Receipt['reference'] . "',
+						'" . $ReceiptExRate . "',
+						'" . $FunctionalExRate . "',
+						'" . $Receipt['trandate'] . "',
+						'" . $Receipt['paymentmethod'] . "',
+						'" . round($Receipt['amountfx'] / $ReceiptExRate,4) . "',
+						'" . $CustCurrRow['currcode'] . "')";
 		
 		$result = api_DB_query($SQL,$db,'','',true);
 		
-		if ($CompanyRecord[['gllink_debtors']==1) {
-		/* Now Credit Debtors account with receipts + discounts */
+fputs($fp, "Entered the bank trans with the following SQL: \n" . $SQL . "\n");
+
+		if ($CompanyRecord['gllink_debtors']==1) {
+		/* Now Credit Debtors account with receipts */
+			$SQL="INSERT INTO gltrans ( type,
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
+					VALUES (12,
+						'" . $ReceiptNo . "',
+						'" . $Receipt['trandate'] . "',
+						'" . $PeriodNo . "',
+						'". $CompanyRecord['debtorsact'] . "',
+						'" . $Receipt['reference'] . "',
+						'" . round(-$Receipt['amountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
+		
+			$result = api_DB_query($SQL,$db,'','',true);
+
+fputs($fp, "Entered the debtor GL journal with the following SQL: \n" . $SQL . "\n");
+
+		/*and debit bank account with the receipt */
 			$SQL="INSERT INTO gltrans ( type,
 										typeno,
 										trandate,
@@ -362,25 +407,68 @@ function ConvertToSQLDate($DateEntry) {
 										amount)
 					VALUES (
 						12,
-						'" . $_SESSION['ReceiptBatch']->BatchNo . "',
-						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+						'" . $ReceiptNo . "',
+						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
-						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
-						'" . $_SESSION['ReceiptBatch']->Narrative . "',
-						'" . -$BatchDebtorTotal . "')";
+						'". $Receipt['bankaccount'] . "',
+						'" . $Receipt['reference'] . "',
+						'" . round($Receipt['amountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
 		
 			$result = api_DB_query($SQL,$db,'','',true);
-		}
 
+fputs($fp, "Entered the bank deposit GL trans with the following SQL: \n" . $SQL . "\n");
+
+		} /* end if GL linked to debtors */
+		
+		$SQL = "INSERT INTO debtortrans (transno,
+										type,
+										debtorno,
+										trandate,
+										inputdate,
+										prd,
+										reference,
+										rate,
+										ovamount,
+										invtext)
+					VALUES ('" . $ReceiptNo . "',
+							12,
+							'" . $Receipt['debtorno'] . "',
+							'" . $Receipt['trandate'] . "',
+							'" . date('Y-m-d H-i-s') . "',
+							'" . $PeriodNo . "',
+							'" . $Receipt['reference'] . "',
+						'" . ($ReceiptExRate/$FunctionalExRate) . "',
+						'" . -$Receipt['amountfx'] . "',
+						'" . $Receipt['paymentmethod'] . "')";
+		
+		$result = api_DB_query($SQL,$db,'','',true);
+fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
+
+		$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $Receipt['trandate'] . "',
+						lastpaid='" . $Receipt['amountfx'] ."'
+					WHERE debtorsmaster.debtorno='" . $Receipt['debtorno'] . "'";
+		
+		$result = api_DB_query($SQL,$db,'','',true);
+		
+		
+		if (sizeof($Errors)==0) {
+			$Result = DB_Txn_Commit($db);
+			$Errors[0]=0;
+			$Errors[1]=$ReceiptNo;
+		} else {
+			$Result = DB_Txn_Rollback($db);
+		}
+		return $Errors;
 	}
 
-/* Create a customer credit note in webERP.
- * Needs an associative array for the Header
- * and an array of assocative arrays for the $LineDetails
- */
-	function CreateCreditNote($Header,$LineDetails, $User, $Password) {
 
-		/* $Header contains an associative array in the format:
+	function CreateCreditNote($Header,$LineDetails, $User, $Password) {
+	
+		/* Create a customer credit note in webERP.
+		 * Needs an associative array for the $Header
+		 * and an array of assocative arrays for the $LineDetails
+
+		 * $Header contains an associative array in the format:
 		 * Header['debtorno'] - the customer code
 		 * Header['branchcode']  - the branch code
 		 * Header['trandate'] - the date of the credit note
