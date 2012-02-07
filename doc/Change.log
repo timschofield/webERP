@@ -1,5 +1,6 @@
 webERP Change Log
 
+7/2/12 Phil: Reworked ReorderLevelLocation.php
 7/2/12 Phil: StockTransfers.php if SESSION['Transfer'][0] not set then now initiate a new transfer
 7/2/12 Exson: Sent NewTransfer with call from SelectProduct.php to ensure new transfer initiated
 6/2/12 Tim: Removed FUD as new API functions seem consistent with the rest of the API</p>
