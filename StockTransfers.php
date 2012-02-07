@@ -65,7 +65,7 @@ $NewTransfer = false; /*initialise this first then determine from form inputs */
 
 if (isset($_GET['NewTransfer'])){
 	 unset($_SESSION['Transfer']);
-	 unset($_SESSION['TransferItem']); /*this is defined in bulk transfers but needs to be unset for individual trsnsfers */
+	 unset($_SESSION['TransferItem']); /*this is defined in bulk transfers but needs to be unset for individual transfers */
 	 $NewTransfer=$_GET['NewTransfer'];
 }
 
@@ -78,6 +78,8 @@ if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additi
 			unset($_SESSION['Transfer']);
 			$NewTransfer = true;
 		}
+	} else { /* _SESSION['Transfer']->TransferItem[0] is not set so */
+		$NewTransfer = true;
 	}
 }
 
