@@ -33,4 +33,6 @@ INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('Supplie
 ALTER TABLE `www_users` ADD `cancreatetender` tinyint(1) NOT NULL DEFAULT 0 AFTER `fullaccess`;
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES (37, 'Tenders', 0);
 
+INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
+
 UPDATE config SET confvalue='4.07.0' WHERE confname='VersionNumber';

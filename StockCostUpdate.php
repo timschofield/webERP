@@ -149,10 +149,10 @@ echo '<input type="hidden" name="OldOverheadCost" value="' . $myrow['overheadcos
 echo '<input type="hidden" name="QOH" value="' . $myrow['totalqoh'] .'" />';
 
 echo '<tr><td>' . _('Last Cost') .':</td>
-		<td class="number">' . locale_number_format($myrow['lastcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+		<td class="number">' . locale_number_format($myrow['lastcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td></tr>';
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<tr><td>' . _('Cost') . ':</td>
-			<td class="number">' . locale_number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
 		</tr>
 		</table>';
 } else {
@@ -160,20 +160,20 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	if ($myrow['mbflag']=='M'){
 		echo '<input type="hidden" name="MaterialCost" value="' . $myrow['materialcost'] . '" />';
 		echo '<tr><td>' . _('Standard Material Cost Per Unit') .':</td>
-				<td class="number">' . locale_number_format($myrow['materialcost'],4) . '</td>
+				<td class="number">' . locale_number_format($myrow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Standard Labour Cost Per Unit') . ':</td>
-				<td class="number"><input type="text" class="number" name="LabourCost" value="' . locale_number_format($myrow['labourcost'],4) . '" /></td>
+				<td class="number"><input type="text" class="number" name="LabourCost" value="' . locale_number_format($myrow['labourcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Standard Overhead Cost Per Unit') . ':</td>
-				<td class="number"><input type="text" class="number" name="OverheadCost" value="' . locale_number_format($myrow['overheadcost'],4) . '" /></td>
+				<td class="number"><input type="text" class="number" name="OverheadCost" value="' . locale_number_format($myrow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
 			</tr>';
 	} elseif ($myrow['mbflag']=='B' OR  $myrow['mbflag']=='D') {
 		echo '<tr>
 				<td>' . _('Standard Cost') .':</td>
-				<td class="number"><input type="text" class="number" name="MaterialCost" value="' . locale_number_format($myrow['materialcost'],4) . '" /></td>
+				<td class="number"><input type="text" class="number" name="MaterialCost" value="' . locale_number_format($myrow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
 			</tr>';
 	} else 	{
 		echo '<input type="hidden" name="LabourCost" value="0" />';

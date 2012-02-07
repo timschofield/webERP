@@ -43,6 +43,10 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 || !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
 		$InputError = 1;
 		prnMsg(_('Freight Charge Applies If Less Than must be a number'),'error');
+	} elseif ( !is_numeric($_POST['X_StandardCostDecimalPlaces']) ||
+		$_POST['X_StandardCostDecimalPlaces'] < 0 || $_POST['X_StandardCostDecimalPlaces'] > 4 ) {
+		$InputError = 1;
+		prnMsg(_('Standard Cost Decimal Places must be a number between 0 and 4'),'error');
 	} elseif (mb_strlen($_POST['X_NumberOfPeriodsOfStockUsage']) > 2 || !is_numeric($_POST['X_NumberOfPeriodsOfStockUsage']) ||
 		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 || $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
 		$InputError = 1;
@@ -152,6 +156,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['CountryOfOperation'] != $_POST['X_CountryOfOperation'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_CountryOfOperation'] ."' WHERE confname = 'CountryOfOperation'";
+		}
+		if ($_SESSION['StandardCostDecimalPlaces'] != $_POST['X_StandardCostDecimalPlaces'] ) {
+			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_StandardCostDecimalPlaces']."' WHERE confname = 'StandardCostDecimalPlaces'";
 		}
 		if ($_SESSION['NumberOfPeriodsOfStockUsage'] != $_POST['X_NumberOfPeriodsOfStockUsage'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_NumberOfPeriodsOfStockUsage']."' WHERE confname = 'NumberOfPeriodsOfStockUsage'";
@@ -598,6 +605,13 @@ if( DB_num_rows($result) == 0 ) {
 }
 echo '</select></td>
 	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. Country names come from the currencies table.') .'</td></tr>';
+
+// StandardCostDecimalPlaces
+echo '<tr style="outline: 1px solid"><td>' . _('Standard Cost Decimal Places') . ':</td>
+	<td><select name="X_StandardCostDecimalPlaces">';
+for ($i=0; $i <= 4; $i++ )
+	echo '<option '.($_SESSION['StandardCostDecimalPlaces'] == $i?'selected ':'').'value="'.$i.'">'.$i;
+echo '</select></td><td>' . _('Decimal Places to be used in Standard Cost') .'</td></tr>';
 
 // NumberOfPeriodsOfStockUsage
 echo '<tr style="outline: 1px solid"><td>' . _('Number Of Periods Of StockUsage') . ':</td>

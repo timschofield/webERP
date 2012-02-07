@@ -195,7 +195,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Cost = $myrow['cost'];
 		}
 		echo '<th class="number">' . _('Cost') . '</th>
-			<td class="select">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+			<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
