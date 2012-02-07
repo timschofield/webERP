@@ -1086,7 +1086,7 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
-	$Description = _('Creates a credit note from header details associative array and line items');
+	$Description = _('Creates a credit note from header details associative array and line items. This function implements most of a webERP credit note with the exception that it cannot handle serialised or lot/batch controlled items. All the necessary updates and inserts are handled for stock quantities returned, taxes, sales analysis, stock movements, sales and cost of sales journals');
 	$Parameter[0]['name'] = _('Credit Note Header Details');
 	$Parameter[0]['description'] = _('An associative array describing the credit note header with the fields debtorno, branchcode, trandate, tpe, fromstkloc, customerref, shipvia');
 	$Parameter[1]['name'] = _('Credit note line items');
@@ -1118,7 +1118,7 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
-	$Description = _('Inserts a sales invoice into the debtortrans table and does the relevant GL entries');
+	$Description = _('Inserts a sales invoice into the debtortrans table and does the relevant GL entries. Note that this function does not do the tax entries, insert stock movements, update the stock quanties, sales analysis data or do any cost of sales gl journals. Caution is advised in using this function. To create a full webERP invoice with all tables updated use the InvoiceSalesOrder function.');
 	$Parameter[0]['name'] = _('Invoice Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the invoice.')
 			._('The field names can be found ').'<a href="../../Z_DescribeTable.php?table=debtortrans">'._('here ').'</a>'
@@ -1157,7 +1157,7 @@
 	unset($Parameter);
 	unset($ReturnValue);
 	$ReturnValue = _('Return Value Descriptions go here');
-	$Description = _('This function is used to insert a new Sales Credit to the webERP database.');
+	$Description = _('This function is used to insert a new Sales Credit to the webERP database. Note that this function does not implement a webERP credit note in full and caution is advised in using this function. It does not handle tax at all, it does not add stockmovements, it does not update stock for any quantity returned or update sales analysis. To create a credit note using webERP logic use the CreateCreditNote function');
 	$Parameter[0]['name'] = _('Credit Details');
 	$Parameter[0]['description'] = _('An array of index/value items describing the credit.  All values must be negative.');
 	$Parameter[1]['name'] = _('User name');

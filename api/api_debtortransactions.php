@@ -276,6 +276,7 @@ function ConvertToSQLDate($DateEntry) {
 		 * $Receipt['paymentmethod'] - the payment method of the receipt e.g. cash/EFTPOS/credit card
 		 * $Receipt['bankaccount'] - the webERP bank account
 		 * $Receipt['reference']
+		 * $Receipt['discountfx']
 
 	*/
 		$Errors = array();
@@ -288,7 +289,8 @@ function ConvertToSQLDate($DateEntry) {
 
 		/*Get Company Defaults */
 		$ReadCoyResult = api_DB_query("SELECT debtorsact,
-												gllink_debtors
+											pytdiscountact,
+											gllink_debtors
 										FROM companies
 										WHERE coycode=1",$db);
 
@@ -391,12 +393,30 @@ fputs($fp, "Entered the bank trans with the following SQL: \n" . $SQL . "\n");
 						'" . $PeriodNo . "',
 						'". $CompanyRecord['debtorsact'] . "',
 						'" . $Receipt['reference'] . "',
-						'" . round(-$Receipt['amountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
+						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) * $FunctionalExRate / $ReceiptExRate,4) . "')";
 		
 			$result = api_DB_query($SQL,$db,'','',true);
 
 fputs($fp, "Entered the debtor GL journal with the following SQL: \n" . $SQL . "\n");
-
+			
+			if($Receipt['discountfx']!=0){
+				$SQL="INSERT INTO gltrans ( type,
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
+					VALUES (12,
+						'" . $ReceiptNo . "',
+						'" . $Receipt['trandate'] . "',
+						'" . $PeriodNo . "',
+						'". $CompanyRecord['pytdiscountact'] . "',
+						'" . $Receipt['reference'] . "',
+						'" . round($Receipt['discountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
+		
+				$result = api_DB_query($SQL,$db,'','',true);
+			}
 		/*and debit bank account with the receipt */
 			$SQL="INSERT INTO gltrans ( type,
 										typeno,
@@ -410,7 +430,7 @@ fputs($fp, "Entered the debtor GL journal with the following SQL: \n" . $SQL . "
 						'" . $ReceiptNo . "',
 						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
-						'". $Receipt['bankaccount'] . "',
+						'" . $Receipt['bankaccount'] . "',
 						'" . $Receipt['reference'] . "',
 						'" . round($Receipt['amountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
 		
@@ -438,10 +458,11 @@ fputs($fp, "Entered the bank deposit GL trans with the following SQL: \n" . $SQL
 							'" . $PeriodNo . "',
 							'" . $Receipt['reference'] . "',
 						'" . ($ReceiptExRate/$FunctionalExRate) . "',
-						'" . -$Receipt['amountfx'] . "',
+						'" . (-$Receipt['amountfx']-$Receipt['discountfx']) . "',
 						'" . $Receipt['paymentmethod'] . "')";
 		
 		$result = api_DB_query($SQL,$db,'','',true);
+		
 fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
 
 		$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $Receipt['trandate'] . "',
