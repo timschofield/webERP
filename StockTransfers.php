@@ -83,6 +83,13 @@ if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additi
 
 if ($NewTransfer){
 
+	if(!isset($_POST['StockLocationFrom'])){
+		$_POST['StockLocationFrom']='';
+	}
+	if(!isset($_POST['StockLocationTo'])){
+		$_POST['StockLocationTo']='';
+	}
+
 	$_SESSION['Transfer']= new StockTransfer(0,
 										$_POST['StockLocationFrom'],
 										'',
