@@ -425,7 +425,7 @@ echo '</td><td valign="top" class="select">';
 /* Stock Transactions */
 if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $rootpath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
-	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '">' . _('Location Transfers') . '</a><br />';
+	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '&NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded
 	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&StockID=' . $StockID . '&text=' . $StockID . '&width=120&height=120" />';
