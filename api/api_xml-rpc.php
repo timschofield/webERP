@@ -12,7 +12,7 @@
 	include '../xmlrpc/lib/xmlrpcs.inc';
 
 	$Description = _('This function is used to login into the API methods for the specified the database.')
-		.'<p><b>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</b>';
+		.'<p>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</p>';
 	$Parameter[0]['name'] = _('Database Name');
 	$Parameter[0]['description'] = _('The name of the database to use for the transactions to come. ');
 	$Parameter[1]['name'] = _('User name');

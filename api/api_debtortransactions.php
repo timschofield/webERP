@@ -1281,7 +1281,7 @@ fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-			$result = DB_Query($sql, $db);
+			$result = api_DB_Query($sql, $db);
 			$sql="INSERT INTO gltrans VALUES(null, 
 											10,
 											'" . GetNextTransactionNo(10, $db) . "',
@@ -1294,7 +1294,7 @@ fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-			$result = DB_Query($sql, $db);
+			$result = api_DB_Query($sql, $db);
 			$result= DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -1307,6 +1307,91 @@ fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
 		} else {
 			return $Errors;
 		}
+	}
+
+	function AllocateTrans($AllocDetails, $User, $Password) {
+		
+		/* AllocDetails is an associative array containing:
+		 * AllocDetails['debtorno']
+		 * AllocDetails['type']
+		 * AllocDetails['transno']
+		 * AllocDetails['customerref']
+		 */
+		$Errors = array();
+		$db = db($User, $Password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors=VerifyDebtorExists($AllocDetails['debtorno'], sizeof($Errors), $Errors, $db);
+		/*Get the outstanding amount to allocate (all amounts in FX) from the transaction*/
+		
+		if ($AllocDetails['type'] !='11' AND $AllocDetails['type'] !=12){
+			$Errors[] = MustBeReceiptOrCreditNote;
+		}
+		$SQL = "SELECT id,
+					rate,
+					ovamount+ovgst-alloc AS lefttoalloc
+				FROM debtortrans
+				WHERE debtorno='" . $AllocDetails['debtorno'] . "'
+				AND type='" . $AllocDetails['type'] . "'
+				AND transno='" . $AllocDetails['transno'] . "'";
+		$Result = api_DB_query($SQL,$db);
+		$LeftToAllocRow = DB_fetch_array($Result);
+		if (DB_num_row($Result)==0){
+			$Errors[] = NoTransactionToAllocate;
+		}
+		
+		if ($LeftToAllocRow['lefttoalloc'] >= 0){
+			/*Now look for invoices with the same customerref to allocate to */
+			$SQL = "SELECT id,
+						rate,
+						-ovamount-ovgst-alloc AS outstanding
+					FROM debtortrans
+					WHERE debtorno='" . $AllocDetails['debtorno'] . "'
+					AND type=10
+					AND customerref='" . $AllocDetails['customerref'] . "'";
+			$Result = api_DB_query($SQL,$db);
+			$OSInvRow = DB_fetch_array($Result);
+			if ($OSInvRow['rate']==$LeftToAllocRow['rate']
+				AND $OSInvRow['outstanding']>0){
+					
+				if ($OSInvRow['outstanding']>=$LeftToAllocRow['lefttoalloc']){
+					/*We can allocate the whole amount of the credit/receipt */
+					$AllocateAmount = $LeftToAllocRow['lefttoalloc'];
+				} else {
+					/*We can only allocate the rest of the invoice outstanding */
+					$AllocateAmount = $OSInvRow['outstanding'];
+				}
+				DB_Txn_Begin($db);
+				/*Now insert the allocation records */
+				$SQL = "INSERT INTO custallocs (amt, 
+												datealloc, 
+												transid_allocfrom, 
+												transid_allocto)
+									VALUE('" . $AllocateAmount . "',
+										'" . Date('Y-m-d') . "',
+										'" . $LeftToAllocRow['id'] . "',
+										'" . $OSInvRow['id'] . "')";
+				$Result = api_DB_query($SQL,$db,'','',true);
+				/*Now update the allocated amounts in the debtortrans for both transactions */
+				$SQL = "UPDATE debtortrans SET alloc=alloc-" . $AllocateAmount . "
+						WHERE id = '" . $LeftToAllocRow['id'] . "'";
+				$Result = api_DB_query($SQL,$db,'','',true);
+				$SQL = "UPDATE debtortrans SET alloc=alloc+" . $AllocateAmount . "
+						WHERE id = '" . $OSInvRow['id'] . "'";
+				$Result = api_DB_query($SQL,$db,'','',true);
+			} /*end if the exchange rates are the same so no diff on exchange */
+
+		}/*end if there is owt to allocation*/
+		if (sizeof($Errors)==0) {
+			$Result = DB_Txn_Commit($db);
+			$Errors[0]=0;
+		} else {
+			$Result = DB_Txn_Rollback($db);
+		}
+		return $Errors;	
+	
 	}
 
 /* Create a customer credit note in webERP. This function will bypass the

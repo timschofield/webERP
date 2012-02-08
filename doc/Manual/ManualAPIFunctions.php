@@ -7,7 +7,7 @@ $PageSecurity = 1;
 //$PathPrefix= $_SERVER['HTTP_HOST'].$rootpath.'/../../';
 //$PathPrefix= '/../';
 
-include('../../includes/session.inc');
+//include('../../includes/session.inc');
 
 include('../../xmlrpc/lib/xmlrpc.inc');
 include('../../api/api_errorcodes.php');
@@ -45,7 +45,11 @@ $response = $client->send($msg);
 $answer = php_xmlrpc_decode($response->value());
 
 for ($i=0; $i<sizeof($answer); $i++) {
-	echo '<table border="1" width="80%"><tr><th colspan="3"><h4>'._('Method name')._('  -  ').'<b>'.$answer[$i].'</b></h4></th></tr></table>';
+	echo '<table border="1" width="80%">
+			<tr>
+				<th colspan="3"><h4>'._('Method name')._('  -  ').'<b>'.$answer[$i].'</b></h4></th>
+			</tr>
+			</table>';
 	$method = php_xmlrpc_encode($answer[$i]);
 	$msg = new xmlrpcmsg("system.methodHelp", array($method));
 

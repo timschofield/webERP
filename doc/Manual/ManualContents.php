@@ -21,7 +21,7 @@
 -->';*/
 
 $PathPrefix='../../';
-//include($PathPrefix.'includes/session.inc');
+include($PathPrefix.'includes/session.inc');
 
 include('ManualHeader.html');
 ?>
