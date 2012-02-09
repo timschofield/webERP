@@ -1057,8 +1057,8 @@
 	unset($ReturnValue);
 
 	$Description = _('Creates a customer receipt from the details passed to the method as an associative array');
-	$Parameter[0]['name'] = _('Create Customer Receipt');
-	$Parameter[0]['description'] = _('An associative array describing the customer receipt with the following fields: debtorno - the customer code, trandate - the date of the receipt in Y-m-d format, amountfx - the amount in FX, paymentmethod - the payment method of the receipt e.g. cash/EFTPOS/credit card, bankaccount - the webERP bank account to use for the transaction, reference - the reference to record against the webERP receipt transaction');
+	$Parameter[0]['name'] = _('Receipt Details');
+	$Parameter[0]['description'] = _('An associative array describing the customer receipt with the following fields: debtorno - the customer code; trandate - the date of the receipt in Y-m-d format; amountfx - the amount in FX; paymentmethod - the payment method of the receipt e.g. cash/EFTPOS/credit card; bankaccount - the webERP bank account to use for the transaction, reference - the reference to record against the webERP receipt transaction');
 	$Parameter[1]['name'] = _('User name');
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
@@ -1077,6 +1077,36 @@
 /*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(InsertDebtorReceipt(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), $xmlrpcmsg->getParam( 1 )->scalarval(  ),$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/	} else {
 /*e*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(InsertDebtorReceipt(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*x*/	}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('Allocates a debtor receipt or credit to a debtor invoice. Using the customerref field to match up which invoice to allocate to');
+	$Parameter[0]['name'] = _('Allocation Details');
+	$Parameter[0]['description'] = _('An associative array describing the customer, the transaction being allocated from, it\'s transaction type 12 for a receipt or 11 for a credit note, the webERP transaction number, the customer ref that is to be searched for in invoices to match to. The fields are: debtorno, type, transno, customerref');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ')
+			._('If the first element is zero then the function was successful.')
+			._('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+/*E*/$AllocateTrans_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$AllocateTrans_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_AllocateTrans($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/	if ($xmlrpcmsg->getNumParams() == 3) {
+/*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(AllocateTrans(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), $xmlrpcmsg->getParam( 1 )->scalarval(  ),$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/	} else {
+/*e*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(AllocateTrans(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
 /*x*/	}
 		ob_end_flush();
 		return $rtn;
@@ -3100,6 +3130,10 @@
 			"function" => "xmlrpc_InsertSalesInvoice",
 			"signature" => $InsertSalesInvoice_sig,
 			"docstring" => $InsertSalesInvoice_doc),
+		"weberp.xmlrpc_AllocateTrans" => array(
+			"function" => "xmlrpc_AllocateTrans",
+			"signature" => $AllocateTrans_sig,
+			"docstring" => $AllocateTrans_doc),
 		"weberp.xmlrpc_InsertDebtorReceipt" => array(
 			"function" => "xmlrpc_InsertDebtorReceipt",
 			"signature" => $InsertDebtorReceipt_sig,

@@ -285,8 +285,7 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
-
+	
 		/*Get Company Defaults */
 		$ReadCoyResult = api_DB_query("SELECT debtorsact,
 											pytdiscountact,
@@ -341,17 +340,11 @@ function ConvertToSQLDate($DateEntry) {
 		$ReceiptExRate = $CustCurrRow['rate']/$BankActRow['rate'];
 		$FunctionalExRate = $BankActRow['rate'];
 		
-fputs($fp, 'Receipt ex rate = ' . $ReceiptExRate . "\n");
-fputs($fp, 'Functional ex rate = ' . $FunctionalExRate . "\n");
-		
 		DB_Txn_Begin($db);
 
 		$ReceiptNo = GetNextTransNo(12,$db);
 		$PeriodNo = GetCurrentPeriod($db);
 /*now enter the BankTrans entry */
-
-fputs($fp, 'Receipt No = ' . $ReceiptNo . "\n");
-fputs($fp, 'Period No = ' . $PeriodNo . "\n");
 
 		$SQL="INSERT INTO banktrans (type,
 									transno,
@@ -376,7 +369,6 @@ fputs($fp, 'Period No = ' . $PeriodNo . "\n");
 		
 		$result = api_DB_query($SQL,$db,'','',true);
 		
-fputs($fp, "Entered the bank trans with the following SQL: \n" . $SQL . "\n");
 
 		if ($CompanyRecord['gllink_debtors']==1) {
 		/* Now Credit Debtors account with receipts */
@@ -396,8 +388,6 @@ fputs($fp, "Entered the bank trans with the following SQL: \n" . $SQL . "\n");
 						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) * $FunctionalExRate / $ReceiptExRate,4) . "')";
 		
 			$result = api_DB_query($SQL,$db,'','',true);
-
-fputs($fp, "Entered the debtor GL journal with the following SQL: \n" . $SQL . "\n");
 			
 			if($Receipt['discountfx']!=0){
 				$SQL="INSERT INTO gltrans ( type,
@@ -436,8 +426,6 @@ fputs($fp, "Entered the debtor GL journal with the following SQL: \n" . $SQL . "
 		
 			$result = api_DB_query($SQL,$db,'','',true);
 
-fputs($fp, "Entered the bank deposit GL trans with the following SQL: \n" . $SQL . "\n");
-
 		} /* end if GL linked to debtors */
 		
 		$SQL = "INSERT INTO debtortrans (transno,
@@ -463,8 +451,6 @@ fputs($fp, "Entered the bank deposit GL trans with the following SQL: \n" . $SQL
 		
 		$result = api_DB_query($SQL,$db,'','',true);
 		
-fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
-
 		$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $Receipt['trandate'] . "',
 						lastpaid='" . $Receipt['amountfx'] ."'
 					WHERE debtorsmaster.debtorno='" . $Receipt['debtorno'] . "'";
@@ -1311,7 +1297,10 @@ fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
 
 	function AllocateTrans($AllocDetails, $User, $Password) {
 		
-		/* AllocDetails is an associative array containing:
+		/* This function is quite specific and probably not generally useful
+		 * It only attempts to allocate a receipt or credit note sent to invoices that have a customerref equal to the value sent
+		 * 
+		 * The first parameter  AllocDetails is an associative array containing:
 		 * AllocDetails['debtorno']
 		 * AllocDetails['type']
 		 * AllocDetails['transno']
@@ -1338,7 +1327,7 @@ fputs($fp, "Entered the debtortrans with the following SQL: \n" . $SQL . "\n");
 				AND transno='" . $AllocDetails['transno'] . "'";
 		$Result = api_DB_query($SQL,$db);
 		$LeftToAllocRow = DB_fetch_array($Result);
-		if (DB_num_row($Result)==0){
+		if (DB_num_rows($Result)==0){
 			$Errors[] = NoTransactionToAllocate;
 		}
 		
