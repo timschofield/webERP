@@ -317,20 +317,24 @@ if (!isset($_POST['EndDate'])){
 	$_POST['EndDate'] = '';
 }
 
-$sql = "SELECT
-			branchcode,
-			brname
-			FROM custbranch
-			WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
+$sql = "SELECT branchcode,
+				brname
+		FROM custbranch
+		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 $result = DB_query($sql, $db);
 
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Branch') . ':</td>
 			<td><select name="Branch">';
-			
+if ($myrow['branchcode']=='') {
+	echo '<option selected="selected" value="">' . _('All branches') . '</option>';
+} else {
+	echo '<option value="">' . _('All branches') . '</option>';
+}
+
 while ($myrow=DB_fetch_array($result)) {
-	if ($myrow['branchcode']==$_POST['branch']) {
+	f ($myrow['branchcode']==$_GET['Branch']) {
 		echo '<option selected="selected" value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
 	} else {
 		echo '<option value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
@@ -403,7 +407,8 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 									AND typeabbrev='" . $PriceList . "'
 									AND startdate ='" . $StartDate . "'
 									AND enddate = '" . $EndDate . "'
-									AND debtorno ='" . $CustomerID . "'";
+									AND debtorno ='" . $CustomerID . "'
+									AND branchcode='" . $BranchCode . "'";
 					$UpdateResult = DB_query($SQL,$db);
 				}
 			} //end of if startdate  after NextStartDate - we have a new NextStartDate
@@ -414,5 +419,38 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 		$StartDate = $myrow['startdate'];
 		$EndDate = $myrow['enddate'];
 	}
+	
+	//Now look for duplicate prices with no end
+	$SQL = "SELECT price,
+					startdate,
+					enddate
+				FROM prices
+				WHERE debtorno=''
+				AND stockid='" . $Item . "'
+				AND currabrev='" . $CurrAbbrev . "'
+				AND typeabbrev='" . $PriceList . "'
+				AND debtorno ='" . $CustomerID . "'
+				AND branchcode=''
+				AND enddate ='0000-00-00'
+				ORDER BY startdate";
+	$result = DB_query($SQL,$db);
+			
+	while ($myrow = DB_fetch_array($result)) {
+		if (isset($OldStartDate)){
+		/*Need to make the end date the new start date less 1 day */
+			$NewEndDate = FormatDateForSQL(DateAdd(ConvertSQLDate($myrow['startdate']),'d',-1));
+			$SQL = "UPDATE prices SET enddate = '" . $NewEndDate  . "'
+						WHERE stockid ='" .$Item . "'
+						AND currabrev='" . $CurrAbbrev . "'
+						AND typeabbrev='" . $PriceList . "'
+						AND startdate ='" . $OldStartDate . "'
+						AND debtorno ='" . $CustomerID . "'
+						AND branchcode=''
+						AND enddate = '0000-00-00'
+						AND debtorno =''";
+			$UpdateResult = DB_query($SQL,$db);
+		}
+		$OldStartDate = $myrow['startdate']
+	} // end of loop around duplicate no end date prices
 }
 ?>

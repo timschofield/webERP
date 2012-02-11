@@ -82,6 +82,8 @@ function ConvertToSQLDate($DateEntry) {
 	}
 
 /* Find the period number from the transaction date */
+/* Why use this function over GetPeriod we already have this function included in DateFunctions.inc 
+ * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
 	function GetPeriodFromTransactionDate($TranDate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=DB_query($sql, $db);
@@ -1306,6 +1308,9 @@ function ConvertToSQLDate($DateEntry) {
 		 * AllocDetails['transno']
 		 * AllocDetails['customerref']
 		 */
+		 
+		$fp = fopen('/root/Web-Server/DebugInfo.txt','w');
+		 
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {

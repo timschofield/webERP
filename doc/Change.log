@@ -1,5 +1,9 @@
 webERP Change Log
 
+Release 4.07
+
+11/2/12 Phil: Fix Prices.php for end dates when a new price with no end date is inserted with a start date in the future.
+11/2/12 Ahmed.Fawzy: Repairs to Prices_Customer.php option to have prices for a single customer and all branches had been compromised by having the branch selection box with no "All Branches" option. Also selected branch was not showing as it should have when editing a specific branch price
 7/2/12 Ricard: Made new system parameter for StandardCostDecimalPlaces - reworked SelectProduct.php and StockCostUpdate.php to use the new parameter. Modified SystemParameters.php to allow the parameter to be a number between 0 and 4 inclusive.
 7/2/12 Phil: Reworked ReorderLevelLocation.php
 7/2/12 Phil: StockTransfers.php if SESSION['Transfer'][0] not set then now initiate a new transfer

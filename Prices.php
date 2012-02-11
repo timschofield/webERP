@@ -99,11 +99,10 @@ if (isset($_POST['submit'])) {
 				FROM prices
 			WHERE prices.stockid='".$Item."'
 			AND startdate='" .FormatDateForSQL($_POST['StartDate']) . "'
-			AND enddate ='" . FormatDateForSQL($_POST['EndDate']) . "'
+			AND enddate ='" . $SQLEndDate . "'
 			AND prices.typeabbrev='" . $_POST['TypeAbbrev'] . "'
 			AND prices.currabrev='" . $_POST['CurrAbrev'] . "'
-			AND prices.price='" . filter_number_format($_POST['Price']) . "'
-			";
+			AND prices.price='" . filter_number_format($_POST['Price']) . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
@@ -158,7 +157,8 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Price']) . "')";
 		$ErrMsg = _('The new price could not be added');
 		$result = DB_query($sql,$db,$ErrMsg);
-
+		echo "Used the following SQL to insert the price:<br />$sql";
+		
 		ReSequenceEffectiveDates ($Item, $_POST['TypeAbbrev'], $_POST['CurrAbrev'], $db) ;
 		prnMsg(_('The new price has been inserted'),'success');
 	}
@@ -305,8 +305,9 @@ if ($InputError ==0){
 	DB_free_result($result);
 
 	echo '</select>	</td></tr>
-			<tr><td>' . _('Sales Type Price List') . ':</td>
-					<td><select name="TypeAbbrev">';
+			<tr>
+				<td>' . _('Sales Type Price List') . ':</td>
+				<td><select name="TypeAbbrev">';
 
 	$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 	$result = DB_query($SQL,$db);
@@ -372,9 +373,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 				AND enddate <>'0000-00-00'
 				ORDER BY startdate, enddate";
 		$result = DB_query($SQL,$db);
-		unset($NextStartDate); 
-		unset($EndDate);
-
+		
 		while ($myrow = DB_fetch_array($result)){
 			if (isset($NextStartDate)){
 				if (Date1GreaterThanDate2(ConvertSQLDate($myrow['startdate']),$NextStartDate)){
@@ -413,19 +412,21 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 					AND enddate ='0000-00-00'
 					ORDER BY startdate";
 		$result = DB_query($SQL,$db);
-		$NewEndDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-		
-		for ($i=1;$i< DB_num_rows($result);$i++) {
-			$myrow = DB_fetch_array($result);
+				
+		while ($myrow = DB_fetch_array($result)) {
+			if (isset($OldStartDate)){
 			/*Need to make the end date the new start date less 1 day */
-			$SQL = "UPDATE prices SET enddate = '" . $NewEndDate  . "'
+				$NewEndDate = FormatDateForSQL(DateAdd(ConvertSQLDate($myrow['startdate']),'d',-1));
+				$SQL = "UPDATE prices SET enddate = '" . $NewEndDate  . "'
 							WHERE stockid ='" .$Item . "'
 							AND currabrev='" . $CurrAbbrev . "'
 							AND typeabbrev='" . $PriceList . "'
-							AND startdate ='" . $myrow['startdate'] . "'
+							AND startdate ='" . $OldStartDate . "'
 							AND enddate = '0000-00-00'
 							AND debtorno =''";
-			$UpdateResult = DB_query($SQL,$db);
+				$UpdateResult = DB_query($SQL,$db);
+			}
+			$OldStartDate = $myrow['startdate'];
 		} // end of loop around duplicate no end date prices
 		
 } // end function ReSequenceEffectiveDates

@@ -591,7 +591,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							taxamount)
 				VALUES ('" . $CreditTransID . "',
 					'" . $TaxAuthID . "',
-					'" . -$TaxAmount/$_SESSION['CurrencyRate'] . "')";
+					'" . (-$TaxAmount/$_SESSION['CurrencyRate']) . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
@@ -751,10 +751,10 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 														'" . $_SESSION['CreditItems']->Branch . "',
 														'" . $PeriodNo . "',
 														'" . _('Ex Inv') . ': ' .  $_SESSION['ProcessingCredit'] . ' ' . _('Assembly') . ': ' . $CreditLine->StockID . "',
-														'" . $AssParts['quantity'] * $CreditLine->QtyDispatched . "',
+														'" . ($AssParts['quantity'] * $CreditLine->QtyDispatched) . "',
 														'" . $AssParts['standard'] . "',
 														0,
-														'" . $QtyOnHandPrior + ($AssParts['quantity'] * $CreditLine->QtyDispatched) . "'
+														'" . ($QtyOnHandPrior + ($AssParts['quantity'] * $CreditLine->QtyDispatched)) . "'
 														)";
 						} else {
 
@@ -779,7 +779,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 														'" . $_SESSION['CreditItems']->Branch . "',
 														'" . $PeriodNo . "',
 														'" . _('Ex Inv') . ': ' . $_SESSION['ProcessingCredit'] . ' ' . _('Assembly') . ': ' . $CreditLine->StockID . "',
-														'" . $AssParts['quantity'] * $CreditLine->QtyDispatched . "',
+														'" . ($AssParts['quantity'] * $CreditLine->QtyDispatched) . "',
 														'" . $AssParts['standard'] . "',
 														0)";
 						}
@@ -790,7 +790,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 						if ($Component_MBFlag=='M' OR $Component_MBFlag=='B'){
 							$SQL = "UPDATE locstock
-									SET locstock.quantity = locstock.quantity + " . $AssParts['quantity'] * $CreditLine->QtyDispatched . "
+									SET locstock.quantity = locstock.quantity + " . ($AssParts['quantity'] * $CreditLine->QtyDispatched) . "
 									WHERE locstock.stockid = '" . $AssParts['component'] . "'
 									AND loccode = '" . $_SESSION['CreditItems']->Location . "'";
 
