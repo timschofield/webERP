@@ -157,7 +157,6 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Price']) . "')";
 		$ErrMsg = _('The new price could not be added');
 		$result = DB_query($sql,$db,$ErrMsg);
-		echo "Used the following SQL to insert the price:<br />$sql";
 		
 		ReSequenceEffectiveDates ($Item, $_POST['TypeAbbrev'], $_POST['CurrAbrev'], $db) ;
 		prnMsg(_('The new price has been inserted'),'success');

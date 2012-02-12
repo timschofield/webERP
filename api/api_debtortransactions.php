@@ -439,6 +439,7 @@ function ConvertToSQLDate($DateEntry) {
 										reference,
 										rate,
 										ovamount,
+										ovdiscount,
 										invtext)
 					VALUES ('" . $ReceiptNo . "',
 							12,
@@ -448,7 +449,8 @@ function ConvertToSQLDate($DateEntry) {
 							'" . $PeriodNo . "',
 							'" . $Receipt['reference'] . "',
 						'" . ($ReceiptExRate/$FunctionalExRate) . "',
-						'" . (-$Receipt['amountfx']-$Receipt['discountfx']) . "',
+						'" . -$Receipt['amountfx'] . "',
+						'" . -$Receipt['discountfx'] . "',
 						'" . $Receipt['paymentmethod'] . "')";
 		
 		$result = api_DB_query($SQL,$db,'','',true);
@@ -1308,9 +1310,7 @@ function ConvertToSQLDate($DateEntry) {
 		 * AllocDetails['transno']
 		 * AllocDetails['customerref']
 		 */
-		 
-		$fp = fopen('/root/Web-Server/DebugInfo.txt','w');
-		 
+
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
@@ -1325,7 +1325,7 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		$SQL = "SELECT id,
 					rate,
-					ovamount+ovgst-alloc AS lefttoalloc
+					ovamount+ovgst+ovidscount-alloc AS lefttoalloc
 				FROM debtortrans
 				WHERE debtorno='" . $AllocDetails['debtorno'] . "'
 				AND type='" . $AllocDetails['type'] . "'
@@ -1336,27 +1336,29 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[] = NoTransactionToAllocate;
 		}
 		
-		if ($LeftToAllocRow['lefttoalloc'] >= 0){
+		if ($LeftToAllocRow['lefttoalloc'] <= 0){ /* negative if there is owt to allocate */
 			/*Now look for invoices with the same customerref to allocate to */
 			$SQL = "SELECT id,
 						rate,
-						-ovamount-ovgst-alloc AS outstanding
+						ovamount+ovgst+ovdiscount-alloc AS outstanding
 					FROM debtortrans
 					WHERE debtorno='" . $AllocDetails['debtorno'] . "'
 					AND type=10
-					AND customerref='" . $AllocDetails['customerref'] . "'";
+					AND reference='" . $AllocDetails['customerref'] . "'";
 			$Result = api_DB_query($SQL,$db);
 			$OSInvRow = DB_fetch_array($Result);
+	
 			if ($OSInvRow['rate']==$LeftToAllocRow['rate']
 				AND $OSInvRow['outstanding']>0){
-					
-				if ($OSInvRow['outstanding']>=$LeftToAllocRow['lefttoalloc']){
+
+				if ($OSInvRow['outstanding']+$LeftToAllocRow['lefttoalloc']>=0){
 					/*We can allocate the whole amount of the credit/receipt */
-					$AllocateAmount = $LeftToAllocRow['lefttoalloc'];
+					$AllocateAmount = -$LeftToAllocRow['lefttoalloc'];
 				} else {
 					/*We can only allocate the rest of the invoice outstanding */
 					$AllocateAmount = $OSInvRow['outstanding'];
 				}
+				
 				DB_Txn_Begin($db);
 				/*Now insert the allocation records */
 				$SQL = "INSERT INTO custallocs (amt, 
@@ -1393,7 +1395,7 @@ function ConvertToSQLDate($DateEntry) {
  * delivering it. All values should be sent as negatives.
 
 
- * NB: Stock is not updated and the method cannot deal with assembly items
+ * NB: Stock is not updated, taxes are ignored, the method cannot deal with assembly items
  * the sales analysis is not updated either
 
  ****************** USE WITH CAUTION!! **********************
