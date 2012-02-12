@@ -7,15 +7,15 @@ include('includes/session.inc');
 
 $Maximum_Number_Of_Parts_To_Show=50;
 
-if (isset($_GET['New']) AND isset($_SESSION['tender'.$identifier])) {
-	unset($_SESSION['tender'.$identifier]);
-}
-
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
 	$identifier=date('U');
 } else {
 	$identifier=$_GET['identifier'];
+}
+
+if (isset($_GET['New']) AND isset($_SESSION['tender'.$identifier])) {
+	unset($_SESSION['tender'.$identifier]);
 }
 
 if (isset($_GET['New']) AND $_SESSION['CanCreateTender']==0) {
