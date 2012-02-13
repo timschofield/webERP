@@ -209,7 +209,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				$myrow['area'],
 				$myrow['stkcat'],
 				$myrow['salestype'],
-				$myrow['salestype'],
+				$myrow['accountname'],
 				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
 				$myrow['id'],
 				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
