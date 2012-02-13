@@ -28,7 +28,7 @@ include('includes/header.inc');
 	$myrow = DB_fetch_row($result);
 	if( $myrow[0] == 0 ) {
 		$sql = "INSERT INTO accountsection (
-					sectionid,21
+					sectionid,
 					sectionname
 				) VALUES (
 					2,
