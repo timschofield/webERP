@@ -20,7 +20,7 @@ if (isset($_POST['DebtorNo'])){
 
 echo '<a href="' . $rootpath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Select Customer') . '</a>
 	<br />';
-	
+
 if ( isset($_POST['submit']) ) {
 
 	//initialise no input errors assumed initially before we test
@@ -83,11 +83,10 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql="DELETE FROM custnotes 
+	$sql="DELETE FROM custnotes
 			WHERE noteid='".$Id."'
 			AND debtorno='".$DebtorNo."'";
 	$result = DB_query($sql,$db);
-			//echo '<br />'.$sql;
 
 	echo '<br />';
 	prnMsg( _('The contact note record has been deleted'), 'success');
@@ -96,7 +95,7 @@ if ( isset($_POST['submit']) ) {
 }
 
 if (!isset($Id)) {
-	$SQLname="SELECT * FROM debtorsmaster 
+	$SQLname="SELECT * FROM debtorsmaster
 				WHERE debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
@@ -110,11 +109,10 @@ if (!isset($Id)) {
 					note,
 					date,
 					priority
-			FROM custnotes 
-			WHERE debtorno='".$DebtorNo."' 
-			ORDER BY date DESC";
+				FROM custnotes
+				WHERE debtorno='".$DebtorNo."'
+				ORDER BY date DESC";
 	$result = DB_query($sql,$db);
-			//echo '<br />'.$sql;
 
 	echo '<table class="selection">
 		<tr>
@@ -145,12 +143,12 @@ if (!isset($Id)) {
 				$myrow['href'],
 				$myrow['href'],
 				$myrow['priority'],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
 				$myrow['noteid'],
 				$myrow['debtorno'],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
 				$myrow['noteid'],
-				$myrow['priority']);
+				$myrow['debtorno']);
 
 	}
 	//END WHILE LIST LOOP
@@ -165,21 +163,21 @@ echo '<br />';
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DebtorNo='.$DebtorNo.'">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo=' . $DebtorNo . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
 		//editing an existing
 
 		$sql = "SELECT noteid,
-					debtorno,
-					href,
-					note,
-					date,
-					priority
-				FROM custnotes 
-				WHERE noteid='".$Id."'
-				AND debtorno='".$DebtorNo."'";
+						debtorno,
+						href,
+						note,
+						date,
+						priority
+					FROM custnotes
+					WHERE noteid='".$Id."'
+						AND debtorno='".$DebtorNo."'";
 
 		$result = DB_query($sql, $db);
 
