@@ -27,6 +27,7 @@ $XPos = 46;
 $YPos = 770;
 
 $FontSize=12;
+$myrow = array_map(html_entity_decode, $myrow);
 $pdf->addText($XPos, $YPos+10,$FontSize, _('Delivery To').':' );
 $pdf->addText($XPos, $YPos- 3,$FontSize, $myrow['deliverto']);
 $pdf->addText($XPos, $YPos-15,$FontSize, $myrow['deladd1']);
