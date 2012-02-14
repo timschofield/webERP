@@ -17,16 +17,16 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $DebtorNo .'">' . _('Back to Customers') . '</a><br />';
-$SQLname="SELECT name FROM debtorsmaster where debtorno='" .$DebtorNo."'";
+echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
+$SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname,$db);
 $row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Contacts for Customer:') . ' <b>' . $row['name'].'</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' .
+			' ' . _('Contacts for Customer') . ': <b>' .$row['name'].'</b></p><br />';
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Edit contact for') . '<b>' . $row['name'].'</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' .
+			' ' . _('Edit contact for'). ': <b>' .$row['name'].'</b></p><br />';
 }
 if ( isset($_POST['submit']) ) {
 
@@ -45,12 +45,12 @@ if ( isset($_POST['submit']) ) {
 	} elseif( trim($_POST['ContactName']) == '' ) {
 		$InputError = 1;
 		prnMsg( _('The contact name may not be empty'), 'error');
-	}elseif (!IsEmailAddress($_POST['ContactEmail']) AND mb_strlen($_POST['ContactEmail'])>0){
+	} elseif (!IsEmailAddress($_POST['ContactEmail']) and mb_strlen($_POST['ContactEmail'])>0){
 		$InputError = 1;
 		prnMsg( _('The contact email address is not a valid email address'), 'error');
 	}
-	if (isset($Id) and ($Id and $InputError !=1)) {
 
+	if (isset($Id) and ($Id and $InputError !=1)) {
 		$sql = "UPDATE custcontacts SET contactname='" . $_POST['ContactName'] . "',
 										role='" . $_POST['ContactRole'] . "',
 										phoneno='" . $_POST['ContactPhone'] . "',
@@ -96,10 +96,10 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql="DELETE FROM custcontacts 
+	$sql="DELETE FROM custcontacts
 			WHERE contid='" . $Id . "'
 			AND debtorno='" . $DebtorNo . "'";
-				$result = DB_query($sql,$db);
+	$result = DB_query($sql,$db);
 
 	echo '<br />';
 	prnMsg( _('The contact record has been deleted'), 'success');
@@ -116,9 +116,9 @@ if (!isset($Id)) {
 					role,
 					phoneno,
 					notes,
-					email 
-			FROM custcontacts 
-			WHERE debtorno='".$DebtorNo."' 
+					email
+			FROM custcontacts
+			WHERE debtorno='".$DebtorNo."'
 			ORDER BY contid";
 	$result = DB_query($sql,$db);
 			//echo '<br />'.$sql;
@@ -154,10 +154,10 @@ if (!isset($Id)) {
 				$myrow['email'],
 				$myrow['email'],
 				$myrow['notes'],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
 				$myrow['contid'],
 				$myrow['debtorno'],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
 				$myrow['contid'],
 				$myrow['debtorno']);
 
@@ -165,27 +165,27 @@ if (!isset($Id)) {
 	//END WHILE LIST LOOP
 	echo '</table>';
 }
-if (isset($Id)) {  
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DebtorNo='.$DebtorNo .'">' . _('Review all contacts for this Customer') . '</a></div>';
+if (isset($Id)) {
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo .'">' . _('Review all contacts for this Customer') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DebtorNo='.$DebtorNo.'">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
 
 		$sql = "SELECT contid,
-					debtorno,
-					contactname,
-					role,
-					phoneno,
-					notes,
-					email 
-				FROM custcontacts 
-				WHERE contid='".$Id."'
-				AND debtorno='".$DebtorNo."'";
+						debtorno,
+						contactname,
+						role,
+						phoneno,
+						notes,
+						email
+					FROM custcontacts
+					WHERE contid='".$Id."'
+						AND debtorno='".$DebtorNo."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -194,8 +194,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['ContactName']	= $myrow['contactname'];
 		$_POST['ContactRole']  = $myrow['role'];
 		$_POST['ContactPhone']  = $myrow['phoneno'];
-		$_POST['ContactNotes']  = $myrow['notes'];
 		$_POST['ContactEmail'] = $myrow['email'];
+		$_POST['ContactNotes'] = $myrow['notes'];
 		$_POST['DebtorNo']  = $myrow['debtorno'];
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
 		echo '<input type="hidden" name="Con_ID" value="' . $_POST['Con_ID'] . '" />';
@@ -207,16 +207,15 @@ if (!isset($_GET['delete'])) {
 					<td>' . $_POST['Con_ID'] . '</td>
 				</tr>';
 	} else {
-		echo '<br />
-				<table class="selection">';
+		echo '<table class="selection">';
 	}
 
 	echo '<tr><td>'. _('Contact Name') . '</td>';
     if (isset($_POST['ContactName'])) {
-        echo '<td><input type="text" name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
+		echo '<td><input type="text" name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
 			</tr>';
     } else {
-        echo '<td><input type="text" name="ContactName" size="35" maxlength="40" /></td>
+		echo '<td><input type="text" name="ContactName" size="35" maxlength="40" /></td>
 			</tr>';
     }
 	echo '<tr>
