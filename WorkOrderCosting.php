@@ -357,7 +357,7 @@ If (isset($_POST['Close'])) {
 										'" . $PeriodNo . "',
 										'" . $WORow['materialuseagevarac'] . "',
 										'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
-										'" . (-$TotalVariance*$ShareProportion*(1-$ProportionOnHand)) . "')";
+										'" .round((-$TotalVariance*$ShareProportion*(1-$ProportionOnHand)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -378,7 +378,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['stockact'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
-							'" . (-$TotalVariance*$ShareProportion*$ProportionOnHand) . "')";
+							'" . round((-$TotalVariance*$ShareProportion*$ProportionOnHand),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -397,7 +397,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
-							'" . ($TotalVariance*$ShareProportion) . "')";
+							'" . round(($TotalVariance*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the work order variance posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -434,7 +434,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['materialuseagevarac'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of usage variance') . "',
-							'" . (-$TotalUsageVar*$ShareProportion) . "')";
+							'" . round((-$TotalUsageVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the material usage variance could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -453,7 +453,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of usage variance') . "',
-							'" . ($TotalUsageVar*$ShareProportion) . "')";
+							'" . round(($TotalUsageVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the usage variance posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -476,7 +476,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['purchpricevaract'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of cost variance') . "',
-							'" . (-$TotalCostVar*$ShareProportion) . "')";
+							'" . round((-$TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the cost variance could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -495,7 +495,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of cost variance') . "',
-							'" . ($TotalCostVar*$ShareProportion) . "')";
+							'" . round(($TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the cost variance posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
