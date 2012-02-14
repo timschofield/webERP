@@ -462,8 +462,8 @@ if (isset($_POST['SearchSupplier']) OR isset($_POST['Go']) OR isset($_POST['Next
 	} //one of keywords or SupplierCode was more than a zero length string
 	$result = DB_query($SQL, $db);
 	if (DB_num_rows($result) == 1) {
-		$myrow = DB_fetch_row($result);
-		$SingleSupplierReturned = $myrow[0];
+		$myrow = DB_fetch_array($result);
+		$SingleSupplierReturned = $myrow['supplierid'];
 	}
 } //end of if search
 if (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
