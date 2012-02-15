@@ -1,9 +1,9 @@
-@charset "UTF-8";
+﻿@charset "utf-8";
 /*--------------------------------------------------\
 |               |               | default.css       |
 |---------------------------------------------------|
 | For use with:                                     |
-| Web-ERP - http://web-erp.sourceforge.net          |
+| Web-ERP - http://weberp.sourceforge.net          |
 | by Logic Works Ltd                                |
 |---------------------------------------------------|
 | Developer:                                        |
@@ -44,12 +44,12 @@ a {
 	font-size: 100%;
 	font-weight: normal;
 	text-decoration: none;
-	color: #00f;
+	color: #5B5B68;
 }
 
 /*links on any screen except quick menu which is overridden when mouse is hovering over them */
 a:hover {
-	color: #00a;
+	color: #000;
 	text-decoration: underline;
 }
 
@@ -60,7 +60,7 @@ table {
 
 th {
 	font-weight: normal;
-	background-color: #cccce5;
+	background-color: #C3C3C3;
 	font-size: 100%;
 	color: #300;
 	text-align: center;
@@ -93,7 +93,7 @@ td.select {
 }
 
 table.selection {
-	background-color:#eee;
+	background-color:#DCDCDC;
 	outline-style:solid;
 	outline-color: #8e8a8a;
 	outline-width:1px;
@@ -322,7 +322,16 @@ textarea:hover { }
 .table1 {
   width:90%;
   background: #eee;
-  border: 1px solid #222;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+// Table type is used for UI tables type 2
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
   margin: 0 auto;
 }
 
@@ -516,7 +525,7 @@ End Merge */
 }
 
 .main_menu_selected {
-	background: #aaa url(images/menu_bg_blue.png) 0px -10px repeat-x;
+	background: #241D1D;
 	border: 1px solid #888;
 /*	position: relative; it's not a div but a table */
 	text-align: center;
@@ -528,11 +537,11 @@ End Merge */
 .main_menu_selected:hover { } */
 
 .main_menu_selected a {
-	color: #00F;
+	color: #ddd;
 }
 
 .main_menu_selected a:hover {
-	color: #000;
+	color: #ffe;
 	text-decoration: none;
 }
 
@@ -568,14 +577,14 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers {
-	background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
+	background: #B3B3B3;
 	width: 25%;
 	vertical-align: top;
 	padding: 0 0 2px 0;
 }
 
 .menu_group_headers table {
-	background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
+	background: #B3B3B3;
 }
 
 .menu_group_headers_text {
@@ -597,7 +606,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_item p {
-	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	color: #000; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent: -11px; /* this makes the bullet to appear as the li tag previously used */
 	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
 }
@@ -607,9 +616,9 @@ p.page_title_text {
         padding-top: 2px;
         padding-bottom: 2px;
         font-weight: bold;
-        font-size: 100%;
-        color: black;
-        background-color: #cccce5;
+        font-size: 150%;
+        color: white;
+        background-color: #7A7A89;
         width: 33%;
         border-style: solid;
         border-width: 1px;
