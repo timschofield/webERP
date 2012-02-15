@@ -5,8 +5,6 @@ include('includes/DefineTenderClass.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/session.inc');
 
-$Maximum_Number_Of_Parts_To_Show=50;
-
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
 	$identifier=date('U');
@@ -124,26 +122,30 @@ if (isset($_GET['Edit'])) {
 			WHERE closed=0";
 	$result=DB_query($sql, $db);
 	echo '<table class="selection">';
-	echo '<tr><th>' . _('Tender ID') . '</th>';
-	echo '<th>' . _('Location') . '</th>';
-	echo '<th>' . _('Address 1') . '</th>';
-	echo '<th>' . _('Address 2') . '</th>';
-	echo '<th>' . _('Address 3') . '</th>';
-	echo '<th>' . _('Address 4') . '</th>';
-	echo '<th>' . _('Address 5') . '</th>';
-	echo '<th>' . _('Address 6') . '</th>';
-	echo '<th>' . _('Telephone') . '</th></tr>';
+	echo '<tr>
+			<th>' . _('Tender ID') . '</th>
+			<th>' . _('Location') . '</th>
+			<th>' . _('Address 1') . '</th>
+			<th>' . _('Address 2') . '</th>
+			<th>' . _('Address 3') . '</th>
+			<th>' . _('Address 4') . '</th>
+			<th>' . _('Address 5') . '</th>
+			<th>' . _('Address 6') . '</th>
+			<th>' . _('Telephone') . '</th>
+		</tr>';
 	while ($myrow=DB_fetch_array($result)) {
-		echo '<tr><td>' . $myrow['tenderid'] . '</td>';
-		echo '<td>' . $myrow['location'] . '</td>';
-		echo '<td>' . $myrow['address1'] . '</td>';
-		echo '<td>' . $myrow['address2'] . '</td>';
-		echo '<td>' . $myrow['address3'] . '</td>';
-		echo '<td>' . $myrow['address4'] . '</td>';
-		echo '<td>' . $myrow['address5'] . '</td>';
-		echo '<td>' . $myrow['address6'] . '</td>';
-		echo '<td>' . $myrow['telephone'] . '</td>';
-		echo '<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier.'&ID='.$myrow['tenderid'].'">'. _('Edit') .'</a></td>';
+		echo '<tr>
+				<td>' . $myrow['tenderid'] . '</td>
+				<td>' . $myrow['location'] . '</td>
+				<td>' . $myrow['address1'] . '</td>
+				<td>' . $myrow['address2'] . '</td>
+				<td>' . $myrow['address3'] . '</td>
+				<td>' . $myrow['address4'] . '</td>
+				<td>' . $myrow['address5'] . '</td>
+				<td>' . $myrow['address6'] . '</td>
+				<td>' . $myrow['telephone'] . '</td>
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&ID='.$myrow['tenderid'].'">'. _('Edit') .'</a></td>
+			</tr>';
 	}
 	echo '</table>';
 	include('includes/footer.inc');
@@ -185,10 +187,9 @@ if (isset($_POST['SelectedSupplier'])) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 	if (mb_strlen($myrow['email'])>0) {
-		$_SESSION['tender'.$identifier]->add_supplier_to_tender(
-				$_POST['SelectedSupplier'],
-				$myrow['suppname'],
-				$myrow['email']);
+		$_SESSION['tender'.$identifier]->add_supplier_to_tender($_POST['SelectedSupplier'],
+																$myrow['suppname'],
+																$myrow['email']);
 	} else {
 		prnMsg( _('The supplier must have an email set up or they cannot be part of a tender'), 'warn');
 	}
@@ -205,21 +206,23 @@ if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
 			$sql="SELECT description, decimalplaces FROM stockmaster WHERE stockid='".$StockID."'";
 			$result=DB_query($sql, $db);
 			$myrow=DB_fetch_array($result);
-			$_SESSION['tender'.$identifier]->add_item_to_tender(
-				$_SESSION['tender'.$identifier]->LinesOnTender,
-				$StockID,
-				$Quantity,
-				$myrow['description'],
-				$UOM,
-				$myrow['decimalplaces'],
-				DateAdd(date($_SESSION['DefaultDateFormat']),'m',3));
+			$_SESSION['tender'.$identifier]->add_item_to_tender($_SESSION['tender'.$identifier]->LinesOnTender,
+																$StockID,
+																$Quantity,
+																$myrow['description'],
+																$UOM,
+																$myrow['decimalplaces'],
+																DateAdd(date($_SESSION['DefaultDateFormat']),'m',3));
 			unset($UOM);
 		}
 	}
 	$ShowTender = 1;
 }
 
-if (!isset($_SESSION['tender'.$identifier]) or isset($_POST['LookupDeliveryAddress']) or $ShowTender==1) {
+if (!isset($_SESSION['tender'.$identifier]) 
+	OR isset($_POST['LookupDeliveryAddress']) 
+	OR $ShowTender==1) {
+		
 	/* Show Tender header screen */
 	if (!isset($_SESSION['tender'.$identifier])) {
 		$_SESSION['tender'.$identifier]=new Tender();
@@ -227,9 +230,13 @@ if (!isset($_SESSION['tender'.$identifier]) or isset($_POST['LookupDeliveryAddre
 	echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
-	echo '<tr><th colspan="4"><font size="3" color="#616161">' . _('Tender header details') . '</font></th></tr>';
-	echo '<tr><td>' . _('Delivery Must Be Made Before') . '</td>';
-	echo '<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredByDate" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" /></td></tr>';
+	echo '<tr>
+			<th colspan="4"><font size="3" color="#616161">' . _('Tender header details') . '</font></th>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Delivery Must Be Made Before') . '</td>
+			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredByDate" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" /></td>
+		</tr>';
 
 	if (!isset($_POST['StkLocation']) OR $_POST['StkLocation']==''){
 	/* If this is the first time
@@ -313,8 +320,9 @@ if (!isset($_SESSION['tender'.$identifier]) or isset($_POST['LookupDeliveryAddre
 			$_SESSION['tender'.$identifier]->Contact = $_POST['Contact'];
 		}
 	}
-	echo '<tr><td>' . _('Warehouse') . ':</td>
-			<td><select name=StkLocation onChange="ReloadForm(form1.LookupDeliveryAddress)">';
+	echo '<tr>
+			<td>' . _('Warehouse') . ':</td>
+			<td><select name="StkLocation" onChange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	$sql = "SELECT loccode,
 					locationname
@@ -335,29 +343,37 @@ if (!isset($_SESSION['tender'.$identifier]) or isset($_POST['LookupDeliveryAddre
 
 	/* Display the details of the delivery location
 	 */
-	echo '<tr><td>' . _('Delivery Contact') . ':</td>
-		<td><input type="text" name="Contact" size="41"  value="' . $_SESSION['tender'.$identifier]->Contact . '" /></td>
+	echo '<tr>
+			<td>' . _('Delivery Contact') . ':</td>
+			<td><input type="text" name="Contact" size="41"  value="' . $_SESSION['tender'.$identifier]->Contact . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 1 :</td>
-		<td><input type="text" name="DelAdd1" size="41" maxlength="40" value="' . $_POST['DelAdd1'] . '" /></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 1 :</td>
+			<td><input type="text" name="DelAdd1" size="41" maxlength="40" value="' . $_POST['DelAdd1'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 2 :</td>
-		<td><input type="text" name="DelAdd2" size="41" maxlength="40" value="' . $_POST['DelAdd2'] . '" /></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 2 :</td>
+			<td><input type="text" name="DelAdd2" size="41" maxlength="40" value="' . $_POST['DelAdd2'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 3 :</td>
-		<td><input type="text" name="DelAdd3" size="41" maxlength="40" value="' . $_POST['DelAdd3'] . '" /></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 3 :</td>
+			<td><input type="text" name="DelAdd3" size="41" maxlength="40" value="' . $_POST['DelAdd3'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 4 :</td>
-		<td><input type="text" name="DelAdd4" size="21" maxlength="20" value="' . $_POST['DelAdd4'] . '" /></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 4 :</td>
+			<td><input type="text" name="DelAdd4" size="21" maxlength="20" value="' . $_POST['DelAdd4'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 5 :</td>
-		<td><input type="text" name="DelAdd5" size="16" maxlength="15" value="' . $_POST['DelAdd5'] . '" /></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 5 :</td>
+			<td><input type="text" name="DelAdd5" size="16" maxlength="15" value="' . $_POST['DelAdd5'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address') . ' 6 :</td>
-		<td><input type="text" name="DelAdd6" size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" /></td>
+	echo '<tr>
+			<td>' . _('Address') . ' 6 :</td>
+			<td><input type="text" name="DelAdd6" size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Phone') . ':</td>
-		<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_SESSION['tender'.$identifier]->Telephone . '" /></td>
+	echo '<tr>
+			<td>' . _('Phone') . ':</td>
+			<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_SESSION['tender'.$identifier]->Telephone . '" /></td>
 		</tr>';
 	echo '</table><br />';
 
@@ -367,26 +383,36 @@ if (!isset($_SESSION['tender'.$identifier]) or isset($_POST['LookupDeliveryAddre
 
 	/* Supplier Details
 	 */
-	echo '<tr><td valign="top"><table class="selection">';
-	echo '<tr><th colspan="4"><font size="3" color="#616161">' . _('Suppliers To Send Tender') . '</font></th></tr>';
-	echo '<tr><th>'. _('Supplier Code') . '</th><th>' ._('Supplier Name') . '</th><th>' ._('Email Address') . '</th></tr>';
+	echo '<tr>
+			<td valign="top">
+			<table class="selection">';
+	echo '<tr>
+			<th colspan="4"><font size="3" color="#616161">' . _('Suppliers To Send Tender') . '</font></th>
+		</tr>';
+	echo '<tr>
+			<th>'. _('Supplier Code') . '</th>
+			<th>' ._('Supplier Name') . '</th>
+			<th>' ._('Email Address') . '</th>
+		</tr>';
 	foreach ($_SESSION['tender'.$identifier]->Suppliers as $Supplier) {
-		echo '<tr><td>' . $Supplier->SupplierCode . '</td>';
-		echo '<td>' . $Supplier->SupplierName . '</td>';
-		echo '<td>' . $Supplier->EmailAddress . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '&DeleteSupplier=' . $Supplier->SupplierCode . '">' . _('Delete') . '</a></td></tr>';
+		echo '<tr>
+				<td>' . $Supplier->SupplierCode . '</td>
+				<td>' . $Supplier->SupplierName . '</td>
+				<td>' . $Supplier->EmailAddress . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES,'UTF-8') . '&DeleteSupplier=' . $Supplier->SupplierCode . '">' . _('Delete') . '</a></td>
+			</tr>';
 	}
 	echo '</table></td>';
 	/* Item Details
 	 */
 	echo '<td valign="top"><table class="selection">';
 	echo '<tr><th colspan="6"><font size="3" color="#616161">' . _('Items in Tender') . '</font></th></tr>';
-	echo '<tr>';
-	echo '<th>'._('Stock ID').'</th>';
-	echo '<th>'._('Description').'</th>';
-	echo '<th>'._('Quantity').'</th>';
-	echo '<th>'._('UOM').'</th>';
-	echo '</tr>';
+	echo '<tr>
+			<th>'._('Stock ID').'</th>
+			<th>'._('Description').'</th>
+			<th>'._('Quantity').'</th>
+			<th>'._('UOM').'</th>
+		</tr>';
 	$k=0;
 	foreach ($_SESSION['tender'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
@@ -397,27 +423,37 @@ if (!isset($_SESSION['tender'.$identifier]) or isset($_POST['LookupDeliveryAddre
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			echo '<td>'.$LineItems->StockID.'</td>';
-			echo '<td>'.$LineItems->ItemDescription.'</td>';
-			echo '<td class="number">' . locale_number_format($LineItems->Quantity,$LineItems->DecimalPlaces).'</td>';
-			echo '<td>'.$LineItems->Units.'</td>';
-			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '&DeleteItem=' . $LineItems->LineNo . '">' . _('Delete') . '</a></td></tr>';
+			echo '<td>'.$LineItems->StockID.'</td>
+				<td>'.$LineItems->ItemDescription.'</td>
+				<td class="number">' . locale_number_format($LineItems->Quantity,$LineItems->DecimalPlaces).'</td>
+				<td>'.$LineItems->Units.'</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier,ENT_QUOTES,'UTF-8') . '&DeleteItem=' . $LineItems->LineNo . '">' . _('Delete') . '</a></td>
+				</tr>';
 			echo '</tr>';
 		}
 	}
 	echo '</table></td></tr></table><br />';
 
-	echo '<div class="centre"><input type="submit" name="Suppliers" value="' . _('Select Suppliers') . '" />';
-	echo '<input type="submit" name="Items" value="' . _('Select Item Details') . '" /></div><br />';
-	if ($_SESSION['tender'.$identifier]->LinesOnTender > 0 AND $_SESSION['tender'.$identifier]->SuppliersOnTender > 0) {
-		echo '<div class="centre"><input type="submit" name="Save" value="' . _('Save Tender') . '" /></div>';
+	echo '<div class="centre">
+			<input type="submit" name="Suppliers" value="' . _('Select Suppliers') . '" />
+			<input type="submit" name="Items" value="' . _('Select Item Details') . '" />
+		</div>
+		<br />';
+	if ($_SESSION['tender'.$identifier]->LinesOnTender > 0 
+		AND $_SESSION['tender'.$identifier]->SuppliersOnTender > 0) {
+			
+		echo '<div class="centre">
+				<input type="submit" name="Save" value="' . _('Save Tender') . '" />
+			</div>';
 	}
 	echo '</form>';
 	include('includes/footer.inc');
 	exit;
 }
 
-if (isset($_POST['SearchSupplier']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+if (isset($_POST['SearchSupplier']) OR isset($_POST['Go']) 
+	OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+	
 	if (mb_strlen($_POST['Keywords']) > 0 AND mb_strlen($_POST['SupplierCode']) > 0) {
 		prnMsg( '<br />' . _('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
 	}
@@ -481,10 +517,13 @@ if (!isset($_POST['PageOffset'])) {
 }
 
 if (isset($_POST['Suppliers'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
-		<table cellpadding="3" colspan="4" class="selection"><tr><td>' . _('Enter a partial Name') . ':</td><td>';
+		<table cellpadding="3" colspan="4" class="selection">
+			<tr>
+				<td>' . _('Enter a partial Name') . ':</td>
+				<td>';
 	if (isset($_POST['Keywords'])) {
 		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 	} else {
@@ -643,7 +682,7 @@ if (isset($_POST['Items'])) {
 }
 
 if (isset($_POST['Search'])){  /*ie seach for stock items */
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) .'">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier,ENT_QUOTES,'UTF-8') .'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Select items required on this tender').'</p>';
 
@@ -662,10 +701,12 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
+					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.description " . LIKE . " '$SearchString'
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.stockid 
+					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -674,11 +715,13 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
+					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.stockid 
+					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		}
 
 	} elseif ($_POST['StockCode']){
@@ -693,10 +736,12 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
+					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.stockid 
+					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -705,11 +750,13 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
+					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.stockid 
+					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		}
 
 	} else {
@@ -722,8 +769,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
 					AND stockmaster.mbflag!='K'
+					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.stockid 
+					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -733,9 +782,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
 					AND stockmaster.mbflag!='K'
+					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.stockid 
+					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		}
 	}
 
@@ -798,22 +849,13 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					<input type="hidden" value="'.$myrow['stockid'].'" name="StockID'.$i.'" />
 					</tr>';
 
-			$PartsDisplayed++;
-			if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
-				break;
-			}
+			
 			$i++;
 #end of page full new headings if
 		}
 #end of while loop
 		echo '</table>';
-		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
-
-	/*$Maximum_Number_Of_Parts_To_Show defined in config.php */
-
-			prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' .
-				_('Please restrict your search to only the parts required'),'info');
-		}
+	
 		echo '<a name="end"></a>
 			<br />
 			<div class="centre">
