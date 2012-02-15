@@ -21,10 +21,10 @@ if (isset($SessionSavePath)){
 
 ini_set('session.gc_Maxlifetime',$SessionLifeTime);
 
-if( !ini_get('safe_mode') ){ 
-	set_time_limit($MaximumExecutionTime); 
+if( !ini_get('safe_mode') ){
+	set_time_limit($MaximumExecutionTime);
 	ini_set('max_execution_time',$MaximumExecutionTime);
-} 
+}
 session_write_close(); //in case a previous session is not closed
 session_start();
 
@@ -75,7 +75,7 @@ include($PathPrefix . 'includes/LanguageSetup.php');
 
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
-	
+
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
@@ -125,9 +125,9 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 include($PathPrefix . 'includes/GetConfig.php');
 
 /*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
- * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME']) 
+ * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME'])
  */
-if (!isset($PageSecurity)){ 
+if (!isset($PageSecurity)){
 //only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
 	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME'])];
 }
@@ -273,17 +273,6 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) 
 	exit;
 }
 
-/* Nasty kludge to allow Supplier only logins as well as Customer logins */
-if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND 
-		$_SESSION['AllowedPageSecurityTokens'][0]==9 AND $PageSecurity==1){
-			
-	$_SESSION['AllowedPageSecurityTokens'][0]=1;
-	$SupplierLogin=1;
-} else {
-	$SupplierLogin=0;
-}
-
-
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$title = _('Security Permissions Problem');
@@ -305,11 +294,11 @@ if (!isset($AllowAnyone)){
 	}
  }
 
-/* Nasty kludge to allow Supplier only logins as well as Customer logins  - .... hmmmmm some work to do here then! */
-if ($SupplierLogin==1) {
-	$_SESSION['AllowedPageSecurityTokens'][0]=9;
+if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) and $PageSecurity==0 and count($_SESSION['AllowedPageSecurityTokens'])==2){
+	$SupplierLogin=1;
+} else if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) and $PageSecurity==0 and count($_SESSION['AllowedPageSecurityTokens'])==2){
+	$SupplierLogin=0;
 }
-
 
 if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
