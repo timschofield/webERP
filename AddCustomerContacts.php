@@ -22,11 +22,9 @@ $SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname,$db);
 $row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' .
-			' ' . _('Contacts for Customer') . ': <b>' .$row['name'].'</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Contacts for Customer') . ': <b>' .$row['name'].'</b></p><br />';
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' .
-			' ' . _('Edit contact for'). ': <b>' .$row['name'].'</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Edit contact for'). ': <b>' .$row['name'].'</b></p><br />';
 }
 if ( isset($_POST['submit']) ) {
 
@@ -36,7 +34,7 @@ if ( isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (isset($_POST['Con_ID']) and !is_long((integer)$_POST['Con_ID'])) {
+	if (isset($_POST['Con_ID']) AND !is_long((integer)$_POST['Con_ID'])) {
 		$InputError = 1;
 		prnMsg( _('The Contact ID must be an integer.'), 'error');
 	} elseif (mb_strlen($_POST['ContactName']) >40) {
@@ -45,12 +43,12 @@ if ( isset($_POST['submit']) ) {
 	} elseif( trim($_POST['ContactName']) == '' ) {
 		$InputError = 1;
 		prnMsg( _('The contact name may not be empty'), 'error');
-	} elseif (!IsEmailAddress($_POST['ContactEmail']) and mb_strlen($_POST['ContactEmail'])>0){
+	} elseif (!IsEmailAddress($_POST['ContactEmail']) AND mb_strlen($_POST['ContactEmail'])>0){
 		$InputError = 1;
 		prnMsg( _('The contact email address is not a valid email address'), 'error');
 	}
 
-	if (isset($Id) and ($Id and $InputError !=1)) {
+	if (isset($Id) AND ($Id AND $InputError !=1)) {
 		$sql = "UPDATE custcontacts SET contactname='" . $_POST['ContactName'] . "',
 										role='" . $_POST['ContactRole'] . "',
 										phoneno='" . $_POST['ContactPhone'] . "',
@@ -91,7 +89,7 @@ if ( isset($_POST['submit']) ) {
 		unset($_POST['ContactEmail']);
 		unset($_POST['Con_ID']);
 	}
-} elseif (isset($_GET['delete']) and $_GET['delete']) {
+} elseif (isset($_GET['delete']) AND $_GET['delete']) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
@@ -229,28 +227,28 @@ if (!isset($_GET['delete'])) {
     }
 	echo '<tr><td>' . _('Phone') . '</td>';
     if (isset($_POST['ContactPhone'])) {
-        echo '<td><input type="text" name="ContactPhone" value="' . $_POST['ContactPhone'] . '" size="35" maxlength="40" /></td>
+		echo '<td><input type="text" name="ContactPhone" value="' . $_POST['ContactPhone'] . '" size="35" maxlength="40" /></td>
 			</tr>';
-    } else {
-        echo '<td><input type="text" name="ContactPhone" size="35" maxlength="40" /></td>
+	} else {
+		echo '<td><input type="text" name="ContactPhone" size="35" maxlength="40" /></td>
 			</tr>';
-    }
-    echo '<tr>
+	}
+	echo '<tr>
 			<td>' . _('Email') . '</td>';
-    if (isset($_POST['ContactEmail'])) {
-        echo '<td><input type="text" name="ContactEmail" value="' . $_POST['ContactEmail'] . '" size="55" maxlength="55" /></td>
+	if (isset($_POST['ContactEmail'])) {
+		echo '<td><input type="text" name="ContactEmail" value="' . $_POST['ContactEmail'] . '" size="55" maxlength="55" /></td>
 			</tr>';
-    } else {
-        echo '<td><input type="text" name="ContactEmail" size="55" maxlength="55" /></td>
+	} else {
+		echo '<td><input type="text" name="ContactEmail" size="55" maxlength="55" /></td>
 			</tr>';
     }
 	echo '<tr>
 			<td>' . _('Notes') . '</td>';
-    if (isset($_POST['ContactNotes'])) {
-        echo '<td><textarea name="ContactNotes">'. $_POST['ContactNotes'] . '</textarea>';
-    } else {
-       echo '<td><textarea name="ContactNotes"></textarea>';
-    }
+	if (isset($_POST['ContactNotes'])) {
+		echo '<td><textarea name="ContactNotes">'. $_POST['ContactNotes'] . '</textarea>';
+	} else {
+	   echo '<td><textarea name="ContactNotes"></textarea>';
+	}
 	echo '<tr>
 			<td colspan="2">
 				<div class="centre">
