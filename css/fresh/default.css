@@ -2,7 +2,7 @@
 |               |               | default.css       |
 |---------------------------------------------------|
 | For use with:                                     |
-| Web-ERP - http://web-erp.sourceforge.net          |
+| Web-ERP - http://weberp.sourceforge.net          |
 | by Logic Works Ltd                                |
 |---------------------------------------------------|
 | Developer:                                        |
@@ -19,11 +19,11 @@
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 10px;
-	background-color: #F1FFDD;
-	margin-left: 10px;
-	margin-top: 5px;
+	background-color: #FFF;
+	margin-left: 0px;
+	margin-top: 0px;
 	margin-bottom: 0px;
-	margin-right: 10px;
+	margin-right: 0px;
 	padding: 0px;
 }
 
@@ -37,7 +37,7 @@ a {
 	font-size: 10px;
 	font-weight: bold;
 	text-decoration: none;
-	color: black;
+	color: #4D4E1A;
 }
 
 /*links on any screen when mouse is hovering over them */
@@ -47,7 +47,7 @@ a:hover {
 }
 
 table {
-  background-color: #B4BB86;
+  background-color: #ffffff;
   margin: 0 auto;
 }
 
@@ -106,11 +106,11 @@ td.number {
 }
 
 .EvenTableRows {
-	background-color: #CCCCCC;
+	background-color: #72824D;
 }
 
 .OddTableRows {
-	background-color: #EEEEEE;
+	background-color: #CAF17C;
 }
 
 th {
@@ -147,7 +147,7 @@ div.success {
 div.info {
 	background-color:#c7ccf6;
 	color: navy;
-	border: 1px solid navy;
+	border: 0px solid navy;
 }
 
 input {
@@ -190,7 +190,7 @@ font.header_title {
 #topMenu {
 	width: 100%;
 	color: black;
-	background-color: #ffffff;
+	background-color: #A0C462;
 	border: none;
 	border-bottom: 1px solid #999999;
 }
@@ -248,10 +248,16 @@ textarea:hover{
 .table1 {
   width:90%;
   background: #eee;
-  border: 1px solid #222;
+  border: 0px 0px 2px 2px #222 solid;
   margin: 0 auto;
 }
-
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
 input.address3 {
 	text-transform: uppercase;
 }
@@ -296,18 +302,12 @@ div.csv {
 /* Main page heading with quick menu within */
 .quick_menu {
 	width: 100%;
-	background-color: #ffffff;
+	background-color: #C9D392;
 	border: none;
 	margin: 0px;
 	padding: 0px;
  	color: black;
-	/*border-top: 2px #aaaaaa solid;
-	border-left: 2px #aaaaaa solid;
-	border-right: 2px #ffffff solid;
-	border-bottom: 4px #ffffff solid; */
 	text-align: right;
-	/* position: relative;
-	top: 3px; */
 }
 
 #quick_menu{
@@ -319,14 +319,14 @@ div.csv {
 	font-size: 11px;
 	border: 0px;
 	white-space: nowrap;
-	margin: 2px;
+	margin: 0px;
 	padding: 0px;
 	color: black;
 }
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
-	background-color: #ffffff;
+	background-color: #5A5F00;
 	white-space: nowrap;
 	border: none;
 	margin: 0px;
@@ -399,6 +399,7 @@ div.csv {
 
 .main_menu {
 	border: 2px inset #ffffff;
+	background-color: #ffffff;
 }
 
 .main_menu table {
@@ -410,9 +411,19 @@ div.csv {
 
 .main_menu_unselected {
 	background-color: #617C4F;
-	border: 2px #f1ffdd outset;
+	border: 1px solid #5C874D;
 	text-align: center;
 	white-space: nowrap;
+	height: 16pt;
+}
+
+.main_menu_selected {
+	background-color: #C9D392;
+	border: 1px solid #5C874D;
+	text-align: center;
+	white-space: nowrap;
+	color: #2B570F;
+	height: 16pt;
 }
 
 .main_menu_unselected:hover{
@@ -426,20 +437,13 @@ div.csv {
 .main_menu_unselected a:hover{
 }
 
-.main_menu_selected {
-	background-color: #617C4F;
-	border: 2px inset #41437D;
-	text-align: center;
-	white-space: nowrap;
-}
-
 .main_menu_selected a{
-	color: #eee;
+	color: #2B570F;
     font-weight:bold;
 }
 
 .main_menu_selected a:hover{
-	color: #fff;
+	color: #2B570F;
 	text-decoration: none;
 }
 
@@ -476,7 +480,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_area {
-  border: 2px inset #ffffff;
+  border: 0px inset #ffffff;
 }
 
 .blank_area table {
@@ -485,7 +489,8 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers {
-  border: 2px outset #aaaaaa;
+  border: 0px #aaaaaa;
+  background-color: #C9D392;
   width: 25%;
 }
 
@@ -502,30 +507,32 @@ span.main_menu_nolink {
 .menu_group_items {
 	vertical-align: top;
 	background-color: #ffffff;
-	border: 2px outset #aaaaaa;
+	border: 0px #aaaaaa;
 	padding: 10px;
 }
 
 .menu_group_item {
-	background-color: #ffffff;
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
 
 .menu_group_item p {
-	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	color: #5AAE34; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
 	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
 }
 
-.page_title_text {
+p.page_title_text {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 2px;
-        padding-bottom: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	font-weight: bold;
 	font-size: 10px;
 	color: black;
+	background-color: #C9D392;
+	width: 30%;
 	TEXT-ALIGN:center;
+	margin: 10px auto;
 }
 
 DIV.page_help_text {
@@ -586,20 +593,21 @@ span.menu_group_nolink {
 #footer {
 	position: relative;
 	bottom: -3px;
+	background-color: #C9D392;
 }
 
 a.footer {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	color: black;
 	font-weight: normal;
-	font-size: 8px;
+	font-size: 10px;
 }
 
 .footer {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	color: black;
 	font-weight: normal;
-	font-size: 8px;
+	font-size: 10px;
 	text-align: center;
 }
 
