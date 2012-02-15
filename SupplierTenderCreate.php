@@ -12,11 +12,11 @@ if (empty($_GET['identifier'])) {
 	$identifier=$_GET['identifier'];
 }
 
-if (isset($_GET['New']) AND isset($_SESSION['tender'.$identifier])) {
+if (isset($_GET['New']) and isset($_SESSION['tender'.$identifier])) {
 	unset($_SESSION['tender'.$identifier]);
 }
 
-if (isset($_GET['New']) AND $_SESSION['CanCreateTender']==0) {
+if (isset($_GET['New']) and $_SESSION['CanCreateTender']==0) {
 	$title = _('Authorisation Problem');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . $title . '" alt="" />  '.$title . '</p>';
@@ -26,7 +26,7 @@ if (isset($_GET['New']) AND $_SESSION['CanCreateTender']==0) {
 	exit;
 }
 
-if (isset($_GET['Edit']) AND $_SESSION['CanCreateTender']==0) {
+if (isset($_GET['Edit']) and $_SESSION['CanCreateTender']==0) {
 	$title = _('Authorisation Problem');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . $title . '" alt="" />  '.$title . '</p>';
@@ -75,10 +75,9 @@ if (isset($_GET['ID'])) {
 			WHERE tenderid='" . $_GET['ID'] . "'";
 	$result=DB_query($sql, $db);
 	while ($myrow=DB_fetch_array($result)) {
-		$_SESSION['tender'.$identifier]->add_supplier_to_tender(
-				$myrow['supplierid'],
-				$myrow['suppname'],
-				$myrow['email']);
+		$_SESSION['tender'.$identifier]->add_supplier_to_tender($myrow['supplierid'],
+																$myrow['suppname'],
+																$myrow['email']);
 	}
 
 	$sql="SELECT tenderid,
@@ -93,14 +92,13 @@ if (isset($_GET['ID'])) {
 			WHERE tenderid='" . $_GET['ID'] . "'";
 	$result=DB_query($sql, $db);
 	while ($myrow=DB_fetch_array($result)) {
-		$_SESSION['tender'.$identifier]->add_item_to_tender(
-				$_SESSION['tender'.$identifier]->LinesOnTender,
-				$myrow['stockid'],
-				$myrow['quantity'],
-				$myrow['description'],
-				$myrow['units'],
-				$myrow['decimalplaces'],
-				DateAdd(date($_SESSION['DefaultDateFormat']),'m',3));
+		$_SESSION['tender'.$identifier]->add_item_to_tender($_SESSION['tender'.$identifier]->LinesOnTender,
+															$myrow['stockid'],
+															$myrow['quantity'],
+															$myrow['description'],
+															$myrow['units'],
+															$myrow['decimalplaces'],
+															DateAdd(date($_SESSION['DefaultDateFormat']),'m',3));
 	}
 	$ShowTender = 1;
 }
@@ -196,7 +194,7 @@ if (isset($_POST['SelectedSupplier'])) {
 	$ShowTender = 1;
 }
 
-if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
+if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
 	foreach ($_POST as $key => $value) {
 		if (mb_substr($key,0,7)=='StockID') {
 			$Index = mb_substr($key,7,mb_strlen($key)-7);
@@ -219,15 +217,15 @@ if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
 	$ShowTender = 1;
 }
 
-if (!isset($_SESSION['tender'.$identifier]) 
-	OR isset($_POST['LookupDeliveryAddress']) 
-	OR $ShowTender==1) {
-		
+if (!isset($_SESSION['tender'.$identifier])
+	or isset($_POST['LookupDeliveryAddress'])
+	or $ShowTender==1) {
+
 	/* Show Tender header screen */
 	if (!isset($_SESSION['tender'.$identifier])) {
 		$_SESSION['tender'.$identifier]=new Tender();
 	}
-	echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
+	echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
@@ -238,7 +236,7 @@ if (!isset($_SESSION['tender'.$identifier])
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredByDate" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>';
 
-	if (!isset($_POST['StkLocation']) OR $_POST['StkLocation']==''){
+	if (!isset($_POST['StkLocation']) or $_POST['StkLocation']==''){
 	/* If this is the first time
 	* the form loaded set up defaults */
 
@@ -330,7 +328,7 @@ if (!isset($_SESSION['tender'.$identifier])
 	$LocnResult = DB_query($sql,$db);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){
-		if ((isset($_SESSION['tender'.$identifier]->Location) AND $_SESSION['tender'.$identifier]->Location == $LocnRow['loccode'])){
+		if ((isset($_SESSION['tender'.$identifier]->Location) and $_SESSION['tender'.$identifier]->Location == $LocnRow['loccode'])){
 			echo '<option selected="selected" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 		} else {
 			echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
@@ -439,9 +437,9 @@ if (!isset($_SESSION['tender'.$identifier])
 			<input type="submit" name="Items" value="' . _('Select Item Details') . '" />
 		</div>
 		<br />';
-	if ($_SESSION['tender'.$identifier]->LinesOnTender > 0 
-		AND $_SESSION['tender'.$identifier]->SuppliersOnTender > 0) {
-			
+	if ($_SESSION['tender'.$identifier]->LinesOnTender > 0
+		and $_SESSION['tender'.$identifier]->SuppliersOnTender > 0) {
+
 		echo '<div class="centre">
 				<input type="submit" name="Save" value="' . _('Save Tender') . '" />
 			</div>';
@@ -451,13 +449,13 @@ if (!isset($_SESSION['tender'.$identifier])
 	exit;
 }
 
-if (isset($_POST['SearchSupplier']) OR isset($_POST['Go']) 
-	OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
-	
-	if (mb_strlen($_POST['Keywords']) > 0 AND mb_strlen($_POST['SupplierCode']) > 0) {
+if (isset($_POST['SearchSupplier']) or isset($_POST['Go'])
+	or isset($_POST['Next']) or isset($_POST['Previous'])) {
+
+	if (mb_strlen($_POST['Keywords']) > 0 and mb_strlen($_POST['SupplierCode']) > 0) {
 		prnMsg( '<br />' . _('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
 	}
-	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
+	if ($_POST['Keywords'] == '' and $_POST['SupplierCode'] == '') {
 		$SQL = "SELECT supplierid,
 					suppname,
 					currcode,
@@ -540,7 +538,7 @@ if (isset($_POST['Suppliers'])) {
 }
 
 if (isset($_POST['SearchSupplier'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($result);
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
@@ -577,23 +575,22 @@ if (isset($_POST['SearchSupplier'])) {
 		<br />
 		<br />
 		<table cellpadding="2" colspan="7">';
-	$TableHeader = '<tr>
-				  		<th>' . _('Code') . '</th>
-						<th>' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
-						<th>' . _('Address 4') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<tr>
+	  		<th>' . _('Code') . '</th>
+			<th>' . _('Supplier Name') . '</th>
+			<th>' . _('Currency') . '</th>
+			<th>' . _('Address 1') . '</th>
+			<th>' . _('Address 2') . '</th>
+			<th>' . _('Address 3') . '</th>
+			<th>' . _('Address 4') . '</th>
+		</tr>';
 	$j = 1;
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
 		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 	}
-	while (($myrow = DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+	while (($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
@@ -619,7 +616,7 @@ if (isset($_POST['SearchSupplier'])) {
 /*The supplier has chosen option 2
  */
 if (isset($_POST['Items'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 	$sql = "SELECT categoryid,
@@ -686,7 +683,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Select items required on this tender').'</p>';
 
-	if ($_POST['Keywords'] AND $_POST['StockCode']) {
+	if ($_POST['Keywords'] and $_POST['StockCode']) {
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
 	}
 	if ($_POST['Keywords']) {
@@ -701,11 +698,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='K'
 					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.description " . LIKE . " '$SearchString'
-					ORDER BY stockmaster.stockid 
+					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
@@ -715,12 +712,12 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='K'
 					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid 
+					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		}
 
@@ -736,11 +733,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='K'
 					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-					ORDER BY stockmaster.stockid 
+					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
@@ -750,12 +747,12 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
 					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K' 
+					AND stockmaster.mbflag!='K'
 					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid 
+					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		}
 
@@ -771,7 +768,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.mbflag!='K'
 					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
-					ORDER BY stockmaster.stockid 
+					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		} else {
 			$sql = "SELECT stockmaster.stockid,
@@ -785,7 +782,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.mbflag!='G'
 					AND stockmaster.discontinued!=1
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					ORDER BY stockmaster.stockid 
+					ORDER BY stockmaster.stockid
 					LIMIT " . $_SESSION['DisplayRecordsMax'];
 		}
 	}
@@ -794,7 +791,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	$DbgMsg = _('The SQL statement that failed was');
 	$SearchResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($SearchResult)==0 AND $debug==1){
+	if (DB_num_rows($SearchResult)==0 and $debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
@@ -806,16 +803,14 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	if (isset($SearchResult)) {
 
-		echo '<table cellpadding="1" colspan="7">';
-
-		$TableHeader = '<tr>
-							<th>' . _('Code')  . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Units') . '</th>
-							<th>' . _('Image') . '</th>
-							<th>' . _('Quantity') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table cellpadding="1">';
+		echo '<tr>
+				<th>' . _('Code')  . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Units') . '</th>
+				<th>' . _('Image') . '</th>
+				<th>' . _('Quantity') . '</th>
+			</tr>';
 
 		$i = 0;
 		$k = 0; //row colour counter
@@ -833,12 +828,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			$FileName = $myrow['stockid'] . '.jpg';
 			if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
 
-				$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
+				$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $FileName . '" width="50" height="50" />';
 
 			} else {
 				$ImageSource = '<i>'._('No Image').'</i>';
 			}
-
 
 			echo '<td>'.$myrow['stockid'].'</td>
 					<td>'.$myrow['description'].'</td>
@@ -849,13 +843,12 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					<input type="hidden" value="'.$myrow['stockid'].'" name="StockID'.$i.'" />
 					</tr>';
 
-			
 			$i++;
 #end of page full new headings if
 		}
 #end of while loop
 		echo '</table>';
-	
+
 		echo '<a name="end"></a>
 			<br />
 			<div class="centre">
