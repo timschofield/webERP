@@ -34,21 +34,20 @@ if ( isset($_POST['submit']) ) {
 		prnMsg( _('The contact priority must be an integer.'), 'error');
 	} elseif (mb_strlen($_POST['note']) >200) {
 		$InputError = 1;
-		prnMsg( _("The contact's notes must be two hundred characters or less long"), 'error');
+		prnMsg( _('The contact\'s notes must be two hundred characters or less long'), 'error');
 	} elseif( trim($_POST['note']) == '' ) {
 		$InputError = 1;
-		prnMsg( _("The contact's notes may not be empty"), 'error');
+		prnMsg( _('The contact\'s notes may not be empty'), 'error');
 	}
 
 	if (isset($Id) and $InputError !=1) {
 
-		$sql = "UPDATE custnotes SET
-				note='" . $_POST['note'] . "',
-				date='" . FormatDateForSQL($_POST['date']) . "',
-				href='" . $_POST['href'] . "',
-				priority='" . $_POST['priority'] . "'
-			WHERE debtorno ='".$DebtorNo."'
-			AND noteid='".$Id."'";
+		$sql = "UPDATE custnotes SET note='" . $_POST['note'] . "',
+									date='" . FormatDateForSQL($_POST['date']) . "',
+									href='" . $_POST['href'] . "',
+									priority='" . $_POST['priority'] . "'
+				WHERE debtorno ='".$DebtorNo."'
+				AND noteid='".$Id."'";
 		$msg = _('Customer Notes') . ' ' . $DebtorNo  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
@@ -99,8 +98,7 @@ if (!isset($Id)) {
 				WHERE debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . _('Notes for Customer').': <b>' .$row['name'].'</b></p>
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$row['name'].'</b></p>
 		<br />';
 
 	$sql = "SELECT noteid,
@@ -156,7 +154,7 @@ if (!isset($Id)) {
 }
 if (isset($Id)) {
 	echo '<div class="centre">
-			<a href="'.htmlspecialchars($_SERVER['PHP_SELF']) . '?DebtorNo='.$DebtorNo.'">'._('Review all notes for this Customer').'</a>
+			<a href="'.htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">'._('Review all notes for this Customer').'</a>
 		</div>';
 }
 echo '<br />';
