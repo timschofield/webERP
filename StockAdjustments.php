@@ -49,6 +49,36 @@ if (isset($_GET['StockID'])){
 		$_SESSION['Adjustment']->StockID = trim(mb_strtoupper($_POST['StockID']));
 		$StockID = trim(mb_strtoupper($_POST['StockID']));
 	}
+        //Get item data 
+	$result = DB_query("SELECT description,
+							controlled,
+							serialised,
+							decimalplaces,
+							perishable
+						FROM stockmaster
+						WHERE stockid=' " . $_SESSION['Adjustment']->StockID . "'",$db);
+	$myrow = DB_fetch_array($result);
+	$_SESSION['Adjustment']->ItemDescription = $myrow['description'];
+	$_SESSION['Adjustment']->Controlled = $myrow['controlled'];
+	$_SESSION['Adjustment']->Serialised = $myrow['serialised'];
+	$_SESSION['Adjustment']->DecimalPlaces = $myrow['decimalplaces'];
+	DB_free_result($result);
+
+        $sql="SELECT materialcost, 
+				labourcost, 
+				overheadcost, 
+				units, 
+				decimalplaces 
+			FROM stockmaster 
+			WHERE stockid='".$_SESSION['Adjustment']->StockID . "'";
+			
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_array($result);
+	$_SESSION['Adjustment']->PartUnit=$myrow['units'];
+	$_SESSION['Adjustment']->StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
+	$DecimalPlaces = $myrow['decimalplaces'];
+	DB_free_result($result);
+
 	$_SESSION['Adjustment']->tag = $_POST['tag'];
 	$_SESSION['Adjustment']->Narrative = $_POST['Narrative'];
 	$_SESSION['Adjustment']->StockLocation = $_POST['StockLocation'];
@@ -272,7 +302,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 									'" . $SQLAdjustmentDate . "',
 									'" . $PeriodNo . "',
 									'" .  $StockGLCodes['adjglact'] . "',
-									'" . $_SESSION['Adjustment']->StandardCost * -($_SESSION['Adjustment']->Quantity) . "',
+									'" . round($_SESSION['Adjustment']->StandardCost * -($_SESSION['Adjustment']->Quantity), $_SESSION['CompanyRecord']['decimalplaces']) . "',
 									'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " .
 										$_SESSION['Adjustment']->StandardCost . " " . $_SESSION['Adjustment']->Narrative . "',
 									'" . $_SESSION['Adjustment']->tag . "'
@@ -295,7 +325,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 									'" . $SQLAdjustmentDate . "',
 									'" . $PeriodNo . "',
 									'" .  $StockGLCodes['stockact'] . "',
-									'" . $_SESSION['Adjustment']->StandardCost * $_SESSION['Adjustment']->Quantity . "',
+									'" . round($_SESSION['Adjustment']->StandardCost * $_SESSION['Adjustment']->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . "',
 									'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . $_SESSION['Adjustment']->Narrative . "',
 									'" . $_SESSION['Adjustment']->tag . "'
 									)";
@@ -304,6 +334,8 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
 			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 		}
+		
+		EnsureGLEntriesBalance(17, $AdjustmentNumber,$db);
 
 		$Result = DB_Txn_Commit($db);
 
@@ -334,7 +366,6 @@ if (!isset($_SESSION['Adjustment'])) {
 	$StockID = $_SESSION['Adjustment']->StockID;
 	$Controlled = $_SESSION['Adjustment']->Controlled;
 	$Quantity = $_SESSION['Adjustment']->Quantity;
-	
 	$sql="SELECT materialcost, 
 				labourcost, 
 				overheadcost, 
