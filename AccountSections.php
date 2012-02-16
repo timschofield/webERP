@@ -14,9 +14,8 @@ include('includes/header.inc');
 
 	if( DB_num_rows($result) == 0 ) {
 		$sql = "INSERT INTO accountsection (sectionid,
-											sectionname
-										) VALUES (
-											1,
+											sectionname) 
+									VALUES (1,
 											'Income')";
 		$result = DB_query($sql,$db);
 	}
@@ -26,9 +25,8 @@ include('includes/header.inc');
 
 	if( DB_num_rows($result) == 0 ) {
 		$sql = "INSERT INTO accountsection (sectionid,
-											sectionname
-										) VALUES (
-											2,
+											sectionname) 
+									VALUES (2,
 											'Cost Of Sales')";
 		$result = DB_query($sql,$db);
 	}
@@ -58,7 +56,7 @@ if (isset($_POST['submit'])) {
 					WHERE sectionid='".$_POST['SectionID']."'";
 		$result=DB_query($sql, $db);
 
-		if ((DB_num_rows($result)!=0 and !isset($_POST['SelectedSectionID']))) {
+		if ((DB_num_rows($result)!=0 AND !isset($_POST['SelectedSectionID']))) {
 			$InputError = 1;
 			prnMsg( _('The account section already exists in the database'),'error');
 			$Errors[$i] = 'SectionID';
@@ -77,20 +75,20 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
-	if (isset($_POST['SectionID']) and (!is_numeric($_POST['SectionID']))) {
+	if (isset($_POST['SectionID']) AND (!is_numeric($_POST['SectionID']))) {
 		$InputError = 1;
 		prnMsg( _('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
 		$i++;
 	}
-	if (isset($_POST['SectionID']) and mb_strpos($_POST['SectionID'],".")>0) {
+	if (isset($_POST['SectionID']) AND mb_strpos($_POST['SectionID'],".")>0) {
 		$InputError = 1;
 		prnMsg( _('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
 		$i++;
 	}
 
-	if (isset($_POST['SelectedSectionID']) and $_POST['SelectedSectionID']!='' AND $InputError !=1) {
+	if (isset($_POST['SelectedSectionID']) AND $_POST['SelectedSectionID']!='' AND $InputError !=1) {
 
 		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
@@ -149,7 +147,7 @@ if (isset($_POST['submit'])) {
 	unset ($_POST['SectionName']);
 }
 
-if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) {
+if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 /* An account section could be posted when one has been edited and is being updated
   or GOT when selected for modification

@@ -52,7 +52,8 @@ if (isset($_POST['submit'])) {
 	$i=1;
 
 	$sql="SELECT count(groupname)
-			FROM accountgroups WHERE groupname='".$_POST['GroupName']."'";
+			FROM accountgroups 
+			WHERE groupname='".$_POST['GroupName']."'";
 
 	$DbgMsg = _('The SQL that was used to retrieve the information was');
 	$ErrMsg = _('Could not check whether the group exists because');
@@ -115,7 +116,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'SequenceInTB';
 		$i++;
 	}
-	if (!ctype_digit($_POST['SequenceInTB']) or $_POST['SequenceInTB'] > 10000) {
+	if (!ctype_digit($_POST['SequenceInTB']) OR $_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
 		prnMsg( _('The sequence in the TB must be numeric and less than') . ' 10,000','error');
 		$Errors[$i] = 'SequenceInTB';

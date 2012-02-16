@@ -34,7 +34,7 @@ if ( isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (isset($_POST['Con_ID']) and !is_long((integer)$_POST['Con_ID'])) {
+	if (isset($_POST['Con_ID']) AND !is_long((integer)$_POST['Con_ID'])) {
 		$InputError = 1;
 		prnMsg( _('The Contact ID must be an integer.'), 'error');
 	} elseif (mb_strlen($_POST['ContactName']) >40) {
@@ -43,12 +43,12 @@ if ( isset($_POST['submit']) ) {
 	} elseif( trim($_POST['ContactName']) == '' ) {
 		$InputError = 1;
 		prnMsg( _('The contact name may not be empty'), 'error');
-	} elseif (!IsEmailAddress($_POST['ContactEmail']) and mb_strlen($_POST['ContactEmail'])>0){
+	} elseif (!IsEmailAddress($_POST['ContactEmail']) AND mb_strlen($_POST['ContactEmail'])>0){
 		$InputError = 1;
 		prnMsg( _('The contact email address is not a valid email address'), 'error');
 	}
 
-	if (isset($Id) and ($Id and $InputError !=1)) {
+	if (isset($Id) AND ($Id AND $InputError !=1)) {
 		$sql = "UPDATE custcontacts SET contactname='" . $_POST['ContactName'] . "',
 										role='" . $_POST['ContactRole'] . "',
 										phoneno='" . $_POST['ContactPhone'] . "',
@@ -89,7 +89,7 @@ if ( isset($_POST['submit']) ) {
 		unset($_POST['ContactEmail']);
 		unset($_POST['Con_ID']);
 	}
-} elseif (isset($_GET['delete']) and $_GET['delete']) {
+} elseif (isset($_GET['delete']) AND $_GET['delete']) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
@@ -127,7 +127,8 @@ if (!isset($Id)) {
 			<th>' . _('Role') . '</th>
 			<th>' . _('Phone no') . '</th>
 			<th>' . _('Email') . '</th>
-			<th>' . _('Notes') . '</th>';
+			<th>' . _('Notes') . '</th>
+		</tr>';
 
 	$k=0; //row colour counter
 
@@ -208,7 +209,8 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">';
 	}
 
-	echo '<tr><td>'. _('Contact Name') . '</td>';
+	echo '<tr>
+			<td>'. _('Contact Name') . '</td>';
 	if (isset($_POST['ContactName'])) {
 		echo '<td><input type="text" name="ContactName" value="' . $_POST['ContactName']. '" size="35" maxlength="40" /></td>
 			</tr>';
@@ -225,7 +227,8 @@ if (!isset($_GET['delete'])) {
 		echo '<td><input type="text" name="ContactRole" size="35" maxlength="40" /></td>
 			</tr>';
 	}
-	echo '<tr><td>' . _('Phone') . '</td>';
+	echo '<tr>
+			<td>' . _('Phone') . '</td>';
 	if (isset($_POST['ContactPhone'])) {
 		echo '<td><input type="text" name="ContactPhone" value="' . $_POST['ContactPhone'] . '" size="35" maxlength="40" /></td>
 			</tr>';

@@ -8,7 +8,7 @@ include('includes/header.inc');
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 include('includes/IndexArray.php');
 
-if (isset($SupplierLogin) and $SupplierLogin==1){
+if (isset($SupplierLogin) AND $SupplierLogin==1){
 	echo '<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
@@ -28,7 +28,7 @@ if (isset($SupplierLogin) and $SupplierLogin==1){
 		</table>';
 	include('includes/footer.inc');
 	exit;
-} elseif (isset($SupplierLogin) and $SupplierLogin==0){
+} elseif (isset($SupplierLogin) AND $SupplierLogin==0){
 	echo '<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
@@ -72,9 +72,13 @@ while ($i < count($ModuleLink)){
 			$_SESSION['Module']=$ModuleLink[$i];
 		}
 		if ($ModuleLink[$i] == $_SESSION['Module']){
-			echo '<tr><td class="main_menu_selected"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td></tr>';
+			echo '<tr>
+					<td class="main_menu_selected"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>
+				</tr>';
 		} else {
-			echo '<tr><td class="main_menu_unselected"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td></tr>';
+			echo '<tr>
+					<td class="main_menu_unselected"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>
+				</tr>';
 		}
 	}
 	$i++;
@@ -199,13 +203,13 @@ be generated, one for standard reports and the other for custom reports.
 	$Title= array(_('Custom Reports'), _('Standard Reports and Forms'));
 
 	$sql= "SELECT id,
-					reporttype,
-					defaultreport,
-					groupname,
-					reportname
-				FROM reports
-				ORDER BY groupname,
-						reportname";
+				reporttype,
+				defaultreport,
+				groupname,
+				reportname
+			FROM reports
+			ORDER BY groupname,
+					reportname";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$ReportList = '';
 	while ($Temp = DB_fetch_array($Result)) $ReportList[] = $Temp;
