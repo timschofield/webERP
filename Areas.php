@@ -31,16 +31,15 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$_POST['AreaCode'] = mb_strtoupper($_POST['AreaCode']);
-	$sql = "SELECT count(areacode) from areas WHERE areacode='".$_POST['AreaCode']."'";
+	$sql = "SELECT areacode FROM areas WHERE areacode='".$_POST['AreaCode']."'";
 	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
 	// mod to handle 3 char area codes
 	if (mb_strlen($_POST['AreaCode']) > 3) {
 		$InputError = 1;
 		prnMsg(_('The area code must be three characters or less long'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
-	} elseif ($myrow[0]>0 and !isset($SelectedArea)){
+	} elseif (DB_num_rows($result)>0 and !isset($SelectedArea)){
 		$InputError = 1;
 		prnMsg(_('The area code entered already exists'),'error');
 		$Errors[$i] = 'AreaCode';
@@ -66,9 +65,8 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE areas SET
-				areadescription='" . $_POST['AreaDescription'] . "'
-			WHERE areacode = '" . $SelectedArea . "'";
+		$sql = "UPDATE areas SET areadescription='" . $_POST['AreaDescription'] . "'
+								WHERE areacode = '" . $SelectedArea . "'";
 
 		$msg = _('Area code') . ' ' . $SelectedArea  . ' ' . _('has been updated');
 
@@ -77,16 +75,16 @@ if (isset($_POST['submit'])) {
 	/*Selectedarea is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new area form */
 
 		$sql = "INSERT INTO areas (areacode,
-						areadescription)
-				VALUES (
-					'" . $_POST['AreaCode'] . "',
-					'" . $_POST['AreaDescription'] . "'
-					)";
+									areadescription
+								) VALUES (
+									'" . $_POST['AreaCode'] . "',
+									'" . $_POST['AreaDescription'] . "'
+								)";
 
-		$SelectedArea =$_POST['AreaCode'];
+		$SelectedArea = $_POST['AreaCode'];
 		$msg = _('New area code') . ' ' . $_POST['AreaCode'] . ' ' . _('has been inserted');
 	} else {
-		$msg='';
+		$msg = '';
 	}
 
 	//run the SQL from either of the above possibilites
@@ -107,22 +105,22 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
 
-	$sql= "SELECT COUNT(*) FROM custbranch WHERE custbranch.area='$SelectedArea'";
+	$sql= "SELECT COUNT(branchcode) AS branches FROM custbranch WHERE custbranch.area='$SelectedArea'";
 	$result = DB_query($sql,$db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
+	$myrow = DB_fetch_array($result);
+	if ($myrow['branches']>0) {
 		$CancelDelete = 1;
 		prnMsg( _('Cannot delete this area because customer branches have been created using this area'),'warn');
-		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches using this area code');
+		echo '<br />' . _('There are') . ' ' . $myrow['branches'] . ' ' . _('branches using this area code');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.area ='$SelectedArea'";
+		$sql= "SELECT COUNT(area) AS records FROM salesanalysis WHERE salesanalysis.area ='$SelectedArea'";
 		$result = DB_query($sql,$db);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
+		$myrow = DB_fetch_array($result);
+		if ($myrow['records']>0) {
 			$CancelDelete = 1;
 			prnMsg( _('Cannot delete this area because sales analysis records exist that use this area'),'warn');
-			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records referring this area code');
+			echo '<br />' . _('There are') . ' ' . $myrow['records'] . ' ' . _('sales analysis records referring this area code');
 		}
 	}
 
@@ -137,21 +135,22 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedArea)) {
 
-	$sql = "SELECT * FROM areas";
+	$sql = "SELECT areacode,
+					areadescription
+				FROM areas";
 	$result = DB_query($sql,$db);
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-	echo '<table>
-		<tr>
-		<th>' . _('Area Code') . '</th>
-		<th>' . _('Area Name') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Area Code') . '</th>
+				<th>' . _('Area Name') . '</th>
+			</tr>';
 
 	$k=0; //row colour counter
 
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -159,11 +158,12 @@ if (!isset($SelectedArea)) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-		echo '<td>' . $myrow[0] . '</td>
-			<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedArea=' . $myrow[0] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales area?') . '\');">' . _('Delete') . '</a></td>';
-		echo '<td><a href="SelectCustomer.php'. '?Area=' . $myrow[0] . '">' . _('View Customers from this Area') . '</a></td>';
+		echo '<td>' . $myrow['areacode'] . '</td>
+				<td>' . $myrow['areadescription'] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '&delete=yes">' . _('Delete') . '</a></td>
+				<td><a href="SelectCustomer.php?Area=' . $myrow['areacode'] . '">' . _('View Customers from this Area') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -172,22 +172,22 @@ if (!isset($SelectedArea)) {
 //end of ifs and buts!
 
 if (isset($SelectedArea)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Areas Defined') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Areas Defined') . '</a></div>';
 }
 
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '"><br />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '"><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedArea)) {
 		//editing an existing area
 
 		$sql = "SELECT areacode,
-				areadescription
-			FROM areas
-			WHERE areacode='" . $SelectedArea . "'";
+						areadescription
+					FROM areas
+					WHERE areacode='" . $SelectedArea . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -213,7 +213,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Area Code') . ':</td>
-				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size="3" maxlength="3"/></td>
+				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ? 'class="inputerror"' : '' ) .' type="text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size="3" maxlength="3" /></td>
 			</tr>';
 	}
 
