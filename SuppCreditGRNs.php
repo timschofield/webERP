@@ -35,9 +35,16 @@ if (isset($_POST['AddGRNToTrans'])){
 	$InputError=False;
 
 	$Complete = False;
+        // Validate Credit Quantity to prevent from credit quantity more than quantity invoiced
+	if (!is_numeric(filter_number_format($_POST['This_QuantityCredited']))
+		or ($_POST['Prev_QuantityInv'] - filter_number_format($_POST['This_QuantityCredited']))<0){
 
+		$InputError = True;
+		prnMsg(_('The credit quantity is not numeric or the quantity to credit is more that quantity invoiced') . '. ' . _('The goods received cannot be credited by this quantity'),'error');
+		}
+	
 	if (!is_numeric(filter_number_format($_POST['ChgPrice'])) 
-		AND filter_number_format($_POST['ChgPrice'])<0){
+		or filter_number_format($_POST['ChgPrice'])<0){
 			
 		$InputError = True;
 		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be credited at this price'),'error');
