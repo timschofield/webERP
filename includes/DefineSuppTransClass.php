@@ -100,7 +100,9 @@ Class SuppTrans {
 								$GLCode,
 								$PONo,
 								$AssetID=0,
-								$DecimalPlaces=2){
+								$Hold=0,
+								$DecimalPlaces=2,
+								$GRNBatchNo){
 
 		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo] = new GRNs($GRNNo,
@@ -119,7 +121,9 @@ Class SuppTrans {
 											$GLCode,
 											$PONo,
 											$AssetID,
-											$DecimalPlaces);
+											$Hold,
+											$DecimalPlaces,
+											$GRNBatchNo);
 			Return 1;
 		}
 		Return 0;
@@ -181,7 +185,8 @@ Class SuppTrans {
 													$GRNSrc->PONo,
 													$GRNSrc->AssetID,
 													$GRNSrc->Hold,
-													$GRNSrc->DecimalPlaces);
+													$GRNSrc->DecimalPlaces,
+													$GRNSrc->GRNBatchNo);
 			Return 1;
 		}
 		Return 0;
@@ -317,6 +322,7 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $Hold;
 	var $AssetID;
 	var $DecimalPlaces;
+	var $GRNBatchNo;
 
 	function GRNs ($GRNNo,
 					$PODetailItem,
@@ -335,7 +341,9 @@ all the info to do the necessary entries without looking up ie additional querie
 					$PONo,
 					$AssetID,
 					$Hold=0,
-					$DecimalPlaces=2){
+					$DecimalPlaces=2,
+					$GRNBatchNo){
+
 
 
 	/* Constructor function to add a new GRNs object with passed params */
@@ -357,22 +365,23 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->AssetID = $AssetID;
 		$this->Hold = $Hold;
 		$this->DecimalPlaces = $DecimalPlaces;
+		$this->GRNBatchNo = $GRNBatchNo;
 	}
 
 	function Modify ($PODetailItem,
-				$ItemCode,
-				$ItemDescription,
-				$QtyRecd,
-				$Prev_QuantityInv,
-				$This_QuantityInv,
-				$OrderPrice,
-				$ChgPrice,
-				$Complete,
-				$StdCostUnit,
-				$ShiptRef,
-				$JobRef,
-				$GLCode,
-				$Hold){
+					$ItemCode,
+					$ItemDescription,
+					$QtyRecd,
+					$Prev_QuantityInv,
+					$This_QuantityInv,
+					$OrderPrice,
+					$ChgPrice,
+					$Complete,
+					$StdCostUnit,
+					$ShiptRef,
+					$JobRef,
+					$GLCode,
+					$Hold){
 
 	/* Modify function to edit a GRNs object with passed params */
 		$this->PODetailItem = $PODetailItem;

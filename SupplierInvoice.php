@@ -1211,12 +1211,13 @@ then do the updates and inserts to process the invoice entered */
 						
 						/* First update the stockmoves delivery cost */
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record for the delivery could not have the cost updated to the actual cost');
-						$result = DB_query("UPDATE stockmoves SET price = '" . $ActualCost . "' 
+						$SQL = "UPDATE stockmoves SET price = '" . $ActualCost . "' 
 											WHERE stockid='" .$EnteredGRN->ItemCode . "' 
 											AND type=25
 											AND loccode='" . $LocCode . "' 
-											AND transno='" . $EnteredGRN->GRNNo . "'",
-											$db,$ErrMsg,$DbgMsg,True);
+											AND transno='" . $EnteredGRN->GRNBatchNo . "'";
+											
+						$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,True);
 						
 						if ($_SESSION['WeightedAverageCosting']==1){
 							/*

@@ -81,24 +81,24 @@ if (isset($_POST['PrintPDF'])
 						ELSE
 							CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 						END) AS overdue2
-						FROM suppliers INNER JOIN paymentterms
-						ON suppliers.paymentterms = paymentterms.termsindicator
-						INNER JOIN currencies
-						ON suppliers.currcode = currencies.currabrev
-						INNER JOIN supptrans
-						ON suppliers.supplierid = supptrans.supplierno
-						WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
-						AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
-						AND suppliers.currcode ='" . $_POST['Currency'] . "'
-						GROUP BY suppliers.supplierid,
-							suppliers.suppname,
-							currencies.currency,
-							paymentterms.terms,
-							paymentterms.daysbeforedue,
-							paymentterms.dayinfollowingmonth
-						HAVING SUM(IF (paymentterms.daysbeforedue > 0,
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END,
-						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END)) > 0";
+				FROM suppliers INNER JOIN paymentterms
+				ON suppliers.paymentterms = paymentterms.termsindicator
+				INNER JOIN currencies
+				ON suppliers.currcode = currencies.currabrev
+				INNER JOIN supptrans
+				ON suppliers.supplierid = supptrans.supplierno
+				WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
+				AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
+				AND suppliers.currcode ='" . $_POST['Currency'] . "'
+				GROUP BY suppliers.supplierid,
+					suppliers.suppname,
+					currencies.currency,
+					paymentterms.terms,
+					paymentterms.daysbeforedue,
+					paymentterms.dayinfollowingmonth
+				HAVING SUM(IF (paymentterms.daysbeforedue > 0,
+				CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END,
+				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END)) > 0";
 
 	}
 

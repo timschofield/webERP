@@ -51,6 +51,7 @@ if (isset($_POST['AddGRNToTrans'])){
 	}
 
 	if ($InputError==False){
+
 		$_SESSION['SuppTrans']->Add_GRN_To_Trans($_POST['GRNNumber'],
 												$_POST['PODetailItem'],
 												$_POST['ItemCode'],
@@ -67,7 +68,9 @@ if (isset($_POST['AddGRNToTrans'])){
 												$_POST['GLCode'],
 												$_POST['PONo'],
 												$_POST['AssetID'],
-												$_POST['DecimalPlaces']);
+												0,
+												$_POST['DecimalPlaces'],
+												$_POST['GRNBatchNo']);
 	}
 }
 
@@ -236,6 +239,7 @@ if (DB_num_rows($GRNResults)>0){
 	if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 	
 		$SQL = "SELECT grnno,
+						grns.grnbatch,
 						grns.podetailitem,
 						purchorderdetails.orderno,
 						purchorderdetails.unitprice,
@@ -320,6 +324,7 @@ if (DB_num_rows($GRNResults)>0){
 		echo '<input type="hidden" name="PONo" value="' . $myrow['orderno'] . '" />';
 		echo '<input type="hidden" name="AssetID" value="' . $myrow['assetid'] . '" />';
 		echo '<input type="hidden" name="DecimalPlaces" value="' . $myrow['decimalplaces'] . '" />';
+		echo '<input type="hidden" name="GRNBatchNo" value="' . $myrow['grnbatch'] . '" />';
 	}
 } //end if there were GRNs to select
 echo '</form>';

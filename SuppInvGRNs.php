@@ -236,7 +236,9 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 														$myrow['glcode'],
 														$myrow['orderno'],
 														$myrow['assetid'],
-														$myrow['decimalplaces']);
+														0,
+														$myrow['decimalplaces'],
+														$myrow['grnbatch']);
 		}
 	}
 }

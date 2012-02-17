@@ -1,5 +1,10 @@
 webERP Change Log
 
+17/2/12 Phil: SuppCreditGRNs.php SuppInvGRNs.php DefineSuppTransClass.php SupplierInvoice.php stock movement was not being updated correctly with cost on purchase invoice entry as was using GRNNo not GRNBatchNo - which is used as the GRN transaction number in stock movements.
+16/2/12 Tim: Modified index.php to use arrays of links rather than hard code all menus
+16/2/12 Exson: Fixed StockAdjustments.php was not producing gltrans entries when stock code entered directly
+
+
 Release 4.07
 
 11/2/12 Phil: Fix Prices.php for end dates when a new price with no end date is inserted with a start date in the future.

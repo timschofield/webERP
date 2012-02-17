@@ -29,23 +29,23 @@ if ( isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (!is_long((integer)$_POST['priority'])) {
+	if (!is_long((integer)$_POST['Priority'])) {
 		$InputError = 1;
 		prnMsg( _('The contact priority must be an integer.'), 'error');
-	} elseif (mb_strlen($_POST['note']) >200) {
+	} elseif (mb_strlen($_POST['Note']) >200) {
 		$InputError = 1;
 		prnMsg( _('The contact\'s notes must be two hundred characters or less long'), 'error');
-	} elseif( trim($_POST['note']) == '' ) {
+	} elseif( trim($_POST['Note']) == '' ) {
 		$InputError = 1;
 		prnMsg( _('The contact\'s notes may not be empty'), 'error');
 	}
 
 	if (isset($Id) and $InputError !=1) {
 
-		$sql = "UPDATE custnotes SET note='" . $_POST['note'] . "',
+		$sql = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
 									date='" . FormatDateForSQL($_POST['date']) . "',
-									href='" . $_POST['href'] . "',
-									priority='" . $_POST['priority'] . "'
+									href='" . $_POST['Href'] . "',
+									priority='" . $_POST['Priority'] . "'
 				WHERE debtorno ='".$DebtorNo."'
 				AND noteid='".$Id."'";
 		$msg = _('Customer Notes') . ' ' . $DebtorNo  . ' ' . _('has been updated');
@@ -57,10 +57,10 @@ if ( isset($_POST['submit']) ) {
 										date,
 										priority)
 				VALUES ('" . $DebtorNo. "',
-						'" . $_POST['href'] . "',
-						'" . $_POST['note'] . "',
+						'" . $_POST['Href'] . "',
+						'" . $_POST['Note'] . "',
 						'" . FormatDateForSQL($_POST['date']) . "',
-						'" . $_POST['priority'] . "')";
+						'" . $_POST['Priority'] . "')";
 		$msg = _('The contact notes record has been added');
 	}
 
@@ -71,11 +71,11 @@ if ( isset($_POST['submit']) ) {
 		echo '<br />';
 		prnMsg($msg, 'success');
 		unset($Id);
-		unset($_POST['note']);
-		unset($_POST['noteid']);
+		unset($_POST['Note']);
+		unset($_POST['Noteid']);
 		unset($_POST['date']);
-		unset($_POST['href']);
-		unset($_POST['priority']);
+		unset($_POST['Href']);
+		unset($_POST['Priority']);
 	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -181,19 +181,19 @@ if (!isset($_GET['delete'])) {
 
 		$myrow = DB_fetch_array($result);
 
-		$_POST['noteid'] = $myrow['noteid'];
-		$_POST['note']	= $myrow['note'];
-		$_POST['href']  = $myrow['href'];
+		$_POST['Noteid'] = $myrow['noteid'];
+		$_POST['Note']	= $myrow['note'];
+		$_POST['Href']  = $myrow['href'];
 		$_POST['date']  = $myrow['date'];
-		$_POST['priority']  = $myrow['priority'];
+		$_POST['Priority']  = $myrow['priority'];
 		$_POST['debtorno']  = $myrow['debtorno'];
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
-		echo '<input type="hidden" name="Con_ID" value="' . $_POST['noteid'] . '" />';
+		echo '<input type="hidden" name="Con_ID" value="' . $_POST['Noteid'] . '" />';
 		echo '<input type="hidden" name="DebtorNo" value="' . $_POST['debtorno'] . '" />';
 		echo '<table class="selection">
 			<tr>
 				<td>'. _('Note ID').':</td>
-				<td>' . $_POST['noteid'] . '</td>
+				<td>' . $_POST['Noteid'] . '</td>
 			</tr>';
 	} else {
 		echo '<table class="selection">';
@@ -201,20 +201,20 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Contact Note'). '</td>';
-	if (isset($_POST['note'])) {
-		echo '<td><textarea name="note">' .$_POST['note'] . '</textarea></td>
+	if (isset($_POST['Note'])) {
+		echo '<td><textarea name="Note">' .$_POST['Note'] . '</textarea></td>
 			</tr>';
 	} else {
-		echo '<td><textarea name="note"></textarea></td>
+		echo '<td><textarea name="Note"></textarea></td>
 			</tr>';
 	}
 	echo '<tr>
 			<td>'. _('WWW').'</td>';
-	if (isset($_POST['href'])) {
-		echo '<td><input type="text" name="href" value="'.$_POST['href'].'" size="35" maxlength="100" /></td>
+	if (isset($_POST['Href'])) {
+		echo '<td><input type="text" name="Href" value="'.$_POST['Href'].'" size="35" maxlength="100" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="href" size="35" maxlength="100" /></td>
+		echo '<td><input type="text" name="Href" size="35" maxlength="100" /></td>
 			</tr>';
 	}
 	echo '<tr>
@@ -228,11 +228,11 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>'. _('Priority'). '</td>';
-	if (isset($_POST['priority'])) {
-		echo '<td><input type="text" name="priority" value="' .$_POST['priority']. '" size="1" maxlength="3" /></td>
+	if (isset($_POST['Priority'])) {
+		echo '<td><input type="text" name="Priority" value="' .$_POST['Priority']. '" size="1" maxlength="3" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="priority" size="1" maxlength="3" /></td>
+		echo '<td><input type="text" name="Priority" size="1" maxlength="3" /></td>
 			</tr>';
 	}
 	echo '<tr>

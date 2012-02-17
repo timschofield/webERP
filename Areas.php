@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The area code must be three characters or less long'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
-	} elseif (DB_num_rows($result)>0 and !isset($SelectedArea)){
+	} elseif (DB_num_rows($result)>0 AND !isset($SelectedArea)){
 		$InputError = 1;
 		prnMsg(_('The area code entered already exists'),'error');
 		$Errors[$i] = 'AreaCode';

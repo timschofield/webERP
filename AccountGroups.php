@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 	$result=DB_query($sql, $db,$ErrMsg,$DbgMsg);
 	$myrow=DB_fetch_row($result);
 
-	if ($myrow[0]!=0 and $_POST['SelectedAccountGroup']=='') {
+	if ($myrow[0]!=0 AND $_POST['SelectedAccountGroup']=='') {
 		$InputError = 1;
 		prnMsg( _('The account group name already exists in the database'),'error');
 		$Errors[$i] = 'GroupName';
@@ -201,7 +201,7 @@ if (isset($_POST['submit'])) {
 
 }
 
-if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGroup'])) {
+if (!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup'])) {
 
 /* An account group could be posted when one has been edited and is being updated or GOT when selected for modification
  SelectedAccountGroup will exist because it was sent with the page in a GET .
@@ -359,7 +359,7 @@ if (!isset($_GET['delete'])) {
 
 	while ( $grouprow = DB_fetch_array($groupresult) ) {
 
-		if (isset($_POST['ParentGroupName']) and $_POST['ParentGroupName']==$grouprow['groupname']) {
+		if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$grouprow['groupname']) {
 			echo '<option selected="selected" value="'.htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
 		} else {
 			echo '<option value="'.htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($grouprow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
