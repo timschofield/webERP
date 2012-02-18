@@ -9,16 +9,16 @@ if ($allow_demo_mode == True and !isset($demo_text)) {
 } elseif (!isset($demo_text)) {
 	$demo_text = _('Please login here');
 }
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <title>webERP Login screen</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
+	<title>webERP Login screen</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>
 <body>
 
@@ -33,21 +33,21 @@ if (get_magic_quotes_gpc()){
 <div id="container">
 	<div id="login_logo"></div>
 	<div id="login_box">
-	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="loginform" method="post">
-	<p><input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
+	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');?>" method="post">
+	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<span><?php echo _('Company'); ?>:</span>
-    
+
 	<?php
 		if ($AllowCompanySelectionBox == true){
 			echo '<select name="CompanyNameField">';
-			
+
 			$Companies = scandir('companies/', 0);
 			foreach ($Companies as $CompanyEntry){
 				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
 					if ($CompanyEntry==$DefaultCompany) {
-						echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
+						echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
 					} else {
-						echo '<option  value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
+						echo '<option label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
 					}
 				}
 			}
@@ -56,20 +56,21 @@ if (get_magic_quotes_gpc()){
 			echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 		}
 	?>
-    
-	<span><?php echo _('User name'); ?>:</span>
-	<input type="text" name="UserNameEntryField" />
-	<span><?php echo _('Password'); ?>:</span>
-	<input type="password" name="Password" /></p>
+
+	<br />
+	<span><?php echo _('User name'); ?>:</span><br />
+	<input type="text" name="UserNameEntryField" maxlength="20" /><br />
+	<span><?php echo _('Password'); ?>:</span><br />
+	<input type="password" name="Password" /><br />
 	<div id="demo_text"><?php echo $demo_text;?></div>
-	<p><input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" /></p>
+	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
 	</form>
 	</div>
 </div>
-    <script type="text/javascript">
-            <!--
-                  document.loginform.UserNameEntryField.focus();
-            //-->
-    </script>
+	<script type="text/javascript">
+			<!--
+				  document.forms[0].UserNameEntryField.focus();
+			//-->
+	</script>
 </body>
 </html>
