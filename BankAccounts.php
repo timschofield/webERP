@@ -178,9 +178,8 @@ if (!isset($SelectedBankAccount)) {
 					bankaddress,
 					currcode,
 					invoice
-				FROM bankaccounts
-				INNER JOIN chartmaster
-					ON bankaccounts.accountcode = chartmaster.accountcode";
+			FROM bankaccounts INNER JOIN chartmaster
+			ON bankaccounts.accountcode = chartmaster.accountcode";
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<br />' . $sql;
@@ -262,8 +261,8 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 					bankaddress,
 					currcode,
 					invoice
-				FROM bankaccounts
-				WHERE bankaccounts.accountcode='" . $SelectedBankAccount . "'";
+			FROM bankaccounts
+			WHERE bankaccounts.accountcode='" . $SelectedBankAccount . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -291,11 +290,10 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	$sql = "SELECT accountcode,
 					accountname
-				FROM chartmaster
-				LEFT JOIN accountgroups
-					ON chartmaster.group_ = accountgroups.groupname
-				WHERE accountgroups.pandl = 0
-				ORDER BY accountcode";
+			FROM chartmaster LEFT JOIN accountgroups
+			ON chartmaster.group_ = accountgroups.groupname
+			WHERE accountgroups.pandl = 0
+			ORDER BY accountcode";
 
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
