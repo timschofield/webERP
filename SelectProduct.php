@@ -79,7 +79,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			<tr>
 				<th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' ' . $ItemStatus . '</b></th>
 			</tr>';
-	
+
 	echo '<tr>
 			<td width="40%" valign="top">
 			<table align="left">'; //nested table
@@ -129,12 +129,12 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
 				<td class="select">';
-		$PriceResult = DB_query("SELECT typeabbrev, 
+		$PriceResult = DB_query("SELECT typeabbrev,
 										price FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
-								AND branchcode='' 
+								AND branchcode=''
 								AND startdate <= '". Date('Y-m-d') ."' AND ( enddate >= '" . Date('Y-m-d') . "' OR enddate = '0000-00-00')
 								AND stockid='" . $StockID . "'", $db);
 		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
@@ -273,7 +273,7 @@ switch ($myrow['mbflag']) {
 					FROM purchorders INNER JOIN purchorderdetails
 					ON purchorders.orderno=purchorderdetails.orderno
 					WHERE purchorderdetails.itemcode='" . $StockID . "'
-					AND purchorderdetails.completed =0 
+					AND purchorderdetails.completed =0
 					AND purchorders.status<>'Cancelled'
 					AND purchorders.status<>'Pending'
 					AND purchorders.status<>'Rejected'";
@@ -346,7 +346,7 @@ echo '<tr><th class="number" width="15%">' . _('Quantity On Order') . ':</th>
 				</table>'; //end of nested table
 echo '</td>'; //end cell of master table
 
-if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M')) 
+if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 	AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
 
 	echo '<td width="50%" valign="top"><table>
@@ -368,7 +368,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 									purchdata.preferred,
 									currencies.decimalplaces
 								FROM purchdata INNER JOIN suppliers
-								ON purchdata.supplierno=suppliers.supplierid 
+								ON purchdata.supplierno=suppliers.supplierid
 								INNER JOIN currencies
 								ON suppliers.currcode=currencies.currabrev
 								WHERE purchdata.stockid = '" . $StockID . "'
@@ -430,7 +430,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&StockID=' . $StockID . '&text=' . $StockID . '&width=120&height=120" />';
 	}
-	if (($myrow['mbflag'] == 'B') 
+	if (($myrow['mbflag'] == 'B')
 		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))
 		AND $myrow['discontinued']==0){
 		echo '<br />';
@@ -450,7 +450,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 			}
 			echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$EOQ.'&LeadTime='.$SuppRow['leadtime'].'">'. _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
 			<br />';
-			
+
 			/**/
 		} /* end of while */
 	} /* end of $myrow['mbflag'] == 'B' */
@@ -469,8 +469,8 @@ if ($Its_A_Labour_Item == True) {
 }
 if (!$Its_A_Kitset) {
 	echo '<a href="' . $rootpath . '/Prices.php?Item=' . $StockID . '">' . _('Maintain Pricing') . '</a><br />';
-	if (isset($_SESSION['CustomerID']) 
-		AND $_SESSION['CustomerID'] != '' 
+	if (isset($_SESSION['CustomerID'])
+		AND $_SESSION['CustomerID'] != ''
 		AND mb_strlen($_SESSION['CustomerID']) > 0) {
 		echo '<a href="' . $rootpath . '/Prices_Customer.php?Item=' . $StockID . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</a><br />';
 	}
@@ -764,13 +764,13 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			} else {
 				$ItemStatus ='';
 			}
-			
+
 			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
 				<td>'.$myrow['description'].'</td>
 				<td class="number">' . $qoh . '</td>
 				<td>' . $myrow['units'] . '</td>
-				<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
 				<td>' . $ItemStatus . '</td>
+				<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
 				</tr>';
 			$j++;
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
