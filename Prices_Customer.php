@@ -231,7 +231,7 @@ $sql = "SELECT prices.price,
 			   custbranch.brname,
 			   prices.startdate,
 			   prices.enddate
-		FROM prices LEFT JOIN custbranch 
+		FROM prices LEFT JOIN custbranch
 		ON prices.branchcode= custbranch.branchcode
 		WHERE prices.typeabbrev = '".$SalesType."'
 		AND prices.stockid='".$Item."'
@@ -278,7 +278,7 @@ if (DB_num_rows($result) == 0) {
 				'&StartDate='.$myrow['startdate'].'&EndDate='.$myrow['enddate'].'&Edit=1">' . _('Edit') . '</td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']).'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td>
 		</tr>';
-	
+
 	}
 //END WHILE LIST LOOP
 }
@@ -334,7 +334,7 @@ if ($myrow['branchcode']=='') {
 }
 
 while ($myrow=DB_fetch_array($result)) {
-	f ($myrow['branchcode']==$_GET['Branch']) {
+	if ($myrow['branchcode']==$_GET['Branch']) {
 		echo '<option selected="selected" value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
 	} else {
 		echo '<option value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
@@ -360,7 +360,7 @@ echo '<br />
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
 		</form>';
-		
+
 include('includes/footer.inc');
 exit;
 
@@ -419,7 +419,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 		$StartDate = $myrow['startdate'];
 		$EndDate = $myrow['enddate'];
 	}
-	
+
 	//Now look for duplicate prices with no end
 	$SQL = "SELECT price,
 					startdate,
@@ -434,7 +434,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 				AND enddate ='0000-00-00'
 				ORDER BY startdate";
 	$result = DB_query($SQL,$db);
-			
+
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($OldStartDate)){
 		/*Need to make the end date the new start date less 1 day */
@@ -450,7 +450,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID, 
 						AND debtorno =''";
 			$UpdateResult = DB_query($SQL,$db);
 		}
-		$OldStartDate = $myrow['startdate']
+		$OldStartDate = $myrow['startdate'];
 	} // end of loop around duplicate no end date prices
 }
 ?>
