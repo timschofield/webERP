@@ -303,6 +303,7 @@ $MenuItems['manuf']['Reports']['URL'] = array ('/WorkOrderEntry.php',
 
 $MenuItems['manuf']['Maintenance']['Caption'] = array (_('Work Centre'),
 												_('Bills Of Material'),
+												_('Copy a Bill Of Materials Between Items'),
 												_('Master Schedule'),
 												_('Auto Create Master Schedule'),
 												_('MRP Calculation')
@@ -310,6 +311,7 @@ $MenuItems['manuf']['Maintenance']['Caption'] = array (_('Work Centre'),
 
 $MenuItems['manuf']['Maintenance']['URL'] = array ('/WorkCentres.php',
 											'/BOMs.php',
+											'/CopyBOM.php',
 											'/MRPDemands.php',
 											'/MRPCreateDemands.php',
 											'/MRP.php'
