@@ -6,8 +6,8 @@ include('includes/session.inc');
 $title = _('Bank Account Matching');
 include('includes/header.inc');
 
-if ((isset($_GET['Type']) and $_GET['Type']=='Receipts') or
-	(isset($_POST['Type']) and $_POST['Type']=='Receipts')){
+if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts') 
+		OR (isset($_POST['Type']) AND $_POST['Type']=='Receipts')){
 
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
@@ -15,8 +15,8 @@ if ((isset($_GET['Type']) and $_GET['Type']=='Receipts') or
 			<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
 		</p>';
 
-} elseif ((isset($_GET['Type']) and $_GET['Type']=='Payments') or
-			(isset($_POST['Type']) and $_POST['Type']=='Payments')) {
+} elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments') 
+			OR (isset($_POST['Type']) AND $_POST['Type']=='Payments')) {
 
 	$Type = 'Payments';
 	$TypeName =_('Payments');
@@ -38,9 +38,9 @@ if (isset($_GET['Account'])) {
 	$_POST['First20_or_All']='All';
 }
 
-if (isset($_POST['Update']) and $_POST['RowCounter']>1){
+if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
-		if (isset($_POST['Clear_' . $Counter]) and $_POST['Clear_' . $Counter]==True){
+		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==True){
 			/*Get amount to be cleared */
 			$sql = "SELECT amount,
 							exrate
@@ -56,8 +56,12 @@ if (isset($_POST['Update']) and $_POST['RowCounter']>1){
 			$ErrMsg =  _('Could not match off this payment because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-		} elseif ((isset($_POST['AmtClear_' . $Counter]) and filter_number_format($_POST['AmtClear_' . $Counter])<0 and $Type=='Payments')
-					or ($Type=='Receipts' and isset($_POST['AmtClear_' . $Counter]) and filter_number_format($_POST['AmtClear_' . $Counter])>0)) {
+		} elseif ((isset($_POST['AmtClear_' . $Counter]) 
+					AND filter_number_format($_POST['AmtClear_' . $Counter])<0 
+					AND $Type=='Payments')
+					OR ($Type=='Receipts' AND isset($_POST['AmtClear_' . $Counter]) 
+					AND filter_number_format($_POST['AmtClear_' . $Counter])>0)) {
+						
 			/*if the amount entered was numeric and negative for a payment or positive for a receipt */
 
 			$sql = "UPDATE banktrans SET amountcleared=" .  filter_number_format($_POST['AmtClear_' . $Counter]) . "
@@ -66,7 +70,9 @@ if (isset($_POST['Update']) and $_POST['RowCounter']>1){
 			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-		} elseif (isset($_POST['Unclear_' . $Counter]) and $_POST['Unclear_' . $Counter]==True){
+		} elseif (isset($_POST['Unclear_' . $Counter]) 
+					AND $_POST['Unclear_' . $Counter]==True){
+						
 			$sql = "UPDATE banktrans SET amountcleared = 0
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not unclear this bank transaction because');
@@ -92,7 +98,9 @@ echo '<table class="selection">
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultBankActs)){
-	if (isset($_POST['BankAccount']) and $myrow['accountcode']==$_POST['BankAccount']){
+	if (isset($_POST['BankAccount']) 
+		AND $myrow['accountcode']==$_POST['BankAccount']){
+			
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
@@ -102,10 +110,10 @@ while ($myrow=DB_fetch_array($resultBankActs)){
 echo '</select></td>
 	</tr>';
 
-if (!isset($_POST['BeforeDate']) or !Is_Date($_POST['BeforeDate'])){
+if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
 	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-if (!isset($_POST['AfterDate']) or !Is_Date($_POST['AfterDate'])){
+if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-3,Date('d'),Date('y')));
 }
 
