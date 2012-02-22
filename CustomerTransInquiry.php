@@ -12,7 +12,7 @@ echo '<p class="page_title_text">
 echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div>
 	<br />';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">
@@ -137,7 +137,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 		if ($_POST['TransType']==10){ /* invoices */
 
 			printf($format_base .
-					'<td><a target="_blank" href=%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice"><img src="%s" title="' . _('Click to preview the invoice') . '" /></a></td>
+					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice"><img src="%s" title="' . _('Click to preview the invoice') . '" /></a></td>
 					</tr>',
 					$myrow['typename'],
 					$myrow['transno'],
