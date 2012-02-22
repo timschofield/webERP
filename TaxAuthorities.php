@@ -183,9 +183,9 @@ if (!isset($SelectedTaxAuthID)) {
 				$myrow[5],
 				$myrow[6],
 				$myrow[7],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0],
 				$rootpath . '/TaxAuthorityRates.php?',
 				$myrow[0]);
@@ -202,12 +202,12 @@ if (!isset($SelectedTaxAuthID)) {
 
 if (isset($SelectedTaxAuthID)) {
 	echo '<div class="centre">
-			<a href="' .  htmlspecialchars($_SERVER['PHP_SELF']) .'">' . _('Review all defined tax authority records') . '</a>
+			<a href="' .  htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Review all defined tax authority records') . '</a>
 		</div>';
  }
 
 
-echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedTaxAuthID)) {

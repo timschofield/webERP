@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 	echo '<br />';
 }
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -173,7 +173,7 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
+	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
 
 	printf('<td>%s</td>
 			<td>%s</td>

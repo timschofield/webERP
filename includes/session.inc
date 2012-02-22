@@ -7,7 +7,7 @@ if (!isset($PathPrefix)) {
 
 
 if (!file_exists($PathPrefix . 'config.php')){
-	$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
+	$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 	if ($rootpath == '/' OR $rootpath == "\\") {
 		$rootpath = '';
 	}

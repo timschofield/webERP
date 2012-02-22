@@ -197,7 +197,7 @@ if (isset($FactorID) and isset($_POST['Amend'])) {
 if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	// its a new factor being added
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FactorID" value="' . $FactorID .'" />
 		<table class="selection">
@@ -272,7 +272,7 @@ if (isset($_POST['Create'])) {
 
 if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="No" />';

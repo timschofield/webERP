@@ -410,7 +410,7 @@ if (isset($_SESSION['Transfer'])){
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $title . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?'. SID . '" method=post>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?'. SID . '" method=post>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	prnMsg(_('Please Verify Shipment Quantities Received'),'info');
@@ -496,13 +496,13 @@ if (isset($_SESSION['Transfer'])){
 			<br />
 		</div>
 		</form>';
-	echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF']). '?NewTransfer=true">'. _('Select A Different Transfer').'</a>';
+	echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?NewTransfer=true">'. _('Select A Different Transfer').'</a>';
 
 } else { /*Not $_SESSION['Transfer'] set */
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" name="form1">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form1">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$LocResult = DB_query("SELECT locationname, loccode FROM locations",$db);
@@ -560,7 +560,7 @@ if (isset($_SESSION['Transfer'])){
 			echo '<td class="number">' . $myrow['reference'] . '</td>
 					<td>' . $myrow['trffromloc'] . '</td>
 					<td>' . ConvertSQLDate($myrow['shipdate']) . '</td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Trf_ID=' . $myrow['reference'] . '">'. _('Receive'). '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Trf_ID=' . $myrow['reference'] . '">'. _('Receive'). '</a></td>
 					</tr>';
 		}
 		echo '</table>';

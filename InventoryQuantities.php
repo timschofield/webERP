@@ -158,7 +158,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 
 	echo '<br />
 		<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<tr>

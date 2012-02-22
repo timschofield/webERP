@@ -192,9 +192,9 @@ or deletion of the records*/
 					$myrow['depnact'],
 					$myrow['disposalact'],
 					$myrow['accumdepnact'],
-					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['categoryid'],
-					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['categoryid']);
 	}
 	//END WHILE LIST LOOP
@@ -204,10 +204,10 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedCategory)) {
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
 }
 
-echo '<form name="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+echo '<form name="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory) and !isset($_POST['submit'])) {

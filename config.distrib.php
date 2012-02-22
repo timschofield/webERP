@@ -76,7 +76,7 @@ NOTE: In some windows installation this command doesn't work and the administrat
 eg. if the files are under the webserver root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
 */
 
-$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
+$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 if (isset($DirectoryLevelsDeep)){
 	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
 		$rootpath = mb_substr($rootpath,0, strrpos($rootpath,'/'));

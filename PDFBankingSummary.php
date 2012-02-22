@@ -24,7 +24,7 @@ if (!isset($_POST['BatchNo'])){
 		ORDER BY transno DESC";
 	$result=DB_query($sql, $db);
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';

@@ -235,7 +235,7 @@ if (isset($_POST['PrintPDF'])) {
 		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<br />
 		<br />
-		<form action=' . htmlspecialchars($_SERVER['PHP_SELF']) . ' method="post">
+		<form action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . ' method="post">
 		<table class="selection">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<tr>

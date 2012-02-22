@@ -26,7 +26,7 @@ If (isset($_POST['PrintPDF'])
 			include('includes/header.inc');
 			echo '<br />';
 			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
-			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Back') . '</a>';
+			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -34,7 +34,7 @@ If (isset($_POST['PrintPDF'])
 			$title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
 			prnMsg(_('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Back') . '</a>';
+			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -136,7 +136,7 @@ If (isset($_POST['PrintPDF'])
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'. _('Back').'</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -258,7 +258,7 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . htmlspecialchars($_SERVER['PHP_SELF']) . ' method="POST"><table class="selection">';
+		echo '<form action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . ' method="POST"><table class="selection">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<tr><td>'. _('From Inventory Category Code') .':</font></td><td><select name=FromCriteria>';

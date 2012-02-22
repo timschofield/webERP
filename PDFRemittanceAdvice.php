@@ -37,7 +37,7 @@ If ((isset($_POST['PrintPDF']))
 		$title = _('Print Remittance Advices Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) . '">'. _('Back').'</a>';
+		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'. _('Back').'</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -132,7 +132,7 @@ If ((isset($_POST['PrintPDF']))
 
 	/* show form to allow input	*/
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="POST"><table>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="POST"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){

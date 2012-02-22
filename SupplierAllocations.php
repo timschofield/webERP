@@ -263,7 +263,7 @@ If with a supplier code show just that supplier's payments and credits for alloc
 If with a specific payment or credit show the invoices and credits available
 for allocating to  */
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['SupplierID'])){
@@ -599,7 +599,7 @@ if (isset($_POST['AllocTrans'])){
 			ConvertSQLDate($myrow['trandate']),
 			locale_number_format($myrow['total'],$myrow['currdecimalplaces']),
 			locale_number_format($myrow['total']-$myrow['alloc'], $myrow['currdecimalplaces']),
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['id']);
 	
   }
@@ -675,7 +675,7 @@ if (isset($_POST['AllocTrans'])){
 			ConvertSQLDate($myrow['trandate']),
 			locale_number_format($myrow['total'],$myrow['currdecimalplaces']),
 			locale_number_format($myrow['total']-$myrow['alloc'],$myrow['currdecimalplaces']),
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['id']);
 	
 

@@ -267,10 +267,10 @@ or deletion of the records*/
 					locale_number_format($myrow['decimalplaces'],0),
 					locale_number_format($myrow['rate'],6),
 					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),6),
-					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['currabrev'],
 					_('Edit'),
-					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['currabrev'],
 					_('Delete'),
 					$rootpath,
@@ -301,14 +301,14 @@ or deletion of the records*/
 
 
 if (isset($SelectedCurrency)) {
-	echo '<div class="centre"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'])  . '">'._('Show all currency definitions').'</a></div>';
+	echo '<div class="centre"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">'._('Show all currency definitions').'</a></div>';
 }
 
 echo '<br />';
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {

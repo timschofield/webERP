@@ -267,7 +267,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 } else {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" name="form">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p />
 		<table class="selection" width="30%">

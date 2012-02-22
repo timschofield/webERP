@@ -177,9 +177,9 @@ or deletion of the records*/
 			$myrow['reasoncode'],
 			$myrow['reasondescription'],
 			$DissallowText,
-			htmlspecialchars($_SERVER['PHP_SELF']),
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 			$myrow['reasoncode'],
-			htmlspecialchars($_SERVER['PHP_SELF']),
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 			$myrow['reasoncode']);
 	
 	} //END WHILE LIST LOOP
@@ -189,13 +189,13 @@ or deletion of the records*/
 
 if (isset($SelectedReason)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show Defined Credit Status Codes') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show Defined Credit Status Codes') . '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReason) and ($InputError!=1)) {

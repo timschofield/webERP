@@ -124,9 +124,9 @@ if (!isset($SelectedRole)) {
 			<td><a href="%s&SelectedRole=%s&delete=1&SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['secrolename'],
-			htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
 			$myrow['secroleid'],
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['secroleid'],
 			urlencode($myrow['secrolename']));
 
@@ -136,7 +136,7 @@ if (!isset($SelectedRole)) {
 
 
 if (isset($SelectedRole)) {
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Existing Roles') . '</a></div>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Existing Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -156,7 +156,7 @@ if (isset($SelectedRole)) {
 	}
 }
 echo '<br />';
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedRole'])) {
 	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '" />';
@@ -221,7 +221,7 @@ if (isset($SelectedRole)) {
 					<td>&nbsp;</td>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
-					htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
 					$SelectedRole,
 					$AvailRow['tokenid'] );
 		} else {
@@ -233,7 +233,7 @@ if (isset($SelectedRole)) {
 					<td><a href="%sSelectedRole=%s&add=1&PageToken=%s">' . _('Add') . '</a></td>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
-					htmlspecialchars($_SERVER['PHP_SELF'])  . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
 					$SelectedRole,
 					$AvailRow['tokenid'] );
 		}

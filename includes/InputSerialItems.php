@@ -48,7 +48,7 @@ if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 $invalid_imports = 0;
 $valid = true;
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .'?identifier='.$identifier.'" enctype="multipart/form-data" >';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'?identifier='.$identifier.'" enctype="multipart/form-data" >';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="hidden" name="LineNo" value="' . $LineNo . '">';
 echo '<input type="hidden" name="StockID" value="'. $StockID. '">';
@@ -84,9 +84,9 @@ echo '</form>';
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
-$EditLink =  '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier.'&EditControlled=true&StockID=' . $LineItem->StockID .
+$EditLink =  '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&EditControlled=true&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
-$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier.'&DELETEALL=YES&StockID=' . $LineItem->StockID .
+$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&DELETEALL=YES&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br /></div>';
 $sql="SELECT perishable
 		FROM stockmaster

@@ -122,8 +122,8 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 				</tr>',
 				$myrow[0],
 				$myrow[1],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-				$myrow[0], htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+				$myrow[0], htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0]);
 	}
 
@@ -134,10 +134,10 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 //end of ifs and buts!
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show all Demand Types') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Demand Types') . '</a></div>';
 }
 
-echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .'">';
+echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {

@@ -20,7 +20,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
@@ -233,7 +233,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
 
-	echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />
 			<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';

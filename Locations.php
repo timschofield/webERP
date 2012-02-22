@@ -394,9 +394,9 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['loccode'],
 			$myrow['locationname'],
 			$myrow['description'],
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['loccode'],
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['loccode']);
 
 	}
@@ -408,13 +408,13 @@ while ($myrow = DB_fetch_array($result)) {
 
 echo '<br />';
 if (isset($SelectedLocation)) {
-	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Review Records') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Records') . '</a>';
 }
 echo '<br />';
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedLocation)) {

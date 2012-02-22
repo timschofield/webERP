@@ -34,7 +34,7 @@ $TableResult = DB_show_tables($db);
 // Get list of users
 $UserResult = DB_query("SELECT userid FROM www_users",$db);
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 

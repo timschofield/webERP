@@ -207,7 +207,7 @@ if (isset($_POST['submit'])) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" name="GLAccounts" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" name="GLAccounts" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedAccount)) {
@@ -316,9 +316,9 @@ or deletion of the records*/
 		$myrow[1],
 		$myrow[2],
 		$myrow[3],
-		htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 		$myrow[0],
-		htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 		$myrow[0]);
 
 	}
@@ -331,7 +331,7 @@ or deletion of the records*/
 echo '<p>';
 
 if (isset($SelectedAccount)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' .  _('Show All Accounts') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Show All Accounts') . '</a></div>';
 }
 
 echo '<p />';

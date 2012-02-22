@@ -12,7 +12,7 @@ include('includes/header.inc');
 
 	// Page Border
 	echo '<table border="1" width="100%"><tr><td bgcolor="#FFFFFF">';
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .  '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	// Context Navigation and Title

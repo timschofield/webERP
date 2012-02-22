@@ -622,7 +622,7 @@ if (isset($_POST['CommitBatch'])){
 			echo '<br /><a href="' . $rootpath . '/Payments.php?SupplierID=' . $LastSupplier . '">' .
 				_('Enter another Payment for') . ' ' . $myrow['suppname'] . '</a>';
 		} else {
-			echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Enter another General Ledger Payment') . '</a><br />';
+			echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Enter another General Ledger Payment') . '</a><br />';
 		}
 	}
 

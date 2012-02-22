@@ -180,9 +180,9 @@ or deletion of the records*/
 			$myrow[4],
 			$myrow[5],
 			$myrow[6],
-			htmlspecialchars($_SERVER['PHP_SELF']),
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 			$myrow[0],
-			htmlspecialchars($_SERVER['PHP_SELF']),
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 			$myrow[0],
 			$myrow[0]);
 
@@ -192,12 +192,12 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedParam)) {
-	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' . _('Show Defined Geocode Param Codes') . '</a><br /></div>';
+	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show Defined Geocode Param Codes') . '</a><br /></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedParam) and ($InputError!=1)) {

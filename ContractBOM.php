@@ -215,7 +215,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form name="ContractBOMForm" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier. '" method="post">';
+echo '<form name="ContractBOMForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
@@ -263,7 +263,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . locale_number_format($ContractComponent->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier. '&Delete=' . $ContractComponent->ComponentID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . '\');">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&Delete=' . $ContractComponent->ComponentID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . '\');">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 

@@ -214,11 +214,11 @@ if (!isset($_GET['Edit'])) {
 					locale_number_format($myrow['minorderqty'],'Variable'), 
 					locale_number_format($myrow['leadtime'],'Variable'), 
 					$DisplayPreferred, 
-					htmlspecialchars($_SERVER['PHP_SELF']), 
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), 
 					$StockID, 
 					$myrow['supplierno'], 
 					$myrow['effectivefrom'], 
-					htmlspecialchars($_SERVER['PHP_SELF']), 
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), 
 					$StockID, 
 					$myrow['supplierno'], 
 					$myrow['effectivefrom']);
@@ -258,7 +258,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
     if (!isset($_POST['SearchSupplier'])) {
-        echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
+        echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 				<table cellpadding="3" colspan="4" class="selection">
 				<tr>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -343,7 +343,7 @@ if (isset($SuppliersResult)) {
         $StockID = '';
         $StockUOM = 'each';
     }
-    echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
+    echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     $TableHeader = '<tr>
@@ -432,7 +432,7 @@ if (!isset($SuppliersResult)) {
         $_POST['SupplierCode'] = $myrow['suppliers_partno'];
 		$StockUOM=$myrow['units'];
     }
-    echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
+    echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     if (!isset($SupplierID)) {

@@ -98,7 +98,7 @@ if (isset($_POST['Modify'])) {
 	}
 }
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {

@@ -351,7 +351,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 					<td><input type="text" class="number" name="Price'.$LineItems->LineNo.'" value="'.locale_number_format($LineItems->Price,2,'.','').'" /></td>
 					<td class="number">'.locale_number_format($LineItems->Price*$LineItems->Quantity,2).'</td>
 					<td><input type="text" size="11" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="expirydate'.$LineItems->LineNo.'" value="'.$LineItems->ExpiryDate.'" /></td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?identifier='.$identifier.'&Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
 				</tr>';
 		}
 	}

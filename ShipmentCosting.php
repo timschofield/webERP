@@ -658,7 +658,7 @@ if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to c
 
 // if the page was called with Close=Yes then show options to confirm OK to c
 	echo '<div class="centre">
-			<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) .'?SelectedShipment=' . $_GET['SelectedShipment'] . '">';
+			<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'?SelectedShipment=' . $_GET['SelectedShipment'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		if ($_SESSION['WeightedAverageCosting']==0){

@@ -197,8 +197,8 @@ if (isset($_POST['submit'])) {
 				<td>' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>
 				<td>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
 				<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedPaymentID=' . $myrow['paymentid'] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -207,14 +207,14 @@ if (isset($_POST['submit'])) {
 
 
 if (isset($SelectedPaymentID)) {
-	echo '<div class="centre"><a href=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID .'>' . _('Review Payment Methods') . '</a></div>';
+	echo '<div class="centre"><a href=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID .'>' . _('Review Payment Methods') . '</a></div>';
 }
 
 echo '<p>';
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedPaymentID)) {

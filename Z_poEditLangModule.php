@@ -60,7 +60,7 @@ if (isset($_POST['module'])) {
     // save the modifications
 
 		echo '<br /><table><tr><td>';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '>';
+		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
@@ -126,7 +126,7 @@ if (isset($_POST['module'])) {
 		echo '<br />';
 		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
 		echo '<br />';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '>';
+		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '</div';
 		echo '<table>';
@@ -217,7 +217,7 @@ else
 		<table>
 		<tr>
 			<td>';
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" >';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table>';

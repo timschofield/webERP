@@ -84,7 +84,7 @@ if (isset($_POST['Update']) AND $InputError == 0) {
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 		_('Print') . '" alt="" />' . ' ' . $title . '</p>';
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" name="form">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
 		<table>
@@ -125,8 +125,8 @@ while ($myrow = DB_fetch_array($Result,$db)){
 	echo '<tr>
 			<td>'.$myrow['tokenid'].'</td>
 			<td>'.$myrow['tokenname'].'</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedToken=' . $myrow['tokenid'] . '&Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedToken=' . $myrow['tokenid'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&Action=edit">' . _('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

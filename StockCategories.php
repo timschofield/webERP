@@ -249,9 +249,9 @@ or deletion of the records*/
 				$myrow[5],
 				$myrow[6],
 				$myrow[7],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0],
-				htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0]);
 	}
 	//END WHILE LIST LOOP
@@ -265,7 +265,7 @@ or deletion of the records*/
 <p>
 <?php
 if (isset($SelectedCategory)) {  ?>
-	<div class='centre'><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>"><?php echo _('Show All Stock Categories'); ?></a></div>
+	<div class='centre'><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8');?>"><?php echo _('Show All Stock Categories'); ?></a></div>
 <?php } ?>
 
 <p>
@@ -274,7 +274,7 @@ if (isset($SelectedCategory)) {  ?>
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form name="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form name="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCategory)) {
@@ -552,7 +552,7 @@ if (! isset($_GET['delete'])) {
 			     }
                  echo ' /></td>';
             
-			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>';
+			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>';
 			echo '</tr>';
 
 			$PropertyCounter++;

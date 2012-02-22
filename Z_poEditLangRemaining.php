@@ -36,7 +36,7 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
     // save the modifications
 
 		echo '<br /><table><tr><td>';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '>';
+		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
@@ -103,7 +103,7 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
 		echo '<br />';
 		echo '</div>';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '>';
+		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table>';

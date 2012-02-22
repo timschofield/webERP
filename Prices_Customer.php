@@ -274,9 +274,9 @@ if (DB_num_rows($result) == 0) {
 			<td class="number">'.$myrow['conversionfactor'].'</td>
 			<td>'.ConvertSQLDate($myrow['startdate']).'</td>
 			<td>'.$EndDateDisplay.'</td>
-	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']).'?Item='.$Item.'&Price='.$myrow['price'].'&Branch='.$myrow['branchcode'].
+	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&Price='.$myrow['price'].'&Branch='.$myrow['branchcode'].
 				'&StartDate='.$myrow['startdate'].'&EndDate='.$myrow['enddate'].'&Edit=1">' . _('Edit') . '</td>
-			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF']).'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td>
 		</tr>';
 
 	}
@@ -285,7 +285,7 @@ if (DB_num_rows($result) == 0) {
 
 echo '</table></tr></table><p />';
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item . '" />';
 

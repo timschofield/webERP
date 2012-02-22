@@ -147,7 +147,7 @@ if (!isset($Id)) {
 }
 if (isset($Id)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?DebtorType=' . $DebtorType . '">' . _('Review all notes for this Customer Type') .'</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorType=' . $DebtorType . '">' . _('Review all notes for this Customer Type') .'</a>
 		</div>';
 }
 

@@ -226,7 +226,7 @@ if (isset($_POST['UpdateItems'])){
 }
 
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" name="form">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
@@ -317,7 +317,7 @@ if (DB_num_rows($WOSerialNoResult)==0){
 			echo '<input type="hidden" name="Quantity' . $i . '" value="1" />';
 		}
 		echo '<td><textarea name="Notes' . $i .'" cols="60" rows="3">' . $WOSNRow['qualitytext'] .'</textarea></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?Delete=1&Reference=' . $WOSNRow['serialno'] . '&Quantity=' . locale_number_format($WOSNRow['quantity'],'Variable') . '&WO=' . $WO . '&StockID=' . $StockID . '&Description=' . $Description . '&Serialised=' . $Serialised . '&NextSerialNo=' . $NextSerialNo . '">' . _('Delete') . '</a></td></tr>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=1&Reference=' . $WOSNRow['serialno'] . '&Quantity=' . locale_number_format($WOSNRow['quantity'],'Variable') . '&WO=' . $WO . '&StockID=' . $StockID . '&Description=' . $Description . '&Serialised=' . $Serialised . '&NextSerialNo=' . $NextSerialNo . '">' . _('Delete') . '</a></td></tr>';
 		$i++;
 		$j++;
 	}

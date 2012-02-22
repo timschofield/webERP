@@ -27,7 +27,7 @@ if (isset($_GET['SelectedFreightCost'])){
 
 if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT shippername, shipper_id FROM shippers";
 	$ShipperResults = DB_query($sql,$db);
@@ -246,11 +246,11 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 			$myrow[5],
 			$myrow[6],
 			$myrow[7],
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow[0],
 			$LocationFrom,
 			$ShipperID,
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow[0],
 			$LocationFrom,
 			$ShipperID);
@@ -264,12 +264,12 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 //end of ifs and buts!
 
 if (isset($SelectedFreightCost)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?LocationFrom=' . $LocationFrom . '&ShipperID=' . $ShipperID . '">' . _('Show all freight costs for') . ' ' . $ShipperName  . ' ' . _('from') . ' ' . $LocationName . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?LocationFrom=' . $LocationFrom . '&ShipperID=' . $ShipperID . '">' . _('Show all freight costs for') . ' ' . $ShipperName  . ' ' . _('from') . ' ' . $LocationName . '</a></div>';
 }
 
 if (isset($LocationFrom) AND isset($ShipperID)) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedFreightCost)) {

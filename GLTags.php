@@ -51,7 +51,7 @@ echo '<p class="page_title_text">
 		_('Print') . '" alt="" />' . ' ' . $title . '
 	</p>';
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" name="form">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
 	<table>
@@ -88,8 +88,8 @@ while ($myrow = DB_fetch_array($result,$db)){
 	echo '<tr>
 			<td>' . $myrow['tagref'] . '</td>
 			<td>' . $myrow['tagdescription'] . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedTag=' . $myrow['tagref'] . '&Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '?SelectedTag=' . $myrow['tagref'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&Action=edit">' . _('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

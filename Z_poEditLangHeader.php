@@ -31,7 +31,7 @@ for ($i=1; $i<=17; $i++){	/* message.po header is 17 lines long - this is easily
 if (isset($_POST['submit'])) {
 
 	echo '<br /><table><tr><td>';
-	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '>';
+	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /* write the new header then the rest of the language file to a new file */
@@ -88,7 +88,7 @@ else
 	prnMsg (_('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br /><br />' .
 				_('Make sure you know what you are doing BEFORE you edit the header'), 'info', _('PLEASE NOTE'));
 	echo '<br /></div>';
-	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF']) . '?' . SID . '>';
+	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table><tr><th" colspan="2" ALIGN="center">'. _('Language File Header for') . ' "' . $_POST['language'] . '"</th></tr>';

@@ -420,11 +420,11 @@ if (!isset($DebtorNo)) {
 	}
 
 	if ($SetupErrors>0) {
-		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF']) .'" >'._('Click here to continue').'</a></div>';
+		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" >'._('Click here to continue').'</a></div>';
 		include('includes/footer.inc');
 		exit;
 	}
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="Yes" />';
@@ -618,7 +618,7 @@ if (!isset($DebtorNo)) {
 
 //DebtorNo exists - either passed when calling the form or from the form itself
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr><td valign="top"><table class="selection">';
@@ -1069,7 +1069,7 @@ if (!isset($DebtorNo)) {
 					$myrow['notes'],
 					$myrow['contid'],
 					$myrow['debtorno'],
-					htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['contid'],
 					$myrow['debtorno']);
 		}
