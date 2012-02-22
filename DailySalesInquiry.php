@@ -81,12 +81,14 @@ $StartDateSQL =  date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1],1,(int)$Date_Ar
 
 $sql = "SELECT 	trandate,
 				SUM(price*(1-discountpercent)* (-qty)) as salesvalue,
-				SUM((standardcost * -qty)) as cost
+				SUM(CASE WHEN mbflag='A' THEN 0 ELSE (standardcost * -qty) END) as cost
 			FROM stockmoves
-				INNER JOIN custbranch ON stockmoves.debtorno=custbranch.debtorno
-					AND stockmoves.branchcode=custbranch.branchcode
+			INNER JOIN stockmaster
+			ON stockmoves.stockid=stockmaster.stockid
+			INNER JOIN custbranch 
+			ON stockmoves.debtorno=custbranch.debtorno
+				AND stockmoves.branchcode=custbranch.branchcode
 			WHERE (stockmoves.type=10 or stockmoves.type=11)
-			AND show_on_inv_crds =1
 			AND trandate>='" . $StartDateSQL . "'
 			AND trandate<='" . $EndDateSQL . "'";
 

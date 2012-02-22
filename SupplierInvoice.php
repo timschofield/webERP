@@ -1325,7 +1325,17 @@ then do the updates and inserts to process the invoice entered */
 																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'",
 																$db,$ErrMsg,$DbgMsg,True);
 										}
-									} //end if the invoice qty is more than is left to allocate
+									} else { //Only $QuantityVarianceAllocated left to allocate so need need to apportion cost using weighted average
+										if ($StkMoveRow['type']==10) { //its a sales invoice
+											
+											$WACost = (((-$StkMoveRow['qty']- $QuantityVarianceAllocated)*$StkMoveRow['standardcost'])+($QuantityVarianceAllocated*$ActualCost))/-$StkMoveRow['qty'];
+											 
+											$UpdStkMovesResult = DB_query("UPDATE stockmoves
+																SET standardcost = '" . $WACost . "'
+																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'",
+																$db,$ErrMsg,$DbgMsg,True);
+										}
+									}
 									$QuantityVarianceAllocated+=$StkMoveRow['qty'];
 								}
 							} // end if the quantity being invoiced here is greater than the current stock on hand
@@ -1353,7 +1363,7 @@ then do the updates and inserts to process the invoice entered */
 								/* if stock is negative then update the cost to this cost */
 								$sql = "UPDATE stockmaster 
 										SET lastcost=materialcost+overheadcost+labourcost,
-											materialcost='" . ($EnteredGRN->ChgPrice /  $_SESSION['SuppTrans']->ExRate) . "'
+											materialcost='" . $ActualCost . "'
 										WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 								$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 							}
