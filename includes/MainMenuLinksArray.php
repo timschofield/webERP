@@ -1,5 +1,5 @@
 <?php
-$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'DBManagement');
+$ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf',  'GL', 'FA', 'PC', 'system', 'Utilities');
 $ReportList = array('orders'=>'ord',
 					'AR'=>'ar',
 					'AP'=>'ap',
@@ -10,7 +10,7 @@ $ReportList = array('orders'=>'ord',
 					'FA'=>'fa',
 					'PC'=>'pc',
 					'system'=>'sys',
-					'DBManagement'=>'dbm'
+					'Utilities'=>'utils'
 					);
 
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
@@ -24,7 +24,7 @@ $ModuleList = array(_('Sales'),
 					_('Asset Manager'),
 					_('Petty Cash'),
 					_('Setup'),
-					_('DB Management'));
+					_('Utilities'));
 
 $MenuItems['orders']['Transactions']['Caption'] = array( _('Enter An Order or Quotation'),
 														_('Enter Counter Sales'),
@@ -40,8 +40,7 @@ $MenuItems['orders']['Transactions']['URL'] = array( '/SelectOrderItems.php?NewO
 													'/SelectSalesOrder.php',
 													'/SpecialOrder.php',
 													'/SelectRecurringSalesOrder.php',
-													'/RecurringSalesOrdersProcess.php'
-													);
+													'/RecurringSalesOrdersProcess.php');
 
 $MenuItems['orders']['Reports']['Caption'] = array( _('Order Inquiry'),
 													_('Print Price Lists'),
@@ -514,60 +513,50 @@ $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/DiscountCategories.php',
 													'/UnitsOfMeasure.php',
 													'/MRPCalendar.php',
-													'/MRPDemandTypes.php'
-													);
+													'/MRPDemandTypes.php');
 													
-$MenuItems['DBManagement']['Transactions']['Caption'] = array (_('Change A Customer Code'),
-														_('Change A Customer Branch Code'),
-														_('Change An Inventory Item Code'),
-														_('Change A Supplier Code'),
-														_('Update costs for all BOM items, from the bottom up'),
-														_('Re-apply costs to Sales Analysis'),
-														_('Send All Unsent EDI Invoices and Credits'),
-														_('Delete sales transactions'),
-														_('Reverse all supplier payments on a specified date')
-														);
+$MenuItems['Utilities']['Transactions']['Caption'] = array (_('Change A Customer Code'),
+																_('Change A Customer Branch Code'),
+																_('Change An Inventory Item Code'),
+																_('Change A Supplier Code'),
+																_('Update costs for all BOM items, from the bottom up'),
+																_('Re-apply costs to Sales Analysis'),
+																_('Delete sales transactions'),
+																_('Reverse all supplier payments on a specified date'));
 
-$MenuItems['DBManagement']['Transactions']['URL'] = array ('/Z_ChangeCustomerCode.php',
+$MenuItems['Utilities']['Transactions']['URL'] = array ('/Z_ChangeCustomerCode.php',
 													'/Z_ChangeBranchCode.php',
 													'/Z_ChangeStockCode.php',
 													'/Z_ChangeSupplierCode.php',
 													'/Z_BottomUpCosts.php',
 													'/Z_ReApplyCostToSA.php',
-													'/EDISendInvoices.php',
 													'/Z_DeleteSalesTransActions.php',
-													'/Z_ReverseSuppPaymentRun.php'
-													);
+													'/Z_ReverseSuppPaymentRun.php');
 
-$MenuItems['DBManagement']['Reports']['Caption'] = array (_('Show Local Currency Total Debtor Balances'),
+$MenuItems['Utilities']['Reports']['Caption'] = array (_('Show Local Currency Total Debtor Balances'),
 													_('Show Local Currency Total Suppliers Balances'),
-													_('Show General Transactions That Do Not Balance')
-													);
+													_('Show General Transactions That Do Not Balance'));
 
-$MenuItems['DBManagement']['Reports']['URL'] = array ('/Z_CurrencyDebtorsBalances.php',
+$MenuItems['Utilities']['Reports']['URL'] = array ('/Z_CurrencyDebtorsBalances.php',
 												'/Z_CurrencySuppliersBalances.php',
-												'/Z_CheckGLTransBalance.php'
-												);
+												'/Z_CheckGLTransBalance.php');
 
-$MenuItems['DBManagement']['Maintenance']['Caption'] = array (_('Maintain Language Files'),
-														_('Make New Company'),
-														_('Data Export Options'),
-														_('Image Manipulation Utility'),
-														_('Import Stock Items from .csv'),
-														_('Import Fixed Assets from .csv file'),
-														_('Create new company template SQL file and submit to webERP'),
-														_('Re-calculate brought forward amounts in GL'),
-														_('Re-Post all GL transactions from a specified period')
-														);
+$MenuItems['Utilities']['Maintenance']['Caption'] = array (_('Maintain Language Files'),
+																_('Make New Company'),
+																_('Data Export Options'),
+																_('Import Stock Items from .csv'),
+																_('Import Fixed Assets from .csv file'),
+																_('Create new company template SQL file and submit to webERP'),
+																_('Re-calculate brought forward amounts in GL'),
+																_('Re-Post all GL transactions from a specified period')	);
 
-$MenuItems['DBManagement']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
-													'/Z_MakeNewCOmpany.php',
-													'/Z_DataExportOptions.php',
-													'/Z_GetStockImage.php',
-													'/Z_ImportStocks.php',
-													'/Z_ImportFixedAssets.php',
-													'/Z_CreateCompanyTemplateFile.php',
-													'/Z_UpdateChartDetailsBFwd.php',
-													'/Z_RePostGLFromPeriod.php'
+$MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
+														'/Z_MakeNewCompany.php',
+														'/Z_DataExport.php',
+														'/Z_ImportStocks.php',
+														'/Z_ImportFixedAssets.php',
+														'/Z_CreateCompanyTemplateFile.php',
+														'/Z_UpdateChartDetailsBFwd.php',
+														'/Z_RePostGLFromPeriod.php'
 												);													
 ?>

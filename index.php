@@ -6,7 +6,7 @@ $title=_('Main Menu');
 include('includes/header.inc');
 
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
-include('includes/IndexArray.php');
+include('includes/MainMenuLinksArray.php');
 
 if (isset($SupplierLogin) AND $SupplierLogin==1){
 	echo '<table class="table_index">

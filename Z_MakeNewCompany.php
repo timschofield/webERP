@@ -191,9 +191,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 
 		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
-		echo '<p><a href="' . $rootpath . '/CompanyPreferences.php?' . SID .'">' . _('Set Up New Company Details') . '</a>';
-		echo '<p><a href="' . $rootpath . '/SystemParameters.php?' . SID .'">' . _('Set Up Configuration Details') . '</a>';
-		echo '<p><a href="' . $rootpath . '/WWW_Users.php?' . SID .'">' . _('Set Up User Accounts') . '</a>';
+		echo '<p><a href="' . $rootpath . '/CompanyPreferences.php">' . _('Set Up New Company Details') . '</a>';
+		echo '<p><a href="' . $rootpath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
+		echo '<p><a href="' . $rootpath . '/WWW_Users.php">' . _('Set Up User Accounts') . '</a>';
 
 		echo '</form>';
 		echo '</div>';
@@ -214,12 +214,18 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table><tr>';
 echo '<td>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</td>
-	<td><input type="TEXT" size="33" maxlength="32" name="NewCompany" /></td></tr>
-	<tr><td>'. _('Logo Image File (.jpg)') . ':</td><td><input type="FILE" ID="LogoFile" name="LogoFile" /></td></tr>
-	<tr><td>' . _('Create Database?') . '</td><td><input type="CHECKBOX" name="CreateDB" /></td></tr>
+	<td><input type="text" size="33" maxlength="32" name="NewCompany" /></td>
+	</tr>
+	<tr>
+		<td>'. _('Logo Image File (.jpg)') . ':</td><td><input type="FILE" ID="LogoFile" name="LogoFile" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Create Database?') . '</td>
+		<td><input type="CHECKBOX" name="CreateDB" /></td>
+	</tr>
 	</table>';
 
-echo '<br /><input type="SUBMIT" name="submit" value="' . _('Proceed') . '" />&nbsp;&nbsp;&nbsp;&nbsp;';
+echo '<br /><input type="submit" name="submit" value="' . _('Proceed') . '" />';
 echo '</form>';
 echo '</div>';
 
