@@ -306,6 +306,7 @@ if (isset($_POST['SearchSuppliers'])){
 		prnMsg(_('Supplier name keywords have been used in preference to the supplier code extract entered'),'warn');
 	}
 	if ($_POST['Keywords']=='' AND $_POST['SuppCode']=='') {
+		echo '<div><br /><br /></div>';
 		prnMsg(_('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search'),'error');
 	} else {
 		if (mb_strlen($_POST['Keywords'])>0) {
