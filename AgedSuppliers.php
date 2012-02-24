@@ -262,7 +262,7 @@ if (isset($_POST['PrintPDF'])
 	if ($ListCount == 0) {
 		$title = _('Aged Supplier Analysis');
 		include('includes/header.inc');
-		prnMsg('There are no results so the PDF is empty');
+		prnMsg(_('There are no results so the PDF is empty'));
 		include('includes/footer.inc');
 	} else {
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_AggedSupliers_' . date('Y-m-d').'.pdf');
