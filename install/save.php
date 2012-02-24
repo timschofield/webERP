@@ -2,9 +2,9 @@
 /* $Id$*/
 error_reporting(E_ALL && ~E_NOTICE);
 ini_set('display_errors', 'On');
-ini_set('max_execution_time', '180');
+ini_set('max_execution_time', '580');
 /*Klaus Opto advised that timeout issues made it difficult to install even though max_execution_time has been set - Tim though set_time_limit should also be set - it might be a windows thing - Klaus was using WAMP */
-set_time_limit(180); 
+set_time_limit(580); 
 
 require_once('../includes/MiscFunctions.php');
 // Start a session
