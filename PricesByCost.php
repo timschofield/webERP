@@ -226,7 +226,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '<a/></div><p>';
 	}
 } else { /*The option to submit was not hit so display form */
-	echo '<div class="page_help_text">' . _('Use this report to display price list with the cost.') . '</div><br />';
+	echo '<div class="page_help_text">' . _('Prices can be displayed based on their relation to cost') . '</div><br />';
 	echo '<br />
           <br />
           <form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">

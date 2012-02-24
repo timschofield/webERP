@@ -26,14 +26,14 @@ echo '<div class="centre">
 <form name="SerialNoResearch" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo  _('Serial Number') .': <input ID="serialno" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" />
+echo  _('Serial Number') .': <input ID="serialno" type="text" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
 </div>
 <br />
 </form>';
 
-echo '<SCRIPT>
-document.getElementById("serialno").focus();
-</SCRIPT>';
+echo '<script>
+		document.getElementById("serialno").focus();
+	</script>';
 
 
 if ($SerialNo!='') {

@@ -174,7 +174,7 @@ function showLabelOptions() {
 			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EffectiveDate" size="11" maxlength="10" value="' . $_POST['EffectiveDate'] . '" /></td></tr>';
 	echo '<tr>
 				<th colspan="2">
-				<input type="submit" name="refresh" value="Refresh options" />
+				<input type="submit" name="refresh" value="' . _('Refresh options') . '" />
 				</th>';
 	echo '<tr>
 				<td colspan="2">

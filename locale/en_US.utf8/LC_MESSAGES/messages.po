@@ -19906,13 +19906,13 @@ msgstr ""
 #: PrintCustTransPortrait.php:1034 includes/PDFTransPageHeader.inc:15
 #: includes/PDFTransPageHeaderPortrait.inc:17
 msgid "TAX INVOICE"
-msgstr ""
+msgstr "INVOICE"
 
 #: PrintCustTrans.php:697 PrintCustTrans.php:930 PrintCustTrans.php:979
 #: PrintCustTransPortrait.php:733 PrintCustTransPortrait.php:981
 #: PrintCustTransPortrait.php:1036 includes/PDFTransPageHeaderPortrait.inc:19
 msgid "TAX CREDIT NOTE"
-msgstr ""
+msgstr "CREDIT NOTE"
 
 #: PrintCustTrans.php:699 PrintCustTransPortrait.php:736
 msgid "Tax Authority Ref"
