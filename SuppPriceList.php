@@ -138,6 +138,15 @@ if (isset($_POST['PrintPDF'])) {
 		include('includes/footer.inc');
 		exit;
 	}
+	
+	if (DB_num_rows($result)==0) {
+
+		$title = _('Supplier Price List') . '-' . _('Report');
+		include('includes/header.inc');
+		prnMsg(_('There are no result so the PDF is empty'));
+		include('includes/footer.inc');
+		exit;
+	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 	            $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
