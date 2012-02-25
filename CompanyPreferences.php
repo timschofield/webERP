@@ -498,7 +498,7 @@ echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Create GL entries for stock transactions')  . '):</td>
+		<td>' . _('Create GL entries for stock transactions')  . ':</td>
 		<td><select tabindex="25" name="GLLink_Stock">';
 
 if ($_POST['GLLink_Stock']=='0'){
