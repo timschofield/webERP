@@ -32,7 +32,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
 	echo '<table class="selection">
 	 		<tr>
 				<td>' . _('Enter the date from which cheques are to be listed') . ':</td>
@@ -64,10 +64,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 				</select></td>
 			</tr>
 			</table>
-			<br />
 			<div class="centre">
+                <br />
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>';
+			</div>
+            </form>';
 
 	 include('includes/footer.inc');
 	 exit;

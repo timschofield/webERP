@@ -27,27 +27,27 @@ if (!isset($_POST['Date'])){
 	}
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	 echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
 	 echo '<table class="selection">
 	 		<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="Date" maxlength="10" size="10" class=date alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" name="Date" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 
 	echo '<tr><td>' . _('Transaction type') . '</td>
 			<td><select name="TransType">
 				<option value="10">' . _('Invoices') . '</option>
 				<option value="11">' . _('Credit Notes') . '</option>
-				<option value="12">' . _('Receipts') . '</option>
-			</select></td>
-		</tr>';
+				<option value="12">' . _('Receipts') . '</option>';
 
 	 echo '</select></td></tr>
 			</table>
-			<br />
 			<div class="centre">
+                <br />
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>';
+			</div>
+            </form>
+            </div>';
 
 	 include('includes/footer.inc');
 	 exit;
