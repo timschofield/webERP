@@ -76,17 +76,17 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	include('includes/ConnectDB.inc');
 }
 
-$SQL = "SELECT bankaccountname,
+$sql = "SELECT bankaccountname,
                decimalplaces AS bankcurrdecimalplaces
 	FROM bankaccounts INNER JOIN currencies
     ON bankaccounts.currcode=currencies.currabrev
 	WHERE accountcode = '" .$_POST['BankAccount'] . "'";
-$BankActResult = DB_query($SQL,$db);
+$BankActResult = DB_query($sql,$db);
 $myrow = DB_fetch_row($BankActResult);
 $BankAccountName = $myrow[0];
 $BankCurrDecimalPlaces = $myrow[1];
 
-$SQL= "SELECT amount,
+$sql= "SELECT amount,
 		ref,
 		transdate,
 		banktranstype,
@@ -98,13 +98,13 @@ $SQL= "SELECT amount,
 	AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 	AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-$Result=DB_query($SQL,$db,'','',false,false);
+$Result=DB_query($sql,$db,'','',false,false);
 if (DB_error_no($db)!=0){
 	$title = _('Payment Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
-	if ($Debug==1){
-		prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
+	if ($debug==1){
+		prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $sql,'error');
 	}
 	include('includes/footer.inc');
   	exit;

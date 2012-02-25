@@ -186,7 +186,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
 							$StatusComment = date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . ' ' . $UserDetails . ' - '._('Auto created from sales orders') .'<br />';
 							$ErrMsg = _('Could not update purchase order status to Authorised');
-							$Debug = _('The SQL that failed was');
+							$DbgMsg = _('The SQL that failed was');
 							$result = DB_query("UPDATE purchorders SET allowprint=1,
 												   status='Authorised',
 												   stat_comment='" . $StatusComment . "'
@@ -350,7 +350,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 				if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
 					$StatusComment = date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails . ' - '._('Auto created from sales orders') .'<br />';
 					$ErrMsg = _('Could not update purchase order status to Authorised');
-					$Debug = _('The SQL that failed was');
+					$DbgMsg = _('The SQL that failed was');
 					$result = DB_query("UPDATE purchorders SET allowprint=1,
 															status='Authorised',
 															stat_comment='" . $StatusComment . "'
