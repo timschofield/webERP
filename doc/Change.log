@@ -1,5 +1,5 @@
 webERP Change Log
-
+25/2/12 James Dupin: Remove extra ) after Create GL entries for stock transactions in CompanyPreferences.php 
 23/2/12 Ricard: Moved Utility scripts from Z_index.php to their own module named Utilities
 22/2/12 Phil: Make daily sales inquiry work correctly with assembly items where costs are recalculated in the case of negatives stock when supplier invoices entered
 22/2/12 James Dupin: Update to French translation
