@@ -507,8 +507,10 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 }
  /*end if Enter line button was hit - adding non stock items */
 
+//Add variables $_SESSION['PO_ItemsResubmitForm' . $identifier] and $_POST['PO_ItemsResubmitFormValue'] to prevent from page refreshing effect
 
-if (isset($_POST['NewItem'])){ 
+$_SESSION['PO_ItemsResubmitForm' . $identifier] = (empty($_SESSION['PO_ItemsResubmitForm' . $identifier]))? '1' : $_SESSION['PO_ItemsResubmitForm' . $identifier];
+if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and $_SESSION['PO_ItemsResubmitForm' . $identifier] == $_POST['PO_ItemsResubmitFormValue']){ //only submit values can be processed 
 	
 	/* NewItem is set from the part selection list as the part code selected 
 	* take the form entries and enter the data from the form into the PurchOrder class variable 
@@ -634,6 +636,7 @@ if (isset($_POST['NewItem'])){
 			} /* end of if not already on the order */
 		} /* end if the $_POST has NewQty in the variable name */
 	} /* end loop around the $_POST array */
+	$_SESSION['PO_ItemsResubmitForm' . $identifier]++; //change the $_SESSION VALUE
 } /* end of if its a new item */
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
@@ -1126,6 +1129,7 @@ if (isset($SearchResult)) {
 	}
 #end of while loop
 	echo '</table>';
+	echo '<input type="hidden" name="PO_ItemsResubmitFormValue" value="' . $_SESSION['PO_ItemsResubmitForm' . $identifier] . '" />';
 	echo '<a name="end"></a><br /><div class="centre"><input type="submit" name="NewItem" value="Order some" /></div>';
 }#end if SearchResults to show
 
