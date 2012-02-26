@@ -14,7 +14,7 @@ Also updates the transaction number
 11 sales credit note
 12 sales receipt
 etc
-* 
+*
 */
 
 	DB_query("LOCK TABLES systypes WRITE",$db);
@@ -43,6 +43,7 @@ Function GetStockGLCode ($StockID, &$db){
 /*Gets the GL Codes relevant to the stock item account from the stock category record */
 	$QuerySQL = "SELECT stockact,
 						adjglact,
+						issueglact,
 						purchpricevaract,
 						materialuseagevarac,
 						wipact
@@ -331,9 +332,9 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 
 /*Ensures general ledger entries balance for a given transaction */
 function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
-	
-	$result = DB_query("SELECT SUM(amount) 
-						FROM gltrans 
+
+	$result = DB_query("SELECT SUM(amount)
+						FROM gltrans
 						WHERE type = '" . $TransType . "'
 						AND typeno = '" . $TransTypeNo . "'",
 						$db);
@@ -344,8 +345,8 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 			prnMsg(_('The general ledger entries created do not balance. See your system administrator'),'error');
 		} else {
 			$result = DB_query("SELECT counterindex,
-										MAX(amount) 
-								FROM gltrans 
+										MAX(amount)
+								FROM gltrans
 								WHERE type = '" . $TransType . "'
 								AND typeno = '" . $TransTypeNo . "'
 								GROUP BY counterindex",
@@ -355,7 +356,7 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
 			$result = DB_query("UPDATE gltrans SET amount = amount - " . $Difference . "
 								WHERE counterindex = '" . $TransToAmend . "'",
 								$db);
-			
+
 		}
 	}
 }

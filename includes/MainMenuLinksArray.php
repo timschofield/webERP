@@ -195,7 +195,10 @@ $MenuItems['stock']['Transactions']['Caption'] = array (_('Receive Purchase Orde
 														_('Inventory Location Transfers'),
 														_('Inventory Adjustments'),
 														_('Reverse Goods Received'),
-														_('Enter Stock Counts')
+														_('Enter Stock Counts'),
+														_('Create a New Internal Stock Request'),
+														_('Authorise Internal Stock Requests'),
+														_('Fulfill Internal Stock Requests')
 														);
 $MenuItems['stock']['Transactions']['URL'] = array ('/PO_SelectOSPurchOrder.php',
 													'/StockLocTransfer.php',
@@ -203,7 +206,10 @@ $MenuItems['stock']['Transactions']['URL'] = array ('/PO_SelectOSPurchOrder.php'
 													'/StockTransfers.php?New=Yes',
 													'/StockAdjustments.php?NewAdjustment=Yes',
 													'/ReverseGRN.php',
-													'/StockCounts.php'
+													'/StockCounts.php',
+													'/InternalStockRequest.php?New=Yes',
+													'/InternalStockRequestAuthorisation.php',
+													'/InternalStockRequestFulfill.php'
 													);
 
 $MenuItems['stock']['Reports']['Caption'] = array (_('Serial Item Research Tool'),
@@ -505,7 +511,8 @@ $MenuItems['system']['Maintenance']['Caption'] = array (_('Inventory Categories 
 														_('Discount Category Maintenance'),
 														_('Units of Measure'),
 														_('MRP Available Production Days'),
-														_('MRP Demand Types')
+														_('MRP Demand Types'),
+														_('Maintain Internal Departments')
 														);
 
 $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
@@ -513,8 +520,10 @@ $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/DiscountCategories.php',
 													'/UnitsOfMeasure.php',
 													'/MRPCalendar.php',
-													'/MRPDemandTypes.php');
-													
+													'/MRPDemandTypes.php',
+													'/Departments.php'
+													);
+
 $MenuItems['Utilities']['Transactions']['Caption'] = array (_('Change A Customer Code'),
 																_('Change A Customer Branch Code'),
 																_('Change An Inventory Item Code'),
@@ -548,7 +557,8 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array (_('Maintain Language 
 																_('Import Fixed Assets from .csv file'),
 																_('Create new company template SQL file and submit to webERP'),
 																_('Re-calculate brought forward amounts in GL'),
-																_('Re-Post all GL transactions from a specified period')	);
+																_('Re-Post all GL transactions from a specified period')
+																);
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
 														'/Z_MakeNewCompany.php',
@@ -558,5 +568,5 @@ $MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
 														'/Z_CreateCompanyTemplateFile.php',
 														'/Z_UpdateChartDetailsBFwd.php',
 														'/Z_RePostGLFromPeriod.php'
-												);													
+												);
 ?>
