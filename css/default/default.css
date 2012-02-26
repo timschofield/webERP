@@ -2,7 +2,7 @@
 |               |               | default.css       |
 |---------------------------------------------------|
 | For use with:                                     |
-| Web-ERP - http://web-erp.sourceforge.net          |
+| Web-ERP - http://weberp.sourceforge.net          |
 | by Logic Works Ltd                                |
 |---------------------------------------------------|
 | Developer:                                        |
@@ -21,8 +21,8 @@ body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
 	background-color: #CCCCDD;
-	margin-left: 5px;
-	margin-top: 5px;
+	margin-left: 0px;
+	margin-top: 0px;
 	margin-bottom: 0px;
 	margin-right: 0px;
 	padding: 0px;
@@ -36,7 +36,7 @@ img {
 a {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
-	font-weight: bold;
+	font-weight: normal;
 	text-decoration: none;
 	color: black;
 }
@@ -248,7 +248,14 @@ textarea:hover{
 .table1 {
   width:90%;
   background: #eee;
-  border: 1px solid #222;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
   margin: 0 auto;
 }
 
@@ -301,10 +308,10 @@ div.csv {
 	margin: 0px;
 	padding: 0px;
  	color: black;
-	border-top: 2px #AAAAAA solid;
-	border-left: 2px #AAAAAA solid;
-	border-right: 2px white solid;
-	border-bottom: 4px white solid;
+	border-top: 0px #AAAAAA solid;
+	border-left: 0px #AAAAAA solid;
+	border-right: 0px white solid;
+	border-bottom: 0px white solid;
 	text-align: right;
 	/* position: relative;
 	top: 3px; */
@@ -328,7 +335,7 @@ div.csv {
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
-	background-color: white;
+	background-color: #588BB6;
 	white-space: nowrap;
 	border: none;
 	margin: 0px;
@@ -337,7 +344,7 @@ div.csv {
 }
 
 .quick_menu_tab{
-	background: white;
+	background: #588BB6;
 	height:28pt;
 	white-space: nowrap;
 	border-left: solid 1px #aaa;
@@ -402,9 +409,10 @@ div.csv {
 .main_menu {
 	background-color: #40FC40;
 	font-size: 10px;
-	border-top: 1px #AAAAAA solid;
-	border-bottom: 1px #AAAAAA solid;
+	border-top: 0px #AAAAAA solid;
+	border-bottom: 0px #AAAAAA solid;
 	font-weight: normal;
+	margin-top: 2px;
 	width: 100%;
 }
 
@@ -421,6 +429,7 @@ div.csv {
 	border-right: 1px #AAAAAA solid;
 	border-bottom: 0px;
 	font-weight: normal;
+	height: 16pt;
 	position: relative;
 	top: 3px;
 	text-align: center;
@@ -446,6 +455,7 @@ div.csv {
 	border-right: 1px #AAAAAA solid;
 	border-bottom: 0px;
 	font-weight: normal;
+	height: 16pt;
 	position: relative;
 	top: 3px;
 	text-align: center;
@@ -499,10 +509,10 @@ span.main_menu_nolink {
 .menu_group_area {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
-  border: 2px inset white;
+	border: 2px inset white;
 	color: #cc6600;
 	background-color: #CCCCCC;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 .blank_area table {
@@ -511,7 +521,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers {
-  border: 2px outset #AAAAAA;
+  border: 0px outset #AAAAAA;
   width: 25%;
 }
 
@@ -521,18 +531,18 @@ span.main_menu_nolink {
 .menu_group_headers_text {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
-	font-weight: bold;
+	font-weight: normal;
 	color: white;
 }
 
 .menu_group_items {
 	background-color: white;
-	font-weight: bold;
+	font-weight: normal;
 	padding: 15px;
-	border-top: 1px #AAAAAA solid;
-	border-left: 1px #AAAAAA solid;
-	border-right: 1px white solid;
-	border-bottom: 1px white solid;
+	border-top: 0px #AAAAAA solid;
+	border-left: 0px #AAAAAA solid;
+	border-right: 0px white solid;
+	border-bottom: 0px white solid;
 }
 
 .menu_group_item {
