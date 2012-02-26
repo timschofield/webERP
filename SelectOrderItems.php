@@ -1501,8 +1501,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 // This code needs sorting out, but until then :
 				$ImageSource = _('No Image');
 // Find the quantity in stock at location
-				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh,
-									stockmaster.decimalplaces
+				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh
 							   FROM locstock INNER JOIN stockmaster
 							   ON locstock.stockid=stockmaster.stockid
 							   WHERE locstock.stockid='" .$myrow['stockid'] . "' AND
