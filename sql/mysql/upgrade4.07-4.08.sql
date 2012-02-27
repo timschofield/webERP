@@ -6,8 +6,6 @@ INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('Recurri
 
 DELETE FROM `scripts` WHERE `script`='Z_CopyBOM.php';
 
-UPDATE config SET confvalue='4.08.1' WHERE confname='VersionNumber';
-
 ALTER TABLE `stockcategory` ADD `issueglact` int(11) NOT NULL DEFAULT 0 AFTER `adjglact`;
 
 CREATE TABLE departments (
