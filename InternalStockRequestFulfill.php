@@ -9,8 +9,7 @@ $title = _('Fulfill Stock Requests');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' .
-			' ' . _('Fulfill Stock Requests') . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $value) {
@@ -177,6 +176,7 @@ if (isset($_POST['UpdateAll'])) {
 				$ConfirmationText = _('A stock issue for'). ' ' . $StockID . ' ' . _('from location').' ' . $Location .' '. _('for a quantity of') . ' ' . $Quantity . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
 				prnMsg( $ConfirmationText,'warn');
 			}
+		}
 	}
 }
 
