@@ -237,7 +237,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected="selected" Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			$_POST['FromStockLocation']=$myrow['loccode'];
 		} else {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

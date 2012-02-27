@@ -151,9 +151,10 @@ if (isset($_POST['submit'])) {
 } /* end of if submit */
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title.'</p><br />';
+		'" alt="" />' . ' ' . $title.'</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
@@ -313,9 +314,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['DebtorsAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -330,9 +331,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['CreditorsAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="' . $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="' . $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -347,9 +348,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PayrollAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -364,9 +365,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['GRNAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -380,9 +381,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['RetainedEarnings']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -405,9 +406,9 @@ $result=DB_query("SELECT accountcode,
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['FreightAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -422,9 +423,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['ExchangeDiffAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -439,9 +440,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PurchasesExchangeDiffAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option  value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option  value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -456,9 +457,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PytDiscountAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . $myrow[1] . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -518,6 +519,7 @@ echo '</table>
 	<div class="centre">
 		<input tabindex="26" type="submit" name="submit" value="' . _('Update') . '" />
 	</div>';
+echo '</div></form>';
 
 include('includes/footer.inc');
 ?>

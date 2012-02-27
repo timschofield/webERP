@@ -31,22 +31,22 @@ function GrpByDataOptions($GroupByDataX) {
  if ($GroupByDataX == 'Sales Type') {
      echo '<option selected="selected" value="Sales Type">' . _('Sales Type') . '</option>';
  } else {
-    echo '<option Value="Sales Type">' . _('Sales Type') . '</option>';
+    echo '<option value="Sales Type">' . _('Sales Type') . '</option>';
  }
  if ($GroupByDataX == 'Product Type') {
      echo '<option selected="selected" value="Product Type">' . _('Product Type') . '</option>';
  } else {
-    echo '<option Value="Product Type">' . _('Product Type') . '</option>';
+    echo '<option value="Product Type">' . _('Product Type') . '</option>';
  }
  if ($GroupByDataX == 'Customer Branch') {
      echo '<option selected="selected" value="Customer Branch">' . _('Customer Branch') . '</option>';
  } else {
-    echo '<option Value="Customer Branch">' . _('Customer Branch') . '</option>';
+    echo '<option value="Customer Branch">' . _('Customer Branch') . '</option>';
  }
  if ($GroupByDataX == 'Sales Person') {
      echo '<option selected="selected" value="Sales Person">' . _('Sales Person') . '</option>';
  } else {
-    echo '<option Value="Sales Person">' . _('Sales Person') . '</option>';
+    echo '<option value="Sales Person">' . _('Sales Person') . '</option>';
  }
  if ($GroupByDataX=='Not Used' OR $GroupByDataX == '' OR ! isset($GroupByDataX) OR is_null($GroupByDataX)){
      echo '<option selected="selected" value="Not Used">' . _('Not Used') . '</option>';
@@ -470,7 +470,7 @@ if (!isset($_GET['delete'])) {
 	 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	 	echo '<option value="1">' . _('Yes') . '</option>';
 	} else {
-	 	echo 'OPTION value="0">' . _('No') . '</option>';
+	 	echo '<option value="0">' . _('No') . '</option>';
 	 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	}
 

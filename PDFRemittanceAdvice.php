@@ -167,7 +167,7 @@ If ((isset($_POST['PrintPDF']))
 
 	echo '</table>
 		<div class="centre">
-			<input type="submit" Name="PrintPDF" Value="' . _('Print PDF') . '" />
+			<input type="submit" Name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
 
 	include ('includes/footer.inc');

@@ -259,7 +259,7 @@ if (isset($_POST['PrintPDF'])
 				<td>' . _('Summary or Detailed Report') . ':</td>
 				<td><select name="DetailedReport">
 					<option selected="selected" value="No">' . _('Summary Report') . '</option>
-					<option Value="Yes">' . _('Detailed Report') . '</option>
+					<option value="Yes">' . _('Detailed Report') . '</option>
 					</select></td>
 			</tr>
 			</table>

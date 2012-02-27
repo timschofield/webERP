@@ -1103,7 +1103,7 @@ the fields for entry of receipt amt and disc */
 			</tr>';
 		echo '<input type="hidden" name="SuppName" value="' . $_SESSION['PaymentDetail' . $identifier]->SuppName . '" />';
 	} else {
-		echo '<input type="hidden" name="Discount" Value="0" />';
+		echo '<input type="hidden" name="Discount" value="0" />';
 	}
 	echo '</table><br />';
 	echo '<input type="submit" name="CommitBatch" value="' . _('Accept and Process Payment') . '" />';

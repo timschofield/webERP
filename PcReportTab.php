@@ -67,7 +67,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<tr><td>' . _('To Date:') .'</td><td>';
 	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
 	echo '</td></tr></table><br />';
-	echo '<div class="centre"><input type="submit" Name="ShowTB" Value="' . _('Show HTML') .'" />';
+	echo '<div class="centre"><input type="submit" Name="ShowTB" value="' . _('Show HTML') .'" />';
 	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '" /></div>';
 
 } else if (isset($_POST['PrintPDF'])) {

@@ -126,7 +126,7 @@ if ($_GET['Action'] == 'Enter'){
 	//START OF action=VIEW
 	$SQL = "select * from stockcounts";
 	$result = DB_query($SQL, $db);
-	echo '<input type="hidden" name=Action Value="View" />';
+	echo '<input type="hidden" name=Action value="View" />';
 	echo '<table cellpadding="2" class="selection">';
 	echo "<tr>
 		<th>" . _('Stock Code') . "</th>

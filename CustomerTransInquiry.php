@@ -37,7 +37,7 @@ while ($myrow=DB_fetch_array($resultTypes)){
 		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 		}
 	} else {
-		     echo '<option Value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
 }
 echo '</select></td>';

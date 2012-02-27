@@ -238,7 +238,7 @@ if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
 	echo '<option selected="selected" value="legal">' . _('Legal') . '</option>';
 } else {
-	echo '<option Value="legal">' . _('Legal') . '</option>';
+	echo '<option value="legal">' . _('Legal') . '</option>';
 }
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
 	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';

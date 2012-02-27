@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF'])) {
 		if (isset($_POST['categoryid']) and ($myrow['categoryid'] == $_POST['categoryid'])) {
 			 echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categoryid']-$myrow['categorydescription'] . '</option>';
 		} else {
-			 echo '<option Value="' . $myrow['categoryid'] . '">' .$myrow['categoryid'].' - '. $myrow['categorydescription'] . '</option>';
+			 echo '<option value="' . $myrow['categoryid'] . '">' .$myrow['categoryid'].' - '. $myrow['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select></td>

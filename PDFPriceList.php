@@ -286,27 +286,27 @@ If (isset($_POST['PrintPDF'])
 		$SalesTypesResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)){
-		          echo '<option Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		          echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Show Gross Profit %') . ':</td>
                   <td><select name="ShowGPPercentages">';
-		echo '<option selected="selected" Value="No">'. _('Prices Only') . '</option>';
-		echo '<option Value="Yes">'. _('Show GP % too') . '</option>';
+		echo '<option selected="selected" value="No">'. _('Prices Only') . '</option>';
+		echo '<option value="Yes">'. _('Show GP % too') . '</option>';
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">';
 		echo '<option selected="selected" value="Sales Type Prices">'. _('Default Sales Type Prices');
-		echo '<option Value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>';
-		echo '<option Value="Full Description">'. _('Full Description') . '</option>';
+		echo '<option value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>';
+		echo '<option value="Full Description">'. _('Full Description') . '</option>';
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Effective As At') . ':</td>';
         echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
-		echo '</table><br /><div class="centre"><input type="submit" Name="PrintPDF" Value="'. _('Print PDF'). '" /></div>';
+		echo '</table><br /><div class="centre"><input type="submit" Name="PrintPDF" value="'. _('Print PDF'). '" /></div>';
 	}
 	include('includes/footer.inc');
 

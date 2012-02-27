@@ -522,12 +522,12 @@ DB_data_seek($resultStkLocs,0);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Transfer']) AND isset($_SESSION['Transfer']->StockLocationTo)){
 		if ($myrow['loccode'] == $_SESSION['Transfer']->StockLocationTo){
-			 echo '<option selected="selected" Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
 			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation'] AND isset($_SESSION['Transfer'])){
-		 echo '<option selected="selected" Value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_SESSION['Transfer']->StockLocationTo=$myrow['loccode'] . '</option>';
 	} else {
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

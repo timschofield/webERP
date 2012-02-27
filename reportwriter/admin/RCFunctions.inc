@@ -717,8 +717,8 @@ function CreateTableList($ReportID,$Table) {
 
 	while ($mytable=DB_fetch_row($Result)) {
 		$tablename = strtolower($mytable[0]);
-		if ($myrow[0] == $tablename) $TableList .= "<OPTION SELECTED Value='" . $tablename . "'>" . $tablename . "</OPTION>";
-			else $TableList .= "<OPTION Value='" . $tablename . "'>" . $tablename . "</OPTION>";
+		if ($myrow[0] == $tablename) $TableList .= "<option selected='selected' value='" . $tablename . "'>" . $tablename . "</option>";
+			else $TableList .= "<option value='" . $tablename . "'>" . $tablename . "</option>";
 	}
 	return $TableList;
 } // CreateTableList
@@ -739,15 +739,15 @@ function CreateLinkList($ReportID,$Table) {
 		while($mytable=DB_fetch_row($Result)) {
 			if ($myrow[$Table]) {
 				if ($myrow[$Table] == $mytable[1]){
-					$LinkList .= "<OPTION SELECTED Value='" . $mytable[1] . "'>" . $mytable[1];
+					$LinkList .= "<option selected='selected' value='" . $mytable[1] . "'>" . $mytable[1];
 				} else {
-					$LinkList .= "<OPTION Value='" . $mytable[1] . "'>" . $mytable[1];
+					$LinkList .= "<option value='" . $mytable[1] . "'>" . $mytable[1];
 				}
 			} else {
 				if ($j == 0){
-					$LinkList .= "<OPTION SELECTED Value='" . $mytable[1] . "'>" . $mytable[1];
+					$LinkList .= "<option selected='selected' value='" . $mytable[1] . "'>" . $mytable[1];
 				} else {
-					$LinkList .= "<OPTION Value='" . $mytable[1] . "'>" . $mytable[1];
+					$LinkList .= "<option value='" . $mytable[1] . "'>" . $mytable[1];
 				}
 				$j++;
 			}
@@ -780,15 +780,15 @@ function CreateLinkEqList($ReportID,$Table) {
 		while($mytable=DB_fetch_row($Result)) {
 			if ($myrow[$Table+3]) {
 				if ($myrow[$Table+3] == $mytable[2]){
-					$LinkEqList .= "<OPTION SELECTED Value='" . $mytable[2] . "'>" . $mytable[2];
+					$LinkEqList .= "<option selected='selected' value='" . $mytable[2] . "'>" . $mytable[2];
 				} else {
-					$LinkEqList .= "<OPTION Value='" . $mytable[2] . "'>" . $mytable[2];
+					$LinkEqList .= "<option value='" . $mytable[2] . "'>" . $mytable[2];
 				}
 			} else {
 				if ($j == 0){
-					$LinkEqList .= "<OPTION SELECTED Value='" . $mytable[2] . "'>" . $mytable[2];
+					$LinkEqList .= "<option selected='selected' value='" . $mytable[2] . "'>" . $mytable[2];
 				} else {
-					$LinkEqList .= "<OPTION Value='" . $mytable[2] . "'>" . $mytable[2];
+					$LinkEqList .= "<option value='" . $mytable[2] . "'>" . $mytable[2];
 				}
 				$j++;
 			}
@@ -818,9 +818,9 @@ function CreateFieldList($ReportID,$FName,$Type) {
 			while ($mytable=DB_fetch_row($Result)) {
 				$fieldname = strtolower($myrow[$i]) . "." . strtolower($mytable[0]);
 				if ($FName == $fieldname){
-					$FieldList .= "<OPTION SELECTED Value='" . $fieldname . "'>" . $fieldname . "</OPTION>";
+					$FieldList .= "<option selected='selected' value='" . $fieldname . "'>" . $fieldname . "</option>";
 				} else {
-					$FieldList .= "<OPTION Value='" . $fieldname . "'>" . $fieldname . "</OPTION>";
+					$FieldList .= "<option value='" . $fieldname . "'>" . $fieldname . "</option>";
 				}
 			} // while
 		} // if
