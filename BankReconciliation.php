@@ -25,11 +25,11 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 
 	if (!is_numeric($_POST['BankStatementBalance'])){
 		prnMsg(_('The entry in the bank statement balance is not numeric. The balance on the bank statement should be entered. The exchange difference has not been calculated and no general ledger journal has been created'),'warn');
-		echo '<p>' . $_POST['BankStatementBalance'];
+		echo '<br />' . $_POST['BankStatementBalance'];
 	} else {
 
 		/* Now need to get the currency of the account and the current table ex rate */
-		$SQL = "SELECT rate, 
+		$SQL = "SELECT rate,
 						bankaccountname,
 						decimalplaces AS currdecimalplaces
 				FROM bankaccounts INNER JOIN currencies
@@ -39,7 +39,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 		$ErrMsg = _('Could not retrieve the exchange rate for the selected bank account');
 		$CurrencyResult = DB_query($SQL,$db);
 		$CurrencyRow =  DB_fetch_array($CurrencyResult);
-		
+
 		$CalculatedBalance = filter_number_format($_POST['DoExchangeDifference']);
 
 		$ExchangeDifference = ($CalculatedBalance - filter_number_format($_POST['BankStatementBalance']))/$CurrencyRow['rate'];
@@ -141,16 +141,16 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 /*Get the balance of the bank account concerned */
 
-	$sql = "SELECT MAX(period) 
-			FROM chartdetails 
+	$sql = "SELECT MAX(period)
+			FROM chartdetails
 			WHERE accountcode='" . $_POST['BankAccount']."'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$LastPeriod = $myrow[0];
 
 	$SQL = "SELECT bfwd+actual AS balance
-			FROM chartdetails 
-			WHERE period='" . $LastPeriod . "' 
+			FROM chartdetails
+			WHERE period='" . $LastPeriod . "'
 			AND accountcode='" . $_POST['BankAccount']."'";
 
 	$ErrMsg = _('The bank account balance could not be returned by the SQL because');
@@ -175,7 +175,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '<table class="selection">
 			<tr class="EvenTableRows">
 				<td colspan="6"><b>' . $CurrencyRow['bankaccountname'] . ' ' . _('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
-			
+
 	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode']){
 		echo  ' (' . $CurrencyRow['currcode'] . ' @ ' . $CurrencyRow['rate'] .')';
 	}
