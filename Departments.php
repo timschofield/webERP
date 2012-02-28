@@ -25,7 +25,7 @@ if (isset($_POST['Submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strpos($_POST['DepartmentName'],'&')>0 OR strpos($_POST['DepartmentName'],"'")>0) {
+	if (ContainsIllegalCharacters($_POST['DepartmentName'])) {
 		$InputError = 1;
 		prnMsg( _('The description of the department must not contain the character') . " '&' " . _('or the character') ." '",'error');
 	}
@@ -34,7 +34,9 @@ if (isset($_POST['Submit'])) {
 		prnMsg( _('The Name of the Department should not be empty'), 'error');
 	}
 
-	if (isset($_POST['SelectedDepartmentID']) AND $_POST['SelectedDepartmentID']!='' AND $InputError !=1) {
+	if (isset($_POST['SelectedDepartmentID']) 
+		AND $_POST['SelectedDepartmentID']!='' 
+		AND $InputError !=1) {
 
 
 		/*SelectedDepartmentID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
@@ -48,21 +50,21 @@ if (isset($_POST['Submit'])) {
 			$InputError = 1;
 			prnMsg( _('This department name already exists.'),'error');
 		} else {
-			// Get the old name and check that the record still exist neet to be very carefull here
-			// idealy this is one of those sets that should be in a stored procedure simce even the checks are
-			// relavant
-			$sql = "SELECT description FROM departments
-				WHERE departmentid = '" . $SelectedDepartmentID . "'";
+			// Get the old name and check that the record still exist neet to be very careful here
+			
+			$sql = "SELECT description 
+					FROM departments
+					WHERE departmentid = '" . $SelectedDepartmentID . "'";
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
 				// This is probably the safest way there is
-				$myrow = DB_fetch_row($result);
-				$OldDepartmentName = $myrow[0];
+				$myrow = DB_fetch_array($result);
+				$OldDepartmentName = $myrow['description'];
 				$sql = array();
 				$sql[] = "UPDATE departments
-					SET description='" . $_POST['DepartmentName'] . "',
-						authoriser='" . $_POST['Authoriser'] . "'
-					WHERE description ".LIKE." '".$OldDepartmentName."'";
+							SET description='" . $_POST['DepartmentName'] . "',
+								authoriser='" . $_POST['Authoriser'] . "'
+							WHERE description ". LIKE . " '" . $OldDepartmentName . "'";
 			} else {
 				$InputError = 1;
 				prnMsg( _('The Department does not exist.'),'error');
@@ -72,20 +74,17 @@ if (isset($_POST['Submit'])) {
 	} elseif ($InputError !=1) {
 		/*SelectedDepartmentID is null cos no item selected on first time round so must be adding a record*/
 		$sql = "SELECT count(*) FROM departments
-				WHERE description " .LIKE. " '".$_POST['DepartmentName'] ."'";
+				WHERE description " . LIKE . " '" . $_POST['DepartmentName'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ( $myrow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( _('There is already a Department with the specified name.'),'error');
 		} else {
-			$sql = "INSERT INTO departments (
-						description,
-						authoriser )
-				VALUES (
-					'" . $_POST['DepartmentName'] ."',
-					'" . $_POST['Authoriser'] ."'
-					)";
+			$sql = "INSERT INTO departments (description,
+											 authoriser )
+					VALUES ('" . $_POST['DepartmentName'] . "',
+							'" . $_POST['Authoriser'] . "')";
 		}
 		$msg = _('The new department has been created');
 	}
@@ -94,10 +93,10 @@ if (isset($_POST['Submit'])) {
 		//run the SQL from either of the above possibilites
 		if (is_array($sql)) {
 			$result = DB_Txn_Begin($db);
-			$tmpErr = _('The department could not be inserted');
-			$tmpDbg = _('The sql that failed was') . ':';
+			$ErrMsg = _('The department could not be inserted');
+			$DbgMsg = _('The sql that failed was') . ':';
 			foreach ($sql as $stmt ) {
-				$result = DB_query($stmt,$db, $tmpErr,$tmpDbg,true);
+				$result = DB_query($stmt,$db, $ErrMsg,$DbgMsg,true);
 				if(!$result) {
 					$InputError = 1;
 					break;
@@ -119,25 +118,28 @@ if (isset($_POST['Submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
-	// Get the original name of the unit of measure the ID is just a secure way to find the unit of measure
-	$sql = "SELECT description FROM departments
-		WHERE departmentid = '" . $SelectedDepartmentID . "'";
+
+	
+	$sql = "SELECT description 
+			FROM departments
+			WHERE departmentid = '" . $SelectedDepartmentID . "'";
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
-		// This is probably the safest way there is
 		prnMsg( _('You cannot delete this Department'),'warn');
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldDepartmentName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM dispatch,departments WHERE dispatch.departmentid=departments.departmentid  and description ".LIKE." '" . $OldDepartmentName . "'";
+		$sql= "SELECT COUNT(*) 
+				FROM dispatch INNER JOIN departments 
+				ON dispatch.departmentid=departments.departmentid  
+				WHERE description " . LIKE . " '" . $OldDepartmentName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('You cannot delete this Department'),'warn');
 			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('There are items related to this department');
 		} else {
-			$sql="DELETE FROM departments WHERE description ".LIKE."'" . $OldDepartmentName . "'";
+			$sql="DELETE FROM departments WHERE description " . LIKE . "'" . $OldDepartmentName . "'";
 			$result = DB_query($sql,$db);
 			prnMsg( $OldDepartmentName . ' ' . _('The department has been removed') . '!','success');
 		}
@@ -152,17 +154,9 @@ if (isset($_POST['Submit'])) {
 
  if (!isset($SelectedDepartmentID)) {
 
-/* An unit of measure could be posted when one has been edited and is being updated
-  or GOT when selected for modification
-  SelectedDepartmentID will exist because it was sent with the page in a GET .
-  If its the first time the page has been displayed with no parameters
-  then none of the above are true and the list of account groups will be displayed with
-  links to delete or edit each. These will call the same page again and allow update/input
-  or deletion of the records*/
-
 	$sql = "SELECT departmentid,
-			description,
-			authoriser
+					description,
+					authoriser
 			FROM departments
 			ORDER BY departmentid";
 
@@ -186,11 +180,11 @@ if (isset($_POST['Submit'])) {
 			$k++;
 		}
 
-		echo '<td>' . $myrow['description'] . '</td>';
-		echo '<td>' . $myrow['authoriser'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&delete=1">' . _('Delete') .'</a></td>';
-		echo '</tr>';
+		echo '<td>' . $myrow['description'] . '</td>
+				<td>' . $myrow['authoriser'] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&delete=1">' . _('Delete') .'</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -212,7 +206,7 @@ if (! isset($_GET['delete'])) {
 		//editing an existing section
 
 		$sql = "SELECT departmentid,
-				description
+						description
 				FROM departments
 				WHERE departmentid='" . $SelectedDepartmentID . "'";
 
@@ -235,10 +229,12 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">';
 	}
 	echo '<tr>
-		<td>' . _('Department Name') . ':' . '</td>
-		<td><input type="text" name="DepartmentName" size="50" maxlength="100" value="' . $_POST['DepartmentName'] . '" /></td>
+			<td>' . _('Department Name') . ':' . '</td>
+			<td><input type="text" name="DepartmentName" size="50" maxlength="100" value="' . $_POST['DepartmentName'] . '" /></td>
 		</tr>';
-	echo '<tr><td>'._('Authoriser').'</td><td><select name="Authoriser">';
+	echo '<tr>
+			<td>'._('Authoriser').'</td>
+			<td><select name="Authoriser">';
 	$usersql="SELECT userid FROM www_users";
 	$userresult=DB_query($usersql,$db);
 	while ($myrow=DB_fetch_array($userresult)) {
@@ -248,12 +244,15 @@ if (! isset($_GET['delete'])) {
 			echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
 		}
 	}
-	echo '</select></td></tr>';
-	echo '</table><br />';
+	echo '</select></td>
+		</tr>
+		</table>
+		<br />';
 
-	echo '<div class="centre"><input type="submit" name="Submit" value="' . _('Enter Information') . '" /></div>';
-
-	echo '</form>';
+	echo '<div class="centre">
+			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
+		</div>
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 

@@ -44,4 +44,5 @@ UPDATE `stockcategory` SET `issueglact`=`adjglact`;
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES (38, 'Stock Requests', 0);
 
 UPDATE `www_users` SET `modulesallowed` = CONCAT(`modulesallowed`,'0,');
+INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';

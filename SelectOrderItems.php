@@ -1502,23 +1502,21 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$ImageSource = _('No Image');
 // Find the quantity in stock at location
 				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh
-							   FROM locstock INNER JOIN stockmaster
-							   ON locstock.stockid=stockmaster.stockid
-							   WHERE locstock.stockid='" .$myrow['stockid'] . "' AND
-								loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
+							FROM locstock 
+							WHERE stockid='" .$myrow['stockid'] . "' 
+							AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$QOHResult =  DB_query($QOHSQL,$db);
 				$QOHRow = DB_fetch_array($QOHResult);
 				$QOH = $QOHRow['qoh'];
 
 				// Find the quantity on outstanding sales orders
 				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-							FROM salesorderdetails,
-								 salesorders
-							WHERE salesorders.orderno = salesorderdetails.orderno
-							AND salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
-							AND salesorderdetails.completed=0
-							AND salesorders.quotation=0
-							AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+						FROM salesorderdetails INNER JOIN salesorders
+						ON salesorders.orderno = salesorderdetails.orderno
+						WHERE salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
+						AND salesorderdetails.completed=0
+						AND salesorders.quotation=0
+						AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
 					 _('cannot be retrieved because');
