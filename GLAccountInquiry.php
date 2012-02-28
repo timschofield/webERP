@@ -30,7 +30,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class="selection"><tr><td>'._('Account').':</td><td><select Name="Account">';
+echo '<table class="selection"><tr><td>'._('Account').':</td><td><select name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $Account = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($Account,$db)){
@@ -61,7 +61,7 @@ while ($myrow=DB_fetch_array($result)){
 }
 echo '</select></td></tr>';
 // End select tag
-echo '<tr> <td>'._('For Period range').':</td><td><select Name=Period[] multiple>';
+echo '<tr> <td>'._('For Period range').':</td><td><select name=Period[] multiple>';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql,$db);
 $id=0;

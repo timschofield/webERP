@@ -36,7 +36,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Select Period From') . ':</td>
-				<td><select Name="FromPeriod">';
+				<td><select name="FromPeriod">';
 
 	$sql = "SELECT periodno, 
 					lastdate_in_period 
@@ -76,7 +76,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	echo '<tr>
 			<td>' . _('Select Period To') . ':</td>
-			<td><select Name="ToPeriod">';
+			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
 
@@ -113,7 +113,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	echo '<tr>
 			<td>'._('Detail Or Summary').':</td>
-			<td><select Name="Detail">
+			<td><select name="Detail">
 				<option selected="selected" value="Summary">'._('Summary') . '</option>
 				<option selected="selected" value="Detailed">'._('All Accounts') . '</option>
 				</select>

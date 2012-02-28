@@ -83,7 +83,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	echo '<tr>
 			<td>' . _('Select Period To') . ':</td>
-			<td><select Name="ToPeriod">';
+			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
 
