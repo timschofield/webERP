@@ -1,4 +1,6 @@
 webERP Change Log
+
+28/2/12 Tim: Added functionality that allows for the set up of internal departments, and for the request of stock to be issued - a new issue account is defined in stockcategories. Issue requests must be authorised by a department manager and then issues fulfilled creates a stock adjustment with posting in the gl to the item category issue account.
 28/02/2012 Vitaly: Added DB_escape_string() to narrative in SQL INSERT statements. Fixes a problem posting to database when the string contains quotes.
 26/02/2012 Fixed bug that when set frequently sold items, there are sql errors which claimed that no group set for sum() function. Fixed by Exson
 26/02/2012 PO_Items.php Add $_SESSION and $_POST variables to fixed extra lines added while page refreshing or push F5. Reported by CQZ and Ke from webERP Chinese forum QQ group. Fixed by Exson

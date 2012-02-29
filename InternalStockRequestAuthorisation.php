@@ -1,6 +1,6 @@
 <?php
 
-/* $Id$*/
+/* $Id: InternalStockRequestAuthorisation.php 4576 2011-05-27 10:59:20Z daintree $*/
 
 include('includes/session.inc');
 
@@ -10,17 +10,13 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' ' . $title . '</p>';
 
-$emailsql="SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
-$emailresult=DB_query($emailsql, $db);
-$emailrow=DB_fetch_array($emailresult);
-
-if (isset($_POST['updateall'])) {
+if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $value) {
 		if (mb_substr($key,0,6)=='status') {
 			$RequestNo=mb_substr($key,6);
 			$sql="UPDATE stockrequest
-				SET authorised='1'
-				WHERE dispatchid='".$RequestNo."'";
+					SET authorised='1'
+					WHERE dispatchid='".$RequestNo."'";
 			$result=DB_query($sql, $db);
 		}
 	}
@@ -35,14 +31,13 @@ $sql="SELECT stockrequest.dispatchid,
 			departments.description,
 			www_users.realname,
 			www_users.email
-		FROM stockrequest
-		LEFT JOIN departments
+		FROM stockrequest INNER JOIN departments
 			ON stockrequest.departmentid=departments.departmentid
-		LEFT JOIN locations
+		INNER JOIN locations
 			ON stockrequest.loccode=locations.loccode
-		LEFT JOIN www_users
+		INNER JOIN www_users
 			ON www_users.userid=departments.authoriser
-	WHERE stockrequest.authorised=0
+		WHERE stockrequest.authorised=0
 		AND stockrequest.closed=0
 		AND www_users.userid='".$_SESSION['UserID']."'";
 $result=DB_query($sql, $db);
@@ -53,22 +48,22 @@ echo '<table class="selection">';
 
 /* Create the table for the purchase order header */
 echo '<tr>
-		<th>'._('Request Number').'</th>
-		<th>'._('Department').'</th>
-		<th>'._('Location Of Stock').'</th>
-		<th>'._('Requested Date').'</th>
-		<th>'._('Narrative').'</th>
-		<th>'._('Authorise').'</th>
+		<th>' . _('Request Number') . '</th>
+		<th>' . _('Department') . '</th>
+		<th>' . _('Location Of Stock') . '</th>
+		<th>' . _('Requested Date') . '</th>
+		<th>' . _('Narrative') . '</th>
+		<th>' . _('Authorise') . '</th>
 	</tr>';
 
 while ($myrow=DB_fetch_array($result)) {
 
 	echo '<tr>
-			<td>'.$myrow['dispatchid'].'</td>
-			<td>'.$myrow['description'].'</td>
-			<td>'.$myrow['locationname'].'</td>
-			<td>'.ConvertSQLDate($myrow['despatchdate']).'</td>
-			<td>'.$myrow['narrative'].'</td>
+			<td>' . $myrow['dispatchid'] . '</td>
+			<td>' . $myrow['description'] . '</td>
+			<td>' . $myrow['locationname'] . '</td>
+			<td>' . ConvertSQLDate($myrow['despatchdate']) . '</td>
+			<td>' . $myrow['narrative'] . '</td>
 			<td><input type="checkbox" name="status'.$myrow['dispatchid'].'" /></td>
 		</tr>';
 	$linesql="SELECT stockrequestitems.dispatchitemsid,
@@ -78,7 +73,7 @@ while ($myrow=DB_fetch_array($result)) {
 						stockmaster.description,
 						stockrequestitems.quantity
 				FROM stockrequestitems
-				LEFT JOIN stockmaster
+				INNER JOIN stockmaster
 				ON stockmaster.stockid=stockrequestitems.stockid
 			WHERE dispatchid='".$myrow['dispatchid'] . "'";
 	$lineresult=DB_query($linesql, $db);
@@ -105,7 +100,7 @@ while ($myrow=DB_fetch_array($result)) {
 		</tr>';
 } //end while header loop
 echo '</table>';
-echo '<br /><div class="centre"><input type="submit" name="updateall" value="' . _('Update'). '" /></form>';
+echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></form>';
 
 include('includes/footer.inc');
 ?>
