@@ -35,10 +35,10 @@ CREATE TABLE stockrequestitems (
 `completed` TINYINT NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('Departments.php', '1', 'Process Recurring Sales Orders');
-INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('InternalStockRequest.php', '1', 'Process Recurring Sales Orders');
-INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('InternalStockRequestFulfill.php', '1', 'Process Recurring Sales Orders');
-INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('InternalStockRequestAuthorisation.php', '1', 'Process Recurring Sales Orders');
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('Departments.php', '1', 'Create business departments');
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('InternalStockRequest.php', '1', 'Create an internal stock request');
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('InternalStockRequestFulfill.php', '1', 'Fulfill an internal stock request');
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('InternalStockRequestAuthorisation.php', '1', 'Authorise internal stock requests');
 
 UPDATE `stockcategory` SET `issueglact`=`adjglact`;
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES (38, 'Stock Requests', 0);
