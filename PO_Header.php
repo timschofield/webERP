@@ -844,7 +844,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 				<td colspan="2">' . html_entity_decode($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'</td>
 			</tr>';
 		
-		echo '<input type="hidden" name="StatusCommentsComplete" value="' . htmlentities($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'" />';
+		echo '<input type="hidden" name="StatusCommentsComplete" value="' . htmlspecialchars($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'" />';
 		echo '<tr><td><input type="submit" name="UpdateStatus" value="' . _('Status Update') .'" /></td>';
 	} //end its not a new order
 	

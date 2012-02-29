@@ -314,9 +314,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['DebtorsAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -331,9 +331,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['CreditorsAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="' . $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="' . $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -348,9 +348,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PayrollAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -365,9 +365,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['GRNAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -381,9 +381,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['RetainedEarnings']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -406,9 +406,9 @@ $result=DB_query("SELECT accountcode,
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['FreightAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -423,9 +423,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['ExchangeDiffAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -440,9 +440,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PurchasesExchangeDiffAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option  value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option  value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 
@@ -457,9 +457,9 @@ echo '<tr>
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PytDiscountAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlentities($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
 	}
 } //end while loop
 

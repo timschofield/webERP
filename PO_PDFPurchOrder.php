@@ -340,7 +340,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$sql = "UPDATE purchorders	SET	allowprint =  0,
 										dateprinted  = '" . Date('Y-m-d') . "',
 										status = 'Printed',
-										stat_comment = '" . htmlentities($StatusComment,ENT_QUOTES,'UTF-8') . "'
+										stat_comment = '" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "'
 				WHERE purchorders.orderno = '" .  $OrderNo ."'";
 		$result = DB_query($sql,$db);
 	}

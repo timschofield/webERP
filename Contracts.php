@@ -790,13 +790,13 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				$k=1;
 			}
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>'.htmlentities($myrow['name'], ENT_QUOTES,'UTF-8').'</td>';
+				echo '<td>'.htmlspecialchars($myrow['name'], ENT_QUOTES,'UTF-8').'</td>';
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="'.htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8').'" /></td>
+			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="'.htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8').'" /></td>
 					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'" />
-					<td>'.htmlentities($myrow['contactname'], ENT_QUOTES,'UTF-8') .'</td>
+					<td>'.htmlspecialchars($myrow['contactname'], ENT_QUOTES,'UTF-8') .'</td>
 					<td>'.$myrow['phoneno'].'</td>
 					<td>'.$myrow['faxno'].'</td>
 					</tr>';

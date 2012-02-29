@@ -380,7 +380,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . $StkLocAddress['deladd6'] . "',
 									'" . $StkLocAddress['contact'] . "',
 									'" . $_SESSION['SPL'.$identifier]->Status . "',
-									'" . htmlentities($StatusComment, ENT_QUOTES,'UTF-8')  . "',
+									'" . htmlspecialchars($StatusComment, ENT_QUOTES,'UTF-8')  . "',
 									'" . $_SESSION['SPL'.$identifier]->AllowPrintPO . "',
 									'" . Date('Y-m-d') . "',
 									'" . Date('Y-m-d') . "')";

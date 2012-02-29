@@ -94,7 +94,7 @@ while ($myrow=DB_fetch_array($result)) {
 					<option value="Cancelled">'._('Cancelled').'</option>
 					</select></td>
 			</tr>';
-		echo '<input type="hidden" name="comment" value="' . htmlentities($myrow['stat_comment'], ENT_QUOTES,'UTF-8') . '" />';
+		echo '<input type="hidden" name="comment" value="' . htmlspecialchars($myrow['stat_comment'], ENT_QUOTES,'UTF-8') . '" />';
 		$LineSQL="SELECT purchorderdetails.*,
 					stockmaster.description,
 					stockmaster.decimalplaces

@@ -98,7 +98,7 @@ else
 
 		echo '<tr>';
 		echo '<td>' . _('Header Line') . ' # ' . $i . '</td>';
-		echo '<td><input type="text" size="80" name="Header_' . $i . '" value="' . htmlentities($LanguageHeader[$i]) . '" /></td>';
+		echo '<td><input type="text" size="80" name="Header_' . $i . '" value="' . htmlspecialchars($LanguageHeader[$i]) . '" /></td>';
 		echo '</tr>';
 	}
 

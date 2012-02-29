@@ -6353,7 +6353,7 @@ if (!class_exists('TCPDF', false)) {
 							case 'link': {
 								if(is_string($pl['txt'])) {
 									// external URI link
-									$annots .= ' /A <</S /URI /URI '.$this->_dataannobjstring($this->unhtmlentities($pl['txt'])).'>>';
+									$annots .= ' /A <</S /URI /URI '.$this->_dataannobjstring($this->unhtmlspecialchars($pl['txt'])).'>>';
 								} else {
 									// internal link
 									$l = $this->links[$pl['txt']];
@@ -8312,7 +8312,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @return string converted
 		 * @access public
 		 */
-		public function unhtmlentities($text_to_convert) {
+		public function unhtmlspecialchars($text_to_convert) {
 			return html_entity_decode($text_to_convert, ENT_QUOTES, $this->encoding);
 		}
 
@@ -13860,7 +13860,7 @@ if (!class_exists('TCPDF', false)) {
 					// text
 					$dom[$key]['tag'] = false;
 					$dom[$key]['block'] = false;
-					$dom[$key]['value'] = stripslashes($this->unhtmlentities($element));
+					$dom[$key]['value'] = stripslashes($this->unhtmlspecialchars($element));
 					$dom[$key]['parent'] = end($level);
 				}
 				++$elkey;
@@ -17572,7 +17572,7 @@ if (!class_exists('TCPDF', false)) {
 		 */
 		public function hyphenateText($text, $patterns, $dictionary=array(), $leftmin=1, $rightmin=2, $charmin=1, $charmax=8) {
 			global $unicode;
-			$text = $this->unhtmlentities($text);
+			$text = $this->unhtmlspecialchars($text);
 			$word = array(); // last word
 			$txtarr = array(); // text to be returned
 			$intag = false; // true if we are inside an HTML tag

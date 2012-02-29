@@ -184,7 +184,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . Date('Y-m-d') . "',
 									'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
 									'" . $_SESSION['PO'.$identifier]->Status . "',
-									'" . htmlentities($StatusComment,ENT_QUOTES,'UTF-8') . "',
+									'" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "',
 									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
 									'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
 									'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "' )";
@@ -277,7 +277,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
 										allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
 										status = '" . $_SESSION['PO'.$identifier]->Status . "',
-										stat_comment = '" . htmlentities($_SESSION['PO'.$identifier]->StatusComments,ENT_QUOTES,'UTF-8') . "' 
+										stat_comment = '" . htmlspecialchars($_SESSION['PO'.$identifier]->StatusComments,ENT_QUOTES,'UTF-8') . "' 
 										WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 			$ErrMsg =  _('The purchase order could not be updated because');

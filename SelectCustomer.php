@@ -447,7 +447,7 @@ if (isset($result)) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			echo '<td><font size="1"><input type="submit" name="SubmitCustomerSelection' . $i .'" value="' . htmlentities($myrow['debtorno'].' '.$myrow['branchcode'],ENT_QUOTES,'UTF-8') . '" /></font></td>
+			echo '<td><font size="1"><input type="submit" name="SubmitCustomerSelection' . $i .'" value="' . htmlspecialchars($myrow['debtorno'].' '.$myrow['branchcode'],ENT_QUOTES,'UTF-8') . '" /></font></td>
 				<input type="hidden" name="SelectedCustomer' . $i . '" value="'.$myrow['debtorno'].'" />
 				<input type="hidden" name="SelectedBranch' . $i . '" value="'. $myrow['branchcode'].'" />
 				<td><font size="1">' . $myrow['name'] . '</font></td>
