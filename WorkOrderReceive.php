@@ -6,15 +6,18 @@ $title = _('Receive Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+echo '<div>';
 echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
 	<br />';
 echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a>
 	<br />';
+echo '</div>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_REQUEST['WO']) OR !isset($_REQUEST['StockID'])) {
@@ -66,6 +69,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	if (DB_num_rows($WOResult)==0){
 		prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
+        echo '</div>';
+        echo '</form>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -234,7 +239,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['adjglact'] . "',
-								'" . DB_escape_string(_('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh']) . "',
+								'" . _('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'] . "',
 								'" . (-$ValueOfChange) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
@@ -253,7 +258,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
-								'" . DB_escape_string(_('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh']) . "',
+								'" . _('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'] . "',
 								'" . $ValueOfChange . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
@@ -374,7 +379,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['wipact'] . "',
-								'" . DB_escape_string($_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('Component') . ': ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces'])) . "',
+								'" . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('Component') . ': ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 								'" . ($AutoIssueCompRow['qtypu'] * $QuantityReceived * $AutoIssueCompRow['cost']) . "')";
 
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP side of the work order issue GL posting could not be inserted because');
@@ -393,7 +398,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								'" . $PeriodNo . "',
 								'" . $AutoIssueCompRow['stockact'] . "',
-								'" . DB_escape_string($_POST['WO'] . ' - ' . $_POST['StockID'] . ' -> ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces'])) . "',
+								'" . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' -> ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 								'" . -($AutoIssueCompRow['qtypu'] * $QuantityReceived * $AutoIssueCompRow['cost']) . "')";
 
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the work order issue GL posting could not be inserted because');
@@ -628,7 +633,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
-								'" . DB_escape_string($_POST['WO'] . " " . $_POST['StockID'] . " - " . $WORow['description'] . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces'])) . "',
+								'" . $_POST['WO'] . " " . $_POST['StockID'] . " - " . DB_escape_string($WORow['description']) . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 								'" . ($WORow['stdcost'] * $QuantityReceived) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The receipt of work order finished stock GL posting could not be inserted because');
@@ -648,7 +653,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['wipact'] . "',
-								'" . DB_escape_string($_POST['WO'] . " " . $_POST['StockID'] . " - " . $WORow['description'] . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces'])) . "',
+								'" . $_POST['WO'] . " " . $_POST['StockID'] . " - " . DB_escape_string($WORow['description']) . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 								'" . -($WORow['stdcost'] * $QuantityReceived) . "')";
 
 			$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP credit on receipt of finished items from a work order GL posting could not be inserted because');
@@ -686,6 +691,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			unset($_POST['QualityText'.$i]);
 			unset($_POST['QtyReqd'.$i]);
 		}
+        echo '</div>';
+        echo '</form>';
 		/*end of process work order goods received entry */
 		include('includes/footer.inc');
 		exit;
@@ -722,6 +729,8 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
+    echo '</div>';
+    echo '</form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -729,6 +738,8 @@ $WORow = DB_fetch_array($WOResult);
 
 if ($WORow['closed']==1){
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more receipts of manufactured items can be received against this work order. You should make up a new work order to receive this item against.'),'info');
+    echo '</div>';
+    echo '</form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -842,8 +853,8 @@ if($WORow['controlled']==1){ //controlled
 		if (!isset($i)){
 			$i=0;
 		}
+        echo '<td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>';
 		echo '</tr>';
-		echo '<input type="hidden" name="CountOfInputs" value="' . $i . '" />';
 		echo '<tr>
 				<td colspan="5"></td>
 			</tr>
@@ -893,7 +904,10 @@ if($WORow['controlled']==1){ //controlled
 						  <td><input type="textbox" class="number" name="Qty' . $i .'" /></td></tr>';
 			}
 		}
-		echo '<input type="hidden" name="CountOfInputs" value="' . $i . '" /></table>';
+		echo '<tr>
+                 <td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>
+              </tr>
+              </table>';
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
@@ -901,8 +915,8 @@ if($WORow['controlled']==1){ //controlled
 	} //end of lot/batch control
 } else { //not controlled - an easy one!
 
-	echo '<input type="hidden" name="CountOfInputs" value="1" />';
 	echo '<tr>
+            <td><input type="hidden" name="CountOfInputs" value="1" /></td>
 			<td>' . _('Quantity Received') . ':</td>
 			<td><input type="text" class="number" name="Qty" /></td>
 		</tr>
@@ -912,7 +926,7 @@ if($WORow['controlled']==1){ //controlled
 			<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 		</div>';
 }
-
+echo '</div>';
 echo '</form>';
 
 include('includes/footer.inc');

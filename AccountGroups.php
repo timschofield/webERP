@@ -178,7 +178,7 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_array($result);
 	if ($myrow['groups']>0) {
 		prnMsg( _('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
-		echo '<br />' . _('There are') . ' ' . $myrow['groups'] . ' ' . _('general ledger accounts that refer to this account group') . '</font>';
+		echo '<br />' . _('There are') . ' ' . $myrow['groups'] . ' ' . _('general ledger accounts that refer to this account group');
 
 	} else {
 		$sql = "SELECT COUNT(groupname) groupnames FROM accountgroups WHERE parentgroupname = '" . $_GET['SelectedAccountGroup'] . "'";
@@ -188,7 +188,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_array($result);
 		if ($myrow['groupnames']>0) {
 			prnMsg( _('Cannot delete this account group because it is a parent account group of other account group(s)'),'warn');
-			echo '<br />' . _('There are') . ' ' . $myrow['groupnames'] . ' ' . _('account groups that have this group as its/there parent account group') . '</font>';
+			echo '<br />' . _('There are') . ' ' . $myrow['groupnames'] . ' ' . _('account groups that have this group as its/there parent account group');
 		} else {
 			$sql="DELETE FROM accountgroups WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
 			$ErrMsg = _('An error occurred in deleting the account group');
@@ -222,7 +222,7 @@ or deletion of the records*/
 	$DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'<br /></p>';
 
 	echo '<table class="selection">
 			<tr>
@@ -261,8 +261,8 @@ or deletion of the records*/
 			<td>' . $myrow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow['parentgroupname'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedAccountGroup=' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedAccountGroup=' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete') .'</a></td></tr>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete') .'</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -270,12 +270,13 @@ or deletion of the records*/
 
 
 if (isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])) {
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
+	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+    echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedAccountGroup'])) {
@@ -307,10 +308,12 @@ if (!isset($_GET['delete'])) {
 
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="2"><font size="2" color="#616161">' . _('Edit Account Group Details') . '</th>
+				<th colspan="2">' . _('Edit Account Group Details') . '</th>
 			</tr>';
-		echo '<input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
-		echo '<input type="hidden" name="GroupName" value="' . $_POST['GroupName'] . '" />';
+        echo '<tr>
+		         <td><input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" /></td>
+		         <td><input type="hidden" name="GroupName" value="' . $_POST['GroupName'] . '" /></td>
+             </tr>';
 
 		echo '<tr>
 				<td>' . _('Account Group') . ':' . '</td>
@@ -336,10 +339,12 @@ if (!isset($_GET['delete'])) {
 		}
 
 		echo '<br /><table class="selection">';
-		echo '<input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" />';
 		echo '<tr>
-				<th colspan="2"><font size="2" color="#616161">' . _('New Account Group Details') . '</th>
+				<th colspan="2">' . _('New Account Group Details') . '</th>
 			</tr>';
+        echo '<tr>
+                 <td><input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" /></td>
+            </tr>';
 		echo '<tr>
 				<td>' . _('Account Group Name') . ':' . '</td>
 				<td><input tabindex="1" ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
@@ -413,7 +418,7 @@ if (!isset($_GET['delete'])) {
 	echo '</table><br />';
 
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].GroupName);</script>';
-
+    echo '</div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
