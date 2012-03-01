@@ -742,10 +742,12 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 	      <th>' . _('Quantity') . '</th>
 	      <th>' . _('QOH') . '</th>
 	      <th>' . _('Unit') . '</th>
-	      <th>' . _('Price') . '</th>
-	      <th>' . _('Discount') . '</th>
-	      <th>' . _('GP %') . '</th>
-	      <th>' . _('Net') . '</th>
+	      <th>' . _('Price') . '</th>';
+	if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+		echo '<th>' . _('Discount') . '</th>
+			  <th>' . _('GP %') . '</th>';
+	}
+	echo '<th>' . _('Net') . '</th>
 	      <th>' . _('Tax') . '</th>
 	      <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
 	      </tr>';
@@ -787,10 +789,15 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 		echo '</td>
 			<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 			<td>' . $OrderLine->Units . '</td>';
-
-		echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
+		if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+			echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
 				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
 				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
+		} else {
+			echo '<td class="number">' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '"  value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
+				<input type="hidden" name="Discount_' . $OrderLine->LineNumber . '" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" />
+				<input type="hidden" name="GPPercent_' . $OrderLine->LineNumber . '" value="' . locale_number_format($OrderLine->GPPercent,2) . '" />';
+		}
 		echo '<td class="number">' . locale_number_format($SubTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $OrderLine->ItemDue;
 		if (!Is_Date($OrderLine->ItemDue)){
@@ -834,11 +841,16 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 
 	} /* end of loop around items */
 
-	echo '<tr class="EvenTableRows"><td colspan="8" class="number"><b>' . _('Total') . '</b></td>
-				<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-						</tr>
+	echo '<tr class="EvenTableRows">';
+	if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+		echo '<td colspan="8" class="number"><b>' . _('Total') . '</b></td>';
+	} else {
+		echo '<td colspan="6" class="number"><b>' . _('Total') . '</b></td>';
+	}
+	echo '<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+		</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
 	echo '<table><tr><td>';

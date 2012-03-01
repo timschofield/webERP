@@ -1336,7 +1336,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<th>' . _('Unit') . '</th>
 				<th>' . _('Price') . '</th>';
 
-		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
+		if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<th>' . _('Discount') . '</th>
 						<th>' . _('GP %') . '</th>';
 		}
@@ -1384,7 +1384,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 					<td>' . $OrderLine->Units . '</td>';
 
-			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
+			if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" /></td>
 					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
@@ -1424,13 +1424,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} /* end of loop around items */
 
 		$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
+		if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
 			$ColSpanNumber = 2;
 		} else {
 			$ColSpanNumber = 1;
 		}
 		echo '<tr class="EvenTableRows">
-				<td class="number" colspan="7"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+				<td class="number" colspan="6"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
 				<td colspan="' . $ColSpanNumber . '" class="number">' . $DisplayTotal . '</td>
 			</tr>
 			</table>';

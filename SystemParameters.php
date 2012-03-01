@@ -24,61 +24,61 @@ if (isset($_POST['submit'])) {
 		Note: the X_ in the POST variables, the reason for this is to overcome globals=on replacing
 		the actial system/overidden variables.
 	*/
-	if (mb_strlen($_POST['X_PastDueDays1']) > 3 || !is_numeric($_POST['X_PastDueDays1']) ) {
+	if (mb_strlen($_POST['X_PastDueDays1']) > 3 OR !is_numeric($_POST['X_PastDueDays1']) ) {
 		$InputError = 1;
 		prnMsg(_('First overdue deadline days must be a number'),'error');
-	} elseif (mb_strlen($_POST['X_PastDueDays2'])  > 3 || !is_numeric($_POST['X_PastDueDays2']) ) {
+	} elseif (mb_strlen($_POST['X_PastDueDays2'])  > 3 OR !is_numeric($_POST['X_PastDueDays2']) ) {
 		$InputError = 1;
 		prnMsg(_('Second overdue deadline days must be a number'),'error');
-	} elseif (mb_strlen($_POST['X_DefaultCreditLimit']) > 12 || !is_numeric($_POST['X_DefaultCreditLimit']) ) {
+	} elseif (mb_strlen($_POST['X_DefaultCreditLimit']) > 12 OR !is_numeric($_POST['X_DefaultCreditLimit']) ) {
 		$InputError = 1;
 		prnMsg(_('Default Credit Limit must be a number'),'error');
-	} elseif (mb_strstr($_POST['X_RomalpaClause'], "'") || mb_strlen($_POST['X_RomalpaClause']) > 5000) {
+	} elseif (mb_strstr($_POST['X_RomalpaClause'], "'") OR mb_strlen($_POST['X_RomalpaClause']) > 5000) {
 		$InputError = 1;
 		prnMsg(_('The Romalpa Clause may not contain single quotes and may not be longer than 5000 chars'),'error');
-	} elseif (mb_strlen($_POST['X_QuickEntries']) > 2 || !is_numeric($_POST['X_QuickEntries']) ||
-		$_POST['X_QuickEntries'] < 1 || $_POST['X_QuickEntries'] > 99 ) {
+	} elseif (mb_strlen($_POST['X_QuickEntries']) > 2 OR !is_numeric($_POST['X_QuickEntries']) OR
+		$_POST['X_QuickEntries'] < 1 OR $_POST['X_QuickEntries'] > 99 ) {
 		$InputError = 1;
 		prnMsg(_('No less than 1 and more than 99 Quick entries allowed'),'error');
-	} elseif (mb_strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 || !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
+	} elseif (mb_strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 OR !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
 		$InputError = 1;
 		prnMsg(_('Freight Charge Applies If Less Than must be a number'),'error');
-	} elseif ( !is_numeric($_POST['X_StandardCostDecimalPlaces']) ||
-		$_POST['X_StandardCostDecimalPlaces'] < 0 || $_POST['X_StandardCostDecimalPlaces'] > 4 ) {
+	} elseif ( !is_numeric($_POST['X_StandardCostDecimalPlaces']) OR
+		$_POST['X_StandardCostDecimalPlaces'] < 0 OR $_POST['X_StandardCostDecimalPlaces'] > 4 ) {
 		$InputError = 1;
 		prnMsg(_('Standard Cost Decimal Places must be a number between 0 and 4'),'error');
-	} elseif (mb_strlen($_POST['X_NumberOfPeriodsOfStockUsage']) > 2 || !is_numeric($_POST['X_NumberOfPeriodsOfStockUsage']) ||
-		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 || $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
+	} elseif (mb_strlen($_POST['X_NumberOfPeriodsOfStockUsage']) > 2 OR !is_numeric($_POST['X_NumberOfPeriodsOfStockUsage']) OR
+		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 OR $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
 		$InputError = 1;
 		prnMsg(_('Financial period per year must be a number between 1 and 12'),'error');
 	} elseif (mb_strlen($_POST['X_TaxAuthorityReferenceName']) >25) {
 		$InputError = 1;
 		prnMsg(_('The Tax Authority Reference Name must be 25 characters or less long'),'error');
-	} elseif (mb_strlen($_POST['X_OverChargeProportion']) > 3 || !is_numeric($_POST['X_OverChargeProportion']) ||
-		$_POST['X_OverChargeProportion'] < 0 || $_POST['X_OverChargeProportion'] > 100 ) {
+	} elseif (mb_strlen($_POST['X_OverChargeProportion']) > 3 OR !is_numeric($_POST['X_OverChargeProportion']) OR
+		$_POST['X_OverChargeProportion'] < 0 OR $_POST['X_OverChargeProportion'] > 100 ) {
 		$InputError = 1;
 		prnMsg(_('Over Charge Proportion must be a percentage'),'error');
-	} elseif (mb_strlen($_POST['X_OverReceiveProportion']) > 3 || !is_numeric($_POST['X_OverReceiveProportion']) ||
-		$_POST['X_OverReceiveProportion'] < 0 || $_POST['X_OverReceiveProportion'] > 100 ) {
+	} elseif (mb_strlen($_POST['X_OverReceiveProportion']) > 3 OR !is_numeric($_POST['X_OverReceiveProportion']) OR
+		$_POST['X_OverReceiveProportion'] < 0 OR $_POST['X_OverReceiveProportion'] > 100 ) {
 		$InputError = 1;
 		prnMsg(_('Over Receive Proportion must be a percentage'),'error');
-	} elseif (mb_strlen($_POST['X_PageLength']) > 3 || !is_numeric($_POST['X_PageLength']) ||
+	} elseif (mb_strlen($_POST['X_PageLength']) > 3 OR !is_numeric($_POST['X_PageLength']) OR
 		$_POST['X_PageLength'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Lines per page must be greater than 1'),'error');
-	} elseif (mb_strlen($_POST['X_MonthsAuditTrail']) > 2 || !is_numeric($_POST['X_MonthsAuditTrail']) ||
+	} elseif (mb_strlen($_POST['X_MonthsAuditTrail']) > 2 OR !is_numeric($_POST['X_MonthsAuditTrail']) OR
 		$_POST['X_MonthsAuditTrail'] < 0 ) {
 		$InputError = 1;
 		prnMsg(_('The number of months of audit trail to keep must be zero or a positive number less than 100 months'),'error');
-	}elseif (mb_strlen($_POST['X_DefaultTaxCategory']) > 1 || !is_numeric($_POST['X_DefaultTaxCategory']) ||
+	}elseif (mb_strlen($_POST['X_DefaultTaxCategory']) > 1 OR !is_numeric($_POST['X_DefaultTaxCategory']) OR
 		$_POST['X_DefaultTaxCategory'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('DefaultTaxCategory must be between 1 and 9'),'error');
-	} elseif (mb_strlen($_POST['X_DefaultDisplayRecordsMax']) > 3 || !is_numeric($_POST['X_DefaultDisplayRecordsMax']) ||
+	} elseif (mb_strlen($_POST['X_DefaultDisplayRecordsMax']) > 3 OR !is_numeric($_POST['X_DefaultDisplayRecordsMax']) OR
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Default maximum number of records to display must be between 1 and 500'),'error');
-	}elseif (mb_strlen($_POST['X_MaxImageSize']) > 3 || !is_numeric($_POST['X_MaxImageSize']) ||
+	}elseif (mb_strlen($_POST['X_MaxImageSize']) > 3 OR !is_numeric($_POST['X_MaxImageSize']) OR
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('The maximum size of item image files must be between 50 and 500 (NB this figure refers to KB)'),'error');
@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
 	}elseif (!IsEmailAddress($_POST['X_InventoryManagerEmail']) AND $_POST['X_InventoryManagerEmail']!=''){
 		$InputError = 1;
 		prnMsg(_('The Inventory Manager Email address does not appear to be valid'),'error');
-	}elseif (mb_strlen($_POST['X_FrequentlyOrderedItems']) > 2 || !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
+	}elseif (mb_strlen($_POST['X_FrequentlyOrderedItems']) > 2 OR !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
 		$InputError = 1;
 		prnMsg(_('The number of frequently ordered items to display must be numeric'),'error');
 	}

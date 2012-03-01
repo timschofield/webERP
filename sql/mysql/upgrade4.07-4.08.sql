@@ -4,7 +4,7 @@ INSERT INTO securitygroups (SELECT secroleid,0 FROM securityroles);
 INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('reportwriter/admin/ReportCreator.php', '15', 'Report Writer');
 INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('RecurringSalesOrdersProcess.php', '1', 'Process Recurring Sales Orders');
 
-DELETE FROM `scripts` WHERE `script`='Z_CopyBOM.php';
+UPDATE `scripts` SET script='CopyBOM.php' WHERE `script`='Z_CopyBOM.php';
 
 ALTER TABLE `stockcategory` ADD `issueglact` int(11) NOT NULL DEFAULT 0 AFTER `adjglact`;
 
@@ -43,6 +43,6 @@ INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('Interna
 UPDATE `stockcategory` SET `issueglact`=`adjglact`;
 INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES (38, 'Stock Requests', 0);
 
-UPDATE `www_users` SET `modulesallowed` = CONCAT(`modulesallowed`,'0,');
+UPDATE `www_users` SET `modulesallowed` = CONCAT(`modulesallowed`,'0,') WHERE modulesallowed LIKE '_,_,_,_,_,_,_,_,_,_,';
 INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
