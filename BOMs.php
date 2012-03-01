@@ -610,7 +610,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			*/
 			echo '<table class="selection">';
 			echo '<tr>
-					<th colspan="13"><div class="centre"><font color="blue" size="3"><b>' . ('New Component Details') .'</font></b></th>
+					<th colspan="13"><div class="centre"><font color="blue" size="3"><b>' . _('New Component Details') .'</font></b></th>
 				</tr>';
 			echo '<tr>
 					<td>' . _('Component code') . ':</td>
