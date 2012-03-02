@@ -950,7 +950,7 @@ if (isset($StockItemsResult)
 	
 			} else { /*must be quotes only */
 				printf('<td><a href="%s">%s</a></td>
-						<td><a href="%s">' . $PrintText . '</a></td>
+						<td><a target="_blank" href="%s">' . $PrintText . '</a></td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
