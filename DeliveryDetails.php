@@ -769,16 +769,29 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder'.$
 	} /* updated line items into sales order details */
 
 	$Result=DB_Txn_Commit($db);
-
+	$Quotation = $_SESSION['Items'.$identifier]->Quotation;
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
+	
+	if($Quotation){ //handle Quotations and Orders print after modification
+		prnMsg(_('Quotation Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
+
+		echo '<br />
+			<table class="selection">
+			<tr>
+				<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
+				<td><a target="_blank" href="' .$rootpath.'/PDFQuotation.php?QuotationNo='.$_SESSION['ExistingOrder'.$identifier].'">'._('Print Quotation').'</a></td>
+			</tr>
+			</table>'; //end of print Quotation
+	}else{
 
 	prnMsg(_('Order Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
 
 	echo '<br />
 			<table class="selection">
 			<tr>
-				<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td><td><a href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'.$identifier] . '">'. _('Print packing slip - pre-printed stationery') .'</a></td>
+			<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
+			<td><a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?identifier='.$identifier  . '&TransNo=' . $_SESSION['ExistingOrder'.$identifier] . '">'. _('Print packing slip - pre-printed stationery') .'</a></td>
 			</tr>';
 	echo '<tr>
 			<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
@@ -793,6 +806,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder'.$
 			<td><a href="' . $rootpath .'/SelectSalesOrder.php?identifier='.$identifier   . '">'. _('Select A Different Order') .'</a></td>
 		</tr>
 		</table>';
+	}//end of print orders
 	include('includes/footer.inc');
 	exit;
 }
