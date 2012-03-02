@@ -148,10 +148,10 @@ echo '</select></td>
 
 echo '<div class="centre">';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type="Submit" name="update" value="' . _('Update Information') . '" />';
+	echo '<input type="submit" name="update" value="' . _('Update Information') . '" />';
 	echo '<br />
 		<br />
-		<<input type="Submit" name="delete" value="' . _('Delete This Location') . '" />';
+		<<input type="submit" name="delete" value="' . _('Delete This Location') . '" />';
 } else {
 	echo '<input type="submit" name="submit" value="' . _('Enter Information') . '" />';
 }

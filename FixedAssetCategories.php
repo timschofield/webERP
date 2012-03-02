@@ -341,7 +341,7 @@ echo '</select></td>
 	<br />';
 
 echo '<div class="centre">
-		<input type="Submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
 	</form>';
 

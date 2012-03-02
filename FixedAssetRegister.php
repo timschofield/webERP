@@ -235,7 +235,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		echo '<th style="text-align:right">' . locale_number_format($TotalNBV, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
 		echo '<th style="text-align:right">' . locale_number_format($TotalDisposals, $_SESSION['CompanyRecord']['decimalplaces']) . '</th></tr>';
 		echo '</table>';
-		echo '<br /><div class="centre"><input type="Submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;';
+		echo '<br /><div class="centre"><input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;';
 		echo '<input type="submit" name="csv" value="' . _('Print as CSV') . '" /></div></form>';
 	}
 } else {
@@ -308,7 +308,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Show Assets') . '" />&nbsp;
 		<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;
-		<input type="Submit" name = "csv" value="' . _('Print as CSV') . '" />
+		<input type="submit" name = "csv" value="' . _('Print as CSV') . '" />
 	</div>
 	</form>';
 }

@@ -103,7 +103,7 @@ else
 	}
 
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="Submit" name="submit" value="' . _('Modify') . '" />&nbsp;&nbsp;';
+	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Modify') . '" />&nbsp;&nbsp;';
 	echo '<input type="hidden" name="language" value="' . $_POST['language'] . '" /></div>';
 	echo '</form>';
 }

@@ -1088,7 +1088,7 @@ if (!isset($DebtorNo)) {
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Update Customer') . '" />&nbsp;
-				<input type="Submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
+				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
 	}
 	
 	echo '</div>';

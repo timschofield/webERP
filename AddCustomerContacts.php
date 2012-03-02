@@ -22,9 +22,9 @@ $SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname,$db);
 $row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Contacts for Customer') . ': <b>' .$row['name'].'</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Contacts for Customer') . ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Edit contact for'). ': <b>' .$row['name'].'</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Edit contact for'). ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
 }
 if ( isset($_POST['submit']) ) {
 
@@ -143,10 +143,10 @@ if (!isset($Id)) {
 		printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href=mailto:%s>%s</a></td>
+				<td><a href="mailto:%s">%s</a></td>
 				<td>%s</td>
-				<td><a href="%sId=%s&DebtorNo=%s">'. _('Edit').' </td>
-				<td><a href="%sId=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">'. _('Delete'). '</td></tr>',
+				<td><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">'. _('Delete'). '</a></td></tr>',
 				$myrow['contactname'],
 				$myrow['role'],
 				$myrow['phoneno'],
@@ -162,7 +162,7 @@ if (!isset($Id)) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</table><br />';
 }
 if (isset($Id)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo .'">' . _('Review all contacts for this Customer') . '</a></div>';
@@ -171,6 +171,7 @@ if (isset($Id)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
@@ -248,10 +249,11 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Notes') . '</td>';
 	if (isset($_POST['ContactNotes'])) {
-		echo '<td><textarea name="ContactNotes">'. $_POST['ContactNotes'] . '</textarea>';
+		echo '<td><textarea name="ContactNotes" rows="3" cols="40">'. $_POST['ContactNotes'] . '</textarea></td>';
 	} else {
-	   echo '<td><textarea name="ContactNotes"></textarea>';
+	   echo '<td><textarea name="ContactNotes" rows="3" cols="40"></textarea></td>';
 	}
+    echo '</tr>';
 	echo '<tr>
 			<td colspan="2">
 				<div class="centre">
@@ -260,6 +262,7 @@ if (!isset($_GET['delete'])) {
 			</td>
 		</tr>
 		</table>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

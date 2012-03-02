@@ -274,7 +274,7 @@ if (isset($_GET['Modify'])){
 
 	echo '<div class="centre">
 			<p>
-			<input type="Submit" name="ModifyGRN" value="' . _('Modify Line') . '" />
+			<input type="submit" name="ModifyGRN" value="' . _('Modify Line') . '" />
 			</p>
 		</div>';
 

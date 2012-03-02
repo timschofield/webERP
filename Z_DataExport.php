@@ -633,7 +633,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<table>';
 	echo '<tr><th colspan="2">' . _('Security User List Export') . '</th></tr>';
 	echo '</table>';
-	echo '<div class="centre"><input type="Submit" name="secuserlist" value="' . _('Export') . '" /></div>';
+	echo '<div class="centre"><input type="submit" name="secuserlist" value="' . _('Export') . '" /></div>';
 	echo '</form><br />';
 
 

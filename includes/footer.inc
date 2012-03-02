@@ -19,6 +19,7 @@ echo '<tr><td colspan="3" class="footer">webERP v' . $_SESSION['VersionNumber'] 
 
 echo '</table>';
 
+echo '</div>';
 echo '</body>';
 echo '</html>';
 ?>

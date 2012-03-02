@@ -128,8 +128,8 @@ if (!isset($Id)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sId=%s&DebtorType=%s">'. _('Edit').' </td>
-				<td><a href="%sId=%s&DebtorType=%s&delete=1">'. _('Delete'). '</td></tr>',
+				<td><a href="%sId=%s&amp;DebtorType=%s">'. _('Edit') . '</a></td>
+				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">'. _('Delete') . '</a></td></tr>',
 				$myrow['date'],
 				$myrow['note'],
 				$myrow['href'],
@@ -154,6 +154,7 @@ if (isset($Id)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorType='.$DebtorType.'">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
@@ -200,7 +201,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>'._('Contact Group Note').':</td>
-			<td><textarea name="note">'. $_POST['note'].'</textarea></td>
+			<td><textarea name="note" rows="3" cols="32">'. $_POST['note'].'</textarea></td>
 		</tr>
 		<tr>
 			<td>'. _('Web site').':</td>
@@ -217,8 +218,9 @@ if (!isset($_GET['delete'])) {
 		</table>
 		<br />
 		<div class="centre">
-			<input type="Submit" name="submit" value="'. _('Enter Information').'" />
+			<input type="submit" name="submit" value="'. _('Enter Information').'" />
 		</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

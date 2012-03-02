@@ -448,10 +448,11 @@ if (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+            <div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>
-				<td>' . _('From Customer Code') . ':' . '</font></td>
+				<td>' . _('From Customer Code') . ':' . '</td>
 				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="0" /></td>
 			</tr>
 			<tr>
@@ -508,7 +509,9 @@ if (isset($_POST['PrintPDF'])
 			<br />
 			<div class="centre">
 				<input tabindex="7" type="submit" name="PrintPDF" value="' . _('Print PDF') , '" />
-			</div>';
+			</div>
+            </div>
+            </form>';
 	}
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

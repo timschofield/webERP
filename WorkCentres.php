@@ -276,7 +276,7 @@ echo '</td>
 
 echo '<br />
 	<div class="centre">
-		<input type="Submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>';
 
 if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {

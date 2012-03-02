@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type="Submit" name="submit" value="' . _('Proceed') . '" />&nbsp;&nbsp;';
+	echo '<input type="submit" name="submit" value="' . _('Proceed') . '" />&nbsp;&nbsp;';
 	echo '</form>';
 	echo '</div>';
 

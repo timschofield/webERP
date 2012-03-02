@@ -126,7 +126,9 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_array($result);
 	if (DB_num_rows($result)>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
-		echo '<br />' . _('There are') . ' ' . $myrow['sections'] . ' ' . _('general ledger accounts groups that refer to this account section') . '</font>';
+        echo '<div>';
+		echo '<br />' . _('There are') . ' ' . $myrow['sections'] . ' ' . _('general ledger accounts groups that refer to this account section');
+        echo '</div>';
 
 	} else {
 		//Fetch section name
@@ -164,10 +166,9 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$db,$ErrMsg);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
-		<br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'<br /></p>';
 
-	echo '<table name="SectionList" class="selection">
+	echo '<table class="selection">
 			<tr>
 				<th>' . _('Section Number') . '</th>
 				<th>' . _('Section Description') . '</th>
@@ -185,15 +186,15 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 		}
 
 		echo '<td>' . $myrow['sectionid'] . '</td><td>' . $myrow['sectionname'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedSectionID=' . $myrow['sectionid'] . '">' . _('Edit') . '</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
 		if ( $myrow['sectionid'] == '1' or $myrow['sectionid'] == '2' ) {
 			echo '<td><b>'._('Restricted').'</b></td>';
 		} else {
-			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedSectionID=' . $myrow['sectionid'] . '&amp;delete=1">' . _('Delete') .'</a></td>';
+			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedSectionID=' . urlencode($myrow['sectionid']) . '&delete=1', ENT_QUOTES, 'UTF-8') . '">' . _('Delete') .'</a></td>';
 		}
 		echo '</tr>';
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</table>';
 } //end of ifs and buts!
 
 
@@ -203,7 +204,8 @@ if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" name="AccountSections" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" id="AccountSections" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+    echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedSectionID'])) {
@@ -257,11 +259,11 @@ if (! isset($_GET['delete'])) {
 	echo '</table><br />';
 
 	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
-		echo '<script>defaultControl(document.AccountSections.SectionID);</script>';
+		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionID);</script>';
 	} else {
-		echo '<script>defaultControl(document.AccountSections.SectionName);</script>';
+		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionName);</script>';
 	}
-
+    echo '</div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

@@ -35,6 +35,7 @@ $TableResult = DB_show_tables($db);
 $UserResult = DB_query("SELECT userid FROM www_users",$db);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
@@ -79,6 +80,7 @@ echo '<td><input type="text" name="ContainingText" size="20" maxlength="20" valu
 
 echo '</table><br />';
 echo '<div class="centre"><input tabindex="5" type="submit" name="View" value="' . _('View') . '" /></div>';
+echo '</div>';
 echo '</form>';
 
 // View the audit trail

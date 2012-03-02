@@ -772,7 +772,7 @@ if (!isset($SupplierID)) {
 
 	echo '</select></td></tr>
 		</table>
-		<p><div class="centre"><input type="Submit" name="submit" value="' . _('Insert New Supplier') . '" />';
+		<p><div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" />';
 	echo '</div></form>';
 
 } else {
