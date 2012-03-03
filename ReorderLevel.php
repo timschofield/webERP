@@ -109,8 +109,8 @@ if (isset($_POST['PrintPDF'])) {
 						 AND locstock.stockid = stockmaster.stockid
 						 AND locstock.stockid ='" . $myrow['stockid'] .
 						 "' AND locstock.loccode !='" . $myrow['loccode'] . "'";
-				$otherresult = DB_query($sql2,$db,'','',false,true);
-				while ($myrow2 = DB_fetch_array($otherresult,$db)){
+				$OtherResult = DB_query($sql2,$db,'','',false,true);
+				while ($myrow2 = DB_fetch_array($OtherResult,$db)){
 					$YPos -=$line_height;
 
 					// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -146,8 +146,8 @@ if (isset($_POST['PrintPDF'])) {
 			include('includes/footer.inc');
 			exit;
 	} else {
-			$pdf->OutputD($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');//UldisN
-			$pdf->__destruct(); //UldisN
+			$pdf->OutputD($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');
+			$pdf->__destruct();
 	}
 
 } else { /*The option to print PDF was not hit so display form */

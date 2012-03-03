@@ -9,7 +9,7 @@ if (!$FirstPage){ /* only initiate a new page if its not the first */
 
 $YPos = $Page_Height - $Top_Margin;
 
-$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -115,$YPos-50,0,35);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -118,$YPos-60,0,35);
 
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {

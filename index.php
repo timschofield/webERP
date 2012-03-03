@@ -68,7 +68,7 @@ while ($i < count($ModuleLink)){
 	if ($_SESSION['ModulesEnabled'][$i]==1)	{
 		// If this is the first time the application is loaded then it is possible that
 		// SESSION['Module'] is not set if so set it to the first module that is enabled for the user
-		if (!isset($_SESSION['Module'])OR $_SESSION['Module']==''){
+		if (!isset($_SESSION['Module']) OR $_SESSION['Module']==''){
 			$_SESSION['Module']=$ModuleLink[$i];
 		}
 		if ($ModuleLink[$i] == $_SESSION['Module']){

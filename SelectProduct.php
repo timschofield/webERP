@@ -411,7 +411,9 @@ echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . 
 if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a><br />';
 	echo '<a href="' . $rootpath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search All Purchase Orders') . '</a><br />';
-	echo '<a href="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg">' . _('Show Part Picture (if available)') . '</a><br />';
+	if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg')){
+		echo '<a href="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg">' . _('Show Part Picture') . '</a><br />';
+	}
 }
 if ($Its_A_Dummy == False) {
 	echo '<a href="' . $rootpath . '/BOMInquiry.php?StockID=' . $StockID . '">' . _('View Costed Bill Of Material') . '</a><br />';

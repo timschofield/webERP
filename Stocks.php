@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 	$i=1;
 
 
-	if (!isset($_POST['Description']) or mb_strlen($_POST['Description']) > 50 OR mb_strlen($_POST['Description'])==0) {
+	if (!isset($_POST['Description']) OR mb_strlen($_POST['Description']) > 50 OR mb_strlen($_POST['Description'])==0) {
 		$InputError = 1;
 		prnMsg (_('The stock item description must be entered and be fifty characters or less long') . '. ' . _('It cannot be a zero length string either') . ' - ' . _('a description is required'),'error');
 		$Errors[$i] = 'Description';
@@ -719,7 +719,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<input type="hidden" name="New" value="'.$New.'" />';
 
-if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
+if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 
 /*If the page was called without $StockID passed to page then assume a new stock item is to be entered show a form with a part Code field other wise the form showing the fields with the existing entries against the part will show for editing with only a hidden StockID field. New is set to flag that the page may have called itself and still be entering a new part, in which case the page needs to know not to go looking up details for an existing part*/
 	if (!isset($StockID)) {
@@ -851,7 +851,7 @@ $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
-	if (!isset($_POST['CategoryID']) or $myrow['categoryid']==$_POST['CategoryID']){
+	if (!isset($_POST['CategoryID']) OR  $myrow['categoryid']==$_POST['CategoryID']){
 		echo '<option selected="selected" value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	} else {
 		echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
@@ -879,13 +879,13 @@ if (!isset($_POST['KGS']) OR $_POST['KGS']==''){
 if (!isset($_POST['Controlled']) OR $_POST['Controlled']==''){
 	$_POST['Controlled']=0;
 }
-if (!isset($_POST['Serialised']) or $_POST['Serialised']=='' || $_POST['Controlled']==0){
+if (!isset($_POST['Serialised']) OR  $_POST['Serialised']=='' || $_POST['Controlled']==0){
 	$_POST['Serialised']=0;
 }
-if (!isset($_POST['DecimalPlaces']) or $_POST['DecimalPlaces']==''){
+if (!isset($_POST['DecimalPlaces']) OR  $_POST['DecimalPlaces']==''){
 	$_POST['DecimalPlaces']=0;
 }
-if (!isset($_POST['Discontinued']) or $_POST['Discontinued']==''){
+if (!isset($_POST['Discontinued']) OR  $_POST['Discontinued']==''){
 	$_POST['Discontinued']=0;
 }
 if (!isset($_POST['Pansize'])) {
@@ -941,22 +941,22 @@ if ($_POST['MBFlag']=='A'){
 } else {
 	echo '<option value="A">' . _('Assembly') . '</option>';
 }
-if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='K'){
+if (!isset($_POST['MBFlag']) OR  $_POST['MBFlag']=='K'){
 	echo '<option selected="selected" value="K">' . _('Kit') . '</option>';
 } else {
 	echo '<option value="K">' . _('Kit') . '</option>';
 }
-if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='M'){
+if (!isset($_POST['MBFlag']) OR  $_POST['MBFlag']=='M'){
 	echo '<option selected="selected" value="M">' . _('Manufactured') . '</option>';
 } else {
 	echo '<option value="M">' . _('Manufactured') . '</option>';
 }
-if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='G' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
+if (!isset($_POST['MBFlag']) OR  $_POST['MBFlag']=='G' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
 	echo '<option selected="selected" value="G">' . _('Phantom') . '</option>';
 } else {
 	echo '<option value="G">' . _('Phantom') . '</option>';
 }
-if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
+if (!isset($_POST['MBFlag']) OR  $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
 	echo '<option selected="selected" value="B">' . _('Purchased') . '</option>';
 } else {
 	echo '<option value="B">' . _('Purchased') . '</option>';
@@ -1031,7 +1031,7 @@ echo '<tr>
 		<td>' . _('Perishable') . ':</td>
 		<td><select name="Perishable">';
 
-if (!isset($_POST['Perishable']) or $_POST['Perishable']==0){
+if (!isset($_POST['Perishable']) OR  $_POST['Perishable']==0){
 		echo '<option selected="selected" value="0">' . _('No'). '</option>';
 } else {
 		echo '<option value="0">' . _('No'). '</option>';
