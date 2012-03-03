@@ -146,7 +146,7 @@ if (isset($_POST['PrintPDF'])) {
 			include('includes/footer.inc');
 			exit;
 	} else {
-			$pdf->OutputI($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');//UldisN
+			$pdf->OutputD($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');//UldisN
 			$pdf->__destruct(); //UldisN
 	}
 
