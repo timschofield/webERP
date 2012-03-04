@@ -649,7 +649,7 @@ $i=0;
 foreach($ModuleList as $ModuleName){
 
 	echo '<tr>
-			<td>' . _('Display') . ' ' . $ModuleName . ' ' . _('options') . ': </td>
+			<td>' . _('Display') . ' ' . $ModuleName . ' ' . _('module') . ': </td>
 			<td><select name="Module_' . $i . '">';
 	if ($ModulesAllowed[$i]==0){
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';

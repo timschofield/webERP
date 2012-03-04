@@ -440,7 +440,7 @@ $MenuItems['system']['Transactions']['Caption'] = array (_('Company Preferences'
 														_('Configuration Settings'),
 														_('User Maintenance'),
 														_('Maintain Security Tokens'),
-														_('Role Permissions'),
+														_('Access Permissions Maintenance'),
 														_('Page Security Settings'),
 														_('Bank Accounts'),
 														_('Currency Maintenance'),
