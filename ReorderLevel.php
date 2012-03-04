@@ -7,7 +7,7 @@
 
 include('includes/session.inc');
 if (isset($_POST['PrintPDF'])) {
-
+	$PaperSize='A4_Landscape';
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Reorder Level Report'));
 	$pdf->addInfo('Subject',_('Parts below reorder level'));
@@ -76,30 +76,47 @@ if (isset($_POST['PrintPDF'])) {
 	$ListCount = 0; // UldisN
 
 	while ($myrow = DB_fetch_array($result,$db)){
-			$YPos -=(2 * $line_height);
+		$YPos -=(2 * $line_height);
 
-			$ListCount ++;
+		$ListCount ++;
 
-			// Parameters for addTextWrap are defined in /includes/class.pdf.php
-			// 1) X position 2) Y position 3) Width
-			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-			// and False to set to transparent
-			$fill = '';
-			$pdf->addTextWrap(50,$YPos,100,$FontSize,$myrow['stockid'],'',0,$fill);
-			$pdf->addTextWrap(150,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
-			$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow['loccode'],'left',0,$fill);
-			$pdf->addTextWrap(370,$YPos,50,$FontSize,locale_number_format($myrow['quantity'], $myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(420,$YPos,50,$FontSize,locale_number_format($myrow['reorderlevel'], $myrow['decimalplaces']),'right',0,$fill);
-			$shortage = $myrow['reorderlevel'] - $myrow['quantity'];
-			$pdf->addTextWrap(470,$YPos,50,$FontSize,locale_number_format($shortage, $myrow['decimalplaces']),'right',0,$fill);
+		$OnOrderSQL = "SELECT SUM(quantityord-quantityrecd) AS quantityonorder
+								FROM purchorders
+								LEFT JOIN purchorderdetails
+								ON purchorders.orderno=purchorderdetails.orderno
+								WHERE purchorderdetails.itemcode='".$myrow['stockid']."'
+								AND purchorders.intostocklocation='".$myrow['loccode']."'";
+		$OnOrderResult = DB_query($OnOrderSQL, $db);
+		$OnOrderRow = DB_fetch_array($OnOrderResult);
+		// Parameters for addTextWrap are defined in /includes/class.pdf.php
+		// 1) X position 2) Y position 3) Width
+		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
+		// and False to set to transparent
+		$fill = '';
+		$pdf->addTextWrap(50,$YPos,100,$FontSize,$myrow['stockid'],'',0,$fill);
+		$pdf->addTextWrap(150,$YPos,150,$FontSize,$myrow['description'],'',0,$fill);
+		$pdf->addTextWrap(410,$YPos,60,$FontSize,$myrow['loccode'],'left',0,$fill);
+		$pdf->addTextWrap(470,$YPos,50,$FontSize,locale_number_format($myrow['quantity'], $myrow['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(520,$YPos,50,$FontSize,locale_number_format($myrow['reorderlevel'], $myrow['decimalplaces']),'right',0,$fill);
+		$pdf->addTextWrap(570,$YPos,50,$FontSize,locale_number_format($OnOrderRow['quantityonorder'], $myrow['decimalplaces']),'right',0,$fill);
+		$shortage = $myrow['reorderlevel'] - $myrow['quantity'] - $OnOrderRow['quantityonorder'];
+		$pdf->addTextWrap(620,$YPos,50,$FontSize,locale_number_format($shortage, $myrow['decimalplaces']),'right',0,$fill);
 
-			if ($YPos < $Bottom_Margin + $line_height){
-			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-						   $Right_Margin,$CategoryDescription);
-			}
+		if ($YPos < $Bottom_Margin + $line_height){
+		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+					   $Right_Margin,$CategoryDescription);
+		}
+		$OnOrderSQL = "SELECT SUM(quantityord-quantityrecd) AS quantityonorder
+								FROM purchorders
+								LEFT JOIN purchorderdetails
+								ON purchorders.orderno=purchorderdetails.orderno
+								WHERE purchorderdetails.itemcode='".$myrow['stockid']."'
+								AND purchorders.intostocklocation='".$myrow['loccode']."'";
+		$OnOrderResult = DB_query($OnOrderSQL, $db);
+		$OnOrderRow = DB_fetch_array($OnOrderResult);
 
-				// Print if stock for part in other locations
-				$sql2 = "SELECT locstock.quantity,
+		// Print if stock for part in other locations
+		$sql2 = "SELECT locstock.quantity,
 								locstock.loccode,
 								locstock.reorderlevel,
 								stockmaster.decimalplaces
@@ -109,24 +126,35 @@ if (isset($_POST['PrintPDF'])) {
 						 AND locstock.stockid = stockmaster.stockid
 						 AND locstock.stockid ='" . $myrow['stockid'] .
 						 "' AND locstock.loccode !='" . $myrow['loccode'] . "'";
-				$OtherResult = DB_query($sql2,$db,'','',false,true);
-				while ($myrow2 = DB_fetch_array($OtherResult,$db)){
-					$YPos -=$line_height;
+		$OtherResult = DB_query($sql2,$db,'','',false,true);
+		while ($myrow2 = DB_fetch_array($OtherResult,$db)){
+			$YPos -=$line_height;
 
-					// Parameters for addTextWrap are defined in /includes/class.pdf.php
-					// 1) X position 2) Y position 3) Width
-					// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-					// and False to set to transparent
+			// Parameters for addTextWrap are defined in /includes/class.pdf.php
+			// 1) X position 2) Y position 3) Width
+			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
+			// and False to set to transparent
+			$OnOrderSQL = "SELECT SUM(quantityord-quantityrecd) AS quantityonorder
+								FROM purchorders
+								LEFT JOIN purchorderdetails
+								ON purchorders.orderno=purchorderdetails.orderno
+								WHERE purchorderdetails.itemcode='".$myrow['stockid']."'
+								AND purchorders.intostocklocation='".$myrow2['loccode']."'";
+			$OnOrderResult = DB_query($OnOrderSQL, $db);
+			$OnOrderRow = DB_fetch_array($OnOrderResult);
 
-					$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow2['loccode'],'left',0,$fill);
-					$pdf->addTextWrap(370,$YPos,50,$FontSize,locale_number_format($myrow2['quantity'], $myrow2['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(420,$YPos,50,$FontSize,locale_number_format($myrow2['reorderlevel'], $myrow2['decimalplaces']),'right',0,$fill);
+			$pdf->addTextWrap(410,$YPos,60,$FontSize,$myrow2['loccode'],'left',0,$fill);
+			$pdf->addTextWrap(470,$YPos,50,$FontSize,locale_number_format($myrow2['quantity'], $myrow2['decimalplaces']),'right',0,$fill);
+			$pdf->addTextWrap(520,$YPos,50,$FontSize,locale_number_format($myrow2['reorderlevel'], $myrow2['decimalplaces']),'right',0,$fill);
+			$pdf->addTextWrap(570,$YPos,50,$FontSize,locale_number_format($OnOrderRow['quantityonorder'], $myrow['decimalplaces']),'right',0,$fill);
+			$shortage = $myrow['reorderlevel'] - $myrow['quantity'] - $OnOrderRow['quantityonorder'];
+			$pdf->addTextWrap(620,$YPos,50,$FontSize,locale_number_format($shortage, $myrow['decimalplaces']),'right',0,$fill);
 
-					if ($YPos < $Bottom_Margin + $line_height){
-					   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$CategoryDescription);
-					}
+			if ($YPos < $Bottom_Margin + $line_height){
+			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$CategoryDescription);
+			}
 
-				} /*end while loop */
+		} /*end while loop */
 
 	} /*end while loop */
 
@@ -157,7 +185,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
 
-	echo '<br /><br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post"><table>';
+	echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post"><table>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 			locationname
@@ -235,7 +263,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$line_height=12;
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
-
+	$pdf->RoundRectangle($Left_Margin-5, $YPos+5, 300, ($line_height*3), 10);
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
 	$YPos -=$line_height;
@@ -257,12 +285,13 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 
 	$pdf->addTextWrap(50,$YPos,100,$FontSize,_('Part Number'), 'left');
 	$pdf->addTextWrap(150,$YPos,150,$FontSize,_('Description'), 'left');
-	$pdf->addTextWrap(310,$YPos,60,$FontSize,_('Location'), 'left');
-	$pdf->addTextWrap(370,$YPos,50,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(420,$YPos,50,$FontSize,_('Reorder'), 'right');
-	$pdf->addTextWrap(470,$YPos,50,$FontSize,_('Needed'), 'right');
+	$pdf->addTextWrap(410,$YPos,60,$FontSize,_('Location'), 'left');
+	$pdf->addTextWrap(470,$YPos,50,$FontSize,_('Quantity'), 'right');
+	$pdf->addTextWrap(520,$YPos,50,$FontSize,_('Reorder'), 'right');
+	$pdf->addTextWrap(570,$YPos,50,$FontSize,_('On Order'), 'right');
+	$pdf->addTextWrap(620,$YPos,50,$FontSize,_('Needed'), 'right');
 	$YPos -= $line_height;
-	$pdf->addTextWrap(415,$YPos,50,$FontSize,_('Level'), 'right');
+	$pdf->addTextWrap(515,$YPos,50,$FontSize,_('Level'), 'right');
 
 
 	$FontSize=8;
