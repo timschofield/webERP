@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 											reasondescription,
 											dissallowinvoices)
 									VALUES ('" . $_POST['ReasonCode'] . "',
-											'" . $_POST['ReasonDescription'] ."', 
+											'" . $_POST['ReasonDescription'] ."',
 											0)";
 		}
 
@@ -172,7 +172,7 @@ or deletion of the records*/
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedReason=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit stuatus record?') . '\');">'. _('Delete') .'</a></td>
+			<td><a href="%s?SelectedReason=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">'. _('Delete') .'</a></td>
 			</tr>',
 			$myrow['reasoncode'],
 			$myrow['reasondescription'],
@@ -181,7 +181,7 @@ or deletion of the records*/
 			$myrow['reasoncode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 			$myrow['reasoncode']);
-	
+
 	} //END WHILE LIST LOOP
 	echo '</table>';
 
