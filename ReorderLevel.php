@@ -84,8 +84,9 @@ if (isset($_POST['PrintPDF'])) {
 								FROM purchorders
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorderdetails.itemcode='".$myrow['stockid']."'
-								AND purchorders.intostocklocation='".$myrow['loccode']."'";
+								WHERE purchorders.status !='Cancelled' 
+								      AND purchorders.status !='Rejected'								      								      AND purchorderdetails.itemcode='".$myrow['stockid']."'
+								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL, $db);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -110,8 +111,10 @@ if (isset($_POST['PrintPDF'])) {
 								FROM purchorders
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorderdetails.itemcode='".$myrow['stockid']."'
-								AND purchorders.intostocklocation='".$myrow['loccode']."'";
+								WHERE purchorders.status != 'Cancelled'
+								      AND purchorders.status != 'Rejected'
+								      AND purchorderdetails.itemcode='".$myrow['stockid']."'
+								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL, $db);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 
@@ -138,8 +141,10 @@ if (isset($_POST['PrintPDF'])) {
 								FROM purchorders
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorderdetails.itemcode='".$myrow['stockid']."'
-								AND purchorders.intostocklocation='".$myrow2['loccode']."'";
+								WHERE purchorders.status !='Cancelled'
+							              AND purchorders.status !='Rejected'
+							      	      AND purchorderdetails.itemcode='".$myrow['stockid']."'
+								      AND purchorders.intostocklocation='".$myrow2['loccode']."'";
 			$OnOrderResult = DB_query($OnOrderSQL, $db);
 			$OnOrderRow = DB_fetch_array($OnOrderResult);
 
