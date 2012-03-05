@@ -789,7 +789,7 @@ If (isset($PrintPDF)
 							<td align=left bgcolor="#bbbbbb"><b>' . _('Delivered To') . ':</b></td>
 						</tr>';
 				   echo '<tr>
-				   		<td bgcolor="#eee">' .$myrow['brname'] .
+				   		<td bgcolor="#eeeeee">' .$myrow['brname'] .
 									'<br />' . $myrow['braddress1'] .
 									'<br />' . $myrow['braddress2'] .
 									'<br />' . $myrow['braddress3'] .
@@ -798,7 +798,7 @@ If (isset($PrintPDF)
 									'<br />' . $myrow['braddress6'] .
 						'</td>';
 
-				   echo '<td bgcolor="#eee">' . $myrow['deliverto'] .
+				   echo '<td bgcolor="#eeeeee">' . $myrow['deliverto'] .
 									'<br />' . $myrow['deladd1'] .
 									'<br />' . $myrow['deladd2'] .
 									'<br />' . $myrow['deladd3'] .
