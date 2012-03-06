@@ -1,4 +1,5 @@
 webERP Change Log
+6/3/2012 6/3/2012 rule out 'Pending' status PO from On Order Quantity in ReorderLevel.php Suggested by Brian. Add by Exson
 6/3/2012 Remove carriage return and feed line from Quotation PDF file in PDFQuotation.php Reported by Thomas_lie and fixed by Exson
 03/06/2012 add condition to prevent blank stock category description in StockCategories.php Fixed by Exson
 6/3/12 BankMatching.php sql error due to extra single quotation. Reported by PakRichard and fixed by Exson
