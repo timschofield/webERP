@@ -51,7 +51,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			$myrow=DB_fetch_array($result);
 			$AmountCleared = round($myrow[0] / $myrow[1],2);
 			/*Update the banktrans recoord to match it off */
-			$sql = "UPDATE banktrans SET amountcleared= ". $AmountCleared . "'
+			$sql = "UPDATE banktrans SET amountcleared= ". $AmountCleared . "
 									WHERE banktransid='" . $_POST['BankTrans_' . $Counter] . "'";
 			$ErrMsg =  _('Could not match off this payment because');
 			$result = DB_query($sql,$db,$ErrMsg);
