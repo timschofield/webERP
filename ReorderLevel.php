@@ -85,7 +85,9 @@ if (isset($_POST['PrintPDF'])) {
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
 								WHERE purchorders.status !='Cancelled' 
-								      AND purchorders.status !='Rejected'								      								      AND purchorderdetails.itemcode='".$myrow['stockid']."'
+								AND purchorders.status !='Rejected'
+								AND purchorders.status !='Pending'
+								AND purchorderdetails.itemcode='".$myrow['stockid']."'
 								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL, $db);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
@@ -112,7 +114,8 @@ if (isset($_POST['PrintPDF'])) {
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
 								WHERE purchorders.status != 'Cancelled'
-								      AND purchorders.status != 'Rejected'
+									AND purchorders.status != 'Rejected'
+									AND purchorders.status != 'Pending'
 								      AND purchorderdetails.itemcode='".$myrow['stockid']."'
 								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL, $db);
@@ -142,7 +145,8 @@ if (isset($_POST['PrintPDF'])) {
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
 								WHERE purchorders.status !='Cancelled'
-							              AND purchorders.status !='Rejected'
+									AND purchorders.status !='Rejected'
+									AND purchorders.status !='Pending'
 							      	      AND purchorderdetails.itemcode='".$myrow['stockid']."'
 								      AND purchorders.intostocklocation='".$myrow2['loccode']."'";
 			$OnOrderResult = DB_query($OnOrderSQL, $db);
