@@ -1,4 +1,5 @@
 webERP Change Log
+03/06/2012 add condition to prevent blank stock category description in StockCategories.php Fixed by Exson
 6/3/12 BankMatching.php sql error due to extra single quotation. Reported by PakRichard and fixed by Exson
 5/3/12 PrintCustTransPortrait.php html elements failed to display. Reported by rfthomas, fixed by Tim, Exson
 3/3/12 Phil: SelectProduct.php checked for existence of part pic before displaying a link that could potnetially fail
