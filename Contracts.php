@@ -746,11 +746,11 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
 		_('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier .'" name="CustomerSelection" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier .'" id="CustomerSelection" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table cellpadding="3" colspan="4" class="selection">
+	echo '<table cellpadding="3" class="selection">
 			<tr>
 			<td><h5>' . _('Part of the Customer Branch Name') . ':</h5></td>
 			<td><input tabindex="1" type="text" name="CustKeywords" size="20" maxlength="25" /></td>
@@ -763,13 +763,13 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		</tr>
 		</table>
 		<br /><div class="centre"><input tabindex="4" type="submit" name="SearchCustomers" value="' . _('Search Now') . '" />
-		<input tabindex="5" type="submit" action="reset" value="' . _('Reset') .'" /></div>';
+		<input tabindex="5" type="submit" name="reset" value="' . _('Reset') .'" /></div>';
 
 	if (isset($result_CustSelect)) {
 
-		echo '<table cellpadding="2" class="selection">';
+		echo '<br /><table cellpadding="2" class="selection">';
 
-		$TableHeader = '<br /><tr>
+		$TableHeader = '<tr>
 				<th>' . _('Customer') . '</th>
 				<th>' . _('Branch') . '</th>
 				<th>' . _('Contact') . '</th>
@@ -791,12 +791,12 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				$k=1;
 			}
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>'.htmlspecialchars($myrow['name'], ENT_QUOTES,'UTF-8').'</td>';
+				echo '<td>'.htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false).'</td>';
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="'.htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8').'" /></td>
-					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'" />
+			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="'.htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8').'" />
+					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'" /></td>
 					<td>'.htmlspecialchars($myrow['contactname'], ENT_QUOTES,'UTF-8') .'</td>
 					<td>'.$myrow['phoneno'].'</td>
 					<td>'.$myrow['faxno'].'</td>
@@ -806,18 +806,17 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 //end of page full new headings if
 		}
 //end of while loop
-		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
+		echo '<tr><td><input type="hidden" name="JustSelectedACustomer" value="Yes" /></td></tr>';
 		
-		echo '</table>
-              </div>
-              </form>';
-
+		echo '</table>';
 	}//end if results to show
+    echo '</div>
+          </form>';
 
 //end if RequireCustomerSelection
 } else { /*A customer is already selected so get into the contract setup proper */
 
-	echo '<form name="ContractEntry" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+	echo '<form id="ContractEntry" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -883,7 +882,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		</tr>
 		<tr>
 			<td>' . _('Contract Description') . ':</td>
-			<td><textarea name="ContractDescription" style="width:100%" rows="5">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td>
+			<td><textarea name="ContractDescription" style="width:100%" rows="5" cols="40">' . $_SESSION['Contract'.$identifier]->ContractDescription . '</textarea></td>
 		</tr><tr>
 			<td>'. _('Drawing File') . ' .jpg' . ' ' . _('format only') .':</td>
 			<td><input type="file" id="Drawing" name="Drawing" /></td>
@@ -1047,11 +1046,10 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo '</div>';
 	}
 	if ($_SESSION['Contract'.$identifier]->Status!=2) {
-		echo '<p>
-				<div class="centre">
-					<input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
-				</div>
-			</p>';
+		echo '<div class="centre">
+                 <br />
+				 <input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
+		      </div>';
 	}
 	echo '</div>
           </form>';

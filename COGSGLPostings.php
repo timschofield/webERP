@@ -105,8 +105,8 @@ if (!isset($SelectedCOGSPostingID)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-					<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
+					<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</a></td>
+					<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</a></td></tr>',
 					$myrow['area'],
 					$myrow['stkcat'],
 					$myrow['salestype'],
@@ -203,8 +203,8 @@ if (!isset($SelectedCOGSPostingID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</td>
+				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
 				$myrow['area'],
 				$myrow['stkcat'],
@@ -341,7 +341,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . $myrow['accountcode']  . ' - '  . $myrow['accountname'] . '</option>';
+	echo $myrow['accountcode'] . '">' . $myrow['accountcode']  . ' - '  . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8') . '</option>';
 
 } //end while loop
 

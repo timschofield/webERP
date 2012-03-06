@@ -49,45 +49,47 @@ $invalid_imports = 0;
 $valid = true;
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'?identifier='.$identifier.'" enctype="multipart/form-data" >';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<input type="hidden" name="LineNo" value="' . $LineNo . '">';
-echo '<input type="hidden" name="StockID" value="'. $StockID. '">';
-echo '<table class=selection><tr><td>';
-echo '<input type="radio" name=EntryType onClick="submit();" ';
+echo '<input type="hidden" name="LineNo" value="' . $LineNo . '" />';
+echo '<input type="hidden" name="StockID" value="'. $StockID. '" />';
+echo '<table class="selection"><tr><td>';
+echo '<input type="radio" name="EntryType" onclick="submit();" ';
 if ($_POST['EntryType']=='KEYED') {
-	echo ' checked ';
+	echo ' checked="checked" ';
 }
-echo 'value="KEYED">'. _('Keyed Entry');
-echo '</TD>';
+echo 'value="KEYED" />'. _('Keyed Entry');
+echo '</td>';
 
 if ($LineItem->Serialised==1){
 	echo '<td>';
-	echo '<input type="radio" name=EntryType onClick="submit();" ';
+	echo '<input type="radio" name="EntryType" onclick="submit();" ';
 	if ($_POST['EntryType']=='SEQUENCE') {
-		echo ' checked ';
+		echo ' checked="checked" ';
 	}
-	echo ' value="SEQUENCE">'. _('Sequential');
+	echo ' value="SEQUENCE" />'. _('Sequential');
 	echo '</td>';
 }
 
-echo '<td valign=bottom>';
-echo '<input type="radio" id="FileEntry" name="EntryType" onClick="submit();" ';
+echo '<td valign="bottom">';
+echo '<input type="radio" id="FileEntry" name="EntryType" onclick="submit();" ';
 if ($_POST['EntryType']=='FILE') {
-	echo ' checked ';
+	echo ' checked="checked" ';
 }
-echo ' value="FILE">'. _('File Upload');
-echo '&nbsp; <input type="file" name="ImportFile" onClick="document.getElementById(\'FileEntry\').checked=true;" >';
-echo '</td></tr><tr><td colspan=3>';
-echo '<div class="centre"><input type="submit" value="'. _('Set Entry Type'). ':"></div>';
+echo ' value="FILE" />'. _('File Upload');
+echo '&nbsp; <input type="file" name="ImportFile" onclick="document.getElementById(\'FileEntry\').checked=true;" />';
+echo '</td></tr><tr><td colspan="3">';
+echo '<div class="centre"><input type="submit" value="'. _('Set Entry Type'). ':" /></div>';
 echo '</td></tr></table>';
+echo '</div>';
 echo '</form>';
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
-$EditLink =  '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&EditControlled=true&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
-$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&DELETEALL=YES&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br /></div>';
+$EditLink =  '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;EditControlled=true&amp;StockID=' . $LineItem->StockID .
+	'&amp;LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
+$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID .
+	'&amp;LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br /></div>';
 $sql="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";

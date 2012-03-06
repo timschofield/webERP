@@ -273,7 +273,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 /***************************************************************
 	Line Item Display
 ***************************************************************/
-echo '<table width="90%" cellpadding="2" colspan="7" class="selection">
+echo '<table width="90%" cellpadding="2" class="selection">
 	<tr>
 		<th>' . _('Item Code') . '</th>
 		<th>' . _('Item Description' ) . '</th>
@@ -317,6 +317,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	$_SESSION['Items'.$identifier]->totalVolume += ($LnItm->QtyDispatched * $LnItm->Volume);
 	$_SESSION['Items'.$identifier]->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
 
+    echo $RowStarter;
 	echo '<td>'.$LnItm->StockID.'</td>
 		<td>'.$LnItm->ItemDescription.'</td>
 		<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
@@ -545,10 +546,10 @@ $_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],$_SESSION['Items
 
 echo '<tr>
 	<td colspan="10" class="number">' . _('Invoice Totals'). '</td>
-	<td class="number:><hr><b>'.$DisplaySubTotal.'</b><hr></td>
+	<td class="number"><hr /><b>'.$DisplaySubTotal.'</b><hr /></td>
 	<td colspan="2"></td>
-	<td class="number"><hr><b>' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr></td>
-	<td class="number"><hr><b>' . locale_number_format($TaxTotal+($_SESSION['Items'.$identifier]->total + $_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr></td>
+	<td class="number"><hr /><b>' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr /></td>
+	<td class="number"><hr /><b>' . locale_number_format($TaxTotal+($_SESSION['Items'.$identifier]->total + $_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr /></td>
 </tr>';
 
 if (! isset($_POST['DispatchDate']) OR  ! Is_Date($_POST['DispatchDate'])){
@@ -629,7 +630,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		} //end of loop around items on the order for negative check
 
 		if ($NegativesFound){
-			echo '<div class="centre">
+            echo '</div>';
+            echo '</form>';
+            echo '<div class="centre">
 					<input type="submit" name="Update" value="' . _('Update'). '" /></div>';
 			include('includes/footer.inc');
 			exit;
