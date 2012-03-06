@@ -373,7 +373,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$DbgMsg = _('The SQL that failed to update the quotation was');
 			$UpdQuoteResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 			prnMsg(_('The contract quotation has been updated based on the new contract cost and margin'),'success');
-			echo '<br /><a href="' .$rootpath . '/SelectSalesOrder.php?OrderNumber=' .  $_SESSION['Contract'.$identifier]->OrderNo . '&Quotations=Quotes_Only">' . _('Go to Quotation') . ' ' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a>';
+			echo '<br /><a href="' .$rootpath . '/SelectSalesOrder.php?OrderNumber=' .  $_SESSION['Contract'.$identifier]->OrderNo . '&amp;Quotations=Quotes_Only">' . _('Go to Quotation') . ' ' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a>';
 
 		}
 		if ($ExistingContract['status'] == 0 AND $_POST['Status']==1){
@@ -747,6 +747,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
 		_('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier .'" name="CustomerSelection" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table cellpadding="3" colspan="4" class="selection">
@@ -807,7 +808,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 //end of while loop
 		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 		
-		echo '</table></form>';
+		echo '</table>
+              </div>
+              </form>';
 
 	}//end if results to show
 
@@ -815,6 +818,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 } else { /*A customer is already selected so get into the contract setup proper */
 
 	echo '<form name="ContractEntry" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
@@ -936,7 +940,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if ($_SESSION['Contract'.$identifier]->Status >=1) {
 		echo '<tr>
 				<td>' . _('Quotation Reference/Sales Order No') . ':</td>
-				<td><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $_SESSION['Contract'.$identifier]->OrderNo . '&Quotations=Quotes_Only">' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a></td>
+				<td><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $_SESSION['Contract'.$identifier]->OrderNo . '&amp;Quotations=Quotes_Only">' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a></td>
 			</tr>';
 	}
 	if ($_SESSION['Contract'.$identifier]->Status!=2 and isset($_SESSION['Contract'.$identifier]->WO)) {
@@ -1049,7 +1053,8 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				</div>
 			</p>';
 	}
-	echo '</form>';
+	echo '</div>
+          </form>';
 } /*end of if customer selected  and entering contract header*/
 
 include('includes/footer.inc');

@@ -106,7 +106,7 @@ if (!isset($SelectedCOGSPostingID)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-					<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
+					<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
 					$myrow['area'],
 					$myrow['stkcat'],
 					$myrow['salestype'],
@@ -204,7 +204,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedCOGSPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</td>
+				<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</td>
 				</tr>',
 				$myrow['area'],
 				$myrow['stkcat'],
@@ -228,6 +228,7 @@ if (isset($SelectedCOGSPostingID)) {
 echo '<br />';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCOGSPostingID)) {
@@ -353,6 +354,7 @@ echo '</select></td>
 	<div class="centre">
 		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

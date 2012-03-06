@@ -216,6 +216,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 echo '<form name="ContractBOMForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
@@ -227,7 +228,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
 		echo  '<tr>
-				<th colspan="7"><font color="navy" size="2">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</font></th>
+				<th colspan="7">' . _('Contract Reference:') .' '. $_SESSION['Contract'.$identifier]->ContractRef.'</th>
 			</tr>';
 	}
 
@@ -263,7 +264,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . locale_number_format($ContractComponent->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&Delete=' . $ContractComponent->ComponentID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . '\');">' . _('Delete') . '</a></td></tr>';
+			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . '\');">' . _('Delete') . '</a></td></tr>';
 		$TotalCost += $LineTotal;
 	}
 
@@ -317,17 +318,17 @@ if (!isset($_GET['Edit'])) {
 	}
 
 	echo '</select></td>
-			<td><font size="2">' . _('Enter text extracts in the description') . ':</font></td>
+			<td>' . _('Enter text extracts in the description') . ':</td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><font size="3"> <b>' . _('OR') . ' </b></font><font size="2">' . _('Enter extract of the Stock Code') . ':</font></td>
+			<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
 			<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><font size="3"><b>' . _('OR') . ' </b></font><font size="2"><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></font></td>
+			<td><b>' . _('OR') . ' </b><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></td>
 		</tr>
 		</table>
 		<br />
@@ -364,7 +365,7 @@ if (isset($SearchResult)) {
 		}
 
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg') ) {
-			$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $myrow['stockid']. '&text=&width=50&height=50" />';
+			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $myrow['stockid']. '&amp;text=&amp;width=50&amp;height=50" />';
 		} else {
 			$ImageSource = '<i>'._('No Image').'</i>';
 		}
@@ -398,6 +399,7 @@ if (isset($SearchResult)) {
 }#end if SearchResults to show
 
 echo '<hr />
+    </div> 
 	</form>';
 include('includes/footer.inc');
 ?>

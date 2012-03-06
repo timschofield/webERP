@@ -432,12 +432,14 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 
 if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order being processed now
 
-	echo '<form  method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&identifier=' . $identifier . '">';
+	echo '<form  method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&amp;identifier=' . $identifier . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 		<div class="centre">
 			<input type="submit" name="CloseContract" value="' . _('Close Contract') .  '" onclick="return confirm(\'' . _('Closing the contract will prevent further stock being issued to it and charges being made against it. Variances will be taken to the profit and loss account. Are You Sure?') . '\');" />
 		</div>
+        </div>
 		</form>';
 }
 

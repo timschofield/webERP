@@ -267,6 +267,7 @@ echo '<table class="selection">
 			<br />';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /***************************************************************
@@ -327,7 +328,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 		if (isset($_POST['ProcessInvoice'])) {
 			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number"><input type="hidden" name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?identifier=' . $identifier . '&LineNo='. $LnItm->LineNumber.'">' .locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</a></td>';
+			echo '<td class="number"><input type="hidden" name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?identifier=' . $identifier . '&amp;LineNo='. $LnItm->LineNumber.'">' .locale_number_format($LnItm->QtyDispatched,$LnItm->DecimalPlaces) . '</a></td>';
 		}
 	} else {
 		if (isset($_POST['ProcessInvoice'])) {
@@ -395,7 +396,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 
 	if ($LnItm->Controlled==1){
 		if (!isset($_POST['ProcessInvoice'])) {
-			echo '<td><a href="' . $rootpath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . $identifier . '&LineNo='. $LnItm->LineNumber.'">';
+			echo '<td><a href="' . $rootpath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . $identifier . '&amp;LineNo='. $LnItm->LineNumber.'">';
 			if ($LnItm->Serialised==1){
 				echo _('Enter Serial Numbers');
 			} else { /*Just batch/roll/lot control */
@@ -1613,9 +1614,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo '<br /><div class="centre">';
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
+		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
 	} else {
-		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
+		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
 	}
 	echo '<a href="'.$rootpath.'/SelectSalesOrder.php">'. _('Select another order for invoicing'). '</a><br /><br />';
 	echo '<a href="'.$rootpath.'/SelectOrderItems.php?NewOrder=Yes">'._('Sales Order Entry').'</a></div><br />';
@@ -1666,7 +1667,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		</div>
 		<input type="hidden" name="ShipVia" value="' . $_SESSION['Items'.$identifier]->ShipVia . '" />';
 }
-
+echo '</div>';
 echo '</form>';
 
 include('includes/footer.inc');
