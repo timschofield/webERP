@@ -14,21 +14,19 @@ if (isset($_GET['StockID'])){
 
 if (!isset($_POST['StockID'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<b>
+        <div>
 		<br />
-		</b>
 		<div class="page_help_text">
 			'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to view the costed bill of materials') . '
-			<br />
-			<font size="1">' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') . '</font>
+			<br />' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') . '
 		</div>
 		<br />
 		<table class="selection">
 		<tr>
-			<td><font size="1">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
+			<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
 			<td><input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" /></td>
-			<td><font size="3"><b>' . _('OR') . '</b></font></td>
-			<td><font size="1">' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</font></td>
+			<td><b>' . _('OR') . '</b></td>
+			<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
 			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" /></td>
 		</tr>
 		</table>
@@ -105,8 +103,6 @@ if (isset($_POST['Search'])
 	AND !isset($SelectedParent)) {
 
 	echo '<br />
-			<hr>
-			<br />
 			<table class="selection">';
 	$TableHeader = '<tr>
 						<th>' . _('Code') . '</th>
@@ -133,7 +129,7 @@ if (isset($_POST['Search'])
 			$StockOnHand = locale_number_format($myrow['totalonhand'],2);
 		}
 		$tabindex=$j+4;
-		printf('<td><input tabindex="' .$tabindex . '" type="submit" name="StockID" value="%s"</td>
+		printf('<td><input tabindex="' .$tabindex . '" type="submit" name="StockID" value="%s" /></td>
 		        <td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -148,6 +144,10 @@ if (isset($_POST['Search'])
 //end of while loop
 
 	echo '</table><br />';
+}
+if (!isset($_POST['StockID'])) {
+    echo '</div>
+          </form>';
 }
 
 if (isset($StockID) and $StockID!=""){
@@ -191,7 +191,7 @@ if (isset($StockID) and $StockID!=""){
 		echo '<table class="selection">';
 		echo '<tr>
 				<th colspan="5">
-					<div class="centre"><font size="4"><b>' . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . '</b></font>
+					<div class="centre"><b>' . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . '</b>
 					</div></th>
 			</tr>';
 		$TableHeader = '<tr>
@@ -258,9 +258,7 @@ if (isset($StockID) and $StockID!=""){
 }
 
 if (!isset($_POST['StockID']) or $_POST['StockID']=='') {
-	echo '<script>defaultControl(document.forms[0].StockCode);</script>';
+	echo '<script type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 }
-
-echo '</form>';
 include('includes/footer.inc');
 ?>

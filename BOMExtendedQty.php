@@ -248,11 +248,10 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-	echo '<br />
-		<br />
-		<form action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . ' method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+        <div>
+        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<tr>
 			<td>' . _('Part') . ':</td>
 			<td><input type ="text" name="Part" size="20" /></td>
@@ -281,7 +280,9 @@ if (isset($_POST['PrintPDF'])) {
 		<div class="centre">
 			<br />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>';
+		</div>
+        </div>
+        </form>';
 
 	include('includes/footer.inc');
 

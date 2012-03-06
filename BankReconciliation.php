@@ -9,6 +9,7 @@ $title = _('Bank Reconciliation');
 include('includes/header.inc');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
@@ -129,11 +130,10 @@ if (DB_num_rows($AccountsResults)==0){
 include ('includes/GLPostings.inc');
 
 echo '</table>
-	<p>
+	<br />
 	<div class="centre">
 		<input type="submit" tabindex="2" name="ShowRec" value="' . _('Show bank reconciliation statement') . '" />
 	</div>
-	</p>
 	<br />';
 
 
@@ -196,7 +196,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				AND amount < 0
 				AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate";
 
-	echo '<tr></tr>'; /*Bang in a blank line */
+	echo '<tr><td><br /></td></tr>'; /*Bang in a blank line */
 
 	$ErrMsg = _('The unpresented cheques could not be retrieved by the SQL because');
 	$UPChequesResult = DB_query($SQL, $db, $ErrMsg);
@@ -253,7 +253,9 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	}
 	//end of while loop
 
-	echo '<tr></tr>
+	echo '<tr>
+             <td><br /></td>
+          </tr>
 			<tr class="EvenTableRows">
 				<td colspan="6">' . _('Total of all unpresented cheques') . '</td>
 				<td class="number">' . locale_number_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td>
@@ -272,7 +274,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			AND amount > 0
 			AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate";
 
-	echo '<tr></tr>'; /*Bang in a blank line */
+	echo '<tr><td><br /></td></tr>'; /*Bang in a blank line */
 
 	$ErrMsg = _('The uncleared deposits could not be retrieved by the SQL because');
 
@@ -328,6 +330,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	}
 	//end of while loop
 	echo '<tr>
+            <td><br /></td>
 		</tr>
 		<tr class="EvenTableRows">
 			<td colspan="6">' . _('Total of all uncleared deposits') . '</td>
@@ -335,6 +338,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		</tr>';
 	$FXStatementBalance = ($Balance*$CurrencyRow['rate'] - $TotalUnpresentedCheques -$TotalUnclearedDeposits);
 	echo '<tr>
+            <td><br /></td>
 		</tr>
 		<tr class="EvenTableRows">
 			<td colspan="6"><b>' . _('Bank statement balance should be') . ' (' . $CurrencyRow['currcode'] . ')</b></td>
@@ -374,10 +378,10 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 if (isset($_POST['BankAccount'])) {
 	echo '<div class="centre">
 			<p>
-			<a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments&Account='.$_POST['BankAccount'].'">' . _('Match off cleared payments') . '</a>
+			<a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared payments') . '</a>
 			</p>
 			<br />
-			<a tabindex="5" href="' . $rootpath . '/BankMatching.php?Type=Receipts&Account='.$_POST['BankAccount'].'">' . _('Match off cleared deposits') . '</a>
+			<a tabindex="5" href="' . $rootpath . '/BankMatching.php?Type=Receipts&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared deposits') . '</a>
 		</div>';
 } else {
 	echo '<div class="centre">
@@ -388,7 +392,7 @@ if (isset($_POST['BankAccount'])) {
 			<a tabindex="5" href="' . $rootpath . '/BankMatching.php?Type=Receipts">' . _('Match off cleared deposits') . '</a>
 		</div>';
 }
-
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

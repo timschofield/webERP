@@ -212,15 +212,15 @@ if (!isset($SelectedBankAccount)) {
 		} elseif ($myrow['invoice']==2) {
 			$DefaultBankAccount=_('Currency Default');
 		}
-		printf('<td>%s<br /><font size="2">%s</font></td>
+		printf('<td>%s<br />%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</td>
-				<td><a href="%s?SelectedBankAccount=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this bank account?') . '\');">' . _('Delete') . '</td>
+				<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</a></td>
+				<td><a href="%s?SelectedBankAccount=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this bank account?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['accountcode'],
 			$myrow['accountname'],
@@ -249,6 +249,7 @@ if (isset($SelectedBankAccount)) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
@@ -298,9 +299,9 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AccountCode']) and $myrow['accountcode']==$_POST['AccountCode']) {
-			echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 		} else {
-			echo '<option value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+			echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 		}
 
 	} //end while loop
@@ -336,7 +337,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Bank Address') . ': </td>
-		<td><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" maxlength="50" /></td>
+		<td><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" maxlength="50" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Currency Of Account') . ': </td>
@@ -358,6 +359,7 @@ while ($myrow = DB_fetch_array($result)) {
 } //end while loop
 
 echo '</select></td>';
+echo '</tr>';
 
 echo '<tr>
 		<td>' . _('Default for Invoices') . ': </td>
@@ -394,7 +396,7 @@ echo '</select></td>';
 
 echo '</tr></table><br />
 		<div class="centre"><input tabindex="7" type="submit" name="submit" value="'. _('Enter Information') .'" /></div>';
-
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

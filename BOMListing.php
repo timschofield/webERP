@@ -112,11 +112,12 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="POST">
-			<table class="selection">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+              <div>
+              <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			  <table class="selection">';
 
-		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</font></td>
+		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</td>
 				<td><input tabindex="1" type="text" name="FromCriteria" size="20" maxlength="20" value="1" /></td>
 			</tr>';
 
@@ -126,10 +127,12 @@ If (isset($_POST['PrintPDF'])
 
 
 		echo '</table>
-				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
-		echo '<script>defaultControl(document.forms[0].FromCriteria);</script>';
+				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
+             </div>
+             </form>';
+		echo '<script type="text/javascript">defaultControl(document.forms[0].FromCriteria);</script>';
 	}
-	include('includes/footer.inc');;
+	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
 
