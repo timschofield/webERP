@@ -45,7 +45,7 @@ if ( $LineItem->Controlled != 1 ){
 /*****  get the page going now... *****/
 echo '<div class="centre">';
 
-echo '<br /><a href="'.$rootpath.'/StockAdjustments.php">' . _('Back to Adjustment Screen') . '</a>';
+echo '<br /><a href="'.$rootpath.'/StockAdjustments.php?identifier='.$identifier.'">' . _('Back to Adjustment Screen') . '</a>';
 
 echo '<br /><font size="2"><b>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
 
