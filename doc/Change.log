@@ -1,5 +1,6 @@
 webERP Change Log
-
+7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustmentsControlled.php. Reported by Soujiro
+7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustments.php. Reported by Soujiro
 6/3/2012 Exson: Rule out 'Pending' status PO from On Order Quantity in ReorderLevel.php Suggested by Brian May
 6/3/2012 Exson: Remove carriage return and feed line from Quotation PDF file in PDFQuotation.php Reported by Thomas_lie
 03/06/2012 Exson: add condition to prevent blank stock category description in StockCategories.php
