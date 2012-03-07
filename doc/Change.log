@@ -1,15 +1,16 @@
 webERP Change Log
-6/3/2012 6/3/2012 rule out 'Pending' status PO from On Order Quantity in ReorderLevel.php Suggested by Brian. Add by Exson
-6/3/2012 Remove carriage return and feed line from Quotation PDF file in PDFQuotation.php Reported by Thomas_lie and fixed by Exson
-03/06/2012 add condition to prevent blank stock category description in StockCategories.php Fixed by Exson
-6/3/12 BankMatching.php sql error due to extra single quotation. Reported by PakRichard and fixed by Exson
-5/3/12 PrintCustTransPortrait.php html elements failed to display. Reported by rfthomas, fixed by Tim, Exson
+
+6/3/2012 Exson: Rule out 'Pending' status PO from On Order Quantity in ReorderLevel.php Suggested by Brian May
+6/3/2012 Exson: Remove carriage return and feed line from Quotation PDF file in PDFQuotation.php Reported by Thomas_lie
+03/06/2012 Exson: add condition to prevent blank stock category description in StockCategories.php
+6/3/12 Exson: BankMatching.php sql error due to extra single quotation. Reported by PakRichard
+5/3/12 Exson/Tim: PrintCustTransPortrait.php html elements failed to display. Reported by rfthomas
 3/3/12 Phil: SelectProduct.php checked for existence of part pic before displaying a link that could potnetially fail
 29/2/12 Phil: Changed all htmlentities calls to htmlspecialchars calls
 28/2/12 Tim: Added functionality that allows for the set up of internal departments, and for the request of stock to be issued - a new issue account is defined in stockcategories. Issue requests must be authorised by a department manager and then issues fulfilled creates a stock adjustment with posting in the gl to the item category issue account.
 28/02/2012 Vitaly: Added DB_escape_string() to narrative in SQL INSERT statements. Fixes a problem posting to database when the string contains quotes.
-26/02/2012 Fixed bug that when set frequently sold items, there are sql errors which claimed that no group set for sum() function. Fixed by Exson
-26/02/2012 PO_Items.php Add $_SESSION and $_POST variables to fixed extra lines added while page refreshing or push F5. Reported by CQZ and Ke from webERP Chinese forum QQ group. Fixed by Exson
+26/02/2012 Exson: Fixed bug that when set frequently sold items, there are sql errors which claimed that no group set for sum() function.
+26/02/2012 Exson: PO_Items.php Add $_SESSION and $_POST variables to fixed extra lines added while page refreshing or push F5. Reported by CQZ and Ke from webERP Chinese forum QQ group.
 
 25/2/12 Vitaly: sql in PDFSuppTransListing.php would not fetch any data and debug message was not showing. Missing FROM in upgrade4.07-4.08.sql.
 25/2/12 James Dupin: Remove extra ) after Create GL entries for stock transactions in CompanyPreferences.php 
