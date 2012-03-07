@@ -422,9 +422,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 					if ($_POST['Detail']=='Detailed'){
 						echo '<tr>
 								<td colspan="2"></td>
-      							<td><hr></td>
+      							<td><hr /></td>
 								<td></td>
-								<td><hr></td>
+								<td><hr /></td>
 								<td></td>
 							</tr>';
 					}
@@ -446,9 +446,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
 							<td colspan="2"></td>
-							<td><hr></td>
+							<td><hr /></td>
 							<td></td>
-							<td><hr></td>
+							<td><hr /></td>
 							<td></td>
 						</tr>';
 				}
@@ -474,17 +474,17 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
 							<td colspan="2"></td>
-							<td><hr></td>
+							<td><hr /></td>
 							<td></td>
-							<td><hr></td>
+							<td><hr /></td>
 							<td></td>
 						</tr>';
 				} else {
 					echo '<tr>
 							<td colspan="3"></td>
-							<td><hr></td>
+							<td><hr /></td>
 							<td></td>
-							<td><hr></td>
+							<td><hr /></td>
 						</tr>';
 				}
 
@@ -575,9 +575,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		if ($_POST['Detail']=='Detailed'){
 			echo '<tr>
 					<td colspan="2"></td>
-					<td><hr></td>
+					<td><hr /></td>
 					<td></td>
-					<td><hr></td>
+					<td><hr /></td>
 					<td></td>
 				</tr>';
 		}
@@ -595,9 +595,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	if ($_POST['Detail']=='Detailed'){
 		echo '<tr>
 				<td colspan="2"></td>
-				<td><hr></td>
+				<td><hr /></td>
 				<td></td>
-				<td><hr></td>
+				<td><hr /></td>
 				<td></td>
 			</tr>';
 	}
@@ -615,17 +615,17 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	if ($_POST['Detail']=='Detailed'){
 		echo '<tr>
 		<td colspan="2"></td>
-		<td><hr></td>
+		<td><hr /></td>
 		<td></td>
-		<td><hr></td>
+		<td><hr /></td>
 		<td></td>
 		</tr>';
 	} else {
 		echo '<tr>
 		<td colspan="3"></td>
-		<td><hr></td>
+		<td><hr /></td>
 		<td></td>
-		<td><hr></td>
+		<td><hr /></td>
 		</tr>';
 	}
 
@@ -650,9 +650,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '<tr>
 			<td colspan="3"></td>
-      		<td><hr></td>
+      		<td><hr /></td>
 			<td></td>
-			<td><hr></td>
+			<td><hr /></td>
 		</tr>';
 
 	printf('<tr>
@@ -666,9 +666,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '<tr>
 		<td colspan="3"></td>
-      	<td><hr></td>
+      	<td><hr /></td>
 		<td></td>
-		<td><hr></td>
+		<td><hr /></td>
 		</tr>';
 
 	echo '</table>';

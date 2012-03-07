@@ -198,10 +198,10 @@ if (isset($_POST['ShowSales'])){
 	} //loop around category sales for the period
 	
 	if ($k==1){
-		echo '<tr class="EvenTableRows"><td colspan="8"><hr></td></tr>';
+		echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
 		echo '<tr class="OddTableRows">';
 	} else {
-		echo '<tr class="OddTableRows"><td colspan="8"><hr></td></tr>';
+		echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
 		echo '<tr class="EvenTableRows">';
 	}
 	echo '<td class="number">' . _('GRAND Total') . '</td>

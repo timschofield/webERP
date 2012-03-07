@@ -177,14 +177,14 @@ if (isset($_POST['Show'])){
 
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-			echo '<tr bgcolor="#FDFEEF">
+			echo '<tr style="background-color:#FDFEEF">
 				<td colspan="3"><b>' . _('Brought Forward Balance') . '</b><td>
 				</td></td>
 				<td class="number"><b>' . locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td></td>
 				</tr>';
 		} else { //its a debit balance b/fwd
-			echo '<tr bgcolor="#FDFEEF">
+			echo '<tr style="background-color:#FDFEEF">
 				<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
 				<td class="number"><b>' . locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td colspan="2"></td>
@@ -213,7 +213,7 @@ if (isset($_POST['Show'])){
 				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-				echo '<tr bgcolor="#FDFEEF">
+				echo '<tr style="background-color:#FDFEEF">
 					<td colspan="3"><b>' . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
 					if ($PandLAccount==True) {
@@ -290,7 +290,7 @@ if (isset($_POST['Show'])){
 
 	}
 
-	echo '<tr bgcolor="#FDFEEF"><td colspan="3"><b>';
+	echo '<tr style="background-color:#FDFEEF"><td colspan="3"><b>';
 	if ($PandLAccount==True){
 		echo _('Total Period Movement');
 	} else { /*its a balance sheet account*/

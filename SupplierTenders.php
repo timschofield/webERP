@@ -334,7 +334,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==False) {
 			if ($LineItems->ExpiryDate < date('Y-m-d')) {
-				echo '<tr bgcolor="#F7A9A9">';
+				echo '<tr style="background-color:#F7A9A9">';
 			} elseif ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;

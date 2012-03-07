@@ -920,7 +920,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			<td colspan="2"><hr /></td>
 		</tr>';
 
-	printf('<tr bgcolor="#ffffff">
+	printf('<tr style="background-color:#ffffff">
 			<td colspan="2"><font size="4" color="blue"><b>'._('Surplus').' - '._('Deficit').'</b></font></td>
 			<td></td>
 			<td class="number">%s</td>

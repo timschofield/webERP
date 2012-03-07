@@ -372,7 +372,7 @@ if(isset($_GET['Trf_ID'])){
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if(DB_num_rows($result) == 0){
-		echo '</table></form><H3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</H3><hr>';
+		echo '</table></form><H3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</H3><hr />';
 		include('includes/footer.inc');
 		exit;
 	}

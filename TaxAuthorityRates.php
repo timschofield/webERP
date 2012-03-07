@@ -95,7 +95,7 @@ if (DB_num_rows($TaxRatesResult)>0){
 	while ($myrow = DB_fetch_array($TaxRatesResult)){
 
 		if ($OldProvince!=$myrow['dispatchtaxprovince'] AND $OldProvince!=''){
-			echo '<tr bgcolor="#555555"><td colspan="3"></td></tr>';
+			echo '<tr style="background-color:#555555"><td colspan="3"></td></tr>';
 		}
 
 		if ($k==1){

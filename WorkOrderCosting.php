@@ -194,7 +194,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 		} else {
 			echo '<tr class="OddTableRows">';
 		}
-		echo '<td colspan="9"><hr></td>
+		echo '<td colspan="9"><hr /></td>
 			</tr>';
 	}
 	if ($k==1){
@@ -230,7 +230,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 		$k++;
 	}
 	echo '<tr>
-			<td colspan="9"><hr></td>
+			<td colspan="9"><hr /></td>
 		</tr>';
 }
 
@@ -283,7 +283,7 @@ echo '<tr>
 		<td colspan="3"></td>
 		<td><hr/></td>
 		<td colspan="2"></td>
-		<td colspan="3"><hr></td>
+		<td colspan="3"><hr /></td>
 	</tr>';
 echo '<tr>
 		<td colspan="2" class="number">' . _('Totals') . '</td>
@@ -299,7 +299,7 @@ echo '<tr>
 		<td colspan="3"></td>
 		<td><hr/></td>
 		<td colspan="2"></td>
-		<td colspan="3"><hr></td>
+		<td colspan="3"><hr /></td>
 	</tr>';
 
 If (isset($_POST['Close'])) {

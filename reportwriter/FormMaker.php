@@ -136,7 +136,7 @@ function BuildFormList($GroupID) {
 	$OutputString = '';
 	if ($GroupID=='') { // then fetchthe complete form list for all groups
 		foreach ($ReportGroups as $key=>$GName) {
-			$OutputString .= '<tr bgcolor="#CCCCCC"><td colspan="3" align="center">'.$GName.'</td></tr>';
+			$OutputString .= '<tr style="background-color:#CCCCCC"><td colspan="3" align="center">'.$GName.'</td></tr>';
 			$OutputString .= '<tr><td colspan="3" width="250" valign="top">';
 			$sql= "SELECT id, 
 						groupname, 

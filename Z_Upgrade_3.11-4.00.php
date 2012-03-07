@@ -56,30 +56,30 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 				$result = DB_query($sql, $db, $ErrMsg, $DBMsg, false, false);
 				switch (DB_error_no($db)) {
 					case 0:
-						echo '<tr><td>'.$comment.'</td><td bgcolor="green">'._('Success').'</td></tr>';
+						echo '<tr><td>'.$comment.'</td><td style="background-color:green">'._('Success').'</td></tr>';
 						break;
 					case 1050:
-						echo '<tr><td>'.$comment.'</td><td bgcolor="yellow">'._('Note').' - '.
+						echo '<tr><td>'.$comment.'</td><td style="background-color:yellow">'._('Note').' - '.
 							_('Table has already been created').'</td></tr>';
 						break;
 					case 1060:
-						echo '<tr><td>'.$comment.'</td><td bgcolor="yellow">'._('Note').' - '.
+						echo '<tr><td>'.$comment.'</td><td style="background-color:yellow">'._('Note').' - '.
 							_('Column has already been created').'</td></tr>';
 						break;
 					case 1061:
-						echo '<tr><td>'.$comment.'</td><td bgcolor="yellow">'._('Note').' - '.
+						echo '<tr><td>'.$comment.'</td><td style="background-color:yellow">'._('Note').' - '.
 							_('Index already exists').'</td></tr>';
 						break;
 					case 1062:
-						echo '<tr><td>'.$comment.'</td><td bgcolor="yellow">'._('Note').' - '.
+						echo '<tr><td>'.$comment.'</td><td style="background-color:yellow">'._('Note').' - '.
 							_('Entry has already been done').'</td></tr>';
 						break;
 					case 1068:
-						echo '<tr><td>'.$comment.'</td><td bgcolor="yellow">'._('Note').' - '.
+						echo '<tr><td>'.$comment.'</td><td style="background-color:yellow">'._('Note').' - '.
 							_('Primary key already exists').'</td></tr>';
 						break;
 					default:
-						echo '<tr><td>'.$comment.'</td><td bgcolor="red">'._('Failure').' - '.
+						echo '<tr><td>'.$comment.'</td><td style="background-color:red">'._('Failure').' - '.
 							_('Error number').' - '.DB_error_no($db) .'</td></tr>';
 						break;
 				}

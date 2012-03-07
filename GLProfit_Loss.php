@@ -1171,7 +1171,7 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="6"><hr /></td>
 		</tr>';
 
-	printf('<tr bgcolor="#ffffff">
+	printf('<tr style="background-color:#ffffff">
 				<td colspan="2"><font size="4" color="blue"><b>'._('Profit').' - '._('Loss').'</b></font></td>
 				<td></td>
 				<td class="number">%s</td>

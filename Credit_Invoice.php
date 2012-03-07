@@ -257,16 +257,17 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 if (!isset($_POST['ProcessCredit'])) {
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-	echo '<table cellpadding="2" colspan="7" class="selection"><tr>';
+	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan="13">';
 	echo '<div class="centre"><b>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</b>
 		<b>'.' - ' . $_SESSION['CreditItems']->CustomerName . '</b>
 		 - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems']->DefaultCurrency . '</div>';
 	echo '</th></tr>';
-	echo '<th>' . _('Item Code') . '</th>
+	echo '<tr><th>' . _('Item Code') . '</th>
 			<th>' . _('Item Description') . '</th>
 			<th>' . _('Invoiced') . '</th>
 			<th>' . _('Units') . '</th>
@@ -380,7 +381,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 			<td class="number">' . $DisplayGrossLineTotal . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $LnItm->LineNumber . '"  onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the credit?') . '\');">' . _('Delete') . '</a></td></tr>';
 
-		echo '<tr' . $RowStarter . '><td colspan="12"><textarea tabindex="' . $j .'"  name="Narrative_' . $LnItm->LineNumber . '" cols="100%" rows="1">' . $LnItm->Narrative . '</textarea><br /><hr></td></tr>';
+		echo '<tr ' . $RowStarter . '><td colspan="12"><textarea tabindex="' . $j .'"  name="Narrative_' . $LnItm->LineNumber . '" cols="100%" rows="1">' . $LnItm->Narrative . '</textarea><br /><hr /></td></tr>';
 		$j++;
 	}
 } /*end foreach loop displaying the invoice lines to credit */
@@ -443,10 +444,10 @@ $DisplayTotal = locale_number_format($_SESSION['CreditItems']->total + $_SESSION
 if (!isset($_POST['ProcessCredit'])) {
 	echo '<tr>
 		<td colspan="7" class="number">' . _('Credit Totals') . '</td>
-		<td class="number"><hr><b>' . $DisplayTotal . '</b><hr></td>
+		<td class="number"><hr /><b>' . $DisplayTotal . '</b><hr /></td>
 		<td colspan="2"></td>
-		<td class="number"><hr><b>' . locale_number_format($TaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '<hr></td>
-		<td class="number"><hr><b>' . locale_number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),$_SESSION['CreditItems']->CurrDecimalPlaces) . '</b><hr></td>
+		<td class="number"><hr /><b>' . locale_number_format($TaxTotal,$_SESSION['CreditItems']->CurrDecimalPlaces) . '</b><hr /></td>
+		<td class="number"><hr /><b>' . locale_number_format($TaxTotal+($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost),$_SESSION['CreditItems']->CurrDecimalPlaces) . '</b><hr /></td>
 		</tr></table>';
 }
 $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
@@ -1513,7 +1514,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	$j++;
 	echo '<input type="submit" tabindex="'.$j++.'" name="ProcessCredit" value="' . _('Process Credit') .'" /></div>';
 }
-
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

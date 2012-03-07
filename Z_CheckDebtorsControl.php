@@ -11,7 +11,7 @@ include('includes/header.inc');
 //
 
 	// Page Border
-	echo '<table border="1" width="100%"><tr><td bgcolor="#FFFFFF">';
+	echo '<table border="1" width="100%"><tr><td style="background-color:#FFFFFF">';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -145,7 +145,7 @@ include('includes/header.inc');
 
 			echo '<td class="number">' . locale_number_format($glMovement,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format(($CalcMovement),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class="number" bgcolor="white"><font color="' . $color . '">' . locale_number_format($diff,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
+					<td class="number" style="background-color:white"><font color="' . $color . '">' . locale_number_format($diff,$_SESSION['CompanyRecord']['decimalplaces']) . '</font></td>
 			</tr>';
 			$CurPeriod++;
 		}

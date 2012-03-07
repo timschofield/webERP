@@ -239,7 +239,7 @@ while ($ChartRow = DB_fetch_array($ChartResult)){
 }
 
 echo '</table>';
-echo '<hr>';
+echo '<hr />';
 echo '<center><input type="submit" name="CreateTemplate" value="' . _('Create Template and Email') . '" /></center>';
 
 echo '</form>';

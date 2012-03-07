@@ -198,7 +198,7 @@ if (isset($_POST['View'])) {
 				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
 				(trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
 				(trim($_SESSION['SQLString']['fields'][$i]) != 'www_users.password')) {
-					echo '<tr bgcolor="' . $RowColour . '">';
+					echo '<tr style="background-color:' . $RowColour . '">';
 					echo '<td></td>
 						<td></td>
 						<td></td>
@@ -208,7 +208,7 @@ if (isset($_POST['View'])) {
 					echo '</tr>';
 				}
 			}
-			echo '<tr bgcolor="black"> <td colspan="6"></td> </tr>';
+			echo '<tr style="background-color:black"> <td colspan="6"></td> </tr>';
 		}
 		unset($_SESSION['SQLString']);
 	}

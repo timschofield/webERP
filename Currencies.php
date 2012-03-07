@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Abbreviation';
 		$i++;
 	}
-	if (mb_strlen($_POST['Abbreviation']) > 3) {
+	if (mb_strlen($_POST['Abbreviation']) > 3 OR mb_strlen($_POST['Abbreviation']) < 1) {
 		$InputError = 1;
 		prnMsg(_('The currency abbreviation must be 3 characters or less long and for automated currency updates to work correctly be one of the ISO4217 currency codes'),'error');
 		$Errors[$i] = 'Abbreviation';
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (ContainsIllegalCharacters($_POST['Abbreviation'])) {
 		$InputError = 1;
-		prnMsg( _('The currency code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
+		prnMsg( _('The currency code cannot contain any of the following characters') . " . - ' &amp; + \" " . _('or a space'),'error');
 		$Errors[$i] = 'Abbreviation';
 		$i++;
 	}
@@ -231,7 +231,7 @@ or deletion of the records*/
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow[1]==$FunctionalCurrency){
-			echo '<tr bgcolor="#FFbbbb">';
+			echo '<tr style="background-color:#FFbbbb">';
 		} elseif ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -247,7 +247,7 @@ or deletion of the records*/
 		}
 
 		if ($myrow[1]!=$FunctionalCurrency){
-			printf('<td><img src="%s" /></td>
+			printf('<td><img src="%s" alt="" /></td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -255,8 +255,8 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td><a href="%s&SelectedCurrency=%s">%s</a></td>
-					<td><a href="%s&SelectedCurrency=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">%s</a></td>
+					<td><a href="%s&amp;SelectedCurrency=%s">%s</a></td>
+					<td><a href="%s&amp;SelectedCurrency=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">%s</a></td>
 					<td><a href="%s/ExchangeRateTrend.php?%s">' . _('Graph') . '</a></td>
 					</tr>',
 					$ImageFile,
@@ -274,9 +274,9 @@ or deletion of the records*/
 					$myrow['currabrev'],
 					_('Delete'),
 					$rootpath,
-					'&CurrencyToShow=' . $myrow['currabrev']);
+					'&amp;CurrencyToShow=' . $myrow['currabrev']);
 		} else {
-			printf('<td><img src="%s" /></td>
+			printf('<td><img src="%s" alt="" /></td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -309,6 +309,7 @@ echo '<br />';
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
@@ -400,6 +401,7 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="submit" value="'._('Enter Information').'" />
 		</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

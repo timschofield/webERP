@@ -189,7 +189,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			}
 			if (round($CheckGLTransBalance,5)!= 0){
 				echo '<tr>
-						<td colspan="4" bgcolor="red"><b>' . _('The GL transactions for this AP transaction are out of balance by') .  ' ' . $CheckGLTransBalance . '</b></td>
+						<td colspan="4" style="background-color:red"><b>' . _('The GL transactions for this AP transaction are out of balance by') .  ' ' . $CheckGLTransBalance . '</b></td>
 					</tr>';
 			}
 			echo '</table></td></tr>';

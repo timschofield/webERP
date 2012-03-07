@@ -178,7 +178,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 		}
 		DB_free_result($TransResult);
 
-		echo '<tr bgcolor="#FFFFFF">
+		echo '<tr style="background-color:#FFFFFF">
 				<td class="number" colspan="3"><b>' . _('Total') . '</b></td>
 				<td class="number">' . locale_number_format(($DebitTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format((-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>

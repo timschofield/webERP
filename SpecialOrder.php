@@ -611,7 +611,7 @@ echo '<td>' . _('Initiated By') . ': <input type="text" name="Initiator" size="1
 		<td valign="top" colspan="2">' . _('Comments') . ': <textarea name="Comments" cols="70" rows="2">' . $_SESSION['SPL'.$identifier]->Comments . '</textarea></td>
 	</tr>
 </table>
-<hr>'; /* Rule off the header */
+<hr />'; /* Rule off the header */
 
 /*Now show the order so far */
 

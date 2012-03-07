@@ -56,7 +56,7 @@ function RetrieveReports() {
 
 	$OutputString = '';
 	foreach ($ReportGroups as $key=>$GName) {
-		$OutputString .= '<tr bgcolor="#CCCCCC"><td colspan="2" align="center">'.$GName.'</td></tr>';
+		$OutputString .= '<tr style="background-color:#CCCCCC"><td colspan="2" align="center">'.$GName.'</td></tr>';
 		$OutputString .= '<tr><td align="center">'.RPT_REPORTS.'</td><td align="center">'.RPT_FORMS.'</td></tr>';
 		$OutputString .= '<tr><td width="250" valign="top">';
 		$sql= "SELECT id, reportname FROM ".DBReports."

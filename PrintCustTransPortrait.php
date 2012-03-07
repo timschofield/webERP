@@ -725,7 +725,7 @@ If (isset($PrintPDF)
 				echo '<table class="table1">
 						<tr>
 							<td valign=top width="10%"><img src="' . $_SESSION['LogoFile'] . '" /></td>
-							<td bgcolor="#bbbbbb"><b>';
+							<td style="background-color:#bbbbbb"><b>';
 
 				if ($InvOrCredit=='Invoice') {
 				   echo '<font size="4">' . _('TAX INVOICE') . ' ';
@@ -759,10 +759,10 @@ If (isset($PrintPDF)
 
 				echo '<table class="table1">
 						<tr>
-							<td align="left" bgcolor="#bbbbbb"><b>' . _('Charge To') . ':</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Charge To') . ':</b></td>
 						</tr>
 						<tr>
-							<td bgcolor="#eeeeee">';
+							<td style="background-color:#eeeeee">';
 				echo $myrow['name'] .
 					'<br />' . $myrow['address1'] .
 					'<br />' . $myrow['address2'] .
@@ -785,11 +785,11 @@ If (isset($PrintPDF)
 
 				   echo '<table class="table1">
 				   		<tr>
-				   			<td align=left bgcolor="#bbbbbb"><b>' . _('Charge Branch') . ':</b></td>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Delivered To') . ':</b></td>
+				   			<td align=left style="background-color:#bbbbbb"><b>' . _('Charge Branch') . ':</b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Delivered To') . ':</b></td>
 						</tr>';
 				   echo '<tr>
-				   		<td bgcolor="#eeeeee">' .$myrow['brname'] .
+				   		<td style="background-color:#eeeeee">' .$myrow['brname'] .
 									'<br />' . $myrow['braddress1'] .
 									'<br />' . $myrow['braddress2'] .
 									'<br />' . $myrow['braddress3'] .
@@ -798,7 +798,7 @@ If (isset($PrintPDF)
 									'<br />' . $myrow['braddress6'] .
 						'</td>';
 
-				   echo '<td bgcolor="#eeeeee">' . $myrow['deliverto'] .
+				   echo '<td style="background-color:#eeeeee">' . $myrow['deliverto'] .
 									'<br />' . $myrow['deladd1'] .
 									'<br />' . $myrow['deladd2'] .
 									'<br />' . $myrow['deladd3'] .
@@ -807,26 +807,26 @@ If (isset($PrintPDF)
 									'<br />' . $myrow['deladd6'] .
 						'</td>';
 				   echo '</tr>
-				   </table><hr>';
+				   </table><hr />';
 
 				   echo '<table class="table1">
 				   		<tr>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Your Order Ref') . '</b></td>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Our Order No') . '</b></td>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Order Date') . '</b></td>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Invoice Date') . '</b></td>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Sales Person') . '</font></b></td>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Shipper') . '</b></td>
-							<td align=left bgcolor="#bbbbbb"><b>' . _('Consignment Ref') . '</b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Your Order Ref') . '</b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Our Order No') . '</b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Order Date') . '</b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Invoice Date') . '</b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Sales Person') . '</font></b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Shipper') . '</b></td>
+							<td align=left style="background-color:#bbbbbb"><b>' . _('Consignment Ref') . '</b></td>
 						</tr>';
 				   	echo '<tr>
-							<td bgcolor="#EEEEEE">' . $myrow['customerref'] . '</td>
-							<td bgcolor="#EEEEEE">' .$myrow['orderno'] . '</td>
-							<td bgcolor="#EEEEEE">' . ConvertSQLDate($myrow['orddate']) . '</td>
-							<td bgcolor="#EEEEEE">' . ConvertSQLDate($myrow['trandate']) . '</td>
-							<td bgcolor="#EEEEEE">' . $myrow['salesmanname'] . '</td>
-							<td bgcolor="#EEEEEE">' . $myrow['shippername'] . '</td>
-							<td bgcolor="#EEEEEE">' . $myrow['consignment'] . '</td>
+							<td style="background-color:#EEEEEE">' . $myrow['customerref'] . '</td>
+							<td style="background-color:#EEEEEE">' .$myrow['orderno'] . '</td>
+							<td style="background-color:#EEEEEE">' . ConvertSQLDate($myrow['orddate']) . '</td>
+							<td style="background-color:#EEEEEE">' . ConvertSQLDate($myrow['trandate']) . '</td>
+							<td style="background-color:#EEEEEE">' . $myrow['salesmanname'] . '</td>
+							<td style="background-color:#EEEEEE">' . $myrow['shippername'] . '</td>
+							<td style="background-color:#EEEEEE">' . $myrow['consignment'] . '</td>
 						</tr>
 					</table>';
 
@@ -849,10 +849,10 @@ If (isset($PrintPDF)
 
 				   echo '<table width="50%">
 						<tr>
-							<td align=left bgcolor="#BBBBBB"><b>' . _('Branch') . ':</b></td>
+							<td align=left style="background-color:#BBBBBB"><b>' . _('Branch') . ':</b></td>
 						</tr>';
 				   echo '<tr>
-							<td bgcolor="#EEEEEE">' . $myrow['brname'] .
+							<td style="background-color:#EEEEEE">' . $myrow['brname'] .
 										'<br />' . $myrow['braddress1'] .
 										'<br />' . $myrow['braddress2'] .
 										'<br />' . $myrow['braddress3'] .
@@ -861,15 +861,15 @@ If (isset($PrintPDF)
 										'<br />' . $myrow['braddress6'] .
 								'</td>
 					</tr></table>';
-				   echo '<hr>
+				   echo '<hr />
 						<table class="table1">
 						<tr>
-					   		<td align="left" bgcolor="#bbbbbb"><b>' . _('Date') . '</b></td>
-							<td align=left bgcolor="#BBBBBB"><b>' . _('Sales Person') . '</font></b></td>
+					   		<td align="left" style="background-color:#bbbbbb"><b>' . _('Date') . '</b></td>
+							<td align=left style="background-color:#BBBBBB"><b>' . _('Sales Person') . '</font></b></td>
 						</tr>';
 				   echo '<tr>
-					   		<td bgcolor="#EEEEEE">' . ConvertSQLDate($myrow['trandate']) . '</td>
-							<td bgcolor="#EEEEEE">' . $myrow['salesmanname'] . '</td>
+					   		<td style="background-color:#EEEEEE">' . ConvertSQLDate($myrow['trandate']) . '</td>
+							<td style="background-color:#EEEEEE">' . $myrow['salesmanname'] . '</td>
 						</tr>
 						</table>';
 
@@ -889,7 +889,7 @@ If (isset($PrintPDF)
 							AND stockmoves.show_on_inv_crds=1";
 				}
 
-				echo '<hr>';
+				echo '<hr />';
 				echo '<div class="centre"><font size="2">' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</font></div>';
 
 				$result=DB_query($sql,$db);
@@ -973,7 +973,7 @@ If (isset($PrintPDF)
 								<table class="table1">
 								<tr>
 									<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" /></td>
-									<td bgcolor="#bbbbbb"><b>';
+									<td style="background-color:#bbbbbb"><b>';
 
 						   if ($InvOrCredit=='Invoice') {
 							    echo '<font size="4">' . _('TAX INVOICE') . ' ';
@@ -1029,7 +1029,7 @@ If (isset($PrintPDF)
 					echo '<table class="table1">
 							<tr>
 								<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" /></td>
-								<td bgcolor="#bbbbbb"><b>';
+								<td style="background-color:#bbbbbb"><b>';
 					if ($InvOrCredit=='Invoice') {
 					      echo '<font size="4">' . _('TAX INVOICE') .' ';
 					} else {
@@ -1099,17 +1099,17 @@ If (isset($PrintPDF)
 	/*Print out the invoice text entered */
 				echo '<table class="table1"><tr>
 					<td class="number">' . _('Sub Total') . '</td>
-					<td class="number" bgcolor="#EEEEEE" width="15%">' . $DisplaySubTot . '</td></tr>';
+					<td class="number" style="background-color:#EEEEEE" width="15%">' . $DisplaySubTot . '</td></tr>';
 				echo '<tr><td class="number">' . _('Freight') . '</td>
-					<td class="number" bgcolor="#EEEEEE">' . $DisplayFreight . '</td></tr>';
+					<td class="number" style="background-color:#EEEEEE">' . $DisplayFreight . '</td></tr>';
 				echo '<tr><td class="number">' . _('Tax') . '</td>
-					<td class="number" bgcolor="#EEEEEE">' . $DisplayTax . '</td></tr>';
+					<td class="number" style="background-color:#EEEEEE">' . $DisplayTax . '</td></tr>';
 				if ($InvOrCredit=='Invoice'){
 				     echo '<tr><td class="number"><b>' . _('TOTAL INVOICE') . '</b></td>
-				     	<td class="number" bgcolor="#EEEEEE"><u><b>' . $DisplayTotal . '</b></u></td></tr>';
+				     	<td class="number" style="background-color:#EEEEEE"><u><b>' . $DisplayTotal . '</b></u></td></tr>';
 				} else {
 				     echo '<tr><td class="number"><font color="red"><b>' . _('TOTAL CREDIT') . '</b></font></td>
-				     		<td class="number" bgcolor="#EEEEEE"><font color="red"><u><b>' . $DisplayTotal . '</b></u></font></td></tr>';
+				     		<td class="number" style="background-color:#EEEEEE"><font color="red"><u><b>' . $DisplayTotal . '</b></u></font></td></tr>';
 				}
 				echo '</table>';
 			} /* end of check to see that there was an invoice record to print */

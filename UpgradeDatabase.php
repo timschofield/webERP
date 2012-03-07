@@ -184,37 +184,37 @@ if (isset($_POST['DoUpgrade'])){
 					echo '<tr><td>' . $sql . '</td>';
 					switch (DB_error_no($db)) {
 						case 0:
-							echo '<td bgcolor="green">'._('Success').'</td></tr>';
+							echo '<td style="background-color:green">'._('Success').'</td></tr>';
 							break;
 						case 1025:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Foreign Key already removed').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Foreign Key already removed').'</td></tr>';
 							break;
 						case 1050:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Table has already been created').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Table has already been created').'</td></tr>';
 							break;
 						case 1054:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Column has already been changed').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Column has already been changed').'</td></tr>';
 							break;
 						case 1060:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Column has already been created').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Column has already been created').'</td></tr>';
 							break;
 						case 1061:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Index already exists').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Index already exists').'</td></tr>';
 							break;
 						case 1062:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Entry has already been done').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Entry has already been done').'</td></tr>';
 							break;
 						case 1064:
-							echo '<td bgcolor="red">'._('Note').' - '.  _('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg($db) . '</td></tr>';
+							echo '<td style="background-color:red">'._('Note').' - '.  _('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg($db) . '</td></tr>';
 							break;
 						case 1068:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Primary key already exists').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Primary key already exists').'</td></tr>';
 							break;
 						case 1091:
-							echo '<td bgcolor="yellow">'._('Note').' - '. _('Index already dropped previously').'</td></tr>';
+							echo '<td style="background-color:yellow">'._('Note').' - '. _('Index already dropped previously').'</td></tr>';
 							break;
 						default:
-							echo '<td bgcolor="red">'._('Failure').' - '. 	_('Error number').' - '.DB_error_no($db) .' ' . DB_error_msg($db) . '</td></tr>';
+							echo '<td style="background-color:red">'._('Failure').' - '. 	_('Error number').' - '.DB_error_no($db) .' ' . DB_error_msg($db) . '</td></tr>';
 							break;
 					}
 					$sql='';

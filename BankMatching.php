@@ -284,7 +284,7 @@ if ($InputError !=1
 		$Outstanding = $myrow['amt']- $myrow['amountcleared'];
 		if (ABS($Outstanding)<0.009){ /*the payment is cleared dont show the check box*/
 
-			printf('<tr bgcolor="#CCCEEE">
+			printf('<tr style="background-color:#CCCEEE">
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>

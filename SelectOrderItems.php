@@ -1324,7 +1324,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		echo '<br />
 				<table width="90%" cellpadding="2" colspan="7">
-				<tr bgcolor="#800000">';
+				<tr style="background-color:#800000">';
 		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';
 		}
@@ -1357,7 +1357,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
 				/*There is a stock deficiency in the stock location selected */
-				$RowStarter = '<tr bgcolor="#EEAABB">'; //rows show red where stock deficiency
+				$RowStarter = '<tr style="background-color:#EEAABB">'; //rows show red where stock deficiency
 			} elseif ($k==1){
 				$RowStarter = '<tr class="OddTableRows">';
 				$k=0;

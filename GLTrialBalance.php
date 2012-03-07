@@ -707,7 +707,7 @@ if ((! isset($_POST['FromPeriod'])
 
 
 
-	printf('<tr bgcolor="#ffffff">
+	printf('<tr style="background-color:#ffffff">
 				<td colspan="2"><b>' . _('Check Totals') . '</b></td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>

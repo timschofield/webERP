@@ -267,7 +267,7 @@ if (DB_num_rows($result) == 0) {
 	} else {
 		$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 	}
-	echo '<tr bgcolor="#CCCCCC">
+	echo '<tr style="background-color:#CCCCCC">
 			<td class="number">'.locale_number_format($myrow['price'],$CurrDecimalPlaces).'</td>
 			<td>' . $Branch.'</td>
 			<td>'.$myrow['units'].'</td>

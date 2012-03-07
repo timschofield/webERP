@@ -40,10 +40,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 	}
 
 	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<tr style="background-color:#CCCCCC">';
 		$k=0;
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<tr style="background-color:#EEEEEE">';
 		$k=1;
 	}
 

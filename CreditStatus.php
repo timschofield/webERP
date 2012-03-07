@@ -150,7 +150,8 @@ or deletion of the records*/
 		<tr>
 			<th>'. _('Status Code') .'</th>
 			<th>'. _('Description') .'</th>
-			<th>'. _('Disallow Invoices') .'</th>';
+			<th>'. _('Disallow Invoices') .'</th>
+        </tr>';
 
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($result)) {
@@ -172,7 +173,7 @@ or deletion of the records*/
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedReason=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">'. _('Delete') .'</a></td>
+			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">'. _('Delete') .'</a></td>
 			</tr>',
 			$myrow['reasoncode'],
 			$myrow['reasondescription'],
@@ -196,6 +197,7 @@ if (isset($SelectedReason)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReason) and ($InputError!=1)) {
@@ -256,6 +258,7 @@ if (!isset($_GET['delete'])) {
 			<div class="centre">
 				<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
 			</div>
+            </div>
 			</form>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
