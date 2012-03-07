@@ -82,7 +82,9 @@ if (isset($_POST['Quantity'])){
 } else {
 	$_POST['Quantity']=0;
 }
-$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
+if($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zero
+	$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
+}
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
 
@@ -350,7 +352,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 }/* end if the user hit enter the adjustment */
 
 
-echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method=post>';
+echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'" method=post>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_SESSION['Adjustment' . $identifier])) {
@@ -450,8 +452,8 @@ if ($Controlled==1){
 		}
 		echo '<input type="hidden" name="Quantity" value="' . $_SESSION['Adjustment' . $identifier]->Quantity . '" />
 				'.locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$DecimalPlaces) .' &nbsp; &nbsp; &nbsp; &nbsp;
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE">'._('Remove').'</a>]
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD">'._('Add').'</a>]';
+				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE?identifier='.$identifier.'">'._('Remove').'</a>]
+				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD?identifier='.$identifier.'">'._('Add').'</a>]';
 } else {
 	echo '<input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($Quantity,$DecimalPlaces) . '" />';
 }
