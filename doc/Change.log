@@ -1,9 +1,11 @@
 webERP Change Log
+
+8/3/12 Ricard: Added parameter for show stock image on select product screen - SelectProduct.php and SystemParameters.php
 7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustmentsControlled.php. Reported by Soujiro
 7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustments.php. Reported by Soujiro
-6/3/2012 Exson: Rule out 'Pending' status PO from On Order Quantity in ReorderLevel.php Suggested by Brian May
-6/3/2012 Exson: Remove carriage return and feed line from Quotation PDF file in PDFQuotation.php Reported by Thomas_lie
-03/06/2012 Exson: add condition to prevent blank stock category description in StockCategories.php
+6/3/12 Exson: Rule out 'Pending' status PO from On Order Quantity in ReorderLevel.php Suggested by Brian May
+6/3/12 Exson: Remove carriage return and feed line from Quotation PDF file in PDFQuotation.php Reported by Thomas_lie
+03/06/12 Exson: add condition to prevent blank stock category description in StockCategories.php
 6/3/12 Exson: BankMatching.php sql error due to extra single quotation. Reported by PakRichard
 5/3/12 Exson/Tim: PrintCustTransPortrait.php html elements failed to display. Reported by rfthomas
 3/3/12 Phil: SelectProduct.php checked for existence of part pic before displaying a link that could potnetially fail

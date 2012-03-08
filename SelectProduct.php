@@ -411,9 +411,7 @@ echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . 
 if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a><br />';
 	echo '<a href="' . $rootpath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search All Purchase Orders') . '</a><br />';
-	if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg')){
-		echo '<a href="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg">' . _('Show Part Picture') . '</a><br />';
-	}
+	echo '<a href="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg">' . _('Show Part Picture (if available)') . '</a><br />';
 }
 if ($Its_A_Dummy == False) {
 	echo '<a href="' . $rootpath . '/BOMInquiry.php?StockID=' . $StockID . '">' . _('View Costed Bill Of Material') . '</a><br />';
@@ -430,7 +428,11 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '&NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded
 	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&StockID=' . $StockID . '&text=' . $StockID . '&width=120&height=120" />';
+		if ($_SESSION['ShowStockidOnImages'] == "0"){
+			echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&width=120&height=120&StockID=' . $StockID . '&text=""' . '" />';
+		}else{
+			echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&StockID=' . $StockID . '&text=' . $StockID . '&width=120&height=120" />';
+		}
 	}
 	if (($myrow['mbflag'] == 'B')
 		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))

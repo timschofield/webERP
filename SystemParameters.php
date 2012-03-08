@@ -193,6 +193,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['MaxImageSize'] != $_POST['X_MaxImageSize'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_MaxImageSize']."' WHERE confname = 'MaxImageSize'";
 		}
+		if ($_SESSION['ShowStockidOnImages'] != $_POST['X_ShowStockidOnImages'] ) {
+			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_ShowStockidOnImages']."' WHERE confname = 'ShowStockidOnImages'";
+		}
 //new number must be shown
 		if ($_SESSION['NumberOfMonthMustBeShown'] != $_POST['X_NumberOfMonthMustBeShown'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_NumberOfMonthMustBeShown']."' WHERE confname = 'NumberOfMonthMustBeShown'";
@@ -701,16 +704,29 @@ echo '<tr style="outline: 1px solid"><td>' . _('Report Page Length') . ':</td>
 </tr>';
 
 //DefaultDisplayRecordsMax
-echo '<tr style="outline: 1px solid"><td>' . _('Default Maximum Number of Records to Show') . ':</td>
-	<td><input type="text" class="number" name="X_DefaultDisplayRecordsMax" size="4" maxlength="3" value="' . $_SESSION['DefaultDisplayRecordsMax'] . '" /></td>
-	<td>' . _('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.') . '</td>
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Default Maximum Number of Records to Show') . ':</td>
+		<td><input type="text" class="number" name="X_DefaultDisplayRecordsMax" size="4" maxlength="3" value="' . $_SESSION['DefaultDisplayRecordsMax'] . '" /></td>
+		<td>' . _('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.') . '</td>
 	</tr>';
 
+// ShowStockidOnImage
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Show Stockid on images') . ':</td>
+		<td><select name="X_ShowStockidOnImages">
+			<option '.($_SESSION['ShowStockidOnImages'] ?'selected ':'').'value="1">'._('Yes').'</option>
+			<option '.(!$_SESSION['ShowStockidOnImages'] ?'selected ':'').'value="0">'._('No').'</option>
+			</select></td>
+		<td>' . _('Show the code inside the thumbnail image of the items') . '</td>
+	</tr>';
+
+
 //MaxImageSize
-echo '<tr style="outline: 1px solid"><td>' . _('Maximum Size in KB of uploaded images') . ':</td>
-	<td><input type="text" class="number" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" /></td>
-	<td>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</td>
-</tr>';
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Maximum Size in KB of uploaded images') . ':</td>
+		<td><input type="text" class="number" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" /></td>
+		<td>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</td>
+	</tr>';
 //NumberOfMonthMustBeShown
 $sql = "SELECT confvalue
 		FROM `config`
