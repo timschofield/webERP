@@ -337,16 +337,17 @@ $TableHeader = '<tr>
 if (isset($_POST['AllocTrans'])) {
 	// Page called with trans number
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />';
 
 	// Show trans already allocated and potential new allocations
 
-	echo '<p><table class="selection">';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th colspan="7">
 			<div class="centre">
-				<font color="blue"><b>' . $_SESSION['Alloc']->DebtorNo . ' - ' . $_SESSION['Alloc']->CustomerName . '</b></font>
+				<b>' . $_SESSION['Alloc']->DebtorNo . ' - ' . $_SESSION['Alloc']->CustomerName . '</b>
 			</div>';
 
 	if ($_SESSION['Alloc']->TransExRate != 1) {
@@ -397,8 +398,8 @@ if (isset($_POST['AllocTrans'])) {
 						<td class="number">' . locale_number_format($balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 					</tr>';
 		} else {
-				echo '<input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" /></td>';
-				echo '<td class="number"><input tabindex="' . $j .'" type="checkbox" name="All' .  $Counter . '"';
+				echo '<td class="number"><input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
+				echo '<input tabindex="' . $j .'" type="checkbox" name="All' .  $Counter . '"';
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
 						echo ' checked="checked" />';
@@ -418,10 +419,11 @@ if (isset($_POST['AllocTrans'])) {
 
 	echo '<tr>
 			<td colspan="5" class="number"><b>'._('Total Allocated').':</b></td>
-			<td class="number"><b><u>' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</u></b></td>';
+			<td class="number"><b>' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>';
 	$j++;
 	echo '<td colspan="2">
 			<input tabindex="'.$j.'" type="submit" name="RefreshAllocTotal" value="' . _('Recalculate Total To Allocate') . '" /></td>
+        </tr>
 		<tr>
 			<td colspan="5" class="number"><b>'._('Left to allocate').'</b></td>
 			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt-$TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces).'</b></td>
@@ -432,7 +434,9 @@ if (isset($_POST['AllocTrans'])) {
 		<div class="centre">
 			<input tabindex="' . $j . '" type="submit" name="UpdateDatabase" value="' . _('Process Allocations') . '" />
 			<input tabindex="' . $j . '" type="submit" name="Cancel" value="' . _('Cancel') . '" />
-		</div>';
+		</div>
+        </div>
+        </form>';
 
 } elseif (isset($_GET['DebtorNo'])) {
 	// Page called with customer code
@@ -488,9 +492,9 @@ if (isset($_POST['AllocTrans'])) {
 				<td class="number">' . locale_number_format($myrow['total'],$myrow['currdecimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($myrow['total']-$myrow['alloc'],$myrow['currdecimalplaces']) . '</td>
 				<td>' . $myrow['currcode'] . '</td>';
-		echo '<td><a href=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '>' . _('Allocate') . '</a></td></tr>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '">' . _('Allocate') . '</a></td></tr>';
 	}
-	echo '</table><p>';
+	echo '</table>';
 } else {
 	/* Page called with no parameters */
 	unset($_SESSION['Alloc']->Allocs);
@@ -529,7 +533,7 @@ if (isset($_POST['AllocTrans'])) {
 	$k=0;
 	while ($myrow = DB_fetch_array($result)) {
 		
-		$AllocateLink = '<a href=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '>' . _('Allocate') . '</a>';
+		$AllocateLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '">' . _('Allocate') . '</a>';
 
 		if ( $CurrentDebtor != $myrow['debtorno'] ) {
 			if ( $CurrentTransaction > 1 ) {
@@ -595,10 +599,7 @@ if (isset($_POST['AllocTrans'])) {
 		<br />';
 }
 
-echo '</td>
-	</tr>
-	</table>';
-	
+
 include('includes/footer.inc');
 
 ?>

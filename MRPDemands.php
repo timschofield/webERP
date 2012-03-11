@@ -329,7 +329,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 	if (!isset($StockID)) {
 		echo'</font><table cellpadding="3" colspan="4" class="selection"><tr>
 			<td><font size="1">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
-			<td><input tabindex="1" type="Text" name="Keywords" size="20" maxlength="25" /></td>
+			<td><input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" /></td>
 			<td><font size="3"><b>' . _('OR') . '</b></font></td>
 			<td><font size="1">' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</font></td>
 			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" /></td>

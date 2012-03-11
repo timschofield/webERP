@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 	if (ContainsIllegalCharacters($_POST['EDIReference'])
 		OR mb_strstr($_POST['EDIReference'],' ')) {
 		$InputError = 1;
-		prnMsg(_('The customers EDI reference code cannot contain any of the following characters') .' - \' & + \" ' . _('or a space'),'warn');
+		prnMsg(_('The customers EDI reference code cannot contain any of the following characters') .' - \' &amp; + \" ' . _('or a space'),'warn');
 	}
 	if (mb_strlen($_POST['EDIReference'])<4 AND ($_POST['EDIInvoices']==1 OR $_POST['EDIOrders']==1)){
 		$InputError = 1;
@@ -70,6 +70,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br /><table class="selection">';
 
@@ -108,7 +109,7 @@ if ($myrow['ediinvoices']==0){
 	echo '<option selected="selected" value="1">'._('Enabled') . '</option>';
 }
 
-echo '</select><a href="' . $rootpath . '/EDIMessageFormat.php?MessageType=INVOIC&PartnerCode=' . $_SESSION['CustomerID'] . '">'._('Create') . '/' . _('Edit Invoice Message Format').'</a></td>
+echo '</select><a href="' . $rootpath . '/EDIMessageFormat.php?MessageType=INVOIC&amp;PartnerCode=' . $_SESSION['CustomerID'] . '">'._('Create') . '/' . _('Edit Invoice Message Format').'</a></td>
 	</tr>';
 
 echo '<tr><td>'._('Enable Receiving of EDI Orders') . ':</td>
@@ -157,6 +158,7 @@ if ($myrow['editransport']=='ftp'){
 
 echo '</table>
 		<br /><div class="centre"><input tabindex="8" type="submit" name="submit" value="' ._('Update EDI Configuration'). '" /></div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

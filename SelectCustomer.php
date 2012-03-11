@@ -284,7 +284,7 @@ echo '</td>
 if (isset($_POST['CustPhone'])) {
 	echo '<input type="text" name="CustPhone" value="' . $_POST['CustPhone'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="Text" name="CustPhone" size="15" maxlength="18" />';
+	echo '<input type="text" name="CustPhone" size="15" maxlength="18" />';
 }
 echo '</td>';
 echo '<td><font size="3"><b>' . _('OR') . '</b></font></td>

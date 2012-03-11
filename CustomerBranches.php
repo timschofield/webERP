@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ')) {
 		$InputError = 1;
-		prnMsg(_('The Branch code cannot contain any of the following characters')." -  & \'",'error');
+		prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \'",'error');
 		$Errors[$i] = 'BranchCode';
 		$i++;
 	}
@@ -104,8 +104,8 @@ if (isset($_POST['submit'])) {
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
                 } else {
 			$address = $_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4'];
-			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml&key=' . KEY;
-			$request_url = $base_url . '&q=' . urlencode($address);
+			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml&amp;key=' . KEY;
+			$request_url = $base_url . '&amp;q=' . urlencode($address);
 			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
 			$coordinates = $xml->Response->Placemark->Point->coordinates;
 			$coordinatesSplit = explode(",", $coordinates);
@@ -360,7 +360,7 @@ if (!isset($SelectedBranch)){
 	$TotalEnable = 0;
 	$TotalDisable = 0;
 	if ($myrow) {
-		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
                  ' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
 		echo '<table class="selection">
 			<tr>
@@ -396,8 +396,8 @@ if (!isset($SelectedBranch)){
 				<td><a href="Mailto:%s">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%s?DebtorNo=%s&SelectedBranch=%s">%s</td>
-				<td><a href="%s?DebtorNo=%s&SelectedBranch=%s&delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this branch?') . '");\'>%s</td></tr>',
+				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s">%s</a></td>
+				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this branch?') . '");\'>%s</a></td></tr>',
 				$myrow[10],
 				$myrow[2],
 				$myrow[5],
@@ -464,6 +464,7 @@ if (!isset($SelectedBranch)){
 
 if (!isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedBranch)) {
@@ -536,10 +537,10 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedBranch" value="' . $SelectedBranch . '" />';
 		echo '<input type="hidden" name="BranchCode" value="' . $_POST['BranchCode'] . '" />';
 		
-		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
                  ' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
 		if (isset($SelectedBranch)) {
-			echo '<div class="centre"><a href=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorNo=' . $DebtorNo. '>' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
+			echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorNo=' . $DebtorNo. '">' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
 		}
 		echo '<br />
 			<table class="selection">
@@ -583,7 +584,7 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['BranchCode'])) {
 			$_POST['BranchCode']='';
 		}
-		echo '<p Class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
+		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
 		echo '<table class="selection">
 				<tr>
 					<td>'._('Branch Code'). ':</td>
@@ -593,11 +594,12 @@ if (!isset($_GET['delete'])) {
 	}
 
 
-	echo '<input type="hidden" name="DebtorNo" value="'. $DebtorNo . '" />';
-
-
 	echo '<tr>
-			<td>'._('Branch Name').':</td>';
+            <td>';
+    echo '<input type="hidden" name="DebtorNo" value="'. $DebtorNo . '" />';
+
+
+	echo _('Branch Name').':</td>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
 	echo '<td><input tabindex="2" type="text" name="BrName" size="41" maxlength="40" value="'. $_POST['BrName'].'" /></td>
 		</tr>';
@@ -904,6 +906,7 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input tabindex="28" type="submit" name="submit" value="' . _('Enter Branch') . '" />
 		</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

@@ -199,8 +199,8 @@ while ($myrow = DB_fetch_row($result)) {
 
 printf('<td>%s</td>
 		<td>%s</td>
-		<td><a href="%sSelectedType=%s">' . _('Edit') . '</td>
-		<td><a href="%sSelectedType=%s&delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Customer Type?') . '");\'>' . _('Delete') . '</td>
+		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
+		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Customer Type?') . '");\'>' . _('Delete') . '</a></td>
 		</tr>',
 		$myrow[0],
 		$myrow[1],
@@ -216,13 +216,14 @@ printf('<td>%s</td>
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<div class="centre"><p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Defined') . '</a></div><p>';
+	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Defined') . '</a></div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class="selection">'; //Main table
+	echo '<br />';
 
 
 	// The user wish to EDIT an existing type
@@ -256,13 +257,12 @@ if (! isset($_GET['delete'])) {
 		$_POST['typename']='';
 	}
 	echo '<tr><td>' . _('Type Name') . ':</td>
-		<td><input type="Text" name="typename" value="' . $_POST['typename'] . '" /></td></tr>';
+		<td><input type="text" name="typename" value="' . $_POST['typename'] . '" /></td></tr>';
 
-   	echo '</td></tr>
-   		</table>'; // close main table
+   	echo '</table>'; // close main table
 
-	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /></div>';
-
+	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /></div>';
+    echo '</div>';
 	echo '</form>';
 
 } // end if user wish to delete

@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif ($_SESSION['AutoDebtorNo']==0 AND (ContainsIllegalCharacters($_POST['DebtorNo']) OR mb_strpos($_POST['DebtorNo'], ' '))) {
 		$InputError = 1;
-		prnMsg( _('The customer code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
+		prnMsg( _('The customer code cannot contain any of the following characters') . " . - ' &amp; + \" " . _('or a space'),'error');
 		$Errors[$i] = 'DebtorNo';
 		$i++;
 	} elseif (mb_strlen($_POST['Address1']) >40) {
@@ -425,6 +425,7 @@ if (!isset($DebtorNo)) {
 		exit;
 	}
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="Yes" />';
@@ -441,25 +442,25 @@ if (!isset($DebtorNo)) {
 	}
 
 	echo '<tr><td>' . _('Customer Name') . ':</td>
-		<td><input tabindex="2" type="Text" name="CustName" size="42" maxlength="40" /></td></tr>';
+		<td><input tabindex="2" type="text" name="CustName" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Telephone') . ':</td>
-		<td><input tabindex="2" type="Text" name="Phone" size="30" maxlength="40" /></td></tr>';
+		<td><input tabindex="2" type="text" name="Phone" size="30" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td>
-		<td><input tabindex="2" type="Text" name="Fax" size="30" maxlength="40" /></td></tr>';
+		<td><input tabindex="2" type="text" name="Fax" size="30" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-		<td><input tabindex="2" type="Text" name="Email" size="30" maxlength="40" /></td></tr>';
+		<td><input tabindex="2" type="text" name="Email" size="30" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
-		<td><input tabindex="3" type="Text" name="Address1" size="42" maxlength="40" /></td></tr>';
+		<td><input tabindex="3" type="text" name="Address1" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
-		<td><input tabindex="4" type="Text" name="Address2" size="42" maxlength="40" /></td></tr>';
+		<td><input tabindex="4" type="text" name="Address2" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td>
-		<td><input tabindex="5" type="Text" name="Address3" size="42" maxlength="40" /></td></tr>';
+		<td><input tabindex="5" type="text" name="Address3" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
-		<td><input tabindex="6" type="Text" name="Address4" size="42" maxlength="40" /></td></tr>';
+		<td><input tabindex="6" type="text" name="Address4" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 5') . ':</td>
-		<td><input tabindex="7" type="Text" name="Address5" size="22" maxlength="20" /></td></tr>';
+		<td><input tabindex="7" type="text" name="Address5" size="22" maxlength="20" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 6') . ':</td>
-		<td><input tabindex="8" type="Text" name="Address6" size="17" maxlength="15" /></td></tr>';
+		<td><input tabindex="8" type="text" name="Address6" size="17" maxlength="15" /></td></tr>';
 
 
 
@@ -469,14 +470,14 @@ if (!isset($DebtorNo)) {
 		$DataError =1;
 		echo '<tr><td colspan="2">' . prnMsg(_('No sales types/price lists defined'),'error') . '<br /><a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a></td></tr>';
 	} else {
-		echo '<tr><td>' . _('Sales Type/Price List') . ':</td>
+        echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
 			   <td><select tabindex="9" name="SalesType">';
 
 		while ($myrow = DB_fetch_array($result)) {
 		   echo '<option value="'. $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		} //end while loopre
 		DB_data_seek($result,0);
-		echo '</select></td></tr>';
+        echo '</select></td></tr>';
 	}
 
 // Show Customer Type drop down list
@@ -504,7 +505,7 @@ if (!isset($DebtorNo)) {
 			<td><table class="selection">
 				<tr>
 					<td>' . _('Discount Percent') . ':</td>
-					<td><input tabindex="11" type="textbox" class="number" name="Discount" value="0" size="5" maxlength="4" /></td>
+					<td><input tabindex="11" type="text" class="number" name="Discount" value="0" size="5" maxlength="4" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Discount Code') . ':</td>
@@ -512,7 +513,7 @@ if (!isset($DebtorNo)) {
 				</tr>
 				<tr>
 					<td>' . _('Payment Discount Percent') . ':</td>
-					<td><input tabindex="13" type="textbox" class ="number" name="PymtDiscount" value="0" size="5" maxlength="4" /></td>
+					<td><input tabindex="13" type="text" class ="number" name="PymtDiscount" value="0" size="5" maxlength="4" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Credit Limit') . ':</td>
@@ -608,10 +609,11 @@ if (!isset($DebtorNo)) {
 	if ($DataError ==0){
 		echo '<br />
 			<div class="centre">
-				<input tabindex="20" type="submit" name="submit" value="' . _('Add New Customer') . '" />&nbsp;<input tabindex="21" type="submit" action="Reset" value="' . _('Reset') . '" />
+				<input tabindex="20" type="submit" name="submit" value="' . _('Add New Customer') . '" />&nbsp;<input tabindex="21" type="submit" value="' . _('Reset') . '" />
 			</div>';
 		
 	}
+    echo '</div>';
 	echo '</form>';
 
 } else {
@@ -619,9 +621,10 @@ if (!isset($DebtorNo)) {
 //DebtorNo exists - either passed when calling the form or from the form itself
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
-			<tr><td valign="top"><table class="selection">';
+			<tr><td valign="top">';
 
 	if (!isset($_POST['New'])) {
 		$sql = "SELECT debtorsmaster.debtorno,
@@ -655,10 +658,10 @@ if (!isset($DebtorNo)) {
 		/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 		then display the DebtorNo */
 		if ($_SESSION['AutoDebtorNo']== 0 )  {
-			echo '<tr>
+			echo '<table class="selection"><tr>
 					<td>' . _('Customer Code') . ':</td>
 					<td>' . $DebtorNo. '</td>
-				</tr>';
+				</tr></table><br />';
 		}
 		$_POST['CustName'] = $myrow['name'];
 		$_POST['Address1']  = $myrow['address1'];
@@ -682,10 +685,12 @@ if (!isset($DebtorNo)) {
 		$_POST['typeid'] = $myrow['typeid'];
 
 		echo '<input type="hidden" name="DebtorNo" value="' . $DebtorNo . '" />';
+        echo '<table class="selection">';
 
 	} else {
 	// its a new customer being added
 		echo '<input type="hidden" name="New" value="Yes" />';
+        echo '<table class="selection">';
 
 		/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 		then provide an input box for the DebtorNo to manually assigned */
@@ -773,6 +778,7 @@ if (!isset($DebtorNo)) {
 			}
 		} //end while loop
 		DB_data_seek($result,0);
+        echo '</select></td></tr>';
 	}
 
 // Select Customer types for drop down list for SELECT/UPDATE
@@ -1043,7 +1049,7 @@ if (!isset($DebtorNo)) {
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href=mailto:%s>%s</a></td>
+					<td><a href="mailto:%s">%s</a></td>
 					<td>%s</td>
 					</tr>',
 					$myrow['contactname'],
@@ -1056,10 +1062,10 @@ if (!isset($DebtorNo)) {
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href=mailto:%s>%s</a></td>
+					<td><a href="mailto:%s">%s</a></td>
 					<td>%s</td>
-					<td><a href="AddCustomerContacts.php?Id=%s&DebtorNo=%s">'. _('Edit'). '</a></td>
-					<td><a href="%sID=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">'. _('Delete'). '</a></td>
+					<td><a href="AddCustomerContacts.php?Id=%s&amp;DebtorNo=%s">'. _('Edit'). '</a></td>
+					<td><a href="%sID=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">'. _('Delete'). '</a></td>
 					</tr>',
 					$myrow['contactname'],
 					$myrow['role'],
@@ -1082,16 +1088,17 @@ if (!isset($DebtorNo)) {
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Add New Customer') . '" />&nbsp;
 				<input type="submit" name="Reset" value="' . _('Reset') . '" />
-			</div>
-			</form>';
+			</div>';
 	} elseif (!isset($_GET['Modify'])){
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Update Customer') . '" />&nbsp;
-				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
+				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
+            </div>';
 	}
 	
-	echo '</div>';
+	echo '</div>
+          </form>';
 } // end of main ifs
 
 include('includes/footer.inc');

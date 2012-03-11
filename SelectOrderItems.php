@@ -1627,14 +1627,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 
 		echo '</select></td>
-			<td><b>' . _('Enter partial Description') . ':</b><input tabindex="2" type="Text" name="Keywords" size="20" maxlength="25" value="' ;
+			<td><b>' . _('Enter partial Description') . ':</b><input tabindex="2" type="text" name="Keywords" size="20" maxlength="25" value="' ;
 
         if (isset($_POST['Keywords'])) {
              echo $_POST['Keywords'] ;
         }
         echo '" /></td>';
 
-		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="Text" name="StockCode" size="15" maxlength="18" value="';
+		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="';
         if (isset($_POST['StockCode'])) {
             echo  $_POST['StockCode'];
         }

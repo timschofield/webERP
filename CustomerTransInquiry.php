@@ -13,6 +13,7 @@ echo '<div class="page_help_text">' . _('Choose which type of transaction to rep
 	<br />';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">
@@ -58,6 +59,7 @@ echo '<td>' . _('From') . ':</td>
 	<div class="centre">
 		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Transactions') . '" />
 	</div>
+    </div>
 	</form>';
 
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
@@ -128,7 +130,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td width="200">%s</td>
+						<td style="width:200px">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>

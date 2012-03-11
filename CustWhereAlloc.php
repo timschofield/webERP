@@ -7,6 +7,7 @@ $title = _('Customer How Paid Inquiry');
 include('includes/header.inc');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
@@ -153,7 +154,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 		} // end if there are allocations against the transaction
 	} //got the ID of the transaction to find allocations for
 }
-
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 

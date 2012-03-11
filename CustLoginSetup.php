@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID']) OR mb_strstr($_POST['UserID'],' ')) {
 		$InputError = 1;
-		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
+		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
 	} elseif (mb_strlen($_POST['Password'])<5){
 		if (!$SelectedUser){
 			$InputError = 1;
@@ -124,6 +124,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">
@@ -147,7 +148,7 @@ if (!isset($_POST['Email'])) {
 
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
+		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Full Name') . ':</td>
@@ -161,9 +162,9 @@ echo '<tr>
 			<td>' . _('Email Address') .':</td>
 			<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
 		</tr>
-		<input type="hidden" name="Access" value="1" />
-		<tr>
-			<td>' . _('Branch Code') . ':</td>
+        <tr>
+		<td><input type="hidden" name="Access" value="1" />
+			' . _('Branch Code') . ':</td>
 			<td><select name="BranchCode">';
 
 $sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
@@ -182,7 +183,7 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
 	}
 }
-
+echo '</select></td></tr>';
 echo '<tr><td>' . _('Reports Page Size') .':</td>
 	<td><select name="PageSize">';
 
@@ -271,6 +272,7 @@ echo '</select></td>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
+    </div>
 	</form>';
 
 if (isset($_GET['SelectedUser'])) {

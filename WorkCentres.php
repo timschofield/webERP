@@ -216,7 +216,7 @@ if (!isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Work Centre Description') . ':</td>
-		<td><input type="Text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
+		<td><input type="text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	<tr><td>' . _('Location') . ':</td>
 		<td><select name="Location">';

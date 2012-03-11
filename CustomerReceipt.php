@@ -729,7 +729,8 @@ customer record returned by the search - this record is then auto selected */
 /*set up the form whatever */
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Type='.$_GET['Type'] . '" method="post" name="form1">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Type='.$_GET['Type'] . '" method="post" id="form1">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*show the batch header details and the entries in the batch so far */
@@ -755,7 +756,7 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		 <td><select tabindex="1" name="BankAccount" onChange="ReloadForm(form1.BatchInput)">';
+		 <td><select tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults)==0){
 	echo '</select></td>
@@ -785,11 +786,11 @@ if (!Is_Date($_SESSION['ReceiptBatch']->DateBanked)){
 
 echo '<tr>
 		<td>' . _('Date Banked') . ':</td>
-		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength="10" size="10" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '" /></td>
+		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DateBanked" maxlength="10" size="10" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch']->DateBanked . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Currency') . ':</td>
-		<td><select tabindex="3" name="Currency" onChange="ReloadForm(form1.BatchInput)">';
+		<td><select tabindex="3" name="Currency" onchange="ReloadForm(form1.BatchInput)">';
 
 if (!isset($_SESSION['ReceiptBatch']->Currency)){
   $_SESSION['ReceiptBatch']->Currency=$_SESSION['CompanyRecord']['currencydefault'];
@@ -994,7 +995,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	echo '<br />
 		<table class="selection">
 			<tr>
-				<th colspan="2"><font size="2" color="navy">' . _('General Ledger Receipt Entry') . '</font></th>
+				<th colspan="2">' . _('General Ledger Receipt Entry') . '</th>
 			</tr>';
 
 	//Select the tag
@@ -1101,15 +1102,15 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<br />';
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Select a Customer') . '</b>
+			<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Select a Customer') . '</p>
 		<table class="selection">
 		<tr>
 			<td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>
 			<td><input tabindex="9" type="text" name="Keywords" size="15" maxlength="25" /></td>
-			<td><font size="3"><b>' . _('OR') . '</b></font></td>
+			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Text extract in the Customer') . ' ' . '<b>' . _('code') . '</b>:</td>
 			<td><input tabindex="10" type="text" name="CustCode" size="10" maxlength="18" /></td>
-			<td><font size="3"><b>' . _('OR') . '</b></font></td>
+			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Customer invoice number') . ':</td>
 			<td><input tabindex="11" type="text" name="CustInvNo" size="8" maxlength="8" /></td>
 		</tr>
@@ -1170,6 +1171,7 @@ if (isset($_SESSION['ReceiptBatch']->Items) and count($_SESSION['ReceiptBatch']-
 			<input tabindex="13" type="submit" name="CommitBatch" value="' . _('Accept and Process Batch') . '" />
 		</div>';
 }
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

@@ -266,7 +266,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['Sales_Type']='';
 	}
 	echo '<tr><td>' . _('Sales Type Name') . ':</td>
-			<td><input type="Text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
+			<td><input type="text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
 
    	echo '</td></tr></table>'; // close main table
 
