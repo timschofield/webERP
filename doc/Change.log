@@ -1,5 +1,7 @@
 webERP Change Log
 
+11/3/12 Dr. Magdy Salib - ar_EG.utf8 arabic translation started
+11/3/12 James Dupin: French language translation update
 8/3/12 Ricard: Added parameter for show stock image on select product screen - SelectProduct.php and SystemParameters.php
 7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustmentsControlled.php. Reported by Soujiro
 7/3/2012 Exson: Fixed that serialised items cannot be processed in StockAdjustments.php. Reported by Soujiro
