@@ -30,7 +30,7 @@ echo '<tr>
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('This Week') . ':</td>
@@ -38,7 +38,7 @@ echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('This Month') . ':</td>
@@ -46,7 +46,7 @@ echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('This Quarter') . ':</td>
@@ -54,7 +54,7 @@ echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>';
 if ($_POST['DateRange']=='Custom'){
 	if (!isset($_POST['FromDate'])){

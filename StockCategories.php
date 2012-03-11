@@ -374,7 +374,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Stock Type') . ':</td>
-		<td><select name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
+		<td><select name="StockType" onchange="ReloadForm(CategoryForm.UpdateTypes)" >';
 if (isset($_POST['StockType']) and $_POST['StockType']=='F') {
 	echo '<option selected="selected" value="F">' . _('Finished Goods') . '</option>';
 } else {

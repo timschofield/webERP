@@ -27,7 +27,7 @@ if (isset($_POST['Submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['DepartmentName'])) {
 		$InputError = 1;
-		prnMsg( _('The description of the department must not contain the character') . " '&' " . _('or the character') ." '",'error');
+		prnMsg( _('The description of the department must not contain the character') . " '&amp;' " . _('or the character') ." '",'error');
 	}
 	if (trim($_POST['DepartmentName']) == '') {
 		$InputError = 1;
@@ -111,6 +111,7 @@ if (isset($_POST['Submit'])) {
 			$result = DB_query($sql,$db);
 		}
 		prnMsg($msg,'success');
+        echo '<br />';
 	}
 	unset ($SelectedDepartmentID);
 	unset ($_POST['SelectedDepartmentID']);
@@ -183,7 +184,7 @@ if (isset($_POST['Submit'])) {
 		echo '<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['authoriser'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&delete=1">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&amp;delete=1">' . _('Delete') .'</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -200,6 +201,7 @@ echo '<br />';
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .  '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedDepartmentID)) {
@@ -252,6 +254,7 @@ if (! isset($_GET['delete'])) {
 	echo '<div class="centre">
 			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
 		</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

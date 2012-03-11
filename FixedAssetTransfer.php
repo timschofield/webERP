@@ -129,7 +129,7 @@ if (isset($_POST['Search'])) {
 				<td class="number">'.locale_number_format($myrow['cost'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
 				<td class="number">'.locale_number_format($myrow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
 				<td>'.$myrow['locationdescription'].'</td>';
-		echo '<td><select name="Location'.$myrow['assetid'].'" onChange="ReloadForm(Move'.$myrow['assetid'].')">';
+		echo '<td><select name="Location'.$myrow['assetid'].'" onchange="ReloadForm(Move'.$myrow['assetid'].')">';
 		echo '<option></option>';
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
 			if ($LocationRow['locationid']==$myrow['location']) {

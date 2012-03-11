@@ -511,7 +511,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '<tr>
 			<td>'. _('Select Location Receiving Into'). ':</td>
 			<td>';
-	echo '<select name="RecLocation" onChange="ReloadForm(form1.RefreshTransferList)">';
+	echo '<select name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
 	if (!isset($_POST['RecLocation'])){
 		$_POST['RecLocation'] = $_SESSION['UserStockLocation'];
 	}

@@ -22,7 +22,7 @@ function GetReports($GroupID) {
 			ORDER BY reportname";
 		$Result=DB_query($sql,$db,'','',false,true);
 		if (DB_num_rows($Result)>0) {
-			$RptForm .= '<tr><td><select name="ReportID" size="10" onChange="submit()">';
+			$RptForm .= '<tr><td><select name="ReportID" size="10" onchange="submit()">';
 			while ($Temp = DB_fetch_array($Result)) {
 				$RptForm .= '<option value="'.$Temp['id'].'">'.$Temp['reportname'].'</option>';
 			}

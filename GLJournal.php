@@ -318,7 +318,7 @@ echo '</select></td>';
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode']='';
 }
-echo '<td><input class="number" type="text" name="GLManualCode" maxlength="12" size="12" onChange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
+echo '<td><input class="number" type="text" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
 
 $sql="SELECT accountcode,
 			accountname
@@ -326,7 +326,7 @@ $sql="SELECT accountcode,
 		ORDER BY accountcode";
 
 $result=DB_query($sql, $db);
-echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
+echo '<td><select name="GLCode" onchange="return assignComboToInput(this,'.'GLManualCode'.')">';
 echo '<option value="">' . _('Select a general ledger account code') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['accountcode']){
@@ -350,11 +350,11 @@ if (!isset($_POST['Debit'])) {
 echo '</tr>
 	<tr>
 		<th>' . _('Debit') . '</th>
-		<td><input type="text" class="number" name = "Debit" onChange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" name = "Debit" onchange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<th>' . _('Credit') . '</th>
-		<td><input type="text" class="number" Name = "Credit" onChange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" Name = "Credit" onchange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<td></td>

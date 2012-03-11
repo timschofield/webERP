@@ -155,18 +155,18 @@ function showLabelOptions() {
 		</tr>';
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
-				<td><select name="SalesType" onChange="ReloadForm(form1.refresh)">
+				<td><select name="SalesType" onchange="ReloadForm(form1.refresh)">
 					'.$OptionSales.'
 					</select></td>
 			</tr>';
 	echo '<td class="number">'.$txt[$iTxt++].':</td>
-				<td><select name="Currency" onChange="ReloadForm(form1.refresh)">
+				<td><select name="Currency" onchange="ReloadForm(form1.refresh)">
 						'.$OptionCurrency.'
 					</select></td>
 			</tr>';
 	echo '<tr>
 				<td class="number">'.$txt[$iTxt++].':</td>
-				<td><select name="Category" onChange="ReloadForm(form1.refresh)">
+				<td><select name="Category" onchange="ReloadForm(form1.refresh)">
 					'.$OptionsCategory.'
 					</select> </td>
 			</tr>';

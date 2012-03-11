@@ -467,7 +467,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td class="label">' . _('Factory Location') .':</td>
-		<td><select name="StockLocation" onChange="ReloadForm(form1.submit)">';
+		<td><select name="StockLocation" onchange="ReloadForm(form1.submit)">';
 $LocResult = DB_query("SELECT loccode,locationname FROM locations",$db);
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_POST['StockLocation']==$LocRow['loccode']){

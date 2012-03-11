@@ -756,7 +756,7 @@ $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 echo '<tr>
 		<td>' . _('Bank Account') . ':</td>
-		<td><select name="BankAccount" onChange="ReloadForm(UpdateHeader)">';
+		<td><select name="BankAccount" onchange="ReloadForm(UpdateHeader)">';
 
 if (DB_num_rows($AccountsResults)==0){
 	echo '</select></td>
@@ -782,13 +782,13 @@ if (DB_num_rows($AccountsResults)==0){
 
 echo '<tr>
 		<td>' . _('Date Paid') . ':</td>
-		<td><input type="text" name="DatePaid" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" onChange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '" /></td>
+		<td><input type="text" name="DatePaid" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '" /></td>
 	</tr>';
 
 
 if ($_SESSION['PaymentDetail' . $identifier]->SupplierID==''){
 	echo '<tr><td>' . _('Currency of Payment') . ':</td>
-			<td><select name="Currency" onChange="ReloadForm(UpdateHeader)">';
+			<td><select name="Currency" onchange="ReloadForm(UpdateHeader)">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
 	$result=DB_query($SQL,$db);
 
@@ -939,17 +939,17 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	if (isset($_POST['GLManualCode'])) {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" class="number" name="GLManualCode" maxlength="12" size="12" onChange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' . ' value="'. $_POST['GLManualCode'] .'"   /></td>
+				<td><input type="text" class="number" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' . ' value="'. $_POST['GLManualCode'] .'"   /></td>
 			</tr>';
 	} else {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" class="number" Name="GLManualCode" maxlength="12" size="12" onChange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" /></td></tr>';
+				<td><input type="text" class="number" Name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" /></td></tr>';
 	}
 	
 	echo '<tr>
 			<td>' . _('Select GL Group') . ':</td>
-			<td><select name="GLGroup" onChange="return ReloadForm(UpdateCodes)">';
+			<td><select name="GLGroup" onchange="return ReloadForm(UpdateCodes)">';
 
 	$SQL = "SELECT groupname
 			FROM accountgroups
@@ -990,7 +990,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	
 	echo '<tr>
 			<td>' . _('Select GL Account') . ':</td>
-			<td><select name="GLCode" onChange="return assignComboToInput(this,'.'GLManualCode'.')">';
+			<td><select name="GLCode" onchange="return assignComboToInput(this,'.'GLManualCode'.')">';
 
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){

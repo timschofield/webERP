@@ -34,7 +34,7 @@ echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)"/></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)"/></td>
 		</tr>
 	<tr>
 		<td>' . _('This Week') . ':</td>
@@ -42,7 +42,7 @@ echo	' onChange="ReloadForm(Form1.ShowSales)"/></td>
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('This Month') . ':</td>
@@ -50,7 +50,7 @@ echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('This Quarter') . ':</td>
@@ -58,7 +58,7 @@ echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
 		</tr>';
 if ($_POST['DateRange']=='Custom'){
 	if (!isset($_POST['ToDate'])){
@@ -86,7 +86,7 @@ echo '<tr><th colspan="2" class="centre">' . _('Display Data') . '</th>
 if ($_POST['DisplayData']=='Daily'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('Weekly') . ':</td>
@@ -94,7 +94,7 @@ echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
 if ($_POST['DisplayData']=='Weekly'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('Monthly') . ':</td>
@@ -102,7 +102,7 @@ echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
 if ($_POST['DisplayData']=='Monthly'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
 		</tr>
 	<tr>
 		<td>' . _('Quarterly') . ':</td>
@@ -110,7 +110,7 @@ echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
 if ($_POST['DisplayData']=='Quarterly'){
 	echo 'checked';
 }
-echo	' onChange="ReloadForm(Form1.ShowSales)" /></td>
+echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
 		</tr>';
 echo '</table>
 		</td></tr>

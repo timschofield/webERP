@@ -82,6 +82,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -105,7 +106,7 @@ while ($myrow = DB_fetch_array($result)){
 	}
 }
 
-echo '</select>';
+echo '</select></td></tr>';
 
 
 $sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
@@ -122,9 +123,9 @@ if (DB_num_rows($result) > 0) {
 			echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
 		}
 	}
-	echo '</select></td>';
+	echo '</select></td></tr>';
 } else {
-	echo '<input type="hidden" name="DiscountCategory" value="" />';
+	echo '<tr><td><input type="hidden" name="DiscountCategory" value="" /></td></tr>';
 }
 
 echo '<tr>
@@ -173,13 +174,13 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
+	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;DiscountCategory=' . $myrow['discountcategory'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'];
 
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</td>
+			<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['sales_type'],
 			$myrow['discountcategory'],
@@ -190,7 +191,8 @@ while ($myrow = DB_fetch_array($result)) {
 }
 
 echo '</table>
-	</form>';
+      </div>
+	  </form>';
 
 include('includes/footer.inc');
 ?>

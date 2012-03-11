@@ -778,7 +778,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 	if ($_SESSION['PO'.$identifier]->AllowPrintPO==0 AND empty($_POST['RePrint'])){
 		echo '<tr><td>' . _('Allow Reprint') . ':</td>
-				<td><select name="RePrint" onChange="ReloadForm(form1.AllowRePrint)">
+				<td><select name="RePrint" onchange="ReloadForm(form1.AllowRePrint)">
 					<option selected="selected" value="0">' . _('No') . '</option>
 					<option value="1">' . _('Yes') . '</option>
 				</select></td>';
@@ -802,7 +802,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		echo '<tr><td>' . _('New Purchase Order') . '</td></tr>';
 	} else {
 		echo '<tr><td>' . _('Status') . ' :  </td>
-				<td><select name="Status" onChange="ReloadForm(form1.UpdateStatus)">';
+				<td><select name="Status" onchange="ReloadForm(form1.UpdateStatus)">';
 	
 		switch ($_SESSION['PO'.$identifier]->Status) {
 			case 'Pending':
@@ -862,7 +862,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	echo '<table class="selection" width="100%">
 			<tr>
 				<td>' . _('Warehouse') . ':</td>
-				<td><select name="StkLocation" onChange="ReloadForm(form1.LookupDeliveryAddress)">';
+				<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	$sql = "SELECT loccode,
 					locationname
@@ -1012,7 +1012,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	echo '<table class="selection" width="100%">
 			<tr>
 				<td>' . _('Supplier Selection') . ':</td>
-				<td><select name="Keywords" onChange="ReloadForm(form1.SearchSuppliers)">';
+				<td><select name="Keywords" onchange="ReloadForm(form1.SearchSuppliers)">';
 
 	$SuppCoResult = DB_query("SELECT supplierid, suppname FROM suppliers ORDER BY suppname",$db);
 

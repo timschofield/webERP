@@ -11,6 +11,7 @@ echo '<div class="page_help_text">' . _('Select the month to show daily sales fo
 	<br />';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['MonthToShow'])){
@@ -62,6 +63,7 @@ echo '</tr>
 	<div class="centre">
 		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Daily Sales For The Selected Month') . '" />
 	</div>
+    </div>
 	</form>
 	<br />';
 /*Now get and display the sales data returned */

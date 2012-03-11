@@ -32,7 +32,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 
 
 	// CurrencyToShow Currency Picker
-	echo '<tr><td><select name="CurrencyToShow" onChange="ReloadForm(update.submit)">';
+	echo '<tr><td><select name="CurrencyToShow" onchange="ReloadForm(update.submit)">';
 
 	DB_data_seek($result,0);
 	while ($myrow=DB_fetch_array($result)) {

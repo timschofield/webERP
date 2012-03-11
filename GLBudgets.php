@@ -35,7 +35,7 @@ echo '<table>';
 echo '<br />
 		<tr>
 			<td>'.  _('Select GL Account').  ':</td>
-			<td><select name="SelectedAccount" onChange="ReloadForm(selectaccount.Select)">';
+			<td><select name="SelectedAccount" onchange="ReloadForm(selectaccount.Select)">';
 
 $SQL = "SELECT accountcode,
 				accountname
@@ -221,7 +221,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 			<td></td>
 			<td><input class="number" type="text" size="14" name="AnnualAmountTY" value="0.00" /></td>
 			<td></td>
-			<td><input onChange="numberFormat(this,2)" class="number" type="text" size="14" name="AnnualAmount" value="0.00" /></td>
+			<td><input onchange="numberFormat(this,2)" class="number" type="text" size="14" name="AnnualAmount" value="0.00" /></td>
 			<td><input type="submit" name="Apportion" value="' . _('Apportion Budget') . '" /></td>
 		</tr>
 		</table>';

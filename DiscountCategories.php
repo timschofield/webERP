@@ -65,7 +65,8 @@ if (isset($_POST['submit'])) {
 }
 
 if (isset($_POST['selectchoice'])) {
-	echo '<form name="update" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form id="update" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
@@ -73,7 +74,7 @@ if (isset($_POST['selectchoice'])) {
 	if (DB_num_rows($result) > 0) {
 		echo '<table class="selection"><tr><td>'. _('Discount Category Code') .': </td>';
 
-		echo '<td><select name="DiscCat" onChange="ReloadForm(update.select)">';
+		echo '<td><select name="DiscCat" onchange="ReloadForm(update.select)">';
 
 		while ($myrow = DB_fetch_array($result)){
 			if ($myrow['discountcategory']==$_POST['DiscCat']){
@@ -81,7 +82,6 @@ if (isset($_POST['selectchoice'])) {
 			} else {
 				echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
 			}
-			echo '</option>';
 		}
 
 		echo '</select></td>';
@@ -90,8 +90,11 @@ if (isset($_POST['selectchoice'])) {
 			</table>
 			<br />';
 	}
+    echo '</div>
+          </form>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ChooseOption" value="'.$_POST['ChooseOption'].'" />';
 	echo '<input type="hidden" name="selectchoice" value="'.$_POST['selectchoice'].'" />';
@@ -171,7 +174,8 @@ if (isset($_POST['selectchoice'])) {
 		echo '</select></td></tr></table>';
 		echo '<br /><div class="centre"><input type="submit" name="SubmitCategory" value="'. _('Update Items') .'" /></div>';
 	}
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 	if (! isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for first cat defined */
 
@@ -212,11 +216,11 @@ if (isset($_POST['selectchoice'])) {
 				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
-			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&StockID=' . $myrow['stockid'] . '&DiscountCategory=' . $myrow['discountcategory'];
+			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;StockID=' . $myrow['stockid'] . '&amp;DiscountCategory=' . $myrow['discountcategory'];
 
 			printf('<td>%s</td>
 					<td>%s - %s</td>
-					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">'. _('Delete') .'</td>
+					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">'. _('Delete') .'</a></td>
 					</tr>',
 					$myrow['discountcategory'],
 					$myrow['stockid'],
@@ -235,17 +239,20 @@ if (isset($_POST['selectchoice'])) {
 }
 
 if (!isset($_POST['selectchoice'])) {
-	echo '<form method="post" name="choose" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
+	echo '<form method="post" id="choose" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr><td>'._('Update discount category for').'</td>';
-	echo '<td><select name="ChooseOption" onChange="ReloadForm(choose.selectchoice)">';
+	echo '<td><select name="ChooseOption" onchange="ReloadForm(choose.selectchoice)">';
 	echo '<option value="1">'._('a single stock item').'</option>';
 	echo '<option value="2">'._('a complete stock category').'</option>';
 	echo '</select></td></tr>
 		</table>
 		<br />';
 	echo '<div class="centre"><input type="submit" name="selectchoice" value="'._('Select').'" /></div>';
+    echo '</div>
+          </form>';
 }
 
 include('includes/footer.inc');

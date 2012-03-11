@@ -320,7 +320,7 @@ if (!isset($_SESSION['tender'.$identifier])
 	}
 	echo '<tr>
 			<td>' . _('Warehouse') . ':</td>
-			<td><select name="StkLocation" onChange="ReloadForm(form1.LookupDeliveryAddress)">';
+			<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	$sql = "SELECT loccode,
 					locationname

@@ -841,7 +841,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<table class="selection">
 				<tr>
 					<td>' . _('Credit Note Type') . ' :</td>
-					<td><select name="CreditType" onChange="ReloadForm(MainForm.Update)" >';
+					<td><select name="CreditType" onchange="ReloadForm(MainForm.Update)" >';
 					
 		if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
 			   echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>

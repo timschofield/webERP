@@ -843,7 +843,7 @@ if ($StockImgLink!=_('No Image')) {
 
 echo '<tr>
 		<td>' . _('Category') . ':</td>
-		<td><select name="CategoryID" onChange="ReloadForm(ItemForm.UpdateCategories)">';
+		<td><select name="CategoryID" onchange="ReloadForm(ItemForm.UpdateCategories)">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
