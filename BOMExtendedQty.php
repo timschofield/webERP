@@ -14,6 +14,7 @@ if (isset($_POST['PrintPDF'])) {
 	$FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
+	$YPos = $Page_Height - $Top_Margin;
 
 	if (!$_POST['Quantity'] or !is_numeric(filter_number_format($_POST['Quantity']))) {
 		$_POST['Quantity'] = 1;
