@@ -34,8 +34,8 @@ if (isset($_POST['Submit'])) {
 		prnMsg( _('The Name of the Department should not be empty'), 'error');
 	}
 
-	if (isset($_POST['SelectedDepartmentID']) 
-		AND $_POST['SelectedDepartmentID']!='' 
+	if (isset($_POST['SelectedDepartmentID'])
+		AND $_POST['SelectedDepartmentID']!=''
 		AND $InputError !=1) {
 
 
@@ -51,8 +51,8 @@ if (isset($_POST['Submit'])) {
 			prnMsg( _('This department name already exists.'),'error');
 		} else {
 			// Get the old name and check that the record still exist neet to be very careful here
-			
-			$sql = "SELECT description 
+
+			$sql = "SELECT description
 					FROM departments
 					WHERE departmentid = '" . $SelectedDepartmentID . "'";
 			$result = DB_query($sql,$db);
@@ -120,8 +120,8 @@ if (isset($_POST['Submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	
-	$sql = "SELECT description 
+
+	$sql = "SELECT description
 			FROM departments
 			WHERE departmentid = '" . $SelectedDepartmentID . "'";
 	$result = DB_query($sql,$db);
@@ -130,9 +130,9 @@ if (isset($_POST['Submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldDepartmentName = $myrow[0];
-		$sql= "SELECT COUNT(*) 
-				FROM dispatch INNER JOIN departments 
-				ON dispatch.departmentid=departments.departmentid  
+		$sql= "SELECT COUNT(*)
+				FROM stockrequest INNER JOIN departments
+				ON stockrequest.departmentid=departments.departmentid
 				WHERE description " . LIKE . " '" . $OldDepartmentName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
