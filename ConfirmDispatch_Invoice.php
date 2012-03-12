@@ -531,18 +531,18 @@ foreach ($_SESSION['Items'.$identifier]->FreightTaxes as $FreightTaxLine) {
 echo '</td>';
 
 echo '<td class="number">' . locale_number_format($FreightTaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
-	<td class="number">' . locale_number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
+	<td class="number">' . locale_number_format($FreightTaxTotal + filter_number_format($_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
 	</tr>';
 
 $TaxTotal += $FreightTaxTotal;
 
-$DisplaySubTotal = locale_number_format(($_SESSION['Items'.$identifier]->total + $_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+$DisplaySubTotal = locale_number_format(($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['ChargeFreightCost'])),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
 
 /* round the totals to avoid silly entries */
 $TaxTotal = round($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 $_SESSION['Items'.$identifier]->total = round($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-$_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+$_POST['ChargeFreightCost'] = round(filter_number_format($_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
 echo '<tr>
 	<td colspan="10" class="number">' . _('Invoice Totals'). '</td>
