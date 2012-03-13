@@ -488,8 +488,8 @@ If (isset($PrintPDF)
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include('includes/header.inc');
-
 		include ('includes/htmlMimeMail.php');
+		$FromTransNo--; //reverse the increment to retain the correct transaction number
 		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
 		$pdf->Output($FileName,'F');
 		$mail = new htmlMimeMail();
@@ -502,20 +502,15 @@ If (isset($PrintPDF)
 		$result = $mail->send(array($_GET['Email']));
 
 		unlink($FileName); //delete the temporary file
-		if(($FromTransNo - $FirstTrans)==1){
-			$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FirstTrans;
-			include('includes/header.inc');
-			echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $FirstTrans . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
-		}else{
-			$title = _('Emailing') . ' ' . $InvOrCredit . ' ' . _('from Number') . ' ' . $FirstTrans.' ' . _('to Number'). ' ' . ($FromTransNo-1);
-			include('includes/header.inc');
-			echo '<p>' . $InvOrCredit . ' ' . _('from Number') . ' ' . $FirstTrans . ' '._('to Number').' ' . ($FromTransNo-1) . _('has been emailed to') . ' ' . $_GET['Email'];
-		}
+
+		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
+		include('includes/header.inc');
+		echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include('includes/footer.inc');
 		exit;
 
 	} else { //its not an email just print the invoice to PDF
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FirstTrans. '.pdf');
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf');
 
 	}
 	$pdf->__destruct();
