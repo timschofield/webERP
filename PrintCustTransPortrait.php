@@ -502,15 +502,20 @@ If (isset($PrintPDF)
 		$result = $mail->send(array($_GET['Email']));
 
 		unlink($FileName); //delete the temporary file
-
-		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
-		include('includes/header.inc');
-		echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
+		if(($FromTransNo - $FirstTrans)==1){
+			$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FirstTrans;
+			include('includes/header.inc');
+			echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $FirstTrans . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
+		}else{
+			$title = _('Emailing') . ' ' . $InvOrCredit . ' ' . _('from Number') . ' ' . $FirstTrans.' ' . _('to Number'). ' ' . ($FromTransNo-1);
+			include('includes/header.inc');
+			echo '<p>' . $InvOrCredit . ' ' . _('from Number') . ' ' . $FirstTrans . ' '._('to Number').' ' . ($FromTransNo-1) . _('has been emailed to') . ' ' . $_GET['Email'];
+		}
 		include('includes/footer.inc');
 		exit;
 
 	} else { //its not an email just print the invoice to PDF
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf');
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FirstTrans. '.pdf');
 
 	}
 	$pdf->__destruct();
