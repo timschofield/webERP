@@ -487,7 +487,6 @@ If (isset($PrintPDF)
 	} /* end loop to print invoices */
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
-		include('includes/header.inc');
 		include ('includes/htmlMimeMail.php');
 		$FromTransNo--; //reverse the increment to retain the correct transaction number
 		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
