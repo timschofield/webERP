@@ -73,7 +73,9 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 		$sql = "SELECT bom.component,
 						stockmaster.description as itemdescription,
 						locations.locationname,
+						locations.loccode,
 						workcentres.description as workcentrename,
+						workcentres.code as workcentrecode,
 						bom.quantity,
 						bom.effectiveafter,
 						bom.effectiveto,
@@ -148,7 +150,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					<td class="number">%s</td>
 					<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
 					<td>'.$DrillText.'</td>
-					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
+					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
 					 </tr>',
 					$Level1,
 					$myrow['component'],
@@ -168,7 +170,9 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$Parent,
 					$myrow['component'],
-					$UltimateParent);
+					$UltimateParent,
+					$myrow['loccode'],
+					$myrow['workcentrecode']);
 
 		} //END WHILE LIST LOOP
 } //end of function DisplayBOMItems
@@ -356,7 +360,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		$sql="DELETE FROM bom 
 				WHERE parent='".$SelectedParent."' 
-				AND component='".$SelectedComponent."'";
+				AND component='".$SelectedComponent."'
+				AND loccode='".$Location."'
+				AND workcentreadded='".$WorkCentre."'";
 
 		$ErrMsg = _('Could not delete this BOM components because');
 		$DbgMsg = _('The SQL used to delete the BOM was');
@@ -548,7 +554,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$UltimateParent = $SelectedParent;
 		$k = 0;
 		$RowCounter = 1;
-
+		$BOMTree = arrayUnique($BOMTree);
 		foreach($BOMTree as $BOMItem){
 			$Level = $BOMItem['Level'];
 			$Parent = $BOMItem['Parent'];
@@ -909,7 +915,32 @@ if (!isset($SelectedParent)) {
 	echo '</div>';
 	echo '</form>';
 
-} //end StockID already selected
+	} //end StockID already selected
+// This function created by Dominik Jungowski on PHP developer blog
+function arrayUnique($array, $preserveKeys = false)
+{
+	//Unique Array for return
+	$arrayRewrite = array();
+	//Array with the md5 hashes
+	$arrayHashes = array();
+	foreach($array as $key => $item) {
+		// Serialize the current element and create a md5 hash
+		$hash = md5(serialize($item));
+		// If the md5 didn't come up yet, add the element to 
+		// arrayRewrite, otherwise drop it
+		if (!isset($arrayHashes[$hash])) {
+			// Save the current element hash
+			$arrayHashes[$hash] = $hash;
+			//Add element to the unique Array
+			if ($preserveKeys) {
+				$arrayRewrite[$key] = $item;
+			} else {
+				$arrayRewrite[] = $item;
+			}
+		}
+	}
+	return $arrayRewrite;
+}
 
 include('includes/footer.inc');
 ?>
