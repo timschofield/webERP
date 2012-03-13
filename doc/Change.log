@@ -1,5 +1,6 @@
 webERP Change Log
-
+13/3/2012 Exson: Correct mailing sending messages display error in PrintCustTransPortrait.php Reported by Thomas_lie
+12/3/2012 Exson: Fixed freight cost over 1000 cannot be calculated correctly in ConfirmDispatch_Invoice.php reported by Craig Craven.
 11/3/12 Vitaly: Added missing file encodings_maps.php to TCPDF
 11/3/12 Dr. Magdy Salib - ar_EG.utf8 arabic translation started
 11/3/12 James Dupin: French language translation update
