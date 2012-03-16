@@ -282,7 +282,7 @@ if (isset($_POST['CommitBatch'])){
 			<br />
 			<br />';
 
-		echo '<form method=post action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?
 			<br />

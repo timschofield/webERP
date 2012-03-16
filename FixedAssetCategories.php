@@ -11,7 +11,8 @@ include('includes/header.inc');
 echo '<div class="centre">
 	<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $title . '
-	</p>';
+	</p>
+    </div>';
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -162,7 +163,7 @@ or deletion of the records*/
 			<th>' . _('Cat Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Cost GL') . '</th>
-			<th>' . _('P & L Depn GL') . '</th>
+			<th>' . _('P &amp; L Depn GL') . '</th>
 			<th>' . _('Disposal GL') . '</th>
 			<th>' . _('Accum Depn GL') . '</th>
 		  </tr>';
@@ -183,8 +184,8 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</td>
-					<td><a href="%sSelectedCategory=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</td>
+					<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</a></td>
+					<td><a href="%sSelectedCategory=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['categoryid'],
 					$myrow['categorydescription'],
@@ -198,7 +199,8 @@ or deletion of the records*/
 					$myrow['categoryid']);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</table>
+          <br />';
 }
 
 //end of ifs and buts!
@@ -207,7 +209,8 @@ if (isset($SelectedCategory)) {
 	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
 }
 
-echo '<form name="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form id="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory) and !isset($_POST['submit'])) {
@@ -284,9 +287,9 @@ echo '<tr>
 while ($myrow = DB_fetch_array($BSAccountsResult)){
 
 	if (isset($_POST['CostAct']) and $myrow['accountcode']==$_POST['CostAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
+		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
+		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
 	}
 } //end while loop
 echo '</select></td>
@@ -297,9 +300,9 @@ echo '</select></td>
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DepnAct']) and $myrow['accountcode']==$_POST['DepnAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
+		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')</option>';
+		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
 	}
 } //end while loop
 echo '</select></td>
@@ -311,9 +314,9 @@ echo '<tr>
 		<td><select name="DisposalAct">';
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $myrow['accountcode']==$_POST['DisposalAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
+		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
+		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
 	}
 } //end while loop
 echo '</select></td>
@@ -327,9 +330,9 @@ echo '<tr>
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 
 	if (isset($_POST['AccumDepnAct']) and $myrow['accountcode']==$_POST['AccumDepnAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
+		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
+		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
 	}
 
 } //end while loop
@@ -343,6 +346,7 @@ echo '</select></td>
 echo '<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

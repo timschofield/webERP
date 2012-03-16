@@ -1658,7 +1658,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 			$j = 1;
-			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method=post name="orderform">';
+			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="orderform">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
 			echo '<tr><td colspan="1"><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';

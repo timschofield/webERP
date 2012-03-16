@@ -641,7 +641,7 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method=post>';
+echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*need to set up entry for item description where not a stock item and GL Codes */

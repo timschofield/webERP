@@ -44,7 +44,7 @@ $SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
-echo '<table cellpadding="2" colspan="7" width="100%">';
+echo '<table cellpadding="2" width="100%">';
 $TableHeader =	'<tr>
 				<td class="tableheader">' . _('Modify') . '</td>
 				<td class="tableheader">' . _('Send to') . '<br />' . _('Radio Beacon') . '</td>

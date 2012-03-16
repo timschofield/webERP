@@ -104,14 +104,15 @@ while ($myrow=DB_fetch_array($result)) {
 	$ParentResult=DB_query($ParentSql, $db);
 	$ParentRow=DB_fetch_array($ParentResult);
 	echo '<td>' . $ParentRow['locationdescription'] . '</td>
-		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</td>';
+		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</a></td></tr>';
 }
 
 echo '</table>
 	<br />';
-echo '<form name="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
+echo '<form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
+      <div>
+    <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table class="selection">
-	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<tr>
 		<th style="text-align:left">'._('Location ID').'</th>';
 if (isset($_GET['SelectedLocation'])) {
@@ -156,6 +157,7 @@ if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="submit" name="submit" value="' . _('Enter Information') . '" />';
 }
 echo '</div>
+      </div>
 	</form>';
 
 include('includes/footer.inc');

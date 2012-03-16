@@ -80,7 +80,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$PeriodNo = GetPeriod($_POST['ProcessDate'],$db);
 }
 
-echo '<p></p><table>';
+echo '<br /><table>';
 $Heading = '<tr>
 				<th>' . _('Asset ID') . '</th>
 				<th>' . _('Description') . '</th>
@@ -257,7 +257,7 @@ echo '<tr>
 
 echo '</table>
 		<hr />
-		<p />';
+		<br />';
 
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$result = DB_Txn_Commit($db);
@@ -267,11 +267,11 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 } else {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p />
+	echo '<br />
 		<table class="selection" width="30%">
-		<tr></tr>
 		<tr>';
 	if ($AllowUserEnteredProcessDate){
 		echo '<td>'._('Date to Process Depreciation'). ':</td>
@@ -284,6 +284,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 		</tr>
 		</table>
 		<br />
+        </div>
 		</form>';
 }
 include('includes/footer.inc');

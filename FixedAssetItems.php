@@ -380,9 +380,10 @@ if (isset($_POST['submit'])) {
 } /* end if delete asset */
 $result = DB_Txn_Commit($db);
 
-echo '<form name="AssetForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-	<table class="selection">';
+echo '<form id="AssetForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+      <div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<table class="selection">';
 
 
 if (!isset($AssetID) OR $AssetID=='') {
@@ -390,7 +391,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 /*If the page was called without $AssetID passed to page then assume a new asset is to be entered other wise the form showing the fields with the existing entries against the asset will show for editing with a hidden AssetID field. New is set to flag that the page may have called itself and still be entering a new asset, in which case the page needs to know not to go looking up details for an existing asset*/
 
 	$New = 1;
-	echo '<input type="hidden" name="New" value="" /><br />';
+	echo '<tr><td><input type="hidden" name="New" value="" /></td></tr>';
 
 	$_POST['LongDescription'] = '';
 	$_POST['Description'] = '';
@@ -434,14 +435,14 @@ if (!isset($AssetID) OR $AssetID=='') {
 			<td>' . _('Asset Code') . ':</td>
 			<td>' . $AssetID . '</td>
 		</tr>';
-	echo '<input type="Hidden" name="AssetID" value="'.$AssetID.'"/>';
+	echo '<tr><td><input type="hidden" name="AssetID" value="'.$AssetID.'"/></td></tr>';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
 	echo '<tr>
 			<td>' . _('Asset Code') . ':</td>
 			<td>' . $AssetID . '</td>
 		</tr>';
-	echo '<input type="Hidden" name="AssetID" value="' . $AssetID . '"/>';
+	echo '<tr><td><input type="hidden" name="AssetID" value="' . $AssetID . '"/></td></tr>';
 }
 
 if (isset($_POST['Description'])) {
@@ -631,6 +632,7 @@ if (isset($New)) {
 }
 
 echo '</div>
+      </div>
 	</form>';
 include('includes/footer.inc');
 ?>

@@ -290,7 +290,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 		<br />
 		<br />
 	';
-	echo "<form ENCtype='multipart/form-data' action='Z_ImportStocks.php' method=post>";
+	echo "<form ENCtype='multipart/form-data' action='Z_ImportStocks.php' method="post">";
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo "<input type='hidden' name='MAX_FILE_SIZE' value='1000000' />" .

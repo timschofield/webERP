@@ -27,6 +27,7 @@ if (isset($_GET['AssetID'])) {
 	$sql="SELECT categoryid, categorydescription FROM fixedassetcategories";
 	$result=DB_query($sql, $db);
 	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title . '</p>';
@@ -46,7 +47,7 @@ if (isset($_GET['AssetID'])) {
 		}
 	}
 
-	echo '</select>';
+	echo '</select></td>';
 	echo '<td>'. _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 
 
@@ -69,7 +70,10 @@ if (isset($_GET['AssetID'])) {
 
 	echo '</td></tr></table><br />';
 
-	echo '<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '" /></div></form><br />';
+	echo '<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '" /></div>
+          </div>
+          </form>
+          <br />';
 }
 
 if (isset($_POST['Search'])) {
@@ -105,8 +109,9 @@ if (isset($_POST['Search'])) {
 				AND fixedassets.serialno " . LIKE . "'".$_POST['SerialNumber']."'";
 	$Result=DB_query($sql, $db);
 	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+          <div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th>'._('Asset ID') . '</th>
 			<th>' . _('Description') . '</th>
@@ -147,7 +152,9 @@ if (isset($_POST['Search'])) {
 		echo '<td><input type="submit" name="Move'.$myrow['assetid'].'" value="Move" /></td>';
 		echo '</tr>';
 	}
-	echo '</table></form>';
+	echo '</table>
+          </div>
+          </form>';
 }
 
 include('includes/footer.inc');
