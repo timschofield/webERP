@@ -10,7 +10,6 @@ echo '<img src="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" width="120" alt=
 echo '<td class="footer" style="text-align: right;width:33%">'.(strftime('%A')).', '.(date($_SESSION['DefaultDateFormat']).' | '.(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M'))).'</td>';
 
 echo '</tr>';
-echo '<tr><td colspan="3" class="footer">' ._('Copyright') . ' &copy; weberp.org 2003 - ' . date('Y') . '</td></tr>';
 echo '<tr><td colspan="3" class="footer">webERP ' ._('version') .' ' . $_SESSION['VersionNumber'] . '</td></tr>';
 
 //	if(http_file_exists('http://sflogo.sourceforge.net/sflogo.php')) {

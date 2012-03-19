@@ -1,4 +1,5 @@
 webERP Change Log
+19/3/2012 Tim: Remove illegal copyright notices to prevent any legal problems.</p>
 13/3/2012 Exson: Fixed that same parent and component but added in different Work Centers and Locations will display twice in BOMs.php. And fixed that to delete one line of same parents and component will delete all lines with same parents and components. Add ArrayUnique function to get unique array for multi-dimensional array.
 13/3/2012 Exson: Correct mailing sending messages display error in PrintCustTransPortrait.php Reported by Thomas_lie
 12/3/2012 Exson: Fixed freight cost over 1000 cannot be calculated correctly in ConfirmDispatch_Invoice.php reported by Craig Craven.
