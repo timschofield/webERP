@@ -292,8 +292,27 @@ $TaxTotal =0;
 
 $k=0; //row colour counter
 $j=0; //row counter
-
+if(isset($_POST['AutoUpdate'])){//clear the $_SESSION value when users have not click update button and directly process the credit note
+	$_SESSION['CreditItems']->total = 0;
+	$_SESSION['CreditItems']->totalVolume = 0;
+	$_SESSION['CreditItems']->totalWeight = 0;
+}
 foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
+	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
+	if (isset($_POST['AutoUpdate'])){//If users push Process Credit button instead of Update button, use this variable to update related information
+		$_SESSION['CreditItems']->total +=$LineTotal;
+		$_SESSION['CreditItems']->totalVolume += ($LnItm->QtyDispatched * $LnItm->Volume);
+		$_SESSION['CreditItems']->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
+	}
+
+
+
+
+
+
+
+
+
 	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
 	if (!isset($_POST['ProcessCredit'])) {
 		$_SESSION['CreditItems']->total += $LineTotal;
@@ -1512,6 +1531,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	echo '<tr><td>' . _('Credit note text') . '</td><td><textarea tabindex="' . $j . '"  name="CreditText" cols="31" rows="5">' . $_POST['CreditText'] . '</textarea></td></tr>';
 	echo '</table><br /><div class="centre"><input tabindex="' . $j . '" type="submit" name="Update" value="' . _('Update') . '" /><br />';
 	$j++;
+	echo '<input type="hidden" name="AutoUpdate" value="" />';
 	echo '<input type="submit" tabindex="'.$j++.'" name="ProcessCredit" value="' . _('Process Credit') .'" /></div>';
 }
 echo '</div>';
