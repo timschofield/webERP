@@ -678,7 +678,9 @@ if (isset($_POST['submit'])) {
 			$result=DB_query($sql,$db,_('Could not delete the bill of material because'),'',true);
 			$sql="DELETE FROM stockmaster WHERE stockid='".$StockID."'";
 			$result=DB_query($sql,$db, _('Could not delete the item record'),'',true);
-
+			//and cascade delete the item properties
+			$sql="DELETE FROM stockitemproperties WHERE stockid='".$StockID."'";
+			$result=DB_query($sql,$db, _('Could not delete the item properties'),'',true);
 		$result = DB_Txn_Commit($db);
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' .
