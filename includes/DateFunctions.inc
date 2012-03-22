@@ -94,9 +94,18 @@ function MonthAndYearFromSQLDate($DateEntry) {
 	if (mb_strlen($Date_Array[2])>4) {
 		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
 	}
-
-	return ucfirst(strftime('%B %Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0])));
-
+	$str = strftime('%B %Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
+        //This code to handle characters in windows system which not encoded in UTF-8. Those non-utf8 code leads to display garbage
+	$encode = mb_detect_encoding($str,'GB2312,BIG5,UTF-8');
+		
+	if($encode=='EUC-CN'){ 
+		return iconv('GB2312','UTF-8',$str);
+	}elseif($encode=='EUC-TW'){
+		return iconv('BIG5','UTF-8', $str);
+	}else{
+		return ucfirst($str);
+	} 
+ 
 }
 
 function DayOfWeekFromSQLDate($DateEntry) {
