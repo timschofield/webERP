@@ -96,6 +96,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					unset($_POST['StockQTY' . $i]);
 				}
 			}
+			$StockIDAccQty = array(); //set an array to hold all items' quantity
 			for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
 				if (isset($_POST['Delete' . $i])){ //check box to delete the item is set
 					unset($_POST['StockID' . $i]);
@@ -136,6 +137,18 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 							$_POST['LinesCounter'] -= 10;
 						}
 					}
+					// Check the accumulated quantity for each item
+					if(isset($StockIDAccQty[$_POST['StockID'.$i]])){
+						$StockIDAccQty[$_POST['StockID'.$i]] += filter_number_format($_POST['StockQTY' . $i]);
+						if($myrow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
+							$InputError = True;
+							$ErrorMessage .=_('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '._('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.').'<br />';
+							$_POST['LinesCounter'] -= 10;
+						}
+					}else{
+						$StockIDAccQty[$_POST['StockID'.$i]] = filter_number_format($_POST['StockQTY' . $i]);
+					} //end of accumulated check
+
 					DB_free_result( $result );
 					$TotalItems++;
 				}
