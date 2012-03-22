@@ -7,7 +7,7 @@ echo '<table width="100%" id="footer">';
 echo '<tr>';
 echo '<td style="width:33%"></td><td class="footer">';
 echo '<img src="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="webERP" title="webERP ' . _('Copyright') . ' &copy; weberp.org - ' . date('Y') . '" /></td>';
-echo '<td class="footer" style="text-align: right;width:33%">'.(strftime('%A')).', '.(date($_SESSION['DefaultDateFormat']).' | '.(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M'))).'</td>';
+echo '<td class="footer" style="text-align: right;width:33%">'.strftimeToUTF8((strftime('%A'))).', '.(date($_SESSION['DefaultDateFormat']).' | '.(strftimeToUTF8(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M')))).'</td>';
 
 echo '</tr>';
 echo '<tr><td colspan="3" class="footer">webERP ' ._('version') .' ' . $_SESSION['VersionNumber'] . '</td></tr>';
@@ -21,4 +21,19 @@ echo '</table>';
 echo '</div>';
 echo '</body>';
 echo '</html>';
+ function strftimeToUTF8 ($str) {
+ 
+     $encoding = mb_detect_encoding($str,"GB2312,BIG5,UTF-8");
+
+     switch($encoding){
+     		case 'EUC-CN':
+			return iconv('GB2312','UTF-8',$str);
+			break;
+		case 'EUC-TW':
+			return iconv('BIG5','UTF-8',$str);
+			break;
+		default:
+			return $str;
+     }
+     }
 ?>
