@@ -1,4 +1,7 @@
 webERP Change Log
+23/2/2012 Ke: Fixed footer time displayed garbage in Win OS of simplified Chinese Language in footer.inc. Reported and fixed by Ke from webERP Chinese community QQ group.
+23/3/2012 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS in DateFunctions.inc. Reported by CQZ from webERP Chinese community QQ group
+23/3/2012 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS. Reported by CQZ from webERP Chinese community QQ group.
 22/3/2012 Exson: Fixed no control of accumulated quantity of the same item during transferring which lead to negative quantity of stock in StockLocTransfer.php reported by Rong.
 22/3/2012 Exson: Fixed time displayed incorrectly in footer in Win OS since the strftime() encoding is not UTF-8. Reported by CQZ and KE in webERP Chinese Community QQ group.
 22/3/2012 Exson: Fixed period displayed incorrectly in GL inquiry in Win OS since the strftime() encoding is not UTF-8. Reported by CQZ and KE in webERP Chinese Community QQ group. 
