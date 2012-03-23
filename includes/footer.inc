@@ -32,6 +32,9 @@ echo '</html>';
 		case 'EUC-TW':
 			return iconv('BIG5','UTF-8',$str);
 			break;
+		case 'BIG-5':
+			return iconv('BIG5','UTF-8',$str);
+			break:
 		default:
 			return $str;
      }
