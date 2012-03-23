@@ -100,7 +100,7 @@ function MonthAndYearFromSQLDate($DateEntry) {
 		
 	if($encode=='EUC-CN'){ 
 		return iconv('GB2312','UTF-8',$str);
-	}elseif($encode=='EUC-TW'){
+	}elseif($encode=='EUC-TW' or $encode=='BIG-5'){
 		return iconv('BIG5','UTF-8', $str);
 	}else{
 		return ucfirst($str);
