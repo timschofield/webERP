@@ -157,8 +157,19 @@ if (DB_num_rows($result)>0){
 // Javier: now I use the native constructor
 // Javier: better to not use references
 //	$PageSize = array(0,0,$Page_Width,$Page_Height);
-//	$pdf = & new Cpdf($PageSize);
-	$pdf = new Cpdf('L', 'pt', 'LETTER');
+	//	$pdf = & new Cpdf($PageSize);
+	Class Cpdf1 extends Cpdf {
+
+		Public function Footer() {
+			// Position at 15 mm from bottom
+		$this->SetY(-15);
+		//Set font and Page number
+		$this->SetFont($UserPdfFont,'I',8);
+		$this->Cell(0, 10, _('Page').$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+		}
+	}
+	
+	$pdf = new Cpdf1('L', 'pt', 'LETTER');
 
 	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
 	$pdf->addInfo('Author', 'webERP ' . $Version);
@@ -174,7 +185,7 @@ if (DB_num_rows($result)>0){
 //	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
 	$pdf->cMargin = 0;		// Javier: needs check.
 /* END Brought from class.pdf.php constructor */
-
+	$pdf->setPrintFooter(true);
 	$FontSize=12;
 	$line_height=16;
 
