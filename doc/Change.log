@@ -1,4 +1,5 @@
 webERP Change Log
+25/3/2012 Exson: Add return back link for SupplierInvoice.php while users make input errors. Reported by Ke from webERP Chinese Community QQ group
 23/2/2012 Ke: Fixed footer time displayed garbage in Win OS of simplified Chinese Language in footer.inc. Reported and fixed by Ke from webERP Chinese community QQ group.
 23/3/2012 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS in DateFunctions.inc. Reported by CQZ from webERP Chinese community QQ group
 23/3/2012 Exson: Fixed accounting period displayed abnormal in simplified Chinese language in Win OS. Reported by CQZ from webERP Chinese community QQ group.
