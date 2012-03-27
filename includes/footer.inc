@@ -34,7 +34,7 @@ echo '</html>';
 			break;
 		case 'BIG-5':
 			return iconv('BIG5','UTF-8',$str);
-			break:
+			break;
 		default:
 			return $str;
      }
