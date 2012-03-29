@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strlen($_POST['CategoryID'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Inventory category code must be at least 1 character but less than six characters long'),'error');
-	} elseif (mb_strlen($_POST['CategoryDescription']) >20 or mb_strlen($_POST['CategoryDescription']==0)) {
+	} elseif (mb_strlen($_POST['CategoryDescription']) >20 or mb_strlen($_POST['CategoryDescription'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Sales category description must be twenty characters or less long and cannot be zero'),'error');
 	} elseif ($_POST['StockType'] !='D' AND $_POST['StockType'] !='L' AND $_POST['StockType'] !='F' AND $_POST['StockType'] !='M') {
