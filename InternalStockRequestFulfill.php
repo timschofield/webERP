@@ -249,7 +249,7 @@ if (isset($_POST['Location'])) {
 	if (DB_num_rows($result)==0) {
 		prnMsg( _('There are no outstanding authorised requests for this location'), 'info');
 		echo '<br />';
-		echo '<div class="centre"><a href="' . $_SESSION['FormID'] . '">' . _('Select another location') . '</a></div>';
+		echo '<div class="centre"><a href="' . htmlspecialchars($_SESSION['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another location') . '</a></div>';
 		include('includes/footer.inc');
 		exit;
 	}
