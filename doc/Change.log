@@ -1,4 +1,5 @@
 webERP Change Log
+29/3/2012 Exson: Fixed typo which caused scripts does not work. Cannot add or modify existed items.
 27/3/2012 Exson: fixed typo in footer.inc
 25/3/2012 Exson: Add page footer with total pages for users verification purpose in PrintCustOrder.php Reported by Russell
 25/3/2012 Exson: Add return back link for SupplierInvoice.php while users make input errors. Reported by Ke from webERP Chinese Community QQ group
