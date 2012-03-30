@@ -100,7 +100,7 @@ if (!isset($SelectedRole)) {
 	$sql = "SELECT secroleid,
 			secrolename
 		FROM securityroles
-		ORDER BY secroleid";
+		ORDER BY secrolename";
 	$result = DB_query($sql,$db);
 
 	echo '<table class="selection">';

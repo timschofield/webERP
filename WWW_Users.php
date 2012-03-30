@@ -37,7 +37,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/g
 $sql = "SELECT secroleid,
 				secrolename
 		FROM securityroles
-		ORDER BY secroleid";
+		ORDER BY secrolename";
 
 $Sec_Result = DB_query($sql, $db);
 $SecurityRoles = array();
