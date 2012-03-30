@@ -1,7 +1,7 @@
 webERP Change Log
+31/3/2012 Dafydd Crosby: Revise scripts Add_SerialItemsOut.php and OutputSerialItems.php fixes a problem that occurs when receiving a bulk inventory transfer. There was a hard-coded loop that prevented adding bundles that were greater than 10.
 30/3/2012 Richard Andreu Modified security role to order by role name instead of by roleid to make it more user friendly in WWW_Access.php and WWW_Users.php
 29/3/2012Exson:Fixed href typo error which lead to Select another location link does not work in InternalStockRequestFulfill.php
-29/3/2012 
 29/3/2012 Exson: Fixed typo which caused scripts does not work. Cannot add or modify existed items.
 27/3/2012 Exson: fixed typo in footer.inc
 25/3/2012 Exson: Add page footer with total pages for users verification purpose in PrintCustOrder.php Reported by Russell
