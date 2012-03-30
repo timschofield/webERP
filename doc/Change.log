@@ -1,4 +1,5 @@
 webERP Change Log
+30/3/2012 Richard Andreu Modified security role to order by role name instead of by roleid to make it more user friendly in WWW_Access.php and WWW_Users.php
 29/3/2012Exson:Fixed href typo error which lead to Select another location link does not work in InternalStockRequestFulfill.php
 29/3/2012 
 29/3/2012 Exson: Fixed typo which caused scripts does not work. Cannot add or modify existed items.
