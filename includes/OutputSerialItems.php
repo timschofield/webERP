@@ -202,7 +202,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 	$RowNumber++;
 }
-
+echo '<input type="hidden" name="TotalBundles" value="'.($RowNumber).'">';
 echo '</table>';
 echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. _('Enter'). '" /></div>';
 echo '</form>
