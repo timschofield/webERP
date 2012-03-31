@@ -1,4 +1,5 @@
 webERP Change Log
+31/3/2012 Kunshan-Ouhai¡G Fixed bug in PDFStockCheckComparision.php when selecting Report and Close the Inventory Comparison, there will be seriously sql errors. Reported and fixed by Kunshan-Ouhai from webERP Chinese community QQ group. 
 31/3/2012 Dafydd Crosby: Revise scripts Add_SerialItemsOut.php and OutputSerialItems.php fixes a problem that occurs when receiving a bulk inventory transfer. There was a hard-coded loop that prevented adding bundles that were greater than 10.
 30/3/2012 Richard Andreu Modified security role to order by role name instead of by roleid to make it more user friendly in WWW_Access.php and WWW_Users.php
 29/3/2012Exson:Fixed href typo error which lead to Select another location link does not work in InternalStockRequestFulfill.php
