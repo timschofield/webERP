@@ -186,6 +186,16 @@ if (!isset($SelectedTabs)){
 		if(!isset ($Days)){
 			$Days=30;
 		}
+
+		/* Retrieve decimal places to display */
+		$SqlDecimalPlaces="SELECT decimalplaces
+					FROM currencies,pctabs
+					WHERE currencies.currabrev = pctabs.currency
+						AND tabcode='" . $SelectedTabs . "'";
+		$result = DB_query($SqlDecimalPlaces,$db);
+		$myrow=DB_fetch_array($result);
+		$CurrDecimalPlaces = $myrow['decimalplaces'];
+
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
 		echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength="3" size="4" /> ' ._('Days');
 		echo '<input type="submit" name="Go" value="' . _('Go') . '" />';
@@ -254,7 +264,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					locale_number_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
+					locale_number_format($myrow['4'],$CurrDecimalPlaces),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8'],
@@ -270,7 +280,7 @@ if (!isset($SelectedTabs)){
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],
-					locale_number_format($myrow['4'],$_SESSION['CompanyRecord']['decimalplaces']),
+					locale_number_format($myrow['4'],$CurrDecimalPlaces),
 					$AuthorisedDate,
 					$myrow['7'],
 					$myrow['8']);
@@ -292,7 +302,7 @@ if (!isset($SelectedTabs)){
 		}
 
 		echo '<tr><td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
-					<td class="number">'.locale_number_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+					<td class="number">'.locale_number_format($Amount['0'],$CurrDecimalPlaces) . '</td></tr>';
 
 
 		echo '</table>';

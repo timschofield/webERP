@@ -186,8 +186,10 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
 			_('Search') . '" alt="" />' . ' ' . $title. '</p>';
 	}
-	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Details Of Petty Cash Tab ') . '' .$SelectedTabs. '<a/></div>';
+	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another tab') . '<a/></div></p>';
 
+	
+	
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 
 		if (isset($_POST['Cancel'])) {
@@ -200,12 +202,20 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		if(!isset ($Days)){
 			$Days=30;
 		 }
+
+		/* Retrieve decimal places to display */
+		$SqlDecimalPlaces="SELECT decimalplaces
+					FROM currencies,pctabs
+					WHERE currencies.currabrev = pctabs.currency
+						AND tabcode='" . $SelectedTabs . "'";
+		$result = DB_query($SqlDecimalPlaces,$db);
+		$myrow=DB_fetch_array($result);
+		$CurrDecimalPlaces = $myrow['decimalplaces'];
+		
 		$sql = "SELECT * FROM pcashdetails
 				WHERE tabcode='" . $SelectedTabs . "'
 				AND date >=DATE_SUB(CURDATE(), INTERVAL " . $Days . " DAY)
 				ORDER BY date, counterindex ASC";
-
-
 		$result = DB_query($sql,$db);
 
 		echo '<table class="selection">';
@@ -251,7 +261,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 			// only cash assignations NOT authorized can be modified or deleted
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class="number">' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($myrow['amount'],$CurrDecimalPlaces) . '</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -265,7 +275,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		}else{
 			echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
 				<td>' . $Description['0'] . '</td>
-				<td class="number">' . locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+				<td class="number">' . locale_number_format($myrow['amount'],$CurrDecimalPlaces).'</td>
 				<td>' . ConvertSQLDate($myrow['authorized']) . '</td>
 				<td>' . $myrow['notes'] . '</td>
 				<td>' . $myrow['receipt'] . '</td>
@@ -287,7 +297,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<tr>
 				<td colspan="2" style="text-align:right"><b>' . _('Current balance') . ':</b></td>
-				<td>' . locale_number_format($Amount['0'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+				<td>' . locale_number_format($Amount['0'],$CurrDecimalPlaces) . '</td></tr>';
 
 		echo '</table>';
 
@@ -343,7 +353,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 		echo '<tr>
 				<td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+				<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$CurrDecimalPlaces) . '" /></td>
 			</tr>';
 
 		if (!isset($_POST['Notes'])) {
@@ -376,5 +386,6 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 	} // end if user wish to delete
 }
+
 include('includes/footer.inc');
 ?>
