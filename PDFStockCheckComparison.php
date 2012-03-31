@@ -113,7 +113,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 							'" . $PeriodNo . "',
 							'" . _('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
-							'" . $QtyOnHandPrior + $StockQtyDifference . "'
+							'" . ($QtyOnHandPrior + $StockQtyDifference) . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
