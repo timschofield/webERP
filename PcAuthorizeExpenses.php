@@ -101,8 +101,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	while ($myrow=DB_fetch_array($result))	{
          $CurrDecimalPlaces = $myrow['decimalplaces'];
 		//update database if update pressed
-		if ((isset($_POST['Submit']) 
-			AND $_POST['Submit']=='Update') 
+		if (isset($_POST['Submit']) 
+			AND $_POST['Submit']==_('Update') 
 			AND isset($_POST[$myrow['counterindex']])){
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
