@@ -388,8 +388,8 @@ while ($myrow = DB_fetch_array($result)) {
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td><a href="%sSelectedLocation=%s">' . _('Edit') . '</td>
-			<td><a href="%sSelectedLocation=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</td>
+			<td><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
+			<td><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['loccode'],
 			$myrow['locationname'],
@@ -415,6 +415,7 @@ echo '<br />';
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedLocation)) {
@@ -478,7 +479,7 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<table class="selection">
 				<tr>
-					<th colspan="2"><font size="3" color="blue">'._('New Location details').'</font></th>
+					<th colspan="2"><h3>'._('New Location details').'</h3></th>
 				</tr>';
 		echo '<tr>
 				<td>' . _('Location Code') . ':</td>
@@ -605,6 +606,7 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="submit" value="' .  _('Enter Information') . '" />
 		</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

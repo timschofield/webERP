@@ -505,12 +505,13 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			ORDER BY categorydescription";
 	$result1 = DB_query($SQL, $db);
 	if (DB_num_rows($result1) == 0) {
-		echo '<p><font size="4" color=red>' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up');
+		echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		exit;
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items').'</p>';
 	echo '<table class="selection"><tr>';
@@ -531,7 +532,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select>';
+	echo '</select></td>';
 	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 	if (isset($_POST['Keywords'])) {
 		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
@@ -539,7 +540,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 	}
 	echo '</td></tr><tr><td></td>';
-	echo '<td><font size 3><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
+	echo '<td><h3><b>' . _('OR') . ' ' . '</b></h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 	echo '<td>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
@@ -553,10 +554,10 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 		</div>
-		<br />
-		</form>';
+		<br />';
 		
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
+    echo '</div>';
 	echo '</form>';
 	if (!isset($_POST['Search'])) {
 		include('includes/footer.inc');
@@ -701,6 +702,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -785,6 +787,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>
+            </div>
 			</form>
 			<br />';
 	}

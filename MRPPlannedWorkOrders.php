@@ -159,7 +159,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				}
 
 				// Print information on part break
-				if ($PartCounter > 0 & $HoldPart != $myrow['part']) {
+				if ($PartCounter > 0 AND $HoldPart != $myrow['part']) {
 					$pdf->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$fill);
 					$pdf->addTextWrap(180,$YPos,40,$FontSize,_('Unit Cost: '),'center',0,$fill);
 					$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$fill);
@@ -247,10 +247,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
 		echo '<form action="MRPConvertWorkOrders.php" method="post">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
-		echo '<tr><th colspan="9"><font size="3" color="blue">' . _('Consolidation') . ': ' . $_POST['Consolidation'] .
-			"&nbsp;&nbsp;&nbsp;&nbsp;" . _('Cutoff Date') . ': ' . $_POST['cutoffdate'] . '</font></th></tr>';
+		echo '<tr><th colspan="9"><h3>' . _('Consolidation') . ': ' . $_POST['Consolidation'] .
+			"&nbsp;&nbsp;&nbsp;&nbsp;" . _('Cutoff Date') . ': ' . $_POST['cutoffdate'] . '</h3></th></tr>';
 		echo '<tr>
 				<th></th>
 				<th>' . _('Code') . '</th>
@@ -279,7 +280,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				$k++;
 			}
 
-			echo '<td><a href="' . $rootpath . '/WorkOrderEntry.php?NewItem=' . $myrow['part'] . '&ReqQty=' . $myrow['supplyquantity'] . '&ReqDate=' . $myrow['duedate'] . '">' . _('Convert') . '</a></td>
+			echo '<td><a href="' . $rootpath . '/WorkOrderEntry.php?NewItem=' . $myrow['part'] . '&amp;ReqQty=' . $myrow['supplyquantity'] . '&amp;ReqDate=' . $myrow['duedate'] . '">' . _('Convert') . '</a></td>
 				<td>' . $myrow['part'] . ' <input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>
@@ -304,6 +305,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<td colspan="4" class="number">' . _('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			</table>';
+        echo '</div>
+              </form>';
 
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
@@ -317,9 +320,10 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<br /><br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post"><table class="selection">';
+	echo '<br /><br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
+    echo '<table class="selection">';
 	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
 	echo '<option selected="selected" value="None">' . _('None') . '</option>';
 	echo '<option value="Weekly">' . _('Weekly') . '</option>';
@@ -335,6 +339,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			<td><input type ="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="cutoffdate" size="10" value="' .date($_SESSION['DefaultDateFormat']).'" /></td>
 		</tr>';
 	echo '</table><div class="centre"><input type="submit" name="Review" value="' . _('Review') . '" /> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 

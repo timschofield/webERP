@@ -271,22 +271,25 @@ function showLabel($Label, $msg, $theme, $ReadOnly=false) {
 
 	echo '<br />
 	<form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post">
+    <div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<div class="centre">
 		<table border="2" cellspacing="4" class="selection">
 			<tbody>
 			<tr>
-				<td align="center"><img src="'.$rootpath.'/css/paramsLabel.png" align="top" border="0" /></td>
+				<td align="center"><img src="'.$rootpath.'/css/paramsLabel.png" alt="" /></td>
 				<td>'.$TableGD.'</td>
 			</tr>
 			<tr>
-				<td align="center"><IMG src="'.$rootpath.'/css/labelsDim.png" align="top" border="0" /></td>
+				<td align="center"><img src="'.$rootpath.'/css/labelsDim.png" alt="" /></td>
 				<td>'.$TableLines.'</td>
 			</tr>
 			</tbody>
 		</table>
 		<br /><input type="submit" name="'.$name.'" value="'.$value.'" />
 		<input type="submit" name="Cancel" value="'.$vCancel.'" />
+        </div>
+    </div>
 	</form>';
 }
 
@@ -308,7 +311,7 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=fa
 		if ($tag['type']=='s') {
 			$input ='<select name="'. $iTag . '">';
 			foreach ($tag['values'] as $i=>$val) {
-				$xSel = ($vDat==$i)?' selected' : '';
+				$xSel = ($vDat==$i)?' selected="selected"' : '';
 				$input .= '
 					<option value="'. $i .'"'. $xSel .'>'.$val.'</option>';
 			}
@@ -317,8 +320,8 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=fa
 		} else {
 			$ro='';
 			if ($ReadOnly AND $specialTag==$iTag)
-				$ro='readonly ';
-			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'" size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'"'. $ro .' />';
+				$ro='readonly="readonly"';
+			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'" size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'" '. $ro .' />';
 		}
 		if (!$iCol++)  // when zero begins a line
 			$html .= '
@@ -377,7 +380,7 @@ function setLineFields($tags, $data) {
 		if ($tag['type']=='s') {
 			$input ='<select name="'. $iTag . '[]">';
 			foreach ($tag['values'] as $kI=>$kVal) {
-				$xSel = ($vDat==$kI) ? ' selected':'';
+				$xSel = ($vDat==$kI) ? ' selected="selected"':'';
 				$input .= '
 					<option value="'. $kI .'"'. $xSel .'>'.$kVal.'</option>';
 			}
@@ -422,10 +425,12 @@ function showLabelsList($list) {
 			}
 		}
 	</script>
-	<form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post" id="form1" target="_self">
+	<form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post" id="form1">
+    <div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="action" id="action" value="" />
 		<input type="hidden" name="labelID" id="labelID" value="" />
+    </div>
 	</form>
 	<div class="centre">
 	<table class="selection">

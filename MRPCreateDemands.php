@@ -194,6 +194,7 @@ if (isset($_POST['submit'])) {
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
 	_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">
 	<tr>
@@ -260,7 +261,8 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Exclude Total Quantity Less Than') . ':</td>
-		<td><input type ="text" class="number" name="ExcludeQuantity" size="4" value="1" />
+		<td><input type ="text" class="number" name="ExcludeQuantity" size="4" value="1" /></td>
+    </tr>
 	<tr>
 		<td>' . _('Exclude Total Dollars Less Than') . ':</td>
 		<td><input type ="text" class="number" name="ExcludeAmount" size="8" value="0" /></td>
@@ -277,6 +279,8 @@ echo '<tr>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Submit') .  '" />
 	</div>';
+echo '</div>
+      </form>';
 
 include('includes/footer.inc');
 ?>

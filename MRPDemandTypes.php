@@ -117,8 +117,8 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 
 		printf('<tr><td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedDT=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedDT=%s&delete=yes">' . _('Delete') .'</td>
+				<td><a href="%sSelectedDT=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedDT=%s&amp;delete=yes">' . _('Delete') .'</a></td>
 				</tr>',
 				$myrow[0],
 				$myrow[1],
@@ -137,7 +137,8 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Demand Types') . '</a></div>';
 }
 
-echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
@@ -186,6 +187,7 @@ echo '<tr>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
+    </div>
 	</form>';
 	
 include('includes/footer.inc');

@@ -542,7 +542,7 @@ if (isset($_POST['submit'])) {
 		}
 		echo '<table class="selection">
 				<tr>
-					<th colspan="3"><font color="blue" size="3">'._('Last Run Details').'</font></th>
+					<th colspan="3"><h3>'._('Last Run Details').'</h3></th>
 				</tr>
 				<tr>
 					<td>' . _('Last Run Time') . ':</td><td>' . $myrow['runtime'] . '</td>
@@ -573,11 +573,12 @@ if (isset($_POST['submit'])) {
 				</tr>
 				</table>';
 	}
-	echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">';
+	echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
-				<th colspan="3"><font color="blue" size="3">'._('This Run Details').'</font></th>
+				<th colspan="3"><h3>'._('This Run Details').'</h3></th>
 			</tr>
 			<tr>
 				<td>' . _('Location') . '</td>
@@ -598,23 +599,23 @@ if (isset($_POST['submit'])) {
 
 	echo '<tr>
 			<td>' . _('Days Leeway') . ':</td>
-			<td><input type="text" name="Leeway" class="number" size="4" value="' . $leeway . '" />
+			<td><input type="text" name="Leeway" class="number" size="4" value="' . $leeway . '" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use MRP Demands?') . ':</td>
-			<td><input type="checkbox" name="usemrpdemands" value="y" checked /></td>
+			<td><input type="checkbox" name="usemrpdemands" value="y" checked="checked" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use EOQ?') . ':</td>
-			<td><input type="checkbox" name="eoqflag" value="y" checked /></td>
+			<td><input type="checkbox" name="eoqflag" value="y" checked="checked" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use Pan Size?') . ':</td>
-			<td><input type="checkbox" name="pansizeflag" value="y" checked /></td>
+			<td><input type="checkbox" name="pansizeflag" value="y" checked="checked" /></td>
 		</tr>
 		<tr>
 			<td>' ._('Use Shrinkage?') . ':</td>
-			<td><input type="checkbox" name="shrinkageflag" value="y" checked /></td>
+			<td><input type="checkbox" name="shrinkageflag" value="y" checked="checked" /></td>
 		</tr>
 		</table>
 		<div class="centre">
@@ -622,6 +623,7 @@ if (isset($_POST['submit'])) {
 			<br />
 			<input type="submit" name="submit" value="' . _('Run MRP') . '" />
 		</div>
+        </div>
 		</form>';
 }  // End of Main program logic -------------------------------------------------------
 

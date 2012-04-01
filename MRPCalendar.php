@@ -215,7 +215,7 @@ function listall(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_L
 
 	echo '<br />
 		<table class="selection">
-		<tr bgcolor ="#800000">
+		<tr>
 			<th>' . _('Date') . '</th>
 			<th>' . _('Manufacturing Date') . '</th>
 		</tr>';
@@ -253,6 +253,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+          <div>
 			<br />
 			<br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -262,7 +263,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 	echo '<tr>
 			<td>' . _('From Date') . ':</td>
 			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
-			<tr></tr><td>' . _('To Date') . ':</td>
+			<tr><td>' . _('To Date') . ':</td>
 			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		<tr><td></td></tr>
@@ -316,6 +317,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		</table>
 		<br />
 		<br />
+        </div>
 		</form>';
 
 } // End of function display()

@@ -129,8 +129,9 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<br />
 		<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+        <div>
+        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<tr>
 			<td>' . _('Print Option') . ':</td>
 			<td><select name="Fill">
@@ -150,7 +151,9 @@ if (isset($_POST['PrintPDF'])) {
 		<br />
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>';
+		</div>
+        </div>
+        </form>';
 
 	include('includes/footer.inc');
 

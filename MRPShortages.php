@@ -261,9 +261,9 @@ if (isset($_POST['PrintPDF'])) {
 		. _('Stock') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
-	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Inventory Category') . ':</td><td><select name="CategoryID">';
 	echo '<option selected="selected" value="All">' . _('All Stock Categories') .'</option>';
 	$sql = "SELECT categoryid,
@@ -273,6 +273,7 @@ if (isset($_POST['PrintPDF'])) {
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' .$myrow['categorydescription'] . '</option>';
 	} //end while loop
+    echo '</select></td></tr>';
 	echo '<tr><td>' . _('Sort') . ':</td>
 			<td><select name="Sort">
 				<option selected="selected" value="extcost">' . _('Extended Shortage Dollars').'</option>
@@ -300,7 +301,9 @@ if (isset($_POST['PrintPDF'])) {
 		<br />
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>';
+		</div>
+        </div>
+        </form>';
 
 	include('includes/footer.inc');
 
