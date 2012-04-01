@@ -5,7 +5,6 @@
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
-
 	$StrictXHTML=False;
 
 	if (!headers_sent()){
@@ -14,6 +13,9 @@
 		} else {
 			header('Content-type: text/html; charset=utf-8');
 		}
+	}
+	if($title == _('Copy a BOM to New Item Code')){//solve the cannot modify heaer information in CopyBOM.php scritps
+		ob_start();
 	}
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
@@ -32,7 +34,6 @@
 	echo '</head>';
 
 	echo '<body>';
-    echo '<div id="canvas">';
 	echo '<table class="callout_main" cellpadding="0" cellspacing="0">';
 	echo '<tr>';
 	echo '<td colspan="2" rowspan="2">';
