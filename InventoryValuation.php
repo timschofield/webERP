@@ -206,8 +206,9 @@ if (isset($_POST['PrintPDF'])
 			</p>';
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+              <div>
+            <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<tr>
 				<td>' . _('From Inventory Category Code') . ':</td>
 				<td><select name="FromCriteria">';
@@ -267,6 +268,8 @@ if (isset($_POST['PrintPDF'])
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
+        echo '</div>
+              </form>';
 	}
 	include('includes/footer.inc');
 

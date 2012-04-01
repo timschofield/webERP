@@ -118,10 +118,11 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/s
 
 if (isset($_GET['Edit'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="2"><font size="2" color="navy">' . _('Edit the Request Line') . '</font></th>
+			<th colspan="2"><h4>' . _('Edit the Request Line') . '</h4></th>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Line number') . '</td>
@@ -149,17 +150,19 @@ if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
 			<input type="submit" name="Edit" value="' . _('Update Line') . '" />
 		</div>
+        </div>
 		</form>';
 	include('includes/footer.inc');
 	exit;
 }
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">';
 echo '<tr>
-		<th colspan="2"><font color="navy" size="2">' . _('Internal Stock Request Details') . '</font></th>
+		<th colspan="2"><h4>' . _('Internal Stock Request Details') . '</h4></th>
 	</tr>
 	<tr>
 		<td>' . _('Department') . ':</td>';
@@ -202,11 +205,12 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Date when required') . ':</td>';
-echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DispatchDate" maxlength="10" size="11" value="' . $_SESSION['Request']->DispatchDate . '" /></td>';
+echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DispatchDate" maxlength="10" size="11" value="' . $_SESSION['Request']->DispatchDate . '" /></td>
+      </tr>';
 
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
-		<td><textarea name="Narrative" cols="30">'.$_SESSION['Request']->Narrative.'</textarea></td>
+		<td><textarea name="Narrative" cols="30" rows="5">'.$_SESSION['Request']->Narrative.'</textarea></td>
 	</tr>
 	</table>
 	<br />';
@@ -214,6 +218,7 @@ echo '<tr>
 echo '<div class="centre">
 		<input type="submit" name="Update" value="' . _('Update') . '" />
 	</div>
+    </div>
 	</form>';
 
 if (!isset($_SESSION['Request']->Location)) {
@@ -224,11 +229,12 @@ if (!isset($_SESSION['Request']->Location)) {
 //****************MUESTRO LA TABLA CON LOS REGISTROS DE LA TRANSFERENCIA*************************************
 $i = 0; //Line Item Array pointer
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
 	<table class="selection">
 	<tr>
-		<th colspan="7"><font size="2" color="navy">' . _('Details of Items Requested') . '</font></th>
+		<th colspan="7"><h4>' . _('Details of Items Requested') . '</h4></th>
 	</tr>
 	<tr>
 		<th>'. _('Line Number') . '</th>
@@ -264,9 +270,12 @@ echo '</table>
 	<div class="centre">
 		<input type="submit" name="Submit" value="' . _('Submit') . '" />
 	</div>
-	<br />';
+	<br />
+    </div>
+    </form>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
@@ -276,7 +285,7 @@ $SQL = "SELECT categoryid,
 			ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
-	echo '<p><font size="4" color="red">' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
+	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
 	echo '<br />
 		<a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 	exit;
@@ -310,7 +319,7 @@ if (isset($_POST['Keywords'])) {
 echo '</tr>
 		<tr>
 			<td></td>
-			<td><font size="3"><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
+			<td><h3>' . _('OR') . ' ' . '</h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 
 if (isset($_POST['StockCode'])) {
 	echo '<td><input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" /></td>';
@@ -325,6 +334,7 @@ echo '</tr>
 	</div>
 	<br />';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
+echo '</div>';
 echo '</form>';
 
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
@@ -459,6 +469,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -527,7 +538,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$qoh = locale_number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
 			if ($myrow['discontinued']==1){
-				$ItemStatus = '<font class="bad">' . _('Obsolete') . '</font>';
+				$ItemStatus = '<p class="bad">' . _('Obsolete') . '</p>';
 			} else {
 				$ItemStatus ='';
 			}
@@ -542,7 +553,10 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			//end of page full new headings if
 		}
 		//end of while loop
-		echo '</table></form><br />';
+		echo '</table>
+              </div>
+              </form>
+              <br />';
 	}
 }
 /* end display list if there is more than one record */
@@ -552,7 +566,8 @@ if (isset($SearchResult)) {
 	echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 	echo '<br />';
 	$j = 1;
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" name="orderform">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="orderform">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="table1">';
 	echo '<tr><td>
@@ -659,14 +674,14 @@ if (isset($SearchResult)) {
 		}
 		$OnOrder = $PurchQty + $WoQty;
 		$Available = $QOH - $DemandQty + $OnOrder;
-		echo '<td>'.$myrow['stockid'].'</font></td>
+		echo '<td>'.$myrow['stockid'].'</td>
 				<td>'.$myrow['description'].'</td>
 				<td>'.$myrow['stockunits'].'</td>
 				<td class="number">'.locale_number_format($QOH,$DecimalPlaces).'</td>
 				<td class="number">'.locale_number_format($DemandQty,$DecimalPlaces).'</td>
 				<td class="number">'.locale_number_format($OnOrder, $DecimalPlaces).'</td>
 				<td class="number">'.locale_number_format($Available,$DecimalPlaces).'</td>
-				<td><font size="1"><input class="number"  tabindex="'.($j+7).'" type="text" size="6" name="Quantity'.$i.'" value="0" />
+				<td><input class="number"  tabindex="'.($j+7).'" type="text" size="6" name="Quantity'.$i.'" value="0" />
 				<input type="hidden" name="StockID'.$i.'" value="'.$myrow['stockid'].'" />
 				</td>
 			</tr>';
@@ -686,7 +701,9 @@ if (isset($SearchResult)) {
 		<input tabindex="'.($j+8).'" type="submit" value="'._('Add to Requisition').'" /></td>';
 	echo '<td><input type="hidden" name="NextList" value="'.($Offset+1).'" />
 		<input tabindex="'.($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td><tr/>';
-	echo '</table></form>';
+	echo '</table>
+          </div>
+          </form>';
 	echo $jsCall;
 
 }#end if SearchResults to show

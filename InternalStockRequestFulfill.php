@@ -197,6 +197,7 @@ if (isset($RequestID)) {
 
 if (!isset($_POST['Location'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('Choose a location to issue requests from') . '</td>
@@ -206,12 +207,12 @@ if (!isset($_POST['Location'])) {
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_SESSION['Adjustment']->StockLocation)){
 			if ($myrow['loccode'] == $_SESSION['Adjustment']->StockLocation){
-				echo '<option selected="True" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
 		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected="True" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			$_POST['StockLocation']=$myrow['loccode'];
 		} else {
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -220,6 +221,8 @@ if (!isset($_POST['Location'])) {
 	echo '</select></td></tr>';
 	echo '</table><br />';
 	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="'. _('Show Requests'). '" /></div>';
+    echo '</div>
+          </form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -249,12 +252,13 @@ if (isset($_POST['Location'])) {
 	if (DB_num_rows($result)==0) {
 		prnMsg( _('There are no outstanding authorised requests for this location'), 'info');
 		echo '<br />';
-		echo '<div class="centre"><a href="' . htmlspecialchars($_SESSION['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another location') . '</a></div>';
+		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another location') . '</a></div>';
 		include('includes/footer.inc');
 		exit;
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection"><tr>';
 
@@ -320,7 +324,7 @@ if (isset($_POST['Location'])) {
 			echo '<option value=0>0 - None</option>';
 			while ($mytagrow=DB_fetch_array($TagResult)){
 				if (isset($_SESSION['Adjustment']->tag) and $_SESSION['Adjustment']->tag==$mytagrow['tagref']){
-					echo '<option selected="True" value="' . $mytagrow['tagref'] . '">' . $mytagrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+					echo '<option selected="selected" value="' . $mytagrow['tagref'] . '">' . $mytagrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 				} else {
 					echo '<option value="' . $mytagrow['tagref'] . '">' . $mytagrow['tagref'].' - ' .$mytagrow['tagdescription'] . '</option>';
 				}
@@ -335,7 +339,9 @@ if (isset($_POST['Location'])) {
 		echo '</table></td></tr>';
 	} //end while header loop
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></form>';
+	echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></div>
+          </div>
+          </form>';
 }
 
 include('includes/footer.inc');

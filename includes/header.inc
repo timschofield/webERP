@@ -34,6 +34,7 @@
 	echo '</head>';
 
 	echo '<body>';
+    echo '<div id="canvas">';
 	echo '<table class="callout_main" cellpadding="0" cellspacing="0">';
 	echo '<tr>';
 	echo '<td colspan="2" rowspan="2">';

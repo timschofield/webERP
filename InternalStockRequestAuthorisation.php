@@ -43,6 +43,7 @@ $sql="SELECT stockrequest.dispatchid,
 $result=DB_query($sql, $db);
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
@@ -100,7 +101,9 @@ while ($myrow=DB_fetch_array($result)) {
 		</tr>';
 } //end while header loop
 echo '</table>';
-echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></form>';
+echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></div>
+      </div>
+      </form>';
 
 include('includes/footer.inc');
 ?>

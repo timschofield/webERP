@@ -6,9 +6,9 @@
  */
 /* $Id$*/
 
-$title = _('Copy a BOM to New Item Code');
-
 include('includes/session.inc');
+
+$title = _('Copy a BOM to New Item Code');
 
 include('includes/header.inc');
 
@@ -149,6 +149,7 @@ if(isset($_POST['Submit'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT stockid,
@@ -168,8 +169,8 @@ if(isset($_POST['Submit'])) {
 	echo '</select></td>
 			</tr>';
 	echo '<tr>
-			<td><input type="radio" name="type" value="N" checked="" />' . _(' To New Stock ID') . '</td></td><td>';
-	echo '<input type="text" maxlength="20" name="tostkid" /></td></tr>';
+			<td><input type="radio" name="type" value="N" />' . _(' To New Stock ID') . '</td>';
+	echo '<td><input type="text" maxlength="20" name="tostkid" /></td></tr>';
 
 	$sql = "SELECT stockid,
 					description
@@ -185,10 +186,12 @@ if(isset($_POST['Submit'])) {
 		while($row = DB_fetch_row($result)) {
 			echo '<option value="'.$row[0].'">'.$row[0].' -- '.$row[1].'</option>';
 		}
-		echo '</select>';
+		echo '</select></td></tr>';
 	}
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="Submit" value="Submit" /></div></form>';
+	echo '<br /><div class="centre"><input type="submit" name="Submit" value="Submit" /></div>
+          </div>
+          </form>';
 
 	include('includes/footer.inc');
 }
