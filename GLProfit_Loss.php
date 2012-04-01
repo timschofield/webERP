@@ -21,13 +21,14 @@ if ((!isset($_POST['FromPeriod'])
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Profit and Loss Report') . '
 		</p>';
-	echo '<div class="page_help_text">' . _('Profit and loss statement (P&L), also called an Income Statment, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . 
+	echo '<div class="page_help_text">' . _('Profit and loss statement (P&amp;L), also called an Income Statment, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . 
 		'<br />'
 	. _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />'
-	. _('The P&L represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br />'
+	. _('The P&amp;L represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br />'
 	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 	
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -41,7 +42,7 @@ if ((!isset($_POST['FromPeriod'])
 	$period=GetPeriod($FromDate, $db);
 
 	/*Show a form to allow input of criteria for profit and loss to show */
-	echo '<p><table class="selection">
+	echo '<br /><table class="selection">
 			<tr><td>' . _('Select Period From') . ':</td>
 				<td><select name="FromPeriod">';
 
@@ -92,7 +93,7 @@ if ((!isset($_POST['FromPeriod'])
 		if($myrow['periodno']==$DefaultToPeriod){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option value =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -550,6 +551,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -661,7 +663,7 @@ if ((!isset($_POST['FromPeriod'])
 					}
 				if ($Section ==1){ /*Income */
 						printf('<tr>
-								<td colspan="2"><font size="2"><i>%s</i></font></td>
+								<td colspan="2"><h4><i>%s</i></h4></td>
 								<td></td>
 								<td class="number">%s</td>
 								<td></td>
@@ -675,7 +677,7 @@ if ((!isset($_POST['FromPeriod'])
 								locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 					} else { /*Costs */
 						printf('<tr>
-								<td colspan="2"><font size="2"><i>%s </i></font></td>
+								<td colspan="2"><h4><i>%s </i></h4></td>
 								<td class="number">%s</td>
 								<td></td>
 								<td class="number">%s</td>
@@ -707,7 +709,7 @@ if ((!isset($_POST['FromPeriod'])
 
 				if ($Section ==1){ /*Income */
 					printf('<tr>
-							<td colspan="2"><font size="2"><i>%s </i></font></td>
+							<td colspan="2"><h4><i>%s </i></h4></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -721,7 +723,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				} else { /*Costs */
 					printf('<tr>
-							<td colspan="2"><font size="2"><i>%s </i></font></td>
+							<td colspan="2"><h4><i>%s </i></h4></td>
 							<td class="number">%s</td>
 							<td></td>
 							<td class="number">%s</td>
@@ -782,7 +784,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td><hr /></td>
 							</tr>';
 							printf('<tr>
-							<td colspan="2"><font size="4">%s</font></td>
+							<td colspan="2"><h2>%s</h2></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -801,7 +803,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr>
-							<td colspan="2"><font size="4">'._('Gross Profit').'</font></td>
+							<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -833,7 +835,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr>
-							<td colspan="2"><font size="2"><i>'._('Gross Profit Percent').'</i></font></td>
+							<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
 							<td></td>
 							<td class="number"><i>%s</i></td>
 							<td></td>
@@ -855,7 +857,7 @@ if ((!isset($_POST['FromPeriod'])
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
-					<td colspan="6"><font size="4" color=BLUE><b>%s</b></font></td>
+					<td colspan="6"><h2><b>%s</b></h2></td>
 					</tr>',
 					$Sections[$myrow['sectioninaccounts']]);
 			}
@@ -911,7 +913,7 @@ if ((!isset($_POST['FromPeriod'])
 				$k++;
 			}
 
-			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . '&Show=Yes">' . $myrow['accountcode'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 
 			if ($Section ==1){
 				 printf('<td>%s</td>
@@ -924,7 +926,7 @@ if ((!isset($_POST['FromPeriod'])
 						<td class="number">%s</td>
 						</tr>',
 						$ActEnquiryURL,
-						$myrow['accountname'],
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format(-$AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format(-$AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));
@@ -939,7 +941,7 @@ if ((!isset($_POST['FromPeriod'])
 						<td></td>
 						</tr>',
 						$ActEnquiryURL,
-						$myrow['accountname'],
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
 						locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));
@@ -965,7 +967,7 @@ if ((!isset($_POST['FromPeriod'])
 				}
 				if ($Section ==1){ /*Income */
 					printf('<tr>
-								<td colspan="2"><font size="2"><i>%s </i></font></td>
+								<td colspan="2"><h4><i>%s </i></h4></td>
 								<td></td>
 								<td class="number">%s</td>
 								<td></td>
@@ -979,7 +981,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format(-$GrpPrdLY[$Level]),$_SESSION['CompanyRecord']['decimalplaces']);
 				} else { /*Costs */
 					printf('<tr>
-								<td colspan="2"><font size="2"><i>%s </i></font></td>
+								<td colspan="2"><h4><i>%s </i></h4></td>
 								<td class="number">%s</td>
 								<td></td>
 								<td class="number">%s</td>
@@ -1011,7 +1013,7 @@ if ((!isset($_POST['FromPeriod'])
 
 			if ($Section ==1){ /*Income */
 				printf('<tr>
-							<td colspan="2"><font size="2"><i>%s </i></font></td>
+							<td colspan="2"><h4><i>%s </i></h4></td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -1025,7 +1027,7 @@ if ((!isset($_POST['FromPeriod'])
 						locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 			} else { /*Costs */
 				printf('<tr>
-							<td colspan="2"><font size="2"><i>%s </i></font></td>
+							<td colspan="2"><h4><i>%s </i></h4></td>
 							<td class="number">%s</td>
 							<td></td>
 							<td class="number">%s</td>
@@ -1060,7 +1062,7 @@ if ((!isset($_POST['FromPeriod'])
 				</tr>';
 
 			printf('<tr>
-						<td colspan="2"><font size="4">%s</font></td>
+						<td colspan="2"><h2>%s</h2></td>
 						<td></td>
 						<td class="number">%s</td>
 						<td></td>
@@ -1085,7 +1087,7 @@ if ((!isset($_POST['FromPeriod'])
 					<td><hr /></td>
 				</tr>';
 			printf('<tr>
-						<td colspan="2"><font size="4">%s</font></td>
+						<td colspan="2"><h2>%s</h2></td>
 						<td></td>
 						<td class="number">%s</td>
 						<td></td>
@@ -1104,7 +1106,7 @@ if ((!isset($_POST['FromPeriod'])
 					<td colspan="6"><hr /></td>
 				</tr>';
 			printf('<tr>
-						<td colspan="2"><font size="4">'._('Gross Profit').'</font></td>
+						<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
 						<td></td>
 						<td class="number">%s</td>
 						<td></td>
@@ -1136,7 +1138,7 @@ if ((!isset($_POST['FromPeriod'])
 					<td colspan="6"><hr /></td>
 				</tr>';
 			printf('<tr>
-					<td colspan="2"><font size="2"><i>'._('Gross Profit Percent').'</i></font></td>
+					<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
 					<td></td>
 					<td class="number"><i>%s</i></td>
 					<td></td>
@@ -1158,7 +1160,7 @@ if ((!isset($_POST['FromPeriod'])
 
 		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])){
 			printf('<tr>
-				<td colspan="6"><font size="4" color=BLUE><b>%s</b></font></td>
+				<td colspan="6"><h2><b>%s</b></h2></td>
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}
@@ -1172,7 +1174,7 @@ if ((!isset($_POST['FromPeriod'])
 		</tr>';
 
 	printf('<tr style="background-color:#ffffff">
-				<td colspan="2"><font size="4" color="blue"><b>'._('Profit').' - '._('Loss').'</b></font></td>
+				<td colspan="2"><h2><b>'._('Profit').' - '._('Loss').'</b></h2></td>
 				<td></td>
 				<td class="number">%s</td>
 				<td></td>
@@ -1205,7 +1207,7 @@ if ((!isset($_POST['FromPeriod'])
 		</tr>';
 
 	printf('<tr>
-				<td colspan="2"><font size="2"><i>'._('Net Profit Percent').'</i></font></td>
+				<td colspan="2"><h4><i>'._('Net Profit Percent').'</i></h4></td>
 				<td></td>
 				<td class="number"><i>%s</i></td>
 				<td></td>
@@ -1226,6 +1228,7 @@ if ((!isset($_POST['FromPeriod'])
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 

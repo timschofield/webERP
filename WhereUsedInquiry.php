@@ -100,7 +100,7 @@ if (isset($StockID)) {
 	}
 } // StockID is set
 
-echo '<script>defaultControl(document.forms[0].StockID);</script>';
+echo '<script  type="text/javascript">defaultControl(document.forms[0].StockID);</script>';
 
 echo '</form>';
 include('includes/footer.inc');

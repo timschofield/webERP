@@ -280,9 +280,9 @@ echo '<br />
 	</div>';
 
 if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
-	echo '<script>defaultControl(document.forms[0].Code);</script>';
+	echo '<script  type="text/javascript">defaultControl(document.forms[0].Code);</script>';
 } else {
-	echo '<script>defaultControl(document.forms[0].Description);</script>';
+	echo '<script  type="text/javascript">defaultControl(document.forms[0].Description);</script>';
 }
 
 echo '</form>';

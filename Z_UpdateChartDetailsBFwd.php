@@ -6,7 +6,7 @@ include ('includes/session.inc');
 $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
 include('includes/header.inc');
 
-echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if ($_POST['FromPeriod'] > $_POST['ToPeriod']){

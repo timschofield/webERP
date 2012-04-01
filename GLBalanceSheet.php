@@ -367,16 +367,16 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			<table class="selection">
 			<tr>
 				<th colspan="6">
-					<div class="centre"><font size="4" color="blue"><b>' .
-		_('Balance Sheet as at') . ' ' . $BalanceDate .'</b></font>
+					<div class="centre"><h1>' .
+		_('Balance Sheet as at') . ' ' . $BalanceDate .'</h1>
 					</div>
 				</th>
 			</tr>';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
-							<th>'._('Account').'</td>
-							<th>'._('Account Name').'</td>
+							<th>'._('Account').'</th>
+							<th>'._('Account Name').'</th>
 							<th colspan="2">' . $BalanceDate . '</th>
 							<th colspan="2">'._('Last Year').'</th>
 						</tr>';
@@ -428,10 +428,11 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 								<td></td>
 							</tr>';
 					}
-					printf('<td colspan="2"><I>%s</I></td>
-							<td class="number">%s</td>
-							<td></td>
-							<td class="number">%s</td>
+					printf('<tr>
+                              <td colspan="2"><I>%s</I></td>
+							  <td class="number">%s</td>
+							  <td></td>
+							  <td class="number">%s</td>
 							</tr>',
 							$ParentGroups[$Level],
 							locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -453,10 +454,11 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 						</tr>';
 				}
 
-				printf('<td colspan="2">%s</td>
-						<td class="number">%s</td>
-						<td></td>
-						<td class="number">%s</td>
+				printf('<tr>
+                          <td colspan="2">%s</td>
+						  <td class="number">%s</td>
+						  <td></td>
+						  <td class="number">%s</td>
 						</tr>',
 						$ParentGroups[$Level],
 						locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -489,7 +491,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				}
 
 				printf('<tr>
-							<td colspan="3"><font size="4">%s</font></td>
+							<td colspan="3"><h2>%s</h2></td>
 							<td class="number">%s</td>
 							<td></td>
 							<td class="number">%s</td>
@@ -506,7 +508,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
-						<td colspan="6"><font size="4" color="blue"><b>%s</b></font></td>
+						  <td colspan="6"><h1>%s</h1></td>
 						</tr>',
 						$Sections[$myrow['sectioninaccounts']]);
 			}
@@ -521,7 +523,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			if ($_POST['Detail']=='Detailed'){
 				$ActGrp = $myrow['groupname'];
 				printf('<tr>
-						<td colspan="6"><font size="2" color="blue"><b>%s</b></font></td>
+						  <td colspan="6"><h3>%s</h3></td>
 						</tr>',
 						$myrow['groupname']);
 				echo $TableHeader;
@@ -546,14 +548,14 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		if ($_POST['Detail']=='Detailed'){
 
 			if ($k==1){
-				echo '<tr class="EvenTableRows">';
+				echo '<tr class="OddTableRows">';
 				$k=0;
 			} else {
 				echo '<tr class="EvenTableRows">';
 				$k++;
 			}
 
-			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
 
 			printf('<td>%s</td>
 					<td>%s</td>
@@ -563,7 +565,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 					<td></td>
 					</tr>',
 					$ActEnquiryURL,
-					$myrow['accountname'],
+					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8'),
 					locale_number_format($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($LYAccountBalance,$_SESSION['CompanyRecord']['decimalplaces']));
 			$j++;
@@ -581,10 +583,11 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 					<td></td>
 				</tr>';
 		}
-		printf('<td colspan="2"><I>%s</I></td>
-				<td class="number">%s</td>
-				<td></td>
-				<td class="number">%s</td>
+		printf('<tr>
+                  <td colspan="2"><I>%s</I></td>
+				  <td class="number">%s</td>
+				  <td></td>
+				  <td class="number">%s</td>
 				</tr>',
 				$ParentGroups[$Level],
 				locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -602,11 +605,12 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			</tr>';
 	}
 
-	printf('<td colspan="2">%s</td>
-		<td class="number">%s</td>
-		<td></td>
-		<td class="number">%s</td>
-		</tr>',
+	printf('<tr>
+              <td colspan="2">%s</td>
+		      <td class="number">%s</td>
+		      <td></td>
+		      <td class="number">%s</td>
+		   </tr>',
 		$ParentGroups[$Level],
 		locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 		locale_number_format($LYGroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces'])
@@ -630,7 +634,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	}
 
 	printf('<tr>
-		<td colspan="3">%s</td>
+		<td colspan="3"><h2>%s</h2></td>
 		<td class="number">%s</td>
 		<td></td>
 		<td class="number">%s</td>
@@ -643,7 +647,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	if (isset($myrow['sectioninaccounts']) and $_POST['Detail']=='Detailed'){
 		printf('<tr>
-				<td colspan="6"><font size="4" color="blue"><b>%s</b></font></td>
+				<td colspan="6"><h1>%s</h1></td>
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 	}
@@ -656,7 +660,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		</tr>';
 
 	printf('<tr>
-		<td colspan="3">'._('Check Total').'</font></td>
+		<td colspan="3"><h2>'._('Check Total').'</h2></td>
 		<td class="number">%s</td>
 		<td></td>
 		<td class="number">%s</td>
@@ -672,6 +676,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		</tr>';
 
 	echo '</table>';
+    echo '</div>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';
     echo '</div></form>';
 }

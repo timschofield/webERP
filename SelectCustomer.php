@@ -726,6 +726,6 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		}
 	}
 }
-echo '<script>defaultControl(document.forms[0].CustCode);</script>';
+echo '<script  type="text/javascript">defaultControl(document.forms[0].CustCode);</script>';
 include ('includes/footer.inc');
 ?>

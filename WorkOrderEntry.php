@@ -677,9 +677,9 @@ if (isset($SearchResult)) {
 
 
 if (!isset($_GET['NewItem']) or $_GET['NewItem']=='') {
-	echo '<script>defaultControl(document.forms[0].StockCode);</script>';
+	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 } else {
-	echo '<script>defaultControl(document.forms[0].OutputQty"'.$_GET['Line'].'");</script>';
+	echo '<script  type="text/javascript">defaultControl(document.forms[0].OutputQty"'.$_GET['Line'].'");</script>';
 }
 
 echo '</form>';

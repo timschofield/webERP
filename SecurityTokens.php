@@ -132,7 +132,7 @@ while ($myrow = DB_fetch_array($Result,$db)){
 
 echo '</table><p></p>';
 
-echo '<script>defaultControl(document.form.TokenDescription);</script>';
+echo '<script  type="text/javascript">defaultControl(document.form.TokenDescription);</script>';
 
 include('includes/footer.inc');
 ?>

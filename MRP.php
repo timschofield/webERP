@@ -581,7 +581,7 @@ if (isset($_POST['submit'])) {
 			</tr>
 			<tr>
 				<td>' . _('Location') . '</td>
-				<td><select name="location[]" multiple>
+				<td><select name="location[]" multiple="multiple">
 					<option value="All" selected="selected">' . _('All') . '</option>';
 	 $sql = "SELECT loccode,
 				locationname

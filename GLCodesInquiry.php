@@ -20,11 +20,11 @@ $AccountsResult = DB_query($SQL,$db,$ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
-echo '<table cellpadding="2" colspan="2">
+echo '<table cellpadding="2">
 		<tr>
-			<th>' . _('Group') . '</font></th>
-			<th>' . _('Code') . '</font></th>
-			<th>' . _('Account Name') . '</font></th>
+			<th><h3>' . _('Group') . '</h3></th>
+			<th><h3>' . _('Code') . '</h3></th>
+			<th><h3>' . _('Account Name') . '</h3></th>
 		</tr>';
 
 $j = 1;
@@ -42,20 +42,20 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 
        if ($myrow['group_']== $ActGrp){
               printf('<td></td>
-	      		<td><font size="2">%s</font></td>
-			<td><font size="2">%s</font></td>
-			</tr>',
-			$myrow['accountcode'],
-			$myrow['accountname']);
+	      		      <td>%s</td>
+			          <td>%s</td>
+			          </tr>',
+			  $myrow['accountcode'],
+			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8'));
        } else {
               $ActGrp = $myrow['group_'];
-              printf('<td><font size="2">%s</font></td>
-	      		<td><font size="2">%s</font></td>
-			<td><font size="2">%s</font></td>
-			</tr>',
-			$myrow['group_'],
-			$myrow['accountcode'],
-			$myrow['accountname']);
+              printf('<td><b>%s</b></td>
+	      		      <td>%s</td>
+			          <td>%s</td>
+			          </tr>',
+			  $myrow['group_'],
+			  $myrow['accountcode'],
+			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8'));
        }
 }
 //end of while loop

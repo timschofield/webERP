@@ -72,6 +72,7 @@ if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . ' : '. $_SESSION['PO'.$identifier]->OrderNo .' '. _('from'). ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ProcessGoodsReceived'])) {
@@ -91,9 +92,9 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 
 	echo '<table cellpadding="2" class="selection">
 			<tr><th colspan="2"></th>
-				<th align="centre" colspan="3"><b>' . _('Supplier Units') . '</b></th>
+				<th align="center" colspan="3"><b>' . _('Supplier Units') . '</b></th>
 				<th></th>
-				<th align="centre" colspan="5"><b>' . _('Our Receiving Units') . '</b></th>
+				<th align="center" colspan="5"><b>' . _('Our Receiving Units') . '</b></th>
 			</tr>
 			<tr><th>' . _('Item Code') . '</th>
 				<th>' . _('Description') . '</th>
@@ -196,8 +197,6 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 		}
 		echo '</tr>';
 	}//foreach(LineItem)
-	echo '<script>defaultControl(document.forms[0].RecvQty_'.$LnItm->LineNo.');</script>';
-	
 	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 	if ($_SESSION['ShowValueOnGRN']==1) {
 		echo '<tr><td colspan="11" class="number"><b>' . _('Total value of goods received'). '</b></td>
@@ -206,6 +205,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 	} else {
 		echo '</table>';
 	}
+    echo '<script  type="text/javascript">defaultControl(document.forms[0].RecvQty_'.$LnItm->LineNo.');</script>';
+    
 }//If count(LineItems) > 0
 
 
@@ -745,7 +746,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			<input type="submit" name="ProcessGoodsReceived" value="' . _('Process Goods Received') . '" />
 		</div>';
 }
-
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

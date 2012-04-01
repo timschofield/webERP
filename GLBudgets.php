@@ -28,11 +28,11 @@ if (isset($_POST['update'])) {
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
 	</p>';
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="selectaccount">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="selectaccount">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table>';
-
-echo '<br />
+echo '<br />';
+echo '<table>
 		<tr>
 			<td>'.  _('Select GL Account').  ':</td>
 			<td><select name="SelectedAccount" onchange="ReloadForm(selectaccount.Select)">';
@@ -49,7 +49,7 @@ if (DB_num_rows($result)==0){
 	prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('budgets cannot be allocated until the GL accounts are set up'),'warn');
 } else {
 	while ($myrow=DB_fetch_array($result)){
-		$Account = $myrow['accountcode'] . ' - ' . $myrow['accountname'];
+		$Account = $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8');
 		if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount==$myrow['accountcode']){
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $Account . '</option>';
 			$PrevCode=$LastCode;
@@ -68,9 +68,10 @@ if (DB_num_rows($result)==0){
 if (!isset($PrevCode)) {$PrevCode='';}
 if (!isset($NextCode)) {$NextCode='';}
 
+echo '</table>';
 echo '<input type="hidden" name="PrevAccount" value="'.$PrevCode.'" />';
 echo '<input type="hidden" name="NextAccount" value="'.$NextCode.'" />';
-echo '</table>';
+
 echo '<br />
 		<table>
 		<tr>
@@ -80,6 +81,7 @@ echo '<br />
 		</tr>
 		</table>
 		<br />
+    </div>
 	</form>';
 
 // End of account selection
@@ -157,7 +159,8 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 
 // Table Headers
 
-	echo '<form name="form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form id="form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 			<table class="selection">
@@ -217,7 +220,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		<tr>
 			<td colspan="2">'._('Annual Budget').'</td>
 			<td><input class="number" type="text" size="14" name="AnnualAmountLY" value="0.00" /></td>
-			</td><td>
+			<td></td>
 			<td></td>
 			<td><input class="number" type="text" size="14" name="AnnualAmountTY" value="0.00" /></td>
 			<td></td>
@@ -228,12 +231,12 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		
 	echo '<input type="hidden" name="SelectedAccount" value="'.$SelectedAccount.'" />';
 
-	echo '<script>defaultControl(document.form.1next);</script>';
+	echo '<script  type="text/javascript">defaultControl(document.form.1next);</script>';
 	echo '<br />
 		<div class="centre">
-			<input type="submit" name=update value="' . _('Update') . '" />
+			<input type="submit" name="update" value="' . _('Update') . '" />
 		</div>
-		
+		</div>
 		</form>';
 
 	$SQL="SELECT MIN(periodno) FROM periods";

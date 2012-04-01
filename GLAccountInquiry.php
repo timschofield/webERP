@@ -23,7 +23,8 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/t
 
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
 
-echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
@@ -35,9 +36,9 @@ $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $Account = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($Account,$db)){
 	if($myrow['accountcode'] == $SelectedAccount){
-		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
+		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	}
  }
 echo '</select></td></tr>';
@@ -51,30 +52,32 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 
 $result=DB_query($SQL,$db);
-echo '<option value="0">0 - '._('All tags');
+echo '<option value="0">0 - '._('All tags') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
-		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
 // End select tag
-echo '<tr> <td>'._('For Period range').':</td><td><select name=Period[] multiple>';
+echo '<tr> <td>'._('For Period range').':</td><td><select name="Period[]" size="12" multiple="multiple">';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql,$db);
 $id=0;
 while ($myrow=DB_fetch_array($Periods,$db)){
 	if(isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
-		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 		$id++;
 	} else {
-		echo '<option value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
+		echo '<option value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 	}
 }
-echo '</select></td></tr><table>';
-echo '<p><div class="centre"><input type="submit" name="Show" value="'._('Show Account Transactions').'" /></div></form>';
+echo '</select></td></tr></table>';
+echo '<br /><div class="centre"><input type="submit" name="Show" value="'._('Show Account Transactions').'" /></div>
+      </div>
+      </form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 

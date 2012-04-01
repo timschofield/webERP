@@ -368,9 +368,9 @@ if (isset($_POST['PrintPDF'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
 		 $title . '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . ' method="POST"><table class="selection">';
+	echo '<form action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . ' method="post"><table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name=Areas[] multiple>';
+	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name=Areas[] multiple="multiple">';
 
 	$sql="SELECT areacode, areadescription FROM areas";
 	$AreasResult= DB_query($sql,$db);
@@ -383,7 +383,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('For Sales folk'). ':</td>
-			<td><select name=SalesPeople[] multiple>
+			<td><select name=SalesPeople[] multiple="multiple">
 				<option selected="selected" value="All">'. _('All sales folk') . '</option>';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";

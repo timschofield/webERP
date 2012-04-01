@@ -29,7 +29,8 @@ if ((! isset($_POST['FromPeriod'])
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $title . '
 		</p>';
-	echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -47,7 +48,7 @@ if ((! isset($_POST['FromPeriod'])
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Select Period From:') . '</td>
-				<td><select Name="FromPeriod">';
+				<td><select name="FromPeriod">';
 	$NextYear = date('Y-m-d',strtotime('+1 Year'));
 	$sql = "SELECT periodno,
 					lastdate_in_period
@@ -83,7 +84,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	echo '<tr>
 			<td>' . _('Select Period To:') .'</td>
-			<td><select Name="ToPeriod">';
+			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
 
@@ -101,7 +102,7 @@ if ((! isset($_POST['FromPeriod'])
 		<br />';
 
 	echo '<div class="centre">
-			<input type="submit" Name="ShowTB" value="' . _('Show Trial Balance') .'" />
+			<input type="submit" name="ShowTB" value="' . _('Show Trial Balance') .'" />
 			<input type="submit" name="PrintPDF" value="'._('PrintPDF').'" />
 		</div>';
 
@@ -383,7 +384,8 @@ if ((! isset($_POST['FromPeriod'])
 } else {
 
 	include('includes/header.inc');
-	echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -482,11 +484,11 @@ if ((! isset($_POST['FromPeriod'])
 					$ParentGroups[$Level]='';
 				} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
 					printf('<tr>
-						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
+						<td colspan="2"><i>%s ' . _('Total') . ' </i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
 						</tr>',
 						$ParentGroups[$Level],
 						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -502,11 +504,11 @@ if ((! isset($_POST['FromPeriod'])
 				} else {
 					do {
 						printf('<tr>
-							<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
-							<td class="number"><I>%s</I></td>
-							<td class="number"><I>%s</I></td>
-							<td class="number"><I>%s</I></td>
-							<td class="number"><I>%s</I></td>
+							<td colspan="2"><i>%s ' . _('Total') . ' </i></td>
+							<td class="number"><i>%s</i></td>
+							<td class="number"><i>%s</i></td>
+							<td class="number"><i>%s</i></td>
+							<td class="number"><i>%s</i></td>
 							</tr>',
 							$ParentGroups[$Level],
 							locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -526,11 +528,11 @@ if ((! isset($_POST['FromPeriod'])
 
 					if ($Level>0){
 						printf('<tr>
-						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
+						<td colspan="2"><i>%s ' . _('Total') . ' </i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
 						</tr>',
 						$ParentGroups[$Level],
 						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -551,7 +553,7 @@ if ((! isset($_POST['FromPeriod'])
 			$ParentGroups[$Level]=$myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
 			printf('<tr>
-					<td colspan="6"><font size="4" color="blue"><b>%s</b></font></td>
+					<td colspan="6"><h2>%s</h2></td>
 				</tr>',
 				$myrow['groupname']);
 			echo $TableHeader;
@@ -611,7 +613,7 @@ if ((! isset($_POST['FromPeriod'])
 		$CheckPeriodActual += $AccountPeriodActual;
 		$CheckPeriodBudget += $AccountPeriodBudget;
 
-		$ActEnquiryURL = '<a href="'. $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . '&Show=Yes">' . $myrow['accountcode'] . '<a>';
+		$ActEnquiryURL = '<a href="'. $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 
 		printf('<td>%s</td>
 				<td>%s</td>
@@ -621,7 +623,7 @@ if ((! isset($_POST['FromPeriod'])
 				<td class="number">%s</td>
 				</tr>',
 				$ActEnquiryURL,
-				$myrow['accountname'],
+				htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
 				locale_number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
@@ -638,11 +640,11 @@ if ((! isset($_POST['FromPeriod'])
 			$ParentGroups[$Level]=$myrow['groupname'];
 		} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
 			printf('<tr>
-					<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
-					<td class="number"><I>%s</I></td>
-					<td class="number"><I>%s</I></td>
-					<td class="number"><I>%s</I></td>
-					<td class="number"><I>%s</I></td>
+					<td colspan="2"><i>%s ' . _('Total') . ' </i></td>
+					<td class="number"><i>%s</i></td>
+					<td class="number"><i>%s</i></td>
+					<td class="number"><i>%s</i></td>
+					<td class="number"><i>%s</i></td>
 					</tr>',
 					$ParentGroups[$Level],
 					locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -658,11 +660,11 @@ if ((! isset($_POST['FromPeriod'])
 		} else {
 			do {
 				printf('<tr>
-						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
+						<td colspan="2"><i>%s ' . _('Total') . ' </i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
 						</tr>',
 						$ParentGroups[$Level],
 						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -682,11 +684,11 @@ if ((! isset($_POST['FromPeriod'])
 
 			if ($Level >0){
 				printf('<tr>
-						<td colspan="2"><I>%s ' . _('Total') . ' </I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
-						<td class="number"><I>%s</I></td>
+						<td colspan="2"><i>%s ' . _('Total') . ' </i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
+						<td class="number"><i>%s</i></td>
 						</tr>',
 						$ParentGroups[$Level],
 						locale_number_format($GrpActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -720,9 +722,9 @@ if ((! isset($_POST['FromPeriod'])
 			locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
 	
 	echo '</table><br />';
-	echo '<div class="centre"><input type="submit" Name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
+	echo '<div class="centre"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
-
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 

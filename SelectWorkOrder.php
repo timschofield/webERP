@@ -376,7 +376,7 @@ if (!isset($StockID)) {
 		echo '</table>';
 	}
 	
-	echo '<script>defaultControl(document.forms[0].WO);</script>';
+	echo '<script  type="text/javascript">defaultControl(document.forms[0].WO);</script>';
 	
 	echo '</form>';
 }

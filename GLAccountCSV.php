@@ -18,7 +18,8 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/t
 
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
-echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
@@ -28,22 +29,22 @@ $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 echo '<table>
 	        <tr>
 	         <td>'._('Selected Accounts') . ':</td>
-	         <td><select name="Account[]" multiple>';
+	         <td><select name="Account[]" size="12" multiple="multiple">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $AccountsResult = DB_query($sql,$db);
 $i=0;
 while ($myrow=DB_fetch_array($AccountsResult,$db)){
 	if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
-		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 		$i++;
 	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname'] . '</option>';
+		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	}
 }
 echo '</select></td>';
 
 echo '<td>'._('For Period range').':</td>
-		<td><select name="Period[]" multiple>';
+		<td><select name="Period[]" size="12" multiple="multiple">';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql,$db);
 $id=0;
@@ -67,7 +68,7 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 
 $result=DB_query($SQL,$db);
-echo '<option value="0">0 - '._('All tags');
+echo '<option value="0">0 - ' . _('All tags') . '</option>';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 	   echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
@@ -78,8 +79,9 @@ while ($myrow=DB_fetch_array($result)){
 echo '</select></td></tr>';
 // End select tag
 
-echo '</table><p>
+echo '</table><br />
 		<div class="centre"><input type="submit" name="MakeCSV" value="'._('Make CSV File').'" /></div>
+    </div>
 	</form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/

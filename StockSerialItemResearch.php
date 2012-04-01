@@ -31,7 +31,7 @@ echo  _('Serial Number') .': <input ID="serialno" type="text" name="serialno" si
 <br />
 </form>';
 
-echo '<script>
+echo '<script  type="text/javascript">
 		document.getElementById("serialno").focus();
 	</script>';
 

@@ -95,7 +95,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	</tr>';
 
 	$k=0; //row colour counter
-	echo'<form action="PcAuthorizeExpenses.php" method="POST" name="'._('update').'">';
+	echo'<form action="PcAuthorizeExpenses.php" method="post" name="'._('update').'">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	while ($myrow=DB_fetch_array($result))	{

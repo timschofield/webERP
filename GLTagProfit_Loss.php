@@ -17,6 +17,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $title . '
@@ -85,7 +86,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		if($myrow['periodno']==$DefaultToPeriod){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option value =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -108,7 +109,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
     	}
 	}
-	echo '</select></td>';
+	echo '</select></td></tr>';
 // End select tag
 
 	echo '<tr>
@@ -464,6 +465,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 		<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -522,7 +524,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	echo '<tr>
 			<th colspan="9">
 				<div class="centre">
-					<font size="3" color="blue"><b>' . _('Statement of Income and Expenditure for Tag'). ' ' .  $myrow[0]._('during the'). ' ' . $NumberOfMonths . ' ' . _('months to'). ' ' . $PeriodToDate . '</b></font>
+					<h2><b>' . _('Statement of Income and Expenditure for Tag'). ' ' .  $myrow[0]._('during the'). ' ' . $NumberOfMonths . ' ' . _('months to'). ' ' . $PeriodToDate . '</b></h2>
 				</div>
 			</th>
 		</tr>';
@@ -581,7 +583,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 				if ($Section ==3){ /*Income */
 						printf('<tr>
-									<td colspan="2"><font size="2"><i>%s </i></font></td>
+									<td colspan="2"><h4><i>%s </i></h4></td>
 									<td></td>
 									<td class="number">%s</td>
 								</tr>',
@@ -589,7 +591,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 								locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 					} else { /*Costs */
 						printf('<tr>
-									<td colspan="2"><font size="2"><i>%s </i></font></td>
+									<td colspan="2"><h4><i>%s </i></h4></td>
 									<td class="number">%s</td>
 									<td></td>
 								</tr>',
@@ -615,7 +617,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 				if ($Section ==4){ /*Income */
 					printf('<tr>
-								<td colspan="2"><font size="2"><i>%s </i></font></td>
+								<td colspan="2"><h4><i>%s </i></h4></td>
 								<td></td>
 								<td class="number">%s</td>
 							</tr>',
@@ -623,7 +625,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				} else { /*Costs */
 					printf('<tr>
-								<td colspan="2"><font size="2"><i>%s</i></font></td>
+								<td colspan="2"><h4><i>%s</i></h4></td>
 								<td class="number">%s</td>
 								<td></td>
 							</tr>',
@@ -649,7 +651,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						</tr>';
 
 					printf('<tr>
-								<td colspan="2"><font size="4">%s</font></td>
+								<td colspan="2"><h2>%s</h2></td>
 								<td></td>
 								<td class="number">%s</td>
 							</tr>',
@@ -662,7 +664,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							<td colspan="2"><hr /></td>
 						</tr>';
 					printf('<tr>
-								<td colspan="2"><font size="4">%s</font></td>
+								<td colspan="2"><h2>%s</h2></td>
 								<td></td>
 								<td class="number">%s</td>
 							</tr>',
@@ -679,7 +681,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							<td colspan="5"><hr /></td>
 						</tr>';
 					printf('<tr>
-								<td colspan="2"><font size="4">'._('Gross Profit').'</font></td>
+								<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
 								<td></td>
 								<td class="number">%s</td>
 							</tr>',
@@ -695,7 +697,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							<td colspan="6"><hr /></td>
 						</tr>';
 					printf('<tr>
-							<td colspan="2"><font size="2"><i>'._('Gross Profit Percent').'</i></font></td>
+							<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
 							<td></td>
 							<td class="number"><i>%s</i></td>
 							</tr><tr><td colspan="6"> </td></tr>',
@@ -709,7 +711,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
-							<td colspan="6"><font size="4" color="blue"><b>%s</b></font></td>
+							<td colspan="6"><h2><b>%s</b></h2></td>
 						</tr>',
 						$Sections[$myrow['sectioninaccounts']]);
 			}
@@ -727,7 +729,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			$ActGrp = $myrow['groupname'];
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
-							<td colspan="6"><font size="2" color="blue"><b>%s</b></font></td>
+							<td colspan="6"><h4><b>%s</b></h4></td>
 						</tr>',
 						$myrow['groupname']);
 				
@@ -758,7 +760,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				$k++;
 			}
 
-			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['account'] . '&Show=Yes">' . $myrow['account'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['account'] . '&amp;Show=Yes">' . $myrow['account'] . '</a>';
 
 			if ($Section ==4){
 				 printf('<td>%s</td>
@@ -767,7 +769,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						<td class="number">%s</td>
 						</tr>',
 						$ActEnquiryURL,
-						$myrow['accountname'],
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']));
 			} else {
 				printf('<td>%s</td>
@@ -775,7 +777,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						<td class="number">%s</td>
 						</tr>',
 						$ActEnquiryURL,
-						$myrow['accountname'],
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']));
 			}
 
@@ -799,13 +801,13 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				}
 				if ($Section ==4){ /*Income */
 					echo '<tr>
-							<td colspan="2"><font size="2"><i>' . $ActGrpLabel . '</i></font></td>
+							<td colspan="2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
 							<td></td>
 							<td class="number">' . locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 				} else { /*Costs */
 					echo '<tr>
-							<td colspan="2"><font size="2"><i>' . $ActGrpLabel . '</i></font></td>
+							<td colspan="2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
 							<td class="number">' . locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 				}
@@ -826,7 +828,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 			if ($Section ==4){ /*Income */
 				printf('<tr>
-						<td colspan="2"><font size="2"><i>%s</i></font></td>
+						<td colspan="2"><h4><i>%s</i></h4></td>
 						<td></td>
 						<td class="number">%s</td>
 						</tr>',
@@ -834,7 +836,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 			} else { /*Costs */
 				printf('<tr>
-						<td colspan="2"><font size="2"><i>%s </i></font></td>
+						<td colspan="2"><h4><i>%s </i></h4></td>
 						<td class="number">%s</td>
 						<td></td>
 						</tr>',
@@ -856,7 +858,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td colspan="2"><hr /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><font size="4">' . $Sections[$Section] . '</font></td>
+					<td colspan="2"><h2>' . $Sections[$Section] . '</h2></td>
 					<td></td>
 					<td class="number">' . locale_number_format($SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
@@ -867,7 +869,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td colspan="2"><hr /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><font size="4">' . $Sections[$Section] . '</font></td>
+					<td colspan="2"><h2>' . $Sections[$Section] . '</h2></td>
 					<td></td>
 					<td class="number">' . locale_number_format(-$SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
@@ -878,7 +880,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td colspan="2"><hr /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><font size="4">'._('Gross Profit').'</font></td>
+					<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
 					<td></td>
 					<td class="number">' . locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
@@ -893,7 +895,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td colspan="2"><hr /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><font size="2"><i>'._('Gross Profit Percent').'</i></font></td>
+					<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
 					<td></td>
 					<td class="number"><i>' . locale_number_format($PrdGPPercent,1) . '%</i></td>
 					<td></td>
@@ -908,7 +910,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 		if ($_POST['Detail']=='Detailed' AND isset($Sections[$myrow['sectioninaccounts']])){
 			echo '<tr>
-					<td colspan="6"><font size="4" color="blue"><b>' . $Sections[$myrow['sectioninaccounts']] . '</b></font></td>
+					<td colspan="6"><h2><b>' . $Sections[$myrow['sectioninaccounts']] . '</b></h2></td>
 				</tr>';
 		}
 		$j++;
@@ -921,7 +923,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		</tr>';
 
 	printf('<tr style="background-color:#ffffff">
-			<td colspan="2"><font size="4" color="blue"><b>'._('Surplus').' - '._('Deficit').'</b></font></td>
+			<td colspan="2"><h2><b>'._('Surplus').' - '._('Deficit').'</b></h2></td>
 			<td></td>
 			<td class="number">%s</td>
 			</tr>',
@@ -936,6 +938,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			<input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Period').'" />
 		</div>';
 }
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 

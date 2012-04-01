@@ -239,7 +239,8 @@ if (isset($Cancel)){
 }
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
@@ -254,8 +255,8 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 }
 
 echo '<table>
-		<tr>
-		<td colspan="5"><table class="selection">
+        <tr>
+        <td colspan="5"><table class="selection">
 						<tr>
 							<td>'._('Date to Process Journal') . ':</td>
 							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
@@ -281,7 +282,7 @@ echo '<table class="selection" width="70%">';
 
 echo '<tr>
 		<th colspan="3">
-		<div class="centre"><font size="3" color="blue"><b>' . _('Journal Line Entry') . '</b></font></div>
+		<div class="centre"><h2>' . _('Journal Line Entry') . '</h2></div>
 		</th>
 	</tr>';
 
@@ -350,11 +351,11 @@ if (!isset($_POST['Debit'])) {
 echo '</tr>
 	<tr>
 		<th>' . _('Debit') . '</th>
-		<td><input type="text" class="number" name = "Debit" onchange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" name="Debit" onchange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<th>' . _('Credit') . '</th>
-		<td><input type="text" class="number" Name = "Credit" onchange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" name="Credit" onchange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<td></td>
@@ -376,7 +377,7 @@ echo '<div class="centre">
 
 echo '<table class="selection" width="85%">
 		<tr>
-			<th colspan="6"><div class="centre"><font size="3" color="blue"><b>' . _('Journal Summary') . '</b></font></div></th>
+			<th colspan="6"><div class="centre"><h2>' . _('Journal Summary') . '</h2></div></th>
 		</tr>
 		<tr>
 			<th>'._('GL Tag').'</th>
@@ -432,7 +433,7 @@ echo '<tr class="EvenTableRows"><td></td>
 		<td class="number"><b>' . locale_number_format($CreditTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 	</tr>';
 if ($DebitTotal!=$CreditTotal) {
-	echo '<td align="center" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
+	echo '<tr><td align="center" style="background-color: #fddbdb"><b>' . _('Required to balance') .' - </b>' .
 		locale_number_format(abs($DebitTotal-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']);
 }
 if ($DebitTotal>$CreditTotal) {
@@ -440,7 +441,10 @@ if ($DebitTotal>$CreditTotal) {
 } else if ($DebitTotal<$CreditTotal) {
 	echo ' ' . _('Debit') . '</td></tr>';
 }
-echo '</table>';
+echo '</table>
+    </td>
+    </tr>
+    </table>';
 
 if (abs($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
 	echo '<br />
@@ -455,11 +459,11 @@ if (abs($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDe
 }
 
 if (!isset($_GET['NewJournal']) or $_GET['NewJournal']=='') {
-	echo '<script>defaultControl(document.form.GLManualCode);</script>';
+	echo '<script  type="text/javascript">defaultControl(document.form.GLManualCode);</script>';
 } else {
-	echo '<script>defaultControl(document.form.JournalProcessDate);</script>';
+	echo '<script  type="text/javascript">defaultControl(document.form.JournalProcessDate);</script>';
 }
-
+echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

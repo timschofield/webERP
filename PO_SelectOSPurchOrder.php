@@ -548,7 +548,7 @@ else {
 
 	echo '</table>';
 }
-echo '<script>defaultControl(document.forms[0].StockCode);</script>';
+echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

@@ -6,7 +6,7 @@ include ('includes/session.inc');
 $title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
 
-$MenuURL = '<a href="'. $rootpath . '/index.php?&Application=GL">' . _('General Ledger Menu') . '</a></div>';
+$MenuURL = '<div><a href="'. $rootpath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
 if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 	prnMsg(_('This page requires a valid transaction type and number'),'warn');
@@ -36,7 +36,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			. _('Print') . '" alt="" />' . ' ' . $title . '</p>';
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
-				<th colspan="7"><font size="3" color="blue"><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></font></th>
+				<th colspan="7"><h2><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></h2></th>
 			</tr>
 			<tr>
 				<th>' . _('Date') . '</th>
@@ -76,18 +76,18 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			if ( $TransRow['amount'] > 0) {
 					$DebitAmount = locale_number_format($TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 					$DebitTotal += $TransRow['amount'];
-					$CreditAmount = '&nbsp';
+					$CreditAmount = '&nbsp;';
 			} else {
 					$CreditAmount = locale_number_format(-$TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 					$CreditTotal += $TransRow['amount'];
-					$DebitAmount = '&nbsp';
+					$DebitAmount = '&nbsp;';
 			}
 			if ( $TransRow['posted']==0 ){
 				$Posted = _('No');
 			}
 			if ( $TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] )	{
 					$URL = $rootpath . '/CustomerInquiry.php?CustomerID=';
-					$date = '&TransAfterDate=' . $TranDate;
+					$date = '&amp;TransAfterDate=' . $TranDate;
 
 					$DetailSQL = "SELECT debtortrans.debtorno,
 										debtortrans.ovamount,
@@ -101,7 +101,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					$DetailResult = DB_query($DetailSQL,$db);
 			} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )	{
 					$URL = $rootpath . '/SupplierInquiry.php?SupplierID=';
-					$date = '&FromDate=' . $TranDate;
+					$date = '&amp;FromDate=' . $TranDate;
 
 					$DetailSQL = "SELECT supptrans.supplierno,
 										supptrans.ovamount,
@@ -117,7 +117,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					$URL = $rootpath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
 
 					if( mb_strlen($TransRow['narrative'])==0 ) {
-						$TransRow['narrative'] = '&nbsp';
+						$TransRow['narrative'] = '&nbsp;';
 					}
 					
 					if ($j==1) {
@@ -142,18 +142,18 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					if ( $TransRow['amount'] > 0){
 						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
 							$Debit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-							$Credit = '&nbsp';
+							$Credit = '&nbsp;';
 						} else {
 							$Debit = locale_number_format((-$DetailRow[1] - $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-							$Credit = '&nbsp';
+							$Credit = '&nbsp;';
 						}
 					} else {
 						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
 							$Credit = locale_number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-							$Debit = '&nbsp';
+							$Debit = '&nbsp;';
 						} else {
 							$Credit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
-							$Debit = '&nbsp';
+							$Debit = '&nbsp;';
 						}
 					}
 
@@ -182,17 +182,14 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				<td class="number" colspan="3"><b>' . _('Total') . '</b></td>
 				<td class="number">' . locale_number_format(($DebitTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format((-$CreditTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td colspan="2">&nbsp</td>
+				<td colspan="2">&nbsp;</td>
 			</tr>';
-		echo '</table><p>';
+		echo '</table>';
 	}
 
 }
 
-echo '</td>
-	</tr>
-	</table>';
-	
+
 include('includes/footer.inc');
 
 ?>

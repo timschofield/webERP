@@ -34,7 +34,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 			<input type="hidden" name="EntryType" value="KEYED">
 			<input type="hidden" name="identifier" value="' . $identifier . '">
 			<input type="hidden" name="EditControlled" value="true">
-			<select name=Bundles[] multiple>';
+			<select name=Bundles[] multiple="multiple">';
 	
 		$id=0;
 		$ItemsAvailable=0;

@@ -788,7 +788,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					</tr>';
 			} else {
 				echo '<tr>
-						<td><select name="SerialNos[]" multiple>';
+						<td><select name="SerialNos[]" multiple="multiple">';
 				while ($SerialNoRow = DB_fetch_array($SerialNoResult)){
 					if (in_array($SerialNoRow['serialno'],$_POST['SerialNos'])){
 						echo '<option selected="selected" value="' . $SerialNoRow['serialno'] . '">' . $SerialNoRow['serialno'] . '</option>';

@@ -221,7 +221,7 @@ if (isset($_POST['RunReport'])){
 
 	echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
-	echo '<form method="POST" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	/*Dates in SQL format for the last day of last month*/
@@ -231,7 +231,7 @@ if (isset($_POST['RunReport'])){
 	echo '<table>
 		        <tr>
 		         <td>'._('Selected Accounts') . ':</td>
-		         <td><select name="Account[]" multiple>';
+		         <td><select name="Account[]" multiple="multiple">';
 	$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 	$AccountsResult = DB_query($sql,$db);
 	$i=0;
@@ -246,7 +246,7 @@ if (isset($_POST['RunReport'])){
 	echo '</select></td>';
 
 	echo '<td>'._('For Period range').':</td>
-			<td><select Name=Period[] multiple>';
+			<td><select Name=Period[] multiple="multiple">';
 	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);
 	$id=0;

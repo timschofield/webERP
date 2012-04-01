@@ -65,7 +65,7 @@ echo '<div class="centre">
 		<br />
 		<a href="'.$rootpath.'/GoodsReceived.php?identifier=' .$identifier . '">'. _('Back To Purchase Order'). ' # '. $_SESSION['PO'.$identifier]->OrderNo . '</a>
 		<br />
-		<font size="2"><b>'. _('Receive controlled item'). ' '. $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</b></font>
+		<h4>'. _('Receive controlled item'). ' '. $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</h4>
 	</div>';
 
 /** vars needed by InputSerialItem : **/

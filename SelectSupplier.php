@@ -380,5 +380,5 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	}
 }
 include ('includes/footer.inc');
-echo '<script>defaultControl(document.forms[0].SupplierCode);</script>';
+echo '<script  type="text/javascript">defaultControl(document.forms[0].SupplierCode);</script>';
 ?>
