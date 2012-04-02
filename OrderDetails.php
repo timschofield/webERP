@@ -61,7 +61,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	
 	echo '<table class="selection">
 			<tr>
-				<th colspan="4"><font color="blue">'._('Order Header Details For Order No').' '.$_GET['OrderNumber'].'</font></th>
+				<th colspan="4"><h3>'._('Order Header Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Customer Code') . ':</th>
@@ -88,7 +88,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<td class="OddTableRows">' . $myrow['deladd2'] . '</td>
 			</tr>
 			<tr>
-				<th style="text-align: left"h>' . _('Order Currency') . ':</th>
+				<th style="text-align: left">' . _('Order Currency') . ':</th>
 				<td class="OddTableRows">' . $myrow['currcode'] . '</td>
 				<th style="text-align: left">' . _('Delivery Address 3') . ':</th>
 				<td class="OddTableRows">' . $myrow['deladd3'] . '</td>
@@ -156,7 +156,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="9"><font color="blue">'._('Order Line Details For Order No').' '.$_GET['OrderNumber'].'</font></th>
+				<th colspan="9"><h3>'._('Order Line Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
 			</tr>
 			<tr>
 				<th>' . _('Item Code') . '</th>

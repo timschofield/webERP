@@ -198,23 +198,24 @@ if (isset($_POST['submit'])) {
 				<td>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
 				<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><p>';
+	echo '</table><br />';
 } //end of ifs and buts!
 
 
 if (isset($SelectedPaymentID)) {
-	echo '<div class="centre"><a href=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID .'>' . _('Review Payment Methods') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID .'">' . _('Review Payment Methods') . '</a></div>';
 }
 
-echo '<p>';
+echo '<br />';
 
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedPaymentID)) {
@@ -259,28 +260,29 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 		<td>' . _('Use For Payments') . ':' . '</td>
 		<td><select name="ForPayment">
-			<option' . ($_POST['ForPayment'] ? ' selected' : '') .' value="1">' . _('Yes') . '</option>
-			<option' . ($_POST['ForPayment'] ? '' : ' selected') .' value="0">' . _('No') . '</select></td>
+			<option' . ($_POST['ForPayment'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
+			<option' . ($_POST['ForPayment'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
+            </select></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Use For Receipts') . ':' . '</td>
 			<td><select name="ForReceipt">
-				<option' . ($_POST['ForReceipt'] ? ' selected' : '') .' value="1">' . _('Yes') . '</option>
-				<option' . ($_POST['ForReceipt'] ? '' : ' selected') .' value="0">' . _('No') . '</option>
+				<option' . ($_POST['ForReceipt'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
+				<option' . ($_POST['ForReceipt'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
 			</select></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Use Pre-printed Stationery') . ':' . '</td>
 			<td><select name="UsePrePrintedStationery">
-				<option' . ($_POST['UsePrePrintedStationery'] ? ' selected': '' ) .' value="1">' . _('Yes') . '</option>
-				<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected' ) .' value="0">' . _('No') . '</option>
+				<option' . ($_POST['UsePrePrintedStationery'] ? ' selected="selected"': '' ) .' value="1">' . _('Yes') . '</option>
+				<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected="selected"' ) .' value="0">' . _('No') . '</option>
 				</select></td>
 		</tr>';
 	
 	echo '</table>';
 
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
-
+    echo '</div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

@@ -161,8 +161,9 @@ If (isset($_POST['PrintPDF'])
 		'" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+          <div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">';
 
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
@@ -175,8 +176,10 @@ If (isset($_POST['PrintPDF'])
 		</table>
 		<br />
 		<div class="centre">
-			<input type="submit" Name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>';
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>
+        </div>
+        </form>';
 
 	include('includes/footer.inc');
 

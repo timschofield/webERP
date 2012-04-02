@@ -175,7 +175,7 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="6"><font color="blue" size="3">'._('Payment Terms.').'</font></th>
+			<th colspan="6"><h3>'._('Payment Terms.').'</h3></th>
 		</tr>';
 	echo '<tr>
 			<th>' . _('Term Code') . '</th>
@@ -203,7 +203,7 @@ or deletion of the records*/
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedTerms=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedTerms=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment term?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s?SelectedTerms=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment term?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['termsindicator'],
 			$myrow['terms'],
@@ -215,7 +215,7 @@ or deletion of the records*/
 			$myrow[0]);
 	
 	} //END WHILE LIST LOOP
-	echo '</table><p>';
+	echo '</table><br />';
 } //end of ifs and buts!
 
 if (isset($SelectedTerms)) {
@@ -227,6 +227,7 @@ if (isset($SelectedTerms)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTerms)) {
@@ -252,7 +253,7 @@ if (!isset($_GET['delete'])) {
 		echo '<br />
 			<table class="selection">';
 		echo '<tr>
-				<th colspan="6"><font color="blue" size="3">'._('Update Payment Terms.').'</font></th>
+				<th colspan="6"><h3>'._('Update Payment Terms.').'</h3></th>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
@@ -272,7 +273,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="6"><font color=blue size="3">'._('New Payment Terms.').'</font></th>
+				<th colspan="6"><h3>'._('New Payment Terms.').'</h3></th>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
@@ -307,8 +308,9 @@ if (!isset($_GET['delete'])) {
 		<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="'._('Enter Information').'" />
-			</form>
 		</div>';
+    echo '</div>
+          </form>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');

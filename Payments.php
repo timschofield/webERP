@@ -48,8 +48,7 @@ echo '<p class="page_title_text">
 . '" alt="" />' . ' ' . _('Payment Entry') . '
 	</p>';
 echo '<div class="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  <br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</div>
-	<br />
-	<div class="centre">';
+	<br />';
 
 if (isset($_GET['SupplierID'])){
 	/*The page was called with a supplierID check it is valid and default the inputs for Supplier Name and currency of payment */
@@ -278,11 +277,12 @@ if (isset($_POST['CommitBatch'])){
 	// it is a supplier payment by cheque and haven't printed yet so print cheque
 
 		echo '<br />
-			<a href="' . $rootpath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&identifier=' . $identifier . '">' . _('Print Cheque using pre-printed stationery') . '</a>
+			<a href="' . $rootpath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '">' . _('Print Cheque using pre-printed stationery') . '</a>
 			<br />
 			<br />';
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?
 			<br />
@@ -293,6 +293,8 @@ if (isset($_POST['CommitBatch'])){
 			<input type="submit" name="PaymentCancelled" value="' . _('No / Cancel Payment') . '" />';
 			
 		echo '<br />Payment amount = ' . $_SESSION['PaymentDetail' . $identifier]->Amount;
+        echo '</div>
+              </form>';
 		
 	} else {
 
@@ -728,11 +730,12 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!='') {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p><table class="selection">';
+echo '<br /><table class="selection">';
 
-echo '<tr><th colspan="4"><font size="3" color="blue">' . _('Payment');
+echo '<tr><th colspan="4"><h3>' . _('Payment');
 
 if ($_SESSION['PaymentDetail' . $identifier]->SupplierID!=''){
 	echo ' ' . _('to') . ' ' . $_SESSION['PaymentDetail' . $identifier]->SuppName;
@@ -742,7 +745,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->BankAccountName!=''){
 	echo ' ' . _('from the') . ' ' . $_SESSION['PaymentDetail' . $identifier]->BankAccountName;
 }
 
-echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '</font></th></tr>';
+echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '</h3></th></tr>';
 
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
@@ -809,11 +812,11 @@ if ($_SESSION['PaymentDetail' . $identifier]->SupplierID==''){
 			</tr>';
 	}
 } else { /*its a supplier payment so it must be in the suppliers currency */
-	echo '<tr>
-			<td>' . _('Supplier Currency') . ':</td>
+	echo '<tr>';
+    echo '<td><input type="hidden" name="Currency" value="' . $_SESSION['PaymentDetail' . $identifier]->Currency . '" />
+			' . _('Supplier Currency') . ':</td>
 			<td>' . $_SESSION['PaymentDetail' . $identifier]->Currency . '</td>
 		</tr>';
-	echo '<input type="hidden" name="Currency" value="' . $_SESSION['PaymentDetail' . $identifier]->Currency . '" />';
 	/*get the default rate from the currency table if it has not been set */
 	if (!isset($_POST['ExRate']) OR $_POST['ExRate']==''){
 		$SQL = "SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency ."'";
@@ -906,7 +909,7 @@ echo '<tr>';
 		echo '<td><input type="hidden" name="SuggestedExRate1" value="'.$SuggestedExRate.'" /></td>';
 	}
 echo '
-	<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update'). '" /></td>
+	<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update'). '" /></div></td>
 	</tr>';
 
 
@@ -917,7 +920,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="2"><font size="3" color="blue">' . _('General Ledger Payment Analysis Entry') . '</font></th></tr>';
+	echo '<tr><th colspan="2"><h3>' . _('General Ledger Payment Analysis Entry') . '</h3></th></tr>';
 
 	//Select the Tag
 	echo '<tr>
@@ -951,7 +954,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	} else {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" class="number" Name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" /></td></tr>';
+				<td><input type="text" class="number" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" /></td></tr>';
 	}
 	
 	echo '<tr>
@@ -1007,9 +1010,9 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		echo '<option value=""></option>';
 		while ($myrow=DB_fetch_array($result)){
 			if (isset($_POST['GLCode']) AND $_POST['GLCode']==$myrow['accountcode']){
-				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8') . '</option>';
 			} else {
-				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8') . '</option>';
 			}
 		}
 		echo '</select></td></tr>';
@@ -1077,7 +1080,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 				<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
 				<td>' . stripslashes($PaymentItem->Narrative)  . '</td>
 				<td>' . $PaymentItem->Tag . ' - ' . $TagName . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '&Delete=' . $PaymentItem->ID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment analysis item?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '&amp;Delete=' . $PaymentItem->ID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment analysis item?') . '\');">' . _('Delete') . '</a></td>
 				</tr>';
 			$PaymentTotal += $PaymentItem->Amount;
 		}
@@ -1090,7 +1093,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 			</tr>
 			</table>
 			<br />';
-		echo '<input type="submit" name="CommitBatch" value="' . _('Accept and Process Payment') . '" />';
+		echo '<div class="centre"><input type="submit" name="CommitBatch" value="' . _('Accept and Process Payment') . '" /></div>';
 	}
 
 } else {
@@ -1104,17 +1107,18 @@ the fields for entry of receipt amt and disc */
 		</tr>';
 
 	if (isset($_SESSION['PaymentDetail' . $identifier]->SupplierID)){ /*So it is a supplier payment so show the discount entry item */
-		echo '<tr>
-				<td>' . _('Amount of Discount') . ':</td>
+		echo '<tr>';
+        echo '<td><input type="hidden" name="SuppName" value="' . $_SESSION['PaymentDetail' . $identifier]->SuppName . '" />
+				' . _('Amount of Discount') . ':</td>
 				<td><input class="number" type="text" name="Discount" maxlength="12" size="13" value="' . $_SESSION['PaymentDetail' . $identifier]->Discount . '" /></td>
 			</tr>';
-		echo '<input type="hidden" name="SuppName" value="' . $_SESSION['PaymentDetail' . $identifier]->SuppName . '" />';
 	} else {
 		echo '<input type="hidden" name="Discount" value="0" />';
 	}
 	echo '</table><br />';
-	echo '<input type="submit" name="CommitBatch" value="' . _('Accept and Process Payment') . '" />';
+	echo '<div class="centre"><input type="submit" name="CommitBatch" value="' . _('Accept and Process Payment') . '" /></div>';
 }
+echo '</div>';
 echo '</form>';
 
 include('includes/footer.inc');
