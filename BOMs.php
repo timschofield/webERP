@@ -195,6 +195,20 @@ if (isset($_GET['SelectedComponent'])){
 	$SelectedComponent = $_POST['SelectedComponent'];
 }
 
+/* delete function requires Location to be set */
+if (isset($_GET['Location'])){
+	$Location = $_GET['Location'];
+} elseif (isset($_POST['Location'])){
+	$Location = $_POST['Location'];
+}
+
+/* delete function requires WorkCentre to be set */
+if (isset($_GET['WorkCentre'])){
+	$WorkCentre = $_GET['WorkCentre'];
+} elseif (isset($_POST['WorkCentre'])){
+	$WorkCentre = $_POST['WorkCentre'];
+}
+
 if (isset($_GET['Select'])){
 	$Select = $_GET['Select'];
 } elseif (isset($_POST['Select'])){
