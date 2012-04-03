@@ -8,7 +8,7 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br /><div class="centre">';
@@ -142,10 +142,10 @@ $ContractsResult = DB_query($SQL,$db,$ErrMsg);
 
 /*show a table of the contracts returned by the SQL */
 
-echo '<table cellpadding="2" colspan="7" width="98%" class="selection">';
+echo '<table cellpadding="2" width="98%" class="selection">';
 
 $TableHeader = '<tr>
-				    <th>' . _('Modify') . '</th>
+					<th>' . _('Modify') . '</th>
 					<th>' . _('Order') . '</th>
 					<th>' . _('Issue To WO') . '</th>
 					<th>' . _('Costing') . '</th>
@@ -170,7 +170,7 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 
 	$ModifyPage = $rootpath . '/Contracts.php?ModifyContractRef=' . $myrow['contractref'];
 	$OrderModifyPage = $rootpath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
-	$IssueToWOPage = $rootpath . '/WorkOrderIssue.php?WO=' . $myrow['wo'] . '&StockID=' . $myrow['contractref'];
+	$IssueToWOPage = $rootpath . '/WorkOrderIssue.php?WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['contractref'];
 	$CostingPage = $rootpath . '/ContractCosting.php?SelectedContract=' . $myrow['contractref'];
 	$FormatedRequiredDate = ConvertSQLDate($myrow['requireddate']);
 
@@ -208,6 +208,6 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 }
 //end of while loop
 
-echo '</table></form>';
+echo '</table></form><br />';
 include('includes/footer.inc');
 ?>
