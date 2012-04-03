@@ -1,4 +1,5 @@
 webERP Change Log
+3/4/2012 Vitaly: Cleaned up Petty Cash module. Fixed several errors in SQL INSERT statements.
 3/4/2012 Exson: Fixed typo in PurchData.php.
 3/4/2012 Tim: fixed Supplier Code and Supplier part code inconsistent with database field length definition in PurchData.php. Reported by rfthomas.
 2/4/2012 Vitaly: BOMs delete function requires Location and WorkCentre to be set

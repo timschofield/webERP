@@ -122,9 +122,11 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('Cannot delete this tab type because tabs have been created using this tab type'),'error');
 		echo '<br />';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<p><div class="centre"><input type="submit" name="Return" value="' . _('Return to list of tab types') . '" /></div>';
-		echo '</form>';
+		echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Return to list of tab types') . '" /></div>';
+		echo '</div>
+              </form>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -169,8 +171,8 @@ while ($myrow = DB_fetch_row($result)) {
 
 	printf("<td>%s</td>
 		<td>%s</td>
-		<td><a href='%sSelectedTab=%s'>" . _('Edit') . "</td>
-		<td><a href='%sSelectedTab=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this code and all the description it may have set up?') . "');\">" . _('Delete') . "</td>
+		<td><a href='%sSelectedTab=%s'>" . _('Edit') . "</a></td>
+		<td><a href='%sSelectedTab=%s&amp;delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this code and all the description it may have set up?') . "');\">" . _('Delete') . "</a></td>
 		</tr>",
 		$myrow['0'],
 		$myrow['1'],
@@ -184,13 +186,14 @@ while ($myrow = DB_fetch_row($result)) {
 //end of ifs and buts!
 if (isset($SelectedTab)) {
 
-	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Tabs Defined') . '</a></div><p>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Tabs Defined') . '</a></div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class="selection">'; //Main table
+	echo '<br />'; //Main table
 
 	if ( isset($SelectedTab) AND $SelectedTab!='' )
 	{
@@ -237,15 +240,14 @@ if (! isset($_GET['delete'])) {
 			<td><input type="text" name="TypeTabDescription" size="50" maxlength="49" value="' . $_POST['TypeTabDescription'] . '" /></td>
 		</tr>';
 
-	echo '</td>
-		</tr>
-		</table>'; // close main table
+	echo '</table>'; // close main table
 
 	echo '<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Accept') . '" />
 			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>
+        </div>
 		</form>';
 
 } // end if user wish to delete

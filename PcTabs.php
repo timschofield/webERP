@@ -230,8 +230,8 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedTab=%s">' . _('Edit') . '</td>
-					<td><a href="%sSelectedTab=%s&delete=yes" onclick=\' return confirm("' . _('Are you sure you wish to delete this tab code?') . '");\'>' . _('Delete') . '</td>
+					<td><a href="%sSelectedTab=%s">' . _('Edit') . '</a></td>
+					<td><a href="%sSelectedTab=%s&amp;delete=yes" onclick=\' return confirm("' . _('Are you sure you wish to delete this tab code?') . '");\'>' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['tabcode'],
 					$myrow['usercode'],
@@ -253,14 +253,14 @@ or deletion of the records*/
 //end of ifs and buts!
 if (isset($SelectedTab)) {
 
-	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Tabs Defined') . '</a></div><p>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Tabs Defined') . '</a></div>';
 }
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class="selection">'; //Main table
-
+	echo '<br />'; //Main table
 
 	if ( isset($SelectedTab) AND $SelectedTab!='' ) {
 
@@ -303,7 +303,6 @@ if (!isset($_GET['delete'])) {
 	echo '<tr><td>' . _('User Name') . ':</td>
 			<td><select name="SelectUser">';
 
-	DB_free_result($result);
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users ORDER BY userid";
@@ -321,11 +320,11 @@ if (!isset($_GET['delete'])) {
 	} //end while loop get user
 
 	echo '</select></td></tr>';
+    DB_free_result($result);
 
 	echo '<tr><td>' . _('Type Of Tab') . ':</td>
 			<td><select name="SelectTabs">';
 
-	DB_free_result($result);
 	$SQL = "SELECT typetabcode,
 					typetabdescription
 			FROM pctypetabs
@@ -344,11 +343,11 @@ if (!isset($_GET['delete'])) {
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
+    DB_free_result($result);
 
 	echo '<tr><td>' . _('Currency') . ':</td>
 			<td><select name="SelectCurrency">';
 
-	DB_free_result($result);
 	$SQL = "SELECT currency, currabrev FROM currencies";
 
 	$result = DB_query($SQL,$db);
@@ -364,6 +363,7 @@ if (!isset($_GET['delete'])) {
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
+    DB_free_result($result);
 
 	if (!isset($_POST['TabLimit'])) {
 		$_POST['TabLimit']=0;
@@ -375,7 +375,6 @@ if (!isset($_GET['delete'])) {
 	echo '<tr><td>' . _('Assigner') . ':</td>
 			<td><select name="SelectAssigner">';
 
-	DB_free_result($result);
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -393,9 +392,11 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get assigner
 
+    echo '</select></td></tr>';
+    DB_free_result($result);
+
 	echo '<tr><td>' . _('Authoriser') . ":</td><td><select name='SelectAuthoriser'>";
 
-	DB_free_result($result);
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -413,12 +414,12 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get authoriser
 
-	echo '</select></td></tr>';
+    echo '</select></td></tr>';
+    DB_free_result($result);
 
 	echo '<tr><td>' . _('GL Account Cash Assignment') . ':</td>
 			<td><select name="GLAccountCash">';
 
-	DB_free_result($result);
 	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname
 			FROM chartmaster INNER JOIN bankaccounts
@@ -433,16 +434,16 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 
 	} //end while loop
 
-	echo '</select></td></tr>';
+    echo '</select></td></tr>';
+    DB_free_result($result);
 
 	echo '<tr><td>' . _('GL Account Petty Cash Tab') . ':</td>
 			<td><select name="GLAccountPcashTab">';
 
-	DB_free_result($result);
 	$SQL = "SELECT accountcode, accountname
 			FROM chartmaster
 			ORDER BY accountcode";
@@ -455,16 +456,18 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 
 	} //end while loop
 
-	echo '</select></td></tr>';
-   	echo '</td></tr></table>'; // close main table
+    echo '</select></td></tr>';
+   	echo '</table>'; // close main table
+    DB_free_result($result);
 
-	echo '<p><div class="centre"><input type="submit" name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<br /><div class="centre"><input type="submit" name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 } // end if user wish to delete
 

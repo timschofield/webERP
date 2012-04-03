@@ -55,13 +55,13 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}elseif (ContainsIllegalCharacters($_POST['CodeExpense'])){
 		$InputError = 1;
-		prnMsg(_('The Expense code cannot contain any of the following characters " \' - &'),'error');
+		prnMsg(_('The Expense code cannot contain any of the following characters " \' - &amp;'),'error');
 		echo '<br />';
 		$Errors[$i] = 'CodeExpense';
 		$i++;
 	} elseif (ContainsIllegalCharacters($_POST['Description'])){
 		$InputError = 1;
-		prnMsg(_('The Expense description cannot contain any of the following characters " \' - &'),'error');
+		prnMsg(_('The Expense description cannot contain any of the following characters " \' - &amp;'),'error');
 		echo '<br />';
 		$Errors[$i] = 'Description';
 		$i++;
@@ -220,8 +220,8 @@ or deletion of the records*/
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedExpense=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\');">' . _('Delete') . '</td>
+				<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedExpense=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
 				$myrow[0],
 				$myrow[1],
@@ -238,13 +238,14 @@ or deletion of the records*/
 //end of ifs and buts!
 if (isset($SelectedExpense)) {
 
-	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Petty Cash Expenses Defined') . '</a></div><p>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Petty Cash Expenses Defined') . '</a></div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class="selection">'; //Main table
+	echo '<br />'; //Main table
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedExpense) AND $SelectedExpense!='' ){
@@ -310,14 +311,13 @@ if (! isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8') . '</option>';
 
 	} //end while loop
 
 	echo '</select></td></tr>';
 
 	//Select the tag
-	DB_free_result($result);
 	echo '<tr>
 			<td>' . _('Tag') . ':</td>
 			<td><select name="Tag">';
@@ -336,10 +336,11 @@ if (! isset($_GET['delete'])) {
 			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 		}
 	}
-	echo '</select></td>';
+	echo '</select></td></tr>';
 	// End select tag
 
-   	echo '</td></tr></table>'; // close main table
+   	echo '</table>'; // close main table
+    DB_free_result($result);
 
 	echo '<br />
 		<div class="centre">
@@ -347,7 +348,8 @@ if (! isset($_GET['delete'])) {
 			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 } // end if user wish to delete
 

@@ -21,6 +21,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	. '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
@@ -67,8 +68,10 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<tr><td>' . _('To Date:') .'</td><td>';
 	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
 	echo '</td></tr></table><br />';
-	echo '<div class="centre"><input type="submit" Name="ShowTB" value="' . _('Show HTML') .'" />';
+	echo '<div class="centre"><input type="submit" name="ShowTB" value="' . _('Show HTML') .'" />';
 	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '" /></div>';
+    echo '</div>
+          </form>';
 
 } else if (isset($_POST['PrintPDF'])) {
 
@@ -234,6 +237,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />
 			<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';
@@ -252,7 +256,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '<tr><td>' . _('Tab Code') . '</td>
 				<td>:</td>
-				<td width="200">' . ''.$SelectedTabs.'</td>'  .
+				<td style="width:200px">' . ''.$SelectedTabs.'</td>'  .
 				'<td>' . _('From') . '</td><td>:</td><td>' .
 			''.$_POST['FromDate'].'</td></tr>';
 
@@ -396,13 +400,14 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Amount[0]=0;
 	}
 
-	echo '<tr><td colspan="2" style="text"-align:right >' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
+	echo '<tr><td colspan="2" style="text-align:right">' . _('Balance At') . ' '.$_POST['ToDate'].':</td>
 				<td>'.locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']).' </td><td>'.$Tabs['currency'].'</td></tr>';
 
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';
+    echo '</div>
+          </form>';
 }
-echo '</form>';
 include('includes/footer.inc');
 
 ?>

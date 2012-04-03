@@ -19,7 +19,7 @@ if (isset($_POST['SelectedType'])){
 
 if (!isset($_GET['delete']) and (ContainsIllegalCharacters($SelectedType) OR mb_strpos($SelectedType,' ')>0)){
 	$InputError = 1;
-	prnMsg(_('The petty cash tab type contain any of the following characters " \' - & or a space'),'error');
+	prnMsg(_('The petty cash tab type contain any of the following characters " \' - &amp; or a space'),'error');
 }
 
 if (isset($_POST['SelectedTab'])){
@@ -109,12 +109,12 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">'; //Main table
 
 	echo '<tr><td>' . _('Select Type of Tab') . ':</td><td><select name="SelectedTab">';
 
-	DB_free_result($result);
 	$SQL = "SELECT typetabcode,
 					typetabdescription
 			FROM pctypetabs";
@@ -133,21 +133,23 @@ or deletion of the records*/
 
 	echo '</select></td></tr>';
 
-	   	echo '</table>'; // close table in first column
-   	echo '</td></tr></table>'; // close main table
+   	echo '</table>'; // close main table
+    DB_free_result($result);
 
-	echo '<p><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
+	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
 				<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 }
 
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedTab)) {
 
-	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</a></div><p>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</a></div>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '" />';
@@ -163,7 +165,7 @@ if (isset($_POST['process'])OR isset($SelectedTab)) {
 
 	echo '<br />
 			<table class="selection">';
-	echo '<tr><th colspan="3"><font size="2" color="navy">' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</font></th></tr>';
+	echo '<tr><th colspan="3"><h3>' . _('Expense Codes for Type of Tab ') . ' ' .$SelectedTab. '</h3></th></tr>';
 	echo '<tr>
 			<th>' . _('Expense Code') . '</th>
 			<th>' . _('Description') . '</th>
@@ -182,7 +184,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%s?SelectedType=%s&delete=yes&SelectedTab=' . $SelectedTab . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code?') . '\');">' . _('Delete') . '</td>
+			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedTab=' . $SelectedTab . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['codeexpense'],
 			$myrow['description'],
@@ -201,7 +203,6 @@ while ($myrow = DB_fetch_array($result)) {
 
 		echo '<tr><td>' . _('Select Expense Code') . ':</td><td><select name="SelectedExpense">';
 
-		DB_free_result($result);
 		$SQL = "SELECT codeexpense,
 						description
 				FROM pcexpenses";
@@ -222,12 +223,14 @@ while ($myrow = DB_fetch_array($result)) {
 
 		echo '</select></td></tr>';
 
-	   	echo '</td></tr></table>'; // close main table
+	   	echo '</table>'; // close main table
+        DB_free_result($result);
 
-		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
+		echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
 									<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
-		echo '</form>';
+		echo '</div>
+              </form>';
 
 	} // end if user wish to delete
 }
