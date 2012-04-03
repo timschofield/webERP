@@ -46,3 +46,5 @@ INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES (38, 'Stock Reque
 UPDATE `www_users` SET `modulesallowed` = CONCAT(`modulesallowed`,'0,') WHERE modulesallowed LIKE '_,_,_,_,_,_,_,_,_,_,';
 INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
+
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('SupplierPriceList.php', '4', 'Maintain Supplier Price Lists');

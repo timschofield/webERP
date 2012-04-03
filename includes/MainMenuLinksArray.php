@@ -108,7 +108,7 @@ if ($_SESSION['InvoicePortraitFormat']==0){
 } else {
 	$PrintInvoicesOrCreditNotesScript = '/PrintCustTransPortrait.php';
 }
-	
+
 $MenuItems['AR']['Reports']['URL'] = array ('/CustWhereAlloc.php',
 											$PrintInvoicesOrCreditNotesScript,
 											'/PrintCustStatements.php',
@@ -189,9 +189,9 @@ $MenuItems['PO']['Reports']['URL'] = array ('/PO_SelectPurchOrder.php',
 											'/SuppPriceList.php'
 											);
 
-$MenuItems['PO']['Maintenance']['Caption'] = array (
+$MenuItems['PO']['Maintenance']['Caption'] = array (_('Maintain Supplier Price Lists')
 													);
-$MenuItems['PO']['Maintenance']['URL'] = array (
+$MenuItems['PO']['Maintenance']['URL'] = array ('/SupplierPriceList.php'
 												);
 $MenuItems['stock']['Transactions']['Caption'] = array (_('Receive Purchase Orders'),
 														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
