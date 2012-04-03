@@ -498,11 +498,11 @@ if (!isset($SuppliersResult)) {
 	echo '<tr><td>' . _('Conversion Factor (to our UOM)') . ':</td>
 	<td><input type="text" class="number" name="ConversionFactor" maxlength="12" size="12" value="' . $_POST['ConversionFactor'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Supplier Stock Code') . ':</td>
-	<td><input type="text" name="SupplierCode" maxlength="20" size="50" value="' . $_POST['SupplierCode'] . '" /></td></tr>';
+	<td><input type="text" name="SupplierCode" maxlength="50" size="20" value="' . $_POST['SupplierCode'] . '" /></td></tr>';
 	echo '<tr><td>' . _('MinOrderQty') . ':</td>
 	<td><input type="text" class="number" name="MinOrderQty" maxlength="15" size="15" value="' . $_POST['MinOrderQty'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Supplier Stock Description') . ':</td>
-	<td><input type="text" name="SupplierDescription" maxlength="50" size="51" value="' . $_POST['SupplierDescription'] . '" /></td></tr>';
+	<td><input type="text" name="SupplierDescription" maxlength="50" size="50" value="' . $_POST['SupplierDescription'] . '" /></td></tr>';
 	if (!isset($_POST['LeadTime']) OR $_POST['LeadTime'] == "") {
 		$_POST['LeadTime'] = 1;
 	}
