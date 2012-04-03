@@ -1,4 +1,6 @@
 webERP Change Log
+3/4/2012 Exson: Fixed typo in PurchData.php.
+3/4/2012 Tim: fixed Supplier Code and Supplier part code inconsistent with database field length definition in PurchData.php. Reported by rfthomas.
 2/4/2012 Vitaly: BOMs delete function requires Location and WorkCentre to be set
 2/4/2012  Billy Chang,劉世琪: add Chinese Traditional TW locale
 2/4/2012  Exson: fixed CopyBOM.php sql errors and header already sent error.
