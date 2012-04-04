@@ -488,7 +488,8 @@ if (isset($_POST['SupplierID'])) {
 			FROM purchdata
 			INNER JOIN stockmaster
 			ON purchdata.stockid=stockmaster.stockid
-			WHERE supplierno='".$_POST['SupplierID']."'";
+			WHERE supplierno='".$_POST['SupplierID']."'
+			ORDER BY purchdata.stockid, effectivefrom DESC";
 
 	$result=DB_query($SQL, $db);
 
