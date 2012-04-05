@@ -88,6 +88,19 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 		$DbgMsg = _('The SQL that failed was');
 		$AddResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 		prnMsg(_('This supplier purchasing data has been added to the database'), 'success');
+
+		/* If the new purchdata is the preferred one, the old ones from the same suppliers shouldn't be preferred.
+		Are kept only for historic information only */
+		if ($_POST['Preferred'] == 1){
+			$sql = "UPDATE purchdata SET preferred='0'
+								WHERE purchdata.stockid='".$StockID."'
+									AND purchdata.supplierno='".$SupplierID."'
+									AND purchdata.effectivefrom < '" . FormatDateForSQL($_POST['EffectiveFrom']) . "'";
+			$ErrMsg = _('The preferred supplier details could not be update because');
+			$DbgMsg = _('The SQL that failed was');
+			$UpdResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			prnMsg(_('Supplier preferred flag has been updated'), 'success');
+		}
 	}
 	if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
 		$sql = "UPDATE purchdata SET price='" . filter_number_format($_POST['Price']) . "',
@@ -177,6 +190,7 @@ if (!isset($_GET['Edit'])) {
 							<th>' . _('Effective From') . '</th>
 							<th>' . _('Supplier Unit') . '</th>
 							<th>' . _('Conversion Factor') . '</th>
+							<th>' . _('Price Our Units') . '</th>
 							<th>' . _('Min Order Qty') . '</th>
 							<th>' . _('Lead Time') . '</th>
 							<th>' . _('Preferred') . '</th>
@@ -216,11 +230,11 @@ if (!isset($_GET['Edit'])) {
 					</tr>',
 					$myrow['suppname'],
 					locale_number_format($myrow['price'], $myrow['currdecimalplaces']),
+					$myrow['currcode'],
+					ConvertSQLDate($myrow['effectivefrom']),
 					$myrow['suppliersuom'],
 					locale_number_format($myrow['conversionfactor'],'Variable'),
 					locale_number_format($myrow['price']/$myrow['conversionfactor'],$myrow['currdecimalplaces']),
-					$myrow['currcode'],
-					ConvertSQLDate($myrow['effectivefrom']),
 					locale_number_format($myrow['minorderqty'],'Variable'),
 					locale_number_format($myrow['leadtime'],'Variable'),
 					$DisplayPreferred,
