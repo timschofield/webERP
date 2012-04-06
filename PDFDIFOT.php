@@ -25,7 +25,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('DIFOT Report') . '</p>';
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+     echo '<div>';
+	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	 echo '<table class="selection">
 			<tr>
 				<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
@@ -80,6 +81,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		<div class="centre">
 		<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 		</div>';
+     echo '</div>
+           </form>';
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');

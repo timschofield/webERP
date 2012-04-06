@@ -368,9 +368,11 @@ if (isset($_POST['PrintPDF'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
 		 $title . '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . ' method="post"><table class="selection">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name=Areas[] multiple="multiple">';
+    echo '<table class="selection">';
+	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name="Areas[]" multiple="multiple">';
 
 	$sql="SELECT areacode, areadescription FROM areas";
 	$AreasResult= DB_query($sql,$db);
@@ -383,7 +385,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('For Sales folk'). ':</td>
-			<td><select name=SalesPeople[] multiple="multiple">
+			<td><select name="SalesPeople[]" multiple="multiple">
 				<option selected="selected" value="All">'. _('All sales folk') . '</option>';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
@@ -408,14 +410,16 @@ if (isset($_POST['PrintPDF'])){
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
 	echo '<tr>
 			<td>' . _('Activity Since'). ':</td>
-			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size="10" maxlength="10" value="' . $DefaultActivitySince . '" /></td>
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  name="ActivitySince" size="10" maxlength="10" value="' . $DefaultActivitySince . '" /></td>
 		</tr>';
 
 	echo '</table>
 			<br />
 			<div class="centre">
-				<input type="submit" Name="PrintPDF" value="'. _('Print PDF'). '" />
+				<input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" />
 			</div>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 

@@ -127,18 +127,19 @@ function showLabelOptions() {
         <input type="submit" name="PDFTest" value="'. _('Print labels with borders') .'" /></div>';
 	$iTxt=0;
 
-	echo "<script type=\"text/javascript\">
+	echo '<script type="text/javascript">
 			function setAll(all) {
-				var x=document.getElementById('form1');
+				var x=document.getElementById("form1");
 				for (var i=0;i<x.length;i++) {
-					if (x.elements[i].id=='item');
+					if (x.elements[i].id=="item");
 						x.elements[i].checked=all.checked;
 				}
 			}
-		</script>";
+		</script>';
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' .$txt[$iTxt++].'</p>';
-	echo '<form name ="form1" action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post" id="form1">';
+	echo '<form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post" id="form1">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tbody>';
@@ -159,7 +160,8 @@ function showLabelOptions() {
 					'.$OptionSales.'
 					</select></td>
 			</tr>';
-	echo '<td class="number">'.$txt[$iTxt++].':</td>
+	echo '<tr>
+                <td class="number">'.$txt[$iTxt++].':</td>
 				<td><select name="Currency" onchange="ReloadForm(form1.refresh)">
 						'.$OptionCurrency.'
 					</select></td>
@@ -171,11 +173,12 @@ function showLabelOptions() {
 					</select> </td>
 			</tr>';
 	echo '<tr><td class="number">'.$txt[$iTxt++].':</td>
-			<td><input type="text" class=date alt="'.$_SESSION['DefaultDateFormat'].'" name="EffectiveDate" size="11" maxlength="10" value="' . $_POST['EffectiveDate'] . '" /></td></tr>';
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EffectiveDate" size="11" maxlength="10" value="' . $_POST['EffectiveDate'] . '" /></td></tr>';
 	echo '<tr>
 				<th colspan="2">
 				<input type="submit" name="refresh" value="' . _('Refresh options') . '" />
-				</th>';
+				</th>
+             </tr>';
 	echo '<tr>
 				<td colspan="2">
 					'.$TableItems.'
@@ -184,6 +187,7 @@ function showLabelOptions() {
 	echo '</tbody>
 		</table>
 		'.$SendButton.'
+    </div>
 	</form>';
 }
 
@@ -224,7 +228,7 @@ function selectTable($sql, &$currentKey) {
 function selectOptions($list, $currentKey) {
 	$html='';
 	foreach ($list as $key=>$value) {
-		$xs = ($currentKey==$key) ? " selected":"";
+		$xs = ($currentKey==$key) ? ' selected="selected"':'';
 		$html .= '
 			<option value="'. $key .'"'. $xs .'>'. $value. '</option>';
 	}
@@ -258,7 +262,7 @@ function tableItems($CategoryID, &$ok) {
 				<th>'.$txt[$ix++].'</th>
 				<th>'.$txt[$ix++].'</th>
 				<th colspan="2" align="center">'.$txt[$ix++].'
-					<input type="checkbox" checked onclick="setAll(this);" />
+					<input type="checkbox" checked="checked" onclick="setAll(this);" />
 				</th>
 			</tr>
 		</thead>
@@ -276,7 +280,7 @@ function tableItems($CategoryID, &$ok) {
 				<td>{$myrow['description']}</td>
 				<td class="number">{$price}</td>
 				<td><div class="centre">
-					<input type="checkbox" checked name="StockID[{$myrow['stockid']}]" id="item" />
+					<input type="checkbox" checked="checked" name="StockID[{$myrow['stockid']}]" id="item" />
 					</div>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;</td>
@@ -285,8 +289,7 @@ ZZZ;
 	}
 	return $html . '
 		</tbody>
-		</table>
-	</div>';
+		</table>';
 }
 
 function noneButton($msg) {

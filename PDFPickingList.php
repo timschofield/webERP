@@ -27,6 +27,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 	$result=DB_query($sql, $db);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 		<tr>
@@ -45,6 +46,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 		<div class="centre">
 			<input type="submit" name="Process" value="' . _('Print Picking Lists') . '" />
 		</div>
+        </div>
 		</form>';
 	include('includes/footer.inc');
 	exit();

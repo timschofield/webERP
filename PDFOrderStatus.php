@@ -30,6 +30,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -72,6 +73,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 	exit;

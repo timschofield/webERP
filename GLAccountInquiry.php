@@ -264,7 +264,7 @@ if (isset($_POST['Show'])){
 		}
 
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
-		$URL_to_TransDetail = $rootpath . '/GLTransInquiry.php?' . SID . '&TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'];
+		$URL_to_TransDetail = $rootpath . '/GLTransInquiry.php?' . SID . '&amp;TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
 
 		$tagsql="SELECT tagdescription FROM tags WHERE tagref='".$myrow['tag'] . "'";
 		$tagresult=DB_query($tagsql,$db);

@@ -258,19 +258,22 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . ' method="post"><table class="selection">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-		echo '<tr><td>'. _('From Inventory Category Code') .':</font></td><td><select name=FromCriteria>';
+        echo '<table class="selection">';
+		echo '<tr><td>'. _('From Inventory Category Code') .':</td>
+                  <td><select name="FromCriteria">';
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('To Inventory Category Code'). ':</td><td><select name=ToCriteria>';
+		echo '<tr><td>' . _('To Inventory Category Code'). ':</td>
+                  <td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -297,7 +300,7 @@ If (isset($_POST['PrintPDF'])
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Price Listing Type'). ':</td><td><select name="CustomerSpecials">';
-		echo '<option selected="selected" value="Sales Type Prices">'. _('Default Sales Type Prices');
+		echo '<option selected="selected" value="Sales Type Prices">'. _('Default Sales Type Prices') . '</option>';
 		echo '<option value="Customer Special Prices Only">'. _('Customer Special Prices Only') . '</option>';
 		echo '<option value="Full Description">'. _('Full Description') . '</option>';
 		echo '</select></td></tr>';
@@ -306,7 +309,9 @@ If (isset($_POST['PrintPDF'])
         echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
-		echo '</table><br /><div class="centre"><input type="submit" Name="PrintPDF" value="'. _('Print PDF'). '" /></div>';
+		echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" /></div>';
+        echo '</div>
+              </form>';
 	}
 	include('includes/footer.inc');
 

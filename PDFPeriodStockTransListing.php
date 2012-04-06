@@ -17,14 +17,15 @@ if (!isset($_POST['FromDate'])){
 	 include ('includes/header.inc');
 
 	echo '<div class="centre">
-			<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '. _('Stock Transaction Listing').'</img></p>
+			<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '. _('Stock Transaction Listing').'</p>
 		</div>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
 	}
 
-	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
@@ -79,6 +80,8 @@ if (!isset($_POST['FromDate'])){
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
+    echo '</div>
+          </form>';
 
 	 include('includes/footer.inc');
 	 exit;

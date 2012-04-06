@@ -18,19 +18,20 @@ if (!isset($_POST['Date'])){
 	 include ('includes/header.inc');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
-		. _('Supplier Transaction Listing').'</p>';
+		. _('Supplier Transaction Listing').'</p></div>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
 	}
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+     echo '<div>';
+	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	 echo '<table class="selection">
-	 			<tr>
+	        <tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
 				<td><input type="text" name="Date" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			<tr>';
+			</tr>';
 
 	echo '<tr>
 			<td>' . _('Transaction type') . '</td>
@@ -46,6 +47,8 @@ if (!isset($_POST['Date'])){
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
+     echo '</div>
+           </form>';
 
 	 include('includes/footer.inc');
 	 exit;
