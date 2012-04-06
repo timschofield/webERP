@@ -217,12 +217,12 @@ if (!isset($_GET['Edit'])) {
 			printf('<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s ' . _('days') . '</td>
+					<td class="number">%s</td>
+					<td class="number">%s ' . _('days') . '</td>
 					<td>%s</td>
 					<td><a href="%s?StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s">' . _('Edit') . '</a></td>
 					<td><a href="%s?StockID=%s&SupplierID=%s&Copy=1&EffectiveFrom=%s">' . _('Copy') . '</a></td>
@@ -238,37 +238,37 @@ if (!isset($_GET['Edit'])) {
 					locale_number_format($myrow['minorderqty'],'Variable'),
 					locale_number_format($myrow['leadtime'],'Variable'),
 					$DisplayPreferred,
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
+					htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
 					$StockID,
 					$myrow['supplierno'],
 					$myrow['effectivefrom'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
+					htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
 					$StockID,
 					$myrow['supplierno'],
 					$myrow['effectivefrom'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
+					htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
 					$StockID,
 					$myrow['supplierno'],
 					$myrow['effectivefrom']);
 		} //end of while loop
-		echo '</table><br/>';
+		echo '</table><br />';
 		if ($CountPreferreds > 1) {
 			prnMsg(_('There are now') . ' ' . $CountPreferreds . ' ' . _('preferred suppliers set up for') . ' ' . $StockID . ' ' . _('you should edit the supplier purchasing data to make only one supplier the preferred supplier'), 'warn');
 		} elseif ($CountPreferreds == 0) {
 			prnMsg(_('There are NO preferred suppliers set up for') . ' ' . $StockID . ' ' . _('you should make one supplier only the preferred supplier'), 'warn');
 		}
 	} // end of there are purchsing data rows to show
-	echo '<br/>';
+	echo '<br />';
 } /* Only show the existing purchasing data records if one is not being edited */
 
 if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])) { /*NOT EDITING AN EXISTING BUT SUPPLIER selected OR ENTERED*/
 	$sql = "SELECT suppliers.suppname,
 					suppliers.currcode,
 					currencies.decimalplaces AS currdecimalplaces
-			FROM suppliers
-			INNER JOIN currencies
-			ON suppliers.currcode=currencies.currabrev
-			WHERE supplierid='".$SupplierID."'";
+				FROM suppliers
+				INNER JOIN currencies
+					ON suppliers.currcode=currencies.currabrev
+				WHERE supplierid='".$SupplierID."'";
 	$ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
 	$SuppSelResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -286,8 +286,8 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
 	if (!isset($_POST['SearchSupplier'])) {
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-				<table cellpadding="3" colspan="4" class="selection">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+				<table cellpadding="3" class="selection">
 				<tr>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
@@ -328,8 +328,8 @@ if (isset($_POST['SearchSupplier'])) {
 						suppliers.address1,
 						suppliers.address2,
 						suppliers.address3
-				FROM suppliers
-				WHERE suppliers.suppname " . LIKE  . " '".$SearchString."'";
+					FROM suppliers
+					WHERE suppliers.suppname " . LIKE  . " '".$SearchString."'";
 
 	} elseif (mb_strlen($_POST['SupplierCode']) > 0) {
 		$SQL = "SELECT suppliers.supplierid,
@@ -338,8 +338,8 @@ if (isset($_POST['SearchSupplier'])) {
 						suppliers.address1,
 						suppliers.address2,
 						suppliers.address3
-				FROM suppliers
-				WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'";
+					FROM suppliers
+					WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'";
 
 	} //one of keywords or SupplierCode was more than a zero length string
 	$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
@@ -347,32 +347,33 @@ if (isset($_POST['SearchSupplier'])) {
 	$SuppliersResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 } //end of if search
 
-if (isset($SuppliersResult)) {
-	if (isset($StockID)) {
-		$result = DB_query("SELECT stockmaster.description,
+if (isset($StockID)) {
+	$result = DB_query("SELECT stockmaster.description,
 								stockmaster.units,
 								stockmaster.mbflag
 						FROM stockmaster
 						WHERE stockmaster.stockid='".$StockID."'", $db);
-		$myrow = DB_fetch_row($result);
-		$StockUOM = $myrow[1];
-		if (DB_num_rows($result) == 1) {
-			if ($myrow[2] == 'D' OR $myrow[2] == 'A' OR $myrow[2] == 'K') {
-				prnMsg($StockID . ' - ' . $myrow[0] . '<p> ' . _('The item selected is a dummy part or an assembly or kit set part') . ' - ' . _('it is not purchased') . '. ' . _('Entry of purchasing information is therefore inappropriate'), 'warn');
-				include ('includes/footer.inc');
-				exit;
-			} else {
- //			   echo '<br /><b>' . $StockID . ' - ' . $myrow[0] . ' </b>  (' . _('In Units of') . ' ' . $myrow[1] . ' )';
-			}
+	$myrow = DB_fetch_array($result);
+	$StockUOM = $myrow['units'];
+	if (DB_num_rows($result) == 1) {
+		if ($myrow['mbflag'] == 'D' OR $myrow['mbflag'] == 'A' OR $myrow['mbflag'] == 'K') {
+			prnMsg($StockID . ' - ' . $myrow['description'] . '<br /> ' . _('The item selected is a dummy part or an assembly or kit set part') . ' - ' . _('it is not purchased') . '. ' . _('Entry of purchasing information is therefore inappropriate'), 'warn');
+			include ('includes/footer.inc');
+			exit;
 		} else {
-			prnMsg(_('Stock Item') . ' - ' . $StockID . ' ' . _('is not defined in the database'), 'warn');
+ //			echo '<br /><font color="blue" size="3"><b>' . $StockID . ' - ' . $myrow[0] . ' </b>  (' . _('In Units of') . ' ' . $myrow[1] . ' )</font>';
 		}
 	} else {
-		$StockID = '';
-		$StockUOM = 'each';
+		prnMsg(_('Stock Item') . ' - ' . $StockID . ' ' . _('is not defined in the database'), 'warn');
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<table cellpadding="2" colspan="7" class="selection">';
+} else {
+	$StockID = '';
+	$StockUOM = 'each';
+}
+
+if (isset($SuppliersResult)) {
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+			<table cellpadding="2" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$TableHeader = '<tr>
 						<th>' . _('Code') . '</th>
@@ -392,19 +393,19 @@ if (isset($SuppliersResult)) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-	   printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>',
-			$myrow['supplierid'],
-			$myrow['suppname'],
-			$myrow['currcode'],
-			$myrow['address1'],
-			$myrow['address2'],
-			$myrow['address3']);
+		printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				</tr>',
+				$myrow['supplierid'],
+				$myrow['suppname'],
+				$myrow['currcode'],
+				$myrow['address1'],
+				$myrow['address2'],
+				$myrow['address3']);
 
 		echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 		echo '<input type="hidden" name="StockUOM" value="' . $StockUOM . '" />';
@@ -465,7 +466,7 @@ if (!isset($SuppliersResult)) {
 		$_POST['SupplierCode'] = $myrow['suppliers_partno'];
 		$StockUOM=$myrow['units'];
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -480,7 +481,7 @@ if (!isset($SuppliersResult)) {
 		</tr>';
 	} else {
 		echo '<tr>
-			<td>' . _('Supplier Name') . ':</td>
+				<td>' . _('Supplier Name') . ':</td>
 		<input type="hidden" name="SupplierID" maxlength="10" size="11" value="' . $SupplierID . '" />';
 		if ($SupplierID!='') {
 			echo '<td>'.$SuppName;
