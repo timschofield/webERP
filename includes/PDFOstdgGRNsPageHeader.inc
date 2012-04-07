@@ -26,9 +26,9 @@ $pdf->line($Page_Width-$Right_Margin, $YPos-$line_height,$Page_Width-$Right_Marg
 
 /*Draw a rectangle to put the details in     */
 
-$pdf->line($Left_Margin, $Page_Height-$YPos-$line_height,$Page_Width-$Right_Margin, $Page_Height-$YPos-$line_height);
-$pdf->line($Left_Margin, $Page_Height-$YPos-$line_height,$Left_Margin, $YPos+10);
-$pdf->line($Page_Width-$Right_Margin, $Page_Height-$YPos-$line_height,$Page_Width-$Right_Margin, $YPos+10);
+$pdf->line($Left_Margin, $Bottom_Margin, $Page_Width-$Right_Margin, $Bottom_Margin);
+$pdf->line($Left_Margin, $Bottom_Margin, $Left_Margin, $YPos+10);
+$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin, $Page_Width-$Right_Margin, $YPos+10);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;

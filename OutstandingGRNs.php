@@ -84,6 +84,9 @@ If (isset($_POST['PrintPDF'])
 
 			if ($Supplier!=''){ /*Then it's NOT the first time round */
 				/* need to print the total of previous supplier */
+               if ($YPos < $Bottom_Margin + $line_height * 5){
+                  include('includes/PDFOstdgGRNsPageHeader.inc');
+               }
 				$YPos -= (2*$line_height);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
 				$DisplaySuppTotVal = locale_number_format($SuppTot_Val,$GRNs['currdecimalplaces']);

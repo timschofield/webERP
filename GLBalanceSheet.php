@@ -188,6 +188,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
         				$GroupTotal[$Level]=0;
         				$LYGroupTotal[$Level]=0;
         				$Level--;
+                        if ($YPos < $Bottom_Margin){
+                            include('includes/PDFBalanceSheetPageHeader.inc');
+                        }
         			}
         			$YPos -= $line_height;
         			$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
@@ -197,6 +200,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
         			$GroupTotal[$Level]=0;
         			$LYGroupTotal[$Level]=0;
         			$YPos -= $line_height;
+                    if ($YPos < $Bottom_Margin){
+                        include('includes/PDFBalanceSheetPageHeader.inc');
+                    }
         		}
         }
 
@@ -209,6 +215,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,locale_number_format($SectionBalance,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($SectionBalanceLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$YPos -= (2 * $line_height);
+                if ($YPos < $Bottom_Margin){
+                    include('includes/PDFBalanceSheetPageHeader.inc');
+                }
 			}
 			$SectionBalanceLY = 0;
 			$SectionBalance = 0;
@@ -218,11 +227,16 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
 				$YPos -= (2 * $line_height);
-
+                if ($YPos < $Bottom_Margin){
+                    include('includes/PDFBalanceSheetPageHeader.inc');
+                }
 			}
 		}
 
 		if ($myrow['groupname']!= $ActGrp){
+            if ($YPos < $Bottom_Margin + $line_height){
+               include('includes/PDFBalanceSheetPageHeader.inc');
+            }
             $FontSize =8;
             $pdf->setFont('','B');
 			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp!=''){
