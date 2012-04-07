@@ -25,6 +25,7 @@ if (isset($_GET['SelectedSupplier'])) {
 	$SelectedSupplier = $_POST['SelectedSupplier'];
 }
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
@@ -175,9 +176,9 @@ echo '<br />
 		<table class="selection">
 		<tr>
 			<td>';
-echo '<font size="1">' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</font>';
+echo _('To search for purchase orders for a specific part use the part selection facilities below') . '</td></tr>';
 echo '<tr>
-		<td><font size="1">' . _('Select a stock category') . ':</font><select name="StockCat">';
+		<td>' . _('Select a stock category') . ':<select name="StockCat">';
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
 		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -186,12 +187,12 @@ while ($myrow1 = DB_fetch_array($result1)) {
 	}
 }
 echo '</select></td>
-		<td><font size="1">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</font></td>
+		<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
 		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><font size="3"><b>' . _('OR') . ' </b></font><font size="1">' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</font></td>
+		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</td>
 		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	</tr>
 	<tr>
@@ -425,7 +426,7 @@ else {
 	
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
-		echo '<table cellpadding="2" colspan="7" width="90%" class="selection">';
+		echo '<table cellpadding="2" width="90%" class="selection">';
 		$TableHeader = '<tr>
 						<th>' . _('View') . '</th>
 						<th>' . _('Supplier') . '</th>
@@ -476,6 +477,7 @@ else {
 		echo '</table>';
 	} // end if purchase orders to show
 }
-echo '</form>';
+echo '</div>
+      </form>';
 include ('includes/footer.inc');
 ?>

@@ -641,20 +641,21 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*need to set up entry for item description where not a stock item and GL Codes */
 
 if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Purchase Order') . '" alt="">  '.$_SESSION['PO'.$identifier]->SupplierName;
+		_('Purchase Order') . '" alt="" />  '.$_SESSION['PO'.$identifier]->SupplierName;
 
 	if (isset($_SESSION['PO'.$identifier]->OrderNo)) {
 		echo  ' ' . _('Purchase Order') .' '. $_SESSION['PO'.$identifier]->OrderNo ;
 	}
-	echo '<br /><b>'._(' Order Summary') . '</b>';
-	echo '<table cellpadding="2" colspan="7" class="selection">';
+	echo '<br /><b>'._(' Order Summary') . '</b></p>';
+	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Description') . '</th>
@@ -705,9 +706,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td class="number">' . $DisplayLineTotal . '</td>
 				<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'].'" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'" /></td>';
 			if ($POLine->QtyReceived !=0 AND $POLine->Completed!=1){
-				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .'&Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
+				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .'&amp;Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
 			} elseif ($POLine->QtyReceived ==0) {
-				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .'&Delete=' . $POLine->LineNo . '">' . _('Delete'). '</a></td>';
+				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .'&amp;Delete=' . $POLine->LineNo . '">' . _('Delete'). '</a></td>';
 			}
 			echo '</tr>';
 			$_SESSION['PO'.$identifier]->Total += $LineTotal;
@@ -1013,10 +1014,9 @@ if (!isset($_GET['Edit'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="3"><font size="3" color="blue">'. _('Search For Stock Items') . '</th>';
+				<th colspan="3"><h3>'. _('Search For Stock Items') . ':</h3></th>';
 
-	echo ':</font>
-			</tr>
+	echo '</tr>
 			<tr><td>' . _('Item Category') . ': <select name="StockCat">';
 
 	echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -1048,11 +1048,11 @@ if (!isset($_GET['Edit'])) {
 		echo 'checked';
 	}
 	echo ' /></td>
-		<td><font size="3"><b>' . _('OR') . ' </b></font>' . _('Enter extract of the Stock Code') . ':</td>
+		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
 		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr><td></td>
-		<td><font size="3"><b>' . _('OR') . ' </b></font><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
+		<td><b>' . _('OR') . ' </b><a target="_blank" href="'.$rootpath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
 		</table>
 		<br />
 		
@@ -1065,7 +1065,7 @@ if (!isset($_GET['Edit'])) {
 
 if (isset($SearchResult)) {
 
-	echo '<table cellpadding="1" colspan="7" class="selection">';
+	echo '<table cellpadding="1" class="selection">';
 
 	$TableHeader = '<tr>
 						<th>' . _('Code')  . '</th>
@@ -1133,6 +1133,7 @@ if (isset($SearchResult)) {
 	echo '<a name="end"></a><br /><div class="centre"><input type="submit" name="NewItem" value="Order some" /></div>';
 }#end if SearchResults to show
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

@@ -30,6 +30,7 @@ if (isset($_GET['SelectedSupplier'])){
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -132,7 +133,7 @@ if (isset($_POST['SearchParts'])) {
 
 if (!isset($OrderNumber) or $OrderNumber=='' ){
 	if (isset($SelectedSupplier)){
-		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
+		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
 	} else {
 		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	}
@@ -193,13 +194,12 @@ if (!isset($OrderNumber) or $OrderNumber=='' ){
 $SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 
-echo '<br /><font size="1"><div class="page_help_text">' ._('To search for purchase orders for a specific part use the part selection facilities below')
-		.'</div> </font>';
+echo '<br /><div class="page_help_text">' ._('To search for purchase orders for a specific part use the part selection facilities below') . '</div>';
 echo '<br />
 		<table class="selection">
 		<tr>';
 
-echo '<td><font size="1">' . _('Select a stock category') . ':</font>
+echo '<td>' . _('Select a stock category') . ':
 		<select name="StockCat">';
 
 while ($myrow1 = DB_fetch_array($result1)) {
@@ -210,11 +210,11 @@ while ($myrow1 = DB_fetch_array($result1)) {
 	}
 }
 echo '</select></td>';
-echo '<td><font size="1">' . _('Enter text extracts in the') . '<b>' . _('description') . '</b>:</font></td>';
+echo '<td>' . _('Enter text extracts in the') . '<b>' . _('description') . '</b>:</td>';
 echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
 		<tr><td></td>';
-echo '<td><font size="4"><b>' . _('OR') . '</b></font><font size="1">' .  _('Enter extract of the') .  '<b>' .  _('Stock Code') . '</b>:</font></td>';
+echo '<td><b>' . _('OR') . '</b>' .  _('Enter extract of the') .  '<b>' .  _('Stock Code') . '</b>:</td>';
 echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	</tr>
 	</table>
@@ -230,7 +230,7 @@ echo '<br />';
 
 if (isset($StockItemsResult)) {
 
-	echo '<table cellpadding="2" colspan="7" class="selection">';
+	echo '<table cellpadding="2" class="selection">';
 	$TableHeader = 	'<tr><th>' . _('Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('On Hand') . '</th>
@@ -477,7 +477,7 @@ else {
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding="2" colspan="7 width="97%" class="selection">';
+	echo '<table cellpadding="2" width="97%" class="selection">';
 
 
 	echo '<tr>
@@ -518,7 +518,7 @@ else {
 		} elseif ($myrow['status'] == 'Authorisied' AND $myrow['allowprint'] == 0) {
 			$PrintPurchOrder = _('Printed');
 		} elseif ($myrow['status'] == 'Printed'){
-			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $myrow['orderno'] . '&realorderno=' . $myrow['realorderno'] . '&ViewingOnly=2">
+			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $myrow['orderno'] . '&amp;realorderno=' . $myrow['realorderno'] . '&amp;ViewingOnly=2">
 				' . _('Print Copy') . '</a>';
 		} else {
 			$PrintPurchOrder = _('N/A');
@@ -549,6 +549,7 @@ else {
 	echo '</table>';
 }
 echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

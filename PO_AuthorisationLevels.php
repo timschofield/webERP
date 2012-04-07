@@ -147,10 +147,10 @@ while ($myrow=DB_fetch_array($Result)) {
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
 			<td class="number">'.locale_number_format($myrow['authlevel'],$myrow['decimalplaces']).'</td>
-			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&UserID=' . $myrow['userid'] .
-	'&Currency='.$myrow['currabrev'].'">'._('Edit').'</td>
-			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&UserID=' . $myrow['userid'] .
-	'&Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">'._('Delete').'</td>
+			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $myrow['userid'] .
+	'&amp;Currency='.$myrow['currabrev'].'">'._('Edit').'</a></td>
+			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $myrow['userid'] .
+	'&amp;Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">'._('Delete').'</a></td>
 		</tr>';
 }
 
@@ -164,7 +164,8 @@ if (!isset($_GET['Edit'])) {
 	$AuthLevel=0;
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form1">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
@@ -230,7 +231,7 @@ if ($CanCreate==1) {
 	echo '<td><input type="checkbox" name="CanCreate" /></td>
 		</tr>';
 } else {
-	echo '<td><input type="checkbox" checked name="CanCreate" /></td>
+	echo '<td><input type="checkbox" checked="checked" name="CanCreate" /></td>
 		</tr>';
 }
 
@@ -240,7 +241,7 @@ if ($OffHold==1) {
 	echo '<td><input type="checkbox" name="OffHold" /></td>
 		</tr>';
 } else {
-	echo '<td><input type="checkbox" checked name="OffHold" /></td>
+	echo '<td><input type="checkbox" checked="checked" name="OffHold" /></td>
 		</tr>';
 }
 
@@ -254,14 +255,14 @@ if (isset($_GET['Edit'])) {
 	echo '<br />
 			<div class="centre">
 				<input type="submit" name="Update" value="'._('Update Information').'" />
-			</div>
-		</form>';
+			</div>';
 } else {
 	echo '<br />
 		<div class="centre">
 			<input type="submit" name="Submit" value="'._('Enter Information').'" />
-		</div>
-		</form>';
+		</div>';
 }
+echo '</div>
+        </form>';
 include('includes/footer.inc');
 ?>

@@ -32,7 +32,7 @@ echo '<table><tr>';
 
 for ($i=0;$i<3;$i++) {
 	echo '<td valign="top">';
-	echo '<table cellpadding="2" colspan="2" class="selection">';
+	echo '<table cellpadding="2" class="selection">';
 	echo $TableHeader;
 	$k=0;
 	$j=0; 

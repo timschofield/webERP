@@ -130,10 +130,14 @@ If ((isset($_POST['PrintPDF']))
 	$title=_('Remittance Advices');
 	include('includes/header.inc');
 
+    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . $title . '" alt="" />' . ' '
+        . $title . '</p>';
 	/* show form to allow input	*/
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post"><table>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    echo '<table>';
 
 	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
@@ -146,7 +150,7 @@ If ((isset($_POST['PrintPDF']))
 		$DefaultToCriteria = $_POST['ToCriteria'];
 	}
 	echo '<tr>
-			<td>' . _('From Supplier Code') . ':</font></td>
+			<td>' . _('From Supplier Code') . ':</td>
 			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
 		</tr>';
 	echo '<tr>
@@ -166,9 +170,13 @@ If ((isset($_POST['PrintPDF']))
 		</tr>';
 
 	echo '</table>
+        <br />
 		<div class="centre">
-			<input type="submit" Name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
+        
+    echo '</div>
+          </form>';
 
 	include ('includes/footer.inc');
 } /*end of else not PrintPDF */

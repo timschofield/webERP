@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 	submitcsv($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
 } else {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . '</img>' . $title.'</p>';
+		'" alt="" />' . $title.'</p>';
 	display($db);
 }
 
@@ -814,9 +814,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						locale_number_format($TotalExtPrice,2),
 						locale_number_format($TotalInvQty,2),
 						' ');
+            echo '</table>';
 		} // End of if ($_POST['ReportType']
-		echo '</table>';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="ReportType" value="'.$_POST['ReportType'].'" />';
 		echo '<input type="hidden" name="DateType" value="'.$_POST['DateType'].'" />';
@@ -834,7 +835,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		echo '<input type="hidden" name="SortBy" value="'.$_POST['SortBy'].'" />';
 		echo '<input type="hidden" name="SummaryType" value="'.$_POST['SummaryType'].'" />';
 		echo '<br /><div class="centre"><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '" /></div>';
-		echo '</form>';
+		echo '</div>
+              </form>';
 	} // End of if inputerror != 1
 } // End of function submit()
 
@@ -1495,6 +1497,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // the page is called.
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
@@ -1503,17 +1506,17 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<td><select name="ReportType">';
 	echo '<option selected="selected" value="Detail">' . _('Detail') . '</option>';
 	echo '<option value="Summary">' . _('Summary') . '</option>';
-	echo '</select></td><td>&nbsp</td></tr>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '<tr><td>' . _('Date Type') . ':</td>';
 	echo '<td><select name="DateType">';
 	echo '<option selected="selected" value="Order">' . _('Order Date') . '</option>';
 	echo '<option value="Delivery">' . _('Delivery Date') . '</option>';
-	echo '</select></td><td>&nbsp</td></tr>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '<tr>
 		<td>' . _('Date Range') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp&nbsp
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
         <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 
@@ -1522,11 +1525,11 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="Equals">' . _('Equals') . '</option>';
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
-	echo '&nbsp&nbsp<input type="text" name="PartNumber" size="20" maxlength="20" value="';
+	echo '&nbsp;&nbsp;<input type="text" name="PartNumber" size="20" maxlength="20" value="';
     if (isset($_POST['PartNumber'])) {
         echo $_POST['PartNumber'] . '" /></td></tr>';
 	} else {
-		echo '"></td></tr>';
+		echo '" /></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Supplier Number') . ':</td>';
@@ -1534,11 +1537,11 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="Equals">' . _('Equals') . '</option>';
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
-	echo '&nbsp&nbsp<input type="text" name="SupplierId" size="10" maxlength="10" value="';
+	echo '&nbsp;&nbsp;<input type="text" name="SupplierId" size="10" maxlength="10" value="';
     if (isset($_POST['SupplierId'])) {
         echo $_POST['SupplierId'] . '" /></td></tr>';
 	} else {
-		echo  '"></td></tr>';
+		echo  '" /></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Supplier Name') . ':</td>';
@@ -1546,7 +1549,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="LIKE">' . _('Begins With') . '</option>';
 	echo '<option value="Equals">' . _('Equals') . '</option>';
 	echo '</select>';
-	echo '&nbsp&nbsp<input type="text" name="SupplierName" size="30" maxlength="30" value="';
+	echo '&nbsp;&nbsp;<input type="text" name="SupplierName" size="30" maxlength="30" value="';
 	if (isset($_POST['SupplierName'])) {
 		echo $_POST['SupplierName'] . '" /></td></tr>';
 	} else {
@@ -1554,12 +1557,12 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	}
 
 	echo '<tr><td>' . _('Order Number') . ':</td>';
-	echo '<td>'._('Equals').':&nbsp&nbsp';
+	echo '<td>'._('Equals').':&nbsp;&nbsp;';
 	echo '<input type="text" name="OrderNo" size="10" maxlength="10" value="';
     if (isset($_POST['OrderNo'])) {
         echo $_POST['OrderNo'] . '" /></td></tr>';
 	} else {
-		echo  '"></td></tr>';
+		echo  '" /></td></tr>';
 	}
 
 	echo '<tr><td>' . _('Line Item Status') . ':</td>';
@@ -1567,7 +1570,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	echo '<option value="Completed">' . _('Completed') . '</option>';
 	echo '<option value="Open">' . _('Not Completed') . '</option>';
-	echo '</select></td><td>&nbsp</td></tr>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '<tr><td>' . _('Stock Categories') . ':</td><td><select name="Category">';
 	$sql="SELECT categoryid, categorydescription FROM stockcategory";
@@ -1578,16 +1581,16 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>&nbsp</td></tr>';
+	echo '<tr><td>&nbsp;</td></tr>';
 	echo '<tr><td>' . _('Sort By') . ':</td>';
 	echo '<td><select name="SortBy">';
 	echo '<option selected="selected" value="purchorderdetails.orderno">' . _('Order Number') . '</option>';
 	echo '<option value="purchorderdetails.itemcode">' . _('Part Number') . '</option>';
 	echo '<option value="suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Number') . '</option>';
 	echo '<option value="suppliers.suppname,suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Name') . '</option>'; 
-	echo '</select></td><td>&nbsp</td></tr>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
-	echo '<tr><td>&nbsp</td></tr>';
+	echo '<tr><td>&nbsp;</td></tr>';
 	echo '<tr><td>' . _('Summary Type') . ':</td>';
 	echo '<td><select name="SummaryType">';
 	echo '<option selected="selected" value="orderno">' . _('Order Number') . '</option>';
@@ -1597,9 +1600,9 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option value="suppname">' . _('Supplier Name') . '</option>';
 	echo '<option value="month">' . _('Month') . '</option>';
 	echo '<option value="categoryid">' . _('Stock Category') . '</option>';
-	echo '</select></td><td>&nbsp</td></tr>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
-	echo '<tr><td>&nbsp</td></tr>
+	echo '<tr><td>&nbsp;</td></tr>
 		<tr>
 		<td colspan="4"><div class="centre"><input type="submit" name="submit" value="' . _('Run Inquiry') . '" /></div></td>
 	</tr>
@@ -1608,7 +1611,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	</tr>
 	</table>
 	<br/>';
-   echo '</form>';
+   echo '</div>
+         </form>';
 
 } // End of function display()
 

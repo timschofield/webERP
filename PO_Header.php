@@ -302,13 +302,9 @@ if (isset($_POST['ChangeSupplier'])) {
 
 if (isset($_POST['SearchSuppliers'])){
 
-	if (mb_strlen($_POST['Keywords'])>0 AND mb_strlen($_SESSION['PO'.$identifier]->SupplierID)>0) {
-		prnMsg(_('Supplier name keywords have been used in preference to the supplier code extract entered'),'warn');
-	}
-	if ($_POST['Keywords']=='' AND $_POST['SuppCode']=='') {
-		echo '<div><br /><br /></div>';
-		prnMsg(_('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search'),'error');
-	} else {
+	    if (mb_strlen($_POST['Keywords'])>0 AND mb_strlen($_SESSION['PO'.$identifier]->SupplierID)>0) {
+		    prnMsg(_('Supplier name keywords have been used in preference to the supplier code extract entered'),'warn');
+	    }
 		if (mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -339,7 +335,19 @@ if (isset($_POST['SearchSuppliers'])){
 						FROM suppliers
 						WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SuppCode'] . "%'
 						ORDER BY suppliers.supplierid";
-		}
+		} else {
+            $SQL = "SELECT suppliers.supplierid,
+                            suppliers.suppname,
+                            suppliers.address1,
+                            suppliers.address2,
+                            suppliers.address3,
+                            suppliers.address4,
+                            suppliers.address5,
+                            suppliers.address6,
+                            suppliers.currcode
+                        FROM suppliers
+                        ORDER BY suppliers.supplierid";
+        }
 
 		$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
 		$result_SuppSelect = DB_query($SQL,$db,$ErrMsg);
@@ -351,7 +359,6 @@ if (isset($_POST['SearchSuppliers'])){
 			prnMsg( _('No supplier records contain the selected text') . ' - ' .
 				_('please alter your search criteria and try again'),'info');
 		}
-	} /*one of keywords or SuppCode was more than a zero length string */
 } /*end of if search for supplier codes/names */
 
 
@@ -525,32 +532,33 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	OR $_SESSION['PO'.$identifier]->SupplierID=='' ) {
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Purchase Order') . '" alt="">' . ' ' . _('Purchase Order: Select Supplier') . '';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post" name="choosesupplier">';
+		_('Purchase Order') . '" alt="" />' . ' ' . _('Purchase Order: Select Supplier') . '</p>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post" id="choosesupplier">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($SuppliersReturned)){
 		echo '<input type="hidden" name="SuppliersReturned" value="' . $SuppliersReturned .'" />';
 	}
 
-	echo '<table cellpadding="3" colspan="4" class="selection">
+	echo '<table cellpadding="3" class="selection">
 	<tr>
-	<td><font size="1">' . _('Enter text in the supplier name') . ':</font></td>
+	<td>' . _('Enter text in the supplier name') . ':</td>
 	<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-	<td><font size="3"><b>' . _('OR') . '</b></font></td>
-	<td><font size="1">' . _('Enter text extract in the supplier code') . ':</font></td>
+	<td><h3><b>' . _('OR') . '</b></h3></td>
+	<td>' . _('Enter text extract in the supplier code') . ':</td>
 	<td><input type="text" name="SuppCode" size="15"	maxlength="18" /></td>
 	</tr>
 	</table>
 	<br />
 	<div class="centre">
 	<input type="submit" name="SearchSuppliers" value="' . _('Search Now') . '" />
-	<input type="submit" action="reset" value="' . _('Reset') . '" /></div>';
+	<input type="submit" value="' . _('Reset') . '" /></div>';
 
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
 	if (isset($result_SuppSelect)) {
 
-		echo '<br /><table cellpadding="3" colspan="7" class="selection">';
+		echo '<br /><table cellpadding="3" class="selection">';
 
 		$tableheader = '<tr>
 						<th>' . _('Code') . '</th>
@@ -597,13 +605,14 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 } else {
 /* everything below here only do if a supplier is selected */
 
-	echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+	echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />
 			' . $_SESSION['PO'.$identifier]->SupplierName . ' - ' . _('All amounts stated in') . '
-			' . $_SESSION['PO'.$identifier]->CurrCode . '<br />';
+			' . $_SESSION['PO'.$identifier]->CurrCode . '</p>';
 
 	if ($_SESSION['ExistingOrder']) {
 		echo  _(' Modify Purchase Order Number') . ' ' . $_SESSION['PO'.$identifier]->OrderNo;
@@ -712,10 +721,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		$_POST['PaymentTerms']=$_SESSION['PO'.$identifier]->PaymentTerms;
 	}
 
-	echo '<br /><table colspan="1" width="80%">
+	echo '<br /><table width="80%">
 		<tr>
-			<th><b>' . _('Order Initiation Details') . '</b></th>
-			<th><b>' . _('Order Status') . '</b></th>
+			<th><h3>' . _('Order Initiation Details') . '</h3></th>
+			<th><h3>' . _('Order Status') . '</h3></th>
 		</tr>		
 		<tr><td style="width:50%">';
 //sub table starts
@@ -787,10 +796,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		echo '<tr><td colspan="2"><a target="_blank"  href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['ExistingOrder'] . '&identifier='.$identifier. '">' . _('Reprint Now') . '</a></td></tr>';
 	}
 
-	echo '</table>';
+	echo '</table></td>';
 	//Set up the next column with a sub-table in it too
-	echo '<td style="width:50%" valign=top>
-			<table class="selection" width="100%">';
+	echo '<td style="width:50%" valign="top">
+            <table class="selection" width="100%">';
 	
 	if($_SESSION['ExistingOrder'] != 0 AND $_SESSION['PO'.$identifier]->Status == 'Printed'){
 	
@@ -798,8 +807,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 			$_SESSION['PO'.$identifier]->OrderNo . '&identifier=' . $identifier . '">'._('Receive this order').'</a></td></tr>';
 	}
 	if ($_SESSION['PO'.$identifier]->Status==''){ //then its a new order
-		echo '<input type="hidden" name="Status" value="NewOrder" />';
-		echo '<tr><td>' . _('New Purchase Order') . '</td></tr>';
+		echo '<tr><td><input type="hidden" name="Status" value="NewOrder" />';
+		echo _('New Purchase Order') . '</td></tr>';
 	} else {
 		echo '<tr><td>' . _('Status') . ' :  </td>
 				<td><select name="Status" onchange="ReloadForm(form1.UpdateStatus)">';
@@ -845,18 +854,17 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 			</tr>';
 		
 		echo '<input type="hidden" name="StatusCommentsComplete" value="' . htmlspecialchars($_SESSION['PO'.$identifier]->StatusComments, ENT_QUOTES,'UTF-8') .'" />';
-		echo '<tr><td><input type="submit" name="UpdateStatus" value="' . _('Status Update') .'" /></td>';
+		echo '<tr><td><input type="submit" name="UpdateStatus" value="' . _('Status Update') .'" /></td></tr>';
 	} //end its not a new order
 	
-	echo '</tr></table></td>';
+	echo '</table></td></tr>';
 
-	echo '<table width="80%">
-		<tr>
-		<th><font color=blue size="4"><b>' . _('Warehouse Info') . '</b></font></th>
-		<!--    <th><font color=blue size="4"><b>' . _('Delivery To') . '</b></font></th> -->
-			<th><font color=blue size="4"><b>' . _('Supplier Info') . '</b></font></th>
+	echo '<tr>
+		<th><h3>' . _('Warehouse Info') . '</h3></th>
+		<!--    <th><h3>' . _('Delivery To') . '</h3></th> -->
+			<th><h3>' . _('Supplier Info') . '</h3></th>
 		</tr>
-		<tr><td valign=top>';
+		<tr><td valign="top">';
 	/*nested table level1 */
 
 	echo '<table class="selection" width="100%">
@@ -1005,7 +1013,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		}
 	}
 
-	echo '</select></tr></table>';
+	echo '</select></td></tr></table>';
 	  /* end of sub table */
 
 	echo '</td><td>'; /*sub table nested */
@@ -1028,8 +1036,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 	echo '<input type="submit" name="SearchSuppliers" value="' . _('Select Now') . '" /></td>
 		</tr>';
 
-	echo '</td></tr>
-			<tr>
+	echo '<tr>
 				<td>' . _('Supplier Contact') . ':</td>
 				<td><select name="SupplierContact">';
 
@@ -1106,12 +1113,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 				<td><input type="text" name="ExRate" value="'. locale_number_format($_POST['ExRate'],5).'" class="number" size="11" /></td>
 			</tr>';
 	} else {
-		echo '<input type="hidden" name="ExRate" value="1" />';
+		echo '<tr><td><input type="hidden" name="ExRate" value="1" /></td></tr>';
 	}
-	echo '</td></tr></table>'; /*end of sub table */
+	echo '</table>'; /*end of sub table */
  
 	echo '</td></tr>
-			<tr><th colspan="4"><font color="blue" size="4"><b>' . _('Comments');
+			<tr><th colspan="4"><h3>' . _('Comments');
 
 	$Default_Comments = '';
 
@@ -1119,10 +1126,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 		$_POST['Comments']=$Default_Comments;
 	}
 
-	echo ':</b></font></th></tr>
-			<tr><td colspan="4"><textarea name="Comments" style="width:100%" rows="5">' . $_POST['Comments'] . '</textarea>';
-
-	echo '</table>';
+	echo ':</h3></th></tr>
+			<tr><td colspan="4"><textarea name="Comments" style="width:100%" rows="5" cols="200">' . $_POST['Comments'] . '</textarea>';
 
 	echo '</td></tr></table><br />'; /* end of main table */
 
@@ -1132,6 +1137,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 
 } /*end of if supplier selected */
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>
