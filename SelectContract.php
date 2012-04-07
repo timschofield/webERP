@@ -42,37 +42,23 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 	if (!isset($_POST['Status'])){
 		$_POST['Status']=4;
 	}
-	if ($_POST['Status']==0){
-		echo '<option selected="selected" value="0">' . _('Not Yet Quoted'). '</option>
-				<option value="1">' . _('Quoted - No Order Placed'). '</option>
-				<option value="2">' . _('Order Placed') . '</option>
-				<option value="3">' . _('Completed') . '</option>
-				<option value="4">' . _('All Contracts') . '</option>';
-	} elseif($_POST['Status']==1) {
-		echo '<option value="0">' . _('Not Yet Quoted'). '</option>
-				<option selected="selected" value="1">' . _('Quoted - No Order Placed'). '</option>
-				<option value="2">' . _('Order Placed') . '</option>
-				<option value="3">' . _('Completed') . '</option>
-				<option value="4">' . _('All Contracts') . '</option>';
-	} elseif($_POST['Status']==2) {
-		echo '<option value="0">' . _('Not Yet Quoted'). '</option>
-				<option value="1">' . _('Quoted - No Order Placed'). '</option>
-				<option selected="selected" value="2">' . _('Order Placed') . '</option>
-				<option value="3">' . _('Completed') . '</option>
-				<option value="4">' . _('All Contracts') . '</option>';
-	} elseif($_POST['Status']==3) {
-		echo '<option value="0">' . _('Not Yet Quoted'). '</option>
-				<option value="1">' . _('Quoted - No Order Placed'). '</option>
-				<option value="2">' . _('Order Placed') . '</option>
-				<option selected="selected" value="3">' . _('Completed') . '</option>
-				<option value="4">' . _('All Contracts') . '</option>';
-	} elseif($_POST['Status']==4) {
-		echo '<option value="0">' . _('Not Yet Quoted'). '</option>
-				<option value="1">' . _('Quoted - No Order Placed'). '</option>
-				<option value="2">' . _('Order Placed') . '</option>
-				<option value="3">' . _('Completed') . '</option>
-				<option selected="selected" value="4">' . _('All Contracts') . '</option>';
+
+	$statuses[] = _('Not Yet Quoted');
+	$statuses[] = _('Quoted - No Order Placed');
+	$statuses[] = _('Order Placed');
+	$statuses[] = _('Completed');
+	$statuses[] = _('All Contracts');
+
+	$status_count = count($statuses);
+
+	for ( $i = 0; $i < $status_count; $i++ ) {
+		if ( $i == $_POST['Status'] ) {
+			echo '<option selected="selected" value="' . $i . '">' . $statuses[$i] . '</option>';
+		} else {
+			echo '<option value="' . $i . '">' . $statuses[$i] . '</option>';
+		}
 	}
+
 	echo '</select> &nbsp;&nbsp;';
 }
 echo '<input type="submit" name="SearchContracts" value="' . _('Search') . '" />';
