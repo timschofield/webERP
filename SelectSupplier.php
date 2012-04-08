@@ -143,7 +143,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
 	echo '<br />
-		<table width="90%" colspan="2" cellpadding="4">
+		<table width="90%" cellpadding="4">
 		<tr>
 			<th width="33%">' . _('Supplier Inquiries') . '</th>
 			<th width="33%">' . _('Supplier Transactions') . '</th>
@@ -178,7 +178,7 @@ if (isset($_SESSION['SupplierID'])) {
 } else {
 	// Supplier is not selected yet
 	echo '<br />';
-	echo '<table width="90%" colspan="2" cellpadding="4">
+	echo '<table width="90%" cellpadding="4">
 		<tr>
 			<th width="33%">' . _('Supplier Inquiries') . '</th>
 			<th width="33%">' . _('Supplier Transactions') . '</th>
@@ -196,7 +196,7 @@ if (isset($_SESSION['SupplierID'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
-	<table cellpadding="3" colspan="4" class="selection">
+	<table cellpadding="3" class="selection">
 	<tr>
 		<td>' . _('Enter a partial Name') . ':</font></td>
 		<td>';
@@ -253,7 +253,7 @@ if (isset($_POST['Search'])) {
 	echo '<br />
 		<br />
 		<br />
-		<table cellpadding="2" colspan="7">';
+		<table cellpadding="2">';
 	$tableheader = '<tr>
 				  		<th>' . _('Code') . '</th>
 						<th>' . _('Supplier Name') . '</th>
@@ -349,7 +349,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			$row = DB_fetch_array($Total1Result);
 			echo '<br />';
 			echo '<tr><td colspan="2">';
-			echo '<table width="45%" colspan="2" cellpadding="4">';
+			echo '<table width="45%" cellpadding="4">';
 			echo '<tr><th width="33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
 			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";

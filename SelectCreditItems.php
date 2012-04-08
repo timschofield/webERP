@@ -214,7 +214,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note').'</p>';
 	
-	echo '<table cellpadding="3" colspan="4" class="selection">';
+	echo '<table cellpadding="3" class="selection">';
 	echo '<tr><th colspan="5"><font size="3" color="navy"><b> ' . _('Customer Selection') .'</b></font></th></tr>';
 	echo '<tr>
 			<td><font size="1">' . _('Enter text in the customer name') . ':</font></td>
@@ -231,7 +231,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	if (isset($result_CustSelect)) {
 
-		echo '<table cellpadding="2" colspan="7">';
+		echo '<table cellpadding="2">';
 
 		$TableHeader = '<br />
 					<tr>
@@ -667,7 +667,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* This is where the credit note as selected should be displayed  reflecting any deletions or insertions*/
 
-		  echo '<table cellpadding="2" colspan="7" class="selection">
+		  echo '<table cellpadding="2" class="selection">
 				<tr>
 					<th>' . _('Item Code') . '</th>
 					<th>' . _('Item Description') . '</th>
@@ -983,7 +983,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		 if (isset($SearchResult)) {
 
-			  echo '<table cellpadding="2" colspan="7" class="selection">';
+			  echo '<table cellpadding="2" class="selection">';
 			  $TableHeader = '<tr>
 								<th>' . _('Code') . '</th>
 					  			<th>' . _('Description') . '</th>

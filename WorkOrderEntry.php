@@ -616,7 +616,7 @@ if (isset($SearchResult)) {
 
 	if (DB_num_rows($SearchResult)>1){
 
-		echo '<table cellpadding="2" colspan="7" class="selection">';
+		echo '<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
 							<th>' . _('Code') . '</th>
 				   			<th>' . _('Description') . '</th>

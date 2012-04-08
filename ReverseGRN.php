@@ -378,7 +378,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			prnMsg(_('There are no outstanding goods received yet to be invoiced for') . ' ' . $_POST['SuppName'] . '.<br />' . _('To reverse a GRN that has been invoiced first it must be credited'),'warn');
 		} else { //there are GRNs to show
 
-			echo '<br /><table cellpadding="2" colspan="7" class="selection">';
+			echo '<br /><table cellpadding="2" class="selection">';
 			$TableHeader = '<tr>
 								<th>' . _('GRN') . ' #</th>
 								<th>' . _('Item Code') . '</th>

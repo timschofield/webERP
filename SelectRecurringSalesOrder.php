@@ -79,7 +79,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 	/*show a table of the orders returned by the SQL */
 
 	echo '<br />
-		<table cellpadding="2" colspan="7" width="90%" class="selection">';
+		<table cellpadding="2" width="90%" class="selection">';
 
 	$tableheader = '<tr>
 						<th>' . _('Modify') . '</th>

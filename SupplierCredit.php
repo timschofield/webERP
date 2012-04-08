@@ -258,7 +258,7 @@ if (isset($_POST['FixedAssets'])
 /* everything below here only do if a Supplier is selected
    fisrt add a header to show who we are making an credit note for */
 
-echo '<table class="selection" colspan="4">
+echo '<table class="selection">
 		<tr><th>' . _('Supplier') . '</th>
 			<th>' . _('Currency') . '</th>
 			<th>' . _('Terms') . '</th>

@@ -59,7 +59,7 @@ if (DB_num_rows($Result) == 0){
 	exit;
 }
 
-echo '<table cellpadding="2" colspan="7 width="80%" class="selection">';
+echo '<table cellpadding="2" width="80%" class="selection">';
 $TableHeader = '<tr>
 					<th>' . _('Supplier Number') . '<br />' . _('Reference') . '</th>
 					<th>' . _('Payment') .'<br />' . _('Reference') . '</th>

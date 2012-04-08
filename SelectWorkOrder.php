@@ -186,7 +186,7 @@ if (!isset($StockID)) {
 	if (isset($StockItemsResult)) {
 	
 		echo '<br />
-			<table cellpadding="2" colspan="7" class="selection">';
+			<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
 							<th>' . _('Code') . '</th>
 							<th>' . _('Description') . '</th>
@@ -301,7 +301,7 @@ if (!isset($StockID)) {
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult)>0) {
 			echo '<br />
-				<table cellpadding="2" colspan="7" width="95%" class="selection">';
+				<table cellpadding="2" width="95%" class="selection">';
 	
 	
 			$tableheader = '<tr>

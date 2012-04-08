@@ -580,7 +580,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" name="SelectCustomer" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table cellpadding="3" colspan="4" class="selection">
+	echo '<table cellpadding="3" class="selection">
 			<tr>
 			<td><h5>' . _('Part of the Customer Branch Name') . ':</h5></td>
 			<td><input tabindex="1" type="text" name="CustKeywords" size="20" maxlength="25" /></td>
@@ -1323,7 +1323,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 		echo '<br />
-				<table width="90%" cellpadding="2" colspan="7">
+				<table width="90%" cellpadding="2">
 				<tr style="background-color:#800000">';
 		if($_SESSION['Items'.$identifier]->DefaultPOLine == 1){
 			echo '<th>' . _('PO Line') . '</th>';

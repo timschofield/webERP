@@ -543,7 +543,7 @@ if (!isset($SelectedStockItem)) {
 If (isset($StockItemsResult)) {
 
 	echo '<br />
-		<table cellpadding="2" colspan="7" class="selection">';
+		<table cellpadding="2" class="selection">';
 
 	$TableHeadings = '<tr>
 						<th>' . _('Code') . '</th>
@@ -595,7 +595,7 @@ If (isset($SalesOrdersResult)) {
 
 /*show a table of the orders returned by the SQL */
 
-	echo '<br /><table cellpadding="2" colspan="6" width="90%" class="selection">';
+	echo '<br /><table cellpadding="2" width="90%" class="selection">';
 
 	$tableheader = '<tr><th>' . _('Order') . ' #</th>
 						<th>' . _('Customer') . '</th>

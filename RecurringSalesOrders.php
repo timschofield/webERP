@@ -312,7 +312,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-echo '<table cellpadding="2" colspan="7" class="selection">';
+echo '<table cellpadding="2" class="selection">';
 echo '<tr><th colspan="7"><b>'._('Order Line Details').'</b></th></tr>';
 echo '<tr>
 	<th>'. _('Item Code') .'</th>

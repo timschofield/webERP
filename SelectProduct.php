@@ -483,7 +483,7 @@ if (!$Its_A_Kitset) {
 echo '</td></tr></table>';
 } else {
 	// options (links) to pages. This requires stock id also to be passed.
-	echo '<table width="90%" colspan="2" cellpadding="4">';
+	echo '<table width="90%" cellpadding="4">';
 	echo '<tr>
 		<th width="33%">' . _('Item Inquiries') . '</th>
 		<th width="33%">' . _('Item Transactions') . '</th>

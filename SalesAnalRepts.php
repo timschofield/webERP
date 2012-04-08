@@ -383,12 +383,12 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedReport" value="' . $SelectedReport . '" />';
 		echo '<input type="hidden" name="ReportID" value="' . $ReportID . '" />';
-		echo '<table width="98%" colspan="4" class="selection">
+		echo '<table width="98%" class="selection">
 				<tr>
 					<th colspan="8"><font size="3" color="blue">' . _('Edit The Selected Report') . '</font></th>
 				</tr>';
 	} else {
-		echo '<table width="98%" colspan="4" class="selection">
+		echo '<table width="98%" class="selection">
 				<tr>
 					<th colspan="8"><font size="3" color="blue">' . _('Define A New Report') . '</font></th>
 				</tr>';

@@ -476,7 +476,7 @@ $result = DB_query($sql,$db);
 
 if (DB_num_rows($result)>0){
 
-	echo '<table cellpadding="2" colspan="7" class="selection">';
+	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
 			<th colspan="7"><font color="navy" size="3">'. _('Possible Order Lines To Add To This Shipment').'</font></th>
 		</tr>';

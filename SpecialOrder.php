@@ -618,7 +618,7 @@ echo '<td>' . _('Initiated By') . ': <input type="text" name="Initiator" size="1
 if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 
 	echo '<div class="centre"><b>' . _('Special Order Summary') . '</b></div>';
-	echo '<table class="selection" cellpadding="2" colspan="7" border="1">';
+	echo '<table class="selection" cellpadding="2" border="1">';
 
 	echo '<tr>
 			<th>' . _('Item Description') . '</th>

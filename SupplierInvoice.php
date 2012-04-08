@@ -229,7 +229,7 @@ if (!isset($_POST['PostInvoice'])){
 	/* everything below here only do if a Supplier is selected
 	fisrt add a header to show who we are making an invoice for */
 
-	echo '<br /><table class="selection" colspan="4">
+	echo '<br /><table class="selection">
 			<tr>
 				<th>' . _('Supplier') . '</th>
 				<th>' . _('Currency') .  '</th>
