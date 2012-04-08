@@ -414,17 +414,21 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post"><table class="selection">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
+        echo '<table class="selection">';
 		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)'). '
-			</td><td><input type="text" max="6" size="7" name="FromCust" value="1" /></td></tr>
+			</td><td><input type="text" maxlength="6" size="7" name="FromCust" value="1" /></td></tr>
 			<tr><td>'. _('Ending Customer statement to print (Customer code)').'</td><td>
-				<input type="text" max="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
+				<input type="text" maxlength="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
 				<br /><div class="centre">
 				<input type="submit" name="PrintPDF" value="' .
                 _('Print All Statements in the Range Selected').'" />
 			</div>';
+        echo '</div>
+              </form>';
 	}
 	echo '<br /><br /><br />';
 	include('includes/footer.inc');

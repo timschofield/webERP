@@ -523,6 +523,7 @@ If (isset($PrintPDF)
 	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Portrait Mode)') . '</p>';
@@ -563,11 +564,11 @@ If (isset($PrintPDF)
 			</tr>';
 		echo '<tr>
 				<td>' . _('Start invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" max="6" size="7" name="FromTransNo" /></td>
+				<td><input class="number" type="text" maxlength="6" size="7" name="FromTransNo" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('End invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" max="6" size="7" name="ToTransNo" /></td>
+				<td><input class="number" type="text" maxlength="6" size="7" name="ToTransNo" /></td>
 			</tr>
 			</table>';
 		echo '<div class="centre">
@@ -590,6 +591,8 @@ If (isset($PrintPDF)
 		$myrow = DB_fetch_row($result);
 
 		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b><br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</div>';
+        echo '</div>
+              </form>';
 
 	} else {
 
@@ -714,7 +717,7 @@ If (isset($PrintPDF)
 				$myrow = DB_fetch_array($result);
 	/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
 				if (count($_SESSION['AllowedPageSecurityTokens'])==1 AND in_array(1, $_SESSION['AllowedPageSecurityTokens']) AND $myrow['debtorno'] != $_SESSION['CustomerID']){
-					echo '<p><font color="red" size="4">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
+					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
 					exit;
 				}
 
@@ -723,23 +726,23 @@ If (isset($PrintPDF)
 
 				echo '<table class="table1">
 						<tr>
-							<td valign=top width="10%"><img src="' . $_SESSION['LogoFile'] . '" /></td>
-							<td style="background-color:#bbbbbb"><b>';
+							<td valign="top" style="width:10%"><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
+							<td style="background-color:#bbbbbb">';
 
 				if ($InvOrCredit=='Invoice') {
-				   echo '<font size="4">' . _('TAX INVOICE') . ' ';
+				   echo '<h2>' . _('TAX INVOICE') . ' ';
 				} else {
-				   echo '<font color="red" size="4">' . _('TAX CREDIT NOTE') . ' ';
+				   echo '<h2 style="color:red">' . _('TAX CREDIT NOTE') . ' ';
 				}
-				echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font>
-					<br /><font size="1">' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
+				echo _('Number') . ' ' . $FromTransNo . '</h2>
+					<br />' . _('Tax Authority Ref') . '. ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
 					</tr>
 					</table>';
 
 	/*Now print out the logo and company name and address */
-				echo '<table class"table1">
+				echo '<table class="table1">
 						<tr>
-							<td><font size="4" color="#333"><b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></font>
+							<td><h2>' . $_SESSION['CompanyRecord']['coyname'] . '</h2>
 							<br />';
 				echo $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
 				echo $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
@@ -752,7 +755,7 @@ If (isset($PrintPDF)
 				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<br />';
 
 				echo '</td>
-					<td width="50%" class="number">';
+					<td style="width:50%" class="number">';
 
 	/*Now the customer charged to details in a sub table within a cell of the main table*/
 
@@ -784,8 +787,8 @@ If (isset($PrintPDF)
 
 				   echo '<table class="table1">
 				   		<tr>
-				   			<td align=left style="background-color:#bbbbbb"><b>' . _('Charge Branch') . ':</b></td>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Delivered To') . ':</b></td>
+				   			<td align="left" style="background-color:#bbbbbb"><b>' . _('Charge Branch') . ':</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Delivered To') . ':</b></td>
 						</tr>';
 				   echo '<tr>
 				   		<td style="background-color:#eeeeee">' .$myrow['brname'] .
@@ -810,13 +813,13 @@ If (isset($PrintPDF)
 
 				   echo '<table class="table1">
 				   		<tr>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Your Order Ref') . '</b></td>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Our Order No') . '</b></td>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Order Date') . '</b></td>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Invoice Date') . '</b></td>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Sales Person') . '</font></b></td>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Shipper') . '</b></td>
-							<td align=left style="background-color:#bbbbbb"><b>' . _('Consignment Ref') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Your Order Ref') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Our Order No') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Order Date') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Invoice Date') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Sales Person') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Shipper') . '</b></td>
+							<td align="left" style="background-color:#bbbbbb"><b>' . _('Consignment Ref') . '</b></td>
 						</tr>';
 				   	echo '<tr>
 							<td style="background-color:#EEEEEE">' . $myrow['customerref'] . '</td>
@@ -848,7 +851,7 @@ If (isset($PrintPDF)
 
 				   echo '<table width="50%">
 						<tr>
-							<td align=left style="background-color:#BBBBBB"><b>' . _('Branch') . ':</b></td>
+							<td align="left" style="background-color:#BBBBBB"><b>' . _('Branch') . ':</b></td>
 						</tr>';
 				   echo '<tr>
 							<td style="background-color:#EEEEEE">' . $myrow['brname'] .
@@ -864,7 +867,7 @@ If (isset($PrintPDF)
 						<table class="table1">
 						<tr>
 					   		<td align="left" style="background-color:#bbbbbb"><b>' . _('Date') . '</b></td>
-							<td align=left style="background-color:#BBBBBB"><b>' . _('Sales Person') . '</font></b></td>
+							<td align="left" style="background-color:#BBBBBB"><b>' . _('Sales Person') . '</b></td>
 						</tr>';
 				   echo '<tr>
 					   		<td style="background-color:#EEEEEE">' . ConvertSQLDate($myrow['trandate']) . '</td>
@@ -889,7 +892,7 @@ If (isset($PrintPDF)
 				}
 
 				echo '<hr />';
-				echo '<div class="centre"><font size="2">' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</font></div>';
+				echo '<div class="centre"><h4>' . _('All amounts stated in') . ' ' . $myrow['currcode'] . '</h4></div>';
 
 				$result=DB_query($sql,$db);
 				if (DB_error_no($db)!=0) {
@@ -971,22 +974,22 @@ If (isset($PrintPDF)
 						   echo '</table>
 								<table class="table1">
 								<tr>
-									<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" /></td>
-									<td style="background-color:#bbbbbb"><b>';
+									<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
+									<td style="background-color:#bbbbbb">';
 
 						   if ($InvOrCredit=='Invoice') {
-							    echo '<font size="4">' . _('TAX INVOICE') . ' ';
+							    echo '<h2>' . _('TAX INVOICE') . ' ';
 						   } else {
-							    echo '<font color="red" size="4">' . _('TAX CREDIT NOTE') . ' ';
+							    echo '<h2 style="color:red">' . _('TAX CREDIT NOTE') . ' ';
 						   }
-						   echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font><br /><font size="1">' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
+						   echo _('Number') . ' ' . $FromTransNo . '</h2><br />' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
 							</tr>
 							</table>';
 
 	/*Now print out company name and address */
 						    echo '<table class="table1">
 									<tr>
-										<td><font size="4" color="#333"><b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br />';
+										<td><h2>' . $_SESSION['CompanyRecord']['coyname'] . '</h2><br />';
 						    echo $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
 						    echo $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
 						    echo $_SESSION['CompanyRecord']['regoffice3'] . '<br />';
@@ -1027,23 +1030,22 @@ If (isset($PrintPDF)
 					$PageNumber++;
 					echo '<table class="table1">
 							<tr>
-								<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" /></td>
-								<td style="background-color:#bbbbbb"><b>';
+								<td valign="top"><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
+								<td style="background-color:#bbbbbb">';
 					if ($InvOrCredit=='Invoice') {
-					      echo '<font size="4">' . _('TAX INVOICE') .' ';
+					      echo '<h2>' . _('TAX INVOICE') .' ';
 					} else {
-					      echo '<font color="red" size="4">' . _('TAX CREDIT NOTE') . ' ';
+					      echo '<h2 style="color:red">' . _('TAX CREDIT NOTE') . ' ';
 					}
-					echo '</b>' . _('Number') . ' ' . $FromTransNo . '</font>
-							<br />
-							<font size="1">' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</font></td>
+					echo _('Number') . ' ' . $FromTransNo . '</h2>
+							<br />' . _('GST Number') . ' - ' . $_SESSION['CompanyRecord']['gstno'] . '</td>
 						</tr>
 						</table>';
 
 	/*Print out the logo and company name and address */
 					echo '<table class="table1">
 							<tr>
-								<td><font size="4" color="#333"><b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></font><br />';
+								<td><h2>' . $_SESSION['CompanyRecord']['coyname'] . '</h2><br />';
 					echo $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
 					echo $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
 					echo $_SESSION['CompanyRecord']['regoffice3'] . '<br />';
@@ -1098,17 +1100,17 @@ If (isset($PrintPDF)
 	/*Print out the invoice text entered */
 				echo '<table class="table1"><tr>
 					<td class="number">' . _('Sub Total') . '</td>
-					<td class="number" style="background-color:#EEEEEE" width="15%">' . $DisplaySubTot . '</td></tr>';
+					<td class="number" style="background-color:#EEEEEE;width:15%">' . $DisplaySubTot . '</td></tr>';
 				echo '<tr><td class="number">' . _('Freight') . '</td>
 					<td class="number" style="background-color:#EEEEEE">' . $DisplayFreight . '</td></tr>';
 				echo '<tr><td class="number">' . _('Tax') . '</td>
 					<td class="number" style="background-color:#EEEEEE">' . $DisplayTax . '</td></tr>';
 				if ($InvOrCredit=='Invoice'){
 				     echo '<tr><td class="number"><b>' . _('TOTAL INVOICE') . '</b></td>
-				     	<td class="number" style="background-color:#EEEEEE"><u><b>' . $DisplayTotal . '</b></u></td></tr>';
+				     	<td class="number" style="background-color:#EEEEEE"><b>' . $DisplayTotal . '</b></td></tr>';
 				} else {
-				     echo '<tr><td class="number"><font color="red"><b>' . _('TOTAL CREDIT') . '</b></font></td>
-				     		<td class="number" style="background-color:#EEEEEE"><font color="red"><u><b>' . $DisplayTotal . '</b></u></font></td></tr>';
+				     echo '<tr><td class="number" style="color:red"><b>' . _('TOTAL CREDIT') . '</b></td>
+				     		<td class="number" style="background-color:#EEEEEE;color:red"><b>' . $DisplayTotal . '</b></td></tr>';
 				}
 				echo '</table>';
 			} /* end of check to see that there was an invoice record to print */

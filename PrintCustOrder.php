@@ -20,9 +20,11 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
           <br />
           <table class="table_index">
                  <tr><td class="menu_group_item">
+                 <ul>
 					<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
 					<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-					 </td>
+                 </ul>
+				 </td>
 				 </tr>
 			</table>
 			</div>

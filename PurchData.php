@@ -224,9 +224,9 @@ if (!isset($_GET['Edit'])) {
 					<td class="number">%s</td>
 					<td class="number">%s ' . _('days') . '</td>
 					<td>%s</td>
-					<td><a href="%s?StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s?StockID=%s&SupplierID=%s&Copy=1&EffectiveFrom=%s">' . _('Copy') . '</a></td>
-					<td><a href="%s?StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this suppliers price?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%s?StockID=%s&amp;SupplierID=%s&amp;Edit=1&amp;EffectiveFrom=%s">' . _('Edit') . '</a></td>
+					<td><a href="%s?StockID=%s&amp;SupplierID=%s&amp;Copy=1&amp;EffectiveFrom=%s">' . _('Copy') . '</a></td>
+					<td><a href="%s?StockID=%s&amp;SupplierID=%s&amp;Delete=1&amp;EffectiveFrom=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this suppliers price?') . '\');">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['suppname'],
 					locale_number_format($myrow['price'], $myrow['currdecimalplaces']),
@@ -286,11 +286,12 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
 	if (!isset($_POST['SearchSupplier'])) {
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-				<table cellpadding="3" class="selection">
-				<tr>';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
+        echo '<table cellpadding="3" class="selection">
+                <tr>';
 		echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>';
 		echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>';
 		echo '<td><b>' . _('OR') . '</b></td>';
@@ -300,6 +301,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 		echo '<div class="centre">
 				<input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" />
 			</div>
+            </div>
 			</form>';
 		include ('includes/footer.inc');
 		exit;
@@ -372,9 +374,10 @@ if (isset($StockID)) {
 }
 
 if (isset($SuppliersResult)) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-			<table cellpadding="2" class="selection">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    echo '<table cellpadding="2" class="selection">';
 	$TableHeader = '<tr>
 						<th>' . _('Code') . '</th>
 						<th>' . _('Supplier Name') . '</th>
@@ -398,8 +401,7 @@ if (isset($SuppliersResult)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td>%s</td>
-				</tr>',
+				<td>%s',
 				$myrow['supplierid'],
 				$myrow['suppname'],
 				$myrow['currcode'],
@@ -408,11 +410,13 @@ if (isset($SuppliersResult)) {
 				$myrow['address3']);
 
 		echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
-		echo '<input type="hidden" name="StockUOM" value="' . $StockUOM . '" />';
+		echo '<input type="hidden" name="StockUOM" value="' . $StockUOM . '" /></td></tr>';
 
 	}
 	//end of while loop
-	echo '</table><br/></form>';
+	echo '</table><br/>';
+    echo '</div>
+          </form>';
 }
 //end if results to show
 
@@ -467,10 +471,11 @@ if (!isset($SuppliersResult)) {
 		$StockUOM=$myrow['units'];
 	}
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
-				<th colspan="3"><font color="navy" size="3">' . _('Data for Purchasing') . ' ' . $StockID . ' ' . _('from') . ' '. $SupplierID . '</font></th>
+				<th colspan="3"><h3>' . _('Data for Purchasing') . ' ' . $StockID . ' ' . _('from') . ' '. $SupplierID . '</h3></th>
 			</tr>';
 	if (!isset($SupplierID)) {
 		$SupplierID = '';
@@ -481,19 +486,17 @@ if (!isset($SuppliersResult)) {
 		</tr>';
 	} else {
 		echo '<tr>
-				<td>' . _('Supplier Name') . ':</td>
-		<input type="hidden" name="SupplierID" maxlength="10" size="11" value="' . $SupplierID . '" />';
-		if ($SupplierID!='') {
-			echo '<td>'.$SuppName;
-		}
-		if (!isset($SuppName) OR $SuppName = "") {
-			echo '(' . _('A search facility is available below if necessary') . ')';
+				<td>' . _('Supplier Name') . ':
+		           <input type="hidden" name="SupplierID" maxlength="10" size="11" value="' . $SupplierID . '" />
+                </td>';
+		if (!isset($SuppName) OR $SuppName == "") {
+			echo '<td>(' . _('A search facility is available below if necessary') . ')';
 		} else {
 			echo '<td>'.$SuppName;
 		}
 		echo '</td></tr>';
 	}
-   	echo '<td><input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockID . '" />';
+   	echo '<tr><td><input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockID . '" /></td></tr>';
 	if (!isset($CurrCode)) {
 		$CurrCode = '';
 	}
@@ -516,7 +519,7 @@ if (!isset($SuppliersResult)) {
 		$_POST['MinOrderQty'] = '1';
 	}
 	echo '<tr><td>' . _('Currency') . ':</td>
-	<td><input type="hidden" name="CurrCode" . value="' . $CurrCode . '" />' . $CurrCode . '</td></tr>';
+	<td><input type="hidden" name="CurrCode" value="' . $CurrCode . '" />' . $CurrCode . '</td></tr>';
 	echo '<tr><td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
 	<td><input type="text" class="number" name="Price" maxlength="12" size="12" value="' . $_POST['Price'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Date Updated') . ':</td>
@@ -564,11 +567,13 @@ if (!isset($SuppliersResult)) {
 	echo '<div class="centre">';
 	if (isset($StockLocation) and isset($StockID) AND mb_strlen($StockID) != 0) {
 		echo '<br /><a href="' . $rootpath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
-		echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';
-		echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Search Outstanding Sales Orders') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '&amp;StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';
+		echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $StockLocation . '">' . _('Search Outstanding Sales Orders') . '</a>';
 		echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 	}
-	echo '</form></div>';
+	echo '</div>';
+    echo '</div>
+          </form>';
 }
 
 include ('includes/footer.inc');
