@@ -160,7 +160,8 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				<th>' . _('List Price') . '</th>
 			<tr>';
 		$k = 0; //row colour counter
-		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" name="update">';
+		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
 			<input type="hidden" value="' . $_POST['Margin'] . '" name="Margin" />
@@ -220,18 +221,20 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<tr>
 			<td style="text-align:right" colspan="4"><input type="submit" name="submit" value="' . _('Update') . '" onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
 			<td style="text-align:left" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '"><input type="submit" value="' . _('Back') . '" /></a></td>
-			 </tr></form>';
+			 </tr>
+             </div>
+             </form>';
 	} else {
 		prnMsg(_('There were no prices meeting the criteria specified to review'),'info');
-		echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '<a/></div><p>';
+		echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '<a/></div>';
 	}
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text">' . _('Prices can be displayed based on their relation to cost') . '</div><br />';
 	echo '<br />
-          <br />
-          <form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+          <form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    echo '<table class="selection">';
 
 	$SQL = "SELECT categoryid, categorydescription
 		      FROM stockcategory
@@ -240,7 +243,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	echo '<tr>
 			<td>' . _('Category') . ':</td>
 			<td><select name="StockCat">';
-	echo '<option value="all">' . _('All Categories') . '';
+	echo '<option value="all">' . _('All Categories') . '</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
@@ -283,7 +286,9 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '</table>
-		<br /><p><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '" /></div></p>';
+		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '" /></div>';
+    echo '</div>
+          </form>';
 } /*end of else not submit */
 include ('includes/footer.inc');
 ?>

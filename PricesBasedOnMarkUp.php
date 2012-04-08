@@ -7,22 +7,23 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $title.'</p>';
 
-echo '<br /><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br /><div class="centre">';
+echo '<br /><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br />';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
 $PricesResult = DB_query($SQL,$db);
 
-echo '<p><table class="selection">
+echo '<br /><table class="selection">
              <tr>
           	   <td>' . _('Select the Price List to update') .':</td>
                <td><select name="PriceList">';
 
 if (!isset($_POST['PriceList']) OR $_POST['PriceList']=='0'){
-	echo '<option selected="selected" value="0">' . _('No Price List Selected');
+	echo '<option selected="selected" value="0">' . _('No Price List Selected') . '</option>';
 }
 
 while ($PriceLists=DB_fetch_array($PricesResult)){
@@ -161,9 +162,10 @@ echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . '
                 <td><input type="text" name="IncreasePercent" class="number" size="4" maxlength="4" value="' . $_POST['IncreasePercent'] . '" /></td></tr></table>';
 
 
-echo '<p><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
+echo '<br /><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
 
-echo '</form>';
+echo '</div>
+      </form>';
 
 if (isset($_POST['UpdatePrices'])){
 	$InputError =0; //assume the best

@@ -12,7 +12,7 @@ $result = DB_query("SELECT debtorsmaster.name,
 					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_array($result);
 
-$title = _('Special Prices for') . ' '. $myrow['name'];
+$title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
 
 include('includes/header.inc');
 
@@ -34,7 +34,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . _('Special Customer Prices').'</p><br />';
-echo '<font color=BLUE><b>' . $myrow['name'] . ' ' . _('in') . ' ' . $myrow['currcode'] . '<br />' . ' ' . _('for') . ' ';
+echo '<b>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $myrow['currcode'] . '<br />' . ' ' . _('for') . ' ';
 
 $CurrCode = $myrow['currcode'];
 $SalesType = $myrow['salestype'];
@@ -55,7 +55,7 @@ if ($myrow[1]=='K'){
 	exit;
 }
 
-echo $Item . ' - ' . $myrow[0] . '</b></font></p>';
+echo $Item . ' - ' . $myrow[0] . '</b><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -199,7 +199,7 @@ $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<table><tr><td valign=top>';
+echo '<table><tr><td valign="top">';
 echo '<table class="selection">';
 
 if (DB_num_rows($result) == 0) {
@@ -274,18 +274,19 @@ if (DB_num_rows($result) == 0) {
 			<td class="number">'.$myrow['conversionfactor'].'</td>
 			<td>'.ConvertSQLDate($myrow['startdate']).'</td>
 			<td>'.$EndDateDisplay.'</td>
-	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&Price='.$myrow['price'].'&Branch='.$myrow['branchcode'].
-				'&StartDate='.$myrow['startdate'].'&EndDate='.$myrow['enddate'].'&Edit=1">' . _('Edit') . '</td>
-			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&Branch='.$myrow['branchcode'].'&StartDate='.$myrow['startdate'] .'&EndDate='.$myrow['enddate'].'&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td>
+	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$myrow['price'].'&amp;Branch='.$myrow['branchcode'].
+				'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'].'&amp;Edit=1">' . _('Edit') . '</a></td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$myrow['branchcode'].'&amp;StartDate='.$myrow['startdate'] .'&amp;EndDate='.$myrow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 
 	}
 //END WHILE LIST LOOP
 }
 
-echo '</table></tr></table><p />';
+echo '</table></td></tr></table><br />';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item . '" />';
 
@@ -335,19 +336,19 @@ if ($myrow['branchcode']=='') {
 
 while ($myrow=DB_fetch_array($result)) {
 	if ($myrow['branchcode']==$_GET['Branch']) {
-		echo '<option selected="selected" value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
+		echo '<option selected="selected" value="'.$myrow['branchcode'].'">'.htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8').'</option>';
 	} else {
-		echo '<option value="'.$myrow['branchcode'].'">'.$myrow['brname'].'</option>';
+		echo '<option value="'.$myrow['branchcode'].'">'.htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8').'</option>';
 	}
 }
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" class="date" alt='.$_SESSION['DefaultDateFormat']. ' size="11" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
+		<td><input type="text" name="StartDate" class="date" alt="'.$_SESSION['DefaultDateFormat']. '" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('End Date') . ':</td>
-		<td><input type="text" name="EndDate" class=date alt='.$_SESSION['DefaultDateFormat']. ' size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
+		<td><input type="text" name="EndDate" class="date" alt="'.$_SESSION['DefaultDateFormat']. '" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('Price') . ':</td>
           <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" /></td>
@@ -359,6 +360,7 @@ echo '<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
+        </div>
 		</form>';
 
 include('includes/footer.inc');

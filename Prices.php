@@ -206,16 +206,16 @@ if ($InputError ==0){
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result) > 0) {
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-				<table class="selection">
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+        echo '<div>';      
+		echo '<table class="selection">
 				<tr>
 					<th colspan="7">
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . 
 					_('Pricing for part') . ':
 					<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20" />
 					<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
-				</tr>
-			</form>';
+				</tr>';
 
 		echo '<tr><th>' . _('Currency') . '</th>
 					<th>' . _('Sales Type') . '</th>
@@ -246,8 +246,8 @@ if ($InputError ==0){
 					<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
 					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&Price=' . $myrow['price'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&Edit=1">' . _('Edit') . '</td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&TypeAbbrev=' .$myrow['typeabbrev'] . '&CurrAbrev=' . $myrow['currabrev'] . '&StartDate=' . $myrow['startdate'] . '&EndDate=' . $myrow['enddate'] . '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</td></tr>';
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . $myrow['price'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td></tr>';
 					
 			} else {
 				echo '<td>' . $myrow['currency'] . '</td>
@@ -259,12 +259,15 @@ if ($InputError ==0){
 
 		}
 		//END WHILE LIST LOOP
-		echo '</table><p>';
+		echo '</table><br />';
+        echo '</div>
+              </form>';
 	} else {
 		prnMsg(_('There are no prices set up for this part'),'warn');
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (isset($_GET['Edit'])){
 		echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'" />';
@@ -289,7 +292,7 @@ if ($InputError ==0){
 	$result = DB_query($SQL,$db);
 
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="5"><font color="blue" size="3"><b>' . $Item . ' - ' . $PartDescription . '</b></font></th></tr>';
+	echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
 	echo '<tr><td>' . _('Currency') . ':</td>
 			<td><select name="CurrAbrev">';
 	while ($myrow = DB_fetch_array($result)) {
@@ -333,8 +336,8 @@ if ($InputError ==0){
 	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
 				<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="10" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
 	echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-				<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
-	echo '<input type="hidden" name="Item" value="' . $Item.'" />';
+				<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" />';
+	echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
 	echo '<tr><td>' . _('Price') . ':</td>
 	          <td>
 	          <input type="text" class="number" name="Price" size="12" maxlength="11" value="'; 
@@ -349,7 +352,8 @@ if ($InputError ==0){
 	</div>';
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 
 
