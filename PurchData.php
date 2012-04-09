@@ -169,7 +169,7 @@ if (!isset($_GET['Edit'])) {
 				INNER JOIN currencies
 					ON suppliers.currcode=currencies.currabrev
 				WHERE purchdata.stockid = '" . $StockID . "'
-				ORDER BY supplierno, purchdata.effectivefrom DESC";
+				ORDER BY purchdata.effectivefrom DESC, supplierno";
 	$ErrMsg = _('The supplier purchasing details for the selected part could not be retrieved because');
 	$PurchDataResult = DB_query($sql, $db, $ErrMsg);
 	if (DB_num_rows($PurchDataResult) == 0 and $StockID != '') {
