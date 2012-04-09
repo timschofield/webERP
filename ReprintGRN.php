@@ -12,10 +12,11 @@ if (!isset($_POST['PONumber'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">
 		<tr>
-			<th colspan="2"><font size="2" color="navy">' . _('Select a purchase order') . '</th>
+			<th colspan="2"><h3>' . _('Select a purchase order') . '</h3></th>
 		</tr>
 		<tr>
 			<td>' . _('Enter a Purchase Order Number') . '</td>
@@ -25,6 +26,8 @@ echo '<table class="selection">
 			<td colspan="2" style="text-align: center"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>
 		</tr>
 	</table>
+    <br />
+    </div>
 	</form>';
 
 if (isset($_POST['Show'])) {
@@ -72,7 +75,7 @@ if (isset($_POST['Show'])) {
 	echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="8"><font size="2" color="navy">' . _('GRNs for Purchase Order No') .' ' . $_POST['PONumber'] . '</th>
+				<th colspan="8"><h3>' . _('GRNs for Purchase Order No') .' ' . $_POST['PONumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th>' . _('Supplier') . '</th>

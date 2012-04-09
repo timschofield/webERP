@@ -55,29 +55,30 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	$ResultLocation = DB_query($SqlLoc,$db);
 	$Location=DB_fetch_array($ResultLocation);
 
-	echo'<p class="page_title_text" align="center"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
-	echo'<p class="page_title_text" align="center"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
-	echo '<table>';
-	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
-			<th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
-			<th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
-			<th>' . _('Reorder Level') . '</th>
-		<tr>';
-
+	echo'<p class="page_title_text"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
+	echo'<p class="page_title_text"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
 	$k=0; //row colour counter
-	echo'<form action="ReorderLevelLocation.php" method="post" name="Update">';
+	echo '<form action="ReorderLevelLocation.php" method="post" id="Update">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    echo '<table>';
+    echo '<tr>
+            <th>' . _('Code') . '</th>
+            <th>' . _('Description') . '</th>
+            <th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
+            <th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
+            <th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
+            <th>' . _('Reorder Level') . '</th>
+        </tr>';
+
 	$i=1;
 	while ($myrow=DB_fetch_array($result))	{
 
 		if ($k==1){
-			echo '<tr class="EvenTableRows">';
+			echo '<tr class="EvenTableRows"><td>';
 			$k=0;
 		} else {
-			echo '<tr class="OddTableRows">';
+			echo '<tr class="OddTableRows"><td>';
 			$k=1;
 		}
 
@@ -116,7 +117,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$LocQtyResult = DB_query($SqlOHLoc,$db);
 		$LocQtyRow = DB_fetch_array($LocQtyResult);
 
-		echo'<td>'.$myrow['stockid'].'</td>
+		echo $myrow['stockid'].'</td>
 			<td>'.$myrow['description'].'</td>
 			<td class="number">'.locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']).'</td>
 			<td class="number">'.locale_number_format($TotQtyRow['qty'],$myrow['decimalplaces']).'</td>
@@ -131,6 +132,8 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				<input type="submit" name="submit" value="' . _('Update') . '" />
 			</td>
 		</tr>
+        </table>
+        </div>
 		</form>';
 
 
@@ -142,7 +145,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '<br />
 		<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<table>';
+		<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 				   locationname
@@ -173,9 +176,10 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	}
 
 	echo '</select></td></tr>';
-	echo'<tr>
+	echo '<tr>
 			<td>' . _('Number Of Days Sales') . ':</td>
-			<td><input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" /></td>';
+			<td><input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" /></td>
+          </tr>';
 	echo '<tr>
 			<td>' . _('Order By') . ':</td>
 			<td><select name="Sequence">
@@ -185,11 +189,11 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		</tr>';
 	echo '</table>
 			<br />
-			<p>
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Submit') . '" />
-			</div>
-			</p>';
+			</div>';
+    echo '</div>
+          </form>';
 
 } /*end of else not submit */
 include('includes/footer.inc');

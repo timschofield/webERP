@@ -309,8 +309,8 @@ If (isset($_POST['Process'])) {
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
 		'" alt="" /><b>'.' '. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName .'</b></p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr><th colspan="7"><b>'._('Order Line Details').'</b></th></tr>';
@@ -368,7 +368,7 @@ echo '<tr>
 	</table>';
 
 echo '<br /><table class="selection">';
-echo '<tr><th colspan="7"><font size="2" color=navy><b>'._('Order Header Details').'</b></font></th></tr>';
+echo '<tr><th colspan="7"><h3>'._('Order Header Details').'</h3></th></tr>';
 
 echo '<tr>
 	<td>'. _('Deliver To') .':</td>
@@ -419,8 +419,8 @@ if ($NewRecurringOrder=='Yes'){
 } else {
 	echo '<tr>
 	<td>'. _('Last Recurrence') . ':</td>
-	<td>' . $_POST['StartDate'] . '</td></tr>';
-	echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '" />';
+	<td>' . $_POST['StartDate'];
+	echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '" /></td></tr>';
 }
 
 if (!isset($_POST['StopDate'])){
@@ -484,12 +484,11 @@ if ($_SESSION['Items'.$identifier]->AllDummyLineItems()==true){
 		echo '<option value="0">' . _('No') . '</option>';
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></td></tr></table>';
 } else {
+    echo '</table>';
 	echo '<input type="hidden" name="AutoInvoice" value="0" />';
 }
-
-echo '</table>';
 
 echo '<br /><div class="centre">';
 if ($NewRecurringOrder=='Yes'){
@@ -504,6 +503,8 @@ if ($NewRecurringOrder=='Yes'){
 	echo '<br /><br /><input type="submit" name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');" />';
 }
 
-echo '</form></div>';
+echo '</div>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

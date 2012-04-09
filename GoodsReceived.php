@@ -169,7 +169,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		if ($LnItm->Controlled == 1) {
 
-			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" value="' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '" /><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
+			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" value="' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '" /><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
 			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQty,$LnItm->DecimalPlaces),$LnItm->DecimalPlaces) . '" /></td>';
@@ -188,10 +188,10 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1){
-				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&LineNo=' . $LnItm->LineNo . '">'.
+				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">'.
 					_('Enter Serial Nos'). '</a></td>';
 			} else {
-				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&LineNo=' . $LnItm->LineNo . '">'.
+				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">'.
 					_('Enter Batches'). '</a></td>';
 			}
 		}
@@ -270,6 +270,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	if ($_SESSION['CompanyRecord']==0){
 		/*The company data and preferences could not be retrieved for some reason */
+        echo '</div>';
+        echo '</form>';
 		prnMsg(_('The company information and preferences could not be retrieved') . ' - ' . _('see your system administrator') , 'error');
 		include('includes/footer.inc');
 		exit;
@@ -354,6 +356,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			unset($_SESSION['PO'.$identifier]->LineItems);
 			unset($_SESSION['PO'.$identifier]);
 			unset($_POST['ProcessGoodsReceived']);
+            echo '</div>';
+            echo '</form>';
 			include ('includes/footer.inc');
 			exit;
 		}
@@ -723,12 +727,14 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			'. prnMsg(_('GRN number'). ' '. $GRN .' '. _('has been processed'),'success') . '
 			<br />
 			<br />
-			<a href="PDFGrn.php?GRNNo='.$GRN .'&PONo='.$PONo.'">'. _('Print this Goods Received Note (GRN)').'</a>
+			<a href="PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">'. _('Print this Goods Received Note (GRN)').'</a>
 			<br />
 			<br />
 			<a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Select a different purchase order for receiving goods against'). '</a>
 		</div>';
 /*end of process goods received entry */
+    echo '</div>';
+    echo '</form>';
 	include('includes/footer.inc');
 	exit;
 

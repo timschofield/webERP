@@ -340,14 +340,15 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 } else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['RecdAfterDate']) OR !Is_Date($_POST['RecdAfterDate'])) {
 		$_POST['RecdAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date("m")-3,Date("d"),Date("Y")));
 	}
+    echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
+    echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';
 	echo '<table class="selection"><tr>';
-	echo '<input type="hidden" name="SupplierID" valuE="' . $_POST['SupplierID'] . '" />';
-	echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';
 	echo '<td>'._('Show all goods received after') . ': </td>
 			<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'].'" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="10" /></td>
 		</tr>
@@ -356,6 +357,8 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		<div class="centre">
 			<input type="submit" name="ShowGRNS" value="' . _('Show Outstanding Goods Received') . '" />
 		</div>';
+    echo '</div>
+          </form>';
 		
 	if (isset($_POST['ShowGRNS'])){
 
@@ -435,6 +438,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			}
 
 			echo '</table>';
+        
 		}
 	}
 }
