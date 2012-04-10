@@ -129,12 +129,12 @@ if (!isset($SelectedSalesPostingID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedSalesPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
+				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</a></td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
-				$myrow[4],
+				htmlspecialchars($myrow[4],ENT_QUOTES,'UTF-8'),
 				$myrow[5],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0],
@@ -242,12 +242,12 @@ if (!isset($SelectedSalesPostingID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedSalesPostingID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</td></tr>',
+				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">'. _('Delete') . '</a></td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
-				$myrow[4],
+                htmlspecialchars($myrow[4],ENT_QUOTES,'UTF-8'),
 				$myrow[5],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0],
@@ -269,6 +269,7 @@ if (isset($SelectedSalesPostingID)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPostingID)) {
@@ -389,13 +390,13 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname']  . '</option>';
+		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8')  . '</option>';
 
 	} //end while loop
 
 	DB_data_seek($result,0);
 
-	echo '</td></tr>
+	echo '</select></td></tr>
 		<tr><td>' . _('Post Discount to GL Account') . ':</td>
 			<td><select name="DiscountGLCode">';
 
@@ -405,7 +406,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname']  . '</option>';
+		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8')  . '</option>';
 
 	} //end while loop
 
@@ -415,7 +416,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 } //end if record deleted no point displaying form to add record
 

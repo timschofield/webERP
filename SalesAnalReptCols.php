@@ -258,8 +258,8 @@ if (DB_num_rows($result)!=0){
 			<th>' . _('Prd From') . '</th>
 			<th>' . _('Prd To') . '</th>
 			<th>' . _('Data') . '</th>
-			<th>' . _('Col') . ' #<br /><font size="1">' . _('Numerator') . '</font></th>
-			<th>' . _('Col') . ' #<br /><font size="1">' . _('Denominator') . '</font></th>
+			<th>' . _('Col') . ' #<br />' . _('Numerator') . '</th>
+			<th>' . _('Col') . ' #<br />' . _('Denominator') . '</th>
 			<th>' . _('Operator') . '</th>
 			<th>' . _('Budget') . '<br />' . _('Or Actual') . '</th>
 		</tr>';
@@ -285,7 +285,7 @@ if (DB_num_rows($result)!=0){
 		$BudOrAct = _('N/A');
 	}
 
-	printf('<td><a href=\'%sReportID=%s&SelectedCol=%s\'>%s</a></td>
+	printf('<td><a href=\'%sReportID=%s&amp;SelectedCol=%s\'>%s</a></td>
           	<td>%s</td>
           	<td>%s</td>
           	<td>%s</td>
@@ -296,7 +296,7 @@ if (DB_num_rows($result)!=0){
           	<td>%s</td>
           	<td>%s</td>
           	<td>%s</td>
-          	<td><a href="%sReportID=%s&SelectedCol=%s&delete=1">' . _('Delete') . '</td></tr>',
+          	<td><a href="%sReportID=%s&amp;SelectedCol=%s&amp;delete=1">' . _('Delete') . '</a></td></tr>',
           	htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
           	$ReportID,
           	$myrow[1],
@@ -319,8 +319,7 @@ if (DB_num_rows($result)!=0){
 	//END WHILE LIST LOOP
  }
 
-echo '</table>
-		<br />
+echo '</table><br />
 		<div class="centre">
 			<a href="' . $rootpath . '/SalesAnalRepts.php">' . _('Maintain Report Headers') . '</a>
 		</div>';
@@ -335,6 +334,7 @@ if (!isset($_GET['delete'])) {
 	$myrow=DB_fetch_array($result);
 	$ReportHeading=$myrow['reportheading'];
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ReportHeading" value="'.$ReportHeading.'" />';
 	echo '<input type="hidden" name="ReportID" value="' . $ReportID . '" />';
@@ -386,13 +386,13 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">';
 
 	} else {
-		echo '<table class="selection">';
+		echo '<br /><table class="selection">';
 		if (!isset($_POST['ColID'])) {
 			$_POST['ColID']=1;
 		}
 		echo '<tr>
 				<td>' . _('Column Number') . ':</td>
-				<td><input type="text" class="number" name=ColID size="3" maxlength="3" value="' . $_POST['ColID'] . '" />&nbsp;<font size="1" />(' . _('A number between 1 and 10 is expected') . ')</font></td>
+				<td><input type="text" class="number" name="ColID" size="3" maxlength="3" value="' . $_POST['ColID'] . '" />&nbsp;(' . _('A number between 1 and 10 is expected') . ')</td>
 			</tr>';
 	}
 	if (!isset($_POST['Heading1'])) {
@@ -429,7 +429,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<tr>
 				<td>' . _('From Period') . ':</td>
-				<td><select name="PeriodFrom"';
+				<td><select name="PeriodFrom">';
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = _('Could not load periods table');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -445,7 +445,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<tr>
 				<td>' . _('ToPeriod') . ':</td>
-				<td><select name="PeriodTo"';
+				<td><select name="PeriodTo">';
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = _('Could not load periods table');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -475,14 +475,14 @@ if (!isset($_GET['delete'])) {
 		      echo '<option value="0">' . _('Budget') . '</option>';
 		      echo '<option selected="selected" value="1">' . _('Actual') . '</option>';
 		}
-		echo '</select></td>
-			</tr>';
+		echo '</select>';
 		echo '<input type="hidden" name="ValFormat" value="N" />
 				<input type="hidden" name="ColNumerator" value="0" />
 				<input type="hidden" name="ColDenominator" value="0" />
 				<input type="hidden" name="CalcOperator" value="" />
 				<input type="hidden" name="Constant" value="0" />';
-
+        echo '</td>
+            </tr>';
 	} else {  /*it IS a calculated column */
 
 		echo '<tr>
@@ -551,6 +551,7 @@ if (!isset($_GET['delete'])) {
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 			</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

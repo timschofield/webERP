@@ -210,17 +210,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	OR $_SESSION['CreditItems'.$identifier]->DebtorNo=='' ) {
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .  '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note').'</p>';
 	
 	echo '<table cellpadding="3" class="selection">';
-	echo '<tr><th colspan="5"><font size="3" color="navy"><b> ' . _('Customer Selection') .'</b></font></th></tr>';
+	echo '<tr><th colspan="5"><h3> ' . _('Customer Selection') .'</h3></th></tr>';
 	echo '<tr>
-			<td><font size="1">' . _('Enter text in the customer name') . ':</font></td>
+			<td>' . _('Enter text in the customer name') . ':</td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-			<td><font size="3"><b>' . _('OR') . '</b></font></td>
-			<td><font size="1">' . _('Enter text extract in the customer code') . ':</font></td>
+			<td><b>' . _('OR') . '</b></td>
+			<td>' . _('Enter text extract in the customer code') . ':</td>
 			<td><input type="text" name="CustCode" size="15" maxlength="18" /></td>
 		</tr>';
 	echo '</table>
@@ -231,10 +232,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	if (isset($result_CustSelect)) {
 
-		echo '<table cellpadding="2">';
+		echo '<br /><table cellpadding="2">';
 
-		$TableHeader = '<br />
-					<tr>
+		$TableHeader = '<tr>
 						<th>' . _('Customer') . '</th>
 						<th>' . _('Branch') . '</th>
 						<th>' . _('Contact') . '</th>
@@ -261,9 +261,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8'). '" /></td>
+			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8'). '" />
 				<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
-				<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" />
+				<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" /></td>
 				<td>'.$myrow['contactname'].'</td>
 				<td>'.$myrow['phoneno'].'</td>
 				<td>'.$myrow['faxno'].'</td>
@@ -272,10 +272,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$j++;
 		//end of page full new headings if
 		} //end of while loop
-		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
-		echo '</table></form>';
-
+		echo '</table><input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 	}//end if results to show
+    echo '</div>
+          </form>';
+
 	
 //end if RequireCustomerSelection
 } else {
@@ -398,8 +399,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /*Always do the stuff below if not looking for a customerid
   Set up the form for the credit note display and  entry*/
 
-	 echo '<form name="MainForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	 echo '<form id="MainForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">';
+     echo '<div>';
+	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 /*Process Quick Entry */
@@ -712,7 +714,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   } else {
 				echo '<td class="number"><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LineItem->LineNumber . '">' . locale_number_format($LineItem->Quantity,$LineItem->DecimalPlaces) . '</a>
-              <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
+                      <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   }
 
 			echo '<td>' . $LineItem->Units . '</td>
@@ -969,7 +971,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 echo '<td>' . _('Enter text extracts in the description') . ':&nbsp;</td>';
 		 echo '<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>';
 		 echo '<tr><td></td>';
-		 echo '<td><font size="3"><b>' ._('OR') . '</b></font>&nbsp;&nbsp;' . _('Enter extract of the Stock Code') . ':&nbsp;</td>';
+		 echo '<td><b>' ._('OR') . '</b>&nbsp;&nbsp;' . _('Enter extract of the Stock Code') . ':&nbsp;</td>';
 		 echo '<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>';
 		 echo '</tr>';
 		 echo '</table>
@@ -1003,18 +1005,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				    $k++;
 				}
 				if(file_exists($_SESSION['part_pics_dir'] . '/' .mb_strtoupper($myrow['stockid']).'.jpg') ) {
-					printf('<td><font size="1"><input type="submit" name="NewItem" value="%s" /></font></td>
-							<td><font size="1">%s</font></td>
-							<td><font size="1">%s</font></td>
+					printf('<td><input type="submit" name="NewItem" value="%s" /></td>
+							<td>%s</td>
+							<td>%s</td>
 							<td><img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=%s&text=&width=120&height=120" /></td></tr>',
 							$myrow['stockid'],
 							$myrow['description'],
 							$myrow['units'],
 							$myrow['stockid']);
 				} else { //don't try to show the image
-					printf('<td><font size="1"><input type="submit" name="NewItem" value="%s" /></font></td>
-						<td><font size="1">%s</font></td>
-						<td><font size="1">%s</font></td>
+					printf('<td><input type="submit" name="NewItem" value="%s" /></td>
+						<td>%s</td>
+						<td>%s</td>
 						<td>' . _('No Image') . '</td></tr>',
 						$myrow['stockid'],
 						$myrow['description'],
@@ -1029,7 +1031,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /*FORM VARIABLES TO POST TO THE CREDIT NOTE 10 AT A TIME WITH PART CODE AND QUANTITY */
 	     echo '<table class="selection">';
-	     echo '<tr><th colspan="2"><font size="3" color="navy"><b>' . _('Quick Entry') . '</th></tr>';
+	     echo '<tr><th colspan="2"><h3>' . _('Quick Entry') . '</h3></th></tr>';
 	     echo '<tr>
 	           	<th>' . _('Part Code') . '</th>
 	           	<th>' . _('Quantity') . '</th>
@@ -1052,6 +1054,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	}
 
+    echo '</div>
+          </form>';
 } //end of else not selecting a customer
 
 if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
@@ -1968,6 +1972,5 @@ then debit the expense account the stock is to written off to */
 
 } /*end of process credit note */
 
-echo '</form>';
 include('includes/footer.inc');
 ?>

@@ -14,7 +14,8 @@ if (!isset($_POST['DateRange'])){
 	$_POST['DateRange']='ThisMonth';
 }
 
-echo '<form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">';
@@ -25,7 +26,7 @@ echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
 		<td>' . _('Custom Range') . ':</td>
 		<td><input type="radio" name="DateRange" value="Custom" ';
 if ($_POST['DateRange']=='Custom'){
-	echo 'checked';
+	echo 'checked="checked"';
 }
 echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
@@ -33,7 +34,7 @@ echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		<td>' . _('This Week') . ':</td>
 		<td><input type="radio" name="DateRange" value="ThisWeek" ';
 if ($_POST['DateRange']=='ThisWeek'){
-	echo 'checked';
+	echo 'checked="checked"';
 }
 echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
@@ -41,7 +42,7 @@ echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		<td>' . _('This Month') . ':</td>
 		<td><input type="radio" name="DateRange" value="ThisMonth" ';
 if ($_POST['DateRange']=='ThisMonth'){
-	echo 'checked';
+	echo 'checked="checked"';
 }
 echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>
@@ -49,7 +50,7 @@ echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		<td>' . _('This Quarter') . ':</td>
 		<td><input type="radio" name="DateRange" value="ThisQuarter" ';
 if ($_POST['DateRange']=='ThisQuarter'){
-	echo 'checked';
+	echo 'checked="checked"';
 }
 echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
 		</tr>';
@@ -72,7 +73,9 @@ echo '</table>';
 
 
 echo '<br /><div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
-echo '</form></div>';
+echo '</div>';
+echo '</div>
+      </form>';
 echo '<br />';
 
 

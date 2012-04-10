@@ -41,6 +41,7 @@ if (DB_num_rows($result) == 0) {
 // end of showing search facilities
 
 echo '<form action="SelectAsset.php?' . SID . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
 echo '<table class="selection"><tr>';
@@ -63,13 +64,13 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
 }
-echo '</select>';
+echo '</select></td>';
 
-echo '<td>' . _('Enter partial description') . '</b>:</td><td>';
+echo '<td>' . _('Enter partial description') . ':</td><td>';
 if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" maxlength="25" /> /';
+	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
 echo '</td>
 	</tr>
@@ -96,7 +97,7 @@ while ($myrow = DB_fetch_array($result)) {
 }
 echo '</select>';
 
-echo '  </td><td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . '</b>:</td>';
+echo '  </td><td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . ':</td>';
 echo '<td>';
 if (isset($_POST['AssetCode'])) {
 	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" maxlength="13" />';
@@ -108,6 +109,7 @@ echo '<div class="centre">
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
 	</div>
 	<br />
+    </div>
 	</form>';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
@@ -209,6 +211,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="FixedAssetItems.php" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -244,7 +247,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				<input type="submit" name="Previous" value="' . _('Previous') . '" />
 				<input type="submit" name="Next" value="' . _('Next') . '" />';
 
-			echo '<p></div>';
+			echo '<br /></div>';
 		}
 		echo '<table class="selection">';
 		$tableheader = '<tr>
@@ -282,8 +285,10 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			//end of page full new headings if
 		}
 		//end of while loop
-		echo '</table></form>';
+		echo '</table>';
 	} // there were records to list
+    echo '</div>
+          </form>';
 }
 /* end display list if there is more than one record */
 include ('includes/footer.inc');

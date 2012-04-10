@@ -29,13 +29,14 @@
 	OR $SelectADifferentPeriod==_('Select A Different Period')){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
  
 	echo '<table class="selection">
 			<tr><td>' . _('Select Period From:') . '</td>
-			<td><select Name="FromPeriod">';
+			<td><select name="FromPeriod">';
 
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
@@ -114,7 +115,7 @@
 	}
 	echo '<tr>
 			<td>' . _('For Stock Category:') .'</td>
-			<td><select Name="CategoryID">';
+			<td><select name="CategoryID">';
 	if($_POST['CategoryID']=='All'){
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	} else {
@@ -176,20 +177,22 @@
 		$_POST['ValueTo']='';
 	}
 	echo '<tr><td>' . _('Graph On:') . '</td><td>
-			<input type="radio"" name="GraphOn" value="All" CHECKED />' . _('All') . '<br />
-			<input type="radio"" name="GraphOn" value="Customer" />' . _('Customer') . '<br />
-			<input type="radio"" name="GraphOn" value="StockID" />' . _('Item Code') . '</td></tr>';
+			<input type="radio" name="GraphOn" value="All" checked="checked" />' . _('All') . '<br />
+			<input type="radio" name="GraphOn" value="Customer" />' . _('Customer') . '<br />
+			<input type="radio" name="GraphOn" value="StockID" />' . _('Item Code') . '</td></tr>';
 	echo '<tr><td>' . _('From:') . ' <input type="text" name="ValueFrom" value="' . $_POST['ValueFrom'] . '" /></td>
 	 		<td>' . _('To:') . ' <input type="text" name="ValueTo" value="' . $_POST['ValueTo'] . '" /></td></tr>';
 
 	echo '<tr><td>' . _('Graph Value:') . '</td><td>
-			<input type="radio"" name="GraphValue" value="Net" CHECKED />' . _('Net Sales Value') . '<br />
-			<input type="radio"" name="GraphValue" value="GP" />' . _('Gross Profit') . '<br />
-			<input type="radio"" name="GraphValue" value="Quantity" />' . _('Quantity') . '</td></tr>';
+			<input type="radio" name="GraphValue" value="Net" checked="checked" />' . _('Net Sales Value') . '<br />
+			<input type="radio" name="GraphValue" value="GP" />' . _('Gross Profit') . '<br />
+			<input type="radio" name="GraphValue" value="Quantity" />' . _('Quantity') . '</td></tr>';
 
 	echo '</table>';
 
-	echo '<br /><div class="centre"><input type="submit" Name="ShowGraph" value="' . _('Show Sales Graph') .'" /></div>';
+	echo '<br /><div class="centre"><input type="submit" name="ShowGraph" value="' . _('Show Sales Graph') .'" /></div>';
+    echo '</div>
+          </form>';
 	include('includes/footer.inc');
 } else {
 

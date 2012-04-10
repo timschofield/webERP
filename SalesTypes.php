@@ -203,8 +203,8 @@ while ($myrow = DB_fetch_row($result)) {
 
 	printf('<td>%s</td>
 		<td>%s</td>
-		<td><a href="%sSelectedType=%s">' . _('Edit') . '</td>
-		<td><a href="%sSelectedType=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . _('Delete') . '</td>
+		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
+		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
 		$myrow[0],
 		$myrow[1],
@@ -218,13 +218,14 @@ while ($myrow = DB_fetch_row($result)) {
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<p><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Show All Sales Types Defined') . '</a></div></p>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Show All Sales Types Defined') . '</a></div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p><table class="selection">'; //Main table
+	echo '<br />';
 
 
 	// The user wish to EDIT an existing type
@@ -268,11 +269,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr><td>' . _('Sales Type Name') . ':</td>
 			<td><input type="text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
 
-   	echo '</td></tr></table>'; // close main table
+   	echo '</table>'; // close main table
 
-	echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 } // end if user wish to delete
 

@@ -194,7 +194,7 @@ for($Buzy = (isset($TmpParentID) AND ($TmpParentID != 0));
 
 $CategoryPath = $CategoryPath.$TempPath;
 
-echo '<p><div class="centre"><i>' . _('Selected Sales Category Path') . '</i>&nbsp;:&nbsp;'. $CategoryPath . '&nbsp;*&nbsp;</b></div></p>';
+echo '<br /><div class="centre"><i>' . _('Selected Sales Category Path') . '</i>&nbsp;:&nbsp;'. $CategoryPath . '&nbsp;*&nbsp;</div>';
 
 // END Calculate Path for navigation
 // ----------------------------------------------------------------------------------------
@@ -216,7 +216,7 @@ $sql = "SELECT salescatid,
 $result = DB_query($sql,$db);
 
 
-echo '<p>';
+echo '<br />';
 if (DB_num_rows($result) == 0) {
 	prnMsg(_('There are no categories defined at this level.'));
 } else {
@@ -271,7 +271,6 @@ if (DB_num_rows($result) == 0) {
 	//END WHILE LIST LOOP
 	echo '</table>';
 }
-echo '</p>';
 
 // END display Categories
 // ----------------------------------------------------------------------------------------
@@ -281,7 +280,8 @@ echo '</p>';
 // ----------------------------------------------------------------------------------------
 // Show New or Edit Category
 
-echo '<p><form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<br /><form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 // This array will contain the stockids in use for this category
@@ -328,7 +328,8 @@ if (isset($SelectedCategory)) {
 echo '</table>';
 echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Submit Information') . '" /></div>';
 
-echo '</form></p>';
+echo '</div>
+      </form>';
 
 // END Show New or Edit Category
 // ----------------------------------------------------------------------------------------
@@ -366,7 +367,8 @@ $sql = "SELECT stockid, description FROM stockmaster ORDER BY stockid";
 $result = DB_query($sql,$db);
 if($result && DB_num_rows($result)) {
 	// continue id stock id in the stockid array
-	echo '<p><form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+	echo '<br /><form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if( isset($SelectedCategory) ) { // If we selected a category we need to keep it selected
 		echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
@@ -391,8 +393,8 @@ if($result && DB_num_rows($result)) {
 	echo '</select>';
 	echo '</td></tr></table>';
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Add Inventory Item') . '" /></div>';
-	echo '';
-	echo '</form></p>';
+	echo '</div>
+          </form>';
 } else {
 	echo '<p>';
 	echo prnMsg( _('No more Inventory items to add') );
@@ -407,7 +409,7 @@ unset($stockids);
 
 // ----------------------------------------------------------------------------------------
 // Always Show Stock In Category
-echo '<p>';
+echo '<br />';
 $sql = "SELECT scp.stockid, sm.description FROM salescatprod scp
 			LEFT JOIN stockmaster sm ON sm.stockid = scp.stockid
 			WHERE scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . "
@@ -442,7 +444,6 @@ if($result ) {
 	}
 	DB_free_result($result);
 }
-echo '</p>';
 
 // ----------------------------------------------------------------------------------------
 // END Always Show Stock In Category

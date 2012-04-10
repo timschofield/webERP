@@ -1038,6 +1038,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // the page is called.
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+          <div>
 			<br/>
 			<br/>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -1050,7 +1051,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option selected="selected" value="Detail">' . _('Detail') . '</option>
 				<option value="Summary">' . _('Summary') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 		</tr>';
 
 
@@ -1060,7 +1061,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option selected="selected" value="0">' . _('Sales Order') . '</option>
 				<option value="1">' . _('Quotation') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 		</tr>';
 
 	echo '<tr>
@@ -1069,7 +1070,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option selected="selected" value="Order">' . _('Order Date') . '</option>
 				<option value="Invoice">' . _('Invoice Date') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 		</tr>';
 
 	echo '<tr>
@@ -1079,7 +1080,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="10">' . _('Sales Invoice') . '</option>
 				<option value="11">' . _('Credit Note') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td>' . _('Only Applies To Invoice Date Type') . '</td>
 		</tr>';
 
@@ -1098,7 +1099,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td><input type="text" name="PartNumber" size="20" maxlength="20" value="'. $_POST['PartNumber'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['DebtorNo'])){
@@ -1110,7 +1111,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td><input type="text" name="DebtorNo" size="10" maxlength="10" value="' . $_POST['DebtorNo'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['DebtorName'])){
@@ -1122,7 +1123,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option selected="selected" value="LIKE">' . _('Begins With') . '</option>
 				<option value="Equals">' . _('Equals') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td><input type="text" name="DebtorName" size="30" maxlength="30" value="' . $_POST['DebtorName'] .'" /></td>
 		</tr>';
 	if (!isset($_POST['OrderNo'])){
@@ -1131,7 +1132,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
     echo '<tr>
 			<td>' . _('Order Number') . ':</td>
 			<td>' . _('Equals') . '</td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td><input type="text" name="OrderNo" size="10" maxlength="10" value="' . $_POST['OrderNo'] . '" /></td>
 		</tr>';
 
@@ -1142,7 +1143,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="Completed">' . _('Completed') . '</option>
 				<option value="Open">' . _('Not Completed') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 		</tr>';
 
 	echo '<tr>
@@ -1178,7 +1179,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>&nbsp</td></tr>';
+	echo '<tr><td>&nbsp;</td></tr>';
     echo '<tr>
 			<td>' . _('Sort By') . ':</td>
 			<td><select name="SortBy">
@@ -1188,15 +1189,15 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno">' . _('Customer Name') . '</option>
 				<option value="tempstockmoves.transno,salesorderdetails.stkcode">' . _('Transaction Number') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td>' . _('Transaction Number sort only valid for Invoice Date Type') . '</td>
 		</tr>';
 
-   echo '<tr><td>&nbsp</td></tr>
-		<tr><td>&nbsp</td></tr>
-		<tr><td>&nbsp</td></tr>';
+   echo '<tr><td>&nbsp;</td></tr>
+		<tr><td>&nbsp;</td></tr>
+		<tr><td>&nbsp;</td></tr>';
 	
-	echo '<tr><td>&nbsp</td></tr>';
+	echo '<tr><td>&nbsp;</td></tr>';
     echo '<tr><td>' . _('Summary Type') . ':</td>
 			<td><select name="SummaryType">
 				<option selected="selected" value="orderno">' . _('Order Number') . '</option>
@@ -1210,20 +1211,21 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="salesman">' . _('Salesman') . '</option>
 				<option value="area">' . _('Sales Area') . '</option>
 			</select></td>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td>' . _('Transaction Number summary only valid for Invoice Date Type') . '</td>
 		</tr>';
 
-   echo '<tr><td>&nbsp</td></tr>
-		<tr><td>&nbsp</td></tr>
-		<tr><td>&nbsp</td></tr>
+   echo '<tr><td>&nbsp;</td></tr>
+		<tr><td>&nbsp;</td></tr>
+		<tr><td>&nbsp;</td></tr>
 		<tr>
-			<td>&nbsp</td>
+			<td>&nbsp;</td>
 			<td><input type="submit" name="submit" value="' . _('Run Inquiry') . '" /></td>
 		</tr>
 		</table>
 	<br />';
-   echo '</form>';
+   echo '</div>
+         </form>';
 
 } // End of function display()
 

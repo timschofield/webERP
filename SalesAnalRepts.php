@@ -57,7 +57,7 @@ function GrpByDataOptions($GroupByDataX) {
 
 /* end of function  */
 
-echo '<p>';
+echo '<br />';
 
 if (isset($_GET['SelectedReport'])) {
 	$SelectedReport = $_GET['SelectedReport'];
@@ -280,7 +280,8 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Report No') . '</th>
-			<th>' . _('Report Title') . '</th>';
+			<th>' . _('Report Title') . '</th>
+          </tr>';
 
 $k=0; //row colour counter
 
@@ -296,11 +297,11 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%s&SelectedReport=%s">' . _('Design') . '</a></td>
+			<td><a href="%s&amp;SelectedReport=%s">' . _('Design') . '</a></td>
 			<td><a href="%s/SalesAnalReptCols.php?ReportID=%s">' . _('Define Columns') . '</a></td>
-			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&ProducePDF=True">' . _('Make PDF Report') . '</a></td>
-			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&ProduceCVSFile=True">' . _('Make CSV File') . '</a></td>
-			<td><a href="%s&SelectedReport=%s&delete=1" onclick="return confirm(\"' . _('Are you sure you wish to remove this report design?') . '\");">' . _('Delete') . '</td>
+			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&amp;ProducePDF=True">' . _('Make PDF Report') . '</a></td>
+			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&amp;ProduceCVSFile=True">' . _('Make CSV File') . '</a></td>
+			<td><a href="%s&amp;SelectedReport=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this report design?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow[0],
 			$myrow[1],
@@ -317,7 +318,7 @@ while ($myrow = DB_fetch_array($result)) {
 	
 	}
 	//END WHILE LIST LOOP
-	echo '</table><p>';
+	echo '</table><br />';
 }
 
 //end of ifs and buts!
@@ -328,11 +329,12 @@ if (isset($SelectedReport)) {
 	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Defined Reports') . '</a>';
 }
 
-echo '<p />';
+echo '<br />';
 
 
 if (!isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReport)) {
@@ -385,12 +387,12 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="ReportID" value="' . $ReportID . '" />';
 		echo '<table width="98%" class="selection">
 				<tr>
-					<th colspan="8"><font size="3" color="blue">' . _('Edit The Selected Report') . '</font></th>
+					<th colspan="8"><h3>' . _('Edit The Selected Report') . '</h3></th>
 				</tr>';
 	} else {
 		echo '<table width="98%" class="selection">
 				<tr>
-					<th colspan="8"><font size="3" color="blue">' . _('Define A New Report') . '</font></th>
+					<th colspan="8"><h3>' . _('Define A New Report') . '</h3></th>
 				</tr>';
 	}
 
@@ -513,6 +515,7 @@ if (!isset($_GET['delete'])) {
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 			</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

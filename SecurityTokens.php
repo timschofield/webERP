@@ -84,7 +84,8 @@ if (isset($_POST['Update']) AND $InputError == 0) {
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 		_('Print') . '" alt="" />' . ' ' . $title . '</p>';
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="form">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
 		<table>
@@ -108,9 +109,10 @@ if (isset($_GET['Action']) and $_GET['Action']=='edit') {
 echo '</td>
 	</tr>
 	</table>
-	<p></p>';
+	<br />';
 
-echo '</form>';
+echo '</div>
+      </form>';
 
 echo '<table class="selection">';
 echo '<tr>
@@ -124,13 +126,13 @@ $Result= DB_query($sql,$db);
 while ($myrow = DB_fetch_array($Result,$db)){
 	echo '<tr>
 			<td>'.$myrow['tokenid'].'</td>
-			<td>'.$myrow['tokenname'].'</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token?') . '\');">' . _('Delete') . '</a></td>
+			<td>'.htmlspecialchars($myrow['tokenname'],ENT_QUOTES,'UTF-8').'</td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&amp;Action=edit">' . _('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&amp;Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 
-echo '</table><p></p>';
+echo '</table><br />';
 
 echo '<script  type="text/javascript">defaultControl(document.form.TokenDescription);</script>';
 

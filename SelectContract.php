@@ -9,6 +9,7 @@ include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br /><div class="centre">';
@@ -62,7 +63,7 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 	echo '</select> &nbsp;&nbsp;';
 }
 echo '<input type="submit" name="SearchContracts" value="' . _('Search') . '" />';
-echo '&nbsp;&nbsp;<a href="' . $rootpath . '/Contracts.php">' . _('New Contract') . '</a></div></p>';
+echo '&nbsp;&nbsp;<a href="' . $rootpath . '/Contracts.php">' . _('New Contract') . '</a></div><br />';
 
 
 //figure out the SQL required from the inputs available
@@ -194,6 +195,9 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 }
 //end of while loop
 
-echo '</table></form><br />';
+echo '</table>
+      </div>
+      </form>
+      <br />';
 include('includes/footer.inc');
 ?>

@@ -12,6 +12,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
      ' . ' ' . _('Search Sales Orders') . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['completed'])) {
@@ -520,7 +521,7 @@ if (!isset($SelectedStockItem)) {
 		}
 	}
 
-   echo '</select>
+   echo '</select></td>
 		<td>' . _('Enter text extracts in the description') . ':</td>
 		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 	</tr>
@@ -653,7 +654,8 @@ If (isset($SalesOrdersResult)) {
 	echo '</table>';
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 
 ?>
