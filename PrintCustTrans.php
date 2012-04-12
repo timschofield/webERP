@@ -924,7 +924,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						   $PageNumber++;
 						   echo '</table>
 								<table class="table1">
-								<tr><td valign=top><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
+								<tr><td valign="top"><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
 									<td style="background-color:#BBBBBB">';
 
 						   if ($InvOrCredit=='Invoice') {
@@ -973,7 +973,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					/* head up a new invoice/credit note page */
 					$PageNumber++;
 					echo '<table class="table1">
-							<tr><td valign=top><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
+							<tr><td valign="top"><img src="' . $_SESSION['LogoFile'] . '" alt="" /></td>
 							<td style="background-color:#BBBBBB">';
 
 					if ($InvOrCredit=='Invoice') {

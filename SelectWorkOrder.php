@@ -8,6 +8,7 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -112,7 +113,7 @@ if (!isset($StockID)) {
 		if (isset($_REQUEST['SelectedStockItem'])) {
 			echo _('For the item') . ': ' . $_REQUEST['SelectedStockItem'] . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $_REQUEST['SelectedStockItem'] . '" />';
 		}
-		echo _('Work Order number') . ': <input type="text" name="WO" maxlength="8" size="9" />&nbsp ' . _('Processing at') . ':<select name="StockLocation"> ';
+		echo _('Work Order number') . ': <input type="text" name="WO" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
 		$sql = "SELECT loccode, locationname FROM locations";
 
@@ -132,7 +133,7 @@ if (!isset($StockID)) {
 			}
 		}
 
-		echo '</select> &nbsp&nbsp';
+		echo '</select> &nbsp;&nbsp;';
 		echo '<select name="ClosedOrOpen">';
 
 		if ($_GET['ClosedOrOpen']=='Closed_Only'){
@@ -147,7 +148,7 @@ if (!isset($StockID)) {
 			echo '<option selected="selected" value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
 		}
 
-		echo '</select> &nbsp&nbsp';
+		echo '</select> &nbsp;&nbsp;';
 		echo '<input type="submit" name="SearchOrders" value="' . _('Search') . '" />';
 		echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td></tr></table><br />';
 	}
@@ -161,22 +162,22 @@ if (!isset($StockID)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="6"><font size="3" color="navy">' . _('To search for work orders for a specific item use the item selection facilities below') . '</font></th>
+				<th colspan="6"><h3>' . _('To search for work orders for a specific item use the item selection facilities below') . '</h3></th>
 			</tr>
 			<tr>
-				<td><font size="1">' . _('Select a stock category') . ':</font>
+				<td>' . _('Select a stock category') . ':
 	  			<select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 
-	  echo '</select>
-	  		<td><font size="1">' . _('Enter text extract(s) in the description') . ':</font></td>
+	  echo '</select></td>
+	  		<td>' . _('Enter text extract(s) in the description') . ':</td>
 	  		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
 	  	<tr><td></td>
-	  		<td><font size="3"><b>' . _('OR') . ' </b></font><font size="1">' . _('Enter extract of the Stock Code') . '</b>:</font></td>
+	  		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
 	  		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	  	</tr>
 	  </table><br />';
@@ -243,7 +244,7 @@ if (!isset($StockID)) {
 		} else {
 			$ClosedOrOpen = 1;
 		}
-		if (isset($_REQUEST['WO']) && $_REQUEST['WO'] !='') {
+		if (isset($_REQUEST['WO']) AND $_REQUEST['WO'] !='') {
 				$SQL = "SELECT workorders.wo,
 								woitems.stockid,
 								stockmaster.description,
@@ -318,7 +319,7 @@ if (!isset($StockID)) {
 							</tr>';
 	
 			echo $tableheader;
-		}
+
 		$j = 1;
 		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
@@ -332,9 +333,9 @@ if (!isset($StockID)) {
 			}
 	
 			$ModifyPage = $rootpath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
-			$Status_WO = $rootpath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
-			$Receive_WO = $rootpath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
-			$Issue_WO = $rootpath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
+			$Status_WO = $rootpath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
+			$Receive_WO = $rootpath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
+			$Issue_WO = $rootpath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Costing_WO =$rootpath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
 	
 			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
@@ -374,11 +375,13 @@ if (!isset($StockID)) {
 		//end of while loop
 	
 		echo '</table>';
+      }
 	}
 	
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].WO);</script>';
 	
-	echo '</form>';
+	echo '</div>
+          </form>';
 }
 
 include('includes/footer.inc');

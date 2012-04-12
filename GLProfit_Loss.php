@@ -926,7 +926,7 @@ if ((!isset($_POST['FromPeriod'])
 						<td class="number">%s</td>
 						</tr>',
 						$ActEnquiryURL,
-						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format(-$AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format(-$AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));
@@ -941,7 +941,7 @@ if ((!isset($_POST['FromPeriod'])
 						<td></td>
 						</tr>',
 						$ActEnquiryURL,
-						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
 						locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));

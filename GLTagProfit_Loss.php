@@ -769,7 +769,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						<td class="number">%s</td>
 						</tr>',
 						$ActEnquiryURL,
-						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']));
 			} else {
 				printf('<td>%s</td>
@@ -777,7 +777,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 						<td class="number">%s</td>
 						</tr>',
 						$ActEnquiryURL,
-						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
+						htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
 						locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']));
 			}
 

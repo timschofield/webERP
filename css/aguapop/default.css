@@ -191,20 +191,14 @@ select {
 	font-size: 11px;
 }
 
-font.good {
+p.good {
 	font-weight: bold;
 	color: green;
 }
 
-font.bad {
+p.bad {
 	font-weight: bold;
 	color:red;
-}
-
-font.header_title {
-	font-size: 14px;
-	font-weight: bold;
-	
 }
 
 #topMenu {

@@ -623,7 +623,7 @@ if ((! isset($_POST['FromPeriod'])
 				<td class="number">%s</td>
 				</tr>',
 				$ActEnquiryURL,
-				htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8'),
+				htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
 				locale_number_format($myrow['monthactual'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($myrow['monthbudget'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),

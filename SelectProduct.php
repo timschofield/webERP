@@ -36,7 +36,7 @@ $SQL = "SELECT categoryid,
 		ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
-	echo '<p><font size="4" color="red">' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
+	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
 	echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 	exit;
 }
@@ -71,18 +71,18 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$Its_A_Kitset = false;
 	$Its_A_Labour_Item = false;
 	if ($myrow['discontinued']==1){
-		$ItemStatus = '<font class="bad">' ._('Obsolete') . '</font>';
+		$ItemStatus = '<p class="bad">' ._('Obsolete') . '</p>';
 	} else {
 		$ItemStatus = '';
 	}
 	echo '<table width="90%">
 			<tr>
-				<th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' ' . $ItemStatus . '</b></th>
+				<th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
 			</tr>';
 
 	echo '<tr>
-			<td width="40%" valign="top">
-			<table align="left">'; //nested table
+			<td style="width:40%" valign="top">
+			<table>'; //nested table
 	echo '<tr><th class="number">' . _('Item Type:') . '</th>
 			<td colspan="2" class="select">';
 	switch ($myrow['mbflag']) {
@@ -194,12 +194,12 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$Cost = $myrow['cost'];
 		}
-		echo '<th class="number">' . _('Cost') . '</th>
-			<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>';
+		echo '<tr><th class="number">' . _('Cost') . '</th>
+			<td class="select">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td></tr>';
 	} //end of if PricesSecuirty allows viewing of prices
 	echo '</table>'; //end of first nested table
 	// Item Category Property mod: display the item properties
-	echo '<table align="left">';
+	echo '<table>';
 	$CatValResult = DB_query("SELECT categoryid
 							FROM stockmaster
 							WHERE stockid='" . $StockID . "'", $db);
@@ -226,11 +226,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<tr><th align="right">' . $PropertyRow['label'] . ':</th>';
 		switch ($PropertyRow['controltype']) {
 			case 0; //textbox
-			echo '<td class="select" width="60"><input type="text" name="PropValue' . $PropertyCounter . '" value="' . $PropertyValue . '" />';
+			echo '<td class="select" style="width:60px"><input type="text" name="PropValue' . $PropertyCounter . '" value="' . $PropertyValue . '" />';
 		break;
 		case 1; //select box
 		$OptionValues = explode(',', $PropertyRow['defaultvalue']);
-		echo '<td align="left" width="60"><select name="PropValue' . $PropertyCounter . '">';
+		echo '<td align="left" style="width:60px"><select name="PropValue' . $PropertyCounter . '">';
 		foreach($OptionValues as $PropertyOptionValue) {
 			if ($PropertyOptionValue == $PropertyValue) {
 				echo '<option selected="selected" value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
@@ -241,7 +241,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '</select>';
 	break;
 	case 2; //checkbox
-	echo '<td align="left" width="60"><input type="checkbox" name="PropValue' . $PropertyCounter . '"';
+	echo '<td align="left" style="width:60px"><input type="checkbox" name="PropValue' . $PropertyCounter . '"';
 	if ($PropertyValue == 1) {
 		echo ' checked';
 	}
@@ -251,8 +251,8 @@ break;
 echo '</td></tr>';
 $PropertyCounter++;
 } //end loop round properties for the item category
-echo '</table>'; //end of Item Category Property mod
-echo '<td style="width: 15%; vertical-align: top">
+echo '</table></td>'; //end of Item Category Property mod
+echo '<td style="width:15%; vertical-align:top">
 			<table>'; //nested table to show QOH/orders
 $QOH = 0;
 switch ($myrow['mbflag']) {
@@ -337,26 +337,26 @@ if (DB_num_rows($DemandResult) == 1) {
 	$DemandRow = DB_fetch_row($DemandResult);
 	$Demand+= $DemandRow[0];
 }
-echo '<tr><th class="number" width="15%">' . _('Quantity On Hand') . ':</th>
-		<td width="17%" class="select">' . $QOH . '</td></tr>';
-echo '<tr><th class="number" width="15%">' . _('Quantity Demand') . ':</th>
-		<td width="17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td></tr>';
-echo '<tr><th class="number" width="15%">' . _('Quantity On Order') . ':</th>
-		<td width="17%" class="select">' . $QOO . '</td></tr>
+echo '<tr><th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
+		<td style="width:17%" class="select">' . $QOH . '</td></tr>';
+echo '<tr><th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
+		<td style="width:17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td></tr>';
+echo '<tr><th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
+		<td style="width:17%" class="select">' . $QOO . '</td></tr>
 				</table>'; //end of nested table
 echo '</td>'; //end cell of master table
 
 if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 	AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
 
-	echo '<td width="50%" valign="top"><table>
-			<tr><th width="50%">' . _('Supplier') . '</th>
-				<th width="15%">' . _('Cost') . '</th>
-				<th width="5%">' . _('Curr') . '</th>
-				<th width="15%">' . _('Eff Date') . '</th>
-				<th width="10%">' . _('Lead Time') . '</th>
-				<th width="10%">' . _('Min Order Qty') . '</th>
-				<th width="5%">' . _('Prefer') . '</th></tr>';
+	echo '<td style="width:50%" valign="top"><table>
+			<tr><th style="width:50%">' . _('Supplier') . '</th>
+				<th style="width:15%">' . _('Cost') . '</th>
+				<th style="width:5%">' . _('Curr') . '</th>
+				<th style="width:15%">' . _('Eff Date') . '</th>
+				<th style="width:10%">' . _('Lead Time') . '</th>
+				<th style="width:10%">' . _('Min Order Qty') . '</th>
+				<th style="width:5%">' . _('Prefer') . '</th></tr>';
 	$SuppResult = DB_query("SELECT  suppliers.suppname,
 									suppliers.currcode,
 									suppliers.supplierid,
@@ -386,18 +386,18 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 		} else {
 			echo '<td class="select">' . _('No') . '</td>';
 		}
-		echo '<td class="select"><a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&SelectedSupplier=' .
-			$SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$SuppRow['minorderqty'].'&LeadTime='.$SuppRow['leadtime'] . '">' . _('Order') . ' </a></td>';
+		echo '<td class="select"><a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&amp;SelectedSupplier=' .
+			$SuppRow['supplierid'] . '&amp;StockID=' . $StockID . '&amp;Quantity='.$SuppRow['minorderqty'].'&amp;LeadTime='.$SuppRow['leadtime'] . '">' . _('Order') . ' </a></td>';
 		echo '</tr>';
 	}
-	echo '</table></td>';
+	echo '</table>';
 	DB_data_seek($result, 0);
 }
 echo '</td></tr></table><br />'; // end first item details table
 echo '<table width="90%"><tr>
-		<th width="33%">' . _('Item Inquiries') . '</th>
-		<th width="33%">' . _('Item Transactions') . '</th>
-		<th width="33%">' . _('Item Maintenance') . '</th>
+		<th style="width:33%">' . _('Item Inquiries') . '</th>
+		<th style="width:33%">' . _('Item Transactions') . '</th>
+		<th style="width:33%">' . _('Item Maintenance') . '</th>
 	</tr>';
 echo '<tr><td valign="top" class="select">';
 /*Stock Inquiry Options */
@@ -425,13 +425,13 @@ echo '</td><td valign="top" class="select">';
 /* Stock Transactions */
 if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $rootpath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
-	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '&NewTransfer=true">' . _('Location Transfers') . '</a><br />';
+	echo '<a href="' . $rootpath . '/StockTransfers.php?StockID=' . $StockID . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 	//show the item image if it has been uploaded
 	if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
 		if ($_SESSION['ShowStockidOnImages'] == "0"){
-			echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&width=120&height=120&StockID=' . $StockID . '&text=""' . '" />';
+			echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&amp;textcolor=FFFFF0&amp;bgcolor=007F00&amp;width=120&amp;height=120&amp;StockID=' . $StockID . '&amp;text=""' . '" />';
 		}else{
-			echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&textcolor=FFFFF0&bgcolor=007F00&StockID=' . $StockID . '&text=' . $StockID . '&width=120&height=120" />';
+			echo '<div class="centre"><img src="' . $rootpath . '/GetStockImage.php?automake=1&amp;textcolor=FFFFF0&amp;bgcolor=007F00&amp;StockID=' . $StockID . '&amp;text=' . $StockID . '&amp;width=120&amp;height=120" />';
 		}
 	}
 	if (($myrow['mbflag'] == 'B')
@@ -452,7 +452,7 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 			} else {
 				$EOQ = $myrow['eoq'];
 			}
-			echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes' . '&SelectedSupplier=' . $SuppRow['supplierid'] . '&StockID=' . $StockID . '&Quantity='.$EOQ.'&LeadTime='.$SuppRow['leadtime'].'">'. _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
+			echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] . '&amp;StockID=' . $StockID . '&amp;Quantity='.$EOQ.'&amp;LeadTime='.$SuppRow['leadtime'].'">'. _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
 			<br />';
 
 			/**/
@@ -485,9 +485,9 @@ echo '</td></tr></table>';
 	// options (links) to pages. This requires stock id also to be passed.
 	echo '<table width="90%" cellpadding="4">';
 	echo '<tr>
-		<th width="33%">' . _('Item Inquiries') . '</th>
-		<th width="33%">' . _('Item Transactions') . '</th>
-		<th width="33%">' . _('Item Maintenance') . '</th>
+		<th style="width:33%">' . _('Item Inquiries') . '</th>
+		<th style="width:33%">' . _('Item Transactions') . '</th>
+		<th style="width:33%">' . _('Item Maintenance') . '</th>
 	</tr>';
 	echo '<tr><td class="select">';
 	/*Stock Inquiry Options */
@@ -499,6 +499,7 @@ echo '</td></tr></table>';
 	echo '</td></tr></table>';
 } // end displaying item options if there is one and only one record
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
@@ -528,7 +529,7 @@ if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
 echo '</td></tr><tr><td></td>';
-echo '<td><font size="3"><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
+echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 echo '<td>';
 if (isset($_POST['StockCode'])) {
 	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
@@ -538,7 +539,8 @@ if (isset($_POST['StockCode'])) {
 echo '</td></tr></table><br />';
 echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-echo '</form>';
+echo '</div>
+      </form>';
 // query for list of record(s)
 if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	$_POST['Search']='Search';
@@ -695,6 +697,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -764,7 +767,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$qoh = locale_number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
 			if ($myrow['discontinued']==1){
-				$ItemStatus = '<font class="bad">' . _('Obsolete') . '</font>';
+				$ItemStatus = '<p class="bad">' . _('Obsolete') . '</p>';
 			} else {
 				$ItemStatus ='';
 			}
@@ -785,7 +788,10 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			//end of page full new headings if
 		}
 		//end of while loop
-		echo '</table></form><br />';
+		echo '</table>
+              </div>
+              </form>
+              <br />';
 	}
 }
 /* end display list if there is more than one record */

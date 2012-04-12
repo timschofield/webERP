@@ -237,18 +237,14 @@ select {background:#eee;
 	font-size: 10px;
 }
 
-font.good {
+p.good {
     font-weight: bold;
     color: green;
 }
 
-font.bad {
+p.bad {
     font-weight: bold;
     color:red;
-}
-/* In Jelly theme we don't want the page title text in the menu bar */
-font.header_title {
-    display:none
 }
 
 #topMenu {

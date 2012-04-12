@@ -49,7 +49,7 @@ if (DB_num_rows($result)==0){
 	prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('budgets cannot be allocated until the GL accounts are set up'),'warn');
 } else {
 	while ($myrow=DB_fetch_array($result)){
-		$Account = $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8');
+		$Account = $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false);
 		if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount==$myrow['accountcode']){
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $Account . '</option>';
 			$PrevCode=$LastCode;

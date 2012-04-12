@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 /*--------------------------------------------------\
 |               |               | default.css       |
 |---------------------------------------------------|
@@ -243,19 +243,15 @@ select {
 	font-size: 100%;
 }
 
-font.good {
+p.good {
     font-weight: bold;
     color: green;
 }
 
-font.bad {
+p.bad {
     font-weight: bold;
     color:red;
 }
-
-/* From merge, uncomment to apply style
-font.header_title { }
-End merge */
 
 #topMenu {
 	width: 100%;

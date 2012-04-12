@@ -579,7 +579,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 					<td></td>
 					</tr>',
 					$ActEnquiryURL,
-					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8'),
+					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
 					locale_number_format($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($LYAccountBalance,$_SESSION['CompanyRecord']['decimalplaces']));
 			$j++;

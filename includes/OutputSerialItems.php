@@ -182,7 +182,7 @@ $RowNumber=0;
 while ($myrow=DB_fetch_array($result)){
 
 	echo '<tr>
-			<td valign=top>'.$myrow['serialno'].'<input type="hidden" name="SerialNo'. ($RowNumber) .'" size="21" value="'.$myrow['serialno'].'" maxlength="20" /></td>';
+			<td valign="top">'.$myrow['serialno'].'<input type="hidden" name="SerialNo'. ($RowNumber) .'" size="21" value="'.$myrow['serialno'].'" maxlength="20" /></td>';
 
 	/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 	into the form for entry of quantities manually */

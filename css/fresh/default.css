@@ -172,19 +172,14 @@ select {
 	font-size: 10px;
 }
 
-font.good {
+p.good {
     font-weight: bold;
     color: green;
 }
 
-font.bad {
+p.bad {
     font-weight: bold;
     color:red;
-}
-
-font.header_title {
-	font-weight: bold;
-    color:black;
 }
 
 #topMenu {

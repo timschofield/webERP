@@ -20,7 +20,7 @@ $_SESSION['MaxLogoSize'] = 10 * 1024;	    // Limit logo file size.
 // Check if the page has been reloaded
 if(!isset($_GET['sessions_checked']) || $_GET['sessions_checked'] != 'true') {
 	// Set session variable
-	$_SESSION['session_support'] = '<font class="good">Enabled</font>';
+	$_SESSION['session_support'] = '<p class="good">Enabled</p>';
 	// Reload page
 	header('Location: index.php?sessions_checked=true');
 	exit(0);
@@ -29,7 +29,7 @@ if(!isset($_GET['sessions_checked']) || $_GET['sessions_checked'] != 'true') {
 	if(isset($_SESSION['session_support'])) {
 		$session_support = $_SESSION['session_support'];
 	} else {
-		$session_support = '<font class="bad">Disabled</font>';
+		$session_support = '<p class="bad">Disabled</p>';
 	}
 }
 $PathToRoot = '..';
@@ -74,8 +74,8 @@ function change_data(type) {
 <table cellpadding="0" cellspacing="0" border="0" width="750" align="center">
 <tr>
 	<td width="100%" align="center" style="font-size: 20px;">
-		<font style="color: #FFFFFF;">WebERP</font>
-		<font style="color: #DDDDDD;">Installation Wizard</font>
+		<p style="color: #FFFFFF;">WebERP</p>
+		<p style="color: #DDDDDD;">Installation Wizard</p>
 	</td>
 </tr>
 </table>
@@ -105,9 +105,9 @@ function change_data(type) {
 		<tr>
 			<td colspan="8"><h1>Step 1</h1>Please check the following requirements are met before continuing...</td>
 		</tr>
-		<?php if($session_support != '<font class="good">Enabled</font>') { ?>
+		<?php if($session_support != '<p class="good">Enabled</p>') { ?>
 		<tr>
-			<td colspan="8" style="font-size: 10px;" class="bad">Please note: PHP Session Support may appear disabled if your browser does not support cookies.</td>
+			<td colspan="8" style="font-size: 10px;"><p class="bad">Please note: PHP Session Support may appear disabled if your browser does not support cookies.</p></td>
 		</tr>
 		<?php } ?>
 		<tr>
@@ -116,9 +116,9 @@ function change_data(type) {
 				<?php
 				$phpversion = mb_substr(PHP_VERSION, 0, 6);
 				if($phpversion > 5.1) {
-					?><font class="good">Yes</font><?php
+					?><p class="good">Yes</p><?php
 				} else {
-					?><font class="bad">No</font><?php
+					?><p class="bad">No</p><?php
 				}
 				?>
 			</td>
@@ -128,9 +128,9 @@ function change_data(type) {
 			<td>
 				<?php
 				if(ini_get('safe_mode')) {
-					?><font class="bad">Enabled</font><?php
+					?><p class="bad">Enabled</p><?php
 				} else {
-					?><font class="good">Disabled</font><?php
+					?><p class="good">Disabled</p><?php
 				}
 				?>
 			</td>
@@ -143,17 +143,17 @@ function change_data(type) {
 		<tr>
 			<td style="color: #666666;">Configuration file</td>
 			<td><?php if(is_writable($PathToRoot)) {
-						echo '<font class="good">Writeable</font>';
+						echo '<p class="good">Writeable</p>';
 					  } else {
-						echo '<font class="bad">Unwriteable</font>';
+						echo '<p class="bad">Unwriteable</p>';
 					  } ?>
 			</td>
 			<td style="color: #666666;"><?php echo 'Company data dirs ('.  $CompanyPath. '/*)'; ?>
 			</td>
 			<td><?php if(is_writable($CompanyPath)) {
-						echo '<font class="good">Writeable</font>';
+						echo '<p class="good">Writeable</p>';
 					  } else {
-						echo '<font class="bad">Unwriteable</font>';
+						echo '<p class="bad">Unwriteable</p>';
 					  }
 				 ?>
 		   </td>
@@ -198,7 +198,7 @@ function change_data(type) {
 						echo ' checked'; 
 					} ?> 
 				/>
-				<font style="cursor: pointer;" onclick="javascript: change_os('linux');">Linux/Unix based</font>
+				<p style="cursor: pointer;" onclick="javascript: change_os('linux');">Linux/Unix based</p>
 				<br />
 				<input type="radio" tabindex="41" name="operating_system" id="operating_system_windows" onclick="document.getElementById('file_perms_box').style.display = 'none';" value="windows"
 				<?php 
@@ -206,7 +206,7 @@ function change_data(type) {
 						echo ' checked'; } 
 					?> 
 				/>
-				<font style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</font>
+				<p style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</p>
 			</td>
 			<td>
 				
@@ -222,7 +222,7 @@ function change_data(type) {
 						World-writeable file permissions (777)
 					</label>
 					<br />
-					<font class="note">(Please note: this is only recommended for testing environments)</font>
+					<p>(Please note: this is only recommended for testing environments)</p>
 				</div>
 			</td>
 		</tr>
@@ -293,7 +293,7 @@ function change_data(type) {
 
 			<td width="180">
 				<input type="checkbox" tabindex="51" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
-				<font style="cursor: pointer;" onclick="javascript: change_data('demo');">weberpdemo company</font>
+				<p style="cursor: pointer;" onclick="javascript: change_data('demo');">weberpdemo company</p>
 			</td>
 		</tr>
 		<tr>
@@ -367,7 +367,7 @@ function change_data(type) {
 				</table>
 			</td>
 			<?php //only show submit button if ready to go
-			if ($phpversion > 4.1 AND $_SESSION['session_support'] = '<font class="good">Enabled</font>'
+			if ($phpversion > 4.1 AND $_SESSION['session_support'] = '<p class="good">Enabled</p>'
 					AND is_writable($PathToRoot) AND is_writable($CompanyPath)){
 				echo '<td colspan="1" align="right">
 						<input type="submit" tabindex="20" name="submit" value="Install WebERP" class="submit" />

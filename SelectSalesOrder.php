@@ -207,7 +207,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					} //end of authorisation status settings
 
 					if ($SupplierID !=''){ //then we have just added a purchase order
-						echo '<p />';
+						echo '<br />';
 						prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
 						DB_Txn_Commit($db);
 					}
@@ -368,7 +368,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 			} //end of authorisation status settings
 
 			if ($SupplierID !=''){ //then we have just added a purchase order irrespective of autoauthorise status
-				echo '<p>';
+				echo '<br />';
 				prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
 				DB_Txn_Commit($db);
 			}
@@ -383,6 +383,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -390,7 +391,7 @@ if (isset($_POST['ResetPart'])){
      unset($_REQUEST['SelectedStockItem']);
 }
 
-echo '<p><div class="centre">';
+echo '<br /><div class="centre">';
 
 if (isset($_REQUEST['OrderNumber']) AND $_REQUEST['OrderNumber']!='') {
 	$_REQUEST['OrderNumber'] = trim($_REQUEST['OrderNumber']);
@@ -546,10 +547,10 @@ if (!isset($StockID)) {
 	echo '<br />
 		<table class="selection">
 		<tr>
-			<th colspan="6"><font size="3" color="navy">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</th>
+			<th colspan="6"><h3>' . _('To search for sales orders for a specific part use the part selection facilities below') . '</h3></th>
 		</tr>
 		<tr>
-      		<td><font size="1">' . _('Select a stock category') . ':</font>
+      		<td>' . _('Select a stock category') . ':
       			<select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -557,12 +558,12 @@ if (!isset($StockID)) {
 	}
 
 	echo '</select></td>
-			<td><font size="1">' . _('Enter text extract(s) in the description') . ':</font></td>
+			<td>' . _('Enter text extract(s) in the description') . ':</td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
       	<tr>
 			<td></td>
-      		<td><font size="3"><b>' . _('OR') . ' </b></font><font size="1">' . _('Enter extract of the Stock Code') . '</b>:</font></td>
+      		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
       		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
       	</tr>
       </table>';
@@ -899,7 +900,7 @@ if (isset($StockItemsResult)
 				if ($AuthRow['cancreate']==0 AND $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
 				printf('<td><a href="%s">%s</a></td>
         				<td><a href="%s">' . _('Invoice') . '</a></td>
-        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Click for PDF') . '" /></a></td>
+        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath.'/css/'.$theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
         				<td>%s</td>
         				<td>%s</td>
         				<td>%s</td>
@@ -907,7 +908,7 @@ if (isset($StockItemsResult)
         				<td>%s</td>
         				<td>%s</td>
         				<td class="number">%s</td>
-        				<td><input type="checkbox" name="PlacePO_%s" value /><input type="hidden" name="OrderNo_PO_%s" value="%s" /></td>
+        				<td><input type="checkbox" name="PlacePO_%s" /><input type="hidden" name="OrderNo_PO_%s" value="%s" /></td>
         				</tr>',
         				$ModifyPage,
         				$myrow['orderno'],
@@ -926,7 +927,7 @@ if (isset($StockItemsResult)
 				} else {  /*User is not authorised to create POs so don't even show the option */
 					printf('<td><a href="%s">%s</a></td>
 							<td><a href="%s">' . _('Invoice') . '</a></td>
-							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath . '/css/' . $theme .'/images/pdf.png" title="' . _('Click for PDF') . '" /></a></td>
+							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath . '/css/' . $theme .'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -982,7 +983,7 @@ if (isset($StockItemsResult)
 		if ($_POST['Quotations']=='Orders_Only' 
 			AND $AuthRow['cancreate']==0){ //cancreate==0 means can create POs
 			
-			echo '<tr><td colspan="8"><td><td colspan="2" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . "\n" . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td</tr>';
+			echo '<tr><td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td</tr>';
 		}
 		echo '<tr><td colspan="9" class="number">';
 		if ($_POST['Quotations']=='Orders_Only'){
@@ -997,7 +998,8 @@ if (isset($StockItemsResult)
 	} //end if there are some orders to show  
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 
 } //end StockID already selected
 

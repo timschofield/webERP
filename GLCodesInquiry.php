@@ -46,7 +46,7 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 			          <td>%s</td>
 			          </tr>',
 			  $myrow['accountcode'],
-			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8'));
+			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false));
        } else {
               $ActGrp = $myrow['group_'];
               printf('<td><b>%s</b></td>
@@ -55,7 +55,7 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 			          </tr>',
 			  $myrow['group_'],
 			  $myrow['accountcode'],
-			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8'));
+			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false));
        }
 }
 //end of while loop
