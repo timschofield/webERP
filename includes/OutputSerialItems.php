@@ -80,10 +80,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 	}
 
 	if ($k==1){
-		echo '<tr style="background-color:#CCCCCC">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<tr style="background-color:#EEEEEE">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 

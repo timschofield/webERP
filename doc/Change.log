@@ -1,4 +1,5 @@
 webERP Change Log
+12/4/2012 TurboPT: Replaced table row bgcolor [or style=background-color] with the appropriate css class.
 11/4/2012 Ricard: Code simplified on TopItems.php 
 7/4/2012 TurboPT: Remove invalid attribute colspan found within table tag elements.  
 5/4/2012 Exson: Fixed order delivery comments overlapped with Shipper in Packing slip of PDFOrderPageHeader_generic.inc Reported by CQZ from webERP Chinese Community QQ group 

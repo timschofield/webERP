@@ -220,10 +220,10 @@ if (isset($StockItemsResult)) {
 	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_array($StockItemsResult)) {
 		if ($k == 1) {
-			echo '<tr style="background-color:#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k = 0;
 		} else {
-			echo '<tr style="background-color:#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k = 1;
 		}
 		echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
@@ -443,10 +443,10 @@ else {
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($PurchOrdersResult)) {
 			if ($k == 1) { /*alternate bgcolour of row for highlighting */
-				echo '<tr style="background-color:#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k = 0;
 			} else {
-				echo '<tr style="background-color:#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 			$ViewPurchOrder = $rootpath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];

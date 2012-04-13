@@ -174,10 +174,10 @@ while ($myrow=DB_fetch_array($LineItemsResult)) {
     	 	echo '<tr class="OsRow">';
 	} else {
     		if ($k==1){
-    			echo '<tr style="background-color:#CCCCCC">';
+    			echo '<tr class="EvenTableRows">';
     			$k=0;
     		} else {
-    			echo '<tr style="background-color:#EEEEEE">';
+    			echo '<tr class="OddTableRows">';
     			$k=1;
 		}
 	}
