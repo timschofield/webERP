@@ -47,6 +47,34 @@ if (!(isset($_POST['Search']))) {
 	}
 	echo '</select></td>
 		</tr>';
+
+	// stock category selection
+	$SQL="SELECT categoryid,
+					categorydescription
+			FROM stockcategory
+			ORDER BY categorydescription";
+	$result1 = DB_query($SQL,$db);
+
+	echo '<tr>
+			<td width="150">' . _('In Stock Category') . ' </td>
+			<td>:</td>
+			<td><select name="StockCat">';
+	if (!isset($_POST['StockCat'])){
+		$_POST['StockCat']='All';
+	}
+	if ($_POST['StockCat']=='All'){
+		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+	} else {
+		echo '<option value="All">' . _('All') . '</option>';
+	}
+	while ($myrow1 = DB_fetch_array($result1)) {
+		if ($myrow1['categoryid']==$_POST['StockCat']){
+			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		}
+	}
+		
 	//view order by list to display
 	echo '<tr>
 			<td width="150">' . _('Select Order By ') . ' </td>
@@ -60,12 +88,12 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
 			<td>:</td>
-			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	maxlength="8" value="0" /></td>
+			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	maxlength="8" value="30" /></td>
 		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="text" name="NumberOfTopItems" size="8"	maxlength="8" value="1" /></td>
+			<td><input class="number" tabindex="4" type="text" name="NumberOfTopItems" size="8"	maxlength="8" value="100" /></td>
 		 </tr>
 		 <tr>
 			<td></td>
@@ -102,6 +130,10 @@ if (!(isset($_POST['Search']))) {
 
 	if ($_POST['Customers'] != 'All') {
 		$SQL = $SQL . "	AND debtorsmaster.typeid = '" . $_POST['Customers'] . "'";
+	}
+
+	if ($_POST['StockCat'] != 'All') {
+		$SQL = $SQL . "	AND stockmaster.categoryid = '" . $_POST['StockCat'] . "'";
 	}
 
 	$SQL = $SQL . "	GROUP BY salesorderdetails.stkcode
