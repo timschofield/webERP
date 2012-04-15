@@ -19,6 +19,7 @@ if (empty($_GET['identifier'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_GET['NewSpecial']) and $_GET['NewSpecial']=='yes'){
@@ -119,12 +120,12 @@ if (isset($_POST['SelectBranch'])){
 echo '<div class="centre">';
 if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 	echo '<br />
-		<font size="4" color="blue">' . _('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ')';
+		<h2>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ')', ENT_QUOTES, 'UTF-8', false);
 } else {
 	echo '<br />
-		<font size="4" color="blue">' . _('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL'.$identifier]->BranchName . ' ' . _('branch');
+		<h2>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL'.$identifier]->BranchName . ' ' . _('branch'), ENT_QUOTES, 'UTF-8', false);
 }
-echo '</font></div>';
+echo '</h2></div>';
 /*if the branch details and delivery details have not been entered then select them from the list */
 if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 
@@ -167,14 +168,15 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 					<td>%s</td>
 					</tr>',
 				$myrow['branchcode'],
-				$myrow['brname']);
+				htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false));
 
 //end of page full new headings if
 		}
 //end of while loop
 
 		echo '</table>';
-		echo '</form>';
+		echo '</div>
+              </form>';
 		include('includes/footer.inc');
 		exit;
 
@@ -431,7 +433,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						'" . $SPLLine->Cost . "')";
 
 
-			$ErrMsg = _('The item record for line') . ' ' . $SPLLine->LineNo . ' ' . _('could not be create because');
+			$ErrMsg = _('The item record for line') . ' ' . $SPLLine->LineNo . ' ' . _('could not be created because');
 			$DbgMsg = _('The SQL statement used to insert the item and failed was');
 
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -596,7 +598,7 @@ if (!isset($_SESSION['SPL'.$identifier]->StkLocation) or $_SESSION['SPL'.$identi
 
 while ($LocnRow=DB_fetch_array($LocnResult)){
 	if ($_SESSION['SPL'.$identifier]->StkLocation == $LocnRow['loccode']){
-		echo '<option selected="True" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
+		echo '<option selected="selected" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 	} else {
 		echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 	}
@@ -679,13 +681,13 @@ if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 
 /*Set up the form to enter new special items into */
 
-echo '<table>';
-
 echo '<input type="hidden" name="LineNo" value="' . ($_SESSION['SPL'.$identifier]->LinesOnOrder + 1) .'" />';
 
 if (!isset($_POST['ItemDescription'])) {
 	$_POST['ItemDescription']='';
 }
+
+echo '<table>';
 echo '<tr>
 		<td>' . _('Ordered item Description') . ':</td>
 		<td><input type="text" name="ItemDescription" size="40" maxlength="40" value="' . $_POST['ItemDescription'] . '" /></td>
@@ -702,7 +704,7 @@ $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']){
-		echo '<option selected="True" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
@@ -753,6 +755,7 @@ echo '<div class="centre">
 		<br />
 		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
 	</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

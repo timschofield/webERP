@@ -115,7 +115,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr>
 				<td>'.$myrow[0].'</td>
 				<td>'.$myrow[1].'</td>
-				<td><a href="StockAdjustments.php?StockID='.$myrow[0].'&Description='.$myrow[1].'">'._('Adjust').'</a>
+				<td><a href="StockAdjustments.php?StockID='.$myrow[0].'&amp;Description='.$myrow[1].'">'._('Adjust').'</a>
 			</tr>';
 	}
 	echo '</table>';
@@ -353,6 +353,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_SESSION['Adjustment' . $identifier])) {
@@ -381,7 +382,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 echo '<br />
 	<table class="selection">
 	<tr>
-		<th colspan="4"><font color=blue size="3">'._('Adjustment Details').'</font></th>
+		<th colspan="4"><h3>'._('Adjustment Details').'</h3></th>
 	</tr>';
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
@@ -406,7 +407,7 @@ echo '</td>
 	</tr>';
 if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjustment' . $identifier]->ItemDescription)>1){
 	echo '<tr>
-			<td colspan="3"><font color="blue" size="3">' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . _('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</font></td>
+			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . _('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</h3></td>
 		</tr>';
 }
 
@@ -477,7 +478,7 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']. '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select></td></tr>';
 // End select tag
 
 echo '</table>
@@ -495,12 +496,14 @@ echo '<br />
 echo '<br />
 	<a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
 echo '<br />
-	<a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</a>';
+	<a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</a>';
 echo '<br />
-	<a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</a>';
+	<a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&amp;StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</a>';
 echo '<br />
 	<a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</a>';
 
-echo '</div></form>';
+echo '</div>
+      </div>
+      </form>';
 include('includes/footer.inc');
 ?>

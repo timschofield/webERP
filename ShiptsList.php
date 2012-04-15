@@ -34,7 +34,7 @@ if (DB_num_rows($ShiptsResult)==0){
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
-		<th>'. _('Reference'). '</a></th>
+		<th>'. _('Reference'). '</th>
 		<th>'. _('Vessel'). '</th>
 		<th>'. _('ETA'). '</th></tr>';
 

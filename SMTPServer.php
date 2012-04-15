@@ -80,6 +80,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 	
  
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="hidden" name="MailServerSetting" value="' . $MailServerSetting . '" />';
 echo '<table class="selection">';
@@ -92,11 +93,11 @@ echo '<tr><td>'._('Helo Command').'</td>
 echo '<tr><td>'._('Authorisation Required').'</td><td>';
 echo '<select name="Auth">';
 if ($myrow['auth']==1) {
-	echo '<option selected value=1>'._('True').'</option>';
-	echo '<option value=0>'._('False').'</option>';
+	echo '<option selected="selected" value="1">'._('True').'</option>';
+	echo '<option value="0">'._('False').'</option>';
 } else {
-	echo '<option value=1>'._('True').'</option>';
-	echo '<option selected value=0>'._('False').'</option>';
+	echo '<option value="1">'._('True').'</option>';
+	echo '<option selected="selected" value="0">'._('False').'</option>';
 }
 echo '</select></td></tr>';
 echo '<tr><td>'._('User Name').'</td>
@@ -106,7 +107,9 @@ echo '<tr><td>'._('Password').'</td>
 echo '<tr><td>'._('Timeout (seconds)').'</td>
 	<td><input type="text" size="5" name="Timeout" class="number" value="'.$myrow['timeout'].'" /></td></tr>';
 echo '<tr><td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td></tr>';
-echo '</table></form>';
+echo '</table>
+      </div>
+      </form>';
 
 include('includes/footer.inc');
 

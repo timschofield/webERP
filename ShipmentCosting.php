@@ -48,10 +48,10 @@ $HeaderData = DB_fetch_array($GetShiptHdrResult);
 echo '<br />
 	<table class="selection">
 	<tr>
-		<th colspan="4"><font size="3" color="navy">'._('Shipment Details').'</font></th>
+		<th colspan="4"><h3>'._('Shipment Details').'</h3></th>
 	</tr>
 	<tr>
-		<td><b>'. _('Shipment') .': </td>
+		<td><b>'. _('Shipment') .': </b></td>
 		<td><b>' . $_GET['SelectedShipment'] . '</b></td>
 		<td><b>'. _('From').' ' . $HeaderData['suppname'] . '</b></td>
 	</tr>
@@ -142,7 +142,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 	echo '<br /><table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th colspan="9"><font color="navy" size="3">' . _('Items on shipment'). '</font></th></tr>';
+			<th colspan="9"><h3>' . _('Items on shipment'). '</h3></th></tr>';
 
 	$TableHeader = '<tr>
 						<th>'. _('Item'). '</th>
@@ -528,7 +528,7 @@ $ChargesResult = DB_query($sql,$db);
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
-		<th colspan="6"><font color="navy" size="3">' . _('Shipment Charges Against Products'). '</font></th>
+		<th colspan="6"><h3>' . _('Shipment Charges Against Products'). '</h3></th>
 	</tr>';
 
 $TableHeader = '<tr>
@@ -571,7 +571,7 @@ while ($myrow=DB_fetch_array($ChargesResult)) {
 }
 
 echo '<tr>
-		<td colspan="5" class="number"><font color="blue"><b>'. _('Total Charges Against Shipment Items'). ':</b></font></td>
+		<td colspan="5" class="number"><b>'. _('Total Charges Against Shipment Items'). ':</b></td>
 		<td class="number">' . locale_number_format($TotalItemShipmentChgs,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
 
@@ -605,7 +605,7 @@ $ChargesResult = DB_query($sql,$db);
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
-		<th colspan="6"><font color="navy" size="3">'._('General Shipment Charges').'</font></th>
+		<th colspan="6"><h3>'._('General Shipment Charges').'</h3></th>
 	</tr>';
 
 $TableHeader = '<tr>
@@ -645,7 +645,7 @@ while ($myrow=DB_fetch_array($ChargesResult)) {
 }
 
 echo '<tr>
-	<td class="number" colspan="4"><font color="blue"><b>'. _('Total General Shipment Charges'). ':</b></font></td>
+	<td class="number" colspan="4"><b>'. _('Total General Shipment Charges'). ':</b></td>
 	<td class="number">' . locale_number_format($TotalGeneralShipmentChgs,$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 
 echo '</table>';

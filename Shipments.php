@@ -298,11 +298,12 @@ if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is 
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">
 		<tr>
-			<td><b>'. _('Shipment').': </td>
+			<td><b>'. _('Shipment').': </b></td>
 			<td><b>' . $_SESSION['Shipment']->ShiptRef . '</b></td>
 			<td><b>'. _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</b></td>
 		</tr>';
@@ -322,9 +323,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 
 echo '<tr><td>'. _('Expected Arrival Date (ETA)'). ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text" name="ETA" class="date" alt='.$_SESSION['DefaultDateFormat'].'  maxlength="10" size="10" value="' . $ETA . '" /></td>';
+	echo '<td><input type="text" name="ETA" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" size="10" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text" class="date" alt='.$_SESSION['DefaultDateFormat'].' name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>'. _('Into').' ';
 
@@ -392,7 +393,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 	/* Always display all shipment lines */
 
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="9"><font color="navy" size="3">'. _('Order Lines On This Shipment'). '</font></th></tr>';
+	echo '<tr><th colspan="9"><h3>'. _('Order Lines On This Shipment'). '</h3></th></tr>';
 
 	$TableHeader = '<tr>
 						<th>'. _('Order'). '</th>
@@ -478,7 +479,7 @@ if (DB_num_rows($result)>0){
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th colspan="7"><font color="navy" size="3">'. _('Possible Order Lines To Add To This Shipment').'</font></th>
+			<th colspan="7"><h3>'. _('Possible Order Lines To Add To This Shipment').'</h3></th>
 		</tr>';
 
 	$TableHeader = '<tr>
@@ -526,7 +527,8 @@ if (DB_num_rows($result)>0){
 	echo '</table>';
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 
 include('includes/footer.inc');
 ?>

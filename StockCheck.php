@@ -262,11 +262,12 @@ If (isset($_POST['PrintPDF'])
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
 			. _('print') . '" alt="" />' . ' ' . $title.'</p><br />';
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<table class="selection">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+        echo '<div>';
+        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<table class="selection">';
 
-		echo '<tr><td>' . _('From Inventory Category Code') . ':</font></td>
+		echo '<tr><td>' . _('From Inventory Category Code') . ':</td>
 					<td><select name="FromCriteria">';
 
 		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid";
@@ -351,8 +352,9 @@ If (isset($_POST['PrintPDF'])
 			</table>
 			<br />
 			<div class="centre">
-				<input type="submit" Name="PrintPDF" value="' . _('Print and Process') . '" />
+				<input type="submit" name="PrintPDF" value="' . _('Print and Process') . '" />
 			</div>
+            </div>
 			</form>';
 	}
 	include('includes/footer.inc');

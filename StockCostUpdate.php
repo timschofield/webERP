@@ -118,19 +118,21 @@ $result = DB_query("SELECT description,
 $myrow = DB_fetch_array($result);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr><th colspan="2">' . _('Item Code') . ':<input type="text" name="StockID" value="' . $StockID . '"  maxlength="20" />';
 echo '<input type="submit" name="Show" value="' . _('Show Cost Details') . '" /></th></tr>';
-echo '<tr><th colspan="2"><font color="navy" size="2">' . $StockID . ' - ' . $myrow['description'] . '</font></th></tr>';
-echo '<tr><th colspan="2"><font color="navy" size="2">'. _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units'] .'</font></th></tr>';
-echo '<tr><th colspan="2"><font color="navy" size="2">'. _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate']) .'</font></th></tr>';
+echo '<tr><th colspan="2">' . $StockID . ' - ' . $myrow['description'] . '</th></tr>';
+echo '<tr><th colspan="2">'. _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units'] .'</th></tr>';
+echo '<tr><th colspan="2">'. _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate']) .'</th></tr>';
 
 if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
 							OR $myrow['mbflag']=='A'
 							OR $myrow['mbflag']=='K'){
-    echo '</form>'; // Close the form
+    echo '</div>
+          </form>'; // Close the form
    if ($myrow['mbflag']=='D'){
         echo '<br />' . $StockID .' ' . _('is a service item');
    } else if ($myrow['mbflag']=='A'){
@@ -143,12 +145,13 @@ if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
    exit;
 }
 
+echo '<tr><td>';
 echo '<input type="hidden" name="OldMaterialCost" value="' . $myrow['materialcost'] .'" />';
 echo '<input type="hidden" name="OldLabourCost" value="' . $myrow['labourcost'] .'" />';
 echo '<input type="hidden" name="OldOverheadCost" value="' . $myrow['overheadcost'] .'" />';
 echo '<input type="hidden" name="QOH" value="' . $myrow['totalqoh'] .'" />';
 
-echo '<tr><td>' . _('Last Cost') .':</td>
+echo _('Last Cost') .':</td>
 		<td class="number">' . locale_number_format($myrow['lastcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td></tr>';
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<tr><td>' . _('Cost') . ':</td>
@@ -158,8 +161,8 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 } else {
 
 	if ($myrow['mbflag']=='M'){
-		echo '<input type="hidden" name="MaterialCost" value="' . $myrow['materialcost'] . '" />';
-		echo '<tr><td>' . _('Standard Material Cost Per Unit') .':</td>
+		echo '<tr><td><input type="hidden" name="MaterialCost" value="' . $myrow['materialcost'] . '" />';
+		echo _('Standard Material Cost Per Unit') .':</td>
 				<td class="number">' . locale_number_format($myrow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
 			</tr>';
 		echo '<tr>
@@ -176,13 +179,14 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 				<td class="number"><input type="text" class="number" name="MaterialCost" value="' . locale_number_format($myrow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
 			</tr>';
 	} else 	{
-		echo '<input type="hidden" name="LabourCost" value="0" />';
-		echo '<input type="hidden" name="OverheadCost" value="0" />';
+		echo '<tr><td><input type="hidden" name="LabourCost" value="0" />';
+		echo '<input type="hidden" name="OverheadCost" value="0" /></td></tr>';
 	}
     echo '</table>
          <br />
              <div class="centre">
                   <input type="submit" name="UpdateData" value="' . _('Update') . '" />
+             </div>
          <br />
          <br />';
 }
@@ -193,7 +197,7 @@ if ($myrow['mbflag']!='D'){
 	echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
 	echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
 }
-echo '</form>
-     </div>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>
