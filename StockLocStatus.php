@@ -16,6 +16,7 @@ if (isset($_GET['StockID'])){
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $sql = "SELECT loccode,
@@ -106,8 +107,7 @@ if ($_POST['BelowReorderQuantity']=='All'){
           <option value="OnOrder">' . _('Only items currently on order') . '</option>';
 }
 
-echo '</td>
-     </tr>
+echo '</select></td></tr>
      </table>';
 
 echo '<br />
@@ -326,8 +326,9 @@ if (isset($_POST['ShowStatus'])){
 	//end of while loop
 
 	echo '</table>';
-	echo '</form>';
 } /* Show status button hit */
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 
 ?>

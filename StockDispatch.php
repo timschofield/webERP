@@ -228,10 +228,10 @@ If (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 	$DefaultLocation = $myrow['defaultlocation'];
-	echo '<br/>
-         <form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-         <table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>
+          <br />';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 			locationname
 		FROM locations";
@@ -242,7 +242,7 @@ If (isset($_POST['PrintPDF'])) {
 	echo '<table class="selection">
          <tr>
              <td>' . _('Dispatch Percent') . ':</td>
-             <td><input type ="text" name="Percent" class="number" size="8" value="0" />
+             <td><input type ="text" name="Percent" class="number" size="8" value="0" /></td>
          </tr>';
 	echo '<tr>
               <td>' . _('From Stock Location') . ':</td>
@@ -276,11 +276,11 @@ If (isset($_POST['PrintPDF'])) {
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
-		echo '</table></td></tr>
-			</table>
-			<p>';
+		echo '</table>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+        echo '</div>
+              </form>';
 		include ('includes/footer.inc');
 		exit;
 	}
@@ -308,24 +308,26 @@ If (isset($_POST['PrintPDF'])) {
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr></tr><tr></tr><tr><td>' . _('Report Type') . ':</td>';
+	echo '<tr><td>' . _('Report Type') . ':</td>';
 	echo '<td><select name="ReportType">';
 	echo '<option selected="selected" value="Batch">' . _('Create Batch') . '</option>';
 	echo '<option value="Report">' . _('Report Only') . '</option>';
-	echo '</select></td><td>&nbsp</td></tr>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
 
 	echo '<tr><td>' . _('Template') . ':</td>';
 	echo '<td><select name="template">';
 	echo '<option selected="selected" value="standard">' . _('Standard') . '</option>';
 	echo '<option value="simple">' . _('Simple') . '</option>';
-	echo '</select></td><td>&nbsp</td></tr>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '</table>
          <br/>
          <div class="centre">
               <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
          </div>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 

@@ -372,7 +372,7 @@ if(isset($_GET['Trf_ID'])){
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if(DB_num_rows($result) == 0){
-		echo '</table></form><H3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</H3><hr />';
+		echo '<h3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</h3><br />';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -411,6 +411,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?'. SID . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	prnMsg(_('Please Verify Shipment Quantities Received'),'info');
@@ -420,7 +421,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '<br />
 			<table class="selection">';
 	echo '<tr>
-			<th colspan="7"><font size="3" color="blue">' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID . ' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . '</font></th>
+			<th colspan="7"><h3>' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID . ' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . '</h3></th>
 		</tr>';
 
 	$tableheader = '<tr>
@@ -468,7 +469,7 @@ if (isset($_SESSION['Transfer'])){
 		if ($TrfLine->Controlled==1){
 			echo '<td class="number"><input type="hidden" name="Qty' . $i . '" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /><a href="' . $rootpath .'/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
 		} else {
-			echo '<td><input type="text" class="number" name="Qty' . $i . '" maxlength="10" class="number" size="auto" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /></td>';
+			echo '<td><input type="text" class="number" name="Qty' . $i . '" maxlength="10" size="auto" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /></td>';
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
@@ -495,6 +496,7 @@ if (isset($_SESSION['Transfer'])){
 			<input type="submit" name="ProcessTransfer" value="'. _('Process Inventory Transfer'). '" />
 			<br />
 		</div>
+        </div>
 		</form>';
 	echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?NewTransfer=true">'. _('Select A Different Transfer').'</a>';
 
@@ -502,7 +504,8 @@ if (isset($_SESSION['Transfer'])){
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form1">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$LocResult = DB_query("SELECT locationname, loccode FROM locations",$db);
@@ -526,7 +529,7 @@ if (isset($_SESSION['Transfer'])){
 		<input type="submit" name="RefreshTransferList" value="' . _('Refresh Transfer List') . '" /></td>
 		</tr>
 		</table>
-		<p />';
+		<br />';
 
 	$sql = "SELECT DISTINCT reference,
 				locations.locationname as trffromloc,
@@ -542,7 +545,7 @@ if (isset($_SESSION['Transfer'])){
 		$LocResult = DB_query($LocSql,$db);
 		$LocRow = DB_fetch_array($LocResult);
 		echo '<table class="selection">';
-		echo '<tr><th colspan="4"><font size="3" color="blue">'._('Pending Transfers Into').' '.$LocRow['locationname'].'</font></th></tr>';
+		echo '<tr><th colspan="4"><h3>'._('Pending Transfers Into').' '.$LocRow['locationname'].'</h3></th></tr>';
 		echo '<tr>
 			<th>'. _('Transfer Ref'). '</th>
 			<th>'. _('Transfer From'). '</th>
@@ -567,7 +570,8 @@ if (isset($_SESSION['Transfer'])){
 	} else if (!isset($_POST['ProcessTransfer'])) {
 		prnMsg(_('There are no incoming transfers to this location'), 'info');
 	}
-	echo '</form>';
+	echo '</div>
+          </form>';
 }
 include('includes/footer.inc');
 ?>

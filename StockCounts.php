@@ -10,6 +10,7 @@ $title = _('Stock Check Sheets Entry');
 include('includes/header.inc');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
@@ -28,9 +29,9 @@ if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){
 
 echo '<table class="selection"><tr>';
 if ($_GET['Action']=='View'){
-	echo '<td><a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
+	echo '<td><a href="' . $rootpath . '/StockCounts.php?' . SID . '&amp;Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
 } else {
-	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=View">' . _('View Entered Counts') . '</a></td>';
+	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
 }
 echo '</tr></table><br />';
 
@@ -87,9 +88,9 @@ if ($_GET['Action'] == 'Enter'){
 	while ($myrow=DB_fetch_array($result)){
 
 		if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']){
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></th></tr>';
@@ -112,7 +113,7 @@ if ($_GET['Action'] == 'Enter'){
 //END OF action=ENTER
 } elseif ($_GET['Action']=='View'){
 
-	if (isset($_POST['DEL']) && is_array($_POST['DEL']) ){
+	if (isset($_POST['DEL']) AND is_array($_POST['DEL']) ){
 		foreach ($_POST['DEL'] as $id=>$val){
 			if ($val == 'on'){
 				$sql = "DELETE FROM stockcounts WHERE id='".$id."'";
@@ -126,7 +127,7 @@ if ($_GET['Action'] == 'Enter'){
 	//START OF action=VIEW
 	$SQL = "select * from stockcounts";
 	$result = DB_query($SQL, $db);
-	echo '<input type="hidden" name=Action value="View" />';
+	echo '<input type="hidden" name="Action" value="View" />';
 	echo '<table cellpadding="2" class="selection">';
 	echo "<tr>
 		<th>" . _('Stock Code') . "</th>
@@ -149,7 +150,8 @@ if ($_GET['Action'] == 'Enter'){
 //END OF action=VIEW
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 
 ?>
