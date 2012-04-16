@@ -64,7 +64,7 @@ $sql = "SELECT locstock.loccode,
 				locstock.reorderlevel,
 				locations.managed
 		FROM locstock INNER JOIN locations
-		ON locstock.loccode=locations.loccode 
+		ON locstock.loccode=locations.loccode
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locstock.loccode";
 
@@ -86,6 +86,7 @@ if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 						<th>' . _('Quantity On Hand') . '</th>
 						<th>' . _('Re-Order Level') . '</th>
 						<th>' . _('Demand') . '</th>
+						<th>' . _('In Transit') . '</th>
 						<th>' . _('Available') . '</th>
 						<th>' . _('On Order') . '</th>
 					</tr>';
@@ -106,9 +107,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
 			FROM salesorderdetails INNER JOIN salesorders
-			ON salesorders.orderno = salesorderdetails.orderno 
-			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "' 
-			AND salesorderdetails.completed=0 
+			ON salesorders.orderno = salesorderdetails.orderno
+			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
+			AND salesorderdetails.completed=0
 			AND salesorders.quotation=0
 			AND salesorderdetails.stkcode='" . $StockID . "'";
 
@@ -124,15 +125,15 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
 	$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-			FROM salesorderdetails INNER JOIN salesorders 
+			FROM salesorderdetails INNER JOIN salesorders
 			ON salesorders.orderno = salesorderdetails.orderno
-			INNER JOIN bom 
-			ON salesorderdetails.stkcode=bom.parent 
-			INNER JOIN stockmaster 
+			INNER JOIN bom
+			ON salesorderdetails.stkcode=bom.parent
+			INNER JOIN stockmaster
 			ON stockmaster.stockid=bom.parent
-			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "' 
-			AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 
-			AND bom.component='" . $StockID . "' 
+			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
+			AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+			AND bom.component='" . $StockID . "'
 			AND stockmaster.mbflag='A'
 			AND salesorders.quotation=0";
 
@@ -201,9 +202,34 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$QOO +=  $QOORow[0];
 		}
 
+		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+						FROM loctransfers
+						WHERE stockid='" . $StockID . "'
+							AND shiploc='".$myrow['loccode']."'";
+		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitRow=DB_fetch_array($InTransitResult);
+		if ($InTransitRow['intransit']!='') {
+			$InTransitQuantityOut=-$InTransitRow['intransit'];
+		} else {
+			$InTransitQuantityOut=0;
+		}
+
+		$InTransitSQL="SELECT SUM(-shipqty+recqty) as intransit
+						FROM loctransfers
+						WHERE stockid='" . $StockID . "'
+							AND recloc='".$myrow['loccode']."'";
+		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitRow=DB_fetch_array($InTransitResult);
+		if ($InTransitRow['intransit']!='') {
+			$InTransitQuantityIn=-$InTransitRow['intransit'];
+		} else {
+			$InTransitQuantityIn=0;
+		}
+
 		echo '<td>' . $myrow['locationname'] . '</td>';
 
 		printf('<td class="number">%s</td>
+				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -211,6 +237,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 				locale_number_format($myrow['quantity'], $DecimalPlaces),
 				locale_number_format($myrow['reorderlevel'], $DecimalPlaces),
 				locale_number_format($DemandQty, $DecimalPlaces),
+				locale_number_format($InTransitQuantityIn+$InTransitQuantityOut, $DecimalPlaces),
 				locale_number_format($myrow['quantity'] - $DemandQty, $DecimalPlaces),
 				locale_number_format($QOO, $DecimalPlaces)
 				);
@@ -266,7 +293,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 
 	$k=1;
 	while ($myrow=DB_fetch_array($MovtsResult)) {
-	  if ($LastPrice != $myrow['price'] 
+	  if ($LastPrice != $myrow['price']
 			OR $LastDiscount != $myrow['discount']) { /* consolidate price history for records with same price/discount */
 	    if (isset($qty)) {
 	    	$DateRange=ConvertSQLDate($FromDate);
@@ -309,7 +336,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 						<th>' . _('Price') . '</th>
 						<th>' . _('Discount') . '</th>
 					</tr>';
-			
+
 	  $j = 0;
 	  $k = 0; //row colour counter
 
