@@ -86,16 +86,24 @@ if (!isset($_POST['BelowReorderQuantity'])){
 }
 if ($_POST['BelowReorderQuantity']=='All'){
 	echo '<option selected="selected" value="All">' . _('All') . '</option>
-          <option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
-          <option value="NotZero">' . _('Only items where stock is available') . '</option>';
+          <option value="Below">' . _('Only items below re-order quantity') . '</option>
+          <option value="NotZero">' . _('Only items where stock is available') . '</option>
+          <option value="OnOrder">' . _('Only items currently on order') . '</option>';
 } else if ($_POST['BelowReorderQuantity']=='Below') {
 	echo '<option value="All">' . _('All') . '</option>
-          <option selected="selected" value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
-          <option value="NotZero">' . _('Only items where stock is available') . '</option>';
+          <option selected="selected" value="Below">' . _('Only items below re-order quantity') . '</option>
+          <option value="NotZero">' . _('Only items where stock is available') . '</option>
+          <option value="OnOrder">' . _('Only items currently on order') . '</option>';
+} else if ($_POST['BelowReorderQuantity']=='OnOrder') {
+    echo '<option value="All">' . _('All') . '</option>
+          <option value="Below">' . _('Only items below re-order quantity') . '</option>
+          <option value="NotZero">' . _('Only items where stock is available') . '</option>
+          <option selected="selected" value="OnOrder">' . _('Only items currently on order') . '</option>';
 } else  {
 	echo '<option value="All">' . _('All') . '</option>
-          <option value="Below">' . _('Only Items Below Re-order Quantity') . '</option>
-          <option selected="selected" value="NotZero">' . _('Only items where stock is available') . '</option>';
+          <option value="Below">' . _('Only items below re-order quantity') . '</option>
+          <option selected="selected" value="NotZero">' . _('Only items where stock is available') . '</option>
+          <option value="OnOrder">' . _('Only items currently on order') . '</option>';
 }
 
 echo '</td>
@@ -242,13 +250,14 @@ if (isset($_POST['ShowStatus'])){
 			$QOORow = DB_fetch_row($QOOResult);
 			$QOO =  $QOORow[0];
 		} else {
-			$QOOQty = 0;
+			$QOO = 0;
 		}
 
 		if (($_POST['BelowReorderQuantity']=='Below' AND ($myrow['quantity']-$myrow['reorderlevel']-$DemandQty)<0)
-				OR $_POST['BelowReorderQuantity']=='All' OR $_POST['BelowReorderQuantity']=='NotZero'){
+				OR $_POST['BelowReorderQuantity']=='All' OR $_POST['BelowReorderQuantity']=='NotZero'
+                OR ($_POST['BelowReorderQuantity']=='OnOrder' AND $QOO != 0)){
 
-			if (($_POST['BelowReorderQuantity']=='NotZero') and (($myrow['quantity']-$DemandQty)!=0)) {
+			if (($_POST['BelowReorderQuantity']=='NotZero') AND (($myrow['quantity']-$DemandQty)>0)) {
 
 				if ($k==1){
 					echo '<tr class="OddTableRows">';
