@@ -44,6 +44,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			ON locstock.stockid = stockmaster.stockid
 			WHERE stockmaster.categoryid = '" . $_POST['StockCat'] . "'
 			AND locstock.loccode = '" . $_POST['StockLocation'] . "'
+			AND stockmaster.discontinued = 0
 			ORDER BY '" . $Sequence . "' ASC";
 
 	$result = DB_query($sql,$db);
