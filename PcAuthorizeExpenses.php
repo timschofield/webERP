@@ -261,8 +261,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 		}
 
 		echo '<input type="hidden" name="SelectedIndex" value="' . $myrow['counterindex']. '" />';
-		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-		echo '<input type="hidden" name="Days" value="' .$Days. '" />';
 		echo '</td></tr>';
 
 

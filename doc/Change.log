@@ -1,4 +1,5 @@
 webERP Change Log
+16/04/2012 Vitaly: Fixed Days textbox where it did not remember entered value.
 16/04/2012 Ricard: ReorderLevelLocation.php only showing items not discontinued (current).
 14/04/2012 Ricard: Adding stock category as filter for selection in TopItems.php
 12/4/2012 TurboPT: Replaced table row bgcolor [or style=background-color] with the appropriate css class.
