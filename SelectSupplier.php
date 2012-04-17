@@ -350,7 +350,6 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
 			echo '<br />';
-			echo '<tr><td colspan="2">';
 			echo '<table width="45%" cellpadding="4">';
 			echo '<tr><th style="width:33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
 			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
@@ -375,9 +374,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 					<td valign="top" class="select">'._('Total Spend with this Supplier:') . '</td>
 					<td valign="top" class="select"> <b>' . locale_number_format($row['total'], $myrow['currdecimalplaces']) . '</b></td>
 					</tr>';
-			echo '</th>
-					</tr>
-					</table>';
+			echo '</table>';
 		}
 	}
 }

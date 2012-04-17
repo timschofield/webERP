@@ -556,7 +556,6 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					AND type !=12";
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
-			echo '<tr><td colspan="2">';
 			echo '<table width="45%" cellpadding="4">';
 			echo '<tr><th style="width:33%" colspan="3">' . _('Customer Data') . '</th></tr>';
 			echo '<tr><td valign="top" class="select">'; /* Customer Data */
@@ -597,19 +596,16 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					<td class="select"><b>' . $CustomerTypeName . '</b></td>
 					<td class="select"></td>
 					</tr>';
-			echo '</th>
-				</tr>
-				</table>';
+			echo '</table>';
 		}
 		// Customer Contacts
-		echo '<tr><td colspan="2">';
 		$sql = "SELECT * FROM custcontacts
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY contid";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
-			echo '<table width="45%">';
-			echo '<br /><th colspan="7"><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</th>';
+			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</div>';
+            echo '<br /><table width="45%">';
 			echo '<tr>
 					<th>' . _('Name') . '</th>
 					<th>' . _('Role') . '</th>
@@ -632,7 +628,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 				echo '<td>' . $myrow[2] . '</td>
 					<td>' . $myrow[3] . '</td>
 					<td>' . $myrow[4] . '</td>
-					<td><a href=mailto:' . $myrow[6] . '>' . $myrow[6] . '</a></td>
+					<td><a href="mailto:' . $myrow[6] . '">' . $myrow[6] . '</a></td>
 					<td>' . $myrow[5] . '</td>
 					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&amp;DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
 					<td><a href="AddCustomerContacts.php?Id=' . $myrow[0] . '&amp;DebtorNo=' . $myrow[1] . '&amp;delete=1">' . _('Delete') . '</a></td>
@@ -645,7 +641,6 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			}
 		}
 		// Customer Notes
-		echo '<tr><td colspan="2">';
 		$sql = "SELECT * FROM custnotes
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY date DESC";
@@ -686,7 +681,6 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			}
 		}
 		// Custome Type Notes
-		echo '<tr><td colspan="2">';
 		$sql = "SELECT * FROM debtortypenotes
 				WHERE typeid='" . $CustomerType . "'
 				ORDER BY date DESC";
