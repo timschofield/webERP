@@ -226,6 +226,12 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$InTransitQuantityIn=0;
 		}
 
+		if (($InTransitQuantityIn+$InTransitQuantityOut) < 0) {
+			$Available = $myrow['quantity'] - $DemandQty + ($InTransitQuantityIn+$InTransitQuantityOut);
+		} else {
+			$Available = $myrow['quantity'] - $DemandQty;
+		}
+
 		echo '<td>' . $myrow['locationname'] . '</td>';
 
 		printf('<td class="number">%s</td>
@@ -238,7 +244,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 				locale_number_format($myrow['reorderlevel'], $DecimalPlaces),
 				locale_number_format($DemandQty, $DecimalPlaces),
 				locale_number_format($InTransitQuantityIn+$InTransitQuantityOut, $DecimalPlaces),
-				locale_number_format($myrow['quantity'] - $DemandQty, $DecimalPlaces),
+				locale_number_format($Available, $DecimalPlaces),
 				locale_number_format($QOO, $DecimalPlaces)
 				);
 
