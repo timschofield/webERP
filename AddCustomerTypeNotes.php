@@ -40,7 +40,7 @@ if (isset($_POST['submit']) ) {
 	if ($Id and $InputError !=1) {
 
 		$sql = "UPDATE debtortypenotes SET note='" . $_POST['note'] . "',
-											date='" . $_POST['date'] . "',
+											date='" . FormatDateForSQL($_POST['date']) . "',
 											href='" . $_POST['href'] . "',
 											priority='" . $_POST['priority'] . "'
 										WHERE typeid ='".$DebtorType."'
@@ -56,7 +56,7 @@ if (isset($_POST['submit']) ) {
 									VALUES ('" . $DebtorType. "',
 											'" . $_POST['href'] . "',
 											'" . $_POST['note'] . "',
-											'" . $_POST['date'] . "',
+											'" . FormatDateForSQL($_POST['date']) . "',
 											'" . $_POST['priority'] . "')";
 		$msg = _('The contact group notes record has been added');
 	}
