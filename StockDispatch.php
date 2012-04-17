@@ -7,7 +7,7 @@
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
-If (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	if (!is_numeric(filter_number_format($_POST['Percent']))) {
@@ -48,9 +48,15 @@ If (isset($_POST['PrintPDF'])) {
 
 	// Creates WHERE clause for stock categories. StockCat is defined as an array so can choose
 	// more than one category
-	$WhereCategory = " ";
 	if ($_POST['StockCat'] != 'All') {
+		$CategorySQL="SELECT categorydescription FROM stockcategory WHERE categoryid='".$_POST['StockCat']."'";
+		$CategoryResult=DB_query($CategorySQL, $db);
+		$CategoryRow=DB_fetch_array($CategoryResult);
+		$CategoryDescription=$CategoryRow['categorydescription'];
 		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
+	} else {
+		$CategoryDescription=_('All');
+		$WhereCategory = " ";
 	}
 
 
@@ -90,7 +96,7 @@ If (isset($_POST['PrintPDF'])) {
 	  include('includes/header.inc');
 	   prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo '<br />
-            <a href="' .$rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			<a href="' .$rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
@@ -103,14 +109,14 @@ If (isset($_POST['PrintPDF'])) {
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
 		echo '<br />
-             <a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+			 <a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
 
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-				$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
+				$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template,$CategoryDescription);
 
 	$FontSize=8;
 
@@ -120,6 +126,7 @@ If (isset($_POST['PrintPDF'])) {
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
+			$fill=False;
 				if($template=='simple'){
 					//for simple template
 					$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
@@ -176,7 +183,7 @@ If (isset($_POST['PrintPDF'])) {
 							'" . Date('Y-m-d') . "',
 							'" . $_POST['FromLocation']  ."',
 							'" . $_POST['ToLocation'] . "')";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 			if ($_POST['ReportType'] == 'Batch') {
 				$resultLocShip = DB_query($sql2,$db, $ErrMsg);
 			}
@@ -229,9 +236,9 @@ If (isset($_POST['PrintPDF'])) {
 	$myrow = DB_fetch_array($result);
 	$DefaultLocation = $myrow['defaultlocation'];
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>
-          <br />';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<div>
+		  <br />';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 			locationname
 		FROM locations";
@@ -240,13 +247,13 @@ If (isset($_POST['PrintPDF'])) {
 		$_POST['FromLocation']=$DefaultLocation;
 	}
 	echo '<table class="selection">
-         <tr>
-             <td>' . _('Dispatch Percent') . ':</td>
-             <td><input type ="text" name="Percent" class="number" size="8" value="0" /></td>
-         </tr>';
+		 <tr>
+			 <td>' . _('Dispatch Percent') . ':</td>
+			 <td><input type ="text" name="Percent" class="number" size="8" value="0" /></td>
+		 </tr>';
 	echo '<tr>
-              <td>' . _('From Stock Location') . ':</td>
-              <td><select name="FromLocation"> ';
+			  <td>' . _('From Stock Location') . ':</td>
+			  <td><select name="FromLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['FromLocation']){
 			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -255,14 +262,14 @@ If (isset($_POST['PrintPDF'])) {
 		}
 	}
 	echo '</select></td>
-         </tr>';
+		 </tr>';
 	DB_data_seek($resultStkLocs,0);
 	if (!isset($_POST['ToLocation'])) {
 		$_POST['ToLocation']=$DefaultLocation;
 	}
 	echo '<tr>
-              <td>' . _('To Stock Location') . ':</td>
-              <td><select name="ToLocation"> ';
+			  <td>' . _('To Stock Location') . ':</td>
+			  <td><select name="ToLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['ToLocation']){
 			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -271,7 +278,7 @@ If (isset($_POST['PrintPDF'])) {
 		}
 	}
 	echo '</select></td>
-         </tr>';
+		 </tr>';
 
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
@@ -279,8 +286,8 @@ If (isset($_POST['PrintPDF'])) {
 		echo '</table>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-        echo '</div>
-              </form>';
+		echo '</div>
+			  </form>';
 		include ('includes/footer.inc');
 		exit;
 	}
@@ -289,8 +296,8 @@ If (isset($_POST['PrintPDF'])) {
 	// Also have to change way define $WhereCategory for WHERE clause
 
 	echo '<tr>
-              <td>' . _('In Stock Category') . ':</td>
-              <td><select name="StockCat">';
+			  <td>' . _('In Stock Category') . ':</td>
+			  <td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -322,12 +329,12 @@ If (isset($_POST['PrintPDF'])) {
 	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '</table>
-         <br/>
-         <div class="centre">
-              <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-         </div>';
-    echo '</div>
-          </form>';
+		 <br/>
+		 <div class="centre">
+			  <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+		 </div>';
+	echo '</div>
+		  </form>';
 
 	include('includes/footer.inc');
 
@@ -335,7 +342,7 @@ If (isset($_POST['PrintPDF'])) {
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template) {
+					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template,$CategoryDescription) {
 
 
 	/*PDF page header for Stock Dispatch report */
@@ -364,7 +371,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['StockCat']);
-	$pdf->addTextWrap(160,$YPos,150,$FontSize,$catdescription,'left');
+	$pdf->addTextWrap(160,$YPos,150,$FontSize,$CategoryDescription,'left');
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Percent'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['Percent']);
