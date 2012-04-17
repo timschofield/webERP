@@ -92,16 +92,16 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Stock Dispatch - Problem Report');
-	  include('includes/header.inc');
-	   prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br />
+		$title = _('Stock Dispatch - Problem Report');
+		include('includes/header.inc');
+		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
+		echo '<br />
 			<a href="' .$rootpath . '/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
-		  echo '<br />' . $sql;
-	   }
-	   include('includes/footer.inc');
-	   exit;
+		if ($debug==1){
+			echo '<br />' . $sql;
+		}
+		include('includes/footer.inc');
+		exit;
 	}
 	if (DB_num_rows($result) ==0) {
 		$title = _('Stock Dispatch - Problem Report');
@@ -121,73 +121,80 @@ if (isset($_POST['PrintPDF'])) {
 	$FontSize=8;
 
 	while ($myrow = DB_fetch_array($result,$db)){
-			$YPos -=(2 * $line_height);
-			// Parameters for addTextWrap are defined in /includes/class.pdf.php
-			// 1) X position 2) Y position 3) Width
-			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-			// and False to set to transparent
-			$fill=False;
-				if($template=='simple'){
-					//for simple template
-					$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-					$pdf->addTextWrap(135,$YPos,250,$FontSize,$myrow['description'],'',0,$fill);
-					$pdf->addTextWrap(380,$YPos,45,$FontSize,locale_number_format($myrow['fromquantity'],
-														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(425,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
-														$myrow['decimalplaces']),'right',0,$fill);
-					$shipqty = $myrow['available'];
-					if ($myrow['neededqty'] < $myrow['available']) {
-							$shipqty = $myrow['neededqty'];
-						}
-					$pdf->addTextWrap(465,$YPos,40,11,locale_number_format($shipqty,
-														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
-				}else{
-					//for standard template
-					$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-					$pdf->addTextWrap(135,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
-					$pdf->addTextWrap(305,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'],
-														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(345,$YPos,40,$FontSize,locale_number_format($myrow['fromreorderlevel'],
-														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(380,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
-														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(420,$YPos,40,$FontSize,locale_number_format($myrow['reorderlevel'],
-														$myrow['decimalplaces']),'right',0,$fill);
-					$shipqty = $myrow['available'];
-					if ($myrow['neededqty'] < $myrow['available']) {
-							$shipqty = $myrow['neededqty'];
-						}
-					$pdf->addTextWrap(460,$YPos,40,11,locale_number_format($shipqty,
-														$myrow['decimalplaces']),'right',0,$fill);
-					$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
-				}
-
+		$YPos -=(2 * $line_height);
+		// Parameters for addTextWrap are defined in /includes/class.pdf.php
+		// 1) X position 2) Y position 3) Width
+		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
+		// and False to set to transparent
+		$fill=False;
+		if ($_SESSION['ProhibitNegativeStock']==1){
+			$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+							FROM loctransfers
+							WHERE stockid='" . $myrow['stockid'] . "'
+								AND shiploc='".$_POST['FromLocation']."'
+								AND shipqty>recqty";
+			$InTransitResult=DB_query($InTransitSQL, $db);
+			$InTransitRow=DB_fetch_array($InTransitResult);
+			$InTransitQuantity=$InTransitRow['intransit'];
+		}
+		$ShipQty = $myrow['available'];
+		if ($myrow['neededqty'] < $myrow['available']) {
+			$ShipQty = $myrow['neededqty'];
+		}
+		$ShipQty=$ShipQty-$InTransitQuantity;
+		if ($ShipQty>0) {
+			if($template=='simple'){
+				//for simple template
+				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
+				$pdf->addTextWrap(135,$YPos,250,$FontSize,$myrow['description'],'',0,$fill);
+				$pdf->addTextWrap(380,$YPos,45,$FontSize,locale_number_format($myrow['fromquantity'],
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(425,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(465,$YPos,40,11,locale_number_format($ShipQty,
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
+			}else{
+				//for standard template
+				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
+				$pdf->addTextWrap(135,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
+				$pdf->addTextWrap(305,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'],
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(345,$YPos,40,$FontSize,locale_number_format($myrow['fromreorderlevel'],
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(380,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(420,$YPos,40,$FontSize,locale_number_format($myrow['reorderlevel'],
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(460,$YPos,40,11,locale_number_format($ShipQty,
+													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
+			}
 
 			if ($YPos < $Bottom_Margin + $line_height + 200){
 
-			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-						   $Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
+				PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+							$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
 			}
 
 			// Create loctransfers records for each record
 			$sql2 = "INSERT INTO loctransfers (reference,
-								stockid,
-								shipqty,
-								shipdate,
-								shiploc,
-								recloc)
-						VALUES ('" . $Trf_ID . "',
-							'" . $myrow['stockid'] . "',
-							'" . $shipqty . "',
-							'" . Date('Y-m-d') . "',
-							'" . $_POST['FromLocation']  ."',
-							'" . $_POST['ToLocation'] . "')";
+												stockid,
+												shipqty,
+												shipdate,
+												shiploc,
+												recloc)
+											VALUES ('" . $Trf_ID . "',
+												'" . $myrow['stockid'] . "',
+												'" . $ShipQty . "',
+												'" . Date('Y-m-d') . "',
+												'" . $_POST['FromLocation']  ."',
+												'" . $_POST['ToLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
 			if ($_POST['ReportType'] == 'Batch') {
 				$resultLocShip = DB_query($sql2,$db, $ErrMsg);
 			}
-
+		}
 	} /*end while loop  */
 	//add prepared by
 	$pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
