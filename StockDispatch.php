@@ -21,7 +21,7 @@ if (isset($_POST['PrintPDF'])) {
 	$line_height=12;
 	$Xpos = $Left_Margin+1;
 
-	//tempate
+	//template
 	if($_POST['template']=='simple'){
 		$template='simple';
 	}else{
@@ -32,16 +32,15 @@ if (isset($_POST['PrintPDF'])) {
 		$Trf_ID = GetNextTransNo(16,$db);
 	}
 
-
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
-	$sqlfrom="SELECT locationname FROM `locations` where loccode='" . $_POST['FromLocation'] . "'";
+	$sqlfrom="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['FromLocation'] . "'";
 	$result = DB_query($sqlfrom,$db,$ErrMsg);
 	$Row = DB_fetch_row($result);
 	$FromLocation=$Row['0'];
 
 	// to location
-	$sqlto="SELECT locationname FROM `locations` where loccode='" . $_POST['ToLocation'] .  "'";
+	$sqlto="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['ToLocation'] .  "'";
 	$resultto = DB_query($sqlto,$db,$ErrMsg);
 	$RowTo = DB_fetch_row($resultto);
 	$ToLocation=$RowTo['0'];
@@ -114,7 +113,6 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 				$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template,$CategoryDescription);
 
@@ -185,11 +183,11 @@ if (isset($_POST['PrintPDF'])) {
 				//for standard template
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
 				$pdf->addTextWrap(135,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
-				$pdf->addTextWrap(305,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'],
+				$pdf->addTextWrap(305,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'] - $InTransitQuantityAtFrom,
 													$myrow['decimalplaces']),'right',0,$fill);
 				$pdf->addTextWrap(345,$YPos,40,$FontSize,locale_number_format($myrow['fromreorderlevel'],
 													$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(380,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
+				$pdf->addTextWrap(380,$YPos,40,$FontSize,locale_number_format($myrow['quantity'] + $InTransitQuantityAtTo,
 													$myrow['decimalplaces']),'right',0,$fill);
 				$pdf->addTextWrap(420,$YPos,40,$FontSize,locale_number_format($myrow['reorderlevel'],
 													$myrow['decimalplaces']),'right',0,$fill);
@@ -428,9 +426,9 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 		$pdf->addTextWrap(460,$YPos,40,$FontSize,_('Shipped'), 'right');
 		$pdf->addTextWrap(510,$YPos,40,$FontSize,_('Received'), 'right');
 		$YPos -= $line_height;
-		$pdf->addTextWrap(305,$YPos,40,$FontSize,_('QOH'), 'right');
+		$pdf->addTextWrap(305,$YPos,40,$FontSize,_('Avail'), 'right');
 		$pdf->addTextWrap(345,$YPos,40,$FontSize,_('Reord'), 'right');
-		$pdf->addTextWrap(380,$YPos,40,$FontSize,_('QOH'), 'right');
+		$pdf->addTextWrap(380,$YPos,40,$FontSize,_('Avail'), 'right');
 		$pdf->addTextWrap(420,$YPos,40,$FontSize,_('Reord'), 'right');
 
 	}
