@@ -127,6 +127,9 @@ if (isset($_POST['PrintPDF'])) {
 		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 		// and False to set to transparent
 		$fill=False;
+		
+		// Check if there is any stock in transit already sent from FROM LOCATION
+		$InTransitQuantityAtFrom = 0;
 		if ($_SESSION['ProhibitNegativeStock']==1){
 			$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
 							FROM loctransfers
@@ -135,13 +138,37 @@ if (isset($_POST['PrintPDF'])) {
 								AND shipqty>recqty";
 			$InTransitResult=DB_query($InTransitSQL, $db);
 			$InTransitRow=DB_fetch_array($InTransitResult);
-			$InTransitQuantity=$InTransitRow['intransit'];
+			$InTransitQuantityAtFrom=$InTransitRow['intransit'];
 		}
-		$ShipQty = $myrow['available'];
-		if ($myrow['neededqty'] < $myrow['available']) {
-			$ShipQty = $myrow['neededqty'];
+		// The real available stock to ship is the (qty - reorder level - in transit).
+		$AvailableShipQtyAtFrom = $myrow['available'] - $InTransitQuantityAtFrom;
+		
+		// Check if TO location is already waiting to receive some stock of this item
+		$InTransitQuantityAtTo=0;
+		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+						FROM loctransfers
+						WHERE stockid='" . $myrow['stockid'] . "'
+							AND recloc='".$_POST['ToLocation']."'
+							AND shipqty>recqty";
+		$InTransitResult=DB_query($InTransitSQL, $db);
+		$InTransitRow=DB_fetch_array($InTransitResult);
+		$InTransitQuantityAtTo=$InTransitRow['intransit'];
+		
+		// The real needed stock is reorder level - qty - in transit).
+		$NeededQtyAtTo = $myrow['neededqty'] - $InTransitQuantityAtTo;
+		
+		// Decide how many are sent 
+		$ShipQty = 0;
+		if ($AvailableShipQtyAtFrom > 0) {
+			if ($AvailableShipQtyAtFrom >= $NeededQtyAtTo) {
+				// We can ship all the needed qty at TO location
+				$ShipQty = $NeededQtyAtTo;
+			}else{
+				// We can't ship all the needed qty at TO location, but at least can ship some
+				$ShipQty = $AvailableShipQtyAtFrom;
+			}
 		}
-		$ShipQty=$ShipQty-$InTransitQuantity;
+
 		if ($ShipQty>0) {
 			if($template=='simple'){
 				//for simple template
