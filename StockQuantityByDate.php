@@ -12,6 +12,7 @@ echo '<p class="page_title_text">
 	</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
@@ -71,6 +72,7 @@ echo '<tr>
 		</div></td>
 	</tr>
 	</table>
+    </div>
 	</form>';
 
 $TotalQuantity = 0;
@@ -138,17 +140,17 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 			}
 
 			if($NumRows == 0){
-				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</td>
+				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</a></td>
 						<td>%s</td>
-						<td class="number">%s</td>',
+						<td class="number">%s</td></tr>',
 						'StockID=' . mb_strtoupper($myrows['stockid']),
 						mb_strtoupper($myrows['stockid']),
 						$myrows['description'],
 						0);
 			} else {
-				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</td>
+				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</a></td>
 					<td>%s</td>
-					<td class="number">%s</td>',
+					<td class="number">%s</td></tr>',
 					'StockID=' . mb_strtoupper($myrows['stockid']),
 					mb_strtoupper($myrows['stockid']),
 					$myrows['description'],

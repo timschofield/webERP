@@ -22,6 +22,7 @@ $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" 
 $myrow = DB_fetch_row($result);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $sql = "SELECT locstock.loccode,
@@ -46,7 +47,7 @@ echo '<tr>
 		<th colspan="3">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
 	</tr>';
 echo '<tr>
-		<th colspan="3"><font color="blue" size="3"><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</font></th>
+		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
 	</tr>';
 
 $TableHeader = '<tr>
@@ -84,8 +85,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	printf('<td>%s</td>
 			<td class="number">%s</td>
-			<td><input type="text" class="number" name="%s" maxlength="10" size="10" value="%s" /></td>
-			<input type="hidden" name="Old_%s" value="%s" />',
+			<td><input type="text" class="number" name="%s" maxlength="10" size="10" value="%s" />
+			<input type="hidden" name="Old_%s" value="%s" /></td></tr>',
 			$myrow['locationname'],
 			locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
 			$myrow['loccode'],
@@ -114,6 +115,7 @@ echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' 
 echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
+    </div>
 	</form>';
 include('includes/footer.inc');
 ?>

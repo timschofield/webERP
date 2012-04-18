@@ -19,6 +19,7 @@ $myrow = DB_fetch_row($result);
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '</b></p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
@@ -120,7 +121,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	if ($myrow['type']==10){ /*its a sales invoice allow link to show invoice it was sold on*/
 
-		printf('<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice">%s</td>
+		printf('<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Invoice">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -146,7 +147,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	} elseif ($myrow['type']==11){
 
-		printf('<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit">%s</td>
+		printf('<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -199,11 +200,13 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 
 echo '</table>';
 echo '<div class="centre"><br /><a href="' . $rootpath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
-echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Usage') . '</a>';
-echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Usage') . '</a>';
+echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Search Outstanding Sales Orders') . '</a>';
 echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 
-echo '</form></div>';
+echo '</div>
+      </div>
+      </form>';
 
 include('includes/footer.inc');
 

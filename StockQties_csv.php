@@ -11,7 +11,7 @@ function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
 
-echo '<div class="centre">' . _('Making a comma separated values file of the current stock quantities');
+echo '<div class="centre">' . _('Making a comma separated values file of the current stock quantities') . '</div>';
 
 $ErrMsg = _('The SQL to get the stock quantities failed with the message');
 

@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (ContainsIllegalCharacters($StockID) OR mb_strpos($StockID,' ')) {
 		$InputError = 1;
-		prnMsg(_('The stock item code cannot contain any of the following characters') . " - ' & + \" \\ ." . _('or a space'),'error');
+		prnMsg(_('The stock item code cannot contain any of the following characters') . " - ' &amp; + \" \\ ." . _('or a space'),'error');
 		$Errors[$i] = 'StockID';
 		$i++;
 		$StockID='';
@@ -714,12 +714,12 @@ if (isset($_POST['submit'])) {
 }
 
 
-echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-	<table class="selection">
-	<tr><td>'; // Nested table
+echo '<form id="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="New" value="'.$New.'" />';
+echo '<table class="selection">';
 
 if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 
@@ -732,9 +732,8 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 			value="'.$StockID.'" name="StockID" size="21" maxlength="20" /></td></tr>';
 	} else {
 		echo '<tr><td>'. _('Item Code'). ':</td>
-					<td>'.$StockID.'</td>
+					<td>'.$StockID.'<input type="hidden" name ="StockID" value="'.$StockID.'" /></td>
 				</tr>';
-		echo '<input type="hidden" name ="StockID" value="'.$StockID.'" />';
 	}
 
 } elseif (!isset($_POST['UpdateCategories']) AND $InputError!=1) { // Must be modifying an existing item and no changes made yet
@@ -787,16 +786,14 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 
 
 	echo '<tr><td>' . _('Item Code') . ':</td>
-			<td>'.$StockID.'</td>
+			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 			</tr>';
-	echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
 	echo '<tr>
 			<td>' . _('Item Code') . ':</td>
-			<td>'.$StockID.'</td>
+			<td>'.$StockID.'<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
 		</tr>';
-	echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 }
 
 if (isset($_POST['Description'])) {
@@ -823,25 +820,24 @@ echo '<tr>
 		<td><input type="file" id="ItemPicture" name="ItemPicture" /></td>';
 
  if (function_exists('imagecreatefromjpg')){
-	$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-		'&StockID='.urlencode($StockID).
-		'&text='.
-		'&width=64'.
-		'&height=64'.
-		'" />';
+	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+		'&amp;StockID='.urlencode($StockID).
+		'&amp;text='.
+		'&amp;width=64'.
+		'&amp;height=64'.
+		'" alt="" />';
 } else {
 	if( isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		$StockImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . $StockID . '&text=&width=120&height=120" />';
+		$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $StockID . '&amp;text=&amp;width=120&amp;height=120" alt="" />';
 	} else {
 		$StockImgLink = _('No Image');
 	}
 }
 
 if ($StockImgLink!=_('No Image')) {
-	echo '</td>
-			<td>' . _('Image') . '<br />'.$StockImgLink . '</td>
-		</tr>';
+	echo '<td>' . _('Image') . '<br />'.$StockImgLink . '</td>';
 }
+echo '</tr>';
 
 echo '<tr>
 		<td>' . _('Category') . ':</td>
@@ -1026,7 +1022,7 @@ if ($_POST['Serialised']==1 AND $_POST['MBFlag']=='M'){
 			<td>' . _('Next Serial No (>0 for auto numbering)') . ':</td>
 			<td><input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size="15" maxlength="15" value="' . $_POST['NextSerialNo'] . '" /></td></tr>';
 } else {
-	echo '<input type="hidden" name="NextSerialNo" value="0" />';
+	echo '<tr><td><input type="hidden" name="NextSerialNo" value="0" /></td></tr>';
 }
 
 echo '<tr>
@@ -1047,7 +1043,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Decimal Places for display Quantity') . ':</td>
-		<td><input type="text" class="number" name="DecimalPlaces" size="1" maxlength="1" value="' . $_POST['DecimalPlaces'] . '" /><td>
+		<td><input type="text" class="number" name="DecimalPlaces" size="1" maxlength="1" value="' . $_POST['DecimalPlaces'] . '" /></td>
 	</tr>';
 
 if (isset($_POST['BarCode'])) {
@@ -1123,13 +1119,12 @@ $PropertiesResult = DB_query($sql,$db);
 $PropertyCounter = 0;
 $PropertyWidth = array();
 
-echo '<br />
-	<table class="selection">';
 if (DB_num_rows($PropertiesResult)>0) {
+echo '<br />
+    <table class="selection">';
 	echo '<tr>
 			<th colspan="2">' . _('Item Category Properties') . '</th>
 		</tr>';
-}
 
 while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 
@@ -1144,19 +1139,20 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	} else {
 		$PropertyValue =  '';
 	}
-	echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="' .$PropertyRow['stkcatpropid'] .'" />';
-	echo '<input type="hidden" name="PropNumeric' . $PropertyCounter . '" value="' .$PropertyRow['numericvalue'] .'" />';
-
-	echo '<tr>
-			<td>' . $PropertyRow['label'] . '</td>
+    echo '<tr>
+            <td>';
+  	        echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="' .$PropertyRow['stkcatpropid'] .'" />';
+	        echo '<input type="hidden" name="PropNumeric' . $PropertyCounter . '" value="' .$PropertyRow['numericvalue'] .'" />';
+            echo $PropertyRow['label'] . '</td>
+    
 			<td>';
 	switch ($PropertyRow['controltype']) {
 	 	case 0; //textbox
 	 		if ($PropertyRow['numericvalue']==1) {
-				echo '<input type="textbox" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . locale_number_format($PropertyValue,'Variable') . '" />';
+				echo '<input type="text" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . locale_number_format($PropertyValue,'Variable') . '" />';
 				echo _('A number between') . ' ' . locale_number_format($PropertyRow['minimumvalue'],'Variable') . ' ' . _('and') . ' ' . locale_number_format($PropertyRow['maximumvalue'],'Variable') . ' ' . _('is expected');
 			} else {
-				echo '<input type="textbox" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '" />';
+				echo '<input type="text" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '" />';
 			}
 	 		break;
 	 	case 1; //select box
@@ -1185,9 +1181,10 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	
 } //end loop round properties for the item category
 unset($StockID);
-echo '</table>
-		<br />';
+echo '</table>';
+}
 echo '<input type="hidden" name="PropertyCounter" value="' . $PropertyCounter . '" />';
+echo '<br />';
 
 if ($New==1) {
 	echo '<input type="submit" name="submit" value="' . _('Insert New Item') . '" />';
@@ -1199,7 +1196,7 @@ if ($New==1) {
 
 	echo '<input type="submit" name="submit" value="' . _('Update') . '" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
-	echo '<p>';
+	echo '<br />';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') .  _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist'), 'warn', _('WARNING'));
 	echo '<br />
 		<br />
@@ -1207,6 +1204,7 @@ if ($New==1) {
 }
 
 echo '</div>
+    </div>
 	</form>';
 include('includes/footer.inc');
 ?>

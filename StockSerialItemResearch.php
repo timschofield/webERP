@@ -23,12 +23,13 @@ if (isset($_POST['serialno'])) {
 
 echo '<div class="centre">
 <br />
-<form name="SerialNoResearch" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+<form id="SerialNoResearch" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo  _('Serial Number') .': <input ID="serialno" type="text" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
-</div>
+echo  _('Serial Number') .': <input id="serialno" type="text" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
 <br />
+</div>
 </form>';
 
 echo '<script  type="text/javascript">
