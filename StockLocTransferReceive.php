@@ -508,7 +508,7 @@ if (isset($_SESSION['Transfer'])){
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$LocResult = DB_query("SELECT locationname, loccode FROM locations",$db);
+	$LocResult = DB_query("SELECT locationname, loccode FROM locations ORDER BY locationname",$db);
 
 	echo '<table class="selection">';
 	echo '<tr>
