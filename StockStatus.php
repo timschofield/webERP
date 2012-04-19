@@ -66,7 +66,7 @@ $sql = "SELECT locstock.loccode,
 		FROM locstock INNER JOIN locations
 		ON locstock.loccode=locations.loccode
 		WHERE locstock.stockid = '" . $StockID . "'
-		ORDER BY locstock.loccode";
+		ORDER BY locations.locationname";
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
