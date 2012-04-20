@@ -119,13 +119,6 @@ if (isset($_POST['PrintPDF'])) {
 	$FontSize=8;
 
 	while ($myrow = DB_fetch_array($result,$db)){
-		$YPos -=(2 * $line_height);
-		// Parameters for addTextWrap are defined in /includes/class.pdf.php
-		// 1) X position 2) Y position 3) Width
-		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-		// and False to set to transparent
-		$fill=False;
-		
 		// Check if there is any stock in transit already sent from FROM LOCATION
 		$InTransitQuantityAtFrom = 0;
 		if ($_SESSION['ProhibitNegativeStock']==1){
@@ -168,6 +161,13 @@ if (isset($_POST['PrintPDF'])) {
 		}
 
 		if ($ShipQty>0) {
+			$YPos -=(2 * $line_height);
+			// Parameters for addTextWrap are defined in /includes/class.pdf.php
+			// 1) X position 2) Y position 3) Width
+			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
+			// and False to set to transparent
+			$fill=False;
+		
 			if($template=='simple'){
 				//for simple template
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
