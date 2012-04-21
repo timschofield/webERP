@@ -1,4 +1,5 @@
 webERP Change Log
+21/04/2012 Vitaly: Editable item description in PO. 
 16/04/2012 Vitaly: Added option to display only items that are currently on purchase order in StockLocStatus.php
 16/04/2012 Vitaly: Fixed Days textbox where it did not remember entered value.
 16/04/2012 Ricard: ReorderLevelLocation.php only showing items not discontinued (current).
