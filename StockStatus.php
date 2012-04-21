@@ -56,7 +56,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
 
-echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" /></div>';
+echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />';
 
 $sql = "SELECT locstock.loccode,
 				locations.locationname,
@@ -379,7 +379,6 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 }//end of displaying price history for a debtor
 
-echo '<div class="centre">';
 echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>';
 echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>';
 echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';

@@ -117,7 +117,7 @@ if (isset($_GET['Delete'])){
 
 echo '<table class="selection">
 		<tr>
-			<th colspan="6"><font size="3" color="navy">' . _('Invoiced Goods Received Selected') . '</font></th>
+			<th colspan="6"><h3>' . _('Invoiced Goods Received Selected') . '</h3></th>
 		</tr>';
 
 $tableheader = '<tr>
@@ -158,7 +158,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
 echo '<tr>
 		<td colspan="5" align="right">' . _('Total Value of Goods Charged') . ':</td>
-		<td class="number"><font size="2" color="navy">' . locale_number_format($TotalValueCharged,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</font></td>
+		<td class="number"><h4>' . locale_number_format($TotalValueCharged,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
 	</tr>
 	</table>
 	<br />
@@ -196,13 +196,14 @@ $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br />' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');
-	echo '<div class="centre"><p><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . _('Select Purchase Orders to Receive') .'</a></div>';
+	echo '<div class="centre"><p><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . _('Select Purchase Orders to Receive') .'</a></p></div>';
 	include('includes/footer.inc');
 	exit;
 }
 
 /*Set up a table to show the GRNs outstanding for selection */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset( $_SESSION['SuppTransTmp'])){
@@ -249,7 +250,7 @@ if (isset($_GET['Modify'])){
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="10"><font size="3" color="navy">' . _('GRN Selected For Adding To A Purchase Invoice') . '</font></th>
+			<th colspan="10"><h3>' . _('GRN Selected For Adding To A Purchase Invoice') . '</h3></th>
 		</tr>';
 	echo '<tr>
 			<th>' . _('Sequence') . ' #</th>
@@ -295,7 +296,7 @@ else {
 	if (count( $_SESSION['SuppTransTmp']->GRNs)>0){   /*if there are any outstanding GRNs then */
 		echo '<table class="selection">
 				<tr>
-					<th colspan="10"><font size="3" color="navy">' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</font></th>
+					<th colspan="10"><h3>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName.'</h3></th>
 				</tr>';
 
 		$tableheader = '<tr>
@@ -360,6 +361,7 @@ else {
 	}
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

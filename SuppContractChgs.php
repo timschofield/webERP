@@ -104,7 +104,7 @@ foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract){
 }
 
 echo '<tr>
-		<td class="number">' . _('Total') . ':</font></td>
+		<td class="number">' . _('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalContractsValue,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>
 	</table>';
@@ -121,6 +121,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 
 /*Set up a form to allow input of new Contract charges */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ContractRef'])) {
@@ -132,7 +133,7 @@ echo '<table>
 			<td><input type="text" name="ContractRef" size="22" maxlength="20" value="' .  $_POST['ContractRef'] . '" /></td>
 		</tr>';
 echo '<tr>
-		<td>' . _('Contract Selection') . ':<br /><font size="1">' . _('If you know the code enter it above') . '<br />' . _('otherwise select the contract from the list') . '</font></td>
+		<td>' . _('Contract Selection') . ':<br />' . _('If you know the code enter it above') . '<br />' . _('otherwise select the contract from the list') . '</td>
 		<td><select name="ContractSelection">';
 
 $sql = "SELECT contractref, name
@@ -180,8 +181,9 @@ echo '</td>
 	</tr>
 	</table>';
 
-echo '<input type="submit" name="AddContractChgToInvoice" value="' . _('Enter Contract Charge') . '" />';
+echo '<div class="centre"><input type="submit" name="AddContractChgToInvoice" value="' . _('Enter Contract Charge') . '" /></div>';
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

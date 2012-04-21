@@ -51,7 +51,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr>
 				<td>'.$myrow['stockid'].'</td>
 				<td>'.$myrow['description'].'</td>
-				<td><a href="' . $rootpath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&Description='.$myrow['description'].'&NewTransfer=Yes&Quantity='. filter_number_format($_POST['Quantity']).'&From='.$_POST['StockLocationFrom'].'&To='.$_POST['StockLocationTo'].'">'
+				<td><a href="' . $rootpath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&amp;Description='.$myrow['description'].'&amp;NewTransfer=Yes&amp;Quantity='. filter_number_format($_POST['Quantity']).'&amp;From='.$_POST['StockLocationFrom'].'&amp;To='.$_POST['StockLocationTo'].'">'
 				._('Transfer').'</a></td>
 			</tr>';
 				
@@ -457,6 +457,7 @@ echo '<p class="page_title_text">
 	  </p>';
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_GET['Description'])) {
@@ -504,7 +505,7 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		 $_SESSION['Transfer']->StockLocationFrom=$myrow['loccode'] . '</option>';
+		 $_SESSION['Transfer']->StockLocationFrom=$myrow['loccode'];
 	} else {
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -528,7 +529,7 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation'] AND isset($_SESSION['Transfer'])){
 		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		 $_SESSION['Transfer']->StockLocationTo=$myrow['loccode'] . '</option>';
+		 $_SESSION['Transfer']->StockLocationTo=$myrow['loccode'];
 	} else {
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -569,13 +570,14 @@ if (isset($_SESSION['Transfer'])) {
 	echo '<br />
 		<a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
 	echo '<br />
-		<a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
+		<a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
 	echo '<br />
-		<a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
+		<a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
 	echo '<br />
 		<a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
 }
 echo '</div>
+    </div>
 	</form>';
 include('includes/footer.inc');
 ?>

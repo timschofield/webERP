@@ -84,7 +84,7 @@ if (isset($_GET['Delete'])){
 
 echo '<table class="selection">';
 echo '<tr>
-		<th colspan="6"><font size="3" color="navy">' . _('Credits Against Goods Received Selected') . '</font></th>
+		<th colspan="6"><h3>' . _('Credits Against Goods Received Selected') . '</h3></th>
 	</tr>';
 $TableHeader = '<tr>
 					<th>' . _('GRN') . '</th>
@@ -122,8 +122,8 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 }
 
 echo '<tr>
-		<td colspan="5 class="number"><font size="2" color="navy">' . _('Total Value Credited Against Goods') . ':</font></td>
-		<td class="number"><font size="2" color="navy"><U>' . locale_number_format($TotalValueCharged,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td>
+		<td colspan="5" class="number"><h4>' . _('Total Value Credited Against Goods') . ':</h4></td>
+		<td class="number"><h4>' . locale_number_format($TotalValueCharged,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
           </tr>';
 echo '</table>
 	<br />
@@ -167,15 +167,16 @@ if (DB_num_rows($GRNResults)==0){
 
 /*Set up a table to show the GRNs outstanding for selection */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
 	<table class="selection">
 	<tr>
-		<th colspan="10"><font size="3" color="navy">' . _('Show Goods Received Since') . ':&nbsp;</font>';
-echo '<input type="text" name="Show_Since" maxlength="11" size="12" class="date" alt='.$_SESSION['DefaultDateFormat'].' value="' . $_POST['Show_Since'] . '" />
+		<th colspan="10"><h3>' . _('Show Goods Received Since') . ':&nbsp;</h3>';
+echo '<input type="text" name="Show_Since" maxlength="11" size="12" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $_POST['Show_Since'] . '" />
 		<input type="submit" name="FindGRNs" value="' . _('Display GRNs') . '" />
-		<font size="3" color="navy"> ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</font></th>
+		<h3> ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
 	</tr>';
 
 if (DB_num_rows($GRNResults)>0){
@@ -270,7 +271,7 @@ if (DB_num_rows($GRNResults)>0){
 		echo '<br />
 			<table class="selection">';
 		echo '<tr>
-				<th colspan="6"><font size="3" color="navy">' . _('GRN Selected For Adding To A Suppliers Credit Note') . '</font></th>
+				<th colspan="6"><h3>' . _('GRN Selected For Adding To A Suppliers Credit Note') . '</h3></th>
 			</tr>';
 		echo '<tr>
 				<th>' . _('GRN') . '</th>
@@ -327,6 +328,10 @@ if (DB_num_rows($GRNResults)>0){
 		echo '<input type="hidden" name="GRNBatchNo" value="' . $myrow['grnbatch'] . '" />';
 	}
 } //end if there were GRNs to select
-echo '</form>';
+else {
+    echo '</table>';
+}
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

@@ -91,8 +91,8 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 }
 
 echo '<tr>
-	<td class="number"><font size="2" color="navy">' . _('Total') . ':</font></td>
-	<td class="number"><font size="2" color="navy"><U>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td>
+	<td class="number"><h4>' . _('Total') . ':</h4></td>
+	<td class="number"><h4>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
 </tr>
 </table><br />';
 
@@ -103,7 +103,8 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 }
 
 /*Set up a form to allow input of new Shipment charges */
-echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" />';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {
@@ -116,7 +117,7 @@ echo '<br /><table class="selection">';
 
 echo '<tr>
 		<td>' . _('Enter Asset ID') . ':</td>
-		<td><input type="text" name="AssetID" size="5" maxlength="6" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
+		<td><input type="text" name="AssetID" size="5" maxlength="6" value="' .  $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">'. _('New Fixed Asset') . '</a></td>
 	</tr>';
 echo '<tr>
 		<td><b>' . _('OR') .' </b>'. _('Select from list') . ':</td>
@@ -156,6 +157,7 @@ echo '<br />
 		<input type="submit" name="AddAssetToInvoice" value="' . _('Enter Fixed Asset') . '" />
 	</div>';
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>
