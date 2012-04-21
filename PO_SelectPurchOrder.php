@@ -292,7 +292,7 @@ else {
 	} else {
 		/* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 		if (empty($_POST['StockLocation'])) {
-			$_POST['StockLocation'] = '';
+			$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 		}
 		if (isset($SelectedSupplier)) {
 			if (isset($SelectedStockItem)) {

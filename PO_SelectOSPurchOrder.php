@@ -327,7 +327,7 @@ else {
 		if (isset($SelectedSupplier)) {
 
 			if (!isset($_POST['StockLocation'])) {
-				$_POST['StockLocation']='';
+				$_POST['StockLocation']=$_SESSION['UserStockLocation'];
 			}
 
 			if (isset($SelectedStockItem)) {
@@ -400,7 +400,7 @@ else {
 			}
 		} else { //no supplier selected
 			if (!isset($_POST['StockLocation'])) {
-				$_POST['StockLocation']='';
+				$_POST['StockLocation']=$_SESSION['UserStockLocation'];
 			}
 			if (isset($SelectedStockItem) AND isset($_POST['StockLocation'])) {
 				$SQL = "SELECT purchorders.realorderno,
