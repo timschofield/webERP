@@ -264,6 +264,7 @@ If with a specific payment or credit show the invoices and credits available
 for allocating to  */
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['SupplierID'])){
@@ -591,7 +592,7 @@ if (isset($_POST['AllocTrans'])){
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td><a href="%sAllocTrans=%s">' . _('Allocate') .'</td>
+			<td><a href="%sAllocTrans=%s">' . _('Allocate') .'</a></td>
 			</tr>',
 			$myrow['typename'],
 			$myrow['suppname'],
@@ -667,7 +668,7 @@ if (isset($_POST['AllocTrans'])){
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td><a href="%sAllocTrans=%s">' . _('Allocate') . '</td>
+			<td><a href="%sAllocTrans=%s">' . _('Allocate') . '</a></td>
 			</tr>',
 			$myrow['typename'],
 			$myrow['suppname'],
@@ -689,6 +690,7 @@ if (isset($_POST['AllocTrans'])){
 
 } /* end of else if not a SupplierID or transaction called with the URL */
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

@@ -266,28 +266,29 @@ echo '<table class="selection">
 		</tr>';
 
 echo '<tr>
-		<th><font color=blue><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' . $_SESSION['SuppTrans']->SupplierName . '</b></font></th>
-		<th><font color="blue"><b>' .  $_SESSION['SuppTrans']->CurrCode . '</b></font></th>
-		<td><font color="blue"><b>' . $_SESSION['SuppTrans']->TermsDescription . '</b></font></td>
-		<td><font color="blue"><b>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</b></font></td>
+		<th><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' . $_SESSION['SuppTrans']->SupplierName . '</b></th>
+		<th><b>' .  $_SESSION['SuppTrans']->CurrCode . '</b></th>
+		<td><b>' . $_SESSION['SuppTrans']->TermsDescription . '</b></td>
+		<td><b>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</b></td>
 	</tr>
 	</table>';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form1">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
 		<table class="selection">';
 echo '<tr>
-		<td><font color="red">' . _('Supplier Credit Note Reference') . ':</font></td>
-		<td><font size="2"><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+		<td style="color:red">' . _('Supplier Credit Note Reference') . ':</td>
+		<td><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
 	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 }
-echo '<td><font color="red">' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</font></td>
+echo '<td style="color:red">' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
 		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
-		<td><font color=red>' . _('Exchange Rate') . ':</font></td>
+		<td style="color:red">' . _('Exchange Rate') . ':</td>
 		<td><input type="text" class="number" size="11" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,'Variable') . '" /></td>
 	</tr>
 	</table>';
@@ -367,8 +368,8 @@ if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment char
 	}
 
 	echo '<tr>
-			<td class="number"><font color="red">' . _('Total Credited Against Shipments') .  ':</font></td>
-			<td class="number"><font color="red"><U>' . locale_number_format($TotalShiptValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) .  '</U></font></td>
+			<td class="number" style="color:red">' . _('Total Credited Against Shipments') .  ':</td>
+			<td class="number" style="color:red">' . locale_number_format($TotalShiptValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) .  '</td>
 		</tr>
 		</table><br />';
 }
@@ -403,8 +404,8 @@ if (count( $_SESSION['SuppTrans']->Assets) > 0){   /*if there are any fixed asse
 	}
 
 	echo '<tr>
-			<td colspan="2" class="number"><font color="red">' . _('Total') . ':</font></td>
-			<td class="number"><font color="red"><u>' .  locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
+			<td colspan="2" class="number" style="color:red">' . _('Total') . ':</td>
+			<td class="number" style="color:red">' .  locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 		</tr>
 		</table>';
 } //end loop around fixed assets
@@ -440,7 +441,7 @@ if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contrac
 		}
 	}
 
-	echo '<tr><td class="number" colspan="2"><font color="red">' . _('Total Credited against Contracts') . ':</font></td>
+	echo '<tr><td class="number" colspan="2" style="color:red">' . _('Total Credited against Contracts') . ':</td>
 			<td class="number">' .  locale_number_format($TotalContractsValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr></table><br />';
 }
@@ -482,8 +483,8 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 		}
 
 		echo '<tr>
-				<td colspan="3" class="number"><font color="red">' . _('Total GL Analysis') . ':</font></td>
-				<td class="number"><font color="red"><u>' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
+				<td colspan="3" class="number" style="color:red">' . _('Total GL Analysis') . ':</td>
+				<td class="number" style="color:red">' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>
 			</table>
 			<br />';
@@ -508,14 +509,14 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 
 	echo '<table class="selection">
 			<tr>
-				<td><font color="red">' . _('Credit Amount in Supplier Currency') . ':</font></td>
-				<td colspan="2" class="number">' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td></tr>';
-	echo '<input type="hidden" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
+				<td style="color:red">' . _('Credit Amount in Supplier Currency') . ':</td>
+				<td colspan="2" class="number">' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
+    echo '<input type="hidden" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td></tr>';
 } else {
 	echo '<table class="selection">
 			<tr>
-				<td><font color="red">' . _('Credit Amount in Supplier Currency') .
-		  ':</font></td>
+				<td style="color:red">' . _('Credit Amount in Supplier Currency') .
+		  ':</td>
 		  	<td colspan="2" class="number"><input type="text" size="12" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td></tr>';
 }
 
@@ -588,7 +589,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 $DisplayTotal = locale_number_format($_SESSION['SuppTrans']->OvAmount + $TaxTotal,$_SESSION['SuppTrans']->CurrDecimalPlaces);
 
 echo '<tr>
-		<td><font color="red">' . _('Credit Note Total') . '</font></td>
+		<td style="color:red">' . _('Credit Note Total') . '</td>
 		<td colspan="2" class="number"><b>' . $DisplayTotal. '</b></td>
 	</tr>
 	</table>
@@ -596,16 +597,15 @@ echo '<tr>
 
 echo '<table class="selection">
 		<tr>
-			<td><font color="red">' . _('Comments') . '</font></td>
+			<td style="color:red">' . _('Comments') . '</td>
 			<td><textarea name="Comments" cols="40" rows="2">' . $_SESSION['SuppTrans']->Comments . '</textarea></td>
 		</tr>
 	</table>';
 
-echo '<p>
+echo '<br />
 		<div class="centre">
 			<input type="submit" name="PostCreditNote" value="' . _('Enter Credit Note') . '" />
-		</div>
-	</p>';
+		</div>';
 
 
 if (isset($_POST['PostCreditNote'])){
@@ -1337,6 +1337,7 @@ then do the updates and inserts to process the credit note entered */
 
 } /*end of process credit note */
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

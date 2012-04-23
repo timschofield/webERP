@@ -143,7 +143,7 @@ if (!isset($SelectedContact)){
 		
 		echo '<table class="selection">
 				<tr>
-					<th colspan="7"><font size="3" color="navy">' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</font></th>
+					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
 				</tr>';
 	
 		echo '<tr>
@@ -159,9 +159,9 @@ if (!isset($SelectedContact)){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="mailto:%s">%s</td>
-					<td><a href="%s&SupplierID=%s&SelectedContact=%s">' . _('Edit') . '</td>
-					<td><a href="%s&SupplierID=%s&SelectedContact=%s&delete=yes" onclick=\'return confirm("'  . _('Are you sure you wish to delete this contact?') . '");\'>' .  _('Delete') . '</td></tr>',
+					<td><a href="mailto:%s">%s</a></td>
+					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s">' . _('Edit') . '</a></td>
+					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s&amp;delete=yes" onclick="return confirm(\''  . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete') . '</a></td></tr>',
 					$myrow['contact'],
 					$myrow['position'],
 					$myrow['tel'],
@@ -175,6 +175,7 @@ if (!isset($SelectedContact)){
 					$SupplierID,
 					$myrow['contact']);
 		} while ($myrow = DB_fetch_array($result));
+        echo '</table><br />';
 	} else {
 		prnMsg(_('There are no contacts defined for this supplier'),'info');
 	}
@@ -183,7 +184,6 @@ if (!isset($SelectedContact)){
 
 //end of ifs and buts!
 
-echo '</table><br />';
 
 if (isset($SelectedContact)) {
 	echo '<div class="centre">
@@ -195,6 +195,7 @@ if (isset($SelectedContact)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedContact)) {
@@ -253,9 +254,9 @@ if (! isset($_GET['delete'])) {
 		$_POST['Email'] = '';
 	}
 
-	echo '<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
-		<tr>
-			<td>' . _('Position') . ':</td>
+	echo '<tr>
+            <td><input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
+			' . _('Position') . ':</td>
 			<td><input type="text" name="Position" size="31" maxlength="30" value="' . $_POST['Position'] . '" /></td>
 		</tr>
 		<tr>
@@ -280,6 +281,7 @@ if (! isset($_GET['delete'])) {
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

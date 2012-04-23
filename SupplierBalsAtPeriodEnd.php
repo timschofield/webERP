@@ -123,11 +123,12 @@ If (isset($_POST['PrintPDF'])
 	}
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-	echo '<tr>
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	
+    echo '<table class="selection">';
+    echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
 			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="'.$_POST['FromCriteria'].'" /></td>
 		</tr>
@@ -137,7 +138,7 @@ If (isset($_POST['PrintPDF'])
 		</tr>
 		<tr>
 			<td>' . _('Balances As At') . ':</td>
-			<td><select Name="PeriodEnd">';
+			<td><select name="PeriodEnd">';
 
 	$sql = "SELECT periodno, 
 					lastdate_in_period 
@@ -158,7 +159,8 @@ If (isset($_POST['PrintPDF'])
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-
+    echo '</div>
+          </form>';
 	include('includes/footer.inc');
 }/*end of else not PrintPDF */
 

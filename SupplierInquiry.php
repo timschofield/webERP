@@ -158,9 +158,11 @@ echo '<tr>
 echo '<br />
 	<div class="centre">
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<div>
+        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo _('Show all transactions after') . ': ' .'<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" /> 
-	<input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
+	    <input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
+    </div>
 	</form>
 	<br />';
 echo '</div>';
@@ -192,7 +194,7 @@ $DbgMsg = _('The SQL that failed was');
 $TransResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($TransResult) == 0){
-	echo '<p><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
+	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
 	echo '</div>';
 	include('includes/footer.inc');
 	exit;
@@ -254,8 +256,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td class="number">' . locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['totalamount']-$myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td align="left">' . $myrow['transtext'] . '</td>
-					<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['transno'] .'">' . _('View GL Postings') . '</a></td>
-					<td><a href="' . $rootpath . '/PaymentAllocations.php?SuppID=' . $myrow['supplierno'] . '&InvID=' . $myrow['suppreference'] .'">' . _('View Payments') . '</a></td>
+					<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['transno'] .'">' . _('View GL Postings') . '</a></td>
+					<td><a href="' . $rootpath . '/PaymentAllocations.php?SuppID=' . $myrow['supplierno'] . '&amp;InvID=' . $myrow['suppreference'] .'">' . _('View Payments') . '</a></td>
 					</tr>';
 			} else {
 				echo '<td>' . $myrow['transno'] . '</td>
@@ -277,15 +279,15 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$AuthRow=DB_fetch_array($AuthResult);
 				
 				if ($AuthRow[0]==0) {
-					echo '<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?HoldType=' . $myrow['type'] . '&HoldTrans=' . $myrow['transno']. '&HoldStatus=' . $HoldValue . '&FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue .'</a></td>';
+					echo '<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?HoldType=' . $myrow['type'] . '&amp;HoldTrans=' . $myrow['transno']. '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue .'</a></td>';
 				} else {
 					if ($HoldValue==_('Release')) {
 						echo '<td>' . $HoldValue .'</a></td>';
 					} else {
-						echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?' . 'HoldType=' . $myrow['type'] .'&HoldTrans=' . $myrow['transno'] . '&HoldStatus=' . $HoldValue . '&FromDate=' . $_POST['TransAfterDate'] .'">'.$HoldValue .'</a></td>';
+						echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?' . 'HoldType=' . $myrow['type'] .'&amp;HoldTrans=' . $myrow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] .'">'.$HoldValue .'</a></td>';
 					}
 				}
-				echo '<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] .'&TransNo=' . $myrow['transno'] .'">' ._('View GL Postings') . '</a></td></tr>';
+				echo '<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] .'&amp;TransNo=' . $myrow['transno'] .'">' ._('View GL Postings') . '</a></td></tr>';
 			}
 		} else {
 
@@ -321,8 +323,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td align=left>%s</td>
-						<td><a href="%s?HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s">%s</a></td>
-						<td><a href="%s/PaymentAllocations.php?SuppID=%s&InvID=%s">' . _('View Payments') . '</a></tr>',
+						<td><a href="%s?HoldType=%s&amp;HoldTrans=%s&amp;HoldStatus=%s&amp;FromDate=%s">%s</a></td>
+						<td><a href="%s/PaymentAllocations.php?SuppID=%s&amp;InvID=%s">' . _('View Payments') . '</a></tr>',
 						$myrow['transno'],
 						$myrow['typename'],
 						$myrow['suppreference'],
@@ -356,7 +358,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td class="number">%s</td>
 					<td align="left">%s</td>
 					<td><a href="%s/SupplierAllocations.php?AllocTrans=%s">' . _('View Allocations') . '</a></td>
-					<td><a target="_blank" href="%s/GLTransInquiry.php?TypeID=%s&TransNo=%s">' . _('View GL Postings') . '</a></td>
+					<td><a target="_blank" href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Postings') . '</a></td>
 					</tr>',
 					$myrow['transno'],
 					$myrow['typename'],

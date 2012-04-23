@@ -8,6 +8,7 @@ include ('includes/header.inc');
 
 if (isset($_POST['StockSearch'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 
@@ -43,7 +44,7 @@ if (isset($_POST['StockSearch'])) {
 		echo '<input type="search" name="Keywords" size="34" maxlength="25" placeholder="Enter part of the item description" />';
 	}
 	echo '</td></tr><tr><td></td>';
-	echo '<td><font size="3"><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
+	echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 	echo '<td>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
@@ -53,7 +54,8 @@ if (isset($_POST['StockSearch'])) {
 	echo '</td></tr></table><br />';
 	echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-	echo '</form>';
+	echo '</div>
+          </form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -211,6 +213,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 	$ListCount = DB_num_rows($searchresult);
@@ -281,7 +284,10 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			//end of page full new headings if
 		}
 		//end of while loop
-		echo '</table></form><br />';
+		echo '</table>
+              <br />
+              </div>
+              </form>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -380,16 +386,20 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 	}
 	if (!isset($_POST['SearchSupplier'])) {
 		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Search for a supplier') . '</p><br />';
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-				<table cellpadding="3" class="selection"><tr>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</font></td>';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+        echo '<div>';
+        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+        
+		echo '<table cellpadding="3" class="selection"><tr>';
+		echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>';
 		echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>';
-		echo '<td><font size="3"><b>' . _('OR') . '</b></font></td>';
-		echo '<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</font></td>';
+		echo '<td><b>' . _('OR') . '</b></td>';
+		echo '<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</td>';
 		echo '<td><input type="text" name="SupplierCode" size="15" maxlength="18" /></td>';
 		echo '</tr></table><br />';
-		echo '<div class="centre"><input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" /></div></form>';
+		echo '<div class="centre"><input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" /></div>';
+        echo '</div>
+              </form>';
 		include ('includes/footer.inc');
 		exit;
 	};
@@ -427,9 +437,11 @@ if (isset($_POST['SearchSupplier'])) {
 
 if (isset($SuppliersResult)) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Select a supplier') . '</p><br />';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-			<table cellpadding="2" class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    
+	echo '<table cellpadding="2" class="selection">';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Supplier Name') . '</th>
 				<th>' . _('Currency') . '</th>
@@ -447,12 +459,12 @@ if (isset($SuppliersResult)) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-	   printf('<td><font size="1"><input type="submit" name="SupplierID" value="%s" /></font></td>
-				<td><font size="1">%s</font></td>
-				<td><font size="1">%s</font></td>
-				<td><font size="1">%s</font></td>
-				<td><font size="1">%s</font></td>
-				<td><font size="1">%s</font></td>
+	   printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
 			</tr>',
 				$myrow['supplierid'],
 				$myrow['suppname'],
@@ -464,7 +476,10 @@ if (isset($SuppliersResult)) {
 
 	}
 	//end of while loop
-	echo '</table><br/></form>';
+	echo '</table>
+          <br/>
+          </div>
+          </form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -473,6 +488,7 @@ if (isset($SuppliersResult)) {
 if (isset($_POST['SupplierID'])) {
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Supplier Purchasing Data') . '</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$SQL="SELECT purchdata.stockid,
 				stockmaster.description,
@@ -499,9 +515,9 @@ if (isset($_POST['SupplierID'])) {
 	$UOMResult = DB_query($UOMSQL, $db);
 	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 	echo '<table class="selection">';
-	echo '<tr><th colspan="8" style="text-align: left"><font color="navy" size="3">' . _('Supplier purchasing data for') . ' ' . $_POST['SupplierID'] . '</font></th>';
-	echo '<th colspan="5" style="text-align: right"><font color="navy" size="2">' . _('Find new Item Code') . '</font>
-			<button type="submit" name="StockSearch"><img width="15px" src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" /></button></th></tr>';
+	echo '<tr><th colspan="8" style="text-align: left"><h3>' . _('Supplier purchasing data for') . ' ' . $_POST['SupplierID'] . '</h3></th>';
+	echo '<th colspan="5" style="text-align: right">' . _('Find new Item Code') . '
+			<button type="submit" name="StockSearch"><img width="15" src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" alt="" /></button></th></tr>';
 	echo '<tr>
 			<th>' . _('StockID') . '</th>
 			<th>' . _('Description') . '</th>
@@ -541,7 +557,7 @@ if (isset($_POST['SupplierID'])) {
 				echo '<td><input type="text" class="date" size="11" value="' . date( $_SESSION['DefaultDateFormat']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom0" /></td>
 				<td><input type="text" size="20" maxlength="50" value="" name="SupplierPartNo0" /></td>
 				<td><input type="text" class="number" size="11" value="1" name="MinOrderQty0" /></td>
-				<td><button type="submit" style="width:100%;text-align:left" name="Insert"><img width="15px" src="' . $rootpath . '/css/' . $theme . '/images/tick.png" /></button></td>
+				<td><button type="submit" style="width:100%;text-align:left" name="Insert"><img width="15" src="' . $rootpath . '/css/' . $theme . '/images/tick.png" alt="" /></button></td>
 			</tr>';
 	}
 
@@ -572,12 +588,13 @@ if (isset($_POST['SupplierID'])) {
 				echo '<td><input type="text" class="date" size="11" value="' . ConvertSQLDate($myrow['effectivefrom']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom'.$RowCounter.'" /></td>
 				<td><input type="text" size="20" maxlength="50" value="' . $myrow['suppliers_partno'] . '" name="SupplierPartNo'.$RowCounter.'" /></td>
 				<td><input type="text" class="number" size="11" value="' . $myrow['minorderqty'] . '" name="MinOrderQty'.$RowCounter.'" /></td>
-				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img width="15px" src="' . $rootpath . '/css/' . $theme . '/images/tick.png" /></button></td>
+				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img width="15" src="' . $rootpath . '/css/' . $theme . '/images/tick.png" alt="" /></button></td>
 			</tr>';
 		$RowCounter++;
 	}
 	echo '</table>';
-	echo '</form>';
+	echo '</div>
+          </form>';
 	include('includes/footer.inc');
 	exit;
 }

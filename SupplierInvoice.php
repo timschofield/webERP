@@ -238,15 +238,16 @@ if (!isset($_POST['PostInvoice'])){
 			</tr>';
 
 	echo '<tr>
-			<td><font color=blue><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
-		$_SESSION['SuppTrans']->SupplierName . '</b></font></td>
-			<th><font color=blue><b>' .  $_SESSION['SuppTrans']->CurrCode . '</b></font></th>
-			<td><font color=blue><b>' . $_SESSION['SuppTrans']->TermsDescription . '</b></font></td>
-			<td><font color=blue><b>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</b></font></td>
+			<td><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
+		$_SESSION['SuppTrans']->SupplierName . '</b></td>
+			<th><b>' .  $_SESSION['SuppTrans']->CurrCode . '</b></th>
+			<td><b>' . $_SESSION['SuppTrans']->TermsDescription . '</b></td>
+			<td><b>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</b></td>
 		</tr>
 		</table>';
 
-	echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form1" />';
+	echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<br /><table class="selection">';
@@ -313,8 +314,8 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr>
-				<td colspan="5" class="number"><font color="blue">' . _('Total Value of Goods Charged') . ':</font></td>
-				<td class="number"><font color="blue"><U>' . locale_number_format($TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></font></td>
+				<td colspan="5" class="number" style="color:blue">' . _('Total Value of Goods Charged') . ':</td>
+				<td class="number" style="color:blue">' . locale_number_format($TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>
 			</table>';
 	}
@@ -353,8 +354,8 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr>
-				<td class="number"><font color="blue">' . _('Total shipment charges') . ':</font></td>
-				<td class="number"><font color="blue"><u>' .  locale_number_format($TotalShiptValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
+				<td class="number" style="color:blue">' . _('Total shipment charges') . ':</td>
+				<td class="number" style="color:blue">' .  locale_number_format($TotalShiptValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>
 			</table>';
 	}
@@ -393,8 +394,8 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr>
-				<td colspan="2" class="number"><font color="blue">' . _('Total asset additions') . ':</font></td>
-				<td class="number"><font color="blue"><u>' .  locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
+				<td colspan="2" class="number" style="color:blue">' . _('Total asset additions') . ':</td>
+				<td class="number" style="color:blue">' .  locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>
 			</table>';
 	} //end loop around assets added to invocie
@@ -435,8 +436,8 @@ if (!isset($_POST['PostInvoice'])){
 		}
 
 		echo '<tr>
-				<td colspan="2" class="number"><font color="blue">' . _('Total contract charges') . ':</font></td>
-				<td class="number"><font color="blue">' .  locale_number_format($TotalContractsValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</font></td>
+				<td colspan="2" class="number" style="color:blue">' . _('Total contract charges') . ':</td>
+				<td class="number" style="color:blue">' .  locale_number_format($TotalContractsValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>
 			</table>';
 	}
@@ -473,8 +474,8 @@ if (!isset($_POST['PostInvoice'])){
 			}
 
 			echo '<tr>
-					<td colspan="3" class="number"><font color="blue">' . _('Total GL Analysis') .  ':</font></td>
-					<td class="number"><font color="blue">' .  locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</font></td>
+					<td colspan="3" class="number" style="color:blue">' . _('Total GL Analysis') .  ':</td>
+					<td class="number" style="color:blue">' .  locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 				</tr>
 				</table>';
 		}
@@ -528,7 +529,7 @@ if (!isset($_POST['PostInvoice'])){
 		if (!isset($_POST['OverRideTax']) 
 			OR $_POST['OverRideTax']=='Auto'){
 
-			echo  ' <input type="text" class="number" name=TaxRate' . $Tax->TaxCalculationOrder . ' maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,$_SESSION['SuppTrans']->CurrDecimalPlaces)  . '" />%';
+			echo  ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,$_SESSION['SuppTrans']->CurrDecimalPlaces)  . '" />%';
 
 			/*Now recaluclate the tax depending on the method */
 			if ($Tax->TaxOnTax ==1){
@@ -551,7 +552,7 @@ if (!isset($_POST['PostInvoice'])){
 //		}
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = filter_number_format($_POST['TaxAmount'  . $Tax->TaxCalculationOrder]);
 
-			echo  ' <input type="hidden" name="TaxRate"' . $Tax->TaxCalculationOrder . ' value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
+			echo  ' <input type="hidden" name="TaxRate' . $Tax->TaxCalculationOrder . '" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
 
 			echo '</td>
 				<td><input type="text" class="number" size="12" maxlength="12" name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value="' . locale_number_format(round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
@@ -585,6 +586,8 @@ if (!isset($_POST['PostInvoice'])){
 				<input type="submit" name="PostInvoice" value="' . _('Enter Invoice') . '" />
 			</div>';
 
+    echo '</div>
+          </form>';
 } else { // $_POST['PostInvoice'] is set so do the postings -and dont show the button to process
 
 /*First do input reasonableness checks
@@ -1518,6 +1521,5 @@ if($InputError==true){ //add a link to return if users make input errors.
 	echo '<div class="centre"><a href="'.$rootpath.'/SupplierInvoice.php" >'._('Back to Invoice Entry').'</a></div>';
 } //end of return link for input errors
 
-echo '</form>';
 include('includes/footer.inc');
 ?>
