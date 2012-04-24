@@ -7,11 +7,21 @@
  * @version 1.1
  * Last changes: 2010-08-31
  *
+ * 
+ * Phil's notes:
+ * This is an example of clever code that works but IMHO is very hard to decipher and modify - sorry Marcos!
+ * It is in webERP because it fulfills a useful function on its own but don't expect to be able to modify it!!
+ * I would prefer this code was re-written in a manner consistent with the rest of webERP
+ * There are many meaningless variable names
+ * unecessary abrastaction at every turn
+ * No class is necessary for this script IMHO
+ * Data held in an xml file instead of the database
+ * Variable naming uses a lower case first character
+ * $debug is used - but is a webERP global to trap SQL errors for sysadmins
+ * 
 **/
 
 $Version_adds= 1.1;
-
-/** Error reporting */
 
 include('includes/session.inc');
 $title=_('Label Templates Maintainance');
@@ -20,8 +30,11 @@ include('includes/header.inc');
 $debug=false;
 include('includes/DefineLabelClass.php');
 
+
+//Phil why xml? Why not use the database like every other part of webERP for storing data
+
 $allLabels =				 //!< The variable $allLabels is the global variable that contains the list
-		getXMLFile(LABELS_FILE); //!< of all the label objects defined until now. In case of a fresh
+		getXMLFile($_SESSION['reports_dir'] . '/labels.xml'); //!< of all the label objects defined until now. In case of a fresh
 								 //!<  installation or an empty XML labels file it holds a NULL value.
 
 if ($debug) {
@@ -41,6 +54,7 @@ $showList=true; // By default will show the tamplates list
  */
 if (isset($_POST['Update'])) {
 	// Get the data from the user input & validate it (not new)
+	//getData function 
 	$Label=getData($_POST, false, $ok);
 	// If all OK try to update the requested label
 	if (!$ok OR !updateLabel($Label)) {
@@ -138,17 +152,20 @@ function validData($data, $new) {
 // Check the heading data
 	$errors=array();
 	if ($new) {
-		if (empty($data['id']))
+		if (empty($data['id'])) {
 			$errors[]=_('Id required');
-		elseif ($allLabels!=null AND $allLabels->findLabel($data['id'])!==false)
+		} elseif ($allLabels!=null AND $allLabels->findLabel($data['id'])!==false){
 			$errors[]=_('This id exists in previous list');
+		}
 	}
 	if (empty($data['description']))
 		$errors=_('the description is required');
 
 // Check the dimensions data
 	foreach ($DimensionTags as $iTag=>$tag) {
-		if ($tag['type']=='s') continue;  // select type does not require validation
+		if ($tag['type']=='s') {
+			continue;  // select type does not require validation
+		}
 		$dd = trim($data[$iTag]);
 		$desc=$tag['desc'];
 		switch ($tag['type']) {
@@ -286,7 +303,8 @@ function showLabel($Label, $msg, $theme, $ReadOnly=false) {
 			</tr>
 			</tbody>
 		</table>
-		<br /><input type="submit" name="'.$name.'" value="'.$value.'" />
+		<br />
+		<input type="submit" name="'.$name.'" value="'.$value.'" />
 		<input type="submit" name="Cancel" value="'.$vCancel.'" />
         </div>
     </div>
@@ -295,7 +313,7 @@ function showLabel($Label, $msg, $theme, $ReadOnly=false) {
 
 function setTableGD($Label, $ReadOnly) {
 	global $GlobalTags, $DimensionTags;
-	$html='<table border="0" cellspacing="1" class="selection">';
+	$html='<table class="selection">';
 	$html .= setDataFields($GlobalTags, 0, $Label, $specialTag='id', $ReadOnly);
 	$html .= setDataFields($DimensionTags, 1, $Label->dimensions);
 	$html .= '
@@ -345,13 +363,11 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=fa
 
 function setTableLines($lineArray) {
 	global $DataTags;
-	$html='
-		<table border="0" cellspacing="1" class="selection">';
+	$html='<table class="selection">';
 	$html .= setTableHeader($DataTags);
 
 	$iCount=MAX_LINES_PER_LABEL;
 	foreach ($lineArray as $i=>$data) {
-
 		$iCount--;
 		$html .= setLineFields($DataTags, $data);
 	}
@@ -406,8 +422,7 @@ function setLineFields($tags, $data) {
 *  @return Nothing
 */
 function showLabelsList($list) {
-	$txt=		   //*<
-	array(_('Label id'),_('Description'), _('Label array'),
+	$txt= array(_('Label id'),_('Description'), _('Label array'),
 		  _('New'), _('Edit'), _('Copy'), _('Delete'),
 		  _('Do you really want to erase the label')
 	);
@@ -425,7 +440,7 @@ function showLabelsList($list) {
 			}
 		}
 	</script>
-	<form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post" id="form1">
+	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">
     <div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="action" id="action" value="" />
