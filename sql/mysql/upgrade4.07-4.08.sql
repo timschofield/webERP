@@ -45,6 +45,33 @@ INSERT INTO `systypes` (`typeid`, `typename`, `typeno`) VALUES (38, 'Stock Reque
 
 UPDATE `www_users` SET `modulesallowed` = CONCAT(`modulesallowed`,'0,') WHERE modulesallowed LIKE '_,_,_,_,_,_,_,_,_,_,';
 INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
+INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('SupplierPriceList.php', '4', 'Maintain Supplier Price Lists');
+
+CREATE TABLE IF NOT EXISTS `labels` (
+  `labelid` tinyint(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(50) NOT NULL,
+  `papersize` varchar(20) NOT NULL,
+  `height` tinyint(11) NOT NULL,
+  `width` tinyint(11) NOT NULL,
+  `topmargin` tinyint(11) NOT NULL,
+  `leftmargin` tinyint(11) NOT NULL,
+  `rowheight` tinyint(11) NOT NULL,
+  `columnwidth` tinyint(11) NOT NULL,
+  PRIMARY KEY (`labelid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `labelfields` (
+  `labelfieldid` int(11) NOT NULL AUTO_INCREMENT,
+  `labelid` tinyint(4) NOT NULL,
+  `fieldvalue` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `vpos` tinyint(4) NOT NULL,
+  `hpos` tinyint(4) NOT NULL,
+  `fontsize` tinyint(4) NOT NULL,
+  `barcode` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`labelfieldid`),
+  KEY `labelid` (`labelid`),
+  KEY `vpos` (`vpos`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 
-INSERT INTO `scripts` (`script` ,`pagesecurity` ,`description`) VALUES ('SupplierPriceList.php', '4', 'Maintain Supplier Price Lists');

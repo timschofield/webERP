@@ -1,5 +1,6 @@
 webERP Change Log
 
+25/4/12 Phil: Complete rewrite of PDFPrintLabels.php and Labels.php in webERP style - half the code and maintainable with templates stored with all the other data in the database. The new labels also allow fields to be printed as barcodes too.
 24/4/2012 Phil: fix CopyBOM.php that was insering a blank stockid into stockmaster as reported by Ricard
 21/04/2012 Vitaly: Editable item description in PO. 
 16/04/2012 Vitaly: Added option to display only items that are currently on purchase order in StockLocStatus.php

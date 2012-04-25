@@ -19244,7 +19244,8 @@ class TCPDF {
 		$barcodeobj = new TCPDFBarcode($code, $type);
 		$arrcode = $barcodeobj->getBarcodeArray();
 		if ($arrcode === false) {
-			$this->Error('Error in 1D barcode string');
+			$this->Error('Error in 1D barcode string' . ' ' . $code);
+			
 		}
 		// set default values
 		if (!isset($style['position'])) {
