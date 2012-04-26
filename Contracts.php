@@ -68,6 +68,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 	$_SESSION['Contract'.$identifier]->Margin = filter_number_format($_POST['Margin']);
 	$_SESSION['Contract'.$identifier]->CustomerRef = $_POST['CustomerRef'];
 	$_SESSION['Contract'.$identifier]->ExRate = filter_number_format($_POST['ExRate']);
+	$_SESSION['Contract'.$identifier]->DefaultWorkCentre = $_POST['DefaultWorkCentre'];
 
 
 /*User hit the button to enter line items -
@@ -91,7 +92,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 		echo '<br />';
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract requirements page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
-		'<a href="' . $rootpath . '/ContractOtherReqts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+		'<a href="' . $rootpath . '/ContractOtherReqts.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -115,7 +116,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['Drawing']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
-         	$UploadTheFile ='No';
+		 	$UploadTheFile ='No';
 	} elseif (file_exists($filename)){
 		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
 		$result = unlink($filename);
@@ -127,7 +128,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['Drawing']['tmp_name'], $filename);
-		$message = ($result)?_('File url') .'<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading the file');
+		$message = ($result)?_('File url') . '<a href="' . $filename . '">' .  $filename . '</a>' : _('Something is wrong with uploading the file');
 	}
 }
 
@@ -224,7 +225,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		prnMsg(_('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
-	if(ContainsIllegalCharacters($_POST['ContractRef']) OR mb_strpos($_POST['ContractRef'],' ')>0){
+	if(ContainsIllegalCharacters($_POST['ContractRef'])){
 		prnMsg(_('The contract reference cannot contain any spaces, slashes, or inverted commas. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
@@ -265,9 +266,9 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$WorkCentreRow = DB_fetch_row($result);
 			$WorkCentre = $WorkCentreRow[0];
 		} else { //need to add a default work centre for the location
-			$result = DB_query("INSERT INTO workcentres (code, 
-														location, 
-														description, 
+			$result = DB_query("INSERT INTO workcentres (code,
+														location,
+														description,
 														overheadrecoveryact)
 											VALUES ('" . $_SESSION['Contract'.$identifier]->LocCode . "',
 													'" . $_SESSION['Contract'.$identifier]->LocCode . "',
@@ -315,13 +316,13 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$ErrMsg = _('Could not add a component to the contract bill of material');
 			foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component){
 				$sql = "INSERT INTO contractbom (contractref,
-													stockid,
-													workcentreadded,
-													quantity)
-									VALUES ( '" . $_POST['ContractRef'] . "',
-											'" . $Component->StockID . "',
-											'" . $WorkCentre . "',
-											'" . $Component->Quantity . "')";
+												stockid,
+												workcentreadded,
+												quantity)
+											VALUES ( '" . $_POST['ContractRef'] . "',
+												'" . $Component->StockID . "',
+												'" . $WorkCentre . "',
+												'" . $Component->Quantity . "')";
 				$result = DB_query($sql,$db,$ErrMsg);
 			}
 
@@ -333,10 +334,11 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 													requirement,
 													costperunit,
 													quantity)
-									VALUES ( '" . $_POST['ContractRef'] . "',
-											'" . $Requirement->Requirement . "',
-											'" . $Requirement->CostPerUnit . "',
-											'" . $Requirement->Quantity . "')";
+												VALUES (
+													'" . $_POST['ContractRef'] . "',
+													'" . $Requirement->Requirement . "',
+													'" . $Requirement->CostPerUnit . "',
+													'" . $Requirement->Quantity . "')";
 				$result = DB_query($sql,$db,$ErrMsg);
 			}
 
@@ -356,19 +358,19 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$ContractPrice = ($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100);
 
 			$sql = "UPDATE stockmaster SET description='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
-										longdescription='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
-										categoryid = '" . $_SESSION['Contract'.$identifier]->CategoryID . "',
-										materialcost= '" . $ContractCost . "'
-						WHERE stockid ='" . $_SESSION['Contract'.$identifier]->ContractRef."'";
+											longdescription='" . $_SESSION['Contract'.$identifier]->ContractDescription . "',
+											categoryid = '" . $_SESSION['Contract'.$identifier]->CategoryID . "',
+											materialcost= '" . $ContractCost . "'
+										WHERE stockid ='" . $_SESSION['Contract'.$identifier]->ContractRef."'";
 			$ErrMsg =  _('The contract item could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the contract item failed was');
 			$InsertNewItemResult = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 			//update the quotation
 			$sql = "UPDATE salesorderdetails
-								SET unitprice = '" . $ContractPrice* $_SESSION['Contract'.$identifier]->ExRate . "'
-								WHERE stkcode='" .  $_SESSION['Contract'.$identifier]->ContractRef . "'
-								AND orderno='" .  $_SESSION['Contract'.$identifier]->OrderNo . "'";
+						SET unitprice = '" . $ContractPrice* $_SESSION['Contract'.$identifier]->ExRate . "'
+						WHERE stkcode='" .  $_SESSION['Contract'.$identifier]->ContractRef . "'
+						AND orderno='" .  $_SESSION['Contract'.$identifier]->OrderNo . "'";
 			$ErrMsg = _('The contract quotation could not be updated because');
 			$DbgMsg = _('The SQL that failed to update the quotation was');
 			$UpdQuoteResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -458,7 +460,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	$ContractPrice = ($ContractBOMCost+$ContractReqtsCost)/((100-$_SESSION['Contract'.$identifier]->Margin)/100);
 
 //Check if the item exists already
-	$sql = "SELECT * FROM stockmaster WHERE stockid='" . $_SESSION['Contract'.$identifier]->ContractRef."'";
+	$sql = "SELECT stockid FROM stockmaster WHERE stockid='" . $_SESSION['Contract'.$identifier]->ContractRef."'";
 	$ErrMsg =  _('The item could not be retrieved because');
 	$DbgMsg = _('The SQL that was used to find the item failed was');
 	$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
@@ -560,7 +562,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 											'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "',
 											'" . Date('Y-m-d') . "',
 											'1' )";
-	
+
 	$ErrMsg = _('The quotation cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,true);
 	$LineItemSQL = "INSERT INTO salesorderdetails ( orderlineno,
@@ -585,7 +587,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	//make the status of the contract 1 - to indicate that it is now quoted
 	$sql = "UPDATE contracts SET orderno='" . $OrderNo . "',
 								status='" . 1 . "'
-						WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
+						WHERE contractref='" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "'";
 	$ErrMsg = _('Unable to update the contract status and order number because');
 	$UpdContractResult = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	$Result = DB_Txn_Commit($db);
@@ -604,98 +606,97 @@ if (isset($_POST['SearchCustomers'])){
 	if (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
 		prnMsg(_('Customer Branch Code has been used in preference to the Customer Branch Phone Number entered'), 'warn');
 	}
-	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
-		prnMsg(_('At least one Customer Branch Name keyword OR an extract of a Customer Branch Code or Branch Phone Number must be entered for the search'), 'warn');
+	if (mb_strlen($_POST['CustKeywords'])>0) {
+	//insert wildcard characters in spaces
+		$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
+		$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
+
+		$SQL = "SELECT custbranch.brname,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.branchcode,
+						custbranch.debtorno,
+						debtorsmaster.name
+					FROM custbranch
+					LEFT JOIN debtorsmaster
+						ON custbranch.debtorno=debtorsmaster.debtorno
+					WHERE custbranch.brname " . LIKE . " '$SearchString'
+						AND custbranch.disabletrans=0
+					ORDER BY custbranch.debtorno, custbranch.branchcode";
+
+	} elseif (mb_strlen($_POST['CustCode'])>0){
+
+		$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
+
+		$SQL = "SELECT custbranch.brname,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.branchcode,
+						custbranch.debtorno,
+						debtorsmaster.name
+					FROM custbranch
+					LEFT JOIN debtorsmaster
+						ON custbranch.debtorno=debtorsmaster.debtorno
+					WHERE custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'
+						AND custbranch.disabletrans=0
+					ORDER BY custbranch.debtorno";
+
+	} elseif (mb_strlen($_POST['CustPhone'])>0){
+		$SQL = "SELECT custbranch.brname,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.branchcode,
+						custbranch.debtorno,
+						debtorsmaster.name
+					FROM custbranch
+					LEFT JOIN debtorsmaster
+						ON custbranch.debtorno=debtorsmaster.debtorno
+					WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
+						AND custbranch.disabletrans=0
+					ORDER BY custbranch.debtorno";
 	} else {
-		if (mb_strlen($_POST['CustKeywords'])>0) {
-		//insert wildcard characters in spaces
-			$_POST['CustKeywords'] = mb_strtoupper(trim($_POST['CustKeywords']));
-			$SearchString = '%' . str_replace(' ', '%', $_POST['CustKeywords']) . '%';
-
-			$SQL = "SELECT custbranch.brname,
-							custbranch.contactname,
-							custbranch.phoneno,
-							custbranch.faxno,
-							custbranch.branchcode,
-							custbranch.debtorno,
-							debtorsmaster.name
-						FROM custbranch
-						LEFT JOIN debtorsmaster
+		$SQL = "SELECT custbranch.brname,
+						custbranch.contactname,
+						custbranch.phoneno,
+						custbranch.faxno,
+						custbranch.branchcode,
+						custbranch.debtorno,
+						debtorsmaster.name
+					FROM custbranch
+					LEFT JOIN debtorsmaster
 						ON custbranch.debtorno=debtorsmaster.debtorno
-						WHERE custbranch.brname " . LIKE . " '" . $SearchString . "'
-						AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno, custbranch.branchcode";
+					WHERE custbranch.disabletrans=0
+					ORDER BY custbranch.debtorno";
+	}
 
-		} elseif (mb_strlen($_POST['CustCode'])>0){
+	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
+	$result_CustSelect = DB_query($SQL,$db,$ErrMsg);
 
-			$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
+	if (DB_num_rows($result_CustSelect)==0){
+		prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
+	}
+} /*one of keywords or custcode was more than a zero length string */
 
-			$SQL = "SELECT custbranch.brname,
-							custbranch.contactname,
-							custbranch.phoneno,
-							custbranch.faxno,
-							custbranch.branchcode,
-							custbranch.debtorno,
-							debtorsmaster.name
-						FROM custbranch
-						LEFT JOIN debtorsmaster
-						ON custbranch.debtorno=debtorsmaster.debtorno
-						WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'
-						AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno";
+if (isset($_POST['SelectedCustomer1'])) {
 
-		} elseif (mb_strlen($_POST['CustPhone'])>0){
-			$SQL = "SELECT custbranch.brname,
-							custbranch.contactname,
-							custbranch.phoneno,
-							custbranch.faxno,
-							custbranch.branchcode,
-							custbranch.debtorno,
-							debtorsmaster.name
-						FROM custbranch
-						LEFT JOIN debtorsmaster
-						ON custbranch.debtorno=debtorsmaster.debtorno
-						WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
-						AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno";
-		}
+/* will only be true if page called from customer selection form
+ * or set because only one customer record returned from a search
+ * so parse the $Select string into debtorno and branch code */
 
-		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
-		$result_CustSelect = DB_query($SQL,$db,$ErrMsg);
-
-		if (DB_num_rows($result_CustSelect)==1){
-			$myrow=DB_fetch_array($result_CustSelect);
-			$SelectedCustomer = $myrow['debtorno'] . '-' . $myrow['branchcode'];
-		} elseif (DB_num_rows($result_CustSelect)==0){
-			prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
-		}
-	} /*one of keywords or custcode was more than a zero length string */
-} /*end of if search for customer codes/names */
-
-if (isset($_POST['JustSelectedACustomer'])){
-	/*Need to figure out the number of the form variable that the user clicked on */
-	for ($i=1;$i<count($_POST);$i++){ //loop through the returned customers 
-		if(isset($_POST['SubmitCustomerSelection'.$i])){
-			break;
+	foreach ($_POST as $key => $value) {
+		if (mb_substr($key, 0, 6)=='Submit') {
+			$Index=mb_substr($key, 6, 1);
+			$_POST['SelectedCustomer']=$_POST['SelectedCustomer'.$Index];
+			$_POST['SelectedBranch']=$_POST['SelectedBranch'.$Index];
 		}
 	}
-	if ($i==count($_POST)){ 
-			prnMsg(_('Unable to identify the selected customer'),'error');
-	} else {
-		$SelectedCustomer = $_POST['SelectedCustomer'.$i];
-	}
-}
 
-if (isset($SelectedCustomer)) {
+	$_SESSION['Contract'.$identifier]->DebtorNo  = $_POST['SelectedCustomer'];
+	$_SESSION['Contract'.$identifier]->BranchCode = $_POST['SelectedBranch'];
 
-/* will only be true if page called from customer selection 
- * or set because only one customer record returned from a search - isset($SelectedCustomer)
- * so parse the returned SelectedCustomer string into debtorno and branch code */
-  
-	$CustomerBranchArray = explode('-',$SelectedCustomer);
-	$_SESSION['Contract'.$identifier]->DebtorNo  = trim($CustomerBranchArray[0]);
-	$_SESSION['Contract'.$identifier]->BranchCode = trim($CustomerBranchArray[1]);
-	
 	$sql = "SELECT debtorsmaster.name,
 					custbranch.brname,
 					debtorsmaster.currcode,
@@ -711,7 +712,7 @@ if (isset($SelectedCustomer)) {
 			WHERE debtorsmaster.debtorno='" . $_SESSION['Contract'.$identifier]->DebtorNo  . "'
 			AND custbranch.branchcode='" . $_SESSION['Contract'.$identifier]->BranchCode . "'" ;
 
-	$ErrMsg = _('The customer record selected') . ': ' .$_SESSION['Contract'.$identifier]->DebtorNo. ' ' . _('cannot be retrieved because');
+	$ErrMsg = _('The customer record selected') . ': ' . $_SESSION['Contract'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	$myrow = DB_fetch_array($result);
@@ -744,10 +745,8 @@ if (isset($SelectedCustomer)) {
 if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		OR $_SESSION['Contract'.$identifier]->DebtorNo=='' ) {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' .
-		_('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier .'" id="CustomerSelection" method="post">';
-    echo '<div>';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier .'" name="CustomerSelection" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table cellpadding="3" class="selection">
@@ -770,12 +769,12 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo '<br /><table cellpadding="2" class="selection">';
 
 		$TableHeader = '<tr>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Contact') . '</th>
-				<th>' . _('Phone') . '</th>
-				<th>' . _('Fax') . '</th>
-				</tr>';
+							<th>' . _('Customer') . '</th>
+							<th>' . _('Branch') . '</th>
+							<th>' . _('Contact') . '</th>
+							<th>' . _('Phone') . '</th>
+							<th>' . _('Fax') . '</th>
+						</tr>';
 		echo $TableHeader;
 
 		$j = 1;
@@ -791,13 +790,14 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				$k=1;
 			}
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>'.htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8', false).'</td>';
+				echo '<td>'.htmlentities($myrow['name'], ENT_QUOTES,'UTF-8').'</td>';
 			} else {
 				echo '<td></td>';
 			}
-			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="'.htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8').'" />
-					<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].' - '.$myrow['branchcode'].'" /></td>
-					<td>'.htmlspecialchars($myrow['contactname'], ENT_QUOTES,'UTF-8') .'</td>
+			echo '<td><input type="submit" name="Submit'.$j.'" value="'.htmlentities($myrow['brname'], ENT_QUOTES,'UTF-8').'" /></td>
+					<input type="hidden" name="SelectedCustomer'.$j.'" value="'.$myrow['debtorno'].'" />
+					<input type="hidden" name="SelectedBranch'.$j.'" value="'.$myrow['branchcode'].'" />
+					<td>'.htmlentities($myrow['contactname'], ENT_QUOTES,'UTF-8').'</td>
 					<td>'.$myrow['phoneno'].'</td>
 					<td>'.$myrow['faxno'].'</td>
 					</tr>';
@@ -806,22 +806,18 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 //end of page full new headings if
 		}
 //end of while loop
-		echo '<tr><td><input type="hidden" name="JustSelectedACustomer" value="Yes" /></td></tr>';
-		
-		echo '</table>';
+
+		echo '</table></form>';
 	}//end if results to show
-    echo '</div>
-          </form>';
 
 //end if RequireCustomerSelection
 } else { /*A customer is already selected so get into the contract setup proper */
 
-	echo '<form id="ContractEntry" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
-    echo '<div>';
+	echo '<form name="ContractEntry" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-            <img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />  ' . $_SESSION['Contract'.$identifier]->CustomerName;
+			<img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" /> ' . $_SESSION['Contract'.$identifier]->CustomerName;
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
 		echo ' - ' . _('All amounts stated in') . ' ' . $_SESSION['Contract'.$identifier]->CurrCode . '<br />';
@@ -845,7 +841,8 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo '<input type="hidden" name="ContractRef" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />' . $_SESSION['Contract'.$identifier]->ContractRef;
 	}
 	echo '</td></tr>';
-	echo '<tr><td>' . _('Category') . ':</td>
+	echo '<tr>
+			<td>' . _('Category') . ':</td>
 			<td><select name="CategoryID" >';
 
 	$sql = "SELECT categoryid, categorydescription FROM stockcategory";
@@ -868,7 +865,8 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	$DbgMsg = _('The SQL used to retrieve stock locations and failed was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<tr><td>' . _('Location') . ':</td>
+	echo '<tr>
+			<td>' . _('Location') . ':</td>
 			<td><select name="LocCode" >';
 	while ($myrow=DB_fetch_array($result)){
 		if (!isset($_SESSION['Contract'.$identifier]->LocCode) or $myrow['loccode']==$_SESSION['Contract'.$identifier]->LocCode){
@@ -877,6 +875,30 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 			echo '<option value="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
+
+	echo '</select></td></tr>';
+	$sql = "SELECT code, description FROM workcentres";
+	$result = DB_query($sql,$db);
+
+	if (DB_num_rows($result)==0){
+		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
+		echo '<br /><a href="'.$rootpath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+	echo '<tr><td>' . _('Default Work Centre') . ': </td><td>';
+
+	echo '<select name="DefaultWorkCentre">';
+
+	while ($myrow = DB_fetch_array($result)) {
+		if (isset($_POST['DefaultWorkCentre']) and $myrow['code']==$_POST['DefaultWorkCentre']) {
+			echo '<option selected="selected" value="'.$myrow['code'] . '">' . $myrow['description'] . '</option>';
+		} else {
+			echo '<option value="'.$myrow['code'] . '">' . $myrow['description'] . '</option>';
+		}
+	} //end while loop
+
+	DB_free_result($result);
 
 	echo '</select></td>
 		</tr>
@@ -906,13 +928,13 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	}
 	echo '<tr>
 			<td>' . _('Gross Profit') . ' %:</td>
-			<td><input type="text" name="Margin" size="4" maxlength="4" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin,2) . '" /></td>
+			<td><input class="number" type="text" name="Margin" size="6" maxlength="6" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin, 2) . '" /></td>
 		</tr>';
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
 		echo '<tr>
 				<td>' . $_SESSION['Contract'.$identifier]->CurrCode . ' ' . _('Exchange Rate') . ':</td>
-				<td><input type="text" name="ExRate" size="10" maxlength="10" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" /></td>
+				<td><input class="number" type="text" name="ExRate" size="10" maxlength="10" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" /></td>
 			</tr>';
 	} else {
 		echo '<input type="hidden" name="ExRate" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" />';
@@ -953,25 +975,26 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<table>
 			<tr>
 				<td>
-				<table class="selection">
-				<tr>
-					<th colspan="6">' . _('Stock Items Required') . '</th>
-				</tr>';
+					<table class="selection">
+						<tr>
+							<th colspan="6">' . _('Stock Items Required') . '</th>
+						</tr>';
 	$ContractBOMCost = 0;
 	if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
-		echo '<tr><th>' . _('Item Code') . '</th>
-					<th>' . _('Item Description') . '</th>
-					<th>' . _('Quantity') . '</th>
-					<th>' . _('Unit') . '</th>
-					<th>' . _('Unit Cost') . '</th>
-					<th>' . _('Total Cost') . '</th>
-				</tr>';
-					
+		echo '<tr>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Item Description') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Unit') . '</th>
+				<th>' . _('Unit Cost') . '</th>
+				<th>' . _('Total Cost') . '</th>
+			</tr>';
+
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 			echo '<tr>
 					<td>' . $Component->StockID . '</td>
 					<td>' . $Component->ItemDescription . '</td>
-					<td class="number">' . locale_number_format($Component->Quantity,$Component->DecimalPlaces) . '</td>
+					<td class="number">' . locale_number_format($Component->Quantity, $Component->DecimalPlaces) . '</td>
 					<td>' . $Component->UOM . '</td>
 					<td class="number">' . locale_number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -1047,12 +1070,11 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	}
 	if ($_SESSION['Contract'.$identifier]->Status!=2) {
 		echo '<div class="centre">
-                 <br />
+				 <br />
 				 <input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
-		      </div>';
+			  </div>';
 	}
-	echo '</div>
-          </form>';
+	echo '</form>';
 } /*end of if customer selected  and entering contract header*/
 
 include('includes/footer.inc');
