@@ -1,5 +1,5 @@
 webERP Change Log
-
+06/4/2012 Exson: Fixed PO header that does not display user's default warehous when iusse a new PO in PO_Header.php.
 25/4/12 Phil: Complete rewrite of PDFPrintLabels.php and Labels.php in webERP style - half the code and maintainable with templates stored with all the other data in the database. The new labels also allow fields to be printed as barcodes too.
 24/4/2012 Phil: fix CopyBOM.php that was insering a blank stockid into stockmaster as reported by Ricard
 21/04/2012 Vitaly: Editable item description in PO. 
