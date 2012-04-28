@@ -246,9 +246,10 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	/* show form to allow input	*/
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">';
 
 	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
@@ -384,7 +385,8 @@ Payment types can be modified by editing that file */
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF Only') . '" />
 				<input type="submit" name="PrintPDFAndProcess" value="' . _('Print and Process Payments') . '" />
 			</div>';
-
+    echo '</div>
+          </form>';
 	include ('includes/footer.inc');
 } /*end of else not PrintPDF */
 ?>

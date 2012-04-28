@@ -203,9 +203,9 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br />';
 
 	echo '<br/>
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<table>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT supplierid,suppname FROM `suppliers`";
 	$result = DB_query($sql,$db);
@@ -255,6 +255,8 @@ if (isset($_POST['PrintPDF'])) {
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
 
+    echo '</div>
+          </form>';
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */

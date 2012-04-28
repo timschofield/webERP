@@ -94,13 +94,14 @@ foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 }
 
 echo '<tr>
-	<td class="number"><font size="2" color=navy>' . _('Total') . ':</font></td>
-	<td class="number"><font size="2" color=navy><U>' . locale_number_format($TotalShiptValue,2) . '</U></font></td>
+	<td class="number">' . _('Total') . ':</td>
+	<td class="number">' . locale_number_format($TotalShiptValue,2) . '</td>
 </tr>
 </table><br />';
 
 /*Set up a form to allow input of new Shipment charges */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ShiptRef'])) {
@@ -152,6 +153,7 @@ echo '<br />
 	<div class="centre">
 		<input type="submit" name="AddShiptChgToInvoice" value="' . _('Enter Shipment Charge') . '" />
 	</div>
+    </div>
 	</form>';
 	
 include('includes/footer.inc');

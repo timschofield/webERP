@@ -172,8 +172,8 @@ if (!isset($SelectedTaxAuthID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedTaxAuthID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedTaxAuthID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax authority?') . '\');">' . _('Delete') . '</a></td>
-				<td><td><a href="%sTaxAuthority=%s">' . _('Edit Rates') . '</a></td>
+				<td><a href="%sSelectedTaxAuthID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax authority?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="%sTaxAuthority=%s">' . _('Edit Rates') . '</a></td>
 				</tr>',
 				$myrow[0],
 				$myrow[1],
@@ -195,7 +195,7 @@ if (!isset($SelectedTaxAuthID)) {
 
 	//end of ifs and buts!
 
-	echo '</table><p>';
+	echo '</table><br />';
 }
 
 
@@ -203,11 +203,13 @@ if (!isset($SelectedTaxAuthID)) {
 if (isset($SelectedTaxAuthID)) {
 	echo '<div class="centre">
 			<a href="' .  htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Review all defined tax authority records') . '</a>
-		</div>';
+		</div>
+        <br />';
  }
 
 
-echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedTaxAuthID)) {
@@ -266,7 +268,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
+	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 
 } //end while loop
 
@@ -285,7 +287,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')' . '</option>';
+	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 
 } //end while loop
 
@@ -326,6 +328,7 @@ echo '<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

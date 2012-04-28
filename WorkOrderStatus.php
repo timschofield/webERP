@@ -80,7 +80,7 @@ include('includes/header.inc');
 							$db);
 		$LocRow = DB_fetch_array($LocResult);
 		echo $LocRow['locationname'];
-		echo '<tr><td colspan="4"></td></tr>';
+
 		echo '</td>
 			</tr>
 			</table>
@@ -89,7 +89,7 @@ include('includes/header.inc');
 		//set up options for selection of the item to be issued to the WO
 		echo '<table class="selection">
 				<tr>
-					<th colspan="5"><font size="2" color="navy">' . _('Material Requirements For this Work Order') . '</font></th>
+					<th colspan="5"><h3>' . _('Material Requirements For this Work Order') . '</h3></th>
 				</tr>';
 		echo '<tr>
 				<th colspan="2">' . _('Item') . '</th>

@@ -647,6 +647,7 @@ if (!isset($SupplierID)) {
 /*If the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="Yes" />';
@@ -709,13 +710,13 @@ if (!isset($SupplierID)) {
 		echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
 	} //end while loop
 	DB_data_seek($result, 0);
-	echo '</select></td></tr>';
+    echo '</select></td></tr>';
 
 	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
 	echo '<tr><td>' . _('Factor Company') . ':</td>
 			<td><select name="FactorID">';
-	echo '<option value="0">' . _('None');
+	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['FactorID']) AND $_POST['FactorID'] == $myrow['id']){
 		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
@@ -772,14 +773,17 @@ if (!isset($SupplierID)) {
 
 	echo '</select></td></tr>
 		</table>
-		<p><div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" />';
-	echo '</div></form>';
+		<br />
+        <div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
+	echo '</div>
+          </form>';
 
 } else {
 
 //SupplierID exists - either passed when calling the form or from the form itself
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
@@ -830,12 +834,12 @@ if (!isset($SupplierID)) {
 		$_POST['FactorID'] = $myrow['factorcompanyid'];
 		$_POST['TaxRef'] = $myrow['taxref'];
 
-		echo '<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />';
+		echo '<tr><td><input type="hidden" name="SupplierID" value="' . $SupplierID . '" /></td></tr>';
 
 	} else {
 	// its a new supplier being added
-		echo '<input type="hidden" name="New" value="Yes" />';
-		echo '<tr><td>' . _('Supplier Code') . ':</td>
+		echo '<tr><td><input type="hidden" name="New" value="Yes" />';
+		echo _('Supplier Code') . ':</td>
 				<td><input '.(in_array('ID',$Errors) ? 'class="inputerror"' : '').' type="text" name="SupplierID" value="' . $SupplierID . '" size="12" maxlength="10" /></td></tr>';
 	}
 
@@ -889,12 +893,13 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
+    echo '</select></td></tr>';
 
 	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
 	echo '<tr><td>' . _('Factor Company') . ':</td>
 			<td><select name="FactorID">';
-	echo '<option value="0">' . _('None');
+	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['FactorID'] == $myrow['id']){
 		echo '<option selected="selected" value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
@@ -903,12 +908,13 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
+    echo '</select></td></tr>';
 	echo '<tr><td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] .'" /></td></tr>';
 
 	$result=DB_query("SELECT currency, currabrev FROM currencies", $db);
 
-	echo '</select></td></tr><tr><td>' . _('Supplier Currency') . ':</td>
+	echo '<tr><td>' . _('Supplier Currency') . ':</td>
 			<td><select name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']){
@@ -954,7 +960,10 @@ if (!isset($SupplierID)) {
 	echo '</select></td></tr></table>';
 
 	if (isset($_POST['New'])) {
-		echo '<p><div class="centre"><input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" /></form>';
+		echo '<br />
+                <div class="centre">
+                     <input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" />
+                </div>';
 	} else {
 		echo '<br />
 				<div class="centre">
@@ -965,13 +974,13 @@ if (!isset($SupplierID)) {
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
 		echo '<br />
 			<div class="centre">
-				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick=\"return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');\" />
-		</form>';
+				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />';
 		echo '<br />
 			<a href="' . $rootpath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a>
 			</div>';
 	}
-	echo '</div>';
+	echo '</div>
+          </form>';
 } // end of main ifs
 
 include('includes/footer.inc');

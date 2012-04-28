@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (mb_strstr($_POST['Code'],' ') OR ContainsIllegalCharacters($_POST['Code']) ) {
 		$InputError = 1;
-		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
+		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
 	}
 
 	if (isset($SelectedWC) AND $InputError !=1) {
@@ -122,7 +122,7 @@ or deletion of the records*/
 
 	$result = DB_query($sql,$db);
 	echo '<table class="selection">
-			<tr bgcolor ="#800000">
+			<tr>
 				<th>' . _('WC Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Location') . '</th>
@@ -138,8 +138,8 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td><a href="%s&SelectedWC=%s">' . _('Edit') . '</td>
-					<td><a href="%s&SelectedWC=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete') .'</td>
+					<td><a href="%s&amp;SelectedWC=%s">' . _('Edit') . '</a></td>
+					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete') .'</a></td>
 				</tr>',
 				$myrow['code'],
 				$myrow['description'],
@@ -165,6 +165,7 @@ if (isset($SelectedWC)) {
 
 echo '<br />
 	<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedWC)) {
@@ -256,7 +257,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . $myrow['accountname'] . '</option>';
+	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 
 } //end while loop
 DB_free_result($result);
@@ -265,7 +266,7 @@ if (!isset($_POST['OverheadPerHour'])) {
 	$_POST['OverheadPerHour']=0;
 }
 
-echo '</td></tr>';
+echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Overhead Per Hour') . ':</td>
 		<td><input type="text" class="number" name="OverheadPerHour" size="6" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />';
@@ -285,6 +286,7 @@ if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].Description);</script>';
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

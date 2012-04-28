@@ -14,6 +14,7 @@ echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'
 	</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_REQUEST['WO'])) {
@@ -103,9 +104,9 @@ while ($WORow = DB_fetch_array($WOItemsResult)){
 	 			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 	 			<td>' . $WORow['units'] . '</td>
 	 			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-	 			<td class="number"><a href="'. $rootpath . '/WorkOrderStatus.php?WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
-	 			<td class="number"><a href="'. $rootpath . '/WorkOrderReceive.php?WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
-	 			<td class="number"><a href="'. $rootpath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
+	 			<td class="number"><a href="'. $rootpath . '/WorkOrderStatus.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
+	 			<td class="number"><a href="'. $rootpath . '/WorkOrderReceive.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
+	 			<td class="number"><a href="'. $rootpath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
  			</tr>';
 
 	$TotalStdValueRecd +=($WORow['stdcost']*$WORow['qtyrecd']);
@@ -159,7 +160,8 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	}
 
 	echo '<td>' .  $RequirementsRow['stockid'] . '</td>
-		<td>' .  $RequirementsRow['description'] . '</td>';
+		<td>' .  $RequirementsRow['description'] . '</td>
+        </tr>';
 
 	$IssuesResult = DB_query("SELECT stockmoves.trandate,
 									stockmoves.qty,
@@ -547,7 +549,7 @@ if ($WorkOrderRow['closed']==0){
 		</tr>';
 }
 echo '</table>
-	
+	</div>
 	</form>';
 
 include('includes/footer.inc');

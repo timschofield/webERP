@@ -9,7 +9,8 @@ include('includes/header.inc');
 
 if (!isset($_POST['DoUpgrade'])){
 
-	echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_SESSION['VersionNumber'])){
@@ -54,7 +55,8 @@ if (!isset($_POST['DoUpgrade'])){
 		}
 	}
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 }
 
 if (isset($_POST['DoUpgrade'])){

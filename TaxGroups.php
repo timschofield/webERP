@@ -185,8 +185,8 @@ if (!isset($SelectedGroup)) {
 
 			printf('<td>%s</td>
 					<td>%s</td>
-					<td><a href="%s&SelectedGroup=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&SelectedGroup=%s&Delete=1&GroupID=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax group?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%s&amp;SelectedGroup=%s">' . _('Edit') . '</a></td>
+					<td><a href="%s&amp;SelectedGroup=%s&amp;Delete=1&amp;GroupID=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax group?') . '\');">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['taxgroupid'],
 					$myrow['taxgroupdescription'],
@@ -226,6 +226,7 @@ if (isset($SelectedGroup)) {
 }
 echo '<br />';
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedGroup'])) {
 	echo '<input type="hidden" name="SelectedGroup" value="' . $_POST['SelectedGroup'] . '" />';
@@ -239,11 +240,13 @@ echo '<tr><td>' . _('Tax Group') . ':</td>
 		<td><input type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
 echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '" /></td>
 	</tr>
+    </table>
+    <br />
+    </div>
 	</form>';
 
 
 if (isset($SelectedGroup)) {
-	echo '</table><br />';
 
 	$sql = "SELECT taxid,
 			description as taxname
@@ -275,11 +278,12 @@ if (isset($SelectedGroup)) {
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if (count($TaxAuthsUsed)>0) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<input type="hidden" name="SelectedGroup" value="' . $SelectedGroup .'" />';
 		echo '<table class="selection">
 				<tr>
-					<th colspan="3"><font size="3" color="navy">'._('Calculation Order').'</font></th>
+					<th colspan="3"><h3>'._('Calculation Order').'</h3></th>
 				</tr>
 				<tr>
 					<th>'._('Tax Authority').'</th>
@@ -321,7 +325,8 @@ if (isset($SelectedGroup)) {
 			</div>';
 	}
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 	if (DB_num_rows($Result)>0 ) {
 		echo '<br />';
@@ -372,7 +377,7 @@ if (isset($SelectedGroup)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedGroup=%s&remove=1&TaxAuthority=%s" onclick="return confirm(\'' . _('Are you sure you wish to remove this tax authority from the group?') . '\');">' . _('Remove') . '</a></td>
+				<td><a href="%sSelectedGroup=%s&amp;remove=1&amp;TaxAuthority=%s" onclick="return confirm(\'' . _('Are you sure you wish to remove this tax authority from the group?') . '\');">' . _('Remove') . '</a></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>',
 				$AvailRow['taxid'],
@@ -392,7 +397,7 @@ if (isset($SelectedGroup)) {
 				<td>&nbsp;</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedGroup=%s&add=1&TaxAuthority=%s">' . _('Add') . '</a></td>',
+				<td><a href="%sSelectedGroup=%s&amp;add=1&amp;TaxAuthority=%s">' . _('Add') . '</a></td>',
 				$AvailRow['taxid'],
 				$AvailRow['taxname'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',

@@ -298,7 +298,7 @@ $MenuItems['manuf']['Reports']['Caption'] = array (_('Select A Work Order'),
 													_('MRP Reschedules Required')
 												);
 
-$MenuItems['manuf']['Reports']['URL'] = array ('/WorkOrderEntry.php',
+$MenuItems['manuf']['Reports']['URL'] = array ('/SelectWorkOrder.php',
 												'/BOMInquiry.php',
 												'/WhereUsedInquiry.php',
 												'/BOMListing.php',

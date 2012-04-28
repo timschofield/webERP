@@ -120,8 +120,8 @@ if (!isset($SelectedRole)) {
 		/*The SecurityHeadings array is defined in config.php */
 
 		printf('<td>%s</td>
-			<td><a href="%s&SelectedRole=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&SelectedRole=%s&delete=1&SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s&amp;SelectedRole=%s">' . _('Edit') . '</a></td>
+			<td><a href="%s&amp;SelectedRole=%s&amp;delete=1&amp;SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['secrolename'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
@@ -157,6 +157,7 @@ if (isset($SelectedRole)) {
 }
 echo '<br />';
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedRole'])) {
 	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '" />';
@@ -167,13 +168,14 @@ if (!isset($_POST['SecRoleName'])) {
 }
 echo '<tr>
 		<td>' . _('Role') . ':</td>
-		<td><input type="text" name="SecRoleName" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" />
+		<td><input type="text" name="SecRoleName" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" /></td>
 	</tr>';
 echo '</table>
 	<br />
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Role') . '" />
 	</div>
+    </div>
 	</form>';
 
 if (isset($SelectedRole)) {
@@ -215,7 +217,7 @@ if (isset($SelectedRole)) {
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
 			printf('<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&remove=1&PageToken=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token from this role?') . '\');">' . _('Remove') . '</a></td>
+					<td><a href="%sSelectedRole=%s&amp;remove=1&amp;PageToken=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token from this role?') . '\');">' . _('Remove') . '</a></td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>',
@@ -230,7 +232,7 @@ if (isset($SelectedRole)) {
 					<td>&nbsp;</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&add=1&PageToken=%s">' . _('Add') . '</a></td>',
+					<td><a href="%sSelectedRole=%s&amp;add=1&amp;PageToken=%s">' . _('Add') . '</a></td>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',

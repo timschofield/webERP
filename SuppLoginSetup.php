@@ -109,6 +109,7 @@ if (isset($_POST['submit'])) {
 } 
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -133,7 +134,7 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
+		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Full Name') . ':</td>
@@ -178,8 +179,10 @@ while ($myroles = DB_fetch_array($RolesResult)){
 }
 
 if (!$FoundTheSupplierRole){
+    echo '</table>
+          </div>
+          </form>';
 	prnMsg(_('The supplier login role is expected to contain just one token - number 9. There is no such role currently defined - so a supplier login cannot be set up until this role is defined'),'error');
-	echo '</table>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -292,6 +295,7 @@ echo '</select></td>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
+    </div>
 	</form>';
 
 echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';

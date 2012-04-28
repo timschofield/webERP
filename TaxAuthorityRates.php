@@ -56,6 +56,7 @@ $TaxAuthDetail = DB_query("SELECT description
 $myrow = DB_fetch_row($TaxAuthDetail);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="TaxAuthority" value="' . $TaxAuthority . '" />';
@@ -80,7 +81,7 @@ if (DB_num_rows($TaxRatesResult)>0){
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="3"><font size="3" color="navy">' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</font></th>
+			<th colspan="3"><h3>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</h3></th>
 		</tr>';
 	$TableHeader = '<tr>
 						<th>' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
@@ -108,7 +109,7 @@ if (DB_num_rows($TaxRatesResult)>0){
 
 		printf('<td>%s</td>
 				<td>%s</td>
-				<td><input type="text" class="number" name=%s maxlength="5" size="5" value="%s" /></td>
+				<td><input type="text" class="number" name="%s" maxlength="5" size="5" value="%s" /></td>
 				</tr>',
 				$myrow['taxprovincename'],
 				$myrow['taxcatname'],
@@ -128,8 +129,6 @@ echo '<br />
 	prnMsg(_('There are no tax rates to show - perhaps the dispatch tax province records have not yet been created?'),'warn');
 }
 
-echo '</form>';
-
 echo '<br />
 	<br />
 	<a href="' . $rootpath . '/TaxAuthorities.php">' . _('Tax Authorities') .  '</a>
@@ -140,6 +139,9 @@ echo '<br />
 	<br />
 	<a href="' . $rootpath . '/TaxProvinces.php">' . _('Dispatch Tax Provinces') .  '</a>
 	</div>';
+
+echo '</div>
+      </form>';
 
 include( 'includes/footer.inc' );
 ?>

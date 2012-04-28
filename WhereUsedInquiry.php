@@ -30,7 +30,7 @@ if (isset($StockID)){
 		exit;
 	}
 	echo '<br />
-		<font color="navy" size="3"><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('in units of') . ' ' . $myrow[1] . ')</font>';
+		<div class="centre"><h3>' . $StockID . ' - ' . $myrow[0] . '  (' . _('in units of') . ' ' . $myrow[1] . ')</h3></div>';
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -45,8 +45,8 @@ if (isset($StockID)) {
 
 echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />';
 
-echo '</div>
-	<br />';
+echo '<br />
+      </div>';
 
 if (isset($StockID)) {
 
@@ -91,7 +91,8 @@ if (isset($StockID)) {
 				<td>' . $myrow['loccode']. '</td>
 				<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>
 				<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>
-				<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>';
+				<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>
+                </tr>';
 
 			//end of page full new headings if
 		}

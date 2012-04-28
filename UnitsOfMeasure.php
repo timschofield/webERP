@@ -183,11 +183,11 @@ if (isset($_POST['Submit'])) {
 
 		echo '<td>' . $myrow[1] . '</td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete') .'</a></td>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete') .'</a></td>';
 		echo '</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><p>';
+	echo '</table><br />';
 } //end of ifs and buts!
 
 
@@ -197,11 +197,12 @@ if (isset($SelectedMeasureID)) {
 		</div>';
 }
 
-echo '<p />';
+echo '<br />';
 
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedMeasureID)) {
@@ -240,7 +241,8 @@ if (! isset($_GET['delete'])) {
 			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
 		</div>';
 
-	echo '</form>';
+	echo '</div>
+          </form>';
 
 } //end if record deleted no point displaying form to add record
 

@@ -22,6 +22,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/g
 	_('Search') . '" alt="" />' . ' ' . $title.'</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -350,7 +351,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		$Result = DB_Txn_Commit($db);
 
 		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
-		echo '<p><ul><li><a href="' . $rootpath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
+		echo '<p><ul><li><a href="' . $rootpath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
 		echo '<li><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against'). '</a></li></ul>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
@@ -658,27 +659,27 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-	?>
 
-	</select>
-	<td><?php echo _('Enter text extracts in the'); ?> <b><?php echo _('description'); ?></b>:</td>
-	<td><input type="text" name="Keywords" size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td></tr>
-	<tr><td></td>
-			<td><font size="3"><b><?php echo _('OR'); ?> </b></font><?php echo _('Enter extract of the'); ?> <b><?php echo _('Stock Code'); ?></b>:</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
+	echo '</select></td>
+	    <td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
+	    <td><input type="text" name="Keywords" size="20" maxlength="25" value="';
+            if (isset($_POST['Keywords'])) echo $_POST['Keywords']; 
+            echo '" /></td></tr>
+	    <tr><td></td>
+		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
+		<td><input type="text" name="StockCode" size="15" maxlength="18" value="';
+            if (isset($_POST['StockCode'])) echo $_POST['StockCode']; 
+            echo '" /></td>
 			</tr>
 			</table>
 			<br />
-			<div class="centre"><input type="submit" name="Search" value="<?php echo _('Search Now'); ?>" />
+			<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" />';
 
-	<script language='JavaScript' type='text/javascript'>
-
+	echo '<script type="text/javascript">
 		document.forms[0].StockCode.select();
 		document.forms[0].StockCode.focus();
+	</script>';
 
-	</script>
-
-	<?php
 	echo '</div>';
 
 	if (isset($SearchResult)) {
@@ -701,10 +702,10 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
 				if (!in_array($myrow['stockid'],$ItemCodes)){
 					if (function_exists('imagecreatefrompng') ){
-						$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64" />';
+						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . urlencode($myrow['stockid']). '&amp;text=&amp;width=64&amp;height=64" alt="" />';
 					} else {
 						if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-							$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" />';
+							$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" alt="" />';
 						} else {
 							$ImageSource = _('No Image');
 						}
@@ -718,13 +719,13 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 						$k=1;
 					}
 
-					$IssueLink = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '&IssueItem=' . $myrow['stockid'] . '&FromLocation=' . $_POST['FromLocation'];
-					printf('<td><font size="1">%s</font></td>
-							<td><font size="1">%s</font></td>
-							<td><font size="1">%s</font></td>
+					$IssueLink = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '&amp;IssueItem=' . $myrow['stockid'] . '&amp;FromLocation=' . $_POST['FromLocation'];
+					printf('<td>%s</td>
 							<td>%s</td>
-							<td><font size="1"><a href="%s">'
-							. _('Add to Work Order') . '</a></font></td>
+							<td>%s</td>
+							<td>%s</td>
+							<td><a href="%s">'
+							. _('Add to Work Order') . '</a></td>
 							</tr>',
 							$myrow['stockid'],
 							$myrow['description'],
@@ -825,9 +826,10 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 				<td colspan="2"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
 			</tr>';
 	}
+    echo '</table>';
 } //end if selecting new item to issue or entering the issued item quantities
-echo '</table>';
-echo '</form>';
+echo '</div>
+      </form>';
 
 include('includes/footer.inc');
 ?>

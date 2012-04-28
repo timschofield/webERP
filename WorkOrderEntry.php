@@ -384,7 +384,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 		prnMsg(_('The work order has been deleted'),'success');
 
 
-		echo '<p><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing outstanding work order') . '</a>';
+		echo '<p><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing outstanding work order') . '</a></p>';
 		unset($_POST['WO']);
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
 			 unset($_POST['OutputItem'.$i]);
@@ -398,8 +398,10 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 	}
 }
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="form1">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
 
 echo '<br /><table class="selection">';
 
@@ -460,7 +462,6 @@ if (DB_num_rows($WOResult)==1){
 	}
 }
 
-echo '<input type="hidden" name="WO" value="' .$_POST['WO'] . '" />';
 echo '<tr>
 		<td class="label">' . _('Work Order Reference') . ':</td>
 		<td>' . $_POST['WO'] . '</td>
@@ -503,13 +504,14 @@ if (isset($WOResult)){
 		</tr>';
 }
 echo '</table>
-		<p><table class="selection">';
+		<br /><table class="selection">';
 echo '<tr>
 		<th>' . _('Output Item') . '</th>
 		<th>' . _('Qty Required') . '</th>
 		<th>' . _('Qty Received') . '</th>
 		<th>' . _('Balance Remaining') . '</th>
 		<th>' . _('Next Lot/SN Ref') . '</th>
+        <th>&nbsp;</th>
 	</tr>';
 $j=0;
 
@@ -524,8 +526,8 @@ if (isset($NumberOfOutputs)){
 		}
 		echo '<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' . $_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>';
 		if ($_POST['Controlled'.$i]==1 AND $_SESSION['DefineControlledOnWOEntry']==1){
-			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . '</td>';
-			echo '<input type="hidden" name="OutputQty' . $i .'" value="' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . '" />';
+			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]);
+			echo '<input type="hidden" name="OutputQty' . $i .'" value="' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . '" /></td>';
 		} else {
 		  	echo'<td><input type="text" class="number" name="OutputQty' . $i . '" value="' . locale_number_format($_POST['OutputQty' . $i],$_POST['DecimalPlaces' . $i]) . '" size="10" maxlength="10" /></td>';
 		}
@@ -539,13 +541,11 @@ if (isset($NumberOfOutputs)){
 				} else {
 					$LotOrSN = _('Batches');
 				}
-				echo '<td><a href="' . $rootpath . '/WOSerialNos.php?WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
+                echo '<td><a href="' . $rootpath . '/WOSerialNos.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['OutputItem' .$i] . '&amp;Description=' . $_POST['OutputItemDesc' .$i] . '&amp;Serialised=' . $_POST['Serialised' .$i] . '&amp;NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
 			}
 		}
 		echo '<td>';
 		wikiLink('WorkOrder', $_POST['WO'] . $_POST['OutputItem' .$i]);
-		echo '</td>
-			</tr>';
 		if (isset($_POST['Controlled' . $i])) {
 			echo '<input type="hidden" name="Controlled' . $i .'" value="' . $_POST['Controlled' . $i] . '" />';
 		}
@@ -555,8 +555,10 @@ if (isset($NumberOfOutputs)){
 		if (isset($_POST['HasWOSerialNos' . $i])) {
 			echo '<input type="hidden" name="HasWOSerialNos' . $i .'" value="' . $_POST['HasWOSerialNos' . $i] . '" />';
 		}
+        echo '</td>
+            </tr>';
 	}
-	echo '<input type="hidden" name="NumberOfOutputs" value="' . ($i -1).'" />';
+	echo '<tr><td><input type="hidden" name="NumberOfOutputs" value="' . ($i -1).'" /></td></tr>';
 }
 echo '</table>';
 
@@ -621,6 +623,8 @@ if (isset($SearchResult)) {
 							<th>' . _('Code') . '</th>
 				   			<th>' . _('Description') . '</th>
 				   			<th>' . _('Units') . '</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
 				   		</tr>';
 		echo $TableHeader;
 		$j = 1;
@@ -634,10 +638,10 @@ if (isset($SearchResult)) {
 
 			if (!in_array($myrow['stockid'],$ItemCodes)){
 				if (function_exists('imagecreatefrompng') ){
-					$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64" />';
+					$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . urlencode($myrow['stockid']). '&amp;text=&amp;width=64&amp;height=64" alt="" />';
 				} else {
 					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-						$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath .  '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" />';
+						$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath .  '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" alt="" />';
 					} else {
 						$ImageSource = _('No Image');
 					}
@@ -661,7 +665,7 @@ if (isset($SearchResult)) {
 						$myrow['description'],
 						$myrow['units'],
 						$ImageSource,
-						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_POST['WO'] . '&NewItem=' . $myrow['stockid'].'&Line='.$i);
+						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_POST['WO'] . '&amp;NewItem=' . $myrow['stockid'].'&amp;Line='.$i);
 
 				$j++;
 				If ($j == 25){
@@ -682,6 +686,7 @@ if (!isset($_GET['NewItem']) or $_GET['NewItem']=='') {
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].OutputQty"'.$_GET['Line'].'");</script>';
 }
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

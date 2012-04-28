@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
-		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
+		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
 	} elseif (mb_strlen($_POST['Password'])<5){
 		if (!$SelectedUser){
 			$InputError = 1;
@@ -322,8 +322,8 @@ if (!isset($SelectedUser)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%s&SelectedUser=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&SelectedUser=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%s&amp;SelectedUser=%s">' . _('Edit') . '</a></td>
+					<td><a href="%s&amp;SelectedUser=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['userid'],
 					$myrow['realname'],
@@ -353,6 +353,7 @@ if (isset($SelectedUser)) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedUser)) {
@@ -447,7 +448,7 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
+		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Full Name') . ':</td>
@@ -472,9 +473,9 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 		echo '<option value="' . $SecKey . '">' . $SecVal .'</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
-echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" />';
+echo '</select>';
+echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" /></td>
+    </tr>';
 
 echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
 
@@ -697,6 +698,7 @@ echo '</table>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
+    </div>
 	</form>';
 
 if (isset($_GET['SelectedUser'])) {

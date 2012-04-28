@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['TaxCategoryName'])) {
 		$InputError = 1;
-		prnMsg( _('The tax category name cannot contain the character') . " '&' " . _('or the character') ." ' " . _('or a space') ,'error');
+		prnMsg( _('The tax category name cannot contain the character') . " '&amp;' " . _('or the character') ." ' " . _('or a space') ,'error');
 	}
 	if (trim($_POST['TaxCategoryName']) == '') {
 		$InputError = 1;
@@ -180,11 +180,11 @@ if (isset($_POST['submit'])) {
 
 		echo '<td>' . $myrow[1] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax category?') . '\');">' . _('Delete') .'</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><p />';
+	echo '</table><br />';
 } //end of ifs and buts!
 
 
@@ -194,11 +194,12 @@ if (isset($SelectedTaxCategory)) {
 		</div>';
 }
 
-echo '<p>';
+echo '<br />';
 
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTaxCategory)) {
@@ -236,6 +237,7 @@ if (! isset($_GET['delete'])) {
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 			</div>
+        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

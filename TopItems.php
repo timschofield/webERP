@@ -13,12 +13,13 @@ if (!(isset($_POST['Search']))) {
 	echo '<p class="page_title_text">
 			<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
 		</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name="SelectCustomer" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	//to view store location
 	echo '<tr>
-			<td width="150">' . _('Select Location') . '  </td>
+			<td style="width:150px">' . _('Select Location') . '  </td>
 			<td>:</td>
 			<td><select name="Location">';
 	$sql = "SELECT loccode,
@@ -33,7 +34,7 @@ if (!(isset($_POST['Search']))) {
 		</tr>';
 	//to view list of customer
 	echo '<tr>
-			<td width="150">' . _('Select Customer Type') . '</td>
+			<td style="width:150px">' . _('Select Customer Type') . '</td>
 			<td>:</td>
 			<td><select name="Customers">';
 			
@@ -56,7 +57,7 @@ if (!(isset($_POST['Search']))) {
 	$result1 = DB_query($SQL,$db);
 
 	echo '<tr>
-			<td width="150">' . _('In Stock Category') . ' </td>
+			<td style="width:150px">' . _('In Stock Category') . ' </td>
 			<td>:</td>
 			<td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
@@ -74,10 +75,12 @@ if (!(isset($_POST['Search']))) {
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
+    echo '</select></td>
+        </tr>';
 		
 	//view order by list to display
 	echo '<tr>
-			<td width="150">' . _('Select Order By ') . ' </td>
+			<td style="width:150px">' . _('Select Order By ') . ' </td>
 			<td>:</td>
 			<td><select name="Sequence">
 				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
@@ -104,6 +107,7 @@ if (!(isset($_POST['Search']))) {
 	<div class="centre">
 		<input tabindex="5" type="submit" name="Search" value="' . _('Search') . '" />
 	</div>
+    </div>
 	</form>';
 } else {
 	// everything below here to view NumberOfTopItems items sale on selected location
@@ -143,9 +147,10 @@ if (!(isset($_POST['Search']))) {
 	$result = DB_query($SQL, $db);
 	
 	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
-	echo '<form action="PDFTopItems.php"  method="GET">
-		<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="PDFTopItems.php"  method="GET">';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">';
 	$TableHeader = '<tr>
 						<th>' . _('#') . '</th>
 						<th>' . _('Code') . '</th>
@@ -201,6 +206,7 @@ if (!(isset($_POST['Search']))) {
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print To PDF') . '" />
 			</div>
+        </div>
 		</form>';
 }
 include ('includes/footer.inc');

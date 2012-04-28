@@ -131,8 +131,8 @@ foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
 }
 
 echo '<tr>
-		<td colspan="2" class="number"><font size="4" color="blue">' . _('Total') . ':</font></td>
-		<td class="number"><font size="2" color="navy"><u>' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></font></td>
+		<td colspan="2" class="number">' . _('Total') . ':</td>
+		<td class="number">' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 	</tr>
 	</table>';
 
@@ -150,6 +150,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 
 /*Set up a form to allow input of new GL entries */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
@@ -159,8 +160,8 @@ if (!isset($_POST['GLCode'])) {
 }
 echo '<tr>
 		<td>' . _('Account Code') . ':</td>
-		<td><input type="text" name="GLCode" size="12" maxlength="11" value="' .  $_POST['GLCode'] . '" /></td>
-		<input type="hidden" name="JobRef" value="" />
+		<td><input type="text" name="GLCode" size="12" maxlength="11" value="' .  $_POST['GLCode'] . '" />
+		<input type="hidden" name="JobRef" value="" /></td>
 	</tr>';
 echo '<tr>
 	<td>' . _('Account Selection') . ':
@@ -178,7 +179,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+	echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 }
 
 echo '</select>
@@ -206,6 +207,7 @@ echo '<div class="centre">
 		<input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '" />
 	</div>';
 
-echo '</form>';
+echo '</div>
+      </form>';
 include('includes/footer.inc');
 ?>

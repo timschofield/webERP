@@ -226,7 +226,8 @@ if (isset($_POST['UpdateItems'])){
 }
 
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="form">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
@@ -257,11 +258,11 @@ if ($Serialised==1 AND $NextSerialNo>0){
 				<tr><td>';
 		echo _('Add a single batch/lot number');
 	}
-	echo '<td><input type="text" name="Reference" maxlength="30" size="30" /></td>';
+	echo '</td><td><input type="text" name="Reference" maxlength="30" size="30" /></td>';
 	if ($Serialised==0){ //also need to add the quantity
 		echo '<td><input type="text" name="Quantity" size="10" class="number" maxlength="10" value="1" /></td>';
 	} else { //it will be 1 for a serial item
-		echo '<input type="hidden" name="Quantity" value="1" />';
+		echo '<td><input type="hidden" name="Quantity" value="1" /></td>';
 	}
 }
 
@@ -308,21 +309,19 @@ if (DB_num_rows($WOSerialNoResult)==0){
 		}
 
 		echo '<tr>
-				<td><input type="text" name="Reference' . $i .'" value="' . $WOSNRow['serialno'] . '"/></td>';
-		echo '<input type="hidden" name="OldReference' . $i . '" value="' . $WOSNRow['serialno'] . '"/>';
+				<td><input type="text" name="Reference' . $i .'" value="' . $WOSNRow['serialno'] . '"/>';
+		echo '<input type="hidden" name="OldReference' . $i . '" value="' . $WOSNRow['serialno'] . '"/></td>';
 		if ($Serialised==0){
-			echo '<td><input type="text" name="Quantity' . $i .'" value="' . locale_number_format($WOSNRow['quantity'],'Variable') . '" /></td>';
-			echo '<input type="hidden" name="OldQuantity' . $i . '" value="' . locale_number_format($WOSNRow['quantity'],'Variable') . '" />';
+			echo '<td><input type="text" name="Quantity' . $i .'" value="' . locale_number_format($WOSNRow['quantity'],'Variable') . '" />';
+			echo '<input type="hidden" name="OldQuantity' . $i . '" value="' . locale_number_format($WOSNRow['quantity'],'Variable') . '" /></td>';
 		} else {
-			echo '<input type="hidden" name="Quantity' . $i . '" value="1" />';
+			echo '<td><input type="hidden" name="Quantity' . $i . '" value="1" /></td>';
 		}
 		echo '<td><textarea name="Notes' . $i .'" cols="60" rows="3">' . $WOSNRow['qualitytext'] .'</textarea></td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=1&Reference=' . $WOSNRow['serialno'] . '&Quantity=' . locale_number_format($WOSNRow['quantity'],'Variable') . '&WO=' . $WO . '&StockID=' . $StockID . '&Description=' . $Description . '&Serialised=' . $Serialised . '&NextSerialNo=' . $NextSerialNo . '">' . _('Delete') . '</a></td></tr>';
 		$i++;
 		$j++;
 	}
-
-	echo '<input type="hidden" name="CountOfItems" value="' . $i . '" />';
 
 	if ($Serialised==0){
 		echo '<tr><td style="text-align: center" colspan="3">';
@@ -332,10 +331,14 @@ if (DB_num_rows($WOSerialNoResult)==0){
 	echo '<input type="submit" name="UpdateItems" value="' . _('Update') . '" /></td></tr>';
 	echo '</table>';
 
+    echo '<input type="hidden" name="CountOfItems" value="' . $i . '" />';
+
 } //end of if there are woserialno items defined
 
-echo '<p/><a href="' . $rootpath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
-echo '</form>';
+echo '<br /><a href="' . $rootpath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
+
+echo '</div>
+      </form>';
 
 include('includes/footer.inc');
 

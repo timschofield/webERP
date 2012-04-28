@@ -99,6 +99,7 @@ if (isset($_POST['Modify'])) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
@@ -115,8 +116,8 @@ echo '<table class="selection">
 
 echo '<tr>
 		<td>' . _('User Name') . ':</td>
-		<td>' . $_SESSION['UsersRealName'] . '</td>
-		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></tr>';
+		<td>' . $_SESSION['UsersRealName'] . '
+		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></td></tr>';
 
 echo '<tr>
 	<td>' . _('Maximum Number of Records to Display') . ':</td>
@@ -213,6 +214,7 @@ echo '</select></td>
 	</table>
 	<br />
 	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

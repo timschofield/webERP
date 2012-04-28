@@ -714,8 +714,8 @@ echo '<tr style="outline: 1px solid">
 echo '<tr style="outline: 1px solid">
 		<td>' . _('Show Stockid on images') . ':</td>
 		<td><select name="X_ShowStockidOnImages">
-			<option '.($_SESSION['ShowStockidOnImages'] ?'selected ':'').'value="1">'._('Yes').'</option>
-			<option '.(!$_SESSION['ShowStockidOnImages'] ?'selected ':'').'value="0">'._('No').'</option>
+			<option '.($_SESSION['ShowStockidOnImages'] ?'selected="selected" ':'').'value="1">'._('Yes').'</option>
+			<option '.(!$_SESSION['ShowStockidOnImages'] ?'selected="selected" ':'').'value="0">'._('No').'</option>
 			</select></td>
 		<td>' . _('Show the code inside the thumbnail image of the items') . '</td>
 	</tr>';

@@ -289,11 +289,12 @@ if (isset($_POST['TaxAuthority']) AND
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $title. '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">';
 
-	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</font></td>
+	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</td>
 			<td><select name="TaxAuthority">';
 
 	$result = DB_query("SELECT taxid, description FROM taxauthorities",$db);
@@ -302,7 +303,7 @@ if (isset($_POST['TaxAuthority']) AND
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-			<td>' . _('Return Covering') . ':</font></td>
+			<td>' . _('Return Covering') . ':</td>
 			<td><select name="NoOfPeriods">
 			<option value="1">' . _('One Month') . '</option>' .
 			'<option selected="selected" value="2">' ._('Two Months')  . '</option>' .
@@ -337,7 +338,7 @@ if (isset($_POST['TaxAuthority']) AND
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('Detail Or Summary Only') . ':</font></td>
+			<td>' . _('Detail Or Summary Only') . ':</td>
 			<td><select name="DetailOrSummary">
 				<option value="Detail">' . _('Detail and Summary') . '</option> 
 				<option selected="selected" value="Summary">' . _('Summary Only') . '</option>
@@ -350,6 +351,7 @@ if (isset($_POST['TaxAuthority']) AND
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
+        </div>
 		</form>';
 
 	include('includes/footer.inc');

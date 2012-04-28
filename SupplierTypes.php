@@ -186,9 +186,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 	printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%sSelectedType=%s">' . _('Edit') . '</td>
-			<td><a href="%sSelectedType=%s&delete=yes" onclick=\'return confirm("' .
-				_('Are you sure you wish to delete this Supplier Type?') . '");\'>' . _('Delete') . '</td>
+			<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
+			<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' .
+				_('Are you sure you wish to delete this Supplier Type?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
 		$myrow[0],
 		$myrow[1],
@@ -211,6 +211,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 		<table class="selection">'; //Main table
@@ -256,7 +257,7 @@ if (! isset($_GET['delete'])) {
 			</td>
 		</tr>
 		</table>
-		
+		</div>
 		</form>';
 
 } // end if user wish to delete
