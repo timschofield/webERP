@@ -89,9 +89,9 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	$i = 0;
 
 	/* $DaysTextArray used so can get text of day based on the value get from DayOfWeekFromSQLDate of
-	 the calendar date. See if that text is in the ExcludeDays array note no gettext here hard coded english days from $_POST 
-	 * $DaysTextArray = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-	 */
+	 the calendar date. See if that text is in the ExcludeDays array note no gettext here hard coded english days from $_POST*/ 
+	$DaysTextArray = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+	
 	$ExcludeDays = array($_POST['Sunday'],$_POST['Monday'],$_POST['Tuesday'],$_POST['Wednesday'],
 						 $_POST['Thursday'],$_POST['Friday'],$_POST['Saturday']);
 
