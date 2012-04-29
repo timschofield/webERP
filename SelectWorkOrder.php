@@ -251,7 +251,8 @@ if (!isset($StockID)) {
 								stockmaster.decimalplaces,
 								woitems.qtyreqd,
 								woitems.qtyrecd,
-								workorders.requiredby
+								workorders.requiredby,
+								workorders.startdate
 						FROM workorders
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
@@ -269,7 +270,8 @@ if (!isset($StockID)) {
 									stockmaster.decimalplaces,
 									woitems.qtyreqd,
 									woitems.qtyrecd,
-									workorders.requiredby
+									workorders.requiredby,
+									workorders.startdate
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
@@ -285,7 +287,8 @@ if (!isset($StockID)) {
 									stockmaster.decimalplaces,
 									woitems.qtyreqd,
 									woitems.qtyrecd,
-									workorders.requiredby
+									workorders.requiredby,
+									workorders.startdate
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
@@ -315,6 +318,7 @@ if (!isset($StockID)) {
 								<th>' . _('Quantity Required') . '</th>
 								<th>' . _('Quantity Received') . '</th>
 								<th>' . _('Quantity Outstanding') . '</th>
+								<th>' . _('Start Date')  . '</th>
 								<th>' . _('Required Date') . '</th>
 							</tr>';
 	
@@ -339,6 +343,7 @@ if (!isset($StockID)) {
 			$Costing_WO =$rootpath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
 	
 			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
+			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
 	
 	
 			printf('<td><a href="%s">%s</a></td>
@@ -350,6 +355,7 @@ if (!isset($StockID)) {
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td>%s</td>
 					<td>%s</td>
 					</tr>',
 					$ModifyPage,
@@ -363,6 +369,7 @@ if (!isset($StockID)) {
 					locale_number_format($myrow['qtyreqd'],$myrow['decimalplaces']),
 					locale_number_format($myrow['qtyrecd'],$myrow['decimalplaces']),
 					locale_number_format($myrow['qtyreqd']-$myrow['qtyrecd'],$myrow['decimalplaces']),
+					$FormatedStartDate,
 					$FormatedRequiredByDate);
 	
 			$j++;
