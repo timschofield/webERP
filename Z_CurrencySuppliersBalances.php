@@ -5,7 +5,7 @@ include('includes/session.inc');
 $title=_('Currency Debtor Balances');
 include('includes/header.inc');
 
-echo '<b>' . _('Suppliers Balances By Currency Totals') . '</b>';
+echo '<div class="centre"><h3>' . _('Suppliers Balances By Currency Totals') . '</h3></div>';
 
 $sql = "SELECT SUM(ovamount+ovgst-alloc) AS currencybalance,
 		currcode,

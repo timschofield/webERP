@@ -8,14 +8,15 @@ include('includes/header.inc');
 
 $Period = 42;
 
-echo "<form method='POST' action='" . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . "'>";
+echo "<form method='post' action='" . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . "'>";
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = "SELECT MonthName(lastdate_in_period) AS mnth,
 		YEAR(lastdate_in_period) AS yr,
 		periodno
 		FROM periods";
-echo '<p><div class="centre">' . _('Select the Period to update the costs for') . ':<select name="PeriodNo">';
+echo '<br /><div class="centre">' . _('Select the Period to update the costs for') . ':<select name="PeriodNo">';
 $result = DB_query($SQL,$db);
 
 echo '<option selected="selected" value="0">' . _('No Period Selected') . '</option>';
@@ -28,8 +29,8 @@ while ($PeriodInfo=DB_fetch_array($result)){
 
 echo '</select>';
 
-echo '<p><input type="submit" name="UpdateSalesAnalysis" value="' . _('Update Sales Analysis Costs') .'" /></div>';
-echo '</form>';
+echo '<br /><input type="submit" name="UpdateSalesAnalysis" value="' . _('Update Sales Analysis Costs') .'" /></div>';
+echo '</div></form>';
 
 if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 	$sql = "SELECT stockmaster.stockid,

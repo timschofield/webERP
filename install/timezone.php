@@ -16,9 +16,9 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 	$timezone=$data[$c];
 	$c++;
 	if ($timezone==$ltz) {
-	    echo "<option selected='selected' value='".$timezone."'>".$timezone;
+	    echo "<option selected='selected' value='".$timezone."'>".$timezone.'</option>';
 	} else {
-	    echo "<option value='".$timezone."'>".$timezone;
+	    echo "<option value='".$timezone."'>".$timezone.'</option>';
 	}
     }
 }

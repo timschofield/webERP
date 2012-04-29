@@ -34,8 +34,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 	} else {
 
 		$_POST['NewCompany'] = strtolower($_POST['NewCompany']);
-		echo '<div class="centre">';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
+        echo '<div class="centre">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		/* check for directory existence */
 		if (!file_exists('./companies/' . $_POST['NewCompany'])
@@ -161,8 +161,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				prnMsg('_FILES[LogoFile][name] ' ._('is blank'),'info');
 			}
 
+            echo '</div>';
   			echo '</form>';
-	  		echo '</div>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -195,8 +195,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		echo '<p><a href="' . $rootpath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
 		echo '<p><a href="' . $rootpath . '/WWW_Users.php">' . _('Set Up User Accounts') . '</a>';
 
+        echo '</div>';
 		echo '</form>';
-		echo '</div>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -208,8 +208,9 @@ echo '<div class="centre">';
 echo '<br />';
 prnMsg (_('This utility will create a new company') . '<br /><br />' .
 		_('If the company name already exists then you cannot recreate it'), 'info', _('PLEASE NOTE'));
-echo '<br />';
-echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . ' enctype="multipart/form-data">';
+echo '<br /></div>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '" enctype="multipart/form-data">';
+echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table><tr>';
@@ -217,17 +218,17 @@ echo '<td>' . _('Enter up to 32 character lower case character abbreviation for 
 	<td><input type="text" size="33" maxlength="32" name="NewCompany" /></td>
 	</tr>
 	<tr>
-		<td>'. _('Logo Image File (.jpg)') . ':</td><td><input type="FILE" ID="LogoFile" name="LogoFile" /></td>
+		<td>'. _('Logo Image File (.jpg)') . ':</td><td><input type="file" id="LogoFile" name="LogoFile" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Create Database?') . '</td>
-		<td><input type="CHECKBOX" name="CreateDB" /></td>
+		<td><input type="checkbox" name="CreateDB" /></td>
 	</tr>
 	</table>';
 
 echo '<br /><input type="submit" name="submit" value="' . _('Proceed') . '" />';
-echo '</form>';
 echo '</div>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

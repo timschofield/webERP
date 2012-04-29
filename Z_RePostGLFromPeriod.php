@@ -7,6 +7,7 @@ $title = _('Recalculation of GL Balances in Chart Details Table');
 include('includes/header.inc');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['FromPeriod'])){
@@ -15,7 +16,7 @@ if (!isset($_POST['FromPeriod'])){
 	echo '<table>
                              <tr>
                                  <td>' . _('Select Period From') . ':</td>
-                                 <td><select Name="FromPeriod">';
+                                 <td><select name="FromPeriod">';
 
 	$sql = "SELECT periodno,
                        lastdate_in_period
@@ -30,7 +31,9 @@ if (!isset($_POST['FromPeriod'])){
              </tr>
              </table>';
 
-	echo '<div class="centre"><input type="submit" Name="recalc" value="' . _('Do the Recalculation') . '" onclick="return confirm(\'' . _('Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?') . '\');"></div></form>';
+	echo '<div class="centre"><input type="submit" name="recalc" value="' . _('Do the Recalculation') . '" onclick="return confirm(\'' . _('Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?') . '\');" /></div>
+    </div>
+    </form>';
 
 } else {  /*OK do the updates */
 

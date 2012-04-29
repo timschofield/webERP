@@ -7,6 +7,7 @@ $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
 include('includes/header.inc');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
@@ -47,12 +48,14 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 		if($myrow['periodno']==$DefaultToPeriod){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option VALUE =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
 		}
 	}
 	echo '</select></td></tr></table>';
 
-	echo '<div class="centre"><input type="submit" name="recalc" value="' . _('Do the Recalculation') . '" /></div></form>';
+	echo '<div class="centre"><input type="submit" name="recalc" value="' . _('Do the Recalculation') . '" /></div>
+        </div>
+        </form>';
 
 } else {  /*OK do the updates */
 

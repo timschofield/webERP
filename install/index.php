@@ -37,12 +37,14 @@ $CompanyPath = $PathToRoot. '/companies';
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>WebERP Installation Wizard</title>
 <link href="../css/jelly/default.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 
 function change_os(type) {
 	if(type == 'linux') {
@@ -71,29 +73,21 @@ function change_data(type) {
 </head>
 <body>
 
-<table cellpadding="0" cellspacing="0" border="0" width="750" align="center">
-<tr>
-	<td width="100%" align="center" style="font-size: 20px;">
-		<p style="color: #FFFFFF;">WebERP</p>
-		<p style="color: #DDDDDD;">Installation Wizard</p>
-	</td>
-</tr>
-</table>
-
-<form name="weberp_installation_wizard" action="save.php" method="post" enctype="multipart/form-data">
+<form id="weberp_installation_wizard" action="save.php" method="post" enctype="multipart/form-data">
+<div>
 <input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 <input type="hidden" name="url" value="" />
 <input type="hidden" name="password_fieldname" value="admin_password" />
 <input type="hidden" name="remember" id="remember" value="true" />
 <input type="hidden" name="path_to_root" value="<?php echo $PathToRoot; ?>" />
 
-<table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 10px;">
+<table cellpadding="0" cellspacing="0" border="0" width="750" style="margin-top: 10px;">
 <tr>
 	<td class="content">
+        <div class="centre">
 			<h2>Welcome to the WebERP Installation Wizard.</h2>
-		<center>
 			<img src="<?php echo "../companies/weberpdemo/logo.jpg"; ?>" width="250" height="50" alt="Logo" />
-		</center>
+		</div>
 
 
 		<?php
@@ -101,9 +95,9 @@ function change_data(type) {
 			?><div style="width: 700px; padding: 10px; margin-bottom: 5px; border: 1px solid #FF0000; background-color: #FFDBDB;"><b>Error:</b> <?php echo $_SESSION['message']; ?></div><?php
 		}
 		?>
-		<table cellpadding="3" cellspacing="0" width="100%" align="center">
+		<table cellpadding="3" cellspacing="0" width="100%">
 		<tr>
-			<td colspan="8"><h1>Step 1</h1>Please check the following requirements are met before continuing...</td>
+			<td colspan="8"><h3>Step 1</h3>Please check the following requirements are met before continuing...</td>
 		</tr>
 		<?php if($session_support != '<p class="good">Enabled</p>') { ?>
 		<tr>
@@ -111,8 +105,8 @@ function change_data(type) {
 		</tr>
 		<?php } ?>
 		<tr>
-			<td width="140" style="color: #666666;">PHP Version &gt; 5.1.0</td>
-			<td width="35">
+			<td style="color: #666666;">PHP Version &gt; 5.1.0</td>
+			<td>
 				<?php
 				$phpversion = mb_substr(PHP_VERSION, 0, 6);
 				if($phpversion > 5.1) {
@@ -122,9 +116,9 @@ function change_data(type) {
 				}
 				?>
 			</td>
-			<td width="140" style="color: #666666;">PHP Session Support</td>
-			<td width="115"><?php echo $session_support; ?></td>
-			<td width="105" style="color: #666666;">PHP Safe Mode</td>
+			<td style="color: #666666;">PHP Session Support</td>
+			<td><?php echo $session_support; ?></td>
+			<td style="color: #666666;">PHP Safe Mode</td>
 			<td>
 				<?php
 				if(ini_get('safe_mode')) {
@@ -136,9 +130,9 @@ function change_data(type) {
 			</td>
 		</tr>
 		</table>
-		<table cellpadding="3" cellspacing="0" width="100%" align="center">
+		<table cellpadding="3" cellspacing="0" width="100%">
 		<tr>
-			<td colspan="8"><h1>Step 2</h1>Please check the following files/folders are writeable before continuing...</td>
+			<td colspan="8"><h3>Step 2</h3>Please check the following files/folders are writeable before continuing...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;">Configuration file</td>
@@ -159,91 +153,92 @@ function change_data(type) {
 		   </td>
 		</tr>
 		</table>
-		<table cellpadding="3" cellspacing="0" width="100%" align="center">
+		<table cellpadding="3" cellspacing="0" width="100%">
 		<tr>
-			<td colspan="2"><h1>Step 3</h1>Please check your path settings...</td>
+			<td colspan="2"><h3>Step 3</h3>Please check your path settings...</td>
 		</tr>
 		<tr>
-			<td width="125" style="color: #666666;">
+			<td style="color: #666666;width:20%">
 				Absolute URL:
 			</td>
 			<td>
 				<?php
-				// Try to guess installation URL
-				$GuessedURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
-				$GuessedURL = trim(rtrim(dirname($GuessedURL), 'install'));
+                if (isset($_SESSION['ba_url'])) {
+                   $IntstallUrl = $_SESSION['ba_url'];
+                } else {
+                   // Try to guess installation URL
+                   $GuessedURL = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
+                   $GuessedURL = trim(rtrim(dirname($GuessedURL), 'install'));
+                   $IntstallUrl = $GuessedURL;
+                }
 				?>
-				<input type="text" tabindex="30" name="ba_url" style="width: 99%;" value="<?php
-						if(isset($_SESSION['ba_url'])) {
-							echo $_SESSION['ba_url'];
-						} else {
-							echo $GuessedURL;
-						}
-				?>" />
+				<input type="text" tabindex="30" name="ba_url" style="width: 99%;" value="<?php echo $IntstallUrl;?>" />
 			</td>
 		</tr>
 		</table>
-		<table cellpadding="5" cellspacing="0" width="100%" align="center">
+		<table cellpadding="5" cellspacing="0" width="100%">
 		<tr>
-			<td colspan="3"><h1>Step 4</h1>Please specify your operating system information below...</td>
+			<td colspan="3"><h3>Step 4</h3>Please specify your operating system information below...</td>
 		</tr>
-		<tr height="50">
-			<td width="170">
+		<tr>
+			<td >
 				Server Operating System:
 			</td>
-			<td width="180">
-				<input type="radio" tabindex="40" name="operating_system" id="operating_system_linux" onclick="document.getElementById('file_perms_box').style.display = 'block';" value="linux"
+			<td>
+				<p style="cursor: pointer;" onclick="javascript: change_os('linux');">
+                <input type="radio" tabindex="40" name="operating_system" id="operating_system_linux" onclick="document.getElementById('file_perms_box').style.display = 'block';" value="linux"
 				<?php 
 					if(!isset($_SESSION['operating_system']) OR $_SESSION['operating_system'] == 'linux') { 
-						echo ' checked'; 
+						echo ' checked="checked"'; 
 					} ?> 
-				/>
-				<p style="cursor: pointer;" onclick="javascript: change_os('linux');">Linux/Unix based</p>
+				/>Linux/Unix based</p>
 				<br />
+                <p style="cursor: pointer;" onclick="javascript: change_os('windows');">
 				<input type="radio" tabindex="41" name="operating_system" id="operating_system_windows" onclick="document.getElementById('file_perms_box').style.display = 'none';" value="windows"
 				<?php 
 					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { 
-						echo ' checked'; } 
+						echo ' checked="checked"'; } 
 					?> 
-				/>
-				<p style="cursor: pointer;" onclick="javascript: change_os('windows');">Windows</p>
+				/>Windows</p>
 			</td>
 			<td>
-				
-				<?php 
+			  <?php 
 					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') {
 						echo '<div id="file_perms_box" style="margin:0; padding:0; display:none">';
 					} else {
 						echo '<div id="file_perms_box" style="margin:0; padding:0; display:block">';
 					}
 				?>
-					<input type="checkbox" tabindex="42" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked'; } ?> />
+                
+					<input type="checkbox" tabindex="42" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked="checked"'; } ?> />
 					<label for="world_writeable">
 						World-writeable file permissions (777)
 					</label>
 					<br />
 					<p>(Please note: this is only recommended for testing environments)</p>
-				</div>
+				<?php echo '</div>';?>
 			</td>
 		</tr>
 		</table>
-		<table cellpadding="5" cellspacing="0" width="100%" align="center">
+		<table cellpadding="5" cellspacing="0" width="100%">
 		<tr>
 			<td colspan="5">Please enter your MySQL database server details below...</td>
 		</tr>
 		<tr>
-			<td width="120" style="color: #666666;">Host Name:</td>
-			<td width="230">
+			<td style="color: #666666;">Host Name:</td>
+			<td>
 				<input type="text" tabindex="43" name="database_host" style="width: 98%;" value="<?php if(isset($_SESSION['database_host'])) {
 																										 echo $_SESSION['database_host'];
 																									  } else {
 																										 echo 'localhost';
 																									  } ?>" />
 			</td>
-			<td width="7">&nbsp;</td>
-			<td width="70" style="color: #666666;">Username:</td>
+			<td>&nbsp;</td>
+        </tr>
+        <tr>
+			<td style="color: #666666;">Username:</td>
 			<td>
-				<input type="text" tabindex="44" name="database_username" style="width: 98%;" value="<?php
+				<input type="text" tabindex="44" name="database_username" size="20" value="<?php
 					if(isset($_SESSION['database_username'])) {
 						echo $_SESSION['database_username'];
 					 } else {
@@ -253,24 +248,21 @@ function change_data(type) {
 			</td>
 		</tr>
 		<tr>
-			<td style="color: #666666;"></td>
-			<td>
-			</td>
-			<td>&nbsp;</td>
 			<td style="color: #666666;">Password:</td>
 			<td>
-				<input type="password" tabindex="45" name="database_password" style="width: 98%;"<?php if(isset($_SESSION['database_password'])) {
+				<input type="password" tabindex="45" name="database_password"  size="20"<?php if(isset($_SESSION['database_password'])) {
 																											echo ' value = "'.$_SESSION['database_password'].'"';
 																										} ?> />
 			</td>
+            <td>&nbsp;</td>
 		</tr>
 		<tr>
 
 			<td colspan="2">
 				<input type="checkbox" tabindex="46" name="install_tables" id="install_tables" value="true"<?php if(!isset($_SESSION['install_tables'])) {
-																													echo ' checked';
+																													echo ' checked="checked"';
 																												 } elseif($_SESSION['install_tables'] == 'true') {
-																													echo ' checked';
+																													echo ' checked="checked"';
 																												 } ?> />
 				<label for="install_tables" style="color: #666666;">Install Tables</label>
 				<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -278,7 +270,7 @@ function change_data(type) {
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5"><h1>Step 5</h1>Please enter the company name below...</td>
+			<td colspan="5"><h3>Step 5</h3>Please enter the company name below...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;" colspan="1">Company Name:</td>
@@ -287,21 +279,22 @@ function change_data(type) {
 			</td>
 		</tr>
 		<tr>
-			<td width="170">
+			<td>
 				Install the test company :
 			</td>
 
-			<td width="180">
-				<input type="checkbox" tabindex="51" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked'; } ?> />
-				<p style="cursor: pointer;" onclick="javascript: change_data('demo');">weberpdemo company</p>
+			<td>
+                <p style="cursor: pointer;" onclick="javascript: change_data('demo');">
+				<input type="checkbox" tabindex="51" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked="checked"'; } ?> />
+				weberpdemo company</p>
 			</td>
 		</tr>
 		<tr>
-			<td width="170">
+			<td>
 				Time Zone
 			</td>
 
-			<td width="180">
+			<td>
 				<select name='timezone' tabindex="52">
 				<?php
 					include('timezone.php');
@@ -311,17 +304,17 @@ function change_data(type) {
 			</td>
 		</tr>
 		<tr>
-			<td width="170">
+			<td>
 				Logo Image File (.jpg)
 			</td>
 
-			<td width="180">
+			<td>
 			    <input type="hidden" name="MAX_FILE_SIZE" <?php echo "value=\"" . $_SESSION['MaxLogoSize'] . "\"" ?> />
 			    <input type="file" size="50" id="LogoFile" name="LogoFile" tabindex="53" />
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5"><h1>Step 6</h1>Please enter your Administrator account details below...</td>
+			<td colspan="5"><h3>Step 6</h3>Please enter your Administrator account details below...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;">Username:</td>
@@ -350,7 +343,7 @@ function change_data(type) {
 		</tr>
 
 		<tr>
-			<td colspan="5" style="padding: 10px; padding-bottom: 0;"><h1 style="font-size: 0px;">&nbsp;</h1></td>
+			<td colspan="5" style="padding: 10px; padding-bottom: 0;"><h3 style="font-size: 0px;">&nbsp;</h3></td>
 		</tr>
 		<tr>
 			<td colspan="4">
@@ -382,7 +375,7 @@ function change_data(type) {
 	</td>
 </tr>
 </table>
-
+</div>
 </form>
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="padding: 10px 0px 10px 0px;">

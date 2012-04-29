@@ -289,12 +289,14 @@ if ($_FILES['userfile']['name']) { //start file processing
 		<a href="Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
-	echo '<form ENCtype="multipart/form-data" action="Z_ImportStocks.php" method="post">';
+	echo '<form action="Z_ImportStocks.php" method="post">';
+    echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
 			_('Upload file') . ': <input name="userfile" type="file" />
 			<input type="submit" value="' . _('Send File') . '" />
+        </div>
 		</form>';
 
 }

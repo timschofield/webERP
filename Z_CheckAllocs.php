@@ -113,10 +113,8 @@ while ($myrow = DB_fetch_array($result)){
 	//end of while loop
 	echo '<tr><td colspan="6" class="number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td></tr>';
 	echo '</table>
-		<hr />';
+		<br />';
 }
-
-echo '</form>';
 
 include('includes/footer.inc');
 

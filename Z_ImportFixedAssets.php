@@ -289,6 +289,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		<br />
 	';
 	echo '<form enctype="multipart/form-data" action="Z_ImportFixedAssets.php" method="post">';
+    echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
@@ -300,8 +301,9 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		echo '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
 	}
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Fixed Assets Upload file:') . '</td><td><input name="SelectedAssetFile" type="file" /></tr></table>
+	echo '<tr><td>' . _('Fixed Assets Upload file:') . '</td><td><input name="SelectedAssetFile" type="file" /></td></tr></table>
 			<input type="submit" value="' . _('Send File') . '" />
+        </div>
 		</form>';
 
 }

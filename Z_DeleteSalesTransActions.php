@@ -133,9 +133,10 @@ if (isset($_POST['ProcessDeletions'])){
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p><table>
+echo '<br /><table>
 	<tr>
 		<td>' . _('Delete All Sales Analysis') . '</td>
 		<td><input type="checkbox" name="SalesAnalysis" /></td>
@@ -177,7 +178,8 @@ echo '<p><table>
 
 echo '<input type="submit" name="ProcessDeletions" value="' . _('Process') . '"  onclick="return confirm(\'' . _('Are You Really REALLY Sure?') . '\');" />';
 
-echo '</form>';
+echo '</div>
+      </form>';
 
 include('includes/footer.inc');
 ?>

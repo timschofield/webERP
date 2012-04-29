@@ -11,7 +11,7 @@ $title = _('Sales Integrity');
 include('includes/header.inc');
 
 
-echo '<div class="centre"><font size="4" color=blue><U><b>' . _('Sales Integrity Check') . '</b></U></font></div>';
+echo '<div class="centre"><h3>' . _('Sales Integrity Check') . '</h3></div>';
 
 echo '<br /><br />'._('Check every Invoice has a Sales Order').'<br />';
 echo '<br /><br />'._('Check every Invoice has a Tax Entry').'<br />';
@@ -25,7 +25,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 		echo '<br />'._('Invoice '). ' '. $myrow['transno'] . ' : ';
-		echo '<font color=RED>' . _('No Sales Order') . '</font>';
+		echo '<div style="color:red">' . _('No Sales Order') . '</div>';
 	}
 
 	$SQL3 = "SELECT debtortransid FROM debtortranstaxes WHERE debtortransid = '" . $myrow['id'] . "'";
@@ -33,7 +33,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result3) == 0) {
 		echo '<br />'. _('Invoice '). ' ' . $myrow['transno'] . ' : ';
-		echo '<font color=RED>' . _('Has no Tax Entry') . '</font>';
+		echo '<div style="color:red">' . _('Has no Tax Entry') . '</div>';
 	}
 
 	$SQL4 = "SELECT typeno
@@ -44,7 +44,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result4) == 0) {
 		echo '<br />' . _('Invoice') . ' ' . $myrow['transno'] . ' : ';
-		echo '<font color=RED>' . _('has no GL Entry') . '</font>';
+		echo '<div style="color:red">' . _('has no GL Entry') . '</div>';
 	}
 }
 
@@ -64,7 +64,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo "<br />"._('GL Entry ') . $myrow['counterindex'] . " : ";
-			echo ', <font color=RED>'._('Invoice ') . $myrow['typeno'] . _(' could not be found').'</font>';
+			echo ', <div style="color:red">'._('Invoice ') . $myrow['typeno'] . _(' could not be found').'</div>';
 	}
 }
 
@@ -88,7 +88,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( $myrow2[0] + $myrow['amount'] == 0 ) {
 			echo '<br />'._('Receipt') . ' ' . $myrow['typeno'] . " : ";
-			echo '<font color=RED>' . $myrow['amount']. ' ' . _('in GL but found'). ' ' . $myrow2[0] . ' ' . _('in debtorstrans').'</font>';
+			echo '<div style="color:red">' . $myrow['amount']. ' ' . _('in GL but found'). ' ' . $myrow2[0] . ' ' . _('in debtorstrans').'</div>';
 	}
 }
 
@@ -103,7 +103,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( !$myrow2[0] ) {
 		echo '<br />'._('Receipt') . ' ' . $myrow['transno'] . " : ";
-		echo '<font color=RED>' . $myrow['transno'] . ' ' ._('not found in GL')."</font>";
+		echo '<div style="color:red">' . $myrow['transno'] . ' ' ._('not found in GL')."</div>";
 	}
 }
 
@@ -124,7 +124,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 		echo '<br />'._('Sales Order') . ' ' . $myrow['orderno'] . ' : ';
-		echo '<font color=RED>'._('Has no Invoice').'</font>';
+		echo '<div style="color:red">'._('Has no Invoice').'</div>';
 	}
 }
 
@@ -139,7 +139,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo '<br />'._('Order Item') . ' ' . $myrow['orderno'] . ' : ';
-			echo ', <font color=RED>'._('Has no Sales Order').'</font>';
+			echo ', <div style="color:red">'._('Has no Sales Order').'</div>';
 	}
 
 	$sumsql = "SELECT SUM( qtyinvoiced * unitprice ) AS InvoiceTotal
@@ -163,7 +163,7 @@ while ($myrow = DB_fetch_array($Result)) {
 			if ( $invrow['type'] != 11 ) {
 					// Do an integrity check on sales order items
 					if ( $sumrow['InvoiceTotal'] != $invrow['ovamount'] ) {
-						echo '<br /><font color=red>' . _('Debtors trans') . ' ' . $invrow['ovamount'] . ' ' . _('differ from salesorderdetails') . ' ' . $sumrow['InvoiceTotal'] . '</font>';
+						echo '<br /><div style="color:red">' . _('Debtors trans') . ' ' . $invrow['ovamount'] . ' ' . _('differ from salesorderdetails') . ' ' . $sumrow['InvoiceTotal'] . '</div>';
 					}
 			}
 		}
@@ -187,7 +187,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo '<br />'._('Stock Move') . ' ' . $myrow['stkmoveno'] . ' : ';
-			echo ', <font color=RED>'._('Has no Invoice').'</font>';
+			echo ', <div style="color:red">'._('Has no Invoice').'</div>';
 	}
 }
 
@@ -202,7 +202,7 @@ while ($myrow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo '<br />'._('Tax Entry') . ' ' . $myrow['debtortransid'] . ' : ';
-			echo ', <font color=RED>'._('Has no Invoice').'</font>';
+			echo ', <div style="color:red">'._('Has no Invoice').'</div>';
 	}
 }
 
