@@ -128,7 +128,8 @@ switch ($PaperSize) {
 
    case 'legal':
 
-	$DocumentPaper = 'LEGAL'; $DocumentOrientation ='P';
+	$DocumentPaper = 'LEGAL'; 
+	$DocumentOrientation ='P';
 
       $Page_Width=612;
       $Page_Height=1008;
@@ -140,7 +141,8 @@ switch ($PaperSize) {
 
    case 'legal_landscape':
 
-	$DocumentPaper = 'LEGAL'; $DocumentOrientation ='L';
+	$DocumentPaper = 'LEGAL'; 
+	$DocumentOrientation ='L';
 
       $Page_Width=1008;
       $Page_Height=612;
@@ -148,6 +150,19 @@ switch ($PaperSize) {
       $Bottom_Margin=40;
       $Left_Margin=30;
       $Right_Margin=25;
+      break;
+    
+    case '28mm_x_45mm_label':
+      //$DocumentPaper can be an array or width/height of paper size 
+      //as an alternative to the string ISO paper size required by tcpdf
+      $DocumentPaper = array(127.6,79.4); 
+      $DocumentOrientation='L';
+      $Page_Width=127.6;
+      $Page_Height=79.4;
+      $Top_Margin=0;
+      $Bottom_Margin=0;
+      $Left_Margin=0;
+      $Right_Margin=0;
       break;
 }
 

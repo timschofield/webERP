@@ -16,7 +16,8 @@ $PaperSize = array('A4',
 					'Letter',
 					'Letter_Landscape',
 					'Legal',
-					'Legal_Landscape');
+					'Legal_Landscape',
+					'28mm_x_45mm_label');
 
 
 echo '<p class="page_title_text">
@@ -414,9 +415,10 @@ if (isset($SelectedLabelID)) {
 		}
 		//END WHILE LIST LOOP
 		$i--; //last increment needs to be wound back
-		echo '<input type="hidden" name="NoOfFieldsDefined" value="' . $i . '" />';
+		
 	} //end if there are label definitions to show
-
+	echo '<input type="hidden" name="NoOfFieldsDefined" value="' . $i . '" />';
+	
 	echo '<tr>
 		<td><select name="FieldName">
 			<option value="itemcode">' . _('Item Code') . '</option>

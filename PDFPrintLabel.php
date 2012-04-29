@@ -3,7 +3,7 @@
 
 include('includes/session.inc');
 
-$PtsPerMM = 2.83465; //pdf millimetres to points
+$PtsPerMM = 2.83465; //pdf points per mm
 
 
 if (isset($_POST['ShowLabels'])
@@ -163,25 +163,26 @@ if (isset($_POST['PrintLabels'])
 	for ($i=0;$i <= $_POST['NoOfLabels'];$i++){
 		if ($_POST['PrintLabel'.$i]=='on'){
 			
-			if ($Field['FieldValue']== 'price'){
-				$Value = $_POST['Price' . $i];
-			} elseif ($Field['FieldValue']== 'stockid'){
-				$Value = $_POST['StockID' . $i];
-			} elseif ($Field['FieldValue']== 'description'){
-				$Value = $_POST['Description' . $i];
-			} elseif ($Field['FieldValue']== 'barcode'){
-				$Value = $_POST['Barcode' . $i];
-			}
 			foreach ($LabelFields as $Field){
-				
+				//print_r($Field);
+
+				if ($Field['FieldValue']== 'price'){
+					$Value = $_POST['Price' . $i];
+				} elseif ($Field['FieldValue']== 'stockid'){
+					$Value = $_POST['StockID' . $i];
+				} elseif ($Field['FieldValue']== 'description'){
+					$Value = $_POST['Description' . $i];
+				} elseif ($Field['FieldValue']== 'barcode'){
+					$Value = $_POST['Barcode' . $i];
+				}
 				if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
 					$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$_POST['Price' . $i],'center');
 				} elseif($Field['Barcode']==1) {
-					
+
 					/* write1DBarcode($code, $type, $x='', $y='', $w='', $h='', $xres='', $style='', $align='') 
 					 * Note that the YPos for this function is based on the opposite origin for the Y axis i.e from the bottom not from the top!
 					 */
-					
+
 					$pdf->write1DBarcode(str_replace('_','',$Value), 'C128',$XPos+$Field['HPos'],$Page_Height - $YPos+$LabelDimensions['label_height']-$Field['VPos']-$Field['FontSize'],$LabelDimensions['label_width']-$Field['HPos'], $Field['FontSize'], 0.4, $style, 'N');
 				} else {
 					$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos']-20,$Field['FontSize'],$Value);
@@ -213,7 +214,7 @@ if (isset($_POST['PrintLabels'])
 		} //this label is set to print
 	} //loop through labels selected to print
 
-
+	
 	$FileName=$_SESSION['DatabaseName']. '_' . _('Price_Labels') . '_' . date('Y-m-d').'.pdf';
 	ob_clean();
 	$pdf->OutputD($FileName);
