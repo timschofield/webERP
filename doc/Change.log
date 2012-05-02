@@ -1,4 +1,5 @@
 webERP Change Log
+1/5/2012 MTPubRadio: Fixed Purch Order PDF file text of Order Total- Excl tax does not align with amount horizontally. 
 29/4/12 Opto/Klaus: SelectWorkOrder.php added start date for the work order to the work orders displayed for selection
 29/4/12 David Short: Added EDISendInvoices_Reece.php to send Reece format EDI invoices - approved by Reece (Australian Plumbing retailer)
 28/4/2012 Exson: Fixed bugs in MRPCalendar.php which caused working days cannot be calculated correctly.
