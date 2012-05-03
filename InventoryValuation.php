@@ -216,7 +216,7 @@ if (isset($_POST['PrintPDF'])
 		$sql="SELECT categoryid, 
 					categorydescription 
 				FROM stockcategory  
-				ORDER BY categoryid";
+				ORDER BY categorydescription";
 				
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
