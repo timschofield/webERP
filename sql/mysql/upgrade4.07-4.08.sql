@@ -73,7 +73,10 @@ CREATE TABLE IF NOT EXISTS `labelfields` (
   KEY `vpos` (`vpos`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+
 ALTER TABLE `locations` ADD UNIQUE `locationname` (`locationname`);
+
+ALTER TABLE `stockmaster` CHANGE `lastcostupdate` `lastcostupdate` DATE NOT NULL DEFAULT '0000-00-00'
 
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 
