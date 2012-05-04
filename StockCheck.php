@@ -270,10 +270,10 @@ If (isset($_POST['PrintPDF'])
 		echo '<tr><td>' . _('From Inventory Category Code') . ':</td>
 					<td><select name="FromCriteria">';
 
-		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid";
+		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
@@ -285,14 +285,14 @@ If (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
 		echo '<tr>
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
-		$sql = "SELECT loccode, locationname FROM locations";
+		$sql = "SELECT loccode, locationname FROM locations ORDER BY locationname";
 		$LocnResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($LocnResult)){

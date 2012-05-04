@@ -389,7 +389,7 @@ if (isset($_POST['PrintPDF'])
 		$sql="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 		$CatResult= DB_query($sql,$db);
 		while ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] .'</option>';
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select>
 			</td>
@@ -402,7 +402,7 @@ if (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		while ($myrow = DB_fetch_array($CatResult)){
-			echo "<option value='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'].'</option>';
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>
