@@ -73,5 +73,7 @@ CREATE TABLE IF NOT EXISTS `labelfields` (
   KEY `vpos` (`vpos`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+ALTER TABLE `locations` ADD UNIQUE `locationname` (`locationname`);
+
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 
