@@ -76,7 +76,16 @@ CREATE TABLE IF NOT EXISTS `labelfields` (
 
 ALTER TABLE `locations` ADD UNIQUE `locationname` (`locationname`);
 
-ALTER TABLE `stockmaster` CHANGE `lastcostupdate` `lastcostupdate` DATE NOT NULL DEFAULT '0000-00-00'
+ALTER TABLE `stockmaster` CHANGE `lastcostupdate` `lastcostupdate` DATE NOT NULL DEFAULT '0000-00-00';
+ALTER TABLE `labels` CHANGE `papersize` `pagewidth` FLOAT NOT NULL DEFAULT '0';
+ALTER TABLE `labels` ADD `pageheight` FLOAT NOT NULL DEFAULT '0' AFTER `pagewidth`;
+ALTER TABLE `labels` CHANGE `height` `height` FLOAT NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `width` `width` FLOAT NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `topmargin` `topmargin` FLOAT NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `leftmargin` `leftmargin` FLOAT NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `rowheight` `rowheight` FLOAT NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `columnwidth` `columnwidth` FLOAT NOT NULL DEFAULT '0';
+
 
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 

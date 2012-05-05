@@ -156,13 +156,17 @@ if (isset($_POST['submit'])) {
 		if ($myrow[0]>0) {
 			prnMsg (_('Cannot delete this type because customers are currently set up to use this type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this type code'));
 		} else {
-
-			$sql="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
-			$ErrMsg = _('The Type record could not be deleted because');
-			$result = DB_query($sql,$db,$ErrMsg);
-			echo '<br />';
-			prnMsg(_('Customer type') . $SelectedType  . ' ' . _('has been deleted') ,'success');
-
+			$result = DB_query("SELECT typename FROM debtortype WHERE typeid='".$SelectedType."'",$db);
+			if (DB_Num_Rows($result)>0){
+				$TypeRow = DB_fetch_array($result);
+				$TypeName = $TypeRow['typename'];
+			
+				$sql="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
+				$ErrMsg = _('The Type record could not be deleted because');
+				$result = DB_query($sql,$db,$ErrMsg);
+				echo '<br />';
+				prnMsg(_('Customer type') . ' ' . $TypeName  . ' ' . _('has been deleted') ,'success');
+			}
 			unset ($SelectedType);
 			unset($_GET['delete']);
 

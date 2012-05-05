@@ -105,12 +105,12 @@ if (isset($_POST['PrintPDF'])
 	   include('includes/footer.inc');
 	   exit;
 	}
-	$Period_0_Name = strftime('%b',mktime(0,0,0,Date('m'),Date('d'),Date('Y')));
-	$Period_1_Name = strftime('%b',mktime(0,0,0,Date('m')-1,Date('d'),Date('Y')));
-	$Period_2_Name = strftime('%b',mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
-	$Period_3_Name = strftime('%b',mktime(0,0,0,Date('m')-3,Date('d'),Date('Y')));
-	$Period_4_Name = strftime('%b',mktime(0,0,0,Date('m')-4,Date('d'),Date('Y')));
-	$Period_5_Name = strftime('%b',mktime(0,0,0,Date('m')-5,Date('d'),Date('Y')));
+	$Period_0_Name = GetMonthText(mktime(0,0,0,Date('m'),Date('d'),Date('Y')));
+	$Period_1_Name = GetMonthText(mktime(0,0,0,Date('m')-1,Date('d'),Date('Y')));
+	$Period_2_Name = GetMonthText(mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
+	$Period_3_Name = GetMonthText(mktime(0,0,0,Date('m')-3,Date('d'),Date('Y')));
+	$Period_4_Name = GetMonthText(mktime(0,0,0,Date('m')-4,Date('d'),Date('Y')));
+	$Period_5_Name = GetMonthText(mktime(0,0,0,Date('m')-5,Date('d'),Date('Y')));
 
 	include ('includes/PDFInventoryPlanPageHeader.inc');
 

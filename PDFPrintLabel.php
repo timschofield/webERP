@@ -6,7 +6,7 @@ include('includes/session.inc');
 $PtsPerMM = 2.83465; //pdf points per mm
 
 
-if (isset($_POST['ShowLabels'])
+if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND isset($_POST['FromCriteria'])
 	AND mb_strlen($_POST['FromCriteria'])>=1
 	AND isset($_POST['ToCriteria'])
@@ -65,14 +65,27 @@ if (isset($_POST['ShowLabels'])
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Price') . '</th>
 				<th>' . _('Print') . ' ?</th>
-			</tr>';
+			</tr>
+			<tr><th colspan="4"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
+	if (isset($_POST['CheckAll'])){
+		echo 'checked="checked" ';
+	}
+	echo 'onchange="ReloadForm(SelectAll)" /></td>
+		</tr>';
+	
 	$i=0;
 	while ($LabelRow = DB_fetch_array($LabelsResult)){
 		echo '<tr>
 				<td>' . $LabelRow['stockid'] . '</td>
 				<td>' . $LabelRow['description'] . '</td>
 				<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
-				<td><input type="checkbox" checked="checked" name="PrintLabel' . $i .'" /></td>
+				<td>';
+		if (isset($_POST['SelectAll']) AND isset($_POST['CheckAll'])) {
+			echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
+		} else {
+			echo '<input type="checkbox" name="PrintLabel' . $i .'" />';
+		}
+		echo '</td>
 			</tr>';
 		echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
 			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
@@ -84,18 +97,41 @@ if (isset($_POST['ShowLabels'])
 	echo '</table>
 		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
 		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
+		<input type="hidden" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" />
+		<input type="hidden" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" />
+		<input type="hidden" name="SalesType" value="' . $_POST['SalesType'] . '" /> 
+		<input type="hidden" name="Currency" value="' . $_POST['Currency'] . '" />
+		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" /> 
 		<br />
 		<div class="centre">
+			
 			<input type="submit" name="PrintLabels" value="'. _('Print Labels'). '" />
 		</div>
+		<br />
+			<div class="centre">
+				<a href="'. $rootpath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
+			</div>
 		</form>';
 	exit;
 }
 if (isset($_POST['PrintLabels']) 
-	AND isset($_POST['NoOfLabels'])) {
-	
-	$result = DB_query("SELECT papersize,
-								description,
+	AND isset($_POST['NoOfLabels'])
+	AND $_POST['NoOfLabels']>0){ 
+	$NoOfLabels = 0;
+	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
+		if (isset($_POST['PrintLabel'.$i])){
+			$NoOfLabels++;
+		}
+	}
+	if ($NoOfLabels ==0){
+		prnMsg(_('There are no labels selected to print'),'info');
+	}
+}
+if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
+
+	$result = DB_query("SELECT 	description,
+								pagewidth*" . $PtsPerMM . " as page_width,
+								pageheight*" . $PtsPerMM . " as page_height,
 								width*" . $PtsPerMM . " as label_width,
 								height*" . $PtsPerMM . " as label_height,
 								rowheight*" . $PtsPerMM . " as label_rowheight,
@@ -106,14 +142,7 @@ if (isset($_POST['PrintLabels'])
 						WHERE labelid='" . $_POST['LabelID'] . "'",
 						$db);
 	$LabelDimensions = DB_fetch_array($result);
-	$PaperSize = $LabelDimensions['papersize'];
-	include('includes/PDFStarter.php');
-	$Top_Margin = $LabelDimensions['label_topmargin'];
-	$Left_Margin = $LabelDimensions['label_leftmargin'];
-
-	$pdf->addInfo('Title', $LabelDimensions['description'] . ' ' . _('Price Labels') );
-	$pdf->addInfo('Subject', $LabelDimensions['description'] . ' ' . _('Price Labels') );
-
+	
 	$result = DB_query("SELECT fieldvalue,
 								vpos,
 								hpos,
@@ -139,6 +168,19 @@ if (isset($_POST['PrintLabels'])
 		$i++;
 	}
 	
+	$PaperSize = 'Custom'; // so PDF starter wont default the DocumentPaper
+	$DocumentPaper = array($LabelDimensions['page_width'],$LabelDimensions['page_height']); 
+	include('includes/PDFStarter.php');
+	$Top_Margin = $LabelDimensions['label_topmargin'];
+	$Left_Margin = $LabelDimensions['label_leftmargin'];
+	$Page_Height = $LabelDimensions['page_height'];
+	$Page_Width = $LabelDimensions['page_width'];
+	$Right_Margin =0;
+	$Bottom_Margin =0;
+
+	$pdf->addInfo('Title', $LabelDimensions['description'] . ' ' . _('Price Labels') );
+	$pdf->addInfo('Subject', $LabelDimensions['description'] . ' ' . _('Price Labels') );
+	
 	$style = array(
 	    'position' => '',
 	    'align' => 'C',
@@ -160,9 +202,9 @@ if (isset($_POST['PrintLabels'])
 	$YPos = $Page_Height - $Top_Margin; //top of current label
 	$XPos = $Left_Margin; // left of current label
 	
-	for ($i=0;$i <= $_POST['NoOfLabels'];$i++){
+	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if ($_POST['PrintLabel'.$i]=='on'){
-			
+			$NoOfLabels--;
 			foreach ($LabelFields as $Field){
 				//print_r($Field);
 
@@ -183,34 +225,36 @@ if (isset($_POST['PrintLabels'])
 					 * Note that the YPos for this function is based on the opposite origin for the Y axis i.e from the bottom not from the top!
 					 */
 
-					$pdf->write1DBarcode(str_replace('_','',$Value), 'C128',$XPos+$Field['HPos'],$Page_Height - $YPos+$LabelDimensions['label_height']-$Field['VPos']-$Field['FontSize'],$LabelDimensions['label_width']-$Field['HPos'], $Field['FontSize'], 0.4, $style, 'N');
+					$pdf->write1DBarcode(str_replace('_','',$Value), 'C39',$XPos+$Field['HPos'],$Page_Height - $YPos+$LabelDimensions['label_height']-$Field['VPos']-$Field['FontSize'],$LabelDimensions['label_width']-$Field['HPos'], $Field['FontSize'], 0.4, $style, 'N');
 				} else {
 					$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos']-20,$Field['FontSize'],$Value);
 				}
 			} // end loop through label fields
-			//setup $YPos and $XPos for the next label
-			if (($YPos - $LabelDimensions['label_rowheight']) < $LabelDimensions['label_height']){
-				/* not enough space below the above label to print a new label
-				 * so the above was the last label in the column 
-				 * need to start either a new column or new page
-				 */
-				if (($Page_Width - $XPos - $LabelDimensions['label_columnwidth']) < $LabelDimensions['label_width']) {
-					/* Not enough space to start a new column so we are into a new page
+			if ($NoOfLabels>0) {
+				//setup $YPos and $XPos for the next label
+				if (($YPos - $LabelDimensions['label_rowheight']) < $LabelDimensions['label_height']){
+					/* not enough space below the above label to print a new label
+					 * so the above was the last label in the column 
+					 * need to start either a new column or new page
 					 */
-					$pdf->newPage();
-					$PageNumber++;
-					$YPos = $Page_Height - $Top_Margin; //top of next label
-					$XPos = $Left_Margin; // left of next label
+					if (($Page_Width - $XPos - $LabelDimensions['label_columnwidth']) < $LabelDimensions['label_width']) {
+						/* Not enough space to start a new column so we are into a new page
+						 */
+						$pdf->newPage();
+						$PageNumber++;
+						$YPos = $Page_Height - $Top_Margin; //top of next label
+						$XPos = $Left_Margin; // left of next label
+					} else {
+						/* There is enough space for another column */
+						$YPos = $Page_Height - $Top_Margin; //back to the top of next label column
+						$XPos += $LabelDimensions['label_columnwidth']; // left of next label
+					}
 				} else {
-					/* There is enough space for another column */
-					$YPos = $Page_Height - $Top_Margin; //back to the top of next label column
-					$XPos += $LabelDimensions['label_columnwidth']; // left of next label
+					/* There is space below to print a label
+					 */
+					$YPos -= $LabelDimensions['label_rowheight']; //Top of next label
 				}
-			} else {
-				/* There is space below to print a label
-				 */
-				$YPos -= $LabelDimensions['label_rowheight']; //Top of next label
-			} 
+			}//end if there is another label to print 
 		} //this label is set to print
 	} //loop through labels selected to print
 
@@ -302,6 +346,10 @@ if (isset($_POST['PrintLabels'])
 				<br />
 				<div class="centre">
 					<input type="submit" name="ShowLabels" value="'. _('Show Labels'). '" />
+				</div>
+				<br />
+				<div class="centre">
+					<a href="'. $rootpath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
 				</div>
 				</form>';
 				

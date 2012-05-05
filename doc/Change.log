@@ -1,5 +1,10 @@
 webERP Change Log
 
+4/5/12 Phil: Labels.php PDFPrintLabel.php fine tuning of new labels code
+4/5/12 Phil: Fixed customer type name displayed when it is successfully deleted as reported by James Dupin
+4/5/12 Phil: Attempt to create simple work around for the limitations of strftime function and resulting character encoding issues - added new functions to get multi-lingual months GetMonthText() and week day names GetWeekDayText(). Not sure if there is any international consensus on the best format here - but can use the DefaultDateFormat or $_SESSION['Language'] if others want it a different way
+4/5/12 Phil: Allow SelectOrderItems.php to select labour type items
+4/5/12 Phil: updated tcpdf to 5.9.160
 4/5/12 Phil: Default lastcostupdate to 0000-00-00 to avoid issues inserting new items.
 1/5/12 MTPubRadio: Measurement unit in FormDesigner.php should be points instead of millimeters. 
 1/5/12 MTPubRadio: Fixed Purch Order PDF file text of Order Total- Excl tax does not align with amount horizontally. 

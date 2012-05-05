@@ -13189,7 +13189,7 @@ msgstr "Bestellung hinzufügen"
 #: index.php:511
 #, fuzzy
 msgid "Create a New Tender"
-msgstr "Planungskalender anlegen"
+msgstr "Ausschreibung erstellen"
 
 #: index.php:516
 #, fuzzy

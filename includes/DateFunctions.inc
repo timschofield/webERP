@@ -78,8 +78,6 @@ function Is_date($DateEntry) {
 } //end of Is_Date function
 
 
-//_______________________________________________________________
-
 function MonthAndYearFromSQLDate($DateEntry) {
 
 
@@ -94,18 +92,83 @@ function MonthAndYearFromSQLDate($DateEntry) {
 	if (mb_strlen($Date_Array[2])>4) {
 		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
 	}
-	$str = strftime('%B %Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
-        //This code to handle characters in windows system which not encoded in UTF-8. Those non-utf8 code leads to display garbage
-	$encode = mb_detect_encoding($str,'GB2312,BIG5,UTF-8');
-		
-	if($encode=='EUC-CN'){ 
-		return iconv('GB2312','UTF-8',$str);
-	}elseif($encode=='EUC-TW' or $encode=='BIG-5'){
-		return iconv('BIG5','UTF-8', $str);
-	}else{
-		return ucfirst($str);
-	} 
- 
+	
+	$MonthName = GetMonthText(date('n', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0])));
+	return $MonthName . ' ' . date('Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
+
+}
+
+function GetMonthText($MonthNumber){
+	switch ($MonthNumber) {
+		case 1:
+			$Month = _('January');
+			break;
+		case 2:
+			$Month = _('February');
+			break;
+		case 3:
+			$Month = _('March');
+			break;
+		case 4:
+			$Month = _('April');
+			break;
+		case 5:
+			$Month = _('May');
+			break;
+		case 6:
+			$Month = _('June');
+			break;
+		case 7:
+			$Month = _('July');
+			break;
+		case 8:
+			$Month = _('August');
+			break;
+		case 9:
+			$Month = _('September');
+			break;
+		case 10:
+			$Month = _('October');
+			break;
+		case 11:
+			$Month = _('November');
+			break;
+		case 12:
+			$Month = _('December');
+			break;
+	}
+	return $Month;
+}
+
+function GetWeekDayText ($WeekDayNumber){
+	switch ($WeekDayNumber) {
+		case 0:
+			$Day = _('Sunday');
+			break;
+		case 1:
+			$Day = _('Monday');
+			break;
+		case 2:
+			$Day = _('Tuesday');
+			break;
+		case 3:
+			$Day = _('Wednesday');
+			break;
+		case 4:
+			$Day = _('Thursday');
+			break;
+		case 5:
+			$Day = _('Friday');
+			break;
+		case 6:
+			$Day = _('Saturday');
+			break;
+	}
+	return $Day;
+}
+
+function DisplayDateTime () {
+	return  GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('G:i') ;
 }
 
 function DayOfWeekFromSQLDate($DateEntry) {
@@ -125,6 +188,7 @@ function DayOfWeekFromSQLDate($DateEntry) {
 	return date( 'w', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
 
 }
+
 
 function DayOfMonthFromSQLDate($DateEntry) {
 

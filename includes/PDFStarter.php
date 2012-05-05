@@ -22,148 +22,144 @@ if (!isset($PaperSize)){				// Javier: Results True, it's not set.
 }
 
 /* Javier: TCPDF supports 45 standard ISO (DIN) paper formats and 4 american common formats and does this cordinates calculation.
-		However, reports use this units */
+However, reports use this units */
 
 switch ($PaperSize) {
 
   case 'A4':
-
 // Javier: Now I use the native TCPDF constructor to which I send these values in each case,
 //	this should have been done whith FPDF which use the same values in its constructor.
-
-	$DocumentPaper = 'A4'; $DocumentOrientation ='P';
-
-// Javier: DIN-A4 is 210 mm width, i.e., 595'2756 points (inches * 72 ppi)
-      $Page_Width=595;
-      $Page_Height=842;
-      $Top_Margin=30;
-      $Bottom_Margin=30;
-      $Left_Margin=40;
-      $Right_Margin=30;
-      break;
+		$DocumentPaper = 'A4'; 
+		$DocumentOrientation ='P';
+		
+		// Javier: DIN-A4 is 210 mm width, i.e., 595'2756 points (inches * 72 ppi)
+		$Page_Width=595;
+		$Page_Height=842;
+		$Top_Margin=30;
+		$Bottom_Margin=30;
+		$Left_Margin=40;
+		$Right_Margin=30;
+		break;
 
   case 'A4_Landscape':
-
-	$DocumentPaper = 'A4'; $DocumentOrientation ='L';
-
-      $Page_Width=842;
-      $Page_Height=595;
-      $Top_Margin=30;
-      $Bottom_Margin=30;
-      $Left_Margin=40;
-      $Right_Margin=30;
-      break;
+		
+		$DocumentPaper = 'A4'; 
+		$DocumentOrientation ='L';
+		
+		$Page_Width=842;
+		$Page_Height=595;
+		$Top_Margin=30;
+		$Bottom_Margin=30;
+		$Left_Margin=40;
+		$Right_Margin=30;
+		break;
 
   case 'A5':
 
-	$DocumentPaper = 'A5'; $DocumentOrientation ='P';
-
-      $Page_Width=421;
-      $Page_Height=595;
-      $Top_Margin=30;
-      $Bottom_Margin=30;
-      $Left_Margin=40;
-      $Right_Margin=30;
-      break;
+		$DocumentPaper = 'A5'; 
+		$DocumentOrientation ='P';
+		
+		$Page_Width=421;
+		$Page_Height=595;
+		$Top_Margin=30;
+		$Bottom_Margin=30;
+		$Left_Margin=40;
+		$Right_Margin=30;
+		break;
 
   case 'A5_Landscape':
-
-	$DocumentPaper = 'A5'; $DocumentOrientation ='L';
-
-      $Page_Width=595;
-      $Page_Height=421;
-      $Top_Margin=30;
-      $Bottom_Margin=30;
-      $Left_Margin=40;
-      $Right_Margin=30;
-      break;
+		
+		$DocumentPaper = 'A5'; 
+		$DocumentOrientation ='L';
+		
+		$Page_Width=595;
+		$Page_Height=421;
+		$Top_Margin=30;
+		$Bottom_Margin=30;
+		$Left_Margin=40;
+		$Right_Margin=30;
+		break;
 
    case 'A3':
 
-	$DocumentPaper = 'A3'; $DocumentOrientation ='P';
-
-      $Page_Width=842;
-      $Page_Height=1190;
-      $Top_Margin=50;
-      $Bottom_Margin=50;
-      $Left_Margin=50;
-      $Right_Margin=40;
-      break;
+		$DocumentPaper = 'A3'; 
+		$DocumentOrientation ='P';
+		
+		$Page_Width=842;
+		$Page_Height=1190;
+		$Top_Margin=50;
+		$Bottom_Margin=50;
+		$Left_Margin=50;
+		$Right_Margin=40;
+		break;
 
    case 'A3_landscape':
 
-	$DocumentPaper = 'A3'; $DocumentOrientation ='L';
-
-      $Page_Width=1190;
-      $Page_Height=842;
-      $Top_Margin=50;
-      $Bottom_Margin=50;
-      $Left_Margin=50;
-      $Right_Margin=40;
-      break;
+		$DocumentPaper = 'A3'; 
+		$DocumentOrientation ='L';
+		
+		$Page_Width=1190;
+		$Page_Height=842;
+		$Top_Margin=50;
+		$Bottom_Margin=50;
+		$Left_Margin=50;
+		$Right_Margin=40;
+		break;
 
    case 'letter':
-
-	$DocumentPaper = 'LETTER'; $DocumentOrientation ='P';
-
-      $Page_Width=612;
-      $Page_Height=792;
-      $Top_Margin=30;
-      $Bottom_Margin=30;
-      $Left_Margin=30;
-      $Right_Margin=25;
-      break;
+		
+		$DocumentPaper = 'LETTER'; 
+		$DocumentOrientation ='P';
+		
+		$Page_Width=612;
+		$Page_Height=792;
+		$Top_Margin=30;
+		$Bottom_Margin=30;
+		$Left_Margin=30;
+		$Right_Margin=25;
+		break;
 
    case 'letter_landscape':
 
-	$DocumentPaper = 'LETTER'; $DocumentOrientation ='L';
-
-      $Page_Width=792;
-      $Page_Height=612;
-      $Top_Margin=30;
-      $Bottom_Margin=30;
-      $Left_Margin=30;
-      $Right_Margin=25;
-      break;
-
+		$DocumentPaper = 'LETTER'; 
+		$DocumentOrientation ='L';
+		
+		$Page_Width=792;
+		$Page_Height=612;
+		$Top_Margin=30;
+		$Bottom_Margin=30;
+		$Left_Margin=30;
+		$Right_Margin=25;
+		break;
+		
    case 'legal':
 
-	$DocumentPaper = 'LEGAL'; 
-	$DocumentOrientation ='P';
-
-      $Page_Width=612;
-      $Page_Height=1008;
-      $Top_Margin=50;
-      $Bottom_Margin=40;
-      $Left_Margin=30;
-      $Right_Margin=25;
-      break;
+		$DocumentPaper = 'LEGAL'; 
+		$DocumentOrientation ='P';
+		
+		$Page_Width=612;
+		$Page_Height=1008;
+		$Top_Margin=50;
+		$Bottom_Margin=40;
+		$Left_Margin=30;
+		$Right_Margin=25;
+		break;
 
    case 'legal_landscape':
 
-	$DocumentPaper = 'LEGAL'; 
-	$DocumentOrientation ='L';
-
-      $Page_Width=1008;
-      $Page_Height=612;
-      $Top_Margin=50;
-      $Bottom_Margin=40;
-      $Left_Margin=30;
-      $Right_Margin=25;
-      break;
-    
-    case '28mm_x_45mm_label':
-      //$DocumentPaper can be an array or width/height of paper size 
-      //as an alternative to the string ISO paper size required by tcpdf
-      $DocumentPaper = array(127.6,79.4); 
-      $DocumentOrientation='L';
-      $Page_Width=127.6;
-      $Page_Height=79.4;
-      $Top_Margin=0;
-      $Bottom_Margin=0;
-      $Left_Margin=0;
-      $Right_Margin=0;
-      break;
+		$DocumentPaper = 'LEGAL'; 
+		$DocumentOrientation ='L';
+	
+		$Page_Width=1008;
+		$Page_Height=612;
+		$Top_Margin=50;
+		$Bottom_Margin=40;
+		$Left_Margin=30;
+		$Right_Margin=25;
+		break;
+	default:
+		$DocumentOrientation = 'L';
+		break;
 }
 
 // Javier: I correct the call to the constructor to match TCPDF (and FPDF ;-)
