@@ -15,7 +15,7 @@ if (!isset($_SESSION['SupplierID'])){
 	prnMsg(_('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>','info');
 	include('includes/footer.inc');
 	exit;
-} 
+}
 
 $ModuleList = array(_('Orders'),
 					_('Receivables'),
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
 	}
-	
+
 	/* Make a comma separated list of modules allowed ready to update the database*/
 	$i=0;
 	$ModulesAllowed = '';
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 		$ModulesAllowed .= $_POST[($FormVbl)] . ',';
 		$i++;
 	}
-	
+
 
 	if ($InputError !=1) {
 
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 		include('includes/footer.inc');
 		exit;
 	}
-} 
+}
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
@@ -163,13 +163,12 @@ $RolesResult = DB_query("SELECT secroleid FROM securityroles", $db);
 $FoundTheSupplierRole = false;
 while ($myroles = DB_fetch_array($RolesResult)){
 	//Now look to find the tokens for the role - we just wnat the role that has just one token i.e. token 9
-	$TokensResult = DB_query("SELECT tokenid 
-								FROM securitygroups 
+	$TokensResult = DB_query("SELECT tokenid
+								FROM securitygroups
 								WHERE secroleid = '" . $myroles['secroleid'] ."'",
 								$db);
 
-	if (DB_num_rows($TokensResult) == 1 ) {
-		$mytoken = DB_fetch_row($TokensResult);
+	while ($mytoken = DB_fetch_row($TokensResult)) {
 		if ($mytoken[0]==9){
 			echo'<input type="hidden" name="Access" value ="' . $myroles['secroleid'] . '" />';
 			$FoundTheSupplierRole = true;
@@ -196,7 +195,7 @@ $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
 
-	if (isset($_POST['DefaultLocation']) 
+	if (isset($_POST['DefaultLocation'])
 		AND $myrow['loccode'] == $_POST['DefaultLocation']){
 
 		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
