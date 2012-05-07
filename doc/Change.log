@@ -1,5 +1,6 @@
 webERP Change Log
 
+6/5/12 Phil: PaymentMethods.php added open cash drawer field for my POS.
 4/5/12 Phil: Labels.php PDFPrintLabel.php fine tuning of new labels code
 4/5/12 Phil: Fixed customer type name displayed when it is successfully deleted as reported by James Dupin
 4/5/12 Phil: Attempt to create simple work around for the limitations of strftime function and resulting character encoding issues - added new functions to get multi-lingual months GetMonthText() and week day names GetWeekDayText(). Not sure if there is any international consensus on the best format here - but can use the DefaultDateFormat or $_SESSION['Language'] if others want it a different way

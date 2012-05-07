@@ -71,7 +71,8 @@ if (isset($_POST['submit'])) {
 						SET paymentname='" . $_POST['MethodName'] . "',
 							paymenttype = '" . $_POST['ForPayment'] . "',
 							receipttype = '" . $_POST['ForReceipt'] . "',
-							usepreprintedstationery = '" . $_POST['UsePrePrintedStationery']. "'
+							usepreprintedstationery = '" . $_POST['UsePrePrintedStationery']. "',
+							opencashdrawer = '" . $_POST['OpenCashDrawer'] . "'
 						WHERE paymentname " . LIKE . " '".$OldName."'";
 
 			} else {
@@ -91,17 +92,19 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg( _('The payment method can not be created because another with the same name already exists.'),'error');
 		} else {
-			$sql = "INSERT INTO paymentmethods (	paymentname,
+			$sql = "INSERT INTO paymentmethods (paymentname,
 												paymenttype,
 												receipttype,
-												usepreprintedstationery)
+												usepreprintedstationery,
+												opencashdrawer)
 								VALUES ('" . $_POST['MethodName'] ."',
 										'" . $_POST['ForPayment'] ."',
 										'" . $_POST['ForReceipt'] ."',
-										'" . $_POST['UsePrePrintedStationery'] ."')";
+										'" . $_POST['UsePrePrintedStationery'] ."',
+										'" . $_POST['OpenCashDrawer']  . "')";
 		}
-		$msg = _('Record inserted');
-		$ErrMsg = _('Could not insert payment method');
+		$msg = _('New payment method added');
+		$ErrMsg = _('Could not insert the new payment method');
 	}
 
 	if ($InputError!=1){
@@ -114,6 +117,7 @@ if (isset($_POST['submit'])) {
 	unset ($_POST['MethodName']);
 	unset ($_POST['ForPayment']);
 	unset ($_POST['ForReceipt']);
+	unset ($_POST['OpenCashDrawer']);
 	unset ($_POST['UsePrePrintedStationery']);
 
 } elseif (isset($_GET['delete'])) {
@@ -151,6 +155,7 @@ if (isset($_POST['submit'])) {
 	unset ($_POST['MethodName']);
 	unset ($_POST['ForPayment']);
 	unset ($_POST['ForReceipt']);
+	unset ($_POST['OpenCashDrawer']);
 }
 
  if (!isset($SelectedPaymentID)) {
@@ -167,7 +172,8 @@ if (isset($_POST['submit'])) {
 					paymentname,
 					paymenttype,
 					receipttype,
-					usepreprintedstationery
+					usepreprintedstationery,
+					opencashdrawer
 			FROM paymentmethods
 			ORDER BY paymentid";
 
@@ -180,6 +186,7 @@ if (isset($_POST['submit'])) {
 			<th>' . _('For Payments') . '</th>
 			<th>' . _('For Receipts') . '</th>
 			<th>' . _('Use Pre-printed') .'<br />' . _('Stationery') . '</th>
+			<th>' . _('Open Cash Drawer') . '</th>
 		</tr>';
 
 	$k=0; //row colour counter
@@ -197,6 +204,7 @@ if (isset($_POST['submit'])) {
 				<td>' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>
 				<td>' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
 				<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
+				<td>' . ($myrow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
 			</tr>';
@@ -241,6 +249,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['ForPayment'] = $myrow['paymenttype'];
 			$_POST['ForReceipt'] = $myrow['receipttype'];
 			$_POST['UsePrePrintedStationery'] = $myrow['usepreprintedstationery'];
+			$_POST['OpenCashDrawer'] = $myrow['opencashdrawer'];
 
 			echo '<input type="hidden" name="SelectedPaymentID" value="' . $_POST['MethodID'] . '" />';
 			echo '<table class="selection">';
@@ -251,6 +260,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['ForPayment'] = 1; // Default is use for payment
 		$_POST['ForReceipt'] = 1; // Default is use for receipts
 		$_POST['UsePrePrintedStationery'] = 0; // Default is use for receipts
+		$_POST['OpenCashDrawer'] = 0; //Default is not to open cash drawer
 		echo '<table class="selection">';
 	}
 	echo '<tr>
@@ -278,7 +288,13 @@ if (! isset($_GET['delete'])) {
 				<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected="selected"' ) .' value="0">' . _('No') . '</option>
 				</select></td>
 		</tr>';
-	
+	echo '<tr>
+			<td>' . _('Open POS Cash Drawer for Sale') . ':' . '</td>
+			<td><select name="OpenCashDrawer">
+				<option' . ($_POST['OpenCashDrawer'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
+				<option' . ($_POST['OpenCashDrawer'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
+			</select></td>
+		</tr>';
 	echo '</table>';
 
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
