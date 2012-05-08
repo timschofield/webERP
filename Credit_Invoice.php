@@ -292,14 +292,14 @@ $TaxTotal =0;
 
 $k=0; //row colour counter
 $j=0; //row counter
-if(isset($_POST['AutoUpdate'])){//clear the $_SESSION value when users have not click update button and directly process the credit note
+if(isset($_POST['AutoUpdate']) and !isset($_POST['Update'])){//clear the $_SESSION value when users have not click update button and directly process the credit note
 	$_SESSION['CreditItems']->total = 0;
 	$_SESSION['CreditItems']->totalVolume = 0;
 	$_SESSION['CreditItems']->totalWeight = 0;
 }
 foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
-	if (isset($_POST['AutoUpdate'])){//If users push Process Credit button instead of Update button, use this variable to update related information
+	if (isset($_POST['AutoUpdate']) and !isset($_POST['Update'])){//If users push Process Credit button instead of Update button, use this variable to update related information
 		$_SESSION['CreditItems']->total +=$LineTotal;
 		$_SESSION['CreditItems']->totalVolume += ($LnItm->QtyDispatched * $LnItm->Volume);
 		$_SESSION['CreditItems']->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
