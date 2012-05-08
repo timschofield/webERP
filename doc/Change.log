@@ -1,4 +1,5 @@
 webERP Change Log
+8/05/2012 Exson Fix typo and add 'L' type for selection in SelectOrderItems.php.
 8/05/2012 Exson: Fixed the bug of Credit_Invoice.php the total will be doubled when use Update button. The bug is introduced for a fix of directly proceed the Credit. Reported by PakRichard. 
 6/5/12 Phil: PaymentMethods.php added open cash drawer field for my POS.
 4/5/12 Phil: Labels.php PDFPrintLabel.php fine tuning of new labels code
