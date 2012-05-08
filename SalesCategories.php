@@ -236,7 +236,7 @@ if (DB_num_rows($result) == 0) {
 
 		if (function_exists('imagecreatefrompng')){
 			$CatImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-				'&stockid='.urlencode('cat_'.$myrow['salescatid'].'.jpg').
+				'&StockID='.urlencode('cat_'.$myrow['salescatid'].'.jpg').
 				'&text='.
 				'&width=32'.
 				'&height=32'.
