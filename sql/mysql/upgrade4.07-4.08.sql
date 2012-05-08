@@ -86,6 +86,7 @@ ALTER TABLE `labels` CHANGE `leftmargin` `leftmargin` FLOAT NOT NULL DEFAULT '0'
 ALTER TABLE `labels` CHANGE `rowheight` `rowheight` FLOAT NOT NULL DEFAULT '0';
 ALTER TABLE `labels` CHANGE `columnwidth` `columnwidth` FLOAT NOT NULL DEFAULT '0';
 
+ALTER TABLE paymentmethods ADD opencashdrawer tinyint NOT NULL default '0';
 
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 
