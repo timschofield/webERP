@@ -340,6 +340,16 @@ if (isset($_POST['submit'])) {
 				$InputError=1;
 				prnMsg( _('You can not change a Serialised Item to Non-Serialised (or vice-versa) when there is a quantity on hand for the item') , 'error');
 			}
+			/* Do some check for property input */
+			
+			for ($i=0;$i<$_POST['PropertyCounter'];$i++){
+				if ($_POST['PropNumeric' .$i]==1){
+					if ( filter_number_format($_POST['PropValue' . $i]) < $_POST['PropMin' . $i] OR filter_number_format($_POST['PropValue' . $i]) > $_POST['PropMax' . $i]){
+							$InputError = 1;
+							prnMsg(_('The property value should between') . ' '.$_POST['PropMin' . $i] . ' ' . _('and') . $_POST['PropMax' . $i],'error');
+					}
+				}
+
 
 
 			if ($InputError == 0){
@@ -388,7 +398,7 @@ if (isset($_POST['submit'])) {
 						}
 					}
 					if ($_POST['PropNumeric' .$i]==1){
-						$_POST['PropValue' . $i]=filter_number_format($_POST['PropValue' . $i]);
+							$_POST['PropValue' . $i]=filter_number_format($_POST['PropValue' . $i]);
 					} else {
 						$_POST['PropValue' . $i]=$_POST['PropValue' . $i];
 					}
@@ -550,6 +560,33 @@ if (isset($_POST['submit'])) {
 				$DbgMsg = _('The SQL that was used to add the item failed was');
 				$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 				if (DB_error_no($db) ==0) {
+					//now insert any item properties
+					for ($i=0;$i<$_POST['PropertyCounter'];$i++){
+						
+						if ($_POST['PropType' . $i] ==2){
+							if ($_POST['PropValue' . $i]=='on'){
+								$_POST['PropValue' . $i]=1;
+							} else {
+								$_POST['PropValue' . $i]=0;
+							}
+			}
+						
+						if ($_POST['PropNumeric' .$i]==1){
+							$_POST['PropValue' . $i]=filter_number_format($_POST['PropValue' . $i]);
+						} else {
+							$_POST['PropValue' . $i]=$_POST['PropValue' . $i];
+						}
+
+					$result = DB_query("INSERT INTO stockitemproperties (stockid,
+													stkcatpropid,
+													value)
+													VALUES ('" . $StockID . "',
+														'" . $_POST['PropID' . $i] . "',
+														'" . $_POST['PropValue' . $i] . "')",
+								$db,$ErrMsg,$DbgMsg,true);
+					} //end of loop around properties defined for the category
+
+					//Add data to locstock
 
 					$sql = "INSERT INTO locstock (loccode,
 													stockid)
@@ -1149,6 +1186,9 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	switch ($PropertyRow['controltype']) {
 	 	case 0; //textbox
 	 		if ($PropertyRow['numericvalue']==1) {
+				echo '<input type="hidden" name="PropMin' . $PropertyCounter . '" value="' . $PropertyRow['minimumvalue'] . '" />';
+				echo '<input type="hidden" name="PropMax' . $PropertyCounter . '" value="' . $PropertyRow['maximumvalue'] . '" />';
+
 				echo '<input type="text" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . locale_number_format($PropertyValue,'Variable') . '" />';
 				echo _('A number between') . ' ' . locale_number_format($PropertyRow['minimumvalue'],'Variable') . ' ' . _('and') . ' ' . locale_number_format($PropertyRow['maximumvalue'],'Variable') . ' ' . _('is expected');
 			} else {
@@ -1170,7 +1210,7 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 		case 2; //checkbox
 			echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
 			if ($PropertyValue==1){
-				echo '"checked"';
+				echo 'checked';
 			}
 			echo ' />';
 			break;
