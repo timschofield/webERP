@@ -54,15 +54,23 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td align="right"><b>'.  _('Total Quantity'). ': ' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
-	echo '<tr><td><hr /></td></tr>';
+	echo '<tr>
+			<td class="number"><b>'.  _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
+		</tr>
+		<tr>
+			<td><hr /></td>
+		</tr>';
 } else {
-	echo '<tr><td align="right"><b>'. _('Total Quantity'). ':</b></td><td align="right"><b>' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
-	echo '<tr><td colspan="2"><hr /></td></tr>';
+	echo '<tr>
+			<td class="number"><b>'. _('Total Quantity'). ':</b></td>
+			<td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
+		</tr>
+		<tr>
+			<td colspan="2"><hr /></td>
+		</tr>';
 }
 
 echo '</table><br />';
-//echo "<table><tr><td>";
 
 //DISPLAY FILE INFO
 // do some inits & error checks...
@@ -71,7 +79,7 @@ if (!isset($_SESSION['CurImportFile']) ){
 		$_SESSION['CurImportFile'] = '';
 		$LineItem->SerialItemsValid=false;
 }
-if ((isset($_FILES['ImportFile']) and $_FILES['ImportFile']['name'] == '') and $_SESSION['CurImportFile'] == ''){
+if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name'] == '') AND $_SESSION['CurImportFile'] == ''){
 	$msg = _('Please Choose a file and then click Set Entry Type to upload a file for import');
 	prnMsg($msg);
 	$LineItem->SerialItemsValid=false;
@@ -79,17 +87,17 @@ if ((isset($_FILES['ImportFile']) and $_FILES['ImportFile']['name'] == '') and $
 	include('includes/footer.inc');
 	exit();
 }
-if ((isset($_FILES['ImportFile']) and $_FILES['ImportFile']['error'] != '') and !isset($_SESSION['CurImportFile'])){
+if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND !isset($_SESSION['CurImportFile'])){
 		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />'.
 				 _('Name').':'.$_FILES['ImportFile']['name'].'<br />'.
-				 _('Size').':'.number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />'.
+				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />'.
 				 _('Type').':'.$_FILES['ImportFile']['type'].'<br />';
 		echo '<br />'._('Error was').' '.$_FILES['ImportFile']['error'].'<br />';
 		$LineItem->SerialItemsValid=false;
 		echo '</td></tr></table><br />';
 		include('includes/footer.inc');
 		exit();
-} elseif ((isset($_FILES['ImportFile']) and $_FILES['ImportFile']['name']!='')){
+} elseif ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name']!='')){
 	//User has uploaded importfile. reset items, then just 'get hold' of it for later.
 
 	$LineItem->SerialItems=array();
@@ -138,7 +146,7 @@ if ($ShowFileInfo){
 		</tr>
 		<tr>
 			<td>'. _('Size') .':</td>
-			<td>' . number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td>
+			<td>' . locale_number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td>
 		</tr>
 		<tr>
 			<td>'. _('Type') .':</td>
@@ -156,7 +164,7 @@ if ($ShowFileInfo){
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
 }
 
-if ($invalid_imports>0 and !$_SESSION['CurImportFile']['Processed']){
+if ($invalid_imports>0 AND !$_SESSION['CurImportFile']['Processed']){
 		// IF all items are not valid, show the raw first 10 lines of the file. maybe it will help.
 
 	echo '<br /><form method="post">';
