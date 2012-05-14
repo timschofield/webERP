@@ -841,7 +841,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['Paymen
 	}
 	if ($_POST['ExRate']==1 AND isset($SuggestedExRate)){
 		$_POST['ExRate'] = locale_number_format($SuggestedExRate,6);
-	}elseif(isset($_POST['SuggestedExRate1']) and $_POST['ExRate']==locale_number_format($_POST['SuggestedExRate1'],6) and isset($SuggestedExRate)){
+	}elseif($_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)){
 		$_POST['ExRate'] = locale_number_format($SuggestedExRate,6);
 	
 	}
@@ -903,12 +903,12 @@ if (!isset($_POST['Narrative'])) {
 echo '<tr>
 		<td>' . _('Reference / Narrative') . ':</td>
 		<td colspan="2"><input type="text" name="Narrative" maxlength="80" size="82" value="' . $_POST['Narrative'] . '" />  ' . _('(Max. length 80 characters)') . '</td>
-	</tr>';
-echo '<tr>';
-	if(isset($SuggestedExRate)){
-		echo '<td><input type="hidden" name="SuggestedExRate1" value="'.$SuggestedExRate.'" /></td>';
-	}
-echo '
+	</tr>
+
+
+	        <td><input type="hidden" name="PreviousCurrency" value="'.$_POST['Currency'].'" /></td>
+
+
 	<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update'). '" /></div></td>
 	</tr>';
 
