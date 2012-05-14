@@ -1,4 +1,7 @@
 webERP Change Log
+14/5/2012 Exson: Fixed when user change the currency, the suggested rate can not changed accordingly in CustomerReceipt.php. Reported by Ahmed.Fawzy.
+14/5/2012 Ahmed.Fawzy: Fixed bugs that ExchangRateText be applied with locale_number_format() function in CustomerReceipt.php
+
 10/5/2012 Exson: Fixed bug that Date selection does not work in ReverseGRN.php. Add GRN batch column. 
 9/5/2012 Ahmed.Fawzy: Fixed bugs in Stocks.php that the properties for new items cannot be saved. Checked status is not kept and numeric values between max and min are not validated.
 8/5/2012 Exson: Fixed typo in SalesCategories.php which leads to the jpg pictures do not appear. 
