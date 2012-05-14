@@ -1,5 +1,5 @@
 webERP Change Log
-14/5/2012 Exson: Fixed bug that when users input a Exchang Rate manually, when ones changed minds and select another currency, it'll show the suggested rate correctly. 
+14/5/2012 Exson: Fixed bug that when users input a Exchang Rate manually, when ones changed minds and select another currency, it'll not show the suggested rate correctly in Payments.php. 
 14/5/2012 Exson: Fixed when user change the currency, the suggested rate can not changed accordingly in CustomerReceipt.php. Reported by Ahmed.Fawzy.
 14/5/2012 Ahmed.Fawzy: Fixed bugs that ExchangRateText be applied with locale_number_format() function in CustomerReceipt.php
 
