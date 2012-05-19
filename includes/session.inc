@@ -19,7 +19,7 @@ if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
 
-ini_set('session.gc_Maxlifetime',$SessionLifeTime);
+ini_set('session.gc_maxlifetime',$SessionLifeTime);
 
 if( !ini_get('safe_mode') ){
 	set_time_limit($MaximumExecutionTime);

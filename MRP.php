@@ -467,7 +467,7 @@ if (isset($_POST['submit'])) {
 		flush();
 		$result = DB_query($sql,$db);
 		while ($myrow=DB_fetch_array($result)) {
-				LevelNetting($db,$myrow['part'],$myrow['eoq'],$myrow['pansize'],$myrow['shrinkfactor']);
+			LevelNetting($db,$myrow['part'],$myrow['eoq'],$myrow['pansize'],$myrow['shrinkfactor'], $myrow['leadtime']);
 		}  //end of while loop
 	} // end of for
 	echo '<br />' . _('End time') . ': ' . date('h:i:s') . '<br />';
@@ -629,13 +629,13 @@ if (isset($_POST['submit'])) {
 
 
 
-function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
-// Create an array of mrprequirements and an array of mrpsupplies, then read through
-// them seeing if all requirements are covered by supplies. Create a planned order
-// for any unmet requirements. Change dates if necessary for the supplies.
-	//echo '<br />Part is ' . "$part" . '<br />';
+function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
+		// Create an array of mrprequirements and an array of mrpsupplies, then read through
+		// them seeing if all requirements are covered by supplies. Create a planned order
+		// for any unmet requirements. Change dates if necessary for the supplies.
+		//echo '<br />Part is ' . "$part" . '<br />';
 
-	// Get decimal places from stockmaster for rounding of shrinkage factor
+		// Get decimal places from stockmaster for rounding of shrinkage factor
 	$sql = "SELECT decimalplaces FROM stockmaster WHERE stockid = '" . $part . "'";
 	$result = DB_query($sql,$db);
 	$myrow=DB_fetch_row($result);
@@ -751,22 +751,48 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
 			if ($_POST['pansizeflag'] == 'y' AND $PanSize != 0 AND $PlannedQty != 0) {
 				$PlannedQty = ceil($PlannedQty / $PanSize) * $PanSize;
 			}
-			$sql = "INSERT INTO mrpplannedorders (id,
-								part,
-								duedate,
-								supplyquantity,
-								ordertype,
-								orderno,
-								mrpdate,
-								updateflag)
-							VALUES (NULL,
-								'" . $Requirement['part'] . "',
-								'" . $Requirement['daterequired']  . "',
-								'" . $PlannedQty  . "',
-								'" . $Requirement['mrpdemandtype']  . "',
-								'" . $Requirement['orderno']  . "',
-								'" . $Requirement['daterequired'] . "',
-								'0')";
+
+			// Calculate required date by subtracting leadtime from top part's required date
+            $PartRequiredDate=$Requirement['daterequired'];
+			if ((int)$LeadTime>0) {              
+                  
+				$CalendarSQL = "SELECT COUNT(*),cal2.calendardate
+						  FROM mrpcalendar
+							LEFT JOIN mrpcalendar as cal2
+							  ON (mrpcalendar.daynumber - '".$LeadTime."') = cal2.daynumber
+						  WHERE mrpcalendar.calendardate = '".$PartRequiredDate."'
+							AND cal2.manufacturingflag='1'
+							GROUP BY cal2.calendardate";
+				$ResultDate = DB_query($CalendarSQL,$db);
+				$myrowdate=DB_fetch_array($ResultDate);
+				$NewDate = $myrowdate[1];
+				// If can't find date based on manufacturing calendar, use $PartRequiredDate
+			}  else {
+				// Convert $PartRequiredDate from mysql format to system date format, use that to subtract leadtime
+				// from it using DateAdd, convert that date back to mysql format
+				$ConvertDate = ConvertSQLDate($PartRequiredDate);
+				$DateAdd = DateAdd($ConvertDate,'d',($LeadTime * -1));
+				$NewDate = FormatDateForSQL($DateAdd);
+		}
+
+		$sql = "INSERT INTO mrpplannedorders (id,
+												part,
+												duedate,
+												supplyquantity,
+												ordertype,
+												orderno,
+												mrpdate,
+												updateflag)
+											VALUES (NULL,
+												'" . $Requirement['part'] . "',
+												'" . $NewDate  . "',
+												'" . $PlannedQty  . "',
+												'" . $Requirement['mrpdemandtype']  . "',
+												'" . $Requirement['orderno']  . "',
+												'" . $NewDate . "',
+												'0')";
+
+
 			$result = DB_query($sql,$db);
 			// If part has lower level components, create requirements for them
 			$sql = "SELECT COUNT(*) FROM bom
@@ -799,7 +825,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor) {
 function CreateLowerLevelRequirement(&$db,
 									$TopPart,
 									$TopDate,
-									$topquantity,
+									$TopQuantity,
 									$TopMRPDemandType,
 									$TopOrderNo,
 									$WhereRequired) {
@@ -818,47 +844,22 @@ function CreateLowerLevelRequirement(&$db,
 	while ($myrow=DB_fetch_array($ResultBOM)) {
 		// Calculate required date by subtracting leadtime from top part's required date
 		$LeadTime = $myrow['leadtime'];
-
-		// Following sql finds daynumber for the top part's required date, subtracts leadtime, and finds
-		// a valid manufacturing date for the daynumber. There is only one valid manufacturing date
-		// for each daynumber, but there could be several non-manufacturing dates for the
-		// same daynumber. MRPCalendar.php maintains the manufacturing calendar.
-		$CalendarSQL = "SELECT COUNT(*),cal2.calendardate
-						  FROM mrpcalendar
-							LEFT JOIN mrpcalendar as cal2
-							  ON (mrpcalendar.daynumber - '".$LeadTime."') = cal2.daynumber
-						  WHERE mrpcalendar.calendardate = '".$TopDate."'
-							AND cal2.manufacturingflag='1'
-							GROUP BY cal2.calendardate";
-		$ResultDate = DB_query($CalendarSQL,$db);
-		$myrowdate=DB_fetch_array($ResultDate);
-		$NewDate = $myrowdate[1];
-		// If can't find date based on manufacturing calendar, use $TopDate
-		if ($myrowdate[0] == 0){
-		   // Convert $TopDate from mysql format to system date format, use that to subtract leadtime
-		   // from it using DateAdd, convert that date back to mysql format
-		   $ConvertDate = ConvertSQLDate($TopDate);
-		   $DateAdd = DateAdd($ConvertDate,'d',($LeadTime * -1));
-		   $NewDate = FormatDateForSQL($DateAdd);
-		}
-
 		$Component = $myrow['component'];
-		$ExtendedQuantity = $myrow['quantity'] * $topquantity;
+		$ExtendedQuantity = $myrow['quantity'] * $TopQuantity;
 // Commented out the following lines 8/15/09 because the eoq should be considered in the
 // LevelNetting() function where $ExcessQty is calculated
 //		 if ($myrow['eoq'] > $ExtendedQuantity) {
 //			 $ExtendedQuantity = $myrow['eoq'];
 //		 }
-		$sql = "INSERT INTO mrprequirements
-						(part,
-						 daterequired,
-						 quantity,
-						 mrpdemandtype,
-						 orderno,
-						 directdemand,
-						 whererequired)
+		$sql = "INSERT INTO mrprequirements (part,
+											 daterequired,
+											 quantity,
+											 mrpdemandtype,
+											 orderno,
+											 directdemand,
+											 whererequired)
 			   VALUES ('".$Component."',
-					  '".$NewDate."',
+					  '".$TopDate."',
 					  '".$ExtendedQuantity."',
 					  '".$TopMRPDemandType."',
 					  '".$TopOrderNo."',
