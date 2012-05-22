@@ -77,14 +77,18 @@ CREATE TABLE IF NOT EXISTS `labelfields` (
 ALTER TABLE `locations` ADD UNIQUE `locationname` (`locationname`);
 
 ALTER TABLE `stockmaster` CHANGE `lastcostupdate` `lastcostupdate` DATE NOT NULL DEFAULT '0000-00-00';
-ALTER TABLE `labels` CHANGE `papersize` `pagewidth` FLOAT NOT NULL DEFAULT '0';
-ALTER TABLE `labels` ADD `pageheight` FLOAT NOT NULL DEFAULT '0' AFTER `pagewidth`;
-ALTER TABLE `labels` CHANGE `height` `height` FLOAT NOT NULL DEFAULT '0';
-ALTER TABLE `labels` CHANGE `width` `width` FLOAT NOT NULL DEFAULT '0';
-ALTER TABLE `labels` CHANGE `topmargin` `topmargin` FLOAT NOT NULL DEFAULT '0';
-ALTER TABLE `labels` CHANGE `leftmargin` `leftmargin` FLOAT NOT NULL DEFAULT '0';
-ALTER TABLE `labels` CHANGE `rowheight` `rowheight` FLOAT NOT NULL DEFAULT '0';
-ALTER TABLE `labels` CHANGE `columnwidth` `columnwidth` FLOAT NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `papersize` `pagewidth` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `labels` ADD `pageheight` DOUBLE NOT NULL DEFAULT '0' AFTER `pagewidth`;
+ALTER TABLE `labels` CHANGE `height` `height` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `width` `width` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `topmargin` `topmargin` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `leftmargin` `leftmargin` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `rowheight` `rowheight` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `labels` CHANGE `columnwidth` `columnwidth` DOUBLE NOT NULL DEFAULT '0';
+
+
+ALTER TABLE `labelfields` CHANGE `vpos` `vpos` DOUBLE NOT NULL DEFAULT '0';
+ALTER TABLE `labelfields` CHANGE `hpos` `hpos` DOUBLE NOT NULL DEFAULT '0';
 
 ALTER TABLE paymentmethods ADD opencashdrawer tinyint NOT NULL default '0';
 

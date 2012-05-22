@@ -30,13 +30,13 @@ if (isset($_GET['loccode'])){
 }
 
 foreach ($_POST as $key=>$value) {
-	if (substr($key, 0, 9)=='OutputQty' or substr($key, 0, 7)=='RecdQty') {
+	if (substr($key, 0, 9)=='OutputQty' OR substr($key, 0, 7)=='RecdQty') {
 		$_POST[$key] = filter_number_format($value);
 	}
 }
 
 // check for new or modify condition
-if (isset($_REQUEST['WO']) and $_REQUEST['WO']!=''){
+if (isset($_REQUEST['WO']) AND$_REQUEST['WO']!=''){
 	// modify
 	$_POST['WO'] = $_REQUEST['WO'];
 	$EditingExisting = true;
@@ -269,7 +269,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 } //adding a new item to the work order
 
 
-if (isset($_POST['submit']) or isset($_POST['Search'])) { //The update button has been clicked
+if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has been clicked
 
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .'">' . _('Enter a new work order') . '</a>';
 	echo '<br /><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
@@ -316,10 +316,10 @@ if (isset($_POST['submit']) or isset($_POST['Search'])) { //The update button ha
 			if (!isset($_POST['NextLotSNRef'.$i])) {
 				$_POST['NextLotSNRef'.$i]='';
 			}
-			if (isset($_POST['QtyRecd'.$i]) and $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
+			if (isset($_POST['QtyRecd'.$i]) AND $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
 				$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
 			}
-			if ($_POST['RecdQty'.$i]==0 AND (!isset($_POST['HasWOSerialNos'.$i]) or $_POST['HasWOSerialNos'.$i]==false)){
+			if ($_POST['RecdQty'.$i]==0 AND (!isset($_POST['HasWOSerialNos'.$i]) OR $_POST['HasWOSerialNos'.$i]==false)){
 				/* can only change location cost if QtyRecd=0 */
 				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
 												FROM stockmaster
@@ -340,7 +340,7 @@ if (isset($_POST['submit']) or isset($_POST['Search'])) { //The update button ha
 											 stdcost ='" . $Cost . "'
 										WHERE wo='" . $_POST['WO'] . "'
 											AND stockid='" . $_POST['OutputItem'.$i] . "'";
-  			} elseif (isset($_POST['HasWOSerialNos'.$i]) and $_POST['HasWOSerialNos'.$i]==false) {
+  			} elseif (isset($_POST['HasWOSerialNos'.$i]) AND $_POST['HasWOSerialNos'.$i]==false) {
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
@@ -689,7 +689,7 @@ if (isset($SearchResult)) {
 }#end if SearchResults to show
 
 
-if (!isset($_GET['NewItem']) or $_GET['NewItem']=='') {
+if (!isset($_GET['NewItem']) OR $_GET['NewItem']=='') {
 	echo '<script>defaultControl(document.forms[0].StockCode);</script>';
 } else {
 	echo '<script>defaultControl(document.forms[0].OutputQty"'.$_GET['Line'].'");</script>';

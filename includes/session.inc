@@ -78,7 +78,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 	include $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
 
-	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
+	if (isset($_POST['UserNameEntryField']) AND isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $db);
 	} elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;

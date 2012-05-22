@@ -59,7 +59,7 @@ echo '<table width="99%">
 			<td style="width:10%" valign="top">';
 echo '<table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">';
 
-	$i=0;
+$i=0;
 
 while ($i < count($ModuleLink)){
 

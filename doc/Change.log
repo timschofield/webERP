@@ -1,5 +1,6 @@
 webERP Change Log
 
+22/5/2012 Phil Klaus's spot - removed issue location (must always be the same as the manufacture location) and the issued date from WorkOrderStatus.php form - as materials could be issued on many different dates and incorrect to say they are always issued on the current date
 20/5/2012 Klaus Beucher (Opto): move leadtime calculation into levelnetting function and resolve bug which does not use leadtime for highest level items of a BOM  see also http://www.weberp.org/forum/showthread.php?tid=203
 18/5/2012 Ahmed: Fixed bugs that the offer cannot store more than one item and remove function does not work in SupplierTenders.php and DefineOfferClass.php
 18/5/2012 Ahmed.Fawzy: Fixed Branch code validation rule to rule out '-' in CustomerBranches.php.
