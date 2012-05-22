@@ -44,7 +44,7 @@ include('includes/header.inc');
 
 	echo '<table cellpadding="2" class="selection">
 		<tr>
-			<td class="label">' . _('Issue to work order') . ':</td>
+			<td class="label">' . _('Work order Number') . ':</td>
 			<td>' . $_REQUEST['WO'] .'</td>
 			<td class="label">' . _('Item') . ':</td>
 			<td>' . $_REQUEST['StockID'] . ' - ' . $WORow['description'] . '</td>
@@ -64,6 +64,10 @@ include('includes/header.inc');
 			<td class="label">' . _('Already Received') . ':</td>
 			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
 			<td colspan="2">' . $WORow['units'] . '</td>
+		</tr>
+		<tr>
+			<td class="label">' . _('Start Date') . ':</td>
+			<td>' . ConvertSQLDate($WORow['startdate']) . '</td>
 		</tr>
 		</table>
 		<br />';
