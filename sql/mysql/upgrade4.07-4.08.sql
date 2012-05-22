@@ -91,6 +91,33 @@ ALTER TABLE `labelfields` CHANGE `vpos` `vpos` DOUBLE NOT NULL DEFAULT '0';
 ALTER TABLE `labelfields` CHANGE `hpos` `hpos` DOUBLE NOT NULL DEFAULT '0';
 
 ALTER TABLE paymentmethods ADD opencashdrawer tinyint NOT NULL default '0';
-
+ALTER TABLE bankaccounts DROP foreign key bankaccounts_ibfk_1;
+ALTER TABLE banktrans DROP foreign key banktrans_ibfk_2;
+ALTER TABLE bankaccounts MODIFY column accountcode varchar(20) NOT NULL default '0';
+ALTER TABLE banktrans MODIFY column bankact varchar(20) NOT NULL default '0';
+ALTER TABLE banktrans ADD CONSTRAINT banktrans_ibfk_2 FOREIGN KEY(`bankact`) REFERENCES bankaccounts(`accountcode`);
+ALTER TABLE chartdetails DROP FOREIGN KEY chartdetails_ibfk_1;
+ALTER TABLE chartdetails DROP PRIMARY KEY;
+ALTER TABLE chartdetails MODIFY column accountcode varchar(20) NOT NULL default '0';
+ALTER TABLE chartdetails ADD PRIMARY KEY (accountcode,period);
+ALTER TABLE gltrans DROP FOREIGN KEY gltrans_ibfk_1;
+ALTER TABLE gltrans MODIFY column account varchar(20) NOT NULL default '0';
+ALTER TABLE pcexpenses DROP FOREIGN KEY pcexpenses_ibfk_1;
+ALTER TABLE pcexpenses MODIFY column glaccount varchar(20) NOT NULL DEFAULT '0';
+ALTER TABLE pctabs DROP FOREIGN KEY pctabs_ibfk_5;
+ALTER TABLE pctabs MODIFY column glaccountassignment varchar(20) NOT NULL DEFAULT '0';
+ALTER TABLE taxauthorities DROP FOREIGN KEY taxauthorities_ibfk_1;
+ALTER TABLE taxauthorities DROP FOREIGN KEY taxauthorities_ibfk_2;
+ALTER TABLE taxauthorities MODIFY column taxglcode varchar(20) NOT NULL DEFAULT '0';
+ALTER TABLE taxauthorities MODIFY column purchtaxglaccount varchar(20) NOT NULL DEFAULT '0';
+ALTER TABLE chartmaster MODIFY column accountcode varchar(20) NOT NULL DEFAULT '0';
+ALTER TABLE bankaccounts ADD FOREIGN KEY(accountcode) REFERENCES chartmaster(accountcode);
+ALTER TABLE chartdetails ADD CONSTRAINT chartdetails_ibfk_1 FOREIGN KEY(accountcode) REFERENCES chartmaster(accountcode);
+ALTER TABLE gltrans ADD CONSTRAINT gltrans_ibfk_1 FOREIGN KEY (account) REFERENCES chartmaster(accountcode);
+ALTER TABLE pcexpenses ADD CONSTRAINT pcexpenses_ibfk_1 FOREIGN KEY(glaccount) REFERENCES chartmaster(accountcode);
+ALTER TABLE pctabs ADD CONSTRAINT pctabs_ibfk_5 FOREIGN KEY(glaccountassignment) REFERENCES chartmaster(accountcode);
+ALTER TABLE pctabs MODIFY column glaccountpcash varchar(20) NOT NULL DEFAULT '0';
+ALTER TABLE taxauthorities ADD CONSTRAINT taxauthorities_ibfk_1 FOREIGN KEY (taxglcode) REFERENCES chartmaster(accountcode);
+ALTER TABLE taxauthorities ADD CONSTRAINT taxauthorities_ibfk_2 FOREIGN KEY (purchtaxglaccount) REFERENCES chartmaster(accountcode);
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 
