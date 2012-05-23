@@ -1,4 +1,5 @@
 webERP Change Log
+23/5/2012 Exson: Revise GLAccounts.php to make more than 10 digits account code is allowed. 
 2012/05/22 Exson: Modify accountcode to varchar(20) to meet some countries accounting regulation for more digits account code.
 22/5/2012 Phil Klaus's spot - removed issue location (must always be the same as the manufacture location) and the issued date from WorkOrderStatus.php form - as materials could be issued on many different dates and incorrect to say they are always issued on the current date
 20/5/2012 Klaus Beucher (Opto): move leadtime calculation into levelnetting function and resolve bug which does not use leadtime for highest level items of a BOM  see also http://www.weberp.org/forum/showthread.php?tid=203
