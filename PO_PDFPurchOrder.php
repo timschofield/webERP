@@ -255,7 +255,14 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$Desc=$POLine['itemdescription'];
 			
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize,$POLine['itemcode'], 'left');
+			
+			//use suppliers itemcode if available i.e. stringlength >0
+			if (strlen($POLine['suppliers_partno']>0)) {
+				$Itemcode=$POLine['suppliers_partno']; 
+			} else {
+				$Itemcode=$POLine['itemcode'];
+			}
+			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize,$Itemcode, 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize,$Desc, 'left');
 			while (mb_strlen($LeftOvers) > 1){
 				$YPos-=$line_height;
