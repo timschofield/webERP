@@ -119,5 +119,8 @@ ALTER TABLE pctabs ADD CONSTRAINT pctabs_ibfk_5 FOREIGN KEY(glaccountassignment)
 ALTER TABLE pctabs MODIFY column glaccountpcash varchar(20) NOT NULL DEFAULT '0';
 ALTER TABLE taxauthorities ADD CONSTRAINT taxauthorities_ibfk_1 FOREIGN KEY (taxglcode) REFERENCES chartmaster(accountcode);
 ALTER TABLE taxauthorities ADD CONSTRAINT taxauthorities_ibfk_2 FOREIGN KEY (purchtaxglaccount) REFERENCES chartmaster(accountcode);
+
+INSERT INTO  scripts (script, pagesecurity, description) VALUES ('NoSalesItems.php',  '2',  'Shows the No Selling (worst) items');
+
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 

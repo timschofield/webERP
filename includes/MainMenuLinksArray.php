@@ -54,6 +54,7 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Order Inquiry'),
 													_('Delivery In Full On Time (DIFOT) Report'),
 													_('Sales Order Detail Or Summary Inquiries'),
 													_('Top Sales Items Report'),
+													_('Worst Sales Items Report'),
 													_('Sales With Low Gross Profit Report')
 												);
 
@@ -69,6 +70,7 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/PDFDIFOT.php',
 												'/SalesInquiry.php',
 												'/TopItems.php',
+												'/NoSalesItems.php',
 												'/PDFLowGP.php'
 											);
 
