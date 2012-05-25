@@ -169,16 +169,16 @@ If (isset($_POST['PrintPDF'])
 
 		$YPos -=$line_height;
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,80,$FontSize,$PriceList['stockid']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,47,$FontSize,ConvertSQLDate($PriceList['startdate']));
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,47,$FontSize,ConvertSQLDate($PriceList['startdate']));
 		if ($PriceList['enddate']!='0000-00-00'){
 			$DisplayEndDate = ConvertSQLDate($PriceList['enddate']);
 		} else {
 			$DisplayEndDate = _('No End Date');
 		}
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47,$YPos,47,$FontSize,$DisplayEndDate);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47,$YPos,130,$FontSize,$PriceList['description']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+100+47,$YPos,47,$FontSize,$DisplayEndDate);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+130+47+47,$YPos,130,$FontSize,$PriceList['description']);
 		$DisplayUnitPrice = locale_number_format($PriceList['price'],$PriceList['decimalplaces']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130,$YPos,150,$FontSize,$DisplayUnitPrice, 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+110+47+47+130,$YPos,180,$FontSize,$DisplayUnitPrice, 'right');
 
 		if ($PriceList['price']!=0){
 			$DisplayGPPercent = locale_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']),1) . '%';
@@ -187,7 +187,7 @@ If (isset($_POST['PrintPDF'])
 		}
 
 		if ($_POST['ShowGPPercentages']=='Yes'){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+65,$YPos,20,$FontSize,$DisplayGPPercent, 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+135+47+47+130+65,$YPos,20,$FontSize,$DisplayGPPercent, 'right');
 		}
 
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
@@ -205,9 +205,9 @@ If (isset($_POST['PrintPDF'])
 				$width = imagesx( $img );
 				$height = imagesy( $img );
 				if($width>$height){
-					$LeftOvers = $pdf->Image($_SESSION['part_pics_dir'] . '/'.$PriceList['stockid'].'.jpg',120,$Page_Height-$Top_Margin-$YPos+20,50,0);
+					$LeftOvers = $pdf->Image($_SESSION['part_pics_dir'] . '/'.$PriceList['stockid'].'.jpg',265,$Page_Height-$Top_Margin-$YPos+33,33,33);
 				}else{
-					$LeftOvers = $pdf->Image($_SESSION['part_pics_dir'] . '/'.$PriceList['stockid'].'.jpg',120,$Page_Height-$Top_Margin-$YPos+20,0,40);
+					$LeftOvers = $pdf->Image($_SESSION['part_pics_dir'] . '/'.$PriceList['stockid'].'.jpg',265,$Page_Height-$Top_Margin-$YPos+33,33,33);
 				}
 			}/*end checked file exist*/
 
@@ -219,15 +219,15 @@ If (isset($_POST['PrintPDF'])
 			for ($i=0; $i<=count($Split); $i++)	{
 				if(count($Split)==1){
 					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(140,$YPos,300,$FontSize2,$Split[$i]);
+					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,$Split[$i]);
 					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(140,$YPos,300,$FontSize2,'');
+					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,'');
 				}elseif(count($Split)==2){
 					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(140,$YPos,300,$FontSize2,$Split[$i]);
+					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,$Split[$i]);
 				}elseif(count($Split)>=3){
 					$YPos -=(1*$line_height);
-					$LeftOvers = $pdf->addTextWrap(140,$YPos,300,$FontSize2,$Split[$i]);
+					$LeftOvers = $pdf->addTextWrap(300,$YPos,300,$FontSize2,$Split[$i]);
 				}
 			}/*end for*/
 		}/*end if full descriptions*/
@@ -363,16 +363,16 @@ function PageHeader () {
 	$Xpos = $Left_Margin+1;
 
 	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,60,$FontSize, _('Category') . '/' . _('Item'), 'left');
-	$LeftOvers = $pdf->addTextWrap($Xpos+70,$YPos,60,$FontSize, _('Effective Date Range'), 'left');
-
+	$LeftOvers = $pdf->addTextWrap($Xpos+100,$YPos,160,$FontSize, _('Effective Date Range'), 'left');
+	$LeftOvers = $pdf->addTextWrap($Xpos+220,$YPos,160,$FontSize, _('Product Image / Description'), 'left');
 	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+65+25,$YPos,60,$FontSize, _('Branch'), 'centre');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+s80+47+47+130+65+25,$YPos,60,$FontSize, _('Branch'), 'centre');
 	}
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+20,$YPos,130,$FontSize, _('Price') , 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+20,$YPos,180,$FontSize, _('Price') , 'right');
 
 	if ($_POST['ShowGPPercentages']=='Yes'){
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+80+47+47+130+65,$YPos,20,$FontSize, _('GP') .'%', 'centre');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+140+47+47+130+65,$YPos,20,$FontSize, _('GP') .'%', 'centre');
 	}
 
 	$FontSize=8;
