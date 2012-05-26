@@ -14,12 +14,10 @@ $PaperSize['A5']['PageHeight'] = 210;
 $PaperSize['A5']['PageWidth'] = 148;
 $PaperSize['A3']['PageHeight'] = 420;
 $PaperSize['A3']['PageWidth'] = 297;
-$PaperSize['Letter']['PageHeight'] = 279.4; 
+$PaperSize['Letter']['PageHeight'] = 279.4;
 $PaperSize['Letter']['PageWidth'] = 215.9;
 $PaperSize['Legal']['PageHeight'] = 355.6;
 $PaperSize['Legal']['PageWidth'] = 215.9;
-
-
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
@@ -29,13 +27,13 @@ echo '<p class="page_title_text">
 if (isset($_POST['SelectedLabelID'])){
 	$SelectedLabelID =$_POST['SelectedLabelID'];
 	if (ctype_digit($_POST['NoOfFieldsDefined'])){ //Now Process any field updates
-		
+
 		for ($i=0;$i<=$_POST['NoOfFieldsDefined'];$i++){
-			
-			if (ctype_digit($_POST['VPos' . $i]) 
-				AND ctype_digit($_POST['HPos' . $i]) 
+
+			if (ctype_digit($_POST['VPos' . $i])
+				AND ctype_digit($_POST['HPos' . $i])
 				AND ctype_digit($_POST['FontSize' . $i])){ // if all entries are integers
-					
+
 				$result =DB_query("UPDATE labelfields SET fieldvalue='" . $_POST['FieldName' . $i] . "',
 														vpos='" . $_POST['VPos' . $i] . "',
 														hpos='" . $_POST['HPos' . $i] . "',
@@ -44,7 +42,7 @@ if (isset($_POST['SelectedLabelID'])){
 								WHERE labelfieldid='" . $_POST['LabelFieldID' . $i] . "'",
 								$db);
 			} else {
-				prnMsg (_('Entries for Vertical Position, Horizonal Position and Font Size must be integers.'),'error');
+				prnMsg (_('Entries for Vertical Position, Horizonal Position, and Font Size must be integers.'),'error');
 			}
 		}
 	}
@@ -80,7 +78,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The label description may not be empty'), 'error');
 	}
 	$Message = '';
-	
+
 	if (isset($_POST['PaperSize']) AND $_POST['PaperSize']!='custom'){
 		$_POST['PageWidth'] = $PaperSize[$_POST['PaperSize']]['PageWidth'];
 		$_POST['PageHeight'] = $PaperSize[$_POST['PaperSize']]['PageHeight'];
@@ -88,7 +86,7 @@ if (isset($_POST['submit'])) {
 		$_POST['PageWidth'] = 0;
 		$_POST['PageHeight'] = 0;
 	}
-	
+
 	if (isset($SelectedLabelID)) {
 
 		/*SelectedLabelID could also exist if submit had not been clicked this code
@@ -198,7 +196,7 @@ if (!isset($SelectedLabelID)) {
 				</tr>';
 		$k=0;
 		while ($myrow = DB_fetch_array($result)) {
-	
+
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
@@ -207,8 +205,8 @@ if (!isset($SelectedLabelID)) {
 				$k++;
 			}
 			$NoOfRows = floor(($myrow['pageheight']-$myrow['topmargin'])/$myrow['rowheight']);
-			$NoOfCols = floor(($myrow['pagewidth']-$myrow['leftmargin'])/$myrow['columnwidth']); 
-			
+			$NoOfCols = floor(($myrow['pagewidth']-$myrow['leftmargin'])/$myrow['columnwidth']);
+
 			foreach ($PaperSize as $PaperName=>$PaperType) {
 				if ($PaperType['PageWidth'] == $myrow['pagewidth'] AND $PaperType['PageHeight'] == $myrow['pageheight']) {
 					$Paper = $PaperName;
@@ -267,9 +265,9 @@ if (!isset($SelectedLabelID)) {
 			}
 		}
 		//END WHILE LIST LOOP
-	
+
 		//end of ifs and buts!
-	
+
 		echo '</table><p>';
 	} //end if there are label definitions to show
 }
@@ -310,7 +308,7 @@ if (isset($SelectedLabelID)) {
 	$_POST['LeftMargin']	= $myrow['leftmargin'];
 	$_POST['RowHeight']	= $myrow['rowheight'];
 	$_POST['ColumnWidth']	= $myrow['columnwidth'];
-	
+
 	foreach ($PaperSize as $PaperName=>$PaperType) {
 		if ($PaperType['PageWidth'] == $myrow['pagewidth'] AND $PaperType['PageHeight'] == $myrow['pageheight']) {
 			$_POST['PaperSize'] = $PaperName;
@@ -355,7 +353,6 @@ foreach($PaperSize as $PaperType=>$PaperSizeElement) {
 echo '</select></td>
 	</tr>';
 
-	
 if (!isset($_POST['PageHeight'])) {
 	$_POST['PageHeight']=0;
 }
@@ -453,7 +450,7 @@ if (isset($SelectedLabelID)) {
 	if (DB_num_rows($result)>0){
 		$k=0;
 		while ($myrow = DB_fetch_array($result)) {
-	
+
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
@@ -461,7 +458,7 @@ if (isset($SelectedLabelID)) {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-			
+
 			echo '<input type="hidden" name="LabelFieldID' . $i . '" value="' . $myrow['labelfieldid'] . '" />
 			<td><select name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
 			if ($myrow['fieldvalue']=='itemcode'){
@@ -495,7 +492,7 @@ if (isset($SelectedLabelID)) {
 			} else {
 				echo '<option selected="selected" value="1">' . _('Yes') . '</option>
 						<option value="0">' . _('No') . '</option>';
-			} 
+			}
 			echo '</select></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=' . $SelectedLabelID . '&amp;DeleteField=' . $myrow['labelfieldid'] .' onclick="return confirm(\'' . _('Are you sure you wish to delete this label field?') . '\');">' . _('Delete') . '</a></td>
 				</tr>';
@@ -503,10 +500,10 @@ if (isset($SelectedLabelID)) {
 		}
 		//END WHILE LIST LOOP
 		$i--; //last increment needs to be wound back
-		
+
 	} //end if there are label definitions to show
 	echo '<input type="hidden" name="NoOfFieldsDefined" value="' . $i . '" />';
-	
+
 	echo '<tr>
 		<td><select name="FieldName">
 			<option value="itemcode">' . _('Item Code') . '</option>
