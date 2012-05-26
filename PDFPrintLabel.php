@@ -15,7 +15,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 	$title = _('Print Labels');
 	include('includes/header.inc');
-		
+
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
 					stockmaster.barcode,
@@ -29,7 +29,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				ON prices.currabrev=currencies.currabrev
 			WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
 			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-			AND prices.typeabbrev='" . $_POST['SalesType'] . "' 
+			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
 			AND prices.currabrev='" . $_POST['Currency'] . "'
 			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
@@ -38,9 +38,9 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				stockmaster.categoryid,
 				stockmaster.stockid,
 				prices.startdate";
-	
+
 	$LabelsResult = DB_query($SQL,$db,'','',false,false);
-	
+
 	if (DB_error_no($db) !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -57,7 +57,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		exit;
 	}
 
-	
+
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
@@ -67,13 +67,14 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				<th>' . _('Price') . '</th>
 				<th>' . _('Print') . ' ?</th>
 			</tr>
-			<tr><th colspan="4"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
+			<tr>
+				<th colspan="4"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
 	if (isset($_POST['CheckAll'])){
 		echo 'checked="checked" ';
 	}
 	echo 'onchange="ReloadForm(SelectAll)" /></td>
 		</tr>';
-	
+
 	$i=0;
 	while ($LabelRow = DB_fetch_array($LabelsResult)){
 		echo '<tr>
@@ -100,12 +101,12 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
 		<input type="hidden" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" />
 		<input type="hidden" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" />
-		<input type="hidden" name="SalesType" value="' . $_POST['SalesType'] . '" /> 
+		<input type="hidden" name="SalesType" value="' . $_POST['SalesType'] . '" />
 		<input type="hidden" name="Currency" value="' . $_POST['Currency'] . '" />
-		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" /> 
+		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
 		<br />
 		<div class="centre">
-			
+
 			<input type="submit" name="PrintLabels" value="'. _('Print Labels'). '" />
 		</div>
 		<br />
@@ -113,11 +114,12 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				<a href="'. $rootpath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
 			</div>
 		</form>';
+	include('includes/footer.inc');
 	exit;
 }
-if (isset($_POST['PrintLabels']) 
+if (isset($_POST['PrintLabels'])
 	AND isset($_POST['NoOfLabels'])
-	AND $_POST['NoOfLabels']>0){ 
+	AND $_POST['NoOfLabels']>0){
 	$NoOfLabels = 0;
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if (isset($_POST['PrintLabel'.$i])){
@@ -143,7 +145,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						WHERE labelid='" . $_POST['LabelID'] . "'",
 						$db);
 	$LabelDimensions = DB_fetch_array($result);
-	
+
 	$result = DB_query("SELECT fieldvalue,
 								vpos,
 								hpos,
@@ -168,9 +170,9 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		$LabelFields[$i]['Barcode'] = $LabelFieldRow['barcode'];
 		$i++;
 	}
-	
+
 	$PaperSize = 'Custom'; // so PDF starter wont default the DocumentPaper
-	$DocumentPaper = array($LabelDimensions['page_width'],$LabelDimensions['page_height']); 
+	$DocumentPaper = array($LabelDimensions['page_width'],$LabelDimensions['page_height']);
 	include('includes/PDFStarter.php');
 	$Top_Margin = $LabelDimensions['label_topmargin'];
 	$Left_Margin = $LabelDimensions['label_leftmargin'];
@@ -189,12 +191,12 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 	$pdf->setPrintHeader(false);
 	$pdf->setPrintFooter(false);
-	
+
 	$PageNumber=1;
 	//go down first then accross
 	$YPos = $Page_Height - $Top_Margin; //top of current label
 	$XPos = $Left_Margin; // left of current label
-	
+
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if (isset($_POST['PrintLabel'.$i])){
 			$NoOfLabels--;
@@ -215,12 +217,12 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				} elseif($Field['Barcode']==1) {
 
 					$BarcodeImage = new code128(str_replace('_','',$Value));
-					
+
 					ob_start();
 					imagepng(imagepng($BarcodeImage->draw()));
 					$Image_String = ob_get_contents();
 					ob_end_clean();
-					
+
 					$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$Field['VPos'],'', $Field['FontSize']);
 
 				} else {
@@ -231,7 +233,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				//setup $YPos and $XPos for the next label
 				if (($YPos - $LabelDimensions['label_rowheight']) < $LabelDimensions['label_height']){
 					/* not enough space below the above label to print a new label
-					 * so the above was the last label in the column 
+					 * so the above was the last label in the column
 					 * need to start either a new column or new page
 					 */
 					if (($Page_Width - $XPos - $LabelDimensions['label_columnwidth']) < $LabelDimensions['label_width']) {
@@ -251,11 +253,11 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 					 */
 					$YPos -= $LabelDimensions['label_rowheight']; //Top of next label
 				}
-			}//end if there is another label to print 
+			}//end if there is another label to print
 		} //this label is set to print
 	} //loop through labels selected to print
 
-	
+
 	$FileName=$_SESSION['DatabaseName']. '_' . _('Price_Labels') . '_' . date('Y-m-d').'.pdf';
 	ob_clean();
 	$pdf->OutputI($FileName);
@@ -279,7 +281,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '<tr>
 				<td>' . _('Label to print') . ':</td>
 				<td><select name="LabelID">';
-		
+
 		$LabelResult = DB_query("SELECT labelid, description FROM labels",$db);
 		while ($LabelRow = DB_fetch_array($LabelResult)){
 			echo '<option value="' . $LabelRow['labelid'] . '">' . $LabelRow['description'] . '</option>';
@@ -349,7 +351,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 					<a href="'. $rootpath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
 				</div>
 				</form>';
-				
+
 	}
 	include('includes/footer.inc');
 
