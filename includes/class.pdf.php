@@ -101,10 +101,9 @@ if (!class_exists('Cpdf', false)) {
 				$this->SetKeywords( $value );
 			}
 		}
-	
-	
-		function addJpegFromFile($img,$XPos,$y,$Width=0,$Height=0){
-			$this->Image($img, $XPos, $this->h-$y-$Height, $Width, $Height);
+		
+		function addJpegFromFile($img,$XPos,$YPos,$Width=0,$Height=0,$Type=''){
+			$this->Image($img, $x=$XPos, $y=$this->h-$YPos-$Height, $w=$Width, $h=$Height,$type=$Type);
 		}
 	
 		/*

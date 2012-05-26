@@ -65,6 +65,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 	$pdf->setAutoPageBreak(0);
 	$pdf->setPrintHeader(false);
+	$pdf->setPrintFooter(false);
 	$pdf->AddPage();
 	$pdf->cMargin = 0;
 /* END Brought from class.pdf.php constructor */

@@ -63,6 +63,7 @@ If (isset($PrintPDF)
 
 	$pdf->setAutoPageBreak(0);
 	$pdf->setPrintHeader(false);
+	$pdf->setPrintFooter(false);
 	$pdf->AddPage();
 	$pdf->cMargin = 0;
 

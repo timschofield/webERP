@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/5/2012 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by Tomáš Horáček very simple and clean
 23/5/2012 Klaus: PO_PDFPurchOrders.php print purchase orders with supplier's code where it is available in the purchasing data
 23/5/2012 Exson: Revise GLAccounts.php to make more than 10 digits account code is allowed. 
 2012/05/22 Exson: Modify accountcode to varchar(20) to meet some countries accounting regulation for more digits account code.
