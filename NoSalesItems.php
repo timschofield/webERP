@@ -164,12 +164,6 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	$k = 0; //row colour counter
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
-		//find the quantity onhand item
-		$sqloh = "SELECT sum(quantity) AS qty
-					FROM locstock
-					WHERE stockid='" . $myrow['stkcode'] . "'";		
-		$oh = DB_query($sqloh, $db);
-		$ohRow = DB_fetch_row($oh);
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
@@ -195,8 +189,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	}
 	echo '</table>';
 	echo '<br />
-			
-		</form>';
+	</form>';
 }
 include ('includes/footer.inc');
 ?>
