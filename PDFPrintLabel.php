@@ -223,7 +223,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 					$Image_String = ob_get_contents();
 					ob_end_clean();
 
-					$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$Field['VPos'],'', $Field['FontSize']);
+					$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
 				} else {
 					$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos']-20,$Field['FontSize'],$Value);

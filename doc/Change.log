@@ -1,5 +1,6 @@
 webERP Change Log
 
+28/5/2012 Phil: Configure xmlrpc api to work correctly with utf-8 character encoding.
 26/5/2012 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by Tomáš Horáček very simple and clean
 23/5/2012 Klaus: PO_PDFPurchOrders.php print purchase orders with supplier's code where it is available in the purchasing data
 23/5/2012 Exson: Revise GLAccounts.php to make more than 10 digits account code is allowed. 
@@ -11,7 +12,6 @@ webERP Change Log
 14/5/2012 Exson: Fixed bug that when users input a Exchang Rate manually, when ones changed minds and select another currency, it'll not show the suggested rate correctly in Payments.php. 
 14/5/2012 Exson: Fixed when user change the currency, the suggested rate can not changed accordingly in CustomerReceipt.php. Reported by Ahmed.Fawzy.
 14/5/2012 Ahmed.Fawzy: Fixed bugs that ExchangRateText be applied with locale_number_format() function in CustomerReceipt.php
-
 10/5/2012 Exson: Fixed bug that Date selection does not work in ReverseGRN.php. Add GRN batch column. 
 9/5/2012 Ahmed.Fawzy: Fixed bugs in Stocks.php that the properties for new items cannot be saved. Checked status is not kept and numeric values between max and min are not validated.
 8/5/2012 Exson: Fixed typo in SalesCategories.php which leads to the jpg pictures do not appear. 

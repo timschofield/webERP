@@ -8,7 +8,7 @@
 	include 'api_php.php';
 
 	include '../xmlrpc/lib/xmlrpc.inc';
-
+	$xmlrpc_internalencoding='UTF-8';
 	include '../xmlrpc/lib/xmlrpcs.inc';
 
 	$Description = _('This function is used to login into the API methods for the specified the database.')
