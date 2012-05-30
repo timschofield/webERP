@@ -363,7 +363,7 @@ if($result && DB_num_rows($result)) {
 }
 
 // This query will return the stock that is available
-$sql = "SELECT stockid, description FROM stockmaster ORDER BY stockid";
+$sql = "SELECT stockid, description FROM stockmaster WHERE discontinued = 0 ORDER BY stockid";
 $result = DB_query($sql,$db);
 if($result && DB_num_rows($result)) {
 	// continue id stock id in the stockid array
