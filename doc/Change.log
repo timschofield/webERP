@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/6/12 Phil: Settle counter sales and receipts should be set - now fixed.
 28/5/2012 Phil: Configure xmlrpc api to work correctly with utf-8 character encoding.
 26/5/2012 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by Tomáš Horáček very simple and clean
 23/5/2012 Klaus: PO_PDFPurchOrders.php print purchase orders with supplier's code where it is available in the purchasing data
