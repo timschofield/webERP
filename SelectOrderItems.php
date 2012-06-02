@@ -1671,13 +1671,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
         if (!isset($_POST['PartSearch'])) {
             echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
         }
-
 		if (isset($SearchResult)) {
 			echo '<br />';
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 			$j = 1;
-			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" id="orderform">';
+			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="orderform">';
             echo '<div>';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
@@ -1864,14 +1863,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<br /><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '" />
                      <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
-            echo '</div>
-                  </form>';
+            echo '</div></form>';
+               
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
-
+          
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div>';
+			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . 
+				'" method="post" name="deleteform">';
+            		echo '<div>';
+			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
 		}
 	}#end of else not selecting a customer
+	
 
 
 if (isset($_GET['NewOrder']) and $_GET['NewOrder']!='') {
