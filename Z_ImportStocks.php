@@ -33,17 +33,17 @@ $headers = array(
 if ($_FILES['userfile']['name']) { //start file processing
 
 	//initialize
-	$allowType='text/csv';
+	$AllowType='text/csv';
 	$fieldTarget = 18;
 	$InputError = 0;
 
 	//check file info
-	$fileName = $_FILES['userfile']['name'];
+	$FileName = $_FILES['userfile']['name'];
 	$tmpName  = $_FILES['userfile']['tmp_name'];
 	$fileSize = $_FILES['userfile']['size'];
 	$fileType = $_FILES['userfile']['type'];
-	if ($fileType != $allowType) {
-		prnMsg (_('File has type '. $fileType. ', but only '. $allowType. ' is allowed.'),'error');
+	if ($fileType != $AllowType) {
+		prnMsg (_('File has type '. $fileType. ', but only '. $AllowType. ' is allowed.'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -273,7 +273,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 		DB_Txn_Rollback($db);
 	} else { //all good so commit data transaction
 		DB_Txn_Commit($db);
-		prnMsg( _('Batch Import of') .' ' . $fileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
+		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
 	}
 
 	fclose($handle);

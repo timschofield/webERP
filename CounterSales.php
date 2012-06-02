@@ -1278,7 +1278,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 										rate,
 										invtext,
 										shipvia,
-										alloc )
+										alloc,
+										settled )
 			VALUES (
 				'". $InvoiceNo . "',
 				10,
@@ -1295,7 +1296,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				'" . $ExRate . "',
 				'" . $_SESSION['Items'.$identifier]->Comments . "',
 				'" . $_SESSION['Items'.$identifier]->ShipVia . "',
-				'" . ($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['TaxTotal'])) . "')";
+				'" . ($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['TaxTotal'])) . "',
+				'1')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
@@ -1934,7 +1936,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 							rate,
 							ovamount,
 							alloc,
-							invtext)
+							invtext,
+							settled)
 					VALUES ('" . $ReceiptNumber . "',
 						12,
 						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
@@ -1945,7 +1948,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 						'" . $ExRate . "',
 						'" . -filter_number_format($_POST['AmountPaid']) . "',
 						'" . -filter_number_format($_POST['AmountPaid']) . "',
-						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') ."')";
+						'" . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('Counter Sale') ."',
+						'1')";
 
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
