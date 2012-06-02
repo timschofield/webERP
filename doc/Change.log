@@ -1,5 +1,5 @@
 webERP Change Log
-
+02/06/2012 Exson: Fixed the order cancel function failure in SelectOrderItems.php. Reported by Pak Richard.
 2/6/12 Phil: Settle counter sales and receipts should be set - now fixed.
 28/5/2012 Phil: Configure xmlrpc api to work correctly with utf-8 character encoding.
 26/5/2012 Phil: Fix barcode printing on PDFPrintLabel.php - barcode functionality is unreliable so used (http://www.barcodepack.com) by Tomáš Horáček very simple and clean
