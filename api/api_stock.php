@@ -530,8 +530,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql="SELECT stockid, 
-                     description
+		$sql="SELECT stockid
 			  FROM stockmaster
 			  WHERE " . $Field ." LIKE '%".$Criteria."%'";
 		$result = DB_Query($sql, $db);

@@ -90,12 +90,23 @@
 		}
 		$sql = "SELECT * FROM taxauthorities WHERE taxid='".$TaxAuthority."'";
 		$result = DB_query($sql, $db);
-		return DB_fetch_array($result);
+		$i=0;
+		while ($myrow=DB_fetch_array($result)){
+			$Answer[$i]['taxcatid'] = $myrow['taxcatid'];
+			$Answer[$i]['dispatchtaxprovince'] = $myrow['dispatchtaxprovince'];
+			$Answer[$i]['taxrate'] = $myrow['taxrate'];
+		}
+		$Errors[0]=0;
+		$Errors[1]=$Answer;
+		return $Errors;
 	}
 
-/* This function takes as a parameter a tax authority id
- * and returns an array containing the rate of tax fpr the selected
- * tax authority.
+
+/
+	
+/* This function takes as a parameter a tax authority id and a tax category id
+ * and returns an array containing the rate of tax for the selected
+ * tax authority and tax category
  */
 
     function GetTaxAuthorityRates($TaxAuthority, $User, $Password) {
@@ -105,9 +116,10 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM taxauthrates WHERE taxauthority='".$TaxAuthority."'";
+		$sql = "SELECT taxcatid, dispatchtaxprovince, taxrate FROM taxauthrates WHERE taxauthority='".$TaxAuthority."' AND taxcatid='" . $TaxCatID . "'";
 		$result = DB_query($sql, $db);
-		return DB_fetch_array($result);
+		$TaxRateRow = DB_fetch_row($result);
+		return $TaxRateRow[0];
 	}
 
 
