@@ -93,6 +93,12 @@ if (!(isset($_POST['Search']))) {
 			<td>:</td>
 			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	maxlength="8" value="30" /></td>
 		 </tr>';
+	//Stock in days less than
+	echo '<tr>
+			<td>' . _('With less than') . ' </td><td>:</td>
+			<td><input class="number" tabindex="4" type="text" name="MaxDaysOfStock" size="8"	maxlength="8" value="999" /></td>
+			<td>' . ' ' . _('Days of Stock (QOH + QOO) Available') . ' </td>
+		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
@@ -118,6 +124,7 @@ if (!(isset($_POST['Search']))) {
 					SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
 					stockmaster.description,
 					stockmaster.units,
+					stockmaster.mbflag,
 					currencies.rate,
 					debtorsmaster.currcode,
 					stockmaster.decimalplaces
@@ -159,6 +166,8 @@ if (!(isset($_POST['Search']))) {
 						<th>' . _('Units') . '</th>
 						<th>' . _('Value Sales') . '</th>
 						<th>' . _('On Hand') . '</th>
+						<th>' . _('On Order') . '</th>
+						<th>' . _('Stock (Days)') . '</th>
 					</tr>';
 	echo $TableHeader;
 	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
@@ -169,37 +178,82 @@ if (!(isset($_POST['Search']))) {
 	$k = 0; //row colour counter
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
-		//find the quantity onhand item
-		$sqloh = "SELECT sum(quantity) AS qty
-					FROM locstock
-					WHERE stockid='" . $myrow['stkcode'] . "'";
-		
-		$oh = DB_query($sqloh, $db);
-		$ohRow = DB_fetch_row($oh);
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
+		$QOH = 0;
+		$QOO = 0;
+		switch ($myrow['mbflag']) {
+			case 'A':
+			case 'D':
+			case 'K':
+				$QOH = _('N/A');
+				$QOO = _('N/A');
+			break;
+			case 'M':
+			case 'B':
+				$QOHResult = DB_query("SELECT sum(quantity)
+								FROM locstock
+								WHERE stockid = '" . $myrow['stkcode'] . "'", $db);
+				$QOHRow = DB_fetch_row($QOHResult);
+				$QOH = $QOHRow[0];
+				$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
+							FROM purchorders INNER JOIN purchorderdetails
+							ON purchorders.orderno=purchorderdetails.orderno
+							WHERE purchorderdetails.itemcode='" . $myrow['stkcode'] . "'
+							AND purchorderdetails.completed =0
+							AND purchorders.status<>'Cancelled'
+							AND purchorders.status<>'Pending'
+							AND purchorders.status<>'Rejected'";
+				$QOOResult = DB_query($QOOSQL, $db);
+				if (DB_num_rows($QOOResult) == 0) {
+					$QOO = 0;
+				} else {
+					$QOORow = DB_fetch_row($QOOResult);
+					$QOO = $QOORow[0];
+				}
+				//Also the on work order quantities
+				$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
+						FROM woitems INNER JOIN workorders
+						ON woitems.wo=workorders.wo
+						WHERE workorders.closed=0
+						AND woitems.stockid='" . $myrow['stkcode'] . "'";
+				$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');
+				$QOOResult = DB_query($sql, $db, $ErrMsg);
+				if (DB_num_rows($QOOResult) == 1) {
+					$QOORow = DB_fetch_row($QOOResult);
+					$QOO+= $QOORow[0];
+				}
+			break;
 		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$i, 
-				$myrow['stkcode'], 
-				$myrow['description'], 
-				locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
-				$myrow['units'], //unit
-				locale_number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
-				locale_number_format($ohRow[0], $myrow['decimalplaces']) //on hand 
-				);
-		$i++;
+		$DaysOfStock = ($QOH + $QOO) / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+		if ($DaysOfStock < $_POST['MaxDaysOfStock']){
+			if ($k == 1) {
+				echo '<tr class="EvenTableRows">';
+				$k = 0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k = 1;
+			}
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$myrow['stkcode'], 
+					$myrow['description'], 
+					locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
+					$myrow['units'], //unit
+					locale_number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
+					locale_number_format($QOH, $myrow['decimalplaces']),  //on hand 
+					locale_number_format($QOO, $myrow['decimalplaces']), //on order 
+					locale_number_format($DaysOfStock, 0) //days of available stock 
+					);
+			$i++;
+		}
 	}
 	echo '</table>';
 	echo '<br />
