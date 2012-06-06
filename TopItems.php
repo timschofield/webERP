@@ -252,8 +252,8 @@ if (!(isset($_POST['Search']))) {
 					locale_number_format($QOO, $myrow['decimalplaces']), //on order 
 					locale_number_format($DaysOfStock, 0) //days of available stock 
 					);
-			$i++;
 		}
+		$i++;
 	}
 	echo '</table>';
 	echo '<br />
