@@ -10,9 +10,9 @@ $title = _('Reverse Goods Received');
 
 include('includes/header.inc');
 
-if ((isset($_SESSION['SupplierID']) AND $_SESSION['SupplierID']!='') 
+if ((isset($_SESSION['SupplierID']) AND $_SESSION['SupplierID']!='')
 	OR (!isset($_POST['SupplierID']) OR $_POST['SupplierID'])==''){
-		
+
 	$_POST['SupplierID']=$_SESSION['SupplierID'];
 
 }
@@ -49,7 +49,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			FROM grns INNER JOIN purchorderdetails
 			ON grns.podetailitem=purchorderdetails.podetailitem
 			INNER JOIN purchorders
-			ON purchorderdetails.orderno = purchorders.orderno 
+			ON purchorderdetails.orderno = purchorders.orderno
 			WHERE grnno='" . $_GET['GRNNo'] . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not get the details of the GRN selected for reversal because') . ' ';
@@ -263,7 +263,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 						'" . $GRN['itemcode'] . "',
 						'" . $SerialStockMoves['serialno'] . "',
 						'" . -$SerialStockMoves['moveqty'] . "')";
-						
+
 				$result = DB_query($SQL,$db,_('Could not insert the reversing stock movements for the batch/serial numbers'),_('The SQL used but failed was') . ':',true);
 
 				$SQL = "UPDATE stockserialitems
@@ -278,13 +278,13 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
 
-	if ($_SESSION['CompanyRecord']['gllink_stock']==1 
-		AND $GRN['glcode'] !=0 
-		AND $GRN['stdcostunit']!=0){ 
-	
+	if ($_SESSION['CompanyRecord']['gllink_stock']==1
+		AND $GRN['glcode'] !=0
+		AND $GRN['stdcostunit']!=0){
+
 	/*GLCode is set to 0 when the GLLink is not activated
-	this covers a situation where the GLLink is now active  but it wasn't when this PO was entered 
-	
+	this covers a situation where the GLLink is now active  but it wasn't when this PO was entered
+
 	First the credit using the GLCode in the PO detail record entry*/
 
 		$SQL = "INSERT INTO gltrans (type,
@@ -302,7 +302,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 									'" . $GRN['glcode'] . "',
 									'" . _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
 									'" . -($GRN['stdcostunit'] * $QtyToReverse) . "')";
-					
+
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted for the reversal of the received item because');
 		$DbgMsg = _('The following SQL to insert the purchase GLTrans record was used');
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -359,7 +359,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		</div>';
     echo '</div>
           </form>';
-		
+
 	if (isset($_POST['ShowGRNS'])){
 
 		$sql = "SELECT grnno,
@@ -372,7 +372,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 						qtyrecd-quantityinv AS qtytoreverse
 				FROM grns
 				WHERE grns.supplierid = '" . $_POST['SupplierID'] . "'
-				AND (grns.qtyrecd-grns.quantityinv) >0 
+				AND (grns.qtyrecd-grns.quantityinv) >0
 				AND deliverydate>='" . FormatDateForSQL($_POST['RecdAfterDate']) ."'";
 
 		$ErrMsg = _('An error occurred in the attempt to get the outstanding GRNs for') . ' ' . $_POST['SuppName'] . '. ' . _('The message was') . ':';
@@ -394,7 +394,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 								<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
 								<th>' . _('Quantity To') . '<br />' . _('Reverse') . '</th>
 							</tr>';
-		
+
 			echo $TableHeader;
 
 			/* show the GRNs outstanding to be invoiced that could be reversed */
@@ -416,7 +416,6 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				$LinkToRevGRN = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?GRNNo=' . $myrow['grnno'] . '">' . _('Reverse') . '</a>';
 
 				printf('<td>%s</td>
-						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -444,7 +443,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			}
 
 			echo '</table>';
-        
+
 		}
 	}
 }
