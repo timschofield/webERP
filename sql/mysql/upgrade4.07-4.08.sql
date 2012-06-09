@@ -122,5 +122,7 @@ ALTER TABLE taxauthorities ADD CONSTRAINT taxauthorities_ibfk_2 FOREIGN KEY (pur
 
 INSERT INTO  scripts (script, pagesecurity, description) VALUES ('NoSalesItems.php',  '2',  'Shows the No Selling (worst) items');
 
+ALTER TABLE  stockmaster ADD lastcategoryupdate DATE NOT NULL DEFAULT  '0000-00-00' AFTER  categoryid;
+
 UPDATE config SET confvalue='4.08' WHERE confname='VersionNumber';
 

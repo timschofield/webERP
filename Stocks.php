@@ -1,6 +1,6 @@
 <?php
 
-/* $Id$ */
+//* $Id$ */
 
 include('includes/session.inc');
 $title = _('Item Maintenance');
@@ -225,7 +225,8 @@ if (isset($_POST['submit'])) {
 							serialised,
 							materialcost+labourcost+overheadcost AS itemcost,
 							stockcategory.stockact,
-							stockcategory.wipact
+							stockcategory.wipact,
+							stockmaster.categoryid
 					FROM stockmaster 
 					INNER JOIN stockcategory 
 					ON stockmaster.categoryid=stockcategory.categoryid
@@ -238,6 +239,7 @@ if (isset($_POST['submit'])) {
 			$UnitCost = $myrow[3];
 			$OldStockAccount = $myrow[4];
 			$OldWIPAccount = $myrow[5];
+			$OldCategoryId = $myrow[6];
 			
 
 			$sql = "SELECT SUM(locstock.quantity) 
@@ -364,8 +366,11 @@ if (isset($_POST['submit'])) {
 							controlled='" . $_POST['Controlled'] . "',
 							serialised='" . $_POST['Serialised']."',
 							perishable='" . $_POST['Perishable']."',
-							categoryid='" . $_POST['CategoryID'] . "',
-							units='" . $_POST['Units'] . "',
+							categoryid='" . $_POST['CategoryID'] . "', ";
+				if ($OldCategoryId != $_POST['CategoryID']){
+					$sql = $sql . "lastcategoryupdate='" . date('Y-m-d') . "', ";
+				}
+				$sql = $sql . "units='" . $_POST['Units'] . "',
 							mbflag='" . $_POST['MBFlag'] . "',
 							eoq='" . filter_number_format($_POST['EOQ']) . "',
 							volume='" . filter_number_format($_POST['Volume']) . "',
@@ -507,7 +512,8 @@ if (isset($_POST['submit'])) {
 				DB_Txn_Commit($db);
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 				echo '<br />';
-			}	
+			}
+
 
 		} else { //it is a NEW part
 			//but lets be really sure here
@@ -522,6 +528,7 @@ if (isset($_POST['submit'])) {
 												description,
 												longdescription,
 												categoryid,
+												lastcategoryupdate,
 												units,
 												mbflag,
 												eoq,
@@ -541,6 +548,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['Description'] . "',
 								'" . $_POST['LongDescription'] . "',
 								'" . $_POST['CategoryID'] . "',
+								'" . date('Y-m-d') . "',
 								'" . $_POST['Units'] . "',
 								'" . $_POST['MBFlag'] . "',
 								'" . filter_number_format($_POST['EOQ']) . "',
