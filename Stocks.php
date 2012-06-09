@@ -349,6 +349,7 @@ if (isset($_POST['submit'])) {
 							prnMsg(_('The property value should between') . ' '.$_POST['PropMin' . $i] . ' ' . _('and') . $_POST['PropMax' . $i],'error');
 					}
 				}
+			}
 
 
 
@@ -506,7 +507,7 @@ if (isset($_POST['submit'])) {
 				DB_Txn_Commit($db);
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 				echo '<br />';
-			}
+			}	
 
 		} else { //it is a NEW part
 			//but lets be really sure here
