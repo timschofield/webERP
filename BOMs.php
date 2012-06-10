@@ -704,18 +704,19 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo '</select></td>
 			</tr>
 			<tr>
-				<td>' . _('Work Centre Added') . ': </td>
-				<td><select tabindex="3" name="WorkCentreAdded">';
+				<td>' . _('Work Centre Added') . ': </td><td>';
 
 		$sql = "SELECT code, description FROM workcentres";
 		$result = DB_query($sql,$db);
 
 		if (DB_num_rows($result)==0){
-			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
-			echo '<br /><a href="' . $rootpath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
+			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.','warn');
+			echo '<a href="' . $rootpath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
 			include('includes/footer.inc');
 			exit;
 		}
+
+		echo '<select tabindex="3" name="WorkCentreAdded">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($_POST['WorkCentreAdded']) and $myrow['code']==$_POST['WorkCentreAdded']) {
