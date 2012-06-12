@@ -46,8 +46,8 @@ if (isset($_POST['PrintPDF'])
 					stockmaster.stockid,
 					stockmaster.description
 				HAVING SUM(locstock.quantity)!=0
-				AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
+				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
 				ORDER BY stockmaster.categoryid,
 					stockmaster.stockid";
 	} else {
@@ -66,8 +66,8 @@ if (isset($_POST['PrintPDF'])
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND locstock.quantity!=0
-				AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
+				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
 				AND locstock.loccode = '" . $_POST['Location'] . "'
 				ORDER BY stockmaster.categoryid,
 					stockmaster.stockid";
@@ -148,7 +148,7 @@ if (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
 			$LeftOvers = $pdf->addTextWrap(423,$YPos,15,$FontSize,$InventoryValn['units'],'left');
 			$LeftOvers = $pdf->addTextWrap(438,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
-			
+
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
@@ -168,7 +168,7 @@ if (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 	}
 	$DisplayCatTotVal = locale_number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
-	
+
 	$LeftOvers = $pdf->addTextWrap(480,$YPos,80,$FontSize,$DisplayCatTotVal, 'right');
 	$DisplayCatTotQty = locale_number_format($CatTot_Qty,2);
 	$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
@@ -213,14 +213,14 @@ if (isset($_POST['PrintPDF'])
 				<td>' . _('From Inventory Category Code') . ':</td>
 				<td><select name="FromCriteria">';
 
-		$sql="SELECT categoryid, 
-					categorydescription 
-				FROM stockcategory  
+		$sql="SELECT categoryid,
+					categorydescription
+				FROM stockcategory
 				ORDER BY categorydescription";
-				
+
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
+			echo '<option value="' . $myrow['categorydescription'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
+			echo '<option value="' . $myrow['categorydescription'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
@@ -241,11 +241,11 @@ if (isset($_POST['PrintPDF'])
 		echo '<tr>
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
-				
-		$sql = "SELECT loccode, 
-						locationname 
+
+		$sql = "SELECT loccode,
+						locationname
 				FROM locations";
-				
+
 		$LocnResult=DB_query($sql,$db);
 
 		echo '<option value="All">' . _('All Locations') . '</option>';
