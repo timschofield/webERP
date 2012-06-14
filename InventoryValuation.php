@@ -48,7 +48,7 @@ if (isset($_POST['PrintPDF'])
 				HAVING SUM(locstock.quantity)!=0
 				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
 				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
-				ORDER BY stockmaster.categoryid,
+				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
 	} else {
 		$SQL = "SELECT stockmaster.categoryid,
@@ -69,7 +69,7 @@ if (isset($_POST['PrintPDF'])
 				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
 				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
 				AND locstock.loccode = '" . $_POST['Location'] . "'
-				ORDER BY stockmaster.categoryid,
+				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
 	}
 	$InventoryResult = DB_query($SQL,$db,'','',false,true);
