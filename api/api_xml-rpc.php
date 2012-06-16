@@ -115,8 +115,7 @@
 
 	function  xmlrpc_InsertBranch($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3) {
 /*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
@@ -152,13 +151,12 @@
 
 	function  xmlrpc_ModifyCustomer($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3) {
+/*x*/		 	$rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/				$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/		} else {
-/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*e*/		 	$rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
 /*x*/		}
 		ob_end_flush();
 		return $rtn;
@@ -183,19 +181,18 @@
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-/*E*/	$ModifyBranch_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
+/*E*/$ModifyBranch_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$ModifyBranch_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_ModifyBranch($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 3)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/		if ($xmlrpcmsg->getNumParams() == 3) {
+/*x*/		  $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/		} else {
-/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*e*/		  $rtn = new xmlrpcresp( php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
 /*x*/		}
 		ob_end_flush();
 		return $rtn;
@@ -367,7 +364,7 @@
 /*x*/	if ($xmlrpcmsg->getNumParams() == 2)	{
 /*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
 /*x*/	} else {
-/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList( '', '')));
+/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetCurrencyList('','')));
 /*x*/	}
 		ob_end_flush();
 		return $rtn;
