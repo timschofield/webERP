@@ -26,8 +26,8 @@ if (isset($_POST['PrintPDF'])) {
 		$template='simple';
 	}elseif($_POST['template']=='standard'){
 		$template='standard';
-	}
-	else{$template='full';
+	}else{
+		$template='full';
 		}
 	// Create Transfer Number
 	if(!isset($Trf_ID) && $_POST['ReportType'] == 'Batch'){
@@ -60,6 +60,11 @@ if (isset($_POST['PrintPDF'])) {
 		$WhereCategory = " ";
 	}
 
+	if ($_POST['Strategy'] == 'RLZero') {
+		$WhereCategory = $WhereCategory . " AND fromlocstock.reorderlevel = 0 ";
+	}else{
+		$WhereCategory = $WhereCategory . " AND locstock.reorderlevel > locstock.quantity ";
+	}
 
 	$sql = "SELECT locstock.stockid,
 				stockmaster.description,
@@ -84,7 +89,6 @@ if (isset($_POST['PrintPDF'])) {
 			  AND fromlocstock.loccode = '" . $_POST['FromLocation'] . "'
 			WHERE locstock.stockid=stockmaster.stockid
 			AND locstock.loccode ='" . $_POST['ToLocation'] . "'
-			AND locstock.reorderlevel > locstock.quantity
 			AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
 			AND stockcategory.stocktype<>'A'
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
@@ -150,15 +154,21 @@ if (isset($_POST['PrintPDF'])) {
 		// The real needed stock is reorder level - qty - in transit).
 		$NeededQtyAtTo = $myrow['neededqty'] - $InTransitQuantityAtTo;
 		
-		// Decide how many are sent 
-		$ShipQty = 0;
-		if ($AvailableShipQtyAtFrom > 0) {
-			if ($AvailableShipQtyAtFrom >= $NeededQtyAtTo) {
-				// We can ship all the needed qty at TO location
-				$ShipQty = $NeededQtyAtTo;
-			}else{
-				// We can't ship all the needed qty at TO location, but at least can ship some
-				$ShipQty = $AvailableShipQtyAtFrom;
+		// Decide how many are sent (depends on the strategy)
+		if ($_POST['Strategy'] == 'RLZero') {
+			// send items with overstock (and RL = 0) at FROM, no matter qty needed at TO.
+			$ShipQty = $AvailableShipQtyAtFrom;
+		}else{
+			// Send all items with overstock at FROM needed at TO
+			$ShipQty = 0;
+			if ($AvailableShipQtyAtFrom > 0) {
+				if ($AvailableShipQtyAtFrom >= $NeededQtyAtTo) {
+					// We can ship all the needed qty at TO location
+					$ShipQty = $NeededQtyAtTo;
+				}else{
+					// We can't ship all the needed qty at TO location, but at least can ship some
+					$ShipQty = $AvailableShipQtyAtFrom;
+				}
 			}
 		}
 
@@ -285,7 +295,7 @@ if (isset($_POST['PrintPDF'])) {
 	$title=_('Stock Dispatch Report');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
-	echo '<div class="page_help_text">' . _('Create batch of overstock from one location to transfer to another location that is below reorder level.<br/>
+	echo '<div class="page_help_text">' . _('Create a transfer batch of overstock from one location to another location that is below reorder level.<br/>
 										 Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a<br/>
 										 dispatch percentage entered, that needed quantity is inflated by the percentage entered.<br/>
 										 Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
@@ -351,9 +361,6 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	// Define StockCat with 'name="StockCat[ ]" multiple' so can select more than one
-	// Also have to change way define $WhereCategory for WHERE clause
-
 	echo '<tr>
 			  <td>' . _('In Stock Category') . ':</td>
 			  <td><select name="StockCat">';
@@ -373,6 +380,12 @@ if (isset($_POST['PrintPDF'])) {
 		}
 	}
 	echo '</select></td></tr>';
+
+	echo '<tr><td>' . _('Dispatch Strategy:') . ':</td>';
+	echo '<td><select name="Strategy">';
+	echo '<option selected="selected" value="All">' . _('Items needed at TO location with overstock at FROM location') . '</option>';
+	echo '<option value="RLZero">' . _('Items with overstock at FROM location (and RL=0)') . '</option>';
+	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '<tr><td>' . _('Report Type') . ':</td>';
 	echo '<td><select name="ReportType">';
@@ -418,8 +431,8 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos -=$line_height;
 	
 	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Stock Dispatch ') . $_POST['ReportType']);
-	$pdf->addTextWrap(200,$YPos,50,$FontSize,_('From :'));
-	$pdf->addTextWrap(250,$YPos,200,$FontSize,$FromLocation);
+	$pdf->addTextWrap(200,$YPos,30,$FontSize,_('From :'));
+	$pdf->addTextWrap(230,$YPos,200,$FontSize,$FromLocation);
 
 	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');	 
@@ -427,16 +440,21 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Transfer No.'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$Trf_ID);
 	$pdf->setFont('','B');
-	$pdf->addTextWrap(200,$YPos,20,$FontSize,_('To :'));
-	$pdf->addTextWrap(250,$YPos,200,$FontSize,$ToLocation);
+	$pdf->addTextWrap(200,$YPos,30,$FontSize,_('To :'));
+	$pdf->addTextWrap(230,$YPos,200,$FontSize,$ToLocation);
 	$pdf->setFont('','');
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['StockCat']);
 	$pdf->addTextWrap(160,$YPos,150,$FontSize,$CategoryDescription,'left');
 	$YPos -= $line_height;
-	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Percent'));
-	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['Percent']);
+	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Over transfer'));
+	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['Percent'] . "%");
+	if ($_POST['Strategy'] == 'RLZero') {
+		$pdf->addTextWrap(200,$YPos,200,$FontSize,_('Overstock items at '). $FromLocation);
+	}else{
+		$pdf->addTextWrap(200,$YPos,200,$FontSize,_('Items needed at '). $ToLocation);
+	}
 	$YPos -=(2*$line_height);
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
