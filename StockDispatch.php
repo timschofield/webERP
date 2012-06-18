@@ -60,9 +60,9 @@ if (isset($_POST['PrintPDF'])) {
 		$WhereCategory = " ";
 	}
 
-	if ($_POST['Strategy'] == 'RLZero') {
-		$WhereCategory = $WhereCategory . " AND fromlocstock.reorderlevel = 0 ";
-	} else {
+	// If Strategy is "Items needed at TO location with overstock at FROM" we need to control the "needed at TO" part
+	// The "overstock at FROM" part is controlled in any case with AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
+	if ($_POST['Strategy'] == 'All') {
 		$WhereCategory = $WhereCategory . " AND locstock.reorderlevel > locstock.quantity ";
 	}
 
@@ -155,8 +155,8 @@ if (isset($_POST['PrintPDF'])) {
 		$NeededQtyAtTo = $myrow['neededqty'] - $InTransitQuantityAtTo;
 
 		// Decide how many are sent (depends on the strategy)
-		if ($_POST['Strategy'] == 'RLZero') {
-			// send items with overstock (and RL = 0) at FROM, no matter qty needed at TO.
+		if ($_POST['Strategy'] == 'OverFrom') {
+			// send items with overstock at FROM, no matter qty needed at TO.
 			$ShipQty = $AvailableShipQtyAtFrom;
 		}else{
 			// Send all items with overstock at FROM needed at TO
@@ -371,7 +371,7 @@ if (isset($_POST['PrintPDF'])) {
 			<td>
 				<select name="Strategy">
 					<option selected="selected" value="All">' . _('Items needed at TO location with overstock at FROM location') . '</option>
-					<option value="RLZero">' . _('Items with overstock at FROM location (and RL=0)') . '</option>
+					<option value="OverFrom">' . _('Items with overstock at FROM location') . '</option>
 				</select>
 			</td>
 			<td>&nbsp;</td>
@@ -450,7 +450,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Over transfer'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['Percent'] . "%");
-	if ($_POST['Strategy'] == 'RLZero') {
+	if ($_POST['Strategy'] == 'OverFrom') {
 		$pdf->addTextWrap(200,$YPos,200,$FontSize,_('Overstock items at '). $FromLocation);
 	}else{
 		$pdf->addTextWrap(200,$YPos,200,$FontSize,_('Items needed at '). $ToLocation);
