@@ -1,4 +1,5 @@
 webERP Change Log
+19/06/2012 Ricard: Added new script Z_ChangeLocationCode. 
 17/06/2012 Ricard: Added a 2nd strategy for StockDispatch (items with overstock at FROM, RL=0 no matter if needed at TO). 
 
 15/6/12 Release 4.08
