@@ -1,4 +1,5 @@
 webERP Change Log
+20/06/2012 Ricard: Added total QOH to NoSalesItems.php. 
 20/06/2012 Ricard: Added opposite currency pair graph to ExchangeRateTrend.php. 
 19/06/2012 Ricard: Added new script Z_ChangeLocationCode. 
 17/06/2012 Ricard: Added a 2nd strategy for StockDispatch (items with overstock at FROM, RL=0 no matter if needed at TO). 

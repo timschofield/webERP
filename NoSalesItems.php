@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: NoSalesItems.php 2012-05-12 Kapal Laut $*/
+/* $Id: NoSalesItems.php 2012-05-12 $*/
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
@@ -146,7 +146,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	$SQL = $SQL. "ORDER BY stockmaster.stockid";	
 	$result = DB_query($SQL, $db);		
 	echo '<p class="page_title_text" align="center"><strong>' . _('No Sales Items') . '</strong></p>';
-	echo '<form action="PDFNoSalesItems2.php"  method="GET">
+	echo '<form action="PDFNoSalesItems.php"  method="GET">
 		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$TableHeader = '<tr>
@@ -154,7 +154,8 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 						<th>' . _('Location') . '</th>
 						<th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
+						<th>' . _('Location QOH') . '</th>
+						<th>' . _('Total QOH') . '</th>
 						<th>' . _('Units') . '</th>		
 					</tr>';
 	echo $TableHeader;
@@ -171,18 +172,28 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 			echo '<tr class="OddTableRows">';
 			$k = 1;
 		}
+		$QOHResult = DB_query("SELECT sum(quantity)
+				FROM locstock
+				WHERE stockid = '" . $myrow['stockid'] . "'", $db);
+		$QOHRow = DB_fetch_row($QOHResult);
+		$QOH = $QOHRow[0];
+
+		$CodeLink = '<a href="' . $rootpath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>	
 				<td class="number">%s</td>
+				<td>%s</td>
 				</tr>', 
 				$i,
 				$myrow['locationname'], 
-				$myrow['0'], 				
+				$CodeLink, 				
 				$myrow['description'], 
-				$myrow['quantity'], //onhand
+				$myrow['quantity'], //on hand on location selected only
+				$QOH, // total on hand 
 				$myrow['units'] //unit			
 				);
 		$i++;
