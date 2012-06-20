@@ -58,11 +58,19 @@ if ( isset($_GET['CurrencyToShow']) ){
 // **************
 
 
-	$graph = $CurrencyToShow. '/' . $FunctionalCurrency . $graph;
-	$image = 'http://www.x-rates.com/d/' . $graph;
+	$graphA = $CurrencyToShow. '/' . $FunctionalCurrency . $graph;
+	$image = 'http://www.x-rates.com/d/' . $graphA;
 
 	echo '<br /><table class="selection">';
 	echo '<tr><th><div class="centre"><b>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b></div></th></tr>';
+	echo '<tr><td><img src="' . $image . '" alt="' ._('Trend Currently Unavailable') . '" /></td></tr>';
+	echo '</table>';
+
+	$graphB = $FunctionalCurrency. '/' . $CurrencyToShow . $graph;
+	$image = 'http://www.x-rates.com/d/' . $graphB;
+
+	echo '<br /><table class="selection">';
+	echo '<tr><th><div class="centre"><b>' . $CurrencyToShow . ' / ' . $FunctionalCurrency . '</b></div></th></tr>';
 	echo '<tr><td><img src="' . $image . '" alt="' ._('Trend Currently Unavailable') . '" /></td></tr>';
 	echo '</table>';
 
