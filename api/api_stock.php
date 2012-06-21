@@ -563,7 +563,7 @@
 		$sql="SELECT quantity, 
                      loccode 
                FROM locstock WHERE stockid='" . $StockID."'";
-		$result = DB_Query($sql, $db);
+		$result = DB_query($sql, $db);
 		if (sizeof($Errors)==0) {
 			$i=0;
 			while ($myrow=DB_fetch_array($result)) {

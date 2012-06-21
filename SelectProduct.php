@@ -560,6 +560,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
+							stockmaster.longdescription,
 							SUM(locstock.quantity) AS qoh,
 							stockmaster.units,
 							stockmaster.mbflag,
@@ -573,6 +574,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						AND stockmaster.description " . LIKE . " '$SearchString'
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
+							stockmaster.longdescription,
 							stockmaster.units,
 							stockmaster.mbflag,
 							stockmaster.discontinued,
@@ -581,6 +583,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
+							stockmaster.longdescription,
 							SUM(locstock.quantity) AS qoh,
 							stockmaster.units,
 							stockmaster.mbflag,
@@ -593,6 +596,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						AND categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
+							stockmaster.longdescription,
 							stockmaster.units,
 							stockmaster.mbflag,
 							stockmaster.discontinued,
@@ -604,6 +608,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
+							stockmaster.longdescription,
 							stockmaster.mbflag,
 							stockmaster.discontinued,
 							SUM(locstock.quantity) AS qoh,
@@ -617,6 +622,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
+							stockmaster.longdescription,
 							stockmaster.units,
 							stockmaster.mbflag,
 							stockmaster.discontinued,
@@ -625,6 +631,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.longdescription,
 						stockmaster.mbflag,
 						stockmaster.discontinued,
 						sum(locstock.quantity) as qoh,
@@ -637,6 +644,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					AND categoryid='" . $_POST['StockCat'] . "'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.longdescription,
 						stockmaster.units,
 						stockmaster.mbflag,
 						stockmaster.discontinued,
@@ -647,6 +655,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.longdescription,
 						stockmaster.mbflag,
 						stockmaster.discontinued,
 						SUM(locstock.quantity) AS qoh,
@@ -659,6 +668,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					WHERE stockmaster.stockid=locstock.stockid
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.longdescription,
 						stockmaster.units,
 						stockmaster.mbflag,
 						stockmaster.discontinued,
@@ -667,6 +677,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.longdescription,
 						stockmaster.mbflag,
 						stockmaster.discontinued,
 						SUM(locstock.quantity) AS qoh,
@@ -678,6 +689,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					AND categoryid='" . $_POST['StockCat'] . "'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
+						stockmaster.longdescription,
 						stockmaster.units,
 						stockmaster.mbflag,
 						stockmaster.discontinued,
@@ -773,7 +785,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			}
 
 			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
-				<td>'.$myrow['description'].'</td>
+				<td title="'. $myrow['longdescription'] . '">' . $myrow['description'] . '</td>
 				<td class="number">' . $qoh . '</td>
 				<td>' . $myrow['units'] . '</td>
 				<td>' . $ItemStatus . '</td>

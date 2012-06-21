@@ -1844,16 +1844,16 @@
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of tax group IDs.');
 
-/*E*/$GetTaxgroupList_sig = array(array($xmlrpcStruct),
+/*E*/$GetTaxGroupList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
-	$GetTaxgroupList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+	$GetTaxGroupList_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function  xmlrpc_GetTaxgroupList($xmlrpcmsg){
+	function  xmlrpc_GetTaxGroupList($xmlrpcmsg){
 		ob_start('ob_file_callback');
 /*x*/	if ($xmlrpcmsg->getNumParams() == 2)	{
-/*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+/*x*/		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupList($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
 /*x*/	} else {
-/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupList( '', '')));
+/*e*/ 		$rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupList( '', '')));
 /*x*/	}
 		ob_end_flush();
 		return $rtn;
@@ -1873,18 +1873,18 @@
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('This function returns an array of tax group details.');
 
-/*E*/$GetTaxgroupDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
+/*E*/$GetTaxGroupDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
-	$GetTaxgroupDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+	$GetTaxGroupDetails_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
-	function  xmlrpc_GetTaxgroupDetails($xmlrpcmsg){
+	function  xmlrpc_GetTaxGroupDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
 /*x*/	if ($xmlrpcmsg->getNumParams() == 3)	{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/		$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/		$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/	} else {
-/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxGroupDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
 /*x*/	}
 		ob_end_flush();
 		return $rtn;
@@ -1932,7 +1932,7 @@
 	function  xmlrpc_GetTaxAuthorityDetails($xmlrpcmsg){
 		ob_start('ob_file_callback');
 /*x*/	if ($xmlrpcmsg->getNumParams() == 3)	{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ),	$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ), $xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/	} else {
 /*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetTaxAuthorityDetails($xmlrpcmsg->getParam( 0 )->scalarval(  ), '', '')));
 /*x*/	}
@@ -3240,18 +3240,14 @@
 			"function" => "xmlrpc_InsertSalesman",
 			"signature" => $InsertSalesman_sig,
 			"docstring" => $InsertSalesman_doc),
-		"weberp.xmlrpc_GetTaxgroupList" => array(
-			"function" => "xmlrpc_GetTaxgroupList",
-			"signature" => $GetTaxgroupList_sig,
-			"docstring" => $GetTaxgroupList_doc),
-		"weberp.xmlrpc_GetTaxCategoryList" => array(
-			"function" => "xmlrpc_GetTaxCategoryList",
-			"signature" => $GetTaxCategoryList_sig,
-			"docstring" => $GetTaxCategoryList_doc),	
-		"weberp.xmlrpc_GetTaxgroupDetails" => array(
-			"function" => "xmlrpc_GetTaxgroupDetails",
-			"signature" => $GetTaxgroupDetails_sig,
-			"docstring" => $GetTaxgroupDetails_doc),
+		"weberp.xmlrpc_GetTaxGroupList" => array(
+			"function" => "xmlrpc_GetTaxGroupList",
+			"signature" => $GetTaxGroupList_sig,
+			"docstring" => $GetTaxGroupList_doc),
+		"weberp.xmlrpc_GetTaxGroupDetails" => array(
+			"function" => "xmlrpc_GetTaxGroupDetails",
+			"signature" => $GetTaxGroupDetails_sig,
+			"docstring" => $GetTaxGroupDetails_doc),
 		"weberp.xmlrpc_GetTaxGroupTaxes" => array(
 			"function" => "xmlrpc_GetTaxGroupTaxes",
 			"signature" => $GetTaxGroupTaxes_sig,
@@ -3264,10 +3260,10 @@
 			"function" => "xmlrpc_GetTaxAuthorityDetails",
 			"signature" => $GetTaxAuthorityDetails_sig,
 			"docstring" => $GetTaxAuthorityDetails_doc),
-		"weberp.xmlrpc_GetTaxAuthorityRate" => array(
-			"function" => "xmlrpc_GetTaxAuthorityRate",
-			"signature" => $GetTaxAuthorityRate_sig,
-			"docstring" => $GetTaxAuthorityRate_doc),
+		"weberp.xmlrpc_GetTaxAuthorityRates" => array(
+			"function" => "xmlrpc_GetTaxAuthorityRates",
+			"signature" => $GetTaxAuthorityRates_sig,
+			"docstring" => $GetTaxAuthorityRates_doc),
 		"weberp.xmlrpc_GetCustomerTypeList" => array(
 			"function" => "xmlrpc_GetCustomerTypeList",
 			"signature" => $GetCustomerTypeList_sig,

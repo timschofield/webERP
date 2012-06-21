@@ -160,8 +160,12 @@ for detail of the European Central Bank rates - published daily */
 			if ($tag['type'] == 'complete' OR $tag['type'] == 'open') {
 				$elements[$index] = new XmlElement;
 				$elements[$index]->name = $tag['tag'];
-				$elements[$index]->attributes = $tag['attributes'];
-				$elements[$index]->content = $tag['value'];
+				if (isset($tag['attributes'])){
+					$elements[$index]->attributes = $tag['attributes'];
+				}
+				if (isset($tag['value'])){
+					$elements[$index]->content = $tag['value'];
+				}
 				if ($tag['type'] == 'open') {  // push
 					$elements[$index]->children = array();
 					$stack[count($stack)] = &$elements;

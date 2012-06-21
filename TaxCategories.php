@@ -121,9 +121,9 @@ if (isset($_POST['submit'])) {
 		// This is probably the safest way there is
 		prnMsg( _('Cannot delete this tax category because it no longer exists'),'warn');
 	} else {
-		$myrow = DB_fetch_row($result);
-		$OldTaxCategoryName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM stockmaster WHERE taxcatid ".LIKE." '" . $OldTaxCategoryName . "'";
+		$myrow = DB_fetch_array($result);
+		$TaxCatName = $myrow['taxcatname'];
+		$sql= "SELECT COUNT(*) FROM stockmaster WHERE taxcatid = '" . $SelectedTaxCategory . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db);
 			$sql = "DELETE FROM taxcategories WHERE taxcatid = '" . $SelectedTaxCategory . "'";
 			$result = DB_query($sql,$db);
-			prnMsg( $OldTaxCategoryName . ' ' . _('tax category and any tax rates set for it have been deleted'),'success');
+			prnMsg( $TaxCatName . ' ' . _('tax category and any tax rates set for it have been deleted'),'success');
 		}
 	} //end if
 	unset ($SelectedTaxCategory);

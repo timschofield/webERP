@@ -5,7 +5,7 @@
  * currently setup on webERP
  */
 
-	function GetTaxgroupList($user, $password) {
+	function GetTaxGroupList($user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -27,7 +27,7 @@
  * tax group.
  */
 
-	function GetTaxgroupDetails($taxgroup, $user, $password) {
+	function GetTaxGroupDetails($taxgroup, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -51,9 +51,20 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM taxgrouptaxes WHERE taxgroupid='".$TaxGroup."'";
+		$sql = "SELECT taxgroupid, taxauthid, calculationorder, taxontax FROM taxgrouptaxes WHERE taxgroupid='".$TaxGroup."'";
 		$result = DB_query($sql, $db);
-		return DB_fetch_array($result);
+		$i=0;
+		$Answer = array();
+		while ($myrow=DB_fetch_array($result)){
+			$Answer[$i]['taxgroupid'] = $myrow['taxgroupid'];
+			$Answer[$i]['taxauthid'] = $myrow['taxauthid'];
+			$Answer[$i]['calculationorder'] = $myrow['calculationorder'];
+			$Answer[$i]['taxontax'] = $myrow['taxontax'];
+			$i++;
+		}
+		$Errors[0]=0;
+		$Errors[1]=$Answer;
+		return $Errors;
 	}
 
 /* This function returns a list of the tax authority ids
@@ -90,20 +101,9 @@
 		}
 		$sql = "SELECT * FROM taxauthorities WHERE taxid='".$TaxAuthority."'";
 		$result = DB_query($sql, $db);
-		$i=0;
-		while ($myrow=DB_fetch_array($result)){
-			$Answer[$i]['taxcatid'] = $myrow['taxcatid'];
-			$Answer[$i]['dispatchtaxprovince'] = $myrow['dispatchtaxprovince'];
-			$Answer[$i]['taxrate'] = $myrow['taxrate'];
-		}
-		$Errors[0]=0;
-		$Errors[1]=$Answer;
-		return $Errors;
+		return DB_fetch_array($result);
 	}
 
-
-/
-	
 /* This function takes as a parameter a tax authority id and a tax category id
  * and returns an array containing the rate of tax for the selected
  * tax authority and tax category
@@ -116,11 +116,19 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT taxcatid, dispatchtaxprovince, taxrate FROM taxauthrates WHERE taxauthority='".$TaxAuthority."' AND taxcatid='" . $TaxCatID . "'";
+		$sql = "SELECT taxcatid, dispatchtaxprovince, taxrate FROM taxauthrates WHERE taxauthority='".$TaxAuthority."'";
 		$result = DB_query($sql, $db);
-		$TaxRateRow = DB_fetch_row($result);
-		return $TaxRateRow[0];
+		$i=0;
+		$Answer = array();
+		while ($myrow=DB_fetch_array($result)){
+			$Answer[$i]['taxcatid'] = $myrow['taxcatid'];
+			$Answer[$i]['dispatchtaxprovince'] = $myrow['dispatchtaxprovince'];
+			$Answer[$i]['taxrate'] = $myrow['taxrate'];
+			$i++;
+		}
+		$Errors[0]=0;
+		$Errors[1]=$Answer;
+		return $Errors;
 	}
-
 
 ?>
