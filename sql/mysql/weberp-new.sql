@@ -148,8 +148,8 @@ CREATE TABLE `banktrans` (
   KEY `ref_8` (`ref`),
   KEY `ref_9` (`ref`),
   KEY `ref_10` (`ref`),
-  CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`),
-  CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`)
+  CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
+  CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2664,8 +2664,8 @@ CREATE TABLE `taxauthorities` (
   PRIMARY KEY (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
   KEY `PurchTaxGLAccount` (`purchtaxglaccount`),
-  CONSTRAINT `taxauthorities_ibfk_2` FOREIGN KEY (`purchtaxglaccount`) REFERENCES `chartmaster` (`accountcode`),
-  CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`)
+  CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`),
+  CONSTRAINT `taxauthorities_ibfk_2` FOREIGN KEY (`purchtaxglaccount`) REFERENCES `chartmaster` (`accountcode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2953,7 +2953,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-16 16:48:41
+-- Dump completed on 2012-06-24  9:43:54
 -- MySQL dump 10.13  Distrib 5.5.24, for Linux (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3295,7 +3295,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','','MEL',8,0,'2012-06-16 16:31:57','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB.utf8',0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','test@test.com','MEL',8,0,'2012-06-16 20:29:18','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB.utf8',0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -4002,7 +4002,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-16 16:48:42
+-- Dump completed on 2012-06-24  9:43:54
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webERP 3.05\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-16 16:39+1200\n"
+"POT-Creation-Date: 2012-06-24 09:40+1200\n"
 "PO-Revision-Date: 2011-04-15 02:56+0000\n"
 "Last-Translator: SilvioBandeira <Unknown>\n"
 "Language-Team: Brazilian Portuguese <joao@matik.com.br>\n"
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Section In Accounts"
 msgstr "Seção nas Contas"
 
-#: AccountGroups.php:415 AccountSections.php:258 AddCustomerContacts.php:260
+#: AccountGroups.php:415 AccountSections.php:259 AddCustomerContacts.php:260
 #: AddCustomerNotes.php:242 AddCustomerTypeNotes.php:221 Areas.php:228
 #: BankAccounts.php:398 BOMs.php:785 COGSGLPostings.php:355
 #: CreditStatus.php:259 Currencies.php:402 CustLoginSetup.php:273
@@ -586,8 +586,8 @@ msgstr "O registro de contato foi apagado"
 
 #: AddCustomerContacts.php:126 CompanyPreferences.php:224
 #: CustomerBranches.php:368 Customers.php:1020 Customers.php:1028
-#: SalesPeople.php:200 SelectCustomer.php:610 StockDispatch.php:243
-#: StockDispatch.php:254 StockDispatch.php:265 SupplierContacts.php:150
+#: SalesPeople.php:200 SelectCustomer.php:610 StockDispatch.php:237
+#: StockDispatch.php:248 StockDispatch.php:259 SupplierContacts.php:150
 #: SuppTransGLAnalysis.php:105 includes/InputSerialItemsFile.php:92
 #: includes/InputSerialItemsFile.php:144 includes/PDFTaxPageHeader.inc:37
 msgid "Name"
@@ -698,7 +698,7 @@ msgstr ""
 #: PcAuthorizeExpenses.php:88 PDFRemittanceAdvice.php:308
 #: PrintCustTrans.php:826 PrintCustTransPortrait.php:870 ReverseGRN.php:392
 #: ShipmentCosting.php:538 ShipmentCosting.php:615 Shipments.php:491
-#: StockDispatch.php:245 StockDispatch.php:256 StockDispatch.php:267
+#: StockDispatch.php:239 StockDispatch.php:250 StockDispatch.php:261
 #: StockLocMovements.php:91 StockMovements.php:95
 #: StockSerialItemResearch.php:81 SupplierAllocations.php:456
 #: SupplierAllocations.php:569 SupplierAllocations.php:644
@@ -875,7 +875,7 @@ msgstr "Não foi possí­vel obter os detalhes do cliente pois"
 #: PrintCustOrder.php:233 ReorderLevel.php:63 ReorderLevel.php:182
 #: SalesAnalysis_UserDefined.php:28 SelectCreditItems.php:30 StockCheck.php:46
 #: StockCheck.php:68 StockCheck.php:99 StockCheck.php:142 StockCheck.php:153
-#: StockCheck.php:194 StockDispatch.php:100 StockDispatch.php:113
+#: StockCheck.php:194 StockDispatch.php:104 StockDispatch.php:117
 #: SupplierBalsAtPeriodEnd.php:54 SupplierBalsAtPeriodEnd.php:65
 #: SuppPaymentRun.php:112 SuppPaymentRun.php:122 SuppPaymentRun.php:186
 #: SuppPaymentRun.php:217 SuppPriceList.php:134 Tax.php:63 Tax.php:168
@@ -1003,7 +1003,7 @@ msgstr "Relatório detalhado"
 #: OutstandingGRNs.php:182 PDFCustomerList.php:419 PDFLowGP.php:146
 #: PDFPriceList.php:312 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:361 PrintCustTrans.php:542
-#: PrintCustTransPortrait.php:579 ReorderLevel.php:259 StockDispatch.php:394
+#: PrintCustTransPortrait.php:579 ReorderLevel.php:259 StockDispatch.php:407
 #: SupplierBalsAtPeriodEnd.php:160 SuppPriceList.php:255 Tax.php:352
 msgid "Print PDF"
 msgstr "Gerar PDF"
@@ -1191,8 +1191,8 @@ msgstr "Identificação do usuário"
 #: SalesGraph.php:144 SalesGraph.php:146 SalesGraph.php:180
 #: SalesInquiry.php:1079 SalesInquiry.php:1142 SelectCreditItems.php:955
 #: SelectOrderItems.php:1626 SelectOrderItems.php:1629 SelectProduct.php:513
-#: SelectProduct.php:515 StockDispatch.php:59 StockDispatch.php:364
-#: StockDispatch.php:366 StockLocStatus.php:69 StockLocStatus.php:71
+#: SelectProduct.php:515 StockDispatch.php:59 StockDispatch.php:355
+#: StockDispatch.php:357 StockLocStatus.php:69 StockLocStatus.php:71
 #: StockLocStatus.php:89 StockLocStatus.php:94 StockLocStatus.php:99
 #: StockLocStatus.php:104 StockQuantityByDate.php:25 SupplierPriceList.php:23
 #: SupplierPriceList.php:25 SupplierTenderCreate.php:647
@@ -1215,7 +1215,7 @@ msgid "Containing text"
 msgstr "Constante"
 
 #: AuditTrail.php:82 InternalStockRequest.php:550 MRPReport.php:778
-#: PO_SelectPurchOrder.php:431 SelectContract.php:180 SelectProduct.php:780
+#: PO_SelectPurchOrder.php:431 SelectContract.php:180 SelectProduct.php:792
 msgid "View"
 msgstr "Visualizar"
 
@@ -2020,7 +2020,7 @@ msgstr ""
 #: MRPPlannedWorkOrders.php:366 MRPReport.php:816 MRPReschedules.php:180
 #: MRPShortages.php:334 PDFOrderStatus.php:308 PDFPriceList.php:344
 #: PDFReceipt.php:31 PO_Header.php:829 PO_PDFPurchOrder.php:61
-#: PO_SelectOSPurchOrder.php:519 ReorderLevel.php:283 StockDispatch.php:424
+#: PO_SelectOSPurchOrder.php:519 ReorderLevel.php:283 StockDispatch.php:437
 #: SuppPriceList.php:284 Tax.php:243 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBalanceSheetPageHeader.inc:25
@@ -2059,7 +2059,7 @@ msgstr "Impresso"
 #: PrintCustOrder.php:170 PrintCustTrans.php:741 PrintCustTrans.php:950
 #: PrintCustTrans.php:999 PrintCustTransPortrait.php:781
 #: PrintCustTransPortrait.php:1003 PrintCustTransPortrait.php:1059
-#: ReorderLevel.php:284 StockDispatch.php:425 SuppPriceList.php:285
+#: ReorderLevel.php:284 StockDispatch.php:438 SuppPriceList.php:285
 #: Tax.php:243 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBalanceSheetPageHeader.inc:26
@@ -2116,12 +2116,11 @@ msgstr ""
 
 #: BOMExtendedQty.php:321 BOMInquiry.php:110 BOMs.php:883
 #: CounterSales.php:2044 CounterSales.php:2233 InternalStockRequest.php:586
-#: NoSalesItems.php:157 PO_SelectOSPurchOrder.php:236
-#: PO_SelectPurchOrder.php:214 ReorderLevelLocation.php:70
-#: ReorderLevelLocation.php:71 SelectCompletedOrder.php:552
-#: SelectOrderItems.php:1506 SelectOrderItems.php:1690
-#: SelectSalesOrder.php:583 SelectWorkOrder.php:194 Shipt_Select.php:192
-#: TopItems.php:168 includes/PDFTopItemsHeader.inc:54
+#: PO_SelectOSPurchOrder.php:236 PO_SelectPurchOrder.php:214
+#: ReorderLevelLocation.php:70 ReorderLevelLocation.php:71
+#: SelectCompletedOrder.php:552 SelectOrderItems.php:1506
+#: SelectOrderItems.php:1690 SelectSalesOrder.php:583 SelectWorkOrder.php:194
+#: Shipt_Select.php:192 TopItems.php:168 includes/PDFTopItemsHeader.inc:54
 msgid "On Hand"
 msgstr "Entregue"
 
@@ -2141,7 +2140,7 @@ msgstr ""
 #: POReport.php:539 POReport.php:625 POReport.php:725 POReport.php:1267
 #: POReport.php:1276 POReport.php:1290 POReport.php:1305 POReport.php:1356
 #: POReport.php:1419 POReport.php:1523 POReport.php:1588 POReport.php:1597
-#: ReorderLevel.php:297 StockDispatch.php:445 StockDispatch.php:452
+#: ReorderLevel.php:297 StockDispatch.php:463 StockDispatch.php:470
 msgid "Part Number"
 msgstr ""
 
@@ -2209,9 +2208,9 @@ msgstr ""
 #: SecurityTokens.php:104 SecurityTokens.php:120 SelectAsset.php:255
 #: SelectCompletedOrder.php:551 SelectContract.php:140
 #: SelectCreditItems.php:991 SelectOrderItems.php:1504
-#: SelectOrderItems.php:1688 SelectProduct.php:525 SelectProduct.php:744
+#: SelectOrderItems.php:1688 SelectProduct.php:525 SelectProduct.php:756
 #: SelectSalesOrder.php:582 SelectWorkOrder.php:193 Shipt_Select.php:191
-#: StockCategories.php:234 StockDispatch.php:446 StockLocStatus.php:168
+#: StockCategories.php:234 StockDispatch.php:464 StockLocStatus.php:168
 #: StockQuantityByDate.php:108 SuppCreditGRNs.php:92 SuppCreditGRNs.php:187
 #: SuppFixedAssetChgs.php:75 SuppInvGRNs.php:126 SuppInvGRNs.php:307
 #: SupplierCredit.php:317 SupplierCredit.php:385 SupplierInvoice.php:294
@@ -2228,7 +2227,7 @@ msgstr ""
 #: includes/PDFStockLocTransferHeader.inc:49
 #: includes/PDFStockTransferHeader.inc:36 includes/PDFTopItemsHeader.inc:50
 #: includes/PDFTransPageHeader.inc:207
-#: includes/PDFTransPageHeaderPortrait.inc:262 api/api_xml-rpc.php:3398
+#: includes/PDFTransPageHeaderPortrait.inc:262 api/api_xml-rpc.php:3394
 msgid "Description"
 msgstr "Descrição"
 
@@ -2404,7 +2403,7 @@ msgstr ""
 #: PricesByCost.php:151 PurchData.php:382 ReorderLevelLocation.php:67
 #: SalesPeople.php:199 SelectCompletedOrder.php:550 SelectCreditItems.php:990
 #: SelectCustomer.php:415 SelectGLAccount.php:119 SelectOrderItems.php:1503
-#: SelectOrderItems.php:1687 SelectProduct.php:743 SelectSalesOrder.php:581
+#: SelectOrderItems.php:1687 SelectProduct.php:755 SelectSalesOrder.php:581
 #: SelectSupplier.php:259 SelectWorkOrder.php:192 Shipt_Select.php:190
 #: SpecialOrder.php:149 SupplierPriceList.php:260 SupplierPriceList.php:445
 #: SupplierTenderCreate.php:583 SupplierTenderCreate.php:817
@@ -2420,11 +2419,11 @@ msgstr "Código"
 #: Credit_Invoice.php:273 GoodsReceived.php:102 GoodsReceived.php:106
 #: InternalStockRequestAuthorisation.php:89
 #: InternalStockRequestFulfill.php:301 InternalStockRequest.php:518
-#: InternalStockRequest.php:585 MRPReport.php:751 NoSalesItems.php:158
+#: InternalStockRequest.php:585 MRPReport.php:751 NoSalesItems.php:159
 #: OffersReceived.php:109 PO_Items.php:1076 PO_SelectOSPurchOrder.php:238
 #: PO_SelectPurchOrder.php:216 SelectCompletedOrder.php:555
 #: SelectCreditItems.php:992 SelectOrderItems.php:1505
-#: SelectOrderItems.php:1689 SelectProduct.php:121 SelectProduct.php:746
+#: SelectOrderItems.php:1689 SelectProduct.php:121 SelectProduct.php:758
 #: SelectSalesOrder.php:584 SelectWorkOrder.php:195 Shipments.php:402
 #: Shipments.php:489 Shipt_Select.php:194 StockLocTransferReceive.php:433
 #: SupplierPriceList.php:262 SupplierTenderCreate.php:819
@@ -2561,7 +2560,7 @@ msgstr ""
 #: PaymentTerms.php:196 PO_SelectOSPurchOrder.php:524
 #: SalesAnalReptCols.php:285 SelectProduct.php:119 SelectProduct.php:165
 #: SelectProduct.php:178 SelectProduct.php:262 SelectProduct.php:263
-#: SelectProduct.php:765 TopItems.php:187 TopItems.php:188
+#: SelectProduct.php:777 TopItems.php:187 TopItems.php:188
 msgid "N/A"
 msgstr "Inexistente"
 
@@ -2582,11 +2581,11 @@ msgid "The effective to date field must be a date in the format"
 msgstr "O campo 'Cliente desde' deve ser uma data no formato"
 
 #: BOMs.php:254 StockAdjustments.php:135 StockTransfers.php:172
-#: WorkOrderEntry.php:281
+#: WorkOrderEntry.php:281 Z_StockConversion.php:26
 msgid "The quantity entered must be numeric"
 msgstr "A quantidade digitada deve ser um valor numérico"
 
-#: BOMs.php:260 StockAdjustments.php:138
+#: BOMs.php:260 StockAdjustments.php:138 Z_StockConversion.php:29
 msgid "The quantity entered cannot be zero"
 msgstr "A quantidade digitada não pode ser zero"
 
@@ -3711,7 +3710,7 @@ msgstr ""
 #: ShipmentCosting.php:432 ShipmentCosting.php:451 ShipmentCosting.php:465
 #: StockAdjustments.php:203 StockAdjustments.php:234 StockAdjustments.php:252
 #: StockAdjustments.php:268 StockAdjustments.php:281 StockAdjustments.php:309
-#: StockAdjustments.php:331 StockDispatch.php:235 StockLocTransfer.php:189
+#: StockAdjustments.php:331 StockDispatch.php:229 StockLocTransfer.php:189
 #: StockLocTransfer.php:213 StockLocTransfer.php:217
 #: StockLocTransferReceive.php:102 StockLocTransferReceive.php:136
 #: StockLocTransferReceive.php:150 StockLocTransferReceive.php:169
@@ -3754,9 +3753,9 @@ msgstr ""
 #: WorkOrderReceive.php:499 WorkOrderReceive.php:514 WorkOrderReceive.php:524
 #: WorkOrderReceive.php:543 WorkOrderReceive.php:570 WorkOrderReceive.php:585
 #: WorkOrderReceive.php:605 WorkOrderReceive.php:639 WorkOrderReceive.php:659
-#: WorkOrderReceive.php:669 includes/SQL_CommonFunctions.inc:24
-#: includes/SQL_CommonFunctions.inc:31 includes/SQL_CommonFunctions.inc:185
-#: includes/SQL_CommonFunctions.inc:204
+#: WorkOrderReceive.php:669 Z_StockConversion.php:94 Z_StockConversion.php:106
+#: includes/SQL_CommonFunctions.inc:24 includes/SQL_CommonFunctions.inc:31
+#: includes/SQL_CommonFunctions.inc:185 includes/SQL_CommonFunctions.inc:204
 msgid "CRITICAL ERROR"
 msgstr "ERRO CRÍTICO"
 
@@ -3868,9 +3867,10 @@ msgstr "ERRO CRÍTICO"
 #: WorkOrderReceive.php:462 WorkOrderReceive.php:499 WorkOrderReceive.php:514
 #: WorkOrderReceive.php:524 WorkOrderReceive.php:543 WorkOrderReceive.php:570
 #: WorkOrderReceive.php:585 WorkOrderReceive.php:605 WorkOrderReceive.php:639
-#: WorkOrderReceive.php:659 WorkOrderReceive.php:669
-#: includes/SQL_CommonFunctions.inc:24 includes/SQL_CommonFunctions.inc:31
-#: includes/SQL_CommonFunctions.inc:185 includes/SQL_CommonFunctions.inc:204
+#: WorkOrderReceive.php:659 WorkOrderReceive.php:669 Z_StockConversion.php:94
+#: Z_StockConversion.php:106 includes/SQL_CommonFunctions.inc:24
+#: includes/SQL_CommonFunctions.inc:31 includes/SQL_CommonFunctions.inc:185
+#: includes/SQL_CommonFunctions.inc:204
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
 msgstr "ANOTE ESTE ERRO E PROCURE ASSISTÄNCIA"
 
@@ -4368,8 +4368,8 @@ msgid "There is a problem selecting the part records to display because"
 msgstr "Há um problema ao selecionar a parte do registro para mostrar porque"
 
 #: ContractBOM.php:140 PO_Items.php:990 SupplierTenderCreate.php:800
-#: SupplierTenders.php:670 Z_ChangeStockCategory.php:63
-#: Z_ChangeStockCode.php:104
+#: SupplierTenders.php:670 Z_ChangeLocationCode.php:90
+#: Z_ChangeStockCategory.php:63 Z_ChangeStockCode.php:104
 msgid "The SQL statement that failed was"
 msgstr "O comando SQL mal sucedido foi"
 
@@ -4653,7 +4653,7 @@ msgstr ""
 #: PDFStockCheckComparison.php:127 ReverseGRN.php:219 StockAdjustments.php:281
 #: StockLocTransferReceive.php:293 StockLocTransferReceive.php:302
 #: StockTransfers.php:431 StockTransfers.php:440 WorkOrderIssue.php:161
-#: WorkOrderReceive.php:432
+#: WorkOrderReceive.php:432 Z_StockConversion.php:106
 msgid "The location stock record could not be updated because"
 msgstr "O local de estoque registrado não pôde ser actualizado porque"
 
@@ -5195,7 +5195,7 @@ msgstr ""
 #: Contracts.php:845 InventoryQuantities.php:237 PDFPriceList.php:365
 #: PricesByCost.php:244 ReorderLevelLocation.php:172 ReorderLevel.php:286
 #: SalesCategoryPeriodInquiry.php:164 SalesTopItemsInquiry.php:221
-#: SpecialOrder.php:697 StockDispatch.php:434 Stocks.php:881
+#: SpecialOrder.php:697 StockDispatch.php:447 Stocks.php:881
 #: SuppPriceList.php:229 SuppPriceList.php:291
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
@@ -5591,7 +5591,8 @@ msgstr "Soma"
 #: SuppContractChgs.php:168 SupplierCredit.php:421 SupplierCredit.php:460
 #: SupplierInvoice.php:414 SupplierInvoice.php:458
 #: SupplierTransInquiry.php:174 SuppTransGLAnalysis.php:107
-#: SuppTransGLAnalysis.php:200 includes/PDFBankingSummaryPageHeader.inc:58
+#: SuppTransGLAnalysis.php:200 Z_StockConversion.php:172
+#: includes/PDFBankingSummaryPageHeader.inc:58
 msgid "Narrative"
 msgstr "Descrição"
 
@@ -5860,8 +5861,8 @@ msgid "On Order"
 msgstr "No pedido"
 
 #: CounterSales.php:2047 CounterSales.php:2236 InternalStockRequest.php:589
-#: SelectOrderItems.php:1509 SelectOrderItems.php:1693 StockDispatch.php:459
-#: StockDispatch.php:460 StockLocStatus.php:172 StockStatus.php:90
+#: SelectOrderItems.php:1509 SelectOrderItems.php:1693 StockDispatch.php:477
+#: StockDispatch.php:478 StockLocStatus.php:172 StockStatus.php:90
 #: includes/OutputSerialItems.php:37 includes/PDFStockCheckPageHeader.inc:40
 msgid "Available"
 msgstr "Disponí­vel"
@@ -5922,7 +5923,7 @@ msgstr ""
 #: CounterSales.php:2227 CounterSales.php:2352 InternalStockRequest.php:506
 #: InternalStockRequest.php:581 InternalStockRequest.php:703 MRPReport.php:740
 #: SelectAsset.php:248 SelectCustomer.php:409 SelectCustomer.php:492
-#: SelectOrderItems.php:1685 SelectOrderItems.php:1805 SelectProduct.php:734
+#: SelectOrderItems.php:1685 SelectOrderItems.php:1805 SelectProduct.php:746
 #: SelectSupplier.php:250 SelectSupplier.php:312 SupplierPriceList.php:251
 #: SupplierTenderCreate.php:574
 msgid "Next"
@@ -7843,7 +7844,7 @@ msgstr "no"
 #: CustomerReceipt.php:904 GoodsReceived.php:103 GoodsReceived.php:107
 #: GoodsReceived.php:113 POReport.php:629 POReport.php:1360 ReverseGRN.php:392
 #: ReverseGRN.php:393 ShipmentCosting.php:150 Shipments.php:403
-#: Shipments.php:490 StockDispatch.php:450 StockDispatch.php:457
+#: Shipments.php:490 StockDispatch.php:468 StockDispatch.php:475
 #: SuppCreditGRNs.php:189
 msgid "Received"
 msgstr "Recebido"
@@ -8257,7 +8258,7 @@ msgstr ""
 #: FixedAssetRegister.php:358 PcReportTab.php:139 PcReportTab.php:260
 #: SalesAnalRepts.php:432 SalesAnalRepts.php:460 SalesAnalRepts.php:489
 #: SalesAnalRepts.php:508 ShipmentCosting.php:56 Shipments.php:308
-#: StockDispatch.php:454 StockLocTransferReceive.php:209
+#: StockDispatch.php:472 StockLocTransferReceive.php:209
 #: StockTransfers.php:349 SuppContractChgs.php:72 SuppCreditGRNs.php:179
 #: SuppFixedAssetChgs.php:70 SupplierTransInquiry.php:51 SuppShiptChgs.php:77
 #: includes/PDFChequeListingPageHeader.inc:17
@@ -8278,7 +8279,7 @@ msgstr "De"
 #: CustomerTransInquiry.php:54 FixedAssetRegister.php:359 PcReportTab.php:266
 #: POReport.php:517 POReport.php:1519 SalesAnalRepts.php:433
 #: SalesAnalRepts.php:461 SalesAnalRepts.php:490 SalesAnalRepts.php:509
-#: SalesInquiry.php:780 SalesInquiry.php:1090 StockDispatch.php:455
+#: SalesInquiry.php:780 SalesInquiry.php:1090 StockDispatch.php:473
 #: StockLocTransferReceive.php:97 SupplierTransInquiry.php:53
 #: includes/PO_PDFOrderPageHeader.inc:41
 msgid "To"
@@ -10042,7 +10043,7 @@ msgstr ""
 msgid "View Currency Trend"
 msgstr ""
 
-#: ExchangeRateTrend.php:66
+#: ExchangeRateTrend.php:66 ExchangeRateTrend.php:74
 #, fuzzy
 msgid "Trend Currently Unavailable"
 msgstr "não disponí­vel"
@@ -12798,14 +12799,14 @@ msgstr "Verificação de inventário"
 #: ImportStockQuantites.php:155 InternalStockRequestFulfill.php:82
 #: PDFStockCheckComparison.php:119 StockAdjustments.php:203
 #: StockLocTransferReceive.php:102 StockTransfers.php:239
-#: StockTransfers.php:353
+#: StockTransfers.php:353 Z_StockConversion.php:94
 msgid "The stock movement record cannot be inserted because"
 msgstr "não foi possí­vel inserir o registro de movimentação de estoque pois"
 
 #: ImportStockQuantites.php:156 InternalStockRequestFulfill.php:83
 #: PDFStockCheckComparison.php:120 StockAdjustments.php:204
 #: StockLocTransferReceive.php:103 StockLocTransferReceive.php:215
-#: StockTransfers.php:240 StockTransfers.php:354
+#: StockTransfers.php:240 StockTransfers.php:354 Z_StockConversion.php:95
 msgid "The following SQL to insert the stock movement record was used"
 msgstr ""
 "O comando SQL a seguir foi usado para inserir o registro de movimentação de "
@@ -12814,7 +12815,7 @@ msgstr ""
 #: ImportStockQuantites.php:164 InternalStockRequestFulfill.php:96
 #: InternalStockRequestFulfill.php:104 PDFStockCheckComparison.php:128
 #: StockAdjustments.php:282 StockLocTransferReceive.php:294
-#: StockLocTransferReceive.php:303
+#: StockLocTransferReceive.php:303 Z_StockConversion.php:107
 msgid "The following SQL to update the stock record was used"
 msgstr "O comando SQL a seguir foi usado para atualizar o registro de estoque"
 
@@ -12957,7 +12958,7 @@ msgstr ""
 
 #: InternalStockRequestFulfill.php:35 InternalStockRequest.php:492
 #: MRPReport.php:726 SelectAsset.php:234 SelectCustomer.php:395
-#: SelectCustomer.php:478 SelectOrderItems.php:1398 SelectProduct.php:720
+#: SelectCustomer.php:478 SelectOrderItems.php:1398 SelectProduct.php:732
 #: SelectSupplier.php:236 SelectSupplier.php:298 StockLocTransfer.php:61
 #: SupplierPriceList.php:237 SupplierTenderCreate.php:560
 #: WorkOrderIssue.php:353 WorkOrderReceive.php:681
@@ -13166,7 +13167,7 @@ msgid "Search for Inventory Items"
 msgstr ""
 
 #: InternalStockRequest.php:288 InventoryQuantities.php:181 MRPReport.php:508
-#: ReorderLevel.php:231 SelectProduct.php:39 StockDispatch.php:346
+#: ReorderLevel.php:231 SelectProduct.php:39 StockDispatch.php:340
 #: StockLocStatus.php:57 SupplierTenderCreate.php:636 SupplierTenders.php:398
 msgid ""
 "There are no stock categories currently defined please use the link below to "
@@ -13176,14 +13177,14 @@ msgstr ""
 "defini-las"
 
 #: InternalStockRequest.php:290 InventoryQuantities.php:182 MRPReport.php:509
-#: ReorderLevel.php:232 SelectProduct.php:40 StockDispatch.php:347
+#: ReorderLevel.php:232 SelectProduct.php:40 StockDispatch.php:341
 #: StockLocStatus.php:58 SupplierTenderCreate.php:637 SupplierTenders.php:399
 msgid "Define Stock Categories"
 msgstr "Definir categorias de estoque"
 
 #: InternalStockRequest.php:295 InventoryQuantities.php:188 MRPReport.php:518
 #: NoSalesItems.php:65 ReorderLevel.php:238 SelectProduct.php:507
-#: StockDispatch.php:358 StockLocStatus.php:63 SupplierPriceList.php:17
+#: StockDispatch.php:349 StockLocStatus.php:63 SupplierPriceList.php:17
 #: SupplierTenderCreate.php:642 SupplierTenders.php:403 TopItems.php:60
 msgid "In Stock Category"
 msgstr "Na categoria de estoque"
@@ -13197,14 +13198,14 @@ msgid "Stock Code has been used in search"
 msgstr ""
 
 #: InternalStockRequest.php:492 MRPReport.php:726 SelectAsset.php:234
-#: SelectCustomer.php:395 SelectCustomer.php:478 SelectProduct.php:720
+#: SelectCustomer.php:395 SelectCustomer.php:478 SelectProduct.php:732
 #: SelectSupplier.php:236 SelectSupplier.php:298 SupplierPriceList.php:237
 #: SupplierTenderCreate.php:560
 msgid "pages"
 msgstr "páginas"
 
 #: InternalStockRequest.php:492 MRPReport.php:726 SelectAsset.php:234
-#: SelectCustomer.php:395 SelectCustomer.php:478 SelectProduct.php:720
+#: SelectCustomer.php:395 SelectCustomer.php:478 SelectProduct.php:732
 #: SelectSupplier.php:236 SelectSupplier.php:298 SupplierPriceList.php:237
 #: SupplierTenderCreate.php:560
 msgid "Go to Page"
@@ -13213,28 +13214,28 @@ msgstr "Prosseguir para página"
 #: InternalStockRequest.php:504 MRPReport.php:738 PcAssignCashToTab.php:231
 #: PcAuthorizeExpenses.php:61 PcClaimExpensesFromTab.php:204
 #: SelectAsset.php:246 SelectCustomer.php:407 SelectCustomer.php:490
-#: SelectProduct.php:732 SelectSupplier.php:248 SelectSupplier.php:310
+#: SelectProduct.php:744 SelectSupplier.php:248 SelectSupplier.php:310
 #: SupplierPriceList.php:249 SupplierTenderCreate.php:572
 msgid "Go"
 msgstr "Prosseguir"
 
 #: InternalStockRequest.php:505 MRPReport.php:739 SelectAsset.php:247
-#: SelectCustomer.php:408 SelectCustomer.php:491 SelectProduct.php:733
+#: SelectCustomer.php:408 SelectCustomer.php:491 SelectProduct.php:745
 #: SelectSupplier.php:249 SelectSupplier.php:311 SupplierPriceList.php:250
 #: SupplierTenderCreate.php:573
 msgid "Previous"
 msgstr "Anterior"
 
-#: InternalStockRequest.php:517 MRPReport.php:750 SelectProduct.php:745
+#: InternalStockRequest.php:517 MRPReport.php:750 SelectProduct.php:757
 msgid "Total Qty On Hand"
 msgstr "Quantidade total real"
 
-#: InternalStockRequest.php:519 MRPReport.php:752 SelectProduct.php:747
+#: InternalStockRequest.php:519 MRPReport.php:752 SelectProduct.php:759
 #: StockStatus.php:7
 msgid "Stock Status"
 msgstr "Estado do estoque"
 
-#: InternalStockRequest.php:541 SelectProduct.php:74 SelectProduct.php:770
+#: InternalStockRequest.php:541 SelectProduct.php:74 SelectProduct.php:782
 #: Stocks.php:1020 Stocks.php:1022
 msgid "Obsolete"
 msgstr "Obsoleto"
@@ -13402,7 +13403,7 @@ msgid "Max Mnth"
 msgstr ""
 
 #: InventoryPlanningPrefSupplier.php:80 ShipmentCosting.php:154
-#: StockDispatch.php:387
+#: StockDispatch.php:397
 msgid "Standard"
 msgstr "Padrão"
 
@@ -13512,7 +13513,7 @@ msgstr ""
 #: MRPDemands.php:27 MRPDemandTypes.php:17 MRP.php:517
 #: MRPPlannedPurchaseOrders.php:265 MRPPlannedWorkOrders.php:247
 #: MRPPlannedWorkOrders.php:321 PricesByCost.php:8 ReorderLevelLocation.php:12
-#: ReorderLevel.php:194 SelectProduct.php:80 StockDispatch.php:287
+#: ReorderLevel.php:194 SelectProduct.php:80 StockDispatch.php:281
 #: StockMovements.php:19 StockQties_csv.php:8 StockQuantityByDate.php:10
 #: StockReorderLevel.php:18 StockSerialItemResearch.php:9
 #: StockSerialItems.php:9 StockStatus.php:40 StockTransferControlled.php:14
@@ -14731,17 +14732,17 @@ msgid ""
 msgstr ""
 
 #: MRPReport.php:693 PO_SelectOSPurchOrder.php:124 PO_SelectPurchOrder.php:105
-#: SelectCompletedOrder.php:223 SelectProduct.php:688 SelectSalesOrder.php:472
+#: SelectCompletedOrder.php:223 SelectProduct.php:700 SelectSalesOrder.php:472
 #: SupplierPriceList.php:203
 msgid "No stock items were returned by the SQL because"
 msgstr "Nenhum item de estoque foi retornado pelo comando SQL pois"
 
-#: MRPReport.php:694 SelectAsset.php:202 SelectProduct.php:689
+#: MRPReport.php:694 SelectAsset.php:202 SelectProduct.php:701
 #: SupplierPriceList.php:204
 msgid "The SQL that returned an error was"
 msgstr "O comando SQL que retornou um erro foi"
 
-#: MRPReport.php:697 SelectProduct.php:692 SupplierPriceList.php:207
+#: MRPReport.php:697 SelectProduct.php:704 SupplierPriceList.php:207
 msgid ""
 "No stock items were returned by this search please re-enter alternative "
 "criteria to try again"
@@ -14925,6 +14926,16 @@ msgstr ""
 #: NoSalesItems.php:86 TopItems.php:92 includes/PDFTopItemsHeader.inc:28
 msgid "Number Of Days"
 msgstr ""
+
+#: NoSalesItems.php:157
+#, fuzzy
+msgid "Location QOH"
+msgstr "Local"
+
+#: NoSalesItems.php:158
+#, fuzzy
+msgid "Total QOH"
+msgstr "Quantidade total"
 
 #: OffersReceived.php:6 OffersReceived.php:100
 msgid "Supplier Offers"
@@ -18825,7 +18836,7 @@ msgstr ""
 msgid "The report has been exported as a csv file."
 msgstr ""
 
-#: POReport.php:1505 SalesInquiry.php:1049 StockDispatch.php:377
+#: POReport.php:1505 SalesInquiry.php:1049 StockDispatch.php:381
 msgid "Report Type"
 msgstr ""
 
@@ -20741,7 +20752,7 @@ msgstr ""
 msgid "Inventory Reorder Level Report"
 msgstr ""
 
-#: ReorderLevel.php:206 SelectSalesOrder.php:497 StockDispatch.php:314
+#: ReorderLevel.php:206 SelectSalesOrder.php:497 StockDispatch.php:308
 #: StockLocMovements.php:19 StockLocStatus.php:32 StockLocTransfer.php:259
 #: StockMovements.php:35 StockTransfers.php:494 StockUsage.php:66
 msgid "From Stock Location"
@@ -24752,15 +24763,15 @@ msgid "Adjust"
 msgstr ""
 
 #: StockAdjustments.php:132 StockCostUpdate.php:42 StockCostUpdate.php:64
-#: StockTransfers.php:168 StockTransfers.php:261
+#: StockTransfers.php:168 StockTransfers.php:261 Z_StockConversion.php:23
 msgid "The entered item code does not exist"
 msgstr "O item digitado não existe"
 
-#: StockAdjustments.php:138
+#: StockAdjustments.php:138 Z_StockConversion.php:29
 msgid "There would be no adjustment to make"
 msgstr "não haveria ajustes a serem feitos"
 
-#: StockAdjustments.php:141
+#: StockAdjustments.php:141 Z_StockConversion.php:32
 msgid ""
 "The item entered is a controlled item that requires the detail of the serial "
 "numbers or batch references to be adjusted to be entered"
@@ -24768,7 +24779,7 @@ msgstr ""
 "O item digitado é um item controlado que requer o detalhe dos números "
 "seriais ou referências de lote a serem ajustadas"
 
-#: StockAdjustments.php:153
+#: StockAdjustments.php:153 Z_StockConversion.php:44
 msgid ""
 "The system parameters are set to prohibit negative stocks. Processing this "
 "stock adjustment would result in negative stock at this location. This "
@@ -25337,7 +25348,7 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: StockDispatch.php:17 StockDispatch.php:285
+#: StockDispatch.php:17 StockDispatch.php:279
 msgid "Stock Dispatch Report"
 msgstr ""
 
@@ -25349,123 +25360,163 @@ msgstr ""
 msgid "Could not retrieve location name from the database"
 msgstr ""
 
-#: StockDispatch.php:96 StockDispatch.php:108
+#: StockDispatch.php:100 StockDispatch.php:112
 msgid "Stock Dispatch - Problem Report"
 msgstr ""
 
-#: StockDispatch.php:98
+#: StockDispatch.php:102
 msgid "The Stock Dispatch report could not be retrieved by the SQL because"
 msgstr ""
 
-#: StockDispatch.php:111
+#: StockDispatch.php:115
 msgid "The stock dispatch did not have any items to list"
 msgstr ""
 
-#: StockDispatch.php:235 StockLocTransfer.php:213
+#: StockDispatch.php:229 StockLocTransfer.php:213
 msgid "Unable to enter Location Transfer record for"
 msgstr ""
 "não foi possí­vel submeter o registro de transferência de localidade para"
 
-#: StockDispatch.php:242
+#: StockDispatch.php:236
 msgid "Prepared By :"
 msgstr ""
 
-#: StockDispatch.php:247 StockDispatch.php:258 StockDispatch.php:269
+#: StockDispatch.php:241 StockDispatch.php:252 StockDispatch.php:263
 msgid "Hour"
 msgstr ""
 
-#: StockDispatch.php:249 StockDispatch.php:260 StockDispatch.php:271
+#: StockDispatch.php:243 StockDispatch.php:254 StockDispatch.php:265
 msgid "Signature"
 msgstr ""
 
-#: StockDispatch.php:253
+#: StockDispatch.php:247
 #, fuzzy
 msgid "Shipped By :"
 msgstr "Transportado por"
 
-#: StockDispatch.php:264
+#: StockDispatch.php:258
 msgid "Received By :"
 msgstr ""
 
-#: StockDispatch.php:287
+#: StockDispatch.php:281
 msgid "Inventory Stock Dispatch Report"
 msgstr ""
 
-#: StockDispatch.php:288
+#: StockDispatch.php:282
 msgid ""
-"Create batch of overstock from one location to transfer to another location "
-"that is below reorder level.<br/>\n"
-"\t\t\t\t\t\t\t\t\t\t Quantity to ship is based on reorder level minus the "
-"quantity on hand at the To Location; if there is a<br/>\n"
-"\t\t\t\t\t\t\t\t\t\t dispatch percentage entered, that needed quantity is "
-"inflated by the percentage entered.<br/>\n"
-"\t\t\t\t\t\t\t\t\t\t Use Bulk Inventory Transfer - Receive to process the "
-"batch"
+"Create a transfer batch of overstock from one location to another location "
+"that is below reorder level."
 msgstr ""
 
-#: StockDispatch.php:310
+#: StockDispatch.php:283
+#, fuzzy
+msgid ""
+"Quantity to ship is based on reorder level minus the quantity on hand at the "
+"To Location; if there is a"
+msgstr ""
+"não pôde ser recuperada a quantidade entregue do local que está sendo "
+"transferido para"
+
+#: StockDispatch.php:284
+msgid ""
+"dispatch percentage entered, that needed quantity is inflated by the "
+"percentage entered."
+msgstr ""
+
+#: StockDispatch.php:285
+#, fuzzy
+msgid "Use Bulk Inventory Transfer - Receive to process the batch"
+msgstr "esta informação é necessária para processamento do lote"
+
+#: StockDispatch.php:304
 msgid "Dispatch Percent"
 msgstr ""
 
-#: StockDispatch.php:330 StockLocTransfer.php:279 StockTransfers.php:518
+#: StockDispatch.php:324 StockLocTransfer.php:279 StockTransfers.php:518
 msgid "To Stock Location"
 msgstr "Localidade de estoque de destino"
 
-#: StockDispatch.php:379
+#: StockDispatch.php:370
+#, fuzzy
+msgid "Dispatch Strategy:"
+msgstr "Data de despacho"
+
+#: StockDispatch.php:373
+msgid "Items needed at TO location with overstock at FROM location"
+msgstr ""
+
+#: StockDispatch.php:374
+#, fuzzy
+msgid "Items with overstock at FROM location"
+msgstr ""
+"artigos conservados em estoque com o estoque na mío neste código de posição"
+
+#: StockDispatch.php:384
 msgid "Create Batch"
 msgstr ""
 
-#: StockDispatch.php:380
+#: StockDispatch.php:385
 msgid "Report Only"
 msgstr ""
 
-#: StockDispatch.php:384
+#: StockDispatch.php:393
 msgid "Template"
 msgstr ""
 
-#: StockDispatch.php:386
+#: StockDispatch.php:396
 #, fuzzy
 msgid "Full"
 msgstr "Nome completo"
 
-#: StockDispatch.php:388
+#: StockDispatch.php:398
 msgid "Simple"
 msgstr ""
 
-#: StockDispatch.php:420
+#: StockDispatch.php:433
 msgid "Stock Dispatch "
 msgstr ""
 
-#: StockDispatch.php:421
+#: StockDispatch.php:434
 msgid "From :"
 msgstr ""
 
-#: StockDispatch.php:427
+#: StockDispatch.php:440
 msgid "Transfer No."
 msgstr ""
 
-#: StockDispatch.php:430
+#: StockDispatch.php:443
 msgid "To :"
 msgstr ""
 
-#: StockDispatch.php:438
-msgid "Percent"
-msgstr ""
+#: StockDispatch.php:451
+#, fuzzy
+msgid "Over transfer"
+msgstr "Transferência de inventário"
 
-#: StockDispatch.php:447
+#: StockDispatch.php:454
+#, fuzzy
+msgid "Overstock items at "
+msgstr "Item de estoque"
+
+#: StockDispatch.php:456
+#, fuzzy
+msgid "Items needed at "
+msgstr "Manutenção de itens"
+
+#: StockDispatch.php:465
 msgid "QOH-From"
 msgstr ""
 
-#: StockDispatch.php:448
+#: StockDispatch.php:466
 msgid "QOH-To"
 msgstr ""
 
-#: StockDispatch.php:449 StockDispatch.php:456
+#: StockDispatch.php:467 StockDispatch.php:474
 #: includes/PDFStockLocTransferHeader.inc:22
 msgid "Shipped"
 msgstr "Transportado"
 
-#: StockDispatch.php:453
+#: StockDispatch.php:471
 #, fuzzy
 msgid "Image/Description"
 msgstr "Descrição"
@@ -28714,8 +28765,9 @@ msgid "Outstanding Tenders Waiting For Offer"
 msgstr "Pedidos de venda pendentes"
 
 #: SupplierTenders.php:508 Z_ChangeBranchCode.php:215
-#: Z_ChangeCustomerCode.php:242 Z_ChangeStockCategory.php:108
-#: Z_ChangeStockCode.php:340 Z_DeleteSalesTransActions.php:179
+#: Z_ChangeCustomerCode.php:242 Z_ChangeLocationCode.php:261
+#: Z_ChangeStockCategory.php:108 Z_ChangeStockCode.php:340
+#: Z_DeleteSalesTransActions.php:179
 msgid "Process"
 msgstr "Processar"
 
@@ -29831,15 +29883,15 @@ msgid ""
 "and every user login"
 msgstr ""
 
-#: SystemParameters.php:848 includes/MiscFunctions.php:230
+#: SystemParameters.php:848 includes/MiscFunctions.php:234
 msgid "WackoWiki"
 msgstr ""
 
-#: SystemParameters.php:849 includes/MiscFunctions.php:232
+#: SystemParameters.php:849 includes/MiscFunctions.php:236
 msgid "MediaWiki"
 msgstr ""
 
-#: SystemParameters.php:850 includes/MiscFunctions.php:234
+#: SystemParameters.php:850 includes/MiscFunctions.php:238
 msgid "DokuWiki"
 msgstr ""
 
@@ -32482,6 +32534,367 @@ msgstr "Código de devedor existente"
 msgid "New Debtor Code"
 msgstr "Novo código de devedor"
 
+#: Z_ChangeLocationCode.php:6
+#, fuzzy
+msgid "UTILITY PAGE Change A Location Code"
+msgstr "Página de utililade para modificar um código de estoque"
+
+#: Z_ChangeLocationCode.php:19
+#, fuzzy
+msgid "The location code"
+msgstr "Código da localidade"
+
+#: Z_ChangeLocationCode.php:19
+#, fuzzy
+msgid "does not currently exist as a location code in the system"
+msgstr "não existe no sistema"
+
+#: Z_ChangeLocationCode.php:24
+#, fuzzy
+msgid ""
+"The new location code to change the old code to contains illegal characters "
+"- no changes will be made"
+msgstr "O novo código de cliente deve ser digitado"
+
+#: Z_ChangeLocationCode.php:29
+#, fuzzy
+msgid "The new location code to change the old code to must be entered as well"
+msgstr "O novo código de cliente deve ser digitado"
+
+#: Z_ChangeLocationCode.php:34
+#, fuzzy
+msgid ""
+"The new location name to change the old name to contains illegal characters "
+"- no changes will be made"
+msgstr "O código do fornecedor não pode conter algum dos seguintes caracteres"
+
+#: Z_ChangeLocationCode.php:39
+#, fuzzy
+msgid "The new location name to change the old name to must be entered as well"
+msgstr "O novo código de cliente deve ser digitado"
+
+#: Z_ChangeLocationCode.php:46
+#, fuzzy
+msgid "The replacement location code"
+msgstr "O código de estoque de substituição"
+
+#: Z_ChangeLocationCode.php:46
+#, fuzzy
+msgid "already exists as a location code in the system"
+msgstr "já existe no sistema"
+
+#: Z_ChangeLocationCode.php:46
+#, fuzzy
+msgid "a unique location code must be entered for the new code"
+msgstr "um código de estoque único deve ser digitado"
+
+#: Z_ChangeLocationCode.php:54
+#, fuzzy
+msgid "Adding the new location record"
+msgstr "Adicionando o novo registro mestre de estoque"
+
+#: Z_ChangeLocationCode.php:91
+#, fuzzy
+msgid "The SQL to insert the new location record failed"
+msgstr ""
+"O comando SQL usado para inserir o novo registro mestre de estoque foi mal "
+"sucedido"
+
+#: Z_ChangeLocationCode.php:93 Z_ChangeLocationCode.php:99
+#: Z_ChangeLocationCode.php:105 Z_ChangeLocationCode.php:111
+#: Z_ChangeLocationCode.php:117 Z_ChangeLocationCode.php:123
+#: Z_ChangeLocationCode.php:129 Z_ChangeLocationCode.php:135
+#: Z_ChangeLocationCode.php:141 Z_ChangeLocationCode.php:151
+#: Z_ChangeLocationCode.php:158 Z_ChangeLocationCode.php:164
+#: Z_ChangeLocationCode.php:170 Z_ChangeLocationCode.php:176
+#: Z_ChangeLocationCode.php:182 Z_ChangeLocationCode.php:188
+#: Z_ChangeLocationCode.php:194 Z_ChangeLocationCode.php:200
+#: Z_ChangeLocationCode.php:206 Z_ChangeLocationCode.php:212
+#: Z_ChangeLocationCode.php:218 Z_ChangeLocationCode.php:224
+#: Z_ChangeLocationCode.php:234 Z_ChangeStockCategory.php:66
+#: Z_ChangeStockCategory.php:71 Z_ChangeStockCategory.php:76
+#: Z_ChangeStockCategory.php:81 Z_ChangeStockCategory.php:89
+#: Z_ChangeStockCode.php:107 Z_ChangeStockCode.php:113
+#: Z_ChangeStockCode.php:119 Z_ChangeStockCode.php:126
+#: Z_ChangeStockCode.php:132 Z_ChangeStockCode.php:142
+#: Z_ChangeStockCode.php:151 Z_ChangeStockCode.php:159
+#: Z_ChangeStockCode.php:166 Z_ChangeStockCode.php:173
+#: Z_ChangeStockCode.php:180 Z_ChangeStockCode.php:187
+#: Z_ChangeStockCode.php:194 Z_ChangeStockCode.php:201
+#: Z_ChangeStockCode.php:207 Z_ChangeStockCode.php:213
+#: Z_ChangeStockCode.php:219 Z_ChangeStockCode.php:226
+#: Z_ChangeStockCode.php:233 Z_ChangeStockCode.php:240
+#: Z_ChangeStockCode.php:248 Z_ChangeStockCode.php:254
+#: Z_ChangeStockCode.php:259 Z_ChangeStockCode.php:266
+#: Z_ChangeStockCode.php:274 Z_ChangeStockCode.php:279
+#: Z_ChangeStockCode.php:286 Z_ChangeStockCode.php:292
+#: Z_ChangeStockCode.php:304 Z_ChangeStockCode.php:316
+msgid "completed"
+msgstr "completo"
+
+#: Z_ChangeLocationCode.php:95 Z_ChangeStockCode.php:236
+#: Z_ChangeStockCode.php:244
+msgid "Changing the BOM table records"
+msgstr "Modificando os componentes dos registros da FDM"
+
+#: Z_ChangeLocationCode.php:97 Z_ChangeLocationCode.php:103
+#: Z_ChangeStockCode.php:238
+msgid "The SQL to update the BOM records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de FDM foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:101
+#, fuzzy
+msgid "Changing the config table records"
+msgstr "Modificando os componentes dos registros da FDM"
+
+#: Z_ChangeLocationCode.php:107
+#, fuzzy
+msgid "Changing the contracts table records"
+msgstr "Modificando os registros de FDM do contrato"
+
+#: Z_ChangeLocationCode.php:109
+#, fuzzy
+msgid "The SQL to update the contracts records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de contagem de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:113
+#, fuzzy
+msgid "Changing the custbranch table records"
+msgstr "Modificando os registros de FDM do contrato"
+
+#: Z_ChangeLocationCode.php:115
+#, fuzzy
+msgid "The SQL to update the custbranch records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros do usuário foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:119
+#, fuzzy
+msgid "Changing the freightcosts table records"
+msgstr "Modificando registros de contagem de estoque"
+
+#: Z_ChangeLocationCode.php:121
+#, fuzzy
+msgid "The SQL to update the freightcosts records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de preços foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:125 Z_ChangeStockCode.php:109
+msgid "Changing stock location records"
+msgstr "Modificando registros de localidade de estoque"
+
+#: Z_ChangeLocationCode.php:127 Z_ChangeStockCode.php:111
+msgid "The SQL to update stock location records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de localidade de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:131
+msgid "Changing location transfer information (Shipping location)"
+msgstr ""
+
+#: Z_ChangeLocationCode.php:133 Z_ChangeLocationCode.php:139
+#: Z_ChangeStockCode.php:124
+msgid "The SQL to update the loctransfers records failed"
+msgstr ""
+
+#: Z_ChangeLocationCode.php:137
+msgid "Changing location transfer information (Receiving location)"
+msgstr ""
+
+#: Z_ChangeLocationCode.php:147
+#, fuzzy
+msgid "Changing MRP parameters information"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:149
+#, fuzzy
+msgid "The SQL to update the mrpparameters records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros pais da FDM foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:154
+#, fuzzy
+msgid "Changing purchase orders information"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:156
+#, fuzzy
+msgid "The SQL to update the purchase orders records failed"
+msgstr ""
+"O comando SQL usado para atualizar o registro de detalhes da ordem de compra "
+"foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:160
+#, fuzzy
+msgid "Changing recurring sales orders information"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:162
+#, fuzzy
+msgid "The SQL to update the recurring sales orders records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros do cabeçalho da ordem de "
+"vendas foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:166
+#, fuzzy
+msgid "Changing  sales orders information"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:168
+#, fuzzy
+msgid "The SQL to update the  sales orders records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros do cabeçalho da ordem de "
+"vendas foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:172
+#, fuzzy
+msgid "Changing stock check freeze records"
+msgstr ""
+"Modificando os registros de arquivo de congelamento de verificação de estoque"
+
+#: Z_ChangeLocationCode.php:174 Z_ChangeStockCode.php:211
+msgid "The SQL to update stock check freeze records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de congelamento de "
+"verificação de estoque foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:178
+#, fuzzy
+msgid "Changing stockcounts records"
+msgstr "Modificando registros de movimentação de estoque"
+
+#: Z_ChangeLocationCode.php:180
+#, fuzzy
+msgid "The SQL to update stockcounts records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de contagem de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:184
+#, fuzzy
+msgid "Changing stockmoves records"
+msgstr "Modificando registros de movimentação de estoque"
+
+#: Z_ChangeLocationCode.php:186
+#, fuzzy
+msgid "The SQL to update stockmoves records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de contagem de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:190
+#, fuzzy
+msgid "Changing stockrequest records"
+msgstr "Modificando registros de movimentação de estoque"
+
+#: Z_ChangeLocationCode.php:192
+#, fuzzy
+msgid "The SQL to update stockrequest records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de contagem de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:196
+#, fuzzy
+msgid "Changing stockserialitems records"
+msgstr "Modificando registros de movimentação de estoque"
+
+#: Z_ChangeLocationCode.php:198
+#, fuzzy
+msgid "The SQL to update stockserialitems records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de contagem de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:202
+#, fuzzy
+msgid "Changing tenders records"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:204
+#, fuzzy
+msgid "The SQL to update tenders records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros do usuário foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:208
+#, fuzzy
+msgid "Changing workcentres records"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:210
+#, fuzzy
+msgid "The SQL to update workcentres records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de contagem de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:214
+#, fuzzy
+msgid "Changing workorders records"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:216
+#, fuzzy
+msgid "The SQL to update workorders records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros de contagem de estoque foi "
+"mal sucedido"
+
+#: Z_ChangeLocationCode.php:220
+#, fuzzy
+msgid "Changing users records"
+msgstr "Modificando pedidos de venda"
+
+#: Z_ChangeLocationCode.php:222
+#, fuzzy
+msgid "The SQL to update users records failed"
+msgstr ""
+"O comando SQL usado para atualizar os registros do usuário foi mal sucedido"
+
+#: Z_ChangeLocationCode.php:230
+#, fuzzy
+msgid "Deleting the old location record"
+msgstr "Removendo o registro mestre de estoque antigo"
+
+#: Z_ChangeLocationCode.php:232
+#, fuzzy
+msgid "The SQL to delete the old location record failed"
+msgstr ""
+"O comando SQL usado para remover o registro de devedor antigo foi mal "
+"sucedido"
+
+#: Z_ChangeLocationCode.php:237
+#, fuzzy
+msgid "Location code"
+msgstr "Código da localidade"
+
+#: Z_ChangeLocationCode.php:237 Z_ChangeStockCategory.php:90
+#: Z_ChangeStockCode.php:319
+msgid "was successfully changed to"
+msgstr ""
+
+#: Z_ChangeLocationCode.php:248
+#, fuzzy
+msgid "Existing Location Code"
+msgstr "Código de filial existente"
+
+#: Z_ChangeLocationCode.php:252
+#, fuzzy
+msgid "New Location Code"
+msgstr "Código da localidade"
+
+#: Z_ChangeLocationCode.php:256
+#, fuzzy
+msgid "New Location Name"
+msgstr "Nome da localidade"
+
 #: Z_ChangeStockCategory.php:6
 msgid "UTILITY PAGE Change A Stock Category"
 msgstr ""
@@ -32524,27 +32937,6 @@ msgstr ""
 msgid "The SQL to insert the new stock category record failed"
 msgstr ""
 
-#: Z_ChangeStockCategory.php:66 Z_ChangeStockCategory.php:71
-#: Z_ChangeStockCategory.php:76 Z_ChangeStockCategory.php:81
-#: Z_ChangeStockCategory.php:89 Z_ChangeStockCode.php:107
-#: Z_ChangeStockCode.php:113 Z_ChangeStockCode.php:119
-#: Z_ChangeStockCode.php:126 Z_ChangeStockCode.php:132
-#: Z_ChangeStockCode.php:142 Z_ChangeStockCode.php:151
-#: Z_ChangeStockCode.php:159 Z_ChangeStockCode.php:166
-#: Z_ChangeStockCode.php:173 Z_ChangeStockCode.php:180
-#: Z_ChangeStockCode.php:187 Z_ChangeStockCode.php:194
-#: Z_ChangeStockCode.php:201 Z_ChangeStockCode.php:207
-#: Z_ChangeStockCode.php:213 Z_ChangeStockCode.php:219
-#: Z_ChangeStockCode.php:226 Z_ChangeStockCode.php:233
-#: Z_ChangeStockCode.php:240 Z_ChangeStockCode.php:248
-#: Z_ChangeStockCode.php:254 Z_ChangeStockCode.php:259
-#: Z_ChangeStockCode.php:266 Z_ChangeStockCode.php:274
-#: Z_ChangeStockCode.php:279 Z_ChangeStockCode.php:286
-#: Z_ChangeStockCode.php:292 Z_ChangeStockCode.php:304
-#: Z_ChangeStockCode.php:316
-msgid "completed"
-msgstr "completo"
-
 #: Z_ChangeStockCategory.php:67
 msgid "Changing stock properties"
 msgstr ""
@@ -32567,10 +32959,6 @@ msgstr ""
 
 #: Z_ChangeStockCategory.php:87
 msgid "The SQL to delete the old stock category record failed"
-msgstr ""
-
-#: Z_ChangeStockCategory.php:90 Z_ChangeStockCode.php:319
-msgid "was successfully changed to"
 msgstr ""
 
 #: Z_ChangeStockCategory.php:99
@@ -32615,16 +33003,6 @@ msgstr ""
 "O comando SQL usado para inserir o novo registro mestre de estoque foi mal "
 "sucedido"
 
-#: Z_ChangeStockCode.php:109
-msgid "Changing stock location records"
-msgstr "Modificando registros de localidade de estoque"
-
-#: Z_ChangeStockCode.php:111
-msgid "The SQL to update stock location records failed"
-msgstr ""
-"O comando SQL usado para atualizar os registros de localidade de estoque foi "
-"mal sucedido"
-
 #: Z_ChangeStockCode.php:117
 msgid "The SQL to update stock movement transaction records failed"
 msgstr ""
@@ -32633,10 +33011,6 @@ msgstr ""
 
 #: Z_ChangeStockCode.php:121
 msgid "Changing location transfer information"
-msgstr ""
-
-#: Z_ChangeStockCode.php:124
-msgid "The SQL to update the loctransfers records failed"
 msgstr ""
 
 #: Z_ChangeStockCode.php:128
@@ -32710,12 +33084,6 @@ msgid "Changing the stock check freeze file records"
 msgstr ""
 "Modificando os registros de arquivo de congelamento de verificação de estoque"
 
-#: Z_ChangeStockCode.php:211
-msgid "The SQL to update stock check freeze records failed"
-msgstr ""
-"O comando SQL usado para atualizar os registros de congelamento de "
-"verificação de estoque foi mal sucedido"
-
 #: Z_ChangeStockCode.php:215
 msgid "Changing the stock counts table records"
 msgstr "Modificando registros de contagem de estoque"
@@ -32744,18 +33112,9 @@ msgstr ""
 "O comando SQL usado para atualizar os registros de FDM do contrato foi mal "
 "sucedido"
 
-#: Z_ChangeStockCode.php:236 Z_ChangeStockCode.php:244
-msgid "Changing the BOM table records"
-msgstr "Modificando os componentes dos registros da FDM"
-
 #: Z_ChangeStockCode.php:236
 msgid "components"
 msgstr "componentes"
-
-#: Z_ChangeStockCode.php:238
-msgid "The SQL to update the BOM records failed"
-msgstr ""
-"O comando SQL usado para atualizar os registros de FDM foi mal sucedido"
 
 #: Z_ChangeStockCode.php:244 Z_ChangeStockCode.php:262
 msgid "parents"
@@ -34388,6 +34747,46 @@ msgstr ""
 msgid "Sales Integrity Check completed."
 msgstr ""
 
+#: Z_StockConversion.php:8
+#, fuzzy
+msgid "Stock Conversion Utility"
+msgstr "Fator de conversão"
+
+#: Z_StockConversion.php:14
+#, fuzzy
+msgid "Inventory Conversion Utility"
+msgstr "Comparação de inventário"
+
+#: Z_StockConversion.php:128
+#, fuzzy
+msgid "Conversion Details"
+msgstr "Versão"
+
+#: Z_StockConversion.php:143
+#, fuzzy
+msgid "Convert From Stock Code"
+msgstr "não foi possí­vel localizar o código de estoque"
+
+#: Z_StockConversion.php:148
+#, fuzzy
+msgid "Convert To Stock Code"
+msgstr "não foi possí­vel localizar o código de estoque"
+
+#: Z_StockConversion.php:152
+#, fuzzy
+msgid "Convert Stock At Location"
+msgstr "Para localidade de estoque"
+
+#: Z_StockConversion.php:176
+#, fuzzy
+msgid "Quantity To Convert"
+msgstr "Quantidade a receber"
+
+#: Z_StockConversion.php:186
+#, fuzzy
+msgid "Convert Items"
+msgstr "Digite um código de item"
+
 #: Z_test.php:6
 #, fuzzy
 msgid "Test Script"
@@ -35868,62 +36267,67 @@ msgid "Change A Supplier Code"
 msgstr "Modificar um código de cliente"
 
 #: includes/MainMenuLinksArray.php:537
+#, fuzzy
+msgid "Change A Location Code"
+msgstr "Alterar local de ativos"
+
+#: includes/MainMenuLinksArray.php:538
 msgid "Update costs for all BOM items, from the bottom up"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:538
+#: includes/MainMenuLinksArray.php:539
 msgid "Re-apply costs to Sales Analysis"
 msgstr "Reaplicar custos à analise de vendas"
 
-#: includes/MainMenuLinksArray.php:539
+#: includes/MainMenuLinksArray.php:540
 msgid "Delete sales transactions"
 msgstr "Remover transações de vendas"
 
-#: includes/MainMenuLinksArray.php:540
+#: includes/MainMenuLinksArray.php:541
 msgid "Reverse all supplier payments on a specified date"
 msgstr "Reverter todos os pagamentos ao fornecedor em uma data especificada"
 
-#: includes/MainMenuLinksArray.php:551
+#: includes/MainMenuLinksArray.php:553
 msgid "Show Local Currency Total Debtor Balances"
 msgstr "Mostrar saldo total do devedor na moeda local"
 
-#: includes/MainMenuLinksArray.php:552
+#: includes/MainMenuLinksArray.php:554
 msgid "Show Local Currency Total Suppliers Balances"
 msgstr "Mostrar saldo total do fornecedor na moeda local"
 
-#: includes/MainMenuLinksArray.php:553
+#: includes/MainMenuLinksArray.php:555
 msgid "Show General Transactions That Do Not Balance"
 msgstr "Mostrar transações que não batem o saldo"
 
-#: includes/MainMenuLinksArray.php:559
+#: includes/MainMenuLinksArray.php:561
 msgid "Maintain Language Files"
 msgstr "Manter arquivos de linguagem"
 
-#: includes/MainMenuLinksArray.php:560
+#: includes/MainMenuLinksArray.php:562
 msgid "Make New Company"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:561
+#: includes/MainMenuLinksArray.php:563
 msgid "Data Export Options"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:562
+#: includes/MainMenuLinksArray.php:564
 msgid "Import Stock Items from .csv"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:563
+#: includes/MainMenuLinksArray.php:565
 msgid "Import Fixed Assets from .csv file"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:564
+#: includes/MainMenuLinksArray.php:566
 msgid "Create new company template SQL file and submit to webERP"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:565
+#: includes/MainMenuLinksArray.php:567
 msgid "Re-calculate brought forward amounts in GL"
 msgstr "Re-calcular quantias previstas no LGC"
 
-#: includes/MainMenuLinksArray.php:566
+#: includes/MainMenuLinksArray.php:568
 msgid "Re-Post all GL transactions from a specified period"
 msgstr "Re-inserir todas as transações do LGC de um determinado perí­odo"
 
@@ -35943,8 +36347,8 @@ msgstr "INFORMAÇÃO"
 msgid "Message"
 msgstr "Mensagem"
 
-#: includes/MiscFunctions.php:231 includes/MiscFunctions.php:233
-#: includes/MiscFunctions.php:235
+#: includes/MiscFunctions.php:235 includes/MiscFunctions.php:237
+#: includes/MiscFunctions.php:239
 msgid "Wiki "
 msgstr ""
 
@@ -39239,11 +39643,11 @@ msgid ""
 "error code in element 0 and the error string in element 1. "
 msgstr ""
 
-#: api/api_xml-rpc.php:3399
+#: api/api_xml-rpc.php:3395
 msgid "Parameters"
 msgstr ""
 
-#: api/api_xml-rpc.php:3404
+#: api/api_xml-rpc.php:3400
 msgid "Return Value"
 msgstr ""
 

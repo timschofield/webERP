@@ -1,5 +1,7 @@
 webERP Change Log
 
+24/6/2012 Release 4.08.1
+
 22/06/2012 Icedlava: Fixed bug preventing insert of new account section
 21/06/2012 Phil: Added tooltip of long description to SelectProduct.php
 20/06/2012 Ricard: Added total QOH to NoSalesItems.php.
