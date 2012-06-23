@@ -14,7 +14,7 @@ include('includes/header.inc');
 
 	if( DB_num_rows($result) == 0 ) {
 		$sql = "INSERT INTO accountsection (sectionid,
-											sectionname) 
+											sectionname)
 									VALUES (1,
 											'Income')";
 		$result = DB_query($sql,$db);
@@ -25,7 +25,7 @@ include('includes/header.inc');
 
 	if( DB_num_rows($result) == 0 ) {
 		$sql = "INSERT INTO accountsection (sectionid,
-											sectionname) 
+											sectionname)
 									VALUES (2,
 											'Cost Of Sales')";
 		$result = DB_query($sql,$db);
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE accountsection SET sectionname='" . $_POST['SectionName'] . "'
-				WHERE sectionid = " . $_POST['SelectedSectionID'];
+				WHERE sectionid = '" . $_POST['SelectedSectionID'] . "'";
 
 		$msg = _('Record Updated');
 	} elseif ($InputError !=1) {
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 											sectionname
 										) VALUES (
 											" . $_POST['SectionID'] . ",
-											'" . $_POST['SectionName'] .")";
+											'" . $_POST['SectionName'] ."')";
 		$msg = _('Record inserted');
 	}
 
@@ -255,8 +255,11 @@ if (! isset($_GET['delete'])) {
 		<td><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="SectionName" size="30" maxlength="30" value="' . $_POST['SectionName'] . '" /></td>
 		</tr>';
 
-	echo '<tr><td colspan="2"><div class="centre"><input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td></tr>';
-	echo '</table><br />';
+	echo '<tr>
+			<td colspan="2"><div class="centre"><input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
+		</tr>
+		</table>
+		<br />';
 
 	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID']=='') {
 		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionID);</script>';
