@@ -43,21 +43,21 @@ if (((!isset($_POST['Submit'])) AND (empty($_GET['ViewTopic']))) ||
 	   echo ' <input type="checkbox" name="SelectTableOfContents">';
 	}
 	echo "Table of Contents</h1></li>\n";
-	foreach ($TOC_Array['TableOfContents'] as $title => $sublinks) {
+	foreach ($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
 	
-	   $Name = 'Select' . $title;
+	   $Name = 'Select' . $Title;
 	   echo "<ul>\n";
 	   if (!isset($_POST['Submit'])) {
 		 echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="'.$Name.'">'."\n";
-		 echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic='.$title.'">'.$sublinks[0].'</a></li>'."\n";
+		 echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic='.$Title.'">'.$SubLinks[0].'</a></li>'."\n";
 	   } else {
-		 echo' <li class="toc"><a href="#'.$title.'">'.$sublinks[0].'</a></li>'."\n";
+		 echo' <li class="toc"><a href="#'.$Title.'">'.$SubLinks[0].'</a></li>'."\n";
 	   }
-	   if (count($sublinks)>1) {
+	   if (count($SubLinks)>1) {
 		  echo'<ul>'."\n";
-		  foreach ($sublinks as $k=>$subname) {
+		  foreach ($SubLinks as $k=>$SubName) {
 			if ($k == 0) continue;
-			echo '<li>'.$subname.'</li>'."\n";
+			echo '<li>'.$SubName.'</li>'."\n";
 		  }
 			echo '</ul>'."\n";
 		}
