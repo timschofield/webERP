@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 	$sql= "SELECT COUNT(sectioninaccounts) AS sections FROM accountgroups WHERE sectioninaccounts='" . $_GET['SelectedSectionID'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result);
-	if (DB_num_rows($result)>0) {
+	if ($myrow['sections']>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
         echo '<div>';
 		echo '<br />' . _('There are') . ' ' . $myrow['sections'] . ' ' . _('general ledger accounts groups that refer to this account section');
