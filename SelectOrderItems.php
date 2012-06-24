@@ -190,6 +190,7 @@ if (isset($_GET['ModifyOrderNumber'])
 			$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
 									salesorderdetails.stkcode,
 									stockmaster.description,
+									stockmaster.longdescription,
 									stockmaster.volume,
 									stockmaster.kgs,
 									stockmaster.units,
@@ -226,6 +227,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
 																	$myrow['quantity'],
 																	$myrow['description'],
+																	$myrow['longdescription'],
 																	$myrow['unitprice'],
 																	$myrow['discountpercent'],
 																	$myrow['units'],
@@ -747,6 +749,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
@@ -758,6 +761,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
@@ -777,6 +781,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
@@ -788,6 +793,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
@@ -803,6 +809,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
@@ -813,6 +820,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
@@ -1391,7 +1399,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 
 			echo '<a target="_blank" href="' . $rootpath . '/StockStatus.php?identifier='.$identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
-				<td>' . $OrderLine->ItemDescription . '</td>';
+				<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
 			echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($OrderLine->Quantity,$OrderLine->DecimalPlaces) . '" />';
 			if ($QtyRemain != $QtyOrdered){
@@ -1484,6 +1492,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$SQL="SELECT stockmaster.units,
 						stockmaster.description,
+						stockmaster.longdescription,
 						stockmaster.stockid,
 						salesorderdetails.stkcode,
 						SUM(qtyinvoiced) salesqty
@@ -1588,7 +1597,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$Available = $QOH - $DemandQty + $OnOrder;
 
 				printf('<td>%s</td>
-						<td>%s</td>
+						<td title="%s">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -1599,6 +1608,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						</td>
 						</tr>',
 						$myrow['stockid'],
+						$myrow['longdescription'],
 						$myrow['description'],
 						$myrow['units'],
 						locale_number_format($QOH, $QOHRow['decimalplaces']),
@@ -1775,7 +1785,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$Available = $QOH - $DemandQty + $OnOrder;
 
 				printf('<td>%s</td>
-						<td>%s</td>
+						<td title="%s">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -1786,6 +1796,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						</td>
 						</tr>',
 						$myrow['stockid'],
+						$myrow['longdescription'],
 						$myrow['description'],
 						$myrow['units'],
 						locale_number_format($QOH,$QOHRow['decimalplaces']),

@@ -99,6 +99,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 		$LineItemsSQL = "SELECT stockmoves.stkmoveno,
 								stockmoves.stockid,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.volume,
 								stockmaster.kgs,
 								stockmaster.mbflag,
@@ -136,6 +137,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 				$_SESSION['CreditItems']->add_to_cart($myrow['stockid'],
 														$myrow['quantity'],
 														$myrow['description'],
+														$myrow['longdescription'],
 														$myrow['price'],
 														$myrow['discountpercent'],
 														$myrow['units'],
@@ -329,7 +331,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 		$j++;
 
 		echo '<tr '.$RowStarter.'><td>' . $LnItm->StockID . '</td>
-			<td>' . $LnItm->ItemDescription . '</td>
+			<td title="'. $LnItm->LongDescription . '">' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
 			<td>' . $LnItm->Units . '</td>';
 

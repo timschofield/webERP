@@ -865,7 +865,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 		}
 
 		echo '<td>'.$StockItem->StockID.'</td>
-			<td>'.$StockItem->ItemDescription.'</td>
+			<td title="' . $StockItem->LongDescription . '">'.$StockItem->ItemDescription.'</td>
 			<td class="number">'.$DisplayQuantity.'</td>
 			<td>'.$StockItem->Units.'</td>
 			<td class="number">'.$DisplayPrice.'</td>

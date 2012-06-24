@@ -442,6 +442,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		   if ($AlreadyOnThisCredit!=1){
 
 			    $sql = "SELECT stockmaster.description,
+								stockmaster.longdescription,
 					    		stockmaster.stockid,
 								stockmaster.units,
 								stockmaster.volume,
@@ -466,6 +467,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					if ($_SESSION['CreditItems'.$identifier]->add_to_cart ($myrow['stockid'],
 																			$NewItemQty,
 																			$myrow['description'],
+																			$myrow['longdescription'],
 																			GetPrice ($_POST['NewItem'],
 																			$_SESSION['CreditItems'.$identifier]->DebtorNo,
 																			$_SESSION['CreditItems'.$identifier]->Branch, $db),
@@ -608,6 +610,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   if ($AlreadyOnThisCredit!=1){
 
 				$sql = "SELECT stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.stockid,
 								stockmaster.units,
 								stockmaster.volume,
@@ -632,6 +635,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if ($_SESSION['CreditItems'.$identifier]->add_to_cart ($myrow['stockid'],
 														1,
 														$myrow['description'],
+														$myrow['longdescription'],
 														GetPrice($_POST['NewItem'],
 														$_SESSION['CreditItems'.$identifier]->DebtorNo,
 														$_SESSION['CreditItems'.$identifier]->Branch,
@@ -708,7 +712,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   }
 
 			   echo $RowStarter . '<td>' . $LineItem->StockID . '</td>
-									<td>' . $LineItem->ItemDescription . '</td>';
+									<td title="'. $LineItem->LongDescription . '">' . $LineItem->ItemDescription . '</td>';
 
 			   if ($LineItem->Controlled==0){
 			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';

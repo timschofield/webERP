@@ -105,6 +105,7 @@ if (isset($_GET['NewRecurringOrder'])){
 	/*need to look up customer name from debtors master then populate the line items array with the sales order details records */
 			$LineItemsSQL = "SELECT recurrsalesorderdetails.stkcode,
 									stockmaster.description,
+									stockmaster.longdescription,
 									stockmaster.volume,
 									stockmaster.kgs,
 									stockmaster.units,
@@ -130,6 +131,7 @@ if (isset($_GET['NewRecurringOrder'])){
 					$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
 																$myrow['quantity'],
 																$myrow['description'],
+																$myrow['longdescription'],
 																$myrow['unitprice'],
 																$myrow['discountpercent'],
 																$myrow['units'],
@@ -347,7 +349,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 	}
 
 		echo '<td>' . $StockItem->StockID . '</td>
-			<td>' . $StockItem->ItemDescription . '</td>
+			<td title="'. $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
 			<td class="number">' . $DisplayQuantity . '</td>
 			<td>' . $StockItem->Units . '</td>
 			<td class="number">' . $DisplayPrice . '</td>

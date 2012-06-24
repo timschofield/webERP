@@ -131,6 +131,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 
 		$LineItemsSQL = "SELECT stkcode,
 								stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.controlled,
 								stockmaster.serialised,
 								stockmaster.volume,
@@ -167,6 +168,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 				$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
 											$myrow['quantity'],
 											$myrow['description'],
+											$myrow['longdescription'],
 											$myrow['unitprice'],
 											$myrow['discountpercent'],
 											$myrow['units'],
@@ -319,7 +321,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 
     echo $RowStarter;
 	echo '<td>'.$LnItm->StockID.'</td>
-		<td>'.$LnItm->ItemDescription.'</td>
+		<td title="'. $LnItm->LongDescription . '">' .$LnItm->ItemDescription.'</td>
 		<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
 		<td>'.$LnItm->Units.'</td>
 		<td class="number">' . locale_number_format($LnItm->QtyInv,$LnItm->DecimalPlaces) . '</td>';

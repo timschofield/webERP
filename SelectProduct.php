@@ -53,6 +53,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		$StockID = $_SESSION['SelectedStockItem'];
 	}
 	$result = DB_query("SELECT stockmaster.description,
+								stockmaster.longdescription,
 								stockmaster.mbflag,
 								stockcategory.stocktype,
 								stockmaster.units,
@@ -79,7 +80,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	}
 	echo '<table width="90%">
 			<tr>
-				<th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
+				<th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b title="' . $myrow['longdescription'] . '">' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
 			</tr>';
 
 	echo '<tr>

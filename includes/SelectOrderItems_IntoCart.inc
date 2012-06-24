@@ -32,6 +32,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 if ($AlreadyOnThisOrder!=1){
 
     $sql = "SELECT stockmaster.description,
+				stockmaster.longdescription,
 				stockmaster.stockid,
 				stockmaster.units,
 				stockmaster.volume,
@@ -133,6 +134,7 @@ if ($AlreadyOnThisOrder!=1){
 				$_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
 															$NewItemQty,
 															$myItemRow['description'],
+															$myItemRow['longdescription'],
 															$Price,
 															$Discount,
 															$myItemRow['units'],

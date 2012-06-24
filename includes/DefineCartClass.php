@@ -77,6 +77,7 @@ Class Cart {
 	function add_to_cart($StockID,
 							$Qty,
 							$Descr,
+							$LongDescr,
 							$Price,
 							$Disc=0,
 							$UOM,
@@ -116,6 +117,7 @@ Class Cart {
 			$this->LineItems[$LineNumber] = new LineDetails($LineNumber,
 															$StockID,
 															$Descr,
+															$LongDescr,
 															$Qty,
 															$Price,
 															$Disc,
@@ -418,6 +420,7 @@ Class LineDetails {
 	Var $LineNumber;
 	Var $StockID;
 	Var $ItemDescription;
+	Var $LongDescription;
 	Var $Quantity;
 	Var $Price;
 	Var $DiscountPercent;
@@ -448,6 +451,7 @@ Class LineDetails {
 	function LineDetails ($LineNumber,
 							$StockItem,
 							$Descr,
+							$LongDescr,
 							$Qty,
 							$Prc,
 							$DiscPercent,
@@ -475,6 +479,7 @@ Class LineDetails {
 		$this->LineNumber = $LineNumber;
 		$this->StockID =$StockItem;
 		$this->ItemDescription = $Descr;
+		$this->LongDescription = $LongDescr;
 		$this->Quantity = $Qty;
 		$this->Price = $Prc;
 		$this->DiscountPercent = $DiscPercent;
