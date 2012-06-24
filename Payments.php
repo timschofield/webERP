@@ -6,7 +6,8 @@ include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
 
 $title = _('Payment Entry');
-
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'BankAccountPayments';
 include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');

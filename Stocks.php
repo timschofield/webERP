@@ -6,8 +6,8 @@ include('includes/session.inc');
 $title = _('Item Maintenance');
 $title = _('Item Maintenance');
 /* webERP manual links before header.inc */
-$ViewTopic= "Inventory";
-$BookMark = "InventoryAddingItems";
+$ViewTopic= 'Inventory';
+$BookMark = 'InventoryAddingItems';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

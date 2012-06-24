@@ -5,7 +5,8 @@
 include('includes/session.inc');
 
 $title = _('Bank Accounts Maintenance');
-
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'BankAccounts';
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank') . '" alt="" />' . ' ' . $title . '</p>';

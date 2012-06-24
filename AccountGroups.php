@@ -5,7 +5,8 @@
 include('includes/session.inc');
 
 $title = _('Account Groups');
-
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'AccountGroups';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

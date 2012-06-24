@@ -67,7 +67,7 @@
 
 			echo '<td class="quick_menu_tab" align="center"><a href="' .  $rootpath . '/SelectSupplier.php"><span style="text-decoration:underline;">4</span> ' . _('Suppliers') . '</a></td>';
 
-			$DefaultManualLink = '<td class="quick_menu_tab" align="center"><a rel="external" accesskey="8" href="' .  $rootpath . '/doc/Manual/ManualContents.php'.$ViewTopic . $BookMark. '"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
+			$DefaultManualLink = '<td class="quick_menu_tab" align="center"><a rel="external" accesskey="8" href="' .  $rootpath . '/doc/Manual/ManualContents.php'. $ViewTopic . $BookMark. '"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
 
 			if (mb_substr($_SESSION['Language'],0,2) !='en'){
 				if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')){
