@@ -1,99 +1,92 @@
-<a name="APITutorial"><font size="+3"><b>Application Programming Interface</b></font></a>
-<br /><br />
-<font size="+2"><b>webERP API - Getting Started</b></font>
-<br /><br />
+<a id="APITutorial"><h1>Application Programming Interface</h1></a>
+
+<h2>webERP API - Getting Started</h2>
+<p>
 The API is an Application Program Interface, that is intended to expose webERP functionality to external programs. There are currently a number of low level functions it exposes to enable external applications to retrieve webERP data and to update or insert webERP data.
-<br /><br />
+</p>
 The API in webERP uses XML-RPC in particular the phpxmlrpc class from Useful Inc originally developed by Edd Dumbill
-<br /><br />
-XML-RPC is a protocl to use XML to make RPC - remote procedure calls.
-<br /><br />
-Simply put the XML-RPC call is XML that contains the method of the remote procedure call together with any parameters and their data types and is sent over http as a POST to the XML-RPC server - the server returns an XML payload containing the results of the call. The parameters sent to the methods can contain arrays and associative arrays of data.
-<br /><br />
-The clever thing about XML-RPC is that it is the simplest protocol around for doing web-services. The newer and MUCH more complex SOAP - Simple Object Access Protocol - is quite involved and complicated. webERP is founded on the KISS principle.
-<br /><br />
-In fact the XML-RPC "Server" in webERP is just the script http://www.yourdomain.com/webERP/api/api_xml-rpc.php
-<br /><br />
-There is no daemon background process running continuously to field calls to the "server" it is just a script that is http posted to by the XML-RPC call sending the XML encoded method to be run together with the necessary parameters to the webERP API - the server script runs the API php functions exposed by the xml-rpc methods and returns the XML-RPC response as an XML payload. The phpxmlrpc class does the packaging converting the PHP variables and arrays to the XML required for the XML-RPC call and also has the functions to convert the XML response into something useable in PHP without having to write the XML parsing routines.
-<br /><br />
-It is worthwhile reading a how-to on XML-RPC with PHP which explains in more detail what is going on as a primer for the concepts.
-<br /><br />
-The beauty of XML-RPC is that the client calling the webERP XML-RPC server and performing native webERP functions can be called from any language (with XML-RPC bindings). I have used Vala, Genie and Python. Python particularly has been very straight forward as it has an xmlrpclib bundled with it. Of course a PHP client is also possible and is demonstrated below.
-<br /><br />
-The API help is actually produced by an xml-rpc call to the API using the system.listMethods method (this is a phpxmlrpc method - not a webERP API method). Aother system xml-rpc method of phpxmlrpc class is used to return the details of each method's parameters required. So the help file not only documents each of the API methods it is itself and illustration of how the API can be used!!
-<br /><br />
-Below is a simple example of how to use the API.
-<br /><br />
-<hr />
-<i>
-echo "<html><head>Test webERP API</head><body>";
-<br /><br />
-//the xmlrpc class can output some funny warnings so make sure notices are turned off
-error_reporting (E_ALL & ~E_NOTICE);
-<br /><br />
-/*you need to include the phpxmlrpc class - see link above - copy the whole directory structure of the class over to your client application from the webERP/xmlrpc directory
-*/
-<br /><br />
+</p>
+<p>XML-RPC is a protocl to use XML to make RPC - remote procedure calls.</p>
+<p>
+Simply put the XML-RPC call is XML that contains the method of the remote procedure call together with any parameters and their data types and is sent over http as a POST to the XML-RPC server - the server returns an XML payload containing the results of the call. The parameters sent to the methods can contain arrays and associative arrays of data.</p>
+<p>
+The clever thing about XML-RPC is that it is the simplest protocol around for doing web-services. The newer and MUCH more complex SOAP - Simple Object Access Protocol - is quite involved and complicated. webERP is founded on the KISS principle.</p>
+<p>
+In fact the XML-RPC "Server" in webERP is just the script http://www.yourdomain.com/webERP/api/api_xml-rpc.php</p>
+<p>There is no daemon background process running continuously to field calls to the "server" it is just a script that is http posted to by the XML-RPC call sending the XML encoded method to be run together with the necessary parameters to the webERP API - the server script runs the API php functions exposed by the xml-rpc methods and returns the XML-RPC response as an XML payload. The phpxmlrpc class does the packaging converting the PHP variables and arrays to the XML required for the XML-RPC call and also has the functions to convert the XML response into something useable in PHP without having to write the XML parsing routines.</p>
+<p>
+It is worthwhile reading a how-to on XML-RPC with PHP which explains in more detail what is going on as a primer for the concepts.</p>
+<p>
+The beauty of XML-RPC is that the client calling the webERP XML-RPC server and performing native webERP functions can be called from any language (with XML-RPC bindings). I have used Vala, Genie and Python. Python particularly has been very straight forward as it has an xmlrpclib bundled with it. Of course a PHP client is also possible and is demonstrated below.</p>
+<p>
+The API help is actually produced by an xml-rpc call to the API using the system.listMethods method (this is a phpxmlrpc method - not a webERP API method). Aother system xml-rpc method of phpxmlrpc class is used to return the details of each method's parameters required. So the help file not only documents each of the API methods it is itself and illustration of how the API can be used!!</p>
+<p>
+Below is a simple example of how to use the API.</p>
+<p>
+<hr>
+<pre>
+echo "Test webERP API";
+
+//the xmlrpc class can output some funny warnings so make sure notices are turned off error_reporting (E_ALL & ~E_NOTICE);
+
+/* you need to include the phpxmlrpc class - see link above - copy the whole directory structure of the class over to your client application from the webERP/xmlrpc directory */
+
 include ("xmlrpc/lib/xmlrpc.inc");
-<br /><br />
+
 //if your webERP install is on a server at http://www.yourdomain.com/webERP
-<br /><br />
+
 $ServerURL = "http://www.yourdomain.com/webERP/api/api_xml-rpc.php";
-<br /><br />
+
 $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
-<br /><br />
+
 $Parameters = array();
-<br /><br />
-/*The trap for me was that each parameter needs to be run through xmlrpcval()  - to create the necessary xml required for the rpc call
-if one of the parameters required is an array then it needs to be processing into xml for the rpc call through php_xmlrpc_encode()*/
-<br /><br />
+
+/* The trap for me was that each parameter needs to be run through xmlrpcval() - to create the necessary xml required for the rpc call if one of the parameters required is an array then it needs to be processing into xml for the rpc call through php_xmlrpc_encode()*/
+
 $Parameters['StockID'] = xmlrpcval('DVD-TOPGUN'); //the stockid of the item we wish to know the balance for
-<br /><br />
+
 //assuming the demo username and password will work !
-<br /><br />
+
 $Parameters['Username'] = xmlrpcval('admin');
-<br /><br />
+
 $Parameters['Password'] = xmlrpcval('weberp');
-<br /><br />
+
 $msg = new xmlrpcmsg("weberp.xmlrpc_GetStockBalance", $Parameters);
-<br /><br />
+
 $client = new xmlrpc_client($ServerURL);
-<br /><br />
-$client->setDebug($DebugLevel);
-<br /><br />
-$response = $client->send($msg);
-<br /><br />
-$answer = php_xmlrpc_decode($response->value());
-<br /><br />
+
+$client-&gt;setDebug($DebugLevel);
+
+$response = $client-&gt;send($msg);
+
+$answer = php_xmlrpc_decode($response-&gt;value());
+
 if ($answer[0]!=0){ //then the API returned some errors need to figure out what went wrong
-<br /><br />
+
 //need to figure out how to return all the error descriptions associated with the codes
-<br /><br />
+
 } else { //all went well the returned data is in $answer[1]
-<br /><br />
+
 //answer will be an array of the locations and quantity on hand for DVD_TOPGUN so we need to run through the array to print out
-<br /><br />
-for ($i=0; $i < sizeof($answer[1]);$i++) {
-<br /><br />
-  echo '<br>' . $answer[1][$i]['loccode'] . ' has ' . $answer[1][$i]['quantity'] . ' on hand';
- <br /><br />
+
+for ($i=0; $i &lt; sizeof($answer[1]);$i++) {
+
+echo '<br>
+' . $answer[1][$i]['loccode'] . ' has ' . $answer[1][$i]['quantity'] . ' on hand';
+
 }
-<br /><br />
-echo "</body></html>";
-<br /><br />
-</i>
-<hr />
-<br /><br />
-It is necessary to be logged in to see the API functions manual shows all the functions in the API with a description of the parameters required and what each function does.
-<br /><br />
-To create invoices in webERP you need to use the following methods:
-<br /><br />
-InsertOrderHeader
-InsertOrderLine - potentially multiple times for all the lines on the order then
-InvoiceSalesOrder - to invoice sales orders directly assuming the entire order is delivered - it cannot deal with controlled stock items though. However, it does process invoices in much the same way as standard webERP with updates to the stock quantities dispatched, GL entries and records required to record taxes and sales analysis records.
-<br /><br />
-To create a credit note just a sinlge API call is required:
-<br />
-CreateCreditNote - to create a credit note from some base header data and an array of line items (as an associative array. In the same way as the InvoiceSalesOrder function this does all the same processing as a standard credit note from the interface in webERP.
-<br /><br />
-There are some example scripts on the wiki showing how a number of the API XML-RPC functions are called - these scripts should be put on a web-server outside a webERP installation - all you need to do is edit the config.inc file to give the system your webERP username and password and the URL of your webERP installation you wish to connect to. As always playing with the examples helps to figure out how it all works.
+
+echo "";
+</pre>
+<p>
+It is necessary to be logged in to see the API functions manual shows all the functions in the API with a description of the parameters required and what each function does.</p>
+<p>
+To create invoices in webERP you need to use the following methods:</p>
+<p>
+InsertOrderHeader InsertOrderLine - potentially multiple times for all the lines on the order then InvoiceSalesOrder - to invoice sales orders directly assuming the entire order is delivered - it cannot deal with controlled stock items though. However, it does process invoices in much the same way as standard webERP with updates to the stock quantities dispatched, GL entries and records required to record taxes and sales analysis records.</p>
+<p>
+To create a credit note just a sinlge API call is required:</p>
+<p>
+CreateCreditNote - to create a credit note from some base header data and an array of line items (as an associative array. In the same way as the InvoiceSalesOrder function this does all the same processing as a standard credit note from the interface in webERP.</p>
+<p>
+There are some example scripts on the wiki showing how a number of the API XML-RPC functions are called - these scripts should be put on a web-server outside a webERP installation - all you need to do is edit the config.inc file to give the system your webERP username and password and the URL of your webERP installation you wish to connect to. As always playing with the examples helps to figure out how it all works.</p>

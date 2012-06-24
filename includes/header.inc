@@ -5,8 +5,15 @@
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
+	if (!isset($rootpath)){
+		$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
+		if ($rootpath == '/' OR $rootpath == "\\") {
+			$rootpath = '';
+		}
+	}
 	$StrictXHTML=False;
-
+    $ViewTopic = isset($ViewTopic)?"?ViewTopic=$ViewTopic":'';
+    $BookMark = isset($BookMark)? "#$BookMark":'';
 	if (!headers_sent()){
 		if ($StrictXHTML) {
 			header('Content-type: application/xhtml+xml; charset=utf-8');
@@ -60,11 +67,11 @@
 
 			echo '<td class="quick_menu_tab" align="center"><a href="' .  $rootpath . '/SelectSupplier.php"><span style="text-decoration:underline;">4</span> ' . _('Suppliers') . '</a></td>';
 
-			$DefaultManualLink = '<td class="quick_menu_tab" align="center"><a rel="external" href="' .  $rootpath . '/doc/Manual/ManualContents.php"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
+			$DefaultManualLink = '<td class="quick_menu_tab" align="center"><a rel="external" accesskey="8" href="' .  $rootpath . '/doc/Manual/ManualContents.php'.$ViewTopic . $BookMark. '"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
 
 			if (mb_substr($_SESSION['Language'],0,2) !='en'){
 				if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')){
-					echo '<td class="quick_menu_tab" align="center"><a target="_blank" href="' .  $rootpath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
+					echo '<td class="quick_menu_tab" align="center"><a target="_blank" href="' .  $rootpath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php'.$ViewTopic . $BookMark.'"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
 				} else {
 					echo $DefaultManualLink;
 				}
