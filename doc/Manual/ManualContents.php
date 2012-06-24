@@ -30,40 +30,40 @@ echo '  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /
 
 if (((!isset($_POST['Submit'])) AND (empty($_GET['ViewTopic']))) ||
      ((isset($_POST['Submit'])) AND(isset($_POST['SelectTableOfContents'])))) {
-    // if not submittws then coming into manual to look at TOC
-    // if SelectTableOfContents set then user wants it displayed
-    if (!isset($_POST['Submit'])) {
-        echo '<p>Click on a link to view a page, or<br />
-             Check boxes and click on Display Checked to view selected in one page
-             <input type="submit" name="Submit" value="Display Checked" />
-            </p>';
-    }
-    echo "<ul>\n<li style=\"list-style-type:none;\">\n<h1>";
-    if (!isset($_POST['Submit'])) {
-       echo ' <input type="checkbox" name="SelectTableOfContents">';
-    }
-    echo "Table of Contents</h1></li>\n";
-    foreach ($TOC_Array['TableOfContents'] as $title => $sublinks) {
-
-       $Name = 'Select' . $title;
-       echo "<ul>\n";
-       if (!isset($_POST['Submit'])) {
-         echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="'.$Name.'">'."\n";
-         echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic='.$title.'">'.$sublinks[0].'</a></li>'."\n";
-       } else {
-         echo' <li class="toc"><a href="#'.$title.'">'.$sublinks[0].'</a></li>'."\n";
-       }
-       if (count($sublinks)>1) {
-          echo'<ul>'."\n";
-          foreach ($sublinks as $k=>$subname) {
-            if ($k == 0) continue;
-            echo '<li>'.$subname.'</li>'."\n";
-          }
-            echo '</ul>'."\n";
-        }
-        echo '</ul>'."\n";
-    }
-echo '</ul>'."\n";
+	// if not submittws then coming into manual to look at TOC
+	// if SelectTableOfContents set then user wants it displayed
+	if (!isset($_POST['Submit'])) {
+		echo '<p>Click on a link to view a page, or<br />
+			 Check boxes and click on Display Checked to view selected in one page
+			 <input type="submit" name="Submit" value="Display Checked" />
+			</p>';
+	}
+	echo "<ul>\n<li style=\"list-style-type:none;\">\n<h1>";
+	if (!isset($_POST['Submit'])) {
+	   echo ' <input type="checkbox" name="SelectTableOfContents">';
+	}
+	echo "Table of Contents</h1></li>\n";
+	foreach ($TOC_Array['TableOfContents'] as $title => $sublinks) {
+	
+	   $Name = 'Select' . $title;
+	   echo "<ul>\n";
+	   if (!isset($_POST['Submit'])) {
+		 echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="'.$Name.'">'."\n";
+		 echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic='.$title.'">'.$sublinks[0].'</a></li>'."\n";
+	   } else {
+		 echo' <li class="toc"><a href="#'.$title.'">'.$sublinks[0].'</a></li>'."\n";
+	   }
+	   if (count($sublinks)>1) {
+		  echo'<ul>'."\n";
+		  foreach ($sublinks as $k=>$subname) {
+			if ($k == 0) continue;
+			echo '<li>'.$subname.'</li>'."\n";
+		  }
+			echo '</ul>'."\n";
+		}
+		echo '</ul>'."\n";
+	}
+	echo '</ul>'."\n";
 }
 echo '</form>'."\n";
 
@@ -73,14 +73,13 @@ if (!isset($_GET['ViewTopic']))
 }
 
 foreach ($TOC_Array['TableOfContents'] as $Name=>$FullName){
-    $PostName = 'Select'.$Name;
-    if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName])))
-    {
-        $manualpage = 'Manual'.$Name.'.html';
-        if (file_exists($manualpage)) {
-          include($manualpage);
-        }
-    }
+	$PostName = 'Select' . $Name;
+	if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName]))) {
+		$ManualPage = 'Manual'.$Name.'.html';
+		if (file_exists($ManualPage)) {
+		  include($ManualPage);
+		}
+	}
 }
 
 include('ManualFooter.html');
