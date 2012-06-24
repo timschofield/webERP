@@ -3,6 +3,9 @@
 /* $Id$ */
 
 include('includes/session.inc');
+/* webERP manual links before header.inc */
+$ViewTopic= "Inventory";
+$BookMark = "PlanningReport";
 
 if (isset($_POST['PrintPDF'])
 	and isset($_POST['FromCriteria'])
@@ -409,7 +412,7 @@ if (isset($_POST['PrintPDF'])
 			<tr>
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
-					
+
 		$sql = "SELECT loccode, locationname FROM locations";
 		$LocnResult=DB_query($sql,$db);
 

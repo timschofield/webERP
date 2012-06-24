@@ -4,6 +4,9 @@
 
 include('includes/session.inc');
 $title = _('Stock Movements');
+/* webERP manual links before header.inc */
+$ViewTopic= "Inventory";
+$BookMark = "InventoryMovement";
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
@@ -101,7 +104,7 @@ $tableheader = '<tr>
 					<th>' . _('Discount') . '</th>
 					<th>' . _('New Qty') . '</th>
 				</tr>';
-		
+
 echo $tableheader;
 
 $j = 1;

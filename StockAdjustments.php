@@ -6,7 +6,9 @@ include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
 $title = _('Stock Adjustments');
-
+/* webERP manual links before header.inc */
+$ViewTopic= "Inventory";
+$BookMark = "InventoryAdjustments";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -38,16 +40,16 @@ if (isset($_GET['StockID'])){
 	}
 }
 if ($NewAdjustment==true){
-	
+
 	$_SESSION['Adjustment' . $identifier]->StockID = trim(mb_strtoupper($StockID));
-	$result = DB_query("SELECT description, 
-							controlled, 
-							serialised, 
+	$result = DB_query("SELECT description,
+							controlled,
+							serialised,
 							decimalplaces,
 							perishable,
 							materialcost+labourcost+overheadcost AS totalcost,
 							units
-						FROM stockmaster 
+						FROM stockmaster
 						WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'",$db);
 	$myrow = DB_fetch_array($result);
 	$_SESSION['Adjustment' . $identifier]->ItemDescription = $myrow['description'];
@@ -64,7 +66,7 @@ if ($NewAdjustment==true){
 	$DecimalPlaces = $myrow['decimalplaces'];
 	DB_free_result($result);
 
-	
+
 } //end if it's a new adjustment
 if (isset($_POST['tag'])){
 	$_SESSION['Adjustment' . $identifier]->tag = $_POST['tag'];
@@ -93,14 +95,14 @@ if (isset($_POST['CheckCode'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
-		$sql="SELECT stockid, 
-					description 
-				FROM stockmaster 
+		$sql="SELECT stockid,
+					description
+				FROM stockmaster
 				WHERE description " . LIKE . " '%" . $_POST['StockText'] ."%'";
 	} else {
-		$sql="SELECT stockid, 
-					description 
-				FROM stockmaster 
+		$sql="SELECT stockid,
+					description
+				FROM stockmaster
 				WHERE stockid " . LIKE  . " '%" . $_POST['StockCode'] ."%'";
 	}
 	$ErrMsg=_('The stock information cannot be retrieved because');
@@ -332,7 +334,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
 			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 		}
-		
+
 		EnsureGLEntriesBalance(17, $AdjustmentNumber,$db);
 
 		$Result = DB_Txn_Commit($db);
@@ -345,7 +347,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
 			mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 		}
-		
+
 		unset ($_SESSION['Adjustment' . $identifier]);
 	} /* end if there was no input error */
 
@@ -365,14 +367,14 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 	$Controlled = $_SESSION['Adjustment' . $identifier]->Controlled;
 	$Quantity = $_SESSION['Adjustment' . $identifier]->Quantity;
-	$sql="SELECT materialcost, 
-				labourcost, 
-				overheadcost, 
-				units, 
-				decimalplaces 
-			FROM stockmaster 
+	$sql="SELECT materialcost,
+				labourcost,
+				overheadcost,
+				units,
+				decimalplaces
+			FROM stockmaster
 			WHERE stockid='".$StockID."'";
-			
+
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_array($result);
 	$_SESSION['Adjustment' . $identifier]->PartUnit=$myrow['units'];

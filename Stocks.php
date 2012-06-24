@@ -4,6 +4,10 @@
 
 include('includes/session.inc');
 $title = _('Item Maintenance');
+$title = _('Item Maintenance');
+/* webERP manual links before header.inc */
+$ViewTopic= "Inventory";
+$BookMark = "InventoryAddingItems";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -18,11 +22,11 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($StockID) and !isset($_POST['UpdateCategories'])) {
-	$sql = "SELECT COUNT(stockid) 
-			FROM stockmaster 
-			WHERE stockid='".$StockID."' 
+	$sql = "SELECT COUNT(stockid)
+			FROM stockmaster
+			WHERE stockid='".$StockID."'
 			GROUP BY stockid";
-			
+
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]==0) {
@@ -181,12 +185,12 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'NextSerialNo';
 		$i++;
 	}
-	if (($_POST['MBFlag']=='A' 
-			OR $_POST['MBFlag']=='K' 
-			OR $_POST['MBFlag']=='D' 
-			OR $_POST['MBFlag']=='G') 
+	if (($_POST['MBFlag']=='A'
+			OR $_POST['MBFlag']=='K'
+			OR $_POST['MBFlag']=='D'
+			OR $_POST['MBFlag']=='G')
 		AND $_POST['Controlled']==1){
-			
+
 		$InputError = 1;
 		prnMsg(_('Assembly/Kitset/Phantom/Service/Labour items cannot also be controlled items') . '. ' . _('Assemblies/Dummies/Phantom and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
 		$Errors[$i] = 'Controlled';
@@ -226,8 +230,8 @@ if (isset($_POST['submit'])) {
 							materialcost+labourcost+overheadcost AS itemcost,
 							stockcategory.stockact,
 							stockcategory.wipact
-					FROM stockmaster 
-					INNER JOIN stockcategory 
+					FROM stockmaster
+					INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockid = '".$StockID."'";
 			$MBFlagResult = DB_query($sql,$db);
@@ -238,26 +242,26 @@ if (isset($_POST['submit'])) {
 			$UnitCost = $myrow[3];
 			$OldStockAccount = $myrow[4];
 			$OldWIPAccount = $myrow[5];
-			
 
-			$sql = "SELECT SUM(locstock.quantity) 
-					FROM locstock 
-					WHERE stockid='".$StockID."' 
+
+			$sql = "SELECT SUM(locstock.quantity)
+					FROM locstock
+					WHERE stockid='".$StockID."'
 					GROUP BY stockid";
 			$result = DB_query($sql,$db);
 			$StockQtyRow = DB_fetch_row($result);
 
 			/*Now check the GL account of the new category to see if it is different to the old stock gl account */
-			
+
 			$result = DB_query("SELECT stockact,
 										wipact
-								FROM stockcategory 
+								FROM stockcategory
 								WHERE categoryid='" . $_POST['CategoryID'] . "'",
 								$db);
 			$NewStockActRow = DB_fetch_array($result);
 			$NewStockAct = $NewStockActRow['stockact'];
 			$NewWIPAct = $NewStockActRow['wipact'];
-			
+
 			if ($OldMBFlag != $_POST['MBFlag']){
 				if (($OldMBFlag == 'M' OR $OldMBFlag=='B') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D' OR $_POST['MBFlag']=='G')){ /*then need to check that there is no stock holding first */
 					/* stock holding OK for phantom (ghost) items */
@@ -303,9 +307,9 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was a Manufactured, Kitset, Phantom or Assembly and is being changed to a purchased or dummy - that no BOM exists */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='K' OR $OldMBFlag=='A' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='B' OR $_POST['MBFlag']=='D')) {
-					$sql = "SELECT COUNT(*) 
-							FROM bom 
-							WHERE parent = '".$StockID."' 
+					$sql = "SELECT COUNT(*)
+							FROM bom
+							WHERE parent = '".$StockID."'
 							GROUP BY parent";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
@@ -317,9 +321,9 @@ if (isset($_POST['submit'])) {
 
 				/*now check that if it was Manufac, Phantom or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='B' OR $OldMBFlag=='D' OR $OldMBFlag=='G') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K')) {
-					$sql = "SELECT COUNT(*) 
-							FROM bom 
-							WHERE component = '".$StockID."' 
+					$sql = "SELECT COUNT(*)
+							FROM bom
+							WHERE component = '".$StockID."'
 							GROUP BY component";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
@@ -341,7 +345,7 @@ if (isset($_POST['submit'])) {
 				prnMsg( _('You can not change a Serialised Item to Non-Serialised (or vice-versa) when there is a quantity on hand for the item') , 'error');
 			}
 			/* Do some check for property input */
-			
+
 			for ($i=0;$i<$_POST['PropertyCounter'];$i++){
 				if ($_POST['PropNumeric' .$i]==1){
 					if ( filter_number_format($_POST['PropValue' . $i]) < $_POST['PropMin' . $i] OR filter_number_format($_POST['PropValue' . $i]) > $_POST['PropMax' . $i]){
@@ -354,9 +358,9 @@ if (isset($_POST['submit'])) {
 
 
 			if ($InputError == 0){
-				
+
 				DB_Txn_Begin($db);
-				
+
 				$sql = "UPDATE stockmaster
 						SET longdescription='" . $_POST['LongDescription'] . "',
 							description='" . $_POST['Description'] . "',
@@ -411,7 +415,7 @@ if (isset($_POST['submit'])) {
 																'" . $_POST['PropValue' . $i] . "')",
 										$db,$ErrMsg,$DbgMsg,true);
 				} //end of loop around properties defined for the category
-				
+
 				if ($OldStockAccount != $NewStockAct AND $_SESSION['CompanyRecord']['gllink_stock']==1) {
 				/*Then we need to make a journal to transfer the cost to the new stock account */
 					$JournalNo = GetNextTransNo(0,$db); //enter as a journal
@@ -447,20 +451,20 @@ if (isset($_POST['submit'])) {
 												'" . $StockID . ' ' . _('Change stock category') . "',
 												'" . (-$UnitCost* $StockQtyRow[0]) . "')";
 					$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
-				
+
 				} /* end if the stock category changed and forced a change in stock cost account */
 				if ($OldWIPAccount != $NewWIPAct AND $_SESSION['CompanyRecord']['gllink_stock']==1) {
 				/*Then we need to make a journal to transfer the cost  of WIP to the new WIP account */
 				/*First get the total cost of WIP for this category */
-				
+
 					$WOCostsResult = DB_query("SELECT workorders.costissued,
 													SUM(woitems.qtyreqd * woitems.stdcost) AS costrecd
 												FROM woitems INNER JOIN workorders
 												ON woitems.wo = workorders.wo
 												INNER JOIN stockmaster
 												ON woitems.stockid=stockmaster.stockid
-												WHERE stockmaster.stockid='". $StockID . "' 
-												AND workorders.closed=0 
+												WHERE stockmaster.stockid='". $StockID . "'
+												AND workorders.closed=0
 												GROUP BY workorders.costissued",
 												$db,
 												_('Error retrieving value of finished goods received and cost issued against work orders for this item'));
@@ -468,7 +472,7 @@ if (isset($_POST['submit'])) {
 					while ($WIPRow=DB_fetch_array($WOCostsResult)){
 						$WIPValue += ($WIPRow['costissued']-$WIPRow['costrecd']);
 					}
-					if ($WIPValue !=0){			
+					if ($WIPValue !=0){
 						$JournalNo = GetNextTransNo(0,$db); //enter as a journal
 						$SQL = "INSERT INTO gltrans (type,
 													typeno,
@@ -507,12 +511,12 @@ if (isset($_POST['submit'])) {
 				DB_Txn_Commit($db);
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 				echo '<br />';
-			}	
+			}
 
 		} else { //it is a NEW part
 			//but lets be really sure here
-			$result = DB_query("SELECT stockid 
-								FROM stockmaster 
+			$result = DB_query("SELECT stockid
+								FROM stockmaster
 								WHERE stockid='" . $StockID ."'",$db);
 			if (DB_num_rows($result)==1){
 				prnMsg(_('The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
@@ -563,7 +567,7 @@ if (isset($_POST['submit'])) {
 				if (DB_error_no($db) ==0) {
 					//now insert any item properties
 					for ($i=0;$i<$_POST['PropertyCounter'];$i++){
-						
+
 						if ($_POST['PropType' . $i] ==2){
 							if ($_POST['PropValue' . $i]=='on'){
 								$_POST['PropValue' . $i]=1;
@@ -571,7 +575,7 @@ if (isset($_POST['submit'])) {
 								$_POST['PropValue' . $i]=0;
 							}
 			}
-						
+
 						if ($_POST['PropNumeric' .$i]==1){
 							$_POST['PropValue' . $i]=filter_number_format($_POST['PropValue' . $i]);
 						} else {
@@ -600,9 +604,9 @@ if (isset($_POST['submit'])) {
 					$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 					if (DB_error_no($db) ==0) {
-						prnMsg( _('New Item') .' ' . '<a href="SelectProduct.php?StockID=' . $StockID . '">' . $StockID . '</a> '. _('has been added to the database') . 
+						prnMsg( _('New Item') .' ' . '<a href="SelectProduct.php?StockID=' . $StockID . '">' . $StockID . '</a> '. _('has been added to the database') .
 							'<br />' . _('NB: The item cost and pricing must also be setup') .
-							'<br />' . '<a target="_blank" href="StockCostUpdate.php?StockID=' . $StockID . '">' . _('Enter Item Cost') . '</a> 
+							'<br />' . '<a target="_blank" href="StockCostUpdate.php?StockID=' . $StockID . '">' . _('Enter Item Cost') . '</a>
 							<br />' . '<a target="_blank" href="Prices.php?Item=' . $StockID . '">' . _('Enter Item Prices') . '</a> ','success');
 						echo '<br />';
 						unset($_POST['Description']);
@@ -630,7 +634,7 @@ if (isset($_POST['submit'])) {
 				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO
 			}//END CHECK FOR ALREADY EXISTING ITEM OF THE SAME CODE
 		}
-		
+
 
 	} else {
 		echo '<br />'. "\n";
@@ -746,7 +750,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['DecimalPlaces']);
 		unset($_SESSION['SelectedStockItem']);
 		unset($StockID);
-		
+
 		$New=1;
 	} //end if Delete Part
 }
@@ -798,7 +802,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 					shrinkfactor
 			FROM stockmaster
 			WHERE stockid = '".$StockID."'";
-	
+
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
@@ -820,7 +824,7 @@ if (!isset($StockID) OR $StockID=='' or isset($_POST['UpdateCategories'])) {
 	$_POST['DecimalPlaces'] = $myrow['decimalplaces'];
 	$_POST['NextSerialNo'] = $myrow['nextserialno'];
 	$_POST['Pansize'] = $myrow['pansize'];
-	$_POST['ShrinkFactor'] = $myrow['shrinkfactor']; 
+	$_POST['ShrinkFactor'] = $myrow['shrinkfactor'];
 
 
 	echo '<tr><td>' . _('Item Code') . ':</td>
@@ -1010,7 +1014,7 @@ echo '</select></td>
 echo '<tr>
 		<td>' . _('Current or Obsolete') . ':</td>
 		<td><select name="Discontinued">';
-		
+
 if ($_POST['Discontinued']==0){
 	echo '<option selected="selected" value="0">' . _('Current') . '</option>';
 } else {
@@ -1182,7 +1186,7 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
   	        echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="' .$PropertyRow['stkcatpropid'] .'" />';
 	        echo '<input type="hidden" name="PropNumeric' . $PropertyCounter . '" value="' .$PropertyRow['numericvalue'] .'" />';
             echo $PropertyRow['label'] . '</td>
-    
+
 			<td>';
 	switch ($PropertyRow['controltype']) {
 	 	case 0; //textbox
@@ -1219,7 +1223,7 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	echo '<input type="hidden" name="PropType' . $PropertyCounter .'" value="' . $PropertyRow['controltype'] . '" />';
 	echo '</td></tr>';
 	$PropertyCounter++;
-	
+
 } //end loop round properties for the item category
 unset($StockID);
 echo '</table>';

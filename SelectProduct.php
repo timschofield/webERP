@@ -6,6 +6,8 @@ $SuppliersSecurity = 9; //don't show supplier purchasing info unless security to
 
 include ('includes/session.inc');
 $title = _('Search Inventory Items');
+/* webERP manual links before header.inc */
+$ViewTopic= "Inventory";
 include ('includes/header.inc');
 
 if (isset($_GET['StockID'])) {
