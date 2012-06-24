@@ -3,8 +3,7 @@
 /*
  * This is the outline of the webERP manual
 **/
-$tocarray = array
-(
+$TOC_Array = array (
 'TableOfContents'   => array(
     'Introduction'      => array('Introduction',
                                  'Why another accounting program?'

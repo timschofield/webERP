@@ -16,7 +16,7 @@
 
 ob_start();
 $PathPrefix='../../';
-$toccontents = array();
+
 include($PathPrefix.'includes/session.inc');
 include('ManualHeader.html');
 include('ManualOutline.php');
@@ -25,12 +25,11 @@ $_GET['ViewTopic'] = isset($_GET['ViewTopic'])?$_GET['ViewTopic']:'';
 
 //all sections of manual listed here
 
-$toccontents = $tocarray['TableOfContents'];
 echo'  <form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post">';
 echo '  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (((!isset($_POST['Submit'])) && (empty($_GET['ViewTopic']))) ||
-     ((isset($_POST['Submit'])) &&(isset($_POST['SelectTableOfContents'])))) {
+if (((!isset($_POST['Submit'])) AND (empty($_GET['ViewTopic']))) ||
+     ((isset($_POST['Submit'])) AND(isset($_POST['SelectTableOfContents'])))) {
     // if not submittws then coming into manual to look at TOC
     // if SelectTableOfContents set then user wants it displayed
     if (!isset($_POST['Submit'])) {
@@ -44,12 +43,12 @@ if (((!isset($_POST['Submit'])) && (empty($_GET['ViewTopic']))) ||
        echo ' <input type="checkbox" name="SelectTableOfContents">';
     }
     echo "Table of Contents</h1></li>\n";
-    foreach ($toccontents as $title => $sublinks) {
+    foreach ($TOC_Array['TableOfContents'] as $title => $sublinks) {
 
-       $name = 'Select'.$title;
+       $Name = 'Select' . $title;
        echo "<ul>\n";
        if (!isset($_POST['Submit'])) {
-         echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="'.$name.'">'."\n";
+         echo '<li class="toc" style="list-style-type:none;"><input type="checkbox" name="'.$Name.'">'."\n";
          echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic='.$title.'">'.$sublinks[0].'</a></li>'."\n";
        } else {
          echo' <li class="toc"><a href="#'.$title.'">'.$sublinks[0].'</a></li>'."\n";
@@ -73,12 +72,11 @@ if (!isset($_GET['ViewTopic']))
 	$_GET['ViewTopic'] = '';
 }
 
-foreach ($toccontents as $name=>$fullname)
-{
-    $postname = 'Select'.$name;
-    if (($_GET['ViewTopic'] == $name)  OR (isset($_POST[$postname])))
+foreach ($TOC_Array['TableOfContents'] as $Name=>$FullName){
+    $PostName = 'Select'.$Name;
+    if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName])))
     {
-        $manualpage = 'Manual'.$name.'.html';
+        $manualpage = 'Manual'.$Name.'.html';
         if (file_exists($manualpage)) {
           include($manualpage);
         }
