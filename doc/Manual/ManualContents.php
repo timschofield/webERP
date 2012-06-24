@@ -1,5 +1,5 @@
 <?php
-/* $Id: ManualContents.php  */
+/* $Id: ManualContents.php 5450 2009-12-24 15:28:49Z icedlava $ */
 /* This table of contents allows the choice to display one section or select multiple sections to format for print.
      Selecting multiple sections is for printing
 
@@ -44,7 +44,7 @@ if (((!isset($_POST['Submit'])) AND (empty($_GET['ViewTopic']))) ||
 	}
 	echo "Table of Contents</h1></li>\n";
 	foreach ($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
-	
+
 	   $Name = 'Select' . $Title;
 	   echo "<ul>\n";
 	   if (!isset($_POST['Submit'])) {
@@ -74,9 +74,11 @@ if (!isset($_GET['ViewTopic']))
 
 foreach ($TOC_Array['TableOfContents'] as $Name=>$FullName){
 	$PostName = 'Select' . $Name;
-	if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName]))) {
+	if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName])))
+	{
 		$ManualPage = 'Manual'.$Name.'.html';
-		if (file_exists($ManualPage)) {
+		if (file_exists($ManualPage))
+		{
 		  include($ManualPage);
 		}
 	}

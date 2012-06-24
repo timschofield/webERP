@@ -1,5 +1,5 @@
 <?php
-/* $Id: ManualOutline.php  */
+/* $Id: ManualOutline.php 5450 2009-12-24 15:28:49Z icedlava $ */
 /*
  * This is the outline of the webERP manual
 **/
