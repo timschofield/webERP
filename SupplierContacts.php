@@ -4,7 +4,9 @@
 include('includes/session.inc');
 
 $title = _('Supplier Contacts');
-
+/* webERP manual links before header.inc */
+$ViewTopic= 'AccountsPayable';
+$BookMark = 'SupplierContact';
 include('includes/header.inc');
 
 if (isset($_GET['SupplierID'])){
@@ -64,7 +66,7 @@ if (isset($_POST['submit'])) {
 											fax='" . $_POST['Fax'] . "',
 											email='" . $_POST['Email'] . "',
 											mobile = '". $_POST['Mobile'] . "'
-				WHERE contact='".$SelectedContact."' 
+				WHERE contact='".$SelectedContact."'
 				AND supplierid='".$SupplierID."'";
 
 		$msg = _('The supplier contact information has been updated');
@@ -136,16 +138,16 @@ if (!isset($SelectedContact)){
 				AND suppliercontacts.supplierid = '".$SupplierID."'";
 
 	$result = DB_query($sql, $db);
-	
+
 	if (DB_num_rows($result)>0){
-		
+
 		$myrow = DB_fetch_array($result);
-		
+
 		echo '<table class="selection">
 				<tr>
 					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
 				</tr>';
-	
+
 		echo '<tr>
 				<th>' . _('Name') . '</th>
 				<th>' . _('Position') . '</th>
@@ -153,7 +155,7 @@ if (!isset($SelectedContact)){
 				<th>' . _('Fax No') . '</th>
 				<th>' . _('Email') . '</th>
 			</tr>';
-	
+
 		do {
 			printf('<tr><td>%s</td>
 					<td>%s</td>
@@ -210,7 +212,7 @@ if (! isset($_GET['delete'])) {
 					FROM suppliercontacts
 					WHERE contact='" . $SelectedContact . "'
 					AND supplierid='" . $SupplierID . "'";
-	
+
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 

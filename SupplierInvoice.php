@@ -12,7 +12,9 @@ include('includes/DefineSuppTransClass.php');
 include('includes/session.inc');
 
 $title = _('Enter Supplier Invoice');
-
+/* webERP manual links before header.inc */
+$ViewTopic= 'AccountsPayable';
+$BookMark = 'SupplierInvoice';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -182,7 +184,7 @@ if the link is not active then OvAmount must be entered manually. */
 
 if (!isset($_POST['PostInvoice'])){
 
-	if (isset($_POST['GRNS']) 
+	if (isset($_POST['GRNS'])
 		AND $_POST['GRNS'] == _('Purchase Orders')){
 		/*This ensures that any changes in the page are stored in the session before calling the grn page */
 		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppInvGRNs.php">';
@@ -217,7 +219,7 @@ if (!isset($_POST['PostInvoice'])){
 			<br />';
 		exit;
 	}
-	if (isset($_POST['FixedAssets']) 
+	if (isset($_POST['FixedAssets'])
 		AND $_POST['FixedAssets'] == _('Fixed Assets')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppFixedAssetChgs.php">';
@@ -268,8 +270,8 @@ if (!isset($_POST['PostInvoice'])){
 
 	echo '<br />
 		<div class="centre">
-			<input type="submit" name="GRNS" value="' . _('Purchase Orders') . '" /> 
-			<input type="submit" name="Shipts" value="' . _('Shipments') . '" /> 
+			<input type="submit" name="GRNS" value="' . _('Purchase Orders') . '" />
+			<input type="submit" name="Shipts" value="' . _('Shipments') . '" />
 			<input type="submit" name="Contracts" value="' . _('Contracts') . '" /> ';
 
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
@@ -279,7 +281,7 @@ if (!isset($_POST['PostInvoice'])){
 		</div>';
 
 	$TotalGRNValue = 0;
-	
+
 	if (count( $_SESSION['SuppTrans']->GRNs)>0){   /*if there are any GRNs selected for invoicing then */
 		/*Show all the selected GRNs so far from the SESSION['SuppInv']->GRNs array */
 
@@ -334,9 +336,9 @@ if (!isset($_POST['PostInvoice'])){
 							<th>' . _('Amount') . '</th>
 						</tr>';
 		echo $TableHeader;
-		
+
 		$i=0; //row counter
-		
+
 		foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 			echo '<tr>
@@ -416,7 +418,7 @@ if (!isset($_POST['PostInvoice'])){
 						</tr>';
 		echo $TableHeader;
 
-		
+
 		$i=0;
 		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
@@ -443,7 +445,7 @@ if (!isset($_POST['PostInvoice'])){
 	}
 
 	$TotalGLValue = 0;
-	
+
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
@@ -526,7 +528,7 @@ if (!isset($_POST['PostInvoice'])){
 
 		/*If a tax rate is entered that is not the same as it was previously then recalculate automatically the tax amounts */
 
-		if (!isset($_POST['OverRideTax']) 
+		if (!isset($_POST['OverRideTax'])
 			OR $_POST['OverRideTax']=='Auto'){
 
 			echo  ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,$_SESSION['SuppTrans']->CurrDecimalPlaces)  . '" />%';
@@ -619,43 +621,43 @@ then do the updates and inserts to process the invoice entered */
 
 	$InputError = False;
 	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount < 0){
-	
+
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than  0') . '. ' . _('Invoices are expected to have a positive charge'),'error');
 		echo '<p>' . _('The tax total is') . ' : ' . locale_number_format($TaxTotal,$_SESSION['SuppTrans']->CurrDecimalPlaces);
 		echo '<p>' . _('The ovamount is') . ' : ' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces);
-	
+
 	} elseif ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount == 0){
-	
+
 		prnMsg(_('The invoice as entered will be processed but be warned the amount of the invoice is  zero!') . '. ' . _('Invoices are normally expected to have a positive charge'),'warn');
-	
+
 	} elseif (mb_strlen( $_SESSION['SuppTrans']->SuppReference)<1){
-		
+
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
 
 	} elseif (!Is_date( $_SESSION['SuppTrans']->TranDate)){
-	
+
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 
 	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, 'd') < 0){
-	
+
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the invoice date is after today') . '. ' . _('Purchase invoices are expected to have a date prior to or today'),'error');
 
 	}elseif ( $_SESSION['SuppTrans']->ExRate <= 0){
-	
+
 		$InputError = True;
 		prnMsg( _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'error');
-	
+
 	} elseif ( $_SESSION['SuppTrans']->OvAmount < round($_SESSION['SuppTrans']->Total_Shipts_Value() + $_SESSION['SuppTrans']->Total_GL_Value() + $_SESSION['SuppTrans']->Total_Contracts_Value()+ $_SESSION['SuppTrans']->Total_Assets_Value()+$_SESSION['SuppTrans']->Total_GRN_Value(),$_SESSION['SuppTrans']->CurrDecimalPlaces)){
-	
+
 		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any), the charges for goods received, contract charges and fixed asset charges. There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
 		$InputError = True;
 
 	} else {
-	
+
 		$sql = "SELECT count(*)
 				FROM supptrans
 				WHERE supplierno='" . $_SESSION['SuppTrans']->SupplierID . "'
@@ -782,7 +784,7 @@ then do the updates and inserts to process the invoice entered */
 											account,
 											narrative,
 											amount)
-								VALUES ('20', 
+								VALUES ('20',
 									'" . $InvoiceNo . "',
 									'" . $SQLInvoiceDate . "',
 									'" . $PeriodNo . "',
@@ -814,7 +816,7 @@ then do the updates and inserts to process the invoice entered */
 											account,
 											narrative,
 											amount)
-									VALUES ('20', 
+									VALUES ('20',
 											'" . $InvoiceNo . "',
 											'" . $SQLInvoiceDate . "',
 											'" . $PeriodNo . "',
@@ -829,7 +831,7 @@ then do the updates and inserts to process the invoice entered */
 
 			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-				if (mb_strlen($EnteredGRN->ShiptRef) == 0 
+				if (mb_strlen($EnteredGRN->ShiptRef) == 0
 					OR $EnteredGRN->ShiptRef == 0){
 				/*so its not a GRN shipment item
 				  enter the GL entry to reverse the GRN suspense entry created on delivery
@@ -845,7 +847,7 @@ then do the updates and inserts to process the invoice entered */
 													account,
 													narrative,
 													amount)
-								VALUES ('20', 
+								VALUES ('20',
 									'" . $InvoiceNo . "',
 									'" . $SQLInvoiceDate . "',
 									'" . $PeriodNo . "',
@@ -870,7 +872,7 @@ then do the updates and inserts to process the invoice entered */
 
 							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
 							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode,$db);
-							
+
 							/*We have stock item and a purchase price variance need to see whether we are using Standard or WeightedAverageCosting */
 
 							if ($_SESSION['WeightedAverageCosting']==1){ /*Weighted Average costing */
@@ -900,11 +902,11 @@ then do the updates and inserts to process the invoice entered */
 								if ($EnteredGRN->This_QuantityInv > $TotalQuantityOnHand){
 
 									/*So we need to write off some of the variance to variances and only the balance of the quantity in stock to go to stock value */
-									
+
 									/*if the TotalQuantityOnHand is negative then this variance to write off is inflated by the negative quantity - which makes sense */
-									
+
 									$WriteOffToVariances =  ($EnteredGRN->This_QuantityInv - $TotalQuantityOnHand) * (($EnteredGRN->ChgPrice /  $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
-									
+
 									$SQL = "INSERT INTO gltrans (type,
 																typeno,
 																trandate,
@@ -926,7 +928,7 @@ then do the updates and inserts to process the invoice entered */
 
 									$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 								} // end if the quantity being invoiced here is greater than the current stock on hand
-								
+
 								/*Now post any remaining price variance to stock rather than price variances */
 
 								$SQL = "INSERT INTO gltrans (type,
@@ -1093,7 +1095,7 @@ then do the updates and inserts to process the invoice entered */
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL transaction was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
-			
+
 			EnsureGLEntriesBalance(20, $InvoiceNo, $db);
 		} /*Thats the end of the GL postings */
 
@@ -1147,12 +1149,12 @@ then do the updates and inserts to process the invoice entered */
 		/* Now update the GRN and PurchOrderDetails records for amounts invoiced  - can't use the other loop through the GRNs as this was only where the GL link to credtors is active */
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-			
+
 			//in local currency
-			$ActualCost = $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate; 
+			$ActualCost = $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate;
 			$PurchPriceVar = $EnteredGRN->This_QuantityInv * ($ActualCost - $EnteredGRN->StdCostUnit);
-			
-			$SQL = "UPDATE purchorderdetails 
+
+			$SQL = "UPDATE purchorderdetails
 					SET qtyinvoiced = qtyinvoiced + " . $EnteredGRN->This_QuantityInv .",
 						actprice = '" . $EnteredGRN->ChgPrice . "'
 					WHERE podetailitem = '" . $EnteredGRN->PODetailItem . "'";
@@ -1163,8 +1165,8 @@ then do the updates and inserts to process the invoice entered */
 
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
-			$SQL = "UPDATE grns 
-					SET quantityinv = quantityinv + " . $EnteredGRN->This_QuantityInv . " 
+			$SQL = "UPDATE grns
+					SET quantityinv = quantityinv + " . $EnteredGRN->This_QuantityInv . "
 					WHERE grnno = '" . $EnteredGRN->GRNNo . "'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity invoiced off the goods received record could not be updated because');
@@ -1193,35 +1195,35 @@ then do the updates and inserts to process the invoice entered */
 			} //end of adding GRN shipment charges
 				else {
 			/*so its not a GRN shipment item its a plain old stock item */
-				
+
 				if ($PurchPriceVar !=0){ /* don't bother with any of this lot if there is no difference ! */
-					
+
 					if (mb_strlen($EnteredGRN->ItemCode)>0 OR $EnteredGRN->ItemCode != ''){ /*so it is a stock item */
 
-						/*We need to: 
+						/*We need to:
 						 *
 						 * a) update the stockmove for the delivery to reflect the actual cost of the delivery
 						 *
 						 * b) If a WeightedAverageCosting system and the stock quantity on hand now is negative then the cost that has gone to sales analysis and the cost of sales stock movement records will have been incorrect ... attempt to fix it retrospectively
 						 */
 						/*Get the location that the stock was booked into */
-						$result = DB_query("SELECT intostocklocation 
-											FROM purchorders 
+						$result = DB_query("SELECT intostocklocation
+											FROM purchorders
 											WHERE orderno='" . $EnteredGRN->PONo . "'",
 											$db);
 						$LocRow = DB_fetch_array($result);
 						$LocCode = $LocRow['intostocklocation'];
-						
+
 						/* First update the stockmoves delivery cost */
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record for the delivery could not have the cost updated to the actual cost');
-						$SQL = "UPDATE stockmoves SET price = '" . $ActualCost . "' 
-											WHERE stockid='" .$EnteredGRN->ItemCode . "' 
+						$SQL = "UPDATE stockmoves SET price = '" . $ActualCost . "'
+											WHERE stockid='" .$EnteredGRN->ItemCode . "'
 											AND type=25
-											AND loccode='" . $LocCode . "' 
+											AND loccode='" . $LocCode . "'
 											AND transno='" . $EnteredGRN->GRNBatchNo . "'";
-											
+
 						$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,True);
-						
+
 						if ($_SESSION['WeightedAverageCosting']==1){
 							/*
 							 * 	How many in stock now?
@@ -1230,9 +1232,9 @@ then do the updates and inserts to process the invoice entered */
 							 *  here then some items sold will not have had this cost factored in
 							 * The cost of these items = $ActualCost
 							*/
-		
-							$sql ="SELECT quantity 
-									FROM locstock 
+
+							$sql ="SELECT quantity
+									FROM locstock
 									WHERE loccode='" . $LocCode . "'
 									AND stockid='" . $EnteredGRN->ItemCode . "'";
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
@@ -1240,23 +1242,23 @@ then do the updates and inserts to process the invoice entered */
 							$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 							$QtyRow = DB_fetch_row($Result);
 							$TotalQuantityOnHand = $QtyRow[0];
-		
+
 							/* If the quantity on hand is less the quantity charged on this invoice then some must have been sold and the price variance should be reflected in the cost of sales*/
-		
+
 							if ($EnteredGRN->This_QuantityInv > $TotalQuantityOnHand){
-								
-								/* The variance to the extent of the quantity invoiced should also be written off against the sales analysis cost - as sales analysis would have been created using the cost at the time the sale was made... this was incorrect as hind-sight has shown here. However, how to determine when these were last sold? To update the sales analysis cost. Work through the last 6 months sales analysis from the latest period in which this invoice is being posted and prior. 
-								
+
+								/* The variance to the extent of the quantity invoiced should also be written off against the sales analysis cost - as sales analysis would have been created using the cost at the time the sale was made... this was incorrect as hind-sight has shown here. However, how to determine when these were last sold? To update the sales analysis cost. Work through the last 6 months sales analysis from the latest period in which this invoice is being posted and prior.
+
 								The assumption here is that the goods have been sold prior to the purchase invoice  being entered so it is necessary to back track on the sales analysis cost.
 								* Note that this will mean that posting to GL COGS will not agree to the cost of sales from the sales analysis
 								* Of course the price variances will need to be included in COGS as well
 								* */
-		
+
 								$QuantityVarianceAllocated = $EnteredGRN->This_QuantityInv;
 								$CostVarPerUnit = $ActualCost - $EnteredGRN->StdCostUnit;
 								$PeriodAllocated = $PeriodNo;
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales analysis records could not be updated for the cost variances on this purchase invoice');
-								
+
 								while ($QuantityVarianceAllocated >0) {
 									$SalesAnalResult=DB_query("SELECT cust,
 																	custbranch,
@@ -1301,9 +1303,9 @@ then do the updates and inserts to process the invoice entered */
 										break;
 									}
 								} /*end loop around different periods to see which sales analysis records to update */
-								
+
 								/*now we need to work back through the sales stockmoves up to the quantity on this purchase invoice to update costs
-								 * Only go back up to 6 months looking for stockmoves and 
+								 * Only go back up to 6 months looking for stockmoves and
 								 * Only in the stock location where the purchase order was received
 								 * into - if the stock was transferred to another location then
 								 * we cannot adjust for this */
@@ -1311,7 +1313,7 @@ then do the updates and inserts to process the invoice entered */
 															type,
 															qty,
 															standardcost
-													FROM stockmoves 
+													FROM stockmoves
 													WHERE loccode='" . $LocCode . "'
 													AND qty < 0
 													AND stockid='" . $EnteredGRN->ItemCode . "'
@@ -1330,9 +1332,9 @@ then do the updates and inserts to process the invoice entered */
 										}
 									} else { //Only $QuantityVarianceAllocated left to allocate so need need to apportion cost using weighted average
 										if ($StkMoveRow['type']==10) { //its a sales invoice
-											
+
 											$WACost = (((-$StkMoveRow['qty']- $QuantityVarianceAllocated)*$StkMoveRow['standardcost'])+($QuantityVarianceAllocated*$ActualCost))/-$StkMoveRow['qty'];
-											 
+
 											$UpdStkMovesResult = DB_query("UPDATE stockmoves
 																SET standardcost = '" . $WACost . "'
 																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'",
@@ -1344,27 +1346,27 @@ then do the updates and inserts to process the invoice entered */
 							} // end if the quantity being invoiced here is greater than the current stock on hand
 
 							/*Now to update the stock cost with the new weighted average */
-		
+
 							/*Need to consider what to do if the cost has been changed manually between receiving the stock and entering the invoice - this code assumes there has been no cost updates made manually and all the price variance is posted to stock.
-		
+
 							A nicety or important?? */
-		
-		
+
+
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost could not be updated because');
 							$DbgMsg = _('The following SQL to update the cost was used');
-		
+
 							if ($TotalQuantityOnHand>0) {
-		
+
 								$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
-		
-								$sql = "UPDATE stockmaster 
+
+								$sql = "UPDATE stockmaster
 										SET lastcost=materialcost+overheadcost+labourcost,
-										materialcost=materialcost+" . $CostIncrement . " 
+										materialcost=materialcost+" . $CostIncrement . "
 										WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 								$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
-							} else { 
+							} else {
 								/* if stock is negative then update the cost to this cost */
-								$sql = "UPDATE stockmaster 
+								$sql = "UPDATE stockmaster
 										SET lastcost=materialcost+overheadcost+labourcost,
 											materialcost='" . $ActualCost . "'
 										WHERE stockid='" . $EnteredGRN->ItemCode . "'";
@@ -1397,11 +1399,11 @@ then do the updates and inserts to process the invoice entered */
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-	
+
 					/*Now update the asset cost in fixedassets table */
-					$SQL = "UPDATE fixedassets SET cost = cost + " . ($PurchPriceVar)  . " 
+					$SQL = "UPDATE fixedassets SET cost = cost + " . ($PurchPriceVar)  . "
 							WHERE assetid = '" . $EnteredGRN->AssetID . "'";
-							
+
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost could not be updated because:');
 					$DbgMsg = _('The following SQL was used to attempt the update of the asset cost:');
 					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);

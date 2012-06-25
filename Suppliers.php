@@ -5,7 +5,9 @@
 include('includes/session.inc');
 
 $title = _('Supplier Maintenance');
-
+/* webERP manual links before header.inc */
+$ViewTopic= 'AccountsPayable';
+$BookMark = 'NewSupplier';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -324,10 +326,10 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ID';
 		$i++;
 	}
-	if (mb_strlen($_POST['SuppName']) > 40 
-		OR mb_strlen($_POST['SuppName']) == 0 
+	if (mb_strlen($_POST['SuppName']) > 40
+		OR mb_strlen($_POST['SuppName']) == 0
 		OR $_POST['SuppName'] == '') {
-			
+
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
 		$Errors[$i]='Name';

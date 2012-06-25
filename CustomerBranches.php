@@ -4,8 +4,10 @@
 
 include('includes/session.inc');
 $title = _('Customer Branches');
+/* webERP manual links before header.inc */
+$ViewTopic= 'AccountsReceivable';
+$BookMark = 'NewCustomerBranch';
 include('includes/header.inc');
-
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = mb_strtoupper($_GET['DebtorNo']);
 } else if (isset($_POST['DebtorNo'])){
@@ -112,7 +114,7 @@ if (isset($_POST['submit'])) {
 			// Format: Longitude, Latitude, Altitude
 			$Latitude = $coordinatesSplit[1];
 			$Longitude = $coordinatesSplit[0];
-			
+
 			$status = $xml->Response->Status->code;
 			if (strcmp($status, '200') == 0) {
 				// Successful geocode
@@ -417,11 +419,11 @@ if (!isset($SelectedBranch)){
 				$DebtorNo,
 				urlencode($myrow[1]),
 				_('Delete Branch'));
-			
-			if ($myrow[11]){ 
-				$TotalDisable++; 
-			}else { 
-				$TotalEnable++; 
+
+			if ($myrow[11]){
+				$TotalDisable++;
+			}else {
+				$TotalEnable++;
 			}
 
 		} while ($myrow = DB_fetch_row($result));
@@ -536,7 +538,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedBranch" value="' . $SelectedBranch . '" />';
 		echo '<input type="hidden" name="BranchCode" value="' . $_POST['BranchCode'] . '" />';
-		
+
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
                  ' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
 		if (isset($SelectedBranch)) {
@@ -673,9 +675,9 @@ if (!isset($_GET['delete'])) {
 
 
 	//SQL to poulate account selection boxes
-	$sql = "SELECT salesmanname, 
-					salesmancode 
-			FROM salesman 
+	$sql = "SELECT salesmanname,
+					salesmancode
+			FROM salesman
 			WHERE current = 1";
 
 	$result = DB_query($sql,$db);
@@ -799,7 +801,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>'._('Tax Group').':</td>
 			<td><select tabindex="19" name="TaxGroup">';
-			
+
 	while ($myrow = DB_fetch_array($TaxGroupResults)) {
 		if (isset($_POST['TaxGroup']) and $myrow['taxgroupid']==$_POST['TaxGroup']) {
 			echo '<option selected="selected" value="';
@@ -825,7 +827,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '	</select></td></tr>';
 
-	
+
 	$SQL = "SELECT shipper_id, shippername FROM shippers";
 	$ShipperResults = DB_query($SQL,$db);
 	if (DB_num_rows($ShipperResults)==0){
@@ -862,7 +864,7 @@ if (!isset($_GET['delete'])) {
 		echo '<option selected="selected" value="1">' . _('Show company details and logo') . '</option>
 				<option value="2">' . _('Hide company details and logo') . '</option>';
 	}
-	
+
 	echo '</select></td>
 		</tr>';
 

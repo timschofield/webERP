@@ -5,7 +5,9 @@
 include('includes/session.inc');
 
 $title = _('Customer Maintenance');
-
+/* webERP manual links before header.inc */
+$ViewTopic= 'AccountsReceivable';
+$BookMark = 'NewCustomer';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -500,7 +502,7 @@ if (!isset($DebtorNo)) {
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr><td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
 				<td><input tabindex="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size="12" maxlength="10" /></td></tr>';
-	
+
 	echo '</table></td>
 			<td><table class="selection">
 				<tr>
@@ -611,7 +613,7 @@ if (!isset($DebtorNo)) {
 			<div class="centre">
 				<input tabindex="20" type="submit" name="submit" value="' . _('Add New Customer') . '" />&nbsp;<input tabindex="21" type="submit" value="' . _('Reset') . '" />
 			</div>';
-		
+
 	}
     echo '</div>';
 	echo '</form>';
@@ -650,7 +652,7 @@ if (!isset($DebtorNo)) {
 						typeid
 				FROM debtorsmaster
 				WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
-	
+
 		$ErrMsg = _('The customer details could not be retrieved because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -675,9 +677,9 @@ if (!isset($DebtorNo)) {
 		$_POST['ClientSince'] = ConvertSQLDate($myrow['clientsince']);
 		$_POST['HoldReason']  = $myrow['holdreason'];
 		$_POST['PaymentTerms']  = $myrow['paymentterms'];
-		$_POST['Discount']  = locale_number_format($myrow['discount'] * 100,2); 
+		$_POST['Discount']  = locale_number_format($myrow['discount'] * 100,2);
 		$_POST['DiscountCode']  = $myrow['discountcode'];
-		$_POST['PymtDiscount']  = locale_number_format($myrow['pymtdiscount'] * 100,2); 
+		$_POST['PymtDiscount']  = locale_number_format($myrow['pymtdiscount'] * 100,2);
 		$_POST['CreditLimit']	= locale_number_format($myrow['creditlimit'],0);
 		$_POST['InvAddrBranch'] = $myrow['invaddrbranch'];
 		$_POST['TaxRef'] = $myrow['taxref'];
@@ -759,7 +761,7 @@ if (!isset($DebtorNo)) {
 				<td>' . _('Address Line 6') . ':</td>
 				<td><input ' . (in_array('Address6',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Address6" size="42" maxlength="40" value="' . $_POST['Address6'] . '" /></td>
 			</tr>';
-		
+
 	}
 // Select sales types for drop down list
 	if (isset($_GET['Modify'])) {
@@ -808,10 +810,10 @@ if (!isset($DebtorNo)) {
 		echo '</select></td></tr>
 			<tr><td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
 				<td>' . $_POST['ClientSince'] . '</td></tr>';
-		
+
 		echo '</table></td>
 				<td><table class="selection">';
-		
+
 		echo '<tr>
 				<td>' . _('Discount Percent') . ':</td>
 				<td>' . $_POST['Discount'] . '</td>
@@ -841,7 +843,7 @@ if (!isset($DebtorNo)) {
 			</tr>
 			</table></td>
 			<td><table class="selection">';
-		
+
 		echo '<tr>
 				<td>' . _('Discount Percent') . ':</td>
 				<td><input type="text" name="Discount" class="number" size="5" maxlength="4" value="' . $_POST['Discount'] . '" /></td>
@@ -995,7 +997,7 @@ if (!isset($DebtorNo)) {
 
 	if (isset($_GET['delete'])) { //User hit delete link on customer contacts
 		/*Process this first before showing remaining contacts */
-		$resultupcc = DB_query("DELETE FROM custcontacts 
+		$resultupcc = DB_query("DELETE FROM custcontacts
 								WHERE debtorno='".$DebtorNo."'
 								AND contid='".$ID."'",
 								$db);
@@ -1008,9 +1010,9 @@ if (!isset($DebtorNo)) {
 					role,
 					phoneno,
 					notes,
-					email 
-			FROM custcontacts 
-			WHERE debtorno='".$DebtorNo."' 
+					email
+			FROM custcontacts
+			WHERE debtorno='".$DebtorNo."'
 			ORDER BY contid";
 	$result = DB_query($sql,$db);
 
@@ -1081,7 +1083,7 @@ if (!isset($DebtorNo)) {
 		}
 	}//END WHILE LIST LOOP
 	echo '</table>';
-	
+
 	echo'</td></tr></table>';
 
 	if (isset($_POST['New']) and $_POST['New']) {
@@ -1096,7 +1098,7 @@ if (!isset($DebtorNo)) {
 				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
             </div>';
 	}
-	
+
 	echo '</div>
           </form>';
 } // end of main ifs
