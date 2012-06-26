@@ -455,8 +455,8 @@ if ($Controlled==1){
 		}
 		echo '<input type="hidden" name="Quantity" value="' . $_SESSION['Adjustment' . $identifier]->Quantity . '" />
 				'.locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$DecimalPlaces) .' &nbsp; &nbsp; &nbsp; &nbsp;
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE?identifier='.$identifier.'">'._('Remove').'</a>]
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD?identifier='.$identifier.'">'._('Add').'</a>]';
+				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE?&dentifier='.$identifier.'">'._('Remove').'</a>]
+				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD&identifier='.$identifier.'">'._('Add').'</a>]';
 } else {
 	echo '<input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($Quantity,$DecimalPlaces) . '" />';
 }

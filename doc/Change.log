@@ -1,5 +1,6 @@
 webERP Change Log
 
+26/06/12 Bob Thomas: StockAdjustments fix link to controlled stock adjustments entry
 24/06/2012 Phil: Added tooltip/title showing long description on many scripts where short description is currently shown SelectOrderItems.php SelectCreditItems.php CreditInvoice.php DeliveryDetails.php CounterSales.php RecurringSalesOrders.php
 24/06/2012 Icedlava: Add ViewTopic and BookMark vars to some functions to take advantage of new Manual contextual help. Must be added before header.inc include.
 24/06/2012 Icedlava: Adjust header.inc, ManualContents.php, ManualHeader.html to take Viewtopic and Bookmark parameters in displaying manual. Add ManualOutline.php file containing manual TOC, add CSS and rework all manual docs. Still to add $Viewtopic and $Bookmark to functions (eg see Stocks.php)
