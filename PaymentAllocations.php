@@ -42,7 +42,7 @@ $SQL= "SELECT supptrans.supplierno,
 				currencies.decimalplaces AS currdecimalplaces
 		FROM supptrans INNER JOIN suppliers
 		ON supptrans.supplierno=suppliers.supplierid
-		INNER JOIN currencies 
+		INNER JOIN currencies
 		ON suppliers.currcode=currencies.currabrev
 		WHERE supptrans.id IN (SELECT suppallocs.transid_allocfrom
 								FROM supptrans, suppallocs
@@ -55,7 +55,7 @@ $Result = DB_query($SQL, $db);
 if (DB_num_rows($Result) == 0){
 	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
 	echo '<br /><a href ="javascript:history.back()">' . _('Go back') . '</a>';
-	include('includes/foooter.inc');
+	include('includes/footer.inc');
 	exit;
 }
 
