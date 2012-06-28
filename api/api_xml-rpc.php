@@ -2931,12 +2931,12 @@
 	unset($Parameter);
 	unset($ReturnValue);
 
-	$Description = _('Returns the webERP currency code');
+	$Description = _('Returns the webERP default inventory location');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default currency code. ')
+	$ReturnValue[0] = _('If successful this function returns a string contain the default inventory location. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetDefaultLocation_sig = array(array($xmlrpcStruct),
@@ -2955,6 +2955,43 @@
 		ob_end_flush();
 		return $rtn;
 	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function creates a POS data file on the webERP server for download by the POS');
+	$Parameter[0]['name'] = _('POS Customer Code - a valid webERP customer that sales from the POS are made against.');
+	$Parameter[0]['description'] = _('POS Customer Branch Code - a valid branch code of the webERP customer that the POS sales are made against');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns 0 for success and 1 for error. ');
+
+	$GetCreatePOSDataFull_sig = array(array($xmlrpcStruct),
+						array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
+	$GetCreatePOSDataFull_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_CreatePOSDataFull($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 4) {
+/*x*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(CreatePOSDataFull($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/																		$xmlrpcmsg->getParam( 1 )->scalarval(  ), 
+																			$xmlrpcmsg->getParam( 2 )->scalarval(  ),
+																			$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
+/*x*/		} else {
+/*e*/ 			$rtn = new xmlrpcresp( php_xmlrpc_encode(CreatePOSDataFull( $xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/																		$xmlrpcmsg->getParam( 1 )->scalarval(  ),
+																			'', 
+																			'')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
 
 	unset($Description);
 	unset($Parameter);

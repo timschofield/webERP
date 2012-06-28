@@ -1,6 +1,6 @@
 <?php
 /* $Id$*/
-function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
+function GetPrice ($StockID, $DebtorNo, $BranchCode, $db, $ReportZeroPrice=1){
 
 	$Price = 0;
 	/*Search by branch and customer for a date specified price */
@@ -140,7 +140,9 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 			
 								if (DB_num_rows($result)==0){
 									/*Not even a price set up in the default price list so return 0 */
-									prnMsg(_('There are no prices set up for') . ' ' . $StockID,'warn');
+									if ($ReportZeroPrice ==1){
+										prnMsg(_('There are no prices set up for') . ' ' . $StockID,'warn');
+									}
 									Return 0;
 								}
 							}

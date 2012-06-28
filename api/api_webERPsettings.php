@@ -67,7 +67,7 @@
 		}
 		$sql = "select defaultlocation from www_users where userid='".$user."'";
 		$result = DB_query($sql, $db);
-		$answer=DB_fetch_array($result);
+ 	$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
@@ -88,6 +88,25 @@
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
+		return $ReturnValue;
+	}
+	
+	/* This function creates a POS zipped update file */
+
+	include('../../includes/POSDataCreation.php');
+
+	function CreatePOSDataFull($POSDebtorNo, $POSBranchCode, $User, $Password) {
+		$Errors = array();
+		$db = db($User, $Password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		if (CreatePOSDataFull($_POST['POSDebtorNo'],$_POST['POSBranchCode'],$db) ==1){
+		   $ReturnValue=0;
+		} else {
+		   $ReturnValue=1;
+		}
 		return $ReturnValue;
 	}
 
