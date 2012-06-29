@@ -583,7 +583,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 					<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
 					<td>' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?identifier='.$identifier . '&amp;OrderNumber=' . $OrderNo .'">'. _('Confirm Dispatch and Produce Invoice') .'</a></td>
 				</tr>';
-			
+
 			echo '</table>';
 
 		} else {
@@ -768,17 +768,23 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 	$Quotation = $_SESSION['Items'.$identifier]->Quotation;
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
-	
+
 	if($Quotation){ //handle Quotations and Orders print after modification
 		prnMsg(_('Quotation Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
 
-		echo '<br />
-			<table class="selection">
-			<tr>
-				<td><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
-				<td><a target="_blank" href="' .$rootpath.'/PDFQuotation.php?QuotationNo='.$_SESSION['ExistingOrder'.$identifier].'">'._('Print Quotation').'</a></td>
-			</tr>
-			</table>'; //end of print Quotation
+		/*link to print the quotation */
+		echo '<br /><table class="selection">
+				<tr>
+					<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt=""></td>
+					<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '">'. _('Print Quotation (Landscape)') .'</a></td>
+				</tr>
+				</table>';
+		echo '<br /><table class="selection">
+				<tr>
+					<td><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Order') . '" alt="" /></td>
+					<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '">'. _('Print Quotation (Portrait)') .'</a></td>
+				</tr>
+				</table>';
 	}else{
 
 	prnMsg(_('Order Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
@@ -824,9 +830,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 /*Display the order with or without discount depending on access level*/
 if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
-	
+
 	echo '<table>';
-	
+
 	if ($_SESSION['Items'.$identifier]->Quotation==1){
 		echo '<tr><th colspan="7">'._('Quotation Summary').'</th></tr>';
 	} else {
@@ -1064,7 +1070,7 @@ echo '<tr>
 
 	echo '<tr><td>' . _('Packlist Type') . ':</td>
 			<td><select name="DeliverBlind">';
-			
+
 	if ($_SESSION['Items'.$identifier]->DeliverBlind ==2){
 		echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
 		echo '<option selected="selected" value="2">' . _('Hide Company Details/Logo') . '</option>';
