@@ -15,6 +15,7 @@
 	include($PathPrefix . 'includes/SQL_CommonFunctions.inc');
 	/* Required for creating invoices/credits */
 	include($PathPrefix . 'includes/GetSalesTransGLCodes.inc');
+	include($PathPrefix . 'includes/POSDataCreation.php');
 
 /* Get weberp authentication, and return a valid database
    connection */

@@ -88,7 +88,7 @@ if (isset($_POST['Search'])){
 						FROM stockmaster
 						INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='M')
 							AND stockmaster.description " . LIKE . " '$SearchString'
 							AND stockmaster.discontinued=0
 							AND mbflag='M'
@@ -100,7 +100,7 @@ if (isset($_POST['Search'])){
 						FROM stockmaster
 						INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='M')
 							AND stockmaster.discontinued=0
 							AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -113,6 +113,7 @@ if (isset($_POST['Search'])){
 		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
 		$SearchString = '%' . $_POST['StockCode'] . '%';
 
+		/* Only items of stock type F finished goods or M - raw materials can have work orders created - raw materials can include the manufacture of components (as noted by Bob Thomas! */
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT  stockmaster.stockid,
 							stockmaster.description,
@@ -120,7 +121,7 @@ if (isset($_POST['Search'])){
 						FROM stockmaster
 						INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='M')
 							AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 							AND stockmaster.discontinued=0
 							AND mbflag='M'
@@ -132,7 +133,7 @@ if (isset($_POST['Search'])){
 						FROM stockmaster
 						INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='M')
 							AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 							AND stockmaster.discontinued=0
 							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -147,7 +148,7 @@ if (isset($_POST['Search'])){
 						FROM stockmaster
 						INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='M')
 							AND stockmaster.discontinued=0
 							AND mbflag='M'
 						ORDER BY stockmaster.stockid";
@@ -158,7 +159,7 @@ if (isset($_POST['Search'])){
 						FROM stockmaster
 						INNER JOIN stockcategory
 							ON stockmaster.categoryid=stockcategory.categoryid
-						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+						WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='M')
 							AND stockmaster.discontinued=0
 							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 							AND mbflag='M'
@@ -339,12 +340,12 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
 											 stdcost ='" . $Cost . "'
 										WHERE wo='" . $_POST['WO'] . "'
-											AND stockid='" . $_POST['OutputItem'.$i] . "'";
+										AND stockid='" . $_POST['OutputItem'.$i] . "'";
   			} elseif (isset($_POST['HasWOSerialNos'.$i]) AND $_POST['HasWOSerialNos'.$i]==false) {
 				$sql[] = "UPDATE woitems SET qtyreqd =  '". $_POST['OutputQty' . $i] . "',
 											 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
 										WHERE wo='" . $_POST['WO'] . "'
-											AND stockid='" . $_POST['OutputItem'.$i] . "'";
+										AND stockid='" . $_POST['OutputItem'.$i] . "'";
 			}
 		}
 
@@ -375,8 +376,8 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 	// can't delete it there are open work issues
 	$HasTransResult = DB_query("SELECT transno
 									FROM stockmoves
-									WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-										AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'",$db);
+								WHERE (stockmoves.type= 26 OR stockmoves.type=28)
+								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'",$db);
 	if (DB_num_rows($HasTransResult)>0){
 		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
 		$CancelDelete=true;
@@ -429,9 +430,8 @@ $sql="SELECT workorders.loccode,
 			 startdate,
 			 costissued,
 			 closed
-		FROM workorders
-		INNER JOIN locations
-			ON workorders.loccode=locations.loccode
+		FROM workorders	INNER JOIN locations
+		ON workorders.loccode=locations.loccode
 		WHERE workorders.wo='" . $_POST['WO'] . "'";
 
 $WOResult = DB_query($sql,$db);
@@ -454,9 +454,8 @@ if (DB_num_rows($WOResult)==1){
 										serialised,
 										stockmaster.decimalplaces,
 										nextserialno
-								FROM woitems
-								INNER JOIN stockmaster
-									ON woitems.stockid=stockmaster.stockid
+								FROM woitems INNER JOIN stockmaster
+								ON woitems.stockid=stockmaster.stockid
 								WHERE wo='" .$_POST['WO'] . "'",$db,$ErrMsg);
 
 	$NumberOfOutputs=DB_num_rows($WOItemsResult);
@@ -586,7 +585,7 @@ echo '</div><br />';
 $SQL="SELECT categoryid,
 			categorydescription
 		FROM stockcategory
-		WHERE stocktype='F' OR stocktype='D'
+		WHERE stocktype='F' OR stocktype='M'
 		ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 

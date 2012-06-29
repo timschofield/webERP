@@ -90,10 +90,9 @@
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
 	}
-	
+
 	/* This function creates a POS zipped update file */
 
-	include('../../includes/POSDataCreation.php');
 
 	function CreatePOSDataFull($POSDebtorNo, $POSBranchCode, $User, $Password) {
 		$Errors = array();
