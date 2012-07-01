@@ -3,7 +3,7 @@
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
 	// FOLLOWING ONLY REQUIRED TO SUPPORT PER FUNCTION AUTHENTICATION
-	$api_DatabaseName='ipartx_erp';
+	$api_DatabaseName='weberpdemo';
 	// END OF OLD STYLE AUTHENTICATION
 
 	$AllowAnyone = true;
