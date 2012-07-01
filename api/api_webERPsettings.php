@@ -101,11 +101,23 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		if (CreatePOSDataFull($_POST['POSDebtorNo'],$_POST['POSBranchCode'],$db) ==1){
-		   $ReturnValue=0;
+
+		if (Create_POS_Data_Full($_POST['POSDebtorNo'],$_POST['POSBranchCode'],$db) ==1){
+		   $ReturnValue[0]=0;
 		} else {
-		   $ReturnValue=1;
+		   $ReturnValue[0]=1;
 		}
+		return $ReturnValue;
+	}
+	function DeletePOSData($User, $Password) {
+		$Errors = array();
+		$db = db($User, $Password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		Delete_POS_Data();
+		$ReturnValue[0]=0;
 		return $ReturnValue;
 	}
 

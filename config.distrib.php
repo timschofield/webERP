@@ -18,10 +18,12 @@ $allow_demo_mode = True;
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally
-putenv('TZ=Europe/London');
-// putenv('TZ=Australia/Melbourne');
-// putenv('TZ=Australia/Sydney');
-//putenv('TZ=Pacific/Auckland');
+//date_default_timezone_set('Europe/London');
+//date_default_timezone_set('America/Los_Angeles');
+date_default_timezone_set('Asia/Shanghai');
+//date_default_timezone_set('Australia/Melbourne');
+//date_default_timezone_set('Australia/Sydney');
+//date_default_timezone_set('Pacific/Auckland');
 
 // Connection information for the database
 // $host is the computer ip address or name where the database is located

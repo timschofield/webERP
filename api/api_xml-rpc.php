@@ -1140,7 +1140,7 @@
 		ob_end_flush();
 		return $rtn;
 	}
-	
+
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
@@ -1475,7 +1475,7 @@
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
-	
+
 	$Description = _('This function returns a list of stock location ids.');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
@@ -2971,21 +2971,50 @@
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
 	$ReturnValue[0] = _('If successful this function returns 0 for success and 1 for error. ');
 
-	$GetCreatePOSDataFull_sig = array(array($xmlrpcStruct),
+	$CreatePOSDataFull_sig = array(array($xmlrpcStruct),
 						array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
-	$GetCreatePOSDataFull_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+	$CreatePOSDataFull_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_CreatePOSDataFull($xmlrpcmsg){
 		ob_start('ob_file_callback');
 /*x*/		if ($xmlrpcmsg->getNumParams() == 4) {
 /*x*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(CreatePOSDataFull($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/																		$xmlrpcmsg->getParam( 1 )->scalarval(  ), 
+/*x*/																		$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 																			$xmlrpcmsg->getParam( 2 )->scalarval(  ),
 																			$xmlrpcmsg->getParam( 3 )->scalarval(  ))) );
 /*x*/		} else {
 /*e*/ 			$rtn = new xmlrpcresp( php_xmlrpc_encode(CreatePOSDataFull( $xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/																		$xmlrpcmsg->getParam( 1 )->scalarval(  ),
-																			'', 
+																			'',
+																			'')));
+/*x*/		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+
+	$Description = _('This function deletes a POS data file on the webERP server');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('Returns 0 if the delete POS Data was successfull');
+
+/*E*/$DeletePOSData_sig = array(array($xmlrpcStruct),
+/*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$DeletePOSData_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+
+	function  xmlrpc_DeletePOSData($xmlrpcmsg){
+		ob_start('ob_file_callback');
+/*x*/		if ($xmlrpcmsg->getNumParams() == 2) {
+/*x*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(DeletePOSData($xmlrpcmsg->getParam( 0 )->scalarval(  ),
+/*x*/																		$xmlrpcmsg->getParam( 1 )->scalarval(  ) )) );
+/*x*/		} else {
+/*e*/ 			$rtn = new xmlrpcresp( php_xmlrpc_encode(DeletePOSData( '',
 																			'')));
 /*x*/		}
 		ob_end_flush();
@@ -3413,6 +3442,14 @@
 				"function" => "xmlrpc_GetDefaultLocation",
 				"signature" => $GetDefaultLocation_sig,
 				"docstring" => $GetDefaultLocation_doc),
+			"weberp.xmlrpc_CreatePOSDataFull" => array(
+				"function" => "xmlrpc_CreatePOSDataFull",
+				"signature" => $CreatePOSDataFull_sig,
+				"docstring" => $CreatePOSDataFull_doc),
+			"weberp.xmlrpc_DeletePOSData" => array(
+				"function" => "xmlrpc_DeletePOSData",
+				"signature" => $DeletePOSData_sig,
+				"docstring" => $DeletePOSData_doc),
 			"weberp.xmlrpc_GetStockCatProperty" => array(
 				"function" => "xmlrpc_GetStockCatProperty",
 				"signature" => $GetStockCatProperty_sig,
@@ -3424,7 +3461,7 @@
 		)
 	);
 
-	
+
 //  Generate the HTMLised description string for each API.
 
 function apiBuildDocHTML( $description, $parameter, $return )

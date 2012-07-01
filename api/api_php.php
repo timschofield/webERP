@@ -3,7 +3,7 @@
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
 	// FOLLOWING ONLY REQUIRED TO SUPPORT PER FUNCTION AUTHENTICATION
-	$api_DatabaseName='weberpdemo';
+	$api_DatabaseName='ipartx_erp';
 	// END OF OLD STYLE AUTHENTICATION
 
 	$AllowAnyone = true;
@@ -15,7 +15,7 @@
 	include($PathPrefix . 'includes/SQL_CommonFunctions.inc');
 	/* Required for creating invoices/credits */
 	include($PathPrefix . 'includes/GetSalesTransGLCodes.inc');
-	include($PathPrefix . 'includes/POSDataCreation.php');
+	include($PathPrefix . 'includes/Z_POSDataCreation.php');
 
 /* Get weberp authentication, and return a valid database
    connection */

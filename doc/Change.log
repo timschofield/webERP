@@ -1,5 +1,7 @@
 webERP Change Log
 
+30/6/12 Phil: Attempt at quicker price retrieval
+30/6/12 Phil: Allow creation of work orders for Raw materials - well intermediary components manufacture - per Bob Thomas email
 26/06/12 Bob Thomas: StockAdjustments fix link to controlled stock adjustments entry
 24/06/2012 Phil: Added tooltip/title showing long description on many scripts where short description is currently shown SelectOrderItems.php SelectCreditItems.php CreditInvoice.php DeliveryDetails.php CounterSales.php RecurringSalesOrders.php
 24/06/2012 Icedlava: Add ViewTopic and BookMark vars to some functions to take advantage of new Manual contextual help. Must be added before header.inc include.

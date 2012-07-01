@@ -3,11 +3,20 @@ include('includes/GetPrice.inc');
 /* $Id: Z_POS_Data.php 3843 2010-09-30 14:49:45Z daintree $*/
 $PageSecurity = 9;
 
+/* Note: For really large databases need to change config.php MaxExecutionTime = 1000; or similar */
+
 include('includes/session.inc');
 
 $title = _('Create POS Data Upload File');
 
 include('includes/header.inc');
+
+if (isset($_GET['Delete'])){
+	unlink($_SESSION['reports_dir'] . '/POS.sql');
+	unlink($_SESSION['reports_dir'] . '/POS.sql.zip');
+	prnMsg(_('Old POS upload files deleted'),'info');
+}
+
 
 if (!isset($_GET['POSDebtorNo']) AND !isset($_GET['POSBranchCode'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Create POS Data File') . '" alt="">' . ' ' . $title.'<br />';
@@ -54,10 +63,10 @@ if (isset($_POST['CreatePOSDataFile'])){
 	if ($InputError ==0) {
 
 		include('includes/Z_POSDataCreation.php');
-		if (CreatePOSDataFull($_POST['POSDebtorNo'],$_POST['POSBranchCode'],$db) ==1){
-		echo '<br />
-		 	  <br />
-		 	  <a href="' . $_SESSION['reports_dir'] . '/POS.sql.zip">' . _('Download POS Upload File') . '</a>';
+		if (Create_POS_Data_Full($_POST['POSDebtorNo'],$_POST['POSBranchCode'],$db) == 1 ){
+			echo '<br />
+			 	  <br />
+			 	  <a href="' . $_SESSION['reports_dir'] . '/POS.sql.zip">' . _('Download POS Upload File') . '</a>';
 		} else {
 			prnMsg(_('Unable to create POS Data file - perhaps the POS Customer Code or Branch Code do not exist'),'error');
 		}
@@ -65,5 +74,9 @@ if (isset($_POST['CreatePOSDataFile'])){
 	} // end if no input errors
 } //hit create POSDataFile
 
+if (file_exists($_SESSION['reports_dir'] . '/POS.sql.zip')){
+	prnMsg(_('It is important to delete the POS Data file after it has been retrieved - use the link below to delete it'),'warn');
+	echo '<p><a href="' . $_SERVER['PHP_SELF'] . '?Delete=Yes">' . _('Delete the POS Upload File') . '</a></p>';
+}
 include('includes/footer.inc');
 ?>

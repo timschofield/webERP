@@ -170,7 +170,7 @@ function GetPriceQuick ($StockID, $DebtorNo, $BranchCode, $db){
 
 	$sql="SELECT prices.price, prices.debtorno, prices.branchcode, prices.enddate, prices.typeabbrev
 			FROM prices INNER JOIN debtorsmaster
-			AND prices.currabrev = debtorsmaster.currcode
+			ON prices.currabrev = debtorsmaster.currcode
 			WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
 			AND (prices.typeabbrev = debtorsmaster.salestype OR prices.typeabbrev='" . $_SESSION['DefaultPriceList'] . "')
 			AND prices.stockid = '" . $StockID . "'
@@ -187,7 +187,7 @@ function GetPriceQuick ($StockID, $DebtorNo, $BranchCode, $db){
 		$PricesArray = array();
 		$RankArray = array();
 		$i = 0;
-		while ($myrow=DB_fetch_row($result)){
+		while ($myrow=DB_fetch_array($result)){
 			$Prices[$i]['Price'] = $myrow['price'];
 			$Prices[$i]['DebtorNo'] = $myrow['debtorno'];
 			$Prices[$i]['BranchCode'] = $myrow['branchcode'];
