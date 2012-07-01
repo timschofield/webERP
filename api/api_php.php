@@ -27,7 +27,7 @@
 			    global  $api_DatabaseName;
 			    $rc = LoginAPI ($api_DatabaseName, $user, $password);
 			    if ($rc[0] == UL_OK ) {
-				return $_SESSION['db'];
+					return $_SESSION['db'];
 			    }
 			}
 			return NoAuthorisation;

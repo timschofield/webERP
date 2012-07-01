@@ -12,8 +12,12 @@ $title = _('Create POS Data Upload File');
 include('includes/header.inc');
 
 if (isset($_GET['Delete'])){
-	unlink($_SESSION['reports_dir'] . '/POS.sql');
-	unlink($_SESSION['reports_dir'] . '/POS.sql.zip');
+	if (file_exists($_SESSION['reports_dir'] . '/POS.sql')){
+		unlink($_SESSION['reports_dir'] . '/POS.sql');
+	}
+	if (file_exists($_SESSION['reports_dir'] . '/POS.sql.zip')){
+		unlink($_SESSION['reports_dir'] . '/POS.sql.zip');
+	}
 	prnMsg(_('Old POS upload files deleted'),'info');
 }
 

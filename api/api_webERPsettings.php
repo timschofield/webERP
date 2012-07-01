@@ -67,7 +67,7 @@
 		}
 		$sql = "select defaultlocation from www_users where userid='".$user."'";
 		$result = DB_query($sql, $db);
- 	$answer=DB_fetch_array($result);
+		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
@@ -98,14 +98,13 @@
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
-			$Errors[0]=NoAuthorisation;
-			return $Errors;
+			 return NoAuthorisation;
 		}
-
-		if (Create_POS_Data_Full($_POST['POSDebtorNo'],$_POST['POSBranchCode'],$db) ==1){
-		   $ReturnValue[0]=0;
+		$Result = Create_POS_Data_Full($POSDebtorNo,$POSBranchCode,$db);
+		if ($Result==1) {
+			$ReturnValue=0;
 		} else {
-		   $ReturnValue[0]=1;
+			$ReturnValue=1;
 		}
 		return $ReturnValue;
 	}
@@ -113,12 +112,14 @@
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
-			$Errors[0]=NoAuthorisation;
-			return $Errors;
+			return NoAuthorisation;
 		}
-		Delete_POS_Data();
-		$ReturnValue[0]=0;
-		return $ReturnValue;
+		$Result = Delete_POS_Data();
+		if ($Result==1){
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 
 ?>

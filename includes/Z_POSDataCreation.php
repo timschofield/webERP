@@ -1,9 +1,11 @@
 <?php
 
-function Create_POS_Data_Full ( $POSDebtorNo, $POSBranchCode, $db) {
+function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $db) {
+	
 	$result = DB_query("SELECT currcode, salestype FROM debtorsmaster WHERE debtorno='" . $POSDebtorNo . "'",$db);
 	$CustomerRow = DB_fetch_array($result);
 	if (DB_num_rows($result)==0){
+		echo 'customer not found';
 		return 0;
 	}
 	$CurrCode = $CustomerRow['currcode'];
@@ -12,6 +14,7 @@ function Create_POS_Data_Full ( $POSDebtorNo, $POSBranchCode, $db) {
 	$FileHandle = fopen($_SESSION['reports_dir'] . '/POS.sql','w');
 
 	if ($FileHandle == false){
+		echo 'cant open file';
 		return 0;
 	}
 
@@ -151,12 +154,17 @@ function SQLite_Escape($String) {
   return $String;
 }
 function Delete_POS_Data(){
+	$Success = true;
 	if (file_exists($_SESSION['reports_dir'] . '/POS.sql.zip')){
-		unlink($_SESSION['reports_dir'] . '/POS.sql');
+		$Success = unlink($_SESSION['reports_dir'] . '/POS.sql');
 	}
 	if (file_exists($_SESSION['reports_dir'] . '/POS.sql')){
-		unlink($_SESSION['reports_dir'] . '/POS.sql');
+		$Success = unlink($_SESSION['reports_dir'] . '/POS.sql');
 	}
-	return 1;
+	if ($Success){
+		return 1;
+	} else {
+		return 0;
+	}
 }
 ?>
