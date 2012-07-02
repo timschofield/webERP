@@ -16,6 +16,7 @@
 	/* Required for creating invoices/credits */
 	include($PathPrefix . 'includes/GetSalesTransGLCodes.inc');
 	include($PathPrefix . 'includes/Z_POSDataCreation.php');
+	include($PathPrefix . 'includes/GetPrice.inc');
 
 /* Get weberp authentication, and return a valid database
    connection */

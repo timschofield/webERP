@@ -1,21 +1,29 @@
 <?php
 
-function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $db) {
+function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	
+	$result = DB_query("SELECT confvalue FROM config WHERE confname='reports_dir'",$db);
+	$ReportDirRow = DB_fetch_row($result);
+	$ReportDir = $ReportDirRow[0];
+
+	$result = DB_query("SELECT confvalue FROM config WHERE confname='DefaultPriceList'",$db);
+	$DefaultPriceListRow = DB_fetch_row($result);
+	$DefaultPriceList= $DefaultPriceListRow[0];
+
+
 	$result = DB_query("SELECT currcode, salestype FROM debtorsmaster WHERE debtorno='" . $POSDebtorNo . "'",$db);
 	$CustomerRow = DB_fetch_array($result);
 	if (DB_num_rows($result)==0){
-		echo 'customer not found';
 		return 0;
 	}
 	$CurrCode = $CustomerRow['currcode'];
 	$SalesType = $CustomerRow['salestype'];
-
-	$FileHandle = fopen($_SESSION['reports_dir'] . '/POS.sql','w');
+	
+	
+	$FileHandle = fopen($PathPrefix . $ReportDir . '/POS.sql','w');
 
 	if ($FileHandle == false){
-		echo 'cant open file';
-		return 0;
+		return 'cant open file ' . $PathPrefix . $ReportDir . '/POS.sql';
 	}
 
 	fwrite($FileHandle,"DELETE FROM currencies;\n");
@@ -108,7 +116,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $db) {
 	while ($myrow = DB_fetch_array($result)) {
 
 		  fwrite($FileHandle,"INSERT INTO stockmaster VALUES ('" . SQLite_Escape ($myrow['stockid']) . "', '" . SQLite_Escape ($myrow['categoryid']) . "', '" . SQLite_Escape ($myrow['description']) . "', '" . SQLite_Escape (str_replace("\n", '', $myrow['longdescription'])) . "', '" . SQLite_Escape ($myrow['units']) . "', '" . SQLite_Escape ($myrow['barcode']) . "', '" . $myrow['taxcatid'] . "', '" . $myrow['decimalplaces'] . "');\n");
-	      $Price = GetPriceQuick ($myrow['stockid'], $_POST['POSDebtorNo'], $_POST['POSBranchCode'], $db);
+	      $Price = GetPriceQuick ($myrow['stockid'], $_POST['POSDebtorNo'], $_POST['POSBranchCode'], $DefaultPriceList, $db);
 	      if ($Price!=0) {
 		  	  fwrite($FileHandle,"INSERT INTO prices (stockid, currabrev, typeabbrev, price) VALUES('" . $myrow['stockid'] . "', '" . $CurrCode . "', '" . $SalesType . "', '" . $Price . "');\n");
   		  }
@@ -131,18 +139,17 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $db) {
 
 	fclose($FileHandle);
 	/*Now compress to a zip archive */
-	if (file_exists($_SESSION['reports_dir'] . '/POS.sql.zip')){
-		unlink($_SESSION['reports_dir'] . '/POS.sql.zip');
+	if (file_exists($PathPrefix . $ReportDir . '/POS.sql.zip')){
+		unlink($PathPrefix . $ReportDir . '/POS.sql.zip');
 	}
 	$ZipFile = new ZipArchive();
-	if ($ZipFile->open($_SESSION['reports_dir'] . '/POS.sql.zip', ZIPARCHIVE::CREATE)!==TRUE) {
-		exit("cannot open <" . $_SESSION['reports_dir'] . "/POS.sql.zip\n");
-		include('includes/footer.inc');
+	if ($ZipFile->open($PathPrefix . $ReportDir . '/POS.sql.zip', ZIPARCHIVE::CREATE)!==TRUE) {
+		return 'couldnt open zip file ' . $PathPrefix . $ReportDir . '/POS.sql.zip';
 	}
-	$ZipFile->addFile($_SESSION['reports_dir'] . '/POS.sql','POS.sql');
+	$ZipFile->addFile($PathPrefix . $ReportDir . '/POS.sql','POS.sql');
 	$ZipFile->close();
 	//delete the original big sql file as we now have the zip for transferring
-	unlink($_SESSION['reports_dir'] . '/POS.sql');
+	unlink($PathPrefix . $ReportDir . '/POS.sql');
 	return 1;
 }
 
@@ -153,18 +160,81 @@ function SQLite_Escape($String) {
   $String = str_replace($SearchCharacters, $ReplaceWith, $String);
   return $String;
 }
-function Delete_POS_Data(){
+
+function Delete_POS_Data($PathPrefix, $db){
+	
+	$result = DB_query("SELECT confvalue FROM config WHERE confname='reports_dir'",$db);
+	$ReportDirRow = DB_fetch_row($result);
+	$ReportDir = $ReportDirRow[0];
+	
+	
 	$Success = true;
-	if (file_exists($_SESSION['reports_dir'] . '/POS.sql.zip')){
-		$Success = unlink($_SESSION['reports_dir'] . '/POS.sql');
+	if (file_exists($PathPrefix . $ReportDir . '/POS.sql.zip')){
+		$Success = unlink($PathPrefix . $ReportDir . '/POS.sql.zip');
 	}
-	if (file_exists($_SESSION['reports_dir'] . '/POS.sql')){
-		$Success = unlink($_SESSION['reports_dir'] . '/POS.sql');
+	if (file_exists($PathPrefix . $ReportDir . '/POS.sql')){
+		$Success = unlink($PathPrefix . $ReportDir . '/POS.sql');
 	}
 	if ($Success){
 		return 1;
 	} else {
 		return 0;
+	}
+}
+
+function GetPriceQuick ($StockID, $DebtorNo, $BranchCode, $DefaultPriceList,$db){
+
+	$sql="SELECT prices.price, prices.debtorno, prices.branchcode, prices.enddate, prices.typeabbrev
+			FROM prices INNER JOIN debtorsmaster
+			ON prices.currabrev = debtorsmaster.currcode
+			WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
+			AND (prices.typeabbrev = debtorsmaster.salestype OR prices.typeabbrev='" . $DefaultPriceList . "')
+			AND prices.stockid = '" . $StockID . "'
+			AND (prices.debtorno=debtorsmaster.debtorno OR prices.debtorno='')
+			AND (prices.branchcode='" . $BranchCode . "' OR prices.branchcode='')
+			AND prices.startdate <='" . Date('Y-m-d') . "'
+			AND (prices.enddate >='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
+
+	$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
+	$result = DB_query($sql, $db,$ErrMsg);
+	if (DB_num_rows($result)==0){
+		return 0;
+	} else {
+		$PricesArray = array();
+		$RankArray = array();
+		$i = 0;
+		while ($myrow=DB_fetch_array($result)){
+			$Prices[$i]['Price'] = $myrow['price'];
+			$Prices[$i]['DebtorNo'] = $myrow['debtorno'];
+			$Prices[$i]['BranchCode'] = $myrow['branchcode'];
+			$Prices[$i]['EndDate'] = $myrow['enddate'];
+			if ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']==$BranchCode AND $myrow['enddate']!='0000-00-00') {
+				$Rank[$i] = 1;
+			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']==$BranchCode) {
+				$Rank[$i] = 2;
+			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']=='' AND $myrow['enddate']!='0000-00-00'){
+				$Rank[$i] = 3;
+			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']=='' ){
+				$Rank[$i] = 4;
+			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['typeabbrev']!=$DefaultPriceList AND $myrow['enddate']!='0000-00-00'){
+				$Rank[$i] = 5;
+			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['typeabbrev']!=$DefaultPriceList){
+				$Rank[$i] = 6;
+			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['enddate']!='0000-00-00'){
+				$Rank[$i] = 7;
+			}  elseif ($myrow['debtorno']=='' AND $myrow['branchcode']==''){
+				$Rank[$i] = 8;
+			}
+			$i++;
+		}
+		$LowestRank = 10;
+		foreach ($RankArray as $ArrayElement=>$Ranking) {
+			if ($Ranking < $LowestRank){
+				$LowestRankElement = $ArrayElement;
+				$LowestRank = $Ranking;
+			}
+		}
+		return $Prices[$ArrayElement]['Price'];
 	}
 }
 ?>

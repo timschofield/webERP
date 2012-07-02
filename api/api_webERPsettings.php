@@ -100,11 +100,11 @@
 		if (gettype($db)=='integer') {
 			 return NoAuthorisation;
 		}
-		$Result = Create_POS_Data_Full($POSDebtorNo,$POSBranchCode,$db);
+		$Result = Create_POS_Data_Full($POSDebtorNo,$POSBranchCode,dirname(__FILE__).'/../',$db);
 		if ($Result==1) {
 			$ReturnValue=0;
 		} else {
-			$ReturnValue=1;
+			$ReturnValue=$Result;
 		}
 		return $ReturnValue;
 	}
@@ -114,11 +114,11 @@
 		if (gettype($db)=='integer') {
 			return NoAuthorisation;
 		}
-		$Result = Delete_POS_Data();
+		$Result = Delete_POS_Data(dirname(__FILE__).'/../',$db);
 		if ($Result==1){
 			return 0;
 		} else {
-			return 1;
+			return $Result;
 		}
 	}
 
