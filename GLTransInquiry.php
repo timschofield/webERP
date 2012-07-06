@@ -107,7 +107,6 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 					$DetailSQL = "SELECT supptrans.supplierno,
 										supptrans.ovamount,
 										supptrans.ovgst,
-										supptrans.ovfreight,
 										supptrans.rate,
 										suppliers.suppname
 									FROM supptrans INNER JOIN suppliers
@@ -146,7 +145,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							$Debit = locale_number_format(($DetailRow[1] + $DetailRow[2]+ $DetailRow[3]) / $DetailRow[4],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						} else {
-							$Debit = locale_number_format((-$DetailRow[1] - $DetailRow[2] $DetailRow[3]) / $DetailRow[4],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Debit = locale_number_format((-$DetailRow[1] - $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						}
 					} else {
@@ -154,7 +153,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 							$Credit = locale_number_format(-($DetailRow[1] + $DetailRow[2] + $DetailRow[3]) / $DetailRow[4],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						} else {
-							$Credit = locale_number_format(($DetailRow[1] + $DetailRow[2] + $DetailRow[3]) / $DetailRow[4],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = locale_number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],$_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						}
 					}
