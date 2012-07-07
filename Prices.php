@@ -74,19 +74,20 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		prnMsg (_('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
-
-	if (FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
-		if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){
-			$InputError =1;
-			prnMsg (_('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-		}
-		if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!='' AND FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
-			$InputError =1;
-			prnMsg (_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
-		}
-		if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!='' AND FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
-			$InputError =1;
-			prnMsg(_('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!'),'error');
+	if ($_POST['EndDate']!='') {
+		if (FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
+			if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){
+				$InputError =1;
+				prnMsg (_('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+			}
+			if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!='' AND FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
+				$InputError =1;
+				prnMsg (_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
+			}
+			if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!='' AND FormatDateForSQL($_POST['EndDate'])!='0000-00-00'){
+				$InputError =1;
+				prnMsg(_('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!'),'error');
+			}
 		}
 	}
 	if (Is_Date($_POST['EndDate'])){
@@ -94,15 +95,14 @@ if (isset($_POST['submit'])) {
 	} else {
 		$SQLEndDate = '0000-00-00';
 	}
-	
+
 	$sql = "SELECT COUNT(typeabbrev)
 				FROM prices
 			WHERE prices.stockid='".$Item."'
 			AND startdate='" .FormatDateForSQL($_POST['StartDate']) . "'
 			AND enddate ='" . $SQLEndDate . "'
 			AND prices.typeabbrev='" . $_POST['TypeAbbrev'] . "'
-			AND prices.currabrev='" . $_POST['CurrAbrev'] . "'
-			AND prices.price='" . filter_number_format($_POST['Price']) . "'";
+			AND prices.currabrev='" . $_POST['CurrAbrev'] . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
@@ -111,9 +111,9 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('This price has already been entered. To change it you should edit it') , 'warn');
 		$InputError =1;
 	}
-	
-	
-	
+
+
+
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND mb_strlen($Item)>1 AND $InputError !=1) {
 
 		/* Need to see if there is also a price entered that has an end date after the start date of this price and if so we will need to update it so there is no ambiguity as to which price will be used*/
@@ -157,10 +157,11 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Price']) . "')";
 		$ErrMsg = _('The new price could not be added');
 		$result = DB_query($sql,$db,$ErrMsg);
-		
+
 		ReSequenceEffectiveDates ($Item, $_POST['TypeAbbrev'], $_POST['CurrAbrev'], $db) ;
 		prnMsg(_('The new price has been inserted'),'success');
 	}
+
 	unset($_POST['Price']);
 	unset($_POST['StartDate']);
 	unset($_POST['EndDate']);
@@ -182,175 +183,175 @@ if (isset($_POST['submit'])) {
 }
 
 //Always do this stuff
-if ($InputError ==0){
-	$sql = "SELECT currencies.currency,
-	        	salestypes.sales_type,
-			prices.price,
-			prices.stockid,
-			prices.typeabbrev,
-			prices.currabrev,
-			prices.startdate,
-			prices.enddate,
-			currencies.decimalplaces AS currdecimalplaces
-		FROM prices 
-		INNER JOIN salestypes 
-			ON prices.typeabbrev = salestypes.typeabbrev
-		INNER JOIN currencies
-			ON prices.currabrev=currencies.currabrev
-		WHERE prices.stockid='".$Item."'
-		AND prices.debtorno=''
-		ORDER BY prices.currabrev,
-			prices.typeabbrev,
-			prices.startdate";
 
-	$result = DB_query($sql,$db);
+$sql = "SELECT currencies.currency,
+        	salestypes.sales_type,
+		prices.price,
+		prices.stockid,
+		prices.typeabbrev,
+		prices.currabrev,
+		prices.startdate,
+		prices.enddate,
+		currencies.decimalplaces AS currdecimalplaces
+	FROM prices
+	INNER JOIN salestypes
+		ON prices.typeabbrev = salestypes.typeabbrev
+	INNER JOIN currencies
+		ON prices.currabrev=currencies.currabrev
+	WHERE prices.stockid='".$Item."'
+	AND prices.debtorno=''
+	ORDER BY prices.currabrev,
+		prices.typeabbrev,
+		prices.startdate";
 
-	if (DB_num_rows($result) > 0) {
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-        echo '<div>';      
-		echo '<table class="selection">
-				<tr>
-					<th colspan="7">
-					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . 
-					_('Pricing for part') . ':
-					<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20" />
-					<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
-				</tr>';
+$result = DB_query($sql,$db);
 
-		echo '<tr><th>' . _('Currency') . '</th>
-					<th>' . _('Sales Type') . '</th>
-					<th>' . _('Price') . '</th>
-					<th>' . _('Start Date') . ' </th>
-					<th>' . _('End Date') . '</th>
-				</tr>';
-
-		$k=0; //row colour counter
-
-		while ($myrow = DB_fetch_array($result)) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
-			if ($myrow['enddate']=='0000-00-00'){
-				$EndDateDisplay = _('No End Date');
-			} else {
-				$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
-			}
-			/*Only allow access to modify prices if securiy token 5 is allowed */
-			if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
-				echo '<td>' . $myrow['currency'] . '</td>
-					<td>' .  $myrow['sales_type'] . '</td>
-					<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
-					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
-					<td>' . $EndDateDisplay . '</td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . $myrow['price'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td></tr>';
-					
-			} else {
-				echo '<td>' . $myrow['currency'] . '</td>
-					<td>' .  $myrow['sales_type'] . '</td>
-					<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
-					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
-					<td>' . $EndDateDisplay . '</td></tr>';
-			}
-
-		}
-		//END WHILE LIST LOOP
-		echo '</table><br />';
-        echo '</div>
-              </form>';
-	} else {
-		prnMsg(_('There are no prices set up for this part'),'warn');
-	}
-
+if (DB_num_rows($result) > 0) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	if (isset($_GET['Edit'])){
-		echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'" />';
-		echo '<input type="hidden" name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '" />';
-		echo '<input type="hidden" name="OldStartDate" value="' . $_GET['StartDate'] . '" />';
-		echo '<input type="hidden" name="OldEndDate" value="' . $_GET['EndDate'] . '" />';
-		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
-		$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
-		/*the price sent with the get is sql format price so no need to filter */
-		$_POST['Price'] = $_GET['Price']; 
-		$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
-		if ($_GET['EndDate']=='' OR $_GET['EndDate']=='0000-00-00'){
-			$_POST['EndDate'] = '';
-		} else {
-			$_POST['EndDate'] = ConvertSQLDate($_GET['EndDate']);
-		}
-	}
-
-	$SQL = "SELECT currabrev, 
-					currency
-			FROM currencies";
-	$result = DB_query($SQL,$db);
-
-	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
-	echo '<tr><td>' . _('Currency') . ':</td>
-			<td><select name="CurrAbrev">';
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['currabrev']==$_POST['CurrAbrev']) {
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
-		}
-		echo $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
-	} //end while loop
-
-	DB_free_result($result);
-
-	echo '</select>	</td></tr>
+	echo '<div>';
+	echo '<table class="selection">
 			<tr>
-				<td>' . _('Sales Type Price List') . ':</td>
-				<td><select name="TypeAbbrev">';
+				<th colspan="7">
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' .
+				_('Pricing for part') . ':
+				<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20" />
+				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
+			</tr>';
 
-	$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
-	$result = DB_query($SQL,$db);
+	echo '<tr><th>' . _('Currency') . '</th>
+				<th>' . _('Sales Type') . '</th>
+				<th>' . _('Price') . '</th>
+				<th>' . _('Start Date') . ' </th>
+				<th>' . _('End Date') . '</th>
+			</tr>';
+
+	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['typeabbrev']==$_POST['TypeAbbrev']) {
-			echo '<option selected="selected" value="';
+		if ($k==1){
+			echo '<tr class="EvenTableRows">';
+			$k=0;
 		} else {
-			echo '<option value="';
+			echo '<tr class="OddTableRows">';
+			$k=1;
 		}
-		echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		if ($myrow['enddate']=='0000-00-00'){
+			$EndDateDisplay = _('No End Date');
+		} else {
+			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
+		}
+		/*Only allow access to modify prices if securiy token 5 is allowed */
+		if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
+			echo '<td>' . $myrow['currency'] . '</td>
+				<td>' .  $myrow['sales_type'] . '</td>
+				<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
+				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+				<td>' . $EndDateDisplay . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . $myrow['price'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td></tr>';
 
-	} //end while loop
-	echo '</select></td></tr>';
-	
-	DB_free_result($result);
+		} else {
+			echo '<td>' . $myrow['currency'] . '</td>
+				<td>' .  $myrow['sales_type'] . '</td>
+				<td class="number">' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '</td>
+				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+				<td>' . $EndDateDisplay . '</td></tr>';
+		}
 
-	if (!isset($_POST['StartDate'])){
-		$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
-	if (!isset($_POST['EndDate'])){
-		$_POST['EndDate'] = '';
-	}
-	echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
-				<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="10" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
-	echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-				<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" />';
-	echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
-	echo '<tr><td>' . _('Price') . ':</td>
-	          <td>
-	          <input type="text" class="number" name="Price" size="12" maxlength="11" value="'; 
-	          if (isset($_POST['Price'])) {
-		         echo $_POST['Price'];
-	          }
-	          echo '" /> 
-	     </td></tr>
-	</table>
-	<br /><div class="centre">
-	<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />
-	</div>';
+	//END WHILE LIST LOOP
+	echo '</table><br />';
+	echo '</div>
+		  </form>';
+} else {
+	prnMsg(_('There are no prices set up for this part'),'warn');
 }
+
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+if (isset($_GET['Edit'])){
+	echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'" />';
+	echo '<input type="hidden" name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '" />';
+	echo '<input type="hidden" name="OldStartDate" value="' . $_GET['StartDate'] . '" />';
+	echo '<input type="hidden" name="OldEndDate" value="' . $_GET['EndDate'] . '" />';
+	$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
+	$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
+	/*the price sent with the get is sql format price so no need to filter */
+	$_POST['Price'] = $_GET['Price'];
+	$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
+	if ($_GET['EndDate']=='' OR $_GET['EndDate']=='0000-00-00'){
+		$_POST['EndDate'] = '';
+	} else {
+		$_POST['EndDate'] = ConvertSQLDate($_GET['EndDate']);
+	}
+}
+
+$SQL = "SELECT currabrev,
+				currency
+		FROM currencies";
+$result = DB_query($SQL,$db);
+
+echo '<br /><table class="selection">';
+echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
+echo '<tr><td>' . _('Currency') . ':</td>
+		<td><select name="CurrAbrev">';
+while ($myrow = DB_fetch_array($result)) {
+	if ($myrow['currabrev']==$_POST['CurrAbrev']) {
+		echo '<option selected="selected" value="';
+	} else {
+		echo '<option value="';
+	}
+	echo $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+} //end while loop
+
+DB_free_result($result);
+
+echo '</select>	</td></tr>
+		<tr>
+			<td>' . _('Sales Type Price List') . ':</td>
+			<td><select name="TypeAbbrev">';
+
+$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
+$result = DB_query($SQL,$db);
+
+while ($myrow = DB_fetch_array($result)) {
+	if ($myrow['typeabbrev']==$_POST['TypeAbbrev']) {
+		echo '<option selected="selected" value="';
+	} else {
+		echo '<option value="';
+	}
+	echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+
+} //end while loop
+echo '</select></td></tr>';
+
+DB_free_result($result);
+
+if (!isset($_POST['StartDate'])){
+	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
+}
+if (!isset($_POST['EndDate'])){
+	$_POST['EndDate'] = '';
+}
+echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="10" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
+echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" />';
+echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
+echo '<tr><td>' . _('Price') . ':</td>
+          <td>
+          <input type="text" class="number" name="Price" size="12" maxlength="11" value="';
+          if (isset($_POST['Price'])) {
+	         echo $_POST['Price'];
+          }
+          echo '" />
+     </td></tr>
+</table>
+<br /><div class="centre">
+<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />
+</div>';
+
 
 echo '</div>
       </form>';
@@ -361,7 +362,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 
 	/*This is quite complicated - the idea is that prices set up should be unique and there is no way two prices could be returned as valid - when getting a price in includes/GetPrice.inc the logic is to first look for a price of the salestype/currency within the effective start and end dates - then if not get the price with a start date prior but a blank end date (the default price). We would not want two prices where one price falls inside another effective date range except in the case of a blank end date - ie no end date - the default price for the currency/salestype.
 	I first thought that we would need to update the previous default price (blank end date), when a new default price is entered, to have an end date of the startdate of this new default price less 1 day - but this is  converting a default price into a special price which could result in having two special prices over the same date range - best to leave it unchanged and use logic in the GetPrice.inc to ensure the correct default price is returned
-	* 
+	*
 	* After further discussion (Ricard) if the new price has a blank end date - i.e. no end then the pre-existing price with no end date should be changed to have an end date just prior to the new default (no end date) price commencing
 	*/
 	//this is just the case where debtorno='' - see the Prices_Customer.php script for customer special prices
@@ -376,7 +377,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 				AND enddate <>'0000-00-00'
 				ORDER BY startdate, enddate";
 		$result = DB_query($SQL,$db);
-		
+
 		while ($myrow = DB_fetch_array($result)){
 			if (isset($NextStartDate)){
 				if (Date1GreaterThanDate2(ConvertSQLDate($myrow['startdate']),$NextStartDate)){
@@ -402,7 +403,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 			$EndDate = $myrow['enddate'];
 			$Price = $myrow['price'];
 		} // end of loop around all prices
-		
+
 		//Now look for duplicate prices with no end
 		$SQL = "SELECT price,
 						startdate,
@@ -415,7 +416,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 					AND enddate ='0000-00-00'
 					ORDER BY startdate";
 		$result = DB_query($SQL,$db);
-				
+
 		while ($myrow = DB_fetch_array($result)) {
 			if (isset($OldStartDate)){
 			/*Need to make the end date the new start date less 1 day */
@@ -431,7 +432,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $db) {
 			}
 			$OldStartDate = $myrow['startdate'];
 		} // end of loop around duplicate no end date prices
-		
+
 } // end function ReSequenceEffectiveDates
 
 ?>

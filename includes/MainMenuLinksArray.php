@@ -565,7 +565,8 @@ $MenuItems['Utilities']['Maintenance']['Caption'] = array (_('Maintain Language 
 																_('Import Fixed Assets from .csv file'),
 																_('Create new company template SQL file and submit to webERP'),
 																_('Re-calculate brought forward amounts in GL'),
-																_('Re-Post all GL transactions from a specified period')
+																_('Re-Post all GL transactions from a specified period'),
+																_('Purge all old prices')
 																);
 
 $MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
@@ -575,6 +576,7 @@ $MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
 														'/Z_ImportFixedAssets.php',
 														'/Z_CreateCompanyTemplateFile.php',
 														'/Z_UpdateChartDetailsBFwd.php',
-														'/Z_RePostGLFromPeriod.php'
+														'/Z_RePostGLFromPeriod.php',
+														'/Z_DeleteOldPrices.php'
 												);
 ?>

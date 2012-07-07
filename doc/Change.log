@@ -1,5 +1,7 @@
 webERP Change Log
 
+6/7/12 Phil: Add stable versions to UpgradeDatabase.php script
+6/7/12 Phil: Added new Z_DeleteOldPrices.php script to purge prices which are past their end date
 30/6/12 Phil: Attempt at quicker price retrieval
 30/6/12 Phil: Allow creation of work orders for Raw materials - well intermediary components manufacture - per Bob Thomas email
 26/06/12 Bob Thomas: StockAdjustments fix link to controlled stock adjustments entry
