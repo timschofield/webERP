@@ -1,5 +1,6 @@
 webERP Change Log
 
+9/7/12 Tim/Ricard: Add Z_ChangeSupplierCode.php - 
 6/7/12 Phil: Add stable versions to UpgradeDatabase.php script
 6/7/12 Phil: Added new Z_DeleteOldPrices.php script to purge prices which are past their end date
 30/6/12 Phil: Attempt at quicker price retrieval

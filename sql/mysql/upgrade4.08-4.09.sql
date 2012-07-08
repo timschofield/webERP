@@ -1,5 +1,4 @@
 INSERT INTO scripts VALUES ('Z_DeleteOldPrices.php','15','Deletes all old prices');
 INSERT INTO scripts VALUES ('Z_ChangeLocationCode.php','15','Change a locations code and in all tables where the old code was used to the new code');
-DELETE FROM scripts WHERE script='Z_ChangeSupplierCode.php';
 UPDATE config SET confvalue='4.08.2' WHERE confname='VersionNumber';
 
