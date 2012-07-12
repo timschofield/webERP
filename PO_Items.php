@@ -596,6 +596,13 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 						$SuppliersUnitOfMeasure = $PurchRow['suppliersuom'];
 						$SuppliersPartNo = $PurchRow['suppliers_partno'];
 						$LeadTime = $PurchRow['leadtime'];
+						/* Work out the delivery date based on today + lead time
+						 * if > header DeliveryDate then set DeliveryDate to today + leadtime
+						 */
+						$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
+						if (! Date1GreaterThanDate2($DeliveryDate,$_SESSION['PO'.$identifier]->DeliveryDate)){
+							$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
+						}
 					} else { // no purchasing data setup
 						$PurchPrice = 0; 
 						$ConversionFactor = 1;
@@ -603,6 +610,7 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 						$SuppliersUnitOfMeasure = $ItemRow['units'];
 						$SuppliersPartNo = '';
 						$LeadTime = 1;
+						$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 					}
 	
 					$_SESSION['PO'.$identifier]->add_to_order ($_SESSION['PO'.$identifier]->LinesOnOrder+1,
@@ -614,7 +622,7 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 															$PurchPrice,
 															$ItemRow['units'],
 															$ItemRow['stockact'],
-															$_SESSION['PO'.$identifier]->DeliveryDate,
+															$DeliveryDate,
 															0,
 															0,
 															0,

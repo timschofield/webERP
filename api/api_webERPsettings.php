@@ -108,6 +108,7 @@
 		}
 		return $ReturnValue;
 	}
+	
 	function DeletePOSData($User, $Password) {
 		$Errors = array();
 		$db = db($User, $Password);

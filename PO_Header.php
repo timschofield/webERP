@@ -179,7 +179,7 @@ if (isset($_GET['NewOrder'])
 		/* set the SupplierID we got */
 		$_SESSION['PO'.$identifier]->SupplierID = $_GET['SelectedSupplier'];
 		$_SESSION['PO'.$identifier]->DeliveryDate = date($_SESSION['DefaultDateFormat']);
-		
+		$_SESSION['PO'.$identifier]->Initiator = $_SESSION['UsersRealName'];
 		$_SESSION['RequireSupplierSelection'] = 0;
 		$_POST['Select'] = $_GET['SelectedSupplier'];
 		
@@ -760,7 +760,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1
 			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td></tr>';
 
 	if (!isset($_POST['Initiator'])) {
-		$_POST['Initiator'] = $_SESSION['UserID'];
+		$_POST['Initiator'] = $_SESSION['UsersRealName'];
 		$_POST['Requisition'] = '';
 	}
 

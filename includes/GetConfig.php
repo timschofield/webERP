@@ -3,7 +3,7 @@
 // $ForceConfigReload to true
 /* $Id$*/
 
-if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
+if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	global  $db;		// It is global, we may not be.
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');

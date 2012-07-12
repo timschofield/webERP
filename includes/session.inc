@@ -31,7 +31,7 @@ session_start();
 include($PathPrefix . 'includes/ConnectDB.inc');
 include($PathPrefix . 'includes/DateFunctions.inc');
 
-// Un comment to turn off attempts counter
+// Uncomment to turn off attempts counter
 //$_SESSION['AttemptsCounter'] = 0;
 
 if (!isset($_SESSION['AttemptsCounter'])){
