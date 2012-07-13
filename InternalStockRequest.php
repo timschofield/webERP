@@ -279,10 +279,12 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
-$SQL = "SELECT categoryid,
-				categorydescription
-			FROM stockcategory
-			ORDER BY categorydescription";
+$SQL = "SELECT stockcategory.categoryid,
+				stockcategory.categorydescription
+			FROM stockcategory, internalstockcatrole
+			WHERE stockcategory.categoryid = internalstockcatrole.categoryid
+				AND internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
+			ORDER BY stockcategory.categorydescription";
 $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
 	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
@@ -298,9 +300,9 @@ if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = '';
 }
 if ($_POST['StockCat'] == 'All') {
-	echo '<option selected="True" value="All">' . _('All').'</option>';
+	echo '<option selected="True" value="All">' . _('All Authorized').'</option>';
 } else {
-	echo '<option value="All">' . _('All').'</option>';
+	echo '<option value="All">' . _('All Authorized').'</option>';
 }
 while ($myrow1 = DB_fetch_array($result1)) {
 	if ($myrow1['categoryid'] == $_POST['StockCat']) {
@@ -357,8 +359,11 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 							stockmaster.units as stockunits,
 							stockmaster.decimalplaces
 					FROM stockmaster,
-						stockcategory
+						stockcategory,
+						internalstockcatrole
 					WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND stockcategory.categoryid = internalstockcatrole.categoryid
+						AND internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
 						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
@@ -370,8 +375,11 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 							stockmaster.units as stockunits,
 							stockmaster.decimalplaces
 					FROM stockmaster,
-						stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
+						stockcategory,
+						internalstockcatrole
+					WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND stockcategory.categoryid = internalstockcatrole.categoryid
+						AND internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
 						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -391,8 +399,11 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 							stockmaster.units as stockunits,
 							stockmaster.decimalplaces
 					FROM stockmaster,
-						stockcategory
+						stockcategory,
+						internalstockcatrole
 					WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND stockcategory.categoryid = internalstockcatrole.categoryid
+						AND internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
 						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
@@ -404,8 +415,11 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 							stockmaster.units as stockunits,
 							stockmaster.decimalplaces
 					FROM stockmaster,
-						stockcategory
+						stockcategory,
+						internalstockcatrole
 					WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND stockcategory.categoryid = internalstockcatrole.categoryid
+						AND internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
 						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 						AND stockmaster.mbflag <>'G'
@@ -421,8 +435,11 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 							stockmaster.units as stockunits,
 							stockmaster.decimalplaces
 					FROM stockmaster,
-						stockcategory
-					WHERE  stockmaster.categoryid=stockcategory.categoryid
+						stockcategory,
+						internalstockcatrole
+					WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND stockcategory.categoryid = internalstockcatrole.categoryid
+						AND internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
 						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
@@ -433,8 +450,11 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 							stockmaster.units as stockunits,
 							stockmaster.decimalplaces
 					FROM stockmaster,
-						stockcategory
+						stockcategory,
+						internalstockcatrole
 					WHERE stockmaster.categoryid=stockcategory.categoryid
+						AND stockcategory.categoryid = internalstockcatrole.categoryid
+						AND internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
 						AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 						AND stockmaster.mbflag <>'G'
 						AND stockmaster.discontinued=0
