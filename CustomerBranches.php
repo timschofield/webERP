@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 		if ($map_host=="") {
 		// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
-                } else {
+				} else {
 			$address = $_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4'];
 			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml&amp;key=' . KEY;
 			$request_url = $base_url . '&amp;q=' . urlencode($address);
@@ -118,7 +118,7 @@ if (isset($_POST['submit'])) {
 			$status = $xml->Response->Status->code;
 			if (strcmp($status, '200') == 0) {
 				// Successful geocode
-			    	$geocode_pending = false;
+					$geocode_pending = false;
 				$coordinates = $xml->Response->Placemark->Point->coordinates;
 				$coordinatesSplit = explode(",", $coordinates);
 				// Format: Longitude, Latitude, Altitude
@@ -172,7 +172,7 @@ if (isset($_POST['submit'])) {
 
 	/*Selected branch is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Customer Branches form */
 
-        $sql = "INSERT INTO custbranch (branchcode,
+		$sql = "INSERT INTO custbranch (branchcode,
 						debtorno,
 						brname,
 						braddress1,
@@ -274,7 +274,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['CustBranchCode']);
 		unset($_POST['DeliverBlind']);
 		unset($SelectedBranch);
-    }
+	}
 } else if (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -315,12 +315,12 @@ if (isset($_POST['submit'])) {
 
 				if ($myrow[0]>0) {
 					prnMsg(_('Cannot delete this branch because users exist that refer to it') . '. ' . _('Purge old users first'),'warn');
-				    echo '<br />'._('There are').' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
+					echo '<br />'._('There are').' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
 				} else {
 
 					$sql="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
 					$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
-    					$result = DB_query($sql,$db,$ErrMsg);
+						$result = DB_query($sql,$db,$ErrMsg);
 					if (DB_error_no($db)==0){
 						prnMsg(_('Branch Deleted'),'success');
 					}
@@ -335,27 +335,26 @@ if (!isset($SelectedBranch)){
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedBranch will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of branches will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
 	$sql = "SELECT debtorsmaster.name,
-			custbranch.branchcode,
-			brname,
-			salesman.salesmanname,
-			areas.areadescription,
-			contactname,
-			phoneno,
-			faxno,
-			custbranch.email,
-			taxgroups.taxgroupdescription,
-			custbranch.branchcode,
-			custbranch.disabletrans
-		FROM custbranch,
-			debtorsmaster,
-			areas,
-			salesman,
-			taxgroups
-		WHERE custbranch.debtorno=debtorsmaster.debtorno
-		AND custbranch.area=areas.areacode
-		AND custbranch.salesman=salesman.salesmancode
-		AND custbranch.taxgroupid=taxgroups.taxgroupid
-		AND custbranch.debtorno = '".$DebtorNo."'";
+					custbranch.branchcode,
+					brname,
+					salesman.salesmanname,
+					areas.areadescription,
+					contactname,
+					phoneno,
+					faxno,
+					custbranch.email,
+					taxgroups.taxgroupdescription,
+					custbranch.disabletrans
+				FROM custbranch,
+					debtorsmaster,
+					areas,
+					salesman,
+					taxgroups
+				WHERE custbranch.debtorno=debtorsmaster.debtorno
+					AND custbranch.area=areas.areacode
+					AND custbranch.salesman=salesman.salesmancode
+					AND custbranch.taxgroupid=taxgroups.taxgroupid
+					AND custbranch.debtorno = '".$DebtorNo."'";
 
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -363,7 +362,7 @@ if (!isset($SelectedBranch)){
 	$TotalDisable = 0;
 	if ($myrow) {
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
-                 ' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
+				 ' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
 		echo '<table class="selection">
 			<tr>
 				<th>'._('Code').'</th>
@@ -400,7 +399,7 @@ if (!isset($SelectedBranch)){
 				<td>%s</td>
 				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s">%s</a></td>
 				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this branch?') . '");\'>%s</a></td></tr>',
-				$myrow[10],
+				$myrow[1],
 				$myrow[2],
 				$myrow[5],
 				$myrow[3],
@@ -410,7 +409,7 @@ if (!isset($SelectedBranch)){
 				$myrow[8],
 				$myrow[8],
 				$myrow[9],
-				($myrow[11]?_('No'):_('Yes')),
+				($myrow[10]?_('No'):_('Yes')),
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 				$DebtorNo,
 				urlencode($myrow[1]),
@@ -466,7 +465,7 @@ if (!isset($SelectedBranch)){
 
 if (!isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedBranch)) {
@@ -540,7 +539,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="BranchCode" value="' . $_POST['BranchCode'] . '" />';
 
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
-                 ' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
+				 ' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
 		if (isset($SelectedBranch)) {
 			echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorNo=' . $DebtorNo. '">' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
 		}
@@ -577,10 +576,10 @@ if (!isset($_GET['delete'])) {
 			$_POST['BranchCode'] = $_GET['BranchCode'];
 			$_POST['BrName']     = $myrow['name'];
 		 	$_POST['BrAddress1'] = $myrow['addrsss1'];
-        	$_POST['BrAddress2'] = $myrow['addrsss2'];
+			$_POST['BrAddress2'] = $myrow['addrsss2'];
 			$_POST['BrAddress3'] = $myrow['addrsss3'];
 		 	$_POST['BrAddress4'] = $myrow['addrsss4'];
-        	$_POST['BrAddress5'] = $myrow['addrsss5'];
+			$_POST['BrAddress5'] = $myrow['addrsss5'];
 			$_POST['BrAddress6'] = $myrow['addrsss6'];
 		}
 		if (!isset($_POST['BranchCode'])) {
@@ -597,8 +596,8 @@ if (!isset($_GET['delete'])) {
 
 
 	echo '<tr>
-            <td>';
-    echo '<input type="hidden" name="DebtorNo" value="'. $DebtorNo . '" />';
+			<td>';
+	echo '<input type="hidden" name="DebtorNo" value="'. $DebtorNo . '" />';
 
 
 	echo _('Branch Name').':</td>';
@@ -783,7 +782,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>'.(($_POST['Email']) ? '<a href="Mailto:'.$_POST['Email'].'">'._('Email').':</a>' : _('Email').':').'</td>';
-      //only display email link if there is an email address
+	  //only display email link if there is an email address
 	echo '<td><input tabindex="18" type="text" name="Email" size="56" maxlength="55" value="'. $_POST['Email'].'" /></td>
 		</tr>';
 
@@ -908,7 +907,7 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input tabindex="28" type="submit" name="submit" value="' . _('Enter Branch') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

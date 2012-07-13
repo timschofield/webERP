@@ -1,5 +1,6 @@
 webERP Change Log
 
+13/7/12 Tim: Fix up the sql where a field was selected twice
 10/7/12 Phil: Made purchase order lines look at the purchasing data lead time and set the delivery date of the line to today + the lead time if this is beyond the delivery date specified in the PO header.
 9/7/12 Tim/Ricard: Add Z_ChangeSupplierCode.php
 6/7/12 Phil: Add stable versions to UpgradeDatabase.php script
