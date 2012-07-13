@@ -10,4 +10,6 @@ CREATE TABLE IF NOT EXISTS `internalstockcatrole` (
 
 INSERT INTO scripts VALUES ('InternalStockCategoriesByRole.php','15','Daintains the stock categories to be used as internal for any user security role');
 
+ALTER TABLE  `locations` ADD  `internalrequest` TINYINT( 4 ) NOT NULL DEFAULT  '1' COMMENT  'Allow (1) or not (0) internal request from this location';
+
 UPDATE config SET confvalue='4.08.2' WHERE confname='VersionNumber';

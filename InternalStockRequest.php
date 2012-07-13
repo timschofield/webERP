@@ -189,6 +189,7 @@ echo '</select></td>
 $sql="SELECT loccode,
 			locationname
 		FROM locations
+		WHERE internalrequest = 1
 		ORDER BY locationname";
 
 $result=DB_query($sql, $db);
