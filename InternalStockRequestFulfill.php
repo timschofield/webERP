@@ -202,7 +202,10 @@ if (!isset($_POST['Location'])) {
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('Choose a location to issue requests from') . '</td>
 		<td><select name="Location">';
-	$sql = "SELECT loccode, locationname FROM locations";
+	$sql = "SELECT loccode, locationname 
+			FROM locations 
+			WHERE internalrequest = 1
+			ORDER BY locationname";
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_SESSION['Adjustment']->StockLocation)){
