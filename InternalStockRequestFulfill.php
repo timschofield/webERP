@@ -1,6 +1,6 @@
 <?php
 
-$PageSecurity=1;
+/* $Id: InternalStockRequestFulfill.php  $*/
 
 include('includes/session.inc');
 
@@ -32,7 +32,7 @@ if (isset($_POST['UpdateAll'])) {
 			$myrow=DB_fetch_array($result);
 			$StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
 
-			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' '. $StockID . ' ' . _('to department');
+			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' '. $StockID . ' ' . _('to department') .' ' . _('from') . ' ' . $Location ;
 
 			$AdjustmentNumber = GetNextTransNo(17,$db);
 			$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
