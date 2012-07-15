@@ -2975,7 +2975,7 @@
 	$CreatePOSDataFull_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
 	function  xmlrpc_CreatePOSDataFull($xmlrpcmsg){
-		ob_start('ob_file_callback');
+		//ob_start('ob_file_callback');
 /*x*/		if ($xmlrpcmsg->getNumParams() == 4) {
 /*x*/			$rtn = new xmlrpcresp( php_xmlrpc_encode(CreatePOSDataFull($xmlrpcmsg->getParam( 0 )->scalarval(  ),
 /*x*/																		$xmlrpcmsg->getParam( 1 )->scalarval(  ),
@@ -2987,7 +2987,7 @@
 																			'',
 																			'')));
 /*x*/		}
-		ob_end_flush();
+		//ob_end_flush();
 		return $rtn;
 	}
 
