@@ -117,7 +117,7 @@ function ContainsIllegalCharacters ($CheckVariable) {
 		OR mb_strstr($CheckVariable,'&')
 		OR mb_strstr($CheckVariable,"\\")
 		OR mb_strstr($CheckVariable,'"')
-		OR mb_strstr($CheckVariable,'>') 
+		OR mb_strstr($CheckVariable,'>')
 		OR mb_strstr($CheckVariable,'<')){
 
 		return true;
@@ -230,13 +230,17 @@ function AddCarriageReturns($str) {
 
 
 function wikiLink($type, $id) {
-
+	if (strstr($_SESSION['WikiPath'], 'http:')) {
+		$WikiPath=$_SESSION['WikiPath'];
+	} else {
+		$WikiPath='../' . $_SESSION['WikiPath'] . '/';
+	}
 	if ($_SESSION['WikiApp']==_('WackoWiki')){
-		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/' . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
+		echo '<a target="_blank" href="' . $WikiPath . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
 	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
-		echo '<a target="_blank" href="../' . $_SESSION['WikiPath'] . '/index.php/' . $type . '/' .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
+		echo '<a target="_blank" href="' . $WikiPath . $_SESSION['WikiPath'] . '/index.php/' . $type . '/' .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
 	} elseif ($_SESSION['WikiApp']==_('DokuWiki')){
-		echo ' ../' . $_SESSION['WikiPath'] . '/doku.php?id=' . $type . ':' . $id . ' ' . _('Wiki ' . $type . ' Knowlege Base') . ' <br />';
+		echo $WikiPath  . $_SESSION['WikiPath'] . '/doku.php?id=' . $type . ':' . $id . ' ' . _('Wiki ' . $type . ' Knowlege Base') . ' <br />';
 	}
 
 }//wikiLink
@@ -342,7 +346,7 @@ function filter_number_format($Number) {
 	/*It is possible if the user entered the $DecimalPoint as a thousands separator and the $DecimalPoint is a comma that the result of this could contain several periods "." so need to ditch all but the last "." */
 	if (mb_substr_count($SQLFormatNumber,'.')>1){
 		return  str_replace('.','',mb_substr($SQLFormatNumber,0,mb_strrpos($SQLFormatNumber,'.'))) . mb_substr($SQLFormatNumber,mb_strrpos($SQLFormatNumber,'.'));
-		
+
 		echo '<br /> Number of periods: ' . $NumberOfPeriods . ' $SQLFormatNumber = ' . $SQLFormatNumber;
 
 	} else {
@@ -351,7 +355,7 @@ function filter_number_format($Number) {
 }
 
 
-function indian_number_format($Number,$DecimalPlaces){ 
+function indian_number_format($Number,$DecimalPlaces){
 	$IntegerNumber = intval($Number);
 	$DecimalValue = $Number - $IntegerNumber;
 	if ($DecimalPlaces !='Variable'){
@@ -372,20 +376,20 @@ function indian_number_format($Number,$DecimalPlaces){
 			$DecimalValue ='';
 		}
 	}
-	if(strlen($IntegerNumber)>3){ 
-		$LastThreeNumbers = substr($IntegerNumber, strlen($IntegerNumber)-3, strlen($IntegerNumber)); 
-		$RestUnits = substr($IntegerNumber, 0, strlen($IntegerNumber)-3); // extracts the last three digits 
-		$RestUnits = (strlen($RestUnits)%2 == 1)?'0'.$RestUnits:$RestUnits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping. 
+	if(strlen($IntegerNumber)>3){
+		$LastThreeNumbers = substr($IntegerNumber, strlen($IntegerNumber)-3, strlen($IntegerNumber));
+		$RestUnits = substr($IntegerNumber, 0, strlen($IntegerNumber)-3); // extracts the last three digits
+		$RestUnits = (strlen($RestUnits)%2 == 1)?'0'.$RestUnits:$RestUnits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
 		$FirstPart ='';
-		$ExplodedUnits = str_split($RestUnits, 2); 
-		for($i=0; $i<sizeof($ExplodedUnits); $i++){ 
-			$FirstPart .= intval($ExplodedUnits[$i]).','; // creates each of the 2's group and adds a comma to the end 
-		}    
-	
-		return $FirstPart.$LastThreeNumbers.$DecimalValue; 
-	} else { 
+		$ExplodedUnits = str_split($RestUnits, 2);
+		for($i=0; $i<sizeof($ExplodedUnits); $i++){
+			$FirstPart .= intval($ExplodedUnits[$i]).','; // creates each of the 2's group and adds a comma to the end
+		}
+
+		return $FirstPart.$LastThreeNumbers.$DecimalValue;
+	} else {
 		return $IntegerNumber. $DecimalValue;
-	} 
-} 
+	}
+}
 
 ?>

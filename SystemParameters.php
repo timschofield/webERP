@@ -338,7 +338,7 @@ $TableHeader = '<tr>
 				<th>' . _('Value') . '</th>
 				<th>' . _('Notes') . '</th>
                 </tr>';
-			
+
 echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
 echo $TableHeader;
 
@@ -389,7 +389,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Default Credit Limit') . ':</td>
 // Check Credit Limits
 echo '<tr style="outline: 1px solid"><td>' . _('Check Credit Limits') . ':</td>
 	<td><select name="X_CheckCreditLimits">
-	<option '.($_SESSION['CheckCreditLimits']==0?'selected="selected" ':'').'value="0">'._('Do not check').'</option> 
+	<option '.($_SESSION['CheckCreditLimits']==0?'selected="selected" ':'').'value="0">'._('Do not check').'</option>
 	<option '.($_SESSION['CheckCreditLimits']==1?'selected="selected" ':'').'value="1">'._('Warn on breach').'</option>
 	<option '.($_SESSION['CheckCreditLimits']==2?'selected="selected" ':'').'value="2">'._('Prohibit Sales').'</option>
 	</select></td>
@@ -473,8 +473,8 @@ echo '<tr style="outline: 1px solid"><td>' . _('Invoice Orientation') . ':</td>
 //Blind packing note
 echo '<tr style="outline: 1px solid"><td>' . _('Show company details on packing slips') . ':</td>
 	<td><select name="X_DefaultBlindPackNote">
-	<option '.($_SESSION['DefaultBlindPackNote']=='1'?'selected="selected" ':'').'value="1">'._('Show Company Details').'</option> 
-	<option '.($_SESSION['DefaultBlindPackNote']=='2'?'selected="selected" ':'').'value="2">'._('Hide Company Details').'</option> 
+	<option '.($_SESSION['DefaultBlindPackNote']=='1'?'selected="selected" ':'').'value="1">'._('Show Company Details').'</option>
+	<option '.($_SESSION['DefaultBlindPackNote']=='2'?'selected="selected" ':'').'value="2">'._('Hide Company Details').'</option>
 	</select></td>
 	<td>' . _('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</td>
 	</tr>';
@@ -482,9 +482,9 @@ echo '<tr style="outline: 1px solid"><td>' . _('Show company details on packing 
 // Working days on a week
 echo '<tr style="outline: 1px solid"><td>' . _('Working Days on a Week') . ':</td>
 	<td><select name="X_WorkingDaysWeek">
-	<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '._('working days').'</option> 
-	<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '._('working days').'</option> 
-	<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '._('working days').'</option> 
+	<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '._('working days').'</option>
+	<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '._('working days').'</option>
+	<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '._('working days').'</option>
 	</select></td>
 	<td>' . _('Number of working days on a week') . '</td>
 	</tr>';
@@ -859,7 +859,7 @@ echo '</select></td>
 
 echo '<tr style="outline: 1px solid"><td>' . _('Wiki Path') . ':</td>
 	<td><input type="text" name="X_WikiPath" size="40" maxlength="40" value="' . $_SESSION['WikiPath'] . '" /></td>
-	<td>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</td></tr>';
+	<td>' . _('The path to the wiki installation to form the basis of wiki URLs - or the full URL of the wiki.') .'</td></tr>';
 
 echo '<tr style="outline: 1px solid"><td>' . _('Geocode Customers and Suppliers') . ':</td>
         <td><select name="X_geocode_integration">';
