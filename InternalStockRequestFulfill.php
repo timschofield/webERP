@@ -19,6 +19,7 @@ if (isset($_POST['UpdateAll'])) {
 			$Quantity = $_POST[$RequestID.'Qty'.$LineID];
 			$StockID = $_POST[$RequestID.'StockID'.$LineID];
 			$Location = $_POST[$RequestID.'Location'.$LineID];
+			$Department = $_POST[$RequestID.'Department'.$LineID];
 			$Tag = $_POST[$RequestID.'Tag'.$LineID];
 			$RequestedQuantity = $_POST[$RequestID.'RequestedQuantity'.$LineID];
 			if (isset($_POST[$RequestID.'Completed'.$LineID])) {
@@ -32,7 +33,7 @@ if (isset($_POST['UpdateAll'])) {
 			$myrow=DB_fetch_array($result);
 			$StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
 
-			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' '. $StockID . ' ' . _('to department') .' ' . _('from') . ' ' . $Location ;
+			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' '. $StockID . ' ' . _('to department') . ' ' . $Department . ' ' . _('from') . ' ' . $Location ;
 
 			$AdjustmentNumber = GetNextTransNo(17,$db);
 			$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
@@ -338,6 +339,7 @@ if (isset($_POST['Location'])) {
 			echo '<input type="hidden" class="number" name="'. $linerow['dispatchid'] . 'StockID'. $linerow['dispatchitemsid'] . '" value="'.$linerow['stockid'].'" />';
 			echo '<input type="hidden" class="number" name="'. $linerow['dispatchid'] . 'Location'. $linerow['dispatchitemsid'] . '" value="'.$_POST['Location'].'" />';
 			echo '<input type="hidden" class="number" name="'. $linerow['dispatchid'] . 'RequestedQuantity'. $linerow['dispatchitemsid'] . '" value="'.locale_number_format($linerow['quantity']-$linerow['qtydelivered'],$linerow['decimalplaces']).'" />';
+			echo '<input type="hidden" class="number" name="'. $linerow['dispatchid'] . 'Department'. $linerow['dispatchitemsid'] . '" value="'.$myrow['description'].'" />';
 		} // end while order line detail
 		echo '</table></td></tr>';
 	} //end while header loop
