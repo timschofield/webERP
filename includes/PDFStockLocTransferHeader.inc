@@ -19,7 +19,7 @@ _('Transfer No').': ' . $_GET['TransferNo']);
 $YPos -=15;
 $FontSize=12;
 $LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
-_('Shipped'). ' ' . ConvertSQLDate($TransferRow['shipdate']));
+_('Shipped'). ' ' . ConvertSQLDateTime($TransferRow['shipdate']));
 
 $YPos -=15;
 $FontSize=12;

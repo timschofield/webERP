@@ -308,12 +308,12 @@ if(isset($_POST['ProcessTransfer'])){
 				if ($TrfLine->CancelBalance==1){
 					$sql = "UPDATE loctransfers SET recqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						shipqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
-								recdate = '".date('Y-m-d H:i:s'). "'
+								recdate = '".Date('Y-m-d H:i:s'). "'
 						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
 						AND stockid = '".  $TrfLine->StockID."'";
 				} else {
 					$sql = "UPDATE loctransfers SET recqty = recqty + '". round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
-								recdate = '".date('Y-m-d H:i:s'). "'
+								recdate = '".Date('Y-m-d H:i:s'). "'
 							WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
 								AND stockid = '".  $TrfLine->StockID."'";
 				}
@@ -562,7 +562,7 @@ if (isset($_SESSION['Transfer'])){
 			}
 			echo '<td class="number">' . $myrow['reference'] . '</td>
 					<td>' . $myrow['trffromloc'] . '</td>
-					<td>' . ConvertSQLDate($myrow['shipdate']) . '</td>
+					<td>' . ConvertSQLDateTime($myrow['shipdate']) . '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Trf_ID=' . $myrow['reference'] . '">'. _('Receive'). '</a></td>
 					</tr>';
 		}

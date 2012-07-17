@@ -207,7 +207,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 						VALUES ('" . $_POST['Trf_ID'] . "',
 							'" . $_POST['StockID' . $i] . "',
 							'" . round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . "',
-							'" . Date('Y-m-d') . "',
+							'" . Date('Y-m-d H-i-s'). "',
 							'" . $_POST['FromStockLocation']  ."',
 							'" . $_POST['ToStockLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];

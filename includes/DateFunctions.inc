@@ -267,6 +267,52 @@ function ConvertSQLDate($DateEntry) {
 
 } // end function ConvertSQLDate
 
+function ConvertSQLDateTime($DateEntry) {
+
+//for MySQL dates are in the format YYYY-mm-dd H:i:s
+
+
+	if (mb_strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
+	} else {
+		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
+		switch ($_SESSION['DefaultDateFormat']) {
+			case 'd/m/Y':
+				return '0/0/000';
+				break;
+			case 'd.m.Y':
+				return '0.0.000';
+				break;
+			case 'm/d/Y':
+				return '0/0/0000';
+				break;
+			case 'Y/m/d':
+				return '0000/0/0';
+				break;
+		}
+	}
+
+	if (mb_strlen($Date_Array[2])>4) {  
+		$Time = mb_substr($Date_Array[2],3,8);
+		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
+	}
+
+	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0] . ' ' . $Time;
+	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y'){
+		return $Date_Array[2].'.'.$Date_Array[1].'.'.$Date_Array[0] . ' ' . $Time;
+	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
+		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0] . ' ' . $Time;
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2] . ' ' . $Time;
+	}
+
+} // end function ConvertSQLDate
+
 function SQLDateToEDI($DateEntry) {
 
 //for MySQL dates are in the format YYYY-mm-dd
