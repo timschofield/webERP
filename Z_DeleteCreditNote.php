@@ -22,11 +22,14 @@ if (!isset($_GET['CreditNoteNo'])){
 }
 /*get the order number that was credited */
 
-$SQL = "SELECT order_ FROM debtortrans WHERE transno='" . $_GET['CreditNoteNo'] . "' AND type='11'";
+$SQL = "SELECT order_, id 
+		FROM debtortrans 
+		WHERE transno='" . $_GET['CreditNoteNo'] . "' AND type='11'";
 $Result = DB_query($SQL, $db);
 
 $myrow = DB_fetch_row($Result);
 $OrderNo = $myrow[0];
+$IDDebtorTrans = $myrow[1];
 
 /*Now get the stock movements that were credited into an array */
 
@@ -51,8 +54,29 @@ prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows(
 
 
 $Result = DB_Txn_Begin($db); /* commence a database transaction */
-/*Now delete the DebtorTrans */
 
+/*Now delete the custallocns */
+
+$SQL = "DELETE custallocns FROM custallocns
+        WHERE transid_allocto ='" . $IDDebtorTrans . "'";
+
+$DbgMsg = _('The SQL that failed was');
+$ErrMsg = _('The custallocns record could not be deleted') . ' - ' . _('the sql server returned the following error');
+$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+prnMsg(_('The custallocns record has been deleted'),'info');
+
+/*Now delete the debtortranstaxes */
+
+$SQL = "DELETE debtortranstaxes FROM debtortranstaxes
+               WHERE debtortransid ='" . $IDDebtorTrans . "'";
+$DbgMsg = _('The SQL that failed was');
+$ErrMsg = _('The debtortranstaxes record could not be deleted') . ' - ' . _('the sql server returned the following error');
+$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+prnMsg(_('The debtortranstaxes record has been deleted'),'info');
+
+/*Now delete the DebtorTrans */
 $SQL = "DELETE FROM debtortrans
                WHERE transno ='" . $_GET['CreditNoteNo'] . "' AND Type=11";
 $DbgMsg = _('The SQL that failed was');
@@ -80,7 +104,8 @@ foreach ($StockMovement as $CreditLine) {
 
 	$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg, true);
 
-/*Delete Sales Analysis records */
+/*Delete Sales Analysis records 
+ * This is unreliable as the salesanalysis record contains totals for the item cust custbranch periodno */
 	$SQL = "DELETE FROM salesanalysis
                        WHERE periodno = '" . $CreditLine['prd'] . "'
                        AND cust='" . $CreditLine['debtorno'] . "'

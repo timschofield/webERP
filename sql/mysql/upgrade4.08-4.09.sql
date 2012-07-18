@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `internalstockcatrole` (
   KEY `internalstockcatrole_ibfk_2` (`secroleid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO scripts VALUES ('InternalStockCategoriesByRole.php','15','Daintains the stock categories to be used as internal for any user security role');
+INSERT INTO scripts VALUES ('InternalStockCategoriesByRole.php','15','Maintains the stock categories to be used as internal for any user security role');
 
 ALTER TABLE  `locations` ADD  `internalrequest` TINYINT( 4 ) NOT NULL DEFAULT  '1' COMMENT  'Allow (1) or not (0) internal request from this location';
 ALTER TABLE  `loctransfers` CHANGE  `shipdate`  `shipdate` DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00';

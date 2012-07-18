@@ -5,7 +5,7 @@
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
 * 
-* STRONGLY RECOMMEND NOT USING THIS -CREDIT THE INVOICE AND RE INVOICE
+* STRONGLY RECOMMEND NOT USING THIS - CREDIT THE INVOICE AND RE INVOICE
 * * 
 * 
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
@@ -22,7 +22,7 @@ if (!isset($_GET['InvoiceNo'])){
 }
 /*Get the order number that was invoiced */
 
-$SQL = "SELECT order_
+$SQL = "SELECT order_, id
 		FROM debtortrans
 		WHERE debtortrans.type = 10	
 		AND transno = '" . $_GET['InvoiceNo'] . "'";
@@ -31,6 +31,7 @@ $Result = DB_query($SQL,$db);
 $myrow = DB_fetch_row($Result);
 
 $ProcessingOrder = $myrow[0];
+$IDDebtorTrans = $myrow[1];
 
 /*Now get the stock movements that were invoiced into an array */
 
@@ -78,6 +79,28 @@ $SQL = "DELETE FROM orderdeliverydifferenceslog
 $ErrMsg = _('The SQL to delete the delivery differences records failed because');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Any order delivery differences records have been deleted'),'info');
+
+/*Now delete the custallocns */
+
+$SQL = "DELETE custallocns FROM custallocns
+        WHERE transid_allocto ='" . $IDDebtorTrans . "'";
+
+$DbgMsg = _('The SQL that failed was');
+$ErrMsg = _('The custallocns record could not be deleted') . ' - ' . _('the sql server returned the following error');
+$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+prnMsg(_('The custallocns record has been deleted'),'info');
+
+/*Now delete the debtortranstaxes */
+
+$SQL = "DELETE debtortranstaxes FROM debtortranstaxes
+               WHERE debtortransid ='" . $IDDebtorTrans . "'";
+$DbgMsg = _('The SQL that failed was');
+$ErrMsg = _('The debtortranstaxes record could not be deleted') . ' - ' . _('the sql server returned the following error');
+$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+prnMsg(_('The debtortranstaxes record has been deleted'),'info');
+
 
 /*Now delete the DebtorTrans */
 

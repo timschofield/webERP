@@ -2,6 +2,9 @@
 
 function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	
+	set_time_limit(1800);
+	ini_set('max_execution_time',1800);
+	
 	$result = DB_query("SELECT confvalue FROM config WHERE confname='reports_dir'",$db);
 	$ReportDirRow = DB_fetch_row($result);
 	$ReportDir = $ReportDirRow[0];
@@ -153,6 +156,8 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	$ZipFile->close();
 	//delete the original big sql file as we now have the zip for transferring
 	unlink($PathPrefix . $ReportDir . '/POS.sql');
+	set_time_limit($MaximumExecutionTime);
+	ini_set('max_execution_time',$MaximumExecutionTime);
 	return 1;
 }
 
