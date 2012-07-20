@@ -55,7 +55,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 	if ($Perishable==1){
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'&identifier='.$identifier.'">'. _('Delete'). '</a></td>
+	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'&identifier='.$identifier.'&CreditInvoice=Yes ">'. _('Delete'). '</a></td>
 		</tr>';
 	
 	$TotalQuantity += $Bundle->BundleQty;
@@ -149,6 +149,7 @@ for ($i=0;$i < 10;$i++){
 echo '</table>
 		<br />
 		<div class="centre">
+			<input type="hidden" name="CreditInvoice" value="Yes" />
 			<input type="submit" name="AddBatches" value="'. _('Enter'). '" />
 		</div>
 		</div>
