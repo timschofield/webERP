@@ -14,4 +14,7 @@ ALTER TABLE  `locations` ADD  `internalrequest` TINYINT( 4 ) NOT NULL DEFAULT  '
 ALTER TABLE  `loctransfers` CHANGE  `shipdate`  `shipdate` DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00';
 ALTER TABLE  `loctransfers` CHANGE  `recdate`  `recdate` DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00';
 
+INSERT INTO scripts VALUES ('GLJournalInquiry.php','15','General Ledger Journal Inquiry');
+INSERT INTO scripts VALUES ('PDFGLJournal.php','15','General Ledger Journal Print');
+
 UPDATE config SET confvalue='4.08.2' WHERE confname='VersionNumber';

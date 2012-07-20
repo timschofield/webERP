@@ -49,7 +49,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 	include('includes/footer.inc');
 	exit;
 }
-
+echo 'x'.$PathPrefix.'x';
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
 }

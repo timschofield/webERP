@@ -1,4 +1,5 @@
 webERP Change Log
+20/7/2012 Tim: Added scripts to inquire on and to print General Ledger Journals
 20/7/2012 Exson: Fixed that delete or editing new serial items will lead to hyper-link changed as select credit items instead of back to credit invoice in scripts InputSerialItemsKeyed.php. Report by UK-Steven from webERP Chinese Community QQ group
 15/7/12 Gilberto Dos Santos Alves: updated pt_BR.utf8 translation
 13/7/12 Tim: Fix up the sql where a field was selected twice
