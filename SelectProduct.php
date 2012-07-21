@@ -584,7 +584,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.mbflag,
 							stockmaster.discontinued,
 							stockmaster.decimalplaces
-						ORDER BY stockmaster.stockid";
+						ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
@@ -606,7 +606,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.mbflag,
 							stockmaster.discontinued,
 							stockmaster.decimalplaces
-						ORDER BY stockmaster.stockid";
+						ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		}
 	} elseif (isset($_POST['StockCode'])) {
 		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
@@ -632,7 +632,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.mbflag,
 							stockmaster.discontinued,
 							stockmaster.decimalplaces
-						ORDER BY stockmaster.stockid";
+						ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -654,7 +654,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						stockmaster.mbflag,
 						stockmaster.discontinued,
 						stockmaster.decimalplaces
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		}
 	} elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
 		if ($_POST['StockCat'] == 'All') {
@@ -678,7 +678,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						stockmaster.mbflag,
 						stockmaster.discontinued,
 						stockmaster.decimalplaces
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -699,7 +699,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						stockmaster.mbflag,
 						stockmaster.discontinued,
 						stockmaster.decimalplaces
-					ORDER BY stockmaster.stockid";
+					ORDER BY stockmaster.discontinued, stockmaster.stockid";
 		}
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
@@ -757,11 +757,11 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		}
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
+							<th>' . _('Stock Status') . '</th>
 							<th>' . _('Code') . '</th>
 							<th>' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
-							<th>' . _('Stock Status') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$j = 1;
@@ -789,11 +789,11 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				$ItemStatus ='';
 			}
 
-			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
+			echo '<td>' . $ItemStatus . '</td>
+				<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
 				<td title="'. $myrow['longdescription'] . '">' . $myrow['description'] . '</td>
 				<td class="number">' . $qoh . '</td>
 				<td>' . $myrow['units'] . '</td>
-				<td>' . $ItemStatus . '</td>
 				<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
 				</tr>';
 			$j++;
