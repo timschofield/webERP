@@ -1,40 +1,50 @@
-/*--------------------------------------------------\
-|               |               | default.css       |
-|---------------------------------------------------|
-| For use with:                                     |
-| Web-ERP - http://web-erp.sourceforge.net          |
-| by Logic Works Ltd                                |
-|---------------------------------------------------|
-| Developer:                                        |
-| Shane Barnaby                                     |
-| Steve Kaill                                       |
-| Modified by:                                      |
-| Fred Schuettler    Sept.17, 2011                  |
-|---------------------------------------------------|
-| Note:                                             |
-| Changes can be made to this CSS that will be      |
-| reflected throughout Web-ERP.                     |
-|
-\--------------------------------------------------*/
-
-/* $Id: default.css 4218 2010-12-22 14:34:48Z tim_schofield $*/
-
+/*** hj aquapop new ***/
 body {
-	background: url(images/top_bg.png) top left no-repeat silver;
-	width: 960px;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	margin: 0px auto;
-	padding: 36px 0px 0px 0px;/*fred: limiting the body will keep the elements from wandering on full page views and distorting the looks. It should still work on netbooks with 1024x600 resolution.*/
+    background: silver;  
+}
+#CanvasDiv {
+    background: none;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 9px;
-	
-	
+	margin-left: auto;
+    margin-right: auto;
+    width: 960px;	
 }
+/*** HEADER ************************************************************/
+#HeaderDiv {
+	background: url(images/top_bg.png) top no-repeat silver;
+}
+.HeaderTbl {
+	padding-top:12px;
+    width:99%;
+}
+/*** BODY **************************************************************/
+#BodyDiv {
+	background:url("images/body_bg.png") repeat-y scroll center center silver;
+    text-align:center;
+}
+
+.BodyTbl {
+	background:none repeat scroll 0 0 steelblue;
+    width:932px;
+}
+/*** eof BodyDiv *** 
+
+/*** FOOTER ************************************************************/
+#FooterDiv {
+	background: url(images/footer.png) bottom no-repeat silver;
+	padding-top: 10px;
+	padding-bottom: 18px;
+}
+
+.FooterTbl {
+	width:838px;
+}
+/************************************************************************/
 
 img {
 	border: none;
+	vertical-align:middle;
 }
 
 /*links before selection */
@@ -53,8 +63,9 @@ a:hover {
 }
 
 table {
-	 background-color: steelblue;
+	 background-color: none;
 	 margin: 0 auto;
+	 width:90%
 }
 
 .dpTbl {
@@ -62,12 +73,8 @@ table {
 }
 
 div.centre {
-	background: lightsteelblue;
-	max-width: 932px;
-	margin: 0 auto;
-	margin-bottom: 0px;
-	padding: 6px 0px 6px 0px;
-	text-align: center;
+    /*padding-bottom:10px;*/
+	text-align:center;
 }
 
 /*table detail items default format */
@@ -78,13 +85,14 @@ td {
 
 td.select {
 	background-color: whitesmoke;
+	padding:3px;
 }
 
 table.selection {
-	background-color: whitesmoke;
-	width: 90%;/*fred: this keeps the table from growing to full size*/
-	outline: 1px solid;
-	margin-bottom: 5px;
+	background:none repeat scroll 0 0 lightsteelblue;
+	border:2px outset steelblue;
+    padding:0;
+    width:90%;
 }
 
 .dpTD {
@@ -124,9 +132,10 @@ td.number {
 }
 
 th {
-	font-weight: normal;
-	background-color: skyblue;
-	color: white;
+	background-color:skyblue;
+    color:black;
+    font-weight:normal;
+    padding:3px;
 }
 
 th.number {
@@ -290,11 +299,6 @@ div.csv {
 }
 
 .callout_main {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	background: url(images/body_bg.png)left silver;
-	width: 960px;
-	margin: 0 auto;
-	padding: 0px;
 }
 
 .main_page {
@@ -308,11 +312,7 @@ div.csv {
 
 /* Main page heading with quick menu within */
 .quick_menu {
-	width: 100%;
-	background: transparent;
-	margin-top: -20px;
-	border: 0px;
-	padding: 0 0 0 6px;
+	width:930px;
 }
 
 #quick_menu{
@@ -320,26 +320,13 @@ div.csv {
 
 /*The main page heading left part before quick menu */
 .quick_menu_left {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9px;
 	color: white;
 	white-space: nowrap;
-	border: 0px;
-	margin: 0px;
-	padding: 5px;
-	padding-bottom: 1px;
-	text-align: left;
-	vertical-align: bottom;
 }
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
-	background-color: transparent;
 	white-space: nowrap;
-	border: 0px;
-	margin: 0px;
-	padding-right: 4px;
-	padding-bottom: 1px;
 	vertical-align: bottom;
 }
 
@@ -504,9 +491,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers {
-  border: 2px outset lightsteelblue;
-  width: 25%;
-  margin-top: 0px;
+	background:lightsteelblue;
 }
 
 .menu_group_headers table{
@@ -536,18 +521,14 @@ span.main_menu_nolink {
 .menu_group_item p {
 	color: steelblue; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
 	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
+	margin: 0 0 0 12px; 
 }
 
 .page_title_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	width: 90%;
-	margin: 0 auto;
-	padding: 2px;
-	font-weight: bold;
-	font-size: 10px;
-	color: black;
-	text-align:center;
+	font-weight:bold;
+    margin-top:0;
+    padding-bottom:5px;
+    padding-top:5px;
 }
 
 DIV.page_help_text {
@@ -607,10 +588,7 @@ span.menu_group_nolink {
 }
 
 #footer {
-	background: url(images/footer.png) bottom no-repeat;
-	width: 960px;
-	margin-left: 0px;
-	padding-bottom: 13px;
+
 }
 
 a.footer {

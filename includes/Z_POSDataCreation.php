@@ -1,7 +1,7 @@
 <?php
 
 function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
-	
+
 	set_time_limit(1800);
 	ini_set('max_execution_time',1800);
 	
@@ -21,12 +21,12 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	}
 	$CurrCode = $CustomerRow['currcode'];
 	$SalesType = $CustomerRow['salestype'];
-	
-	
+
+
 	$FileHandle = fopen($PathPrefix . $ReportDir . '/POS.sql','w');
 
 	if ($FileHandle == false){
-		return 'cant open file ' . $PathPrefix . $ReportDir . '/POS.sql';
+		return 'Cannot open file ' . $PathPrefix . $ReportDir . '/POS.sql';
 	}
 
 	fwrite($FileHandle,"DELETE FROM currencies;\n");
@@ -110,7 +110,6 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	fwrite($FileHandle,"DELETE FROM taxauthrates;\n");
 	$result = DB_query("SELECT taxauthority, dispatchtaxprovince, taxcatid, taxrate FROM taxauthrates",$db);
 	while ($myrow = DB_fetch_array($result)) {
-
 		  fwrite($FileHandle,"INSERT INTO taxauthrates VALUES ('" . $myrow['taxauthority'] . "', '" . $myrow['dispatchtaxprovince'] . "', '" . $myrow['taxcatid'] . "', '" . $myrow['taxrate'] . "');\n");
 
 	}
@@ -119,9 +118,9 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	while ($myrow = DB_fetch_array($result)) {
 
 		  fwrite($FileHandle,"INSERT INTO stockmaster VALUES ('" . SQLite_Escape ($myrow['stockid']) . "', '" . SQLite_Escape ($myrow['categoryid']) . "', '" . SQLite_Escape ($myrow['description']) . "', '" . SQLite_Escape (str_replace("\n", '', $myrow['longdescription'])) . "', '" . SQLite_Escape ($myrow['units']) . "', '" . SQLite_Escape ($myrow['barcode']) . "', '" . $myrow['taxcatid'] . "', '" . $myrow['decimalplaces'] . "');\n");
-		  
+
 		  fwrite($FileHandle,"DELETE FROM prices WHERE stockid='" . $myrow['stockid'] . "';\n");
-		  
+
 	      $Price = GetPriceQuick ($myrow['stockid'], $POSDebtorNo, $POSBranchCode, $DefaultPriceList, $db);
 	      if ($Price!=0) {
 		  	  fwrite($FileHandle,"INSERT INTO prices (stockid, currabrev, typeabbrev, price) VALUES('" . $myrow['stockid'] . "', '" . $CurrCode . "', '" . $SalesType . "', '" . $Price . "');\n");
@@ -170,12 +169,12 @@ function SQLite_Escape($String) {
 }
 
 function Delete_POS_Data($PathPrefix, $db){
-	
+
 	$result = DB_query("SELECT confvalue FROM config WHERE confname='reports_dir'",$db);
 	$ReportDirRow = DB_fetch_row($result);
 	$ReportDir = $ReportDirRow[0];
-	
-	
+
+
 	$Success = true;
 	if (file_exists($PathPrefix . $ReportDir . '/POS.sql.zip')){
 		$Success = unlink($PathPrefix . $ReportDir . '/POS.sql.zip');
@@ -200,8 +199,8 @@ function GetPriceQuick ($StockID, $DebtorNo, $BranchCode, $DefaultPriceList,$db)
 			AND prices.stockid = '" . $StockID . "'
 			AND (prices.debtorno=debtorsmaster.debtorno OR prices.debtorno='')
 			AND (prices.branchcode='" . $BranchCode . "' OR prices.branchcode='')
-			AND prices.startdate <='" . Date('Y-m-d') . "'
-			AND (prices.enddate >='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
+			AND prices.startdate <='" . Date('Y-m-d:23.59') . "'
+			AND (prices.enddate >='" . Date('Y-m-d:23.59') . "' OR prices.enddate='0000-00-00')";
 
 	$ErrMsg =  _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID  . ' ' . _('and for Customer') . ' ' . $DebtorNo .  ' ' . _('the error message returned by the SQL server was');
 	$result = DB_query($sql, $db,$ErrMsg);
@@ -217,21 +216,21 @@ function GetPriceQuick ($StockID, $DebtorNo, $BranchCode, $DefaultPriceList,$db)
 			$Prices[$i]['BranchCode'] = $myrow['branchcode'];
 			$Prices[$i]['EndDate'] = $myrow['enddate'];
 			if ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']==$BranchCode AND $myrow['enddate']!='0000-00-00') {
-				$Rank[$i] = 1;
+				$RankArray[$i] = 1;
 			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']==$BranchCode) {
-				$Rank[$i] = 2;
+				$RankArray[$i] = 2;
 			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']=='' AND $myrow['enddate']!='0000-00-00'){
-				$Rank[$i] = 3;
+				$RankArray[$i] = 3;
 			} elseif ($myrow['debtorno']==$DebtorNo AND $myrow['branchcode']=='' ){
-				$Rank[$i] = 4;
+				$RankArray[$i] = 4;
 			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['typeabbrev']!=$DefaultPriceList AND $myrow['enddate']!='0000-00-00'){
-				$Rank[$i] = 5;
+				$RankArray[$i] = 5;
 			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['typeabbrev']!=$DefaultPriceList){
-				$Rank[$i] = 6;
+				$RankArray[$i] = 6;
 			} elseif ($myrow['debtorno']=='' AND $myrow['branchcode']=='' AND $myrow['enddate']!='0000-00-00'){
-				$Rank[$i] = 7;
+				$RankArray[$i] = 7;
 			}  elseif ($myrow['debtorno']=='' AND $myrow['branchcode']==''){
-				$Rank[$i] = 8;
+				$RankArray[$i] = 8;
 			}
 			$i++;
 		}

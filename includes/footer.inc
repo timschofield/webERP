@@ -1,9 +1,10 @@
 <?php
 
 /* $Id$*/
+echo '</div>'; //end of BODY div
+echo '<div id="FooterDiv">'; //start of FOOTER div
 
-echo '<table width="100%" id="footer">';
-
+echo '<table class="FooterTbl">';
 echo '<tr>';
 echo '<td style="width:33%"></td><td class="footer">';
 echo '<img src="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="webERP" title="webERP ' . _('Copyright') . ' &copy; weberp.org - ' . date('Y') . '" /></td>';
@@ -18,8 +19,11 @@ echo '<tr><td colspan="3" class="footer">webERP ' ._('version') .' ' . $_SESSION
 
 echo '</table>';
 
-echo '</div>';
-echo '</body>';
-echo '</html>';
+echo '</div>'; //end of FOOTER div
+
+echo '</div>'; //end of CANVAS div
+
+echo '</body>
+	</html>';
 
 ?>

@@ -54,7 +54,7 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 	$_SESSION['Module'] = $_GET['Application'];
 }
 
-echo '<table width="99%">
+echo '<table class="BodyTbl">
 		<tr>
 			<td style="width:10%" valign="top">';
 echo '<table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">';

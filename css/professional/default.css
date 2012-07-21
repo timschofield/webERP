@@ -49,6 +49,7 @@ a:hover {
 table {
   background-color: #EEEEFF;
   margin: 0 auto;
+  width: 95%;
 }
 
 .dpTbl {

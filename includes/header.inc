@@ -41,8 +41,11 @@
 	echo '</head>';
 
 	echo '<body>';
-    echo '<div id="canvas">';
-	echo '<table class="callout_main" cellpadding="0" cellspacing="0">';
+
+	echo '<div id="CanvasDiv">'; //start of CANVAS div
+	echo '<div id="HeaderDiv">'; //start of HEADER div
+
+	echo '<table class="HeaderTbl">';
 	echo '<tr>';
 	echo '<td colspan="2" rowspan="2">';
 
@@ -90,5 +93,6 @@
 echo '</td>';
 echo '</tr>';
 echo '</table>';
-
+echo '</div>'; //end of HEADER div
+echo '<div id="BodyDiv">'; //start of BODY div - contains left menu, three columns menu, forms, data, etc
 ?>

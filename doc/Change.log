@@ -1,4 +1,8 @@
 webERP Change Log
+
+21/7/2012 Hindra: Fix Aguapop theme and table and div nesting of index.php header.inc and footer.inc - and other themes table style width: 95%;
+21/7/2012 Phil: Fix api function for POS prices includes/Z_POSDataCreation.php
+21/7/2012 Ricard: sorting products by discontinued then stockid to ensure obsolete items at the end of the list
 20/7/2012 Tim: Added scripts to inquire on and to print General Ledger Journals
 20/7/2012 Exson: Fixed that delete or editing new serial items will lead to hyper-link changed as select credit items instead of back to credit invoice in scripts InputSerialItemsKeyed.php. Report by UK-Steven from webERP Chinese Community QQ group
 15/7/12 Gilberto Dos Santos Alves: updated pt_BR.utf8 translation
