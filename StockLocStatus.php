@@ -185,7 +185,8 @@ if (isset($_POST['ShowStatus'])){
                    	ON salesorders.orderno = salesorderdetails.orderno
         			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
         			AND salesorderdetails.completed=0
-        			AND salesorderdetails.stkcode='" . $StockID . "'";
+        			AND salesorderdetails.stkcode='" . $StockID . "'
+        			AND salesorders.quotation=0";
 
 		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$DemandResult = DB_query($sql,$db,$ErrMsg);
@@ -201,14 +202,15 @@ if (isset($_POST['ShowStatus'])){
 		$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
 				FROM salesorderdetails INNER JOIN salesorders
 				     ON salesorders.orderno = salesorderdetails.orderno
-                INNER JOIN bom 
+                INNER JOIN bom
                       ON salesorderdetails.stkcode=bom.parent
 				INNER JOIN stockmaster
 				      ON stockmaster.stockid=bom.parent
 				WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
 				AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 				AND bom.component='" . $StockID . "'
-				AND stockmaster.mbflag='A'";
+				AND stockmaster.mbflag='A'
+				AND salesorders.quotation=0";
 
 		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$DemandResult = DB_query($sql,$db, $ErrMsg);
@@ -220,7 +222,7 @@ if (isset($_POST['ShowStatus'])){
 		$sql = "SELECT SUM((woitems.qtyreqd-woitems.qtyrecd)*bom.quantity) AS dem
 				FROM workorders INNER JOIN woitems
                      ON woitems.wo = workorders.wo
-                INNER JOIN bom 
+                INNER JOIN bom
                       ON woitems.stockid =  bom.parent
 				WHERE workorders.closed=0
 				AND   bom.component = '". $StockID . "'
@@ -241,7 +243,8 @@ if (isset($_POST['ShowStatus'])){
 				AND purchorderdetails.itemcode='" . $StockID . "'
 					AND purchorders.status <> 'Cancelled'
 					AND purchorders.status <> 'Rejected'
-					AND purchorders.status <> 'Pending'";
+					AND purchorders.status <> 'Pending'
+					AND purchorders.status <> 'Completed'";
 
 		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$QOOResult = DB_query($sql,$db,$ErrMsg);

@@ -314,15 +314,12 @@ $DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.q
 $DemRow = DB_fetch_row($DemResult);
 $Demand = $DemRow[0];
 $DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-									FROM salesorderdetails,
-										salesorders,
-										bom,
-										stockmaster
-									WHERE salesorderdetails.stkcode=bom.parent
-									AND salesorders.orderno = salesorderdetails.orderno
-									AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+									FROM salesorderdetails INNER JOIN salesorders
+									ON salesorders.orderno = salesorderdetails.orderno
+									INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
+									INNER JOIN stockmaster stockmaster.stockid=bom.parent
+									WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 									AND bom.component='" . $StockID . "'
-									AND stockmaster.stockid=bom.parent
 									AND stockmaster.mbflag='A'
 									AND salesorders.quotation=0", $db);
 $DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
@@ -342,13 +339,19 @@ if (DB_num_rows($DemandResult) == 1) {
 	$DemandRow = DB_fetch_row($DemandResult);
 	$Demand+= $DemandRow[0];
 }
-echo '<tr><th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
-		<td style="width:17%" class="select">' . $QOH . '</td></tr>';
-echo '<tr><th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
-		<td style="width:17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td></tr>';
-echo '<tr><th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
-		<td style="width:17%" class="select">' . $QOO . '</td></tr>
-				</table>'; //end of nested table
+echo '<tr>
+		<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
+		<td style="width:17%" class="select">' . $QOH . '</td>
+	</tr>';
+echo '<tr>
+		<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
+		<td style="width:17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td>
+	</tr>';
+echo '<tr>
+		<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
+		<td style="width:17%" class="select">' . $QOO . '</td>
+	</tr>
+	</table>'; //end of nested table
 echo '</td>'; //end cell of master table
 
 if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
@@ -571,8 +574,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.mbflag,
 							stockmaster.discontinued,
 							stockmaster.decimalplaces
-						FROM stockmaster
-						LEFT JOIN stockcategory
+						FROM stockmaster LEFT JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid,
 							locstock
 						WHERE stockmaster.stockid=locstock.stockid
@@ -594,10 +596,9 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.mbflag,
 							stockmaster.discontinued,
 							stockmaster.decimalplaces
-						FROM stockmaster,
-							locstock
-						WHERE stockmaster.stockid=locstock.stockid
-						AND description " . LIKE . " '$SearchString'
+						FROM stockmaster INNER JOIN locstock
+						ON stockmaster.stockid=locstock.stockid
+						WHERE description " . LIKE . " '$SearchString'
 						AND categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
@@ -621,10 +622,9 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.decimalplaces
 						FROM stockmaster
 						INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid,
-							locstock
-						WHERE stockmaster.stockid=locstock.stockid
-						AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+						ON stockmaster.categoryid=stockcategory.categoryid
+						INNER JOIN locstock ON stockmaster.stockid=locstock.stockid
+						WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.longdescription,
@@ -642,10 +642,9 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						sum(locstock.quantity) as qoh,
 						stockmaster.units,
 						stockmaster.decimalplaces
-					FROM stockmaster,
-						locstock
-					WHERE stockmaster.stockid=locstock.stockid
-					AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+					FROM stockmaster INNER JOIN locstock
+					ON stockmaster.stockid=locstock.stockid
+					WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 					AND categoryid='" . $_POST['StockCat'] . "'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
@@ -688,10 +687,9 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						SUM(locstock.quantity) AS qoh,
 						stockmaster.units,
 						stockmaster.decimalplaces
-					FROM stockmaster,
-						locstock
-					WHERE stockmaster.stockid=locstock.stockid
-					AND categoryid='" . $_POST['StockCat'] . "'
+					FROM stockmaster INNER JOIN locstock
+					ON stockmaster.stockid=locstock.stockid
+					WHERE categoryid='" . $_POST['StockCat'] . "'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.longdescription,

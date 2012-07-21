@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 	$sql = "INSERT INTO passbom (part, sortpart)
 					   SELECT bom.component AS part,
 							  CONCAT(bom.parent,'%',bom.component) AS sortpart
-							  FROM bom LEFT JOIN bom as bom2 
+							  FROM bom LEFT JOIN bom as bom2
 							  ON bom.parent = bom2.component
 					  WHERE bom2.component IS NULL";
 	$result = DB_query($sql,$db);
@@ -247,9 +247,9 @@ if (isset($_POST['submit'])) {
 									  stkcode
 							  FROM salesorders, salesorderdetails
 							  WHERE salesorders.orderno = salesorderdetails.orderno
-								  AND (quantity - qtyinvoiced) > 0
-								  AND salesorderdetails.completed = 0
-								  AND salesorders.quotation = 0";
+							  AND (quantity - qtyinvoiced) > 0
+							  AND salesorderdetails.completed = 0
+							  AND salesorders.quotation = 0";
 	$result = DB_query($sql,$db);
 
 	prnMsg(_('Loading requirements from work orders'),'info');
@@ -435,7 +435,7 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('Creating planned orders table'),'info');
 	flush();
 	$result = DB_query("DROP TABLE IF EXISTS mrpplannedorders",$db);
-	$sql = "CREATE TABLE mrpplannedorders (id int(11) NOT NULL auto_increment, 
+	$sql = "CREATE TABLE mrpplannedorders (id int(11) NOT NULL auto_increment,
 											part char(20),
 											duedate date,
 											supplyquantity double,
@@ -754,8 +754,8 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 
 			// Calculate required date by subtracting leadtime from top part's required date
             $PartRequiredDate=$Requirement['daterequired'];
-			if ((int)$LeadTime>0) {              
-                  
+			if ((int)$LeadTime>0) {
+
 				$CalendarSQL = "SELECT COUNT(*),cal2.calendardate
 						  FROM mrpcalendar
 							LEFT JOIN mrpcalendar as cal2

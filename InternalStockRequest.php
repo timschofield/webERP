@@ -296,7 +296,7 @@ if (DB_num_rows($result1) == 0) {
 echo '<table class="selection">
 	<tr>
 		<td>' . _('In Stock Category') . ':<select name="StockCat">';
-		
+
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = '';
 }
@@ -636,13 +636,12 @@ if (isset($SearchResult)) {
 
 		// Find the quantity on outstanding sales orders
 		$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						 FROM salesorderdetails,
-					  			salesorders
-						 WHERE salesorders.orderno = salesorderdetails.orderno AND
-							salesorders.fromstkloc='" . $_SESSION['Request']->Location . "' AND
- 							salesorderdetails.completed=0 AND
-		 					salesorders.quotation=0 AND
-				 			salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+				 FROM salesorderdetails INNER JOIN salesorders
+				 ON salesorders.orderno = salesorderdetails.orderno
+				 WHERE salesorders.fromstkloc='" . $_SESSION['Request']->Location . "'
+				 AND salesorderdetails.completed=0
+				 AND salesorders.quotation=0
+				 AND salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
 		$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Request']->Location . ' ' . _('cannot be retrieved because');
 		$DemandResult = DB_query($sql,$db,$ErrMsg);
 
@@ -655,12 +654,13 @@ if (isset($SearchResult)) {
 
 		// Find the quantity on purchase orders
 		$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd)*purchorderdetails.conversionfactor AS dem
-					 FROM purchorderdetails LEFT JOIN purchorders
-						ON purchorderdetails.orderno=purchorders.orderno
-					 WHERE purchorderdetails.completed=0
-					 AND purchorders.status<>'Cancelled'
-					 AND purchorders.status<>'Rejected'
-					AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+				 FROM purchorderdetails LEFT JOIN purchorders
+					ON purchorderdetails.orderno=purchorders.orderno
+				 WHERE purchorderdetails.completed=0
+				 AND purchorders.status<>'Cancelled'
+				 AND purchorders.status<>'Rejected'
+				 AND purchorders.status<>'Completed'
+				AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 		$ErrMsg = _('The order details for this product cannot be retrieved because');
 		$PurchResult = DB_query($sql,$db,$ErrMsg);

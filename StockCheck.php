@@ -37,7 +37,7 @@ If (isset($_POST['PrintPDF'])
 					   stockmaster.mbflag!='A' AND
 					   stockmaster.mbflag!='K' AND
 					   stockmaster.mbflag!='D'";
-	
+
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$title = _('Stock Count Sheets - Problem Report');
@@ -53,11 +53,11 @@ If (isset($_POST['PrintPDF'])
 	}
 
 	if ($_POST['MakeStkChkData']=='AddUpdate'){
-		$sql = "DELETE stockcheckfreeze 
+		$sql = "DELETE stockcheckfreeze
 				FROM stockcheckfreeze
 				INNER JOIN stockmaster ON stockcheckfreeze.stockid=stockmaster.stockid
-				WHERE stockmaster.categoryid >='" . $_POST['FromCriteria'] . "' 
-				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' 
+				WHERE stockmaster.categoryid >='" . $_POST['FromCriteria'] . "'
+				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "'
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
 		$result = DB_query($sql,$db,'','',false,false);
@@ -83,12 +83,12 @@ If (isset($_POST['PrintPDF'])
 					'" . Date('Y-m-d') . "'
 				FROM locstock INNER JOIN stockmaster
 				ON locstock.stockid=stockmaster.stockid
-				WHERE locstock.loccode='" . $_POST['Location'] . "' 
-				AND stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' 
-				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' 
-				AND stockmaster.mbflag!='A' 
-				AND stockmaster.mbflag!='K' 
-				AND stockmaster.mbflag!='G' 
+				WHERE locstock.loccode='" . $_POST['Location'] . "'
+				AND stockmaster.categoryid>='" . $_POST['FromCriteria'] . "'
+				AND stockmaster.categoryid<='" . $_POST['ToCriteria'] . "'
+				AND stockmaster.mbflag!='A'
+				AND stockmaster.mbflag!='K'
+				AND stockmaster.mbflag!='G'
 				AND stockmaster.mbflag!='D'";
 
 		$result = DB_query($sql, $db,'','',false,false);
@@ -120,12 +120,12 @@ If (isset($_POST['PrintPDF'])
 				 stockcategory.categorydescription,
 				 stockcheckfreeze.qoh
 			 FROM stockcheckfreeze INNER JOIN stockmaster
-			 ON stockcheckfreeze.stockid=stockmaster.stockid 
-			 INNER JOIN stockcategory 
-			 ON stockmaster.categoryid=stockcategory.categoryid 
-			 WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "' 
-			 AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "' 
-			 AND (stockmaster.mbflag='B' OR mbflag='M') 
+			 ON stockcheckfreeze.stockid=stockmaster.stockid
+			 INNER JOIN stockcategory
+			 ON stockmaster.categoryid=stockcategory.categoryid
+			 WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+			 AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+			 AND (stockmaster.mbflag='B' OR mbflag='M')
 			 AND stockcheckfreeze.loccode = '" . $_POST['Location'] . "'";
 	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly']==true){
 		$SQL .= " AND stockcheckfreeze.qoh<>0";
@@ -180,10 +180,11 @@ If (isset($_POST['PrintPDF'])
 
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 			   		FROM salesorderdetails INNER JOIN salesorders
-			   		ON salesorderdetails.orderno=salesorders.orderno 
-			   		WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "' 
-			   		AND salesorderdetails.stkcode = '" . $InventoryCheckRow['stockid'] . "'  
-			   		AND salesorderdetails.completed = 0";
+			   		ON salesorderdetails.orderno=salesorders.orderno
+			   		WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
+			   		AND salesorderdetails.stkcode = '" . $InventoryCheckRow['stockid'] . "'
+			   		AND salesorderdetails.completed = 0
+			   		AND salesorders.quotation=0";
 
 			$DemandResult = DB_query($SQL,$db,'','',false, false);
 
@@ -204,16 +205,17 @@ If (isset($_POST['PrintPDF'])
 
 			//Also need to add in the demand for components of assembly items
 			$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-						   FROM salesorderdetails INNER JOIN salesorders 
+						   FROM salesorderdetails INNER JOIN salesorders
 						   ON salesorders.orderno = salesorderdetails.orderno
-						   INNER JOIN bom 
+						   INNER JOIN bom
 						   ON salesorderdetails.stkcode=bom.parent
-						   INNER JOIN stockmaster 
+						   INNER JOIN stockmaster
 						   ON stockmaster.stockid=bom.parent
-						   WHERE salesorders.fromstkloc='" . $_POST['Location'] . "' 
-						   AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 
-						   AND bom.component='" . $InventoryCheckRow['stockid'] . "' 
-						   AND stockmaster.mbflag='A'";
+						   WHERE salesorders.fromstkloc='" . $_POST['Location'] . "'
+						   AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+						   AND bom.component='" . $InventoryCheckRow['stockid'] . "'
+						   AND stockmaster.mbflag='A'
+						   AND salesorders.quotation=0";
 
 			$DemandResult = DB_query($sql,$db,'','',false,false);
 			if (DB_error_no($db) !=0) {

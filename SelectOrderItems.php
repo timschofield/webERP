@@ -211,12 +211,12 @@ if (isset($_GET['ModifyOrderNumber'])
 									stockmaster.decimalplaces,
 									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
 									salesorderdetails.completed
-									FROM salesorderdetails INNER JOIN stockmaster
-									ON salesorderdetails.stkcode = stockmaster.stockid
-									INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
-									WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
-									AND salesorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
-									ORDER BY salesorderdetails.orderlineno";
+								FROM salesorderdetails INNER JOIN stockmaster
+								ON salesorderdetails.stkcode = stockmaster.stockid
+								INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
+								WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
+								AND salesorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
+								ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg);
@@ -671,9 +671,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['ExistingOrder' . $identifier]!=0) { //need to check that not already dispatched
 
 			$sql = "SELECT qtyinvoiced
-							FROM salesorderdetails
-							WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'
-							AND qtyinvoiced>0";
+					FROM salesorderdetails
+					WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'
+					AND qtyinvoiced>0";
 
 			$InvQties = DB_query($sql,$db);
 
@@ -1528,8 +1528,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$ImageSource = _('No Image');
 // Find the quantity in stock at location
 				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh
-							FROM locstock 
-							WHERE stockid='" .$myrow['stockid'] . "' 
+							FROM locstock
+							WHERE stockid='" .$myrow['stockid'] . "'
 							AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
 				$QOHResult =  DB_query($QOHSQL,$db);
 				$QOHRow = DB_fetch_array($QOHResult);
@@ -1560,6 +1560,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						WHERE purchorderdetails.completed=0
 						AND purchorders.status<> 'Completed'
 						AND purchorders.status<> 'Rejected'
+						AND purchorders.status<> 'Cancelled'
 						AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
@@ -1748,6 +1749,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						 AND purchorders.status<>'Cancelled'
 						 AND purchorders.status<>'Rejected'
 						 AND purchorders.status<>'Pending'
+						 AND purchorders.status<>'Completed'
 						AND purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
 
 				$ErrMsg = _('The order details for this product cannot be retrieved because');
@@ -1875,18 +1877,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                      <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
             echo '</div></form>';
-               
+
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
-          
+
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . 
+			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .
 				'" method="post" name="deleteform">';
             		echo '<div>';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
 		}
 	}#end of else not selecting a customer
-	
+
 
 
 if (isset($_GET['NewOrder']) and $_GET['NewOrder']!='') {
