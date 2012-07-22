@@ -82,7 +82,7 @@ function ConvertToSQLDate($DateEntry) {
 	}
 
 /* Find the period number from the transaction date */
-/* Why use this function over GetPeriod we already have this function included in DateFunctions.inc 
+/* Why use this function over GetPeriod we already have this function included in DateFunctions.inc
  * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
 	function GetPeriodFromTransactionDate($TranDate, $i, $Errors, $db) {
 		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
@@ -243,11 +243,11 @@ function ConvertToSQLDate($DateEntry) {
 		return $Errors;
 	}
 
-/* Retrieves the default sales GL code for a given part code and sales area 
- * 
+/* Retrieves the default sales GL code for a given part code and sales area
+ *
  * This function also in SQL_CommonFunctions...better to use it from there as it covers all cases
  * and not limited to stk='any'!!
- * 
+ *
 	function GetSalesGLCode($salesarea, $partnumber, $db) {
 		$sql="SELECT salesglcode FROM salesglpostings
 			WHERE stkcat='any'";
@@ -267,8 +267,8 @@ function ConvertToSQLDate($DateEntry) {
 
 
 	function InsertDebtorReceipt($Receipt, $User, $Password) {
-	
-	/* 
+
+	/*
 	This function inserts a debtors receipt into a bank account/GL Postings and does the allocation and journals for difference on exchange
 
 	$Receipt contains an associative array in the format:
@@ -287,7 +287,7 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-	
+
 		/*Get Company Defaults */
 		$ReadCoyResult = api_DB_query("SELECT debtorsact,
 											pytdiscountact,
@@ -299,7 +299,7 @@ function ConvertToSQLDate($DateEntry) {
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoCompanyRecord;
 		}
-		
+
 		$CustCurrencySQL = "SELECT 	currcode,
 									rate
 							FROM debtorsmaster
@@ -313,9 +313,9 @@ function ConvertToSQLDate($DateEntry) {
 		}
 
 		$CustCurrRow = DB_fetch_array($CurrResult);
-				
+
 		/*Get the currency and rate of the bank account transferring to*/
-		$SQL = "SELECT currcode, 
+		$SQL = "SELECT currcode,
 						rate
 					FROM bankaccounts INNER JOIN currencies
 					ON bankaccounts.currcode = currencies.currabrev
@@ -324,9 +324,9 @@ function ConvertToSQLDate($DateEntry) {
 		if (DB_error_no($db) != 0) {
 			$Errors[] = InvalidBankAccount;
 		}
-		
+
 		$BankActRow = DB_fetch_array($BankActResult);
-		
+
 		/*To illustrate the rates required
 		 * The money received is assumed to be in the currency of the customer account.
 		 * but it may be banked into a bank account that is denominated in a different currency - so we need to work out the amount of money that this would turn into when sold to the bank to deposit into this bank account - we call this the receipt ex rate. Normally this would be figured out at the time of entry so the actual currency banked agrees. However, we must use the system rates to automate this and the amounts may not agree to actual deposits.
@@ -336,12 +336,12 @@ function ConvertToSQLDate($DateEntry) {
 			The FunctionalExRate = 0.90 - the rate between the functional currency and the bank account currency
 			The receipt ex rate is the rate at which one can sell the received currency and purchase the bank account currency in this case the AUD/USD cross rate
 			or 0.8/0.9 = 0.88889
-			So the receipt ex rate will always be 1 if the currency of the bank account is the same as the customer currency. 
- 
+			So the receipt ex rate will always be 1 if the currency of the bank account is the same as the customer currency.
+
 		*/
 		$ReceiptExRate = $CustCurrRow['rate']/$BankActRow['rate'];
 		$FunctionalExRate = $BankActRow['rate'];
-		
+
 		DB_Txn_Begin($db);
 
 		$ReceiptNo = GetNextTransNo(12,$db);
@@ -368,9 +368,9 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['paymentmethod'] . "',
 						'" . round($Receipt['amountfx'] / $ReceiptExRate,4) . "',
 						'" . $CustCurrRow['currcode'] . "')";
-		
+
 		$result = api_DB_query($SQL,$db,'','',true);
-		
+
 
 		if ($CompanyRecord['gllink_debtors']==1) {
 		/* Now Credit Debtors account with receipts */
@@ -388,9 +388,9 @@ function ConvertToSQLDate($DateEntry) {
 						'". $CompanyRecord['debtorsact'] . "',
 						'" . $Receipt['reference'] . "',
 						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) * $FunctionalExRate / $ReceiptExRate,4) . "')";
-		
+
 			$result = api_DB_query($SQL,$db,'','',true);
-			
+
 			if($Receipt['discountfx']!=0){
 				$SQL="INSERT INTO gltrans ( type,
 										typeno,
@@ -406,7 +406,7 @@ function ConvertToSQLDate($DateEntry) {
 						'". $CompanyRecord['pytdiscountact'] . "',
 						'" . $Receipt['reference'] . "',
 						'" . round($Receipt['discountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
-		
+
 				$result = api_DB_query($SQL,$db,'','',true);
 			}
 		/*and debit bank account with the receipt */
@@ -425,11 +425,11 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['bankaccount'] . "',
 						'" . $Receipt['reference'] . "',
 						'" . round($Receipt['amountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
-		
+
 			$result = api_DB_query($SQL,$db,'','',true);
 
 		} /* end if GL linked to debtors */
-		
+
 		$SQL = "INSERT INTO debtortrans (transno,
 										type,
 										debtorno,
@@ -448,20 +448,20 @@ function ConvertToSQLDate($DateEntry) {
 							'" . date('Y-m-d H-i-s') . "',
 							'" . $PeriodNo . "',
 							'" . $Receipt['reference'] . "',
-						'" . ($ReceiptExRate/$FunctionalExRate) . "',
-						'" . -$Receipt['amountfx'] . "',
-						'" . -$Receipt['discountfx'] . "',
-						'" . $Receipt['paymentmethod'] . "')";
-		
+							'" . ($ReceiptExRate/$FunctionalExRate) . "',
+							'" . -$Receipt['amountfx'] . "',
+							'" . -$Receipt['discountfx'] . "',
+							'" . $Receipt['paymentmethod'] . "')";
+
 		$result = api_DB_query($SQL,$db,'','',true);
-		
+
 		$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $Receipt['trandate'] . "',
 						lastpaid='" . $Receipt['amountfx'] ."'
 					WHERE debtorsmaster.debtorno='" . $Receipt['debtorno'] . "'";
-		
+
 		$result = api_DB_query($SQL,$db,'','',true);
-		
-		
+
+
 		if (sizeof($Errors)==0) {
 			$Result = DB_Txn_Commit($db);
 			$Errors[0]=0;
@@ -474,7 +474,7 @@ function ConvertToSQLDate($DateEntry) {
 
 
 	function CreateCreditNote($Header,$LineDetails, $User, $Password) {
-	
+
 		/* Create a customer credit note in webERP.
 		 * Needs an associative array for the $Header
 		 * and an array of assocative arrays for the $LineDetails
@@ -501,8 +501,8 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		
-		
+
+
 		$Errors=VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifyBranchNoExists($Header['debtorno'],$Header['branchcode'], sizeof($Errors), $Errors, $db);
 		/*Does not deal with serialised/lot track items - for use by POS */
@@ -518,7 +518,7 @@ function ConvertToSQLDate($DateEntry) {
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoCompanyRecord;
 		}
-		
+
 		$HeaderSQL = "SELECT custbranch.area,
 							 custbranch.taxgroupid,
 							 debtorsmaster.currcode,
@@ -602,7 +602,7 @@ function ConvertToSQLDate($DateEntry) {
 			}
 
 			$LineTaxAmount = 0;
-			
+
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
 					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
@@ -618,7 +618,7 @@ function ConvertToSQLDate($DateEntry) {
 					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
 				}
 				$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
-				
+
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
 				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
@@ -634,7 +634,7 @@ function ConvertToSQLDate($DateEntry) {
 			$TotalFXNetCredit += $LineNetAmount;
 			$TotalFXTax += $LineTaxAmount;
 
-						
+
 			if ($LineRow['mbflag']=='B' OR $LineRow['mbflag']=='M') {
 				$Assembly = False;
 
@@ -645,7 +645,7 @@ function ConvertToSQLDate($DateEntry) {
 						WHERE locstock.stockid='" . $CN_Line['stockid'] . "'
 						AND loccode= '" . $Header['fromstkloc'] . "'";
 				$Result = api_DB_query($SQL, $db);
-				
+
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
@@ -1101,16 +1101,16 @@ function ConvertToSQLDate($DateEntry) {
 		}
 
 		#Now figure out if there was an invoice in the same POS transaction to allocate against?
-		
-		$SQL = "SELECT id, 
-					ovamount+ovgst AS total, 
-					alloc 
-				FROM debtortrans 
-				WHERE customerref='" . $Header['customerref'] . "' 
+
+		$SQL = "SELECT id,
+					ovamount+ovgst AS total,
+					alloc
+				FROM debtortrans
+				WHERE customerref='" . $Header['customerref'] . "'
 				AND type=10
 				AND settled=0";
 		$Result = api_DB_query($SQL,$db,'','',true);
-		
+
 		$TotalCreditFX = $TotalFXNetCredit + $TotalFXTax; #Should be negative number
 		$Allocated = 0;
 		if (DB_num_rows($Result)>0){
@@ -1123,11 +1123,11 @@ function ConvertToSQLDate($DateEntry) {
 				} else {
 					$AllocateAmount = 0;
 				}
-				if ($AllocateAmount > 0) {	
+				if ($AllocateAmount > 0) {
 					$SQL = "INSERT INTO	custallocns (datealloc,
 													 amt,
 													 transid_allocfrom,
-													 transid_allocto) 
+													 transid_allocto)
 							VALUES ('" . date('Y-m-d') . "',
 									'" . $AllocateAmount . "',
 									'" . $DebtorTransID . "',
@@ -1143,7 +1143,7 @@ function ConvertToSQLDate($DateEntry) {
 												settled = '" . $Settled . "'
 						WHERE id = '" . $InvoiceRow['id'] ."'";
 				$UpdateAllocResult = api_DB_query($SQL,$db,'','',true);
-								
+
 				$Allocated -= $AllocateAmount;
 			}
 			if (abs($TotalCreditFX - $Allocated)<0.005){
@@ -1156,7 +1156,7 @@ function ConvertToSQLDate($DateEntry) {
 					WHERE id = '" . $DebtorTransID  ."'";
 			$UpdateAllocResult = api_DB_query($SQL,$db,'','',true);
 		}
-		
+
 		if (sizeof($Errors)==0) {
 			$Result = DB_Txn_Commit($db);
 			$Errors[0]=0;
@@ -1252,35 +1252,35 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		if (sizeof($Errors)==0) {
 			$result = DB_Txn_Begin($db);
-			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .") 
+			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
 									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_Query($sql, $db);
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10, $db) . "' WHERE typeid=10";
 			$result = DB_Query($sql, $db);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
-			$sql="INSERT INTO gltrans VALUES(null, 
+			$sql="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransactionNo(10, $db) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] ."',
-											'" . $InvoiceDetails['prd'] . "', 
+											'" . $InvoiceDetails['prd'] . "',
 											'" . $DebtorsGLCode. "',
-											'". _('Invoice for') .' -' . $InvoiceDetails['debtorno'] .' ' . _('Total') . ' - '. $InvoiceDetails['ovamount'] . "', 
-											'" . $InvoiceDetails['ovamount'] . "', 
+											'". _('Invoice for') .' -' . $InvoiceDetails['debtorno'] .' ' . _('Total') . ' - '. $InvoiceDetails['ovamount'] . "',
+											'" . $InvoiceDetails['ovamount'] . "',
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
 			$result = api_DB_Query($sql, $db);
-			$sql="INSERT INTO gltrans VALUES(null, 
+			$sql="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransactionNo(10, $db) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] ."',
-											'" . $InvoiceDetails['prd'] . "', 
+											'" . $InvoiceDetails['prd'] . "',
 											'" . $SalesGLCode . "',
-											'" . _('Invoice for') . ' -' . $InvoiceDetails['debtorno'] . ' ' . _('Total') .' - '. $InvoiceDetails['ovamount'] ."', 
-											'" . (-intval($InvoiceDetails['ovamount'])) ."', 
+											'" . _('Invoice for') . ' -' . $InvoiceDetails['debtorno'] . ' ' . _('Total') .' - '. $InvoiceDetails['ovamount'] ."',
+											'" . (-intval($InvoiceDetails['ovamount'])) ."',
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
@@ -1300,10 +1300,10 @@ function ConvertToSQLDate($DateEntry) {
 	}
 
 	function AllocateTrans($AllocDetails, $User, $Password) {
-		
+
 		/* This function is quite specific and probably not generally useful
 		 * It only attempts to allocate a receipt or credit note sent to invoices that have a customerref equal to the value sent
-		 * 
+		 *
 		 * The first parameter  AllocDetails is an associative array containing:
 		 * AllocDetails['debtorno']
 		 * AllocDetails['type']
@@ -1319,7 +1319,7 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		$Errors=VerifyDebtorExists($AllocDetails['debtorno'], sizeof($Errors), $Errors, $db);
 		/*Get the outstanding amount to allocate (all amounts in FX) from the transaction*/
-		
+
 		if ($AllocDetails['type'] !='11' AND $AllocDetails['type'] !=12){
 			$Errors[] = MustBeReceiptOrCreditNote;
 		}
@@ -1335,7 +1335,7 @@ function ConvertToSQLDate($DateEntry) {
 		if (DB_num_rows($Result)==0){
 			$Errors[] = NoTransactionToAllocate;
 		}
-		
+
 		if ($LeftToAllocRow['lefttoalloc'] <= 0){ /* negative if there is owt to allocate */
 			/*Now look for invoices with the same customerref to allocate to */
 			$SQL = "SELECT id,
@@ -1347,7 +1347,7 @@ function ConvertToSQLDate($DateEntry) {
 					AND reference='" . $AllocDetails['customerref'] . "'";
 			$Result = api_DB_query($SQL,$db);
 			$OSInvRow = DB_fetch_array($Result);
-	
+
 			if ($OSInvRow['rate']==$LeftToAllocRow['rate']
 				AND $OSInvRow['outstanding']>0){
 
@@ -1358,12 +1358,12 @@ function ConvertToSQLDate($DateEntry) {
 					/*We can only allocate the rest of the invoice outstanding */
 					$AllocateAmount = $OSInvRow['outstanding'];
 				}
-				
+
 				DB_Txn_Begin($db);
 				/*Now insert the allocation records */
-				$SQL = "INSERT INTO custallocs (amt, 
-												datealloc, 
-												transid_allocfrom, 
+				$SQL = "INSERT INTO custallocs (amt,
+												datealloc,
+												transid_allocfrom,
 												transid_allocto)
 									VALUE('" . $AllocateAmount . "',
 										'" . Date('Y-m-d') . "',
@@ -1386,8 +1386,8 @@ function ConvertToSQLDate($DateEntry) {
 		} else {
 			$Result = DB_Txn_Rollback($db);
 		}
-		return $Errors;	
-	
+		return $Errors;
+
 	}
 
 /* Create a customer credit note in webERP. This function will bypass the
@@ -1476,22 +1476,22 @@ function ConvertToSQLDate($DateEntry) {
 		}
 		if (sizeof($Errors)==0) {
 			$result = DB_Txn_Begin($db);
-			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ") 
+			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
 			$result = DB_Query($sql, $db);
 			$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11, $db) ."' WHERE typeid=10";
 			$result = DB_Query($sql, $db);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
-			$sql="INSERT INTO gltrans VALUES(null, 
+			$sql="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransactionNo(11, $db). "',
 											0,
 											'" . $CreditDetails['trandate'] . "',
-											'" . $CreditDetails['prd'] . "', 
+											'" . $CreditDetails['prd'] . "',
 											'" .$DebtorsGLCode . "',
-											'". _('Invoice for') .  ' - '.$CreditDetails['debtorno'].' ' . -('Total') .' - '.$CreditDetails['ovamount']. "', 
-											'" . $CreditDetails['ovamount'] . "', 
+											'". _('Invoice for') .  ' - '.$CreditDetails['debtorno'].' ' . -('Total') .' - '.$CreditDetails['ovamount']. "',
+											'" . $CreditDetails['ovamount'] . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
 			$result = DB_Query($sql, $db);
@@ -1500,10 +1500,10 @@ function ConvertToSQLDate($DateEntry) {
 											'" . GetNextTransactionNo(11, $db) . "',
 											0,
 											'" . $CreditDetails['trandate'] ."',
-											'" . $CreditDetails['prd'] . "', 
+											'" . $CreditDetails['prd'] . "',
 											'" . $SalesGLCode ."',
-											'". _('Invoice for') . ' - ' . $CreditDetails['debtorno'] .' ' . _('Total') . ' - '. $CreditDetails['ovamount'] ."', 
-											'" .(-intval($CreditDetails['ovamount'])) . "', 
+											'". _('Invoice for') . ' - ' . $CreditDetails['debtorno'] .' ' . _('Total') . ' - '. $CreditDetails['ovamount'] ."',
+											'" .(-intval($CreditDetails['ovamount'])) . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
 			$result = DB_Query($sql, $db);

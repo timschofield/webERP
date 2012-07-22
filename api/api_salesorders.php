@@ -5,10 +5,10 @@
 // InsertSalesOrderHeader and ModifySalesOrderHeader have date fields
 // which need to be converted to the appropriate format.  This is
 // a list of such fields used to detect date values and format appropriately.
-$SOH_DateFields = array ('orddate', 
+$SOH_DateFields = array ('orddate',
 						'deliverydate',
 						'datepackingslipprinted',
-						'quotedate', 
+						'quotedate',
 						'confirmeddate' );
 
 /* Check that the custmerref field is 50 characters or less long */
@@ -345,10 +345,10 @@ $SOH_DateFields = array ('orddate',
 			}
 			$FieldValues.="'".$value."', ";
 		}
-		$sql = 'INSERT INTO salesorders ('.mb_substr($FieldNames,0,-2).") 
+		$sql = 'INSERT INTO salesorders ('.mb_substr($FieldNames,0,-2).")
 					VALUES (" . mb_substr($FieldValues,0,-2). ")";
 		if (sizeof($Errors)==0) {
-			
+
 			$result = api_DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -460,7 +460,7 @@ $SOH_DateFields = array ('orddate',
  * already exist in webERP.
  */
 	function InsertSalesOrderLine($OrderLine, $user, $password) {
-		
+
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -488,7 +488,7 @@ $SOH_DateFields = array ('orddate',
 			$Errors=VerifyNarrative($OrderLine['narrative'], sizeof($Errors), $Errors);
 		}
 		/*
-		 * Not sure why the verification of itemdue doesn't work 
+		 * Not sure why the verification of itemdue doesn't work
 		if (isset($OrderLine['itemdue'])){
 			$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
 		}
@@ -507,8 +507,8 @@ $SOH_DateFields = array ('orddate',
 			}
 			$FieldValues.= "'" . $value . "', ";
 		}
-		
-		$sql = "INSERT INTO salesorderdetails (" . mb_substr($FieldNames,0,-2) . ") 
+
+		$sql = "INSERT INTO salesorderdetails (" . mb_substr($FieldNames,0,-2) . ")
 			VALUES (" . mb_substr($FieldValues,0,-2) . ")";
 
 		if (sizeof($Errors)==0) {
@@ -582,7 +582,7 @@ $SOH_DateFields = array ('orddate',
 		}
 		return $Errors;
 	}
-	
+
 /* This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.
@@ -606,13 +606,13 @@ $SOH_DateFields = array ('orddate',
 			return $Errors;
 		}
 	}
-	
+
 /* This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.
 */
 	function GetSalesOrderLine($OrderNo, $user, $password) {
-		
+
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -631,14 +631,9 @@ $SOH_DateFields = array ('orddate',
 			return $Errors;
 		}
 	}
-	
-	
+
+
 	function InvoiceSalesOrder($OrderNo, $User, $Password) {
-
-
-$fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
-
-
 
 		$Errors = array();
 		$db = db($User, $Password);
@@ -662,8 +657,8 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 		$CompanyRecord = DB_fetch_array($ReadCoyResult);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoCompanyRecord;
-		} 
-		
+		}
+
 		$OrderHeaderSQL = "SELECT salesorders.debtorno,
 				 				  debtorsmaster.name,
 								  salesorders.branchcode,
@@ -692,10 +687,10 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 		$OrderHeaderResult = api_DB_query($OrderHeaderSQL,$db);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoReadOrder;
-		} 
-		
+		}
+
 		$OrderHeader = DB_fetch_array($OrderHeaderResult);
-		
+
 		$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $OrderHeader['fromstkloc'] ."'",$db);
 		if (DB_error_no($db) != 0) {
 			$Errors[] = NoTaxProvince;
@@ -720,21 +715,21 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 			$Errors[] = NoReadOrderLines;
 			return $Errors;
 		}
-		
+
 	/*Start an SQL transaction */
 		$result = DB_Txn_Begin($db);
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10, $db);
 		$PeriodNo = GetCurrentPeriod($db);
-		
+
 		$TaxTotals =array();
-		
+
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
 		$LineCounter =0;
 
 		while ($OrderLineRow = DB_fetch_array($LineItemsResult)) {
-			
+
 			$StandardCost = $OrderLineRow['standardcost'];
 			$LocalCurrencyPrice= ($OrderLineRow['unitprice'] *(1- floatval($OrderLineRow['discountpercent'])))/ $OrderHeader['rate'];
 			$LineNetAmount = $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] *(1- floatval($OrderLineRow['discountpercent']));
@@ -758,10 +753,10 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 					ORDER BY taxgrouptaxes.calculationorder";
 
 			$GetTaxRatesResult = api_DB_query($SQL,$db);
-			
+
 			if (DB_error_no($db) != 0) {
 				$Errors[] = TaxRatesFailed;
-			} 
+			}
 			$LineTaxAmount = 0;
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
@@ -779,7 +774,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
 				}
 				$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
-				
+
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
 				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
@@ -804,8 +799,8 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 					AND stkcode = '" . $OrderLineRow['stkcode'] . "'";
 
 			$Result = api_DB_query($SQL,$db,'','',true);
-			
-						
+
+
 			if ($OrderLineRow['mbflag']=='B' OR $OrderLineRow['mbflag']=='M') {
 				$Assembly = False;
 
@@ -816,7 +811,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 						WHERE locstock.stockid='" . $OrderLineRow['stkcode'] . "'
 						AND loccode= '" . $OrderHeader['fromstkloc'] . "'";
 				$Result = api_DB_query($SQL, $db);
-				
+
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
@@ -830,7 +825,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 						WHERE locstock.stockid = '" . $OrderLineRow['stkcode'] . "'
 						AND loccode = '" . $OrderHeader['fromstkloc'] . "'";
 				$Result = api_DB_query($SQL,$db,'','',true);
-								
+
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
 												transno,
@@ -859,9 +854,9 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 								'" . $OrderLineRow['discountpercent'] . "',
 								'" . $StandardCost . "',
 								'" . ($QtyOnHandPrior - $OrderLineRow['quantity']) . "' )";
-	
+
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 			} else if ($OrderLineRow['mbflag']=='A'){ /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
@@ -937,9 +932,9 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 				} /* end of assembly explosion and updates */
 			} /* end of its an assembly */
 
-			
+
 			if ($OrderLineRow['mbflag']=='A' OR $OrderLineRow['mbflag']=='D'){
-				/*it's a Dummy/Service item or an Assembly item - still need stock movement record 
+				/*it's a Dummy/Service item or an Assembly item - still need stock movement record
 				 * but quantites on hand are always nil */
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
@@ -969,7 +964,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 								'" . $OrderLineRow['discountpercent'] . "',
 								'" . $StandardCost . "',
 								'0' )";
-								
+
 				$Result = api_DB_query($SQL,$db,'','',true);
 			}
 			/*Get the ID of the StockMove... */
@@ -990,7 +985,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 
 				$Result = DB_query($SQL,$db,'','',true);
 			}
-			
+
 			/*Insert Sales Analysis records */
 
 			$SQL="SELECT COUNT(*),
@@ -1031,7 +1026,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			$myrow = DB_fetch_row($Result);
-			
+
 			if ($myrow[0]>0){  /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis
@@ -1047,7 +1042,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 						AND stockid  " . LIKE . " '" . $OrderLineRow['stkcode'] . "'
 						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
 						AND budgetoractual='1'";
-			
+
 			} else { /* insert a new sales analysis record */
 
 				$SQL = "INSERT INTO salesanalysis (	typeabbrev,
@@ -1080,9 +1075,9 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 								WHERE stockmaster.stockid = '" . $OrderLineRow['stkcode'] . "'
 								AND custbranch.debtorno = '" . $OrderHeader['debtorno'] . "'
 								AND custbranch.branchcode='" . $OrderHeader['branchcode'] . "'";
-			
+
 			}
-			
+
 			$Result = api_DB_query($SQL,$db,'','',true);
 
 			if ($CompanyRecord['gllink_stock']==1 AND $StandardCost !=0){
@@ -1105,7 +1100,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 										'" . ($StandardCost * $OrderLineRow['quantity']) . "')";
 
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 /*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
 				$StockGLCode = GetStockGLCode($OrderLineRow['stkcode'],$db);
 
@@ -1125,7 +1120,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 										'" . (-$StandardCost * $OrderLineRow['quantity']) . "')";
 
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 			} /* end of if GL and stock integrated and standard cost !=0  and not an asset */
 
 			if ($CompanyRecord['gllink_debtors']==1 AND $OrderLineRow['unitprice'] !=0){
@@ -1149,7 +1144,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 						'" . -$OrderLineRow['unitprice'] * $OrderLineRow['quantity']/$OrderHeader['rate'] . "'
 					)";
 				$Result = api_DB_query($SQL,$db,'','',true);
-				
+
 				if ($OrderLineRow['discountpercent'] !=0){
 
 					$SQL = "INSERT INTO gltrans (type,
@@ -1223,7 +1218,7 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 				$Result = api_DB_query($SQL,$db,'','',true);
 			}
 			EnsureGLEntriesBalance(10,$InvoiceNo,$db);
-			
+
 		} /*end of if Sales and GL integrated */
 
 	/*Update order header for invoice charged on */
@@ -1261,14 +1256,14 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 										'" . $TotalFXTax . "',
 										'" . $OrderHeader['rate'] . "',
 										'" . $OrderHeader['shipvia'] . "')";
-						
+
 		$Result = api_DB_query($SQL,$db,'','',true);
-		
+
 		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
-		
+
 		/*for each Tax - need to insert into debtortranstaxes */
 		foreach ($TaxTotals AS $TaxAuthID => $Tax) {
-			
+
 			$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 												taxauthid,
 												taxamount)
@@ -1277,27 +1272,27 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 										'" . $Tax['FXAmount']/$OrderHeader['rate'] . "')";
 			$Result = api_DB_query($SQL,$db,'','',true);
 		}
-		
+
 		if (sizeof($Errors)==0) {
-			
+
 			$Result = DB_Txn_Commit($db);
 			$Errors[0]=0;
 			$Errors[1]=$InvoiceNo;
 		} else {
 			$Result = DB_Txn_Rollback($db);
-		}	
+		}
 		return $Errors;
 	} //end InvoiceSalesOrder function
-	
-	
+
+
 	function GetCurrentPeriod (&$db) {
-		
+
 		$TransDate = time(); //The current date to find the period for
 		/* Find the unix timestamp of the last period end date in periods table */
 		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 		$result = DB_query($sql, $db);
 		$myrow=DB_fetch_row($result);
-		
+
 		if (is_null($myrow[0])){
 			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db);
 			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",$db);
@@ -1315,14 +1310,14 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 		$Date_Array = explode('-', $myrow[0]);
 		$FirstPeriodEnd = mktime(0,0,0,$Date_Array[1],0,(int)$Date_Array[0]);
 		$FirstPeriod = $myrow[1];
-	
+
 		/* If the period number doesn't exist */
 		if (!PeriodExists($TransDate, $db)) {
 			/* if the transaction is after the last period */
 			if ($TransDate > $LastPeriodEnd) {
-				
+
 				$PeriodEnd = mktime(0,0,0,Date('m', $TransDate)+1, 0, Date('Y', $TransDate));
-				
+
 				while ($PeriodEnd >= $LastPeriodEnd) {
 					if (Date('m', $LastPeriodEnd)<=13) {
 						$LastPeriodEnd = mktime(0,0,0,Date('m', $LastPeriodEnd)+2, 0, Date('Y', $LastPeriodEnd));
@@ -1356,19 +1351,19 @@ $fp = fopen( "/root/Web-Server/apidebug/DebugInfo.txt", "w");
 			$LastPeriod = $myrow[1];
 			CreatePeriod($LastPeriod+1, $LastPeriodEnd, $db);
 		}
-	
+
 		/* Now return the period number of the transaction */
-	
+
 		$MonthAfterTransDate = Mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate));
-		$GetPrdSQL = "SELECT periodno 
-						FROM periods 
-						WHERE lastdate_in_period < '" . Date('Y-m-d', $MonthAfterTransDate) . "' 
+		$GetPrdSQL = "SELECT periodno
+						FROM periods
+						WHERE lastdate_in_period < '" . Date('Y-m-d', $MonthAfterTransDate) . "'
 						AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
-	
+
 		$ErrMsg = _('An error occurred in retrieving the period number');
 		$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);
 		$myrow = DB_fetch_row($GetPrdResult);
-	
+
 		return $myrow[0];
 	}
 
