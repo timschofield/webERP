@@ -72,7 +72,11 @@ if (isset($_POST['PrintPDF'])) {
 
 			$sql = "SELECT purchdata.stockid,
 							stockmaster.description,
-							purchdata.price,
+							(SELECT purchdata.price
+							 FROM purchdata
+							 WHERE purchdata.stockid = stockmaster.stockid
+							 ORDER BY effectivefrom DESC
+							 LIMIT 0,1) AS price,
 							purchdata.conversionfactor,
 							(SELECT purchdata.effectivefrom
 							 FROM purchdata
@@ -106,7 +110,11 @@ if (isset($_POST['PrintPDF'])) {
 			//price != all category !=all
 				$sql = "SELECT 	purchdata.stockid,
 								stockmaster.description,
-								purchdata.price,
+								(SELECT purchdata.price
+								 FROM purchdata
+								 WHERE purchdata.stockid = stockmaster.stockid
+								 ORDER BY effectivefrom DESC
+								 LIMIT 0,1) AS price,
 								purchdata.conversionfactor,
 								(SELECT purchdata.effectivefrom
 								FROM purchdata
