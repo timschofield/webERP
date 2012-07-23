@@ -166,20 +166,27 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Department') . ':</td>';
-
-$sql="SELECT departmentid,
-			description
-		FROM departments
-		ORDER BY description";
-
+if($_SESSION['AllowedDepartment'] == 0){
+	// any internal department allowed
+	$sql="SELECT departmentid,
+				description
+			FROM departments
+			ORDER BY description";
+}else{
+	// just 1 internal department allowed
+	$sql="SELECT departmentid,
+				description
+			FROM departments
+			WHERE departmentid = '". $_SESSION['AllowedDepartment'] ."'
+			ORDER BY description";
+}
 $result=DB_query($sql, $db);
-echo '<td><select name="Department">
-		<option value="">' . _('Select your department') . '</option>';
+echo '<td><select name="Department">';
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_SESSION['Request']->Department) AND $_SESSION['Request']->Department==$myrow['departmentid']){
-		echo '<option selected="True" value="' . $myrow['departmentid'] . '">' . $myrow['departmentid'].' - ' .htmlspecialchars($myrow['description'], ENT_QUOTES,'UTF-8') . '</option>';
+		echo '<option selected="True" value="' . $myrow['departmentid'] . '">' . htmlspecialchars($myrow['description'], ENT_QUOTES,'UTF-8') . '</option>';
 	} else {
-		echo '<option value="' . $myrow['departmentid'] . '">' . $myrow['departmentid'].' - ' .htmlspecialchars($myrow['description'], ENT_QUOTES,'UTF-8') . '</option>';
+		echo '<option value="' . $myrow['departmentid'] . '">' . htmlspecialchars($myrow['description'], ENT_QUOTES,'UTF-8') . '</option>';
 	}
 }
 echo '</select></td>

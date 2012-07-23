@@ -156,7 +156,8 @@ if (isset($_POST['submit'])) {
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
 						blocked='" . $_POST['Blocked'] . "',
-						pdflanguage='" . $_POST['PDFLanguage'] . "'
+						pdflanguage='" . $_POST['PDFLanguage'] . "',
+						department='" . $_POST['Department'] . "'
 					WHERE userid = '". $SelectedUser . "'";
 
 		prnMsg( _('The selected user record has been updated'), 'success' );
@@ -179,7 +180,8 @@ if (isset($_POST['submit'])) {
 						displayrecordsmax,
 						theme,
 						language,
-						pdflanguage)
+						pdflanguage,
+						department)
 					VALUES ('" . $_POST['UserID'] . "',
 						'" . $_POST['RealName'] ."',
 						'" . $_POST['Cust'] ."',
@@ -197,7 +199,8 @@ if (isset($_POST['submit'])) {
 						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 						'" . $_POST['Theme'] . "',
 						'". $_POST['UserLanguage'] ."',
-						'" . $_POST['PDFLanguage'] . "')";
+						'" . $_POST['PDFLanguage'] . "',
+						'" . $_POST['Department'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
 	}
 
@@ -225,6 +228,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Theme']);
 		unset($_POST['UserLanguage']);
 		unset($_POST['PDFLanguage']);
+		unset($_POST['Department']);
 		unset($SelectedUser);
 	}
 
@@ -376,7 +380,8 @@ if (isset($SelectedUser)) {
 			blocked,
 			theme,
 			language,
-			pdflanguage
+			pdflanguage,
+			department
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
@@ -400,6 +405,7 @@ if (isset($SelectedUser)) {
 	$_POST['UserLanguage'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
 	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
+	$_POST['Department'] = $myrow['department'];
 
 	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
@@ -679,6 +685,35 @@ for($i=0;$i<count($PDFLanguages);$i++){
 }
 echo '</select></td>
 	</tr>';
+
+/* Allowed Department for Internal Requests */
+	
+echo '<tr>
+		<td>' . _('Allowed Department for Internal Requests') . ':</td>';
+
+$sql="SELECT departmentid,
+			description
+		FROM departments
+		ORDER BY description";
+
+$result=DB_query($sql, $db);
+echo '<td><select name="Department">';
+if ((isset($_POST['Department']) AND $_POST['Department']=='0') OR !isset($_POST['Department'])){
+	echo '<option selected="selected" value="0">' .  _('Any Internal Department') . '</option>';
+} else {
+	echo '<option value="">' . _('Any Internal Department') . '</option>';
+}
+while ($myrow=DB_fetch_array($result)){
+	if (isset($_POST['Department']) AND $myrow['departmentid'] == $_POST['Department']){
+		echo '<option selected="selected" value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+	} else {
+		echo '<option value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+	}
+}
+echo '</select></td>
+	</tr>';
+	
+/* Account status */
 
 echo '<tr>
 		<td>' . _('Account Status') . ':</td>

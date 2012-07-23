@@ -66,6 +66,8 @@ function userLogin($Name, $Password, $db) {
 			$_SESSION['Language'] = $myrow['language'];
 			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
 			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
+			$_SESSION['AllowedDepartment'] = $myrow['department'];
+
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
 			} else {

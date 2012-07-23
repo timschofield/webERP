@@ -17,4 +17,6 @@ ALTER TABLE  `loctransfers` CHANGE  `recdate`  `recdate` DATETIME NOT NULL DEFAU
 INSERT INTO scripts VALUES ('GLJournalInquiry.php','15','General Ledger Journal Inquiry');
 INSERT INTO scripts VALUES ('PDFGLJournal.php','15','General Ledger Journal Print');
 
+ALTER TABLE  `www_users` ADD  `department` INT( 11 ) NOT NULL DEFAULT  '0';
+
 UPDATE config SET confvalue='4.08.2' WHERE confname='VersionNumber';
