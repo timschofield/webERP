@@ -1,29 +1,20 @@
 <?php
 
 /* $Id$*/
-echo '</div>'; //end of BODY div
-echo '<div id="FooterDiv">'; //start of FOOTER div
 
-echo '<table class="FooterTbl">';
-echo '<tr>';
-echo '<td style="width:33%"></td><td class="footer">';
-echo '<img src="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="webERP" title="webERP ' . _('Copyright') . ' &copy; weberp.org - ' . date('Y') . '" /></td>';
-echo '<td class="footer" style="text-align: right;width:33%">'. DisplayDateTime() .'</td>';
-
-echo '</tr>';
-echo '<tr><td colspan="3" class="footer">webERP ' ._('version') .' ' . $_SESSION['VersionNumber'] . '</td></tr>';
-
-//	if(http_file_exists('http://sflogo.sourceforge.net/sflogo.php')) {
-//		echo '<tr><td class="footer"><a href="https://sourceforge.net/projects/web-erp"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=391629&amp;type=12" width="120" height="30" border="0" alt="Get webERP web-based ERP Accounting at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></td></tr>';
-//	}
-
-echo '</table>';
-
-echo '</div>'; //end of FOOTER div
-
-echo '</div>'; //end of CANVAS div
-
-echo '</body>
+echo '<table width="100%" id="footer">
+		<tr>
+			<td style="width:33%"></td><td class="footer">
+				<img src="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="webERP" title="webERP ' . _('Copyright') . ' &copy; weberp.org - ' . date('Y') . '" />
+			</td>
+			<td class="footer" style="text-align: right;width:33%">'. DisplayDateTime() .'</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="footer">webERP ' ._('version') .' ' . $_SESSION['VersionNumber'] . '</td>
+		</tr>
+	</table>
+	</div>
+	</body>
 	</html>';
 
 ?>

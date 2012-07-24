@@ -1235,8 +1235,7 @@ then do the updates and inserts to process the invoice entered */
 
 							$sql ="SELECT quantity
 									FROM locstock
-									WHERE loccode='" . $LocCode . "'
-									AND stockid='" . $EnteredGRN->ItemCode . "'";
+									WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
 							$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
 							$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg);

@@ -49,12 +49,12 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 	include('includes/footer.inc');
 	exit;
 }
-echo 'x'.$PathPrefix.'x';
+
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
 }
 
-echo '<table class="BodyTbl">
+echo '<table width="99%">
 		<tr>
 			<td style="width:10%" valign="top">';
 echo '<table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">';

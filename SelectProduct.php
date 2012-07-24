@@ -317,7 +317,7 @@ $DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-saleso
 									FROM salesorderdetails INNER JOIN salesorders
 									ON salesorders.orderno = salesorderdetails.orderno
 									INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
-									INNER JOIN stockmaster stockmaster.stockid=bom.parent
+									INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
 									WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 									AND bom.component='" . $StockID . "'
 									AND stockmaster.mbflag='A'
