@@ -13,6 +13,10 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	$DefaultPriceListRow = DB_fetch_row($result);
 	$DefaultPriceList= $DefaultPriceListRow[0];
 
+	$result = DB_query("SELECT confvalue FROM config WHERE confname='DefaultDateFormat'",$db);
+	$DefaultDateFormatRow = DB_fetch_row($result);
+	$DefaultDateFormat= $DefaultDateFormatRow[0];
+
 
 	$result = DB_query("SELECT currcode, salestype FROM debtorsmaster WHERE debtorno='" . $POSDebtorNo . "'",$db);
 	$CustomerRow = DB_fetch_array($result);
@@ -29,6 +33,8 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 		return 'Cannot open file ' . $PathPrefix . $ReportDir . '/POS.sql';
 	}
 
+	fwrite($FileHandle,"UPDATE config SET configvalue='" . $DefaultDateFormat . "' WHERE configname='DefaultDateFormat';\n");
+	
 	fwrite($FileHandle,"DELETE FROM currencies;\n");
 	$result = DB_query('SELECT currency, currabrev, country, hundredsname,decimalplaces, rate FROM currencies',$db);
 	while ($CurrRow = DB_fetch_array($result)) {
