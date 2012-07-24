@@ -4,7 +4,6 @@ webERP Change Log
 24/7/2012 Phil: includes/Z_POSDataCreation.php - added system default date format config to POS data upload file
 22/7/2012 Phil/Bob Thomas: Fix all scripts where demand was calculated including salesorder quotations (to exclude quotations). CounterSales.php DeliveryDetails.php SelectOrderItems.php StockCheck.php StockLocStatus.php
 22/7/2012 Phil: Fixed on order quantities to exclude purchase orders with status completed and cancelled CounterSales.php SelectOrderItems.php DeliveryDetails.php StockLocStatus.php
-21/7/2012 Hindra: Fix Aguapop theme and table and div nesting of index.php header.inc and footer.inc - and other themes table style width: 95%;
 21/7/2012 Phil: Fix api function for POS prices includes/Z_POSDataCreation.php
 21/7/2012 Ricard: sorting products by discontinued then stockid to ensure obsolete items at the end of the list
 20/7/2012 Tim: Added scripts to inquire on and to print General Ledger Journals
