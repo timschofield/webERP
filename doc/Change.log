@@ -1,5 +1,5 @@
 webERP Change Log
-
+25/7/2012 Exson: Fix the typo to make the $TotalQuantityOnHand is correct in SupplierInvoice.php
 24/7/2012 Exson/Phil: SupplierInvoice.php incorrect calculation of weighted average cost just using the stock quantity at a single location, now corrected
 24/7/2012 Phil: includes/Z_POSDataCreation.php - added system default date format config to POS data upload file
 22/7/2012 Phil/Bob Thomas: Fix all scripts where demand was calculated including salesorder quotations (to exclude quotations). CounterSales.php DeliveryDetails.php SelectOrderItems.php StockCheck.php StockLocStatus.php
