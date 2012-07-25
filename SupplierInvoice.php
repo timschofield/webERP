@@ -1233,7 +1233,7 @@ then do the updates and inserts to process the invoice entered */
 							 * The cost of these items = $ActualCost
 							*/
 
-							$sql ="SELECT quantity
+							$sql ="SELECT sum(quantity)
 									FROM locstock
 									WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
