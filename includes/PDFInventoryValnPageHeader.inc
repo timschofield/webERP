@@ -35,8 +35,9 @@ if ($_POST['DetailedReport']=='Yes'){
 	$LeftOvers = $pdf->addTextWrap(437,$YPos,60,$FontSize,_('Cost'), 'right');
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Extended Cost'), 'right');
 } else {
-	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,320-$Left_Margin,$FontSize,_('Category'), 'right');
-	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,_('Cost'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,320-$Left_Margin,$FontSize,_('Category'), 'center');
+	$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,_('Quantity'), 'right');
+	$LeftOvers = $pdf->addTextWrap(490,$YPos,60,$FontSize,_('Cost'), 'right');
 }
 
 $FontSize=8;

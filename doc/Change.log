@@ -1,4 +1,5 @@
 webERP Change Log
+26/7/2012 Hindra Joshua: New wood theme - mods to index.php / header.inc and footer.inc and modify existing themes to work with new html tag classes used - using <div> tags instead of tables for layout of the main menu
 25/7/2012 Exson: Fix the typo to make the $TotalQuantityOnHand is correct in SupplierInvoice.php
 24/7/2012 Exson/Phil: SupplierInvoice.php incorrect calculation of weighted average cost just using the stock quantity at a single location, now corrected
 24/7/2012 Phil: includes/Z_POSDataCreation.php - added system default date format config to POS data upload file
