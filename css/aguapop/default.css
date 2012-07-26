@@ -1,79 +1,311 @@
-/*** hj aquapop new ***/
+/***
+
+New AguaPop theme for WebERP by Hindra Joshua
+
+Using new theming support any without background images
+
+****/
+
 body {
-    background: silver;  
-}
-#CanvasDiv {
-    background: none;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9px;
-	margin-left: auto;
-    margin-right: auto;
-    width: 960px;	
+	font-size: 8pt;
+/*	color:white;*/
+	background: silver;  
+	margin:0;
+	padding:0;
 }
-/*** HEADER ************************************************************/
-#HeaderDiv {
-	background: url(images/top_bg.png) top no-repeat silver;
-}
-.HeaderTbl {
-	padding-top:12px;
-    width:99%;
-}
-/*** BODY **************************************************************/
-#BodyDiv {
-	background:url("images/body_bg.png") repeat-y scroll center center silver;
-    text-align:center;
-}
-
-.BodyTbl {
-	background:none repeat scroll 0 0 steelblue;
-    width:932px;
-}
-/*** eof BodyDiv *** 
-
-/*** FOOTER ************************************************************/
-#FooterDiv {
-	background: url(images/footer.png) bottom no-repeat silver;
-	padding-top: 10px;
-	padding-bottom: 18px;
-}
-
-.FooterTbl {
-	width:838px;
-}
-/************************************************************************/
 
 img {
-	border: none;
 	vertical-align:middle;
 }
-
-/*links before selection */
-a {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9px;
-	font-weight: bold;
+/*a {
+	color: blue;
 	text-decoration: none;
-	color: black;
 }
-
-/*links on any screen when mouse is hovering over them */
 a:hover {
-	color: seagreen;
+	color: lightblue;
 	text-decoration: none;
-}
-
+}*/
 table {
 	 background-color: none;
 	 margin: 0 auto;
 	 width:90%
 }
 
+
+/*** CANVAS ************************************************************/
+
+#CanvasDiv { 
+    background:steelblue;
+	margin:10px;
+	border:thick outset steelblue;
+	border-radius:20px;
+}
+
+/*** HEADER ************************************************************/
+
+#HeaderDiv {
+	padding:2px;
+	color:white;
+}
+#HeaderDiv a{
+	color:white;
+	text-decoration:none;
+	border:2px inset transparent;
+	border-radius:10px;
+	padding:3px;	
+}
+#HeaderDiv a:hover{
+	color:cyan;
+	border:2px inset steelblue;
+	border-radius:10px;
+	padding:3px;
+}
+#HeaderWrapDiv{
+}
+#AppInfoDiv{
+	float:left;
+}
+#AppInfoCompanyDiv{
+	float:left;
+}
+#AppInfoUserDiv{
+	float:left;
+}
+#AppInfoModuleDiv{
+	font-weight:bold;
+	font-size:10pt;
+}
+
+/*** Quick Menu ***/
+
+#QuickMenuDiv{
+	float:right;
+}
+#QuickMenuDiv ul{
+	list-style:none;
+	float:right;
+}
+#QuickMenuDiv ul li{
+	display:inline;
+	margin: 0px 3px;
+	float: left;
+}
+
+/*** BODY **************************************************************/
+
+#BodyDiv {
+	clear:both;
+}
+
+#BodyWrapDiv{
+	background:lightsteelblue;
+	margin:5px;
+}
+
+/*** MAIN MENU ***/
+
+#MainMenuDiv{
+	float:left;
+	width:10%;
+	white-space:nowrap;
+	text-align:center;
+	padding:3px;
+}
+#MainMenuDiv ul{
+	margin:0; 
+	padding:0;
+}
+#MainMenuDiv li{
+	list-style:none; 
+}
+#MainMenuDiv li a:link, a:visited{
+	color:white;
+	text-decoration:none;
+}
+#MainMenuDiv li a:hover{
+	color:cyan;
+}
+
+.main_menu_unselected {
+	border:2px inset transparent;
+	border-radius:10px;
+	padding:3px;
+}
+.main_menu_unselected:hover{
+	border:2px inset steelblue;
+	border-radius:10px;
+	padding:3px;
+}
+.main_menu_unselected a{
+}
+.main_menu_unselected a:hover{
+}
+
+.main_menu_selected {
+	border:2px inset steelblue;
+	border-radius:10px;
+	padding:3px;
+}
+.main_menu_selected:hover{
+	border:2px inset steelblue;
+	border-radius:10px;
+	padding:3px;
+}
+.main_menu_selected a{
+}
+.main_menu_selected a:hover{
+}
+
+/*********************************************/
+#SubMenuDiv{
+    float:right;
+    margin:0;
+    padding:0;
+	overflow: hidden;
+	width: 87%;
+}
+#SubMenuDiv ul{
+	margin:0;
+	padding:0;
+}
+#SubMenuDiv li{
+	list-style:none;
+}
+#SubMenuDiv a{
+	color:black;
+	text-decoration:none;
+}
+#SubMenuDiv a:hover{
+	color:blue;
+	text-decoration:none;
+}
+#TransactionsDiv{
+	background:whitesmoke;
+    border:thin inset whitesmoke;
+    float:left;
+    list-style:none;
+    width:32%;
+	padding:0px;	
+}
+#InquiriesDiv{
+	background:whitesmoke;
+    border:thin inset whitesmoke;
+    float:left;
+    list-style:none;
+    width:32%;
+	padding:0px;				
+}
+#MaintenanceDiv{
+	background:whitesmoke;
+    border:thin inset whitesmoke;
+    float:left;
+    list-style:none;
+    width:32%;
+	padding:0px;		
+}
+.menu_group_headers {
+	background:steelblue;
+    border:thin outset steelblue;
+	padding:3px;	
+    text-align:center;
+	color:white;
+}
+.menu_group_headers table{
+}
+.menu_group_img {
+	background-color: gainsboro;
+	text-align: center;
+	width: 90px;
+	position: relative;
+	left: 3px;
+}
+
+.menu_group_img img{
+	position: relative;
+	top: 10px;
+}
+
+.menu_group_area {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	border-top: 0px;
+	margin-top: 0px;
+	padding-top: 0px; /*this creates the border*/
+	color: seagreen;
+}
+
+.blank_area table {
+	border: 0px;
+	width: 100%;
+}
+
+
+
+.menu_group_headers_text {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+}
+
+.menu_group_items {
+	vertical-align: top;
+	background-color: white;
+	font-weight: bold;
+	padding: 15px;
+	border: 1px inset steelblue;
+}
+
+.menu_group_item {
+	padding:3px;
+}
+.menu_group_item:hover{
+	background:lightblue;
+}
+
+.menu_group_item p {
+	color: steelblue; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px; 
+}
+/*** FOOTER ************************************************************/
+#FooterDiv{
+	clear:both;
+    color:black;
+    height:52px;
+}
+#FooterWrapDiv{
+	padding:5px;
+}
+#FooterLogoDiv{
+	background:white;
+    border:2px outset sandybrown;
+    border-radius:8px 8px 8px 8px;
+    float:left;
+    padding:5px;
+}	
+#FooterVersionDiv{
+	float:left;
+    margin-left:10px;
+    margin-top:15px;
+
+}
+#FooterTimeDiv{
+	float:right;
+    margin-top:15px;
+}
+
+/************************************************************************/
+
+
 .dpTbl {
 	 border: solid navy 1px;
 }
 
 div.centre {
-    /*padding-bottom:10px;*/
+    padding-bottom:5px;
 	text-align:center;
 }
 
@@ -89,8 +321,8 @@ td.select {
 }
 
 table.selection {
-	background:none repeat scroll 0 0 lightsteelblue;
-	border:2px outset steelblue;
+	background:whitesmoke;
+	border:2px inset whitesmoke;
     padding:0;
     width:90%;
 }
@@ -400,47 +632,6 @@ div.csv {
 	margin: 2px;
 }
 
-.main_menu_unselected {
-	background-color: steelblue;
-	padding: 2px;
-	border-bottom: 2px;
-	font-weight: normal;
-	position: relative;
-	top: 0px;
-	text-align: left;
-	white-space: nowrap;
-
-}
-
-.main_menu_unselected:hover{
-}
-.main_menu_selected:hover{
-}
-
-.main_menu_unselected a{
-}
-
-.main_menu_unselected a:hover{
-}
-
-.main_menu_selected {
-	background: url(images/tab_bg.png)right no-repeat steelblue;
-	padding: 3px;
-	padding-right: 0px;
-	font-weight: normal;
-	position: relative;
-	text-align: right;
-	white-space: nowrap;
-}
-
-.main_menu_selected a{
-	
-}
-
-.main_menu_selected a:hover{
-  
-}
-
 span.main_menu_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
@@ -462,73 +653,12 @@ span.main_menu_nolink {
 	color: lightsteelblue;
 }
 
-.menu_group_img {
-	background-color: gainsboro;
-	text-align: center;
-	width: 90px;
-	position: relative;
-	left: 3px;
-}
 
-.menu_group_img img{
-	position: relative;
-	top: 10px;
-}
-
-.menu_group_area {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 11px;
-	font-weight: bold;
-	border-top: 0px;
-	margin-top: 0px;
-	padding-top: 0px; /*this creates the border*/
-	color: seagreen;
-}
-
-.blank_area table {
-	border: 0px;
-	width: 100%;
-}
-
-.menu_group_headers {
-	background:lightsteelblue;
-}
-
-.menu_group_headers table{
- }
-
-.menu_group_headers_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	color: white;
-}
-
-.menu_group_items {
-	vertical-align: top;
-	background-color: white;
-	font-weight: bold;
-	padding: 15px;
-	border: 1px inset steelblue;
-}
-
-.menu_group_item {
-	background-color: white;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-
-.menu_group_item p {
-	color: steelblue; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; 
-}
 
 .page_title_text {
 	font-weight:bold;
-    margin-top:0;
-    padding-bottom:5px;
-    padding-top:5px;
+	text-align:center;
+	padding-top:5px;
 }
 
 DIV.page_help_text {

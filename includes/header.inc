@@ -11,9 +11,11 @@
 			$rootpath = '';
 		}
 	}
+
+	$ViewTopic = isset($ViewTopic)?'?ViewTopic=' . $ViewTopic : '';
+	$BookMark = isset($BookMark)? '#' . $BookMark : '';
 	$StrictXHTML=False;
-    $ViewTopic = isset($ViewTopic)?"?ViewTopic=$ViewTopic":'';
-    $BookMark = isset($BookMark)? "#$BookMark":'';
+
 	if (!headers_sent()){
 		if ($StrictXHTML) {
 			header('Content-type: application/xhtml+xml; charset=utf-8');
@@ -27,7 +29,6 @@
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
-
 	echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $title . '</title>';
 	echo '<link rel="shortcut icon" href="'. $rootpath.'/favicon.ico" />';
 	echo '<link rel="icon" href="' . $rootpath.'/favicon.ico" />';
@@ -39,40 +40,45 @@
 	echo '<link href="' . $rootpath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
 	echo '<script type="text/javascript" src = "'.$rootpath.'/javascripts/MiscFunctions.js"></script>';
 	echo '</head>';
-
 	echo '<body>';
 
-	echo '<div id="canvas">'; 	 
-	echo '<table class="callout_main" cellpadding="0" cellspacing="0">';
-	echo '<tr>';
-	echo '<td colspan="2" rowspan="2">';
+
+    echo '<div id="CanvasDiv">'; 
+	echo '<div id="HeaderDiv">'; 
+	echo '<div id="HeaderWrapDiv">'; 
+
 
 	if (isset($title)) {
-		echo '<table cellpadding="0" cellspacing="0" border="0" id="quick_menu" class="quick_menu">';
-		echo '<tr>';
-		echo '<td align="left" style="width:100%;" class="quick_menu_left">';
-// Use icons for company and user data, saves screen realestate, use alt tag in case theme icon not avail.
-		echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.png" title="' . _('Company') . '" alt="' . _('Company') . '" />';
-		echo ' ' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '  <a href="' .  $rootpath . '/UserSettings.php"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="User" alt="' . _('User') . '" />' . stripslashes($_SESSION['UsersRealName']) . '</a>';
-// Make the title text a class, can be set to display:none is some themes
-		echo '<br />' . $title . '</td>';
-		echo '<td class="quick_menu_tabs">';
-		echo '<table cellpadding="0" cellspacing="0" class="quick_menu_tabs"><tr>';
-		echo '<td class="quick_menu_tab" align="center"><a href="' .  $rootpath . '/index.php"><span style="text-decoration:underline;">1</span> ' . _('Main Menu') . '</a></td>';
+
+	
+		echo '<div id="AppInfoDiv">'; //===HJ===
+			echo '<div id="AppInfoCompanyDiv">';
+				echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.png" title="'._('Company').'" alt="'._('Company').'"/>'.stripslashes($_SESSION['CompanyRecord']['coyname']);
+			echo '</div>';
+			echo '<div id="AppInfoUserDiv">';
+				echo '<a href="'. $rootpath.'/UserSettings.php"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="User" alt="'._('User').'"/>'.stripslashes($_SESSION['UsersRealName']).'</a>';
+			echo '</div>';
+			echo '<div id="AppInfoModuleDiv">';
+				// Make the title text a class, can be set to display:none is some themes
+				echo $title;
+			echo '</div>';
+		echo '</div>'; // AppInfoDiv
+
+
+		echo '<div id="QuickMenuDiv"><ul>'; 
+		
+		echo '<li><a href="'.$rootpath.'/index.php">'._('Main Menu').'</a></li>'; //take off inline formatting, use CSS instead ===HJ===
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
+			echo '<li><a href="'.$rootpath.'/SelectCustomer.php">'._('Customers').'</a></li>';
+			echo '<li><a href="'.$rootpath.'/SelectProduct.php">' ._('Items')    .'</a></li>';
+			echo '<li><a href="'.$rootpath.'/SelectSupplier.php">'._('Suppliers').'</a></li>';
+			
+			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $rootpath . '/doc/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">'._('Manual').'</a></li>';
 
-			echo '<td class="quick_menu_tab" align="center"><a href="' .  $rootpath . '/SelectCustomer.php"><span style="text-decoration:underline;">2</span> ' . _('Customers') . '</a></td>';
-
-			echo '<td class="quick_menu_tab" align="center"><a href="' .  $rootpath . '/SelectProduct.php"><span style="text-decoration:underline;">3</span> ' . _('Items') . '</a></td>';
-
-			echo '<td class="quick_menu_tab" align="center"><a href="' .  $rootpath . '/SelectSupplier.php"><span style="text-decoration:underline;">4</span> ' . _('Suppliers') . '</a></td>';
-
-			$DefaultManualLink = '<td class="quick_menu_tab" align="center"><a rel="external" accesskey="8" href="' .  $rootpath . '/doc/Manual/ManualContents.php'. $ViewTopic . $BookMark. '"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
-
-			if (mb_substr($_SESSION['Language'],0,2) !='en'){
-				if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')){
-					echo '<td class="quick_menu_tab" align="center"><a target="_blank" href="' .  $rootpath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php'.$ViewTopic . $BookMark.'"><span style="text-decoration:underline;">8</span> ' . _('Manual') . '</a></td>';
+			if (mb_substr($_SESSION['Language'],0,2) != 'en'){
+				if (file_exists('locale/'.$_SESSION['Language'].'/Manual/ManualContents.php')){
+					echo '<li><a target="_blank" href="'.$rootpath.'/locale/'.$_SESSION['Language'].'/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">'._('Manual').'</a></li>';
 				} else {
 					echo $DefaultManualLink;
 				}
@@ -81,15 +87,13 @@
 			}
 		}
 
-		echo '<td class="quick_menu_tab" align="center"><a href="' . $rootpath . '/Logout.php" onclick="return confirm(\'' . _('Are you sure you wish to logout?') . '\');"><span style="text-decoration:underline;">0</span> '  . _('Logout') . '</a></td>';
+		echo '<li><a href="'.$rootpath.'/Logout.php" onclick="return confirm(\''._('Are you sure you wish to logout?').'\');">'._('Logout').'</a></l>';
 
-		echo '</tr></table>';
-		echo '</td></tr></table>';
-
+		echo '</ul></div>'; // QuickMenuDiv
 	}
-
-echo '</td>';
-echo '</tr>';
-echo '</table>';
+	echo '</div>'; // HeaderWrapDiv 
+	echo '</div>'; // Headerdiv
+	echo '<div id="BodyDiv">'; 
+	echo '<div id="BodyWrapDiv">'; 
 
 ?>

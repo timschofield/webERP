@@ -5,6 +5,7 @@ include('includes/session.inc');
 $title=_('Main Menu');
 include('includes/header.inc');
 
+
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 include('includes/MainMenuLinksArray.php');
 
@@ -46,6 +47,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 			</td>
 			</tr>
 		</table>';
+
 	include('includes/footer.inc');
 	exit;
 }
@@ -54,15 +56,10 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 	$_SESSION['Module'] = $_GET['Application'];
 }
 
-echo '<table width="99%">
-		<tr>
-			<td style="width:10%" valign="top">';
-echo '<table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">';
-
+//=== MainMenuDiv =======================================================================
+echo '<div id="MainMenuDiv"><ul>'; //===HJ===
 $i=0;
-
 while ($i < count($ModuleLink)){
-
 	// This determines if the user has display access to the module see config.php and header.inc
 	// for the authorisation and security code
 	if ($_SESSION['ModulesEnabled'][$i]==1)	{
@@ -72,120 +69,102 @@ while ($i < count($ModuleLink)){
 			$_SESSION['Module']=$ModuleLink[$i];
 		}
 		if ($ModuleLink[$i] == $_SESSION['Module']){
-			echo '<tr>
-					<td class="main_menu_selected"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>
-				</tr>';
+			echo '<li class="main_menu_selected">';
 		} else {
-			echo '<tr>
-					<td class="main_menu_unselected"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></td>
-				</tr>';
+			echo '<li class="main_menu_unselected">';
+			
 		}
+		echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></li>';
 	}
 	$i++;
 }
+echo '</ul></div>'; // MainMenuDiv ===HJ===
 
-echo '</table>';
 
-echo '</td>';
-echo '<td style="width:30%" valign="top">';
+//=== SubMenuDiv (wrapper) ==============================================================================
+echo '<div id="SubMenuDiv">'; //===HJ===
+
+
+echo '<div id="TransactionsDiv"><ul>'; //=== TransactionsDiv ===
+
+echo '<li class="menu_group_headers">'; //=== SubMenuHeader ===
 if ($_SESSION['Module']=='system') {
 	$Header='<img src="' . $rootpath . '/css/' . $theme . '/images/company.png" title="' . _('General Setup Options') . '" alt="' . _('General Setup Options') . '" /><b>' . _('General Setup Options') . '</b>';
 } else {
 	$Header='<img src="' . $rootpath . '/css/' . $theme . '/images/transactions.png" title="' . _('Transactions') . '" alt="' . _('Transactions') . '" /><b>'. _('Transactions') . '</b>';
 }
-echo '	<table width="100%" class="selection">
-			<tr>
-				<td class="menu_group_headers">
-				<div class="centre">
-					' . $Header . '
-				</div>
-				</td>
-			</tr>';
+echo $Header;
+echo '</li>'; // SubMenuHeader
 
+//=== SubMenu Items ===
 $i=0;
 foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption) {
 /* Transactions Menu Item */
 	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i],1));
 	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
 	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-		echo '<tr>
-				<td class="menu_group_item">
-					<p>&bull; <a href="' . $rootpath . $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i] .'">' . $Caption . '</a></p>
-				</td>
-				</tr>';
+		echo '<li class="menu_group_item">
+				<p>&bull; <a href="' . $rootpath . $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i] .'">' . $Caption . '</a></p>
+			  </li>';
 	}
 	$i++;
 }
-echo '</table>';
-echo '</td>';
+echo '</ul></div>'; //=== TransactionsDiv ===
 
 
-echo '<td style="width:30%" valign="top">';
+echo '<div id="InquiriesDiv"><ul>'; //=== InquiriesDiv ===
+
+echo '<li class="menu_group_headers">';
 if ($_SESSION['Module']=='system') {
 	$Header='<img src="' . $rootpath . '/css/' . $theme . '/images/ar.png" title="' . _('Receivables/Payables Setup') . '" alt="' . _('Receivables/Payables Setup') . '" /><b>' . _('Receivables/Payables Setup') . '</b>';
 } else {
 	$Header='<img src="' . $rootpath . '/css/' . $theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" alt="' . _('Inquiries and Reports') . '" /><b>'. _('Inquiries and Reports') . '</b>';
 }
-echo '	<table width="100%" class="selection">
-			<tr>
-				<td class="menu_group_headers">
-				<div class="centre">
-					' . $Header . '
-				</div>
-				</td>
-			</tr>';
+echo $Header;
+echo '</li>';
+
+
 $i=0;
 foreach ($MenuItems[$_SESSION['Module']]['Reports']['Caption'] as $Caption) {
 /* Transactions Menu Item */
 	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Reports']['URL'][$i],1));
 	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
 	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-		echo '<tr>
-				<td class="menu_group_item">
-					<p>&bull; <a href="' . $rootpath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] .'">' . $Caption . '</a></p>
-				</td>
-				</tr>';
+		echo '<li class="menu_group_item">
+				<p>&bull; <a href="' . $rootpath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] .'">' . $Caption . '</a></p>
+			  </li>';
 	}
 	$i++;
 }
-echo GetRptLinks($_SESSION['Module']);
-echo '</table>';
-echo '</td>';
+echo GetRptLinks($_SESSION['Module']); //=== GetRptLinks() must be modified!!! ===
+echo '</ul></div>'; //=== InquiriesDiv ===
 
 
-echo '<td style="width:30%" valign="top">';
+echo '<div id="MaintenanceDiv"><ul>'; //=== MaintenanceDive ===
+
+echo '<li class="menu_group_headers">';
 if ($_SESSION['Module']=='system') {
 	$Header='<img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory Setup') . '" alt="' . _('Inventory Setup') . '" /><b>' . _('Inventory Setup') . '</b>';
 } else {
 	$Header='<img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Maintenance') . '" alt="' . _('Maintenance') . '" /><b>'. _('Maintenance') . '</b>';
 }
-echo '	<table width="100%" class="selection">
-			<tr>
-				<td class="menu_group_headers">
-				<div class="centre">
-					' . $Header . '
-				</div>
-				</td>
-			</tr>';
+echo $Header;
+echo '</li>';
+
 $i=0;
 foreach ($MenuItems[$_SESSION['Module']]['Maintenance']['Caption'] as $Caption) {
 /* Transactions Menu Item */
 	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i],1));
 	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
 	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-		echo '<tr>
-				<td class="menu_group_item">
-					<p>&bull; <a href="' . $rootpath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] .'">' . $Caption . '</a></p>
-				</td>
-			</tr>';
+		echo '<li class="menu_group_item">
+				<p>&bull; <a href="' . $rootpath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] .'">' . $Caption . '</a></p>
+			  </li>';
 	}
 	$i++;
 }
-echo '</table>';
-echo '</td>';
-
-echo '</tr>
-	</table>';
+echo '</ul></div>'; // MaintenanceDive ===HJ===
+echo '</div>'; // SubMenuDiv ===HJ===
 
 include('includes/footer.inc');
 

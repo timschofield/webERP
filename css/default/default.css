@@ -1,25 +1,20 @@
-/*--------------------------------------------------\
-|               |               | default.css       |
-|---------------------------------------------------|
-| For use with:                                     |
-| Web-ERP - http://web-erp.sourceforge.net          |
-\--------------------------------------------------*/
+/***
 
-/* $Id$*/
+New Default Theme for WebERP
+
+***/
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
 	background-color: #CCCCDD;
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-right: 0px;
-	padding: 0px;
+	margin:0;
+	padding:0
 }
 
 img {
 	border:none;
+	vertical-align:middle;
 }
 
 /*links before selection */
@@ -41,15 +36,257 @@ a:hover {
 table {
   background-color: #587BA6;
   margin: 0 auto;
+  width:100%;
 }
 
-.dpTbl {
-	border: solid navy 1px;
+
+/*** CANVAS ***/
+
+#CanvasDiv {
 }
+
+/*** HEADER ***/
+
+#HeaderDiv {
+	color:white;
+	background:#588BB6;
+	overflow:hidden;
+}
+#HeaderDiv a{
+	color:white;
+}
+#HeaderDiv a:hover{
+	color:black;
+	background:white;
+	text-decoration:underline;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	display:table;
+	float:left;
+	padding:
+}
+#AppInfoDiv img{
+	vertical-align:middle;
+}
+#AppInfoCompanyDiv{
+	display:table-cell;
+}
+#AppInfoUserDiv{
+	display:table-cell;
+}
+#AppInfoModuleDiv{
+	display:table-row-group;
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right;
+}
+#QuickMenuDiv ul{
+}
+#QuickMenuDiv ul li{
+	display:inline;
+	border-left:thin ridge #588BB6;
+	padding:10px;
+}
+
+/*** BODY ***/
+
+#BodyDiv {
+	clear:both;
+/*	margin-left:5px;
+	margin-right:5px;*/
+	color:black;
+	background:#588BB6;
+	overflow:hidden;	
+}
+#BodyDiv table {
+	width:90%;
+	text-align:center;
+}
+
+#BodyWrapDiv{
+	background:#CCCCCC;
+}
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:left;
+	width:11%;
+	white-space:nowrap;
+	text-align:center;
+	border:thin solid gray;
+}
+#MainMenuDiv ul{
+	margin:0; 
+	padding:0;
+}
+#MainMenuDiv li{
+	list-style:none; 
+}
+#MainMenuDiv li a:link, a:visited{
+/*	color:black;
+	font-weight:bold;*/
+}
+#MainMenuDiv li a:hover{
+	color:black;
+	background:white;
+	text-decoration:underline;
+}
+
+.main_menu_unselected{
+	background:#40FC40;
+	padding:2px;
+}
+.main_menu_unselected:hover{
+	background:white;
+}
+.main_menu_unselected a{
+}
+.main_menu_unselected a:hover{
+}
+.main_menu_selected {
+	background-color: white;
+	border:thin solid gray;
+	font-weight: normal;
+	text-align: center;
+	white-space: nowrap;
+	padding:2px;
+}
+.main_menu_selected:hover{
+}
+.main_menu_selected a{
+}
+.main_menu_selected a:hover{
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table;
+    float:right;
+	overflow: hidden;
+	min-width: 88%;
+}
+#SubMenuDiv ul{
+	margin:0;
+	padding:0;
+}
+#SubMenuDiv li{
+	list-style:none;
+}
+#SubMenuDiv a{
+}
+#SubMenuDiv a:hover{
+	color:green;
+	text-decoration:underline;
+}
+#TransactionsDiv{
+    float:left;
+    list-style:none;
+    width:33%;
+	border:thin solid black;
+	background:#EEEEEE;
+/*	display:table-cell;	*/
+}
+#InquiriesDiv{
+    float:left;
+    list-style:none;
+    width:33%;
+	border:thin solid black;
+	background:#EEEEEE;
+/*	display:table-cell;	*/
+}
+#MaintenanceDiv{
+    float:left;
+    list-style:none;
+    width:33%;
+	border:thin solid black;
+	background:#EEEEEE;
+/*	display:table-cell;	*/
+}
+.menu_group_headers {
+	text-align:center;
+	color:black;
+	background:#EEEEEE;	
+	border: thin outset #EEEEEE;
+}
+/*.menu_group_headers table{
+}*/
+/*.menu_group_headers_text {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: white;
+}
+*/
+/*.menu_group_items {
+	background-color: white;
+	font-weight: normal;
+	padding: 15px;
+	border-top: 0px #AAAAAA solid;
+	border-left: 0px #AAAAAA solid;
+	border-right: 0px white solid;
+	border-bottom: 0px white solid;
+}*/
+.menu_group_item {
+	background-color: white;
+	padding:2px;
+}
+.menu_group_item p {
+	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both;
+    color:#CCCCCC;
+	background:#588BB6;
+    overflow:hidden;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:5px;
+}
+#FooterLogoDiv{
+	background:white;
+    border-radius:8px 8px 8px 8px;
+    float:left;
+    padding:5px;
+}	
+#FooterVersionDiv{
+	float:left;
+    margin-left:10px;
+    margin-top:15px;
+
+}
+#FooterTimeDiv{
+	float:right;
+    margin-top:15px;
+}
+
+/*** MISC ***/
 
 div.centre {
   margin: 0 auto;
   text-align:center;
+}
+
+
+
+/*
+.dpTbl {
+	border: solid navy 1px;
 }
 
 /*table detail items default format */
@@ -410,54 +647,7 @@ div.csv {
 	margin-bottom: 2px;
 }
 
-.main_menu_unselected {
-	background-color: #40fc40;
-	border-left: 1px #AAAAAA solid;
-	border-right: 1px #AAAAAA solid;
-	border-bottom: 0px;
-	font-weight: normal;
-	height: 16pt;
-	position: relative;
-	top: 3px;
-	text-align: center;
-	white-space: nowrap;
 
-}
-
-.main_menu_unselected:hover{
-}
-.main_menu_selected:hover{
-}
-
-.main_menu_unselected a{
-}
-
-.main_menu_unselected a:hover{
-}
-
-.main_menu_selected {
-	background-color: white;
-	border-top: 1px #AAAAAA solid;
-	border-left: 1px #AAAAAA solid;
-	border-right: 1px #AAAAAA solid;
-	border-bottom: 0px;
-	font-weight: normal;
-	height: 16pt;
-	position: relative;
-	top: 3px;
-	text-align: center;
-	white-space: nowrap;
-}
-
-.main_menu_selected a{
-	color: #eee;
-    font-weight:bold;
-}
-
-.main_menu_selected a:hover{
-	color: #fff;
-	text-decoration: none;
-}
 
 span.main_menu_nolink {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -507,42 +697,7 @@ span.main_menu_nolink {
 	width: 100%;
 }
 
-.menu_group_headers {
-  border: 0px outset #AAAAAA;
-  width: 25%;
-}
 
-.menu_group_headers table{
- }
-
-.menu_group_headers_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	color: white;
-}
-
-.menu_group_items {
-	background-color: white;
-	font-weight: normal;
-	padding: 15px;
-	border-top: 0px #AAAAAA solid;
-	border-left: 0px #AAAAAA solid;
-	border-right: 0px white solid;
-	border-bottom: 0px white solid;
-}
-
-.menu_group_item {
-	background-color: white;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-
-.menu_group_item p {
-	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
-}
 
 .page_title_text {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
