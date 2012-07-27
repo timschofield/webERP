@@ -159,7 +159,7 @@ if (isset($_POST['Submit'])) {
 					description,
 					authoriser
 			FROM departments
-			ORDER BY departmentid";
+			ORDER BY description";
 
 	$ErrMsg = _('There are no departments created');
 	$result = DB_query($sql,$db,$ErrMsg);
