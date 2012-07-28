@@ -36,16 +36,12 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<table class="selection">';
 	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ':</td><td><select name="SelectedTabs">';
 
-	if ($_SESSION['AccessLevel'] >= 15){ // superuser can supervise the supervisors
-		$SQL = "SELECT tabcode
-			FROM pctabs
-			ORDER BY tabcode";
-	}else{
-		$SQL = "SELECT tabcode
-			FROM pctabs
-			WHERE ( authorizer='" . $_SESSION['UserID'] . "' OR usercode ='" . $_SESSION['UserID'] . "' )
-			ORDER BY tabcode";
-	}
+	$SQL = "SELECT tabcode
+		FROM pctabs
+		WHERE ( authorizer='" . $_SESSION['UserID'] . 
+			"' OR usercode ='" . $_SESSION['UserID']. 
+			"' OR assigner ='" . $_SESSION['UserID'] . "' )
+		ORDER BY tabcode";
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
