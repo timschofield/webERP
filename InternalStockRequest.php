@@ -104,6 +104,17 @@ if (isset($_POST['Submit'])) {
 			$Result = DB_query($LineSQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 
+		$EmailSQL="SELECT email
+					FROM www_users, departments
+					WHERE departments.authoriser = www_users.userid
+						AND departments.departmentid = '" . $_SESSION['Request']->Department ."'";
+		$EmailResult = DB_query($EmailSQL,$db);
+		if ($myEmail=DB_fetch_array($EmailResult)){
+			$ConfirmationText = _('An internal stock request has been created and is waiting for your authoritation');
+			$EmailSubject = _('Internal Stock Request needs your authoritation');
+			mail($myEmail['email'],$EmailSubject,$ConfirmationText);
+		}
+
 	}
 	DB_Txn_Commit($db);
 	prnMsg( _('The internal stock request has been entered and now needs to be authorised'), 'success');
