@@ -1,126 +1,83 @@
-/*--------------------------------------------------\
-|               |               | default.css       |
-|---------------------------------------------------|
-| For use with:                                     |
-| Web-ERP - http://web-erp.sourceforge.net          |
-| by Logic Works Ltd                                |
-|---------------------------------------------------|
-| Developer:                                        |
-| Shane Barnaby                                     |
-| Steve Kaill                                       |
-| Ali Hosseini                                      |
-|---------------------------------------------------|
-| Note:                                             |
-| Changes can be made to this CSS that will be      |
-| reflected throughout Web-ERP.                     |
-|
-\--------------------------------------------------*/
-/* $Id$*/
+/*** 
+
+New "Professional RTL" Theme for WebERP
+For Right-To-Left Languages
+
+by Hindra Joshua
+
+*** This a very clean professional-looking theme - handsome!
+
+Based from the previous theme "SilverWolf"
+Credits to the original authors.
+
+NOTE: 
+This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
+but for the obvious one it will be cleaned up.
+To optimized the rest we should examined the whole codes! That would be for 
+the next project. :)
+
+***/
 
 body {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
-	background-color: #DDDDDD;
-	margin-left: 10px;
-	margin-top: 5px;
-	margin-bottom: 0px;
-	margin-right: 10px;
-	padding: 0px;
-	direction: rtl;
+	background-color: #ddd;
+	margin:0;
+	padding:0;
+	direction:rtl;
 }
 
 img {
 	border:none;
+	vertical-align:middle;
 }
-
-/*links before selection */
 a {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	text-decoration: none;
-	color: #0000FF;
+	color:blue;
+	text-decoration:none;
 }
-
-/*links on any screen when mouse is hovering over them */
 a:hover {
-	color: #0000AA;
-	text-decoration: underline;
+	color:blue;
+	text-decoration:underline;
 }
 
-table {
-  background-color: #EEEEFF;
-  margin: 0 auto;
-}
-
-.dpTbl {
-	border: solid navy 1px;
-}
-
-div.centre {
+.centre { /* used */
   margin: 0 auto;
   text-align:center;
 }
 
 /*table detail items default format */
 td {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-family: Arial, Verdana, Helvetica;
 	font-size: 10px;
 	text-align: left;
 }
-
 td.select {
 	background-color:#eee;
 }
-
-table.selection {
-	background-color:#eee;
-	outline-style:solid;
-	outline-width:1px;
-}
-
-.dpTD {
-	border: 0;
-	width:20px;
-	background-color: #EEEEEE;
-	text-align:right;
-	cursor:pointer;
-}
-
-.dpDayHighlight {
-	border: 0;
-	width:20px;
-	background-color: yellow;
-	text-align:right;
-	cursor:pointer;
-}
-
-.dpTDHover {
-	border: 0;
-	width:20px;
-	background-color: #CCCCCC;
-	text-align:right;
-	cursor:pointer;
-}
-
 td.number {
 	text-align: right;
 }
 
 .EvenTableRows {
-	background: #CCCCCC;
+	background-color: #CCCCCC;
 }
-
 .OddTableRows {
-	background: #EEEEEE;
+	background-color: #EEEEEE;
 }
 
-th {
+th { /* table heading */
 	font-weight: normal;
 	font-size: 10px;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: center;
+}
+th.number {
+	font-weight: normal;
+	font-size: 10px;
+	background-color: #cccce5;
+	color: #330000;
+	text-align: right;
 }
 
 div.error {
@@ -134,85 +91,73 @@ div.warn {
 	color: maroon;
 	border: 1px solid maroon;
 }
-
 div.success {
 	background-color:#b9ecb4;
 	color: darkgreen;
 	border: 1px solid darkgreen;
 }
-
 div.info {
 	background-color:#c7ccf6;
 	color: navy;
 	border: 1px solid navy;
 }
 
+/* input as button or text */
+/* NOTE: input for button should have different class, one for 'normal' and one for 'input button inside a table,
+which should have the same width as the column where it is located 
+e.g.: class input_button, input_column_button, input_text */
 input {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-family: Arial, Verdana, Helvetica;
 	font-size: 10px;
 }
-
 input.number{
 	text-align: right;
 }
-
 input.image {
 	border-width:0px;
 	background-color: transparent;
 }
-
 input:hover{
+	background:lightblue;
+}
+input.big {
+	width: 100px;
+}
+input.small {
+	width: 50px;
+}
+input.inputerror {
+	background-color: #fddbdb;
 }
 
+/* for buttons ***HJ***/
+button{
+	font-size:10px;
+}
+button:hover{
+	background:lightblue;
+}
+
+/* dropdown box */
+
 select {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-family: Arial, Verdana, Helvetica;
 	font-size: 10px;
+}
+select.selecterror {
+	background-color: #fddbdb;
+}
+select:hover{
+	background:lightblue;
 }
 
 p.good {
     font-weight: bold;
     color: green;
 }
-
 p.bad {
     font-weight: bold;
     color:red;
-}
-
-#topMenu {
-	width: 100%;
-	color: black;
-	background-color: white;
-	border: none;
-	border-bottom: 1px solid #999999;
-}
-
-#trim {
-	background: white;
-}
-
-#page {
-	width: 100%;
-	color: black;
-	font-size: 10px;
-	white-space: nowrap;
-	border: none;
-}
-
-#menuImg {
-	vertical-align: top;
-	text-align: center;
-	margin: 0px;
-	padding: 10px;
-}
-
-#mainMenu {
-	width: 100%;
-	color: black;
-	background-color: white;
-	border: none;
-	margin: 0px;
-	padding: 0px;
 }
 
 .header {
@@ -224,18 +169,13 @@ p.bad {
 	padding: 0px;
 }
 
-.login {
-	background-color: white;
-	border: none;
-}
-
-textarea{
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
+textarea{ /* default style for textarre */
+	font-family: Arial, Verdana, Helvetica;
 	font-size: 10px;
 }
-
 textarea:hover{
 }
+
 /* Table type is used for UI tables type 1 */
 .table1 {
   width:90%;
@@ -259,7 +199,7 @@ div.csv {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
+        font-family: Arial, Verdana, Helvetica;
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
@@ -267,253 +207,7 @@ div.csv {
         TEXT-ALIGN:center;
 }
 
-.callout_main {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
-	background-color: white;
-	border: none;
-	width: 100%;
-	margin: 0px;
-	padding: 0px;
-}
-
-.main_page {
-	background-color: white;
-	border: none;
-	width: 100%;
-	margin: 0px;
-	padding: 0px;
- 	font-size: 10px;
-}
-
-/* Main page heading with quick menu within */
-.quick_menu {
-	width: 100%;
-	background-color: white;
-	border: none;
-	margin: 0px;
-	padding: 0px;
- 	color: black;
-	border-top: 2px #AAAAAA solid;
-	border-left: 2px #AAAAAA solid;
-	border-right: 2px white solid;
-	border-bottom: 4px white solid;
-	text-align: right;
-	/* position: relative;
-	top: 3px; */
-}
-
-#quick_menu{
-}
-
-/*The main page heading left part before quick menu */
-.quick_menu_left {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	border: 0px;
-	white-space: nowrap;
-	margin: 2px;
-	padding: 2px;
-	color: black;
-}
-
-/*the Select Customer / Item / Supplier Menu tabs */
-.quick_menu_tabs {
-	background-color: white;
-	white-space: nowrap;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-	text-align: right;
-}
-
-.quick_menu_tab{
-	background: #EEEEFF;
-	height:28pt;
-	white-space: nowrap;
-	border-left: solid 1px #aaa;
-	border-right: solid 1px #aaa;
-	padding-left: 10px;
-	padding-right: 10px;
-	text-align: right;
-}
-
-.quick_menu_tab a{
-	color:#fff;
-	font-weight:bold;
-}
-
-.quick_menu_left a{
-	color:#fff;
-}
-
-.quick_menu_tab a:hover{
-	color:#ffc;
-	text-decoration:none;
-	font-weight:bold;
-}
-
-.quick_menu_left a:hover{
-	color:#ffc;
-	text-decoration:none;
-}
-
-.quick_menu_tab:hover{
-	color:#ffd;
-}
-
-/*the Select Customer / Item / Supplier Menu tabs */
-.system_menu_tabs {
-	background-color: white;
-	white-space: nowrap;
-	border: none;
-	margin-left: 6px;
-	margin-right: 6px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	padding: 0px;
-	text-align: center;
-}
-
-.system_menu_tabs a {
-	font-size: 10px;
-   color: black;
-}
-
-.system_menu_tabs a:hover {
-	font-size: 10px;
-	color: black;
-}
-
-.main_area {
-	border: 2px inset white;
-	width: 100%;
-  background-color: white;
-}
-
-.main_menu {
-	border: 2px inset white;
-}
-
-.main_menu table {
-	border: 0px;
-	width: 100%;
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-
-.main_menu_unselected {
-	background-color: #CCCCCC;
-	border: 2px outset white;
-/*	position: relative; */
-	text-align: center;
-	white-space: nowrap;
-}
-
-.main_menu_unselected:hover{
-}
-.main_menu_selected:hover{
-}
-
-.main_menu_unselected a{
-}
-
-.main_menu_unselected a:hover{
-}
-
-.main_menu_selected {
-	background-color: #CCCCCC;
-	border: 2px inset white;
-/*	position: relative; */
-	text-align: center;
-	white-space: nowrap;
-}
-
-.main_menu_selected a{
-	color: #eee;
-    font-weight:bold;
-}
-
-.main_menu_selected a:hover{
-	color: #fff;
-	text-decoration: none;
-}
-
-span.main_menu_nolink {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	color: #777777;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.main_menu a {
-	font-weight: normal;
-}
-
-.main_menu a:hover {
-	color: #0000aa;
-	text-decoration: underline;
-}
-
-.menu_group_img {
-	background-color: #CCCCCC;
-	text-align: center;
-	width: 90px;
-	position: relative;
-	left: 3px;
-}
-
-.menu_group_img img{
-	position: relative;
-	top: 10px;
-}
-
-.menu_group_area {
-  border: 2px inset white;
-}
-
-.blank_area table {
-	border: 0px;
-	width: 100%;
-}
-
-.menu_group_headers {
-  border: 2px outset #AAAAAA;
-  width: 25%;
-}
-
-.menu_group_headers table{
-}
-
-.menu_group_headers_text {
-	font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	color: black;
-}
-
-.menu_group_items {
-	vertical-align: top;
-	background-color: white;
-	border: 2px outset #AAAAAA;
-	padding: 10px;
-}
-
-.menu_group_item {
-	background-color: white;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-
-.menu_group_item p {
-	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
-}
-
-.page_title_text {
+.page_title_text { /* used */
 	font-family: Arial, Verdana, Helvetica;
         padding-top: 2px;
         padding-bottom: 2px;
@@ -542,112 +236,20 @@ DIV.page_help_text {
 	TEXT-ALIGN:center;
 }
 
-DIV.system_check {
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 40%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        background: lightgray;
-        font-family: Arial, Verdana, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        TEXT-ALIGN:left;
-}
-
-span.menu_group_nolink {
-	font-family: Tahoma, Arial, Verdana, Helvetica;
-	font-size: 10px;
-	font-weight: normal;
-	color: #777777;
-	text-decoration: none;
-}
-
 .menu_group_item a {
 }
-
 .menu_group_items a:hover {
 	color: #0000aa;
 	text-decoration: underline;
 }
 
-#footer {
-	position: relative;
-	bottom: -3px;
-}
 
-a.footer {
-	font-family:  Arial, Verdana, Helvetica;
-	color: black;
-	font-weight: normal;
-	font-size: 8px;
-}
-
-.footer {
-	font-family: Tahoma, Arial, Verdana, Helvetica;
-	color: black;
-	font-weight: normal;
-	font-size: 8px;
-	text-align: center;
-}
-
-.legal {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 9px;
-	color: #333333;
-}
-
-.box1 {
-	border-color: #CCCCCC #333333 #333333 #CCCCCC;
-	border-width: medium;
-  border-style: ridge;
-}
-
-.promo {
-	font-family: "Times New Roman", Times, serif;
-	color: #000033;
-}
-
-.titlebar {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 9px;
-	color: white;
-  	background-color: #336699;
-}
-
-.dingbat {
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #99CC99;
-  color: #006666;
-	font-weight: bolder;
-	font-size: medium;
-}
-
-input.big {
-	width: 100px;
-}
-
-input.small {
-	width: 50px;
-}
-
-input.inputerror {
-	background-color: #fddbdb;
-}
 
 textarea.texterror {
 	background-color: #fddbdb;
 }
 
-select.selecterror {
-	background-color: #fddbdb;
-}
+
 
 .tableheader {
 	font-weight: normal;
@@ -661,7 +263,7 @@ select.selecterror {
 	color:#555555;
 }
 
-.label {
+.label { /* used */
 	font-weight:bold;
 	font-style:normal;
 	font-size:12px;
@@ -681,3 +283,214 @@ select.selecterror {
 li {
 	list-style-image: url(bullet.gif);
 }
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+	background:#fff;
+	margin:5px;
+	border:thin inset #ddd;
+}
+
+/*** HEADER ***/
+
+#HeaderDiv {
+	overflow:hidden; /* REQUIRED: height according to items contained */
+	color:black;
+	padding-right:3px;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:right; /* REQUIRED: to the RIGHT */
+}
+#AppInfoDiv img{
+	vertical-align:middle; /* center image and text vertically */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv a{
+	color:black;
+}
+#AppInfoUserDiv a:hover{
+	color:blue;
+	text-decoration:underline;
+}
+#AppInfoModuleDiv{
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:left; /* to the right side  */
+	margin-top:3px;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+}
+#QuickMenuDiv li{
+    display:inline; /* items are inline */
+	float:right; /* right to left */
+}
+
+/*** links as buttons!!! clicking anywhere in the button will activate 
+     the link!!! ***HJ***/
+	 
+#QuickMenuDiv li a{
+	padding:3px; /* links as button */
+	border:thin outset #ddd; /* un-pressed state */
+	background:#ddd;
+}
+#QuickMenuDiv li a:hover{
+	padding:3px; /* links as button */
+	border:thin inset #ddd; /* pressed state */
+	text-decoration:none; /* no underline */
+	color:blue;
+}
+
+/*** BODY ***/
+
+#BodyDiv {
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:white;
+}
+#BodyDiv table {
+	width:auto; /* automatic width */
+	margin: 0 auto;
+	margin-bottom:10px;
+}
+#BodyDiv table.selection {
+	background:#eee;
+	padding:5px;
+	border:thin outset #eee;
+}
+/*#BodyDiv .centre{
+	margin:0 auto 10px;
+    text-align:center;
+}*/
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:right; /* REQUIRED: to the RIGHT side */
+	white-space:nowrap; /* don't break text */
+	text-align:center; 
+	width:11%;
+	background:#ddd;
+}
+#MainMenuDiv ul{
+	list-style:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:0;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
+	display:block; /* REQUIRED */
+	padding:3px;
+	border:thin outset #ddd;
+	color:blue;
+}
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+	text-decoration:none;
+	padding:3px;
+	border:thin inset #ddd;
+	background:#ddd;	
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	border:thin inset #ccc;	
+	background:#ccc;
+	color:blue;	
+	text-decoration:none;
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table; /* display as table, sub menu will auto adjust width */
+	width:89%; /* main menu is 10% */
+}
+#SubMenuDiv ul{
+	list-style-type:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin-top:0px;	
+	margin-left:3px;
+	border:thin outset #ddd;
+}
+#SubMenuDiv li{
+	/*list-style:none;*/ /* REQUIRED: hide the bullets */
+	background:#eee;
+	padding:2px;
+}
+#SubMenuDiv li img{
+	vertical-align:middle; /* verticall align icon with the text */
+}
+#SubMenuDiv .menu_group_headers {
+	background:#ddd;
+	outline:thin outset #ddd;
+	text-align:center;
+	color:black;
+}
+#TransactionsDiv{
+	display:table-cell;
+}
+#InquiriesDiv{
+	display:table-cell;
+}
+#InquiriesDiv div{ /* default div, used for custom report header */
+	background:#ddd;
+	color:black;
+	padding:2px;
+	border:thin outset #ddd;
+}
+#InquiriesDiv body{
+	background:#eee;
+	color:red;
+	padding:2px;
+}
+#MaintenanceDiv{
+	display:table-cell;
+/*    float:left;*/
+/*    width:32.5%;
+	border:thin solid black;*/
+	
+}
+.menu_group_item p {
+	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: 3px; /* this makes the bullet to appear as the li tag previously used */
+	margin:0px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both; /* REQUIRED */
+    overflow:hidden;	
+    color:gray;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:3px;
+}
+#FooterLogoDiv{ 
+	float:left; /* right side */
+}
+#FooterVersionDiv{
+	float:right; /* left side */
+}
+#FooterTimeDiv{
+	clear:right; /* below  */
+}
+
+/*** END ***/

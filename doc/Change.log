@@ -1,5 +1,6 @@
 webERP Change Log
 
+29/7/2012 Hindra Joshua: Updates to Professional and Professional-rtl themes - tidy up images not used
 28/7/2012 Hindra Joshua: Fix for Gel theme and default theme to work with new styles
 26/7/2012 Hindra Joshua: New wood theme - mods to index.php / header.inc and footer.inc and modify existing themes to work with new html tag classes used - using <div> tags instead of tables for layout of the main menu
 25/7/2012 Exson: Fix the typo to make the $TotalQuantityOnHand is correct in SupplierInvoice.php
