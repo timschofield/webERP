@@ -5,7 +5,8 @@
 include('includes/session.inc');
 
 $title = _('Cost Of Sales GL Postings Set Up');
-
+$ViewTopic= 'CreatingNewSystem';
+$BookMark = 'SalesGLPostings';
 include('includes/header.inc');
 
 

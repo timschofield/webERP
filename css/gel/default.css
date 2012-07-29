@@ -247,42 +247,42 @@ div.csv { /*** used ***/
 	TEXT-ALIGN:center;
 }
 
-DIV.page_help_text {
+div.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
+	border: #a52a2a 1px solid;
 	padding-top:2px;
-        padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	z-index: 1;
 	width: 80%;
-	FLOAT: none;
-	VISIBILITY: visible;
-	MARGIN: 0 auto;
-	POSITION: static;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
     font-weight: normal;
     font-size: 10px;
     color: black;
-	TEXT-ALIGN:center;
+	text-align:center;
 }
 
-DIV.system_check { /*** is this used???  */
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
+div.system_check { /*** is this used???  */
+        border: #a52a2a 1px solid;
+        padding-left: 3px;
+        z-index: 1;
         width: 40%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
+        float: none;
+        visibility: visible;
+        margin: 0 auto;
+        position: static;
         background: lightgray;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
+        font-family: arial, verdana, helvetica, sans-serif;
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
         font-size: 10px;
         color: black;
-        TEXT-ALIGN:left;
+        text-align:left;
 }
 
 input.big {
@@ -441,7 +441,7 @@ li { /* ??? */
 	white-space:nowrap; /* don't break text */
 	text-align:center; 
 	width:12%;
-	background:url(images/gelbluev.png) repeat-y blue;
+	background:url(images/gelblue.png) repeat-y blue;
 	background-size:contain;
 	border:2px outset blue;
 	border-radius:20px;

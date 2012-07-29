@@ -286,7 +286,7 @@ $msg .= "\$dbpassword = '" . $_POST['database_password'] . "';\n";
 
 $msg .= "// The timezone of the business - this allows the possibility of having;\n";
 
-$msg .= "putenv('TZ=" . $_POST['timezone'] . "');\n";
+$msg .= "date_default_timezone_set('" . $_POST['timezone'] . "');\n";
 $msg .= "\$AllowCompanySelectionBox = true;\n";
 if ($_POST['DemoData'] ==false){
 	$msg .= "\$DefaultCompany = '" . $_POST['company_name']. "';\n";

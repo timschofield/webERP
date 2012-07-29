@@ -4,6 +4,8 @@
 
 include('includes/session.inc');
 $title = _('Sales GL Postings Set Up');
+$ViewTopic= 'CreatingNewSystem';
+$BookMark = 'SalesGLPostings';
 include('includes/header.inc');
 
 if (isset($_GET['SelectedSalesPostingID'])){
