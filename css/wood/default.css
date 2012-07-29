@@ -1,0 +1,760 @@
+/***********************************
+
+"Wood" experimental theme for WebERP 
+by Hindra Joshua 
+
+************************************/
+
+
+body{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:8pt;
+    margin:10px;
+	background:url(images/desk.jpg) saddlebrown;
+}
+
+/*a{
+	color:blue;
+	text-decoration:none;
+}
+a:hover{
+	color:red;
+	text-decoration:underline;	
+}*/
+img{ 
+	vertical-align:middle;
+}
+table{
+    margin:0 auto;
+    text-align:center;
+}
+
+
+/*** CANVAS ***/
+#CanvasDiv{
+	background:url(images/wood.jpg) repeat scroll 0 0 sandybrown;
+    border:medium outset sandybrown;
+    border-radius:15px 15px 15px 15px;
+	padding:5px;
+}
+
+
+/*** HEADER *************************************************/
+#HeaderDiv{
+}
+#HeaderDiv a:link, a:visited{
+	color: black;
+	font-weight: normal;
+	text-decoration: none;
+	border:2px outset sandybrown;
+	border-radius:10px;
+	padding-left:5px;
+	padding-right:5px;
+}
+#HeaderDiv a:hover{
+	color: red;
+	text-decoration: none;
+	border:2px inset sandybrown;
+	border-radius:10px;
+	padding-left:5px;
+	padding-right:5px;
+}
+#HeaderWrapDiv{
+}
+
+#AppInfoDiv{
+	float:left;
+}
+#AppInfoDiv{
+	float:left;
+}
+#AppInfoCompanyDiv{
+	float:left;
+}
+#AppInfoUserDiv{
+	float:left;
+}
+#AppInfoModuleDiv{
+	font-weight:bold;
+	font-size:10pt;
+}
+#QuickMenuDiv{
+	float:right;
+}
+#QuickMenuDiv ul{
+	float:right;
+}
+#QuickMenuDiv ul li{
+	display:inline;
+	margin: 0px 2px;
+	float: left;
+}
+/* That's it! All other 'header' styles outside this is NOT needed! */
+
+
+
+/*** BODY *********************************************************************/
+
+#BodyDiv {
+	clear:both;
+}
+#BodyWrapDiv{
+/*    text-align:center;*/	
+}
+#MainMenuDiv{
+	float:left;
+    margin-left:0;
+	width:12%;
+	white-space:nowrap;
+}
+#MainMenuDiv ul{
+	margin:0; 
+	padding:0;
+}
+#MainMenuDiv li{
+	list-style:none; 
+}
+.main_menu_unselected {
+	border:2px outset sandybrown;
+	border-radius:10px;
+	padding-left:5px;
+	padding-right:5px;
+	margin:2px;
+	text-align:center;
+}
+.main_menu_selected {
+	border:2px inset sandybrown;
+	border-radius:10px;
+	padding-left:5px;
+	padding-right:5px;
+	margin:2px;
+	text-align:center;
+}
+.main_menu_unselected:hover{
+	border:2px inset sandybrown;
+	border-radius:10px;
+	padding-left:5px;
+	padding-right:5px;
+	margin:2px;
+	text-align:center;
+}
+.main_menu_selected:hover{
+}
+.main_menu_unselected a{
+	text-decoration:none;
+}
+.main_menu_unselected a:hover{
+	color:red;
+}
+.main_menu_selected a{
+	text-decoration:none;
+}
+.main_menu_selected a:hover{
+	color:red;
+}
+
+
+/************************************/
+#SubMenuDiv{
+    border:2px inset sandybrown;
+    border-radius:15px 15px 15px 15px;
+    float:right;
+    list-style:none;
+    margin:0;
+    padding:5px;;
+    width:86%;
+	background:url(images/desk.jpg);
+}
+#SubMenuDiv ul{
+	margin:0;
+	padding:0;
+}
+#SubMenuDiv li{
+	list-style:none;
+}
+
+#TransactionsDiv{
+	background:peachpuff;
+    border:2px outset peachpuff;
+    border-radius:10px;
+    float:left;
+    list-style:none;
+    width:32%;
+	margin:3px;
+}
+#InquiriesDiv{
+	background:peachpuff;
+    border:2px outset peachpuff;
+    border-radius:10px;
+    float:left;
+    list-style:none;
+    width:32%;
+	margin:3px;
+}
+#MaintenanceDiv{
+	background:peachpuff;
+    border:2px outset peachpuff;
+    border-radius:10px;
+    float:left;
+    list-style:none;
+    width:32%;
+	margin:3px;
+}
+.menu_group_headers {
+	background:saddlebrown;
+    border:2px outset saddlebrown;
+    border-radius:10px 10px 0 0;
+	padding:3px;	
+    text-align:center;
+	color:white;
+}
+/********************************************/
+
+.BodyTbl{
+    width:100%;
+}
+
+/*** main menu (at left) ****************************************/
+.main_menu {
+    outline:thin outset olivedrab;   
+    background:olivedrab;
+}
+
+
+.main_menu a {
+	color: lightgreen;
+	text-decoration:none;
+}
+.main_menu a:hover {
+	color: yellow;
+	text-decoration: none;
+}
+
+/**** CONTENT *********************************/
+
+table.selection {
+}
+
+.menu_group_headers table{
+}
+.menu_group_headers_text {
+}
+div.centre {
+  margin: 0 auto;
+  text-align:center;
+}
+.menu_group_items {
+}
+.menu_group_item p {
+	color: saddlebrown; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px;
+}
+.menu_group_item {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border:thin inset transparent;
+	border-radius:10px;	
+	color:black;
+}
+.menu_group_item:hover{
+	border:thin inset tan;
+	background:tan;
+	border-radius:10px;
+}
+.menu_group_item a{
+	color:darkgreen;
+	text-decoration:none;
+}
+.menu_group_item a:hover{
+	color:red;
+	text-decoration:none;
+}
+
+
+
+/*** FOOTER **************************************************/
+#FooterDiv{
+	clear:both;
+    color:black;
+    height:47px;
+}
+#FooterWrapDiv{
+	padding:5px;
+}
+#FooterLogoDiv{
+	background:white;
+    border:2px outset sandybrown;
+    border-radius:8px 8px 8px 8px;
+    float:left;
+    padding:5px;
+	margin-left:-9px;	
+}	
+#FooterVersionDiv{
+	float:left;
+    margin-left:10px;
+    margin-top:15px;
+
+}
+#FooterTimeDiv{
+	float:right;
+    margin-top:15px;
+}
+/* That's it! All other 'footer' styles outside this is NOT needed! */
+
+
+
+/************************************************************/
+
+.dpTbl {
+	border: solid navy 1px;
+}
+
+
+/*table detail items default format */
+td {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 10px;
+	text-align: left;
+}
+
+td.select {
+	background-color:#eee;
+}
+
+
+
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;
+}
+
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
+
+td.number {
+	text-align: right;
+}
+
+.EvenTableRows {
+	background-color: #f5e6c9;
+}
+
+.OddTableRows {
+	background-color: #f2fac0;
+}
+
+th {
+	font-weight: normal;
+	font-size: 10px;
+	background-color: #777C59;
+	color: white;
+	text-align: center;
+}
+th.number {
+	text-align: right;
+	font-weight: normal;
+	background-color: #800000;
+	color: white;
+}
+div.error {
+	background-color:#fddbdb;
+	color: red;
+	border: 1px solid red;
+}
+
+div.warn {
+	background-color:#f5dbfd;
+	color: maroon;
+	border: 1px solid maroon;
+}
+
+div.success {
+	background-color:#b9ecb4;
+	color: darkgreen;
+	border: 1px solid darkgreen;
+}
+
+div.info {
+	background-color:#c7ccf6;
+	color: navy;
+	border: 0px solid navy;
+}
+
+input {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 10px;
+}
+
+input.number{
+	text-align: right;
+}
+
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+
+input:hover{
+}
+
+select {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 10px;
+}
+
+p.good {
+    font-weight: bold;
+    color: green;
+}
+
+p.bad {
+    font-weight: bold;
+    color:red;
+}
+
+#topMenu {
+	width: 100%;
+	color: black;
+	background-color: #A0C462;
+	border: none;
+	border-bottom: 1px solid #999999;
+}
+
+#trim {
+	background: #ffffff;
+}
+
+#page {
+	width: 100%;
+	color: black;
+	font-size: 10px;
+	white-space: nowrap;
+	border: none;
+}
+
+#menuImg {
+	vertical-align: top;
+	text-align: center;
+	margin: 0px;
+	padding: 10px;
+}
+
+#mainMenu {
+	width: 100%;
+	color: black;
+	background-color: #ffffff;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.header {
+	background-image: url("");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.login {
+	background-color: #ffffff;
+	border: none;
+}
+
+textarea{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
+textarea:hover{
+}
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+input.address3 {
+	text-transform: uppercase;
+}
+
+div.csv {
+        background:lightgray;
+        color: black;
+        border: 1px solid black;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 50%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        TEXT-ALIGN:center;
+}
+
+
+
+.main_page {
+	background-color: #ffffff;
+	border: none;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+ 	font-size: 10px;
+}
+
+/*top bar*/
+
+
+#quick_menu{
+}
+
+
+
+
+/*the Select Customer / Item / Supplier Menu tabs */
+.system_menu_tabs {
+	background-color: #ffffff;
+	white-space: nowrap;
+	border: none;
+	margin-left: 6px;
+	margin-right: 6px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+.system_menu_tabs a {
+	font-size: 10px;
+   	color: black;
+}
+
+.system_menu_tabs a:hover {
+	font-size: 10px;
+	color: black;
+}
+
+.main_area {
+	border: 2px inset #ffffff;
+	width: 100%;
+  	background-color: #ffffff;
+}
+
+
+/*********************************************************/
+
+
+
+span.main_menu_nolink {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #777777;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+
+.menu_group_img {
+	background-color: lightgray;
+	text-align: center;
+	width: 90px;
+	position: relative;
+	left: 3px;
+}
+
+.menu_group_img img{
+	position: relative;
+	top: 10px;
+}
+
+.menu_group_area {
+  border: 0px inset #ffffff;
+}
+
+.blank_area table {
+	border: 0px;
+	width: 100%;
+}
+
+p.page_title_text {
+    color:black;
+    font-weight:bold;
+    margin:5px auto;
+    text-align:center;
+ }
+
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
+	padding-top:2px;
+        padding-bottom: 2px;
+	PADDING-LEFT: 10px;
+	Z-INDEX: 1;
+	width: 80%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+	TEXT-ALIGN:center;
+}
+
+DIV.system_check {
+        BORDER: #a52a2a 1px solid;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 40%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        background: lightgray;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+        TEXT-ALIGN:left;
+}
+
+span.menu_group_nolink {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #777777;
+	text-decoration: none;
+}
+
+.menu_group_item a {
+	font-weight: normal;
+}
+
+.menu_group_items a:hover {
+	color: #0000aa;
+	text-decoration: underline;
+}
+
+
+.legal {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #333333;
+}
+
+.box1 {
+	border-color: #CCCCCC #333333 #333333 #CCCCCC;
+	border-width: medium;
+  border-style: ridge;
+}
+
+.promo {
+	font-family: "Times New Roman", Times, serif;
+	color: #000033;
+}
+
+.titlebar {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 10px;
+	color: white;
+  	background-color: #336699;
+}
+
+.dingbat {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #99CC99;
+  color: #006666;
+	font-weight: bolder;
+	font-size: medium;
+}
+
+
+input.big {
+	width: 100px;
+}
+
+input.small {
+	width: 50px;
+}
+
+input.inputerror {
+	background-color: #fddbdb;
+}
+
+textarea.texterror {
+	background-color: #fddbdb;
+}
+
+select.selecterror {
+	background-color: #fddbdb;
+}
+
+.tableheader {
+	font-weight: normal;
+	background-color: #777C59;
+	color: white;
+}
+
+.notavailable {
+	font-weight:lighter;
+	font-style:italic;
+	color:#555555;
+}
+
+.label {
+	font-weight:bold;
+	font-style:normal;
+	font-size:12px;
+	color:black;
+	background-color:#cccccc;
+}
+
+
+.OsRow {
+	background-color: #234567;
+	color: white;
+}
+
+.table_index {
+	background-color: #F1FFDD;
+}
+
+li {
+	list-style-image: url(bullet.gif);
+}
