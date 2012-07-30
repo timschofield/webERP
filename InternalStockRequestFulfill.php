@@ -165,16 +165,16 @@ if (isset($_POST['UpdateAll'])) {
 
 				$Result = DB_Txn_Commit($db);
 
-				$ConfirmationText = _('A stock issue for'). ' ' . $StockID . ' ' . _('has been created from location').' ' . $Location .' '. _('for a quantity of') . ' ' . $Quantity ;
+				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . $Quantity ;
 				prnMsg( $ConfirmationText,'success');
 
 				if ($_SESSION['InventoryManagerEmail']!=''){
 					$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
-					$EmailSubject = _('Stock adjustment for'). ' ' . $StockID;
+					$EmailSubject = _('Internal Stock Request Fulfillment for'). ' ' . $StockID;
 					mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 				}
 			} else {
-				$ConfirmationText = _('A stock issue for'). ' ' . $StockID . ' ' . _('from location').' ' . $Location .' '. _('for a quantity of') . ' ' . $Quantity . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
+				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . $Quantity . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
 				prnMsg( $ConfirmationText,'warn');
 			}
 		}
