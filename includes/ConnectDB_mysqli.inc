@@ -40,16 +40,16 @@ if ( !$db ) {
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if (isset($DatabaseName)) {
 	if (!mysqli_select_db($db,$DatabaseName)) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
 		unset ($DatabaseName);
 		exit;
 	}
 } else {
 	if (!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
-		
+
 		unset ($_SESSION['DatabaseName']);
 		exit;
         }
@@ -95,7 +95,7 @@ function DB_query ($SQL,
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
-	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0)){
+	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($result)>0)){
 
 		$SQLArray = explode(' ', $SQL);
 
