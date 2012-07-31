@@ -350,8 +350,10 @@ $SOH_DateFields = array ('orddate',
 		if (sizeof($Errors)==0) {
 
 			$result = api_DB_Query($sql, $db);
+			
 			if (DB_error_no($db) != 0) {
-				$Errors[0] = DatabaseUpdateFailed;
+				//$Errors[0] = DatabaseUpdateFailed;
+				$Errors[0] = $sql;
 			} else {
 				$Errors[0]=0;
 				$Errors[1]=$OrderHeader['orderno'];

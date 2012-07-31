@@ -269,7 +269,7 @@ function ConvertToSQLDate($DateEntry) {
 	function InsertDebtorReceipt($Receipt, $User, $Password) {
 
 	/*
-	This function inserts a debtors receipt into a bank account/GL Postings and does the allocation and journals for difference on exchange
+	This function inserts a debtors receipt into a bank account/GL Postings
 
 	$Receipt contains an associative array in the format:
 		 * $Receipt['debtorno'] - the customer code
@@ -387,7 +387,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $PeriodNo . "',
 						'". $CompanyRecord['debtorsact'] . "',
 						'" . $Receipt['reference'] . "',
-						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) * $FunctionalExRate / $ReceiptExRate,4) . "')";
+						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) / $CustCurrRow['rate'],4) . "')";
 
 			$result = api_DB_query($SQL,$db,'','',true);
 
@@ -405,7 +405,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $PeriodNo . "',
 						'". $CompanyRecord['pytdiscountact'] . "',
 						'" . $Receipt['reference'] . "',
-						'" . round($Receipt['discountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
+						'" . round($Receipt['discountfx'] / $CustCurrRow['rate'],4) . "')";
 
 				$result = api_DB_query($SQL,$db,'','',true);
 			}
@@ -424,7 +424,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $PeriodNo . "',
 						'" . $Receipt['bankaccount'] . "',
 						'" . $Receipt['reference'] . "',
-						'" . round($Receipt['amountfx'] * $FunctionalExRate / $ReceiptExRate,4) . "')";
+						'" . round($Receipt['amountfx'] / $CustCurrRow['rate'],4) . "')";
 
 			$result = api_DB_query($SQL,$db,'','',true);
 
@@ -448,7 +448,7 @@ function ConvertToSQLDate($DateEntry) {
 							'" . date('Y-m-d H-i-s') . "',
 							'" . $PeriodNo . "',
 							'" . $Receipt['reference'] . "',
-							'" . ($ReceiptExRate/$FunctionalExRate) . "',
+							'" . $CustCurrRow['rate'] . "',
 							'" . -$Receipt['amountfx'] . "',
 							'" . -$Receipt['discountfx'] . "',
 							'" . $Receipt['paymentmethod'] . "')";
