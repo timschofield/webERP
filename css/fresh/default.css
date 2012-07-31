@@ -1,65 +1,48 @@
-/*--------------------------------------------------\
-|               |               | default.css       |
-|---------------------------------------------------|
-| For use with:                                     |
-| Web-ERP - http://weberp.sourceforge.net          |
-| by Logic Works Ltd                                |
-|---------------------------------------------------|
-| Developer:                                        |
-| Shane Barnaby                                     |
-| Steve Kaill                                       |
-|---------------------------------------------------|
-| Note:                                             |
-| Changes can be made to this CSS that will be      |
-| reflected throughout Web-ERP.                     |
-|
-\--------------------------------------------------*/
-/* $Id$*/
+/*** 
+
+New "Fresh" Theme for WebERP
+
+by Hindra Joshua
+
+*** This a very clean professional-looking theme - handsome!
+
+Based from the previous theme "SilverWolf"
+Credits to the original authors.
+
+NOTE: 
+This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
+but for the obvious one it will be cleaned up.
+To optimized the rest we should examined the whole codes! That would be for 
+the next project. :)
+
+***/
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 10px;
-	background-color: #FFF;
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-right: 0px;
-	padding: 0px;
+	margin:0;
+	padding:0;
 }
+
+/*** default styles ***/
 
 img {
 	border:none;
+	vertical-align:middle;
 }
-
-/*links before selection */
 a {
-	font-family: Arial, Verdana, Helvetica, sans-serif;;
-	font-size: 10px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #4D4E1A;
+	color:blue;
+	text-decoration:none;
 }
-
-/*links on any screen when mouse is hovering over them */
 a:hover {
-	color: #00000a;
+	color:blue;
 	text-decoration: underline;
 }
-
 table {
   background-color: #ffffff;
   margin: 0 auto;
+  width:100%
 }
-
-.dpTbl {
-	border: solid navy 1px;
-}
-
-div.centre {
-  margin: 0 auto;
-  text-align:center;
-}
-
 /*table detail items default format */
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
@@ -67,16 +50,14 @@ td {
 	text-align: left;
 }
 
-td.select {
-	background-color:#eee;
-}
+/*** calendar picker ***/
 
-table.selection {
-	background-color:#E0F3B1;
-	outline-style:solid;
-	outline-width:1px;
-}
+#calendar{
 
+}
+.dpTbl {
+	border: solid navy 1px;
+}
 .dpTD {
 	border: 0;
 	width:20px;
@@ -84,7 +65,6 @@ table.selection {
 	text-align:right;
 	cursor:pointer;
 }
-
 .dpDayHighlight {
 	border: 0;
 	width:20px;
@@ -92,7 +72,6 @@ table.selection {
 	text-align:right;
 	cursor:pointer;
 }
-
 .dpTDHover {
 	border: 0;
 	width:20px;
@@ -101,16 +80,14 @@ table.selection {
 	cursor:pointer;
 }
 
-td.number {
-	text-align: right;
+/*** /calendar picker ***/
+
+div.centre { /* centering buttons / links */
+  margin: 0 auto;
+  text-align:center;
 }
 
-.EvenTableRows {
-	background-color: #72824D;
-}
-
-.OddTableRows {
-	background-color: #CAF17C;
+table.selection {
 }
 
 th {
@@ -126,24 +103,36 @@ th.number {
 	background-color: #800000;
 	color: white;
 }
+
+td.select {
+	background-color:#eee;
+}
+td.number {
+	text-align: right;
+}
+
+.EvenTableRows {
+	background-color: #72824D;
+}
+.OddTableRows {
+	background-color: #CAF17C;
+}
+
 div.error {
 	background-color:#fddbdb;
 	color: red;
 	border: 1px solid red;
 }
-
 div.warn {
 	background-color:#f5dbfd;
 	color: maroon;
 	border: 1px solid maroon;
 }
-
 div.success {
 	background-color:#b9ecb4;
 	color: darkgreen;
 	border: 1px solid darkgreen;
 }
-
 div.info {
 	background-color:#c7ccf6;
 	color: navy;
@@ -154,16 +143,13 @@ input {
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 10px;
 }
-
 input.number{
 	text-align: right;
 }
-
 input.image {
 	border-width:0px;
 	background-color: transparent;
 }
-
 input:hover{
 }
 
@@ -172,50 +158,13 @@ select {
 	font-size: 10px;
 }
 
-p.good {
+p.good { /***/
     font-weight: bold;
     color: green;
 }
-
-p.bad {
+p.bad { /***/
     font-weight: bold;
     color:red;
-}
-
-#topMenu {
-	width: 100%;
-	color: black;
-	background-color: #A0C462;
-	border: none;
-	border-bottom: 1px solid #999999;
-}
-
-#trim {
-	background: #ffffff;
-}
-
-#page {
-	width: 100%;
-	color: black;
-	font-size: 10px;
-	white-space: nowrap;
-	border: none;
-}
-
-#menuImg {
-	vertical-align: top;
-	text-align: center;
-	margin: 0px;
-	padding: 10px;
-}
-
-#mainMenu {
-	width: 100%;
-	color: black;
-	background-color: #ffffff;
-	border: none;
-	margin: 0px;
-	padding: 0px;
 }
 
 .header {
@@ -239,6 +188,7 @@ textarea{
 
 textarea:hover{
 }
+
 /* Table type is used for UI tables type 1 */
 .table1 {
   width:90%;
@@ -253,6 +203,7 @@ textarea:hover{
   border: 0px 0px 2px 2px #222 solid;
   margin: 0 auto;
 }
+
 input.address3 {
 	text-transform: uppercase;
 }
@@ -274,247 +225,6 @@ div.csv {
         font-weight: normal;
         font-size: 10px;
         TEXT-ALIGN:center;
-}
-
-.callout_main {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	background-color: #ffffff;
-	border: none;
-	width: 100%;
-	margin: 0px;
-	padding: 0px;
-}
-
-.main_page {
-	background-color: #ffffff;
-	border: none;
-	width: 100%;
-	margin: 0px;
-	padding: 0px;
- 	font-size: 10px;
-}
-
-/* Main page heading with quick menu within */
-.quick_menu {
-	width: 100%;
-	background-color: #C9D392;
-	border: none;
-	margin: 0px;
-	padding: 0px;
- 	color: black;
-	text-align: right;
-}
-
-#quick_menu{
-}
-
-/*The main page heading left part before quick menu */
-.quick_menu_left {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 11px;
-	border: 0px;
-	white-space: nowrap;
-	margin: 0px;
-	padding: 0px;
-	color: black;
-}
-
-/*the Select Customer / Item / Supplier Menu tabs */
-.quick_menu_tabs {
-	background-color: #5A5F00;
-	white-space: nowrap;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-	text-align: right;
-}
-
-.quick_menu_tab{
-	background: #B4BB86;
-	height:28pt;
-	white-space: nowrap;
-	border-left: solid 1px #aaa;
-	border-right: solid 1px #aaa;
-	padding-left: 10px;
-	padding-right: 10px;
-	text-align: right;
-}
-
-.quick_menu_tab a{
-	color:white;
-}
-
-.quick_menu_left a{
-	color:black;
-	font-weight:normal;
-}
-
-.quick_menu_tab a:hover{
-	color:#ffc;
-	text-decoration:none;
-	font-weight:bold;
-}
-
-.quick_menu_left a:hover{
-	color:blue;
-	text-decoration:none;
-}
-
-.quick_menu_tab:hover{
-	color:#ffd;
-}
-/*the Select Customer / Item / Supplier Menu tabs */
-.system_menu_tabs {
-	background-color: #ffffff;
-	white-space: nowrap;
-	border: none;
-	margin-left: 6px;
-	margin-right: 6px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	padding: 0px;
-	text-align: center;
-}
-
-.system_menu_tabs a {
-	font-size: 10px;
-   	color: black;
-}
-
-.system_menu_tabs a:hover {
-	font-size: 10px;
-	color: black;
-}
-
-.main_area {
-	border: 2px inset #ffffff;
-	width: 100%;
-  	background-color: #ffffff;
-}
-
-.main_menu {
-	border: 2px inset #ffffff;
-	background-color: #ffffff;
-}
-
-.main_menu table {
-	border: 0px;
-	width: 100%;
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-
-.main_menu_unselected {
-	background-color: #617C4F;
-	border: 1px solid #5C874D;
-	text-align: center;
-	white-space: nowrap;
-	height: 16pt;
-}
-
-.main_menu_selected {
-	background-color: #C9D392;
-	border: 1px solid #5C874D;
-	text-align: center;
-	white-space: nowrap;
-	color: #2B570F;
-	height: 16pt;
-}
-
-.main_menu_unselected:hover{
-}
-.main_menu_selected:hover{
-}
-
-.main_menu_unselected a{
-}
-
-.main_menu_unselected a:hover{
-}
-
-.main_menu_selected a{
-	color: #2B570F;
-    font-weight:bold;
-}
-
-.main_menu_selected a:hover{
-	color: #2B570F;
-	text-decoration: none;
-}
-
-span.main_menu_nolink {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	color: #777777;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.main_menu a {
-	font-weight: normal;
-	color: white
-}
-
-.main_menu a:hover {
-	color: #0000aa;
-	text-decoration: underline;
-}
-
-.menu_group_img {
-	background-color: #cccccc;
-	text-align: center;
-	width: 90px;
-	position: relative;
-	left: 3px;
-}
-
-.menu_group_img img{
-	position: relative;
-	top: 10px;
-}
-
-.menu_group_area {
-  border: 0px inset #ffffff;
-}
-
-.blank_area table {
-	border: 0px;
-	width: 100%;
-}
-
-.menu_group_headers {
-  border: 0px #aaaaaa;
-  background-color: #C9D392;
-  width: 25%;
-}
-
-.menu_group_headers table{
-}
-
-.menu_group_headers_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	color: black;
-}
-
-.menu_group_items {
-	vertical-align: top;
-	background-color: #ffffff;
-	border: 0px #aaaaaa;
-	padding: 10px;
-}
-
-.menu_group_item {
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-
-.menu_group_item p {
-	color: #5AAE34; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didn´t like of the li was that it had no left margin applied */
 }
 
 p.page_title_text {
@@ -549,112 +259,12 @@ DIV.page_help_text {
 	TEXT-ALIGN:center;
 }
 
-DIV.system_check {
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 40%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        background: lightgray;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        TEXT-ALIGN:left;
-}
-
-span.menu_group_nolink {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	color: #777777;
-	text-decoration: none;
-}
-
-.menu_group_item a {
-	font-weight: normal;
-}
-
-.menu_group_items a:hover {
-	color: #0000aa;
-	text-decoration: underline;
-}
-
-#footer {
-	position: relative;
-	bottom: -3px;
-	background-color: #C9D392;
-}
-
-a.footer {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	color: black;
-	font-weight: normal;
-	font-size: 10px;
-}
-
-.footer {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	color: black;
-	font-weight: normal;
-	font-size: 10px;
-	text-align: center;
-}
-
-.legal {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 9px;
-	color: #333333;
-}
-
-.box1 {
-	border-color: #CCCCCC #333333 #333333 #CCCCCC;
-	border-width: medium;
-  border-style: ridge;
-}
-
-.promo {
-	font-family: "Times New Roman", Times, serif;
-	color: #000033;
-}
-
-.titlebar {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 10px;
-	color: white;
-  	background-color: #336699;
-}
-
-.dingbat {
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #99CC99;
-  color: #006666;
-	font-weight: bolder;
-	font-size: medium;
-}
-
-
-input.big {
-	width: 100px;
-}
-
-input.small {
-	width: 50px;
-}
-
 input.inputerror {
 	background-color: #fddbdb;
 }
-
 textarea.texterror {
 	background-color: #fddbdb;
 }
-
 select.selecterror {
 	background-color: #fddbdb;
 }
@@ -676,9 +286,7 @@ select.selecterror {
 	font-style:normal;
 	font-size:12px;
 	color:black;
-	background-color:#cccccc;
 }
-
 
 .OsRow {
 	background-color: #234567;
@@ -689,6 +297,235 @@ select.selecterror {
 	background-color: #F1FFDD;
 }
 
-li {
+/*li {
 	list-style-image: url(bullet.gif);
+}*/
+
+/*** CANVAS ***/
+
+#CanvasDiv{
+	background:#fff;
+	margin:0;
 }
+
+/*** HEADER ***/
+
+#HeaderDiv {
+	overflow:hidden; /* REQUIRED: height according to items contained */
+	color:black;
+	padding-left:3px;
+	background:#C9D392;
+}
+#HeaderWrapDiv{
+}
+
+/*** HEADER - APP INFO ***/
+
+#AppInfoDiv{
+	float:left; /* REQUIRED: to the left */
+}
+#AppInfoDiv img{
+	vertical-align:middle; /* center image and text vertically */
+}
+#AppInfoCompanyDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+	display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv a{
+	color:#5A5F00;
+}
+#AppInfoUserDiv a:hover{
+	color:black;
+	text-decoration:underline;
+}
+#AppInfoModuleDiv{
+}
+
+/*** HEADER - QUICK MENU ***/
+
+#QuickMenuDiv{
+	float:right; /* to the right side  */
+	margin-top:0.1em;
+}
+#QuickMenuDiv ul{
+	list-style:none; /* hide the bullets */
+}
+#QuickMenuDiv li{
+    display:inline; /* items are inline */
+}
+
+/*** links as buttons!!! clicking anywhere in the button will activate 
+     the link!!! ***HJ***/
+	 
+#QuickMenuDiv li a{
+	background:#B4BB86;
+    border:thin outset #5A5F00;
+    color:#5A5F00;
+    padding:8px;	
+}
+#QuickMenuDiv li a:hover{
+	background:#B4BB86;
+    border:thin inset #5A5F00;
+    color:black;
+    padding:8px;
+	text-decoration:none;
+}
+
+/*** BODY ***/
+
+#BodyDiv {
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:white;
+	padding:5px;
+}
+#BodyDiv table {
+	width:auto; /* automatic width */
+	margin: 0 auto;
+	margin-bottom:10px;
+}
+#BodyDiv table.selection {
+background:#E0F3B1;
+    border:thin outset #E0F3B1;
+    padding:5px;
+}
+/*#BodyDiv .centre{
+	margin:0 auto 10px;
+    text-align:center;
+}*/
+
+/*** BODY - MAIN MENU ***/
+
+#MainMenuDiv{
+	float:left; /* REQUIRED: to the left side */
+	white-space:nowrap; /* don't break text */
+	text-align:center; 
+	width:11%;
+	background:#617C4F;
+}
+#MainMenuDiv ul{
+	list-style:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin:0;
+}
+#MainMenuDiv li{
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
+}
+#MainMenuDiv li a{ /* link as button!!! not-pressed state */
+	display:block; /* REQUIRED */
+	padding:3px;
+	border:thin outset #617C4F;
+	color:white;
+}
+#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
+	text-decoration:none;
+	padding:3px;
+	border:thin inset #617C4F;
+	background:#5A5F00;	
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+	border:thin inset #5A5F00;	
+	background:#5A5F00;
+	color:white;	
+}
+
+/*** BODY - SUB MENU ***/
+
+#SubMenuDiv{
+	display:table; /* display as table, sub menu will auto adjust width */
+	width:89%; /* main menu is 10% */
+}
+#SubMenuDiv a:link, a:visited{
+	color:#5A5F00;
+	text-decoration:none;
+}
+#SubMenuDiv a:hover{
+	color:#5A5F00;
+	text-decoration:underline;
+}
+#SubMenuDiv ul{
+	list-style-type:none; /* REQUIRED: hide bullets */
+	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
+	margin-left:3px;
+	margin-top:0;
+	margin-bottom:0;
+	border:thin outset #5A5F00;
+	background:#E0F3B1;	/* for custom reports */
+}
+#SubMenuDiv li{
+	/*list-style:none;*/ /* REQUIRED: hide the bullets */
+	padding:2px;
+	background:#E0F3B1;	
+}
+#SubMenuDiv li img{
+	vertical-align:middle; /* verticall align icon with the text */
+}
+#SubMenuDiv .menu_group_headers {
+	background:#C9D392;
+	outline:thin outset #5A5F00;
+	text-align:center;
+	color:black;
+}
+#TransactionsDiv{
+	display:table-cell;
+}
+#InquiriesDiv{
+	display:table-cell;
+}
+#InquiriesDiv div{ /* default div, used for custom report header */
+	background:#C9D392;
+	color:black;
+	padding:2px;
+	border:thin outset #5A5F00;
+}
+#InquiriesDiv body{
+	background:#eee;
+	color:red;
+	padding:2px;
+}
+#MaintenanceDiv{
+	display:table-cell;
+/*    float:left;*/
+/*    width:32.5%;
+	border:thin solid black;*/
+	
+}
+.menu_group_item p {
+	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
+	margin: 0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+	clear:both; /* REQUIRED */
+    overflow:hidden;	
+    background:#C9D392;
+}
+#FooterWrapDiv{
+	overflow:hidden;
+	padding:3px;
+}
+#FooterLogoDiv{ 
+	float:right; /* right side */
+	background:white;
+    border-radius:8px;
+    padding:2px;
+}
+#FooterLogoDiv img {
+    vertical-align:middle;
+}
+#FooterVersionDiv{
+	float:left; /* left side */
+	margin-top:3px;
+}
+#FooterTimeDiv{
+	clear:left; /* below  */
+}
+
+/*** END ***/
