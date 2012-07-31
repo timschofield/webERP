@@ -123,7 +123,7 @@ if (isset($_POST['PrintPDF'])) {
 				$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template,$CategoryDescription);
 
 	$FontSize=8;
-
+	$Now = Date('Y-m-d H-i-s');
 	while ($myrow = DB_fetch_array($result,$db)){
 		// Check if there is any stock in transit already sent from FROM LOCATION
 		$InTransitQuantityAtFrom = 0;
@@ -223,7 +223,7 @@ if (isset($_POST['PrintPDF'])) {
 											VALUES ('" . $Trf_ID . "',
 												'" . $myrow['stockid'] . "',
 												'" . $ShipQty . "',
-												'" . Date('Y-m-d H-i-s') . "',
+												'" . $Now . "',
 												'" . $_POST['FromLocation']  ."',
 												'" . $_POST['ToLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
