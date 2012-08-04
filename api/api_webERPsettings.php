@@ -47,7 +47,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "select confvalue from config where confname='DefaultDateFormat'";
+		$sql = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result = DB_query($sql, $db);
 		$answer=DB_fetch_array($result);
 		$ReturnValue[0]=0;
@@ -55,8 +55,24 @@
 		return $ReturnValue;
 	}
 
-/* This function returns the default date format in webERP.
- */
+/* This function returns the reports directory of the webERP installation for the company in api/api_php.php */
+
+	function GetReportsDirectory($user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql = "SELECT confvalue FROM config WHERE confname='reports_dir'";
+		$result = DB_query($sql, $db);
+		$answer=DB_fetch_array($result);
+		$ReturnValue[0]=0;
+		$ReturnValue[1]=$answer;
+		return $ReturnValue;
+	}
+
+/* This function returns the default location of the weberp user being used */
 
 	function GetDefaultLocation($user, $password) {
 		$Errors = array();
@@ -108,7 +124,7 @@
 		}
 		return $ReturnValue;
 	}
-	
+
 	function DeletePOSData($User, $Password) {
 		$Errors = array();
 		$db = db($User, $Password);

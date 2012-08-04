@@ -2945,17 +2945,36 @@
 
 	function  xmlrpc_GetDefaultLocation($xmlrpcmsg){
 		ob_start('ob_file_callback');
-/*x*/		if ($xmlrpcmsg->getNumParams() == 2)
-/*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam( 0 )->scalarval(  ),
-/*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
-/*x*/		} else {
-/*e*/ $rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation( '', '')));
-/*x*/		}
+		if ($xmlrpcmsg->getNumParams() == 2){
+			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+		} else {
+			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetDefaultLocation( '', '')));
+		}
 		ob_end_flush();
 		return $rtn;
 	}
 
+	$Description = _('Returns the webERP reports_dir for the company selected');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string containing the path to the company reporte_dir') . ' ' . _('Otherwise an array of error codes is returned. ');
+
+	$GetReportsDirectory_sig = array(array($xmlrpcStruct),
+									array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
+	$GetReportsDirectory_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
+
+	function  xmlrpc_GetReportsDirectory($xmlrpcmsg){
+		ob_start('ob_file_callback');
+		if ($xmlrpcmsg->getNumParams() == 2) {
+			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetReportsDirectory($xmlrpcmsg->getParam( 0 )->scalarval(  ), $xmlrpcmsg->getParam( 1 )->scalarval(  ))) );
+		} else {
+			$rtn = new xmlrpcresp( php_xmlrpc_encode(GetReportsDirectory( '', '')));
+		}
+		ob_end_flush();
+		return $rtn;
+	}
 	unset($Description);
 	unset($Parameter);
 	unset($ReturnValue);
@@ -3439,6 +3458,10 @@
 				"function" => "xmlrpc_GetDefaultLocation",
 				"signature" => $GetDefaultLocation_sig,
 				"docstring" => $GetDefaultLocation_doc),
+			"weberp.xmlrpc_GetReportsDirectory" => array(
+				"function" => "xmlrpc_GetReportsDirectory",
+				"signature" => $GetReportsDirectory_sig,
+				"docstring" => $GetReportsDirectory_doc),
 			"weberp.xmlrpc_CreatePOSDataFull" => array(
 				"function" => "xmlrpc_CreatePOSDataFull",
 				"signature" => $CreatePOSDataFull_sig,
