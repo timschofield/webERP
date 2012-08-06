@@ -87,7 +87,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 
 	/*  Need to set the theme to make login screen nice */
-	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'silverwolf';
+	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'wood';
 	switch ($rc) {
 	case  UL_OK;
 		include($PathPrefix . 'includes/LanguageSetup.php');
@@ -187,7 +187,7 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 }
 
 
-If (isset($_POST['Theme']) && ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
+If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$theme = $_POST['Theme'];
 } elseif (!isset($_SESSION['Theme'])) {

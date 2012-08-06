@@ -1,822 +1,463 @@
-/***
+/*
 
-New AguaPop theme for WebERP by Hindra Joshua
+New "AguaPop" Theme for WebERP
 
-Using new theming support any without background images
+v2, 2012-08-03
 
-****/
+by Hindra Joshua
+
+*/
 
 body {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 8pt;
-/*	color:white;*/
-	background: silver;  
-	margin:0;
-	padding:0;
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:10px;
+background: silver;  
+margin:0;
+padding:0;
 }
 
-img {
-	vertical-align:middle;
+/* default styles */
+
+a{
+color:blue;
+text-decoration:none;
 }
-/*a {
-	color: blue;
-	text-decoration: none;
+a:hover{
+color:red;
+text-decoration:underline;
 }
-a:hover {
-	color: lightblue;
-	text-decoration: none;
-}*/
+a:active{
+}
+
+img{ /* icon on page title, etc */
+border:none;
+vertical-align:middle;
+}
+
+p{ /* some text need to be centered */
+/*text-align:center;*/
+}
+p.page_title_text { /* page title */
+color:black;
+font-weight:bold;
+margin:0 auto;
+padding:5px;
+text-align:center;
+}
+p.good {
+font-weight: bold;
+color: green;
+}
+p.bad {
+font-weight: bold;
+color:red;
+}
+
+
 table {
-	 background-color: none;
-	 margin: 0 auto;
-	 width:90%
+width:auto;
+max-width:90%;
+margin:5px auto;
+padding-bottom:5px;
+}
+table.selection {
+width:auto;
+max-width:90%;
+/*padding-bottom:5px;*/
+}
+th {
+background-color:skyblue;
+color:black;
+font-weight:normal;
+padding:3px;
+}
+th.number {
+text-align: right;
+font-weight: normal;
+background-color: skyblue;
+color: white;
 }
 
-
-/*** CANVAS ************************************************************/
-
-#CanvasDiv { 
-    background:steelblue;
-	margin:10px;
-	border:thick outset steelblue;
-	border-radius:20px;
+td {
+font-family: Arial, Verdana, Helvetica, sans-serif;
+text-align: left;
 }
-
-/*** HEADER ************************************************************/
-
-#HeaderDiv {
-	padding:2px;
-	color:white;
+td.select {
+background-color: whitesmoke;
+padding:3px;
 }
-#HeaderDiv a{
-	color:white;
-	text-decoration:none;
-	border:2px inset transparent;
-	border-radius:10px;
-	padding:3px;	
-}
-#HeaderDiv a:hover{
-	color:cyan;
-	border:2px inset steelblue;
-	border-radius:10px;
-	padding:3px;
-}
-#HeaderWrapDiv{
-}
-#AppInfoDiv{
-	float:left;
-}
-#AppInfoCompanyDiv{
-	float:left;
-}
-#AppInfoUserDiv{
-	float:left;
-}
-#AppInfoModuleDiv{
-	font-weight:bold;
-	font-size:10pt;
-}
-
-/*** Quick Menu ***/
-
-#QuickMenuDiv{
-	float:right;
-}
-#QuickMenuDiv ul{
-	list-style:none;
-	float:right;
-}
-#QuickMenuDiv ul li{
-	display:inline;
-	margin: 0px 3px;
-	float: left;
-}
-
-/*** BODY **************************************************************/
-
-#BodyDiv {
-	clear:both;
-}
-
-#BodyWrapDiv{
-	background:lightsteelblue;
-	margin:5px;
-}
-
-/*** MAIN MENU ***/
-
-#MainMenuDiv{
-	float:left;
-	width:10%;
-	white-space:nowrap;
-	text-align:center;
-	padding:3px;
-}
-#MainMenuDiv ul{
-	margin:0; 
-	padding:0;
-}
-#MainMenuDiv li{
-	list-style:none; 
-}
-#MainMenuDiv li a:link, a:visited{
-	color:white;
-	text-decoration:none;
-}
-#MainMenuDiv li a:hover{
-	color:cyan;
-}
-
-.main_menu_unselected {
-	border:2px inset transparent;
-	border-radius:10px;
-	padding:3px;
-}
-.main_menu_unselected:hover{
-	border:2px inset steelblue;
-	border-radius:10px;
-	padding:3px;
-}
-.main_menu_unselected a{
-}
-.main_menu_unselected a:hover{
-}
-
-.main_menu_selected {
-	border:2px inset steelblue;
-	border-radius:10px;
-	padding:3px;
-}
-.main_menu_selected:hover{
-	border:2px inset steelblue;
-	border-radius:10px;
-	padding:3px;
-}
-.main_menu_selected a{
-}
-.main_menu_selected a:hover{
-}
-
-/*********************************************/
-#SubMenuDiv{
-    float:right;
-    margin:0;
-    padding:0;
-	overflow: hidden;
-	width: 87%;
-}
-#SubMenuDiv ul{
-	margin:0;
-	padding:0;
-}
-#SubMenuDiv li{
-	list-style:none;
-}
-#SubMenuDiv a{
-	color:black;
-	text-decoration:none;
-}
-#SubMenuDiv a:hover{
-	color:blue;
-	text-decoration:none;
-}
-#TransactionsDiv{
-	background:whitesmoke;
-    border:thin inset whitesmoke;
-    float:left;
-    list-style:none;
-    width:32%;
-	padding:0px;	
-}
-#InquiriesDiv{
-	background:whitesmoke;
-    border:thin inset whitesmoke;
-    float:left;
-    list-style:none;
-    width:32%;
-	padding:0px;				
-}
-#MaintenanceDiv{
-	background:whitesmoke;
-    border:thin inset whitesmoke;
-    float:left;
-    list-style:none;
-    width:32%;
-	padding:0px;		
-}
-.menu_group_headers {
-	background:steelblue;
-    border:thin outset steelblue;
-	padding:3px;	
-    text-align:center;
-	color:white;
-}
-.menu_group_headers table{
-}
-.menu_group_img {
-	background-color: gainsboro;
-	text-align: center;
-	width: 90px;
-	position: relative;
-	left: 3px;
-}
-
-.menu_group_img img{
-	position: relative;
-	top: 10px;
-}
-
-.menu_group_area {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 11px;
-	font-weight: bold;
-	border-top: 0px;
-	margin-top: 0px;
-	padding-top: 0px; /*this creates the border*/
-	color: seagreen;
-}
-
-.blank_area table {
-	border: 0px;
-	width: 100%;
-}
-
-
-
-.menu_group_headers_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	color: white;
-}
-
-.menu_group_items {
-	vertical-align: top;
-	background-color: white;
-	font-weight: bold;
-	padding: 15px;
-	border: 1px inset steelblue;
-}
-
-.menu_group_item {
-	padding:3px;
-}
-.menu_group_item:hover{
-	background:lightblue;
-}
-
-.menu_group_item p {
-	color: steelblue; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; 
-}
-/*** FOOTER ************************************************************/
-#FooterDiv{
-	clear:both;
-    color:black;
-    height:52px;
-}
-#FooterWrapDiv{
-	padding:5px;
-}
-#FooterLogoDiv{
-	background:white;
-    border:2px outset sandybrown;
-    border-radius:8px 8px 8px 8px;
-    float:left;
-    padding:5px;
-}	
-#FooterVersionDiv{
-	float:left;
-    margin-left:10px;
-    margin-top:15px;
-
-}
-#FooterTimeDiv{
-	float:right;
-    margin-top:15px;
-}
-
-/************************************************************************/
-
-
-.dpTbl {
-	 border: solid navy 1px;
+td.number {
+text-align: right;
 }
 
 div.centre {
-    padding-bottom:5px;
-	text-align:center;
-}
-
-/*table detail items default format */
-td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	text-align: left;
-}
-
-td.select {
-	background-color: whitesmoke;
-	padding:3px;
-}
-
-table.selection {
-	background:whitesmoke;
-	border:2px inset whitesmoke;
-    padding:0;
-    width:90%;
-}
-
-.dpTD {
-	border: 0;
-	width: 20px;
-	background-color: whitesmoke;
-	text-align: right;
-	cursor: pointer;
-}
-
-.dpDayHighlight {
-	border: 0;
-	width: 20px;
-	background-color: yellow;
-	text-align: right;
-	cursor: pointer;
-}
-
-.dpTDHover {
-	border: 0;
-	width: 20px;
-	background-color: gainsboro;
-	text-align: right;
-	cursor: pointer;
-}
-
-td.number {
-	text-align: right;
-}
-
-.EvenTableRows {
-	background-color: gainsboro;
-}
-
-.OddTableRows {
-	background-color: whitesmoke;
-}
-
-th {
-	background-color:skyblue;
-    color:black;
-    font-weight:normal;
-    padding:3px;
-}
-
-th.number {
-	text-align: right;
-	font-weight: normal;
-	background-color: skyblue;
-	color: white;
-}
-
-div.error {
-	background-color: mistyrose;
-	width: 98%;
-	margin: 5px auto;
-	color: red;
-	border: 1px solid red;
-}
-
-div.warn {
-	background-color: pink;
-	width: 98%;
-	margin: 5px auto;
-	color: maroon;
-	border: 1px solid maroon;
-}
-
-div.success {
-	background-color: aquamarine;
-	width: 98%;
-	margin: 5px auto;
-	color: green;
-	border: 1px solid green;
-}
-
-div.info {
-	background-color: lightskyblue;
-	width: 98%;
-	margin: 5px auto;
-	color:navy;
-	border: 1px solid navy;
+padding:5px;
+text-align:center;
 }
 
 input { /*specifies the input field text characteristics*/
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9px;
-	font-style: italic;
+font-family: Arial, Verdana, Helvetica, sans-serif;
+font-size: 9px;
+font-style: italic;
 }
-
 input.number{
-	text-align: right;
+text-align: right;
 }
-
 input.image {
-	border-width: 0px;
-	background-color: transparent;
+border-width: 0px;
+background-color: transparent;
 }
-
 input:hover{
+background:#9ffffb;
 }
 
 select {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 11px;
+font-family: Arial, Verdana, Helvetica, sans-serif;
+font-size: 11px;
+}
+select:hover { /* drop down */
+background:#9ffffb;
 }
 
-p.good {
-	font-weight: bold;
-	color: green;
+textarea{
+font-family: Arial, Verdana, Helvetica, sans-serif;
+font-size: 10px;
+}
+textarea:hover{
+background:#9ffffb;
 }
 
-p.bad {
-	font-weight: bold;
-	color:red;
+.EvenTableRows {
+background-color: gainsboro;
+}
+.OddTableRows {
+background-color: whitesmoke;
 }
 
-#topMenu {
-	width: 100%;
-	color: black;
-	background-color: whitesmoke;
-	border: none;
-	border-bottom: 1px solid gray;
+div{ /* some input/buttons need to be centered */
+}
+div.error {
+background-color: mistyrose;
+width: 98%;
+margin: 5px auto;
+color: red;
+border: 1px solid red;
+}
+div.warn {
+background-color: pink;
+width: 98%;
+margin: 5px auto;
+color: maroon;
+border: 1px solid maroon;
+}
+div.success {
+background-color: aquamarine;
+width: 98%;
+margin: 5px auto;
+color: green;
+border: 1px solid green;
+}
+div.info {
+background-color: lightskyblue;
+width: 98%;
+margin: 5px auto;
+color:navy;
+border: 1px solid navy;
+}
+DIV.page_help_text {
+background: lightgrey url(images/help.png) top left no-repeat;
+border: maroon 1px solid;
+padding-top:2px;
+padding-bottom: 2px;
+z-index: 1;
+width: 80%;
+float: none;
+visibility: visible;
+margin: 0 auto;
+position: static;
+font-family: Arial, Verdana, Helvetica, sans-serif;
+font-weight: normal;
+font-size: 10px;
+color: black;
+text-align:center;
+padding-left: 24px;
+min-height:26px;
 }
 
-#trim {
-	background: gainsboro;
+/* date picker */
+.dpTbl {
+ border: solid navy 1px;
+ background:white;
+}
+.dpTD {
+border: 0;
+width: 20px;
+background-color: whitesmoke;
+text-align: right;
+cursor: pointer;
+}
+.dpDayHighlight {
+border: 0;
+width: 20px;
+background-color: yellow;
+text-align: right;
+cursor: pointer;
+}
+.dpTDHover {
+border: 0;
+width: 20px;
+background-color: gainsboro;
+text-align: right;
+cursor: pointer;
 }
 
-#page {
-	width: 100%;
-	color: black;
-	font-size: 10px;
-	white-space: nowrap;
-	border: 0px;
-}
-
-#menuImg {
-	vertical-align: top;
-	text-align: center;
-	margin: 0px;
-	padding: 10px;
-}
-
-#mainMenu {
-	width: 100%;
-	color: white;
-	background-color: whitesmoke;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.header {
-	background-image: url("");
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.login {
-	background-color: white;
-	border: none;
-}
-
-textarea {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-}
-
-textarea:hover {
-}
 /* Table type is used for UI tables type 1 */
 .table1 {
-	width:90%;
-	background: whitesmoke;
-	border: 1px solid darkslategray;
-	margin: 0 auto;
+width:90%;
+background: whitesmoke;
+border: 1px solid darkslategray;
+margin: 0 auto;
 }
-
-input.address3 {
-	text-transform: uppercase;
-}
-
-div.csv {
-	background: silver;
-	color: black;
-	border: 1px solid black;
-	padding-left: 3px;
-	z-index: 1;
-	width: 50%;
-	float: none;
-	visibility: visible;
-	margin: 0 auto;
-	position: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	font-weight: normal;
-	font-size: 10px;
-	text-align: center;
-}
-
-.callout_main {
-}
-
-.main_page {
-	background: lightsteelblue;
-	border: none;
-	width: 932px;
-	margin: 0 auto;
-	padding: 0px;
- 	font-size: 10px;
-}
-
-/* Main page heading with quick menu within */
-.quick_menu {
-	width:930px;
-}
-
-#quick_menu{
-}
-
-/*The main page heading left part before quick menu */
-.quick_menu_left {
-	color: white;
-	white-space: nowrap;
-}
-
-/*the Select Customer / Item / Supplier Menu tabs */
-.quick_menu_tabs {
-	white-space: nowrap;
-	vertical-align: bottom;
-}
-
-.quick_menu_tab{/*borders will work here*/
-	background: url(images/tab_bg.png) top left no-repeat steelblue;
-	white-space: nowrap;
-	padding: 6px;
-	padding-top: 4px;
-	padding-bottom: 0px;
-}
-
-.quick_menu_tab a{
-	color: white;
-	font-size: 12px;
-	text-decoration: none;
-}
-
-.quick_menu_left a{
-	color: white;
-}
-
-.quick_menu_tab a:hover{
-	color: lightsteelblue;
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.quick_menu_left a:hover{
-	color: lightsteelblue;
-	text-decoration: none;
-}
-
-.quick_menu_tab:hover{
-	color: red;
-}
-/*the Select Customer / Item / Supplier Menu tabs */
-.system_menu_tabs {
-	background-color: white;
-	white-space: nowrap;
-	border: none;
-	margin:0 6px 0 6px;
-	padding: 0px;
-	text-align: center;
-}
-
-.system_menu_tabs a {
-	font-size: 10px;
-	color: black;
-}
-
-.system_menu_tabs a:hover {
-	font-size: 10px;
-	color: black;
-}
-
-.main_area {
-	width: 100%;
-	background-color: white;
-}
-
-.main_menu {
-	background-color: white;
-	margin: 2px 0 0 6px;
-	font-weight: normal;
-	width: 110px;
-}
-
-.main_menu table {
-	border-top: 0px;
-	width: 100%;
-	margin: 2px;
-}
-
-span.main_menu_nolink {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	color: gray;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.main_menu a {
-	color: white;
-	font-weight: bold;
-	font-size: 11px;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.main_menu a:hover {
-	color: lightsteelblue;
-}
-
-
-
-.page_title_text {
-	font-weight:bold;
-	text-align:center;
-	padding-top:5px;
-}
-
-DIV.page_help_text {
-	background: lightgrey url(images/help.png) top left no-repeat;
-	border: maroon 1px solid;
-	padding-top:2px;
-	padding-bottom: 2px;
-	padding-left: 10px;
-	z-index: 1;
-	width: 80%;
-	float: none;
-	visibility: visible;
-	margin: 0 auto;
-	position: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-weight: normal;
-	font-size: 10px;
-	color: black;
-	text-align:center;
-}
-
-DIV.system_check {
-	border: 1px solid maroon;
-	padding-left: 3px;
-	z-index: 1;
-	width: 40%;
-	float: none;
-	visibility: visible;
-	margin: 0 auto;
-	position: static;
-	background: silver;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	font-weight: normal;
-	font-size: 10px;
-	color: black;
-	text-align:left;
-}
-
-span.menu_group_nolink {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	color: gray;
-	text-decoration: none;
-}
-
-.menu_group_item a {
-	font-size: 11px;
-	font-weight: normal;
-}
-
-.menu_group_items a:hover {
-	color: navy;
-	text-decoration: underline;
-}
-
-#footer {
-
-}
-
-a.footer {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	color: black;
-	font-weight: normal;
-	font-size: 8px;
-}
-
-.footer {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	color: gainsboro;
-	font-weight: normal;
-	font-size: 9px;
-	text-align: center;
-}
-
-.legal {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9px;
-	color: dimgray;
-}
-
-.box1 {
-	border-color: gainsboro dimgray dimgray gainsboro;
-	border-width: medium;
-	border-style: ridge;
-}
-
-.promo {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	color: red;
-}
-
-.titlebar {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9px;
-	color: white;
-	background-color: silver;
-}
-
-.dingbat {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	background-color: darkseagreen;
-	color: seagreen;
-	font-weight: bolder;
-	font-size: medium;
-}
-
-input.big {
-	width: 100px;
-}
-
-input.small {
-	width: 50px;
-}
-
-input.inputerror {
-	background-color: mistyrose;
-}
-
-textarea.texterror {
-	background-color: mistyrose;
-}
-
-select.selecterror {
-	background-color: mistyrose;
-}
-
 .tableheader {
-	font-weight: normal;
-	background-color: skyblue;
-	color: white;
+font-weight: normal;
+background-color: skyblue;
+color: white;
 }
-
 .notavailable {
-	font-weight: lighter;
-	font-style: italic;
-	color: gray;
+font-weight: lighter;
+font-style: italic;
+color: gray;
 }
-
 .label {
-	font-weight: bold;
-	font-style: normal;
-	font-size: 11px;
-	color: black;
-	background-color: gainsboro;
+font-weight: bold;
+font-style: normal;
+font-size: 11px;
+color: black;
+background-color: gainsboro;
 }
-
-.OsRow {
-	background-color: midnightblue;
-	color: white;
-}
-
 .table_index {
-	background-color: aliceblue;
+background-color: aliceblue;
+}
+li {
+/*list-style-image: url(bullet.gif);*/
 }
 
-li {
-	list-style-image: url(bullet.gif);
+/* CANVAS */
+
+#CanvasDiv { 
+background:steelblue;
+border-radius:20px;
+box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
+margin:10px;
 }
+
+/* HEADER */
+
+#HeaderDiv {
+overflow:hidden;
+color:white;
+padding:5px 10px 0;
+}
+#HeaderDiv a{
+border-radius:10px;
+color:white;
+text-decoration:none;
+padding:3px;
+}
+#HeaderDiv a:hover{
+color:cyan;
+border-radius:10px;
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+padding:3px;
+}
+#HeaderWrapDiv{
+}
+
+/* HEADER - APP INFO */
+
+#AppInfoDiv{
+float:left; /* REQUIRED: to the left */
+}
+#AppInfoCompanyDiv{
+display:table-cell; /* REQUIRED: as a cell */
+}
+#AppInfoUserDiv{
+display:table-cell; /* REQUIRED: as a cell */
+padding-left:5px;
+}
+#AppInfoModuleDiv{
+font-weight:bold;
+font-size:12px;
+padding:3px;
+}
+
+/* HEADER - QUICK MENU */
+
+#QuickMenuDiv{
+float:right;
+margin-top:7px;
+}
+#QuickMenuDiv ul{
+list-style:none;
+float:right;
+}
+#QuickMenuDiv ul li{
+float: left;
+display:inline;
+margin: 0px 3px;
+}
+
+/* BODY */
+
+#BodyDiv {
+clear:both;
+overflow:hidden;
+text-align:center; /* needed to center some buttons on SelectSupplier.php */
+}
+#BodyWrapDiv{
+background:lightsteelblue;
+box-shadow:2px 2px 3px inset;
+margin:0 5px;
+}
+
+/* BODY - MAIN MENU */
+
+#MainMenuDiv{
+float:left;
+background:steelblue;
+white-space:nowrap;
+text-align:center;
+padding-left:3px;
+padding-top:3px;
+width:11%;
+}
+#MainMenuDiv ul{
+margin:0; 
+padding:0;
+}
+#MainMenuDiv li{
+list-style:none; 
+}
+#MainMenuDiv li a,
+#MainMenuDiv li a:hover,
+#MainMenuDiv .main_menu_selected a{
+display:block; /* REQUIRED */
+border-radius:10px;
+color:white;
+text-decoration:none;
+padding:3px;
+margin-bottom:5px;
+}
+#MainMenuDiv li a:hover{
+color:cyan;
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+}
+#MainMenuDiv .main_menu_selected a{ /* the selected button */
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+}
+
+/* BODY - SUB MENU */
+
+#SubMenuDiv{
+display:table; /* display as table, sub menu will auto adjust width */
+float:right;
+overflow: hidden;
+margin-left:auto;
+margin-right:auto;
+width:88%; /* main menu is 10% */
+text-align:left;
+}
+#SubMenuDiv ul{
+margin:0;
+padding:0;
+}
+#SubMenuDiv li{
+list-style:none; /* REQUIRED: hide bullets */
+}
+#SubMenuDiv p{
+}
+
+#SubMenuDiv a{
+color:black;
+text-decoration:none;
+}
+#SubMenuDiv a:hover{
+color:black;
+text-decoration:underline;
+}
+
+.menu_group_headers {
+background:steelblue;
+border:2px outset white;
+color:white;
+font-weight:bold;
+text-align:center;
+padding:3px;
+}
+
+.menu_group_item {
+padding:2px;
+text-align:left; 
+}
+.menu_group_item:hover{
+background:lightblue;
+text-align:left; 
+}
+
+.menu_group_item p { /* bullet */
+color: red; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
+margin: 0 0 0 12px;
+text-align:left; 
+}
+.menu_group_item a{
+color:black;
+text-decoration:none;
+}
+.menu_group_item a:hover{
+color:red;
+text-decoration:none;
+}
+
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
+background:whitesmoke;
+border:2px solid steelblue;
+display:table-cell; 
+}
+#InquiriesDiv div{ /* to center custom report/form header */
+background:lightsteelblue;
+font-weight:bold;
+color:black;
+padding:2px;
+}
+
+/*** FOOTER ***/
+
+#FooterDiv{
+clear:both;
+color:white;
+height:53px;
+padding:0;
+}
+#FooterWrapDiv{
+padding:5px;
+}
+#FooterLogoDiv{
+background:white;
+border:2px outset steelblue;
+border-radius:8px 8px 8px 8px;
+float:left;
+padding:3px;
+}
+#FooterVersionDiv{
+float:left;
+margin-left:10px;
+margin-top:15px;
+
+}
+#FooterTimeDiv{
+float:right;
+margin-top:15px;
+}
+
+/**** END  ***/
