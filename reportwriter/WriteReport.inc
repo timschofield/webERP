@@ -222,7 +222,7 @@ var $pageY; // y value of bottom of page less bottom margin
 						$this->SetY($LastY);
 						// truncate data if necessary
 						if ($trunc) $value=$this->TruncData($value, $Prefs['col'.$col.'width']);
-						$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value,0);
+						$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value,$Prefs['datafontalign'],1);
 						if ($ColBreak[$key]) {
 							$col++;
 							$LastY = $this->y0;
