@@ -177,22 +177,22 @@ if (isset($_POST['UpdateAll'])) {
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . $Quantity . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
 				prnMsg( $ConfirmationText,'warn');
 			}
-		}
-	}
-}
 
-// Check if request can be closed and close if done.
-if (isset($RequestID)) {
-	$SQL="SELECT dispatchid
-			FROM stockrequestitems
-			WHERE dispatchid='".$RequestID."'
-			AND completed=0";
-	$Result=DB_query($SQL, $db);
-	if (DB_num_rows($Result)==0) {
-		$SQL="UPDATE stockrequest
-				SET closed=1
-			WHERE dispatchid='".$RequestID."'";
-		$Result=DB_query($SQL, $db);
+			// Check if request can be closed and close if done.
+			if (isset($RequestID)) {
+				$SQL="SELECT dispatchid
+						FROM stockrequestitems
+						WHERE dispatchid='".$RequestID."'
+							AND completed=0";
+				$Result=DB_query($SQL, $db);
+				if (DB_num_rows($Result)==0) {
+					$SQL="UPDATE stockrequest
+						SET closed=1
+					WHERE dispatchid='".$RequestID."'";
+					$Result=DB_query($SQL, $db);
+				}
+			}
+		}
 	}
 }
 
@@ -203,8 +203,8 @@ if (!isset($_POST['Location'])) {
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('Choose a location to issue requests from') . '</td>
 		<td><select name="Location">';
-	$sql = "SELECT loccode, locationname 
-			FROM locations 
+	$sql = "SELECT loccode, locationname
+			FROM locations
 			WHERE internalrequest = 1
 			ORDER BY locationname";
 	$resultStkLocs = DB_query($sql,$db);
