@@ -446,6 +446,8 @@ function BuildSQL($Prefs) {
 	if ($Prefs['table2']) $strTable .= ' INNER JOIN '.$Prefs['table2']. ' ON '.$Prefs['table2criteria'];
 	if ($Prefs['table3']) $strTable .= ' INNER JOIN '.$Prefs['table3']. ' ON '.$Prefs['table3criteria'];
 	if ($Prefs['table4']) $strTable .= ' INNER JOIN '.$Prefs['table4']. ' ON '.$Prefs['table4criteria'];
+	if ($Prefs['table5']) $strTable .= ' INNER JOIN '.$Prefs['table5']. ' ON '.$Prefs['table5criteria'];
+	if ($Prefs['table6']) $strTable .= ' INNER JOIN '.$Prefs['table6']. ' ON '.$Prefs['table6criteria'];
 	// Build query string and execute
 	$sql = "SELECT ".$strField." FROM ".$strTable;
 	if ($strCrit AND $strDate) $sql .= ' WHERE '.$strDate.' AND '.$strCrit;
