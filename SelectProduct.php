@@ -66,7 +66,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.discontinued,
 								stockmaster.eoq,
 								stockmaster.volume,
-								stockmaster.kgs
+								stockmaster.kgs,
+								stockcategory.categorydescription
 								FROM stockmaster INNER JOIN stockcategory
 								ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE stockid='" . $StockID . "'", $db);
@@ -85,9 +86,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				<th colspan="3"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b title="' . $myrow['longdescription'] . '">' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
 			</tr>';
 
+
 	echo '<tr>
 			<td style="width:40%" valign="top">
 			<table>'; //nested table
+	echo '<tr><th class="number">' . _('Category:') . '</th> <td colspan="2" class="select">' . $myrow['categorydescription'] , '</td></tr>';
 	echo '<tr><th class="number">' . _('Item Type:') . '</th>
 			<td colspan="2" class="select">';
 	switch ($myrow['mbflag']) {
