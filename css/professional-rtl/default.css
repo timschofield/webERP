@@ -54,6 +54,33 @@ td {
 td.select {
 	background-color:#eee;
 }
+.dpTbl {
+	border: solid navy 1px;
+	background:white;
+}
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;
+}
+
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
 td.number {
 	text-align: right;
 }
@@ -362,6 +389,7 @@ li {
 	overflow:hidden; /* REQUIRED */
 	color:black;
 	background:white;
+	text-align:center;
 }
 #BodyDiv table {
 	width:auto; /* automatic width */
@@ -420,6 +448,7 @@ li {
 #SubMenuDiv{
 	display:table; /* display as table, sub menu will auto adjust width */
 	width:89%; /* main menu is 10% */
+	text-align:left;
 }
 #SubMenuDiv ul{
 	list-style-type:none; /* REQUIRED: hide bullets */

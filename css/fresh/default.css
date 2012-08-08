@@ -25,11 +25,6 @@ body {
 }
 
 /*** default styles ***/
-
-img {
-	border:none;
-	vertical-align:middle;
-}
 a {
 	color:blue;
 	text-decoration:none;
@@ -38,58 +33,38 @@ a:hover {
 	color:blue;
 	text-decoration: underline;
 }
+
+img {
+	border:none;
+	vertical-align:middle;
+}
+p.page_title_text {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: bold;
+	font-size: 10px;
+	color: black;
+	background-color: #C9D392;
+	width: 30%;
+	TEXT-ALIGN:center;
+	margin: 10px auto;
+}
+p.good { /***/
+    font-weight: bold;
+    color: green;
+}
+p.bad { /***/
+    font-weight: bold;
+    color:red;
+}
 table {
   background-color: #ffffff;
   margin: 0 auto;
   width:100%
 }
-/*table detail items default format */
-td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;;
-	font-size: 10px;
-	text-align: left;
-}
-
-/*** calendar picker ***/
-
-#calendar{
-
-}
-.dpTbl {
-	border: solid navy 1px;
-}
-.dpTD {
-	border: 0;
-	width:20px;
-	background-color: #EEEEEE;
-	text-align:right;
-	cursor:pointer;
-}
-.dpDayHighlight {
-	border: 0;
-	width:20px;
-	background-color: yellow;
-	text-align:right;
-	cursor:pointer;
-}
-.dpTDHover {
-	border: 0;
-	width:20px;
-	background-color: #CCCCCC;
-	text-align:right;
-	cursor:pointer;
-}
-
-/*** /calendar picker ***/
-
-div.centre { /* centering buttons / links */
-  margin: 0 auto;
-  text-align:center;
-}
-
 table.selection {
 }
-
 th {
 	font-weight: normal;
 	font-size: 10px;
@@ -103,14 +78,44 @@ th.number {
 	background-color: #800000;
 	color: white;
 }
-
+td {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 10px;
+	text-align: left;
+}
 td.select {
 	background-color:#eee;
 }
 td.number {
 	text-align: right;
 }
-
+div.centre { /* centering buttons / links */
+  margin: 0 auto;
+  text-align:center;
+}
+input {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 10px;
+}
+input.number{
+	text-align: right;
+}
+input.image {
+	border-width:0px;
+	background-color: transparent;
+}
+input:hover{
+}
+select {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 10px;
+}
+textarea{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+}
+textarea:hover{
+}
 .EvenTableRows {
 	background-color: #72824D;
 }
@@ -138,108 +143,6 @@ div.info {
 	color: navy;
 	border: 0px solid navy;
 }
-
-input {
-	font-family: Arial, Verdana, Helvetica, sans-serif;;
-	font-size: 10px;
-}
-input.number{
-	text-align: right;
-}
-input.image {
-	border-width:0px;
-	background-color: transparent;
-}
-input:hover{
-}
-
-select {
-	font-family: Arial, Verdana, Helvetica, sans-serif;;
-	font-size: 10px;
-}
-
-p.good { /***/
-    font-weight: bold;
-    color: green;
-}
-p.bad { /***/
-    font-weight: bold;
-    color:red;
-}
-
-.header {
-	background-image: url("");
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.login {
-	background-color: #ffffff;
-	border: none;
-}
-
-textarea{
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-}
-
-textarea:hover{
-}
-
-/* Table type is used for UI tables type 1 */
-.table1 {
-  width:90%;
-  background: #eee;
-  border: 0px 0px 2px 2px #222 solid;
-  margin: 0 auto;
-}
-/* Table type is used for UI tables type 2 */
-.table2 {
-  width:90%;
-  background: #eee;
-  border: 0px 0px 2px 2px #222 solid;
-  margin: 0 auto;
-}
-
-input.address3 {
-	text-transform: uppercase;
-}
-
-div.csv {
-        background:lightgray;
-        color: black;
-        border: 1px solid black;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        TEXT-ALIGN:center;
-}
-
-p.page_title_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	font-weight: bold;
-	font-size: 10px;
-	color: black;
-	background-color: #C9D392;
-	width: 30%;
-	TEXT-ALIGN:center;
-	margin: 10px auto;
-}
-
 DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	BORDER: #a52a2a 1px solid;
@@ -259,6 +162,79 @@ DIV.page_help_text {
 	TEXT-ALIGN:center;
 }
 
+/*** calendar picker ***/
+#calendar{
+
+}
+.dpTbl {
+	border: solid navy 1px;
+}
+.dpTD {
+	border: 0;
+	width:20px;
+	background-color: #EEEEEE;
+	text-align:right;
+	cursor:pointer;
+}
+.dpDayHighlight {
+	border: 0;
+	width:20px;
+	background-color: yellow;
+	text-align:right;
+	cursor:pointer;
+}
+.dpTDHover {
+	border: 0;
+	width:20px;
+	background-color: #CCCCCC;
+	text-align:right;
+	cursor:pointer;
+}
+/*** /calendar picker ***/
+
+/* Table type is used for UI tables type 1 */
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+/* Table type is used for UI tables type 2 */
+.table2 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  margin: 0 auto;
+}
+.tableheader {
+	font-weight: normal;
+	background-color: #777C59;
+	color: white;
+}
+.notavailable {
+	font-weight:lighter;
+	font-style:italic;
+	color:#555555;
+}
+.label {
+	font-weight:bold;
+	font-style:normal;
+	font-size:12px;
+	color:black;
+}
+.table_index {
+	background-color: #F1FFDD;
+}
+
+
+.header {
+	background-image: url("");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
 input.inputerror {
 	background-color: #fddbdb;
 }
@@ -268,33 +244,9 @@ textarea.texterror {
 select.selecterror {
 	background-color: #fddbdb;
 }
-
-.tableheader {
-	font-weight: normal;
-	background-color: #777C59;
-	color: white;
-}
-
-.notavailable {
-	font-weight:lighter;
-	font-style:italic;
-	color:#555555;
-}
-
-.label {
-	font-weight:bold;
-	font-style:normal;
-	font-size:12px;
-	color:black;
-}
-
 .OsRow {
 	background-color: #234567;
 	color: white;
-}
-
-.table_index {
-	background-color: #F1FFDD;
 }
 
 /*li {
@@ -381,6 +333,7 @@ select.selecterror {
 	color:black;
 	background:white;
 	padding:5px;
+	text-align:center;
 }
 #BodyDiv table {
 	width:auto; /* automatic width */
@@ -438,6 +391,7 @@ background:#E0F3B1;
 #SubMenuDiv{
 	display:table; /* display as table, sub menu will auto adjust width */
 	width:89%; /* main menu is 10% */
+	text-align:left;
 }
 #SubMenuDiv a:link, a:visited{
 	color:#5A5F00;

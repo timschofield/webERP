@@ -1,71 +1,65 @@
+/***
+
+"Default" Login theme for WebERP
+
+by Hindra Joshua
+
+***/
+
+
 /* $Id$*/
 body {
-	padding: 0px;
-	margin: 0px;
-	text-align: center;
-	font: 14px "Lucida Grande", "Arial", "Helvetica", "Verdana", "sans-serif";
-	background: #fff;
-	color: #777;
+background:#fff;
+color:black;
+font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
+text-align:center;
+}
+
+img{
+vertical-align:middle;
 }
 
 #container {
-	text-align: left;
-	margin-top: 0px;
-	margin-left: auto;
-	margin-right: auto;
-	position: relative;
-	z-index: 1000;
-	width: 300px;
-	background: #cdf;
+background:#ddd;;
+border:thin solid black;
+margin-left:auto;
+margin-right:auto;
+margin-top:50px;
+width:300px;
+z-index:1000;
 }
 
 #login_logo {
-	width: 200px;
-	height: 75px;
-	margin-left: 50px;
-	margin-top: 70px;
-	padding-top: 10px;
-	margin-bottom: 20px;
-	background: #fff url(../webERP.gif) repeat-x left bottom;
-}
-
-input{
-	width: 200px;
-	border: solid #e3e3e3 1px;
-	height:25px;
-/*	background:url(images/input_bg.png) repeat-x left top; */
-	padding:4px 0;
-	vertical-align:middle;
-	margin-left:50px;
-	margin-bottom:10px;
-}
-
-input:hover {
-	border: solid #aad4e3 1px;
-	background-position:left bottom;
+background:url("../webERP.gif") no-repeat scroll center center #FFFFFF;
+border:medium outset gray;
+border-radius:19px 19px 19px 19px;
+height:44px;
+margin:10% auto;
+padding:12px;
+width:190px;
 }
 
 input.button {
-	font-weight: bold;
-	color: #000;
-	background:#27f;
-	border: solid #e3e3e3 1px;
-	padding: 0px;
-	margin-top: 10px;
-	margin-bottom: 30px;
+background:none repeat scroll 0 0 transparent;
+border:thick outset #ddd;
+border-radius:15px 15px 15px 15px;
+padding:10px;
+vertical-align:middle;
+width:50%;
+font-weight:bold;
+box-shadow:3px 3px 4px;
 }
 
 input.button:hover {
-	background: #f11;
-}
-
-span{
-	width:200px;
-	padding-top:7px;
-	padding-left:50px;
+background:none repeat scroll 0 0 transparent;
+border:thick inset #ddd;
+border-radius:15px 15px 15px 15px;
+padding:10px;
+vertical-align:middle;
+width:50%;
+box-shadow:3px 3px 4px inset;	
 }
 
 #demo_text{
-	margin-left:50px;
-	width:200px;
+	padding:10px;
 }

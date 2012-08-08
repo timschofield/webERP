@@ -80,3 +80,7 @@ vertical-align:middle;
 width:50%;
 box-shadow:3px 3px 4px black inset;	
 }
+
+#demo_text{
+	padding:10px;
+}

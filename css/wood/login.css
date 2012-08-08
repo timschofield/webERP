@@ -79,3 +79,7 @@ input.button:hover {
     width:50%;
 	box-shadow:3px 3px 4px inset;	
 }
+
+#demo_text{
+	padding:10px;
+}

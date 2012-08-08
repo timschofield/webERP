@@ -23,10 +23,6 @@ body {
 	padding:5px;
 }
 
-img {
-	border:none;
-	vertical-align:middle;
-}
 a {
 	font-weight: normal;
 	text-decoration: none;
@@ -36,22 +32,26 @@ a:hover {
 	color: blue;
 	text-decoration: underline;
 }
-input:hover{
-	background: url(images/inputh.png) #eee;
-	color:#000;
-	border: 1px 1px 1px 1px #000 solid;
+img {
+	border:none;
+	vertical-align:middle;
 }
-textarea{
-	background: url(images/inputtxt.png) #eee;
-	color:#000;
-	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Verdana, Arial, Helvetica;
+.page_title_text {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+    padding-top: 2px;
+    padding-bottom: 2px;
+	font-weight: bold;
 	font-size: 10px;
-	}
-textarea:hover{
-	background: url(images/inputhtxt.png) #eee;
-	color:#000;
-	border: 1px 1px 1px 1px #000 solid;
+	color: black;
+	TEXT-ALIGN:center;
+}
+p.good {
+    font-weight: bold;
+    color: green;
+}
+p.bad {
+    font-weight: bold;
+    color:red;
 }
 table {
   background-color: #eee;
@@ -59,37 +59,10 @@ table {
   background: #eee;
   width:100%;
 }
-
-/***/
-
-.dpTbl {
-	border: solid navy 1px;
-}
-
-div.centre {
-  margin: 0 auto;
-  text-align:center;
-}
-
-/*table detail items default format */
-td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	text-align: left;
-}
-
-td.select {
-	background-color:#eee;
-}
-
 table.selection {
 	background-color:#eee;
 	outline-style:solid;
 	outline-width:1px;
-}
-
-td.number {
-	text-align: right;
 }
 th {
 	font-weight: normal;
@@ -105,46 +78,21 @@ th.number {
 	font-size: 10px;
 	color: #330000;
 }
-/*** unknown ***/
-
-/*** used ***/
-
-.EvenTableRows {
-	background-color: #CCCCCC;
+td {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	text-align: left;
 }
-
-.OddTableRows {
-	background-color: #EEEEEE;
+td.select {
+	background-color:#eee;
 }
-
-
-div.error { /*** is this used??? ***/
-	background-color:red;
-	color: white;
-	font-style: italic; font-weight:bold;
-	border: 3px solid red;
+td.number {
+	text-align: right;
 }
-
-div.warn { 
-	background-color:#fa0;
-	color: black;
-	border: 1px solid black;
+div.centre {
+  margin: 0 auto;
+  text-align:center;
 }
-
-div.success { /*** is this used??? ***/
-	background-color:#b9ecb4;
-	color: #008000;
-	border: 1px solid #008000;
-}
-
-div.info { /* ??? */
-	background-color:#5d70f8;
-	color: white;
-	border: 1px solid white;
-}
-
-/*** textbox and buttons ***/
-
 input{
   	background: url(images/input.png) #eee;
 	color:#000;
@@ -152,50 +100,24 @@ input{
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
 }
-
+input:hover{
+	background: url(images/inputh.png) #eee;
+	color:#000;
+	border: 1px 1px 1px 1px #000 solid;
+}
 input.number{
 	text-align: right;
 }
-
 input.image {
 	border-width:0px;
 	background-color: transparent;
 }
-
-input:hover{
-}
-
 select {
 	background:#eee;
 	color:#111;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
 }
-
-p.good {
-    font-weight: bold;
-    color: green;
-}
-
-p.bad {
-    font-weight: bold;
-    color:red;
-}
-
-.header {
-	background-image: url("");
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.login {
-	background-color: white;
-	border: none;
-}
-
 textarea{
   	background: url(images/input.png) #eee;
 	color:#000;
@@ -203,114 +125,120 @@ textarea{
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 10px;
 }
-
 textarea:hover{
 }
-/* Table type is used for UI tables type 1 */
+.EvenTableRows {
+	background-color: #CCCCCC;
+}
+.OddTableRows {
+	background-color: #EEEEEE;
+}
+textarea{
+	background: url(images/inputtxt.png) #eee;
+	color:#000;
+	border: 0px 0px 1px 1px #000 dashed;
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 10px;
+	}
+textarea:hover{
+	background: url(images/inputhtxt.png) #eee;
+	color:#000;
+	border: 1px 1px 1px 1px #000 solid;
+}
+div.error { /*** is this used??? ***/
+	background-color:red;
+	color: white;
+	font-style: italic; font-weight:bold;
+	border: 3px solid red;
+}
+div.warn { 
+	background-color:#fa0;
+	color: black;
+	border: 1px solid black;
+}
+div.success { /*** is this used??? ***/
+	background-color:#b9ecb4;
+	color: #008000;
+	border: 1px solid #008000;
+}
+div.info { /* ??? */
+	background-color:#5d70f8;
+	color: white;
+	border: 1px solid white;
+}
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
+	padding-top:2px;
+        padding-bottom: 2px;
+	PADDING-LEFT: 10px;
+	Z-INDEX: 1;
+	width: 80%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 10px;
+    color: black;
+	TEXT-ALIGN:center;
+}
+DIV.system_check { /*** is this used???  */
+        BORDER: #a52a2a 1px solid;
+        PADDING-LEFT: 3px;
+        Z-INDEX: 1;
+        width: 40%;
+        FLOAT: none;
+        VISIBILITY: visible;
+        MARGIN: 0 auto;
+        POSITION: static;
+        background: lightgray;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-weight: normal;
+        font-size: 10px;
+        color: black;
+        TEXT-ALIGN:left;
+}
+
+.dpTbl {
+	border: solid navy 1px;
+}
+.dpTD{
+border:0;
+width:20px;
+background-color:#EEEEEE;
+text-align:right;
+cursor:pointer;
+}
+.dpDayHighlight{
+border:0;
+width:20px;
+background-color:yellow;
+text-align:right;
+cursor:pointer;
+}
+.dpTDHover{
+border:0;
+width:20px;
+background-color:#CCCCCC;
+text-align:right;
+cursor:pointer;
+}
+
 .table1 { /*** used ***/
   width:90%;
   background: #eee;
   border: 1px solid #222;
   margin: 0 auto;
 }
-
-input.address3 { /*** used ***/
-	text-transform: uppercase;
-}
-
-div.csv { /*** used ***/
-        background:lightgray;
-        color: black;
-        border: 1px solid black;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        TEXT-ALIGN:center;
-}
-
-.page_title_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-    padding-top: 2px;
-    padding-bottom: 2px;
-	font-weight: bold;
-	font-size: 10px;
-	color: black;
-	TEXT-ALIGN:center;
-}
-
-div.page_help_text {
-	background: lightgrey url(images/help.png) top left no-repeat;
-	border: #a52a2a 1px solid;
-	padding-top:2px;
-	padding-bottom: 2px;
-	padding-left: 10px;
-	z-index: 1;
-	width: 80%;
-	float: none;
-	visibility: visible;
-	margin: 0 auto;
-	position: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-    font-weight: normal;
-    font-size: 10px;
-    color: black;
-	text-align:center;
-}
-
-div.system_check { /*** is this used???  */
-        border: #a52a2a 1px solid;
-        padding-left: 3px;
-        z-index: 1;
-        width: 40%;
-        float: none;
-        visibility: visible;
-        margin: 0 auto;
-        position: static;
-        background: lightgray;
-        font-family: arial, verdana, helvetica, sans-serif;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        text-align:left;
-}
-
-input.big {
-	width: 100px;
-}
-
-input.small {
-	width: 50px;
-}
-
-input.inputerror { /* used */
-	background-color: #fddbdb;
-}
-
-textarea.texterror { /* used */
-	background-color: #fddbdb;
-}
-
-select.selecterror { /* used */
-	background-color: #fddbdb;
-}
-
 .tableheader { /* used */
 	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 }
-
 .notavailable { /* used */
 	font-weight: normal;
 	font-style:italic;
@@ -323,16 +251,31 @@ select.selecterror { /* used */
 	color:black;
 	background-color:#cccccc;
 }
-
-.OsRow { /* used */
-	background-color: #234567;
-	color: white;
-}
-
 .table_index { /* used */
 	background-color: #eee;
 }
 
+.header {
+	background-image: url("");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+input.inputerror { /* used */
+	background-color: #fddbdb;
+}
+textarea.texterror { /* used */
+	background-color: #fddbdb;
+}
+select.selecterror { /* used */
+	background-color: #fddbdb;
+}
+.OsRow { /* used */
+	background-color: #234567;
+	color: white;
+}
 li { /* ??? */
 	list-style-image: url(bullet.gif);
 }
@@ -423,6 +366,7 @@ li { /* ??? */
 	overflow:hidden; /* REQUIRED */
 	color:black;
 	background:whitesmoke;
+	text-align:center;
 }
 #BodyDiv table {
 	width:auto; /* automatic width */
@@ -440,8 +384,8 @@ li { /* ??? */
 	float:left; /* REQUIRED: to the left side */
 	white-space:nowrap; /* don't break text */
 	text-align:center; 
-	width:12%;
-	background:url(images/gelblue.png) repeat-y blue;
+	width:11%;
+	background:url(images/gelbluev.png) repeat-y blue;
 	background-size:contain;
 	border:2px outset blue;
 	border-radius:20px;
@@ -484,15 +428,19 @@ li { /* ??? */
 /*** BODY - SUB MENU ***/
 
 #SubMenuDiv{
-    float:right;
-	overflow: hidden;
-	min-width: 86%;
-	margin-top:5px;
+	display:table;
+    margin-left:auto;
+    margin-right:auto;
+   	padding-top:5px;
+    width:87%;
+	text-align:left;
 }
 #SubMenuDiv ul{
 	list-style-type:none; /* REQUIRED: hide bullets */
 	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
 	margin:0;	
+	border:thin solid black;
+	margin-left:3px;
 }
 #SubMenuDiv li{
 	list-style:none; /* REQUIRED: hide the bullets */
@@ -530,16 +478,10 @@ li { /* ??? */
 	background:#bfd8ff;
 }
 #TransactionsDiv{
-	float:left; /* REQUIRED: to the left side */
-    width:32.5%;
-	border:thin solid black;
-	margin-right:4px;
+	display:table-cell;	
 }
 #InquiriesDiv{
-    float:left;
-    width:32.5%;
-	border:thin solid black;
-	margin-right:4px;	
+	display:table-cell;		
 }
 #InquiriesDiv div{ /* default div, used for custom report header */
 	background:#dddddd;
@@ -548,9 +490,7 @@ li { /* ??? */
 /*	border:thin outset silver;*/
 }
 #MaintenanceDiv{
-    float:left;
-    width:32.5%;
-	border:thin solid black;
+	display:table-cell;	
 }
 
 /*** FOOTER ***/

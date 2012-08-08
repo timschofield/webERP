@@ -7,7 +7,7 @@ by Hindra Joshua
 Based from the previous theme "SilverWolf"
 Credits to the original authors.
 
-NOTE: 
+NOTE:
 This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
 but for the obvious one it will be cleaned up.
 To optimized the rest we should examined the whole codes! That would be for 
@@ -16,339 +16,267 @@ the next project. :)
 ***/
 
 
-body {
-	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:10px;
-	background-color:white;
-	margin:0;
-	padding:5px;
+body{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:10px;
+background:url(images/stripe.png) white;
+margin:0;
+padding:5px;
 }
 
-form {
+a{
+color:#5B5B68;
+text-decoration:none;
 }
-img {
-	border:none;
-	vertical-align:middle;
+a:hover{
+color:#000;
+text-decoration:underline;
 }
-a {
-	font-weight: normal;
-	text-decoration: none;
-	color: #5B5B68;
+form{
 }
-a:hover {
-	color: #000;
-	text-decoration: underline;
+img{
+border:none;
+vertical-align:middle;
 }
-table {
-	background-color: #fff;
-	width:100%;
+p.good{
+font-weight:bold;
+color:green;
 }
-th {
-	font-weight: normal;
-	background-color: #C3C3C3;
-	font-size: 100%;
-	color: #300;
-	text-align: center;
-	vertical-align: middle;
+p.bad{
+font-weight:bold;
+color:red;
 }
-th.number {
-	font-weight: normal;
-	background-color: #cccce5;
-	font-size: 100%;
-	color: #300;
-	text-align: right;
-	vertical-align: middle;
+p.page_title_text{ /* page title, used in many *.php */
+background:gainsboro;
+font-size:12px;
+margin:10px auto;
+padding:5px;
+text-align:center;
 }
-.tableheader {
-	font-weight: normal;
-	background-color: #cccce5;
-	color: #300;
+table{
+width:auto; /* automatic width */
+max-width:90%;
+margin:0 auto;
+margin-bottom:10px;
 }
-
-/*table detail items default format */
-td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 100%;
-	text-align: left;
+table.selection{
 }
-td.select {
-	background-color:#eee;
+th{
+font-weight:normal;
+background-color:#C3C3C3;
+font-size:100%;
+color:#300;
+text-align:center;
+vertical-align:middle;
 }
-table.selection {
-	background-color:#DCDCDC;
-	outline-style:solid;
-	outline-color: #8e8a8a;
-	outline-width:1px;
+th.number{
+font-weight:normal;
+background-color:#cccce5;
+font-size:100%;
+color:#300;
+text-align:right;
+vertical-align:middle;
 }
-td.number {
-	text-align: right;
+td{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:100%;
+text-align:left;
 }
-.EvenTableRows {
-	background-color: #ccc;
+td.select{
+background-color:#eee;
 }
-.OddTableRows {
-	background-color: #eee;
+td.number{
+text-align:right;
 }
-
-.dpTbl {
-	border: solid navy 1px;
-}
-.dpTD {
-	border: 0;
-	width:20px;
-	background-color: #eee;
-	text-align:right;
-	cursor:pointer;
-}
-.dpDayHighlight {
-	border: 0;
-	width:20px;
-	background-color: yellow;
-	text-align:right;
-	cursor:pointer;
-}
-.dpTDHover {
-	border: 0;
-	width:20px;
-	background-color: #ccc;
-	text-align:right;
-	cursor:pointer;
+.centre{
+margin:0 auto 10px;
+text-align:center;
 }
 
-/*** for messages ***/
-
-div.error {
-	background-color: #fddbdb;
-	color: red;
-	border: 1px solid red;
-	width: 80%;
-	text-align: center;
-    margin: 0 auto;
+input{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:100%;
+background-color:#e3e1e1;
+border-width:1px;
+border-bottom-color:gray;
+border-bottom-style:solid;
+border-top-color:gray;
+border-top-style:solid;
+border-left-color:gray;
+border-left-style:solid;
+border-right-color:gray;
+border-right-style:solid;
 }
-div.warn {
-	background-color: #f5dbfd;
-	color: maroon;
-	border: 1px solid maroon;
-	width: 80%;
-	text-align: center;
-    margin: 0 auto;
+input:hover{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:100%;
+background-color:#e3e5f5;
+border-width:1px;
+border-bottom-color:gray;
+border-bottom-style:solid;
+border-top-color:gray;
+border-top-style:solid;
+border-left-color:gray;
+border-left-style:solid;
+border-right-color:gray;
+border-right-style:solid;
 }
-div.success {
-	background-color: #b9ecb4;
-	color: #006400;			/* darkgreen is not a w3c css valid color */
-	border: 1px solid #006400;	/* darkgreen is not a w3c css valid color */
-	width: 80%;
-	text-align: center;
-    margin: 0 auto;
+input.number{
+text-align:right;
 }
-div.info {
-	background-color: #c7ccf6;
-	color: navy;
-	border: 1px solid navy;
-	width: 80%;
-	text-align: center;
-    margin: 0 auto;
-}
-
-textarea {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 100%;
-	background-color: #e3e1e1;
-	border-width:1px;
-	border-bottom-color: gray;
-	border-bottom-style: solid;
-	border-top-color: gray;
-	border-top-style: solid;
-	border-left-color: gray;
-	border-left-style: solid;
-	border-right-color: gray;
-	border-right-style: solid;
+input.image{
+border-width:0px;
+background-color:transparent;
 }
 
-
-/*** text input and buttons ***/
-
-input {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 100%;
-	background-color: #e3e1e1;
-	border-width:1px;
-	border-bottom-color: gray;
-	border-bottom-style: solid;
-	border-top-color: gray;
-	border-top-style: solid;
-	border-left-color: gray;
-	border-left-style: solid;
-	border-right-color: gray;
-	border-right-style: solid;
+select{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:100%;
+}
+.EvenTableRows{
+background-color:#ccc;
+}
+.OddTableRows{
+background-color:#eee;
 }
 
-input:hover {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 100%;
-	background-color: #e3e5f5;
-	border-width:1px;
-	border-bottom-color: gray;
-	border-bottom-style: solid;
-	border-top-color: gray;
-	border-top-style: solid;
-	border-left-color: gray;
-	border-left-style: solid;
-	border-right-color: gray;
-	border-right-style: solid;
+div.error{
+background-color:#fddbdb;
+color:red;
+border:1px solid red;
+width:80%;
+text-align:center;
+margin:0 auto;
+}
+div.warn{
+background-color:#f5dbfd;
+color:maroon;
+border:1px solid maroon;
+width:80%;
+text-align:center;
+margin:0 auto;
+}
+div.success{
+background-color:#b9ecb4;
+color:#006400;/* darkgreen is not a w3c css valid color */
+border:1px solid #006400;/* darkgreen is not a w3c css valid color */
+width:80%;
+text-align:center;
+margin:0 auto;
+}
+div.info{
+background-color:#c7ccf6;
+color:navy;
+border:1px solid navy;
+width:80%;
+text-align:center;
+margin:0 auto;
+}
+div.page_help_text{ /* many */
+background-color:#ccc;/* lightgray is not a w3c css valid color #ccc */
+border:#a52a2a 1px solid;
+padding-top:1px;/* 2px in merge */
+padding-bottom:1px; /* 2px in merge */
+padding-left:3px;   /* 10px in merge */
+z-index:1;
+width:50%; /* 80% in merge */
+float:none;
+visibility:visible;
+margin:0 auto;
+position:static;
+font-family:Verdana, Arial, Helvetica;
+font-weight:normal;
+font-size:100%;
+color:black;
+text-align:center;
 }
 
-input.number {
-	text-align: right;
+.dpTbl{
+border:solid navy 1px;
+}
+.dpTD{
+border:0;
+width:20px;
+background-color:#eee;
+text-align:right;
+cursor:pointer;
+}
+.dpDayHighlight{
+border:0;
+width:20px;
+background-color:yellow;
+text-align:right;
+cursor:pointer;
+}
+.dpTDHover{
+border:0;
+width:20px;
+background-color:#ccc;
+text-align:right;
+cursor:pointer;
 }
 
-input.image {
-	border-width:0px;
-	background-color: transparent;
+.table1 {
+  width:90%;
+  background: #eee;
+  border: 0px 0px 2px 2px #222 solid;
+  background: #eee;
+  margin: 0 auto;
+}
+.tableheader{
+font-weight:normal;
+background-color:#cccce5;
+color:#300;
+}
+.notavailable{ /* WorkOrderIssue.php, WorkOrderStatus.php  */
+font-weight:lighter;/* light is not a w3c css valid font weight */
+font-style:italic;
+color:#555;
+}
+.label{ /*WorkOrderCosting.php, WorkOrderEntry.php, WorkOrderIssue.php, WorkOrderStatus.php */
+font-weight:bold;
+font-style:normal;
+font-size:10px;
+color:black;
+background-color:#ccc;
+}
+.table_index {
+	background-color: #F1FFDD;
 }
 
-select {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 100%;
+.header{ /* used in \includes\InputSerialItemsFile.php */
+background-image:url("");
+background-repeat:no-repeat;
+background-attachment:fixed;
+border:none;
+margin:0px;
+padding:0px;
+}
+input.inputerror{ /* many * .php */
+background-color:#fddbdb;
+}
+textarea{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:100%;
+background-color:#e3e1e1;
+border-width:1px;
+border-bottom-color:gray;
+border-bottom-style:solid;
+border-top-color:gray;
+border-top-style:solid;
+border-left-color:gray;
+border-left-style:solid;
+border-right-color:gray;
+border-right-style:solid;
+}
+select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php */
+background-color:#fddbdb;
 }
 
-p.good {
-    font-weight: bold;
-    color: green;
+.OsRow{ /* PO_OrderDetails.php */
+background-color:#234567;
+color:white;
 }
-
-p.bad {
-    font-weight: bold;
-    color:red;
-}
-
-.header { /* used in \includes\InputSerialItemsFile.php */
-	background-image: url("");
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.login {
-	background-color: white;
-	border: none;
-}
-
-textarea.texterror { /* used in FixedAssetItems.php, Stocks.php ??? */
-	background-color: #fddbdb;
-}
-
-.menu_group_img {
-	background-color: #ccc;
-	text-align: center;
-	width: 90px;
-	position: relative;
-	left: 3px;
-}
-
-.menu_group_headers { /* used  in index.php, ReportListLinks.php */
-	background: #B3B3B3;
-	width: 25%;
-	vertical-align: top;
-	padding: 0 0 2px 0;
-}
-
-.menu_group_headers table {
-	background: #B3B3B3;
-}
-
-.menu_group_items { /* session.inc */
-	vertical-align: top;
-	border: none;
-	padding: 10px;
-}
-
-.menu_group_item { /* index.php, EmailConfirmation.php, PDFQuotation.php, PDFQuotationPortrait.php,
-PO_Header.php, PO_OrderDetails.php, PO_PDFPurchOrder.php, PrintCustOrder.php,
-Shipments.php, session.php, ReportListLinks.php */
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-
-.menu_group_item p {
-	color: #000; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -11px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
-}
-
-p.page_title_text { /* page title, used in many *.php */
-        font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-weight: bold;
-        font-size: 150%;
-        color: white;
-        background-color: #7A7A89;
-        width: 33%;
-        border-style: solid;
-        border-width: 1px;
-        border-color: #666;
-		margin: 10px auto;
-		text-align:center;
-}
-
-div.page_help_text { /* many */
-        background-color: #ccc;		/* lightgray is not a w3c css valid color #ccc */
-        border: #a52a2a 1px solid;
-        padding-top: 1px;    /* 2px in merge */
-        padding-bottom: 1px; /* 2px in merge */
-        padding-left: 3px;   /* 10px in merge */
-        z-index: 1;
-        width: 50%; /* 80% in merge */
-        float: none;
-        visibility: visible;
-        margin: 0 auto;
-        position: static;
-        font-family: Verdana, Arial, Helvetica;
-        font-weight: normal;
-        font-size: 100%;
-        color: black;
-        text-align:center;
-}
-
-input.big {
-	width: 100px;
-}
-
-input.small {
-	width: 50px;
-}
-
-input.inputerror { /* many * .php */
-	background-color: #fddbdb;
-}
-
-select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php */
-	background-color: #fddbdb;
-}
-
-.notavailable { /* WorkOrderIssue.php, WorkOrderStatus.php  */
-	font-weight: lighter;	/* light is not a w3c css valid font weight */
-	font-style:italic;
-	color:#555;
-}
-
-.label { /*WorkOrderCosting.php, WorkOrderEntry.php, WorkOrderIssue.php, WorkOrderStatus.php */
-	font-weight:bold;
-	font-style:normal;
-	font-size:10px;
-	color:black;
-	background-color:#ccc;
-}
-
-.OsRow { /* PO_OrderDetails.php */
-	background-color: #234567;
-	color: white;
-}
-
-
 
 /*** CANVAS ***/
 
@@ -357,12 +285,12 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 
 /*** HEADER ***/
 
-#HeaderDiv {
-	overflow:hidden; /* REQUIRED: height according to items contained */
-	background: url(images/menu_bg_grey.png) lightgray;
-	color:gray;
-	padding:3px;
-	border:thin solid lightgray;
+#HeaderDiv{
+overflow:hidden; /* REQUIRED:height according to items contained */
+background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
+color:gray;
+padding:3px;
+border:thin solid lightgray;
 }
 #HeaderWrapDiv{
 }
@@ -370,23 +298,23 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 /*** HEADER - APP INFO ***/
 
 #AppInfoDiv{
-	float:left; /* REQUIRED: to the left */
+float:left; /* REQUIRED:to the left */
 }
 #AppInfoDiv img{
-	vertical-align:middle; /* center image and text vertically */
+vertical-align:middle; /* center image and text vertically */
 }
 #AppInfoCompanyDiv{
-	display:table-cell; /* REQUIRED: as a cell */
+display:table-cell; /* REQUIRED:as a cell */
 }
 #AppInfoUserDiv{
-	display:table-cell; /* REQUIRED: as a cell */
+display:table-cell; /* REQUIRED:as a cell */
 }
 #AppInfoUserDiv a{
-	color:gray;
+color:gray;
 }
 #AppInfoUserDiv a:hover{
-	color:black;
-	text-decoration:underline;
+color:black;
+text-decoration:underline;
 }
 #AppInfoModuleDiv{
 }
@@ -394,183 +322,155 @@ select.selecterror { /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php
 /*** HEADER - QUICK MENU ***/
 
 #QuickMenuDiv{
-	float:right; /* to the right side  */
+float:right; /* to the right side  */
+margin-top:2px;
 }
 #QuickMenuDiv ul{
-	list-style:none; /* hide the bullets */
+list-style:none; /* hide the bullets */
 }
 #QuickMenuDiv li{
-    display:inline; /* items are inline */
+display:inline; /* items are inline */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate 
-     the link!!! ***HJ***/
-	 
+ the link!!! ***HJ***/
+ 
 #QuickMenuDiv li a{
-	padding:9px; /* links as button */
-	border:thin outset lightgray; /* un-pressed state */
+padding:9px; /* links as button */
+border:thin outset lightgray; /* un-pressed state */
 }
 #QuickMenuDiv li a:hover{
-	padding:9px; /* links as button */
-	border:thin inset lightgray; /* pressed state */
-	text-decoration:none; /* no underline */
-	color:black;
+padding:9px; /* links as button */
+border:thin inset lightgray; /* pressed state */
+text-decoration:none; /* no underline */
+color:black;
 }
 
 /*** BODY ***/
 
-#BodyDiv {
-	clear:both; /* REQUIRED */
-	overflow:hidden; /* REQUIRED */
-	color:black;
-	background:whitesmoke;
+#BodyDiv{
+clear:both; /* REQUIRED */
+overflow:hidden; /* REQUIRED */
+color:black;
+background:whitesmoke;
+padding-bottom:5px;
+text-align:center;
 }
-#BodyDiv table {
-	width:auto; /* automatic width */
-	margin: 0 auto;
-	margin-bottom:10px;
-}
-#BodyDiv .centre{
-	margin:0 auto 10px;
-    text-align:center;
-}
+
 
 /*** BODY - MAIN MENU ***/
 
 #MainMenuDiv{
-	float:left; /* REQUIRED: to the left side */
-	white-space:nowrap; /* don't break text */
-	text-align:center; 
-	width:11%;
-	background:silver;
-	border:thin outset black;
-	margin-top:3px;
+float:left; /* REQUIRED:to the left side */
+white-space:nowrap; /* don't break text */
+text-align:center; 
+width:12%;
+margin-top:3px;
 }
 #MainMenuDiv ul{
-	list-style:none; /* REQUIRED: hide bullets */
-	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
-	margin:0;
+padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+margin:0 3px 0 0;
+border:thin outset silver;
 }
 #MainMenuDiv li{
-	list-style:none; /* REQUIRED */
-	padding:0; /* REQUIRED */
+list-style:none; /* REQUIRED */
+padding:0; /* REQUIRED */
 }
-#MainMenuDiv li a{ /* link as button!!! not-pressed state */
-	display:block; /* REQUIRED */
-	padding:3px;
-	border:thin outset black;
-	color:black;
+#MainMenuDiv li a,
+#MainMenuDiv li a:hover,
+#MainMenuDiv li a:active,
+#MainMenuDiv .main_menu_selected a,
+#MainMenuDiv .main_menu_selected a:hover{ /* common styles */
+display:block; /* REQUIRED */
+padding:3px;
+border:thin outset silver;
+color:black;
+text-decoration:none;
+background:silver;
 }
 #MainMenuDiv li a:hover{ /* link as button!!! pressed state */
-	text-decoration:none;
-	padding:3px;
-	border:thin inset black;
-	background:dimgray;	
+border:thin inset silver;
 }
-#MainMenuDiv .main_menu_selected a{ /* the selected button */
-	color:red;
-	text-decoration:none;
-	border:thin inset black;	
-	background:dimgray;
-	color:white;	
+#MainMenuDiv .main_menu_selected a,#MainMenuDiv .main_menu_selected a:hover{ /* the selected button */
+border:thin inset silver;
+background:dimgray;
+color:white;
 }
-
-.menu_group_item a {
-}
-.menu_group_items a:hover {
-	color: #00a;
-	text-decoration: underline;
-}
-/*** other 'main_menu_xxx' styles is NOT needed!!! ***/
 
 /*** BODY - SUB MENU ***/
 
 #SubMenuDiv{
-    float:right;
-	overflow: hidden;
-	min-width: 88%;
-	margin-top:3px;
+display:table;
+float:right;
+overflow:hidden;
+width:88%;
+margin-top:3px;
+text-align:left;
 }
 #SubMenuDiv ul{
-	list-style-type:none; /* REQUIRED: hide bullets */
-	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
-	margin:0;	
+list-style-type:none; /* REQUIRED:hide bullets */
+padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+margin:0;
+background:gainsboro;
+border:thin outset gainsboro;
+margin-left:3px;
 }
 #SubMenuDiv li{
-	list-style:none; /* REQUIRED: hide the bullets */
-	width:100%; /* REQUIRED: make item full width */
-	background:gainsboro;
+list-style:none; /* REQUIRED:hide the bullets */
+padding:2px;
 }
-#SubMenuDiv li img{
-	vertical-align:middle; /* verticall align icon with the text */
+.menu_group_headers{
+background:silver;
+outline:thin outset silver;
+text-align:center;
+color:black;
 }
-#SubMenuDiv .menu_group_headers {
-	background:silver;
-	outline:2px outset silver;
-	text-align:center;
-	color:black;
-}
-#TransactionsDiv{
-	float:left; /* REQUIRED: to the left side */
-    width:32.5%;
-	border:thin solid black;
-	margin-right:4px;
-}
-#InquiriesDiv{
-    float:left;
-    width:32.5%;
-	border:thin solid black;
-	margin-right:4px;	
+
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
+display:table-cell;
 }
 #InquiriesDiv div{ /* default div, used for custom report header */
-	background:silver;
-	color:black;
-	padding:2px;
-	border:thin outset silver;
+background:silver;
+color:black;
+padding:2px;
 }
-#MaintenanceDiv{
-    float:left;
-    width:32.5%;
-	border:thin solid black;
-	
-}
-.menu_group_item p {
-	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+.menu_group_item p{
+color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
+margin:0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
 }
 
 /*** FOOTER ***/
 
 #FooterDiv{
-	clear:both; /* REQUIRED */
-    overflow:hidden;	
-    color:gray;
-	background:url(images/menu_bg_grey.png) repeat-x lightgray;
-	border:thin solid lightgray;
+clear:both; /* REQUIRED */
+overflow:hidden;
+color:gray;
+background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
+border:thin solid lightgray;
 }
 #FooterWrapDiv{
-	overflow:hidden;
-	padding:3px;
+overflow:hidden;
+padding:3px;
 }
 #FooterLogoDiv{
-    float:left;
-	background:white;
-    border-radius:8px 8px 8px 8px;
-    padding:3px;
-	margin-left:47%; /* to the center (approx) */
+float:left;
+background:white;
+border-radius:8px 8px 8px 8px;
+padding:3px;
+margin-left:47%; /* to the center (approx) */
 }
 #FooterLogoDiv img{
-	vertical-align:middle;
+vertical-align:middle;
 }
 #FooterVersionDiv{
-	clear:both; /* below the logo */
-	float:left;
-    margin-left:47%; /* to the center (approx) */
+clear:both; /* below the logo */
+float:left;
+margin-left:47%; /* to the center (approx) */
 }
 #FooterTimeDiv{
-	float:right;
-    margin-top:-22px; /* go up to center */
+float:right;
+margin-top:-22px; /* go up to center */
 }
 
 /*** END ***/

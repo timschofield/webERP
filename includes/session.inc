@@ -87,7 +87,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 
 	/*  Need to set the theme to make login screen nice */
-	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'wood';
+	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
 	switch ($rc) {
 	case  UL_OK;
 		include($PathPrefix . 'includes/LanguageSetup.php');

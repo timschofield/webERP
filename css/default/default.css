@@ -4,61 +4,267 @@ New Default Theme for WebERP
 
 ***/
 
-body {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	background-color: #CCCCDD;
-	margin:0;
-	padding:0
+body{
+background-color:#ccd;
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:10px;
+margin:0;
+padding:0
 }
 
-img {
-	border:none;
-	vertical-align:middle;
+a{
+color:blue;
+text-decoration:none;
+}
+a:hover{
+color:blue;
+text-decoration:underline;
 }
 
-/*links before selection */
-a {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	text-decoration: none;
-	color: black;
+img{
+border:none;
+vertical-align:middle;
 }
 
-/*links on any screen when mouse is hovering over them */
-a:hover {
-	background:#fff;
-	color: #2D8628;
-	text-decoration: underline;
+.page_title_text{
+padding:5px;
+font-weight:bold;
+color:black;
+TEXT-ALIGN:center;
+}
+p.good{
+font-weight:bold;
+color:green;
+}
+p.bad{
+font-weight:bold;
+color:red;
+}
+table{
+margin:0 auto;
+width:auto;
+max-width:90%;
+padding-bottom:5px;
+}
+table.selection{
+padding-bottom:5px;
+}
+th{
+font-weight:normal;
+background-color:#B06161;
+color:white;
+}
+th.number{
+text-align:right;
+font-weight:normal;
+background-color:#B06161;
+color:white;
+}
+td{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:10px;
+text-align:left;
+}
+td.select{
+background-color:#eee;
+}
+td.number{
+text-align:right;
+}
+div.centre{
+margin:0 auto;
+text-align:center;
+padding:5px;
+}
+input{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:10px;
+}
+input.number{
+text-align:right;
+}
+input.image{
+border-width:0px;
+background-color:transparent;
+}
+input:hover{
+}
+select{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:10px;
+}
+textarea{
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-size:10px;
+}
+textarea:hover{
+}
+.EvenTableRows{
+background-color:#CCCCCC;
+}
+.OddTableRows{
+background-color:#EEEEEE;
+}
+div.error{
+background-color:#fddbdb;
+color:red;
+border:1px solid red;
+}
+div.warn{
+background-color:#f5dbfd;
+color:maroon;
+border:1px solid maroon;
+}
+div.success{
+background-color:#b9ecb4;
+color:darkgreen;
+border:1px solid darkgreen;
+}
+div.info{
+background-color:#c7ccf6;
+color:navy;
+border:1px solid navy;
+}
+DIV.page_help_text{
+background:lightgrey url(images/help.png) top left no-repeat;
+BORDER:#a52a2a 1px solid;
+padding-top:2px;
+padding-bottom:2px;
+PADDING-LEFT:10px;
+Z-INDEX:1;
+width:80%;
+FLOAT:none;
+VISIBILITY:visible;
+MARGIN:0 auto;
+POSITION:static;
+font-family:Arial, Verdana, Helvetica, sans-serif;
+font-weight:normal;
+font-size:10px;
+color:black;
+TEXT-ALIGN:center;
+}
+DIV.system_check{
+BORDER:#a52a2a 1px solid;
+PADDING-LEFT:3px;
+Z-INDEX:1;
+width:40%;
+FLOAT:none;
+VISIBILITY:visible;
+MARGIN:0 auto;
+POSITION:static;
+background:lightgray;
+font-family:Arial, Verdana, Helvetica, sans-serif;
+padding-top:1px;
+padding-bottom:1px;
+font-weight:normal;
+font-size:10px;
+color:black;
+TEXT-ALIGN:left;
 }
 
-table {
-  background-color: #587BA6;
-  margin: 0 auto;
-  width:100%;
+.dpTbl { /* date picker background */
+border:thin solid black;
+background:white;
+box-shadow: 3px 3px 4px #000; /* shadow on modern browsers */
+}
+.dpTD{
+border:0;
+width:20px;
+background-color:#EEEEEE;
+text-align:right;
+cursor:pointer;
+}
+.dpDayHighlight{
+border:0;
+width:20px;
+background-color:yellow;
+text-align:right;
+cursor:pointer;
+}
+.dpTDHover{
+border:0;
+width:20px;
+background-color:#CCCCCC;
+text-align:right;
+cursor:pointer;
 }
 
+/* Table type is used for UI tables type 1 */
+.table1{
+width:90%;
+background:#eee;
+border:0px 0px 2px 2px #222 solid;
+margin:0 auto;
+}
+/* Table type is used for UI tables type 2 */
+/*.table2{
+width:90%;
+background:#eee;
+border:0px 0px 2px 2px #222 solid;
+margin:0 auto;
+}*/
+
+.tableheader{
+font-weight:normal;
+background-color:#800000;
+color:white;
+}
+.notavailable{
+font-weight:lighter;
+font-style:italic;
+color:#555555;
+}
+.label{
+font-weight:bold;
+font-style:normal;
+font-size:12px;
+color:black;
+background-color:#cccccc;
+}
+.table_index{
+background-color:#F1FFDD;
+}
+
+.header{
+background-image:url("");
+background-repeat:no-repeat;
+background-attachment:fixed;
+border:none;
+margin:0px;
+padding:0px;
+}
+input.inputerror{
+background-color:#fddbdb;
+}
+textarea.texterror{
+background-color:#fddbdb;
+}
+select.selecterror{
+background-color:#fddbdb;
+}
+.OsRow{
+background-color:#234567;
+color:white;
+}
 
 /*** CANVAS ***/
 
-#CanvasDiv {
+#CanvasDiv{
+	background:#588BB6;	
 }
 
 /*** HEADER ***/
 
-#HeaderDiv {
-	color:white;
-	background:#588BB6;
-	overflow:hidden;
+#HeaderDiv{
+color:white;
+/*background:#588BB6;*/
+/*overflow:hidden;*/
 }
 #HeaderDiv a{
-	color:white;
+color:white;
 }
 #HeaderDiv a:hover{
-	color:black;
-	background:white;
-	text-decoration:underline;
+text-decoration:underline;
 }
 #HeaderWrapDiv{
 }
@@ -66,804 +272,153 @@ table {
 /*** HEADER - APP INFO ***/
 
 #AppInfoDiv{
-	display:table;
-	float:left;
-	padding:
+float:left;
+padding:0;
 }
-#AppInfoDiv img{
-	vertical-align:middle;
-}
-#AppInfoCompanyDiv{
-	display:table-cell;
-}
-#AppInfoUserDiv{
-	display:table-cell;
+#AppInfoCompanyDiv,#AppInfoUserDiv{
+display:table-cell;
 }
 #AppInfoModuleDiv{
-	display:table-row-group;
 }
 
 /*** HEADER - QUICK MENU ***/
 
 #QuickMenuDiv{
-	float:right;
+float:right;
+margin-top:2px;
 }
 #QuickMenuDiv ul{
 }
-#QuickMenuDiv ul li{
-	display:inline;
-	border-left:thin ridge #588BB6;
-	padding:10px;
+#QuickMenuDiv li{
+display:inline;
+border-left:thin ridge #588BB6;
+padding:14px 12px;
 }
 
 /*** BODY ***/
 
-#BodyDiv {
-	clear:both;
-/*	margin-left:5px;
-	margin-right:5px;*/
-	color:black;
-	background:#588BB6;
-	overflow:hidden;	
+#BodyDiv{
+clear:both;
 }
-#BodyDiv table {
-	width:90%;
-	text-align:center;
-}
-
 #BodyWrapDiv{
-	background:#CCCCCC;
+background:#CCCCCC;
+/*border:thin solid #ccc;*/
+clear:both;
 }
 
 /*** BODY - MAIN MENU ***/
 
 #MainMenuDiv{
-	float:left;
-	width:11%;
-	white-space:nowrap;
-	text-align:center;
-	border:thin solid gray;
+float:left;
+width:11%;
+border:thin solid #000;
+text-align:center;
+white-space:nowrap;
 }
 #MainMenuDiv ul{
-	margin:0; 
-	padding:0;
+margin:0; 
+padding:0;
 }
 #MainMenuDiv li{
-	list-style:none; 
-}
-#MainMenuDiv li a:link, a:visited{
-/*	color:black;
-	font-weight:bold;*/
-}
-#MainMenuDiv li a:hover{
-	color:black;
-	background:white;
-	text-decoration:underline;
+list-style:none; 
 }
 
+#MainMenuDiv li a{
+color:black;
+}
+#MainMenuDiv li a:hover{
+color:black;
+text-decoration:underline;
+}
 .main_menu_unselected{
-	background:#40FC40;
-	padding:2px;
+background:#8EDE8D;
+padding:2px;
 }
 .main_menu_unselected:hover{
-	background:white;
+background:white;
 }
-.main_menu_unselected a{
-}
-.main_menu_unselected a:hover{
-}
-.main_menu_selected {
-	background-color: white;
-	border:thin solid gray;
-	font-weight: normal;
-	text-align: center;
-	white-space: nowrap;
-	padding:2px;
-}
-.main_menu_selected:hover{
-}
-.main_menu_selected a{
-}
-.main_menu_selected a:hover{
+.main_menu_selected{
+background-color:white;
+padding:2px;
 }
 
 /*** BODY - SUB MENU ***/
 
 #SubMenuDiv{
-	display:table;
-    float:right;
-	overflow: hidden;
-	min-width: 88%;
+display:table;
+float:right;
+overflow:hidden;
+width:88.5%;
 }
 #SubMenuDiv ul{
-	margin:0;
-	padding:0;
+margin:0;
+padding:0;
+background:#fff;
+border:thin solid black;
+margin-left:3px;
 }
 #SubMenuDiv li{
-	list-style:none;
+list-style:none;
 }
 #SubMenuDiv a{
+color:blue;
 }
 #SubMenuDiv a:hover{
-	color:green;
-	text-decoration:underline;
+color:blue;
+text-decoration:underline;
 }
-#TransactionsDiv{
-    float:left;
-    list-style:none;
-    width:33%;
-	border:thin solid black;
-	background:#EEEEEE;
-/*	display:table-cell;	*/
-}
-#InquiriesDiv{
-    float:left;
-    list-style:none;
-    width:33%;
-	border:thin solid black;
-	background:#EEEEEE;
-/*	display:table-cell;	*/
-}
+#TransactionsDiv,
+#InquiriesDiv,
 #MaintenanceDiv{
-    float:left;
-    list-style:none;
-    width:33%;
-	border:thin solid black;
-	background:#EEEEEE;
-/*	display:table-cell;	*/
+display:table-cell;
 }
-.menu_group_headers {
-	text-align:center;
-	color:black;
-	background:#EEEEEE;	
-	border: thin outset #EEEEEE;
+.menu_group_headers{
+text-align:center;
+color:black;
+background:#eee;
+border-bottom:thin solid black;
 }
-/*.menu_group_headers table{
-}*/
-/*.menu_group_headers_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	color: white;
+.menu_group_item{
+background-color:white;
+padding:2px;
 }
-*/
-/*.menu_group_items {
-	background-color: white;
-	font-weight: normal;
-	padding: 15px;
-	border-top: 0px #AAAAAA solid;
-	border-left: 0px #AAAAAA solid;
-	border-right: 0px white solid;
-	border-bottom: 0px white solid;
-}*/
-.menu_group_item {
-	background-color: white;
-	padding:2px;
+.menu_group_item p{
+color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+text-indent:-12px; /* this makes the bullet to appear as the li tag previously used */
+margin:0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
 }
-.menu_group_item p {
-	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didnÂ´t like of the li was that it had no left margin applied */
+#InquiriesDiv div{ /* header for standard reports/forms, custom reports */
+border-top:thin solid black;
+border-bottom:thin solid black;
+background:#eee;
+color:black;
+padding:2px;
 }
 
 /*** FOOTER ***/
 
 #FooterDiv{
-	clear:both;
-    color:#CCCCCC;
-	background:#588BB6;
-    overflow:hidden;
+clear:both;
+overflow:hidden;
+color:#CCCCCC;
+padding:3px 2px;
 }
 #FooterWrapDiv{
-	overflow:hidden;
-	padding:5px;
+
 }
 #FooterLogoDiv{
-	background:white;
-    border-radius:8px 8px 8px 8px;
-    float:left;
-    padding:5px;
-}	
+background:white;
+border-radius:7px;
+float:left;
+padding:3px;
+}
 #FooterVersionDiv{
-	float:left;
-    margin-left:10px;
-    margin-top:15px;
+float:left;
+margin-left:10px;
+margin-top:15px;
 
 }
 #FooterTimeDiv{
-	float:right;
-    margin-top:15px;
-}
-
-/*** MISC ***/
-
-div.centre {
-  margin: 0 auto;
-  text-align:center;
-}
-
-
-
-/*
-.dpTbl {
-	border: solid navy 1px;
-}
-
-/*table detail items default format */
-td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	text-align: left;
-}
-
-td.select {
-	background-color:#eee;
-}
-
-table.selection {
-	background-color:#eee;
-	outline-style:solid;
-	outline-width:1px;
-}
-
-.dpTD {
-	border: 0;
-	width:20px;
-	background-color: #EEEEEE;
-	text-align:right;
-	cursor:pointer;
-}
-
-.dpDayHighlight {
-	border: 0;
-	width:20px;
-	background-color: yellow;
-	text-align:right;
-	cursor:pointer;
-}
-
-.dpTDHover {
-	border: 0;
-	width:20px;
-	background-color: #CCCCCC;
-	text-align:right;
-	cursor:pointer;
-}
-
-td.number {
-	text-align: right;
-}
-
-.EvenTableRows {
-	background-color: #CCCCCC;
-}
-
-.OddTableRows {
-	background-color: #EEEEEE;
-}
-
-th {
-	font-weight: normal;
-	background-color: #800000;
-	color: white;
-}
-
-th.number {
-	text-align: right;
-	font-weight: normal;
-	background-color: #800000;
-	color: white;
-}
-
-div.error {
-	background-color:#fddbdb;
-	color: red;
-	border: 1px solid red;
-}
-
-div.warn {
-	background-color:#f5dbfd;
-	color: maroon;
-	border: 1px solid maroon;
-}
-
-div.success {
-	background-color:#b9ecb4;
-	color: darkgreen;
-	border: 1px solid darkgreen;
-}
-
-div.info {
-	background-color:#c7ccf6;
-	color:navy;
-	border: 1px solid navy;
-}
-
-input {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-}
-
-input.number{
-	text-align: right;
-}
-
-input.image {
-	border-width:0px;
-	background-color: transparent;
-}
-
-input:hover{
-}
-
-select {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-}
-
-p.good {
-    font-weight: bold;
-    color: green;
-}
-
-p.bad {
-    font-weight: bold;
-    color:red;
-}
-
-#topMenu {
-	width: 100%;
-	color: black;
-	background-color: #E2E9EB;
-	border: none;
-	border-bottom: 1px solid #999999;
-}
-
-#trim {
-	background: #CCCCCC;
-}
-
-#page {
-	width: 100%;
-	color: black;
-	font-size: 10px;
-	white-space: nowrap;
-	border: none;
-}
-
-#menuImg {
-	vertical-align: top;
-	text-align: center;
-	margin: 0px;
-	padding: 10px;
-}
-
-#mainMenu {
-	width: 100%;
-	color: black;
-	background-color: #E3EBE2;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.header {
-	background-image: url("");
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.login {
-	background-color: white;
-	border: none;
-}
-
-textarea{
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-}
-
-textarea:hover{
-}
-/* Table type is used for UI tables type 1 */
-.table1 {
-  width:90%;
-  background: #eee;
-  border: 0px 0px 2px 2px #222 solid;
-  margin: 0 auto;
-}
-/* Table type is used for UI tables type 2 */
-.table2 {
-  width:90%;
-  background: #eee;
-  border: 0px 0px 2px 2px #222 solid;
-  margin: 0 auto;
-}
-
-input.address3 {
-	text-transform: uppercase;
-}
-
-div.csv {
-        background:lightgray;
-        color: black;
-        border: 1px solid black;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        TEXT-ALIGN:center;
-}
-
-.callout_main {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	background-color: white;
-	border: none;
-	width: 100%;
-	margin: 0px;
-	padding: 0px;
-}
-
-.main_page {
-	background-color: white;
-	border: none;
-	width: 100%;
-	margin: 0px;
-	padding: 0px;
- 	font-size: 10px;
-}
-
-/* Main page heading with quick menu within */
-.quick_menu {
-	width: 100%;
-	background-color: #588BB6;
-	border: none;
-	margin: 0px;
-	padding: 0px;
- 	color: black;
-	border-top: 0px #AAAAAA solid;
-	border-left: 0px #AAAAAA solid;
-	border-right: 0px white solid;
-	border-bottom: 0px white solid;
-	text-align: right;
-	/* position: relative;
-	top: 3px; */
-}
-
-#quick_menu{
-}
-
-/*The main page heading left part before quick menu */
-.quick_menu_left {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	border: 0px;
-	white-space: nowrap;
-	margin: 2px;
-	padding: 2px;
-	color: white;
-  text-align: left;
-}
-
-/*the Select Customer / Item / Supplier Menu tabs */
-.quick_menu_tabs {
-	background-color: #588BB6;
-	white-space: nowrap;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-	text-align: right;
-}
-
-.quick_menu_tab{
-	background: #588BB6;
-	height:28pt;
-	white-space: nowrap;
-	border-left: solid 1px #aaa;
-	border-right: solid 1px #aaa;
-	padding-left: 10px;
-	padding-right: 10px;
-	text-align: right;
-}
-
-.quick_menu_tab a{
-	color:#fff;
-	font-weight:bold;
-}
-
-.quick_menu_left a{
-	color:#fff;
-}
-
-.quick_menu_tab a:hover{
-	color:#ffc;
-	text-decoration:none;
-	font-weight:bold;
-}
-
-.quick_menu_left a:hover{
-	color:#ffc;
-	text-decoration:none;
-}
-
-.quick_menu_tab:hover{
-	color:#ffd;
-}
-/*the Select Customer / Item / Supplier Menu tabs */
-.system_menu_tabs {
-	background-color: white;
-	white-space: nowrap;
-	border: none;
-	margin-left: 6px;
-	margin-right: 6px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	padding: 0px;
-	text-align: center;
-}
-
-.system_menu_tabs a {
-	font-size: 10px;
-	color: black;
-}
-
-.system_menu_tabs a:hover {
-	font-size: 10px;
-  color: black;
-}
-
-.main_area {
-	border: 2px inset white;
-	width: 100%;
-	background-color: white;
-}
-
-.main_menu {
-	background-color: #40FC40;
-	font-size: 10px;
-	border-top: 0px #AAAAAA solid;
-	border-bottom: 0px #AAAAAA solid;
-	font-weight: normal;
-	margin-top: 2px;
-	width: 100%;
-}
-
-.main_menu table {
-	border: 0px;
-	width: 100%;
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-
-
-
-span.main_menu_nolink {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	color: #777777;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.main_menu a {
-	color: black;
-	font-weight: bold;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.main_menu a:hover {
-	color: black;
-	text-decoration: underline;
-}
-
-.menu_group_img {
-	background-color: #CCCCCC;
-	text-align: center;
-	width: 90px;
-	position: relative;
-	left: 3px;
-}
-
-.menu_group_img img{
-	position: relative;
-	top: 10px;
-}
-
-.menu_group_area {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	border: 2px inset white;
-	color: #cc6600;
-	background-color: #CCCCCC;
-	font-weight: normal;
-}
-
-.blank_area table {
-	border: 0px;
-	width: 100%;
-}
-
-
-
-.page_title_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 2px;
-        padding-bottom: 2px;
-	font-weight: bold;
-	font-size: 10px;
-	color: black;
-	TEXT-ALIGN:center;
-}
-
-DIV.page_help_text {
-	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
-	padding-top:2px;
-        padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
-	width: 80%;
-	FLOAT: none;
-	VISIBILITY: visible;
-	MARGIN: 0 auto;
-	POSITION: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-	TEXT-ALIGN:center;
-}
-
-DIV.system_check {
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 40%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        background: lightgray;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 10px;
-        color: black;
-        TEXT-ALIGN:left;
-}
-
-span.menu_group_nolink {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: normal;
-	color: #777777;
-	text-decoration: none;
-}
-
-.menu_group_item a {
-}
-
-.menu_group_items a:hover {
-	color: #0000aa;
-	text-decoration: underline;
-}
-
-#footer {
-	position: relative;
-	bottom: -3px;
-}
-
-a.footer {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	color: black;
-	font-weight: normal;
-	font-size: 8px;
-}
-
-.footer {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	color: #CCCCCC;
-	font-weight: normal;
-	font-size: 9px;
-	text-align: center;
-}
-
-.legal {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9px;
-	color: #333333;
-}
-
-.box1 {
-	border-color: #CCCCCC #333333 #333333 #CCCCCC;
-	border-width: medium;
-	border-style: ridge;
-}
-
-.promo {
-	font-family: "Times New Roman", Times, serif;
-	color: #000033;
-}
-
-.titlebar {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 9px;
-	color: white;
-	background-color: #336699;
-}
-
-.dingbat {
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #99CC99;
-	color: #006666;
-	font-weight: bolder;
-	font-size: medium;
-}
-
-input.big {
-	width: 100px;
-}
-
-input.small {
-	width: 50px;
-}
-
-input.inputerror {
-	background-color: #fddbdb;
-}
-
-textarea.texterror {
-	background-color: #fddbdb;
-}
-
-select.selecterror {
-	background-color: #fddbdb;
-}
-
-.tableheader {
-	font-weight: normal;
-	background-color: #800000;
-	color: white;
-}
-
-.notavailable {
-	font-weight:lighter;
-	font-style:italic;
-	color:#555555;
-}
-
-.label {
-	font-weight:bold;
-	font-style:normal;
-	font-size:12px;
-	color:black;
-	background-color:#cccccc;
-}
-
-.OsRow {
-	background-color: #234567;
-	color: white;
-}
-
-.table_index {
-	background-color: #F1FFDD;
-}
-
-li {
-	list-style-image: url(bullet.gif);
+float:right;
+margin-top:15px;
 }
