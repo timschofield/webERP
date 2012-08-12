@@ -59,7 +59,7 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 //=== MainMenuDiv =======================================================================
 echo '<div id="MainMenuDiv"><ul>'; //===HJ===
 $i=0;
-while ($i < count($ModuleLink)){
+while ($i < count($ModuleLink)-1){
 	// This determines if the user has display access to the module see config.php and header.inc
 	// for the authorisation and security code
 	if ($_SESSION['ModulesEnabled'][$i]==1)	{

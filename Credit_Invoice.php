@@ -251,7 +251,6 @@ if ($_SESSION['CreditItems']->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
 	}
 }
 
-
 /* Always display credit quantities
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $title.'</p>';
@@ -306,14 +305,6 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 		$_SESSION['CreditItems']->totalVolume += ($LnItm->QtyDispatched * $LnItm->Volume);
 		$_SESSION['CreditItems']->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
 	}
-
-
-
-
-
-
-
-
 
 	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
 	if (!isset($_POST['ProcessCredit'])) {
@@ -672,14 +663,19 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 			if ($_POST['CreditType']=='Return'){
 
-				/* some want this some do not */
+				/* some want this some do not 
+				 * We cannot use the orderlineno to update with as it could be different when added to the credit note than it was when the order was created
+				 * Also there could potentially be the same item on the order multiple times with different delivery dates
+				 * So all up the SQL below is a bit hit and miss !! 
+				 * Probably right 99% of time with the item on the order only once */
 
 				$SQL = "UPDATE salesorderdetails
 							SET qtyinvoiced = qtyinvoiced - " . $CreditLine->QtyDispatched . ",
 								completed=0
 						WHERE orderno = '" . $_SESSION['CreditItems']->OrderNo . "'
 						AND stkcode = '" . $CreditLine->StockID . "'
-						AND orderlineno='" . $CreditLine->LineNumber."'";
+						AND quantity >=" . $CreditLine->QtyDispatched;
+						
 
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated for the reduced quantity invoiced because');
 				$DbgMsg = _('The following SQL to update the sales order detail record was used');

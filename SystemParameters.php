@@ -125,9 +125,11 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['QuickEntries'] != $_POST['X_QuickEntries'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_QuickEntries']."' WHERE confname = 'QuickEntries'";
 		}
+		
 		if ($_SESSION['WorkingDaysWeek'] != $_POST['X_WorkingDaysWeek'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_WorkingDaysWeek']."' WHERE confname = 'WorkingDaysWeek'";
 		}
+		
 		if ($_SESSION['DispatchCutOffTime'] != $_POST['X_DispatchCutOffTime'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DispatchCutOffTime']."' WHERE confname = 'DispatchCutOffTime'";
 		}
@@ -480,15 +482,17 @@ echo '<tr style="outline: 1px solid"><td>' . _('Show company details on packing 
 	<td>' . _('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</td>
 	</tr>';
 
-// Working days on a week
-echo '<tr style="outline: 1px solid"><td>' . _('Working Days on a Week') . ':</td>
-	<td><select name="X_WorkingDaysWeek">
-	<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '._('working days').'</option>
-	<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '._('working days').'</option>
-	<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '._('working days').'</option>
-	</select></td>
-	<td>' . _('Number of working days on a week') . '</td>
-	</tr>';
+
+	// Working days on a week
+	echo '<tr style="outline: 1px solid">
+			<td>' . _('Working Days on a Week') . ':</td>
+			<td><select name="X_WorkingDaysWeek">
+				<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '._('working days').'</option>
+				<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '._('working days').'</option>
+				<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '._('working days').'</option>
+				</select></td>
+			<td>' . _('Number of working days on a week') . '</td>
+		</tr>';
 
 // DispatchCutOffTime
 echo '<tr style="outline: 1px solid"><td>' . _('Dispatch Cut-Off Time') . ':</td>

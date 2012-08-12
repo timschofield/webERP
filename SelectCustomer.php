@@ -10,7 +10,7 @@ if (isset($_GET['Select'])) {
 	$_SESSION['CustomerID'] = $_GET['Select'];
 }
 if (!isset($_SESSION['CustomerID'])) { //initialise if not already done
-	$_SESSION['CustomerID'] = "";
+	$_SESSION['CustomerID'] = '';
 }
 if (isset($_GET['Area'])) {
 	$_POST['Area']=$_GET['Area'];
@@ -44,15 +44,15 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 	$ErrMsg = _('An error occurred in retrieving the information');
 	$result2 = DB_query($sql, $db, $ErrMsg);
 	$myrow2 = DB_fetch_array($result2);
-	$lat = $myrow2['lat'];
-	$lng = $myrow2['lng'];
-	$api_key = $myrow['geocode_key'];
+	$Lattitude = $myrow2['lat'];
+	$Longitude = $myrow2['lng'];
+	$API_Key = $myrow['geocode_key'];
 	$center_long = $myrow['center_long'];
 	$center_lat = $myrow['center_lat'];
 	$map_height = $myrow['map_height'];
 	$map_width = $myrow['map_width'];
 	$map_host = $myrow['map_host'];
-	echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $api_key . '"';
+	echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $API_Key . '"';
 	echo ' type="text/javascript"></script>';
 	echo ' <script type="text/javascript">';
 	echo 'function load() {
@@ -60,8 +60,8 @@ if ($_SESSION['geocode_integration'] == 1 AND $_SESSION['CustomerID'] != "") {
 			var map = new GMap2(document.getElementById("map"));
 		map.addControl(new GSmallMapControl());
 		map.addControl(new GMapTypeControl());';
-	echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);';
-	echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));';
+	echo 'map.setCenter(new GLatLng(' . $Lattitude . ', ' . $Longitude . '), 11);';
+	echo 'var marker = new GMarker(new GLatLng(' . $Lattitude . ', ' . $Longitude . '));';
 	echo 'map.addOverlay(marker);
 		GEvent.addListener(marker, "click", function() {
 		marker.openInfoWindowHtml(WINDOW_HTML);
@@ -194,13 +194,22 @@ if (isset($_POST['JustSelectedACustomer'])){
 }
 
 if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST['CSV'])) {
-	$SQL = "SELECT debtorsmaster.name,
+	if (!isset($_SESSION['BranchCode'])){
+		
+		$SQL = "SELECT debtorsmaster.name,
+					custbranch.phoneno
+			FROM debtorsmaster INNER JOIN custbranch
+			ON debtorsmaster.debtorno=custbranch.debtorno
+			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'";
+
+	} else {
+		$SQL = "SELECT debtorsmaster.name,
 					custbranch.phoneno
 			FROM debtorsmaster INNER JOIN custbranch
 			ON debtorsmaster.debtorno=custbranch.debtorno
 			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
 			AND custbranch.branchcode='" . $_SESSION['BranchCode'] . "'";
-
+	}
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
 	$result = DB_query($SQL, $db, $ErrMsg);
 	if ($myrow = DB_fetch_array($result)) {
@@ -228,7 +237,9 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 	echo '</td><td valign="top" class="select">';
 	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><br />';
 	echo '<a href="' . $rootpath . '/CustomerAllocations.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Allocate Receipts or Credit Notes') . '</a><br />';
-	echo '<a href="' . $rootpath . '/CounterSales.php?DebtorNo=' . $_SESSION['CustomerID'] . '&amp;BranchNo=' . $_SESSION['BranchCode'] . '">' . _('Create a Counter Sale for this Customer') . '</a><br />';
+	if (isset($_SESSION['CustomerID']) AND isset($_SESSION['BranchCode'])){
+		echo '<a href="' . $rootpath . '/CounterSales.php?DebtorNo=' . $_SESSION['CustomerID'] . '&amp;BranchNo=' . $_SESSION['BranchCode'] . '">' . _('Create a Counter Sale for this Customer') . '</a><br />';
+	}
 	echo '</td><td valign="top" class="select">';
 	echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br />';
 	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><br />';
@@ -500,7 +511,7 @@ echo '</div>
 if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
 		echo '<br />';
-		if ($lat == 0) {
+		if ($Lattitude == 0) {
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Customer.') . '</div>';
 		} else {
 			echo '<tr>
