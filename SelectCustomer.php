@@ -652,7 +652,13 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			}
 		}
 		// Customer Notes
-		$sql = "SELECT * FROM custnotes
+		$sql = "SELECT noteid,
+						debtorno,
+						href,
+						note,
+						date,
+						priority
+				FROM custnotes
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
@@ -677,17 +683,17 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					echo '<tr class="EvenTableRows">';
 					$k = 1;
 				}
-				echo '<td>' . $myrow[4] . '</td>
-					<td>' . $myrow[3] . '</td>
-					<td>' . $myrow[2] . '</td>
-					<td>' . $myrow[5] . '</td>
-					<td><a href="AddCustomerNotes.php?Id=' . $myrow[0] . '&amp;DebtorNo=' . $myrow[1] . '">' . _('Edit') . '</a></td>
-					<td><a href="AddCustomerNotes.php?Id=' . $myrow[0] . '&amp;DebtorNo=' . $myrow[1] . '&amp;delete=1">' . _('Delete') . '</a></td>
+				echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
+					<td>' . $myrow['note'] . '</td>
+					<td><a href="' . $myrow['href'] . '">' . $myrow['href'] . '</a></td>
+					<td>' . $myrow['priority'] . '</td>
+					<td><a href="AddCustomerNotes.php?Id=' . $myrow['noteid'] . '&amp;DebtorNo=' . $myrow['debtorno'] . '">' . _('Edit') . '</a></td>
+					<td><a href="AddCustomerNotes.php?Id=' . $myrow['noteid'] . '&amp;DebtorNo=' . $myrow['debtorno'] . '&amp;delete=1">' . _('Delete') . '</a></td>
 					</tr>';
 			} //END WHILE LIST LOOP
 			echo '</table>';
 		} else {
-			if ($_SESSION['CustomerID'] != "") {
+			if ($_SESSION['CustomerID'] != '') {
 				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" /><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div>';
 			}
 		}
