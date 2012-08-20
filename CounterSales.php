@@ -244,7 +244,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 						stockmaster.decimalplaces
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag <>'G'
 					AND stockmaster.controlled <> 1
 					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
@@ -257,7 +257,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 						stockmaster.decimalplaces
 					FROM stockmaster INNER JOIN stockcategory
 					ON  stockmaster.categoryid=stockcategory.categoryid
-					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag <>'G'
 					AND stockmaster.controlled <> 1
 					AND stockmaster.discontinued=0
@@ -278,7 +278,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 						stockmaster.decimalplaces
 					FROM stockmaster INNER JOIN stockcategory
 					  ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.mbflag <>'G'
 					AND stockmaster.controlled <> 1
@@ -291,7 +291,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 						stockmaster.decimalplaces
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.mbflag <>'G'
 					AND stockmaster.controlled <> 1
@@ -308,7 +308,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 						stockmaster.decimalplaces
 					FROM stockmaster INNER JOIN stockcategory
 					ON  stockmaster.categoryid=stockcategory.categoryid
-					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag <>'G'
 					AND stockmaster.controlled <> 1
 					AND stockmaster.discontinued=0
@@ -320,7 +320,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 						stockmaster.decimalplaces
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
+					WHERE (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='L')
 					AND stockmaster.mbflag <>'G'
 					AND stockmaster.controlled <> 1
 					AND stockmaster.discontinued=0

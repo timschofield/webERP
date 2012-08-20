@@ -29,9 +29,9 @@ if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){
 
 echo '<table class="selection"><tr>';
 if ($_GET['Action']=='View'){
-	echo '<td><a href="' . $rootpath . '/StockCounts.php?' . SID . '&amp;Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
+	echo '<td><a href="' . $rootpath . '/StockCounts.php?&amp;Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
 } else {
-	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
+	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $rootpath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
 }
 echo '</tr></table><br />';
 
@@ -44,8 +44,22 @@ if ($_GET['Action'] == 'Enter'){
 			$InputError =False; //always assume the best to start with
 
 			$Quantity = 'Qty_' . $i;
+			$BarCode = 'BarCode_' . $i;
 			$StockID = 'StockID_' . $i;
 			$Reference = 'Ref_' . $i;
+			
+			if (strlen($_POST[$BarCode])>0){
+				$sql = "SELECT stockmaster.stockid
+								FROM stockmaster
+								WHERE stockmaster.barcode='". $_POST[$BarCode] ."'";
+			
+				$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
+				$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
+				$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+				$myrow=DB_fetch_array($KitResult);
+			
+				$_POST[$StockID] = strtoupper($myrow['stockid']);		
+			}
 
 			if (mb_strlen($_POST[$StockID])>0){
 				if (!is_numeric($_POST[$Quantity])){
@@ -94,21 +108,29 @@ if ($_GET['Action'] == 'Enter'){
 		}
 	}
 	echo '</select></th></tr>';
-	echo "<tr>
-		<th>" . _('Stock Code') . "</th>
-		<th>" . _('Quantity') . "</th>
-		<th>" . _('Reference') . '</th></tr>';
+	echo '<tr>
+			<th>' . _('Bar Code') . '</th>
+			<th>' . _('Stock Code') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Reference') . '</th>
+		</tr>';
 
 	for ($i=1;$i<=10;$i++){
 
 		echo '<tr>
-			<td><input type="text" name="StockID_' . $i . '" maxlength="20" size="20" /></td>
-			<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
-			<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td></tr>';
+				<td><input type="text" name="BarCode_' . $i . '" maxlength="20" size="20" /></td>
+				<td><input type="text" name="StockID_' . $i . '" maxlength="20" size="20" /></td>
+				<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
+				<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td>
+			</tr>';
 
 	}
 
-	echo '</table><br /><div class="centre"><input type="submit" name="EnterCounts" value="' . _('Enter Above Counts') . '" /></div>';
+	echo '</table>
+			<br />
+			<div class="centre">
+				<input type="submit" name="EnterCounts" value="' . _('Enter Above Counts') . '" />
+			</div>';
 
 //END OF action=ENTER
 } elseif ($_GET['Action']=='View'){

@@ -858,7 +858,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (DB_num_rows($SearchResult)<$_SESSION['DisplayRecordsMax']){
 			$Offset=0;
 		}
-
 	} //end of if search
 
 #Always do the stuff below if not looking for a customerid

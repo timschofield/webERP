@@ -1,4 +1,7 @@
 webERP Change Log
+
+20/8/2012 Phil: StockCounts.php now allows entry Bar Codes or stock codes  
+20/8/2012 Phil: Now allow labour type category items to be selected searched for in CounterSales.php and SelectOrderItems.php
 30/7/2012 Exson: fixed that the shipper will change sometime when modify the PO by modify file PO_ReadInOrder.inc. Reported by Craig. 
 29/7/2012 Phil: install/save.php now uses date_default_timezone_set function to set the time-zone to avoid all the nasty warnings
 29/7/2012 Hindra Joshua: Updates to Professional and Professional-rtl themes - tidy up images not used
