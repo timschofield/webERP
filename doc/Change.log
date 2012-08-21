@@ -1,5 +1,6 @@
 webERP Change Log
 
+21/8/12 Phil: Stock.php could not change an item to an assembly if there were any old completed or deleted/rejected purchase orders for the item.
 20/8/2012 Phil: StockCounts.php now allows entry Bar Codes or stock codes  
 20/8/2012 Phil: Now allow labour type category items to be selected searched for in CounterSales.php and SelectOrderItems.php
 30/7/2012 Exson: fixed that the shipper will change sometime when modify the PO by modify file PO_ReadInOrder.inc. Reported by Craig. 

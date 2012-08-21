@@ -292,9 +292,13 @@ if (isset($_POST['submit'])) {
 				if ($_POST['MBFlag']=='K' OR $_POST['MBFlag']=='A' OR $_POST['MBFlag']=='D') {
 
 					$sql = "SELECT quantityord-quantityrecd
-							FROM purchorderdetails
+							FROM purchorderdetails INNER JOIN purchorders
+							ON purchorders.orderno=purchorderdetails.orderno
 							WHERE itemcode = '".$StockID."'
-							AND completed=0";
+							AND purchorderdetails.completed=0
+							AND purchorders.status<>'Cancelled'
+							AND purchorders.status<>'Completed'
+							AND purchorders.status<>'Rejected'";
 
 					$result = DB_query($sql,$db);
 					$ChkPurchOrds = DB_fetch_row($result);
