@@ -270,7 +270,7 @@ function change_data(type) {
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5"><h3>Step 5</h3>Please enter the company name below...</td>
+			<td colspan="5"><h3>Step 5</h3>Please enter the company database name below...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;" colspan="1">Company Name:</td>
