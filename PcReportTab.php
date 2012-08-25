@@ -38,8 +38,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
-		WHERE ( authorizer='" . $_SESSION['UserID'] . 
-			"' OR usercode ='" . $_SESSION['UserID']. 
+		WHERE ( authorizer='" . $_SESSION['UserID'] .
+			"' OR usercode ='" . $_SESSION['UserID'].
 			"' OR assigner ='" . $_SESSION['UserID'] . "' )
 		ORDER BY tabcode";
 	$result = DB_query($SQL,$db);
@@ -171,7 +171,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+200,$YPos,100,$FontSize,_('Amount'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,_('Note'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,_('Receipt'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,100,$FontSize,_('Date Authoriser'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,100,$FontSize,_('Date Authorised'));
 	$YPos -= (2 * $line_height);
 
 	while ($myrow=DB_fetch_array($TabDetail)) {
@@ -179,10 +179,10 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$sqldes="SELECT description
 					FROM pcexpenses
 					WHERE codeexpense='". $myrow[3] . "'";
-	
+
 		$ResultDes = DB_query($sqldes,$db);
 		$Description=DB_fetch_array($ResultDes);
-	
+
 		if (!isset($Description[0])){
 			$Description[0]='ASSIGNCASH';
 		}
