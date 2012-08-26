@@ -22,24 +22,23 @@ if ( !$db ) {
 	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . '<a href="index.php">' . _('here') . '</a>' ._('to try logging in
-again') . '</p>';
+	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' , ' '  ._('to try logging in again') . '</p>';
 
 	exit;
 }
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if (isset($DatabaseName)) {
-	
+
 	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');  
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
 		unset ($_SESSION['DatabaseName']);
 		exit;
 	}
 } else {
 	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');	
+		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
 		unset ($_SESSION['DatabaseName']);
 		exit;
@@ -59,7 +58,7 @@ function DB_query ($SQL,
 
 	global $debug;
 	global $PathPrefix;
-	
+
 	$result=mysql_query($SQL,$Conn);
 	$_SESSION['LastInsertId'] = mysql_insert_id($Conn);
 
