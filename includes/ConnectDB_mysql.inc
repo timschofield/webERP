@@ -22,7 +22,7 @@ if ( !$db ) {
 	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' , ' '  ._('to try logging in again') . '</p>';
+	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' . ' '  ._('to try logging in again') . '</p>';
 
 	exit;
 }

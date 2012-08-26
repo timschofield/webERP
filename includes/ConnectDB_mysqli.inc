@@ -27,7 +27,7 @@ if (mysqli_connect_errno()) {
 	printf("Connect failed: %s\n", mysqli_connect_error());
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' , ' '  ._('to try logging in again') . '</p>';
+	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' . ' '  ._('to try logging in again') . '</p>';
 	exit();
 }
 
