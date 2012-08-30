@@ -42,7 +42,7 @@ if (isset($_POST['SelectedLabelID'])){
 								WHERE labelfieldid='" . $_POST['LabelFieldID' . $i] . "'",
 								$db);
 			} else {
-				prnMsg (_('Entries for Vertical Position, Horizonal Position, and Font Size must be integers.'),'error');
+				prnMsg (_('Entries for Vertical Position, Horizontal Position, and Font Size must be integers.'),'error');
 			}
 		}
 	}
@@ -433,7 +433,7 @@ if (isset($SelectedLabelID)) {
 			FROM labelfields
 			WHERE labelid = '" . $SelectedLabelID . "'
 			ORDER BY vpos DESC";
-	$ErrMsg = _('Could note get the label fields because');
+	$ErrMsg = _('Could not get the label fields because');
 	$result = DB_query($SQL,$db,$ErrMsg);
 	$i=0;
 	echo '<table class="selection">
@@ -443,7 +443,7 @@ if (isset($SelectedLabelID)) {
 					<tr>
 						<th>' . _('Field') . '</th>
 						<th>' . _('Vertical') . '<br />' . _('Position')  . '<br />(VPos)</th>
-						<th>' . _('Horizonal') . '<br />' . _('Position') . '<br />(HPos)</th>
+						<th>' . _('Horizontal') . '<br />' . _('Position') . '<br />(HPos)</th>
 						<th>' . _('Font Size') . '</th>
 						<th>' . _('Bar-code') . '</th>
 					</tr>';

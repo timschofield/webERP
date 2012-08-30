@@ -53,9 +53,9 @@ if (isset($_POST['AddControlledItems'])){
 		} else {
 			DB_Txn_Begin($db);
 			/*Process the additional controlled items into woserialnos and update the quantity on the work order order in woitems*/
-			
+
 			$InputError = false;
-			
+
 			$sql = "INSERT INTO woserialnos (stockid,
 											wo,
 											qualitytext,
@@ -278,7 +278,7 @@ $sql = "SELECT serialno,
 		WHERE wo='" . $WO . "'
 		AND stockid='" . $StockID . "'";
 
-$ErrMsg = _('Could note get the work order serial/batch items');
+$ErrMsg = _('Could not get the work order serial/batch items');
 $WOSerialNoResult = DB_query($sql,$db,$ErrMsg);
 
 if (DB_num_rows($WOSerialNoResult)==0){

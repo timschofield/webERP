@@ -2847,7 +2847,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of two elements the first should contain an integer of zero for successful and the second an associative arrat containing the key of confvalue the value of which is the Default_Shipper.')
+	$ReturnValue[0] = _('If successful this function returns an array of two elements the first should contain an integer of zero for successful and the second an associative array containing the key of confvalue the value of which is the Default_Shipper.')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/$GetDefaultShipper_sig = array(array($xmlrpcStruct),
@@ -3019,7 +3019,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('Returns 0 if the delete POS Data was successfull');
+	$ReturnValue[0] = _('Returns 0 if the delete POS Data was successful');
 
 /*E*/$DeletePOSData_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$DeletePOSData_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );

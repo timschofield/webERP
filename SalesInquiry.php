@@ -131,7 +131,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	} else {
 		$WhereDebtorNo = ' ';
 	}
-	
+
 	$WhereDebtorName = ' ';
 	if (mb_strlen($DebtorName) > 0 AND $DebtorNameOp == 'LIKE') {
 	    $DebtorName = $DebtorName . '%';
@@ -209,8 +209,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE salesorders.orddate >='" . $FromDate . "'
 						 AND salesorders.orddate <='" . $ToDate . "'
-						 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" . 
-						$WherePart . 
+						 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
+						$WherePart .
 						$WhereOrderNo .
 						$WhereDebtorNo .
 						$WhereDebtorName .
@@ -485,7 +485,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							$WhereSalesman .
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
-							",areas.areadescription 
+							",areas.areadescription
 							ORDER BY " . $orderby;
 				}
 		   } else {
@@ -1196,7 +1196,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
    echo '<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>';
-	
+
 	echo '<tr><td>&nbsp;</td></tr>';
     echo '<tr><td>' . _('Summary Type') . ':</td>
 			<td><select name="SummaryType">
@@ -1241,7 +1241,7 @@ function TempStockmoves(&$db) {
 	$ToDate = FormatDateForSQL($_POST['ToDate']);
 
 	$sql = "CREATE TEMPORARY TABLE tempstockmoves LIKE stockmoves";
-	$ErrMsg = _('The SQL to to the create temp stock moves table failed with the message');
+	$ErrMsg = _('The SQL to the create temp stock moves table failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = "INSERT tempstockmoves
@@ -1258,7 +1258,7 @@ function TempStockmoves(&$db) {
 	            AND SUBSTR(tempstockmoves.reference,10,10) = stockmoves.transno
                 AND tempstockmoves.stockid = stockmoves.stockid
                 AND stockmoves.type ='10'";
-	$ErrMsg = _('The SQL to to update tempstockmoves failed with the message');
+	$ErrMsg = _('The SQL to update tempstockmoves failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 

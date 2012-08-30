@@ -18,7 +18,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 				username='".$_POST['UserName']."',
 				password='".$_POST['Password']."',
 				auth='".$_POST['Auth']."'";
-	$ErrMsg = _('The email setting information is failed to update');
+	$ErrMsg = _('The email setting information failed to update');
 	$DbgMsg = _('The SQL failed to update is ');
 	$result1=DB_query($sql, $db, $ErrMsg, $DbgMsg);
 	unset($_POST['MailServerSetting']);
@@ -32,7 +32,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 						heloaddress,
 						username,
 						password,
-						auth) 
+						auth)
 				VALUES (
 					'".$_POST['Host']."',
 					'".$_POST['Port']."',
@@ -40,7 +40,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 					'".$_POST['UserName']."',
 					'".$_POST['Password']."',
 					'".$_POST['Auth']."')";
-	$ErrMsg = _('The email settings are failed to be inserted');
+	$ErrMsg = _('The email settings failed to be inserted');
 	$DbgMsg = _('The SQL failed to insert the email information is');
 	$result2 = DB_query($sql,$db);
 	DB_free_result($result2);
@@ -61,13 +61,13 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 				auth
 			FROM emailsettings";
 		$ErrMsg = _('The email settings information cannot be retrieved');
-		$DbgMsg = _('The SQL that faild was');
+		$DbgMsg = _('The SQL that failed was');
 
 		$result=DB_query($sql, $db,$ErrMsg,$DbgMsg);
 		if(DB_num_rows($result)!=0){
 			$MailServerSetting = 1;
 			$myrow=DB_fetch_array($result);
-		}else{  
+		}else{
 			DB_free_result($result);
 			$MailServerSetting = 0;
 			$myrow['host']='';
@@ -77,8 +77,8 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 			$myrow['password']='';
 			$myrow['timeout']=5;
 		}
-	
- 
+
+
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

@@ -23,7 +23,7 @@ if (isset($_POST['PrintPDF'])) {
 				part char(20),
 				sortpart text) DEFAULT CHARSET=utf8";
 
-	$ErrMsg = _('The SQL to to create passbom failed with the message');
+	$ErrMsg = _('The SQL to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (
@@ -48,7 +48,7 @@ if (isset($_POST['PrintPDF'])) {
 					  CONCAT(bom.component,bom.parent) AS sortpart
 					  FROM bom
 			  WHERE bom.component ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() 
+			  AND bom.effectiveto >= NOW()
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
@@ -75,7 +75,7 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.quantity
 					 FROM bom
 			  WHERE bom.component ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() 
+			  AND bom.effectiveto >= NOW()
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
@@ -106,7 +106,7 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.quantity
 				FROM bom,passbom
 				WHERE bom.component = passbom.part
-				AND bom.effectiveto >= NOW() 
+				AND bom.effectiveto >= NOW()
 				AND bom.effectiveafter <= NOW()";
 		$result = DB_query($sql,$db);
 
@@ -126,7 +126,7 @@ if (isset($_POST['PrintPDF'])) {
 						  CONCAT(passbom2.sortpart,bom.parent) AS sortpart
 				   FROM bom,passbom2
 				   WHERE bom.component = passbom2.part
-					AND bom.effectiveto >= NOW() 
+					AND bom.effectiveto >= NOW()
 					AND bom.effectiveafter <= NOW()";
 		$result = DB_query($sql,$db);
 		$result = DB_query("SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part",$db);
@@ -172,8 +172,8 @@ if (isset($_POST['PrintPDF'])) {
               ORDER BY sortpart";
 	$result = DB_query($sql,$db);
 
-    $ListCount = DB_num_rows($result); 
-    
+    $ListCount = DB_num_rows($result);
+
 	While ($myrow = DB_fetch_array($result,$db)){
 
 		$YPos -=$line_height;

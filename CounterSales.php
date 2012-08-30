@@ -996,13 +996,13 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 
 	/* Now Get the area where the sale is to from the branches table */
 
-		$SQL = "SELECT 	area,
+		$SQL = "SELECT area,
 						defaultshipvia
 				FROM custbranch
 				WHERE custbranch.debtorno ='". $_SESSION['Items'.$identifier]->DebtorNo . "'
 				AND custbranch.branchcode = '" . $_SESSION['Items'.$identifier]->Branch . "'";
 
-		$ErrMsg = _('We were unable to load the area where the sale is to from the custbranch table');
+		$ErrMsg = _('We were unable to load the area from the custbranch table where the sale is to ');
 		$Result = DB_query($SQL,$db, $ErrMsg);
 		$myrow = DB_fetch_row($Result);
 		$Area = $myrow[0];

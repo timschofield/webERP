@@ -27,7 +27,7 @@ if (isset($_POST['PrintPDF'])) {
 				part char(20),
 				extendedqpa double,
 				sortpart text) DEFAULT CHARSET=utf8";
-	$ErrMsg = _('The SQL to to create passbom failed with the message');
+	$ErrMsg = _('The SQL to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (

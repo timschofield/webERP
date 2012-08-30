@@ -83,15 +83,15 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 				manufacturingflag smallint(6) NOT NULL default '1',
 				INDEX (daynumber),
 				PRIMARY KEY (calendardate)) DEFAULT CHARSET=utf8";
-	$ErrMsg = _('The SQL to to create passbom failed with the message');
+	$ErrMsg = _('The SQL to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$i = 0;
 
 	/* $DaysTextArray used so can get text of day based on the value get from DayOfWeekFromSQLDate of
-	 the calendar date. See if that text is in the ExcludeDays array note no gettext here hard coded english days from $_POST*/ 
+	 the calendar date. See if that text is in the ExcludeDays array note no gettext here hard coded english days from $_POST*/
 	$DaysTextArray = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-	
+
 	$ExcludeDays = array($_POST['Sunday'],$_POST['Monday'],$_POST['Tuesday'],$_POST['Wednesday'],
 						 $_POST['Thursday'],$_POST['Friday'],$_POST['Saturday']);
 
@@ -122,7 +122,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	// manufacturing day that precedes it. That way can read the table by the non-manufacturing day,
 	// subtract the leadtime from the daynumber, and find the valid manufacturing day with that daynumber.
 	$DayNumber = 1;
-	$sql = "SELECT * FROM mrpcalendar 
+	$sql = "SELECT * FROM mrpcalendar
 			ORDER BY calendardate";
 	$result = DB_query($sql,$db,$ErrMsg);
 	while ($myrow = DB_fetch_array($result)) {
@@ -306,7 +306,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 	if (!isset($_POST['ChangeDate'])) {
 		$_POST['ChangeDate']=date($_SESSION['DefaultDateFormat']);
 	}
-	
+
 	echo '<br />
 		<table class="selection">
 		<tr>

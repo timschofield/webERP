@@ -11,8 +11,8 @@ use getttext for translation.
 define('RPT_SAVEDEF',_('The name you entered is a default report. Please enter a new My Report name.'));
 define('RPT_SAVEDUP',_('This report name already exists! Press Replace to overwrite or enter a new name and press continue.'));
 define('RPT_DUPDB',_('There is an error in your database selection. Check your database names and link equations.'));
-define('RPT_BADFLD',_('There is an error in your database field or description. Pleae check and try again.'));
-define('RPT_BADDATA',_('There is an error in one of your data fields. Pleae check and try again.'));
+define('RPT_BADFLD',_('There is an error in your database field or description. Please check and try again.'));
+define('RPT_BADDATA',_('There is an error in one of your data fields. Please check and try again.'));
 define('RPT_EMPTYFIELD',_('A data field has been left empty located at sequence number: '));
 define('RPT_DEFDEL',_('If you replace this report/form, the original report/form will be deleted!'));
 define('RPT_NODATA',_('There was not any data in this report based on the criteria provided!'));
@@ -37,13 +37,13 @@ define('RPT_DEFIMP',_('Select a default report to import.'));
 define('RPT_RPTBROWSE',_('Or browse for a report to upload.'));
 
 // Error messages for importing reports
-define('RPT_IMP_ERMSG1',_('The filesize exceeds the upload_max_filesize directive in you php.ini settings.'));
-define('RPT_IMP_ERMSG2',_('The filesize exceeds the MAX_FLE_SIZE directive in the webERP form.'));
+define('RPT_IMP_ERMSG1',_('The filesize exceeds the upload_max_filesize directive in your php.ini settings.'));
+define('RPT_IMP_ERMSG2',_('The filesize exceeds the MAX_FILE_SIZE directive in the webERP form.'));
 define('RPT_IMP_ERMSG3',_('The file was not completely uploaded. Please retry.'));
 define('RPT_IMP_ERMSG4',_('No file was selected to upload.'));
 define('RPT_IMP_ERMSG5',_('Unknown php upload error, php returned error # '));
 define('RPT_IMP_ERMSG6',_('This file is not reported by the server as a text file.'));
-define('RPT_IMP_ERMSG7',_('The uploaded file does not conatin any data!'));
+define('RPT_IMP_ERMSG7',_('The uploaded file does not contain any data!'));
 define('RPT_IMP_ERMSG8',_('webERP could not find a valid report to import in the uploaded file!'));
 define('RPT_IMP_ERMSG9',_(' was successfully imported!'));
 define('RPT_IMP_ERMSG10',_('There was an unexpected error uploading the file!'));

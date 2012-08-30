@@ -830,7 +830,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			} else {
 				$AssetNumber =   intval(mb_substr($OrderLine->StockID,6,mb_strlen($OrderLine->StockID)-$HyphenOccursAt-1));
 			}
-			prnMsg (_('The asset number beind disposed of is:') . ' ' . $AssetNumber, 'info');
+			prnMsg (_('The asset number being disposed of is:') . ' ' . $AssetNumber, 'info');
 		} else {
 			$IsAsset = false;
 			$AssetNumber = 0;
@@ -1440,7 +1440,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('disposal') . "',
 											'" . -$DisposalRow['cost'] . "')";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of asset cost on dispoal GL posting could not be inserted because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of asset cost on disposal GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				}

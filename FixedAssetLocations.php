@@ -28,7 +28,7 @@ if (isset($_POST['submit']) AND !isset($_POST['delete'])) {
 	}
 }
 if (isset($_GET['SelectedLocation'])) {
-	$sql="SELECT * FROM fixedassetlocations 
+	$sql="SELECT * FROM fixedassetlocations
 		WHERE locationid='".$_GET['SelectedLocation']."'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -50,11 +50,11 @@ if (isset($_POST['update']) and !isset($_POST['delete'])) {
 			$InputError=1;
 		}
 		if ($InputError==0) {
-			 $sql="UPDATE fixedassetlocations 
+			 $sql="UPDATE fixedassetlocations
 					SET locationdescription='" . $_POST['LocationDescription'] . "',
 						parentlocationid='" . $_POST['ParentLocationID'] . "'
 					WHERE locationid ='" . $_POST['LocationID'] . "'";
-					
+
 			 $result=DB_query($sql,$db);
 			 echo '<meta http-equiv="Refresh" content="0; url="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'">';
 		}
@@ -74,7 +74,7 @@ if (isset($_POST['update']) and !isset($_POST['delete'])) {
 		$result = DB_query($sql,$db);
 		$myrow=DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg(_('You have assets in this location location so it cannot be removed'), 'warn');
+			prnMsg(_('You have assets in this location so it cannot be removed'), 'warn');
 			$InputError=1;
 		}
 		if ($InputError==0) {

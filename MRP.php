@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 
 	$sql = "CREATE TEMPORARY TABLE passbom (part char(20),
 											sortpart text) DEFAULT CHARSET=utf8";
-	$ErrMsg = _('The SQL to to create passbom failed with the message');
+	$ErrMsg = _('The SQL to create passbom failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (parent char(20),
