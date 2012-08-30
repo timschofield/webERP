@@ -38,7 +38,7 @@ foreach ($_POST as $key=>$value) {
 // check for new or modify condition
 if (isset($_REQUEST['WO']) AND$_REQUEST['WO']!=''){
 	// modify
-	$_POST['WO'] = $_REQUEST['WO'];
+	$_POST['WO'] = (int)$_REQUEST['WO'];
 	$EditingExisting = true;
 } else {
 	// new
