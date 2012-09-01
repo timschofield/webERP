@@ -68,9 +68,9 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartDetails'
 
-	$sql= "SELECT COUNT(*) 
-			FROM chartdetails 
-			WHERE chartdetails.accountcode ='" . $SelectedAccount . "' 
+	$sql= "SELECT COUNT(*)
+			FROM chartdetails
+			WHERE chartdetails.accountcode ='" . $SelectedAccount . "'
 			AND chartdetails.actual <>0";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -81,8 +81,8 @@ if (isset($_POST['submit'])) {
 
 	} else {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'GLTrans'
-		$sql= "SELECT COUNT(*) 
-				FROM gltrans 
+		$sql= "SELECT COUNT(*)
+				FROM gltrans
 				WHERE gltrans.account ='" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not test for existing transactions because');
@@ -146,8 +146,8 @@ if (isset($_POST['submit'])) {
 						prnMsg( _('Cannot delete this account because it is used by one of the sales GL posting interface records'),'warn');
 					} else {
 //PREVENT DELETES IF COGS POSTINGS USE THE GL ACCOUNT
-						$sql= "SELECT COUNT(*) 
-								FROM cogsglpostings 
+						$sql= "SELECT COUNT(*)
+								FROM cogsglpostings
 								WHERE glcode='" . $SelectedAccount ."'";
 
 						$ErrMsg = _('Could not test for existing cost of sales interface codes because');
@@ -238,7 +238,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
 	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="text" size="51" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
 
-	"$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb";
+	$sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$result = DB_query($sql, $db);
 
 	echo '<tr>
