@@ -2,13 +2,22 @@ webERP README
 
 /* $Id$*/
 
-See the change log shows descriptions and dates of all changes made.
+INSTALLATION
 
 Installation is largely automatic having extracted the archive to a directory under the web-server's root and then browsing to this directory. The installation script will display with guidance on how to proceed.
 
-Detailed installation instructions are in the file INSTALL.txt in the doc directory. If you have trouble installing with the automated script, it is important to read the INSTALL.txt file in its entirety before proceeding manually. A printout is recommended.
+Detailed installation instructions are in the file doc/INSTALL.txt in the doc directory. If you have trouble installing with the automated script, it is important to read the INSTALL.txt file in its entirety before proceeding manually. A printout is recommended.
 
-The user documentation contains a wealth of information and is installed under the doc/Manual directory in html format. Links to it are available from the application itself.
+DOCUMENTATION
+
+The user documentation contains a wealth of information and is installed under the doc/Manual directory in html format. Links to it are available from the application itself. There is also a wiki at http://www.weberp.org/wiki/ that contains some how-tos descriptions of specification for the original developments.
+
+The change log at:
+
+http://web-erp.svn.sourceforge.net/viewvc/web-erp/trunk/doc/Change.log
+
+lists all changes and the dates they were made.
+
 
 SUPPORT
 
