@@ -1,4 +1,5 @@
 webERP Change Log
+1/9/12 Carlos Rubio: AccountGroups.php now has option to move to alternative accountgroups
 30/8/2012 Exson: fixed sql problem reported bymodpr0be
 24/8/12 Serge Gélinas: Added new fr_CA.utf8 French Quebec translation
 21/8/12 Phil: Stock.php could not change an item to an assembly if there were any old completed or deleted/rejected purchase orders for the item.

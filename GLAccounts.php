@@ -238,10 +238,12 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
 	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="text" size="51" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
 
-	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
+	"$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$result = DB_query($sql, $db);
 
-	echo '<tr><td>' . _('Account Group') . ':</td><td><select name="Group">';
+	echo '<tr>
+			<td>' . _('Account Group') . ':</td>
+			<td><select name="Group">';
 
 	while ($myrow = DB_fetch_array($result)){
 		if (isset($_POST['Group']) and $myrow[0]==$_POST['Group']){
@@ -251,7 +253,9 @@ if (!isset($_GET['delete'])) {
 		}
 		echo $myrow[0] . '">' . $myrow[0] . '</option>';
 	}
-    echo '</select></td></tr></table>';
+    echo '</select></td>
+		</tr>
+		</table>';
 
 	if (!isset($_GET['SelectedAccount']) or $_GET['SelectedAccount']=='') {
 		echo '<script  type="text/javascript">defaultControl(document.GLAccounts.AccountCode);</script>';

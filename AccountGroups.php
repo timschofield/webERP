@@ -40,6 +40,15 @@ if (isset($Errors)) {
 
 $Errors = array();
 
+if (isset($_POST['MoveGroup'])) {
+	$sql="UPDATE chartmaster SET group_='" . $_POST['DestinyAccountGroup'] . "' WHERE group_='" . $_POST['OriginalAccountGroup'] . "'";
+	$ErrMsg = _('An error occurred in moving the account group');
+	$DbgMsg = _('The SQL that was used to moving the account group was');
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
+	prnMsg( _('All accounts in the account group:') . ' ' . $_POST['OriginalAccountGroup'] . ' ' . _('have been changed to the account group:') . ' ' . $_POST['DestinyAccountGroup'],'success');
+}
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -180,6 +189,30 @@ if (isset($_POST['submit'])) {
 	if ($myrow['groups']>0) {
 		prnMsg( _('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
 		echo '<br />' . _('There are') . ' ' . $myrow['groups'] . ' ' . _('general ledger accounts that refer to this account group');
+		echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+			
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<table class="selection">';
+		echo '<input  type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
+		echo '<tr>
+				<td>' . _('Parent Group') . ':' . '</td>
+				<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) . '  name="DestinyAccountGroup">';
+
+		$sql = "SELECT groupname FROM accountgroups";
+		$GroupResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+		while ($GroupRow = DB_fetch_array($GroupResult) ) {
+
+			if (isset($_POST['ParentGroupName']) AND $_POST['ParentGroupName']==$RroupRow['groupname']) {
+				echo '<option selected="selected" value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8'). '</option>';
+			} else {
+				echo '<option value="'.htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlentities($GroupRow['groupname'], ENT_QUOTES,'UTF-8').'</option>';
+			}
+		}
+		echo '</select>';
+		echo '</td></tr>';
+		echo '<tr>
+				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . _('Move Group') . '" /></div></td>
+		  </tr>';
 
 	} else {
 		$sql = "SELECT COUNT(groupname) groupnames FROM accountgroups WHERE parentgroupname = '" . $_GET['SelectedAccountGroup'] . "'";
@@ -190,6 +223,7 @@ if (isset($_POST['submit'])) {
 		if ($myrow['groupnames']>0) {
 			prnMsg( _('Cannot delete this account group because it is a parent account group of other account group(s)'),'warn');
 			echo '<br />' . _('There are') . ' ' . $myrow['groupnames'] . ' ' . _('account groups that have this group as its/there parent account group');
+
 		} else {
 			$sql="DELETE FROM accountgroups WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
 			$ErrMsg = _('An error occurred in deleting the account group');
@@ -321,8 +355,8 @@ if (!isset($_GET['delete'])) {
 				<td>' . $_POST['GroupName'] . '</td>
 			</tr>';
 
-	} else { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
-
+	} elseif (!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
+	
 		if (!isset($_POST['SelectedAccountGroup'])){
 			$_POST['SelectedAccountGroup']='';
 		}
