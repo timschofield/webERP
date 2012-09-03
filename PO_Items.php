@@ -704,7 +704,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			}
 
 			echo '<td>' . $POLine->StockID  . '</td>
-                <td><input type="text" name="ItemDescription' . $POLine->LineNo.'" size="80" value="' .$POLine->ItemDescription .'" /></td>
+                <td><input type="text" name="ItemDescription' . $POLine->LineNo.'" size="30" value="' .$POLine->ItemDescription .'" /></td>
 				<td class="number">' . locale_number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>

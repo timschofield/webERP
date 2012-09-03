@@ -2954,12 +2954,12 @@
 		return $rtn;
 	}
 
-	$Description = _('Returns the webERP reports_dir for the company selected');
+	$Description = _('Returns the webERP reports directory for the company selected');
 	$Parameter[0]['name'] = _('User name');
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string containing the path to the company reporte_dir') . ' ' . _('Otherwise an array of error codes is returned. ');
+	$ReturnValue[0] = _('If successful this function returns a string containing the path to the company reports directory') . ' ' . _('Otherwise an array of error codes is returned. ');
 
 	$GetReportsDirectory_sig = array(array($xmlrpcStruct),
 									array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));

@@ -228,7 +228,7 @@ if (isset($_POST['ProcessStockChange'])){
 	
 		echo '<br />' . _('Changing the contract BOM table records');
 		$sql = "UPDATE contractbom SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
-		$ErrMsg = _('The SQL to contract BOM records failed');
+		$ErrMsg = _('The SQL to update the contract BOM records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 	

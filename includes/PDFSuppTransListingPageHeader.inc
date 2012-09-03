@@ -12,13 +12,13 @@ $FontSize=15;
 
 Switch ($_POST['TransType']) {
 	case 20:
-		$TransType=_('Suppier Invoices');
+		$TransType=_('Supplier Invoices');
 		break;
 	case 21:
-		$TransType=_('Suppier Credit Notes');
+		$TransType=_('Supplier Credit Notes');
 		break;
 	case 22:
-		$TransType=_('Suppier Payments');
+		$TransType=_('Supplier Payments');
 }
 
 $XPos = $Left_Margin;

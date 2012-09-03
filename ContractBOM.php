@@ -156,7 +156,7 @@ if(isset($_GET['Delete'])){
 	if($_SESSION['Contract'.$identifier]->Status!=2){
 		$_SESSION['Contract'.$identifier]->Remove_ContractComponent($_GET['Delete']);
 	} else {
-		prnMsg( _('The contract BOM cannot be alterned because the customer has already placed the order'),'warn');
+		prnMsg( _('The contract BOM cannot be altered because the customer has already placed the order'),'warn');
 	}
 }
 

@@ -22,7 +22,7 @@ if (isset($_POST['Cancel'])) {
 	$Cancel=1;
 }
 
-if (isset($_GET['Type']) and $_GET['Type']=='GL') {
+if (isset($_GET['Type']) AND $_GET['Type']=='GL') {
 	$_POST['GLEntry']=1;
 }
 
