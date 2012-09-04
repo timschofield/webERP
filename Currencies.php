@@ -265,8 +265,8 @@ or deletion of the records*/
 					$myrow['country'],
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
-					locale_number_format($myrow['rate'],6),
-					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),6),
+					locale_number_format($myrow['rate'],8),
+					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),8),
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['currabrev'],
 					_('Edit'),
@@ -333,7 +333,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['CurrencyName']  = $myrow['currency'];
 		$_POST['Country']  = $myrow['country'];
 		$_POST['HundredsName']  = $myrow['hundredsname'];
-		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'],6);
+		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'],8);
 		$_POST['DecimalPlaces']  = locale_number_format($myrow['decimalplaces'],0);
 
 
@@ -393,7 +393,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate']='';
 	}
-	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="9" value="'. $_POST['ExchangeRate'].'" /></td>
+	echo '<input ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="number" name="ExchangeRate" size="10" maxlength="10" value="'. $_POST['ExchangeRate'].'" /></td>
 		</tr>
 		</table>';
 
