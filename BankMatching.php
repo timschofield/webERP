@@ -6,7 +6,7 @@ include('includes/session.inc');
 $title = _('Bank Account Matching');
 include('includes/header.inc');
 
-if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts') 
+if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 		OR (isset($_POST['Type']) AND $_POST['Type']=='Receipts')){
 
 	$Type = 'Receipts';
@@ -15,7 +15,7 @@ if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 			<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
 		</p>';
 
-} elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments') 
+} elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments')
 			OR (isset($_POST['Type']) AND $_POST['Type']=='Payments')) {
 
 	$Type = 'Payments';
@@ -56,12 +56,12 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			$ErrMsg =  _('Could not match off this payment because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-		} elseif ((isset($_POST['AmtClear_' . $Counter]) 
-					AND filter_number_format($_POST['AmtClear_' . $Counter])<0 
+		} elseif ((isset($_POST['AmtClear_' . $Counter])
+					AND filter_number_format($_POST['AmtClear_' . $Counter])<0
 					AND $Type=='Payments')
-					OR ($Type=='Receipts' AND isset($_POST['AmtClear_' . $Counter]) 
+					OR ($Type=='Receipts' AND isset($_POST['AmtClear_' . $Counter])
 					AND filter_number_format($_POST['AmtClear_' . $Counter])>0)) {
-						
+
 			/*if the amount entered was numeric and negative for a payment or positive for a receipt */
 
 			$sql = "UPDATE banktrans SET amountcleared=" .  filter_number_format($_POST['AmtClear_' . $Counter]) . "
@@ -70,9 +70,9 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-		} elseif (isset($_POST['Unclear_' . $Counter]) 
+		} elseif (isset($_POST['Unclear_' . $Counter])
 					AND $_POST['Unclear_' . $Counter]==True){
-						
+
 			$sql = "UPDATE banktrans SET amountcleared = 0
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not unclear this bank transaction because');
@@ -99,9 +99,9 @@ echo '<table class="selection">
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultBankActs)){
-	if (isset($_POST['BankAccount']) 
+	if (isset($_POST['BankAccount'])
 		AND $myrow['accountcode']==$_POST['BankAccount']){
-			
+
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
@@ -161,7 +161,7 @@ echo '</table>
 	<div class="centre">
 		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />
 		<p>
-		<a href="' . $rootpath . '/BankReconciliation.php">' . _('Show reconciliation') . '</a>
+		<a href="' . $rootpath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a>
 		</p>
 	</div>';
 
