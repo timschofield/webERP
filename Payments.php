@@ -836,14 +836,14 @@ if (!isset($_POST['FunctionalExRate'])){
 }
 if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['PaymentDetail' . $identifier]->Currency AND isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)){
 	if (isset($SuggestedExRate)){
-		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedExRate,6) . '</b>';
+		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedExRate,8) . '</b>';
 	} else {
 		$SuggestedExRateText ='';
 	}
 	if ($_POST['ExRate']==1 AND isset($SuggestedExRate)){
-		$_POST['ExRate'] = locale_number_format($SuggestedExRate,6);
+		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
 	}elseif($_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)){
-		$_POST['ExRate'] = locale_number_format($SuggestedExRate,6);
+		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
 	
 	}
 	echo '<tr>
@@ -856,7 +856,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['Paymen
 if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
 										AND isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)){
 	if (isset($SuggestedFunctionalExRate)){
-		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedFunctionalExRate,6) . '</b>';
+		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . locale_number_format($SuggestedFunctionalExRate,8) . '</b>';
 	} else {
 		$SuggestedFunctionalExRateText ='';
 	}
