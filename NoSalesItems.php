@@ -2,8 +2,6 @@
 
 /* $Id: NoSalesItems.php 2012-05-12 $*/
 
-/* Session started in session.inc for password checking and authorisation level check
-config.php is in turn included in session.inc*/
 include ('includes/session.inc');
 $title = _('No Sales Items Searching');
 include ('includes/header.inc');
@@ -11,14 +9,12 @@ if (!(isset($_POST['Search']))) {
 echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
 	echo '<div class="page_help_text">'
 	. _('List of items with stock available during the last X days at the selected locations but did not sell any quantity during these X days.'). '<br />'. _( 'This list gets the no selling items, items at the location just wasting space, or need a price reduction, etc.') . '<br />'. _('Stock available during the last X days means there was a stock movement that produced that item into that location before that day, and no other positive stock movement has been created afterwards.  No sell any quantity means, there is no sales order for that item from that location.')  . '</div>';
-//check if input already
-
 	echo '<br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name="SelectCustomer" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	
-	//to view store location
+	//select location
 	echo '<tr>
 		         <td>'._('Select Location') . '</td>
 				 <td>:</td>
@@ -97,53 +93,88 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	
 	// everything below here to view NumberOfNoSalesItems on selected location
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($_POST['NumberOfDays'])));
-	$SQL = "SELECT 	stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.units, 
-					locstock.quantity,
-					locations.locationname 
-			FROM 	stockmaster,locstock,locations
-			WHERE 	stockmaster.stockid = locstock.stockid
-					AND (locstock.loccode = locations.loccode)";					
+	if ($_POST['StockCat']=='All'){
+		$WhereStockCat = "";
+	}else{
+		$WhereStockCat = " AND stockmaster.categoryid = '" . $_POST['StockCat'] ."'";
+	}
+	
 	if ($_POST['Location'][0] == 'All') {
-		$WhereLocation = ' ';
-	} elseif (sizeof($_POST['Location']) == 1) {
-		$WhereLocation = " AND locstock.loccode ='" . $_POST['Location'][0] . "' ";
-	} else {
-		$WhereLocation = " AND locstock.loccode IN(";
-		$commactr = 0;
-		foreach ($_POST['Location'] as $key => $value) {
-			$WhereLocation .= "'" . $value . "'";
-			$commactr++;
-			if ($commactr < sizeof($_POST['Location'])) {
-				$WhereLocation .= ",";
-			} // End of if
-		} // End of foreach
-		$WhereLocation .= ')';
-	}	
-	$SQL = $SQL . $WhereLocation. " AND (locstock.quantity > 0)
+		$SQL = "SELECT 	stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units
+				FROM 	stockmaster,locstock
+				WHERE 	stockmaster.stockid = locstock.stockid ".
+						$WhereStockCat . "
+					AND (locstock.quantity > 0)
 					AND NOT EXISTS (
-			SELECT * 
-			FROM 	salesorderdetails, salesorders
-			WHERE 	stockmaster.stockid = salesorderdetails.stkcode
-					AND (salesorders.fromstkloc = locstock.loccode)
-					AND (salesorderdetails.orderno = salesorders.orderno)
-					AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
+							SELECT * 
+							FROM 	salesorderdetails, salesorders
+							WHERE 	stockmaster.stockid = salesorderdetails.stkcode
+									AND (salesorderdetails.orderno = salesorders.orderno)
+									AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
 					AND NOT EXISTS (
-			SELECT * 
-			FROM 	stockmoves
-			WHERE 	stockmoves.loccode = locstock.loccode 
-					AND stockmoves.stockid = stockmaster.stockid
-					AND stockmoves.trandate >= '" . $FromDate . "'
-			)
+							SELECT * 
+							FROM 	stockmoves
+							WHERE 	stockmoves.stockid = stockmaster.stockid
+									AND stockmoves.trandate >= '" . $FromDate . "')
 					AND EXISTS (
-			SELECT * 
-			FROM 	stockmoves
-			WHERE 	stockmoves.loccode = locstock.loccode 
-					AND stockmoves.stockid = stockmaster.stockid
-					AND stockmoves.trandate < '" . $FromDate . "'
-					AND stockmoves.qty >0) ";	
-	$SQL = $SQL. "ORDER BY stockmaster.stockid";	
+							SELECT * 
+							FROM 	stockmoves
+							WHERE 	stockmoves.stockid = stockmaster.stockid
+									AND stockmoves.trandate < '" . $FromDate . "'
+									AND stockmoves.qty >0) 
+				GROUP BY stockmaster.stockid
+				ORDER BY stockmaster.stockid";	
+	}else{
+		$WhereLocation = '';
+		if (sizeof($_POST['Location']) == 1) {
+			$WhereLocation = " AND locstock.loccode ='" . $_POST['Location'][0] . "' ";
+		} else {
+			$WhereLocation = " AND locstock.loccode IN(";
+			$commactr = 0;
+			foreach ($_POST['Location'] as $key => $value) {
+				$WhereLocation .= "'" . $value . "'";
+				$commactr++;
+				if ($commactr < sizeof($_POST['Location'])) {
+					$WhereLocation .= ",";
+				} // End of if
+			} // End of foreach
+			$WhereLocation .= ')';
+		}	
+		$SQL = "SELECT 	stockmaster.stockid,
+						stockmaster.description,
+						stockmaster.units, 
+						locstock.quantity,
+						locations.locationname 
+				FROM 	stockmaster,locstock,locations
+				WHERE 	stockmaster.stockid = locstock.stockid
+						AND (locstock.loccode = locations.loccode)".
+						$WhereLocation .
+						$WhereStockCat . "
+						AND (locstock.quantity > 0)
+						AND NOT EXISTS (
+								SELECT * 
+								FROM 	salesorderdetails, salesorders
+								WHERE 	stockmaster.stockid = salesorderdetails.stkcode
+										AND (salesorders.fromstkloc = locstock.loccode)
+										AND (salesorderdetails.orderno = salesorders.orderno)
+										AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
+						AND NOT EXISTS (
+								SELECT * 
+								FROM 	stockmoves
+								WHERE 	stockmoves.loccode = locstock.loccode 
+										AND stockmoves.stockid = stockmaster.stockid
+										AND stockmoves.trandate >= '" . $FromDate . "')
+						AND EXISTS (
+								SELECT * 
+								FROM 	stockmoves
+								WHERE 	stockmoves.loccode = locstock.loccode 
+										AND stockmoves.stockid = stockmaster.stockid
+										AND stockmoves.trandate < '" . $FromDate . "'
+										AND stockmoves.qty >0) 
+				ORDER BY stockmaster.stockid";	
+	}
 	$result = DB_query($SQL, $db);		
 	echo '<p class="page_title_text" align="center"><strong>' . _('No Sales Items') . '</strong></p>';
 	echo '<form action="PDFNoSalesItems.php"  method="GET">
@@ -179,23 +210,41 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 		$QOH = $QOHRow[0];
 
 		$CodeLink = '<a href="' . $rootpath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>	
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>', 
-				$i,
-				$myrow['locationname'], 
-				$CodeLink, 				
-				$myrow['description'], 
-				$myrow['quantity'], //on hand on location selected only
-				$QOH, // total on hand 
-				$myrow['units'] //unit			
-				);
+		if ($_POST['Location'][0] == 'All') {
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>	
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i,
+					'All', 
+					$CodeLink, 				
+					$myrow['description'], 
+					$QOH, //on hand on ALL locations
+					$QOH, // total on hand 
+					$myrow['units'] //unit			
+					);
+		}else{
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>	
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i,
+					$myrow['locationname'], 
+					$CodeLink, 				
+					$myrow['description'], 
+					$myrow['quantity'], //on hand on location selected only
+					$QOH, // total on hand 
+					$myrow['units'] //unit			
+					);
+		}
 		$i++;
 	}
 	echo '</table>';
