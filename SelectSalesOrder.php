@@ -7,6 +7,10 @@ $title = _('Search Outstanding Sales Orders');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+if (isset($_REQUEST['SelectedStockItem'])) {
+	$_REQUEST['SelectedStockItem'] = DB_escape_string($_REQUEST['SelectedStockItem']);
+}
+
 if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders */
 
 	/*Note the button would not have been displayed if the user had no authority to create purchase orders */
