@@ -7,8 +7,20 @@ $title = _('Search Outstanding Sales Orders');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if (isset($_REQUEST['SelectedStockItem'])) {
-	$_REQUEST['SelectedStockItem'] = DB_escape_string($_REQUEST['SelectedStockItem']);
+if (isset($_GET['SelectedStockItem'])) {
+	$SelectedStockItem = $_GET['SelectedStockItem'];
+} elseif (isset($_POST['SelectedStockItem'])){
+	$SelectedStockItem = $_POST['SelectedStockItem'];
+} else {
+	unset($SelectedStockItem);
+}
+
+if (isset($_GET['SelectedCustomer'])) {
+	$SelectedCustomer = $_GET['SelectedCustomer'];
+} elseif (isset($_POST['SelectedCustomer'])){
+	$SelectedCustomer = $_POST['SelectedCustomer'];
+} else {
+	unset($SelectedCustomer);
 }
 
 if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders */
@@ -392,7 +404,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 
 if (isset($_POST['ResetPart'])){
-     unset($_REQUEST['SelectedStockItem']);
+     unset($SelectedStockItem);
 }
 
 echo '<br /><div class="centre">';
@@ -408,12 +420,12 @@ if (isset($_REQUEST['OrderNumber']) AND $_REQUEST['OrderNumber']!='') {
 		echo _('Order Number') . ' - ' . $_REQUEST['OrderNumber'];
 	}
 } else {
-	if (isset($_REQUEST['SelectedCustomer'])) {
-		echo _('For customer') . ': ' . $_REQUEST['SelectedCustomer'] . ' ' . _('and') . ' ';
-		echo '<input type="hidden" name="SelectedCustomer" value="' . $_REQUEST['SelectedCustomer'] . '" />';
+	if (isset($SelectedCustomer)) {
+		echo _('For customer') . ': ' . $SelectedCustomer . ' ' . _('and') . ' ';
+		echo '<input type="hidden" name="SelectedCustomer" value="' . $SelectedCustomer . '" />';
 	}
-	if (isset($_REQUEST['SelectedStockItem'])) {
-		 echo _('for the part') . ': ' . $_REQUEST['SelectedStockItem'] . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $_REQUEST['SelectedStockItem'] . '" />';
+	if (isset($SelectedStockItem)) {
+		 echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
 }
 
@@ -492,7 +504,7 @@ if (!isset($StockID)) {
 	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
      */
 
-	if (!isset($_REQUEST['OrderNumber']) or $_REQUEST['OrderNumber']==''){
+	if (!isset($_REQUEST['OrderNumber']) OR $_REQUEST['OrderNumber']==''){
 
 		echo '<table class="selection">
 			<tr>
@@ -673,9 +685,9 @@ if (isset($StockItemsResult)
 	} else {
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
-		if (isset($_REQUEST['SelectedCustomer'])) {
+		if (isset($SelectedCustomer)) {
 
-			if (isset($_REQUEST['SelectedStockItem'])) {
+			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
 						custbranch.brname,
@@ -697,8 +709,8 @@ if (isset($StockItemsResult)
 						ON debtorsmaster.currcode = currencies.currabrev
 					WHERE salesorderdetails.completed=0
 					AND salesorders.quotation =" .$Quotations . "
-					AND salesorderdetails.stkcode='". $_REQUEST['SelectedStockItem'] ."'
-					AND salesorders.debtorno='" . $_REQUEST['SelectedCustomer'] ."'
+					AND salesorderdetails.stkcode='". $SelectedStockItem ."'
+					AND salesorders.debtorno='" . $SelectedCustomer ."'
 					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
 					ORDER BY salesorders.orderno";
 
@@ -725,7 +737,7 @@ if (isset($StockItemsResult)
 						ON debtorsmaster.currcode = currencies.currabrev
 					WHERE  salesorders.quotation =" .$Quotations . "
 					AND salesorderdetails.completed=0
-					AND salesorders.debtorno='" . $_REQUEST['SelectedCustomer'] . "'
+					AND salesorders.debtorno='" . $SelectedCustomer . "'
 					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
 					GROUP BY salesorders.orderno,
 						debtorsmaster.name,
@@ -740,7 +752,7 @@ if (isset($StockItemsResult)
 
 			}
 		} else { //no customer selected
-			if (isset($_REQUEST['SelectedStockItem'])) {
+			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
 						custbranch.brname,
@@ -762,7 +774,7 @@ if (isset($StockItemsResult)
 						ON debtorsmaster.currcode = currencies.currabrev
 					WHERE salesorderdetails.completed=0
 					AND salesorders.quotation =" .$Quotations . "
-					AND salesorderdetails.stkcode='". $_REQUEST['SelectedStockItem'] . "'
+					AND salesorderdetails.stkcode='". $SelectedStockItem . "'
 					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
 					GROUP BY salesorders.orderno,
 						debtorsmaster.name,

@@ -12,19 +12,36 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-if (isset($_POST['ResetPart'])){
-	 unset($_REQUEST['SelectedStockItem']);
+if (isset($_GET['WO'])) {
+	$SelectedWO = $_GET['WO'];
+} elseif (isset($_POST['WO'])){
+	$SelectedWO = $_POST['WO'];
+} else {
+	unset($SelectedWO);
 }
 
-if (isset($_REQUEST['WO']) AND $_REQUEST['WO']!='') {
-	$_REQUEST['WO'] = trim($_REQUEST['WO']);
-	if (!is_numeric($_REQUEST['WO'])){
+if (isset($_GET['SelectedStockItem'])) {
+	$SelectedStockItem = $_GET['SelectedStockItem'];
+} elseif (isset($_POST['SelectedStockItem'])){
+	$SelectedStockItem = $_POST['SelectedStockItem'];
+} else {
+	unset($SelectedStockItem);
+}
+
+
+if (isset($_POST['ResetPart'])){
+	 unset($SelectedStockItem);
+}
+
+if (isset($SelectedWO) AND $SelectedWO!='') {
+	$SelectedWO = trim($SelectedWO);
+	if (!is_numeric($SelectedWO)){
 		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
-		  unset ($_REQUEST['WO']);
+		  unset ($SelectedWO);
 		  include('includes/footer.inc');
 		  exit;
 	} else {
-		echo _('Work Order Number') . ' - ' . $_REQUEST['WO'];
+		echo _('Work Order Number') . ' - ' . $SelectedWO;
 	}
 }
 
@@ -108,10 +125,10 @@ if (!isset($StockID)) {
 	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 	 */
 
-	if (!isset($_REQUEST['WO']) or ($_REQUEST['WO']=='')){
+	if (!isset($SelectedWO) or ($SelectedWO=='')){
 		echo '<table class="selection"><tr><td>';
-		if (isset($_REQUEST['SelectedStockItem'])) {
-			echo _('For the item') . ': ' . $_REQUEST['SelectedStockItem'] . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $_REQUEST['SelectedStockItem'] . '" />';
+		if (isset($SelectedStockItem)) {
+			echo _('For the item') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
 		echo _('Work Order number') . ': <input type="text" name="WO" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
@@ -244,7 +261,7 @@ if (!isset($StockID)) {
 		} else {
 			$ClosedOrOpen = 1;
 		}
-		if (isset($_REQUEST['WO']) AND $_REQUEST['WO'] !='') {
+		if (isset($SelectedWO) AND $SelectedWO !='') {
 				$SQL = "SELECT workorders.wo,
 								woitems.stockid,
 								stockmaster.description,
@@ -257,13 +274,13 @@ if (!isset($StockID)) {
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 						WHERE workorders.closed='" . $ClosedOrOpen . "'
-						AND workorders.wo='". $_REQUEST['WO'] ."'
+						AND workorders.wo='". $SelectedWO ."'
 						ORDER BY workorders.wo,
 								woitems.stockid";
 		} else {
 			  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 	
-				if (isset($_REQUEST['SelectedStockItem'])) {
+				if (isset($SelectedStockItem)) {
 					$SQL = "SELECT workorders.wo,
 									woitems.stockid,
 									stockmaster.description,
@@ -276,7 +293,7 @@ if (!isset($StockID)) {
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 							WHERE workorders.closed='" . $ClosedOrOpen . "'
-							AND woitems.stockid='". $_REQUEST['SelectedStockItem'] ."'
+							AND woitems.stockid='". $SelectedStockItem ."'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
 							ORDER BY workorders.wo,
 								 woitems.stockid";

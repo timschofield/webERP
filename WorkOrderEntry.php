@@ -11,6 +11,15 @@ echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
 	</p>';
 
+
+if (isset($_GET['WO'])) {
+	$SelectedWO = $_GET['WO'];
+} elseif (isset($_POST['WO'])){
+	$SelectedWO = $_POST['WO'];
+} else {
+	unset($SelectedWO);
+}
+
 if (isset($_GET['ReqDate'])){
 	$ReqDate = ConvertSQLDate($_GET['ReqDate']);
 } else {
@@ -36,9 +45,9 @@ foreach ($_POST as $key=>$value) {
 }
 
 // check for new or modify condition
-if (isset($_REQUEST['WO']) AND$_REQUEST['WO']!=''){
+if (isset($SelectedWO) AND$SelectedWO!=''){
 	// modify
-	$_POST['WO'] = (int)$_REQUEST['WO'];
+	$_POST['WO'] = (int)$SelectedWO;
 	$EditingExisting = true;
 } else {
 	// new
@@ -274,7 +283,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .'">' . _('Enter a new work order') . '</a>';
 	echo '<br /><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
-	echo '<br /><a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Go to Costing'). '</a></div>';
+	echo '<br /><a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Go to Costing'). '</a></div>';
 
 	$Input_Error = false; //hope for the best
 	 for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
