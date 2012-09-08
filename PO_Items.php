@@ -730,9 +730,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			</tr></table>';
 	echo '<br />
 			<div class="centre">
-			<input type="submit" name="UpdateLines" value="Update Order Lines" />';
+			<input type="submit" name="UpdateLines" value="' . _('Update Order Lines') . '" />';
 	
-	echo '&nbsp;<input type="submit" name="Commit" value="Process Order" />
+	echo '&nbsp;<input type="submit" name="Commit" value="' . _('Process Order') . '" />
 			</div>';
 	
 } /*Only display the order line items if there are any !! */
@@ -743,7 +743,8 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<br /><table class="selection"><tr>
 				<td>' . _('Item Description') . '</td>';
 	echo '<td><input type="text" name="ItemDescription" size="40" /></td></tr>';
-	echo '<tr><td>' . _('General Ledger Code') . '</td>';
+	echo '<tr>
+			<td>' . _('General Ledger Code') . '</td>';
 	echo '<td><select name="GLCode">';
 	$sql="SELECT accountcode,
 				  accountname
@@ -755,7 +756,8 @@ if (isset($_POST['NonStockOrder'])) {
 		echo '<option value="'.$myrow['accountcode'].'">'.$myrow['accountcode'].' - '.$myrow['accountname'].'</option>';
 	}
 	echo '</select></td></tr>';
-	echo '<tr><td>'._('OR Asset ID'). '</td>
+	echo '<tr>
+			<td>'._('OR Asset ID'). '</td>
 			<td><select name="AssetID">';
 	$AssetsResult = DB_query("SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC",$db);
 	echo '<option selected="selected" value="Not an Asset">' . _('Not an Asset') . '</option>';
@@ -768,18 +770,26 @@ if (isset($_POST['NonStockOrder'])) {
 		echo '<option value="' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
 	}
 
-	echo'</select><a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td>
-				<tr><td>'._('Quantity to purchase').'</td>
-						<td><input type="text" class="number" name="Qty" size="10" value="1" /></td></tr>
-				<tr><td>'._('Price per item').'</td>
-						<td><input type="text" class="number" name="Price" size="10" /></td></tr>
-				<tr><td>'._('Unit').'</td>
-						<td><input type="text" name="SuppliersUnit" size="10" value="' . _('each') . '" /></td></tr>
-				<tr><td>'._('Delivery Date').'</td>
-						<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td></tr>';
-	echo '</table>';
-	echo '<div class="centre">
-			<input type="submit" name="EnterLine" value="Enter Item" />
+	echo'</select><a href="FixedAssetItems.php" target=_blank>'. _('New Fixed Asset') . '</a></td></tr>
+		<tr>
+			<td>'._('Quantity to purchase').'</td>
+			<td><input type="text" class="number" name="Qty" size="10" value="1" /></td>
+		</tr>
+		<tr>
+			<td>'._('Price per item').'</td>
+			<td><input type="text" class="number" name="Price" size="10" /></td>
+		</tr>
+		<tr>
+			<td>'._('Unit').'</td>
+			<td><input type="text" name="SuppliersUnit" size="10" value="' . _('each') . '" /></td>
+		</tr>
+		<tr>
+			<td>'._('Delivery Date').'</td>
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
+		</tr>
+		</table>
+		<div class="centre">
+			<input type="submit" name="EnterLine" value="' . _('Enter Item') . '" />
 		</div>';
 }
 

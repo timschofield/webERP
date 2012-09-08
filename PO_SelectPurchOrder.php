@@ -30,7 +30,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
 }
-if (isset($OrderNumber) && $OrderNumber != "") {
+if (isset($OrderNumber) AND $OrderNumber != '') {
 	if (!is_numeric($OrderNumber)) {
 		prnMsg(_('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric'), 'error');
 		unset($OrderNumber);
@@ -192,7 +192,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</td>
+		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</td>
 		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	</tr>
 	<tr>
