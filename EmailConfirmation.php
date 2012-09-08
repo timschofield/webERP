@@ -4,8 +4,9 @@
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
+
 //Get Out if we have no order number to work with
-If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
+If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	$title = _('Select Order To Print');
 	include('includes/header.inc');
 	echo '<div class="centre">
@@ -20,8 +21,8 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 			<tr>
 				<td class="menu_group_item">
 					<ul>
-					<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-					<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+						<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -31,11 +32,11 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 			<br />
 			<br />';
 	include('includes/footer.inc');
-	exit();
+	exit;
 }
 
 $MailTo = $_GET['EMail'];
-$headers = 'From: Bethany Manufacturing <sales@bethanymfg.com>' . '\n';
+$headers = 'From: weberp.org <info@weberp.org>' . '\n';
 $headers  .=  'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="utf-8"\n';
 
 /*retrieve the order details from the database to print */
@@ -103,7 +104,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />';
 	include('includes/footer.inc');
-	exit();
+	exit;
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
 	$myrow = DB_fetch_array($result);
@@ -122,18 +123,20 @@ if (DB_num_rows($result)==0){
 				<br />
 				<br />';
 		echo  _('Or select another Order Number to Print');
-		echo '<table class="table_index"><tr><td class="menu_group_item">
-				<ul>
-				<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-				<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-				</ul>
-				</td>
+		echo '<table class="table_index">
+				<tr>
+					<td class="menu_group_item">
+					<ul>
+						<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+					</ul>
+					</td>
 				</tr>
-				</table>
-				</div>
-				<br />
-				<br />
-				<br />';
+			</table>
+			</div>
+			<br />
+			<br />
+			<br />';
 
 		include('includes/footer.inc');
 		exit;
@@ -141,46 +144,69 @@ if (DB_num_rows($result)==0){
 	$MailSubject = _('Order Confirmation-Sales Order') . ' ' .  $_GET['TransNo'] . ' - '. _('Your PO') . ' ' . $myrow['customerref'] ;
 }
 
-/*retrieve the order details from the database to print */
-
-/* Then there's an order to print and its not been printed already (or its been flagged for reprinting/ge_Width=807;
-)
-LETS GO */
-
-$MailMessage =  '<html><head><title>' . _('Email Confirmation') . '</title></head>
+$MailMessage =  '<html>
+				<head>
+					<title>' . _('Email Confirmation') . '</title>
+				</head>
 				<body>
 				<table cellpadding="2" cellspacing="2">
 				<tr>
-				<td align="center" colspan="4"><h1>' . $_SESSION['CompanyRecord']['coyname'] . '</h1></td>
+					<td align="center" colspan="4"><h1>' . $_SESSION['CompanyRecord']['coyname'] . '</h1></td>
 				</tr>
-				<tr><td colspan="4"> <b>' . $_SESSION['CompanyRecord']['regoffice1'] . '</td>
+				<tr>
+					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['regoffice1'] . '</td>
 				</tr>
-				<tr><td colspan="4"> <b>' . $_SESSION['CompanyRecord']['regoffice4'] . ',<b>' . $_SESSION['CompanyRecord']['regoffice5'] . '</td>
+				<tr>
+					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['regoffice4'] . ',<b>' . $_SESSION['CompanyRecord']['regoffice5'] . '</td>
 				</tr>
-				<tr><td colspan="4"> <b>' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax'] . '</td>
+				<tr>
+					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax'] . '</td>
 				</tr>
-				<tr><td colspan="4"> <b>' . $_SESSION['CompanyRecord']['email'] . '<br /><br /><br /></td>
+				<tr>
+					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['email'] . '
+					<br />
+					<br />
+					<br /></td>
 				</tr>
 				</table>
 				<table>
-				<tr><td align="center" colspan="4">
-				<h2>' . _('Order Acknowledgement') . '</h2></td>
+					<tr>
+						<td align="center" colspan="4">
+							<h2>' . _('Order Acknowledgement') . '</h2>
+						</td>
 				</tr>
-				<tr><td align="center" colspan="4"> <b>' . _('Order Number') . ' ' . $_GET['TransNo'] . '</b><br /><br /><br /></td>
+				<tr>
+					<td align="center" colspan="4"> <b>' . _('Order Number') . ' ' . $_GET['TransNo'] . '</b>
+					<br />
+					<br />
+					<br /></td>
 				</tr>
-				<tr><td colspan="4"> <b>' . _('Delivered To') . ':</b></td>
+				<tr>
+					<td colspan="4"> <b>' . _('Delivered To') . ':</b></td>
 				</tr>
-				<tr><td colspan="4"> <b>' . $myrow['deliverto'] . '</td>
+				<tr>
+					<td colspan="4"> <b>' . $myrow['deliverto'] . '</td>
 				</tr>
-				<tr><td colspan="4"> <b>' . $myrow['deladd1'] . '</td>
+				<tr>
+					<td colspan="4"> <b>' . $myrow['deladd1'] . '</td>
 				</tr>';
 
 if(mb_strlen(trim($myrow['deladd2']))) {
-      $MailMessage .= '<tr><td> <b>' . $myrow['deladd2'] . '</td></tr>
-						<tr><td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']. '<br /><br /><br /></td>
-						</tr>';
+      $MailMessage .= '<tr>
+						<td> <b>' . $myrow['deladd2'] . '</td>
+					</tr>
+					<tr>
+						<td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']. '
+							<br />
+							<br />
+							<br /></td>
+					/tr>';
 } else {
-      $MailMessage .= '<tr><td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '<br /><br /><br /></td>
+      $MailMessage .= '<tr>
+						<td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
+							<br />
+							<br />
+							<br /></td>
 					</tr>';
 }
 $MailMessage .= '</table>
@@ -229,106 +255,101 @@ if($_REQUEST['POLine'] == 1){
 			if($_REQUEST['POLine'] == 1){
 				$MailMessage .= '<td align="right">' . $POLine[$i] . '</td>';
 			}
-			$MailMessage .= '<td>' . $myrow2['stkcode'] . '</td><td>' . $myrow2['description'] . '</td>
+			$MailMessage .= '<td>' . $myrow2['stkcode'] . '</td>
+							<td>' . $myrow2['description'] . '</td>
 							<td align="right">' . $DisplayQty . '</td>
 							<td align="center">' . $ItemDue[$i]  . '</td>
 							</tr>';
-
-         $i = $i + 1;
-
+			$i++;
 		} //end while there are line items to print out
-
 	} /*end if there are order details to show on the order*/
 $MailMessage .= '</table>
 				</body>
 				</html>';
 // echo $MailMessage . "=mailMessage<br />";
-IF(mail( $MailTo, $MailSubject, $MailMessage, $headers )){
+iF(mail( $MailTo, $MailSubject, $MailMessage, $headers )){
 	echo ' ' ._('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
 }
-?>
-<html>
-<head>
-<title>Email Confirmation</title>
-</head>
-<body>
-<table width='60%'>
-	<tr>
-		<td align='center' colspan='4'> <?php echo "<IMG src='" . $rootpath . '/' . $_SESSION['LogoFile'] . "' alt='Logo'" .
-                 "width='500' height='100' align='center' border='0'>" ?>
-      		</td>
-   	</tr>
-	<tr>
-		<td align='center' colspan='4'> <h2> Order Acknowledgement</h2></td>
-	</tr>
- 	<tr>
- 		<td align='center' colspan='4'> <b>Order Number <?=$_GET['TransNo']?> </b><br /><br /><br /></td>
- 	</tr>
- 	<tr>
- 		<td colspan='2' nowrap width="50%"> <b><?=$_SESSION['CompanyRecord']['coyname']?></b></td>
- 		<td colspan='2' nowrap width="50%"> <b>Delivered To:</b></td>
- 	</tr>
- 	<tr>
- 		<td colspan='2' nowrap width="50%"> <b><?=$_SESSION['CompanyRecord']['regoffice1']?> </b></td>
- 		<td colspan='2' nowrap width="50%"> <b><?=$myrow['deliverto']?></td>
- 	</tr>
-  	<tr>
-  		<td colspan='2' nowrap width="50%">
-  			<b><?=$_SESSION['CompanyRecord']['regoffice4']?>,
-				<?=$_SESSION['CompanyRecord']['regoffice5']?> </b>
-		</td>
-		<td colspan='2' nowrap width="50%"> <b><?=$myrow['deladd1']?></td>
-	</tr>
- 	<tr>
- 		<td colspan='2' nowrap width="50%">
- 			<b><?=$_SESSION['CompanyRecord']['telephone']?>
- 			Fax:<?=$_SESSION['CompanyRecord']['fax']?></b>
- 		</td>
- 		<td nowrap width="50%"><b><?=$myrow['deladd2']?></td>
- 	</tr>
- 	<tr>
- 		<td colspan='2' nowrap width="50%">
- 			<b><?=$_SESSION['CompanyRecord']['email']?><br /><br /><br />
- 		</td>
-     		<td nowrap width="50%">
-       		<b><?=$myrow['deladd3']?> <?=$myrow['deladd4'] ?> <?=$myrow['deladd5']?><br /><br /><br />
-      		</td>
- 	</tr>
-</table>
-<table border='1' width='60%' cellpadding="2" cellspacing='2'>
-	<tr>
-<?
-if($_REQUEST['POLine'] == 1){
-?>
-		<td align="center">PO Line</td>
-<?
+
+echo '<html>
+	<head>
+	<title>' . _('Email Confirmation') . '</title>
+	</head>
+	<body>
+	<table width="60%">
+		<tr>
+			<td align="center" colspan="4"><img src="' . $rootpath . '/' . $_SESSION['LogoFile'] . '" alt="Logo" width="500" height="100" align="center" border="0" /></td>
+	   	</tr>
+		<tr>
+			<td align="center" colspan="4"><h2>' . _('Order Acknowledgement') . '</h2></td>
+		</tr>
+	 	<tr>
+	 		<td align="center" colspan="4"> <b>' . _('Order Number') .  ' ' . $_GET['TransNo'] . '</b>
+			<br />
+			<br />
+			<br /></td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="2" nowrap width="50%"> <b>' . $_SESSION['CompanyRecord']['coyname'] . '</b></td>
+	 		<td colspan="2" nowrap width="50%"> <b>' . _('Delivered To') . ':</b></td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="2" nowrap width="50%"> <b>' . $_SESSION['CompanyRecord']['regoffice1'] . '</b></td>
+	 		<td colspan="2" nowrap width="50%"> <b>' . $myrow['deliverto'] . '</td>
+	 	</tr>
+	  	<tr>
+	  		<td colspan="2" nowrap width="50%">
+	  			<b>' . $_SESSION['CompanyRecord']['regoffice4'] . ',
+				<br />' . $_SESSION['CompanyRecord']['regoffice5'] . '</b>
+			</td>
+			<td colspan="2" nowrap width="50%"> <b>' . $myrow['deladd1'] . '</td>
+		</tr>
+	 	<tr>
+	 		<td colspan="2" nowrap width="50%">
+	 			<b>' . $_SESSION['CompanyRecord']['telephone'] . '
+	 			<br />' . _('Fax') . ': ' . $_SESSION['CompanyRecord']['fax'] . '</b>
+	 		</td>
+	 		<td nowrap width="50%"><b>' . $myrow['deladd2'] . '</td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="2" nowrap width="50%">
+	 			<b>' . $_SESSION['CompanyRecord']['email'] . '
+	 			<br />
+	 			<br />
+	 			<br />
+	 		</td>
+	     		<td nowrap width="50%">
+	       		<b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
+	       		<br />
+	       		<br />
+	       		<br />
+	      		</td>
+	 	</tr>
+	</table>
+	<table border="1" width="60%" cellpadding="2" cellspacing="2">
+	<tr>';
+
+if($_GET['POLine'] == 1){
+	echo '<td align="center">' . _('PO Line') . '</td>';
 }
-?>
-		<td align="center">Stock Code</td>
-		<td align="center">Description</td>
-		<td align="center">Quantity Ordered</td>
-      		<td align="center">Due Date</td>
-   	</tr>
-<?
-For( $j=0; $j<$i; $j++)
-{
-?>
-	<tr>
-<?
-	if($_REQUEST['POLine']){
-?>
-		<td align='right'><?=$POLine[$j]?></td>
-<?
+echo '<td align="center">' . _('Stock Code') . '</td>
+	<td align="center">' . _('Description') . '</td>
+	<td align="center">' . _('Quantity Ordered') . '</td>
+	<td align="center">' . _('Due Date') . '</td>
+   	</tr>';
+
+for( $j=0; $j<$i; $j++){
+	echo '<tr>';
+	if($_GET['POLine']){
+		echo '<td align="right">' . $POLine[$j] . '</td>';
 	}
-?>
-		<td><?=$StkCode[$j]?></td>
-		<td><?=$DscCode[$j]?></td>
-		<td align="right"><?=$QtyCode[$j]?></td>
-      		<td align="center"><?=$ItemDue[$j]?></td>
-   	</tr>
-<?
+	echo '<td>' . $StkCode[$j] . '</td>
+			<td>' . $DscCode[$j] . '</td>
+			<td align="right">' . $QtyCode[$j] . '</td>
+			<td align="center">' . $ItemDue[$j] . '</td>
+		</tr>';
 }
+echo '</table>
+	</body>
+	</html>';
 ?>
-</table>
-</body>
-</html>

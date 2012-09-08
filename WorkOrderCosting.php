@@ -6,6 +6,15 @@ $title = _('Work Order Costing');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+
+if (isset($_GET['WO'])) {
+	$SelectedWO = $_GET['WO'];
+} elseif (isset($_POST['WO'])){
+	$SelectedWO = $_POST['WO'];
+} else {
+	unset($SelectedWO);
+}
+
 echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
 	<br />
 	<p class="page_title_text">
@@ -17,7 +26,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (!isset($_REQUEST['WO'])) {
+if (!isset($SelectedWO)) {
 	/* This page can only be called with a work order number */
 	echo '<div class="centre><a href="' . $rootpath . '/SelectWorkOrder.php">'.
 		_('Select a work order').'</a></div>';
@@ -25,8 +34,8 @@ if (!isset($_REQUEST['WO'])) {
 	include ('includes/footer.inc');
 	exit;
 } else {
-	echo '<input type="hidden" name="WO" value="' .$_REQUEST['WO'] . '" />';
-	$_POST['WO']=$_REQUEST['WO'];
+	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';
+	$_POST['WO']=$SelectedWO;
 }
 
 

@@ -6,12 +6,26 @@ $title = _('Receive Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<div>';
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
-	<br />';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_REQUEST['WO'] . '">' . _('Back to Costing'). '</a>
-	<br />';
-echo '</div>';
+if (isset($_GET['WO'])) {
+	$SelectedWO = $_GET['WO'];
+} elseif (isset($_POST['WO'])){
+	$SelectedWO = $_POST['WO'];
+} else {
+	unset($SelectedWO);
+}
+if (isset($_GET['StockID'])) {
+	$StockID = $_GET['StockID'];
+} elseif (isset($_POST['StockID'])){
+	$StockID = $_POST['StockID'];
+} else {
+	unset($StockID);
+}
+echo '<div>
+		<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
+		<br />
+		<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a>
+		<br />
+	</div>';
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $title.'</p>';
@@ -20,7 +34,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (!isset($_REQUEST['WO']) OR !isset($_REQUEST['StockID'])) {
+if (!isset($SelectedWO) OR !isset($StockID)) {
 	/* This page can only be called with a purchase order number for invoicing*/
 	echo '<div class="centre">
 			<a href="' . $rootpath . '/SelectWorkOrder.php">'. _('Select a work order to receive').'</a>
@@ -29,10 +43,10 @@ if (!isset($_REQUEST['WO']) OR !isset($_REQUEST['StockID'])) {
 	include ('includes/footer.inc');
 	exit;
 } else {
-	echo '<input type="hidden" name="WO" value="' .$_REQUEST['WO'] . '" />';
-	$_POST['WO']=$_REQUEST['WO'];
-	echo '<input type="hidden" name="StockID" value="' .$_REQUEST['StockID'] . '" />';
-	$_POST['StockID']=$_REQUEST['StockID'];
+	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';
+	$_POST['WO']=$SelectedWO;
+	echo '<input type="hidden" name="StockID" value="' .$StockID . '" />';
+	$_POST['StockID']=$StockID;
 }
 
 if (isset($_POST['Process'])){ //user hit the process the work order receipts entered.
