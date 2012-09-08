@@ -190,8 +190,8 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 						//if the user has authority to authorise the PO then it should be created as authorised
 						$AuthSQL ="SELECT authlevel
 					 				FROM purchorderauth
-								    WHERE userid='".$_SESSION['UserID']."'
-									AND currabrev='".$SuppRow['currcode']."'";
+								    WHERE userid='" . $_SESSION['UserID'] . "'
+									AND currabrev='" . $SuppRow['currcode'] . "'";
 
 						$AuthResult=DB_query($AuthSQL,$db);
 						$AuthRow=DB_fetch_array($AuthResult);
@@ -234,7 +234,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 					$PO_OrderNo =  GetNextTransNo(18, $db); //get the next PO number
 
 					$SupplierID = $ItemRow['supplierno'];
-					$Order_Value =0;
+					$Order_Value = 0;
 					/*Now get all the required details for the supplier */
 					$sql = "SELECT address1,
         							address2,
@@ -409,15 +409,25 @@ if (isset($_POST['ResetPart'])){
 
 echo '<br /><div class="centre">';
 
-if (isset($_REQUEST['OrderNumber']) AND $_REQUEST['OrderNumber']!='') {
-	$_REQUEST['OrderNumber'] = trim($_REQUEST['OrderNumber']);
-	if (!is_numeric($_REQUEST['OrderNumber'])){
-		echo '<br /><b>' . _('The Order Number entered MUST be numeric') . '</b><br />';
-		unset ($_REQUEST['OrderNumber']);
+if (isset($_GET['OrderNumber'])){
+	$OrderNumber = $_GET['OrderNumber'];
+} elseif (isset($_POST['OrderNumber'])){
+	$OrderNumber = $_POST['OrderNumber'];
+} else {
+	unset($OrderNumber);
+}
+
+if (isset($OrderNumber) AND $OrderNumber!='') {
+	$OrderNumber = trim($OrderNumber);
+	if (!is_numeric($OrderNumber)){
+		echo '<br />
+			<b>' . _('The Order Number entered MUST be numeric') . '</b>
+			<br />';
+		unset ($OrderNumber);
 		include('includes/footer.inc');
 		exit;
 	} else {
-		echo _('Order Number') . ' - ' . $_REQUEST['OrderNumber'];
+		echo _('Order Number') . ' - ' . $OrderNumber;
 	}
 } else {
 	if (isset($SelectedCustomer)) {
@@ -504,7 +514,7 @@ if (!isset($StockID)) {
 	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
      */
 
-	if (!isset($_REQUEST['OrderNumber']) OR $_REQUEST['OrderNumber']==''){
+	if (!isset($OrderNumber) OR $OrderNumber==''){
 
 		echo '<table class="selection">
 			<tr>
@@ -648,8 +658,8 @@ if (isset($StockItemsResult)
 	if(!isset($_POST['StockLocation'])) {
 		$_POST['StockLocation'] = '';
 	}
-	if (isset($_REQUEST['OrderNumber'])
-		AND $_REQUEST['OrderNumber'] !='') {
+	if (isset($OrderNumber)
+		AND $OrderNumber !='') {
 			$SQL = "SELECT salesorders.orderno,
 					debtorsmaster.name,
 					custbranch.brname,
@@ -670,7 +680,7 @@ if (isset($StockItemsResult)
 					INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 				WHERE salesorderdetails.completed=0
-				AND salesorders.orderno=". $_REQUEST['OrderNumber'] ."
+				AND salesorders.orderno=". $OrderNumber ."
 				AND salesorders.quotation =" .$Quotations . "
 				GROUP BY salesorders.orderno,
 					debtorsmaster.name,

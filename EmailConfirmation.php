@@ -211,7 +211,7 @@ if(mb_strlen(trim($myrow['deladd2']))) {
 }
 $MailMessage .= '</table>
 				<table border="1" width="50%"><tr>';
-if($_REQUEST['POLine'] == 1){
+if($_GET['POLine'] == 1){
 	$MailMessage .= '<td>' . _('PO Line') . '</td>';
 }
 	$MailMessage .= '<td>' . _('Stock Code') . '</td>
@@ -252,7 +252,7 @@ if($_REQUEST['POLine'] == 1){
         			$ItemDue[$i] = date('M d, Y',strtotime($myrow2['itemdue']));
         		}
 			$MailMessage .= '<tr>';
-			if($_REQUEST['POLine'] == 1){
+			if($_GET['POLine'] == 1){
 				$MailMessage .= '<td align="right">' . $POLine[$i] . '</td>';
 			}
 			$MailMessage .= '<td>' . $myrow2['stkcode'] . '</td>
