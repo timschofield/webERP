@@ -14,18 +14,8 @@
 
 
 include('includes/session.inc');
-if ($_REQUEST['Serialised']==1){
-	$title = _('Work Order Serial Numbers in Progress');
-} else {
-	$title = _('Work Order Batches in Progress');
-}
-include('includes/header.inc');
 
-if (!isset($_REQUEST['WO']) OR $_REQUEST['WO']==''){
-	prnMsg(_('This page must to be called from the work order entry screen'),'error');
-	include('includes/footer.inc');
-	exit;
-}
+
 if (isset($_GET['StockID'])){ //the page was called for the first time - get variables into $_POST array
 	$StockID = $_GET['StockID'];
 	$Description = $_GET['Description'];
@@ -39,6 +29,18 @@ if (isset($_GET['StockID'])){ //the page was called for the first time - get var
 	$Serialised = $_POST['Serialised'];
 	$NextSerialNo = $_POST['NextSerialNo'];
 }
+if (!isset($WO) OR $WO==''){
+	prnMsg(_('This page must to be called from the work order entry screen'),'error');
+	include('includes/footer.inc');
+	exit;
+}
+if ($Serialised==1){
+	$title = _('Work Order Serial Numbers in Progress');
+} else {
+	$title = _('Work Order Batches in Progress');
+}
+
+include('includes/header.inc');
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
