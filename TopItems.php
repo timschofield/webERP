@@ -148,7 +148,7 @@ if (!(isset($_POST['Search']))) {
 	}
 
 	$SQL = $SQL . "	GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_POST['Sequence'] . " DESC
+					ORDER BY `" . $_POST['Sequence'] . "` DESC
 					LIMIT " . filter_number_format($_POST['NumberOfTopItems']);
 	
 	$result = DB_query($SQL, $db);
@@ -191,13 +191,13 @@ if (!(isset($_POST['Search']))) {
 			case 'B':
 				$QOHResult = DB_query("SELECT sum(quantity)
 								FROM locstock
-								WHERE stockid = '" . $myrow['stkcode'] . "'", $db);
+								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'", $db);
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH = $QOHRow[0];
 				$QOOSQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
 							FROM purchorders INNER JOIN purchorderdetails
 							ON purchorders.orderno=purchorderdetails.orderno
-							WHERE purchorderdetails.itemcode='" . $myrow['stkcode'] . "'
+							WHERE purchorderdetails.itemcode='" . DB_escape_string($myrow['stkcode']) . "'
 							AND purchorderdetails.completed =0
 							AND purchorders.status<>'Cancelled'
 							AND purchorders.status<>'Pending'
@@ -214,7 +214,7 @@ if (!(isset($_POST['Search']))) {
 						FROM woitems INNER JOIN workorders
 						ON woitems.wo=workorders.wo
 						WHERE workorders.closed=0
-						AND woitems.stockid='" . $myrow['stkcode'] . "'";
+						AND woitems.stockid='" . DB_escape_string($myrow['stkcode']) . "'";
 				$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');
 				$QOOResult = DB_query($sql, $db, $ErrMsg);
 				if (DB_num_rows($QOOResult) == 1) {

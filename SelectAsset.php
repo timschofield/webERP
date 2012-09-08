@@ -40,7 +40,7 @@ if (DB_num_rows($result) == 0) {
 }
 // end of showing search facilities
 
-echo '<form action="SelectAsset.php?' . SID . '" method="post">';
+echo '<form action="SelectAsset.php" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
@@ -200,31 +200,31 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$searchresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 	
-	if (DB_num_rows($searchresult) == 0) {
+	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No assets were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
 	unset($_POST['Search']);
 }
 /* end query for list of records */
 /* display list if there is more than one record */
-if (isset($searchresult) AND !isset($_POST['Select'])) {
-	echo '<form action="FixedAssetItems.php" method="post">';
+if (isset($SearchResult) AND !isset($_POST['Select'])) {
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$ListCount = DB_num_rows($searchresult);
+	$ListCount = DB_num_rows($SearchResult);
 	if ($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
 		if (isset($_POST['Next'])) {
 			if ($_POST['PageOffset'] < $ListPageMax) {
-				$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
+				$_POST['PageOffset'] ++;
 			}
 		}
 		if (isset($_POST['Previous'])) {
 			if ($_POST['PageOffset'] > 1) {
-				$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
+				$_POST['PageOffset']--;
 			}
 		}
 		if ($_POST['PageOffset'] > $ListPageMax) {
@@ -260,10 +260,10 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		$j = 1;
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
-		if (DB_num_rows($searchresult) <> 0) {
-			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
+		if (DB_num_rows($SearchResult) <> 0) {
+			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
-		while (($myrow = DB_fetch_array($searchresult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+		while (($myrow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;

@@ -13,7 +13,7 @@ $FontSize = 10;
 $FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$_GET['NumberOfDays']));
 
 //the situation if the location and customer type selected "All"
-if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
+if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 	$SQL = "SELECT 	salesorderdetails.stkcode,
 				SUM(salesorderdetails.qtyinvoiced) totalinvoiced,
 				SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice ) AS valuesales,
@@ -26,8 +26,8 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 				AND salesorders.debtorno = debtorsmaster.debtorno
 				AND salesorderdetails.actualdispatchdate >='" . $FromDate . "' 
 			GROUP BY salesorderdetails.stkcode
-			ORDER BY " . $_GET['Sequence'] . " DESC
-			LIMIT " . $_GET['NumberOfTopItems'] ;
+			ORDER BY `" . $_GET['Sequence'] . "` DESC
+			LIMIT " . intval($_GET['NumberOfTopItems']) ;
 } else { //the situation if only location type selected "All"
 	if ($_GET['Location'] == 'All') {
 		$SQL = "SELECT 	salesorderdetails.stkcode,
@@ -42,8 +42,8 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND debtorsmaster.typeid = '" . $_GET['Customers'] . "'
 						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 				GROUP BY salesorderdetails.stkcode
-				ORDER BY " . $_GET['Sequence'] . " DESC
-				LIMIT " . $_GET['NumberOfTopItems'];
+				ORDER BY `" . $_GET['Sequence'] . "` DESC
+				LIMIT " . intval($_GET['NumberOfTopItems']);
 	} else {
 		//the situation if the customer type selected "All"
 		if ($_GET['Customers'] == 'All') {
@@ -60,8 +60,8 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND salesorders.fromstkloc = '" . $_GET['Location'] . "'
 						AND salesorderdetails.ActualDispatchDate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_GET['Sequence'] . " DESC
-					LIMIT 0," . $_GET['NumberOfTopItems'];
+					ORDER BY `" . $_GET['Sequence'] . "` DESC
+					LIMIT 0," . intval($_GET['NumberOfTopItems']);
 		} else {
 			//the situation if the location and customer type not selected "All"
 			$SQL = "SELECT 	salesorderdetails.stkcode,
@@ -78,8 +78,8 @@ if (($_GET['Location'] == 'All') and ($_GET['Customers'] == 'All')) {
 						AND debtorsmaster.typeid = '" . $_GET['Customers'] . "'
 						AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'
 					GROUP BY salesorderdetails.stkcode
-					ORDER BY " . $_GET['Sequence'] . " DESC
-					LIMIT " . $_GET['NumberOfTopItems'];
+					ORDER BY `" . $_GET['Sequence'] . "` DESC
+					LIMIT " . intval($_GET['NumberOfTopItems']);
 		}
 	}
 }
@@ -90,7 +90,7 @@ if (DB_num_rows($result)>0){
 		//find the quantity onhand item
 		$sqloh = "SELECT sum(quantity)as qty
 					FROM locstock
-					WHERE stockid='" . $myrow['stkcode'] . "'";
+					WHERE stockid='" . DB_escape_string($myrow['stkcode']) . "'";
 		$oh = DB_query($sqloh, $db);
 		$ohRow = DB_fetch_row($oh);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 1, $YPos, 80, $FontSize, $myrow['stkcode']);

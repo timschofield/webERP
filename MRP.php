@@ -245,10 +245,11 @@ if (isset($_POST['submit'])) {
 									  salesorderdetails.orderno,
 									  '1',
 									  stkcode
-							  FROM salesorders, salesorderdetails, stockmaster
-							  WHERE salesorders.orderno = salesorderdetails.orderno
-							  AND stockmaster.stockid = salesorderdetails.stkcode
-							  AND stockmaster.discontinued = 0
+							  FROM salesorders INNER JOIN salesorderdetails
+								ON salesorders.orderno = salesorderdetails.orderno
+								INNER JOIN stockmaster 
+								ON stockmaster.stockid = salesorderdetails.stkcode
+							  WHERE stockmaster.discontinued = 0
 							  AND (quantity - qtyinvoiced) > 0
 							  AND salesorderdetails.completed = 0
 							  AND salesorders.quotation = 0";
