@@ -245,8 +245,10 @@ if (isset($_POST['submit'])) {
 									  salesorderdetails.orderno,
 									  '1',
 									  stkcode
-							  FROM salesorders, salesorderdetails
+							  FROM salesorders, salesorderdetails, stockmaster
 							  WHERE salesorders.orderno = salesorderdetails.orderno
+							  AND stockmaster.stockid = salesorderdetails.stkcode
+							  AND stockmaster.discontinued = 0
 							  AND (quantity - qtyinvoiced) > 0
 							  AND salesorderdetails.completed = 0
 							  AND salesorders.quotation = 0";
@@ -263,18 +265,22 @@ if (isset($_POST['submit'])) {
 										 directdemand,
 										 whererequired)
 							   SELECT worequirements.stockid,
-									  workorders.requiredby,
-									  qtypu*(woitems.qtyreqd - woitems.qtyrecd) AS netqty,
-									  'WO',
-									  woitems.wo,
-									  '1',
-									  parentstockid
-									  FROM woitems INNER JOIN worequirements
+									workorders.requiredby,
+									qtypu*(woitems.qtyreqd - woitems.qtyrecd) AS netqty,
+									'WO',
+									woitems.wo,
+									'1',
+									parentstockid
+								FROM woitems 
+									INNER JOIN worequirements
 										ON woitems.stockid=worequirements.parentstockid
 									INNER JOIN workorders
 									  ON woitems.wo=workorders.wo
 									  AND woitems.wo=worequirements.wo
-									WHERE workorders.closed=0";
+									  INNER JOIN stockmaster
+										ON woitems.stockid = stockmaster.stockid
+								WHERE workorders.closed=0
+									AND stockmaster.discontinued = 0";
 	$result = DB_query($sql,$db);
 
 	$sql = "INSERT INTO mrprequirements	(part,
@@ -284,14 +290,16 @@ if (isset($_POST['submit'])) {
 										 orderno,
 										 directdemand,
 										 whererequired)
-							   SELECT stockid,
-									  duedate,
-									  quantity,
-									  mrpdemandtype,
-									  demandid,
+							   SELECT mrpdemands.stockid,
+									  mrpdemands.duedate,
+									  mrpdemands.quantity,
+									  mrpdemands.mrpdemandtype,
+									  mrpdemands.demandid,
 									  '1',
-									  stockid
-								 FROM mrpdemands";
+									  mrpdemands.stockid
+								 FROM mrpdemands, stockmaster
+								 WHERE mrpdemands.stockid = stockmaster.stockid
+									AND stockmaster.discontinued = 0";
 	if ($_POST['usemrpdemands'] == 'y') {
 		$result = DB_query($sql,$db);
 		prnMsg(_('Loading requirements based on mrpdemands'),'info');
@@ -304,15 +312,17 @@ if (isset($_POST['submit'])) {
 										 orderno,
 										 directdemand,
 										 whererequired)
-							   SELECT stockid,
+							   SELECT locstock.stockid,
 									  NOW(),
-									  (reorderlevel - quantity) AS reordqty,
+									  (locstock.reorderlevel - locstock.quantity) AS reordqty,
 									  'REORD',
 									  '1',
 									  '1',
-									  stockid
-								 FROM locstock
-								 WHERE reorderlevel > quantity";
+									  locstock.stockid
+								 FROM locstock, stockmaster
+								 WHERE stockmaster.stockid = locstock.stockid
+									AND stockmaster.discontinued = 0
+									AND reorderlevel > quantity";
 	$result = DB_query($sql,$db);
 	prnMsg(_('Loading requirements based on reorder level'),'info');
 	flush();
