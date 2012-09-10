@@ -1,4 +1,5 @@
 webERP Change Log
+8/9/12 Phil: removed all use of $_REQUEST across all scripts replace with GET/POST to cirumvent SQL injection attacks as reported by Daniel Compton
 6/9/12 Thomas Timothy Lie and baliboss.com Team: updated Indonesian translation
 1/9/12 Carlos Rubio: AccountGroups.php now has option to move to alternative accountgroups
 30/8/2012 Exson: fixed sql problem reported bymodpr0be

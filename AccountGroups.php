@@ -212,7 +212,8 @@ if (isset($_POST['submit'])) {
 		echo '</td></tr>';
 		echo '<tr>
 				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . _('Move Group') . '" /></div></td>
-		  </tr>';
+		  </tr>
+		  </table>';
 
 	} else {
 		$sql = "SELECT COUNT(groupname) groupnames FROM accountgroups WHERE parentgroupname = '" . $_GET['SelectedAccountGroup'] . "'";
