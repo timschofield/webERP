@@ -38,7 +38,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div><!-- Help Begin: SelectOrderItems -->
 
-<h2>Entry of Sales Orders</h2>
+<h2><a id="SalesOrderEntry">Entry of Sales Orders</a></h2>
 
 <p>From the main menu, Orders tab, click the Order Entry link.</p>
 
@@ -86,7 +86,7 @@
 
 <p>Once all details are entered correctly the Place Order button should be clicked. It is important to note that abandoning the order before this button is clicked there have been no updates to the database and nothing is saved. Clicking into some other screen loses the order as entered. Whilst it is perfectly acceptable to have several browser screens open looking at different inquiries at the same time. It is not possible to have two windows entering two separate sales orders at the same time, entries in the one window will over-write the other. <!-- Help End: SelectOrderItems --></p>
 
-<h3>Entry of Cash Sales Directly - Counter Sales</h3>
+<h3><a id="SalesOrderCounterSales">Entry of Cash Sales Directly - Counter Sales</a></h3>
 
 <p>In version 3.12 of webERP a new feature was introduced which allowed for cash sales to be entered directly without first entering an order and then confirming a dispatch to invoice. This feature is known as "counter sales". From the main menu-&gt;Sales tab select Enter Counter Sales. Entry is similar to entering an order, by default the quick entry screen allows entry of item codes and quantities but it is also possible to select items by the search functions in much the same way as an order. The tax is calculated and the total amount to pay is shown. This page also expects the payment to be made and entered. The payment entered is automatically allocated to the sale.</p>
 
@@ -96,7 +96,7 @@
 
 <p>webERP looks at the user's default location and then looks up against the location record to find the cash sales debtor account (and branch) to use for counter sales entered. Each location for which counter sales are required must first be set up with the cash sales customer and branch which is to be used for counter sales entered. Note that the default location of the customer branch is ignored - the user's default location (see Setup-&gt;General-&gt;User Maintenance - the script webERP/WWW_Users.php) is used as the location and stock movements are all created from this location against the customer specified in the location record (Setup - &gt; Inventory Setup -&gt; Location Maintenance - the script webERP/Locations.php). To specify the customer and branch to use for counter sales for an inventory location (or warehouse), the customer code and branch code must be entered in the format customercode-branchcode in the field provided for this purpose. i.e. the customer code then a hyphen then the branch code.</p><!-- Help Begin: SelectSalesOrder -->
 
-<h2>Modfiying An Order</h2>
+<h2><a id="ModifyOrder">Modfiying An Order</a></h2>
 
 <p>Only Outstanding sales orders can be modified. Only these orders have any balance of a quantity remaining to be delivered and/or invoiced. Order lines that have been invoiced completely will not be available for modification. New items cannot be added to the order. Pricing cannot be altered if any amount of the line has already been delivered/invoiced. Quantities of an order line cannot be reduced below the quantity of the line already invoiced.</p>
 
@@ -106,7 +106,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h3>Selecting an Outstanding Sales Order</h3>
+<h3><a id="SelectSalesOrder">Selecting an Outstanding Sales Order</a></h3>
 
 <p>There are several ways:</p>
 
@@ -138,7 +138,7 @@
 </div><!-- Help End: Quotations -->
 <!-- Help Begin: RecurringSalesOrder -->
 
-<h2>Recurring Sales Orders</h2>
+<h2><a id="RecurringSalesOrders">Recurring Sales Orders</a></h2>
 
 <p>Orders entered can be defined so as to recurr at a desired frequency entered as:</p>
 
@@ -183,7 +183,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h2>Discount Matrix</h2>
+<h2><a id="DiscountMatrix">Discount Matrix</a></h2>
 
 <p>webERP has a system called a discount matrix which allows any group of products to be defined and discounts applicable to all items of the group to be set up just once for the whole group of items. Different discounts can be applied to the "discount group" for each sales type (price list). When an item is entered into a sales order the system retrieves the correct price based on the customer's sales type (price list) and then retrieves the appropriate discount based on the quantity of the item and the other items already entered on the order. The discounts retrieved can be over-ridden.</p>
 

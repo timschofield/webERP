@@ -5,23 +5,25 @@
 $AllowAnyone = true;
 
 /* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
-if (isset($_GET['Database'])) { 
-	$_SESSION['DatabaseName'] = $_GET['Database']; 
-	$DatabaseName = $_GET['Database']; 
-	$_POST['CompanyNameField'] = $_GET['Database']; 
+if (isset($_GET['Database'])) {
+	$_SESSION['DatabaseName'] = $_GET['Database'];
+	$DatabaseName = $_GET['Database'];
+	$_POST['CompanyNameField'] = $_GET['Database'];
 }
 
 if (isset($argc)) {
-	if (isset($argv[1])) { 
-		$_SESSION['DatabaseName'] = $argv[1]; 
-		$DatabaseName = $argv[1]; 
-		$_POST['CompanyNameField'] = $argv[1]; 
+	if (isset($argv[1])) {
+		$_SESSION['DatabaseName'] = $argv[1];
+		$DatabaseName = $argv[1];
+		$_POST['CompanyNameField'] = $argv[1];
 	}
 }
 include('includes/session.inc');
 
 $title = _('Recurring Orders Process');
-
+/* webERP manual links before header.inc */
+$ViewTopic= "SalesOrders";
+$BookMark = "RecurringSalesOrders";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
@@ -674,7 +676,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 										'" . filter_number_format($CurrencyRate) . "',
 										'" . $RecurrOrderRow['comments'] . "',
 										'" . $RecurrOrderRow['shipvia'] . "')";
-						
+
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);

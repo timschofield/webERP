@@ -5,7 +5,9 @@
 include('includes/DefineCartClass.php');
 
 /* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
-
+/* webERP manual links before header.inc */
+$ViewTopic= "SalesOrders";
+$BookMark = "RecurringSalesOrders";
 include('includes/session.inc');
 $title = _('Recurring Orders');
 include('includes/header.inc');
@@ -57,7 +59,7 @@ if (isset($_GET['NewRecurringOrder'])){
 									recurringsalesorders.stopdate,
 									recurringsalesorders.lastrecurrence,
 									recurringsalesorders.autoinvoice
-								FROM recurringsalesorders 
+								FROM recurringsalesorders
 								INNER JOIN debtorsmaster
 								ON recurringsalesorders.debtorno = debtorsmaster.debtorno
 								INNER JOIN salestypes
@@ -267,7 +269,7 @@ If (isset($_POST['Process'])) {
 																			discountpercent,
 																			narrative)
 																		VALUES ('";
-													
+
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 				$LineItemsSQL = $StartOf_LineItemsSQL .
@@ -278,9 +280,9 @@ If (isset($_POST['Process'])) {
 								'" . filter_number_format($StockItem->DiscountPercent) . "',
 								'" . $StockItem->Narrative . "')";
 				$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
-				
+
 			} /* inserted line items into sales order details */
-			
+
 			$result = DB_Txn_Commit($db);
 			prnmsg(_('The new recurring order template has been added'),'success');
 

@@ -9,6 +9,9 @@ config.php is in turn included in session.inc $PageSecurity now comes from sessi
 include('includes/session.inc');
 
 $title = _('Counter Sales');
+/* webERP manual links before header.inc */
+$ViewTopic= "SalesOrders";
+$BookMark = "SalesOrderCounterSales";
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');

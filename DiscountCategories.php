@@ -5,7 +5,9 @@
 include('includes/session.inc');
 
 $title = _('Discount Categories Maintenance');
-
+/* webERP manual links before header.inc */
+$ViewTopic= "SalesOrders";
+$BookMark = "DiscountMatrix";
 include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
@@ -140,14 +142,14 @@ if (isset($_POST['selectchoice'])) {
 
 		if (isset($_POST['search'])) {
 			if ($_POST['PartID']!='' and $_POST['PartDesc']=='')
-				$sql="SELECT stockid, description FROM stockmaster 
+				$sql="SELECT stockid, description FROM stockmaster
 						WHERE stockid " . LIKE  . " '%".$_POST['PartID']."%'";
 			if ($_POST['PartID']=='' and $_POST['PartDesc']!='')
-				$sql="SELECT stockid, description FROM stockmaster 
+				$sql="SELECT stockid, description FROM stockmaster
 						WHERE description " . LIKE  . " '%".$_POST['PartDesc']."%'";
 			if ($_POST['PartID']!='' and $_POST['PartDesc']!='')
-				$sql="SELECT stockid, description FROM stockmaster 
-						WHERE stockid " . LIKE  . " '%".$_POST['PartID']."%' 
+				$sql="SELECT stockid, description FROM stockmaster
+						WHERE stockid " . LIKE  . " '%".$_POST['PartID']."%'
 						AND description " . LIKE . " '%".$_POST['PartDesc']."%'";
 			$result=DB_query($sql,$db);
 			if (!isset($_POST['stockID'])) {
