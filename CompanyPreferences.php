@@ -5,7 +5,9 @@
 include('includes/session.inc');
 
 $title = _('Company Preferences');
-
+/* webERP manual links before header.inc */
+$ViewTopic= "CreatingNewSystem";
+$BookMark = "CompanyParameters";
 include('includes/header.inc');
 
 if (isset($Errors)) {

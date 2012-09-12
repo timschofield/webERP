@@ -5,7 +5,7 @@
 include('includes/session.inc');
 
 $title = _('System Configuration');
-$ViewTopic= 'CreatingNewSystem';
+$ViewTopic= 'GettingStarted';
 $BookMark = 'SystemConfiguration';
 include('includes/header.inc');
 
@@ -125,11 +125,11 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['QuickEntries'] != $_POST['X_QuickEntries'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_QuickEntries']."' WHERE confname = 'QuickEntries'";
 		}
-		
+
 		if ($_SESSION['WorkingDaysWeek'] != $_POST['X_WorkingDaysWeek'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_WorkingDaysWeek']."' WHERE confname = 'WorkingDaysWeek'";
 		}
-		
+
 		if ($_SESSION['DispatchCutOffTime'] != $_POST['X_DispatchCutOffTime'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DispatchCutOffTime']."' WHERE confname = 'DispatchCutOffTime'";
 		}
