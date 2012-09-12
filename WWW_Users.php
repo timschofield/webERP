@@ -27,6 +27,9 @@ $PDFLanguages = array(_('Latin Western Languages'),
 						_('Chinese'));
 
 $title = _('User Maintenance');
+/* webERP manual links before header.inc */
+$ViewTopic= "GettingStarted";
+$BookMark = "UserMaintenance";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -687,7 +690,7 @@ echo '</select></td>
 	</tr>';
 
 /* Allowed Department for Internal Requests */
-	
+
 echo '<tr>
 		<td>' . _('Allowed Department for Internal Requests') . ':</td>';
 
@@ -712,7 +715,7 @@ while ($myrow=DB_fetch_array($result)){
 }
 echo '</select></td>
 	</tr>';
-	
+
 /* Account status */
 
 echo '<tr>
