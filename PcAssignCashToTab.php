@@ -3,6 +3,9 @@
 
 include('includes/session.inc');
 $title = _('Assignment of Cash to Petty Cash Tab');
+/* webERP manual links before header.inc */
+$ViewTopic= "PettyCash";
+$BookMark = "CashAssignment";
 include('includes/header.inc');
 
 if (isset($_POST['SelectedTabs'])){
@@ -34,7 +37,7 @@ if (isset($_POST['Cancel'])) {
 
 if (isset($_POST['process'])) {
 	if ($SelectedTabs=='') {
-		prnMsg(_('You Must First Select a Petty Cash Tab To Assign Cash'),'error'); 
+		prnMsg(_('You Must First Select a Petty Cash Tab To Assign Cash'),'error');
 		unset($SelectedTabs);
 	}
 }
@@ -191,8 +194,8 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 	}
 	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another tab') . '</a></div>';
 
-	
-	
+
+
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 
 		if (isset($_POST['Cancel'])) {
@@ -214,7 +217,7 @@ if (isset($_POST['process']) OR isset($SelectedTabs)) {
 		$result = DB_query($SqlDecimalPlaces,$db);
 		$myrow=DB_fetch_array($result);
 		$CurrDecimalPlaces = $myrow['decimalplaces'];
-		
+
 		$sql = "SELECT * FROM pcashdetails
 				WHERE tabcode='" . $SelectedTabs . "'
 				AND date >=DATE_SUB(CURDATE(), INTERVAL " . $Days . " DAY)

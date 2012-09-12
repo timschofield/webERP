@@ -3,6 +3,9 @@
 
 include('includes/session.inc');
 $title = _('Maintenance Of Petty Cash Type of Tabs');
+/* webERP manual links before header.inc */
+$ViewTopic= "PettyCash";
+$BookMark = "PCTabTypes";
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
@@ -211,14 +214,14 @@ if (! isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '" />';
 		echo '<input type="hidden" name="TypeTabCode" value="' . $_POST['TypeTabCode']. '" />';
-		echo '<table class="selection"> 
+		echo '<table class="selection">
 				<tr><td>' . _('Code Of Type Of Tab') . ':</td>
 					<td>' . $_POST['TypeTabCode'] . '</td>
 				</tr>';
 
 		// We dont allow the user to change an existing type code
 
-		
+
 
 	} else 	{
 

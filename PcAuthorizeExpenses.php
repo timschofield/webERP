@@ -3,6 +3,9 @@
 
 include('includes/session.inc');
 $title = _('Authorisation of Petty Cash Expenses');
+/* webERP manual links before header.inc */
+$ViewTopic= "PettyCash";
+$BookMark = "AuthorizeExpense";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -99,8 +102,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) O
 	while ($myrow=DB_fetch_array($result))	{
          $CurrDecimalPlaces = $myrow['decimalplaces'];
 		//update database if update pressed
-		if (isset($_POST['Submit']) 
-			AND $_POST['Submit']==_('Update') 
+		if (isset($_POST['Submit'])
+			AND $_POST['Submit']==_('Update')
 			AND isset($_POST[$myrow['counterindex']])){
 
 			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);

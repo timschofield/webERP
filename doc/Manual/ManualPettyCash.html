@@ -2,19 +2,19 @@
 
 <h2>Overview</h2>
 
-<p>This for employees to submit expense claims directly in the system - that are then authorised by their immediate supervisor.</p>
+<p>The Petty Cash module enables employees to submit expense claims directly into the system that can then be authorised by their immediate supervisor.</p>
 
-<p>Allows control petty cash expenses in a friendly way, so every employee (without any accounting knowlegde) can enter their expenses, get paid for them, etc</p>
+<p>Petty cash expenses are controlled in a friendly way, enabling all employees (including those without accounting knowledge) to enter their expenses and get paid for them.</p>
 
-<p>It consists on a temporary GL table (pcashdetails), containing all info about payments and expenses done as petty cash. Once authorized by a supervisor (both cash assignments or expenses) are posted in gltrans table and flagged.</p>
+<p>The Petty cash module uses a temporary GL table (pcashdetails), containing all information about payments and expenses entered as petty cash. When cash assignments or expenses are authorized by a supervisor, they are posted into the gltrans table and flagged.</p>
 
-<p>Once any transacion in the petty cash system has been posted can not be modified, edited or deleted in any way. Once posted, that's it.</p>
+<p>Once any transaction in the petty cash system has been posted it cannot be modified, edited or deleted in any way. Once posted, that's it.</p>
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 <h2>Setup General Parameters</h2>
 
-<h3>Set up expenses</h3>
+<h3><a id="PCExpenses">Set up expenses</a></h3>
 
 <h4>Definition of expenses allowed to be used in the Petty Cash system.</h4>
 
@@ -29,7 +29,7 @@
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
-<h3>Set up types of tabs</h3>
+<h3><a id="PCTabTypes">Set up types of tabs</a></h3>
 
 <p>Different kinds of users have different privileges. CEO can spend petty cash money on a different way than a truck driver does (no disrespect, for any of them ;-). The system maintain these different categories of tabs of table pctypetabs.</p>
 
@@ -46,7 +46,7 @@
     <a class="minitext" href="#top">⬆ Top</a>
 </div>
 
-<h3>Set up tabs</h3>
+<h3><a id="PCTabSetup">Set up tabs</a></h3>
 
 <p>PcTabs.php is the script used to set up petty cash tabs</p>
 
@@ -76,7 +76,7 @@
 </div>
 <h2>Workflow</h2>
 
-<h3>Assignment of cash</h3>
+<h3><a id="CashAssignment">Assignment of cash</a></h3>
 
 <p>The supervisor (authorizer) gives money cash to an employee to be used as petty cash. In script PcAssignCashToTab.php we record this fact.<br></p>
 
@@ -92,7 +92,7 @@
 
 <p>Cash Assignments can be edited and deleted before are authorized. Once authorized and posted can not be modified in any way.<br></p>
 
-<h3>Expense claims</h3>
+<h3><a id="ExpenseClaim">Expense claims</a></h3>
 
 <p>Employee will go out and spend money. Then will report to webERP these expenses in script PcClaimExpensesFromTab.php<br></p>
 
@@ -114,7 +114,7 @@
 
 <p>Expenses reported can be edited and deleted before are authorized. Once authorized and posted can not be modified in any way.<br></p>
 
-<h3>Expense authorisation</h3>
+<h3><a id="AuthorizeExpense">Expense authorisation</a></h3>
 
 <p>Supervisor will need to authorize expenses and cash assignemnts reported.<br></p>
 
