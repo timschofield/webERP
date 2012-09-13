@@ -159,7 +159,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Cost = $myrow['cost'];
 		}
 		if (DB_num_rows($PriceResult) == 0) {
-			echo _('No Default Price Set in Home Currency');
+			echo _('No Default Price Set in Home Currency') . '</td></tr>';
 			$Price = 0;
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
@@ -739,7 +739,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 			$_POST['PageOffset'] = $ListPageMax;
 		}
 		if ($ListPageMax > 1) {
-			echo '<div class="centre"><p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
@@ -754,11 +754,11 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				<input type="submit" name="Go" value="' . _('Go') . '" />
 				<input type="submit" name="Previous" value="' . _('Previous') . '" />
 				<input type="submit" name="Next" value="' . _('Next') . '" />';
-			echo '<input type="hidden" name=Keywords value="'.$_POST['Keywords'].'" />';
-			echo '<input type="hidden" name=StockCat value="'.$_POST['StockCat'].'" />';
-			echo '<input type="hidden" name=StockCode value="'.$_POST['StockCode'].'" />';
+			echo '<input type="hidden" name="Keywords" value="'.$_POST['Keywords'].'" />';
+			echo '<input type="hidden" name="StockCat" value="'.$_POST['StockCat'].'" />';
+			echo '<input type="hidden" name="StockCode" value="'.$_POST['StockCode'].'" />';
 //			echo '<input type="hidden" name=Search value="Search" />';
-			echo '<p></div>';
+			echo '<br /></div>';
 		}
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
