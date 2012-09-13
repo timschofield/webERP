@@ -59,7 +59,7 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 //=== MainMenuDiv =======================================================================
 echo '<div id="MainMenuDiv"><ul>'; //===HJ===
 $i=0;
-while ($i < count($ModuleLink)-1){
+while ($i < count($ModuleLink)){
 	// This determines if the user has display access to the module see config.php and header.inc
 	// for the authorisation and security code
 	if ($_SESSION['ModulesEnabled'][$i]==1)	{
@@ -72,7 +72,7 @@ while ($i < count($ModuleLink)-1){
 			echo '<li class="main_menu_selected">';
 		} else {
 			echo '<li class="main_menu_unselected">';
-			
+
 		}
 		echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Application='. $ModuleLink[$i] . '">' . $ModuleList[$i] . '</a></li>';
 	}
