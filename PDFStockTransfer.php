@@ -52,21 +52,23 @@ $FontSize =10;
 
 /*Print out the category totals */
 
-$sql="SELECT stockmoves.stockid, 
+$sql="SELECT stockmoves.stockid,
 			description,
-			transno, 
-			stockmoves.loccode, 
+			transno,
+			stockmoves.loccode,
 			locationname,
-			trandate, 
+			trandate,
 			qty,
-			decimalplaces
-		FROM stockmoves 
+			reference
+		FROM stockmoves
 		INNER JOIN stockmaster
 		ON stockmoves.stockid=stockmaster.stockid
 		INNER JOIN locations
 		ON stockmoves.loccode=locations.loccode
-		WHERE transno='".$_GET['TransferNo']."' 
+		WHERE transno='".$_GET['TransferNo']."'
+		AND qty < 0
 		AND type=16";
+
 $result=DB_query($sql, $db);
 if (DB_num_rows($result) == 0){
 	$title = _('Print Stock Transfer - Error');
@@ -77,30 +79,27 @@ if (DB_num_rows($result) == 0){
 	exit;
 }
 //get the first stock movement which will be the quantity taken from the initiating location
-$myrow=DB_fetch_array($result);
-$StockID=$myrow['stockid'];
-$FromCode=$myrow['loccode'];
-$From = $myrow['locationname'];
-$Date=$myrow['trandate'];
-//get the next row which will be the quantity received in the receiving location
-$myNextRow=DB_fetch_array($result);
-$ToCode=$myNextRow['loccode'];
-$To = $myNextRow['locationname'];
-$Quantity=locale_number_format($myNextRow['qty'],$myNextRow['decimalplaces']);
-$Description=$myNextRow['description'];
+while ($myrow=DB_fetch_array($result)) {
+	$StockID=$myrow['stockid'];
+	$From = $myrow['locationname'];
+	$Date=$myrow['trandate'];
+	$To = $myrow['reference'];
+	$Quantity=-$myrow['qty'];
+	$Description=$myrow['description'];
 
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $From);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
-$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
-$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $From);
-$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
-$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
-
+	$YPos=$YPos-$line_height;
+}
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, _('Date of transfer: ').$Date);
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, _('Signed for ').$From.'______________________');
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, _('Signed for ').$To.'______________________');
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');
-$pdf->__destruct(); 
+$pdf->__destruct();
 ?>
