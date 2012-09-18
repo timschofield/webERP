@@ -47,7 +47,6 @@ $PageNumber=1;
 $line_height=12;
 
 include('includes/PDFStockTransferHeader.inc');
-$FontSize =10;
 
 /*Print out the category totals */
 
