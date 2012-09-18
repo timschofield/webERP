@@ -43,7 +43,6 @@ if (!isset($_GET['TransferNo'])){
 
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Stock Transfer Form') );
-$FontSize=10;
 $PageNumber=1;
 $line_height=12;
 
