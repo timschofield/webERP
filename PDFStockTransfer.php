@@ -94,6 +94,10 @@ while ($myrow=DB_fetch_array($result)) {
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
 
 	$YPos=$YPos-$line_height;
+
+	if ($YPos < $Bottom_Margin + $line_height){
+	   include('includes/PDFStockTransferHeader.inc');
+	}
 }
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, _('Date of transfer: ').$Date);
 
