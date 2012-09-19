@@ -10,6 +10,7 @@ $ViewTopic= 'AccountsPayable';
 $BookMark = 'NewSupplier';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/CountriesArray.php');
 
 Function Is_ValidAccount ($ActNo) {
 
@@ -412,7 +413,7 @@ if (isset($_POST['submit'])) {
 			if ($map_host=="") {
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 			} else {
-			$address = $_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'];
+			$address = $_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5']. ', ' . $_POST['Address6'];
 
 			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml' . '&key=' . KEY;
 			$request_url = $base_url . '&q=' . urlencode($address);
@@ -463,6 +464,8 @@ if (isset($_POST['submit'])) {
 							address2='" . $_POST['Address2'] . "',
 							address3='" . $_POST['Address3'] . "',
 							address4='" . $_POST['Address4'] . "',
+							address5='" . $_POST['Address5'] . "',
+							address6='" . $_POST['Address6'] . "',
 							telephone='". $_POST['Phone'] ."',
 							fax = '". $_POST['Fax']."',
 							email = '" . $_POST['Email'] . "',
@@ -489,6 +492,8 @@ if (isset($_POST['submit'])) {
 							address2='" . $_POST['Address2'] . "',
 							address3='" . $_POST['Address3'] . "',
 							address4='" . $_POST['Address4'] . "',
+							address5='" . $_POST['Address5'] . "',
+							address6='" . $_POST['Address6'] . "',
 							telephone='" . $_POST['Phone']."',
 							fax = '" . $_POST['Fax'] . "',
 							email = '" . $_POST['Email'] . "',
@@ -522,6 +527,8 @@ if (isset($_POST['submit'])) {
 										address2,
 										address3,
 										address4,
+										address5,
+										address6,
 										telephone,
 										fax,
 										email,
@@ -544,6 +551,8 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['Address2'] . "',
 									'" . $_POST['Address3'] . "',
 									'" . $_POST['Address4'] . "',
+									'" . $_POST['Address5'] . "',
+									'" . $_POST['Address6'] . "',
 									'" . $_POST['Phone'] . "',
 									'" . $_POST['Fax'] . "',
 									'" . $_POST['Email'] . "',
@@ -568,12 +577,14 @@ if (isset($_POST['submit'])) {
 
 			prnMsg(_('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database'),'success');
 
-			unset ($SupplierID);
+			unset($SupplierID);
 			unset($_POST['SuppName']);
 			unset($_POST['Address1']);
 			unset($_POST['Address2']);
 			unset($_POST['Address3']);
 			unset($_POST['Address4']);
+			unset($_POST['Address5']);
+			unset($_POST['Address6']);
 			unset($_POST['Phone']);
 			unset($_POST['Fax']);
 			unset($_POST['Email']);
@@ -673,6 +684,27 @@ if (!isset($SupplierID)) {
 	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
 			<td><input type="text" name="Address4" size="42" maxlength="40" /></td>
 		</tr>';
+	echo '<tr><td>' . _('Address Line 5') . ':</td>
+			<td><input type="text" name="Address5" size="42" maxlength="40" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('Country') . ':</td>
+			<td><select name="Address6">';
+
+	foreach ($CountriesArray as $CountryEntry => $CountryName){
+		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryEntry)){
+			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		} elseif (!isset($_POST['Address6'])) {
+			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		} else {
+			echo '<option value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		}
+	}
+
+	echo '</select></td>
+		</tr>';
+
 	echo '<tr><td>' . _('Telephone') . ':</td>
 			<td><input type="text" name="Phone" size="30" maxlength="40" /></td>
 		</tr>';
@@ -796,6 +828,8 @@ if (!isset($SupplierID)) {
 				address2,
 				address3,
 				address4,
+				address5,
+				address6,
 				telephone,
 				fax,
 				email,
@@ -821,6 +855,8 @@ if (!isset($SupplierID)) {
 		$_POST['Address2']  = stripcslashes($myrow['address2']);
 		$_POST['Address3']  = stripcslashes($myrow['address3']);
 		$_POST['Address4']  = stripcslashes($myrow['address4']);
+		$_POST['Address5']  = stripcslashes($myrow['address5']);
+		$_POST['Address6']  = stripcslashes($myrow['address6']);
 		$_POST['CurrCode']  = stripcslashes($myrow['currcode']);
 		$_POST['Phone'] = $myrow['telephone'];
 		$_POST['Fax'] = $myrow['fax'];
@@ -855,6 +891,26 @@ if (!isset($SupplierID)) {
 			<td><input type="text" name="Address3" value="' . $_POST['Address3'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
 			<td><input type="text" name="Address4" value="' . $_POST['Address4'] . '" size="42" maxlength="40" /></td></tr>';
+	echo '<tr><td>' . _('Address Line 5') . ':</td>
+			<td><input type="text" name="Address5" value="' . $_POST['Address5'] . '" size="42" maxlength="40" /></td></tr>';
+
+	echo '<tr>
+			<td>' . _('Country') . ':</td>
+			<td><select name="Address6">';
+
+	foreach ($CountriesArray as $CountryEntry => $CountryName){
+		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryEntry)){
+			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		} elseif (!isset($_POST['Address6'])) {
+			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		} else {
+			echo '<option value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		}
+	}
+
+	echo '</select></td>
+		</tr>';
+
 	echo '<tr><td>' . _('Telephone') . ':</td>
 			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="Phone" value="' . $_POST['Phone'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td>
