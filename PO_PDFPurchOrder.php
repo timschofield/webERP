@@ -257,7 +257,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 			
 			//use suppliers itemcode if available i.e. stringlength >0
-			if (strlen($POLine['suppliers_partno']>0)) {
+			if (strlen($POLine['suppliers_partno'])>0) {
 				$Itemcode=$POLine['suppliers_partno']; 
 			} else {
 				$Itemcode=$POLine['itemcode'];
