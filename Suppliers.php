@@ -15,13 +15,13 @@ include('includes/CountriesArray.php');
 Function Is_ValidAccount ($ActNo) {
 
 	if (mb_strlen($ActNo) < 16) {
-	echo _('NZ account numbers must have 16 numeric characters in it');
-	return False;
+		echo _('NZ account numbers must have 16 numeric characters in it');
+		return False;
 	}
 
 	if (!Is_double((double) $ActNo)) {
-	echo _('NZ account numbers entered must use all numeric characters in it');
-	return False;
+		echo _('NZ account numbers entered must use all numeric characters in it');
+		return False;
 	}
 
 	$BankPrefix = mb_substr($ActNo,0, 2);
@@ -675,33 +675,31 @@ if (!isset($SupplierID)) {
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
 			<td><input type="text" name="Address1" size="42" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
+	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
 			<td><input type="text" name="Address2" size="42" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td>
+	echo '<tr><td>' . _('Address Line 3 (Suburb/City)') . ':</td>
 			<td><input type="text" name="Address3" size="42" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
+	echo '<tr><td>' . _('Address Line 4 (State/Province)') . ':</td>
 			<td><input type="text" name="Address4" size="42" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 5') . ':</td>
+	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
 			<td><input type="text" name="Address5" size="42" maxlength="40" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
-
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
-		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryEntry)){
-			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
-		} elseif (!isset($_POST['Address6'])) {
-			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 		} else {
-			echo '<option value="' . $CountryEntry . '">' . $CountryName .'</option>';
+			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
 		}
 	}
-
 	echo '</select></td>
 		</tr>';
 
@@ -885,29 +883,27 @@ if (!isset($SupplierID)) {
 			<td><input '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' type="text" name="SuppName" value="' . $_POST['SuppName'] . '" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
 			<td><input type="text" name="Address1" value="' . $_POST['Address1'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
+	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
 			<td><input type="text" name="Address2" value="' . $_POST['Address2'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td>
+	echo '<tr><td>' . _('Address Line 3 (Suburb/City)') . ':</td>
 			<td><input type="text" name="Address3" value="' . $_POST['Address3'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
+	echo '<tr><td>' . _('Address Line 4 (State/Province)') . ':</td>
 			<td><input type="text" name="Address4" value="' . $_POST['Address4'] . '" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 5') . ':</td>
+	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
 			<td><input type="text" name="Address5" value="' . $_POST['Address5'] . '" size="42" maxlength="40" /></td></tr>';
 
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
-
 	foreach ($CountriesArray as $CountryEntry => $CountryName){
-		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryEntry)){
-			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
-		} elseif (!isset($_POST['Address6'])) {
-			echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName .'</option>';
+		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
 		} else {
-			echo '<option value="' . $CountryEntry . '">' . $CountryName .'</option>';
+			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
 		}
 	}
-
 	echo '</select></td>
 		</tr>';
 
