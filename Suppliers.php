@@ -15,13 +15,13 @@ include('includes/CountriesArray.php');
 Function Is_ValidAccount ($ActNo) {
 
 	if (mb_strlen($ActNo) < 16) {
-		echo _('NZ account numbers must have 16 numeric characters in it');
-		return False;
+	echo _('NZ account numbers must have 16 numeric characters in it');
+	return False;
 	}
 
 	if (!Is_double((double) $ActNo)) {
-		echo _('NZ account numbers entered must use all numeric characters in it');
-		return False;
+	echo _('NZ account numbers entered must use all numeric characters in it');
+	return False;
 	}
 
 	$BankPrefix = mb_substr($ActNo,0, 2);
