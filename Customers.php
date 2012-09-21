@@ -10,7 +10,7 @@ $ViewTopic= 'AccountsReceivable';
 $BookMark = 'NewCustomer';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
-
+include('includes/CountriesArray.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
@@ -82,11 +82,6 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The Line 5 of the address must be twenty characters or less long'),'error');
 		$Errors[$i] = 'Address5';
-		$i++;
-	} elseif (mb_strlen($_POST['Address6']) >15) {
-		$InputError = 1;
-		prnMsg( _('The Line 6 of the address must be fifteen characters or less long'),'error');
-		$Errors[$i] = 'Address6';
 		$i++;
 	} elseif (!is_numeric(filter_number_format($_POST['CreditLimit']))) {
 		$InputError = 1;
@@ -453,18 +448,29 @@ if (!isset($DebtorNo)) {
 		<td><input tabindex="2" type="text" name="Email" size="30" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
 		<td><input tabindex="3" type="text" name="Address1" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 2 (Suburb/City)') . ':</td>
+	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
 		<td><input tabindex="4" type="text" name="Address2" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 3 (State/Province)') . ':</td>
+	echo '<tr><td>' . _('Address Line 3 (Suburb/City)') . ':</td>
 		<td><input tabindex="5" type="text" name="Address3" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 4 (Postal Code)') . ':</td>
+	echo '<tr><td>' . _('Address Line 4 (State/Province)') . ':</td>
 		<td><input tabindex="6" type="text" name="Address4" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 5') . ':</td>
+	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
 		<td><input tabindex="7" type="text" name="Address5" size="22" maxlength="20" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 6') . ':</td>
-		<td><input tabindex="8" type="text" name="Address6" size="17" maxlength="15" /></td></tr>';
 
-
+	echo '<tr>
+			<td>' . _('Country') . ':</td>
+			<td><select name="Address6">';
+	foreach ($CountriesArray as $CountryEntry => $CountryName){
+		if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+		}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+		} else {
+			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+		}
+	}
+	echo '</select></td>
+		</tr>';
 
 // Show Sales Type drop down list
 	$result=DB_query("SELECT typeabbrev, sales_type FROM salestypes ",$db);
@@ -726,12 +732,21 @@ if (!isset($DebtorNo)) {
 			<tr>
 				<td>' . _('Address Line 5') . ':</td>
 				<td>' . $_POST['Address5'] . '</td>
-			</tr>
-			<tr>
-				<td>' . _('Address Line 6') . ':</td>
-				<td>' . $_POST['Address6'] . '</td>
 			</tr>';
-
+		echo '<tr>
+				<td>' . _('Country') . ':</td>
+				<td><select name="Address6">';
+		foreach ($CountriesArray as $CountryEntry => $CountryName){
+			if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			} else {
+				echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+			}
+		}
+		echo '</select></td>
+			</tr>';
 	} else {
 		echo '<tr>
 				<td>' . _('Customer Name') . ':</td>
@@ -742,24 +757,34 @@ if (!isset($DebtorNo)) {
 				<td><input ' . (in_array('Address1',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] . '" /></td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 2 (Suburb/City)') . ':</td>
+				<td>' . _('Address Line 2 (Street)') . ':</td>
 				<td><input ' . (in_array('Address2',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] . '" /></td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 3 (State/Province)') . ':</td>
+				<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
 				<td><input ' . (in_array('Address3',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Address3" size="42" maxlength="40" value="' . $_POST['Address3'] . '" /></td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 4 (Postal Code)') . ':</td>
+				<td>' . _('Address Line 4 (State/Province)') . ':</td>
 				<td><input ' . (in_array('Address4',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'] . '" /></td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 5') . ':</td>
+				<td>' . _('Address Line 5 (Postal Code)') . ':</td>
 				<td><input ' . (in_array('Address5',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Address5" size="42" maxlength="40" value="' . $_POST['Address5'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Address Line 6') . ':</td>
-				<td><input ' . (in_array('Address6',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Address6" size="42" maxlength="40" value="' . $_POST['Address6'] . '" /></td>
+			</tr>';
+		echo '<tr>
+				<td>' . _('Country') . ':</td>
+				<td><select name="Address6">';
+		foreach ($CountriesArray as $CountryEntry => $CountryName){
+			if (isset($_POST['Address6']) AND ($_POST['Address6'] == $CountryName)){
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+			} else {
+				echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+			}
+		}
+		echo '</select></td>
 			</tr>';
 
 	}

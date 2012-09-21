@@ -20,9 +20,9 @@ INSERT INTO scripts VALUES ('PDFGLJournal.php','15','General Ledger Journal Prin
 ALTER TABLE  `www_users` ADD  `department` INT( 11 ) NOT NULL DEFAULT  '0';
 INSERT INTO config VALUES('WorkingDaysWeek','5');
 
-ALTER TABLE `suppliers` CHANGE `address6` `address6` VARCHAR( 30 ) NOT NULL DEFAULT '';
-ALTER TABLE `custbranch` CHANGE `braddress6` `braddress6` VARCHAR( 30 ) NOT NULL DEFAULT '';
-ALTER TABLE `debtorsmaster` CHANGE `address6` `address6` VARCHAR( 30 ) NOT NULL DEFAULT ''
+ALTER TABLE `suppliers` CHANGE `address6` `address6` VARCHAR( 40 ) NOT NULL DEFAULT '';
+ALTER TABLE `custbranch` CHANGE `braddress6` `braddress6` VARCHAR( 40 ) NOT NULL DEFAULT '';
+ALTER TABLE `debtorsmaster` CHANGE `address6` `address6` VARCHAR( 40 ) NOT NULL DEFAULT ''
 
 UPDATE config SET confvalue='4.09' WHERE confname='VersionNumber';
 

@@ -8,6 +8,8 @@ $title = _('Customer Branches');
 $ViewTopic= 'AccountsReceivable';
 $BookMark = 'NewCustomerBranch';
 include('includes/header.inc');
+include('includes/CountriesArray.php');
+
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = mb_strtoupper($_GET['DebtorNo']);
 } else if (isset($_POST['DebtorNo'])){
@@ -616,41 +618,52 @@ if (!isset($_GET['delete'])) {
 	echo '<td><input tabindex="4" type="text" name="BrAddress1" size="41" maxlength="40" value="'. $_POST['BrAddress1'].'" /></td>
 		</tr>
 		<tr>
-			<td>'._('Street Address 2 (Suburb/City)').':</td>';
+			<td>'._('Street Address 2 (Street)').':</td>';
 	if (!isset($_POST['BrAddress2'])) {
 		$_POST['BrAddress2']='';
 	}
 	echo '<td><input tabindex="5" type="text" name="BrAddress2" size="41" maxlength="40" value="'. $_POST['BrAddress2'].'" /></td>
 		</tr>
 		<tr>
-			<td>'._('Street Address 3 (State)').':</td>';
+			<td>'._('Street Address 3 (Suburb/City)').':</td>';
 	if (!isset($_POST['BrAddress3'])) {
 		$_POST['BrAddress3']='';
 	}
 	echo '<td><input tabindex="6" type="text" name="BrAddress3" size="41" maxlength="40" value="'. $_POST['BrAddress3'].'" /></td>
 		</tr>
 		<tr>
-			<td>'._('Street Address 4 (Postal Code)').':</td>';
+			<td>'._('Street Address 4 (State/Province)').':</td>';
 	if (!isset($_POST['BrAddress4'])) {
 		$_POST['BrAddress4']='';
 	}
 	echo '<td><input tabindex="7" type="text" name="BrAddress4" size="31" maxlength="30" value="'. $_POST['BrAddress4'].'" /></td>
 		</tr>
 		<tr>
-			<td>'._('Street Address 5').':</td>';
+			<td>'._('Street Address 5 (Postal Code)').':</td>';
 	if (!isset($_POST['BrAddress5'])) {
 		$_POST['BrAddress5']='';
 	}
 	echo '<td><input tabindex="8" type="text" name="BrAddress5" size="21" maxlength="20" value="'. $_POST['BrAddress5'].'" /></td>
 		</tr>
 		<tr>
-			<td>'._('Street Address 6').':</td>';
+			<td>'._('Country').':</td>';
 	if (!isset($_POST['BrAddress6'])) {
 		$_POST['BrAddress6']='';
 	}
-	echo '<td><input tabindex="9" type="text" name="BrAddress6" size="16" maxlength="15" value="'. $_POST['BrAddress6'].'" /></td>
-		</tr>
-		<tr>
+	echo '<td><select name="BrAddress6">';
+	foreach ($CountriesArray as $CountryEntry => $CountryName){
+		if (isset($_POST['BrAddress6']) AND ($_POST['BrAddress6'] == $CountryName)){
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+		}elseif (!isset($_POST['BrAddress6']) AND $CountryName == "") {
+			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName .'</option>';
+		} else {
+			echo '<option value="' . $CountryName . '">' . $CountryName .'</option>';
+		}
+	}
+	echo '</select></td>
+		</tr>';
+
+	echo '<tr>
 			<td>'._('Special Instructions').':</td>';
 	if (!isset($_POST['SpecialInstructions'])) {
 		$_POST['SpecialInstructions']='';
