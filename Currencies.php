@@ -218,6 +218,7 @@ or deletion of the records*/
 			<th>' . _('Hundredths Name') . '</th>
 			<th>' . _('Decimal Places') . '</th>
 			<th>' . _('Exchange Rate') . '</th>
+			<th>' . _('1 / Ex Rate') . '</th>
 			<th>' . _('Ex Rate - ECB') .'</th>
 		</tr>';
 
@@ -255,6 +256,7 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td><a href="%s&amp;SelectedCurrency=%s">%s</a></td>
 					<td><a href="%s&amp;SelectedCurrency=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">%s</a></td>
 					<td><a href="%s/ExchangeRateTrend.php?%s">' . _('Graph') . '</a></td>
@@ -266,6 +268,7 @@ or deletion of the records*/
 					$myrow['hundredsname'],
 					locale_number_format($myrow['decimalplaces'],0),
 					locale_number_format($myrow['rate'],8),
+					locale_number_format(1/$myrow['rate'],2),
 					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),8),
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['currabrev'],
@@ -283,7 +286,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					<td colspan="4">%s</td>
+					<td colspan="5">%s</td>
 					</tr>',
 					$ImageFile,
 					$myrow['currabrev'],
