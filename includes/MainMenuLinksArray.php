@@ -124,7 +124,7 @@ $MenuItems['AR']['Reports']['URL'] = array ('/CustWhereAlloc.php',
 											'/CustomerTransInquiry.php' );
 
 $MenuItems['AR']['Maintenance']['Caption'] = array (_('Add Customer'),
-													_('Customers')
+													_('Select Customer')
 													);
 $MenuItems['AR']['Maintenance']['URL'] = array ('/Customers.php',
 												'/SelectCustomer.php'
@@ -156,9 +156,11 @@ $MenuItems['AP']['Reports']['URL'] = array ('/AgedSuppliers.php',
 											);
 
 $MenuItems['AP']['Maintenance']['Caption'] = array (_('Add Supplier'),
+													_('Select Supplier'),
 													_('Maintain Factor Companies')
 													);
 $MenuItems['AP']['Maintenance']['URL'] = array ('/Suppliers.php',
+												'/SelectSupplier.php',
 												'/Factors.php'
 												);
 
