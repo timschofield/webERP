@@ -547,7 +547,7 @@ $_SESSION['Items'.$identifier]->total = round($_SESSION['Items'.$identifier]->to
 $_POST['ChargeFreightCost'] = round(filter_number_format($_POST['ChargeFreightCost']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
 echo '<tr>
-	<td colspan="10" class="number">' . _('Invoice Totals'). '</td>
+	<td colspan="8" class="number">' . _('Invoice Totals'). '</td>
 	<td class="number"><hr /><b>'.$DisplaySubTotal.'</b><hr /></td>
 	<td colspan="2"></td>
 	<td class="number"><hr /><b>' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</b><hr /></td>
@@ -674,7 +674,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					qtyinvoiced,
 					orderlineno
 				FROM salesorderdetails
-				WHERE completed=0
+				WHERE completed=0 AND quantity-qtyinvoiced > 0
 				AND orderno = '" . $_SESSION['ProcessingOrder']."'";
 
 	$Result = DB_query($SQL,$db);

@@ -1,4 +1,7 @@
 webERP Change Log
+
+25/9/12 Phil: ConfirmDispatch_Invoice.php now compares the total of orderlines that have an uninvoiced quantity to the number of lines in the session to ensure no one has invoiced out the order already. It used to compare the total number of lines on the order - but if there are zero lines then this doesn't work and the user is presented with the error message report.
+25/9/12 Phil: WorkOrderIssue.php - now shows all output items on the work order and sums the required component quantities as reported by Samudaya
 12/9/12 Icedlava: some small corrections in the Manual, and update of bookmark links for some setup, petty cash and order functions.
 8/9/12 Phil: removed all use of $_REQUEST across all scripts replace with GET/POST to cirumvent SQL injection attacks as reported by Daniel Compton
 6/9/12 Thomas Timothy Lie and baliboss.com Team: updated Indonesian translation

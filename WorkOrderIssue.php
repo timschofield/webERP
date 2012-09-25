@@ -96,11 +96,11 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 	//Need to get the current standard cost for the item being issued
 	$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
-			controlled,
-			serialised,
-			mbflag
-		FROM stockmaster
-		WHERE stockid='" .$_POST['IssueItem'] . "'";
+					controlled,
+					serialised,
+					mbflag
+			FROM stockmaster
+			WHERE stockid='" .$_POST['IssueItem'] . "'";
 	$Result = DB_query($SQL,$db);
 	$IssueItemRow = DB_fetch_array($Result);
 
@@ -493,8 +493,9 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						 workorders.requiredby,
 						 workorders.startdate,
 						 workorders.closed,
+						 stockmaster.stockid,
 						 stockmaster.description,
-						  stockmaster.decimalplaces,
+						 stockmaster.decimalplaces,
 						 stockmaster.units,
 						 woitems.qtyreqd,
 						 woitems.qtyrecd
@@ -504,8 +505,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster
 						ON woitems.stockid=stockmaster.stockid
-						WHERE woitems.stockid='" . $_POST['StockID'] . "'
-						AND woitems.wo ='" . $_POST['WO'] . "'",
+						WHERE woitems.wo ='" . $_POST['WO'] . "'",
 						$db,
 						$ErrMsg);
 
@@ -514,13 +514,7 @@ if (DB_num_rows($WOResult)==0){
 	include('includes/footer.inc');
 	exit;
 }
-$WORow = DB_fetch_array($WOResult);
 
-if ($WORow['closed']==1){
-	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'),'info');
-	include('includes/footer.inc');
-	exit;
-}
 
 if (!isset($_POST['IssuedDate'])){
 	$_POST['IssuedDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -528,8 +522,23 @@ if (!isset($_POST['IssuedDate'])){
 echo '<table class="selection">
 		<tr>
 			<td class="label">' . _('Issue to work order') . ':</td>
-			<td>' . $_POST['WO'] .'</td><td class="label">' . _('Item') . ':</td>
-			<td>' . $_POST['StockID'] . ' - ' . $WORow['description'] . '</td>
+			<td>' . $_POST['WO'] .'</td><td class="label">' . _('Item(s)') . ':</td>
+			<td>';
+
+while($WORow = DB_fetch_array($WOResult)){
+
+	if ($WORow['closed']==1){
+		prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'),'info');
+		include('includes/footer.inc');
+		exit;
+	}			
+	echo  $WORow['stockid'] . ' - ' . $WORow['description'] . '<br />';
+}
+
+DB_data_seek($WOResult,0);
+$WORow = DB_fetch_array($WOResult);
+
+echo 		'</td>
 		</tr>
 		<tr>
 			<td class="label">' . _('Manufactured at') . ':</td>
@@ -603,10 +612,14 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										stockmaster.description,
 										stockmaster.decimalplaces,
 										autoissue,
-										qtypu
+										SUM(qtypu) AS quantityperunit
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid=stockmaster.stockid
-									WHERE wo='" . $_POST['WO'] . "'",
+									WHERE wo='" . $_POST['WO'] . "'
+									GROUP BY worequirements.stockid,
+											stockmaster.description,
+											stockmaster.decimalplaces,
+											autoissue",
 									$db);
 
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
@@ -626,7 +639,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										$db);
 		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
 
-		echo '<td class="number">' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
+		echo '<td class="number">' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['quantityperunit'],$RequirementsRow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td>
 		</tr>';
 	}
