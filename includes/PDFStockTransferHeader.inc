@@ -8,7 +8,7 @@ if ($PageNumber>1){
 $FontSize=10;
 $YPos= $Page_Height-$Top_Margin;
 $XPos=0;
-$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,$YPos-50,0,60);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+20,$YPos-50,0,60);
 
 
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
