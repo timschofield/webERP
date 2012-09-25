@@ -270,10 +270,10 @@ function change_data(type) {
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5"><h3>Step 5</h3>Please enter the company database name below...</td>
+			<td colspan="5"><h3>Step 5</h3>Please enter the company database name below... note that in some shared hosting environments this will have to be of the format domain_company_database_name. This installation script will fail if the mysql user above does not have permissions to create the company database</td>
 		</tr>
 		<tr>
-			<td style="color: #666666;" colspan="1">Company Name:</td>
+			<td style="color: #666666;" colspan="1">Company Database Name:</td>
 			<td colspan="4">
 				<input type="text" tabindex="50" name="company_name" style="width: 99%;" value="<?php if(isset($_SESSION['company_name'])) { echo $_SESSION['company_name']; } else { echo 'weberpdemo'; } ?>" />
 			</td>

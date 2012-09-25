@@ -119,6 +119,7 @@ if (isset($_POST['path_to_root'])) {
 } else {
 	$path_to_root = '..';
 }
+
 // Begin check to see if form was even submitted
 // Set error if no post vars found
 
