@@ -24,5 +24,25 @@ ALTER TABLE `suppliers` CHANGE `address6` `address6` VARCHAR( 40 ) NOT NULL DEFA
 ALTER TABLE `custbranch` CHANGE `braddress6` `braddress6` VARCHAR( 40 ) NOT NULL DEFAULT '';
 ALTER TABLE `debtorsmaster` CHANGE `address6` `address6` VARCHAR( 40 ) NOT NULL DEFAULT '';
 
+ALTER TABLE `stockcatproperties` ADD FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`);
+ALTER TABLE `stockitemproperties` ADD FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`);
+ALTER TABLE `stockitemproperties` ADD FOREIGN KEY (`stkcatpropid`) REFERENCES `stockcatproperties` (`stkcatpropid`); 
+ALTER TABLE `stockmovestaxes` ADD FOREIGN KEY (`stkmoveno`) REFERENCES `stockmoves` (`stkmoveno`);
+ALTER TABLE `stockrequest` ADD PRIMARY KEY (`dispatchid`); 
+ALTER TABLE `stockrequest` ADD INDEX (`loccode`);
+ALTER TABLE `stockrequest` ADD FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`);
+ALTER TABLE `stockrequest` ADD INDEX (`departmentid`);
+ALTER TABLE `stockrequest` ADD FOREIGN KEY (`departmentid`) REFERENCES `departments` (`departmentid`);
+ALTER TABLE `stockrequestitems` ADD PRIMARY KEY ( `dispatchitemsid` );
+ALTER TABLE `stockrequestitems` ADD INDEX ( `dispatchid` );
+ALTER TABLE `stockrequestitems` ADD INDEX ( `stockid` );
+ALTER TABLE `stockrequestitems` ADD FOREIGN KEY ( `dispatchid` ) REFERENCES `stockrequest` (`dispatchid`);
+ALTER TABLE `stockrequestitems` ADD FOREIGN KEY ( `stockid` ) REFERENCES `stockmaster` (`stockid`);
+ALTER TABLE `internalstockcatrole` ADD PRIMARY KEY ( `categoryid` , `secroleid` );
+ALTER TABLE `internalstockcatrole` ADD FOREIGN KEY ( `categoryid` ) REFERENCES `stockcategory` (`categoryid`);
+ALTER TABLE `internalstockcatrole` ADD FOREIGN KEY ( `secroleid` ) REFERENCES `securityroles` (`secroleid`);
+ 
+
+
 UPDATE config SET confvalue='4.09' WHERE confname='VersionNumber';
 
