@@ -522,23 +522,7 @@ if (!isset($_POST['IssuedDate'])){
 echo '<table class="selection">
 		<tr>
 			<td class="label">' . _('Issue to work order') . ':</td>
-			<td>' . $_POST['WO'] .'</td><td class="label">' . _('Item(s)') . ':</td>
-			<td>';
-
-while($WORow = DB_fetch_array($WOResult)){
-
-	if ($WORow['closed']==1){
-		prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'),'info');
-		include('includes/footer.inc');
-		exit;
-	}			
-	echo  $WORow['stockid'] . ' - ' . $WORow['description'] . '<br />';
-}
-
-DB_data_seek($WOResult,0);
-$WORow = DB_fetch_array($WOResult);
-
-echo 		'</td>
+			<td>' . $_POST['WO'] .'</td>
 		</tr>
 		<tr>
 			<td class="label">' . _('Manufactured at') . ':</td>
@@ -547,22 +531,34 @@ echo 		'</td>
 			<td>' . ConvertSQLDate($WORow['requiredby']) . '</td>
 		</tr>
 		<tr>
+			<td class="label">' . ('Item') . '</td>
 			<td class="label">' . _('Quantity Ordered') . ':</td>
-			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
-			<td colspan="2">' . $WORow['units'] . '</td>
-		</tr>
-		<tr>
 			<td class="label">' . _('Already Received') . ':</td>
-			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-			<td colspan="2">' . $WORow['units'] . '</td></tr>
-		<tr>
-			<td colspan="4"></td>
-		</tr>
-		<tr>
-			<td class="label">' . _('Date Material Issued') . ':</td>
-			<td><input type="text" name="IssuedDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" class="date" size="10" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
-			<td class="label">' . _('Issued From') . ':</td>
-			<td>';
+			<td class="label">' . _('Unit') . ':</td>
+		</tr>';
+$WORow = DB_fetch_array($WOResult);
+if ($WORow['closed']==1){
+	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'),'info');
+	include('includes/footer.inc');
+	exit;
+}	
+DB_data_seek($WOResult,0);
+
+while($WORow = DB_fetch_array($WOResult)){
+
+	echo  '<tr>
+				<td>' . $WORow['stockid'] . ' - ' . $WORow['description'] . '</td>
+				<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+				<td>' . $WORow['units'] . '</td>
+			</tr>';
+}
+
+echo '<tr>
+		<td class="label">' . _('Date Material Issued') . ':</td>
+		<td><input type="text" name="IssuedDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" class="date" size="10" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+		<td class="label">' . _('Issued From') . ':</td>
+		<td>';
 
 if (!isset($_POST['IssueItem'])){
 	$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
@@ -612,10 +608,13 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										stockmaster.description,
 										stockmaster.decimalplaces,
 										autoissue,
-										SUM(qtypu) AS quantityperunit
+										SUM(qtypu*qtyreqd) AS quantityrequired
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid=stockmaster.stockid
-									WHERE wo='" . $_POST['WO'] . "'
+									INNER JOIN woitems
+									ON worequirements.wo=woitems.wo
+									AND worequirements.parentstockid=woitems.stockid
+									WHERE worequirements.wo='" . $_POST['WO'] . "'
 									GROUP BY worequirements.stockid,
 											stockmaster.description,
 											stockmaster.decimalplaces,
@@ -639,7 +638,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 										$db);
 		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
 
-		echo '<td class="number">' . locale_number_format($WORow['qtyreqd']*$RequirementsRow['quantityperunit'],$RequirementsRow['decimalplaces']) . '</td>
+		echo '<td class="number">' . locale_number_format($RequirementsRow['quantityrequired'],$RequirementsRow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td>
 		</tr>';
 	}
