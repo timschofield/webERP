@@ -74,45 +74,46 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
-											stockmaster.description,
-											SUM(locstock.quantity) AS qoh,
-											stockmaster.units,
-											stockmaster.mbflag,
-											stockmaster.discontinued,
-											stockmaster.decimalplaces
-										FROM stockmaster
-										LEFT JOIN stockcategory
-										ON stockmaster.categoryid=stockcategory.categoryid,
-											locstock
-										WHERE stockmaster.stockid=locstock.stockid
-										AND stockmaster.description " . LIKE . " '$SearchString'
-										GROUP BY stockmaster.stockid,
-											stockmaster.description,
-											stockmaster.units,
-											stockmaster.mbflag,
-											stockmaster.discontinued,
-											stockmaster.decimalplaces
-										ORDER BY stockmaster.stockid";
+							stockmaster.description,
+							SUM(locstock.quantity) AS qoh,
+							stockmaster.units,
+							stockmaster.mbflag,
+							stockmaster.discontinued,
+							stockmaster.decimalplaces
+						FROM stockmaster
+						LEFT JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid,
+							locstock
+						WHERE stockmaster.stockid=locstock.stockid
+						AND stockmaster.description " . LIKE . " '$SearchString' 
+						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+						GROUP BY stockmaster.stockid,
+							stockmaster.description,
+							stockmaster.units,
+							stockmaster.mbflag,
+							stockmaster.discontinued,
+							stockmaster.decimalplaces
+						ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
-											stockmaster.description,
-											SUM(locstock.quantity) AS qoh,
-											stockmaster.units,
-											stockmaster.mbflag,
-											stockmaster.discontinued,
-											stockmaster.decimalplaces
-										FROM stockmaster,
-											locstock
-										WHERE stockmaster.stockid=locstock.stockid
-										AND description " . LIKE . " '$SearchString'
-										AND categoryid='" . $_POST['StockCat'] . "'
-										GROUP BY stockmaster.stockid,
-											stockmaster.description,
-											stockmaster.units,
-											stockmaster.mbflag,
-											stockmaster.discontinued,
-											stockmaster.decimalplaces
-										ORDER BY stockmaster.stockid";
+							stockmaster.description,
+							SUM(locstock.quantity) AS qoh,
+							stockmaster.units,
+							stockmaster.mbflag,
+							stockmaster.discontinued,
+							stockmaster.decimalplaces
+						FROM stockmaster INNER JOIN locstock
+						ON stockmaster.stockid=locstock.stockid
+						WHERE description " . LIKE . " '$SearchString'
+						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+						AND categoryid='" . $_POST['StockCat'] . "'
+						GROUP BY stockmaster.stockid,
+							stockmaster.description,
+							stockmaster.units,
+							stockmaster.mbflag,
+							stockmaster.discontinued,
+							stockmaster.decimalplaces
+						ORDER BY stockmaster.stockid";
 		}
 	} elseif (isset($_POST['StockCode'])) {
 		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
@@ -126,10 +127,11 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.decimalplaces
 						FROM stockmaster
 						INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid,
-							locstock
-						WHERE stockmaster.stockid=locstock.stockid
-							AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+						ON stockmaster.categoryid=stockcategory.categoryid 
+						INNER JOIN locstock
+						ON stockmaster.stockid=locstock.stockid
+						WHERE (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+						AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 						GROUP BY stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units,
@@ -145,10 +147,10 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					sum(locstock.quantity) as qoh,
 					stockmaster.units,
 					stockmaster.decimalplaces
-				FROM stockmaster,
-					locstock
-				WHERE stockmaster.stockid=locstock.stockid
-				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+				FROM stockmaster INNER JOIN locstock
+				ONstockmaster.stockid=locstock.stockid
+				WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
 				AND categoryid='" . $_POST['StockCat'] . "'
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
@@ -172,6 +174,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				ON stockmaster.categoryid=stockcategory.categoryid,
 					locstock
 				WHERE stockmaster.stockid=locstock.stockid
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -187,10 +190,10 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					SUM(locstock.quantity) AS qoh,
 					stockmaster.units,
 					stockmaster.decimalplaces
-				FROM stockmaster,
-					locstock
-				WHERE stockmaster.stockid=locstock.stockid
-				AND categoryid='" . $_POST['StockCat'] . "'
+				FROM stockmaster INNER JOIN locstock
+				ONstockmaster.stockid=locstock.stockid
+				WHERE categoryid='" . $_POST['StockCat'] . "'
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -542,10 +545,10 @@ if (isset($_POST['SupplierID'])) {
 				<td><input type="text" class="number" size="11" value="0.0000" name="Price0" /></td>
 				<td><select name="SuppUOM0">';
 					while ($UOMRow=DB_fetch_array($UOMResult)) {
-						if ($UOMRow['unitid']==$StRowoc['units']) {
-							echo '<option selected="selected" value="'.$UOMRow['unitid'].'">' . $UOMRow['unitname'] . '</option>';
+						if ($UOMRow['unitname']==$StRowoc['units']) {
+							echo '<option selected="selected" value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
 						} else {
-							echo '<option value="'.$UOMRow['unitid'].'">' . $UOMRow['unitname'] . '</option>';
+							echo '<option value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
 						}
 					}
 					DB_data_seek($UOMResult, 0);
@@ -570,10 +573,10 @@ if (isset($_POST['SupplierID'])) {
 				<td><select name="SuppUOM'.$RowCounter.'">';
 					DB_data_seek($UOMResult, 0);
 					while ($UOMRow=DB_fetch_array($UOMResult)) {
-						if ($UOMRow['unitid']==$myrow['suppliersuom']) {
-							echo '<option selected="selected" value="'.$UOMRow['unitid'].'">' . $UOMRow['unitname'] . '</option>';
+						if ($UOMRow['unitname']==$myrow['suppliersuom']) {
+							echo '<option selected="selected" value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
 						} else {
-							echo '<option value="'.$UOMRow['unitid'].'">' . $UOMRow['unitname'] . '</option>';
+							echo '<option value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
 						}
 					}
 					echo '</select></td>

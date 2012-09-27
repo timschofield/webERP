@@ -1,5 +1,7 @@
 webERP Change Log
 
+27/9/12 Samudaya Nanayakkara: InternalStockRequestFulfill.php fixed quantity not filtered for number formatting. Phil tidy up coding conventions
+27/9/12 Samudaya Nanayakkara: Fixed SupplierPriceList.php units of measure were being looked up based on unit id but required matching against the unitname
 26/9/12 Phil: Added primary keys, keys and foreign keys for stockinternalrequest and associated work as reported by Oscar M. Borja
 25/9/12 Phil: as per Tim's posting to forum in includes/PDFStockTransferHeader.inc use $_SESSION['LogoFile'] which is obtained in includes/session.inc - also in includes/PDFDIFOTPageHeader.inc
 25/9/12 Phil: ConfirmDispatch_Invoice.php now compares the total of orderlines that have an uninvoiced quantity to the number of lines in the session to ensure no one has invoiced out the order already. It used to compare the total number of lines on the order - but if there are zero lines then this doesn't work and the user is presented with the error message report.
