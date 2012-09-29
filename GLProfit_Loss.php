@@ -520,20 +520,20 @@ if ((!isset($_POST['FromPeriod'])
 	$YPos -= (2 * $line_height);
 
 	if ($TotalIncome != 0){
-			$PrdPLPercent = 100 *(-$PeriodProfitLoss) / $TotalIncome;
-		} else {
-			$PrdPLPercent = 0;
-		}
-		if ($TotalBudgetIncome != 0){
-			$BudgetPLPercent = 100 * (-$PeriodBudgetProfitLoss) / $TotalBudgetIncome;
-		} else {
-			$BudgetPLPercent = 0;
-		}
-		if ($TotalLYIncome != 0){
-			$LYPLPercent = 100 * (-$PeriodLYProfitLoss) / $TotalLYIncome;
-		} else {
-			$LYPLPercent = 0;
-		}
+		$PrdPLPercent = 100 *(-$PeriodProfitLoss) / $TotalIncome;
+	} else {
+		$PrdPLPercent = 0;
+	}
+	if ($TotalBudgetIncome != 0){
+		$BudgetPLPercent = 100 * (-$PeriodBudgetProfitLoss) / $TotalBudgetIncome;
+	} else {
+		$BudgetPLPercent = 0;
+	}
+	if ($TotalLYIncome != 0){
+		$LYPLPercent = 100 * (-$PeriodLYProfitLoss) / $TotalLYIncome;
+	} else {
+		$LYPLPercent = 0;
+	}
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Net Profit Percent'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($PrdPLPercent,1) . '%','right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($BudgetPLPercent,1) . '%','right');
@@ -651,7 +651,7 @@ if ((!isset($_POST['FromPeriod'])
 
 		if ($myrow['groupname']!= $ActGrp){
 			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
-					while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+				while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 					if ($_POST['Detail']=='Detailed'){
 						echo '<tr>
 								<td colspan="2"></td>
@@ -661,7 +661,7 @@ if ((!isset($_POST['FromPeriod'])
 					} else {
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 					}
-				if ($Section ==1){ /*Income */
+					if ($Section ==1){ /*Income */
 						printf('<tr>
 								<td colspan="2"><h4><i>%s</i></h4></td>
 								<td></td>
@@ -690,6 +690,10 @@ if ((!isset($_POST['FromPeriod'])
 								locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 								locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 					}
+
+
+
+
 					$GrpPrdLY[$Level] = 0;
 					$GrpPrdActual[$Level] = 0;
 					$GrpPrdBudget[$Level] = 0;
@@ -703,6 +707,7 @@ if ((!isset($_POST['FromPeriod'])
 								<td colspan="6"><hr /></td>
 							</tr>';
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
+						$ActGrpLabelForPL = str_repeat('___',$Level) . $ParentGroups[$Level];
 					} else {
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 					}
@@ -758,8 +763,8 @@ if ((!isset($_POST['FromPeriod'])
 							<td><hr /></td>
 						</tr>';
 
-					printf('<tr>
-							<td colspan="2">%s</td>
+					printf('<tr style="background-color:#ffffff">
+							<td colspan="2"><h2>%s</td>
 							<td></td>
 							<td class="number">%s</td>
 							<td></td>
@@ -802,7 +807,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
 						</tr>';
-					printf('<tr>
+					printf('<tr style="background-color:#ffffff">
 							<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
 							<td></td>
 							<td class="number">%s</td>
@@ -834,7 +839,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
 						</tr>';
-					printf('<tr>
+					printf('<tr style="background-color:#ffffff">
 							<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
 							<td></td>
 							<td class="number"><i>%s</i></td>
@@ -848,6 +853,67 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($LYGPPercent,1). '%');
 					$j++;
 				}
+// RICARD
+				if (($Section!=1) AND ($Section!=2)){
+					echo '<tr>
+							<td colspan="2"></td>
+							<td colspan="6"><hr /></td>
+						</tr>';
+
+					printf('<tr style="background-color:#ffffff">
+								<td colspan="2"><h4><b>'._('Profit').' - '._('Loss'). ' '. _('after'). ' ' . $ActGrpLabelForPL .'</b></h2></td>
+								<td></td>
+								<td class="number">%s</td>
+								<td></td>
+								<td class="number">%s</td>
+								<td></td>
+								<td class="number">%s</td>
+							</tr>',
+							locale_number_format(-$PeriodProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),
+							locale_number_format(-$PeriodBudgetProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),
+							locale_number_format(-$PeriodLYProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']) );
+
+					if ($TotalIncome !=0){
+						$PrdNPPercent = 100*(-$PeriodProfitLoss)/$TotalIncome;
+					} else {
+						$PrdNPPercent =0;
+					}
+					if ($TotalBudgetIncome !=0){
+						$BudgetNPPercent=100*(-$PeriodBudgetProfitLoss)/$TotalBudgetIncome;
+					} else {
+						$BudgetNPPercent=0;
+					}
+					if ($TotalLYIncome !=0){
+						$LYNPPercent = 100*(-$PeriodLYProfitLoss)/$TotalLYIncome;
+					} else {
+						$LYNPPercent = 0;
+					}
+/*					echo '<tr style="background-color:#ffffff">
+							<td colspan="2"></td>
+							<td colspan="6"><hr /></td>
+						</tr>';
+*/
+					printf('<tr style="background-color:#ffffff">
+								<td colspan="2"><h4><i>'._('P/L Percent after').' ' . $ActGrpLabelForPL .'</i></h4></td>
+								<td></td>
+								<td class="number"><i>%s</i></td>
+								<td></td>
+								<td class="number"><i>%s</i></td>
+								<td></td>
+								<td class="number"><i>%s</i></td>
+								</tr><tr><td colspan="6"> </td>
+							</tr>',
+							locale_number_format($PrdNPPercent,1) . '%',
+							locale_number_format($BudgetNPPercent,1) . '%',
+							locale_number_format($LYNPPercent,1). '%');
+
+					echo '<tr>
+							<td colspan="2"></td>
+							<td colspan="6"><hr /></td>
+						</tr>';		
+				} 
+// END RICARD
+				
 			}
 			$SectionPrdLY =0;
 			$SectionPrdActual =0;
@@ -1164,6 +1230,7 @@ if ((!isset($_POST['FromPeriod'])
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}
+		
 		$j++;
 
 	}
@@ -1206,7 +1273,7 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="6"><hr /></td>
 		</tr>';
 
-	printf('<tr>
+	printf('<tr style="background-color:#ffffff">
 				<td colspan="2"><h4><i>'._('Net Profit Percent').'</i></h4></td>
 				<td></td>
 				<td class="number"><i>%s</i></td>
@@ -1224,7 +1291,6 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="2"></td>
 			<td colspan="6"><hr /></td>
 		</tr>';
-
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
