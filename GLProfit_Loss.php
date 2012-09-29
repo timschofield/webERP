@@ -647,8 +647,6 @@ if ((!isset($_POST['FromPeriod'])
 	$TotalLYIncome=0;
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
-
-
 		if ($myrow['groupname']!= $ActGrp){
 			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
 				while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
@@ -691,9 +689,6 @@ if ((!isset($_POST['FromPeriod'])
 								locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 					}
 
-
-
-
 					$GrpPrdLY[$Level] = 0;
 					$GrpPrdActual[$Level] = 0;
 					$GrpPrdBudget[$Level] = 0;
@@ -702,15 +697,15 @@ if ((!isset($_POST['FromPeriod'])
 				}//end while
 				//still need to print out the old group totals
 				if ($_POST['Detail']=='Detailed'){
-						echo '<tr>
-								<td colspan="2"></td>
-								<td colspan="6"><hr /></td>
-							</tr>';
-						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
-						$ActGrpLabelForPL = str_repeat('___',$Level) . $ParentGroups[$Level];
-					} else {
-						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
-					}
+					echo '<tr>
+							<td colspan="2"></td>
+							<td colspan="6"><hr /></td>
+						</tr>';
+					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
+					$ActGrpLabelForPL = str_repeat('___',$Level) . $ParentGroups[$Level];
+				} else {
+					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
+				}
 
 				if ($Section ==1){ /*Income */
 					printf('<tr>
@@ -853,7 +848,7 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($LYGPPercent,1). '%');
 					$j++;
 				}
-// RICARD
+
 				if (($Section!=1) AND ($Section!=2)){
 					echo '<tr>
 							<td colspan="2"></td>
@@ -888,11 +883,6 @@ if ((!isset($_POST['FromPeriod'])
 					} else {
 						$LYNPPercent = 0;
 					}
-/*					echo '<tr style="background-color:#ffffff">
-							<td colspan="2"></td>
-							<td colspan="6"><hr /></td>
-						</tr>';
-*/
 					printf('<tr style="background-color:#ffffff">
 								<td colspan="2"><h4><i>'._('P/L Percent after').' ' . $ActGrpLabelForPL .'</i></h4></td>
 								<td></td>
@@ -912,8 +902,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';		
 				} 
-// END RICARD
-				
+
 			}
 			$SectionPrdLY =0;
 			$SectionPrdActual =0;
