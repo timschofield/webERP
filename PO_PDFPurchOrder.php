@@ -143,15 +143,14 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 				ConvertSQLDate($POHeader['dateprinted']) . '<br />'.
 					_('To re-print the order it must be modified to allow a reprint'). '<br />'.
 					_('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
-				echo '<br /><table class="table_index">
-					<tr><td class="menu_group_item">
- 					<li><a href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '&ViewingOnly=1">'.
-				_('Print This Order as a Copy'). '</a>
- 				<li><a href="' . $rootpath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">'.
-				_('Modify the order to allow a real reprint'). '</a>' .
-				'<li><a href="'. $rootpath .'/PO_SelectPurchOrder.php">'.
-				_('Select another order'). '</a>'.
-				'<li><a href="' . $rootpath . '/index.php">'. _('Back to the menu').'</a>';
+
+				//=HJ= fixed missing closing tags and replace table with div, for visual conformity
+				echo '<div class="centre">
+ 					<li><a href="'.$rootpath.'/PO_PDFPurchOrder.php?OrderNo='.$OrderNo.'&ViewingOnly=1">'._('Print This Order as a Copy').'</a>
+ 					<li><a href="'.$rootpath.'/PO_Header.php?ModifyOrderNumber='.$OrderNo.'">'._('Modify the order to allow a real reprint').'</a>
+					<li><a href="'.$rootpath.'/PO_SelectPurchOrder.php">'._('Select another order').'</a>
+					<li><a href="'.$rootpath.'/index.php">'._('Back to the menu').'</a></div>';
+					
 				include('includes/footer.inc');
 				exit;
 			}//AllowedToPrint
