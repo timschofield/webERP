@@ -1,9 +1,11 @@
-/*** 
+/* 
 
 New "Professional RTL" Theme for WebERP
 For Right-To-Left Languages
 
-by Hindra Joshua
+v2, 2012-10-01
+
+- All is right aligned now
 
 *** This a very clean professional-looking theme - handsome!
 
@@ -16,7 +18,7 @@ but for the obvious one it will be cleaned up.
 To optimized the rest we should examined the whole codes! That would be for 
 the next project. :)
 
-***/
+*/
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -49,7 +51,7 @@ a:hover {
 td {
 	font-family: Arial, Verdana, Helvetica;
 	font-size: 10px;
-	text-align: left;
+	text-align: right;
 }
 td.select {
 	background-color:#eee;
@@ -448,7 +450,7 @@ li {
 #SubMenuDiv{
 	display:table; /* display as table, sub menu will auto adjust width */
 	width:89%; /* main menu is 10% */
-	text-align:left;
+	text-align:right;
 }
 #SubMenuDiv ul{
 	list-style-type:none; /* REQUIRED: hide bullets */

@@ -1,8 +1,11 @@
-/*** 
+/* 
 
 New "Fresh" Theme for WebERP
 
-by Hindra Joshua
+v2, 2012-10-01
+
+- Broaden compatibility with IE8 and most browsers.
+- Use CSS3-PIE (Thanks to them)
 
 *** This a very clean professional-looking theme - handsome!
 
@@ -15,7 +18,7 @@ but for the obvious one it will be cleaned up.
 To optimized the rest we should examined the whole codes! That would be for 
 the next project. :)
 
-***/
+*/
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
@@ -468,8 +471,12 @@ background:#E0F3B1;
 #FooterLogoDiv{ 
 	float:right; /* right side */
 	background:white;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
     border-radius:8px;
     padding:2px;
+	position: relative;
+	behavior:url(css/pie.htc);
 }
 #FooterLogoDiv img {
     vertical-align:middle;

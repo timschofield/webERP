@@ -1,19 +1,19 @@
-/*** 
+/* 
 
 New "Gel" Theme for WebERP
 
 by Hindra Joshua
 
+v2, 2012-10-01
+
+Changes:
+- Broaden compatibility with IE8 and most browsers.
+- Use CSS3-PIE (Thanks to them)
+
 Based from the previous theme "Gel"
 Credits to the original authors.
 
-NOTE: 
-This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
-but for the obvious one it will be cleaned up.
-To optimized the rest we should examined the whole codes! That would be for 
-the next project. :)
-
-***/
+*/
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -294,8 +294,11 @@ li { /* ??? */
 	color:white;
 	padding:3px;
 	border:2px outset blue;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
 	border-radius:20px;
 	padding:0 5px;
+	behavior:url(css/pie.htc);
 }
 #HeaderWrapDiv{
 }
@@ -347,16 +350,22 @@ li { /* ??? */
 #QuickMenuDiv li a{
 	padding:5px; /* links as button */
 	border:2px outset transparent; /* un-pressed state */
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
 	border-radius:15px;
 	color:white;
 	font-weight:bold;
+	behavior:url(css/pie.htc);
 }
 #QuickMenuDiv li a:hover{
 	padding:5px; /* links as button */
 	border:2px inset steelblue; /* pressed state */
 	text-decoration:none; /* no underline */
 	color:whie;
+	-webkit-border-radius:15px;	
+	-moz-border-radius:15px;	
 	border-radius:15px;	
+	behavior:url(css/pie.htc);
 }
 
 /*** BODY ***/
@@ -388,9 +397,13 @@ li { /* ??? */
 	background:url(images/gelbluev.png) repeat-y blue;
 	background-size:contain;
 	border:2px outset blue;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
 	border-radius:20px;
 	margin-top:5px;
 	padding:3px;
+	position: relative;
+	behavior:url(css/pie.htc);
 	
 }
 #MainMenuDiv ul{
@@ -408,21 +421,33 @@ li { /* ??? */
 	border:2px outset transparent;
 	color:white;
 	font-weight:bold;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
 	border-radius:15px;
+	position: relative;
+	behavior:url(css/pie.htc);
 }
 #MainMenuDiv li a:hover{ /* link as button!!! pressed state */
 	text-decoration:none;
 	padding:3px;
 	border:2px inset steelblue;
 	background:none;	
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
 	border-radius:15px;
+	position: relative;
+	behavior:url(css/pie.htc);
 }
 #MainMenuDiv .main_menu_selected a{ /* the selected button */
 	text-decoration:none;
 	padding:3px;
 	border:2px inset steelblue;
 	background:none;	
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
 	border-radius:15px;
+	position: relative;
+	behavior:url(css/pie.htc);
 }
 
 /*** BODY - SUB MENU ***/
@@ -509,9 +534,13 @@ li { /* ??? */
 #FooterLogoDiv{
     float:left;
 	background:white;
+    -webkit-border-radius:8px 8px 8px 8px;
+    -moz-border-radius:8px 8px 8px 8px;
     border-radius:8px 8px 8px 8px;
     padding:3px;
 	margin-left:47%; /* to the center (approx) */
+	position: relative;
+	behavior:url(css/pie.htc);
 }
 #FooterLogoDiv img{
 	vertical-align:middle;

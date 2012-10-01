@@ -1,8 +1,13 @@
-/***
+/*
 
 New Default Theme for WebERP
 
-***/
+v2, 2012-10-01
+
+- Broaden compatibility with IE8 and most browsers.
+- Use CSS3-PIE (Thanks to them)
+
+*/
 
 body{
 background-color:#ccd;
@@ -404,13 +409,17 @@ color:#CCCCCC;
 padding:3px 2px;
 }
 #FooterWrapDiv{
-
 }
 #FooterLogoDiv{
 background:white;
+-webkit-border-radius:7px;
+-moz-border-radius:7px;
 border-radius:7px;
 float:left;
 padding:3px;
+border:1px solid #fff;
+position: relative;
+behavior:url(css/pie.htc);
 }
 #FooterVersionDiv{
 float:left;
