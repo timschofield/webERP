@@ -456,14 +456,9 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 		$FromTransNo++;
 	} /* end loop to print invoices */
-
-	// Have to get the TransNo again, GET[FromTransNo] is updated on each pass of loop
-	if (isset($_GET['FromTransNo'])) {
-		$FromTransNo = trim($_GET['FromTransNo']);
-	} elseif (isset($_POST['FromTransNo'])) {
-		$FromTransNo = filter_number_format($_POST['FromTransNo']);
-	}
-
+	
+	/* Put the transaction number back as would have been incremented by one after last pass */
+	$FromTransNo--;
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include('includes/header.inc');

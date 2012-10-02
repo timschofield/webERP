@@ -487,6 +487,9 @@ If (isset($PrintPDF)
 	    $FromTransNo++;
 	} /* end loop to print invoices */
 
+	/* Put the transaction number back as would have been incremented by one after last pass */
+	$FromTransNo--;
+
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 		include ('includes/htmlMimeMail.php');
 		$FromTransNo--; //reverse the increment to retain the correct transaction number
