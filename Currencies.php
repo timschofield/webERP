@@ -4,7 +4,8 @@
 
 include('includes/session.inc');
 $title = _('Currencies Maintenance');
-
+$ViewTopic= 'Currencies';
+$BookMark = 'Currencies';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
