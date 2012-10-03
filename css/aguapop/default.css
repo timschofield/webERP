@@ -2,12 +2,9 @@
 
 New "AguaPop" Theme for WebERP
 
+v2, 2012-08-03
+
 by Hindra Joshua
-
-v3, 2012-10-01
-
-- Broaden compatibility with IE8 and most browsers.
-- Use CSS3-PIE (Thanks to them)
 
 */
 
@@ -249,14 +246,9 @@ li {
 
 #CanvasDiv { 
 background:steelblue;
--webkit-border-radius:20px;
--moz-border-radius:20px;
 border-radius:20px;
--webkit-box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
--moz-box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
 box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
 margin:10px;
-behavior:url(css/pie.htc);
 }
 
 /* HEADER */
@@ -267,23 +259,14 @@ color:white;
 padding:5px 10px 0;
 }
 #HeaderDiv a{
--webkit-border-radius:10px;
--moz-border-radius:10px;
 border-radius:10px;
 color:white;
 text-decoration:none;
 padding:3px;
-background:steelblue;
-position:relative;
-behavior:url(css/pie.htc);
 }
 #HeaderDiv a:hover{
 color:cyan;
--webkit-border-radius:10px;
--moz-border-radius:10px;
 border-radius:10px;
--webkit-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
--moz-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 padding:3px;
 }
@@ -333,12 +316,8 @@ text-align:center; /* needed to center some buttons on SelectSupplier.php */
 }
 #BodyWrapDiv{
 background:lightsteelblue;
--webkit-box-shadow:2px 2px 3px inset;
--moz-box-shadow:2px 2px 3px inset;
 box-shadow:2px 2px 3px inset;
 margin:0 5px;
-position:relative;
-behavior:url(css/pie.htc);
 }
 
 /* BODY - MAIN MENU */
@@ -363,26 +342,17 @@ list-style:none;
 #MainMenuDiv li a:hover,
 #MainMenuDiv .main_menu_selected a{
 display:block; /* REQUIRED */
--webkit-border-radius:10px;
--moz-border-radius:10px;
 border-radius:10px;
 color:white;
 text-decoration:none;
 padding:3px;
 margin-bottom:5px;
-background:steelblue;
-position:relative;
-behavior:url(css/pie.htc);
 }
 #MainMenuDiv li a:hover{
 color:cyan;
--webkit-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
--moz-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 }
 #MainMenuDiv .main_menu_selected a{ /* the selected button */
--webkit-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
--moz-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 }
 
@@ -475,12 +445,9 @@ padding:5px;
 #FooterLogoDiv{
 background:white;
 border:2px outset steelblue;
--webkit-border-radius:8px 8px 8px 8px;
--moz-border-radius:8px 8px 8px 8px;
 border-radius:8px 8px 8px 8px;
 float:left;
 padding:3px;
-behavior:url(css/pie.htc);
 }
 #FooterVersionDiv{
 float:left;

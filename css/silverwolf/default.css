@@ -1,11 +1,8 @@
-/* 
+/*** 
 
 New "SilverWolf" Theme for WebERP
 
-v2, 2012-10-01
-
-- Broaden compatibility with IE8 and most browsers.
-- Use CSS3-PIE (Thanks to them)
+by Hindra Joshua
 
 Based from the previous theme "SilverWolf"
 Credits to the original authors.
@@ -16,7 +13,8 @@ but for the obvious one it will be cleaned up.
 To optimized the rest we should examined the whole codes! That would be for 
 the next project. :)
 
-*/
+***/
+
 
 body{
 font-family:Arial, Verdana, Helvetica, sans-serif;
@@ -458,13 +456,9 @@ padding:3px;
 #FooterLogoDiv{
 float:left;
 background:white;
--webkit-border-radius:8px;
--moz-border-radius:8px;
-border-radius:8px;
+border-radius:8px 8px 8px 8px;
 padding:3px;
 margin-left:47%; /* to the center (approx) */
-position: relative;
-behavior:url(css/pie.htc);
 }
 #FooterLogoDiv img{
 vertical-align:middle;

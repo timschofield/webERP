@@ -1,17 +1,10 @@
-/*
-
+/* 
 "Fluid Tabs" theme for webERP
 
 by Hindra Joshua
 
 This is a fluid theme capable to adjust itself on small screen devices (phones, tablets, etc.)
 Beware, the contents is currently not fluid! :D
-
-v2, 2012-10-01
-
-- Broaden compatibility with IE8 and most browsers.
-- Use CSS3-PIE (Thanks to them)
-
 */
 
 body{
@@ -271,13 +264,9 @@ list-style-image:url(bullet.gif);
 background:#aae;
 border:1px outset #aae;
 border-top:1px solid #aae;
--webkit-border-radius: 0 0 7px 7px;
--moz-border-radius: 0 0 7px 7px;
 border-radius: 0 0 7px 7px;
 color:black;
 padding:1px;
-position: relative;
-behavior:url(css/pie.htc);
 }
 #QuickMenuDiv li a:hover{
 background:#cdf;
@@ -304,13 +293,9 @@ height:18px;
 background:#aae;
 border:1px outset #aae;
 border-bottom:1px solid #aae;
--webkit-border-radius: 7px 7px 0 0;
--moz-border-radius: 7px 7px 0 0;
 border-radius: 7px 7px 0 0;
 color:black;
 padding:1px;
-position: relative;
-behavior:url(css/pie.htc);
 }
 #MainMenuDiv li a:hover{
 background:#cdf;

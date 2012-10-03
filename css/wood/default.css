@@ -2,13 +2,11 @@
 
 "Wood" Theme for WebERP
 
+v3, 2012-08-03
+
 by Hindra Joshua
 
-v3, 2012-10-01
-
 Changes:
-- Broaden compatibility with IE8 and most browsers.
-- Use CSS3-PIE (Thanks to them)
 - Wood textures scaled down
 - Add shadow effects
 - Light color
@@ -63,22 +61,16 @@ color:red;
 
 table{ /* most data display/input used tables */
 background:none repeat scroll 0 0 white;
--webkit-box-shadow:3px 3px 4px #663311;
--moz-box-shadow:3px 3px 4px #663311;
 box-shadow:3px 3px 4px #663311;
 text-align:center;
 width:auto;
 max-width:90%;
 margin:5px auto;
 padding:3px;
-behavior:url(css/pie.htc);
 }
 table .selection{ /* nested table for more complex data display/input */
 background:#feb;
--webkit-box-shadow:none;
--moz-box-shadow:none;
 box-shadow:none;
-behavior:url(css/pie.htc);
 }
 th { /* table headers */
 font-weight: normal;
@@ -152,49 +144,37 @@ div.error {
 background-color:#fddbdb;
 color: red;
 border: 1px solid red;
--webkit-box-shadow:3px 3px 4px;
--moz-box-shadow:3px 3px 4px;
 box-shadow:3px 3px 4px;
 margin:0 auto 10px;
 padding:10px;
 width:80%;
-behavior:url(css/pie.htc);
 }
 div.warn {
 background-color:#f5dbfd;
 color: maroon;
 border: 1px solid maroon;
--webkit-box-shadow:3px 3px 4px;
--moz-box-shadow:3px 3px 4px;
 box-shadow:3px 3px 4px;
 margin:0 auto 10px;
 padding:10px;
 width:80%;
-behavior:url(css/pie.htc);
 }
 div.success {
 background-color:#b9ecb4;
 color: darkgreen;
 border: 1px solid darkgreen;
--webkit-box-shadow:3px 3px 4px;
--moz-box-shadow:3px 3px 4px;
 box-shadow:3px 3px 4px;
 margin:0 auto 10px;
 padding:10px;
 width:80%;
-behavior:url(css/pie.htc);
 }
 div.info {
 background-color:#C7CCF6;
 border:0 solid navy;
 color:navy;
--webkit-box-shadow:3px 3px 4px;
--moz-box-shadow:3px 3px 4px;
 box-shadow:3px 3px 4px;
 margin:0 auto 10px;
 padding:10px;
 width:80%;
-behavior:url(css/pie.htc);
 }
 DIV.page_help_text {
 background: lightgrey url(images/help.png) top left no-repeat;
@@ -212,13 +192,10 @@ font-size: 10px;
 color: black;
 TEXT-ALIGN:center;
 
--webkit-box-shadow:3px 3px 4px;
--moz-box-shadow:3px 3px 4px;
 box-shadow:3px 3px 4px;
 margin:0 auto 10px;
 padding:10px;
 width:80%;
-behavior:url(css/pie.htc);
 }
 DIV.system_check { /* probably not used anywhere */
 BORDER: #a52a2a 1px solid;
@@ -233,13 +210,10 @@ font-size: 10px;
 color: black;
 TEXT-ALIGN:left;
 
--webkit-box-shadow:3px 3px 4px;
--moz-box-shadow:3px 3px 4px;
 box-shadow:3px 3px 4px;
 margin:0 auto 10px;
 padding:10px;
 width:80%;
-behavior:url(css/pie.htc);
 }
 
 /* date picker */
@@ -247,10 +221,7 @@ behavior:url(css/pie.htc);
 .dpTbl { /* date picker background */
 border:thin solid black;
 background:white;
--webkit-box-shadow: 3px 3px 4px #000;
--moz-box-shadow: 3px 3px 4px #000;
-box-shadow: 3px 3px 4px #000;
-behavior:url(css/pie.htc);
+box-shadow: 3px 3px 4px #000; /* shadow on modern browsers */
 }
 .dpTD {
 border: 0;
@@ -333,15 +304,10 @@ color:white;
 
 #CanvasDiv{
 background:url(images/wood.jpg) #feb;
-border:3px solid #feb;
--webkit-border-radius:15px;
--moz-border-radius:15px;
-border-radius:15px;
+border:3px outset #feb;
+border-radius:15px 15px 15px 15px;
 padding:3px;
--webkit-box-shadow: 5px 5px 6px #000;
--moz-box-shadow: 5px 5px 6px #000;
-box-shadow: 5px 5px 6px #000;
-behavior:url(css/pie.htc);
+box-shadow: 5px 5px 6px #000; /* modern browser only! */
 }
 
 /* HEADER */
@@ -355,36 +321,29 @@ color: black;
 font-weight: normal;
 text-decoration: none;
 border:2px outset #feb;
--webkit-border-radius:10px;
--moz-border-radius:10px;
 border-radius:10px;
 padding:3px 5px;
--webkit-box-shadow:2px 2px 3px black;
--moz-box-shadow:2px 2px 3px black;
 box-shadow:2px 2px 3px black;
 margin-right:2px;
-background:url(images/wood.jpg) #feb;
-behavior:url(css/pie.htc);
+background:none;
 }
 #HeaderDiv a:hover{
+color: black;
 font-weight: normal;
 text-decoration: none;
 border:2px outset #feb;
+border-radius:10px;
 padding:3px 5px;
 color:red;
+box-shadow:2px 2px 3px black;
 }
 #HeaderDiv a:active{
 color: red;
-text-decoration:none;
+text-decoration: none;
 border:2px inset #feb;
--webkit-border-radius:10px;
--moz-border-radius:10px;
 border-radius:10px;
 padding:3px 5px;
--webkit-box-shadow:2px 2px 3px black inset;
--moz-box-shadow:2px 2px 3px black inset;
 box-shadow:2px 2px 3px black inset;
-background:url(images/wood.jpg) #feb;
 }
 
 #HeaderWrapDiv{
@@ -461,17 +420,11 @@ color:black;
 text-decoration:none;
 background:none;
 border:2px outset #feb;
--webkit-border-radius:10px;
--moz-border-radius:10px;
 border-radius:10px;
--webkit-box-shadow:2px 2px 3px black;
--moz-box-shadow:2px 2px 3px black;
 box-shadow:2px 2px 3px black;
 padding:3px;
 margin-top:2px;
 margin-bottom:2px;
-background:url(images/wood.jpg) #feb;
-behavior:url(css/pie.htc);
 }
 #MainMenuDiv li a:hover{
 color:red;
@@ -480,14 +433,10 @@ color:red;
 #MainMenuDiv .main_menu_selected a:hover{ /* pressed */
 color:red;
 border:2px inset #feb;
--webkit-box-shadow:2px 2px 3px black inset;
--moz-box-shadow:2px 2px 3px black inset;
 box-shadow:2px 2px 3px black inset;
 }
 #MainMenuDiv .main_menu_selected a{ /* the selected button */
 border:2px inset #feb;
--webkit-box-shadow:2px 2px 3px black inset;
--moz-box-shadow:2px 2px 3px black inset;
 box-shadow:2px 2px 3px black inset;
 }
 
@@ -498,29 +447,19 @@ display:table; /* display as table, sub menu will auto adjust width */
 text-align:left;
 background:url(images/desk.jpg) #631;
 border:3px inset #feb;
--webkit-border-radius:15px;
--moz-border-radius:15px;
 border-radius:15px;
--webkit-box-shadow: 5px 5px 6px #000 inset;
--moz-box-shadow: 5px 5px 6px #000 inset;
-box-shadow: 5px 5px 6px #000 inset;
+box-shadow: 5px 5px 6px #000 inset; /* modern browser only! */
 margin:0 auto;
 padding:5px;
 width:87%;
-behavior:url(css/pie.htc);
 }
 #SubMenuDiv ul{
 background:url(images/wood.jpg) #feb;
 border:3px outset #feb;
--webkit-border-radius:10px;
--moz-border-radius:10px;
 border-radius:10px;
--webkit-box-shadow: 5px 5px 6px #000;
--moz-box-shadow: 5px 5px 6px #000;
-box-shadow: 5px 5px 6px #000;
+box-shadow: 5px 5px 6px #000; /* shadow: modern browser only! */
 padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
 margin:5px;
-behavior:url(css/pie.htc);
 }
 #SubMenuDiv li{
 list-style:none; /* REQUIRED: hide bullets */
@@ -529,30 +468,22 @@ list-style:none; /* REQUIRED: hide bullets */
 .menu_group_headers {
 background:url(images/desk.jpg) #631;
 border:3px outset #631;
--webkit-border-radius:10px 10px 0 0;
--moz-border-radius:10px 10px 0 0;
 border-radius:10px 10px 0 0;
 color:white;
 font-weight:bold;
 text-align:center;
 padding:2px;
 margin:-3px -3px 0;
-behavior:url(css/pie.htc);
 }
 
 .menu_group_item,.menu_group_item:hover{
 color:black;
 border:1px inset transparent;
--webkit-border-radius:7px;
--moz-border-radius:7px;
 border-radius:7px;
 padding:2px;
-behavior:url(css/pie.htc);
 }
 .menu_group_item:hover{
 border:1px inset #feb;
--webkit-box-shadow:1px 1px 2px black inset;
--moz-box-shadow:1px 1px 2px black inset;
 box-shadow:1px 1px 2px black inset;
 }
 .menu_group_item a{
@@ -595,14 +526,11 @@ overflow:hidden;
 #FooterLogoDiv{
 background:white;
 border:2px outset #feb;
--webkit-border-radius:8px 8px 8px 8px;
--moz-border-radius:8px 8px 8px 8px;
 border-radius:8px 8px 8px 8px;
 float:left;
 padding:3px;
 margin-left:0px;
 margin-top:3px;
-behavior:url(css/pie.htc);
 }
 #FooterVersionDiv{
 float:left;
