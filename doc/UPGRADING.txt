@@ -2,6 +2,8 @@ UPGRADING FROM PREVIOUS VERSIONS OF WEBERP
 
 /* $Id$*/
 
+A new css structure was released with 4.09 and upgraders will need to clear their cache for the new css to render correctly. This was reported by a user with Internet Explorer 9.
+
 From versions 4.01 database upgrades are now automatically processed if the version number of the code is different to the version number of the database. The first login will require the system administrator to allow the system to upgrade it's own database. A backup of the database prior to the running the upgrade is advisable and a link is provided to download a backup of the database. The new upgrade system will not be able to identify versions prior to 3.11 so it is necessary to select the version being upgraded from manaully. It can process database upgrades from version 3.00 onwards.
 
 The instructions to complete upgrades the old way are provided below if for some reason it becomes necessary:

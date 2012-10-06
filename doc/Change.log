@@ -1,5 +1,7 @@
 webERP Change Log
 
+6/10/2012 Release 4.09
+
 27/9/12 Samudaya Nanayakkara: WorkOrderIssue.php with multiple work order items was not calculating requirements correctly nor showing all the outputs of the work order with correct quantities received and ordered. Reworked the script to show a table of the output items and the sql to get the correct component requirements.
 27/9/12 Samudaya Nanayakkara: InternalStockRequestFulfill.php fixed quantity not filtered for number formatting. Phil tidy up coding conventions
 27/9/12 Samudaya Nanayakkara: Fixed SupplierPriceList.php units of measure were being looked up based on unit id but required matching against the unitname

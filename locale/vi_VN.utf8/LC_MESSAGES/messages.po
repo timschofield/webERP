@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.071\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-30 20:13+1200\n"
+"POT-Creation-Date: 2012-10-06 12:22+1200\n"
 "PO-Revision-Date: 2011-05-18 07:33+0000\n"
 "Last-Translator: BrainCo Technologies Pte Ltd <Unknown>\n"
 "Language-Team: BrainCo Technologies <sales@braincotech.com>\n"
@@ -159,7 +159,7 @@ msgstr ""
 
 #: AccountGroups.php:191 AccountGroups.php:226 AccountSections.php:130
 #: Areas.php:115 Areas.php:124 BankAccounts.php:159 CreditStatus.php:125
-#: Currencies.php:166 Currencies.php:174 Currencies.php:182
+#: Currencies.php:167 Currencies.php:175 Currencies.php:183
 #: CustomerBranches.php:290 CustomerBranches.php:300 CustomerBranches.php:310
 #: CustomerBranches.php:320 Customers.php:286 Customers.php:295
 #: Customers.php:303 Customers.php:311 CustomerTypes.php:147
@@ -238,7 +238,7 @@ msgstr "Không thể tìm ra các nhóm tài khoản vì"
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:231 BOMs.php:858
 #: COGSGLPostings.php:19 CompanyPreferences.php:155 CounterSales.php:2045
 #: CounterSales.php:2170 Credit_Invoice.php:256 CreditStatus.php:21
-#: Currencies.php:28 CustEDISetup.php:17 DailyBankTransactions.php:11
+#: Currencies.php:29 CustEDISetup.php:17 DailyBankTransactions.php:11
 #: DebtorsAtPeriodEnd.php:125 Departments.php:10 DiscountCategories.php:12
 #: DiscountCategories.php:136 DiscountMatrix.php:16 EDIMessageFormat.php:105
 #: FixedAssetLocations.php:9 FixedAssetRegister.php:13
@@ -264,9 +264,9 @@ msgstr "Không thể tìm ra các nhóm tài khoản vì"
 #: Shippers.php:123 Shippers.php:160 Shipt_Select.php:8
 #: StockLocMovements.php:14 StockLocStatus.php:28
 #: StockSerialItemResearch.php:30 SupplierPriceList.php:15
-#: SupplierPriceList.php:214 SupplierPriceList.php:384
-#: SupplierPriceList.php:388 SupplierPriceList.php:439
-#: SupplierPriceList.php:489 Suppliers.php:305 SupplierTenderCreate.php:522
+#: SupplierPriceList.php:217 SupplierPriceList.php:387
+#: SupplierPriceList.php:391 SupplierPriceList.php:442
+#: SupplierPriceList.php:492 Suppliers.php:305 SupplierTenderCreate.php:522
 #: SupplierTenderCreate.php:628 SupplierTenders.php:322
 #: SupplierTenders.php:388 SupplierTransInquiry.php:10 TaxGroups.php:15
 #: TaxProvinces.php:11 TopItems.php:114 UnitsOfMeasure.php:10
@@ -311,7 +311,7 @@ msgstr "Lãi và lỗ"
 #: PaymentMethods.php:294 PcAuthorizeExpenses.php:246 PDFChequeListing.php:63
 #: PDFDeliveryDifferences.php:76 PDFDIFOT.php:76
 #: PO_AuthorisationLevels.php:134 PO_AuthorisationLevels.php:139
-#: PO_Header.php:792 PO_PDFPurchOrder.php:392 PO_PDFPurchOrder.php:395
+#: PO_Header.php:792 PO_PDFPurchOrder.php:391 PO_PDFPurchOrder.php:394
 #: PurchData.php:191 PurchData.php:521 PurchData.php:524
 #: RecurringSalesOrders.php:486 RecurringSalesOrders.php:489
 #: SalesAnalReptCols.php:284 SalesAnalReptCols.php:419
@@ -350,7 +350,7 @@ msgstr "Có"
 #: PaymentMethods.php:288 PaymentMethods.php:295 PcAuthorizeExpenses.php:244
 #: PDFChequeListing.php:62 PDFDeliveryDifferences.php:75 PDFDIFOT.php:75
 #: PO_AuthorisationLevels.php:136 PO_AuthorisationLevels.php:141
-#: PO_Header.php:791 PO_PDFPurchOrder.php:393 PO_PDFPurchOrder.php:396
+#: PO_Header.php:791 PO_PDFPurchOrder.php:392 PO_PDFPurchOrder.php:395
 #: PurchData.php:195 PurchData.php:522 PurchData.php:525
 #: RecurringSalesOrders.php:485 RecurringSalesOrders.php:488
 #: SalesAnalReptCols.php:282 SalesAnalReptCols.php:420
@@ -376,7 +376,7 @@ msgstr "Không"
 #: AccountGroups.php:300 AccountSections.php:189 AddCustomerContacts.php:148
 #: AddCustomerNotes.php:137 AddCustomerTypeNotes.php:131 Areas.php:164
 #: BankAccounts.php:223 BOMs.php:151 COGSGLPostings.php:109
-#: COGSGLPostings.php:207 CreditStatus.php:175 Currencies.php:275
+#: COGSGLPostings.php:207 CreditStatus.php:175 Currencies.php:276
 #: CustomerBranches.php:418 Customers.php:1060 Customers.php:1094
 #: CustomerTypes.php:206 Departments.php:186 EDIMessageFormat.php:150
 #: Factors.php:334 FixedAssetCategories.php:187 FixedAssetLocations.php:107
@@ -411,7 +411,7 @@ msgstr "Bạn có chắc chắn muốn xóa chi nhánh này?"
 #: BankAccounts.php:224 BOMs.php:153 COGSGLPostings.php:110
 #: COGSGLPostings.php:208 ContractBOM.php:267 ContractOtherReqts.php:120
 #: CounterSales.php:833 Credit_Invoice.php:394 CreditStatus.php:176
-#: Currencies.php:278 CustomerReceipt.php:925 Customers.php:1095
+#: Currencies.php:279 CustomerReceipt.php:925 Customers.php:1095
 #: CustomerTypes.php:207 Departments.php:187 DiscountCategories.php:225
 #: DiscountMatrix.php:183 EDIMessageFormat.php:151
 #: FixedAssetCategories.php:188 FreightCosts.php:243 GeocodeSetup.php:174
@@ -488,7 +488,7 @@ msgstr "Các mục trong tài khoản"
 #: AccountGroups.php:451 AccountSections.php:259 AddCustomerContacts.php:260
 #: AddCustomerNotes.php:242 AddCustomerTypeNotes.php:221 Areas.php:229
 #: BankAccounts.php:399 BOMs.php:785 COGSGLPostings.php:356
-#: CreditStatus.php:259 Currencies.php:405 CustLoginSetup.php:273
+#: CreditStatus.php:259 Currencies.php:406 CustLoginSetup.php:273
 #: Departments.php:255 DiscountMatrix.php:142 EDIMessageFormat.php:248
 #: FixedAssetCategories.php:347 FixedAssetLocations.php:157
 #: FreightCosts.php:342 GeocodeSetup.php:271 GLAccounts.php:266 Labels.php:531
@@ -648,10 +648,10 @@ msgstr "Số điện thoại"
 #: CustomerBranches.php:377 CustomerBranches.php:797 CustomerInquiry.php:257
 #: Customers.php:1050 Customers.php:1058 EmailCustTrans.php:15
 #: EmailCustTrans.php:64 Factors.php:246 Factors.php:297 Locations.php:587
-#: OrderDetails.php:109 PDFRemittanceAdvice.php:251 PO_PDFPurchOrder.php:379
-#: PO_PDFPurchOrder.php:382 PrintCustTrans.php:718 PrintCustTrans.php:949
-#: PrintCustTrans.php:998 PrintCustTransPortrait.php:756
-#: PrintCustTransPortrait.php:1002 PrintCustTransPortrait.php:1058
+#: OrderDetails.php:109 PDFRemittanceAdvice.php:251 PO_PDFPurchOrder.php:378
+#: PO_PDFPurchOrder.php:381 PrintCustTrans.php:713 PrintCustTrans.php:944
+#: PrintCustTrans.php:993 PrintCustTransPortrait.php:759
+#: PrintCustTransPortrait.php:1005 PrintCustTransPortrait.php:1061
 #: SelectCustomer.php:433 SelectCustomer.php:624 SupplierContacts.php:156
 #: SupplierContacts.php:277 UserSettings.php:185 WWW_Users.php:288
 #: includes/PDFPickingListHeader.inc:25 includes/PDFStatementPageHeader.inc:67
@@ -737,7 +737,7 @@ msgstr "Ghi chú khách hàng"
 #: GLAccountReport.php:340 GLTransInquiry.php:42 MRPCalendar.php:219
 #: PaymentAllocations.php:66 PcAssignCashToTab.php:237
 #: PcAuthorizeExpenses.php:91 PDFRemittanceAdvice.php:308
-#: PrintCustTrans.php:826 PrintCustTransPortrait.php:870 ReverseGRN.php:392
+#: PrintCustTrans.php:821 PrintCustTransPortrait.php:873 ReverseGRN.php:392
 #: ShipmentCosting.php:538 ShipmentCosting.php:615 Shipments.php:491
 #: StockDispatch.php:239 StockDispatch.php:250 StockDispatch.php:261
 #: StockLocMovements.php:91 StockMovements.php:98
@@ -753,10 +753,10 @@ msgid "Date"
 msgstr "Ngày"
 
 #: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:172
-#: Stocks.php:1062 UpgradeDatabase.php:204 UpgradeDatabase.php:207
-#: UpgradeDatabase.php:210 UpgradeDatabase.php:213 UpgradeDatabase.php:216
-#: UpgradeDatabase.php:219 UpgradeDatabase.php:222 UpgradeDatabase.php:225
-#: UpgradeDatabase.php:228 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1062 UpgradeDatabase.php:209 UpgradeDatabase.php:212
+#: UpgradeDatabase.php:215 UpgradeDatabase.php:218 UpgradeDatabase.php:221
+#: UpgradeDatabase.php:224 UpgradeDatabase.php:227 UpgradeDatabase.php:230
+#: UpgradeDatabase.php:233 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -913,7 +913,7 @@ msgstr ""
 #: PDFQuotation.php:272 PDFQuotationPortrait.php:268
 #: PDFRemittanceAdvice.php:83 PDFStockCheckComparison.php:37
 #: PDFStockCheckComparison.php:63 PDFStockCheckComparison.php:268
-#: PO_PDFPurchOrder.php:31 PO_PDFPurchOrder.php:154
+#: PO_PDFPurchOrder.php:31 PO_PDFPurchOrder.php:152
 #: PrintCustOrder_generic.php:245 PrintCustOrder.php:233 ReorderLevel.php:63
 #: ReorderLevel.php:182 SalesAnalysis_UserDefined.php:28
 #: SelectCreditItems.php:30 StockCheck.php:46 StockCheck.php:68
@@ -964,7 +964,7 @@ msgstr "không thể lấy làm lại vì"
 #: StockMovements.php:91 StockQuantityByDate.php:97 StockReorderLevel.php:41
 #: StockStatus.php:298 StockTransfers.php:203 StockUsageGraph.php:53
 #: StockUsage.php:139 SupplierInquiry.php:78 SupplierInquiry.php:100
-#: SupplierInquiry.php:136 SupplierInquiry.php:192 SupplierPriceList.php:372
+#: SupplierInquiry.php:136 SupplierInquiry.php:192 SupplierPriceList.php:375
 #: SupplierTransInquiry.php:97 SuppPaymentRun.php:114 SuppPaymentRun.php:188
 #: SuppPaymentRun.php:219 WorkOrderCosting.php:429 WorkOrderReceive.php:292
 #: WOSerialNos.php:49 Z_ChangeBranchCode.php:105 Z_ChangeCustomerCode.php:91
@@ -1047,8 +1047,8 @@ msgstr "Báo cáo chi tiết"
 #: MRPPlannedWorkOrders.php:341 MRPReschedules.php:153 MRPShortages.php:303
 #: OutstandingGRNs.php:182 PDFCustomerList.php:419 PDFLowGP.php:146
 #: PDFPriceList.php:312 PDFRemittanceAdvice.php:175
-#: PDFStockCheckComparison.php:361 PrintCustTrans.php:542
-#: PrintCustTransPortrait.php:579 ReorderLevel.php:259 StockDispatch.php:407
+#: PDFStockCheckComparison.php:361 PrintCustTrans.php:537
+#: PrintCustTransPortrait.php:582 ReorderLevel.php:259 StockDispatch.php:407
 #: SupplierBalsAtPeriodEnd.php:160 SuppPriceList.php:263 Tax.php:352
 msgid "Print PDF"
 msgstr "in dưới định dạng PDF"
@@ -1248,7 +1248,7 @@ msgstr "ID người sử dụng"
 #: SystemParameters.php:984 SystemParameters.php:990 SystemParameters.php:996
 #: SystemParameters.php:1002 SystemParameters.php:1008 TopItems.php:29
 #: TopItems.php:45 TopItems.php:67 TopItems.php:69 WorkOrderEntry.php:604
-#: WorkOrderEntry.php:607 WorkOrderIssue.php:661 WorkOrderIssue.php:664
+#: WorkOrderEntry.php:607 WorkOrderIssue.php:660 WorkOrderIssue.php:663
 msgid "All"
 msgstr "tất cả"
 
@@ -1480,7 +1480,7 @@ msgstr "Địa chỉ ngân hàng"
 #: PO_SelectOSPurchOrder.php:489 PO_SelectPurchOrder.php:433
 #: PricesByCost.php:277 Prices.php:221 Prices.php:297 PurchData.php:171
 #: PurchData.php:357 PurchData.php:488 SelectSupplier.php:261
-#: SupplierCredit.php:263 SupplierInvoice.php:237 SupplierPriceList.php:447
+#: SupplierCredit.php:263 SupplierInvoice.php:237 SupplierPriceList.php:450
 #: SupplierTenderCreate.php:585 SupplierTenders.php:126
 #: SupplierTenders.php:538 SupplierTransInquiry.php:111 SuppPriceList.php:303
 #: includes/PDFBankingSummaryPageHeader.inc:42
@@ -1592,7 +1592,7 @@ msgstr "Hiển thị"
 
 #: BankMatching.php:123 CounterSales.php:225 CreditItemsControlled.php:78
 #: FreightCosts.php:269 GoodsReceivedControlled.php:68 GoodsReceived.php:73
-#: InternalStockRequestFulfill.php:36 StockLocTransferReceive.php:424
+#: InternalStockRequestFulfill.php:37 StockLocTransferReceive.php:424
 #: SupplierAllocations.php:435 SuppShiptChgs.php:137
 msgid "from"
 msgstr "Từ"
@@ -1605,7 +1605,7 @@ msgstr "Từ"
 #: PDFDeliveryDifferences.php:203 PDFDeliveryDifferences.php:299
 #: PDFDIFOT.php:193 PDFDIFOT.php:206 PDFDIFOT.php:310 PDFOrdersInvoiced.php:80
 #: PDFOrdersInvoiced.php:277 PDFOrderStatus.php:85 PDFOrderStatus.php:259
-#: PDFRemittanceAdvice.php:48 PO_PDFPurchOrder.php:341
+#: PDFRemittanceAdvice.php:48 PO_PDFPurchOrder.php:340
 #: PricesBasedOnMarkUp.php:215 PricesBasedOnMarkUp.php:354
 #: PrintCustStatements.php:43 PrintCustTrans.php:60 PrintCustTrans.php:63
 #: PrintCustTransPortrait.php:58 PrintCustTransPortrait.php:61
@@ -1698,7 +1698,8 @@ msgstr "không nhập vào được định dạng ngày tháng này"
 msgid "Entry is expected in the format"
 msgstr "đường dẫn chờ định dạng"
 
-#: BankMatching.php:177
+#: BankMatching.php:177 GLProfit_Loss.php:859
+#, php-format
 msgid "after"
 msgstr "sau"
 
@@ -1854,10 +1855,10 @@ msgstr "nhập lại lượng sec không hiển thị"
 #: BankReconciliation.php:211 BankReconciliation.php:288
 #: CustomerAllocations.php:329 CustomerAllocations.php:363
 #: CustomerInquiry.php:199 CustomerTransInquiry.php:101 CustWhereAlloc.php:106
-#: EmailCustTrans.php:15 GLAccountInquiry.php:154 PrintCustTrans.php:485
-#: PrintCustTrans.php:703 PrintCustTrans.php:936 PrintCustTrans.php:985
-#: PrintCustTransPortrait.php:506 PrintCustTransPortrait.php:738
-#: PrintCustTransPortrait.php:986 PrintCustTransPortrait.php:1041
+#: EmailCustTrans.php:15 GLAccountInquiry.php:154 PrintCustTrans.php:480
+#: PrintCustTrans.php:698 PrintCustTrans.php:931 PrintCustTrans.php:980
+#: PrintCustTransPortrait.php:509 PrintCustTransPortrait.php:741
+#: PrintCustTransPortrait.php:989 PrintCustTransPortrait.php:1044
 #: StockMovements.php:97 SupplierAllocations.php:455
 #: SupplierAllocations.php:568 SupplierAllocations.php:643
 #: SupplierTransInquiry.php:103 Z_CheckAllocs.php:63
@@ -2004,17 +2005,17 @@ msgstr "phần"
 #: CounterSales.php:2056 CounterSales.php:2244 CounterSales.php:2380
 #: Credit_Invoice.php:275 DeliveryDetails.php:846 DeliveryDetails.php:916
 #: GoodsReceived.php:101 GoodsReceived.php:105 GoodsReceived.php:108
-#: InternalStockRequestFulfill.php:303 InternalStockRequestFulfill.php:304
+#: InternalStockRequestFulfill.php:308 InternalStockRequestFulfill.php:309
 #: InternalStockRequest.php:629 InventoryPlanningPrefSupplier.php:78
 #: InventoryQuantities.php:248 MRPDemands.php:297 MRPDemands.php:395
 #: MRPPlannedPurchaseOrders.php:328 MRPPlannedWorkOrders.php:261
 #: MRPPlannedWorkOrders.php:387 MRPReport.php:413 MRPReport.php:419
 #: MRPReschedules.php:195 OffersReceived.php:108 OffersReceived.php:219
 #: OffersReceived.php:264 OrderDetails.php:164 PDFOrdersInvoiced.php:393
-#: POReport.php:762 POReport.php:1449 PrintCustTrans.php:866
-#: PrintCustTrans.php:955 PrintCustTrans.php:1004
-#: PrintCustTransPortrait.php:912 PrintCustTransPortrait.php:1010
-#: PrintCustTransPortrait.php:1066 RecurringSalesOrders.php:324
+#: POReport.php:762 POReport.php:1449 PrintCustTrans.php:861
+#: PrintCustTrans.php:950 PrintCustTrans.php:999
+#: PrintCustTransPortrait.php:915 PrintCustTransPortrait.php:1013
+#: PrintCustTransPortrait.php:1069 RecurringSalesOrders.php:324
 #: ReorderLevel.php:300 ReverseGRN.php:393 ReverseGRN.php:394
 #: SalesAnalReptCols.php:16 SalesAnalReptCols.php:18 SalesGraph.php:189
 #: SalesGraph.php:272 SalesInquiry.php:980 SalesTopItemsInquiry.php:225
@@ -2128,9 +2129,9 @@ msgstr "đã in"
 #: MRPPlannedPurchaseOrders.php:308 MRPPlannedWorkOrders.php:367
 #: MRPReport.php:817 MRPReschedules.php:181 MRPShortages.php:335
 #: PDFPriceList.php:344 PDFReceipt.php:31 PDFRemittanceAdvice.php:218
-#: PrintCustOrder.php:170 PrintCustTrans.php:741 PrintCustTrans.php:950
-#: PrintCustTrans.php:999 PrintCustTransPortrait.php:781
-#: PrintCustTransPortrait.php:1003 PrintCustTransPortrait.php:1059
+#: PrintCustOrder.php:170 PrintCustTrans.php:736 PrintCustTrans.php:945
+#: PrintCustTrans.php:994 PrintCustTransPortrait.php:784
+#: PrintCustTransPortrait.php:1006 PrintCustTransPortrait.php:1062
 #: ReorderLevel.php:284 StockDispatch.php:438 SuppPriceList.php:293
 #: Tax.php:243 includes/PDFAgedDebtorsPageHeader.inc:34
 #: includes/PDFAgedSuppliersPageHeader.inc:21
@@ -2284,13 +2285,13 @@ msgstr "mức 1"
 #: StockQuantityByDate.php:108 SuppCreditGRNs.php:92 SuppCreditGRNs.php:187
 #: SuppFixedAssetChgs.php:75 SuppInvGRNs.php:126 SuppInvGRNs.php:307
 #: SupplierCredit.php:317 SupplierCredit.php:385 SupplierInvoice.php:296
-#: SupplierInvoice.php:376 SupplierPriceList.php:40 SupplierPriceList.php:261
-#: SupplierPriceList.php:523 SupplierTenderCreate.php:411
+#: SupplierInvoice.php:376 SupplierPriceList.php:40 SupplierPriceList.php:264
+#: SupplierPriceList.php:526 SupplierTenderCreate.php:411
 #: SupplierTenderCreate.php:659 SupplierTenderCreate.php:818
 #: SupplierTenders.php:326 SupplierTenders.php:421 SupplierTenders.php:689
 #: SuppPriceList.php:309 TaxAuthorities.php:147 TopItems.php:164
 #: WorkCentres.php:127 WorkOrderCosting.php:98 WorkOrderCosting.php:130
-#: WorkOrderEntry.php:643 WorkOrderIssue.php:706
+#: WorkOrderEntry.php:643 WorkOrderIssue.php:705
 #: includes/DefineLabelClass.php:12 includes/DefineLabelClass.php:45
 #: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
@@ -2365,13 +2366,13 @@ msgstr "B? d?ng c? ho?c linh ki?n s? có s?n d? làm danh sách nguyên v?t li?u
 
 #: BOMInquiry.php:26 BOMs.php:864 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:213 PO_SelectPurchOrder.php:190
-#: Shipt_Select.php:169 WorkOrderEntry.php:628 WorkOrderIssue.php:677
+#: Shipt_Select.php:169 WorkOrderEntry.php:628 WorkOrderIssue.php:676
 msgid "Enter text extracts in the"
 msgstr ""
 
 #: BOMInquiry.php:26 BOMs.php:864 MRPDemands.php:336
 #: PO_SelectOSPurchOrder.php:213 PO_SelectPurchOrder.php:190
-#: Shipt_Select.php:169 WorkOrderEntry.php:628 WorkOrderIssue.php:677
+#: Shipt_Select.php:169 WorkOrderEntry.php:628 WorkOrderIssue.php:676
 msgid "description"
 msgstr "mô tả"
 
@@ -2390,15 +2391,15 @@ msgstr "mô tả"
 #: SelectOrderItems.php:605 SelectOrderItems.php:1667 SelectProduct.php:547
 #: SelectSalesOrder.php:595 SelectSupplier.php:210 SelectWorkOrder.php:197
 #: Shipt_Select.php:174 SuppFixedAssetChgs.php:123 SupplierPriceList.php:47
-#: SupplierPriceList.php:396 SupplierTenderCreate.php:532
+#: SupplierPriceList.php:399 SupplierTenderCreate.php:532
 #: SupplierTenderCreate.php:670 SupplierTenders.php:433 WorkOrderEntry.php:631
-#: WorkOrderIssue.php:682
+#: WorkOrderIssue.php:681
 msgid "OR"
 msgstr "hoặc"
 
 #: BOMInquiry.php:29 BOMs.php:867 MRPDemands.php:339
 #: PO_SelectOSPurchOrder.php:217 PO_SelectPurchOrder.php:195
-#: Shipt_Select.php:174 WorkOrderEntry.php:631 WorkOrderIssue.php:682
+#: Shipt_Select.php:174 WorkOrderEntry.php:631 WorkOrderIssue.php:681
 msgid "Enter extract of the"
 msgstr "Nhập thông tin chiết xuất của"
 
@@ -2414,7 +2415,7 @@ msgstr "Nhập thông tin chiết xuất của"
 #: StockCounts.php:155 StockMovements.php:36 StockReorderLevel.php:47
 #: StockStatus.php:57 StockTransfers.php:49 StockTransfers.php:470
 #: StockUsage.php:64 SupplierPriceList.php:47 SupplierTenderCreate.php:670
-#: SupplierTenders.php:433 WorkOrderEntry.php:631 WorkOrderIssue.php:682
+#: SupplierTenders.php:433 WorkOrderEntry.php:631 WorkOrderIssue.php:681
 #: Z_ChangeStockCategory.php:90 Z_ChangeStockCode.php:319
 msgid "Stock Code"
 msgstr "Mã kho"
@@ -2428,7 +2429,7 @@ msgstr "Mã kho"
 #: SelectProduct.php:555 SelectSupplier.php:220 SelectSupplier.php:253
 #: SupplierPriceList.php:55 SupplierTenderCreate.php:538
 #: SupplierTenderCreate.php:577 SupplierTenderCreate.php:681
-#: SupplierTenders.php:445 WorkOrderEntry.php:635 WorkOrderIssue.php:689
+#: SupplierTenders.php:445 WorkOrderEntry.php:635 WorkOrderIssue.php:688
 msgid "Search Now"
 msgstr "Tìm kiếm ngay"
 
@@ -2468,10 +2469,10 @@ msgstr ""
 #: SelectCustomer.php:426 SelectGLAccount.php:119 SelectOrderItems.php:1514
 #: SelectOrderItems.php:1700 SelectProduct.php:766 SelectSalesOrder.php:610
 #: SelectSupplier.php:259 SelectWorkOrder.php:209 Shipt_Select.php:190
-#: SpecialOrder.php:149 SupplierPriceList.php:260 SupplierPriceList.php:445
+#: SpecialOrder.php:149 SupplierPriceList.php:263 SupplierPriceList.php:448
 #: SupplierTenderCreate.php:583 SupplierTenderCreate.php:817
 #: SupplierTenders.php:688 SuppPriceList.php:308 TopItems.php:163
-#: WorkOrderEntry.php:642 WorkOrderIssue.php:705
+#: WorkOrderEntry.php:642 WorkOrderIssue.php:704
 #: includes/PDFTaxPageHeader.inc:38 includes/PDFTopItemsHeader.inc:49
 #: includes/PO_PDFOrderPageHeader.inc:76
 msgid "Code"
@@ -2481,7 +2482,7 @@ msgstr "Mã"
 #: ContractBOM.php:349 CounterSales.php:2051 CounterSales.php:2239
 #: Credit_Invoice.php:274 GoodsReceived.php:102 GoodsReceived.php:106
 #: InternalStockRequestAuthorisation.php:89
-#: InternalStockRequestFulfill.php:305 InternalStockRequest.php:557
+#: InternalStockRequestFulfill.php:310 InternalStockRequest.php:557
 #: InternalStockRequest.php:624 MRPReport.php:751 NoSalesItems.php:190
 #: OffersReceived.php:109 PO_Items.php:1094 PO_SelectOSPurchOrder.php:238
 #: PO_SelectPurchOrder.php:216 SelectCompletedOrder.php:555
@@ -2489,9 +2490,9 @@ msgstr "Mã"
 #: SelectOrderItems.php:1702 SelectProduct.php:129 SelectProduct.php:769
 #: SelectSalesOrder.php:613 SelectWorkOrder.php:212 Shipments.php:402
 #: Shipments.php:489 Shipt_Select.php:194 StockLocTransferReceive.php:433
-#: SupplierPriceList.php:262 SupplierTenderCreate.php:819
+#: SupplierPriceList.php:265 SupplierTenderCreate.php:819
 #: SupplierTenders.php:690 TopItems.php:166 WorkOrderCosting.php:100
-#: WorkOrderEntry.php:644 WorkOrderIssue.php:707 WorkOrderIssue.php:777
+#: WorkOrderEntry.php:644 WorkOrderIssue.php:706 WorkOrderIssue.php:776
 #: includes/DefineLabelClass.php:21 includes/PDFInventoryValnPageHeader.inc:34
 msgid "Units"
 msgstr "các đơn vị"
@@ -2842,7 +2843,7 @@ msgstr "Hiệu quả sau khi"
 msgid "Effective To"
 msgstr "Có hiệu quả với"
 
-#: BOMs.php:559 WorkOrderIssue.php:632 WorkOrderStatus.php:119
+#: BOMs.php:559 WorkOrderIssue.php:631 WorkOrderStatus.php:119
 msgid "Auto Issue"
 msgstr "tự động phát hành"
 
@@ -3173,7 +3174,7 @@ msgstr "tạo các đường dẫn vào sổ cái cho các giao dịch hàng hó
 #: GLTags.php:65 GoodsReceived.php:250 GoodsReceived.php:256
 #: GoodsReceived.php:263 GoodsReceived.php:749
 #: InternalStockRequestAuthorisation.php:104
-#: InternalStockRequestFulfill.php:347 InternalStockRequest.php:238
+#: InternalStockRequestFulfill.php:349 InternalStockRequest.php:238
 #: MRPCalendar.php:315 Payments.php:913 PcAuthorizeExpenses.php:106
 #: PcAuthorizeExpenses.php:288 PO_AuthoriseMyOrders.php:142
 #: PricesByCost.php:222 PurchData.php:529 ReorderLevelLocation.php:133
@@ -3352,10 +3353,10 @@ msgstr "Số tiền ghi trong hoá đơn"
 #: CounterSales.php:2379 Credit_Invoice.php:271 DeliveryDetails.php:844
 #: GoodsReceived.php:99 InternalStockRequest.php:260 Labels.php:465
 #: Labels.php:467 Labels.php:509 OrderDetails.php:162 PDFPrintLabel.php:65
-#: PO_Items.php:669 PO_OrderDetails.php:146 PrintCustTrans.php:864
-#: PrintCustTrans.php:953 PrintCustTrans.php:1002
-#: PrintCustTransPortrait.php:910 PrintCustTransPortrait.php:1008
-#: PrintCustTransPortrait.php:1064 RecurringSalesOrders.php:322
+#: PO_Items.php:669 PO_OrderDetails.php:146 PrintCustTrans.php:859
+#: PrintCustTrans.php:948 PrintCustTrans.php:997
+#: PrintCustTransPortrait.php:913 PrintCustTransPortrait.php:1011
+#: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:322
 #: ReorderLevelLocation.php:188 ReprintGRN.php:84 ReverseGRN.php:390
 #: SalesGraph.php:182 SelectCreditItems.php:678 SelectOrderItems.php:1358
 #: StockCostUpdate.php:125 StockLocMovements.php:88 StockLocTransfer.php:306
@@ -3380,9 +3381,9 @@ msgstr "Mã mặt hàng"
 #: Credit_Invoice.php:272 DeliveryDetails.php:845 DeliveryDetails.php:915
 #: InternalStockRequest.php:147 InternalStockRequest.php:261 Labels.php:470
 #: OrderDetails.php:163 PDFPrintLabel.php:66 PO_Items.php:744
-#: PO_OrderDetails.php:147 PrintCustTrans.php:865 PrintCustTrans.php:954
-#: PrintCustTrans.php:1003 PrintCustTransPortrait.php:911
-#: PrintCustTransPortrait.php:1009 PrintCustTransPortrait.php:1065
+#: PO_OrderDetails.php:147 PrintCustTrans.php:860 PrintCustTrans.php:949
+#: PrintCustTrans.php:998 PrintCustTransPortrait.php:914
+#: PrintCustTransPortrait.php:1012 PrintCustTransPortrait.php:1068
 #: RecurringSalesOrders.php:323 ReprintGRN.php:85 SalesInquiry.php:821
 #: SalesInquiry.php:839 SalesInquiry.php:938 SelectCreditItems.php:679
 #: SelectOrderItems.php:1359 SpecialOrder.php:626
@@ -3424,14 +3425,14 @@ msgstr "thông báo (công văn) này"
 #: OffersReceived.php:219 OffersReceived.php:264 OrderDetails.php:166
 #: PDFOrdersInvoiced.php:394 PDFPriceList.php:372 PDFPrintLabel.php:67
 #: PO_AuthoriseMyOrders.php:116 PricesByCost.php:251 Prices_Customer.php:353
-#: Prices.php:223 Prices.php:342 PrintCustTrans.php:868 PrintCustTrans.php:957
-#: PrintCustTrans.php:1006 PrintCustTransPortrait.php:914
-#: PrintCustTransPortrait.php:1012 PrintCustTransPortrait.php:1068
+#: Prices.php:223 Prices.php:342 PrintCustTrans.php:863 PrintCustTrans.php:952
+#: PrintCustTrans.php:1001 PrintCustTransPortrait.php:917
+#: PrintCustTransPortrait.php:1015 PrintCustTransPortrait.php:1071
 #: PurchData.php:167 PurchData.php:490 RecurringSalesOrders.php:326
 #: SelectCreditItems.php:682 SelectOrderItems.php:1363 Shipments.php:405
 #: StockLocMovements.php:95 StockMovements.php:103 StockStatus.php:344
 #: SuppCreditGRNs.php:192 SuppCreditGRNs.php:281 SuppCreditGRNs.php:282
-#: SupplierPriceList.php:524 SupplierTenders.php:127 SupplierTenders.php:329
+#: SupplierPriceList.php:527 SupplierTenders.php:127 SupplierTenders.php:329
 #: SupplierTenders.php:539 SupplierTenders.php:693 SuppPriceList.php:311
 #: includes/DefineLabelClass.php:49 includes/PDFQuotationPageHeader.inc:105
 #: includes/PDFQuotationPortraitPageHeader.inc:105
@@ -3442,9 +3443,9 @@ msgstr "giá"
 
 #: ConfirmDispatch_Invoice.php:287 CounterSales.php:751 Credit_Invoice.php:277
 #: CustomerReceipt.php:905 DeliveryDetails.php:849 OrderDetails.php:167
-#: PrintCustTrans.php:869 PrintCustTrans.php:958 PrintCustTrans.php:1007
-#: PrintCustTransPortrait.php:915 PrintCustTransPortrait.php:1013
-#: PrintCustTransPortrait.php:1069 RecurringSalesOrders.php:327
+#: PrintCustTrans.php:864 PrintCustTrans.php:953 PrintCustTrans.php:1002
+#: PrintCustTransPortrait.php:918 PrintCustTransPortrait.php:1016
+#: PrintCustTransPortrait.php:1072 RecurringSalesOrders.php:327
 #: SalesAnalReptCols.php:41 SalesAnalReptCols.php:43 SelectCreditItems.php:684
 #: SelectOrderItems.php:1366 StockLocMovements.php:96 StockMovements.php:104
 #: StockStatus.php:345 includes/PDFQuotationPageHeader.inc:106
@@ -3497,8 +3498,8 @@ msgid "Tax %"
 msgstr "phần trăm thuế"
 
 #: ConfirmDispatch_Invoice.php:291 CounterSales.php:755 Credit_Invoice.php:280
-#: Credit_Invoice.php:281 PrintCustTrans.php:396 PrintCustTrans.php:1045
-#: PrintCustTransPortrait.php:456 PrintCustTransPortrait.php:1107
+#: Credit_Invoice.php:281 PrintCustTrans.php:396 PrintCustTrans.php:1040
+#: PrintCustTransPortrait.php:456 PrintCustTransPortrait.php:1110
 #: SelectCreditItems.php:687 SelectCreditItems.php:688
 #: includes/PDFTaxPageHeader.inc:40
 msgid "Tax"
@@ -3753,9 +3754,9 @@ msgstr ""
 #: GoodsReceived.php:462 GoodsReceived.php:490 GoodsReceived.php:521
 #: GoodsReceived.php:539 GoodsReceived.php:568 GoodsReceived.php:585
 #: GoodsReceived.php:675 GoodsReceived.php:698
-#: InternalStockRequestFulfill.php:83 InternalStockRequestFulfill.php:96
-#: InternalStockRequestFulfill.php:104 InternalStockRequestFulfill.php:131
-#: InternalStockRequestFulfill.php:153 InternalStockRequest.php:84
+#: InternalStockRequestFulfill.php:84 InternalStockRequestFulfill.php:97
+#: InternalStockRequestFulfill.php:105 InternalStockRequestFulfill.php:132
+#: InternalStockRequestFulfill.php:154 InternalStockRequest.php:84
 #: InternalStockRequest.php:102 Labels.php:181 PDFStockCheckComparison.php:119
 #: PDFStockCheckComparison.php:127 PDFStockCheckComparison.php:134
 #: PDFStockCheckComparison.php:153 PDFStockCheckComparison.php:173
@@ -3867,9 +3868,9 @@ msgstr "Lỗi lớn"
 #: GoodsReceived.php:391 GoodsReceived.php:432 GoodsReceived.php:462
 #: GoodsReceived.php:490 GoodsReceived.php:521 GoodsReceived.php:539
 #: GoodsReceived.php:568 GoodsReceived.php:585 GoodsReceived.php:675
-#: GoodsReceived.php:698 InternalStockRequestFulfill.php:83
-#: InternalStockRequestFulfill.php:96 InternalStockRequestFulfill.php:104
-#: InternalStockRequestFulfill.php:131 InternalStockRequestFulfill.php:153
+#: GoodsReceived.php:698 InternalStockRequestFulfill.php:84
+#: InternalStockRequestFulfill.php:97 InternalStockRequestFulfill.php:105
+#: InternalStockRequestFulfill.php:132 InternalStockRequestFulfill.php:154
 #: InternalStockRequest.php:84 InternalStockRequest.php:102 Labels.php:181
 #: PDFStockCheckComparison.php:119 PDFStockCheckComparison.php:127
 #: PDFStockCheckComparison.php:134 PDFStockCheckComparison.php:153
@@ -4327,11 +4328,11 @@ msgstr "xử lý"
 #: GLJournalInquiry.php:109 GLProfit_Loss.php:22 GLTagProfit_Loss.php:23
 #: GLTagProfit_Loss.php:521 GLTags.php:51 GLTransInquiry.php:36
 #: PDFPrintLabel.php:68 PDFStockLocTransfer.php:29 PO_OrderDetails.php:115
-#: PO_PDFPurchOrder.php:375 PO_PDFPurchOrder.php:378 PO_PDFPurchOrder.php:381
+#: PO_PDFPurchOrder.php:374 PO_PDFPurchOrder.php:377 PO_PDFPurchOrder.php:380
 #: PO_SelectOSPurchOrder.php:495 PO_SelectOSPurchOrder.php:517
 #: PrintCustStatements.php:83 PrintCustStatements.php:412
-#: PrintCustTrans.php:509 PrintCustTrans.php:541
-#: PrintCustTransPortrait.php:530 SecurityTokens.php:85
+#: PrintCustTrans.php:504 PrintCustTrans.php:536
+#: PrintCustTransPortrait.php:533 SecurityTokens.php:85
 #: SelectSalesOrder.php:922
 msgid "Print"
 msgstr "in"
@@ -4562,7 +4563,7 @@ msgstr "hình ảnh"
 #: SalesCategories.php:249 SelectCreditItems.php:1024
 #: SelectOrderItems.php:1530 SelectOrderItems.php:1710 Stocks.php:878
 #: Stocks.php:882 SupplierTenderCreate.php:843 SupplierTenders.php:716
-#: WorkOrderEntry.php:662 WorkOrderIssue.php:723
+#: WorkOrderEntry.php:662 WorkOrderIssue.php:722
 #, php-format
 msgid "No Image"
 msgstr "Không có hình ảnh"
@@ -4632,11 +4633,11 @@ msgstr "yêu cầu kiểm kê (kiểm kê bắt buộc)"
 
 #: ContractCosting.php:82 ContractCosting.php:88 Contracts.php:988
 #: CounterSales.php:748 DeliveryDetails.php:847 DeliveryDetails.php:917
-#: OrderDetails.php:165 PO_Items.php:783 PrintCustTrans.php:867
-#: PrintCustTrans.php:956 PrintCustTrans.php:1005
-#: PrintCustTransPortrait.php:913 PrintCustTransPortrait.php:1011
-#: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:325
-#: SelectCreditItems.php:681 SelectOrderItems.php:1362
+#: OrderDetails.php:165 PO_Items.php:783 PrintCustTrans.php:862
+#: PrintCustTrans.php:951 PrintCustTrans.php:1000
+#: PrintCustTransPortrait.php:916 PrintCustTransPortrait.php:1014
+#: PrintCustTransPortrait.php:1070 RecurringSalesOrders.php:325
+#: SelectCreditItems.php:681 SelectOrderItems.php:1362 WorkOrderIssue.php:537
 #: includes/PDFTopItemsHeader.inc:52 includes/PO_PDFOrderPageHeader.inc:79
 msgid "Unit"
 msgstr "Đơn vị"
@@ -4730,7 +4731,7 @@ msgid "The SQL used to close the work order was:"
 msgstr "cơ sở dữ liệu SQL đã để đóng lịch làm việc là:"
 
 #: ContractCosting.php:330 GoodsReceived.php:490
-#: InternalStockRequestFulfill.php:96 InternalStockRequestFulfill.php:104
+#: InternalStockRequestFulfill.php:97 InternalStockRequestFulfill.php:105
 #: PDFStockCheckComparison.php:127 ReverseGRN.php:219 StockAdjustments.php:283
 #: StockLocTransferReceive.php:293 StockLocTransferReceive.php:302
 #: StockTransfers.php:433 StockTransfers.php:442 WorkOrderIssue.php:161
@@ -5262,8 +5263,8 @@ msgstr "Đặt lại chế độ mặc định"
 #: Contracts.php:773 CustomerInquiry.php:201 CustomerTransInquiry.php:104
 #: FTP_RadioBeacon.php:52 PDFOrdersInvoiced.php:309 PDFOrderStatus.php:279
 #: PDFPriceList.php:369 PricesByCost.php:154 Prices_Customer.php:256
-#: Prices_Customer.php:329 PrintCustTrans.php:814
-#: PrintCustTransPortrait.php:855 SelectCompletedOrder.php:603
+#: Prices_Customer.php:329 PrintCustTrans.php:809
+#: PrintCustTransPortrait.php:858 SelectCompletedOrder.php:603
 #: SelectCreditItems.php:239 SelectCustomer.php:428 SelectOrderItems.php:624
 #: SelectRecurringSalesOrder.php:88 SelectSalesOrder.php:863
 #: SelectSalesOrder.php:880 StockMovements.php:100
@@ -5294,8 +5295,8 @@ msgid "Fax"
 msgstr "số fax"
 
 #: Contracts.php:823 CustomerInquiry.php:126 CustomerReceipt.php:960
-#: PDFRemittanceAdvice.php:275 PO_Header.php:614 PrintCustTrans.php:851
-#: PrintCustTransPortrait.php:896 SupplierInquiry.php:118
+#: PDFRemittanceAdvice.php:275 PO_Header.php:614 PrintCustTrans.php:846
+#: PrintCustTransPortrait.php:899 SupplierInquiry.php:118
 #: includes/PDFQuotationPageHeader.inc:87
 #: includes/PDFQuotationPortraitPageHeader.inc:96
 #: includes/PDFStatementPageHeader.inc:116 includes/PDFTransPageHeader.inc:158
@@ -5368,7 +5369,7 @@ msgid "Customer Reference"
 msgstr "khách hàng tham khảo"
 
 #: Contracts.php:930 GLProfit_Loss.php:314 GLProfit_Loss.php:503
-#: GLProfit_Loss.php:806 GLProfit_Loss.php:1109 GLTagProfit_Loss.php:307
+#: GLProfit_Loss.php:806 GLProfit_Loss.php:1164 GLTagProfit_Loss.php:307
 #: GLTagProfit_Loss.php:445 GLTagProfit_Loss.php:684 GLTagProfit_Loss.php:883
 #: SalesAnalReptCols.php:31 SalesAnalReptCols.php:33
 #: SalesByTypePeriodInquiry.php:342 SalesCategoryPeriodInquiry.php:169
@@ -5378,7 +5379,7 @@ msgstr "khách hàng tham khảo"
 msgid "Gross Profit"
 msgstr "tổng lợi nhuận"
 
-#: Contracts.php:936 Currencies.php:220 Currencies.php:394 PO_Header.php:1112
+#: Contracts.php:936 Currencies.php:221 Currencies.php:395 PO_Header.php:1112
 #: PO_OrderDetails.php:98 SupplierCredit.php:291 SupplierInvoice.php:266
 #: SuppPaymentRun.php:297
 msgid "Exchange Rate"
@@ -5397,7 +5398,7 @@ msgstr "Cài đặt"
 msgid "Quote"
 msgstr "định gía"
 
-#: Contracts.php:950 GoodsReceived.php:109 InternalStockRequestFulfill.php:306
+#: Contracts.php:950 GoodsReceived.php:109 InternalStockRequestFulfill.php:311
 #: PO_Header.php:833 POReport.php:1571 PO_SelectPurchOrder.php:151
 #: PO_SelectPurchOrder.php:153 SalesInquiry.php:1143 SelectContract.php:50
 msgid "Completed"
@@ -5696,9 +5697,9 @@ msgstr "QOH"
 msgid "GP %"
 msgstr "phần trăm GP"
 
-#: CounterSales.php:754 PrintCustTrans.php:870 PrintCustTrans.php:959
-#: PrintCustTrans.php:1008 PrintCustTransPortrait.php:916
-#: PrintCustTransPortrait.php:1014 PrintCustTransPortrait.php:1070
+#: CounterSales.php:754 PrintCustTrans.php:865 PrintCustTrans.php:954
+#: PrintCustTrans.php:1003 PrintCustTransPortrait.php:919
+#: PrintCustTransPortrait.php:1017 PrintCustTransPortrait.php:1073
 #: includes/PDFTaxPageHeader.inc:39
 msgid "Net"
 msgstr "thuần, ròng"
@@ -5707,7 +5708,7 @@ msgstr "thuần, ròng"
 #: CustomerReceipt.php:1091 GLAccountInquiry.php:158 GLAccountReport.php:343
 #: GLJournalInquiry.php:80 GLJournal.php:363 GLJournal.php:387
 #: InternalStockRequestAuthorisation.php:56
-#: InternalStockRequestFulfill.php:274 InternalStockRequest.php:231
+#: InternalStockRequestFulfill.php:275 InternalStockRequest.php:231
 #: Payments.php:1063 SelectOrderItems.php:1442 SuppContractChgs.php:80
 #: SuppContractChgs.php:168 SupplierCredit.php:421 SupplierCredit.php:460
 #: SupplierInvoice.php:416 SupplierInvoice.php:460
@@ -6061,7 +6062,7 @@ msgstr "xem lại"
 #: InternalStockRequest.php:620 InternalStockRequest.php:742 MRPReport.php:740
 #: SelectAsset.php:248 SelectCustomer.php:420 SelectCustomer.php:503
 #: SelectOrderItems.php:1698 SelectOrderItems.php:1820 SelectProduct.php:756
-#: SelectSupplier.php:250 SelectSupplier.php:312 SupplierPriceList.php:251
+#: SelectSupplier.php:250 SelectSupplier.php:312 SupplierPriceList.php:254
 #: SupplierTenderCreate.php:574
 msgid "Next"
 msgstr "Tiếp theo >"
@@ -6526,11 +6527,11 @@ msgstr "hiện xác định mã trạng thái tín dụng"
 msgid "Currencies Maintenance"
 msgstr "B?o trì ti?n t?"
 
-#: Currencies.php:51
+#: Currencies.php:52
 msgid "The currency already exists in the database"
 msgstr "Loại tiền tệ này đã tồn tại trong cơ sở dữ liệu"
 
-#: Currencies.php:57
+#: Currencies.php:58
 msgid ""
 "The currency abbreviation must be 3 characters or less long and for "
 "automated currency updates to work correctly be one of the ISO4217 currency "
@@ -6540,77 +6541,77 @@ msgstr ""
 "ti?n t? t? d?ng d? làm vi?c chính xác ph?i là m?t trong nh?ng mã ti?n t? "
 "ISO4217"
 
-#: Currencies.php:63
+#: Currencies.php:64
 msgid "The exchange rate must be numeric"
 msgstr "tỷ giá hối đoái viết dưới dạng số"
 
-#: Currencies.php:69
+#: Currencies.php:70
 #, fuzzy
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "numeric"
 msgstr "S? ngày ho?c ngày trong tháng sau dây ph?i ? d?ng s?"
 
-#: Currencies.php:74
+#: Currencies.php:75
 msgid ""
 "The number of decimal places to display for amounts in this currency must be "
 "positive or zero"
 msgstr ""
 
-#: Currencies.php:79
+#: Currencies.php:80
 #, fuzzy
 msgid ""
 "The number of decimal places to display for amounts in this currency is "
 "expected to be 4 or less"
 msgstr "S? ngày ho?c ngày trong tháng sau dây ph?i ? d?ng s?"
 
-#: Currencies.php:85
+#: Currencies.php:86
 msgid "The currency name must be 20 characters or less long"
 msgstr "Tên loại tiền tệ phải ít hơn 20 kí tự"
 
-#: Currencies.php:91
+#: Currencies.php:92
 msgid "The currency country must be 50 characters or less long"
 msgstr "tiền tệ quốc gia phải là 50 ký tự hoặc ít hơn"
 
-#: Currencies.php:97
+#: Currencies.php:98
 msgid "The hundredths name must be 15 characters or less long"
 msgstr "Tên thứ 100 phải ít hơn 15 kí tự"
 
-#: Currencies.php:103
+#: Currencies.php:104
 msgid "The functional currency cannot be modified or deleted"
 msgstr "Các chức năng tiền tệ không thể sửa đổi hay xóa"
 
-#: Currencies.php:107
+#: Currencies.php:108
 msgid "The currency code cannot contain any of the following characters"
 msgstr "Mã tiền tệ không thể chứa bất kỳ các ký tự sau"
 
-#: Currencies.php:107 CustEDISetup.php:31 CustLoginSetup.php:51
+#: Currencies.php:108 CustEDISetup.php:31 CustLoginSetup.php:51
 #: Customers.php:58 Stocks.php:116 SuppLoginSetup.php:51 TaxCategories.php:31
 #: WorkCentres.php:35 WWW_Users.php:73 Z_ChangeBranchCode.php:28
 #: Z_ImportStocks.php:123
 msgid "or a space"
 msgstr "hoặc một khoảng, chỗ"
 
-#: Currencies.php:122
+#: Currencies.php:123
 msgid "The currency definition record has been updated"
 msgstr "bảng xác định tiền tệ đã được cập nhật"
 
-#: Currencies.php:139
+#: Currencies.php:140
 msgid "The currency definition record has been added"
 msgstr "bảng xác định tiền tệ đã được thêm vào"
 
-#: Currencies.php:165
+#: Currencies.php:166
 msgid ""
 "Cannot delete this currency because customer accounts have been created "
 "referring to this currency"
 msgstr ""
 "Không thể xóa loại tiền tệ này vì nó dùng để tạo nên tài khoản khách hàng"
 
-#: Currencies.php:166
+#: Currencies.php:167
 msgid "customer accounts that refer to this currency"
 msgstr "Tài khoản khách hàng dẫn tới loại tiền tệ này"
 
-#: Currencies.php:173
+#: Currencies.php:174
 msgid ""
 "Cannot delete this currency because supplier accounts have been created "
 "referring to this currency"
@@ -6618,11 +6619,11 @@ msgstr ""
 "Cannot delete this currency because vendor accounts have been created "
 "referring to this currency"
 
-#: Currencies.php:174
+#: Currencies.php:175
 msgid "supplier accounts that refer to this currency"
 msgstr "vendor accounts that refer to this currency"
 
-#: Currencies.php:181
+#: Currencies.php:182
 msgid ""
 "Cannot delete this currency because there are bank transactions that use "
 "this currency"
@@ -6630,85 +6631,85 @@ msgstr ""
 "Không xóa b? du?c lo?i ti?n t? này vì nó dã du?c dùng trong các giao d?ch "
 "ngân hàng"
 
-#: Currencies.php:182
+#: Currencies.php:183
 msgid "bank transactions that refer to this currency"
 msgstr "Giao dịch ngân hàng dẫn tới loại tiền tệ này"
 
-#: Currencies.php:184
+#: Currencies.php:185
 msgid ""
 "Cannot delete this currency because it is the functional currency of the "
 "company"
 msgstr ""
 "Không th? xóa lo?i ti?n t? này vì nó là lo?i ti?n t? ch?c nang c?a công ty"
 
-#: Currencies.php:189
+#: Currencies.php:190
 msgid "The currency definition record has been deleted"
 msgstr "bảng xác định tiền tệ đã được xóa"
 
-#: Currencies.php:215
+#: Currencies.php:216
 msgid "ISO4217 Code"
 msgstr "Mã ISO4217"
 
-#: Currencies.php:216 Currencies.php:362
+#: Currencies.php:217 Currencies.php:363
 msgid "Currency Name"
 msgstr "Tên loại tiền tệ"
 
-#: Currencies.php:217 Currencies.php:370 CustomerBranches.php:649
+#: Currencies.php:218 Currencies.php:371 CustomerBranches.php:649
 #: Customers.php:461 Customers.php:737 Customers.php:776 Suppliers.php:692
 #: Suppliers.php:896
 msgid "Country"
 msgstr "Quốc gia"
 
-#: Currencies.php:218 Currencies.php:378
+#: Currencies.php:219 Currencies.php:379
 msgid "Hundredths Name"
 msgstr "Tên thứ 100"
 
-#: Currencies.php:219
+#: Currencies.php:220
 #, fuzzy
 msgid "Decimal Places"
 msgstr "Ði?m th?p phân không h?p l?"
 
-#: Currencies.php:221
+#: Currencies.php:222
 #, fuzzy
 msgid "1 / Ex Rate"
 msgstr "tỷ giá hối đoái"
 
-#: Currencies.php:222
+#: Currencies.php:223
 msgid "Ex Rate - ECB"
 msgstr "tỷ giá hối đoái - ECB"
 
-#: Currencies.php:261
+#: Currencies.php:262
 #, fuzzy, php-format
 msgid "Are you sure you wish to delete this currency?"
 msgstr "Bạn có chắc chắn muốn xóa chi nhánh này?"
 
-#: Currencies.php:262
+#: Currencies.php:263
 #, php-format
 msgid "Graph"
 msgstr "biểu đồ"
 
-#: Currencies.php:298
+#: Currencies.php:299
 msgid "Functional Currency"
 msgstr "Loại tiền tệ chức năng"
 
-#: Currencies.php:307
+#: Currencies.php:308
 msgid "Show all currency definitions"
 msgstr "Hiển thị toàn bộ định nghĩa tiền tệ"
 
-#: Currencies.php:330 geo_displaymap_customers.php:12
+#: Currencies.php:331 geo_displaymap_customers.php:12
 #: geo_displaymap_suppliers.php:12
 msgid "An error occurred in retrieving the currency information"
 msgstr "L?i x?y ra trong quá trình truy xu?t thông tin ti?n t?"
 
-#: Currencies.php:348
+#: Currencies.php:349
 msgid "ISO 4217 Currency Code"
 msgstr "Mã tiền tệ ISO 4217"
 
-#: Currencies.php:356
+#: Currencies.php:357
 msgid "Currency Abbreviation"
 msgstr "Chữ viết tắt của loại tiền tệ"
 
-#: Currencies.php:386
+#: Currencies.php:387
 #, fuzzy
 msgid "Decimal Places to Display"
 msgstr "Số ngày"
@@ -8241,16 +8242,16 @@ msgid "Click here to continue"
 msgstr "nhấn vào đây để tiếp tục"
 
 #: Customers.php:443 Factors.php:238 Factors.php:295 OrderDetails.php:103
-#: PrintCustTrans.php:716 PrintCustTrans.php:947 PrintCustTrans.php:996
-#: PrintCustTransPortrait.php:754 PrintCustTransPortrait.php:1000
-#: PrintCustTransPortrait.php:1056 SalesPeople.php:201 Suppliers.php:706
+#: PrintCustTrans.php:711 PrintCustTrans.php:942 PrintCustTrans.php:991
+#: PrintCustTransPortrait.php:757 PrintCustTransPortrait.php:1003
+#: PrintCustTransPortrait.php:1059 SalesPeople.php:201 Suppliers.php:706
 #: Suppliers.php:910 SupplierTenderCreate.php:132 WWW_Users.php:287
 msgid "Telephone"
 msgstr "số điện thoại"
 
-#: Customers.php:445 PrintCustTrans.php:717 PrintCustTrans.php:948
-#: PrintCustTrans.php:997 PrintCustTransPortrait.php:755
-#: PrintCustTransPortrait.php:1001 PrintCustTransPortrait.php:1057
+#: Customers.php:445 PrintCustTrans.php:712 PrintCustTrans.php:943
+#: PrintCustTrans.php:992 PrintCustTransPortrait.php:758
+#: PrintCustTransPortrait.php:1004 PrintCustTransPortrait.php:1060
 #: SalesPeople.php:202 Suppliers.php:709 Suppliers.php:912
 msgid "Facsimile"
 msgstr "mô phỏng"
@@ -9359,7 +9360,7 @@ msgstr "loại giảm giá"
 #: ShipmentCosting.php:148 ShipmentCosting.php:539 Shipments.php:400
 #: Shipments.php:487 StockUsage.php:60 SuppCreditGRNs.php:278
 #: SuppInvGRNs.php:257 WorkOrderCosting.php:97 WorkOrderCosting.php:129
-#: WorkOrderIssue.php:606 WorkOrderReceive.php:767 WorkOrderStatus.php:65
+#: WorkOrderIssue.php:602 WorkOrderReceive.php:767 WorkOrderStatus.php:65
 #: WorkOrderStatus.php:97 includes/PDFInventoryPlanPageHeader.inc:50
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFLowGPPageHeader.inc:45 includes/PDFOstdgGRNsPageHeader.inc:38
@@ -10049,13 +10050,13 @@ msgstr "Có một vấn đề lấy lại  các chi tiết tiêu đề cho số 
 #: EmailConfirmation.php:43 FTP_RadioBeacon.php:178 PDFPickingList.php:218
 #: PDFQuotation.php:35 PDFQuotation.php:122 PDFQuotationPortrait.php:37
 #: PDFQuotationPortrait.php:122 PO_PDFPurchOrder.php:75
-#: PO_PDFPurchOrder.php:203 PrintCustOrder_generic.php:38
+#: PO_PDFPurchOrder.php:202 PrintCustOrder_generic.php:38
 #: PrintCustOrder_generic.php:159 PrintCustOrder.php:39 PrintCustOrder.php:131
 #: PrintCustStatements.php:94 PrintCustStatements.php:112
-#: PrintCustTrans.php:214 PrintCustTrans.php:262 PrintCustTrans.php:672
-#: PrintCustTrans.php:855 PrintCustTransPortrait.php:236
-#: PrintCustTransPortrait.php:291 PrintCustTransPortrait.php:709
-#: PrintCustTransPortrait.php:900
+#: PrintCustTrans.php:214 PrintCustTrans.php:262 PrintCustTrans.php:667
+#: PrintCustTrans.php:850 PrintCustTransPortrait.php:236
+#: PrintCustTransPortrait.php:291 PrintCustTransPortrait.php:712
+#: PrintCustTransPortrait.php:903
 msgid "from the database"
 msgstr "Từ cơ sở dữ liệu"
 
@@ -10140,8 +10141,8 @@ msgstr "C?u hình h? th?ng"
 msgid "Order Acknowledgement"
 msgstr ""
 
-#: EmailConfirmation.php:185 EmailConfirmation.php:294 PrintCustTrans.php:752
-#: PrintCustTransPortrait.php:792 includes/PDFOrderPageHeader_generic.inc:40
+#: EmailConfirmation.php:185 EmailConfirmation.php:294 PrintCustTrans.php:747
+#: PrintCustTransPortrait.php:795 includes/PDFOrderPageHeader_generic.inc:40
 #: includes/PDFSalesOrder_generic.inc:42 includes/PDFTransPageHeader.inc:112
 msgid "Delivered To"
 msgstr "Giao hàng tới"
@@ -10153,7 +10154,7 @@ msgid "PO Line"
 msgstr ""
 
 #: EmailConfirmation.php:219 EmailConfirmation.php:337
-#: PO_AuthoriseMyOrders.php:114 WorkOrderIssue.php:550
+#: PO_AuthoriseMyOrders.php:114 WorkOrderIssue.php:535
 #: WorkOrderReceive.php:777 WorkOrderStatus.php:75
 msgid "Quantity Ordered"
 msgstr "S? lu?ng d?t hàng"
@@ -10200,12 +10201,12 @@ msgstr ""
 msgid "There was a problem retrieving the contact details for the customer"
 msgstr "Có lối khi truy xuất chi tiết thông tin liên hệ của khách hàng"
 
-#: EmailCustTrans.php:64 PrintCustTrans.php:487 PrintCustTransPortrait.php:508
+#: EmailCustTrans.php:64 PrintCustTrans.php:482 PrintCustTransPortrait.php:511
 #: SupplierAllocations.php:434
 msgid "number"
 msgstr "Số"
 
-#: EmailCustTrans.php:69 PO_PDFPurchOrder.php:430
+#: EmailCustTrans.php:69 PO_PDFPurchOrder.php:429
 msgid "OK"
 msgstr "OK"
 
@@ -10334,19 +10335,19 @@ msgid "Company Name"
 msgstr "Tên công ty"
 
 #: Factors.php:288 PurchData.php:358 SelectSupplier.php:262
-#: SupplierPriceList.php:448 SupplierTenderCreate.php:126
+#: SupplierPriceList.php:451 SupplierTenderCreate.php:126
 #: SupplierTenderCreate.php:586
 msgid "Address 1"
 msgstr "Địa chỉ 1"
 
 #: Factors.php:289 PurchData.php:359 SelectSupplier.php:263
-#: SupplierPriceList.php:449 SupplierTenderCreate.php:127
+#: SupplierPriceList.php:452 SupplierTenderCreate.php:127
 #: SupplierTenderCreate.php:587
 msgid "Address 2"
 msgstr "Địa chỉ 2"
 
 #: Factors.php:290 PurchData.php:360 SelectSupplier.php:264
-#: SupplierPriceList.php:450 SupplierTenderCreate.php:128
+#: SupplierPriceList.php:453 SupplierTenderCreate.php:128
 #: SupplierTenderCreate.php:588
 msgid "Address 3"
 msgstr "Địa chỉ 3"
@@ -11333,7 +11334,7 @@ msgstr "Ðon d?t hàng c?a khách"
 #: FTP_RadioBeacon.php:54 MRPReschedules.php:196 POReport.php:540
 #: POReport.php:626 POReport.php:1306 POReport.php:1357 POReport.php:1513
 #: PO_SelectOSPurchOrder.php:485 PO_SelectPurchOrder.php:435
-#: PrintCustTrans.php:778 PrintCustTransPortrait.php:819 SalesInquiry.php:809
+#: PrintCustTrans.php:773 PrintCustTransPortrait.php:822 SalesInquiry.php:809
 #: SalesInquiry.php:828 SalesInquiry.php:1070 SelectCompletedOrder.php:605
 #: SelectSalesOrder.php:865 includes/PDFOrderPageHeader_generic.inc:77
 #: includes/PDFSalesOrder_generic.inc:79 includes/PDFTransPageHeader.inc:56
@@ -11407,7 +11408,7 @@ msgstr "Ch?nh s?a l?i don hàng sao cho ch?p nh?n g?i l?i ho?c in l?i"
 msgid "Select Delivery Details"
 msgstr "Lựa chọn Chi tiết giao hàng"
 
-#: FTP_RadioBeacon.php:204 PO_PDFPurchOrder.php:202
+#: FTP_RadioBeacon.php:204 PO_PDFPurchOrder.php:201
 msgid "There was a problem retrieving the line details for order number"
 msgstr "Có s? c? khi truy xu?t dòng chi ti?t cho s? don hàng"
 
@@ -11747,7 +11748,7 @@ msgid "Debit"
 msgstr "khoản nợ, ghi nợ"
 
 #: GLAccountInquiry.php:160 GLAccountReport.php:344 GLJournalInquiry.php:82
-#: InternalStockRequestFulfill.php:307 Payments.php:1064 PcExpenses.php:193
+#: InternalStockRequestFulfill.php:312 Payments.php:1064 PcExpenses.php:193
 #: PcExpenses.php:325
 msgid "Tag"
 msgstr ""
@@ -12368,31 +12369,33 @@ msgid "Print Profit and Loss Error"
 msgstr "In các lỗi báo cáo Lỗ/Lãi"
 
 #: GLProfit_Loss.php:231 GLProfit_Loss.php:260 GLProfit_Loss.php:424
-#: GLProfit_Loss.php:453 GLProfit_Loss.php:660 GLProfit_Loss.php:705
-#: GLProfit_Loss.php:964 GLProfit_Loss.php:1009 GLTagProfit_Loss.php:237
+#: GLProfit_Loss.php:453 GLProfit_Loss.php:658 GLProfit_Loss.php:704
+#: GLProfit_Loss.php:1019 GLProfit_Loss.php:1064 GLTagProfit_Loss.php:237
 #: GLTagProfit_Loss.php:262 GLTagProfit_Loss.php:382 GLTagProfit_Loss.php:405
 #: GLTagProfit_Loss.php:579 GLTagProfit_Loss.php:613 GLTagProfit_Loss.php:798
 #: GLTagProfit_Loss.php:824
 msgid "total"
 msgstr "Tổng cộng"
 
-#: GLProfit_Loss.php:337 GLProfit_Loss.php:838 GLProfit_Loss.php:1141
+#: GLProfit_Loss.php:337 GLProfit_Loss.php:838 GLProfit_Loss.php:1196
 #: GLTagProfit_Loss.php:318 GLTagProfit_Loss.php:700 GLTagProfit_Loss.php:898
 #, php-format
 msgid "Gross Profit Percent"
 msgstr "Ph?n tram t?ng l?i nhu?n"
 
-#: GLProfit_Loss.php:516 GLProfit_Loss.php:1177 GLTagProfit_Loss.php:454
+#: GLProfit_Loss.php:516 GLProfit_Loss.php:859 GLProfit_Loss.php:1233
+#: GLTagProfit_Loss.php:454
 #, php-format
 msgid "Profit"
 msgstr "Lãi"
 
-#: GLProfit_Loss.php:516 GLProfit_Loss.php:1177 GLTagProfit_Loss.php:454
+#: GLProfit_Loss.php:516 GLProfit_Loss.php:859 GLProfit_Loss.php:1233
+#: GLTagProfit_Loss.php:454
 #, php-format
 msgid "Loss"
 msgstr "Lỗ"
 
-#: GLProfit_Loss.php:537 GLProfit_Loss.php:1210
+#: GLProfit_Loss.php:537 GLProfit_Loss.php:1266
 #, php-format
 msgid "Net Profit Percent"
 msgstr "Ph?n tram l?i nhu?n ròng"
@@ -12424,7 +12427,12 @@ msgstr ""
 msgid "Period Budget"
 msgstr "Ngân sách theo giai do?n"
 
-#: GLProfit_Loss.php:1229 GLTagProfit_Loss.php:938 GLTrialBalance.php:21
+#: GLProfit_Loss.php:887
+#, php-format
+msgid "P/L Percent after"
+msgstr ""
+
+#: GLProfit_Loss.php:1284 GLTagProfit_Loss.php:938 GLTrialBalance.php:21
 #: GLTrialBalance.php:725 SalesGraph.php:16 SalesGraph.php:20
 #: SalesGraph.php:24 SalesGraph.php:29
 msgid "Select A Different Period"
@@ -13102,25 +13110,25 @@ msgid "Authorise Internal Stock Requests"
 msgstr ""
 
 #: InternalStockRequestAuthorisation.php:52
-#: InternalStockRequestFulfill.php:270
+#: InternalStockRequestFulfill.php:271
 #, fuzzy
 msgid "Request Number"
 msgstr "Số séc"
 
 #: InternalStockRequestAuthorisation.php:53
-#: InternalStockRequestFulfill.php:271 InternalStockRequest.php:179
+#: InternalStockRequestFulfill.php:272 InternalStockRequest.php:179
 #, fuzzy
 msgid "Department"
 msgstr "gốc"
 
 #: InternalStockRequestAuthorisation.php:54
-#: InternalStockRequestFulfill.php:272
+#: InternalStockRequestFulfill.php:273
 #, fuzzy
 msgid "Location Of Stock"
 msgstr "Địa điểm: "
 
 #: InternalStockRequestAuthorisation.php:55
-#: InternalStockRequestFulfill.php:273
+#: InternalStockRequestFulfill.php:274
 #, fuzzy
 msgid "Requested Date"
 msgstr "ngày yêu cầu"
@@ -13131,7 +13139,7 @@ msgid "Authorise"
 msgstr "Đã được thủy quyền"
 
 #: InternalStockRequestAuthorisation.php:87
-#: InternalStockRequestFulfill.php:302 PO_AuthoriseMyOrders.php:113
+#: InternalStockRequestFulfill.php:307 PO_AuthoriseMyOrders.php:113
 msgid "Product"
 msgstr "Sản phẩm"
 
@@ -13139,16 +13147,16 @@ msgstr "Sản phẩm"
 msgid "Fulfill Stock Requests"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:36 WorkOrderCosting.php:104
+#: InternalStockRequestFulfill.php:37 WorkOrderCosting.php:104
 #: WorkOrderCosting.php:118
 msgid "Issue"
 msgstr "Phát hành"
 
-#: InternalStockRequestFulfill.php:36 InternalStockRequest.php:531
+#: InternalStockRequestFulfill.php:37 InternalStockRequest.php:531
 #: MRPReport.php:726 SelectAsset.php:234 SelectCustomer.php:406
 #: SelectCustomer.php:489 SelectOrderItems.php:1408 SelectProduct.php:742
 #: SelectSupplier.php:236 SelectSupplier.php:298 StockLocTransfer.php:61
-#: SupplierPriceList.php:237 SupplierTenderCreate.php:560
+#: SupplierPriceList.php:240 SupplierTenderCreate.php:560
 #: WorkOrderIssue.php:353 WorkOrderReceive.php:695
 #: includes/Add_SerialItemsOut.php:28 includes/Add_SerialItems.php:33
 #: includes/Add_SerialItems.php:184 includes/Add_SerialItems.php:281
@@ -13158,104 +13166,104 @@ msgstr "Phát hành"
 msgid "of"
 msgstr "c?a"
 
-#: InternalStockRequestFulfill.php:36
+#: InternalStockRequestFulfill.php:37
 #, fuzzy
 msgid "to department"
 msgstr "Ði?u ch?nh kho"
 
-#: InternalStockRequestFulfill.php:83 PDFStockCheckComparison.php:119
+#: InternalStockRequestFulfill.php:84 PDFStockCheckComparison.php:119
 #: StockAdjustments.php:205 StockLocTransferReceive.php:102
 #: StockTransfers.php:241 StockTransfers.php:355
 msgid "The stock movement record cannot be inserted because"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:84 PDFStockCheckComparison.php:120
+#: InternalStockRequestFulfill.php:85 PDFStockCheckComparison.php:120
 #: StockAdjustments.php:206 StockLocTransferReceive.php:103
 #: StockLocTransferReceive.php:215 StockTransfers.php:242
 #: StockTransfers.php:356
 msgid "The following SQL to insert the stock movement record was used"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:97 InternalStockRequestFulfill.php:105
+#: InternalStockRequestFulfill.php:98 InternalStockRequestFulfill.php:106
 #: PDFStockCheckComparison.php:128 StockAdjustments.php:284
 #: StockLocTransferReceive.php:294 StockLocTransferReceive.php:303
 msgid "The following SQL to update the stock record was used"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:131 InternalStockRequestFulfill.php:153
+#: InternalStockRequestFulfill.php:132 InternalStockRequestFulfill.php:154
 #: PDFStockCheckComparison.php:134 PDFStockCheckComparison.php:153
 #: StockAdjustments.php:311 StockAdjustments.php:333
 msgid "The general ledger transaction entries could not be added because"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:132 InternalStockRequestFulfill.php:154
+#: InternalStockRequestFulfill.php:133 InternalStockRequestFulfill.php:155
 #: PDFStockCheckComparison.php:135 PDFStockCheckComparison.php:154
 #: StockAdjustments.php:312 StockAdjustments.php:334
 msgid "The following SQL to insert the GL entries was used"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:168 InternalStockRequestFulfill.php:177
+#: InternalStockRequestFulfill.php:169 InternalStockRequestFulfill.php:178
 #, fuzzy
 msgid "An internal stock request for"
 msgstr "Chi tiết hàng trong kho"
 
-#: InternalStockRequestFulfill.php:168 InternalStockRequestFulfill.php:177
+#: InternalStockRequestFulfill.php:169 InternalStockRequestFulfill.php:178
 #, fuzzy
 msgid "has been fulfilled from location"
 msgstr "Ðã du?c t?o t? d?a di?m"
 
-#: InternalStockRequestFulfill.php:168 InternalStockRequestFulfill.php:177
+#: InternalStockRequestFulfill.php:169 InternalStockRequestFulfill.php:178
 #: StockAdjustments.php:342 StockLocTransferReceive.php:306
 #: StockTransfers.php:448
 msgid "for a quantity of"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:172 StockAdjustments.php:346
+#: InternalStockRequestFulfill.php:173 StockAdjustments.php:346
 #, fuzzy
 msgid "by user"
 msgstr "Dành cho người sử dụng"
 
-#: InternalStockRequestFulfill.php:172 StockAdjustments.php:346
+#: InternalStockRequestFulfill.php:173 StockAdjustments.php:346
 #: includes/PDFInventoryValnPageHeader.inc:15
 msgid "at"
 msgstr "tại"
 
-#: InternalStockRequestFulfill.php:173
+#: InternalStockRequestFulfill.php:174
 #, fuzzy
 msgid "Internal Stock Request Fulfillment for"
 msgstr "Chi tiết hàng trong kho"
 
-#: InternalStockRequestFulfill.php:177
+#: InternalStockRequestFulfill.php:178
 msgid ""
 "cannot be created as there is insufficient stock and your system is "
 "configured to not allow negative stocks"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:204
+#: InternalStockRequestFulfill.php:206
 msgid "Choose a location to issue requests from"
 msgstr ""
 
-#: InternalStockRequestFulfill.php:227
+#: InternalStockRequestFulfill.php:229
 #, fuzzy
 msgid "Show Requests"
 msgstr "Hiển thị các tài sản"
 
-#: InternalStockRequestFulfill.php:257
+#: InternalStockRequestFulfill.php:259
 #, fuzzy
 msgid "There are no outstanding authorised requests for this location"
 msgstr "Không có hóa don xu?t s?c nào c?a nhà cung c?p d? tr?"
 
-#: InternalStockRequestFulfill.php:259
+#: InternalStockRequestFulfill.php:261
 #, fuzzy
 msgid "Select another location"
 msgstr "Vui lòng chọn ngày khác"
 
-#: InternalStockRequestFulfill.php:303 Suppliers.php:786 Suppliers.php:988
+#: InternalStockRequestFulfill.php:308 Suppliers.php:786 Suppliers.php:988
 #: Suppliers.php:991 SupplierTenders.php:533
 msgid "Required"
 msgstr "Yêu c?u"
 
-#: InternalStockRequestFulfill.php:304 POReport.php:634 POReport.php:1365
+#: InternalStockRequestFulfill.php:309 POReport.php:634 POReport.php:1365
 #: SuppCreditGRNs.php:188
 msgid "Delivered"
 msgstr "Đã giao hàng"
@@ -13383,7 +13391,7 @@ msgid "Submit"
 msgstr "gửi"
 
 #: InternalStockRequest.php:300 MRPReport.php:516 SelectProduct.php:520
-#: SupplierPriceList.php:15 SupplierPriceList.php:214
+#: SupplierPriceList.php:15 SupplierPriceList.php:217
 #: SupplierTenderCreate.php:628 SupplierTenders.php:388
 msgid "Search for Inventory Items"
 msgstr "Tìm kiếm hàng tồn kho"
@@ -13424,14 +13432,14 @@ msgstr ""
 
 #: InternalStockRequest.php:531 MRPReport.php:726 SelectAsset.php:234
 #: SelectCustomer.php:406 SelectCustomer.php:489 SelectProduct.php:742
-#: SelectSupplier.php:236 SelectSupplier.php:298 SupplierPriceList.php:237
+#: SelectSupplier.php:236 SelectSupplier.php:298 SupplierPriceList.php:240
 #: SupplierTenderCreate.php:560
 msgid "pages"
 msgstr "các trang"
 
 #: InternalStockRequest.php:531 MRPReport.php:726 SelectAsset.php:234
 #: SelectCustomer.php:406 SelectCustomer.php:489 SelectProduct.php:742
-#: SelectSupplier.php:236 SelectSupplier.php:298 SupplierPriceList.php:237
+#: SelectSupplier.php:236 SelectSupplier.php:298 SupplierPriceList.php:240
 #: SupplierTenderCreate.php:560
 msgid "Go to Page"
 msgstr "Chuyển tới trang"
@@ -13440,13 +13448,13 @@ msgstr "Chuyển tới trang"
 #: PcAuthorizeExpenses.php:64 PcClaimExpensesFromTab.php:207
 #: SelectAsset.php:246 SelectCustomer.php:418 SelectCustomer.php:501
 #: SelectProduct.php:754 SelectSupplier.php:248 SelectSupplier.php:310
-#: SupplierPriceList.php:249 SupplierTenderCreate.php:572
+#: SupplierPriceList.php:252 SupplierTenderCreate.php:572
 msgid "Go"
 msgstr "đi"
 
 #: InternalStockRequest.php:544 MRPReport.php:739 SelectAsset.php:247
 #: SelectCustomer.php:419 SelectCustomer.php:502 SelectProduct.php:755
-#: SelectSupplier.php:249 SelectSupplier.php:311 SupplierPriceList.php:250
+#: SelectSupplier.php:249 SelectSupplier.php:311 SupplierPriceList.php:253
 #: SupplierTenderCreate.php:573
 msgid "Previous"
 msgstr "<Trước"
@@ -13635,7 +13643,7 @@ msgid "Deviation"
 msgstr "độ lệch"
 
 #: InventoryPlanningPrefSupplier.php:84 PurchData.php:174 PurchData.php:516
-#: SelectProduct.php:368 SupplierPriceList.php:528
+#: SelectProduct.php:368 SupplierPriceList.php:531
 msgid "Lead Time"
 msgstr ""
 
@@ -13644,7 +13652,7 @@ msgid "in months"
 msgstr ""
 
 #: InventoryPlanningPrefSupplier.php:87 WorkOrderEntry.php:533
-#: WorkOrderIssue.php:607 WorkOrderStatus.php:98
+#: WorkOrderIssue.php:603 WorkOrderStatus.php:98
 msgid "Qty Required"
 msgstr ""
 
@@ -14964,16 +14972,16 @@ msgstr ""
 
 #: MRPReport.php:693 PO_SelectOSPurchOrder.php:124 PO_SelectPurchOrder.php:105
 #: SelectCompletedOrder.php:223 SelectProduct.php:710 SelectSalesOrder.php:501
-#: SupplierPriceList.php:203
+#: SupplierPriceList.php:206
 msgid "No stock items were returned by the SQL because"
 msgstr "Không có hàng trong kho nào được trả về từ dữ liệu SQL vì"
 
 #: MRPReport.php:694 SelectAsset.php:202 SelectProduct.php:711
-#: SupplierPriceList.php:204
+#: SupplierPriceList.php:207
 msgid "The SQL that returned an error was"
 msgstr "D? li?u SQL tr? v? l?i là"
 
-#: MRPReport.php:697 SelectProduct.php:714 SupplierPriceList.php:207
+#: MRPReport.php:697 SelectProduct.php:714 SupplierPriceList.php:210
 msgid ""
 "No stock items were returned by this search please re-enter alternative "
 "criteria to try again"
@@ -16850,15 +16858,15 @@ msgid "Enter the date for which the transactions are to be listed"
 msgstr "Nh?p ngày mà các giao d?ch du?c li?t kê"
 
 #: PDFCustTransListing.php:39 PDFSuppTransListing.php:39
-#: PO_AuthorisationLevels.php:128 PrintCustTrans.php:514
-#: PrintCustTrans.php:518 PrintCustTransPortrait.php:539
-#: PrintCustTransPortrait.php:543 Z_CheckDebtorsControl.php:73
+#: PO_AuthorisationLevels.php:128 PrintCustTrans.php:509
+#: PrintCustTrans.php:513 PrintCustTransPortrait.php:542
+#: PrintCustTransPortrait.php:546 Z_CheckDebtorsControl.php:73
 msgid "Invoices"
 msgstr "Hóa đơn"
 
 #: PDFCustTransListing.php:40 PDFSuppTransListing.php:40
-#: PrintCustTrans.php:515 PrintCustTrans.php:517
-#: PrintCustTransPortrait.php:540 PrintCustTransPortrait.php:542
+#: PrintCustTrans.php:510 PrintCustTrans.php:512
+#: PrintCustTransPortrait.php:543 PrintCustTransPortrait.php:545
 msgid "Credit Notes"
 msgstr ""
 
@@ -18169,7 +18177,7 @@ msgstr ""
 
 #: PO_Header.php:535 PO_Header.php:613 PO_Items.php:233 PO_Items.php:370
 #: PO_Items.php:661 PO_Items.php:664 PO_OrderDetails.php:85
-#: PO_PDFPurchOrder.php:195 PO_PDFPurchOrder.php:335 SelectSalesOrder.php:230
+#: PO_PDFPurchOrder.php:194 PO_PDFPurchOrder.php:334 SelectSalesOrder.php:230
 #: SelectSalesOrder.php:391 SpecialOrder.php:480
 msgid "Purchase Order"
 msgstr "Đơn hàng thu mua"
@@ -18191,7 +18199,7 @@ msgstr "Nh?p van b?n trích xu?t trong mã s? nhà cung c?p"
 #: POReport.php:1278 POReport.php:1296 POReport.php:1308 POReport.php:1359
 #: POReport.php:1414 POReport.php:1425 POReport.php:1547 POReport.php:1590
 #: POReport.php:1600 PurchData.php:356 PurchData.php:449 PurchData.php:454
-#: SelectSupplier.php:260 SupplierPriceList.php:446 Suppliers.php:672
+#: SelectSupplier.php:260 SupplierPriceList.php:449 Suppliers.php:672
 #: Suppliers.php:882 SupplierTenderCreate.php:393 SupplierTenderCreate.php:584
 msgid "Supplier Name"
 msgstr "Tên nhà cung cấp"
@@ -18870,7 +18878,7 @@ msgstr ""
 msgid "Purchase Order Already Printed"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:142 PO_PDFPurchOrder.php:196 PO_PDFPurchOrder.php:327
+#: PO_PDFPurchOrder.php:142 PO_PDFPurchOrder.php:195 PO_PDFPurchOrder.php:326
 #: includes/PO_PDFOrderPageHeader.inc:12
 msgid "Purchase Order Number"
 msgstr "Mã số đơn hàng thu mua"
@@ -18889,70 +18897,70 @@ msgstr ""
 msgid "Print This Order as a Copy"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:151
+#: PO_PDFPurchOrder.php:150
 msgid "Modify the order to allow a real reprint"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:153
+#: PO_PDFPurchOrder.php:151
 msgid "Select another order"
 msgstr "Chọn một đơn hàng khác"
 
-#: PO_PDFPurchOrder.php:309
+#: PO_PDFPurchOrder.php:308
 msgid "Order Total - excl tax"
 msgstr "Tổng số đơn hàng - không bao gồm thuế"
 
-#: PO_PDFPurchOrder.php:326
+#: PO_PDFPurchOrder.php:325
 msgid "Please find herewith our purchase order number"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:332 PO_PDFPurchOrder.php:338
+#: PO_PDFPurchOrder.php:331 PO_PDFPurchOrder.php:337
 #, fuzzy
 msgid "Email a Purchase Order"
 msgstr "Gửi đơn hàng thu mua qua thư điện tử"
 
-#: PO_PDFPurchOrder.php:335 PrintCustTrans.php:487
-#: PrintCustTransPortrait.php:508
+#: PO_PDFPurchOrder.php:334 PrintCustTrans.php:482
+#: PrintCustTransPortrait.php:511
 msgid "has been emailed to"
 msgstr "Đã được gửi qua thư điện tử tới"
 
-#: PO_PDFPurchOrder.php:335
+#: PO_PDFPurchOrder.php:334
 msgid "as directed"
 msgstr "Trực tiếp"
 
-#: PO_PDFPurchOrder.php:341
+#: PO_PDFPurchOrder.php:340
 msgid "Emailing Purchase order"
 msgstr "Gửi đơn hàng thu mua qua thư điện tử"
 
-#: PO_PDFPurchOrder.php:341 Z_ChangeStockCode.php:256
+#: PO_PDFPurchOrder.php:340 Z_ChangeStockCode.php:256
 msgid "failed"
 msgstr "Không thành công"
 
-#: PO_PDFPurchOrder.php:345
+#: PO_PDFPurchOrder.php:344
 #, fuzzy
 msgid "Printed by"
 msgstr "đã in"
 
-#: PO_PDFPurchOrder.php:368
+#: PO_PDFPurchOrder.php:367
 msgid "Print or Email the Order"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:386
+#: PO_PDFPurchOrder.php:385
 msgid "Show Amounts on the Order"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:400
+#: PO_PDFPurchOrder.php:399
 msgid "There was a problem retrieving the contact details for the supplier"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:408
+#: PO_PDFPurchOrder.php:407
 msgid "Email to"
 msgstr "Gửi thư điện tử tới"
 
-#: PO_PDFPurchOrder.php:421
+#: PO_PDFPurchOrder.php:420
 msgid "There are no contacts defined for the supplier of this order"
 msgstr ""
 
-#: PO_PDFPurchOrder.php:422
+#: PO_PDFPurchOrder.php:421
 msgid "You must first set up supplier contacts before emailing an order"
 msgstr ""
 
@@ -19165,7 +19173,7 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:202 PO_SelectPurchOrder.php:181
 #: SelectCompletedOrder.php:513 SelectCreditItems.php:957
 #: SelectSalesOrder.php:582 SelectWorkOrder.php:185 Shipt_Select.php:158
-#: WorkOrderEntry.php:601 WorkOrderIssue.php:658
+#: WorkOrderEntry.php:601 WorkOrderIssue.php:657
 msgid "Select a stock category"
 msgstr "Chọn một kho mục"
 
@@ -20064,53 +20072,53 @@ msgstr ""
 msgid "Transaction Print Error Report"
 msgstr ""
 
-#: PrintCustTrans.php:214 PrintCustTrans.php:672
-#: PrintCustTransPortrait.php:236 PrintCustTransPortrait.php:709
+#: PrintCustTrans.php:214 PrintCustTrans.php:667
+#: PrintCustTransPortrait.php:236 PrintCustTransPortrait.php:712
 msgid ""
 "There was a problem retrieving the invoice or credit note details for note "
 "number"
 msgstr ""
 
-#: PrintCustTrans.php:214 PrintCustTrans.php:672
-#: PrintCustTransPortrait.php:236 PrintCustTransPortrait.php:709
+#: PrintCustTrans.php:214 PrintCustTrans.php:667
+#: PrintCustTransPortrait.php:236 PrintCustTransPortrait.php:712
 msgid ""
 "To print an invoice, the sales order record, the customer transaction record "
 "and the branch record for the customer must not have been purged"
 msgstr ""
 
-#: PrintCustTrans.php:214 PrintCustTrans.php:672
-#: PrintCustTransPortrait.php:236 PrintCustTransPortrait.php:709
+#: PrintCustTrans.php:214 PrintCustTrans.php:667
+#: PrintCustTransPortrait.php:236 PrintCustTransPortrait.php:712
 msgid ""
 "To print a credit note only requires the customer, transaction, salesman and "
 "branch records be available"
 msgstr ""
 
-#: PrintCustTrans.php:216 PrintCustTrans.php:264 PrintCustTrans.php:674
-#: PrintCustTrans.php:857 PrintCustTransPortrait.php:238
-#: PrintCustTransPortrait.php:293 PrintCustTransPortrait.php:711
-#: PrintCustTransPortrait.php:902
+#: PrintCustTrans.php:216 PrintCustTrans.php:264 PrintCustTrans.php:669
+#: PrintCustTrans.php:852 PrintCustTransPortrait.php:238
+#: PrintCustTransPortrait.php:293 PrintCustTransPortrait.php:714
+#: PrintCustTransPortrait.php:905
 msgid "The SQL used to get this information that failed was"
 msgstr ""
 
-#: PrintCustTrans.php:262 PrintCustTrans.php:855
-#: PrintCustTransPortrait.php:291 PrintCustTransPortrait.php:900
+#: PrintCustTrans.php:262 PrintCustTrans.php:850
+#: PrintCustTransPortrait.php:291 PrintCustTransPortrait.php:903
 msgid ""
 "There was a problem retrieving the invoice or credit note stock movement "
 "details for invoice number"
 msgstr ""
 
-#: PrintCustTrans.php:390 PrintCustTrans.php:1041
-#: PrintCustTransPortrait.php:450 PrintCustTransPortrait.php:1103
+#: PrintCustTrans.php:390 PrintCustTrans.php:1036
+#: PrintCustTransPortrait.php:450 PrintCustTransPortrait.php:1106
 msgid "Sub Total"
 msgstr ""
 
-#: PrintCustTrans.php:393 PrintCustTrans.php:1043
-#: PrintCustTransPortrait.php:453 PrintCustTransPortrait.php:1105
+#: PrintCustTrans.php:393 PrintCustTrans.php:1038
+#: PrintCustTransPortrait.php:453 PrintCustTransPortrait.php:1108
 msgid "Freight"
 msgstr "Vận tải"
 
-#: PrintCustTrans.php:407 PrintCustTrans.php:1049
-#: PrintCustTransPortrait.php:467 PrintCustTransPortrait.php:1110
+#: PrintCustTrans.php:407 PrintCustTrans.php:1044
+#: PrintCustTransPortrait.php:467 PrintCustTransPortrait.php:1113
 msgid "TOTAL INVOICE"
 msgstr "Tổng hóa đơn"
 
@@ -20119,157 +20127,157 @@ msgstr "Tổng hóa đơn"
 msgid "Account No:"
 msgstr "Tài khoản"
 
-#: PrintCustTrans.php:452 PrintCustTrans.php:1054
-#: PrintCustTransPortrait.php:482 PrintCustTransPortrait.php:1113
+#: PrintCustTrans.php:452 PrintCustTrans.php:1049
+#: PrintCustTransPortrait.php:482 PrintCustTransPortrait.php:1116
 msgid "TOTAL CREDIT"
 msgstr ""
 
-#: PrintCustTrans.php:477 PrintCustTransPortrait.php:498
+#: PrintCustTrans.php:472 PrintCustTransPortrait.php:501
 msgid "Please find attached"
 msgstr "Vui lòng xem đính kèm"
 
-#: PrintCustTrans.php:485 PrintCustTransPortrait.php:506
+#: PrintCustTrans.php:480 PrintCustTransPortrait.php:509
 msgid "Emailing"
 msgstr "Gửi thư điện tử"
 
-#: PrintCustTrans.php:499 PrintCustTransPortrait.php:519
+#: PrintCustTrans.php:494 PrintCustTransPortrait.php:522
 msgid "Select Invoices/Credit Notes To Print"
 msgstr ""
 
-#: PrintCustTrans.php:509
+#: PrintCustTrans.php:504
 msgid "Print Invoices or Credit Notes (Landscape Mode)"
 msgstr ""
 
-#: PrintCustTrans.php:511 PrintCustTransPortrait.php:534
+#: PrintCustTrans.php:506 PrintCustTransPortrait.php:537
 #: includes/MainMenuLinksArray.php:97
 msgid "Print Invoices or Credit Notes"
 msgstr ""
 
-#: PrintCustTrans.php:522 PrintCustTransPortrait.php:549
+#: PrintCustTrans.php:517 PrintCustTransPortrait.php:552
 msgid "Print EDI Transactions"
 msgstr "In giao dịch EDI"
 
-#: PrintCustTrans.php:526 PrintCustTrans.php:531
-#: PrintCustTransPortrait.php:554 PrintCustTransPortrait.php:559
+#: PrintCustTrans.php:521 PrintCustTrans.php:526
+#: PrintCustTransPortrait.php:557 PrintCustTransPortrait.php:562
 msgid "Do not Print PDF EDI Transactions"
 msgstr ""
 
-#: PrintCustTrans.php:527 PrintCustTrans.php:532
-#: PrintCustTransPortrait.php:555 PrintCustTransPortrait.php:560
+#: PrintCustTrans.php:522 PrintCustTrans.php:527
+#: PrintCustTransPortrait.php:558 PrintCustTransPortrait.php:563
 msgid "Print PDF EDI Transactions Too"
 msgstr ""
 
-#: PrintCustTrans.php:536 PrintCustTransPortrait.php:567
+#: PrintCustTrans.php:531 PrintCustTransPortrait.php:570
 msgid "Start invoice/credit note number to print"
 msgstr ""
 
-#: PrintCustTrans.php:538 PrintCustTransPortrait.php:571
+#: PrintCustTrans.php:533 PrintCustTransPortrait.php:574
 msgid "End invoice/credit note number to print"
 msgstr ""
 
-#: PrintCustTrans.php:549 PrintCustTransPortrait.php:587
+#: PrintCustTrans.php:544 PrintCustTransPortrait.php:590
 msgid "The last invoice created was number"
 msgstr ""
 
-#: PrintCustTrans.php:549 PrintCustTransPortrait.php:587
+#: PrintCustTrans.php:544 PrintCustTransPortrait.php:590
 msgid "If only a single invoice is required"
 msgstr ""
 
-#: PrintCustTrans.php:549 PrintCustTransPortrait.php:587
+#: PrintCustTrans.php:544 PrintCustTransPortrait.php:590
 msgid ""
 "enter the invoice number to print in the Start transaction number to print "
 "field and leave the End transaction number to print field blank"
 msgstr ""
 
-#: PrintCustTrans.php:549 PrintCustTransPortrait.php:587
+#: PrintCustTrans.php:544 PrintCustTransPortrait.php:590
 msgid ""
 "Only use the end invoice to print field if you wish to print a sequential "
 "range of invoices"
 msgstr ""
 
-#: PrintCustTrans.php:556 PrintCustTransPortrait.php:594
+#: PrintCustTrans.php:551 PrintCustTransPortrait.php:597
 msgid "The last credit note created was number"
 msgstr ""
 
-#: PrintCustTrans.php:557 PrintCustTransPortrait.php:594
+#: PrintCustTrans.php:552 PrintCustTransPortrait.php:597
 msgid ""
 "A sequential range can be printed using the same method as for invoices above"
 msgstr ""
 
-#: PrintCustTrans.php:557 PrintCustTransPortrait.php:594
+#: PrintCustTrans.php:552 PrintCustTransPortrait.php:597
 msgid ""
 "A single credit note can be printed by only entering a start transaction "
 "number"
 msgstr ""
 
-#: PrintCustTrans.php:687 PrintCustTransPortrait.php:721
+#: PrintCustTrans.php:682 PrintCustTransPortrait.php:724
 msgid ""
 "This transaction is addressed to another customer and cannot be displayed "
 "for privacy reasons"
 msgstr ""
 
-#: PrintCustTrans.php:687 PrintCustTransPortrait.php:721
+#: PrintCustTrans.php:682 PrintCustTransPortrait.php:724
 msgid "Please select only transactions relevant to your company"
 msgstr ""
 
-#: PrintCustTrans.php:699 PrintCustTrans.php:932 PrintCustTrans.php:981
-#: PrintCustTransPortrait.php:734 PrintCustTransPortrait.php:982
-#: PrintCustTransPortrait.php:1037 includes/PDFTransPageHeader.inc:15
+#: PrintCustTrans.php:694 PrintCustTrans.php:927 PrintCustTrans.php:976
+#: PrintCustTransPortrait.php:737 PrintCustTransPortrait.php:985
+#: PrintCustTransPortrait.php:1040 includes/PDFTransPageHeader.inc:15
 #: includes/PDFTransPageHeaderPortrait.inc:17
 msgid "TAX INVOICE"
 msgstr "Hóa đơn thuế"
 
-#: PrintCustTrans.php:701 PrintCustTrans.php:934 PrintCustTrans.php:983
-#: PrintCustTransPortrait.php:736 PrintCustTransPortrait.php:984
-#: PrintCustTransPortrait.php:1039 includes/PDFTransPageHeaderPortrait.inc:19
+#: PrintCustTrans.php:696 PrintCustTrans.php:929 PrintCustTrans.php:978
+#: PrintCustTransPortrait.php:739 PrintCustTransPortrait.php:987
+#: PrintCustTransPortrait.php:1042 includes/PDFTransPageHeaderPortrait.inc:19
 msgid "TAX CREDIT NOTE"
 msgstr ""
 
-#: PrintCustTrans.php:703 PrintCustTransPortrait.php:739
+#: PrintCustTrans.php:698 PrintCustTransPortrait.php:742
 msgid "Tax Authority Ref"
 msgstr ""
 
-#: PrintCustTrans.php:726 PrintCustTransPortrait.php:765
+#: PrintCustTrans.php:721 PrintCustTransPortrait.php:768
 msgid "Charge To"
 msgstr ""
 
-#: PrintCustTrans.php:751 PrintCustTransPortrait.php:791
+#: PrintCustTrans.php:746 PrintCustTransPortrait.php:794
 #: includes/PDFTransPageHeader.inc:138
 #: includes/PDFTransPageHeaderPortrait.inc:188
 msgid "Charge Branch"
 msgstr ""
 
-#: PrintCustTrans.php:776 PrintCustTransPortrait.php:817
+#: PrintCustTrans.php:771 PrintCustTransPortrait.php:820
 msgid "Your Order Ref"
 msgstr ""
 
-#: PrintCustTrans.php:777 PrintCustTransPortrait.php:818
+#: PrintCustTrans.php:772 PrintCustTransPortrait.php:821
 msgid "Our Order No"
 msgstr "Số đặt hàng của chúng tôi"
 
-#: PrintCustTrans.php:779 PrintCustTransPortrait.php:820 SalesInquiry.php:1071
+#: PrintCustTrans.php:774 PrintCustTransPortrait.php:823 SalesInquiry.php:1071
 #: SupplierInvoice.php:264
 msgid "Invoice Date"
 msgstr ""
 
-#: PrintCustTrans.php:780 PrintCustTrans.php:827
-#: PrintCustTransPortrait.php:821 PrintCustTransPortrait.php:871
+#: PrintCustTrans.php:775 PrintCustTrans.php:822
+#: PrintCustTransPortrait.php:824 PrintCustTransPortrait.php:874
 #: SalesAnalRepts.php:47 SalesAnalRepts.php:49
 #: includes/PDFTransPageHeader.inc:195
 #: includes/PDFTransPageHeaderPortrait.inc:244
 msgid "Sales Person"
 msgstr "Người bán hàng"
 
-#: PrintCustTrans.php:781 PrintCustTransPortrait.php:822
+#: PrintCustTrans.php:776 PrintCustTransPortrait.php:825
 msgid "Shipper"
 msgstr "Hãng tàu"
 
-#: PrintCustTrans.php:782 PrintCustTransPortrait.php:823
+#: PrintCustTrans.php:777 PrintCustTransPortrait.php:826
 msgid "Consignment Ref"
 msgstr ""
 
-#: PrintCustTrans.php:936 PrintCustTrans.php:985
-#: PrintCustTransPortrait.php:986 PrintCustTransPortrait.php:1042
+#: PrintCustTrans.php:931 PrintCustTrans.php:980
+#: PrintCustTransPortrait.php:989 PrintCustTransPortrait.php:1045
 msgid "GST Number"
 msgstr ""
 
@@ -20281,15 +20289,15 @@ msgstr "Tài khoản"
 msgid "Bank Code:"
 msgstr "Mã số ngân hàng"
 
-#: PrintCustTransPortrait.php:530
+#: PrintCustTransPortrait.php:533
 msgid "Print Invoices or Credit Notes (Portrait Mode)"
 msgstr ""
 
-#: PrintCustTransPortrait.php:577
+#: PrintCustTransPortrait.php:580
 msgid "Print Preview"
 msgstr "Xem trước khi in"
 
-#: PurchData.php:6 SupplierPriceList.php:5 SupplierPriceList.php:489
+#: PurchData.php:6 SupplierPriceList.php:5 SupplierPriceList.php:492
 msgid "Supplier Purchasing Data"
 msgstr "Dữ liệu mua của nhà cung cấp"
 
@@ -20386,7 +20394,7 @@ msgid "This purchasing data record has been successfully deleted"
 msgstr "Đã xóa thành công dữ liệu thu mua"
 
 #: PurchData.php:139 PurchData.php:263 PurchData.php:287
-#: SupplierPriceList.php:385
+#: SupplierPriceList.php:388
 msgid "For Stock Code"
 msgstr "Dành cho Mã số kho"
 
@@ -20401,7 +20409,7 @@ msgstr ""
 msgid "There is no purchasing data set up for the part selected"
 msgstr "Không có dữ liệu mua bán nào thiết lập cho nhà cung cấp này"
 
-#: PurchData.php:169 SupplierPriceList.php:526
+#: PurchData.php:169 SupplierPriceList.php:529
 #, fuzzy
 msgid "Conversion Factor"
 msgstr "Hệ số chuyển đổi không chính xác"
@@ -20411,15 +20419,15 @@ msgstr "Hệ số chuyển đổi không chính xác"
 msgid "Cost Per Our Unit"
 msgstr "Chi phí trên mỗi đơn vị"
 
-#: PurchData.php:172 SupplierPriceList.php:530
+#: PurchData.php:172 SupplierPriceList.php:533
 msgid "Effective From"
 msgstr "Có hiệu lực từ"
 
-#: PurchData.php:173 SelectProduct.php:369 SupplierPriceList.php:532
+#: PurchData.php:173 SelectProduct.php:369 SupplierPriceList.php:535
 msgid "Min Order Qty"
 msgstr ""
 
-#: PurchData.php:175 SupplierPriceList.php:529
+#: PurchData.php:175 SupplierPriceList.php:532
 msgid "Preferred"
 msgstr ""
 
@@ -20450,42 +20458,42 @@ msgstr ""
 msgid "you should make one supplier only the preferred supplier"
 msgstr ""
 
-#: PurchData.php:249 SupplierPriceList.php:371
+#: PurchData.php:249 SupplierPriceList.php:374
 msgid ""
 "The supplier details for the selected supplier could not be retrieved because"
 msgstr "Không truy xuất được thông tin chi tiết cho nhà cung cấp vừa chọn vì"
 
-#: PurchData.php:258 SupplierPriceList.php:379
+#: PurchData.php:258 SupplierPriceList.php:382
 msgid "The supplier code"
 msgstr "Mã số nhà cung cấp"
 
-#: PurchData.php:258 SupplierPriceList.php:379
+#: PurchData.php:258 SupplierPriceList.php:382
 msgid "is not an existing supplier in the database"
 msgstr ""
 
-#: PurchData.php:258 SupplierPriceList.php:379
+#: PurchData.php:258 SupplierPriceList.php:382
 msgid ""
 "You must enter an alternative supplier code or select a supplier using the "
 "search facility below"
 msgstr ""
 
-#: PurchData.php:271 SupplierPriceList.php:394
+#: PurchData.php:271 SupplierPriceList.php:397
 msgid "Text in the Supplier"
 msgstr ""
 
-#: PurchData.php:271 SupplierPriceList.php:394
+#: PurchData.php:271 SupplierPriceList.php:397
 msgid "NAME"
 msgstr "TÊN"
 
-#: PurchData.php:274 SupplierPriceList.php:397
+#: PurchData.php:274 SupplierPriceList.php:400
 msgid "Text in Supplier"
 msgstr ""
 
-#: PurchData.php:274 SupplierPriceList.php:397
+#: PurchData.php:274 SupplierPriceList.php:400
 msgid "CODE"
 msgstr "Mã số"
 
-#: PurchData.php:278 SupplierPriceList.php:400
+#: PurchData.php:278 SupplierPriceList.php:403
 msgid "Find Suppliers Now"
 msgstr "Tìm nhà cung cấp"
 
@@ -20497,13 +20505,13 @@ msgstr ""
 "Từ khóa tên nhà cung cấp được sử dụng cho tùy chỉnh của mã nhà cung cấp được "
 "nhập vào"
 
-#: PurchData.php:322 SupplierPriceList.php:433
+#: PurchData.php:322 SupplierPriceList.php:436
 msgid ""
 "The suppliers matching the criteria entered could not be retrieved because"
 msgstr ""
 "Không thể truy xuất nhà cung cấp phù hợp với tiêu chuẩn vừa nhập bởi vì"
 
-#: PurchData.php:323 SupplierPriceList.php:434
+#: PurchData.php:323 SupplierPriceList.php:437
 msgid "The SQL to retrieve supplier details that failed was"
 msgstr "Dữ liệu truy xuất chi tiết về nhà cung cấp không thành công là"
 
@@ -25576,7 +25584,7 @@ msgid "The stock held at each location cannot be retrieved because"
 msgstr ""
 
 #: StockLocStatus.php:167 StockSerialItemResearch.php:75
-#: SupplierPriceList.php:522 api/api_xml-rpc.php:2316
+#: SupplierPriceList.php:525 api/api_xml-rpc.php:2316
 msgid "StockID"
 msgstr ""
 
@@ -28204,37 +28212,37 @@ msgstr "Số hóa đơn nhà cung cấp"
 msgid "Enter another Invoice for this Supplier"
 msgstr "Nh?p vào m?t hóa don khác c?a nhà cung c?p này"
 
-#: SupplierPriceList.php:388
+#: SupplierPriceList.php:391
 #, fuzzy
 msgid "Search for a supplier"
 msgstr "Tìm kiếm nhà cung cấp"
 
-#: SupplierPriceList.php:439
+#: SupplierPriceList.php:442
 #, fuzzy
 msgid "Select a supplier"
 msgstr "Chọn nhà cung cấp"
 
-#: SupplierPriceList.php:518
+#: SupplierPriceList.php:521
 #, fuzzy
 msgid "Supplier purchasing data for"
 msgstr "Dữ liệu mua của nhà cung cấp"
 
-#: SupplierPriceList.php:519
+#: SupplierPriceList.php:522
 #, fuzzy
 msgid "Find new Item Code"
 msgstr "Nhập vào mã mặt hàng"
 
-#: SupplierPriceList.php:525
+#: SupplierPriceList.php:528
 #, fuzzy
 msgid "Suppliers UOM"
 msgstr "nhà cung cấp"
 
-#: SupplierPriceList.php:527
+#: SupplierPriceList.php:530
 #, fuzzy
 msgid "Suppliers Description"
 msgstr "Mô tả kho của nhà cung cấp"
 
-#: SupplierPriceList.php:531
+#: SupplierPriceList.php:534
 #, fuzzy
 msgid "Suppliers Item Code"
 msgstr "mã của nhà cung cấp"
@@ -28687,7 +28695,7 @@ msgid "Tender"
 msgstr "H? so d? th?u"
 
 #: SupplierTenders.php:535 WorkOrderCosting.php:68 WorkOrderEntry.php:522
-#: WorkOrderIssue.php:546 WorkOrderReceive.php:773 WorkOrderStatus.php:71
+#: WorkOrderIssue.php:530 WorkOrderReceive.php:773 WorkOrderStatus.php:71
 msgid "Required By"
 msgstr "Yêu cầu theo"
 
@@ -30903,71 +30911,71 @@ msgid ""
 "Please read all notes carefully to ensure they are expected"
 msgstr ""
 
-#: UpgradeDatabase.php:159
+#: UpgradeDatabase.php:164
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:173
+#: UpgradeDatabase.php:178
 msgid "Applying"
 msgstr ""
 
-#: UpgradeDatabase.php:201 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:206 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "thành công"
 
-#: UpgradeDatabase.php:204
+#: UpgradeDatabase.php:209
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:207 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:212 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr ""
 
-#: UpgradeDatabase.php:210
+#: UpgradeDatabase.php:215
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "Đã được nhập vào"
 
-#: UpgradeDatabase.php:213 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:218 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr ""
 
-#: UpgradeDatabase.php:216 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:221 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Chỉ số đã tồn tại"
 
-#: UpgradeDatabase.php:219 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:224 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr ""
 
-#: UpgradeDatabase.php:222
+#: UpgradeDatabase.php:227
 msgid "SQL syntax error. The SQL error message is"
 msgstr ""
 
-#: UpgradeDatabase.php:225 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:230 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "chìa khóa chính đã tồn tại"
 
-#: UpgradeDatabase.php:228
+#: UpgradeDatabase.php:233
 msgid "Index already dropped previously"
 msgstr ""
 
-#: UpgradeDatabase.php:231 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:236 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Thất bại"
 
-#: UpgradeDatabase.php:231 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:236 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "lỗi số"
@@ -31195,7 +31203,7 @@ msgstr ""
 msgid "Work order"
 msgstr ""
 
-#: WorkOrderCosting.php:66 WorkOrderIssue.php:544 WorkOrderReceive.php:771
+#: WorkOrderCosting.php:66 WorkOrderIssue.php:528 WorkOrderReceive.php:771
 #: WorkOrderStatus.php:69
 msgid "Manufactured at"
 msgstr "Sản xuất tại"
@@ -31449,7 +31457,7 @@ msgstr ""
 msgid "Cancel This Work Order"
 msgstr "Hủy toàn bộ đơn hàng"
 
-#: WorkOrderEntry.php:679 WorkOrderIssue.php:741
+#: WorkOrderEntry.php:679 WorkOrderIssue.php:740
 #, php-format
 msgid "Add to Work Order"
 msgstr ""
@@ -31565,73 +31573,68 @@ msgstr ""
 msgid "Issue to work order"
 msgstr ""
 
-#: WorkOrderIssue.php:525
-#, fuzzy
-msgid "Item(s)"
-msgstr "Mặt hàng"
+#: WorkOrderIssue.php:536 WorkOrderReceive.php:782 WorkOrderStatus.php:80
+msgid "Already Received"
+msgstr "đã nhận"
 
-#: WorkOrderIssue.php:531
+#: WorkOrderIssue.php:541
 msgid ""
 "The selected work order has been closed and variances calculated and posted. "
 "No more issues of materials and components can be made against this work "
 "order."
 msgstr ""
 
-#: WorkOrderIssue.php:555 WorkOrderReceive.php:782 WorkOrderStatus.php:80
-msgid "Already Received"
-msgstr "đã nhận"
-
-#: WorkOrderIssue.php:562
+#: WorkOrderIssue.php:558
 msgid "Date Material Issued"
 msgstr ""
 
-#: WorkOrderIssue.php:564
+#: WorkOrderIssue.php:560
 msgid "Issued From"
 msgstr ""
 
-#: WorkOrderIssue.php:603 WorkOrderStatus.php:94
+#: WorkOrderIssue.php:599 WorkOrderStatus.php:94
 msgid "Material Requirements For this Work Order"
 msgstr ""
 
-#: WorkOrderIssue.php:608 WorkOrderStatus.php:99
+#: WorkOrderIssue.php:604 WorkOrderStatus.php:99
 msgid "Qty Issued"
 msgstr ""
 
-#: WorkOrderIssue.php:769
+#: WorkOrderIssue.php:768
 msgid "Could not get the detail of the item being issued because"
 msgstr ""
 
-#: WorkOrderIssue.php:775
+#: WorkOrderIssue.php:774
 msgid "Issuing"
 msgstr ""
 
-#: WorkOrderIssue.php:789
+#: WorkOrderIssue.php:788
 msgid "Serial Numbers Issued"
 msgstr "Các số se-ri đã được xuất"
 
-#: WorkOrderIssue.php:795
+#: WorkOrderIssue.php:794
 msgid ""
 "Could not retrieve the serial numbers available at the location specified "
 "because"
 msgstr ""
 
-#: WorkOrderIssue.php:798
+#: WorkOrderIssue.php:797
 msgid "There are no serial numbers at this location to issue"
 msgstr ""
 
-#: WorkOrderIssue.php:801
+#: WorkOrderIssue.php:800
 msgid "Reselect Location or Issued Item"
 msgstr ""
 
-#: WorkOrderIssue.php:816 WorkOrderIssue.php:831 WorkOrderIssue.php:839
+#: WorkOrderIssue.php:815 WorkOrderIssue.php:830 WorkOrderIssue.php:838
 msgid "Process Items Issued"
 msgstr ""
 
-#: WorkOrderIssue.php:821
+#: WorkOrderIssue.php:820
 msgid "Batch/Lots Issued"
 msgstr ""
 
-#: WorkOrderIssue.php:836
+#: WorkOrderIssue.php:835
 msgid "Quantity Issued"
 msgstr "Số lượng phát hành"
 
@@ -40690,6 +40693,10 @@ msgstr "các tham số"
 #: api/api_xml-rpc.php:3495
 msgid "Return Value"
 msgstr "giá trị trả lại"
+
+#, fuzzy
+#~ msgid "Item(s)"
+#~ msgstr "Mặt hàng"
 
 #~ msgid "Street Address 5"
 #~ msgstr "City-State-zip"

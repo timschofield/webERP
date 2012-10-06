@@ -89,6 +89,7 @@ mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --no
        holdreasons \
        locations \
        paymentterms \
+       reportlinks \
        salesglpostings \
        systypes \
        taxauthorities \

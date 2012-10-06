@@ -7,7 +7,7 @@ do
     newname=`echo $f | cut -c3-`
     filename="$ROOT_DIR/../$newname"
     echo $filename
-    output=$((php5 -l $filename ) 2>&1)
+    output=$((php -l $filename ) 2>&1)
 
     if [ $? != 0 ]
     then

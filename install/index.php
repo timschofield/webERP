@@ -43,7 +43,7 @@ $CompanyPath = $PathToRoot. '/companies';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>WebERP Installation Wizard</title>
-<link href="../css/jelly/default.css" rel="stylesheet" type="text/css" />
+<link href="../css/gel/default.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
 function change_os(type) {

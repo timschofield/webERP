@@ -4,6 +4,8 @@ webERP README
 
 INSTALLATION
 
+Note that 4.09 includes a new css structure and that upgrading from previous version will require that the browser cache is cleared for the new css to render correctly.
+
 Installation is largely automatic having extracted the archive to a directory under the web-server's root and then browsing to this directory. The installation script will display with guidance on how to proceed.
 
 Detailed installation instructions are in the file doc/INSTALL.txt in the doc directory. If you have trouble installing with the automated script, it is important to read the INSTALL.txt file in its entirety before proceeding manually. A printout is recommended.
