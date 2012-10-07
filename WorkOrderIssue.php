@@ -519,6 +519,8 @@ if (DB_num_rows($WOResult)==0){
 if (!isset($_POST['IssuedDate'])){
 	$_POST['IssuedDate'] = Date($_SESSION['DefaultDateFormat']);
 }
+$WORow = DB_fetch_array($WOResult);
+
 echo '<table class="selection">
 		<tr>
 			<td class="label">' . _('Issue to work order') . ':</td>
@@ -536,7 +538,7 @@ echo '<table class="selection">
 			<td class="label">' . _('Already Received') . ':</td>
 			<td class="label">' . _('Unit') . ':</td>
 		</tr>';
-$WORow = DB_fetch_array($WOResult);
+
 if ($WORow['closed']==1){
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'),'info');
 	include('includes/footer.inc');
