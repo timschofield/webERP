@@ -702,7 +702,6 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level] . ' ' . _('total');
-					$ActGrpLabelForPL = str_repeat('___',$Level) . $ParentGroups[$Level];
 				} else {
 					$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 				}
@@ -856,7 +855,7 @@ if ((!isset($_POST['FromPeriod'])
 						</tr>';
 
 					printf('<tr style="background-color:#ffffff">
-								<td colspan="2"><h4><b>'._('Profit').' - '._('Loss'). ' '. _('after'). ' ' . $ActGrpLabelForPL .'</b></h2></td>
+								<td colspan="2"><h4><b>'._('Profit').' - '._('Loss'). ' '. _('after'). ' ' . $Sections[$Section] .'</b></h2></td>
 								<td></td>
 								<td class="number">%s</td>
 								<td></td>
@@ -884,7 +883,7 @@ if ((!isset($_POST['FromPeriod'])
 						$LYNPPercent = 0;
 					}
 					printf('<tr style="background-color:#ffffff">
-								<td colspan="2"><h4><i>'._('P/L Percent after').' ' . $ActGrpLabelForPL .'</i></h4></td>
+								<td colspan="2"><h4><i>'._('P/L Percent after').' ' . $Sections[$Section] .'</i></h4></td>
 								<td></td>
 								<td class="number"><i>%s</i></td>
 								<td></td>
