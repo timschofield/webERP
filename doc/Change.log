@@ -1,7 +1,7 @@
 webERP Change Log
 
 
-
+9/10/2012: Exson fixed typo in CounterSales.php reported by thumb.
 7/10/12 Phil: Fix WorkOrderIssue.php required by date
 
 6/10/2012 Release 4.09
