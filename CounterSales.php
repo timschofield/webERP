@@ -1111,7 +1111,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 
 				$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorderfetails.orderno=salesorders.orderno
+						ON saleorderdetails.orderno=salesorders.orderno
 						WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
 						AND salesorderdetails.completed = 0
 						AND salesorders.quotation = 0";
