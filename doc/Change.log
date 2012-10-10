@@ -1,6 +1,7 @@
 webERP Change Log
 
 
+10/10/12 Harald Ringehahn: Updated German translation
 9/10/2012: Exson fixed typo in CounterSales.php reported by thumb.
 9/10/12 Exson: installation would not allow demo to be installed - install/index.php 
 7/10/12 Phil: Fix WorkOrderIssue.php required by date
