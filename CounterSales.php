@@ -335,10 +335,10 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 	if (isset($_POST['Next'])) {
 		$Offset = $_POST['NextList'];
 	}
-	if (isset($_POST['Prev'])) {
-		$Offset = $_POST['previous'];
+	if (isset($_POST['Previous'])) {
+		$Offset = $_POST['PreviousList'];
 	}
-	if (!isset($Offset) or $Offset<0) {
+	if (!isset($Offset) OR $Offset<0) {
 		$Offset=0;
 	}
 	$SQL = $SQL . ' LIMIT ' . $_SESSION['DefaultDisplayRecordsMax'].' OFFSET '.strval($_SESSION['DefaultDisplayRecordsMax']*$Offset);
@@ -2172,7 +2172,7 @@ if (!isset($_POST['ProcessSale'])){
 		echo '<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection"><tr><td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';
 
-		if (!isset($_POST['StockCat'])){
+		if (!isset($_POST['StockCat']) OR $_POST['StockCat']=='All'){
 			echo '<option selected="selected" value="All">' . _('All').'</option>';
 			$_POST['StockCat'] ='All';
 		} else {
@@ -2211,9 +2211,10 @@ if (!isset($_POST['ProcessSale'])){
 			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
 		}
 
-		echo '</tr></table><br />';
-        echo '</div>';
-        echo '</form>';
+		echo '</tr>
+		</table>
+		<br />
+		</div>';
 	// Add some useful help as the order progresses
 		if (isset($SearchResult)) {
 			echo '<br />';
@@ -2224,12 +2225,10 @@ if (!isset($_POST['ProcessSale'])){
 
 		if (isset($SearchResult)) {
 			$j = 1;
-			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID .'identifier='.$identifier . '" method="post" id="orderform">';
-            echo '<div>';
-			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+			echo '<div>';
 			echo '<table class="table1">';
 			echo '<tr>
-					<td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>
+					<td><input type="hidden" name="PreviousList" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Previous" value="'._('Prev').'" /></td>
 					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>
 					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td>
 				</tr>';
@@ -2241,7 +2240,8 @@ if (!isset($_POST['ProcessSale'])){
 					   			<th>' . _('On Demand') . '</th>
 					   			<th>' . _('On Order') . '</th>
 					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th></tr>';
+					   			<th>' . _('Quantity') . '</th>
+					   		</tr>';
 			echo $TableHeader;
 			$i=0;
 			$k=0; //row colour counter

@@ -40,16 +40,17 @@ if (DB_num_rows($result) == 0) {
 }
 // end of showing search facilities
 
-echo '<form action="SelectAsset.php" method="post">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
-echo '<table class="selection"><tr>';
-echo '<td>' . _('In Asset Category') . ':</td><td>';
-echo '<select name="AssetCategory">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
+		<table class="selection">
+		<tr>
+			<td>' . _('In Asset Category') . ':</td>
+			<td><select name="AssetCategory">';
 
 if (!isset($_POST['AssetCategory'])) {
-	$_POST['AssetCategory'] = '';
+	$_POST['AssetCategory'] = 'ALL';
 }
 if ($_POST['AssetCategory']=='ALL'){
 	echo '<option selected="selected" value="ALL">' . _('Any asset category') . '</option>';
@@ -64,9 +65,9 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td>';
-
-echo '<td>' . _('Enter partial description') . ':</td><td>';
+echo '</select></td>
+	<td>' . _('Enter partial description') . ':</td>
+	<td>';
 if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
@@ -97,15 +98,19 @@ while ($myrow = DB_fetch_array($result)) {
 }
 echo '</select>';
 
-echo '  </td><td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . ':</td>';
-echo '<td>';
+echo '  </td>
+		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . ':</td>
+		<td>';
 if (isset($_POST['AssetCode'])) {
 	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" maxlength="13" />';
 } else {
 	echo '<input type="text" name="AssetCode" size="15" maxlength="13" />';
 }
-echo '</td></tr></table><br />';
-echo '<div class="centre">
+echo '</td>
+	</tr>
+	</table>
+	<br />
+	<div class="centre">
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
 	</div>
 	<br />
@@ -198,6 +203,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			}
 		}
 	}
+
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
 	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
@@ -210,7 +216,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* end query for list of records */
 /* display list if there is more than one record */
 if (isset($SearchResult) AND !isset($_POST['Select'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="FixedAssetItems.php" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($SearchResult);

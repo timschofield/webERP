@@ -1,7 +1,11 @@
 webERP Change Log
 
+13/10/12 Release 4.09.1
 
-10/10/12 Harald Ringehahn: Updated German translation
+12/10/12 Phil: Fix pagination/selection of order items in SelectOrderItems.php and CounterSales.php
+12/10/12 Phil: SelectAsset.php now goes to FixedAssetItems.php when an item is selected to display the asset for editing
+12/10/12 Rafael Chacón: Updated CRC - Costa Rica flag image
+10/10/12 Harald Ringehahn: Updated German translation 
 9/10/2012: Exson fixed typo in CounterSales.php reported by thumb.
 9/10/12 Exson: installation would not allow demo to be installed - install/index.php 
 7/10/12 Phil: Fix WorkOrderIssue.php required by date
