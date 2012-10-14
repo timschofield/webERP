@@ -4,6 +4,9 @@
 include('includes/session.inc');
 $title = _('Chart of Accounts Maintenance');
 
+$ViewTopic= 'GeneralLedger';
+$BookMark = 'GLAccounts';
+
 include('includes/header.inc');
 
 if (isset($_POST['SelectedAccount'])){

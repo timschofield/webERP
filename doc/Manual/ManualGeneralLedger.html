@@ -25,7 +25,7 @@
 
 <h2><a id="AccountGroups">Account Groups</a></h2>
 
-<p>The account group is the parent object of a general ledger account for someone who understands OO programming. Child accounts created inherit the properties of the account group - ie the account will be a profit and loss account if it belongs to an account group that is a balance sheet account, the child accounts will display in the trial balance (TB) together in the sequence determined by the account groups sequence in the trial balance (TB).</p>
+<p>The account group is the parent object of a general ledger account for someone who understands OO programming. Child accounts created inherit the properties of the account group - ie the account will be a profit and loss account if it belongs to an account group that is a profit and loss account, the child accounts will display in the trial balance (TB) together in the sequence determined by the account groups sequence in the trial balance (TB).</p>
 
 <p>Using a numbering system inhibits the ability to manipulate the format of the trial balance ie you have to be able to change the account code to change where an account appears ie</p>
 
@@ -39,7 +39,32 @@
 
 <p>Account groups require the sequence in the trial balance to be specified and also whether the accounts in that group will be profit and loss accounts or balance sheet accounts.</p>
 
-<p>A balance sheet account is one where only the balance at the end of the period concerned is of interest. A profit and loss is one where we are interested in the movement over the period. eg. Motor expenses we are not concerned with the balance at the end of the month so much as how much was spent over the period of the profit and loss. However, for a bank account we wish to know what we have now as a balance not the movements in the account. As noted accounts created as a member of an account group will inherit the properties of the account group ie if the account group is a balance sheet group then the accounts will be interpreted as balance sheet accounts.</p><!-- Help End: AccountGroups -->
+<p>A balance sheet account is one where only the balance at the end of the period concerned is of interest. A profit and loss is one where we are interested in the movement over the period. eg. Motor expenses we are not concerned with the balance at the end of the month so much as how much was spent over the period of the profit and loss. However, for a bank account we wish to know what we have now as a balance not the movements in the account. As noted accounts created as a member of an account group will inherit the properties of the account group ie if the account group is a balance sheet group then the accounts will be interpreted as balance sheet accounts.</p>
+
+<p>Say we wish to report on &quot;The Hague&quot;, &quot;Compenhagen&quot; and &quot;Amsterdam&quot; we can set up an account group for each, with a series of sub-account groups under each of these account groups. 
+<ul>
+<li>The Hauge -> Sales</li>
+<li>The Hague -> Cost of Sales</li>
+<li>The Hague -> Overheads</li>
+<blockquote><li>The Hague -> Overheads -> Motor Expense</li>
+	<li>The Hague -> Overheads -> Advertising</li>
+	<li>The Hague -> Overheads -> Postage Stationery</li>
+	<li>The Hague -> Overheads -> Repairs Maintenance</li>
+</blockquote>
+</ul>	
+<!-- Help End: AccountGroups -->
+<!-- Help Begin: GLAccounts -->
+
+<h2><a id="GLAccounts">General Ledger Accounts</a></h2>
+
+<p>Any number of general ledger accounts can be defined, the structure of the accounts is goverened by the <a href="#AccountGroups">Account Group</a> - which defined whether an account is a balance sheet or profit and loss account and where abouts it should appear in the trial balance. All accounts are displayed under the heading of the account group so the numbering of general ledger accounts has no bearing on the display of the trial balance or accounts (in contrast to legacy systems).</p>
+<p>General ledger accounts are the cost holders for all accounting in webERP. Whilst it is possible to run webERP to keep track of just stock or debtors/accounts receivable or accounts payable, it is only when these functions are all integrated with the accounting hub that the real value of webERP's integrated design is fully realised. With all costs recorded in accounts payable, bank accounts, accounts receivable, stock, shipment costing, contract costing etc and with the correct configuration, the accounts almost drop out with minimal additional manual inputs required. Useful management information is therefore available in real time as the transactions are made.</p>
+<p>To create a general ledger account, click on:</p>
+<p><blockquote>Main Menu->Maintenance: GL Account</blockquote></p>
+<p>The list of existing general ledger accounts will display - together with the whether the account group of the account is a P &amp; L. To   
+ enter a new account all that is required is to give it a number and a description and select an existing account group.</p>
+<!-- Help End: GLAccounts -->
+
 <!-- Help Begin: BankAccounts -->
 
 <h2><a id="BankAccounts">Bank Accounts</a></h2>

@@ -14,13 +14,15 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 	if (mb_substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off
 		$AssetID	= mb_substr($AssetToMove,4);
-		$sql		= "UPDATE fixedassets
-					SET assetlocation='".$_POST['Location'.$AssetID] ."'
-					WHERE assetid='". $AssetID . "'";
-
-		$result=DB_query($sql, $db);
-		prnMsg(_('The Fixed Asset has been moved successfully'), 'success');
-		echo '<br />';
+		if (isset($_POST['Location' . $AssetID]) AND $_POST['Location' . $AssetID] !=''){ 
+			$sql		= "UPDATE fixedassets
+						SET assetlocation='".$_POST['Location'.$AssetID] ."'
+						WHERE assetid='". $AssetID . "'";
+	
+			$result=DB_query($sql, $db);
+			prnMsg(_('The Fixed Asset has been moved successfully'), 'success');
+			echo '<br />';
+		}
 	}
 }
 
@@ -151,7 +153,7 @@ if (isset($_POST['Search'])) {
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>'._('Asset ID') . '</th>
+			<th>' . _('Asset ID') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Serial number') . '</th>
 			<th>' . _('Purchase Cost') . '</th>
@@ -166,22 +168,20 @@ if (isset($_POST['Search'])) {
 	while ($myrow=DB_fetch_array($Result)) {
 
 		echo '<tr>
-				<td>'.$myrow['assetid'].'</td>
-				<td>'.$myrow['description'].'</td>
-				<td>'.$myrow['serialno'].'</td>
-				<td class="number">'.locale_number_format($myrow['cost'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-				<td class="number">'.locale_number_format($myrow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-				<td>'.$myrow['myassetlocation'].'</td>';
-		echo '<td><select name="Location'.$myrow['assetid'].'" onchange="ReloadForm(Move'.$myrow['assetid'].')">';
+				<td>' . $myrow['assetid'] . '</td>
+				<td>' . $myrow['description'] . '</td>
+				<td>' . $myrow['serialno'] . '</td>
+				<td class="number">' . locale_number_format($myrow['cost'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+				<td class="number">' . locale_number_format($myrow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+				<td>' . $myrow['myassetlocation'] . '</td>';
+		echo '<td><select name="Location' . $myrow['assetid'] . '" onchange="ReloadForm(Move'.$myrow['assetid'].')">';
 		echo '<option></option>';
-		$thisdropdownname	= 'Location'.$myrow['assetid'];
+		$ThisDropDownName	= 'Location' . $myrow['assetid'];
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
 		
-			if(isset($_POST[$thisdropdownname]) and ($_POST[$thisdropdownname] == $LocationRow['locationid']))
-			{
-				echo '<option selected="selected" value="'.$LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
-			}
-			else if ($LocationRow['locationid'] == $myrow['location']) {
+			if(isset($_POST[$ThisDropDownName]) AND ($_POST[$ThisDropDownName] == $LocationRow['locationid'])) {
+				echo '<option selected="selected" value="' . $LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
+			} else if ($LocationRow['locationid'] == $myrow['location']) {
 				echo '<option selected="selected" value="'.$LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
 			} else {
 				echo '<option value="'.$LocationRow['locationid'].'">'.$LocationRow['locationdescription'].'</option>';

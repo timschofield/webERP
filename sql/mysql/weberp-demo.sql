@@ -887,7 +887,7 @@ CREATE TABLE `fixedassets` (
   `depnrate` double NOT NULL,
   `disposaldate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`assetid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -989,7 +989,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2391,7 +2391,7 @@ CREATE TABLE `stockmoves` (
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3006,7 +3006,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-06 13:51:53
+-- Dump completed on 2012-10-14 10:04:00
 -- MySQL dump 10.13  Distrib 5.5.24, for Linux (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -4681,7 +4681,7 @@ INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('VersionNumber','4.09');
+INSERT INTO `config` VALUES ('VersionNumber','4.09.1');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
@@ -5019,11 +5019,13 @@ INSERT INTO `fixedassetcategories` VALUES ('PLANT','Plant and Equipment',1650,77
 --
 
 INSERT INTO `fixedassetlocations` VALUES ('HEADOF','Head Office','');
+INSERT INTO `fixedassetlocations` VALUES ('TORONT','Toronto Warehouse','');
 
 --
 -- Dumping data for table `fixedassets`
 --
 
+INSERT INTO `fixedassets` VALUES (1,'','','HEADOF',0,0,'0000-00-00',0,'PLANT','test 1','Test 1',0,5,'0000-00-00');
 
 --
 -- Dumping data for table `fixedassettrans`
@@ -5111,6 +5113,8 @@ INSERT INTO `gltrans` VALUES (64,11,1,0,'2012-09-04',10,'4100','ANGRY - BREAD x 
 INSERT INTO `gltrans` VALUES (65,11,1,0,'2012-09-04',10,'1100','ANGRY',-5.15,0,'',0);
 INSERT INTO `gltrans` VALUES (66,11,1,0,'2012-09-04',10,'2300','ANGRY',0.22941,0,'',0);
 INSERT INTO `gltrans` VALUES (67,11,1,0,'2012-09-04',10,'2300','ANGRY',0.3372327,0,'',0);
+INSERT INTO `gltrans` VALUES (68,28,12,0,'2012-10-06',11,'1440','18 DVD-CASE x 2 @ 0.30',0.6,0,'',0);
+INSERT INTO `gltrans` VALUES (69,28,12,0,'2012-10-06',11,'1460','18 DVD-CASE x 2 @ 0.30',-0.6,0,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -5168,7 +5172,7 @@ INSERT INTO `locstock` VALUES ('MEL','BIGEARS12',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BirthdayCakeConstruc',0,0);
 INSERT INTO `locstock` VALUES ('MEL','BREAD',7.3,0);
 INSERT INTO `locstock` VALUES ('MEL','DR_TUMMY',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',162,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',160,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',3,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',0,3);
 INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',0,0);
@@ -5378,6 +5382,7 @@ INSERT INTO `periods` VALUES (8,'2012-07-31');
 INSERT INTO `periods` VALUES (9,'2012-08-31');
 INSERT INTO `periods` VALUES (10,'2012-09-30');
 INSERT INTO `periods` VALUES (11,'2012-10-31');
+INSERT INTO `periods` VALUES (12,'2012-11-30');
 
 --
 -- Dumping data for table `pickinglistdetails`
@@ -8982,6 +8987,7 @@ INSERT INTO `stockmoves` VALUES (6,'DVD-UNSG',10,3,'TOR','2011-11-28','QUICK','Q
 INSERT INTO `stockmoves` VALUES (7,'DVD-UNSG',25,37,'MEL','2011-11-26','','',8.0000,1,'WHYNOT (Why not add a new supplier) - 19',10,0,5,1,10,0,NULL);
 INSERT INTO `stockmoves` VALUES (8,'DVD-DHWV',25,38,'MEL','2012-01-07','','',6.9500,2,'WHYNOT (Why not add a new supplier) - 13',3,0,2.32,1,3,0,NULL);
 INSERT INTO `stockmoves` VALUES (9,'BREAD',11,1,'MEL','2012-09-04','ANGRY','ANGRY',2.2900,10,'Ex Inv - 1',2,0,0.4118,1,7.3,0,'');
+INSERT INTO `stockmoves` VALUES (10,'DVD-CASE',28,12,'MEL','2012-10-06','','',0.3000,11,'18',-2,0,0.3,1,160,0,NULL);
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -9090,7 +9096,7 @@ INSERT INTO `systypes` VALUES (22,'Creditors Payment',5);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
 INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',38);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',6);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',11);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',12);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
 INSERT INTO `systypes` VALUES (30,'Sales Order',40);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',28);
@@ -9243,7 +9249,7 @@ INSERT INTO `workcentres` VALUES ('MEL','MEL','Default for MEL',1,0,1,0);
 -- Dumping data for table `workorders`
 --
 
-INSERT INTO `workorders` VALUES (18,'MEL','2011-11-12','2011-11-12',0,0);
+INSERT INTO `workorders` VALUES (18,'MEL','2011-11-12','2011-11-12',0.6,0);
 INSERT INTO `workorders` VALUES (19,'MEL','2011-12-03','2011-12-03',0,0);
 INSERT INTO `workorders` VALUES (20,'MEL','2011-12-04','2011-12-04',0,0);
 INSERT INTO `workorders` VALUES (21,'MEL','2011-12-28','2011-12-28',0,0);
@@ -9259,7 +9265,7 @@ INSERT INTO `workorders` VALUES (23,'MEL','2012-09-08','2012-09-08',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,0,'2012-10-06 14:48:30','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,0,'2012-10-14 10:54:19','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'aguapop','en_GB.utf8',0,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -9267,5 +9273,5 @@ INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-06 13:51:53
+-- Dump completed on 2012-10-14 10:04:00
 SET FOREIGN_KEY_CHECKS = 1;
