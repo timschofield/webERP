@@ -134,7 +134,7 @@ if (isset($_POST['Search'])) {
 				fixedassets.depntype,
 				fixedassets.serialno,
 				fixedassets.barcode,
-				fixedassets.assetlocation as myassetlocation,
+				fixedassets.assetlocation as ItemAssetLocation,
 				fixedassetlocations.locationdescription
 			FROM fixedassets
 			INNER JOIN fixedassetlocations
@@ -173,15 +173,14 @@ if (isset($_POST['Search'])) {
 				<td>' . $myrow['serialno'] . '</td>
 				<td class="number">' . locale_number_format($myrow['cost'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
 				<td class="number">' . locale_number_format($myrow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-				<td>' . $myrow['myassetlocation'] . '</td>';
+				<td>' . $myrow['ItemAssetLocation'] . '</td>';
 		echo '<td><select name="Location' . $myrow['assetid'] . '" onchange="ReloadForm(Move'.$myrow['assetid'].')">';
-		echo '<option></option>';
 		$ThisDropDownName	= 'Location' . $myrow['assetid'];
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
 		
 			if(isset($_POST[$ThisDropDownName]) AND ($_POST[$ThisDropDownName] == $LocationRow['locationid'])) {
 				echo '<option selected="selected" value="' . $LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
-			} else if ($LocationRow['locationid'] == $myrow['location']) {
+			} elseif ($LocationRow['locationid'] == $myrow['ItemAssetLocation']) {
 				echo '<option selected="selected" value="'.$LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
 			} else {
 				echo '<option value="'.$LocationRow['locationid'].'">'.$LocationRow['locationdescription'].'</option>';
