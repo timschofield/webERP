@@ -1,5 +1,7 @@
 webERP Change Log
 
+16/10/12 Phil: SelectOrderItems.php and CounterSales.php $_POST['Prev'] modified to $_POST['Previous']
+
 13/10/12 Release 4.09.1
 
 13/10/12 Samudaya Nanayakkara: Typo fox in FixedAssetLocations.php and FixedAssetTransfer.php added location to search for existing assets to transfer

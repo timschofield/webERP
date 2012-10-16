@@ -10,8 +10,8 @@ include('includes/session.inc');
 
 $title = _('Counter Sales');
 /* webERP manual links before header.inc */
-$ViewTopic= "SalesOrders";
-$BookMark = "SalesOrderCounterSales";
+$ViewTopic= 'SalesOrders';
+$BookMark = 'SalesOrderCounterSales';
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');
@@ -226,7 +226,7 @@ if (isset($_POST['CancelOrder'])) {
 	echo '</p>';
 }
 
-if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
+if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous'])){
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 		$msg = _('Item description has been used in search');
@@ -338,10 +338,10 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 	if (isset($_POST['Previous'])) {
 		$Offset = $_POST['PreviousList'];
 	}
-	if (!isset($Offset) OR $Offset<0) {
-		$Offset=0;
+	if (!isset($Offset) OR $Offset < 0) {
+		$Offset = 0;
 	}
-	$SQL = $SQL . ' LIMIT ' . $_SESSION['DefaultDisplayRecordsMax'].' OFFSET '.strval($_SESSION['DefaultDisplayRecordsMax']*$Offset);
+	$SQL = $SQL . ' LIMIT ' . $_SESSION['DefaultDisplayRecordsMax'].' OFFSET ' . strval($_SESSION['DefaultDisplayRecordsMax']*$Offset);
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL used to get the part selection was');

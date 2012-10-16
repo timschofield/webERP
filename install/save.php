@@ -263,6 +263,8 @@ if ($_POST['DemoData']==false){
 		copy( $path_to_root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
 	}
 }
+    $mysqlport=3306;
+$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 
 //$msg holds the text of the new config.php file
 $msg = "<?php\n\n";
@@ -276,7 +278,7 @@ $msg .= "//  Connection information for the database\n";
 $msg .= "// \$host is the computer ip address or name where the database is located\n";
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$host = '" . $_POST['database_host'] . "';\n\n";
-
+$msg .= "\$mysqlport = 3306;\n\n";
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$dbType = 'mysqli';\n";
 
@@ -299,7 +301,7 @@ $msg .= "\$MaximumExecutionTime =120;\n";
 $msg .= "\$CryptFunction = 'sha1';\n";
 $msg .= "\$DefaultClock = 12;\n";
 
-$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF']));\n";
+$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
 $msg .= "\$rootpath = mb_substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";

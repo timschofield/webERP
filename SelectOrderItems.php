@@ -737,7 +737,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</b></div>';
 	}
 	$msg ='';
-	if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])){
+	if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
 
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 			$msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
