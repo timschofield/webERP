@@ -33,14 +33,14 @@ if (!isset($_SESSION['PaymentDetail' . $identifier])){
 	$_SESSION['PaymentDetail' . $identifier]->GLItemCounter = 1;
 }
 
-if ((isset($_POST['UpdateHeader']) 
-	AND $_POST['BankAccount']=='') 
+if ((isset($_POST['UpdateHeader'])
+	AND $_POST['BankAccount']=='')
 	OR (isset($_POST['Process']) AND $_POST['BankAccount']=='')) {
-		
+
 	prnMsg(_('A bank account must be selected to make this payment from'), 'warn');
 	$BankAccountEmpty=true;
 } else {
-	
+
 	$BankAccountEmpty=false;
 }
 
@@ -69,7 +69,7 @@ if (isset($_GET['SupplierID'])){
 				address6,
 				currcode,
 				factorcompanyid
-			FROM suppliers 
+			FROM suppliers
 			WHERE supplierid='" . $_GET['SupplierID'] . "'";
 
 	$Result = DB_query($SQL, $db);
@@ -90,7 +90,7 @@ if (isset($_GET['SupplierID'])){
 			$_SESSION['PaymentDetail' . $identifier]->SupplierID = $_GET['SupplierID'];
 			$_SESSION['PaymentDetail' . $identifier]->Currency = $myrow['currcode'];
 			$_POST['Currency'] = $_SESSION['PaymentDetail' . $identifier]->Currency;
-			
+
 		} else {
 			$factorsql= "SELECT coyname,
 			 					address1,
@@ -119,18 +119,18 @@ if (isset($_GET['SupplierID'])){
 }
 
 if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!=''){
-	
+
 	$_SESSION['PaymentDetail' . $identifier]->Account=$_POST['BankAccount'];
 	/*Get the bank account currency and set that too */
 	$ErrMsg = _('Could not get the currency of the bank account');
-	$result = DB_query("SELECT currcode, 
-								decimalplaces 
+	$result = DB_query("SELECT currcode,
+								decimalplaces
 						FROM bankaccounts INNER JOIN currencies
 						ON bankaccounts.currcode = currencies.currabrev
 						WHERE accountcode ='" . $_POST['BankAccount'] . "'",
 						$db,
 						$ErrMsg);
-						
+
 	$myrow = DB_fetch_array($result);
 	$_SESSION['PaymentDetail' . $identifier]->AccountCurrency=$myrow['currcode'];
 	$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces=$myrow['decimalplaces'];
@@ -292,15 +292,15 @@ if (isset($_POST['CommitBatch'])){
 			<input type="hidden" name="BankAccount" value="' . $_POST['BankAccount'] . '" />
 			<input type="submit" name="ChequePrinted" value="' . _('Yes / Continue') . '" />&nbsp;&nbsp;
 			<input type="submit" name="PaymentCancelled" value="' . _('No / Cancel Payment') . '" />';
-			
+
 		echo '<br />Payment amount = ' . $_SESSION['PaymentDetail' . $identifier]->Amount;
         echo '</div>
               </form>';
-		
+
 	} else {
 
 		//Start a transaction to do the whole lot inside
-		
+
 		$result = DB_Txn_Begin($db);
 
 
@@ -458,7 +458,7 @@ if (isset($_POST['CommitBatch'])){
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			/*Update the supplier master with the date and amount of the last payment made */
-			$SQL = "UPDATE suppliers 
+			$SQL = "UPDATE suppliers
 					SET	lastpaiddate = '" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
 						lastpaid='" . $_SESSION['PaymentDetail' . $identifier]->Amount ."'
 					WHERE suppliers.supplierid='" . $_SESSION['PaymentDetail' . $identifier]->SupplierID . "'";
@@ -500,7 +500,7 @@ if (isset($_POST['CommitBatch'])){
 												periodno,
 												account,
 												narrative,
-												amount) 
+												amount)
 								VALUES (22,
 										'" . $TransNo . "',
 										'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
@@ -513,7 +513,7 @@ if (isset($_POST['CommitBatch'])){
 					$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
 					$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				} // end if discount
-				
+
 			} // end if gl creditors
 		} // end if supplier
 
@@ -527,7 +527,7 @@ if (isset($_POST['CommitBatch'])){
 											periodno,
 											account,
 											narrative,
-											amount) 
+											amount)
 						VALUES ('" . $TransType . "',
 								'" . $TransNo . "',
 								'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
@@ -555,7 +555,7 @@ if (isset($_POST['CommitBatch'])){
 										transdate,
 										banktranstype,
 										amount,
-										currcode) 
+										currcode)
 							VALUES ('" . $TransNo . "',
 									'" . $TransType . "',
 									'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
@@ -582,7 +582,7 @@ if (isset($_POST['CommitBatch'])){
 											transdate,
 											banktranstype,
 											amount,
-											currcode) 
+											currcode)
 						VALUES ('" . $TransNo . "',
 								'" . $TransType . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
@@ -618,7 +618,7 @@ if (isset($_POST['CommitBatch'])){
 
 		/*Set up a newy in case user wishes to enter another */
 		if (isset($LastSupplier) and $LastSupplier!='') {
-			$sql="SELECT suppname FROM suppliers 
+			$sql="SELECT suppname FROM suppliers
 					WHERE supplierid='".$LastSupplier."'";
 			$result=DB_query($sql, $db);
 			$myrow=DB_fetch_array($result);
@@ -635,7 +635,7 @@ if (isset($_POST['CommitBatch'])){
 } elseif (isset($_GET['Delete'])){
   /* User hit delete the receipt entry from the batch */
 	$_SESSION['PaymentDetail' . $identifier]->Remove_GLItem($_GET['Delete']);
-	
+
 } elseif (isset($_POST['Process']) AND !$BankAccountEmpty){ //user hit submit a new GL Analysis line into the payment
 
 	$ChequeNoSQL="SELECT account FROM gltrans WHERE chequeno='" . $_POST['Cheque'] ."'";
@@ -696,10 +696,10 @@ if (!isset($_POST['DatePaid'])) {
 	$_POST['DatePaid'] = '';
 }
 
-if (isset($_POST['DatePaid']) 
-	AND ($_POST['DatePaid']=='' 
+if (isset($_POST['DatePaid'])
+	AND ($_POST['DatePaid']==''
 		OR !Is_Date($_SESSION['PaymentDetail' . $identifier]->DatePaid))){
-			
+
 	$_POST['DatePaid']= Date($_SESSION['DefaultDateFormat']);
 	$_SESSION['PaymentDetail' . $identifier]->DatePaid = $_POST['DatePaid'];
 }
@@ -844,7 +844,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency!=$_SESSION['Paymen
 		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
 	}elseif($_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)){
 		$_POST['ExRate'] = locale_number_format($SuggestedExRate,8);
-	
+
 	}
 	echo '<tr>
 			<td>' . _('Payment Exchange Rate') . ':</td>
@@ -903,7 +903,7 @@ if (!isset($_POST['Narrative'])) {
 
 echo '<tr>
 		<td>' . _('Reference / Narrative') . ':</td>
-		<td colspan="2"><input type="text" name="Narrative" maxlength="80" size="82" value="' . $_POST['Narrative'] . '" />  ' . _('(Max. length 80 characters)') . '</td>
+		<td colspan="2"><input type="text" name="Narrative" maxlength="80" size="82" value="' . stripslashes($_POST['Narrative'] ) . '" />  ' . _('(Max. length 80 characters)') . '</td>
 	</tr>
 
 
@@ -957,7 +957,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 				<td>' . _('Enter GL Account Manually') . ':</td>
 				<td><input type="text" class="number" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,'.    "'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" /></td></tr>';
 	}
-	
+
 	echo '<tr>
 			<td>' . _('Select GL Group') . ':</td>
 			<td><select name="GLGroup" onchange="return ReloadForm(UpdateCodes)">';
@@ -997,8 +997,8 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 				FROM chartmaster
 				ORDER BY accountcode";
 	}
-	
-	
+
+
 	echo '<tr>
 			<td>' . _('Select GL Account') . ':</td>
 			<td><select name="GLCode" onchange="return assignComboToInput(this,'.'GLManualCode'.')">';
@@ -1027,7 +1027,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	if (isset($_POST['GLNarrative'])) {
 		echo '<tr>
 				<td>' . _('GL Narrative') . ':</td>
-				<td><input type="text" name="GLNarrative" maxlength="50" size="52" value="' . $_POST['GLNarrative'] . '" /></td>
+				<td><input type="text" name="GLNarrative" maxlength="50" size="52" value="' . stripslashes($_POST['GLNarrative']) . '" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
@@ -1074,7 +1074,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 			} else {
 				$TagName=$TagMyrow[0];
 			}
-			
+
 			echo '<tr>
 				<td>' . $PaymentItem->Cheque . '</td>
 				<td class="number">' . locale_number_format($PaymentItem->Amount,$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces) . '</td>

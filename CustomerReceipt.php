@@ -26,11 +26,11 @@ if (isset($_GET['Type']) AND $_GET['Type']=='GL') {
 	$_POST['GLEntry']=1;
 }
 
-if ((isset($_POST['BatchInput']) 
-	AND $_POST['BankAccount']=='') 
-	OR (isset($_POST['Process']) 
+if ((isset($_POST['BatchInput'])
+	AND $_POST['BankAccount']=='')
+	OR (isset($_POST['Process'])
 	AND $_POST['BankAccount']=='')) {
-		
+
 	echo '<br />';
 	prnMsg(_('A bank account must be selected for this receipt'), 'warn');
 	$BankAccountEmpty=true;
@@ -40,20 +40,20 @@ if ((isset($_POST['BatchInput'])
 	$BankAccountEmpty=false;
 }
 
-if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ 
+if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 	//always process a header update unless deleting an item
 
 	$_SESSION['ReceiptBatch']->Account = $_POST['BankAccount'];
 	/*Get the bank account currency and set that too */
 
-	$SQL = "SELECT bankaccountname, 
+	$SQL = "SELECT bankaccountname,
 					currcode,
-					decimalplaces 
-			FROM bankaccounts 
+					decimalplaces
+			FROM bankaccounts
 			INNER JOIN currencies
 			ON bankaccounts.currcode=currencies.currabrev
 			WHERE accountcode='" . $_POST['BankAccount']."'";
-			
+
 	$ErrMsg =_('The bank account name cannot be retrieved because');
 	$result= DB_query($SQL,$db,$ErrMsg);
 
@@ -489,7 +489,7 @@ if (isset($_POST['CommitBatch'])){
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-			
+
 		}
 		if ($BatchDebtorTotal!=0){
 			/* Now Credit Debtors account with receipts + discounts */
@@ -564,10 +564,10 @@ if (isset($_POST['Search'])){
 	if ($_POST['Keywords'] AND $_POST['CustCode']) {
 		$msg=_('Customer name keywords have been used in preference to the customer code extract entered');
 	}
-	if ($_POST['Keywords']=='' 
-		AND $_POST['CustCode']=='' 
+	if ($_POST['Keywords']==''
+		AND $_POST['CustCode']==''
 		AND $_POST['CustInvNo']=='') {
-			
+
 		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
 	} else {
 		if (mb_strlen($_POST['Keywords'])>0) {
@@ -656,13 +656,13 @@ customer record returned by the search - this record is then auto selected */
 				ELSE
 					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				END) AS overdue2
-			FROM debtorsmaster INNER JOIN paymentterms 
+			FROM debtorsmaster INNER JOIN paymentterms
 			ON debtorsmaster.paymentterms = paymentterms.termsindicator
-			INNER JOIN holdreasons 
+			INNER JOIN holdreasons
 			ON debtorsmaster.holdreason = holdreasons.reasoncode
-			INNER JOIN currencies 
+			INNER JOIN currencies
 			ON debtorsmaster.currcode = currencies.currabrev
-			INNER JOIN debtortrans 
+			INNER JOIN debtortrans
 			ON debtorsmaster.debtorno = debtortrans.debtorno
 			WHERE debtorsmaster.debtorno = '" . $_POST['CustomerID'] . "'
 			GROUP BY debtorsmaster.name,
@@ -700,11 +700,11 @@ customer record returned by the search - this record is then auto selected */
 						debtorsmaster.currcode,
 						holdreasons.dissallowinvoices,
 						holdreasons.reasondescription
-					FROM debtorsmaster INNER JOIN paymentterms 
+					FROM debtorsmaster INNER JOIN paymentterms
 					ON debtorsmaster.paymentterms = paymentterms.termsindicator
-					INNER JOIN holdreasons 
+					INNER JOIN holdreasons
 					ON debtorsmaster.holdreason = holdreasons.reasoncode
-					INNER JOIN currencies 
+					INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 					WHERE debtorsmaster.debtorno = '" . $_POST['CustomerID'] . "'";
 
@@ -880,7 +880,7 @@ echo '<tr>
 		<td>' . _('Narrative') . ':</td>
 		<td><input tabindex="7" type="text" name="BatchNarrative" maxlength="50" size="52" value="' . $_SESSION['ReceiptBatch']->Narrative . '" /></td>
 	</tr>
-	<input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" /> 
+	<input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" />
 	<tr>
 		<td colspan="3">
 		<div class="centre">
@@ -921,7 +921,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 				<td class="number">' . locale_number_format($ReceiptItem->Discount,$_SESSION['ReceiptBatch']->CurrDecimalPlaces) . '</td>
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
 				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
-				<td>'.$ReceiptItem->Narrative . '</td>
+				<td>'. stripslashes($ReceiptItem->Narrative) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type']. '">' . _('Delete') . '</a></td>
 			</tr>';
 		$BatchTotal= $BatchTotal + $ReceiptItem->Amount;
@@ -1028,7 +1028,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	echo '<tr>
 			<td>' . _('GL Account') . ':</td>
 			<td><select tabindex="8" name="GLCode">';
-			
+
 	$SQL = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
@@ -1098,7 +1098,7 @@ if (((isset($_SESSION['CustomerRecord'])
 			<input tabindex="15" type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
-} elseif (isset($_SESSION['ReceiptBatch']) 
+} elseif (isset($_SESSION['ReceiptBatch'])
 			AND !isset($_POST['GLEntry'])){
 
 	/*Show the form to select a customer */
@@ -1166,7 +1166,7 @@ if (((isset($_SESSION['CustomerRecord'])
 		echo '</table>';
 
 	}	//end if results to show
-	
+
 }
 if (isset($_SESSION['ReceiptBatch']->Items) and count($_SESSION['ReceiptBatch']->Items) > 0){
 	echo '<div class="centre">
