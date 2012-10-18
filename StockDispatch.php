@@ -210,7 +210,7 @@ if (isset($_POST['PrintPDF'])) {
 			}
 
 			if ($YPos < $Bottom_Margin + $line_height + 200){
-				PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
+				PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template,$CategoryDescription);
 			}
 
 			// Create loctransfers records for each record
