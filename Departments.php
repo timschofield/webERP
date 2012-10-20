@@ -7,7 +7,7 @@ $title = _('Departments');
 
 include('includes/header.inc');
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $title . '</p>';
+		_('Top Sales Order Search') . '" alt="" />' . ' ' . $title . '</p>';
 
 if ( isset($_GET['SelectedDepartmentID']) )
 	$SelectedDepartmentID = $_GET['SelectedDepartmentID'];
@@ -159,7 +159,7 @@ if (isset($_POST['Submit'])) {
 					description,
 					authoriser
 			FROM departments
-			ORDER BY description";
+			ORDER BY departmentid";
 
 	$ErrMsg = _('There are no departments created');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -208,7 +208,8 @@ if (! isset($_GET['delete'])) {
 		//editing an existing section
 
 		$sql = "SELECT departmentid,
-						description
+						description,
+						authoriser
 				FROM departments
 				WHERE departmentid='" . $SelectedDepartmentID . "'";
 
@@ -221,6 +222,7 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['DepartmentID'] = $myrow['departmentid'];
 			$_POST['DepartmentName']  = $myrow['description'];
+			$AuthoriserID			= $myrow['authoriser'];
 
 			echo '<input type="hidden" name="SelectedDepartmentID" value="' . $_POST['DepartmentID'] . '" />';
 			echo '<table class="selection">';
@@ -240,7 +242,7 @@ if (! isset($_GET['delete'])) {
 	$usersql="SELECT userid FROM www_users";
 	$userresult=DB_query($usersql,$db);
 	while ($myrow=DB_fetch_array($userresult)) {
-		if ($myrow['userid']==$UserID) {
+		if ($myrow['userid']==$AuthoriserID) {
 			echo '<option selected="True" value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
 		} else {
 			echo '<option value="'.$myrow['userid'].'">'.$myrow['userid'].'</option>';
