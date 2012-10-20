@@ -7,7 +7,6 @@ $title = _('View Currency Trends');
 
 include('includes/header.inc');
 
-$graph = '/graph120.png';
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
@@ -33,7 +32,8 @@ if ( isset($_GET['CurrencyToShow']) ){
 
 
 	// CurrencyToShow Currency Picker
-	echo '<tr><td><select name="CurrencyToShow" onchange="ReloadForm(update.submit)">';
+	echo '<tr>
+			<td><select name="CurrencyToShow" onchange="ReloadForm(update.submit)">';
 
 	DB_data_seek($result,0);
 	while ($myrow=DB_fetch_array($result)) {
@@ -45,26 +45,34 @@ if ( isset($_GET['CurrencyToShow']) ){
 			}
 		}
 	}
-	echo '</select></td></tr>';
-
-   	echo '</table>'; /*close off the table in the third column */
-
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /></div>';
-    echo '</div>';
-   	echo '</form>';
+	echo '</select></td>
+		</tr>
+		</table>
+		<br />
+		<div class="centre">
+			<input type="submit" name="submit" value="' . _('Accept') . '" />
+		</div>
+	</div>
+	</form>';
 
 // **************
 // SHOW OUR GRAPH
 // **************
-
-	$image = 'https://encrypted.google.com/finance/chart?q=CURRENCY:' . $FunctionalCurrency . $CurrencyToShow .'&amp;tkr=1&amp;p=5Y&amp;chst=cob';
-	//$graphA = $CurrencyToShow. '/' . $FunctionalCurrency . $graph;
-	//$image = 'http://www.x-rates.com/d/' . $graphA;
-
-	echo '<br /><table class="selection">';
-	echo '<tr><th><div class="centre"><b>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b></div></th></tr>';
-	echo '<tr><td><img src="' . $image . '" alt="' ._('Trend Currently Unavailable') . '" /></td></tr>';
-	echo '</table>';
+	$image = 'http://www.google.com/finance/getchart?q=' . $FunctionalCurrency . $CurrencyToShow . '&amp;x=CURRENCY&amp;p=3M&amp;i=86400';
+	
+	echo '<br />
+		<table class="selection">
+		<tr>
+			<th>
+				<div class="centre">
+					<b>' . $FunctionalCurrency . ' / ' . $CurrencyToShow . '</b>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<td><img src="' . $image . '" alt="' ._('Trend Currently Unavailable') . '" /></td>
+		</tr>
+		</table>';
 
 include('includes/footer.inc');
 ?>
