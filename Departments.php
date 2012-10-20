@@ -1,5 +1,5 @@
 <?php
-/* $Id: UnitsOfMeasure.php 4567 2011-05-15 04:34:49Z daintree $*/
+/* $Id: Departments.php 4567 2011-05-15 04:34:49Z daintree $*/
 
 include('includes/session.inc');
 
@@ -7,7 +7,7 @@ $title = _('Departments');
 
 include('includes/header.inc');
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
-		_('Top Sales Order Search') . '" alt="" />' . ' ' . $title . '</p>';
+		_('Departments') . '" alt="" />' . ' ' . $title . '</p>';
 
 if ( isset($_GET['SelectedDepartmentID']) )
 	$SelectedDepartmentID = $_GET['SelectedDepartmentID'];
@@ -43,7 +43,7 @@ if (isset($_POST['Submit'])) {
 		// Check the name does not clash
 		$sql = "SELECT count(*) FROM departments
 				WHERE departmentid <> '" . $SelectedDepartmentID ."'
-				AND description ".LIKE." '" . $_POST['DepartmentName'] . "'";
+				AND description " . LIKE . " '" . $_POST['DepartmentName'] . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ( $myrow[0] > 0 ) {
@@ -64,10 +64,10 @@ if (isset($_POST['Submit'])) {
 				$sql[] = "UPDATE departments
 							SET description='" . $_POST['DepartmentName'] . "',
 								authoriser='" . $_POST['Authoriser'] . "'
-							WHERE description ". LIKE . " '" . $OldDepartmentName . "'";
+							WHERE description " . LIKE . " '" . $OldDepartmentName . "'";
 			} else {
 				$InputError = 1;
-				prnMsg( _('The Department does not exist.'),'error');
+				prnMsg( _('The department does not exist.'),'error');
 			}
 		}
 		$msg = _('The department has been modified');
@@ -79,7 +79,7 @@ if (isset($_POST['Submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ( $myrow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('There is already a Department with the specified name.'),'error');
+			prnMsg( _('There is already a department with the specified name.'),'error');
 		} else {
 			$sql = "INSERT INTO departments (description,
 											 authoriser )
@@ -95,8 +95,8 @@ if (isset($_POST['Submit'])) {
 			$result = DB_Txn_Begin($db);
 			$ErrMsg = _('The department could not be inserted');
 			$DbgMsg = _('The sql that failed was') . ':';
-			foreach ($sql as $stmt ) {
-				$result = DB_query($stmt,$db, $ErrMsg,$DbgMsg,true);
+			foreach ($sql as $SQLStatement ) {
+				$result = DB_query($SQLStatement,$db, $ErrMsg,$DbgMsg,true);
 				if(!$result) {
 					$InputError = 1;
 					break;
@@ -184,7 +184,7 @@ if (isset($_POST['Submit'])) {
 		echo '<td>' . $myrow['description'] . '</td>
 				<td>' . $myrow['authoriser'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&amp;delete=1">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $myrow['departmentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this department?') . '\');">'  . _('Delete') .'</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -193,7 +193,9 @@ if (isset($_POST['Submit'])) {
 
 
 if (isset($SelectedDepartmentID)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('View all Departments') . '</a></div>';
+	echo '<div class="centre">
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('View all Departments') . '</a>
+		</div>';
 }
 
 echo '<br />';
@@ -235,9 +237,9 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Department Name') . ':' . '</td>
 			<td><input type="text" name="DepartmentName" size="50" maxlength="100" value="' . $_POST['DepartmentName'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>'._('Authoriser').'</td>
+		</tr>
+		<tr>
+			<td>' . _('Authoriser') . '</td>
 			<td><select name="Authoriser">';
 	$usersql="SELECT userid FROM www_users";
 	$userresult=DB_query($usersql,$db);
@@ -251,9 +253,8 @@ if (! isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>
 		</table>
-		<br />';
-
-	echo '<div class="centre">
+		<br />
+		<div class="centre">
 			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
 		</div>
         </div>
