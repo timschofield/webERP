@@ -285,6 +285,9 @@ if (isset($_POST['submit'])) {
 				$sql[] = "UPDATE config SET confvalue='0' WHERE confname='UpdateCurrencyRatesDaily'";
 			}
 		}
+		if ($_SESSION['ExchangeRateFeed'] != $_POST['X_ExchangeRateFeed']){
+			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_ExchangeRateFeed'] . "' WHERE confname='ExchangeRateFeed'";
+		}
 		if ($_SESSION['FactoryManagerEmail'] != $_POST['X_FactoryManagerEmail']){
 			$sql[] = "UPDATE config SET confvalue='" . $_POST['X_FactoryManagerEmail'] . "' WHERE confname='FactoryManagerEmail'";
 		}
@@ -452,7 +455,14 @@ echo '<tr style="outline: 1px solid"><td>' . _('Auto Update Exchange Rates Daily
 	<option '.($_SESSION['UpdateCurrencyRatesDaily']!='1'?'selected="selected" ':'').'value="1">'._('Automatic').'</option>
 	<option '.($_SESSION['UpdateCurrencyRatesDaily']=='0'?'selected="selected" ':'').'value="0">'._('Manual').'</option>
 	</select></td>
-	<td>' . _('Automatic updates to exchange rates will retrieve the latest daily rates from the European Central Bank once per day - when the first user logs in for the day. Manual will never update the rates automatically - exchange rates will need to be maintained manually') . '</td>
+	<td>' . _('Automatic updates to exchange rates will retrieve the latest daily rates from either the European Central Bank or Google once per day - when the first user logs in for the day. Manual will never update the rates automatically - exchange rates will need to be maintained manually') . '</td>
+	</tr>';
+echo '<tr style="outline: 1px solid"><td>' . _('Source Exchange Rates From') . ':</td>
+	<td><select name="X_ExchangeRateFeed">
+	<option '.($_SESSION['ExchangeRateFeed']!='ECB'?'selected="selected" ':'').'value="ECB">'._('European Central Bank').'</option>
+	<option '.($_SESSION['ExchangeRateFeed']=='Google'?'selected="selected" ':'').'value="Google">'._('Google').'</option>
+	</select></td>
+	<td>' . _('Specify the source to use for exchange rates') . '</td>
 	</tr>';
 
 //Default Packing Note Format

@@ -223,6 +223,18 @@ function quote_oanda_currency($CurrCode) {
 	}
 }
 
+function google_currency_rate($CurrCode) {
+	
+	$Rate = 0;
+	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
+	foreach ($PageLines as $Line){
+		if (mb_strpos($Line,'currency_converter_result')){
+			$Length = mb_strpos($Line, '</span>') - 58;
+			$Rate = floatval(mb_substr($Line, 58, $Length));
+		}
+	}
+	return $Rate;
+}
 
 function AddCarriageReturns($str) {
 	return str_replace('\r\n',chr(10),$str);

@@ -1,5 +1,7 @@
 webERP Change Log
 
+19/10/12 Phil: Fixed exchange rate trend using google based https://encrypted.google.com/finance/chart?
+18/10/12 Phil: Added google exchange rates option - many more rates than ECB published daily
 16/10/12 Icedlava: CustomerReceipt.php and Payments.php stripslashes
 16/10/12 Phil: SelectOrderItems.php and CounterSales.php $_POST['Prev'] modified to $_POST['Previous']
 

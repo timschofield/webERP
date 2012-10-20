@@ -159,29 +159,34 @@ if(isset($_SESSION['DB_Maintenance'])){
 
 /*Check to see if currency rates need to be updated */
 if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
+	
 	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
-				,'d')> 0){
-
-			$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
-			/*Loop around the defined currencies and get the rate from ECB */
-			if ($CurrencyRates!=false) {
+			ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
+			if ($_SESSION['ExchangeRateFeed']=='ECB') {
+				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
+				/*Loop around the defined currencies and get the rate from ECB */
+				if ($CurrencyRates!=false) {
+					$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
+					while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
+						if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
+	
+							$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
+																WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+						}
+					}
+				}
+			} else {
 				$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
 				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-
-						$UpdateCurrRateResult = DB_query("UPDATE currencies SET
-							rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
-							WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+						$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
+															WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
 					}
 				}
-				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-
-
-
-				$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
 			}
+			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
+			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
 		}
 	}
 }
