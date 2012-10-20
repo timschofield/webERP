@@ -163,6 +163,7 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 			ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
+				
 			if ($_SESSION['ExchangeRateFeed']=='ECB') {
 				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 				/*Loop around the defined currencies and get the rate from ECB */
