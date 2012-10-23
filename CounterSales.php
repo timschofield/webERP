@@ -507,7 +507,7 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 					prnMsg(_('Recalculated the price from the GP % entered - the GP % was') . ' ' . $OrderLine->GPPercent . '  the new GP % is ' . filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]),'info');
 
 
-					$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
+					$Price = filter_number_format(($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100)));
 				} else {
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
 				}
@@ -933,7 +933,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		prnMsg(_('There are no lines on this sale. Please enter lines to invoice first'),'error');
 		$InputError = true;
 	}
-	if (abs(filter_number_format($_POST['AmountPaid']) -($_SESSION['Items'.$identifier]->total+filter_number_format($_POST['TaxTotal'])))>=0.01) {
+	if (abs(filter_number_format($_POST['AmountPaid']) -(filter_number_format($_SESSION['Items'.$identifier]->total)+filter_number_format($_POST['TaxTotal'])))>=0.01) {
 		prnMsg(_('The amount entered as payment does not equal the amount of the invoice. Please ensure the customer has paid the correct amount and re-enter'),'error');
 		$InputError = true;
 	}
