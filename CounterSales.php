@@ -522,7 +522,7 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 					$OrderLine->DiscountPercent = 0;
 				}
 
-			if ($Quantity<0 or $Price <0 or $DiscountPercentage >100 or $DiscountPercentage <0){
+			if ($Quantity<0 OR $Price < 0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 				prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 			} else if ($OrderLine->Quantity !=$Quantity
 						OR $OrderLine->Price != $Price
@@ -912,12 +912,21 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 	if (!isset($_POST['AmountPaid'])){
 		$_POST['AmountPaid'] =0;
 	}
-	echo '<tr><td>' . _('Amount Paid') . ':</td><td><input type="text" class="number" name="AmountPaid" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Amount Paid') . ':</td>
+			<td><input type="text" class="number" name="AmountPaid" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
+		</tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table
-	echo '</th></tr></table>';	//end of column/row/master table
-	echo '<br /><div class="centre"><input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
-				<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" /></div><hr />';
+	echo '</th>
+		</tr>
+		</table>';	//end of column/row/master table
+	echo '<br />
+			<div class="centre">
+				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
+				<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" />
+			</div>
+			<hr />';
 
 } # end of if lines
 
@@ -933,7 +942,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		prnMsg(_('There are no lines on this sale. Please enter lines to invoice first'),'error');
 		$InputError = true;
 	}
-	if (abs(filter_number_format($_POST['AmountPaid']) -($_SESSION['Items'.$identifier]->total+filter_number_format($_POST['TaxTotal'])))>=0.01) {
+	if (abs(filter_number_format($_POST['AmountPaid']) -(round($_SESSION['Items'.$identifier]->total+filter_number_format($_POST['TaxTotal']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces)))>=0.01) {
 		prnMsg(_('The amount entered as payment does not equal the amount of the invoice. Please ensure the customer has paid the correct amount and re-enter'),'error');
 		$InputError = true;
 	}
