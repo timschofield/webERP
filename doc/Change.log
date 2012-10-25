@@ -1,4 +1,7 @@
 webERP Change Log
+
+25/10/12 Phil: Added telephone and email to supplier search - SelectSupplier.php
+25/10/12 Phil: Rounding error prevented CounterSales.php from posting a sale where currency was rounding to 0 decimal places - reported by Arwan
 20/10/12 Samudaya Nanayakkara: Fixed the problem of Authoriser drop down selection when try to edit a Internal Departments.
 19/10/12 Phil: Fixed exchange rate trend using google based https://encrypted.google.com/finance/chart?
 18/10/12 Phil: Added google exchange rates option - many more rates than ECB published daily

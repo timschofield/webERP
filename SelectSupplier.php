@@ -87,7 +87,9 @@ if (isset($_POST['Search'])
 					address1,
 					address2,
 					address3,
-					address4
+					address4,
+					telephone,
+					email
 				FROM suppliers
 				ORDER BY suppname";
 	} else {
@@ -101,7 +103,9 @@ if (isset($_POST['Search'])
 							address1,
 							address2,
 							address3,
-							address4
+							address4,
+							telephone,
+							email
 						FROM suppliers
 						WHERE suppname " . LIKE . " '" . $SearchString . "'
 						ORDER BY suppname";
@@ -113,7 +117,9 @@ if (isset($_POST['Search'])
 							address1,
 							address2,
 							address3,
-							address4
+							address4,
+							telephone,
+							email
 						FROM suppliers
 						WHERE supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'
 						ORDER BY supplierid";
@@ -263,6 +269,8 @@ if (isset($_POST['Search'])) {
 						<th>' . _('Address 2') . '</th>
 						<th>' . _('Address 3') . '</th>
 						<th>' . _('Address 4') . '</th>
+						<th>' . _('Telephone') . '</th>
+						<th>' . _('Email') . '</th>
 					</tr>';
 	echo $tableheader;
 	$j = 1;
@@ -286,6 +294,8 @@ if (isset($_POST['Search'])) {
 				<td>'.$myrow['address2'].'</td>
 				<td>'.$myrow['address3'].'</td>
 				<td>'.$myrow['address4'].'</td>
+				<td>'.$myrow['telephone'].'</td>
+				<td><a href="mailto://'.$myrow['email'].'">' . $myrow['email']. '</a></td>
 			</tr>';
 		$RowIndex = $RowIndex + 1;
 		//end of page full new headings if
