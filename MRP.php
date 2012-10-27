@@ -247,7 +247,7 @@ if (isset($_POST['submit'])) {
 									  stkcode
 							  FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
-								INNER JOIN stockmaster 
+								INNER JOIN stockmaster
 								ON stockmaster.stockid = salesorderdetails.stkcode
 							  WHERE stockmaster.discontinued = 0
 							  AND (quantity - qtyinvoiced) > 0
@@ -272,7 +272,7 @@ if (isset($_POST['submit'])) {
 									woitems.wo,
 									'1',
 									parentstockid
-								FROM woitems 
+								FROM woitems
 									INNER JOIN worequirements
 										ON woitems.stockid=worequirements.parentstockid
 									INNER JOIN workorders
@@ -684,38 +684,54 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 		$TotalRequirement += $Requirements[$reqi]['quantity'];
 		$TotalSupply += $Supplies[$supi]['supplyquantity'];
 		while ($TotalRequirement > 0 && $TotalSupply > 0) {
-				$Supplies[$supi]['updateflag'] = 1;
-				// ******** Put leeway calculation in here ********
-				$DueDate = ConvertSQLDate($Supplies[$supi]['duedate']);
-				$ReqDate = ConvertSQLDate($Requirements[$reqi]['daterequired']);
-				$DateDiff = DateDiff($DueDate,$ReqDate,'d');
-				//if ($Supplies[$supi]['duedate'] > $Requirements[$reqi]['daterequired']) {
-				if ($DateDiff > abs(filter_number_format($_POST['Leeway']))) {
-					$sql = "UPDATE mrpsupplies SET mrpdate = '" . $Requirements[$reqi]['daterequired'] .
-					   "' WHERE id = '" . $Supplies[$supi]['id'] . "' AND duedate = mrpdate";
-					$result = DB_query($sql,$db);
+			$Supplies[$supi]['updateflag'] = 1;
+			// ******** Put leeway calculation in here ********
+			$DueDate = ConvertSQLDate($Supplies[$supi]['duedate']);
+			$ReqDate = ConvertSQLDate($Requirements[$reqi]['daterequired']);
+			$DateDiff = DateDiff($DueDate,$ReqDate,'d');
+			//if ($Supplies[$supi]['duedate'] > $Requirements[$reqi]['daterequired']) {
+			if ($DateDiff > abs(filter_number_format($_POST['Leeway']))) {
+				$sql = "UPDATE mrpsupplies SET mrpdate = '" . $Requirements[$reqi]['daterequired'] .
+				   "' WHERE id = '" . $Supplies[$supi]['id'] . "' AND duedate = mrpdate";
+				$result = DB_query($sql,$db);
+			}
+			if ($TotalRequirement > $TotalSupply) {
+				$TotalRequirement -= $TotalSupply;
+				$Requirements[$reqi]['quantity'] -= $TotalSupply;
+				$TotalSupply = 0;
+				$Supplies[$supi]['supplyquantity'] = 0;
+				$supi++;
+				if ($SupplyCount > $supi) {
+					$TotalSupply += $Supplies[$supi]['supplyquantity'];
 				}
-
-			   if ($TotalRequirement > $TotalSupply) {
-				   $TotalRequirement -= $TotalSupply;
-				   $Requirements[$reqi]['quantity'] -= $TotalSupply;
-				   $TotalSupply = 0;
-				   $Supplies[$supi]['supplyquantity'] = 0;
-				   $supi++;
-				   if ($SupplyCount > $supi) {
-					   $TotalSupply += $Supplies[$supi]['supplyquantity'];
-				   }
-			   } else {
-				   $TotalSupply -= $TotalRequirement;
-				   $Supplies[$supi]['supplyquantity'] -= $TotalRequirement;
-				   $TotalRequirement = 0;
-				   $Requirements[$reqi]['quantity'] = 0;
-				   $reqi++;
-				   if ($RequirementCount > $reqi) {
-					   $TotalRequirement += $Requirements[$reqi]['quantity'];
-				   }
-			  } // End of if $TotalRequirement > $TotalSupply
-	   } // End of while
+			} elseif ($TotalRequirement < $TotalSupply) {
+				$TotalSupply -= $TotalRequirement;
+				$Supplies[$supi]['supplyquantity'] -= $TotalRequirement;
+				$TotalRequirement = 0;
+				$Requirements[$reqi]['quantity'] = 0;
+				$reqi++;
+				if ($RequirementCount > $reqi) {
+					$TotalRequirement += $Requirements[$reqi]['quantity'];
+				}
+			} else {
+				$TotalSupply -= $TotalRequirement;
+				$Supplies[$supi]['supplyquantity'] -= $TotalRequirement;
+				$TotalRequirement = 0;
+				$Requirements[$reqi]['quantity'] = 0;
+				$reqi++;
+				if ($RequirementCount > $reqi) {
+					$TotalRequirement += $Requirements[$reqi]['quantity'];
+				}
+				$TotalRequirement -= $TotalSupply;
+				$Requirements[$reqi]['quantity'] -= $TotalSupply;
+				$TotalSupply = 0;
+				$Supplies[$supi]['supplyquantity'] = 0;
+				$supi++;
+				if ($SupplyCount > $supi) {
+					$TotalSupply += $Supplies[$supi]['supplyquantity'];
+				}
+			} // End of if $TotalRequirement > $TotalSupply
+		} // End of while
 	} // End of if
 
 	// When get to this part of code, have gone through all requirements, If there is any
