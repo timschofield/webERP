@@ -60,6 +60,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 								salesorders.deladd6,
 								salesorders.contactphone,
 								salesorders.contactemail,
+								salesorders.salesperson,
 								salesorders.freightcost,
 								salesorders.deliverydate,
 								debtorsmaster.currcode,
@@ -114,6 +115,8 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items'.$identifier]->BrAdd6 = $myrow['deladd6'];
 		$_SESSION['Items'.$identifier]->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items'.$identifier]->Email = $myrow['contactemail'];
+		$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesperson'];
+		
 		$_SESSION['Items'.$identifier]->Location = $myrow['fromstkloc'];
 		$_SESSION['Items'.$identifier]->FreightCost = $myrow['freightcost'];
 		$_SESSION['Old_FreightCost'] = $myrow['freightcost'];
@@ -740,7 +743,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		$SQL = "UPDATE custbranch
 				SET defaultshipvia ='" . $_SESSION['Items'.$identifier]->ShipVia . "'
 				WHERE debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
-					AND branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'";
+				AND branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'";
 		$ErrMsg = _('Could not update the default shipping carrier for this branch because');
 		$DbgMsg = _('The SQL used to update the branch default carrier was');
 		$result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
@@ -1201,7 +1204,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					AND salesanalysis.cust=custbranch.debtorno
 					AND salesanalysis.custbranch=custbranch.branchcode
 					AND salesanalysis.area=custbranch.area
-					AND salesanalysis.salesperson=custbranch.salesman
+					AND salesanalysis.salesperson='" . $_SESSION['Items'.$identifier]->SalesPerson . "'
 					AND salesanalysis.typeabbrev ='" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 					AND salesanalysis.periodno='" . $PeriodNo . "'
 					AND salesanalysis.cust " . LIKE . " '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
@@ -1265,10 +1268,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 										'" . $OrderLine->StockID . "',
 										custbranch.area,
 										1,
-										custbranch.salesman,
+										'" . $_SESSION['Items'.$identifier]->SalesPerson . "',
 										stockmaster.categoryid
-								FROM stockmaster,
-									custbranch
+								FROM stockmaster, custbranch
 								WHERE stockmaster.stockid = '" . $OrderLine->StockID . "'
 								AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
 								AND custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'";

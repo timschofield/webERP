@@ -49,8 +49,8 @@ if (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 }
 
 if (isset($_POST['Update'])
-	or isset($_POST['BackToLineDetails'])
-	or isset($_POST['MakeRecurringOrder']))   {
+	OR isset($_POST['BackToLineDetails'])
+	OR isset($_POST['MakeRecurringOrder']))   {
 
 	$InputErrors =0;
 	if (mb_strlen($_POST['DeliverTo'])<=1){
@@ -138,7 +138,8 @@ if (isset($_POST['Update'])
 					custbranch.defaultshipvia,
 					custbranch.deliverblind,
 					custbranch.specialinstructions,
-					custbranch.estdeliverydays
+					custbranch.estdeliverydays,
+					custbranch.salesman
 				FROM custbranch
 				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
 				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
@@ -178,6 +179,7 @@ if (isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->DeliverBlind = $myrow[11];
 			$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow[12];
 			$_SESSION['Items'.$identifier]->DeliveryDays = $myrow[13];
+			$_SESSION['Items'.$identifier]->SalesPerson = $myrow[14];
 			$_SESSION['Items'.$identifier]->DeliveryDate = $_POST['DeliveryDate'];
 			$_SESSION['Items'.$identifier]->QuoteDate = $_POST['QuoteDate'];
 			$_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
@@ -205,6 +207,7 @@ if (isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->ConfirmedDate = $_POST['ConfirmedDate'];
 			$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 			$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
+			$_SESSION['Items'.$identifier]->SalesPerson = $_POST['SalesPerson'];
 			$_SESSION['Items'.$identifier]->FreightCost = round($_POST['FreightCost'],2);
 			$_SESSION['Items'.$identifier]->Quotation = $_POST['Quotation'];
 		}
@@ -341,6 +344,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 								deladd6,
 								contactphone,
 								contactemail,
+								salesperson,
 								freightcost,
 								fromstkloc,
 								deliverydate,
@@ -366,6 +370,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 								'" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "',
 								'" . $_SESSION['Items'.$identifier]->PhoneNo . "',
 								'" . $_SESSION['Items'.$identifier]->Email . "',
+								'" . $_SESSION['Items'.$identifier]->SalesPerson . "',
 								'" . $_SESSION['Items'.$identifier]->FreightCost ."',
 								'" . $_SESSION['Items'.$identifier]->Location ."',
 								'" . $DelDate . "',
@@ -729,6 +734,7 @@ if (isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.
 										deladd6 = '" . DB_escape_string($_SESSION['Items'.$identifier]->DelAdd6) . "',
 										contactphone = '" . $_SESSION['Items'.$identifier]->PhoneNo . "',
 										contactemail = '" . $_SESSION['Items'.$identifier]->Email . "',
+										salesperson = '" .  $_SESSION['Items'.$identifier]->SalesPerson . "',
 										freightcost = '" . $_SESSION['Items'.$identifier]->FreightCost ."',
 										fromstkloc = '" . $_SESSION['Items'.$identifier]->Location ."',
 										printedpackingslip = '" . $_POST['ReprintPackingSlip'] . "',
@@ -937,12 +943,12 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<tr class="EvenTableRows">';
 			$k=1;
 		}
-		echo '<td>'.$StockItem->ItemDescription.'</td>
-			<td class="number">'. $DisplayQuantity.'</td>
-			<td>'.$StockItem->Units.'</td>
-			<td class="number">'. $DisplayPrice.'</td>
-			<td class="number">'. $DisplayLineTotal .'</font></td>
-		</tr>';
+		echo '<td>' . $StockItem->ItemDescription .'</td>
+				<td class="number">' . $DisplayQuantity . '</td>
+				<td>' . $StockItem->Units . '</td>
+				<td class="number">' . $DisplayPrice . '</td>
+				<td class="number">' . $DisplayLineTotal . '</font></td>
+			</tr>';
 
 		$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
 		$_SESSION['Items'.$identifier]->totalVolume = $_SESSION['Items'.$identifier]->totalVolume + $StockItem->Quantity * $StockItem->Volume;
@@ -951,23 +957,17 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-	echo '<table class="selection">
-		<tr>
-			<td>'. _('Total Weight') .':</td>
-			<td>'.$DisplayWeight .'</td>
-			<td>'. _('Total Volume') .':</td>
-			<td>'.$DisplayVolume .'</td>
-		</tr>
-		</table>';
-
+	
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-	echo '<table class="selection"><tr>
-		<td>'. _('Total Weight') .':</td>
-		<td>'. $DisplayWeight .'</td>
-		<td>'. _('Total Volume') .':</td>
-		<td>'. $DisplayVolume .'</td>
-	</tr></table>';
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Total Weight') . ':</td>
+				<td>' . $DisplayWeight . '</td>
+				<td>' . _('Total Volume') . ':</td>
+				<td>' . $DisplayVolume . '</td>
+			</tr>
+		</table>';
 
 }
 
@@ -1066,7 +1066,26 @@ echo '<tr>
 		<td>'. _('Comments') .':</td>
 		<td><textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items'.$identifier]->Comments .'</textarea></td>
 	</tr>';
-
+	
+	echo '<tr>
+			<td>' . _('Sales person'). ':</td>
+			<td><select name="SalesPerson">';
+	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
+	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
+		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
+	}
+	
+	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
+		if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
+			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+		} else {
+			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+		}
+	}
+	
+	echo '</select></td>
+		</tr>';
+	
 	/* This field will control whether or not to display the company logo and
 	address on the packlist */
 

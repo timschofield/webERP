@@ -33,6 +33,7 @@ Class Cart {
 	var $DelAdd4;
 	var $DelAdd5;
 	var $DelAdd6;
+	var $SalesPerson;
 	var $PhoneNo;
 	var $Email;
 	var $CustRef;

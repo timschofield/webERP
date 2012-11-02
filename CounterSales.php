@@ -32,6 +32,7 @@ if (isset($_SESSION['Items'.$identifier]) AND isset($_POST['CustRef'])){
 	$_SESSION['Items'.$identifier]->DeliverTo = $_POST['DeliverTo'];
 	$_SESSION['Items'.$identifier]->PhoneNo = $_POST['PhoneNo'];
 	$_SESSION['Items'.$identifier]->Email = $_POST['Email'];
+	$_SESSION['Items'.$identifier]->SalesPerson = $_POST['SalesPerson'];
 }
 
 if (isset($_POST['QuickEntry'])){
@@ -178,8 +179,9 @@ if (!isset($_SESSION['Items'.$identifier])){
 			$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
 			$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
 			$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
-			$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
-
+			$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];			
+			$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesman'];
+	
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 				prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 			}
@@ -875,9 +877,27 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 	</tr>';
 
 	echo '<tr>
-		<td>'. _('Comments') .':</td>
-		<td><textarea name="Comments" cols="23" rows="5">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>
-	</tr>';
+	<td>' . _('Sales person'). ':</td>
+	<td><select name="SalesPerson">';
+	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
+	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
+		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
+	}
+	
+	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
+		if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
+			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+		} else {
+			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+		}
+	}
+	
+	echo '</select></td>
+		</tr>';
+	echo '<tr>
+			<td>'. _('Comments') .':</td>
+			<td><textarea name="Comments" cols="23" rows="5">' . stripcslashes($_SESSION['Items'.$identifier]->Comments) .'</textarea></td>
+		</tr>';
 	echo '</table>'; //end the sub table in the first column of master table
 	echo '</td><th valign="bottom">'; //for the master table
 	echo '<table class="selection">'; // a new nested table in the second column of master table
@@ -1052,7 +1072,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 												fromstkloc,
 												deliverydate,
 												confirmeddate,
-												deliverblind)
+												deliverblind,
+												salesperson)
 											VALUES (
 												'" . $OrderNo . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
@@ -1069,7 +1090,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 												'" . $_SESSION['Items'.$identifier]->Location ."',
 												'" . Date('Y-m-d') . "',
 												'" . Date('Y-m-d') . "',
-												0)";
+												0,
+												'" . $_SESSION['Items'.$identifier]->SalesPerson . "')";
 
 		$ErrMsg = _('The order cannot be added because');
 		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
@@ -1129,39 +1151,39 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$QuantityDemand = $DemandRow[0];
 
 				$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-								FROM salesorderdetails INNER JOIN salesorders
-								ON salesorderdetails.orderno=salesorders.orderno
-								INNER JOIN bom
-								ON salesorderdetails.stkcode=bom.parent
-								INNER JOIN stockmaster
-								ON stockmaster.stockid=bom.parent
-								WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-								AND bom.component='" . $StockItem->StockID . "'
-								AND salesorderdetails.completed=0
-								AND salesorders.quotation=0";
+						FROM salesorderdetails INNER JOIN salesorders
+						ON salesorderdetails.orderno=salesorders.orderno
+						INNER JOIN bom
+						ON salesorderdetails.stkcode=bom.parent
+						INNER JOIN stockmaster
+						ON stockmaster.stockid=bom.parent
+						WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+						AND bom.component='" . $StockItem->StockID . "'
+						AND salesorderdetails.completed=0
+						AND salesorders.quotation=0";
 				$AssemblyDemandResult = DB_query($SQL,$db);
 				$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
 				$QuantityAssemblyDemand = $AssemblyDemandRow[0];
 
 				$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-								FROM purchorderdetails INNER JOIN purchorders
-								ON purchorderdetails.orderno = purchorders.orderno
-								WHERE purchorderdetails.itemcode = '" . $StockItem->StockID . "'
-								AND purchorderdetails.completed = 0
-								AND purchorders.status<>'Cancelled'
-								AND purchorders.status<>'Rejected'
-								AND purchorders.status<>'Pending'
-								AND purchorders.status<>'Completed'";
+						FROM purchorderdetails INNER JOIN purchorders
+						ON purchorderdetails.orderno = purchorders.orderno
+						WHERE purchorderdetails.itemcode = '" . $StockItem->StockID . "'
+						AND purchorderdetails.completed = 0
+						AND purchorders.status<>'Cancelled'
+						AND purchorders.status<>'Rejected'
+						AND purchorders.status<>'Pending'
+						AND purchorders.status<>'Completed'";
 				$PurchOrdersResult = DB_query($SQL,$db);
 				$PurchOrdersRow = DB_fetch_row($PurchOrdersResult);
 				$QuantityPurchOrders = $PurchOrdersRow[0];
 
 				$SQL = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) as qtyonorder
-								FROM woitems INNER JOIN workorders
-								ON woitems.wo=workorders.wo
-								WHERE woitems.stockid = '" . $StockItem->StockID . "'
-								AND woitems.qtyreqd > woitems.qtyrecd
-								AND workorders.closed = 0";
+						FROM woitems INNER JOIN workorders
+						ON woitems.wo=workorders.wo
+						WHERE woitems.stockid = '" . $StockItem->StockID . "'
+						AND woitems.qtyreqd > woitems.qtyrecd
+						AND workorders.closed = 0";
 				$WorkOrdersResult = DB_query($SQL,$db);
 				$WorkOrdersRow = DB_fetch_row($WorkOrdersResult);
 				$QuantityWorkOrders = $WorkOrdersRow[0];
@@ -1619,7 +1641,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				AND salesanalysis.cust=custbranch.debtorno
 				AND salesanalysis.custbranch=custbranch.branchcode
 				AND salesanalysis.area=custbranch.area
-				AND salesanalysis.salesperson=custbranch.salesman
+				AND salesanalysis.salesperson='" . $_SESSION['Items'.$identifier]->SalesPerson . "'
 				AND salesanalysis.typeabbrev ='" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 				AND salesanalysis.periodno='" . $PeriodNo . "'
 				AND salesanalysis.cust " . LIKE . " '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
@@ -1684,7 +1706,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 						'" . $OrderLine->StockID . "',
 						custbranch.area,
 						1,
-						custbranch.salesman,
+						'" . $_SESSION['Items'.$identifier]->SalesPerson . "',
 						stockmaster.categoryid
 					FROM stockmaster,
 						custbranch

@@ -98,6 +98,7 @@ if (isset($_GET['ModifyOrderNumber'])
 							  salesorders.deladd6,
 							  salesorders.contactphone,
 							  salesorders.contactemail,
+							  salesorders.salesperson,
 							  salesorders.freightcost,
 							  salesorders.deliverydate,
 							  debtorsmaster.currcode,
@@ -163,6 +164,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items'.$identifier]->DelAdd6 = $myrow['deladd6'];
 		$_SESSION['Items'.$identifier]->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items'.$identifier]->Email = $myrow['contactemail'];
+		$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesperson'];
 		$_SESSION['Items'.$identifier]->Location = $myrow['fromstkloc'];
 		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
 		$_SESSION['Items'.$identifier]->Quotation = $myrow['quotation'];
@@ -355,8 +357,6 @@ if (isset($_POST['SearchCust'])
 
 if (isset($_POST['JustSelectedACustomer'])){
 	
-	echo 'Just Selected A Customer i TRUE!!';
-	
 	/*Need to figure out the number of the form variable that the user clicked on */
 	for ($i=0;$i<count($_POST);$i++){ //loop through the returned customers
 		if(isset($_POST['SubmitCustomerSelection'.$i])){
@@ -459,29 +459,32 @@ if (isset($SelectedCustomer)) {
 		}
 		// add echo
 		echo '<br />';
-		$myrow = DB_fetch_row($result);
-		if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$myrow[15]){
+		$myrow = DB_fetch_array($result);
+		if ($_SESSION['SalesmanLogin']!=NULL AND $_SESSION['SalesmanLogin']!=$myrow['salesman']){
 			prnMsg(_('Your login is only set up for a particular salesperson. This customer has a different salesperson.'),'error');
 			include('includes/footer.inc');
 			exit;
 		}
-
-		$_SESSION['Items'.$identifier]->DeliverTo = $myrow[0];
-		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow[1];
-		$_SESSION['Items'.$identifier]->DelAdd2 = $myrow[2];
-		$_SESSION['Items'.$identifier]->DelAdd3 = $myrow[3];
-		$_SESSION['Items'.$identifier]->DelAdd4 = $myrow[4];
-		$_SESSION['Items'.$identifier]->DelAdd5 = $myrow[5];
-		$_SESSION['Items'.$identifier]->DelAdd6 = $myrow[6];
-		$_SESSION['Items'.$identifier]->PhoneNo = $myrow[7];
-		$_SESSION['Items'.$identifier]->Email = $myrow[8];
-		$_SESSION['Items'.$identifier]->Location = $myrow[9];
-		$_SESSION['Items'.$identifier]->ShipVia = $myrow[10];
-		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow[11];
-		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow[12];
-		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow[13];
-		$_SESSION['Items'.$identifier]->LocationName = $myrow[14];
-
+		$_SESSION['Items'.$identifier]->DeliverTo = $myrow['brname'];
+		$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['braddress1'];
+		$_SESSION['Items'.$identifier]->DelAdd2 = $myrow['braddress2'];
+		$_SESSION['Items'.$identifier]->DelAdd3 = $myrow['braddress3'];
+		$_SESSION['Items'.$identifier]->DelAdd4 = $myrow['braddress4'];
+		$_SESSION['Items'.$identifier]->DelAdd5 = $myrow['braddress5'];
+		$_SESSION['Items'.$identifier]->DelAdd6 = $myrow['braddress6'];
+		$_SESSION['Items'.$identifier]->PhoneNo = $myrow['phoneno'];
+		$_SESSION['Items'.$identifier]->Email = $myrow['email'];
+		$_SESSION['Items'.$identifier]->Location = $myrow['defaultlocation'];
+		$_SESSION['Items'.$identifier]->ShipVia = $myrow['defaultshipvia'];
+		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
+		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
+		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
+		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
+		if ($_SESSION['SalesmanLogin']!= NULL AND $_SESSION['SalesmanLogin']!=''){
+			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
+		} else {
+			$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesman'];
+		}
 		if ($_SESSION['Items'.$identifier]->SpecialInstructions)
 		  prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 
@@ -556,7 +559,8 @@ if (isset($SelectedCustomer)) {
 						custbranch.defaultlocation,
 						custbranch.deliverblind,
 						custbranch.estdeliverydays,
-						locations.locationname
+						locations.locationname,
+						custbranch.salesman
 				FROM custbranch INNER JOIN locations
 				ON custbranch.defaultlocation=locations.loccode
 				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
@@ -580,6 +584,11 @@ if (isset($SelectedCustomer)) {
 		$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
 		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
 		$_SESSION['Items'.$identifier]->LocationName = $myrow['locationname'];
+		if ($_SESSION['SalesmanLogin']!= NULL AND $_SESSION['SalesmanLogin']!=''){
+			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
+		} else {
+			$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesman'];
+		}
 	} else {
 		prnMsg(_('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');
 		include('includes/footer.inc');
