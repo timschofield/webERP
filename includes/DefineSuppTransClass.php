@@ -195,14 +195,16 @@ Class SuppTrans {
 	function Add_GLCodes_To_Trans($GLCode,
 									$GLActName,
 									$Amount,
-									$Narrative){
+									$Narrative,
+									$Tag){
 		
 		if ($Amount!=0 AND isset($Amount)){
 			$this->GLCodes[$this->GLCodesCounter] = new GLCodes($this->GLCodesCounter,
 																$GLCode,
 																$GLActName,
 																$Amount,
-																$Narrative);
+																$Narrative,
+																$Tag);
 			$this->GLCodesCounter++;
 			Return 1;
 		}
@@ -408,15 +410,27 @@ Class GLCodes {
 	Var $GLActName;
 	Var $Amount;
 	Var $Narrative;
+	Var $Tag;
+	Var $TagName;
 
-	function GLCodes ($Counter, $GLCode, $GLActName, $Amount, $Narrative){
+	function GLCodes ($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
 
+		global $db;
 	/* Constructor function to add a new GLCodes object with passed params */
 		$this->Counter = $Counter;
 		$this->GLCode = $GLCode;
 		$this->GLActName = $GLActName;
 		$this->Amount = $Amount;
 		$this->Narrative = $Narrative;
+		$this->Tag = $Tag;
+		
+		$TagResult=DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'", $db);
+		$TagMyrow=DB_fetch_array($TagResult);
+		if ($Tag==0) {
+			$this->TagName=_('None');
+		} else {
+			$this->TagName=$TagMyrow['tagdescription'];
+		}
 	}
 }
 

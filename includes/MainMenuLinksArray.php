@@ -28,6 +28,7 @@ $ModuleList = array(_('Sales'),
 
 $MenuItems['orders']['Transactions']['Caption'] = array( _('Enter An Order or Quotation'),
 														_('Enter Counter Sales'),
+														_('Enter Counter Returns'),
 														_('Print Picking Lists'),
 														_('Outstanding Sales Orders/Quotations'),
 														_('Special Order'),
@@ -36,6 +37,7 @@ $MenuItems['orders']['Transactions']['Caption'] = array( _('Enter An Order or Qu
 														);
 $MenuItems['orders']['Transactions']['URL'] = array( '/SelectOrderItems.php?NewOrder=Yes',
 													'/CounterSales.php',
+													'/CounterReturns.php',
 													'/PDFPickingList.php',
 													'/SelectSalesOrder.php',
 													'/SpecialOrder.php',

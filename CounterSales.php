@@ -732,8 +732,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 } /* end of discount matrix lookup code */
 
 
-if (count($_SESSION['Items'.$identifier]->LineItems)>0
-	AND !isset($_POST['ProcessSale'])){ /*only show order lines if there are any */
+if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order lines if there are any */
 /*
 // *************************************************************************
 //   T H I S   W H E R E   T H E   S A L E  I S   D I S P L A Y E D
@@ -1449,21 +1448,20 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 													qty,
 													standardcost,
 													show_on_inv_crds,
-													newqoh
-						) VALUES (
-													'" . $AssParts['component'] . "',
-													 10,
-													'" . $InvoiceNo . "',
-													'" . $_SESSION['Items'.$identifier]->Location . "',
-													'" . $DefaultDispatchDate . "',
-													'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-													'" . $_SESSION['Items'.$identifier]->Branch . "',
-													'" . $PeriodNo . "',
-													'" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $OrderNo . "',
-													'" . -$AssParts['quantity'] * $OrderLine->Quantity . "',
-													'" . $AssParts['standard'] . "',
-													0,
-													newqoh-" . ($AssParts['quantity'] * $OrderLine->Quantity) . " )";
+													newqoh) 
+										VALUES ('" . $AssParts['component'] . "',
+												 10,
+												'" . $InvoiceNo . "',
+												'" . $_SESSION['Items'.$identifier]->Location . "',
+												'" . $DefaultDispatchDate . "',
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
+												'" . $_SESSION['Items'.$identifier]->Branch . "',
+												'" . $PeriodNo . "',
+												'" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $OrderNo . "',
+												'" . -$AssParts['quantity'] * $OrderLine->Quantity . "',
+												'" . $AssParts['standard'] . "',
+												0,
+												newqoh-" . ($AssParts['quantity'] * $OrderLine->Quantity) . " )";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records for the assembly components of'). ' '. $OrderLine->StockID . ' ' . _('could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the assembly components stock movement records was used');
@@ -1671,14 +1669,14 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 								qty=qty +" . $OrderLine->Quantity . ",
 								disc=disc+" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->Quantity / $ExRate) . "
 							WHERE salesanalysis.area='" . $myrow[5] . "'
-								AND salesanalysis.salesperson='" . $myrow[8] . "'
-								AND typeabbrev ='" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'
-								AND periodno = '" . $PeriodNo . "'
-								AND cust " . LIKE . " '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
-								AND custbranch " . LIKE . " '" . $_SESSION['Items'.$identifier]->Branch . "'
-								AND stockid " . LIKE . " '" . $OrderLine->StockID . "'
-								AND salesanalysis.stkcategory ='" . $myrow[2] . "'
-								AND budgetoractual=1";
+							AND salesanalysis.salesperson='" . $_SESSION['Items'.$identifier]->SalesPerson . "'
+							AND typeabbrev ='" . $_SESSION['Items'.$identifier]->DefaultSalesType . "'
+							AND periodno = '" . $PeriodNo . "'
+							AND cust " . LIKE . " '" . $_SESSION['Items'.$identifier]->DebtorNo . "'
+							AND custbranch " . LIKE . " '" . $_SESSION['Items'.$identifier]->Branch . "'
+							AND stockid " . LIKE . " '" . $OrderLine->StockID . "'
+							AND salesanalysis.stkcategory ='" . $myrow[2] . "'
+							AND budgetoractual=1";
 
 			} else { /* insert a new sales analysis record */
 

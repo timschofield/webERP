@@ -1,5 +1,8 @@
 webERP Change Log
 
+3/11/12 Phil: Fixed BAD bug wtth CounterSales.php it was possible to make sales where the invoice didn't agree with the sum of the lines sold!!
+3/11/12 Phil: Added CounterReturns.php script to handle cash returns
+3/11/12 Jesus Aguirre: Added tag selection to purchase invoice gl analysis 
 3/11/12 David Short: improve GLPostings.inc just update all gltrans posted once the postings are done rather than a whole load of updates for each gltrans posted
 25/10/12 Phil: Added telephone and email to supplier search - SelectSupplier.php
 25/10/12 Phil: Rounding error prevented CounterSales.php from posting a sale where currency was rounding to 0 decimal places - reported by Arwan

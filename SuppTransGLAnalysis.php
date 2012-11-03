@@ -67,12 +67,14 @@ if (isset($_POST['AddGLCodeToTrans'])
 		$_SESSION['SuppTrans']->Add_GLCodes_To_Trans($_POST['GLCode'],
 													$GLActName,
 													filter_number_format($_POST['Amount']),
-													$_POST['Narrative']);
+													$_POST['Narrative'],
+													$_POST['Tag']);
 		unset($_POST['GLCode']);
 		unset($_POST['Amount']);
 		unset($_POST['JobRef']);
 		unset($_POST['Narrative']);
 		unset($_POST['AcctSelection']);
+		unset($_POST['Tag']);
 	}
 }
 
@@ -86,6 +88,7 @@ if (isset($_GET['Edit'])){
 	$_POST['Amount'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->Amount;
 	$_POST['JobRef'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->JobRef;
 	$_POST['Narrative'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->Narrative;
+	$_POST['Tag'] = $_SESSION['SuppTrans']->GLCodes[$_GET['Edit']]->Tag;
 	$_SESSION['SuppTrans']->Remove_GLCodes_From_Trans($_GET['Edit']);
 }
 
@@ -105,18 +108,20 @@ $TableHeader = '<tr>
 					<th>' . _('Name') . '</th>
 					<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					<th>' . _('Narrative') . '</th>
+					<th>' . _('Tag') . '</th>
 					</tr>';
 echo $TableHeader;
 $TotalGLValue=0;
 $i=0;
 
 foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
-
+	
 	echo '<tr>
 			<td>' . $EnteredGLCode->GLCode . '</td>
 			<td>' . $EnteredGLCode->GLActName . '</td>
 			<td class="number">' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td>' . $EnteredGLCode->Narrative . '</td>
+			<td>' . $EnteredGLCode->Tag  . ' - ' . $EnteredGLCode->TagName . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=' . $EnteredGLCode->Counter . '">' . _('Edit') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</a></td>
 		</tr>';
@@ -158,6 +163,28 @@ echo '<br />
 if (!isset($_POST['GLCode'])) {
 	$_POST['GLCode']='';
 }
+
+echo '<tr>
+		<td>' . _('Select Tag') . ':</td>
+		<td><select name="Tag">';
+
+$SQL = "SELECT tagref,
+			tagdescription
+		FROM tags
+		ORDER BY tagref";
+
+$result=DB_query($SQL,$db);
+echo '<option value="0"></option>';
+while ($myrow=DB_fetch_array($result)){
+	if (isset($_POST['Tag']) AND $_POST['Tag']==$myrow['tagref']){
+		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+	} else {
+		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+	}
+}
+echo '</select></td>
+	</tr>';
+
 echo '<tr>
 		<td>' . _('Account Code') . ':</td>
 		<td><input type="text" name="GLCode" size="12" maxlength="11" value="' .  $_POST['GLCode'] . '" />

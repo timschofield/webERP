@@ -458,16 +458,17 @@ if (!isset($_POST['PostInvoice'])){
 								<th>' . _('Account') . '</th>
 								<th>' . _('Account Name') .     '</th>
 								<th>' . _('Narrative') . '</th>
+								<th>' . _('Tag') . '</th>
 								<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 							</tr>';
 			echo $TableHeader;
 
 			foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
-
 				echo '<tr>
 						<td>' . $EnteredGLCode->GLCode . '</td>
 						<td>' . $EnteredGLCode->GLActName . '</td>
 						<td>' . $EnteredGLCode->Narrative . '</td>
+						<td>' . $EnteredGLCode->Tag  . ' - ' . $EnteredGLCode->TagName . '</td>
 						<td class="number">' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) .  '</td>
 					</tr>';
 
@@ -476,7 +477,7 @@ if (!isset($_POST['PostInvoice'])){
 			}
 
 			echo '<tr>
-					<td colspan="3" class="number" style="color:blue">' . _('Total GL Analysis') .  ':</td>
+					<td colspan="4" class="number" style="color:blue">' . _('Total GL Analysis') .  ':</td>
 					<td class="number" style="color:blue">' .  locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 				</tr>
 				</table>';
@@ -720,13 +721,14 @@ then do the updates and inserts to process the invoice entered */
 
 			/*GL Items are straight forward - just do the debit postings to the GL accounts specified -
 			the credit is to creditors control act  done later for the total invoice value + tax*/
-
+				//skamnev added tag
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
 											periodno,
 											account,
 											narrative,
+											tag,
 											amount)
 									VALUES (20,
 										'" . $InvoiceNo . "',
@@ -734,6 +736,7 @@ then do the updates and inserts to process the invoice entered */
 										'" . $PeriodNo . "',
 										'" . $EnteredGLCode->GLCode . "',
 										'" . $_SESSION['SuppTrans']->SupplierID . ' ' . $EnteredGLCode->Narrative . "',
+										'" . $EnteredGLCode->Tag . "',
 										'" . $EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate ."')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');

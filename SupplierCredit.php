@@ -458,6 +458,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 							<th>' . _('Account') . '</th>
 							<th>' . _('Account Name') . '</th>
 							<th>' . _('Narrative') . '</th>
+							<th>' . _('Tag') . '</th>
 							<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -470,10 +471,11 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 					<td>' . $EnteredGLCode->GLCode . '</td>
 					<td>' . $EnteredGLCode->GLActName . '</td>
 					<td>' . $EnteredGLCode->Narrative . '</td>
+					<td>' . $EnteredGLCode->Tag  . ' - ' . $EnteredGLCode->TagName . '</td>
 					<td class="number">' . locale_number_format($EnteredGLCode->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 					</tr>';
 
-			$TotalGLValue = $TotalGLValue + $EnteredGLCode->Amount;
+			$TotalGLValue += $EnteredGLCode->Amount;
 
 			$i++;
 			if ($i>15){
@@ -483,7 +485,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 		}
 
 		echo '<tr>
-				<td colspan="3" class="number" style="color:red">' . _('Total GL Analysis') . ':</td>
+				<td colspan="4" class="number" style="color:red">' . _('Total GL Analysis') . ':</td>
 				<td class="number" style="color:red">' . locale_number_format($TotalGLValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>
 			</table>
@@ -712,7 +714,7 @@ then do the updates and inserts to process the credit note entered */
 											account,
 											narrative,
 											amount,
-											jobref)
+											tag)
 								 	VALUES (21,
 										'" . $CreditNoteNo . "',
 										'" . $SQLCreditNoteDate . "',
@@ -720,7 +722,7 @@ then do the updates and inserts to process the credit note entered */
 										'" . $EnteredGLCode->GLCode . "',
 										'" . $_SESSION['SuppTrans']->SupplierID . " " . $EnteredGLCode->Narrative . "',
 								 		'" . -$EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate ."',
-								 		'' )";
+								 		'" . $EnteredGLCode->Tag . "' )";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
