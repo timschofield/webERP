@@ -1,5 +1,6 @@
 webERP Change Log
 
+3/11/12 David Short: improve GLPostings.inc just update all gltrans posted once the postings are done rather than a whole load of updates for each gltrans posted
 25/10/12 Phil: Added telephone and email to supplier search - SelectSupplier.php
 25/10/12 Phil: Rounding error prevented CounterSales.php from posting a sale where currency was rounding to 0 decimal places - reported by Arwan
 20/10/12 Samudaya Nanayakkara: Fixed the problem of Authoriser drop down selection when try to edit a Internal Departments.

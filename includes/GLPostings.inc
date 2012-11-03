@@ -82,13 +82,13 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 
 		$sql = "SELECT counterindex,
-			periodno,
-			account,
-			amount
-		FROM gltrans
-		WHERE posted=0
-		AND periodno='" . $CurrPeriod . "'
-		ORDER BY account";
+						periodno,
+						account,
+						amount
+					FROM gltrans
+					WHERE posted=0
+					AND periodno='" . $CurrPeriod . "'
+					ORDER BY account";
 
 	$UnpostedTransResult = DB_query($sql, $db);
 
@@ -99,23 +99,22 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 		if($CurrentAccount != $UnpostedTrans['account']) {
 			if($CurrentAccount != 0) {
 				$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
-					WHERE accountcode = '" . $CurrentAccount . "'
-					AND period= '" . $CurrPeriod . "'";
+						WHERE accountcode = '" . $CurrentAccount . "'
+						AND period= '" . $CurrPeriod . "'";
 				$PostPrd = DB_query($sql,$db);
 				/*Update the BFwd for all following ChartDetail records */
 				$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
-					WHERE accountcode = '" . $CurrentAccount . "'
-					AND period > '" . $CurrPeriod . "'";
+						WHERE accountcode = '" . $CurrentAccount . "'
+						AND period > '" . $CurrPeriod . "'";
 				$PostBFwds = DB_query($sql,$db);
 			}
 			$TotalAmount = 0;
 			$CurrentAccount = $UnpostedTrans['account'];
 		}
-		$TotalAmount = filter_number_format($TotalAmount + $UnpostedTrans['amount']);
-		/*Update the Actual charge in the period of the transaction */
-		$sql = "UPDATE gltrans SET posted = 1 WHERE counterindex = '" . $UnpostedTrans['counterindex'] . "'";
-		$Posted = DB_query($sql,$db);
+		$TotalAmount += $UnpostedTrans['amount'];
 	}
+	$sql = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
+	$Posted = DB_query($sql,$db);
 	// There will be one chartdetail update outstanding if we processed anything
 	if($CurrentAccount != 0) {
 		$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
