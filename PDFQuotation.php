@@ -240,7 +240,7 @@ if (DB_num_rows($result)>0){
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,locale_number_format($QuotationTotal,$myrow['currdecimalplaces']),'right');
 
 	$YPos -= ($line_height);
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,20,10,_('Notes:'));
+	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,30,10,_('Notes:'));
 	$myrow['comments'] = str_replace('\r','',$myrow['comments']);
 	$myrow['comments'] = str_replace('\n','',$myrow['comments']);
 	$LeftOvers = $pdf->addTextWrap($XPos+28,$YPos,800,10,$myrow['comments']);

@@ -228,7 +228,7 @@ if (DB_num_rows($result)>0){
 		include ('includes/PDFQuotationPageHeader.inc');
 	} //end if need a new page headed up
 
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,200,10,_('Notes:'));
+	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,30,10,_('Notes:'));
 	$LeftOvers = $pdf->addText($XPos,$YPos-95,10,$myrow['comments']);
 
 	if (mb_strlen($LeftOvers)>1){

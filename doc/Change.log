@@ -1,5 +1,6 @@
 webERP Change Log
 
+8/11/12 Craig Craven: Updated Japanese translation
 3/11/12 Phil: Fixed BAD bug wtth CounterSales.php it was possible to make sales where the invoice didn't agree with the sum of the lines sold!!
 3/11/12 Phil: Added CounterReturns.php script to handle cash returns
 3/11/12 Jesus Aguirre: Added tag selection to purchase invoice gl analysis 

@@ -68,8 +68,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.volume,
 								stockmaster.kgs,
 								stockcategory.categorydescription
-								FROM stockmaster INNER JOIN stockcategory
-								ON stockmaster.categoryid=stockcategory.categoryid
+						FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE stockid='" . $StockID . "'", $db);
 	$myrow = DB_fetch_array($result);
 	$Its_A_Kitset_Assembly_Or_Dummy = false;
@@ -138,7 +138,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
 				<td class="select">';
 		$PriceResult = DB_query("SELECT typeabbrev,
-										price FROM prices
+										price 
+								FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
@@ -147,8 +148,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								AND stockid='" . $StockID . "'", $db);
 		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
-									FROM bom INNER JOIN
-										stockmaster
+									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
 									AND bom.effectiveto > '" . Date('Y-m-d') . "'
@@ -164,7 +164,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
 			$Price = $PriceRow[1];
-			echo $PriceRow[0] . '</td><td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			echo $PriceRow[0] . '</td>
+				<td class="select">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<th class="number">' . _('Gross Profit') . '</th>
 				<td class="select">';
 			if ($Price > 0) {
@@ -368,7 +369,7 @@ if (($myrow['mbflag'] == 'B' OR ($myrow['mbflag'] == 'M'))
 				<th style="width:10%">' . _('Lead Time') . '</th>
 				<th style="width:10%">' . _('Min Order Qty') . '</th>
 				<th style="width:5%">' . _('Prefer') . '</th></tr>';
-	$SuppResult = DB_query("SELECT  suppliers.suppname,
+	$SuppResult = DB_query("SELECT suppliers.suppname,
 									suppliers.currcode,
 									suppliers.supplierid,
 									purchdata.price,
