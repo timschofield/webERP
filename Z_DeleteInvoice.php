@@ -138,17 +138,26 @@ foreach ($StockMovement as $OrderLine) {
 have been previous sales to the same customer/branch for the same item
 Delete Sales Analysis records */
 	$SQL = "DELETE FROM salesanalysis
-                       WHERE  periodno = '" . $OrderLine['prd'] . "'
-                       AND cust='" . $OrderLine['debtorno'] . "'
-                       AND custbranch = '" . $OrderLine['branchcode'] . "'
-                       AND qty = '" . $OrderLine['qty'] . "'
-                       AND stockid = '" . $OrderLine['stockid'] . "'";
-
+			   WHERE  periodno = '" . $OrderLine['prd'] . "'
+			   AND cust='" . $OrderLine['debtorno'] . "'
+			   AND custbranch = '" . $OrderLine['branchcode'] . "'
+			   AND qty = '" . $OrderLine['qty'] . "'
+			   AND stockid = '" . $OrderLine['stockid'] . "'";
+	
 	$ErrMsg = _('The SQL to delete the sales analysis records failed because');
 
 	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg,true);
 	prnMsg(_('Sales analysis records deleted') . ' - ' . _('this deleted all sales analysis for the customer/branch and items on this invoice'),'info');
 }
+
+$SQL = "DELETE stockmovestaxes.* FROM stockmovestaxes INNER JOIN stockmoves
+		ON stockmovestaxes.stkmoveno=stockmoves.stkmoveno
+		WHERE stockmoves.type=10 AND stockmoves.transno = '" . $_GET['InvoiceNo'] . "'";
+
+$ErrMsg = _('SQL to delete the stock movement tax records failed with the message');
+$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+prnMsg(_('Deleted the credit note stock move taxes').'info');
+echo '<br /><br />';
 
 /* Delete the stock movements  */
 $SQL = "DELETE FROM stockmoves WHERE type=10 AND transno = '" . $_GET['InvoiceNo'] . "'";

@@ -119,6 +119,15 @@ foreach ($StockMovement as $CreditLine) {
 }
 
 /* Delete the stock movements  */
+$SQL = "DELETE stockmovestaxes.* FROM stockmovestaxes INNER JOIN stockmoves
+			ON stockmovestaxes.stkmoveno=stockmoves.stkmoveno
+               WHERE stockmoves.type=11 AND stockmoves.transno = '" . $_GET['CreditNoteNo'] . "'";
+
+$ErrMsg = _('SQL to delete the stock movement tax records failed with the message');
+$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+prnMsg(_('Deleted the credit note stock move taxes').'info');
+echo '<br /><br />';
+
 
 $SQL = "DELETE FROM stockmoves
                WHERE type=11 AND transno = '" . $_GET['CreditNoteNo'] . "'";
@@ -127,6 +136,14 @@ $ErrMsg = _('SQL to delete the stock movement record failed with the message');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Deleted the credit note stock movements').'info');
 echo '<br /><br />';
+
+
+
+
+$SQL = "DELETE FROM gltrans WHERE type=11 AND typeno= '" . $_GET['CreditNoteNo'] . "'";
+$ErrMsg = _('SQL to delete the gl transaction records failed with the message');
+$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+prnMsg(_('Deleted the credit note general ledger transactions').'info');
 
 $result = DB_Txn_Commit($db);
 prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
