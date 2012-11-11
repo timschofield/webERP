@@ -12,22 +12,27 @@ $title = _('Specify Credited Controlled Items');
 include('includes/header.inc');
 
 
-if ($_GET['CreditInvoice']=='Yes' || $_POST['CreditInvoice']=='Yes'){
-	$_SESSION['CreditInv']=true;
-} else {
-	$_SESSION['CreditInv']=false;
-}
-if ($_SESSION['CreditInv']){
+if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
 	$CreditLink = 'Credit_Invoice.php';
 } else {
 	$CreditLink = 'SelectCreditItems.php';
 }
 
+if (!isset($_GET['identifier'])){
+	echo '<div class="centre"><a href="' . $rootpath . '/' . $CreditLink . '">'. _('Select Credit Items'). '</a><br /><br />';
+	prnMsg( _('This page must be called with the identifier to uniquely identify the credit note being entered. This is a programming error that should not occur.') , 'error');
+	echo '</div>';
+	include('includes/footer.inc');
+	exit;
+} else {
+	$identifier=$_GET['identifier'];
+	$CreditLink .= '?identifier=' . $identifier;
+}
 
 if (isset($_GET['LineNo'])){
-        $LineNo = $_GET['LineNo'];
+	$LineNo = $_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
-        $LineNo = $_POST['LineNo'];
+	$LineNo = $_POST['LineNo'];
 } else {
 	echo '<div class="centre"><a href="' . $rootpath . '/' . $CreditLink . '">'. _('Select Credit Items'). '</a><br /><br />';
 	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected.') . ' ' . _('Please do that first'), 'error');
@@ -36,7 +41,7 @@ if (isset($_GET['LineNo'])){
 	exit;
 }
 
-if (!isset($_SESSION['CreditItems'])) {
+if (!isset($_SESSION['CreditItems' . $identifier])) {
 	/* This page can only be called with a credit note entry part entered */
 	echo '<div class="centre"><a href="' . $rootpath . '/' . $CreditLink . '">'. _('Select Credit Items'). '</a>
 		<br />
@@ -49,7 +54,7 @@ if (!isset($_SESSION['CreditItems'])) {
 
 
 /*Save some typing by referring to the line item class object in short form */
-$LineItem = &$_SESSION['CreditItems']->LineItems[$LineNo];
+$LineItem = &$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
@@ -69,16 +74,12 @@ if (isset($_GET['Delete'])){
 
 echo '<div class="centre">';
 
-if ($CreditLink == 'Credit_Invoice.php'){
-	echo '<input type="hidden" name="CreditInvoice" value="Yes" />';
-}
-
 echo '<br /><a href="' . $rootpath . '/' . $CreditLink . '">'. _('Back to Credit Note Entry'). '</a>';
 
-echo '<br /><b>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['CreditItems']->CustomerName . '</b></div>';
+echo '<br /><b>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['CreditItems' . $identifier]->CustomerName . '</b></div>';
 
 /** vars needed by InputSerialItem : **/
-$LocationOut = $_SESSION['CreditItems']->Location;
+$LocationOut = $_SESSION['CreditItems' . $identifier]->Location;
 /* $_SESSION['CreditingControlledItems_MustExist'] is in config.php - Phil and Jesse disagree on the default treatment compromise position make it user configurable */
 $ItemMustExist = $_SESSION['CreditingControlledItems_MustExist'];
 $StockID = $LineItem->StockID;
@@ -92,10 +93,10 @@ echo '</tr>
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-if ($CreditLink == 'Credit_Invoice.php'){
-	$_SESSION['CreditItems']->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
+if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier){
+	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 } else {
-	$_SESSION['CreditItems']->LineItems[$LineNo]->Quantity = $TotalQuantity;
+	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->Quantity = $TotalQuantity;
 }
 
 include('includes/footer.inc');

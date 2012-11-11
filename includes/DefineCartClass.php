@@ -55,7 +55,7 @@ Class Cart {
 	Var $CreditAvailable; //in customer currency
 	Var $TaxGroup;
 	Var $DispatchTaxProvince;
-	VAR $vtigerProductID;
+	var $vtigerProductID;
 	Var $DefaultPOLine;
 	Var $DeliveryDays;
 	var $TaxTotals;

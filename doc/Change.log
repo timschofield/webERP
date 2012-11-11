@@ -1,5 +1,7 @@
 webERP Change Log
 
+11/11/12 Phil: Fixed Credit_Invoice.php to now use identifier to uniquely identify a credit note session
+11/11/12 Phil: Fixed links to send session identifier and whether from CreditInvoice or SelectCreditItems.php InputSerialItemsKeyed.php and CreditItemsControlled. Creating credit notes manually for serial numbered items was failing as reported by Bob Thomas 
 8/11/12 Craig Craven: Updated Japanese translation
 3/11/12 Phil: Fixed BAD bug wtth CounterSales.php it was possible to make sales where the invoice didn't agree with the sum of the lines sold!!
 3/11/12 Phil: Added CounterReturns.php script to handle cash returns
