@@ -69,6 +69,7 @@ function DB_query ($SQL,
 	global $PathPrefix;
 
 	$result=mysqli_query($Conn, $SQL);
+	
 	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
 
 	if ($DebugMessage == '') {
@@ -163,7 +164,7 @@ function DB_error_msg(&$Conn){
 	return mysqli_error($Conn);
 }
 
-function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
+function DB_Last_Insert_ID(&$Conn, $Table, $FieldName){
 //	return mysqli_insert_id($Conn);
 	if (isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];

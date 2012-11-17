@@ -1158,31 +1158,31 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
 	 foreach ($_SESSION['CreditItems'.$identifier]->LineItems as $CreditLine) {
 
-		  If ($CreditLine->Quantity > 0){
+		if ($CreditLine->Quantity > 0){
 
-			    $LocalCurrencyPrice = ($CreditLine->Price / $_SESSION['CurrencyRate']);
+			$LocalCurrencyPrice = ($CreditLine->Price / $_SESSION['CurrencyRate']);
 
-			    if ($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B'){
-			   /*Need to get the current location quantity will need it later for the stock movement */
-		 	    	$SQL="SELECT locstock.quantity
-					FROM locstock
-					WHERE locstock.stockid='" . $CreditLine->StockID . "'
-					AND loccode= '" . $_SESSION['CreditItems'.$identifier]->Location . "'";
+		    if ($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B'){
+		   /*Need to get the current location quantity will need it later for the stock movement */
+	 	    	$SQL="SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.stockid='" . $CreditLine->StockID . "'
+						AND loccode= '" . $_SESSION['CreditItems'.$identifier]->Location . "'";
 
-			    	$Result = DB_query($SQL, $db);
-			    	if (DB_num_rows($Result)==1){
+		    	$Result = DB_query($SQL, $db);
+		    	if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
-			    	} else {
-					/*There must actually be some error this should never happen */
+		    	} else {
+				/*There must actually be some error this should never happen */
 					$QtyOnHandPrior = 0;
-			    	}
-			    } else {
-			    	$QtyOnHandPrior =0; //because its a dummy/assembly/kitset part
-			    }
+		    	}
+		    } else {
+		    	$QtyOnHandPrior =0; //because its a dummy/assembly/kitset part
+		    }
 
-			    if ($_POST['CreditType']=='ReverseOverCharge') {
-			   /*Insert a stock movement coming back in to show the credit note  - flag the stockmovement not to show on stock movement enquiries - its is not a real stock movement only for invoice line - also no mods to location stock records*/
+		    if ($_POST['CreditType']=='ReverseOverCharge') {
+		   /*Insert a stock movement coming back in to show the credit note  - flag the stockmovement not to show on stock movement enquiries - its is not a real stock movement only for invoice line - also no mods to location stock records*/
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
 												transno,
@@ -1199,65 +1199,64 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 												newqoh,
 												hidemovt,
 												narrative)
-										VALUES
-											('" . $CreditLine->StockID . "',
-											11,
-											'" . $CreditNo . "',
-											'" . $_SESSION['CreditItems'.$identifier]->Location . "',
-											'" . $SQLCreditDate . "',
-											'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
-											'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
-											'" . $LocalCurrencyPrice . "',
-											'" . $PeriodNo . "',
-											'" . $_POST['CreditText'] . "',
-											'" . $CreditLine->Quantity . "',
-											'" . $CreditLine->DiscountPercent . "',
-											'" . $CreditLine->StandardCost . "',
-											'" . $QtyOnHandPrior  . "',
-											1,
-											'" . $CreditLine->Narrative . "')";
-				
+										VALUES ('" . $CreditLine->StockID . "',
+												11,
+												'" . $CreditNo . "',
+												'" . $_SESSION['CreditItems'.$identifier]->Location . "',
+												'" . $SQLCreditDate . "',
+												'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
+												'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
+												'" . $LocalCurrencyPrice . "',
+												'" . $PeriodNo . "',
+												'" . $_POST['CreditText'] . "',
+												'" . $CreditLine->Quantity . "',
+												'" . $CreditLine->DiscountPercent . "',
+												'" . $CreditLine->StandardCost . "',
+												'" . $QtyOnHandPrior  . "',
+												1,
+												'" . $CreditLine->Narrative . "')";
+			
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records for the purpose of display on the credit note was used');
 				$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 
-			   } else { //its a return or a write off need to record goods coming in first
+			} else { //its a return or a write off need to record goods coming in first
 
-			    	if ($CreditLine->MBflag=="M" OR $CreditLine->MBflag=="B"){
-			    		$SQL = "INSERT INTO stockmoves (stockid,
-													type,
-													transno,
-													loccode,
-													trandate,
-													debtorno,
-													branchcode,
-													price,
-													prd,
-													qty,
-													discountpercent,
-													standardcost,
-													reference,
-													newqoh,
-													narrative)
-												VALUES (
-													'" . $CreditLine->StockID . "',
-													11,
-													" . $CreditNo . ",
-													'" . $_SESSION['CreditItems'.$identifier]->Location . "',
-													'" . $SQLCreditDate . "',
-													'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
-													'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
-													'" . $LocalCurrencyPrice . "',
-													'" . $PeriodNo . "',
-													'" . $CreditLine->Quantity . "',
-													'" . $CreditLine->DiscountPercent . "',
-													'" . $CreditLine->StandardCost . "',
-													'" . $_POST['CreditText'] . "',
-													'" . ($QtyOnHandPrior + $CreditLine->Quantity) . "',
-													'" . $CreditLine->Narrative . "'
-												)";
-						
-			    	} else { /*its an assembly/kitset or dummy so don't attempt to figure out new qoh */
+		    	if ($CreditLine->MBflag=='M' OR $CreditLine->MBflag=='B'){
+		    		$SQL = "INSERT INTO stockmoves (stockid,
+												type,
+												transno,
+												loccode,
+												trandate,
+												debtorno,
+												branchcode,
+												price,
+												prd,
+												qty,
+												discountpercent,
+												standardcost,
+												reference,
+												newqoh,
+												narrative)
+											VALUES (
+												'" . $CreditLine->StockID . "',
+												11,
+												" . $CreditNo . ",
+												'" . $_SESSION['CreditItems'.$identifier]->Location . "',
+												'" . $SQLCreditDate . "',
+												'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
+												'" . $_SESSION['CreditItems'.$identifier]->Branch . "',
+												'" . $LocalCurrencyPrice . "',
+												'" . $PeriodNo . "',
+												'" . $CreditLine->Quantity . "',
+												'" . $CreditLine->DiscountPercent . "',
+												'" . $CreditLine->StandardCost . "',
+												'" . $_POST['CreditText'] . "',
+												'" . ($QtyOnHandPrior + $CreditLine->Quantity) . "',
+												'" . $CreditLine->Narrative . "'
+											)";
+					
+		    	} else { /*its an assembly/kitset or dummy so don't attempt to figure out new qoh */
 					$SQL = "INSERT INTO stockmoves (stockid,
 													type,
 													transno,
@@ -1272,8 +1271,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													standardcost,
 													reference,
 													narrative)
-												VALUES (
-													'" . $CreditLine->StockID . "',
+											VALUES ('" . $CreditLine->StockID . "',
 													11,
 													'" . $CreditNo . "',
 													'" . $_SESSION['CreditItems'.$identifier]->Location . "',
@@ -1286,9 +1284,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													'" . $CreditLine->DiscountPercent . "',
 													'" . $CreditLine->StandardCost . "',
 													'" . $_POST['CreditText'] . "',
-													'" . $CreditLine->Narrative . "'
-													)";
-			    	}
+													'" . $CreditLine->Narrative . "' )";
+		    	}
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
@@ -1530,7 +1527,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 						
 				    } else { /* its an assembly, so dont figure out the new qoh */
 
-					$SQL = "INSERT INTO stockmoves (	stockid,
+					$SQL = "INSERT INTO stockmoves (stockid,
 													type,
 													transno,
 													loccode,

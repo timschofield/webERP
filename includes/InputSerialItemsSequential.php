@@ -27,10 +27,10 @@ then the multi select box for selection of existing bundle/serial nos for dispat
 
 /*in the first column add a table for the input of newies */
 echo '<table>';
-echo $tableheader;
+echo $TableHeader;
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">
       <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
       <input type="hidden" name="LineNo" value="' . $LineNo . '">
       <input type="hidden" name="StockID" value="' . $StockID . '">

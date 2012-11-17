@@ -55,7 +55,10 @@ echo '<div>
 		<input type="hidden" name="StockID" value="'. $StockID. '" />';
 
 if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
+	$CreditInvoice = '&amp;CreditInvoice=Yes';
 	echo '<input type="hidden" name="CreditInvoice" value="Yes" />';
+} else {
+	$CreditInvoice ='';
 }
 
 echo '<table class="selection">
@@ -92,19 +95,16 @@ echo ' value="FILE" />'. _('File Upload') . '&nbsp; <input type="file" name="Imp
 	</div>
 	</form>';
 
-global $tableheader;
+global $TableHeader;
 /* Link to clear the list and start from scratch */
-if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
-	$CreditInvoice = '&amp;CreditInvoice=Yes';
-} else {
-	$CreditInvoice ='';
-}
+$EditLink =  '<br />
+			<div class="centre">
+					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;EditControlled=true&amp;StockID=' . $LineItem->StockID .'&amp;LineNo=' . $LineNo . $CreditInvoice . '">'. _('Edit'). '</a> | ';
 
-$EditLink =  '<br /><div class="centre">
-					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;EditControlled=true&amp;StockID=' . $LineItem->StockID .
-	'&amp;LineNo=' . $LineNo . $CreditInvoice . '">'. _('Edit'). '</a> | ';
-$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID .
-	'&amp;LineNo=' . $LineNo . $CreditInvoice . '">'. _('Remove All'). '</a><br /></div>';
+$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">'. _('Remove All'). '</a>
+			<br />
+			</div>';
+			
 $sql="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";
@@ -113,23 +113,23 @@ $myrow=DB_fetch_array($result);
 $Perishable=$myrow['perishable'];
 if ($LineItem->Serialised==1){
 	if ($Perishable==0) {
-		$tableheader .= '<tr>
+		$TableHeader .= '<tr>
 							<th>'. _('Serial No'). '</th>
 						</tr>';
 	} else {
-		$tableheader .= '<tr>
+		$TableHeader .= '<tr>
 							<th>'. _('Serial No'). '</th>
 							<th>'. _('Expiry Date'). '<th>
 						</tr>';
 	}
 } else if ($LineItem->Serialised==0 AND $Perishable==1){
-	$tableheader = '<tr>
+	$TableHeader = '<tr>
 						<th>'. _('Batch/Roll/Bundle'). ' #</th>
 						<th>'. _('Quantity'). '</th>
 						<th>'. _('Expiry Date'). '</th>
 					</tr>';
 } else {
-	$tableheader = '<tr>
+	$TableHeader = '<tr>
 						<th>'. _('Batch/Roll/Bundle'). ' #</th>
 						<th>'. _('Quantity'). '</th>
 					</tr>';
