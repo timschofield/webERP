@@ -166,6 +166,7 @@ will be booked back into. */
 					custbranch.braddress6,
 					custbranch.phoneno,
 					custbranch.email,
+					custbranch.salesman,
 					custbranch.defaultlocation,
 					custbranch.taxgroupid,
 					locations.taxprovinceid
@@ -198,6 +199,7 @@ defaulted from the entry of the userid and password.  */
 	$_SESSION['CreditItems'.$identifier]->BrAdd6 = $myrow['braddress6'];
 	$_SESSION['CreditItems'.$identifier]->PhoneNo = $myrow['phoneno'];
 	$_SESSION['CreditItems'.$identifier]->Email = $myrow['email'];
+	$_SESSION['CreditItems'.$identifier]->SalesPerson = $myrow['salesman'];
 	$_SESSION['CreditItems'.$identifier]->Location = $myrow['defaultlocation'];
 	$_SESSION['CreditItems'.$identifier]->TaxGroup = $myrow['taxgroupid'];
 	$_SESSION['CreditItems'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
@@ -264,9 +266,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8'). '" />
 				<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
 				<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" /></td>
-				<td>'.$myrow['contactname'].'</td>
-				<td>'.$myrow['phoneno'].'</td>
-				<td>'.$myrow['faxno'].'</td>
+				<td>' . $myrow['contactname'] . '</td>
+				<td>' . $myrow['phoneno'] . '</td>
+				<td>' . $myrow['faxno'] . '</td>
 				</tr>';
 			$LastCustomer=$myrow['name'];
 			$j++;
@@ -285,6 +287,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $_SESSION['CreditItems'.$identifier]->CustomerName  . ' - ' . $_SESSION['CreditItems'.$identifier]->DeliverTo.'</p>';
+
+	if (isset($_POST['SalesPerson'])){
+		$_SESSION['CreditItems' . $identifier]->SalesPerson = $_POST['SalesPerson'];
+	}
 
  /* do the search for parts that might be being looked up to add to the credit note */
 	 if (isset($_POST['Search'])){
@@ -870,7 +876,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /*if the credit note is a return of goods then need to know which location to receive them into */
 
-			echo '<tr><td>' . _('Goods Returned to Location') . ' :</td>
+			echo '<tr>
+					<td>' . _('Goods Returned to Location') . ' :</td>
 					<td><select name="Location">';
 
 			$SQL="SELECT loccode, locationname FROM locations";
@@ -912,6 +919,24 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 			   echo '</select></td></tr>';
 		  }
+		echo '<tr>
+				<td>' . _('Sales person'). ':</td>
+				<td><select name="SalesPerson">';
+		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
+		if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
+			$_SESSION['CreditItems'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
+		}
+	
+		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
+			if ($SalesPersonRow['salesmancode']==$_SESSION['CreditItems'.$identifier]->SalesPerson){
+				echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			} else {
+				echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			}
+		}
+	
+		echo '</select></td>
+			</tr>';
 		  if (!isset($_POST['CreditText'])) {
 			  $_POST['CreditText']='';
 		  }
@@ -1610,8 +1635,7 @@ sales analysis needs to reflect the sales made before and after the changes*/
 
 			   $SQL="SELECT	COUNT(*),
 							salesanalysis.stkcategory,
-							salesanalysis.area,
-							salesanalysis.salesperson
+							salesanalysis.area
 						FROM salesanalysis,
 							custbranch,
 							stockmaster
@@ -1620,7 +1644,7 @@ sales analysis needs to reflect the sales made before and after the changes*/
 						AND salesanalysis.cust=custbranch.debtorno
 						AND salesanalysis.custbranch=custbranch.branchcode
 						AND salesanalysis.area=custbranch.area
-						AND salesanalysis.salesperson=custbranch.salesman
+						AND salesanalysis.salesperson='" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "'
 						AND salesanalysis.typeabbrev ='" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "'
 						AND salesanalysis.periodno='" . $PeriodNo . "'
 						AND salesanalysis.cust = '" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "'
@@ -1635,7 +1659,7 @@ sales analysis needs to reflect the sales made before and after the changes*/
 			$DbgMsg = _('SQL to count the no of sales analysis records');
 			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
-			$myrow = DB_fetch_row($Result);
+			$myrow = DB_fetch_array($Result);
 
 			if ($myrow[0]>0){  /*Update the existing record that already exists */
 
@@ -1645,14 +1669,14 @@ sales analysis needs to reflect the sales made before and after the changes*/
 
 					$SQL = "UPDATE salesanalysis SET amt=amt-" . $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . ",
 													disc=disc-" . $CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "
-							WHERE salesanalysis.area='" . $myrow[2] . "'
-							AND salesanalysis.salesperson='" . $myrow[3] . "'
+							WHERE salesanalysis.area='" . $myrow['area'] . "'
+							AND salesanalysis.salesperson='" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "'
 							AND salesanalysis.typeabbrev ='" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "'
 							AND salesanalysis.periodno = '" . $PeriodNo . "'
 							AND salesanalysis.cust = '" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "'
 							AND salesanalysis.custbranch = '" . $_SESSION['CreditItems'.$identifier]->Branch . "'
 							AND salesanalysis.stockid = '" . $CreditLine->StockID . "'
-							AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+							AND salesanalysis.stkcategory ='" . $myrow['stkcategory'] . "'
 							AND salesanalysis.budgetoractual=1";
 
 				} else {
@@ -1661,14 +1685,14 @@ sales analysis needs to reflect the sales made before and after the changes*/
 													Cost=Cost-" . $CreditLine->StandardCost * $CreditLine->Quantity . ",
 													Qty=Qty-" . $CreditLine->Quantity . ",
 													Disc=Disc-" . $CreditLine->DiscountPercent * $CreditLine->Price * $CreditLine->Quantity / $_SESSION['CurrencyRate'] . "
-							WHERE salesanalysis.area='" . $myrow[2] . "'
-							AND salesanalysis.salesperson='" . $myrow[3] . "'
+							WHERE salesanalysis.area='" . $myrow['area'] . "'
+							AND salesanalysis.salesperson='" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "'
 							AND salesanalysis.typeabbrev ='" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "'
 							AND salesanalysis.periodno = '" . $PeriodNo . "'
 							AND salesanalysis.cust = '" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "'
 							AND salesanalysis.custbranch = '" . $_SESSION['CreditItems'.$identifier]->Branch . "'
 							AND salesanalysis.stockid = '" . $CreditLine->StockID . "'
-							AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+							AND salesanalysis.stkcategory ='" . $myrow['stkcategory'] . "'
 							AND salesanalysis.budgetoractual=1";
 				}
 
@@ -1698,7 +1722,7 @@ sales analysis needs to reflect the sales made before and after the changes*/
 												'" . $CreditLine->StockID . "',
 												custbranch.area,
 												1,
-												custbranch.salesman,
+												'" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "',
 												stockmaster.categoryid
 										FROM stockmaster, custbranch
 										WHERE stockmaster.stockid = '" . $CreditLine->StockID . "'
@@ -1731,7 +1755,7 @@ sales analysis needs to reflect the sales made before and after the changes*/
 												'" . $CreditLine->StockID . "',
 												custbranch.area,
 												1,
-												custbranch.salesman,
+												'" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "',
 												stockmaster.categoryid
 										FROM stockmaster,
 												custbranch

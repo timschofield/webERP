@@ -1,5 +1,7 @@
 webERP Change Log
 
+17/11/12 Phil: SelectCreditItems.php allow selection of sales person and record credit against this salesperson in sales analysis
+17/11/12 Phil: Allow user to specify sales person to credit so that sales analysis reflects sales by sales person without recourse back to the default sales person for the customer branch
 11/11/12 Phil: Fixed Credit_Invoice.php to now use identifier to uniquely identify a credit note session
 11/11/12 Phil: Fixed links to send session identifier and whether from CreditInvoice or SelectCreditItems.php InputSerialItemsKeyed.php and CreditItemsControlled. Creating credit notes manually for serial numbered items was failing as reported by Bob Thomas 
 8/11/12 Craig Craven: Updated Japanese translation
