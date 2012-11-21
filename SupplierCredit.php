@@ -960,13 +960,13 @@ then do the updates and inserts to process the credit note entered */
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost=materialcost+" . $CostIncrement . " 
-									WHERE stockid='" . $EnteredGRN->ItemCode . "'";
+																	materialcost=materialcost+" . $CostIncrement . " 
+											WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 									
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								} else {
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
+																	materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								}
 								/* End of Weighted Average Costing Code */
@@ -1064,7 +1064,6 @@ then do the updates and inserts to process the credit note entered */
 			} /* end of GRN postings */
 
 			if ($debug == 1 AND abs(($_SESSION['SuppTrans']->OvAmount/ $_SESSION['SuppTrans']->ExRate) - $LocalTotal)>0.004){
-
 				prnMsg(_('The total posted to the credit accounts is') . ' ' . $LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' . ($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate),'error');
 			}
 
