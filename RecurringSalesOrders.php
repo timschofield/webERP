@@ -6,10 +6,17 @@ include('includes/DefineCartClass.php');
 
 /* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
 /* webERP manual links before header.inc */
-$ViewTopic= "SalesOrders";
-$BookMark = "RecurringSalesOrders";
+$ViewTopic= 'SalesOrders';
+$BookMark = 'RecurringSalesOrders';
+
 include('includes/session.inc');
 $title = _('Recurring Orders');
+
+
+/* webERP manual links before header.inc */
+$ViewTopic= 'SalesOrders';
+$BookMark = 'RecurringSalesOrders';
+
 include('includes/header.inc');
 
 if (empty($_GET['identifier'])) {

@@ -3,6 +3,10 @@
 
 include('includes/session.inc');
 $title = _('Search Recurring Sales Orders');
+/* webERP manual links before header.inc */
+$ViewTopic= 'SalesOrders';
+$BookMark = 'RecurringSalesOrders';
+
 include('includes/header.inc');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';

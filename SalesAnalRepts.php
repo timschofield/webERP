@@ -5,6 +5,9 @@
 include('includes/session.inc');
 
 $title = _('Sales Analysis Reports Maintenance');
+/* webERP manual links before header.inc */
+$ViewTopic= 'SalesAnalysis';
+$BookMark = 'SalesAnalysis';
 
 include('includes/header.inc');
 
