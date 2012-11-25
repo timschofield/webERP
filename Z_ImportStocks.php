@@ -30,7 +30,7 @@ $headers = array(
 	'ItemPDF'          	// 17 'ITEMPDF'
 );
 
-if ($_FILES['userfile']['name']) { //start file processing
+if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 
 	//initialize
 	$AllowType='text/csv';
@@ -289,7 +289,7 @@ if ($_FILES['userfile']['name']) { //start file processing
 		<a href="Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
-	echo '<form action="Z_ImportStocks.php" method="post">';
+	echo '<form action="Z_ImportStocks.php" method="post" enctype="multipart/form-data">';
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
