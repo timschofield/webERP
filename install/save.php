@@ -236,7 +236,7 @@ $config_filename = $path_to_root . '/config.php';
 // only make a new company directory structure if we are kicking off a new company
 // no need to bother if just setting up the demo data
 $CompanyDir = $path_to_root . '/companies/' . $_POST['database_name'];
-if (($_POST['DemoData']==false) || ($_POST['database_name'] != "weberpdemo")){  // Fix? 'Use demo data' when used in conjunction with a new company could be misunderstood. Seems to make more sense to skip the new creation data only if this is set and the name is also that of the default demo. May want to simply check for folder existence.
+if (($_POST['DemoData']==false) OR ($_POST['database_name'] != "weberpdemo")){  // Fix? 'Use demo data' when used in conjunction with a new company could be misunderstood. Seems to make more sense to skip the new creation data only if this is set and the name is also that of the default demo. May want to simply check for folder existence.
 	$Result = mkdir($CompanyDir);
 	$Result = mkdir($CompanyDir . '/part_pics');
 	$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
@@ -292,7 +292,7 @@ $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$dbpassword = '" . $_POST['database_password'] . "';\n";
 
 $msg .= "// The timezone of the business - this allows the possibility of having;\n";
-
+$msg .= "date_default_timezone_set('" . $_POST['timezone'] . "');\n";
 $msg .= "putenv('TZ=" . $_POST['timezone'] . "');\n";
 $msg .= "\$AllowCompanySelectionBox = true;\n";
 if ($_POST['DemoData'] ==false){
@@ -305,7 +305,7 @@ $msg .= "\$MaximumExecutionTime =120;\n";
 $msg .= "\$CryptFunction = 'sha1';\n";
 $msg .= "\$DefaultClock = 12;\n";
 
-$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF']));\n";
+$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
 $msg .= "\$rootpath = mb_substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";
@@ -373,10 +373,11 @@ if($_POST['install_tables'] == true){
 				// Database created above with correct name.
 				if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
 				    AND strncasecmp($SQL, ' USE ', 5)){
+					
 					$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 					$result = mysqli_query($db,$SQL);
-				    }
-				    $SQL = '';
+				}
+				$SQL = '';
 			}
 
 		} //end if its a valid sql line not a comment
@@ -397,5 +398,5 @@ session_destroy();
 
 header('Location: ' . $path_to_root . '/index.php?newDb=1');
 ini_set('max_execution_time', '60');
-echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $path_to_root . '/index.php?' . SID . "'>";
+echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $path_to_root . '/index.php">';
 ?>
