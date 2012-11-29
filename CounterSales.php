@@ -764,7 +764,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	$k =0;  //row colour counter
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
-		$SubTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
+		$SubTotal = round($OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		$DisplayDiscount = locale_number_format(($OrderLine->DiscountPercent * 100),2);
 		$QtyOrdered = $OrderLine->Quantity;
 		$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
@@ -938,12 +938,14 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	echo '</th>
 		</tr>
 		</table>';	//end of column/row/master table
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
-				<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" />
-			</div>
-			<hr />';
+	if (!isset($_POST['ProcessSale'])){
+		echo '<br />
+				<div class="centre">
+					<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
+					<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" />
+				</div>';
+	}
+	echo '<hr />';
 
 } # end of if lines
 

@@ -61,7 +61,8 @@ function set_error($message) {
 			$_SESSION['database_username'] = Replace_Dodgy_Characters($_POST['database_username']);
 			$_SESSION['database_password'] = $_POST['database_password'];
 			$_SESSION['install_tables'] = $_POST['install_tables'];
-			$_SESSION['database_name'] = Replace_Dodgy_Characters($_POST['company_name']);
+			$_SESSION['database_name'] = Replace_Dodgy_Characters($_POST['database_name']);
+			$_SESSION['db_prefix'] = Replace_Dodgy_Characters($_POST['db_prefix']);
 			$_SESSION['db_file'] = $_POST['DemoData'] ? 'demo' : 'not';
 			$_SESSION['timezone'] = $_POST['timezone'];
 			$_SESSION['company_name'] = Replace_Dodgy_Characters($_POST['company_name']);
@@ -119,7 +120,6 @@ if (isset($_POST['path_to_root'])) {
 } else {
 	$path_to_root = '..';
 }
-
 // Begin check to see if form was even submitted
 // Set error if no post vars found
 
@@ -186,12 +186,18 @@ if (!isset($_POST['database_password'])) {
 	set_error('Please enter a database password');
 }
 // Check if user has entered a database name
+if (!isset($_POST['database_name']) || $_POST['database_name'] == '') {
+	set_error('Please enter a database name');
+} else {
+	$_POST['database_name'] = Replace_Dodgy_Characters($_POST['database_name']);
+}
+
+// Check if user has entered a company name
 if (!isset($_POST['company_name']) || $_POST['company_name'] == '') {
 	set_error('Please enter a company name');
 } else {
-	$_POST['company_name'] = Replace_Dodgy_Characters($_POST['company_name']);
+	$_POST['company_name'] = $_POST['company_name'];  // No need to remove dodgy chars as company name is not functionally tied to db items.
 }
-
 if (!isset($_POST['timezone']) || $_POST['timezone'] == ''){
 	set_error('Please enter timezone');
 }
@@ -229,8 +235,8 @@ if ($_POST['admin_password'] != $_POST['admin_repassword']){
 $config_filename = $path_to_root . '/config.php';
 // only make a new company directory structure if we are kicking off a new company
 // no need to bother if just setting up the demo data
-$CompanyDir = $path_to_root . '/companies/' . $_POST['company_name'];
-if ($_POST['DemoData']==false){
+$CompanyDir = $path_to_root . '/companies/' . $_POST['database_name'];
+if (($_POST['DemoData']==false) || ($_POST['database_name'] != "weberpdemo")){  // Fix? 'Use demo data' when used in conjunction with a new company could be misunderstood. Seems to make more sense to skip the new creation data only if this is set and the name is also that of the default demo. May want to simply check for folder existence.
 	$Result = mkdir($CompanyDir);
 	$Result = mkdir($CompanyDir . '/part_pics');
 	$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
@@ -263,8 +269,6 @@ if ($_POST['DemoData']==false){
 		copy( $path_to_root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
 	}
 }
-    $mysqlport=3306;
-$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 
 //$msg holds the text of the new config.php file
 $msg = "<?php\n\n";
@@ -278,7 +282,7 @@ $msg .= "//  Connection information for the database\n";
 $msg .= "// \$host is the computer ip address or name where the database is located\n";
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$host = '" . $_POST['database_host'] . "';\n\n";
-$msg .= "\$mysqlport = 3306;\n\n";
+
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$dbType = 'mysqli';\n";
 
@@ -289,7 +293,7 @@ $msg .= "\$dbpassword = '" . $_POST['database_password'] . "';\n";
 
 $msg .= "// The timezone of the business - this allows the possibility of having;\n";
 
-$msg .= "date_default_timezone_set('" . $_POST['timezone'] . "');\n";
+$msg .= "putenv('TZ=" . $_POST['timezone'] . "');\n";
 $msg .= "\$AllowCompanySelectionBox = true;\n";
 if ($_POST['DemoData'] ==false){
 	$msg .= "\$DefaultCompany = '" . $_POST['company_name']. "';\n";
@@ -301,7 +305,7 @@ $msg .= "\$MaximumExecutionTime =120;\n";
 $msg .= "\$CryptFunction = 'sha1';\n";
 $msg .= "\$DefaultClock = 12;\n";
 
-$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
+$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF']));\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
 $msg .= "\$rootpath = mb_substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";
@@ -332,7 +336,8 @@ if (!$db){
 }
 
 if($_POST['install_tables'] == true){
-
+	$dbName = $_POST['db_prefix'].$_POST['database_name'];
+	
 	/* Need to read in the sql script and process the queries to initate a new DB */
 	if ($_POST['DemoData'] == true){ //installing the demo data
 		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-demo.sql');
@@ -341,8 +346,8 @@ if($_POST['install_tables'] == true){
 	} else { //creating a new database with no demo data
 		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-new.sql');
 	}
-	mysqli_query($db, 'CREATE DATABASE IF NOT EXISTS `' . mysqli_real_escape_string($db, $_POST['company_name']) . '`');
-	mysqli_select_db($db, $_POST['company_name']);
+	mysqli_query($db, 'CREATE DATABASE IF NOT EXISTS `' . mysqli_real_escape_string($db, $dbName) . '`');
+	mysqli_select_db($db, $dbName);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 	$SQL ='';
 	$InAFunction = false;
@@ -390,7 +395,7 @@ $result = mysqli_query($db,$sql);
 session_unset();
 session_destroy();
 
-header('Location: ' . $path_to_root . '/index.php');
+header('Location: ' . $path_to_root . '/index.php?newDb=1');
 ini_set('max_execution_time', '60');
 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $path_to_root . '/index.php?' . SID . "'>";
 ?>

@@ -1,5 +1,6 @@
 webERP Change Log
 
+29/11/12 Jeff Trickett: Start of a conversion to remove dependencies between company name, database table name, and the company file system. Particularly on shared virtual server environments, these can be unpredictable and out of the user's control. This should reduce the difficulties often reported by users with installation.
 21/11/12 Harald Ringehan: Updated German translation to SVN revision 5743
 17/11/12 Phil: SelectCreditItems.php allow selection of sales person and record credit against this salesperson in sales analysis
 17/11/12 Phil: Allow user to specify sales person to credit so that sales analysis reflects sales by sales person without recourse back to the default sales person for the customer branch

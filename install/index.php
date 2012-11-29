@@ -43,7 +43,7 @@ $CompanyPath = $PathToRoot. '/companies';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>WebERP Installation Wizard</title>
-<link href="../css/gel/default.css" rel="stylesheet" type="text/css" />
+<link href="../css/jelly/default.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
 function change_os(type) {
@@ -59,8 +59,8 @@ function change_os(type) {
 }
 function change_data(type) {
 	if(type == 'demo') {
-		document.getElementById('db_file_demo').checked = true;
-		document.getElementById('db_file_new').checked = false;
+		document.getElementById('db_file_demo').checked = false;
+		document.getElementById('db_file_new').checked = true;
 
 	} else if(type == 'new') {
 		document.getElementById('db_file_demo').checked = false;
@@ -236,7 +236,33 @@ function change_data(type) {
 			<td>&nbsp;</td>
         </tr>
         <tr>
-			<td style="color: #666666;">Username:</td>
+			<td style="color: #666666;">MySQL Database Name:</td>
+			<td>
+				<input type="text" tabindex="44" name="database_name" size="20" value="<?php
+					if(isset($_SESSION['database_name'])) {
+						echo $_SESSION['database_name'];
+					 } else {
+						echo 'weberpdemo';
+					 }
+				 ?>" />
+			</td>
+			<td>(Excluding prefix if applicable.)</td>
+		</tr>
+		<tr>
+			<td style="color: #666666;">Database Prefix? </td>
+			<td>
+				<input type="text" tabindex="44" name="db_prefix" size="20" value="<?php
+					if(isset($_SESSION['db_prefix'])) {
+						echo $_SESSION['db_prefix'];
+					 } else {
+						echo '';
+					 }
+				 ?>" />
+			</td>
+			<td>(Some shared hosting environments add a prefix automatically; use only if this applies to you. Example: 'prefix_')</td>
+		</tr>
+		 <tr>
+			<td style="color: #666666;">MySQL Username:</td>
 			<td>
 				<input type="text" tabindex="44" name="database_username" size="20" value="<?php
 					if(isset($_SESSION['database_username'])) {
@@ -246,6 +272,7 @@ function change_data(type) {
 					 }
 				 ?>" />
 			</td>
+			<td>(User must already exist, with db access!)</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;">Password:</td>
@@ -254,7 +281,7 @@ function change_data(type) {
 																											echo ' value = "'.$_SESSION['database_password'].'"';
 																										} ?> />
 			</td>
-            <td>&nbsp;</td>
+            <td>(Will be stored to config.php in plain-text.)</td>
 		</tr>
 		<tr>
 
@@ -268,38 +295,27 @@ function change_data(type) {
 				<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span style="font-size: 10px; color: #666666;">(Please note: May remove existing tables and data)</span>
 			</td>
+			<td>
+				<input type="checkbox" tabindex="51" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked="checked"'; } ?> />
+				<label for="db_file_demo" style="color: #666666;">Install the test company data?</label>
+				<span style="font-size: 10px; color: #666666;" style="cursor: pointer;" onclick="javascript: change_data('demo');">(Use sample data for weberpdemo)</span>
+			</td>
+		</tr>
 		</tr>
 		<tr>
-			<td colspan="5"><h3>Step 5</h3>Please enter the company database name below... note that in some shared hosting environments this will have to be of the format domain_company_database_name. This installation script will fail if the mysql user above does not have permissions to create the company database</td>
+			<td colspan="5"><h3>Step 5</h3>Please enter the company name below...</td>
 		</tr>
 		<tr>
-			<td style="color: #666666;" colspan="1">Company Database Name:</td>
+			<td style="color: #666666;" colspan="1">Company Name:</td>
 			<td colspan="4">
 				<input type="text" tabindex="50" name="company_name" style="width: 99%;" value="<?php if(isset($_SESSION['company_name'])) { echo $_SESSION['company_name']; } else { echo 'weberpdemo'; } ?>" />
 			</td>
 		</tr>
 		<tr>
-			<td>
-				Install the test company :
-			</td>
-
-			<td>
-                
-				<input type="checkbox" tabindex="51" name="DemoData" id="db_file_demo" value="demo"<?php if(!isset($_SESSION['db_file']) OR $_SESSION['db_file'] == 'demo') { echo ' checked="checked"'; } ?> />
-			<div style="cursor: pointer;" onclick="javascript: change_data('demo');">	weberpdemo company</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Time Zone
-			</td>
-
+			<td>Time Zone</td>
 			<td>
 				<select name='timezone' tabindex="52">
-				<?php
-					include('timezone.php');
-					 ?>
-
+					<?php include('timezone.php'); ?>
 				</select>
 			</td>
 		</tr>
@@ -314,7 +330,7 @@ function change_data(type) {
 			</td>
 		</tr>
 		<tr>
-			<td colspan="5"><h3>Step 6</h3>Please enter your Administrator account details below...</td>
+			<td colspan="5"><h3>Step 6</h3>Please enter your Administrator account details below (This will be the login information you use to access WebERP as 'admin')...</td>
 		</tr>
 		<tr>
 			<td style="color: #666666;">Username:</td>

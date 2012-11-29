@@ -844,9 +844,14 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 
 	echo '</table>'; //end the sub table in the second column of master table
 	echo '</th></tr></table>';	//end of column/row/master table
-	echo '<br /><div class="centre"><input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
-				<input type="submit" name="ProcessReturn" value="' . _('Process The Return') . '" /></div><hr />';
-
+	if (!isset($_POST['ProcessReturn'])){
+		echo '<br />
+				<div class="centre">
+					<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
+					<input type="submit" name="ProcessReturn" value="' . _('Process The Return') . '" />
+				</div>';
+	}
+	echo '<hr />';
 } # end of if lines
 
 /* **********************************
