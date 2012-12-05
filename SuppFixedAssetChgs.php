@@ -3,7 +3,7 @@
 /* $Id: SuppFixedAssetChgs.php 4473 2011-01-23 04:08:53Z daintree $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
-the SuppTrans class contains an array of Asset objects called Assets- containing details of all asset additions on a supplier invoice
+the SuppTrans class contains an array of Asset objects called Assets - containing details of all asset additions on a supplier invoice
 Asset additions are posted to the debit of fixed asset category cost account if the creditors GL link is on */
 
 include('includes/DefineSuppTransClass.php');

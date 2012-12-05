@@ -334,9 +334,6 @@ if(isset($_POST['Reset'])){
 	unset($_POST['Address4']);
 	unset($_POST['Address5']);
 	unset($_POST['Address6']);
-	unset($_POST['Phone']);
-	unset($_POST['Fax']);
-	unset($_POST['Email']);
 	unset($_POST['HoldReason']);
 	unset($_POST['PaymentTerms']);
 	unset($_POST['Discount']);
@@ -440,13 +437,7 @@ if (!isset($DebtorNo)) {
 
 	echo '<tr><td>' . _('Customer Name') . ':</td>
 		<td><input tabindex="2" type="text" name="CustName" size="42" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Telephone') . ':</td>
-		<td><input tabindex="2" type="text" name="Phone" size="30" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Facsimile') . ':</td>
-		<td><input tabindex="2" type="text" name="Fax" size="30" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Email Address') . ':</td>
-		<td><input tabindex="2" type="text" name="Email" size="30" maxlength="40" /></td></tr>';
-	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
+		echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
 		<td><input tabindex="3" type="text" name="Address1" size="42" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
 		<td><input tabindex="4" type="text" name="Address2" size="42" maxlength="40" /></td></tr>';

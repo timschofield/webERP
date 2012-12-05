@@ -25,7 +25,7 @@ include('includes/header.inc');
 echo '<a href="'. $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Back to Purchase Orders'). '</a>
 	<br />';
 
-if (isset($_GET['PONumber']) and $_GET['PONumber']<=0 and !isset($_SESSION['PO'.$identifier])) {
+if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.$identifier])) {
 	/* This page can only be called with a purchase order number for invoicing*/
 	echo '<div class="centre">
 			<a href= "' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Select a purchase order to receive').'</a>

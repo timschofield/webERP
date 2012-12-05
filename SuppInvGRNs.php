@@ -213,7 +213,7 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 		$GRNAlreadyOnInvoice = False;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-			if ($EnteredGRN->GRNNo == $myrow['grnbatch']) {
+			if ($EnteredGRN->GRNNo == $myrow['grnno']) {
 				$GRNAlreadyOnInvoice = True;
 			}
 		}

@@ -1,7 +1,0 @@
-# This file is used to resolve company names, database names, and the directory used to store the items relevant to them.
-# The following simple format is used, with the symbol | used to separate the items:
-# Company Name | directory_name | database_name
-# Spaces are stripped from either end of each item, and a new line is used to separate companies.
-
-webERP Demo Company | weberpdemo | weberpdemo
-# Company Name | directory_name | database_name

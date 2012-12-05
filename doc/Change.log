@@ -1,5 +1,10 @@
 webERP Change Log
 
+5/12/12 Phil: Allow auto receiving of purchase orders and populating of purchase invoice when purchase order is authorised.
+5/12/12 Tim: PO_PDFPurchOrder.php fix printing of initiator to show the full name also style changes
+4/12/12 Tim: PO_Header.php style mods also initiator reinstated as the userid not the user's realname - realname displayed but not stored in db. 
+1/12/12 Phil: Remove input fields in Customers.php email, phone fax which are not used - these fields do not exist in debtorsmaster to update  these fields are only held by branch.
+1/12/12 Phil: SupplierInvoice.php and link from PO_Items.php to auto receive all items on an authorised purchase order and auto populate the invoice with the received items
 29/11/12 Jeff Trickett: Start of a conversion to remove dependencies between company name, database table name, and the company file system. Particularly on shared virtual server environments, these can be unpredictable and out of the user's control. This should reduce the difficulties often reported by users with installation.
 21/11/12 Harald Ringehan: Updated German translation to SVN revision 5743
 17/11/12 Phil: SelectCreditItems.php allow selection of sales person and record credit against this salesperson in sales analysis

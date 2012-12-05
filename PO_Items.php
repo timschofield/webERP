@@ -22,6 +22,9 @@ if (!isset($_SESSION['PO'.$identifier])){
 	exit;
 } //end if (!isset($_SESSION['PO'.$identifier]))
 
+/* webERP manual links before header.inc */
+$ViewTopic= 'PurchaseOrdering';
+$BookMark = 'PurchaseOrdering';
 include('includes/header.inc');
 
 if (!isset($_POST['Commit'])) {
@@ -230,8 +233,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				}
 			} /* end of the loop round the detail line items on the order */
 			echo '<p />';
-			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('on') . ' ' .
-		     	$_SESSION['PO'.$identifier]->SupplierName . ' ' . _('has been created'),'success');
+			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO'.$identifier]->SupplierName . ' ' . _('has been created'),'success');
+			
+			
 		} else { /*its an existing order need to update the old order info */
 			/*Check to see if there are any incomplete lines on the order */
 			$Completed = true; //assume it is completed i.e. all lines are flagged as completed
@@ -374,10 +378,15 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						
 				echo '<br /><div class="centre"><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
 			}
+			
 		} /*end of if its a new order or an existing one */
 
 
 		$Result = DB_Txn_Commit($db);
+		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'){;
+			echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
+		}
+		
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		include('includes/footer.inc');
 		exit;
