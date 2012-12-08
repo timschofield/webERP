@@ -115,6 +115,9 @@ if (isset($_GET['SupplierID'])){
 			$_SESSION['PaymentDetail' . $identifier]->Currency = $myrow['currcode'];
 			$_POST['Currency'] = $_SESSION['PaymentDetail' . $identifier]->Currency;
 		}
+		if (isset($_GET['Amount']) AND is_numeric($_GET['Amount'])){
+			$_SESSION['PaymentDetail' . $identifier]->Amount = filter_number_format($_GET['Amount']);
+		} 
 	}
 }
 

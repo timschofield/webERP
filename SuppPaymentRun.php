@@ -75,18 +75,18 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		$CurrDecimalPlaces = $SuppliersToPay['currdecimalplaces'];
 
 		$sql = "SELECT suppliers.supplierid,
-					suppliers.suppname,
-					systypes.typename,
-					paymentterms.terms,
-					supptrans.suppreference,
-					supptrans.trandate,
-					supptrans.rate,
-					supptrans.transno,
-					supptrans.type,
-					(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
-					(supptrans.ovamount + supptrans.ovgst ) AS trantotal,
-					supptrans.diffonexch,
-					supptrans.id
+						suppliers.suppname,
+						systypes.typename,
+						paymentterms.terms,
+						supptrans.suppreference,
+						supptrans.trandate,
+						supptrans.rate,
+						supptrans.transno,
+						supptrans.type,
+						(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
+						(supptrans.ovamount + supptrans.ovgst ) AS trantotal,
+						supptrans.diffonexch,
+						supptrans.id
 				FROM suppliers INNER JOIN paymentterms 
 				ON suppliers.paymentterms = paymentterms.termsindicator 
 				INNER JOIN supptrans 
@@ -96,7 +96,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				WHERE supptrans.supplierno = '" . $SuppliersToPay['supplierid'] . "'
 				AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
 				AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
-				AND supptrans.hold=0
+				AND supptrans.hold = 0
 				AND suppliers.currcode = '" . $_POST['Currency'] . "'
 				AND supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
 				AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
@@ -251,12 +251,12 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
-	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){
+	if (!isset($_POST['FromCriteria']) OR mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
 	} else {
 		$DefaultFromCriteria = $_POST['FromCriteria'];
 	}
-	if (!isset($_POST['ToCriteria']) or mb_strlen($_POST['ToCriteria'])<1){
+	if (!isset($_POST['ToCriteria']) OR mb_strlen($_POST['ToCriteria'])<1){
 		$DefaultToCriteria = 'zzzzzzz';
 	} else {
 		$DefaultToCriteria = $_POST['ToCriteria'];
@@ -365,7 +365,7 @@ Payment types can be modified by editing that file */
 	echo '</select></td>
 		</tr>';
 
-	if (!isset($_POST['Ref']) or !is_numeric($_POST['Ref'])){
+	if (!isset($_POST['Ref']) OR !is_numeric($_POST['Ref'])){
 		$DefaultRef = '1';
 	} else {
 		$DefaultRef = $_POST['Ref'];

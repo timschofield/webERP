@@ -124,13 +124,6 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-/*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
- * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME'])
- */
-if (!isset($PageSecurity)){
-//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
-	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME'])];
-}
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
 if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
@@ -265,8 +258,7 @@ if ($_SESSION['HTTPS_Only']==1){
 
 
 
-// Now check that the user as logged in has access to the page being called. The $PageSecurity
-// value must be set in the script before header.inc is included. $SecurityGroups is an array of
+// Now check that the user as logged in has access to the page being called. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 
@@ -278,6 +270,15 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) 
 	include($PathPrefix . 'includes/footer.inc');
 	exit;
 }
+
+/*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
+ * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME'])
+ */
+if (!isset($PageSecurity)){
+//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
+	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME'])];
+}
+
 
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {

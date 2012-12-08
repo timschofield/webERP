@@ -1,5 +1,7 @@
 webERP Change Log
 
+8/12/12 Phil: Check user has authority to receive goods before allowing auto receiving
+7/12/12 Phil: SupplierInvoice.php add link to pay invoice after invoice input
 5/12/12 Phil: Allow auto receiving of purchase orders and populating of purchase invoice when purchase order is authorised.
 5/12/12 Tim: PO_PDFPurchOrder.php fix printing of initiator to show the full name also style changes
 4/12/12 Tim: PO_Header.php style mods also initiator reinstated as the userid not the user's realname - realname displayed but not stored in db. 

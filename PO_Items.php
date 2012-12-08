@@ -383,7 +383,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 
 		$Result = DB_Txn_Commit($db);
-		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'){;
+		/* Only show the link to auto receive the order if the user has permission to receive goods and permission to authorise and has authorised the order */
+		if ($_SESSION['PO'.$identifier]->Status == 'Authorised' AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
 			echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
 		}
 		
