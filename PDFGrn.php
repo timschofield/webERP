@@ -77,6 +77,7 @@ if ($GRNNo == 'Preview'){
 if ($NoOfGRNs >0){
 	include ('includes/PDFGrnHeader.inc'); //head up the page
 
+	$FooterPrintedInPage= 0;
 	$YPos=$FormDesign->Data->y;
 	for ($i=1;$i<=$NoOfGRNs;$i++) {
 		if ($GRNNo!='Preview'){
@@ -104,16 +105,22 @@ if ($NoOfGRNs >0){
 		$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x,$Page_Height-$YPos,$FormDesign->Data->Column7->Length,$FormDesign->Data->Column7->FontSize, $myrow['units'], 'left');
 		$YPos += $line_height;
 
+		if($FooterPrintedInPage == 0){
+			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ') . $DeliveryDate);
+			$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
+			$FooterPrintedInPage= 1;
+		}
+		
 		if ($YPos >= $FormDesign->LineAboveFooter->starty){
 			/* We reached the end of the page so finsih off the page and start a newy */
-			$PageNumber++;
+			//$PageNumber++;	// $PageNumber++ available in PDFGrnHeader.inc
+			$FooterPrintedInPage= 0;	//Set FooterPrintedInPage value zero print footer in new page			
 			$YPos=$FormDesign->Data->y;
 			include ('includes/PDFGrnHeader.inc');
 		} //end if need a new page headed up
 	} //end of loop around GRNs to print
 
-	$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ') . $DeliveryDate);
-	$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
+	
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');
     $pdf->__destruct();
 } else { //there were not GRNs to print
