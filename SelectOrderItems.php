@@ -278,7 +278,9 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course cos the order aint even started !!*/
 
-	if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])
+
+
+	if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])
 		AND ($_SESSION['Items'.$identifier]->DebtorNo==''
 		OR !isset($_SESSION['Items'.$identifier]->DebtorNo))){
 
@@ -300,10 +302,10 @@ if (isset($_POST['ChangeCustomer']) AND $_POST['ChangeCustomer']!=''){
 	}
 }
 
-//Customer logins are not allowed to select other customers hence in_array(2,$_SESSION['AllowedPageSecurityTokens'])
+//Customer logins are not allowed to select other customers hence in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])
 if (isset($_POST['SearchCust'])
 	AND $_SESSION['RequireCustomerSelection']==1
-	AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
+	AND in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])){
 
 	if (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
 		$SQL = "SELECT custbranch.brname,
@@ -718,7 +720,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			unset($_SESSION['Items'.$identifier]);
 			$_SESSION['Items'.$identifier] = new cart;
 
-			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
+			if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])){
 				$_SESSION['RequireCustomerSelection'] = 1;
 			} else {
 				$_SESSION['RequireCustomerSelection'] = 0;
@@ -1374,7 +1376,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<th>' . _('Unit') . '</th>
 				<th>' . _('Price') . '</th>';
 
-		if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 			echo '<th>' . _('Discount') . '</th>
 						<th>' . _('GP %') . '</th>';
 		}
@@ -1423,7 +1425,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 					<td>' . $OrderLine->Units . '</td>';
 
-			if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+			if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces)  . '" /></td>
 					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
@@ -1463,7 +1465,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} /* end of loop around items */
 
 		$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 			$ColSpanNumber = 2;
 		} else {
 			$ColSpanNumber = 1;
@@ -1695,7 +1697,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
 			<td style="text-align:center" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' .  _('Use Quick Entry') . '" /></td>';
 
-		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){ //not a customer entry of own order
+		if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])){ //not a customer entry of own order
 			echo '<td style="text-align:center" colspan="1"><input tabindex="6" type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" /></td>
 			<td style="text-align:center" colspan="1"><input tabindex="7" type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" /></td>';
 		}

@@ -756,11 +756,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 	} /* end of loop around items */
 
 	echo '<tr class="EvenTableRows">';
-	if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
-		echo '<td colspan="8" class="number"><b>' . _('Total') . '</b></td>';
-	} else {
-		echo '<td colspan="6" class="number"><b>' . _('Total') . '</b></td>';
-	}
+	echo '<td colspan="8" class="number"><b>' . _('Total') . '</b></td>';
 	echo '<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($TaxTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format(($_SESSION['Items'.$identifier]->total+$TaxTotal),$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>

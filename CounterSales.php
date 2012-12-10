@@ -746,7 +746,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	      <th>' . _('QOH') . '</th>
 	      <th>' . _('Unit') . '</th>
 	      <th>' . _('Price') . '</th>';
-	if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+	if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 		echo '<th>' . _('Discount') . '</th>
 			  <th>' . _('GP %') . '</th>';
 	}
@@ -792,7 +792,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 		echo '</td>
 			<td class="number">' . locale_number_format($OrderLine->QOHatLoc,$OrderLine->DecimalPlaces) . '</td>
 			<td>' . $OrderLine->Units . '</td>';
-		if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+		if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 			echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($OrderLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
 				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100),2) . '" /></td>
 				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent,2) . '" /></td>';
@@ -845,7 +845,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	} /* end of loop around items */
 
 	echo '<tr class="EvenTableRows">';
-	if (in_array(13,$_SESSION['AllowedPageSecurityTokens'])){
+	if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 		echo '<td colspan="8" class="number"><b>' . _('Total') . '</b></td>';
 	} else {
 		echo '<td colspan="6" class="number"><b>' . _('Total') . '</b></td>';
