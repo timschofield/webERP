@@ -29,7 +29,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 		</table>';
 	include('includes/footer.inc');
 	exit;
-} elseif (isset($SupplierLogin) AND $SupplierLogin==0){
+} elseif (isset($CustomerLogin) AND $CustomerLogin==1){
 	echo '<table class="table_index">
 			<tr>
 			<td class="menu_group_item">

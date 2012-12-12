@@ -301,13 +301,15 @@ if (!isset($AllowAnyone)){
 	}
  }
 
-if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) and $PageSecurity==0 and count($_SESSION['AllowedPageSecurityTokens'])==2){
+//$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
+if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) AND $PageSecurity==0 AND count($_SESSION['AllowedPageSecurityTokens'])==2){
 	$SupplierLogin=1;
-} else if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) and $PageSecurity==0 and count($_SESSION['AllowedPageSecurityTokens'])==2){
-	$SupplierLogin=0;
+}
+if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) AND $PageSecurity==0 AND count($_SESSION['AllowedPageSecurityTokens'])==2){
+	$CustomerLogin = 1;
 }
 
-if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
+if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
 } else {
 	$debug = 0; //don't allow debug messages

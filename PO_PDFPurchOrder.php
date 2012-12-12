@@ -298,7 +298,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			include('includes/PO_PDFOrderPageHeader.inc');
 		} //end if need a new page headed up
 		if ($_POST['ShowAmounts'] == 'Yes') {
-			$DisplayOrderTotal = locale_number_format($OrdendrTotal, $POHeader['currdecimalplaces']);
+			$DisplayOrderTotal = locale_number_format($OrderTotal, $POHeader['currdecimalplaces']);
 		} else {
 			$DisplayOrderTotal = '----';
 		}

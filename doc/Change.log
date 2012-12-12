@@ -1,5 +1,8 @@
 webERP Change Log
 
+12/12/12 Phil/RockStar: SelectOrderitems.php would not recognise Customer only logins correctly as there are two tokens in a Customer login role. and was testing to see if just one token!
+11/12/12 Phil: Made CustomerLogin and SupplierLogin more intuitive - still rely on hard coded Security Tokens though.
+11/12/12 Phil: Reworked GLTransInquiry.php produced incorrect journals
 10/12/12 Phil: Remove hard coding of security tokens in favour of new OrderEntryDiscountPricing dummy script
 8/12/12 Phil: Check user has authority to receive goods before allowing auto receiving
 7/12/12 Phil: SupplierInvoice.php add link to pay invoice after invoice input

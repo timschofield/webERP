@@ -67,18 +67,21 @@ if (((!isset($_POST['Submit'])) AND (empty($_GET['ViewTopic']))) ||
 }
 echo '</form>'."\n";
 
-if (!isset($_GET['ViewTopic']))
-{
+if (!isset($_GET['ViewTopic'])){
 	$_GET['ViewTopic'] = '';
 }
 
 foreach ($TOC_Array['TableOfContents'] as $Name=>$FullName){
 	$PostName = 'Select' . $Name;
-	if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName])))
-	{
-		$ManualPage = 'Manual'.$Name.'.html';
-		if (file_exists($ManualPage))
-		{
+	if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName]))){
+		
+		if ($Name=='APIFunctions') {
+			$ManualPage = 'Manual' . $Name . '.php';
+		} else {
+			$ManualPage = 'Manual' . $Name . '.html';
+		}
+
+		if (file_exists($ManualPage)) {
 		  include($ManualPage);
 		}
 	}

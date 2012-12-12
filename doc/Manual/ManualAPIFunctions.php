@@ -14,7 +14,7 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $title . '</ti
 echo '<link REL="shortcut icon" HREF="'. $rootpath.'/favicon.ico">';
 echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-echo '<link href="'.$rootpath. '/../../css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
+//echo '<link href="'.$rootpath. '/../../css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" type="text/css">';
 echo '</head>';
 
 echo '<body>';
