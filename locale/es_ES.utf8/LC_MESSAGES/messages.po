@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-24 09:40+1200\n"
-"PO-Revision-Date: 2012-10-10 20:33-0430\n"
+"PO-Revision-Date: 2012-12-11 15:23-0430\n"
 "Last-Translator: Daniel Rodriguez - TecnoSoluciones.com "
 "<webmaster@tecnosoluciones.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
@@ -29,8 +29,8 @@ msgid ""
 "An error occurred in retrieving the account groups of the parent account "
 "group during the check for recursion"
 msgstr ""
-"Ocurrió un error al obtener los grupos de cuenta del grupo de cuenta maestro "
-"durante la comprobación recursiva."
+"Ocurrió un error al obtener los grupos de cuenta del grupo de cuenta maestra "
+"durante la comprobación recursiva"
 
 #: AccountGroups.php:18
 msgid ""
@@ -2174,7 +2174,7 @@ msgstr "estructura"
 #: SelectOrderItems.php:1690 SelectSalesOrder.php:583 SelectWorkOrder.php:194
 #: Shipt_Select.php:192 TopItems.php:168 includes/PDFTopItemsHeader.inc:54
 msgid "On Hand"
-msgstr "Disponibles"
+msgstr "Existencia"
 
 #: BOMExtendedQty.php:322
 msgid "P.O."
@@ -2205,11 +2205,11 @@ msgstr "M/B"
 #: POReport.php:1315 POReport.php:1366 POReport.php:1420 Stocks.php:843
 #: Stocks.php:853
 msgid "Part Description"
-msgstr "Descripcion"
+msgstr "Descripción Parcial"
 
 #: BOMExtendedQty.php:332 MRPShortages.php:356
 msgid "Shortage"
-msgstr "Escasez"
+msgstr "Déficit"
 
 #: BOMIndented.php:12 BOMIndented.php:13 BOMIndented.php:150
 #: BOMIndented.php:244 BOMIndented.php:301 BOMIndentedReverse.php:13
@@ -2783,7 +2783,7 @@ msgstr "Kit"
 
 #: BOMs.php:437 BOMs.php:528 Stocks.php:991 Stocks.php:993
 msgid "Phantom"
-msgstr "Ilusorio"
+msgstr "Fantasma"
 
 #: BOMs.php:441
 msgid "Select a Different BOM"
@@ -3226,7 +3226,7 @@ msgstr ""
 
 #: ConfirmDispatchControlled_Invoice.php:66
 msgid "Back to Confirmation of Dispatch"
-msgstr "Volver a la Confirmación del Albarán"
+msgstr "Volver a la Confirmación de la Nota de Entrega"
 
 #: ConfirmDispatchControlled_Invoice.php:66 CounterSales.php:1258
 #: DeliveryDetails.php:583 DeliveryDetails.php:797 EmailCustTrans.php:9
@@ -3297,7 +3297,7 @@ msgstr "Confirmar Factura"
 
 #: ConfirmDispatch_Invoice.php:257
 msgid "Confirm Dispatch and Invoice"
-msgstr "Confirmar Albarán y Factura"
+msgstr "Confirmar Nota de Entrega y Factura"
 
 #: ConfirmDispatch_Invoice.php:260 Contracts.php:772 CustLoginSetup.php:32
 #: CustomerAllocations.php:327 CustomerBranches.php:363
@@ -3414,7 +3414,7 @@ msgstr "Enviada"
 
 #: ConfirmDispatch_Invoice.php:283
 msgid "This Dispatch"
-msgstr "Este Albarán"
+msgstr "Esta Nota de Entrega"
 
 #: ConfirmDispatch_Invoice.php:284 CounterSales.php:746 Credit_Invoice.php:275
 #: DeliveryDetails.php:840 DeliveryDetails.php:910 GoodsReceived.php:112
@@ -4556,7 +4556,7 @@ msgstr "Referencia de contrato:"
 #: includes/PDFTransPageHeader.inc:210
 #: includes/PDFTransPageHeaderPortrait.inc:265
 msgid "UOM"
-msgstr "Unidad de Medida"
+msgstr "Unidades"
 
 #: ContractBOM.php:241 ContractOtherReqts.php:97
 msgid "Sub-total"
@@ -5382,7 +5382,7 @@ msgstr "Fax"
 #: includes/PDFTransPageHeaderPortrait.inc:209
 #: includes/PO_PDFOrderPageHeader.inc:72
 msgid "All amounts stated in"
-msgstr "Todos los importes que constan en"
+msgstr "Todos los precios se muestran en"
 
 #: Contracts.php:834 SelectContract.php:27 SelectContract.php:37
 #: SuppContractChgs.php:132
@@ -5441,7 +5441,7 @@ msgstr "solo formato"
 
 #: Contracts.php:918 SelectContract.php:142 SelectWorkOrder.php:322
 msgid "Required Date"
-msgstr "Fecha Requerida"
+msgstr "Fecha de Entrega"
 
 #: Contracts.php:923 CounterSales.php:870 DeliveryDetails.php:1054
 #: OrderDetails.php:73 RecurringSalesOrders.php:404
@@ -5457,7 +5457,7 @@ msgstr "Referencia del Cliente"
 #: SelectProduct.php:160 SelectProduct.php:173
 #, php-format
 msgid "Gross Profit"
-msgstr "Beneficio Bruto"
+msgstr "Ganancia Bruta"
 
 #: Contracts.php:936 Currencies.php:220 Currencies.php:391 PO_Header.php:1112
 #: PO_OrderDetails.php:98 SupplierCredit.php:291 SupplierInvoice.php:264
@@ -5773,7 +5773,7 @@ msgstr ""
 
 #: CounterSales.php:504 SelectOrderItems.php:1089
 msgid "Recalculated the price from the GP % entered - the GP % was"
-msgstr "Recalculado el precio desde el % introducido - El % fue"
+msgstr "Recalculado el precio desde el % de GB introducido - El % de GB fue"
 
 #: CounterSales.php:523 SelectOrderItems.php:1113
 msgid ""
@@ -5790,11 +5790,11 @@ msgstr ""
 #: includes/PDFStockCheckPageHeader.inc:38
 #: includes/PDFStockComparisonPageHeader.inc:34
 msgid "QOH"
-msgstr "CAM"
+msgstr "Existencia"
 
 #: CounterSales.php:749 PricesByCost.php:158 SelectOrderItems.php:1357
 msgid "GP %"
-msgstr "% BB"
+msgstr "% GB"
 
 #: CounterSales.php:751 PrintCustTrans.php:870 PrintCustTrans.php:959
 #: PrintCustTrans.php:1008 PrintCustTransPortrait.php:916
@@ -6102,7 +6102,7 @@ msgstr ""
 #: CounterSales.php:2045 CounterSales.php:2234 InternalStockRequest.php:587
 #: SelectOrderItems.php:1507 SelectOrderItems.php:1691
 msgid "On Demand"
-msgstr "A la vista"
+msgstr "En Demanda"
 
 #: CounterSales.php:2046 CounterSales.php:2235 InternalStockRequest.php:588
 #: ReorderLevel.php:302 SelectOrderItems.php:1508 SelectOrderItems.php:1692
@@ -6152,7 +6152,7 @@ msgstr ""
 
 #: CounterSales.php:2166 SelectOrderItems.php:1623
 msgid "Select a Stock Category"
-msgstr "Seleccionar una Clase de Existencia"
+msgstr "Seleccionar una Categoría de Existencia"
 
 #: CounterSales.php:2189 SelectOrderItems.php:1647
 msgid "Enter partial Description"
@@ -7777,7 +7777,7 @@ msgstr "Saldo Total"
 #: SupplierInquiry.php:143 includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
-msgstr "Corriente"
+msgstr "Actual"
 
 #: CustomerInquiry.php:140 CustomerReceipt.php:972 SupplierInquiry.php:144
 msgid "Now Due"
@@ -8179,7 +8179,7 @@ msgstr ""
 
 #: CustomerReceipt.php:1079 Payments.php:1112
 msgid "Amount of Discount"
-msgstr "Importe de Descuento"
+msgstr "Descuento"
 
 #: CustomerReceipt.php:1080
 msgid "agreed prompt payment discount is"
@@ -8473,7 +8473,7 @@ msgstr "Porcentaje"
 #: Customers.php:523 Customers.php:832 Customers.php:862 Suppliers.php:729
 #: Suppliers.php:912
 msgid "Tax Reference"
-msgstr "Referencia del Impuesto"
+msgstr "Referencia Fiscal"
 
 #: Customers.php:530
 msgid ""
@@ -9130,7 +9130,7 @@ msgstr "Laser"
 
 #: DeliveryDetails.php:584
 msgid "Confirm Dispatch and Produce Invoice"
-msgstr "Confirmar el Albarán de Entrega y Generar Factura"
+msgstr "Confirmar la Nota de Entrega y Generar Factura"
 
 #: DeliveryDetails.php:594
 msgid "Print Quotation (Landscape)"
@@ -9247,41 +9247,41 @@ msgstr "Fecha de Entrega Estimada"
 
 #: DeliveryDetails.php:1014 SelectSalesOrder.php:853
 msgid "Quote Date"
-msgstr "Fecha de la Cotización"
+msgstr "Fecha de la Oferta"
 
 #: DeliveryDetails.php:1019
 msgid "Confirmed Order Date"
-msgstr "Fecha de Pedido Confirmada"
+msgstr "Fecha de Pedido Confirmado"
 
 #: DeliveryDetails.php:1023 Locations.php:541 OrderDetails.php:81
 #: PO_OrderDetails.php:93
 msgid "Delivery Address 1"
-msgstr "Dirección (para entregas) 1"
+msgstr "Dirección de Entrega 1"
 
 #: DeliveryDetails.php:1027 Locations.php:545 OrderDetails.php:87
 #: PO_OrderDetails.php:96
 msgid "Delivery Address 2"
-msgstr "Dirección (para entregas) 2"
+msgstr "Dirección de Entrega 2"
 
 #: DeliveryDetails.php:1031 Locations.php:549 OrderDetails.php:93
 #: PO_OrderDetails.php:99
 msgid "Delivery Address 3"
-msgstr "Dirección (para entregas) 3"
+msgstr "Dirección de Entrega 3"
 
 #: DeliveryDetails.php:1035 Locations.php:553 OrderDetails.php:99
 #: PO_OrderDetails.php:102
 msgid "Delivery Address 4"
-msgstr "Dirección (para entregas) 4"
+msgstr "Dirección de Entrega 4"
 
 #: DeliveryDetails.php:1039 Locations.php:557 OrderDetails.php:105
 #: PO_OrderDetails.php:105
 msgid "Delivery Address 5"
-msgstr "Dirección (para entregas) 5"
+msgstr "Dirección de Entrega 5"
 
 #: DeliveryDetails.php:1043 Locations.php:561 OrderDetails.php:111
 #: PO_OrderDetails.php:108
 msgid "Delivery Address 6"
-msgstr "Dirección (para entregas) 6"
+msgstr "Dirección de Entrega 6"
 
 #: DeliveryDetails.php:1065
 msgid "Packlist Type"
@@ -10319,7 +10319,7 @@ msgstr "Cantidad Solicitada"
 #: SelectOrderItems.php:1360 SelectOrderItems.php:1824
 #: SupplierTransInquiry.php:108
 msgid "Due Date"
-msgstr "Fecha de Vencimiento"
+msgstr "Fecha de Entrega"
 
 #: EmailConfirmation.php:247
 msgid "The following E-Mail was sent to"
@@ -10979,11 +10979,11 @@ msgstr "Descripción del Activo"
 
 #: FixedAssetItems.php:455 Stocks.php:843
 msgid "short"
-msgstr "pequeño"
+msgstr "corta"
 
 #: FixedAssetItems.php:465 Stocks.php:853
 msgid "long"
-msgstr "largo"
+msgstr "larga"
 
 #: FixedAssetItems.php:472 SalesCategories.php:324 Stocks.php:857
 msgid "Image File (.jpg)"
@@ -11447,11 +11447,11 @@ msgstr "Tarifa peso"
 
 #: FreightCosts.php:208
 msgid "MAX KGs"
-msgstr "Maximo peso"
+msgstr "Máximo peso"
 
 #: FreightCosts.php:209
 msgid "MAX Volume"
-msgstr "Maximo Volumen"
+msgstr "Máximo Volumen"
 
 #: FreightCosts.php:210
 msgid "Fixed Price"
@@ -12641,12 +12641,12 @@ msgstr "total"
 #: GLTagProfit_Loss.php:318 GLTagProfit_Loss.php:700 GLTagProfit_Loss.php:898
 #, php-format
 msgid "Gross Profit Percent"
-msgstr "Porcentaje de Beneficio Bruto"
+msgstr "Porcentaje de Ganancia Bruta"
 
 #: GLProfit_Loss.php:516 GLProfit_Loss.php:1177 GLTagProfit_Loss.php:454
 #, php-format
 msgid "Profit"
-msgstr "Beneficio"
+msgstr "Ganancia"
 
 #: GLProfit_Loss.php:516 GLProfit_Loss.php:1177 GLTagProfit_Loss.php:454
 #, php-format
@@ -13414,7 +13414,7 @@ msgstr "Ubicación de la Existencia: "
 #: InternalStockRequestAuthorisation.php:55
 #: InternalStockRequestFulfill.php:269
 msgid "Requested Date"
-msgstr "Fecha Requerida"
+msgstr "Fecha del Pedido"
 
 #: InternalStockRequestAuthorisation.php:57
 msgid "Authorise"
@@ -14439,7 +14439,7 @@ msgstr "Salir"
 
 #: Logout.php:30
 msgid "Thank you for using webERP"
-msgstr "Gracias por usar WebERP"
+msgstr "Gracias por usar el sistema"
 
 #: Logout.php:32 includes/Login.php:67
 msgid "Login"
@@ -17306,11 +17306,11 @@ msgstr "No hubo recepciones que imprimir"
 
 #: PDFLowGP.php:8 PDFLowGP.php:14 PDFLowGP.php:15
 msgid "Low Gross Profit Sales"
-msgstr "Mínimo de Beneficio Bruto en Ventas"
+msgstr "Mínimo de Ganancias Brutas en Ventas"
 
 #: PDFLowGP.php:20
 msgid "Low GP sales"
-msgstr "Nivel Mínimo de UB en ventas"
+msgstr "Nivel Mínimo de GB en ventas"
 
 #: PDFLowGP.php:24
 msgid "The dates entered must be in the format"
@@ -17318,7 +17318,7 @@ msgstr "Las fechas entradas deben estar en el formato"
 
 #: PDFLowGP.php:58
 msgid "The low GP items could not be retrieved by the SQL because"
-msgstr "El SQL no pudo obtener los artículos con bajo Beneficio Bruto porque"
+msgstr "El SQL no pudo obtener los artículos con bajas Ganancias Brutas porque"
 
 #: PDFLowGP.php:70
 msgid "No low GP items retrieved"
@@ -17657,7 +17657,7 @@ msgstr "Para Ventas Lista Tipo/Precio"
 
 #: PDFPriceList.php:296
 msgid "Show Gross Profit %"
-msgstr "Mostrar % Beneficio Bruto"
+msgstr "Mostrar % Ganancias Brutas"
 
 #: PDFPriceList.php:298
 msgid "Prices Only"
@@ -17665,7 +17665,7 @@ msgstr "Sólo Precios"
 
 #: PDFPriceList.php:299
 msgid "Show GP % too"
-msgstr "Muestre tambien el % de UB"
+msgstr "Muestre tambien el % de GB"
 
 #: PDFPriceList.php:302
 msgid "Price Listing Type"
@@ -17698,12 +17698,12 @@ msgstr "Rango de Fechas de Efectividad"
 
 #: PDFPriceList.php:367
 msgid "Product Image / Description"
-msgstr "Imagen del Producto / Descripcion"
+msgstr "Imagen del Producto / Descripción"
 
 #: PDFPriceList.php:375 includes/PDFLowGPPageHeader.inc:49
 #: includes/PDFLowGPPageHeader.inc:50
 msgid "GP"
-msgstr "UB"
+msgstr "GB"
 
 #: PDFPrintLabel.php:45
 msgid "The Price Labels could not be retrieved by the SQL because"
@@ -20431,7 +20431,7 @@ msgstr "Sub Total"
 #: PrintCustTrans.php:393 PrintCustTrans.php:1043
 #: PrintCustTransPortrait.php:453 PrintCustTransPortrait.php:1105
 msgid "Freight"
-msgstr "Carga"
+msgstr "Flete"
 
 #: PrintCustTrans.php:407 PrintCustTrans.php:1049
 #: PrintCustTransPortrait.php:467 PrintCustTransPortrait.php:1110
@@ -20445,7 +20445,7 @@ msgstr "Cuenta Nr:"
 #: PrintCustTrans.php:452 PrintCustTrans.php:1054
 #: PrintCustTransPortrait.php:482 PrintCustTransPortrait.php:1113
 msgid "TOTAL CREDIT"
-msgstr "TOTAL CREDITO"
+msgstr "TOTAL CRÉDITO"
 
 #: PrintCustTrans.php:477 PrintCustTransPortrait.php:498
 msgid "Please find attached"
@@ -20552,7 +20552,7 @@ msgstr ""
 #: PrintCustTransPortrait.php:1037 includes/PDFTransPageHeader.inc:15
 #: includes/PDFTransPageHeaderPortrait.inc:17
 msgid "TAX INVOICE"
-msgstr "IVA factura"
+msgstr "Factura"
 
 #: PrintCustTrans.php:701 PrintCustTrans.php:934 PrintCustTrans.php:983
 #: PrintCustTransPortrait.php:736 PrintCustTransPortrait.php:984
@@ -20919,7 +20919,7 @@ msgstr "Unidad de Medida del Proveedor"
 
 #: PurchData.php:538
 msgid "Conversion Factor (to our UOM)"
-msgstr "Factor de Conversión (a nuestra Unidad de Medida)"
+msgstr "Factor de Conversión (a nuestras unidades)"
 
 #: PurchData.php:540
 msgid "Supplier Stock Code"
@@ -23304,7 +23304,7 @@ msgstr ""
 
 #: SelectCreditItems.php:786
 msgid "Credit Freight"
-msgstr "Transporte a Crédito"
+msgstr "Crédito de Transporte"
 
 #: SelectCreditItems.php:851 SelectCreditItems.php:855
 msgid "Reverse an Overcharge"
@@ -23933,8 +23933,8 @@ msgid ""
 msgstr ""
 "Cantidad (requerido) - Anote el número de unidades ordenadas. Precio "
 "(requerido) - Ingrese el precio unitario. Descuento (opcional) - Introduzca "
-"un porcentaje de descuento. % GP (opcional) - Introduzca un porcentaje de "
-"Ganancia Bruta (Gross Profit) para agregar al costo unitario. Fecha de "
+"un porcentaje de descuento. % de GB (opcional) - Introduzca un porcentaje de "
+"Ganancia Bruta para agregar al costo unitario. Fecha de "
 "vencimiento (opcional) - Introduzca una fecha para la entrega."
 
 #: SelectOrderItems.php:1398
@@ -24050,7 +24050,7 @@ msgstr "Peso"
 
 #: SelectProduct.php:127
 msgid "EOQ"
-msgstr "Cantidad de Orden Economica (EOQ)"
+msgstr "Cantidad Económica para Reordenar"
 
 #: SelectProduct.php:130 SpecialOrder.php:630
 #: includes/PDFLowGPPageHeader.inc:47
@@ -24083,11 +24083,11 @@ msgstr "Cantidad Disponible"
 
 #: SelectProduct.php:342
 msgid "Quantity Demand"
-msgstr "Demandar Cantidad"
+msgstr "Cantidad Demandada"
 
 #: SelectProduct.php:344
 msgid "Quantity On Order"
-msgstr "Cantidad"
+msgstr "Cantidad Ordenada"
 
 #: SelectProduct.php:355
 msgid "Curr"
@@ -24276,7 +24276,7 @@ msgstr "El SQL no devolvió ningún pedido ni oferta porque"
 
 #: SelectSalesOrder.php:832
 msgid "Dispatch Note"
-msgstr "Nota de Entrega (Albarán)"
+msgstr "Nota de Entrega"
 
 #: SelectSalesOrder.php:842
 msgid "Place PO"
@@ -27200,11 +27200,11 @@ msgstr "Añadir ó Modificar Categorías de Existencias"
 
 #: Stocks.php:939
 msgid "Economic Order Quantity"
-msgstr "Cantidad economica reordenar"
+msgstr "Cantidad Económica para Reordenar"
 
 #: Stocks.php:943
 msgid "Packaged Volume (metres cubed)"
-msgstr "Volumen(metros cubicos)"
+msgstr "Volumen (metros cúbicos)"
 
 #: Stocks.php:948
 msgid "Packaged Weight (KGs)"
@@ -27218,7 +27218,7 @@ msgstr "Unidades de Medida"
 
 #: Stocks.php:973
 msgid "Assembly, Kit, Manufactured or Service/Labour"
-msgstr "Ensamblaje, Kit, Manufacturado o Servicio/Labor"
+msgstr "Tipo de Artículo"
 
 #: Stocks.php:981 Stocks.php:983
 msgid "Kit"
@@ -28387,7 +28387,7 @@ msgstr "Total de Análisos del Libro Mayor General"
 
 #: SupplierCredit.php:512 SupplierCredit.php:518
 msgid "Credit Amount in Supplier Currency"
-msgstr "Importe de Crédito en la Moneda del Proveedor"
+msgstr "Crédito en la Moneda del Proveedor"
 
 #: SupplierCredit.php:524
 msgid "Change Tax Calculation Method"
@@ -29098,7 +29098,7 @@ msgstr "Encontrar un nuevo Código de Artículo"
 
 #: SupplierPriceList.php:525
 msgid "Suppliers UOM"
-msgstr "Proveedores UOM"
+msgstr "Unidades de los Proveedores"
 
 #: SupplierPriceList.php:527
 msgid "Suppliers Description"
@@ -30128,7 +30128,7 @@ msgstr "Configuración de las Cuentas de Cobros/Pagos"
 
 #: SystemParameters.php:374
 msgid "First Overdue Deadline in (days)"
-msgstr "Plazo del Primer Vencimiento (en días)"
+msgstr "Días para la Primera Fecha de Entrega"
 
 #: SystemParameters.php:376
 msgid ""
@@ -30439,7 +30439,7 @@ msgstr ""
 
 #: SystemParameters.php:549
 msgid "Do Freight Calculation"
-msgstr "Calcular Transporte"
+msgstr "Calcular Flete"
 
 #: SystemParameters.php:554
 msgid ""
@@ -30467,7 +30467,7 @@ msgid ""
 "it is set to 0 then freight is always charged. The total order value is "
 "compared to this value in deciding whether or not to charge freight"
 msgstr ""
-"Este parámetro sólo es efectivo cuando el parámetro \"Calcular Transporte\" "
+"Este parámetro sólo es efectivo cuando el parámetro \"Calcular Flete\" "
 "se coloca en Sí. Entonces, si este valor es 0 se cobra siempre el "
 "transporte. El valor total del pedido se compara con este valor para decidir "
 "si se carga el transporte o no."
@@ -30527,7 +30527,7 @@ msgid ""
 "This parameter is only effective if Do Freight Calculation is set to Yes. "
 "Country names come from the currencies table."
 msgstr ""
-"Este parámetro sólo es efectivo si Calcular Transporte es Sí. Los nombres de "
+"Este parámetro sólo es efectivo si Calcular Flete es Sí. Los nombres de "
 "países proceden de la tabla de monedas."
 
 #: SystemParameters.php:615
@@ -34021,7 +34021,7 @@ msgstr "PÁGINA DE UTILIDAD Cambia una Categoría de Existencia"
 
 #: Z_ChangeStockCategory.php:17
 msgid "The stock Category"
-msgstr "La Categoria de Existencia"
+msgstr "La Categoría de Existencia"
 
 #: Z_ChangeStockCategory.php:17
 msgid "does not currently exist as a stock category in the system"
@@ -36398,8 +36398,8 @@ msgstr ""
 #: includes/DefineCartClass.php:382
 msgid "Cannot find tax category Freight which must always be defined"
 msgstr ""
-"No se puede encontrar la Carga de categoría tributaria que siempre se debe "
-"definir"
+"No se puede encontrar la categoría tributaria Flete que siempre se debe "
+"estar definida"
 
 #: includes/DefineLabelClass.php:8
 msgid "Label id"
@@ -37017,7 +37017,7 @@ msgstr "Informe de Artículos Menos Vendidos"
 
 #: includes/MainMenuLinksArray.php:58
 msgid "Sales With Low Gross Profit Report"
-msgstr "Informe de Ventas con Baja de Beneficio Bruto"
+msgstr "Informe de Ventas con Baja de Ganancias Brutas"
 
 #: includes/MainMenuLinksArray.php:78
 msgid "Create Contract"
@@ -37479,7 +37479,7 @@ msgstr "Registros de la Interfaz Contable de Costo de Bienes Vendidos"
 
 #: includes/MainMenuLinksArray.php:495
 msgid "Freight Costs Maintenance"
-msgstr "Administrar Costos de Transporte"
+msgstr "Administrar Costos de Flete"
 
 #: includes/MainMenuLinksArray.php:496
 msgid "Discount Matrix"
@@ -38120,7 +38120,7 @@ msgstr "Importe Neto"
 #: includes/PDFQuotationPortraitPageHeader.inc:108
 #: includes/PDFSuppTransListingPageHeader.inc:52
 msgid "Tax Amount"
-msgstr "Importe de Impuestos"
+msgstr "Impuestos"
 
 #: includes/PDFCustTransListingPageHeader.inc:53
 #: includes/PDFSuppTransListingPageHeader.inc:53
@@ -38153,7 +38153,7 @@ msgstr "Para Categoría de Inventario"
 #: includes/PDFDeliveryDifferencesPageHeader.inc:24
 #: includes/PDFDIFOTPageHeader.inc:24
 msgid "Deliveries ex"
-msgstr "Sin Albarán"
+msgstr "Sin Nota de Entrega"
 
 #: includes/PDFDeliveryDifferencesPageHeader.inc:42
 #: includes/PDFDIFOTPageHeader.inc:41
@@ -38187,11 +38187,11 @@ msgstr "Fecha de Recepción"
 
 #: includes/PDFGrnHeader.inc:31
 msgid "Qty in Suppliers UOM"
-msgstr "Cant en Proveedores UDM (Unidades de Medida)"
+msgstr "Cantidad en las Unidades de los Proveedores"
 
 #: includes/PDFGrnHeader.inc:32
 msgid "Qty in Stock UOM"
-msgstr "Cant en Existencia UDM (Unidades de Medida)"
+msgstr "Unidades en Existencia"
 
 #: includes/PDFInventoryPlanPageHeader.inc:20
 msgid "Inventory Planning for Categories Between"
@@ -38228,7 +38228,7 @@ msgstr "Ubicación"
 
 #: includes/PDFLowGPPageHeader.inc:15
 msgid "Low GP Sales Between"
-msgstr "UB Baja Entre"
+msgstr "Baja GB Entre"
 
 #: includes/PDFLowGPPageHeader.inc:15
 msgid "less than"
@@ -38457,7 +38457,7 @@ msgstr "NOTA DE CRÉDITO (ABONO)"
 #: includes/PDFTransPageHeader.inc:58
 #: includes/PDFTransPageHeaderPortrait.inc:69
 msgid "Dispatch Detail"
-msgstr "Detalle del Albarán"
+msgstr "Detalle de la Nota de Entrega"
 
 #: includes/PDFTransPageHeader.inc:60
 #: includes/PDFTransPageHeaderPortrait.inc:72
@@ -38471,7 +38471,7 @@ msgstr "Vendido A"
 
 #: includes/PDFTransPageHeader.inc:182
 msgid "Customer Tax Ref"
-msgstr "Ref. de Impuesto del Cliente"
+msgstr "Referencia Fiscal del Cliente"
 
 #: includes/PDFTransPageHeader.inc:189
 msgid "Customer Order Ref."
@@ -38483,7 +38483,7 @@ msgstr "Entregado a (Ver Detalle de Despacho)"
 
 #: includes/PDFTransPageHeaderPortrait.inc:238
 msgid "Cust. Tax Ref"
-msgstr "Ref. Impuesto Cust. (cliente o personalizado?)"
+msgstr "Referencia Fiscal"
 
 #: includes/PDFTransPageHeaderPortrait.inc:241
 msgid "Cust. Reference No."
@@ -38806,7 +38806,7 @@ msgstr "Contraseña para el Servidor EDI Inválida"
 
 #: api/api_errorcodes.php:199
 msgid "Invalid Tax Reference"
-msgstr "Referencia del Impuesto Inválida"
+msgstr "Referencia Fiscal Inválida"
 
 #: api/api_errorcodes.php:200
 msgid "Invalid CustomerPOLine"
@@ -39248,7 +39248,7 @@ msgstr "El proveedor no existe"
 
 #: api/api_errorcodes.php:310
 msgid "Incorrect suppliers UOM"
-msgstr "Unidad de Medida de Proveedores Incorrecta"
+msgstr "Unidades de Proveedores Incorrectas"
 
 #: api/api_errorcodes.php:311
 msgid "Incorrect conversion factor"
@@ -41773,7 +41773,7 @@ msgstr "Valor de Retorno"
 
 #, fuzzy
 #~ msgid "Acquired After"
-#~ msgstr "Fecha Requerida"
+#~ msgstr "Fecha de Adquisicón"
 
 #, fuzzy
 #~ msgid "and Before"
@@ -42235,7 +42235,7 @@ msgstr "Valor de Retorno"
 #~ msgstr "El sistema está configurado para prohibir ésto"
 
 #~ msgid "Credit Amount"
-#~ msgstr "Importe de Crédito"
+#~ msgstr "Crédito"
 
 #~ msgid "Show Suppliers"
 #~ msgstr "Mostrar Proveedores"
@@ -42312,7 +42312,7 @@ msgstr "Valor de Retorno"
 #~ msgstr "No hubo clientes para imprimir para la selección especificada"
 
 #~ msgid "Print Low GP Items Error"
-#~ msgstr "Error al Imprimir los Artículos con Bajo Beneficio Bruto"
+#~ msgstr "Error al Imprimir los Artículos con Bajas Ganancias Brutas"
 
 #~ msgid "There were no items below print out for the location specified"
 #~ msgstr "No hubo artículos a imprimir para la ubicación especificada"
