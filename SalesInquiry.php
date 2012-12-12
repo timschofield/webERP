@@ -1,11 +1,9 @@
 <?php
 
 /* $Id$*/
-
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
-
 
 include('includes/session.inc');
 $title = _('Sales Inquiry');
@@ -13,6 +11,7 @@ include('includes/header.inc');
 
 # Sets default date range for current month
 if (!isset($_POST['FromDate'])){
+
 	$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
 }
 if (!isset($_POST['ToDate'])){
@@ -67,7 +66,6 @@ if (isset($_POST['submit'])) {
     display($db);
 }
 
-
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType) {
 
@@ -100,13 +98,11 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		return;
 	}
 
-
 // TempStockmoves function creates a temporary table of stockmoves that is used when the DateType
 // is Invoice Date
 	if ($_POST['DateType'] == 'Invoice') {
 		TempStockmoves($db);
 	}
-
 
 	# Add more to WHERE statement, if user entered something for the part number,debtorno, name
 	// Variables that end with Op - meaning operator - are either = or LIKE
@@ -166,6 +162,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 
 	 $WhereSalesman = ' ';
     if ($_POST['Salesman'] != 'All') {
+
         $WhereSalesman = " AND custbranch.salesman = '" . $_POST['Salesman'] . "'";
     }
 
@@ -428,6 +425,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",categorydescription
+
 							ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'salesman') {
 					$sql = "SELECT custbranch.salesman,
@@ -750,7 +748,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	$Summary_Array['orderno'] =  _('Order Number');
 	$Summary_Array['stkcode'] =  _('Stock Code');
 	$Summary_Array['extprice'] =  _('Extended Price');
-	$Summary_Array['debtorno'] =  _('Customer Number');
+	$Summary_Array['debtorno'] =  _('Customer Code');
 	$Summary_Array['name'] =  _('Customer Name');
 	$Summary_Array['month'] =  _('Month');
 	$Summary_Array['categoryid'] =  _('Stock Category');
@@ -760,7 +758,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
     // Create array for sort for detail report to display in header
     $Detail_Array['salesorderdetails.orderno'] = _('Order Number');
 	$Detail_Array['salesorderdetails.stkcode'] = _('Stock Code');
-	$Detail_Array['debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Number');
+	$Detail_Array['debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Code');
 	$Detail_Array['debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Name');
 	$Detail_Array['tempstockmoves.transno,salesorderdetails.stkcode'] = _('Transaction Number');
 
@@ -782,7 +780,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 			echo '  ' . _('Stock Code') . ' - ' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '<br/>';
 		}
 		if (mb_strlen(trim($_POST['DebtorNo'])) > 0) {
-			echo '  ' . _('Customer Number') . ' - ' . $_POST['DebtorNoOp'] . ' ' . $_POST['DebtorNo'] . '<br/>';
+			echo '  ' . _('Customer Code') . ' - ' . $_POST['DebtorNoOp'] . ' ' . $_POST['DebtorNo'] . '<br/>';
 		}
 		if (mb_strlen(trim($_POST['DebtorName'])) > 0) {
 			echo '  ' . _('Customer Name') . ' - ' . $_POST['DebtorNameOp'] . ' ' . $_POST['DebtorName'] . '<br/>';
@@ -930,10 +928,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				$SummaryType = 'name';
 				$Description = 'debtorno';
 				$SummaryHeader = _('Customer Name');
-				$Descriptionheader =  _('Customer Number');
+				$Descriptionheader =  _('Customer Code');
 			}
 			if ($SummaryType == 'stkcode' OR $SummaryType == 'extprice') {
-				$Description = 'description';
+				$Description = 'Description';
 				$SummaryHeader =  _('Stock Code');
 				$Descriptionheader =  _('Item Description');
 			}
@@ -945,17 +943,16 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 			}
 			if ($SummaryType == 'debtorno') {
 				$Description = 'name';
-				$SummaryHeader =  _('Customer Number');
+				$SummaryHeader =  _('Customer Code');
 				$Descriptionheader =  _('Customer Name');
 			}
 			if ($SummaryType == 'orderno') {
 				$Description = 'debtorno';
 				$SummaryHeader =  _('Order Number');
-				$Descriptionheader =  _('Customer Number');
+				$Descriptionheader =  _('Customer Code');
 				$columnheader7 =  _('Customer Name');
 			}
 			if ($SummaryType == 'categoryid') {
-				$Description = 'categorydescription';
 				$SummaryHeader =  _('Stock Category');
 				$Descriptionheader =  _('Category Description');
 			}
@@ -1053,7 +1050,6 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			</select></td>
 			<td>&nbsp;</td>
 		</tr>';
-
 
 	echo '<tr>
 			<td>' . _('Order Type') . ':</td>
@@ -1204,7 +1200,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 				<option value="transno">' . _('Transaction Number') . '</option>
 				<option value="stkcode">' . _('Stock Code') . '</option>
 				<option value="extprice">' . _('Extended Price') . '</option>
-				<option value="debtorno">' . _('Customer Number') . '</option>
+				<option value="debtorno">' . _('Customer Code') . '</option>
 				<option value="name">' . _('Customer Name') . '</option>
 				<option value="month">' . _('Month') . '</option>
 				<option value="categoryid">' . _('Stock Category') . '</option>
@@ -1215,7 +1211,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 			<td>' . _('Transaction Number summary only valid for Invoice Date Type') . '</td>
 		</tr>';
 
-   echo '<tr><td>&nbsp;</td></tr>
+  echo '<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr>
