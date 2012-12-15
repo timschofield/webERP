@@ -17,228 +17,228 @@ the next project. :)
 
 
 body{
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:10px;
-background:url(images/stripe.png) white;
-margin:0;
-padding:5px;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:12px;
+	background:url(images/stripe.png) white;
+	margin:0;
+	padding:5px;
 }
 
 a{
-color:#5B5B68;
-text-decoration:none;
+	color:#5B5B68;
+	text-decoration:none;
 }
 a:hover{
-color:#000;
-text-decoration:underline;
+	color:#000;
+	text-decoration:underline;
 }
 form{
 }
 img{
-border:none;
-vertical-align:middle;
+	border:none;
+	vertical-align:middle;
 }
 p.good{
-font-weight:bold;
-color:green;
+	font-weight:bold;
+	color:green;
 }
 p.bad{
-font-weight:bold;
-color:red;
+	font-weight:bold;
+	color:red;
 }
 p.page_title_text{ /* page title, used in many *.php */
-background:gainsboro;
-font-size:12px;
-margin:10px auto;
-padding:5px;
-text-align:center;
+	background:gainsboro;
+	font-size:12px;
+	margin:10px auto;
+	padding:5px;
+	text-align:center;
 }
 table{
-width:auto; /* automatic width */
-max-width:90%;
-margin:0 auto;
-margin-bottom:10px;
+	width:auto; /* automatic width */
+	max-width:90%;
+	margin:0 auto;
+	margin-bottom:10px;
 }
 table.selection{
 }
 th{
-font-weight:normal;
-background-color:#C3C3C3;
-font-size:100%;
-color:#300;
-text-align:center;
-vertical-align:middle;
+	font-weight:normal;
+	background-color:#C3C3C3;
+	font-size:100%;
+	color:#300;
+	text-align:center;
+	vertical-align:middle;
 }
 th.number{
-font-weight:normal;
-background-color:#cccce5;
-font-size:100%;
-color:#300;
-text-align:right;
-vertical-align:middle;
+	font-weight:normal;
+	background-color:#cccce5;
+	font-size:100%;
+	color:#300;
+	text-align:right;
+	vertical-align:middle;
 }
 td{
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:100%;
-text-align:left;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	text-align:left;
 }
 td.select{
-background-color:#eee;
+	background-color:#eee;
 }
 td.number{
-text-align:right;
+	text-align:right;
 }
 .centre{
-margin:0 auto 10px;
-text-align:center;
+	margin:0 auto 10px;
+	text-align:center;
 }
 
 input{
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:100%;
-background-color:#e3e1e1;
-border-width:1px;
-border-bottom-color:gray;
-border-bottom-style:solid;
-border-top-color:gray;
-border-top-style:solid;
-border-left-color:gray;
-border-left-style:solid;
-border-right-color:gray;
-border-right-style:solid;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	background-color:#e3e1e1;
+	border-width:1px;
+	border-bottom-color:gray;
+	border-bottom-style:solid;
+	border-top-color:gray;
+	border-top-style:solid;
+	border-left-color:gray;
+	border-left-style:solid;
+	border-right-color:gray;
+	border-right-style:solid;
 }
 input:hover{
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:100%;
-background-color:#e3e5f5;
-border-width:1px;
-border-bottom-color:gray;
-border-bottom-style:solid;
-border-top-color:gray;
-border-top-style:solid;
-border-left-color:gray;
-border-left-style:solid;
-border-right-color:gray;
-border-right-style:solid;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
+	background-color:#e3e5f5;
+	border-width:1px;
+	border-bottom-color:gray;
+	border-bottom-style:solid;
+	border-top-color:gray;
+	border-top-style:solid;
+	border-left-color:gray;
+	border-left-style:solid;
+	border-right-color:gray;
+	border-right-style:solid;
 }
 input.number{
-text-align:right;
+	text-align:right;
 }
 input.image{
-border-width:0px;
-background-color:transparent;
+	border-width:0px;
+	background-color:transparent;
 }
 
 select{
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:100%;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:100%;
 }
 .EvenTableRows{
-background-color:#ccc;
+	background-color:#ccc;
 }
 .OddTableRows{
-background-color:#eee;
+	background-color:#eee;
 }
 
 div.error{
-background-color:#fddbdb;
-color:red;
-border:1px solid red;
-width:80%;
-text-align:center;
-margin:0 auto;
+	background-color:#fddbdb;
+	color:red;
+	border:1px solid red;
+	width:80%;
+	text-align:center;
+	margin:0 auto;
 }
 div.warn{
-background-color:#f5dbfd;
-color:maroon;
-border:1px solid maroon;
-width:80%;
-text-align:center;
-margin:0 auto;
+	background-color:#f5dbfd;
+	color:maroon;
+	border:1px solid maroon;
+	width:80%;
+	text-align:center;
+	margin:0 auto;
 }
 div.success{
-background-color:#b9ecb4;
-color:#006400;/* darkgreen is not a w3c css valid color */
-border:1px solid #006400;/* darkgreen is not a w3c css valid color */
-width:80%;
-text-align:center;
-margin:0 auto;
+	background-color:#b9ecb4;
+	color:#006400;/* darkgreen is not a w3c css valid color */
+	border:1px solid #006400;/* darkgreen is not a w3c css valid color */
+	width:80%;
+	text-align:center;
+	margin:0 auto;
 }
 div.info{
-background-color:#c7ccf6;
-color:navy;
-border:1px solid navy;
-width:80%;
-text-align:center;
-margin:0 auto;
+	background-color:#c7ccf6;
+	color:navy;
+	border:1px solid navy;
+	width:80%;
+	text-align:center;
+	margin:0 auto;
 }
 div.page_help_text{ /* many */
-background-color:#ccc;/* lightgray is not a w3c css valid color #ccc */
-border:#a52a2a 1px solid;
-padding-top:1px;/* 2px in merge */
-padding-bottom:1px; /* 2px in merge */
-padding-left:3px;   /* 10px in merge */
-z-index:1;
-width:50%; /* 80% in merge */
-float:none;
-visibility:visible;
-margin:0 auto;
-position:static;
-font-family:Verdana, Arial, Helvetica;
-font-weight:normal;
-font-size:100%;
-color:black;
-text-align:center;
+	background-color:#ccc;/* lightgray is not a w3c css valid color #ccc */
+	border:#a52a2a 1px solid;
+	padding-top:1px;/* 2px in merge */
+	padding-bottom:1px; /* 2px in merge */
+	padding-left:3px;   /* 10px in merge */
+	z-index:1;
+	width:50%; /* 80% in merge */
+	float:none;
+	visibility:visible;
+	margin:0 auto;
+	position:static;
+	font-family:Verdana, Arial, Helvetica;
+	font-weight:normal;
+	font-size:100%;
+	color:black;
+	text-align:center;
 }
 
 .dpTbl{
-border:solid navy 1px;
+	border:solid navy 1px;
 }
 .dpTD{
-border:0;
-width:20px;
-background-color:#eee;
-text-align:right;
-cursor:pointer;
+	border:0;
+	width:20px;
+	background-color:#eee;
+	text-align:right;
+	cursor:pointer;
 }
 .dpDayHighlight{
-border:0;
-width:20px;
-background-color:yellow;
-text-align:right;
-cursor:pointer;
+	border:0;
+	width:20px;
+	background-color:yellow;
+	text-align:right;
+	cursor:pointer;
 }
 .dpTDHover{
-border:0;
-width:20px;
-background-color:#ccc;
-text-align:right;
-cursor:pointer;
+	border:0;
+	width:20px;
+	background-color:#ccc;
+	text-align:right;
+	cursor:pointer;
 }
 
 .table1 {
-  width:90%;
-  background: #eee;
-  border: 0px 0px 2px 2px #222 solid;
-  background: #eee;
-  margin: 0 auto;
+	width:90%;
+	background: #eee;
+	border: 0px 0px 2px 2px #222 solid;
+	background: #eee;
+	margin: 0 auto;
 }
 .tableheader{
-font-weight:normal;
-background-color:#cccce5;
-color:#300;
+	font-weight:normal;
+	background-color:#cccce5;
+	color:#300;
 }
 .notavailable{ /* WorkOrderIssue.php, WorkOrderStatus.php  */
-font-weight:lighter;/* light is not a w3c css valid font weight */
-font-style:italic;
-color:#555;
+	font-weight:lighter;/* light is not a w3c css valid font weight */
+	font-style:italic;
+	color:#555;
 }
 .label{ /*WorkOrderCosting.php, WorkOrderEntry.php, WorkOrderIssue.php, WorkOrderStatus.php */
-font-weight:bold;
-font-style:normal;
-font-size:10px;
-color:black;
-background-color:#ccc;
+	font-weight:bold;
+	font-style:normal;
+	font-size:12px;
+	color:black;
+	background-color:#ccc;
 }
 .table_index {
 	background-color: #F1FFDD;

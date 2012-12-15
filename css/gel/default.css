@@ -17,7 +17,7 @@ the next project. :)
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	background-color: white;
 	margin:0;
 	padding:5px;
@@ -41,7 +41,7 @@ img {
     padding-top: 2px;
     padding-bottom: 2px;
 	font-weight: bold;
-	font-size: 10px;
+	font-size: 12px;
 	color: black;
 	TEXT-ALIGN:center;
 }
@@ -67,7 +67,7 @@ table.selection {
 th {
 	font-weight: normal;
 	background-color: #ccc;
-	font-size: 10px;
+	font-size: 12px;
 	color: #330000;
 	text-align: center;
 }
@@ -75,12 +75,12 @@ th.number {
 	text-align: right;
 	font-weight: normal;
 	background-color: #ccc;
-	font-size: 10px;
+	font-size: 12px;
 	color: #330000;
 }
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	text-align: left;
 }
 td.select {
@@ -98,7 +98,7 @@ input{
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 }
 input:hover{
 	background: url(images/inputh.png) #eee;
@@ -116,14 +116,14 @@ select {
 	background:#eee;
 	color:#111;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 }
 textarea{
   	background: url(images/input.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 }
 textarea:hover{
 }
@@ -138,7 +138,7 @@ textarea{
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
+	font-size: 12px;
 	}
 textarea:hover{
 	background: url(images/inputhtxt.png) #eee;
@@ -180,7 +180,7 @@ DIV.page_help_text {
 	POSITION: static;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
     font-weight: normal;
-    font-size: 10px;
+    font-size: 12px;
     color: black;
 	TEXT-ALIGN:center;
 }
@@ -198,7 +198,7 @@ DIV.system_check { /*** is this used???  */
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
-        font-size: 10px;
+        font-size: 12px;
         color: black;
         TEXT-ALIGN:left;
 }

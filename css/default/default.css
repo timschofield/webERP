@@ -7,7 +7,7 @@ New Default Theme for WebERP
 body{
 background-color:#ccd;
 font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:10px;
+font-size:10pt;
 margin:0;
 padding:0
 }
@@ -61,8 +61,6 @@ background-color:#B06161;
 color:white;
 }
 td{
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:10px;
 text-align:left;
 }
 td.select{
@@ -78,7 +76,6 @@ padding:5px;
 }
 input{
 font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:10px;
 }
 input.number{
 text-align:right;
@@ -91,11 +88,9 @@ input:hover{
 }
 select{
 font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:10px;
 }
 textarea{
 font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:10px;
 }
 textarea:hover{
 }
@@ -139,7 +134,6 @@ MARGIN:0 auto;
 POSITION:static;
 font-family:Arial, Verdana, Helvetica, sans-serif;
 font-weight:normal;
-font-size:10px;
 color:black;
 TEXT-ALIGN:center;
 }
@@ -157,7 +151,6 @@ font-family:Arial, Verdana, Helvetica, sans-serif;
 padding-top:1px;
 padding-bottom:1px;
 font-weight:normal;
-font-size:10px;
 color:black;
 TEXT-ALIGN:left;
 }
@@ -217,7 +210,7 @@ color:#555555;
 .label{
 font-weight:bold;
 font-style:normal;
-font-size:12px;
+font-size:120%;
 color:black;
 background-color:#cccccc;
 }
@@ -279,6 +272,9 @@ padding:0;
 display:table-cell;
 }
 #AppInfoModuleDiv{
+font-weight:bold;
+font-size:120%;
+padding:3px;
 }
 
 /*** HEADER - QUICK MENU ***/

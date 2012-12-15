@@ -146,7 +146,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $SQLAdjustmentDate . "',
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['adjglact'] . "',
-								'" . $myrow['standardcost'] * -($StockQtyDifference) . "',
+								'" . ($myrow['standardcost'] * -($StockQtyDifference)) . "',
 								'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
@@ -182,13 +182,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$ErrMsg = _('The Inventory Comparison data could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the Inventory Comparison data was used');
 	$sql = "SELECT stockcheckfreeze.stockid,
-			description,
-			stockmaster.categoryid,
-			stockcategory.categorydescription,
-			stockcheckfreeze.loccode,
-			locations.locationname,
-			stockcheckfreeze.qoh,
-			stockmaster.decimalplaces
+					description,
+					stockmaster.categoryid,
+					stockcategory.categorydescription,
+					stockcheckfreeze.loccode,
+					locations.locationname,
+					stockcheckfreeze.qoh,
+					stockmaster.decimalplaces
 			FROM stockcheckfreeze INNER JOIN stockmaster
 				ON stockcheckfreeze.stockid=stockmaster.stockid
 			INNER JOIN locations

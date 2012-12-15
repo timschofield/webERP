@@ -3,6 +3,11 @@
 
 include ('includes/session.inc');
 $title = _('Search Suppliers');
+
+/* webERP manual links before header.inc */
+$ViewTopic= 'AccountsPayable';
+$BookMark = 'SelectSupplier';
+
 include ('includes/header.inc');
 include ('includes/SQL_CommonFunctions.inc');
 if (!isset($_SESSION['SupplierID'])) {

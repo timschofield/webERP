@@ -560,7 +560,7 @@
 
     <h4>Step 1:</h4>
 
-    <p>Ensure invoicing is complete for all product dispatched.</p>
+    <p>Ensure invoicing is complete for all product dispatched. Ensure that goods received are entered against purchase orders. All other goods should be excluded from the counts.</p>
 
     <h4>Step 2:</h4>
 
@@ -570,15 +570,15 @@
 
     <p>Action for stock check freeze.</p>
 
-    <p>By default this is set to list the items to be counted. Before a stock starts this must be run selecting " make a new stock check data file". This copies the quantities on hand as at the time the report is run. If the stock check sheets are run for another location and it is set again to make a new stock check data file, then the previous stock check data file is over-written and lost. If there is a stock check in progress in one location and another location wishes to initiate one too, then the second person to run the stock check sheets needs to print them with the Action for Stock Check Freeze field set to Add/update existing stock check file. Similarly if another stock category is to be added to the stock check then - Add/update existing stock check file is the correct option.</p>
+    <p>By default this is set to list the items to be counted. Before a stock starts this must be run selecting "make a new stock check data file". This copies the quantities on hand as at the time the report is run. If the stock check sheets are run for another location and it is set again to make a new stock check data file, then the previous stock check data file is over-written and lost. If there is a stock check in progress in one location and another location wishes to initiate one too, then the second person to run the stock check sheets needs to print them with the Action for Stock Check Freeze field set to Add/update existing stock check file. Similarly if another stock category is to be added to the stock check then - Add/update existing stock check file is the correct option.</p>
 
     <h4>Step 3:</h4>
 
-    <p>Once the stock check data file is created - the stock should be counted.</p>
+    <p>Once the stock check data file is created - the stock should be counted immediately. Note that any movements - sales or goods received should be stopped so that an accurate count can be obtained as at the moment the stock check data file is created.</p>
 
     <h4>Step 4:</h4>
 
-    <p>The counts should be entered - the system will only accept count entries for parts that were included in the categories selected for stock taking in step 2. The system allows many counts for each item and totals all counts to work out the required adjustment. Also, the initial of the counter or reference to the count sheet can be entered to provide a trail of where the stock was that is entered. As soon as there are counts to enter - the counters should pass on the count sheets to the data entry team so that the data entry can be completed as soon as possible after the counting is complete.</p>
+    <p>The counts should be entered - the system will only accept count entries for parts that were included in the categories selected for stock taking in step 2. The system allows many counts for each item and totals all counts to work out the required adjustment. Also, the initial of the counter or reference to the count sheet can be entered to provide a trail of where the stock was that is entered. As soon as there are counts to enter - the counters should pass on the count sheets to the data entry team so that the data entry can be completed as soon as possible after the counting is complete. Note that the data entry can happen at leisure since the adjustments that will be created are against the quantity that was on hand when the stock check file was created. Subsequent movements of stock are ignored for the purposes of determining the stock check difference.</p>
 
     <h4>Step 5:</h4>
 
@@ -594,5 +594,18 @@
 
     <p>Once happy that the adjustments to be made are correct the report can be run again with the option to Report and Close the Inventory Comparison File and Process Adjustments as Necessary.</p>
 
-    <p>There is no going back on this process - if you didn't mean to process these adjustments they must all be reversed manually. Be very sure when running the comparison in this mode. <!-- Help End: StockCheck --></p>
+    <p>There is no going back on this process - if you didn't mean to process these adjustments they must all be reversed manually. Be very sure when running the comparison in this mode.</p>
+    
+    <h4>Additional Notes on Stock Checks:</h4>
+    
+    <p>The data can be scanned in - using a portable data terminal or keyed in at the time of counting using a wireless tablet. Scanning presupposes all the stock is barcode labelled up which requires a discipline at the time of receiving. In deciding the structure of the stock check entry screens the choice was either to enter the part code or search for the part code to enter the quantity against. In practise simply entering the code is much quicker than searching through long lists - especially as the list gets longer. Populating a selection box where there are millions of items is of course a non starter over a low bandwidth connection.</p>
+
+    <p>It doesn't matter how many times you enter the same item code all entries are added together for the same stock item to accumulate to a total and the comparison report shows each entry - and you can reference to an aisle/row etc and/or the count sheet/counter if you want to go back and double check a count and/or the input. There is no need to manually add stock of the same part counted in for example 12 different places throughout the warehouse (although such a warehouse might need a bit of reorganisation) as the system does this for you.</p>
+
+    <p>When you create the stock check  it looks at the system quantity at the location being counted and stores that quantity - subsequent movements are ignored.  If you carry on selling then these will not be taken into account - you need to count at the time when you create the stock check. All deliveries should be entered in - selling must stop (there is just no other way to ensure an accurate count). Ideally stock checks should be done after hours. Once the count is complete for all the quantitities, selling can resume. There is no panic with the data entry as the stock take adjustments created are derived based on the stock at the time the stock check was created (and the stock counted). You can only count one location at a time.</p>
+    
+    <p>Creating a new stock check will over-write an existing stock check - so if you have entered counts and then create a new stock check it is possible to wipe out a lot of work - only create a new stock check once the previous one has been updated. You can run the comparison report without updating to see what adjustments would be created - and do any necessary double counts if need be. If need be additional quantities can be entered for items that were missed or negative quantities for errors where stock was over counted. The comparison can then be rerun. Finally when happy run the comparison report in update mode to complete the stock check.</p>
+
+    <p>The only problem with doing the data input at your leisure subsequently is that any recheck will potentially be after the stock has moved by additional sales or arrivals of new stock. However, the stock check can be run again for those items that need a recount</p>
+    <!-- Help End: StockCheck -->
 </div>
