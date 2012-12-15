@@ -57,10 +57,14 @@ if (isset($_GET['NewOrder'])){
 
 	if ($CustomerLogin==1){ //its a customer logon
 		$_SESSION['Items'.$identifier]->DebtorNo=$_SESSION['CustomerID'];
-		$_SESSION['RequireCustomerSelection']=0;
+		$_SESSION['Items'.$identifier]->BranchCode=$_SESSION['UserBranch'];
+		$SelectedCustomer = $_SESSION['CustomerID'];
+		$SelectedBranch = $_SESSION['UserBranch'];
+		$_SESSION['RequireCustomerSelection'] = 0;
 	} else {
 		$_SESSION['Items'.$identifier]->DebtorNo='';
-		$_SESSION['RequireCustomerSelection']=1;
+		$_SESSION['Items'.$identifier]->BranchCode='';
+		$_SESSION['RequireCustomerSelection'] = 1;
 	}
 
 }

@@ -221,7 +221,7 @@ if (isset($_POST['Update'])
 		and show a link to set them up
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
-		if ((isset($BestShipper) and $BestShipper=='') AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
+		if ((isset($BestShipper) AND $BestShipper=='') AND ($_POST['ShipVia']=='' OR !isset($_POST['ShipVia']))){
 			$sql =  "SELECT shipper_id
 						FROM shippers
 						WHERE shipper_id='" . $_SESSION['Default_Shipper']."'";
@@ -1067,96 +1067,103 @@ echo '<tr>
 		<td><textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items'.$identifier]->Comments .'</textarea></td>
 	</tr>';
 	
-	echo '<tr>
-			<td>' . _('Sales person'). ':</td>
-			<td><select name="SalesPerson">';
-	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
-	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
-		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
-	}
-	
-	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
-		if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
-			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
-		} else {
-			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
-		}
-	}
-	
-	echo '</select></td>
-		</tr>';
-	
-	/* This field will control whether or not to display the company logo and
-	address on the packlist */
-
-	echo '<tr><td>' . _('Packlist Type') . ':</td>
-			<td><select name="DeliverBlind">';
-
-	if ($_SESSION['Items'.$identifier]->DeliverBlind ==2){
-		echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
-		echo '<option selected="selected" value="2">' . _('Hide Company Details/Logo') . '</option>';
+	if ($CustomerLogin  == 1){
+		echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items'.$identifier]->SalesPerson . '" />
+			<input type="hidden" name="DeliverBlind" value="1" />
+			<input type="hidden" name="FreightCost" value="0" />
+			<input type="hidden" name="ShipVia" value="' . $_SESSION['Items'.$identifier]->ShipVia . '" />
+			<input type="hidden" name="Quotation" value="0" />';
 	} else {
-		echo '<option selected="selected" value="1">' . _('Show Company Details/Logo') . '</option>';
-		echo '<option value="2">' . _('Hide Company Details/Logo') . '</option>';
-	}
-	echo '</select></td></tr>';
-
-if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==1){
-
-	echo '<tr>
-		<td>'. _('Reprint packing slip') .':</td>
-		<td><select name="ReprintPackingSlip">';
-	echo '<option value="0">' . _('Yes') . '</option>';
-	echo '<option selected="selected" value="1">' . _('No') . '</option>';
-	echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
-} else {
-	echo '<tr><td><input type="hidden" name="ReprintPackingSlip" value="0" /></td></tr>';
-}
-
-echo '<tr>
-		<td>'. _('Charge Freight Cost inc tax') .':</td>
-		<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" /></td>';
-
-if ($_SESSION['DoFreightCalc']==true){
-	echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';
-}
-echo '</tr>';
-
-if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['Items'.$identifier]->ShipVia)){
-	$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
-}
-
-echo '<tr>
-		<td>'. _('Freight/Shipper Method') .':</td>
-		<td><select name="ShipVia">';
-
-$ErrMsg = _('The shipper details could not be retrieved');
-$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
-
-$sql = "SELECT shipper_id, shippername FROM shippers";
-$ShipperResults = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-while ($myrow=DB_fetch_array($ShipperResults)){
-	if ($myrow['shipper_id']==$_POST['ShipVia']){
-			echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
-	}else {
-		echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
-	}
-}
-
-echo '</select></td></tr>';
-
-
-echo '<tr><td>'. _('Quotation Only') .':</td>
-		<td><select name="Quotation">';
-if ($_SESSION['Items'.$identifier]->Quotation==1){
-	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
-	echo '<option value="0">' . _('No') . '</option>';
-} else {
-	echo '<option value="1">' . _('Yes') . '</option>';
-	echo '<option selected="selected" value="0">' . _('No') . '</option>';
-}
-echo '</select></td></tr>';
-
+		echo '<tr>
+				<td>' . _('Sales person'). ':</td>
+				<td><select name="SalesPerson">';
+		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
+		if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
+			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
+		}
+		
+		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
+			if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
+				echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			} else {
+				echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			}
+		}
+		
+		echo '</select></td>
+			</tr>';
+		
+		/* This field will control whether or not to display the company logo and
+		address on the packlist */
+	
+		echo '<tr><td>' . _('Packlist Type') . ':</td>
+				<td><select name="DeliverBlind">';
+	
+		if ($_SESSION['Items'.$identifier]->DeliverBlind ==2){
+			echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
+			echo '<option selected="selected" value="2">' . _('Hide Company Details/Logo') . '</option>';
+		} else {
+			echo '<option selected="selected" value="1">' . _('Show Company Details/Logo') . '</option>';
+			echo '<option value="2">' . _('Hide Company Details/Logo') . '</option>';
+		}
+		echo '</select></td></tr>';
+	
+		if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==1){
+		
+			echo '<tr>
+				<td>'. _('Reprint packing slip') .':</td>
+				<td><select name="ReprintPackingSlip">';
+			echo '<option value="0">' . _('Yes') . '</option>';
+			echo '<option selected="selected" value="1">' . _('No') . '</option>';
+			echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
+		} else {
+			echo '<tr><td><input type="hidden" name="ReprintPackingSlip" value="0" /></td></tr>';
+		}
+		
+		echo '<tr>
+				<td>'. _('Charge Freight Cost inc tax') .':</td>
+				<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" /></td>';
+		
+		if ($_SESSION['DoFreightCalc']==true){
+			echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';
+		}
+		echo '</tr>';
+		
+		if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['Items'.$identifier]->ShipVia)){
+			$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
+		}
+		
+		echo '<tr>
+				<td>'. _('Freight/Shipper Method') .':</td>
+				<td><select name="ShipVia">';
+		
+		$ErrMsg = _('The shipper details could not be retrieved');
+		$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
+		
+		$sql = "SELECT shipper_id, shippername FROM shippers";
+		$ShipperResults = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		while ($myrow=DB_fetch_array($ShipperResults)){
+			if ($myrow['shipper_id']==$_POST['ShipVia']){
+					echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
+			}else {
+				echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
+			}
+		}
+		
+		echo '</select></td></tr>';
+		
+		
+		echo '<tr><td>'. _('Quotation Only') .':</td>
+				<td><select name="Quotation">';
+		if ($_SESSION['Items'.$identifier]->Quotation==1){
+			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option value="0">' . _('No') . '</option>';
+		} else {
+			echo '<option value="1">' . _('Yes') . '</option>';
+			echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		}
+		echo '</select></td></tr>';
+	} //end if it is NOT a CustomerLogin
 
 echo '</table>';
 

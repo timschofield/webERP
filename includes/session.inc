@@ -302,10 +302,10 @@ if (!isset($AllowAnyone)){
  }
 
 //$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
-if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) AND $PageSecurity==0 AND count($_SESSION['AllowedPageSecurityTokens'])==2){
+if (in_array(9,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
 	$SupplierLogin=1;
 }
-if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) AND $PageSecurity==0 AND count($_SESSION['AllowedPageSecurityTokens'])==2){
+if (in_array(1,$_SESSION['AllowedPageSecurityTokens']) AND count($_SESSION['AllowedPageSecurityTokens'])==2){
 	$CustomerLogin = 1;
 }
 
