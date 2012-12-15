@@ -59,6 +59,12 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $myrow['decimalplaces'];
 	
+	if ($CustomerLogin ==1 AND $myrow['debtorno']!= $_SESSION['CustomerID']) {
+		prnMsg (_('Your customer login will only allow you to view your own purchase orders'),'error');
+		include('includes/footer.inc');
+		exit;
+	}
+	
 	echo '<table class="selection">
 			<tr>
 				<th colspan="4"><h3>'._('Order Header Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
