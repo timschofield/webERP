@@ -10,4 +10,4 @@ VALUES ('OrderEntryDiscountPricing', '13', 'Not a script but an authority level 
 );
 UPDATE config SET confvalue='4.10.0' WHERE confname='VersionNumber';
 
-
+INSERT INTO scripts VALUES ('CustomerPurchases.php','5','Shows the purchases a customer has made.');
