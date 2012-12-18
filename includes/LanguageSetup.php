@@ -24,7 +24,7 @@ If (isset($_POST['Language'])) {
 	$Language = $_SESSION['Language'];
 }
 
-/*Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if it doesn't exist aready before we include includes/LanguagesArray.php 
+/*Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if it doesn't exist aready before we include includes/LanguagesArray.php
  * */
 if (!function_exists('gettext')) {
 /*
@@ -38,17 +38,17 @@ if (!function_exists('gettext')) {
 	} else {
 		$Locale = $DefaultLanguage;
 	}
-	
+
 	if (isset($PathPrefix)) {
 		$LangFile = $PathPrefix . 'locale/' . $Locale . '/LC_MESSAGES/messages.mo';
 	} else {
 		$LangFile = 'locale/' . $Locale . '/LC_MESSAGES/messages.mo';
 	}
-	
+
 	if (file_exists($LangFile)){
 		$input = new FileReader($LangFile);
 		$PhpGettext = new gettext_reader($input);
-		
+
 		if (!function_exists('_')){
 			function _($text) {
 				global $PhpGettext;
@@ -63,10 +63,10 @@ if (!function_exists('gettext')) {
 	include($PathPrefix . 'includes/LanguagesArray.php');
 } else {
 	include($PathPrefix . 'includes/LanguagesArray.php');
-	
+
 	$LocaleSet = setlocale (LC_ALL, $_SESSION['Language'],$LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
 	$LocaleSet = setlocale (LC_NUMERIC, 'C','en_GB.utf8','en_GB','en_US','english-us');
-	
+
 	if (defined('LC_MESSAGES')){ //it's a unix/linux server
 		$LocaleSet = setlocale (LC_MESSAGES, $_SESSION['Language']);
 	}
@@ -74,13 +74,13 @@ if (!function_exists('gettext')) {
 	if ($_SESSION['Language']=='tr_TR.utf8') {
 		$Locale = setlocale(LC_CTYPE, 'C');
 	}
-	
+
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);
 	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
-	bind_textdomain_codeset('messages', 'UTF-8'); 
+	bind_textdomain_codeset('messages', 'UTF-8');
 }
 
 $DecimalPoint = $LanguagesArray[$_SESSION['Language']]['DecimalPoint'];

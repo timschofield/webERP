@@ -48,7 +48,7 @@ $SQL = "SELECT accountgroups.groupname,
 			accountgroups.sequenceintb,
 			accountgroups.groupname,
 			chartdetails.accountcode";
-	
+
 $AccountsResult = DB_query($SQL,$db);
 
 while ($myrow=DB_fetch_array($AccountsResult)) {

@@ -41,12 +41,12 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					currencies.decimalplaces AS currdecimalplaces,
 					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
 			FROM suppliers INNER JOIN paymentterms
-			ON suppliers.paymentterms = paymentterms.termsindicator 
-			INNER JOIN supptrans 
+			ON suppliers.paymentterms = paymentterms.termsindicator
+			INNER JOIN supptrans
 			ON suppliers.supplierid = supptrans.supplierno
 			INNER JOIN systypes
-			ON systypes.typeid = supptrans.type 
-			INNER JOIN currencies 
+			ON systypes.typeid = supptrans.type
+			INNER JOIN currencies
 			ON suppliers.currcode=currencies.currabrev
 			WHERE supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
 			AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
@@ -71,7 +71,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 
 	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
-		
+
 		$CurrDecimalPlaces = $SuppliersToPay['currdecimalplaces'];
 
 		$sql = "SELECT suppliers.supplierid,
@@ -87,12 +87,12 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 						(supptrans.ovamount + supptrans.ovgst ) AS trantotal,
 						supptrans.diffonexch,
 						supptrans.id
-				FROM suppliers INNER JOIN paymentterms 
-				ON suppliers.paymentterms = paymentterms.termsindicator 
-				INNER JOIN supptrans 
+				FROM suppliers INNER JOIN paymentterms
+				ON suppliers.paymentterms = paymentterms.termsindicator
+				INNER JOIN supptrans
 				ON suppliers.supplierid = supptrans.supplierno
-				INNER JOIN systypes 
-				ON systypes.typeid = supptrans.type 
+				INNER JOIN systypes
+				ON systypes.typeid = supptrans.type
 				WHERE supptrans.supplierno = '" . $SuppliersToPay['supplierid'] . "'
 				AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
 				AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
@@ -103,7 +103,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				ORDER BY supptrans.supplierno,
 					supptrans.type,
 					supptrans.transno";
-	
+
 		$TransResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Run - Problem Report');
@@ -208,8 +208,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		/*All the payment processing is in the below file */
 		include('includes/PDFPaymentRun_PymtFooter.php');
 
-		$ProcessResult = DB_Txn_Commit($db); 
-		
+		$ProcessResult = DB_Txn_Commit($db);
+
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
@@ -247,8 +247,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	/* show form to allow input	*/
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
 	if (!isset($_POST['FromCriteria']) OR mb_strlen($_POST['FromCriteria'])<1){
@@ -263,18 +263,18 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-            <td><input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
-          </tr>';
+			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
+		  </tr>';
 	echo '<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-            <td><input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
-         </tr>';
+			<td><input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
+		 </tr>';
 
 
 	echo '<tr>
 			<td>' . _('For Suppliers Trading in') . ':</td>
 			<td><select name="Currency">';
-			
+
 	$sql = "SELECT currency, currabrev FROM currencies";
 	$result=DB_query($sql,$db);
 
@@ -295,8 +295,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 	echo '<tr>
 			<td>' . _('Exchange Rate') . ':</td>
-            <td><input type="text" class="number" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" /></td>
-          </tr>';
+			<td><input type="text" class="number" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" /></td>
+		  </tr>';
 
 	if (!isset($_POST['AmountsDueBy'])){
 		$DefaultDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
@@ -306,8 +306,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	echo '<tr>
 			<td>' . _('Payments Due To') . ':</td>
-            <td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="AmountsDueBy" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
-          </tr>';
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="AmountsDueBy" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
+		  </tr>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
 
@@ -335,7 +335,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		 exit;
 	} else {
 		while ($myrow=DB_fetch_array($AccountsResults)){
-		      /*list the bank account names */
+			  /*list the bank account names */
 
 			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
 				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
@@ -356,11 +356,11 @@ Payment types can be modified by editing that file */
 
 	foreach ($PaytTypes as $PaytType) {
 
-	     if (isset($_POST['PaytType']) and $_POST['PaytType']==$PaytType){
+		 if (isset($_POST['PaytType']) and $_POST['PaytType']==$PaytType){
 		   echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';
-	     } else {
+		 } else {
 		   echo '<option value="' . $PaytType . '">' . $PaytType . '</option>';
-	     }
+		 }
 	}
 	echo '</select></td>
 		</tr>';
@@ -376,8 +376,8 @@ Payment types can be modified by editing that file */
 
 	echo '<tr>
 			<td>' . _('Starting Reference no (eg chq no)') . ':</td>
-            <td><input type="text" name="Ref" maxlength="11" size="12" value="' . $_POST['Ref'] . '" /></td>
-          </tr>';
+			<td><input type="text" name="Ref" maxlength="11" size="12" value="' . $_POST['Ref'] . '" /></td>
+		  </tr>';
 
 	echo '</table>
 			<br />
@@ -385,8 +385,8 @@ Payment types can be modified by editing that file */
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF Only') . '" />
 				<input type="submit" name="PrintPDFAndProcess" value="' . _('Print and Process Payments') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+	echo '</div>
+		  </form>';
 	include ('includes/footer.inc');
 } /*end of else not PrintPDF */
 ?>

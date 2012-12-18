@@ -957,7 +957,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-	
+
 	$DisplayVolume = number_format($_SESSION['Items'.$identifier]->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 	echo '<table class="selection">
@@ -1066,7 +1066,7 @@ echo '<tr>
 		<td>'. _('Comments') .':</td>
 		<td><textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items'.$identifier]->Comments .'</textarea></td>
 	</tr>';
-	
+
 	if ($CustomerLogin  == 1){
 		echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items'.$identifier]->SalesPerson . '" />
 			<input type="hidden" name="DeliverBlind" value="1" />
@@ -1081,7 +1081,7 @@ echo '<tr>
 		if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 		}
-		
+
 		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
 			if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
 				echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
@@ -1089,16 +1089,16 @@ echo '<tr>
 				echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 			}
 		}
-		
+
 		echo '</select></td>
 			</tr>';
-		
+
 		/* This field will control whether or not to display the company logo and
 		address on the packlist */
-	
+
 		echo '<tr><td>' . _('Packlist Type') . ':</td>
 				<td><select name="DeliverBlind">';
-	
+
 		if ($_SESSION['Items'.$identifier]->DeliverBlind ==2){
 			echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
 			echo '<option selected="selected" value="2">' . _('Hide Company Details/Logo') . '</option>';
@@ -1107,9 +1107,9 @@ echo '<tr>
 			echo '<option value="2">' . _('Hide Company Details/Logo') . '</option>';
 		}
 		echo '</select></td></tr>';
-	
+
 		if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==1){
-		
+
 			echo '<tr>
 				<td>'. _('Reprint packing slip') .':</td>
 				<td><select name="ReprintPackingSlip">';
@@ -1119,27 +1119,27 @@ echo '<tr>
 		} else {
 			echo '<tr><td><input type="hidden" name="ReprintPackingSlip" value="0" /></td></tr>';
 		}
-		
+
 		echo '<tr>
 				<td>'. _('Charge Freight Cost inc tax') .':</td>
 				<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" /></td>';
-		
+
 		if ($_SESSION['DoFreightCalc']==true){
 			echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';
 		}
 		echo '</tr>';
-		
+
 		if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['Items'.$identifier]->ShipVia)){
 			$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
 		}
-		
+
 		echo '<tr>
 				<td>'. _('Freight/Shipper Method') .':</td>
 				<td><select name="ShipVia">';
-		
+
 		$ErrMsg = _('The shipper details could not be retrieved');
 		$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
-		
+
 		$sql = "SELECT shipper_id, shippername FROM shippers";
 		$ShipperResults = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 		while ($myrow=DB_fetch_array($ShipperResults)){
@@ -1149,10 +1149,10 @@ echo '<tr>
 				echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 			}
 		}
-		
+
 		echo '</select></td></tr>';
-		
-		
+
+
 		echo '<tr><td>'. _('Quotation Only') .':</td>
 				<td><select name="Quotation">';
 		if ($_SESSION['Items'.$identifier]->Quotation==1){
@@ -1177,7 +1177,7 @@ if ($_SESSION['ExistingOrder'.$identifier]==0){
 }
 
 echo '</div>
-      </div>
-      </form>';
+	  </div>
+	  </form>';
 include('includes/footer.inc');
 ?>

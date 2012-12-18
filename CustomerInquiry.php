@@ -64,15 +64,15 @@ $SQL = "SELECT debtorsmaster.name,
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 		END) AS overdue2
 		FROM debtorsmaster,
-     			paymentterms,
-     			holdreasons,
-     			currencies,
-     			debtortrans
+	 			paymentterms,
+	 			holdreasons,
+	 			currencies,
+	 			debtortrans
 		WHERE  debtorsmaster.paymentterms = paymentterms.termsindicator
-     		AND debtorsmaster.currcode = currencies.currabrev
-     		AND debtorsmaster.holdreason = holdreasons.reasoncode
-     		AND debtorsmaster.debtorno = '" . $CustomerID . "'
-     		AND debtorsmaster.debtorno = debtortrans.debtorno
+	 		AND debtorsmaster.currcode = currencies.currabrev
+	 		AND debtorsmaster.holdreason = holdreasons.reasoncode
+	 		AND debtorsmaster.debtorno = '" . $CustomerID . "'
+	 		AND debtorsmaster.debtorno = debtortrans.debtorno
 		GROUP BY debtorsmaster.name,
 			currencies.currency,
 			paymentterms.terms,
@@ -153,13 +153,13 @@ echo '<tr>
 echo '<br />
 	<div class="centre">
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
+		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 		. _('Show all transactions after') . ': <input tabindex="1" type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="12" />
 		<input tabindex="2" type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
-	    </div>
+		</div>
 	</form>
-    </div>
+	</div>
 	<br />';
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
@@ -286,8 +286,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$rootpath.'/css/'.$theme.'/images',
 				//$PreviewInvoiceFormatString parameters
 				$rootpath,
-                $myrow['transno'],
-                $rootpath.'/css/'.$theme.'/images',
+				$myrow['transno'],
+				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				$PrintCustomerTransactionScript,
 				$myrow['transno'],
@@ -319,8 +319,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$rootpath.'/css/'.$theme.'/images',
 			//$PreviewInvoiceFormatString parameters
 				$rootpath,
-                $myrow['transno'],
-                $rootpath.'/css/'.$theme.'/images',
+				$myrow['transno'],
+				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				$PrintCustomerTransactionScript,
 				$myrow['transno'],

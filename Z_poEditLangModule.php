@@ -57,13 +57,13 @@ if (isset($_POST['module'])) {
 	$LangFileEntries = sizeof($LangFile);
 
 	if (isset($_POST['submit'])) {
-    // save the modifications
+	// save the modifications
 
 		echo '<br /><table><tr><td>';
 		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-    /* write the new language file */
+	/* write the new language file */
 
 		prnMsg (_('Writing the language file') . '.....<br />', 'info', ' ');
 
@@ -78,8 +78,8 @@ if (isset($_POST['module'])) {
 		}
 		$Result = fclose($fpOut);
 
-    /* Done writing, now move the original file to a .old */
-    /* and the new one to the default */
+	/* Done writing, now move the original file to a .old */
+	/* and the new one to the default */
 
 		if (file_exists($PathToLanguage . '.old')) {
 			$Result = rename($PathToLanguage . '.old', $PathToLanguage . '.bak');
@@ -90,7 +90,7 @@ if (isset($_POST['module'])) {
 			$Result = unlink($PathToLanguage . '.bak');
 		}
 
-    /*now need to create the .mo file from the .po file */
+	/*now need to create the .mo file from the .po file */
 		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($msgfmtCommand);
 
@@ -102,7 +102,7 @@ if (isset($_POST['module'])) {
 	/* End of Submit block */
 	} else {
 
-    /* now we need to parse the resulting array into something we can show the user */
+	/* now we need to parse the resulting array into something we can show the user */
 
 		$j = 1;
 
@@ -121,7 +121,7 @@ if (isset($_POST['module'])) {
 
 /* stick it on the screen */
 
-    echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
+	echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
 		echo '<br />';
 		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
@@ -185,23 +185,23 @@ if (isset($_POST['module'])) {
 /* You'll need to change it if you are running a Windows server - sorry !! */
 
 	if ($handle = opendir('.')) {
-    	$i=0;
-    	while (false !== ($file = readdir($handle))) {
-        if ((mb_substr($file, 0, 1) != ".") && (!is_dir($file))) {
-          $AvailableModules[$i] = $file;
-        	$i += 1;
-        }
-    	}
+		$i=0;
+		while (false !== ($file = readdir($handle))) {
+		if ((mb_substr($file, 0, 1) != ".") && (!is_dir($file))) {
+		  $AvailableModules[$i] = $file;
+			$i += 1;
+		}
+		}
   	  closedir($handle);
 	}
 
 	if ($handle = opendir(".//includes")) {
-    	while (false !== ($file = readdir($handle))) {
-        if ((mb_substr($file, 0, 1) != ".") && (!is_dir($file))) {
-          $AvailableModules[$i] = $file;
-        	$i += 1;
-        }
-    	}
+		while (false !== ($file = readdir($handle))) {
+		if ((mb_substr($file, 0, 1) != ".") && (!is_dir($file))) {
+		  $AvailableModules[$i] = $file;
+			$i += 1;
+		}
+		}
   	  closedir($handle);
 	}
 

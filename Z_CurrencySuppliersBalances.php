@@ -11,9 +11,9 @@ $sql = "SELECT SUM(ovamount+ovgst-alloc) AS currencybalance,
 		currcode,
 		decimalplaces AS currdecimalplaces,
 		SUM((ovamount+ovgst-alloc)/supptrans.rate) AS localbalance
-		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid 
+		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
 		INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
-		WHERE (ovamount+ovgst-alloc)<>0 
+		WHERE (ovamount+ovgst-alloc)<>0
 		GROUP BY currcode";
 
 $result = DB_query($sql,$db);

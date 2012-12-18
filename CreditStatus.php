@@ -151,7 +151,7 @@ or deletion of the records*/
 			<th>'. _('Status Code') .'</th>
 			<th>'. _('Description') .'</th>
 			<th>'. _('Disallow Invoices') .'</th>
-        </tr>';
+		</tr>';
 
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($result)) {
@@ -197,7 +197,7 @@ if (isset($SelectedReason)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReason) and ($InputError!=1)) {
@@ -258,7 +258,7 @@ if (!isset($_GET['delete'])) {
 			<div class="centre">
 				<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
 			</div>
-            </div>
+			</div>
 			</form>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');

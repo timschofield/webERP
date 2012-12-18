@@ -108,8 +108,8 @@ echo '<tr><td>'._('Timeout (seconds)').'</td>
 	<td><input type="text" size="5" name="Timeout" class="number" value="'.$myrow['timeout'].'" /></td></tr>';
 echo '<tr><td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td></tr>';
 echo '</table>
-      </div>
-      </form>';
+	  </div>
+	  </form>';
 
 include('includes/footer.inc');
 

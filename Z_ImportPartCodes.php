@@ -33,12 +33,12 @@ if (isset($_POST['update'])) {
    	$successes=0;
    	$failures=0;
  	while (!feof ($fp)) {
-    	$buffer = fgets($fp, 4096);
-    	$FieldValues = explode(',', $buffer);
-    	if ($FieldValues[0]!='') {
-    		for ($i=0; $i<sizeof($FieldValues); $i++) {
-    			$ItemDetails[$FieldNames[$i]]=$FieldValues[$i];
-    		}
+		$buffer = fgets($fp, 4096);
+		$FieldValues = explode(',', $buffer);
+		if ($FieldValues[0]!='') {
+			for ($i=0; $i<sizeof($FieldValues); $i++) {
+				$ItemDetails[$FieldNames[$i]]=$FieldValues[$i];
+			}
 			$stockitem = php_xmlrpc_encode($ItemDetails);
 			$user = new xmlrpcval($webERPUser);
 			$password = new xmlrpcval($weberppassword);
@@ -61,7 +61,7 @@ if (isset($_POST['update'])) {
 				echo '</td></tr>';
 				$failures++;
 			}
-    	}
+		}
 		unset($ItemDetails);
 	}
 	echo '<tr><td>'.$successes._(' records successfully imported') .'</td></tr>';
@@ -78,13 +78,13 @@ if (isset($_POST['update'])) {
 			 _('The first line must contain the field names that you wish to import. ').
 			 '<a href ="Z_DescribeTable.php?table=stockmaster">' . _('The field names can be found here'). '</a>', 'info');
 		echo '<form id="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' .SID .'">';
-        echo '<div class="centre">';
+		echo '<div class="centre">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table><tr><td>'._('File to import').'</td>'.
 			'<td><input type="file" id="ImportFile" name="ImportFile" /></td></tr></table>';
 		echo '<div class="centre"><input type="submit" name="update" value="Process" /></div>';
 		echo '</div>
-              </form>';
+			  </form>';
 	}
 }
 

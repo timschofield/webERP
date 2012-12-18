@@ -8,9 +8,9 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['ProcessLocationChange'])){
-	
+
 	$InputError =0;
-	
+
 	$_POST['NewLocationID'] = mb_strtoupper($_POST['NewLocationID']);
 
 /*First check the location code exists */
@@ -50,7 +50,7 @@ if (isset($_POST['ProcessLocationChange'])){
 	if ($InputError ==0){ // no input errors
 		$result = DB_Txn_Begin($db);
 		DB_IgnoreForeignKeys($db);
-	
+
 		echo '<br />' . _('Adding the new location record');
 		$sql = "INSERT INTO locations (loccode,
 										locationname,
@@ -69,7 +69,7 @@ if (isset($_POST['ProcessLocationChange'])){
 										cashsalecustomer,
 										cashsalebranch)
 				SELECT '" . $_POST['NewLocationID'] . "',
-					    '" . $_POST['NewLocationName'] . "',
+						'" . $_POST['NewLocationName'] . "',
 						deladd1,
 						deladd2,
 						deladd3,
@@ -86,7 +86,7 @@ if (isset($_POST['ProcessLocationChange'])){
 						cashsalebranch
 				FROM locations
 				WHERE loccode='" . $_POST['OldLocationID'] . "'";
-	
+
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the new location record failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -121,7 +121,7 @@ if (isset($_POST['ProcessLocationChange'])){
 		$ErrMsg = _('The SQL to update the freightcosts records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing stock location records');
 		$sql = "UPDATE locstock SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update stock location records failed');
@@ -140,8 +140,8 @@ if (isset($_POST['ProcessLocationChange'])){
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
-		//check if MRP tables exist before assuming 
-		
+		//check if MRP tables exist before assuming
+
 		$result = DB_query("SELECT COUNT(*) FROM mrpparameters",$db,'','',false,false);
 		if (DB_error_no($db)==0) {
 			echo '<br />' . _('Changing MRP parameters information');
@@ -150,25 +150,25 @@ if (isset($_POST['ProcessLocationChange'])){
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 			echo ' ... ' . _('completed');
 		}
-		
+
 		echo '<br />' . _('Changing purchase orders information');
 		$sql = "UPDATE purchorders SET intostocklocation='" . $_POST['NewLocationID'] . "' WHERE intostocklocation='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update the purchase orders records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing recurring sales orders information');
 		$sql = "UPDATE recurringsalesorders SET fromstkloc='" . $_POST['NewLocationID'] . "' WHERE fromstkloc='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update the recurring sales orders records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing  sales orders information');
 		$sql = "UPDATE salesorders SET fromstkloc='" . $_POST['NewLocationID'] . "' WHERE fromstkloc='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update the  sales orders records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing stock check freeze records');
 		$sql = "UPDATE stockcheckfreeze SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update stock check freeze records failed');
@@ -192,19 +192,19 @@ if (isset($_POST['ProcessLocationChange'])){
 		$ErrMsg = _('The SQL to update stockrequest records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing stockserialitems records');
 		$sql = "UPDATE stockserialitems SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update stockserialitems records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing tenders records');
 		$sql = "UPDATE tenders SET location='" . $_POST['NewLocationID'] . "' WHERE location='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update tenders records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing workcentres records');
 		$sql = "UPDATE workcentres SET location='" . $_POST['NewLocationID'] . "' WHERE location='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update workcentres records failed');
@@ -216,7 +216,7 @@ if (isset($_POST['ProcessLocationChange'])){
 		$ErrMsg = _('The SQL to update workorders records failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-		
+
 		echo '<br />' . _('Changing users records');
 		$sql = "UPDATE www_users SET defaultlocation='" . $_POST['NewLocationID'] . "' WHERE defaultlocation='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update users records failed');
@@ -224,18 +224,18 @@ if (isset($_POST['ProcessLocationChange'])){
 		echo ' ... ' . _('completed');
 
 		DB_ReinstateForeignKeys($db);
-		
+
 		$result = DB_Txn_Commit($db);
-	
+
 		echo '<br />' . _('Deleting the old location record');
 		$sql = "DELETE FROM locations WHERE loccode='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to delete the old location record failed');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
-	
-	
+
+
 		echo '<p>' . _('Location code') . ': ' . $_POST['OldLocationID'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewLocationID'];
-	} //only do the stuff above if  $InputError==0 
+	} //only do the stuff above if  $InputError==0
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
@@ -243,7 +243,7 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
-    <table>
+	<table>
 	<tr>
 		<td>' . _('Existing Location Code') . ':</td>
 		<td><input type="text" name="OldLocationID" size="5" maxlength="5" /></td>

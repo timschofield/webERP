@@ -60,19 +60,19 @@ $SQL = "SELECT suppliers.suppname,
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(supptrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(supptrans.trandate))', 'DAY') . ")) >= '" . $_SESSION['PastDueDays2'] . "')
 			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 		END ) AS overdue2
-		FROM suppliers INNER JOIN paymentterms 
+		FROM suppliers INNER JOIN paymentterms
 		ON suppliers.paymentterms = paymentterms.termsindicator
-     	INNER JOIN currencies 
-     	ON suppliers.currcode = currencies.currabrev 
-     	INNER JOIN supptrans 
-     	ON suppliers.supplierid = supptrans.supplierno 
+	 	INNER JOIN currencies
+	 	ON suppliers.currcode = currencies.currabrev
+	 	INNER JOIN supptrans
+	 	ON suppliers.supplierid = supptrans.supplierno
 		WHERE suppliers.supplierid = '" . $SupplierID . "'
 		GROUP BY suppliers.suppname,
-      			currencies.currency,
-      			currencies.decimalplaces,
-      			paymentterms.terms,
-      			paymentterms.daysbeforedue,
-      			paymentterms.dayinfollowingmonth";
+	  			currencies.currency,
+	  			currencies.decimalplaces,
+	  			paymentterms.terms,
+	  			paymentterms.daysbeforedue,
+	  			paymentterms.dayinfollowingmonth";
 
 $ErrMsg = _('The supplier details could not be retrieved by the SQL because');
 $DbgMsg = _('The SQL that failed was');
@@ -90,10 +90,10 @@ if (DB_num_rows($SupplierResult) == 0){
 					currencies.currency,
 					currencies.decimalplaces AS currdecimalplaces,
 					paymentterms.terms
-			FROM suppliers INNER JOIN paymentterms 
-		    ON suppliers.paymentterms = paymentterms.termsindicator 
-		    INNER JOIN currencies 
-		    ON suppliers.currcode = currencies.currabrev 
+			FROM suppliers INNER JOIN paymentterms
+			ON suppliers.paymentterms = paymentterms.termsindicator
+			INNER JOIN currencies
+			ON suppliers.currcode = currencies.currabrev
 			WHERE suppliers.supplierid = '" . $SupplierID . "'";
 
 	$ErrMsg = _('The supplier details could not be retrieved by the SQL because');
@@ -123,12 +123,12 @@ echo '<p class="page_title_text">
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 	if ($_GET['HoldStatus'] == _('Hold')){
-		$SQL = "UPDATE supptrans SET hold=1 
-				WHERE type='" . $_GET['HoldType'] . "' 
+		$SQL = "UPDATE supptrans SET hold=1
+				WHERE type='" . $_GET['HoldType'] . "'
 				AND transno='" . $_GET['HoldTrans'] . "'";
 	} elseif ($_GET['HoldStatus'] == _('Release')){
-		$SQL = "UPDATE supptrans SET hold=0 
-				WHERE type='" . $_GET['HoldType'] . "' 
+		$SQL = "UPDATE supptrans SET hold=0
+				WHERE type='" . $_GET['HoldType'] . "'
 				AND transno='" . $_GET['HoldTrans'] . "'";
 	}
 
@@ -159,10 +159,10 @@ echo '<br />
 	<div class="centre">
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>
-        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': ' .'<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" /> 
-	    <input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
-    </div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo _('Show all transactions after') . ': ' .'<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
+		<input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
+	</div>
 	</form>
 	<br />';
 echo '</div>';
@@ -187,7 +187,7 @@ $SQL = "SELECT supptrans.id,
 		AND supptrans.supplierno = '" . $SupplierID . "'
 		AND supptrans.trandate >= '" . $DateAfterCriteria . "'
 		ORDER BY supptrans.trandate";
-	
+
 $ErrMsg = _('No transactions were returned by the SQL because');
 $DbgMsg = _('The SQL that failed was');
 
@@ -268,16 +268,16 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td class="number">' .locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['totalamount'] - $myrow['allocated'],$SupplierRecord['currdecimalplaces']) .'</td>
 					<td align="left">' . $myrow['transtext'] . '</td>';
-					
+
 				$AuthSQL="SELECT offhold
 							FROM purchorderauth
-							WHERE userid='" . $_SESSION['UserID'] . "' 
+							WHERE userid='" . $_SESSION['UserID'] . "'
 							AND currabrev='" . $SupplierRecord['currcode']."'";
-				
+
 				$AuthResult=DB_query($AuthSQL, $db);
-				
+
 				$AuthRow=DB_fetch_array($AuthResult);
-				
+
 				if ($AuthRow[0]==0) {
 					echo '<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?HoldType=' . $myrow['type'] . '&amp;HoldTrans=' . $myrow['transno']. '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'].'">' . $HoldValue .'</a></td>';
 				} else {
@@ -373,7 +373,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$rootpath,
 					$myrow['type'],
 					$myrow['transno'] );
-	
+
 		} else { /*Not linked to GL */
 
 			printf('<td>%s</td>

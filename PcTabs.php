@@ -261,7 +261,7 @@ if (isset($SelectedTab)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />'; //Main table
 
@@ -323,7 +323,7 @@ if (!isset($_GET['delete'])) {
 	} //end while loop get user
 
 	echo '</select></td></tr>';
-    DB_free_result($result);
+	DB_free_result($result);
 
 	echo '<tr><td>' . _('Type Of Tab') . ':</td>
 			<td><select name="SelectTabs">';
@@ -346,7 +346,7 @@ if (!isset($_GET['delete'])) {
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
-    DB_free_result($result);
+	DB_free_result($result);
 
 	echo '<tr><td>' . _('Currency') . ':</td>
 			<td><select name="SelectCurrency">';
@@ -366,7 +366,7 @@ if (!isset($_GET['delete'])) {
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
-    DB_free_result($result);
+	DB_free_result($result);
 
 	if (!isset($_POST['TabLimit'])) {
 		$_POST['TabLimit']=0;
@@ -395,8 +395,8 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get assigner
 
-    echo '</select></td></tr>';
-    DB_free_result($result);
+	echo '</select></td></tr>';
+	DB_free_result($result);
 
 	echo '<tr><td>' . _('Authoriser') . ":</td><td><select name='SelectAuthoriser'>";
 
@@ -417,8 +417,8 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop get authoriser
 
-    echo '</select></td></tr>';
-    DB_free_result($result);
+	echo '</select></td></tr>';
+	DB_free_result($result);
 
 	echo '<tr><td>' . _('GL Account Cash Assignment') . ':</td>
 			<td><select name="GLAccountCash">';
@@ -441,8 +441,8 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-    echo '</select></td></tr>';
-    DB_free_result($result);
+	echo '</select></td></tr>';
+	DB_free_result($result);
 
 	echo '<tr><td>' . _('GL Account Petty Cash Tab') . ':</td>
 			<td><select name="GLAccountPcashTab">';
@@ -463,14 +463,14 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-    echo '</select></td></tr>';
+	echo '</select></td></tr>';
    	echo '</table>'; // close main table
-    DB_free_result($result);
+	DB_free_result($result);
 
 	echo '<br /><div class="centre"><input type="submit" name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</div>
-          </form>';
+		  </form>';
 
 } // end if user wish to delete
 

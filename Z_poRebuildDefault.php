@@ -44,9 +44,9 @@ if (isset($_POST['submit'])) {
 	echo '<div class="centre">';
 	echo '<br />';
 	prnMsg (_('Every new language creates a new translation file from the system default one') . '.<br />' .
-          _('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<br />' .
-          _('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<br />' .
-          _('Existing languages are not affected.') . '.', 'info', _('PLEASE NOTE'));
+		  _('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<br />' .
+		  _('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<br />' .
+		  _('Existing languages are not affected.') . '.', 'info', _('PLEASE NOTE'));
 	echo '<br />';
 	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

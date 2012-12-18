@@ -35,7 +35,7 @@ if (isset($_POST['Submit'])) {
 	}
 
 	if (isset($_POST['SelectedMeasureID']) AND $_POST['SelectedMeasureID']!='' AND $InputError !=1) {
- 
+
 
 		/*SelectedMeasureID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
@@ -202,7 +202,7 @@ echo '<br />';
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedMeasureID)) {
@@ -242,7 +242,7 @@ if (! isset($_GET['delete'])) {
 		</div>';
 
 	echo '</div>
-          </form>';
+		  </form>';
 
 } //end if record deleted no point displaying form to add record
 

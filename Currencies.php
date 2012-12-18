@@ -41,9 +41,9 @@ if (isset($_POST['submit'])) {
 	$i=1;
 
 	$sql="SELECT count(currabrev)
-			FROM currencies 
+			FROM currencies
 			WHERE currabrev='".$_POST['Abbreviation']."'";
-			
+
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
 
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['HundredsName'] .  "',
 										'" . filter_number_format($_POST['DecimalPlaces']) . "',
 										'" . filter_number_format($_POST['ExchangeRate']) . "')";
-				
+
 		$msg = _('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql= "SELECT COUNT(*) FROM debtorsmaster 
+	$sql= "SELECT COUNT(*) FROM debtorsmaster
 			WHERE currcode = '" . $SelectedCurrency . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -166,7 +166,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('Cannot delete this currency because customer accounts have been created referring to this currency') .
 		 	'<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
 	} else {
-		$sql= "SELECT COUNT(*) FROM suppliers 
+		$sql= "SELECT COUNT(*) FROM suppliers
 				WHERE suppliers.currcode = '".$SelectedCurrency."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Cannot delete this currency because supplier accounts have been created referring to this currency')
 			 . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
 		} else {
-			$sql= "SELECT COUNT(*) FROM banktrans 
+			$sql= "SELECT COUNT(*) FROM banktrans
 					WHERE currcode = '" . $SelectedCurrency . "'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
@@ -201,12 +201,12 @@ then none of the above are true and the list of payment termss will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT currency, 
-					currabrev, 
-					country, 
-					hundredsname, 
+	$sql = "SELECT currency,
+					currabrev,
+					country,
+					hundredsname,
 					rate,
-					decimalplaces 
+					decimalplaces
 				FROM currencies";
 	$result = DB_query($sql, $db);
 
@@ -313,7 +313,7 @@ echo '<br />';
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
@@ -405,7 +405,7 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="submit" value="'._('Enter Information').'" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

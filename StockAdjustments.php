@@ -507,7 +507,7 @@ echo '<br />
 	<a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</a>';
 
 echo '</div>
-      </div>
-      </form>';
+	  </div>
+	  </form>';
 include('includes/footer.inc');
 ?>

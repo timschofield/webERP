@@ -102,8 +102,8 @@ while ($myrow=DB_fetch_array($result)) {
 } //end while header loop
 echo '</table>';
 echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></div>
-      </div>
-      </form>';
+	  </div>
+	  </form>';
 
 include('includes/footer.inc');
 ?>

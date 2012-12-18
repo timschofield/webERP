@@ -25,13 +25,13 @@ if (isset($_POST['TaxAuthority']) AND
 
 	$pdf->addInfo('Title',_('Taxation Report'));
 	$ReportTitle = $TaxAuthorityName . ' ' . _('Tax Report for') . ' ' . $_POST['NoOfPeriods'] . ' ' . _('months to') . ' ' . $PeriodEnd;
-    $pdf->addInfo('Subject', $ReportTitle);
+	$pdf->addInfo('Subject', $ReportTitle);
 
 	$FontSize=12;
 	$PageNumber=0;
 	$line_height=12;
 
-      /*Now get the invoices for the tax report */
+	  /*Now get the invoices for the tax report */
 
 	$SQL = "SELECT debtortrans.transno,
 					debtortrans.type,
@@ -79,11 +79,11 @@ if (isset($_POST['TaxAuthority']) AND
 	$Inputs =0;
 	$InputTax =0;
 
-    $ListCount = 0;
+	$ListCount = 0;
 
 	While ($DebtorTransRow = DB_fetch_array($DebtorTransResult,$db)){
 
-        $ListCount ++;
+		$ListCount ++;
 
 		if ($_POST['DetailOrSummary']=='Detail'){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $DebtorTransRow['typename'],'left');
@@ -182,7 +182,7 @@ if (isset($_POST['TaxAuthority']) AND
 
 	While ($SuppTransRow = DB_fetch_array($SuppTransResult,$db)){
 
-        $ListCount ++;
+		$ListCount ++;
 
 		if ($_POST['DetailOrSummary']=='Detail'){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $SuppTransRow['typename'],'left');
@@ -277,10 +277,10 @@ if (isset($_POST['TaxAuthority']) AND
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
-    } else {
-    	$pdf->OutputD($_SESSION['DatabaseName'] . '_Tax_Report_' . Date('Y-m-d'));
-    }
-    $pdf->__destruct();
+	} else {
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_Tax_Report_' . Date('Y-m-d'));
+	}
+	$pdf->__destruct();
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Tax Reporting');
@@ -290,8 +290,8 @@ if (isset($_POST['TaxAuthority']) AND
 	. '" alt="" />' . $title. '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
 	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</td>
@@ -340,7 +340,7 @@ if (isset($_POST['TaxAuthority']) AND
 	echo '<tr>
 			<td>' . _('Detail Or Summary Only') . ':</td>
 			<td><select name="DetailOrSummary">
-				<option value="Detail">' . _('Detail and Summary') . '</option> 
+				<option value="Detail">' . _('Detail and Summary') . '</option>
 				<option selected="selected" value="Summary">' . _('Summary Only') . '</option>
 			</select></td>
 		</tr>';
@@ -351,7 +351,7 @@ if (isset($_POST['TaxAuthority']) AND
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 	include('includes/footer.inc');

@@ -20,7 +20,7 @@ if (isset($_GET['FactorID'])){
 if (isset($_POST['Create'])) {
 	$FactorID = 0;
 	$_POST['New'] = 'Yes';
-};
+}
 
 echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="'
 	. _('Factor Companies') . '" alt="" />' . ' ' .$title . '</p></div>';
@@ -47,7 +47,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	/* If no input errors have been recieved */
 	if ($InputError == 0 AND isset($_POST['Submit'])){
 		//And if its not a new part then update existing one
@@ -198,10 +198,10 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	// its a new factor being added
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FactorID" value="' . $FactorID .'" />
-        <input type="hidden" name="New" value="Yes" />
+		<input type="hidden" name="New" value="Yes" />
 		<table class="selection">
 		<tr>
 			<td>' . _('Factor company Name') . ':</td>
@@ -255,19 +255,19 @@ if (isset($_POST['Create'])) {
 		<div class="centre">
 			<input tabindex="12" type="submit" name="Submit" value="' . _('Insert New Factor') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 } else if (isset($_POST['Amend'])) {
 	echo '<br />
 		<div class="centre">
 			<input tabindex="13" type="submit" name="Update" value="' . _('Update Factor') . '" />
 			<br />
-            <br />';
+			<br />';
 			prnMsg ( _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no suppliers are using this factor before the deletion is processed'), 'warn');
 			echo '<br />
 				<input tabindex="14" type="submit" name="Delete" value="' . _('Delete Factor') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this factoring company?') . '\');" />
 		</div>
-        </div>
+		</div>
 		</form>';
 }
 
@@ -277,7 +277,7 @@ if (isset($_POST['Create'])) {
 if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="No" />';
@@ -340,7 +340,7 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 			<br />
 			<input tabindex="3" type="submit" name="Create" value="' . _('Create New Factor') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 }
 

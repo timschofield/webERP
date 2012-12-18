@@ -345,7 +345,7 @@ if (isset($_POST['SearchCust'])
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 			$SQL .=	" AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno, 
+						ORDER BY custbranch.debtorno,
 								custbranch.branchcode";
 	} /*one of keywords or custcode was more than a zero length string */
 
@@ -362,7 +362,7 @@ if (isset($_POST['SearchCust'])
 } /*end of if search for customer codes/names */
 
 if (isset($_POST['JustSelectedACustomer'])){
-	
+
 	/*Need to figure out the number of the form variable that the user clicked on */
 	for ($i=0;$i<count($_POST);$i++){ //loop through the returned customers
 		if(isset($_POST['SubmitCustomerSelection'.$i])){
@@ -633,7 +633,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	if (isset($result_CustSelect)) {
 
-        echo '<div>
+		echo '<div>
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 					<input type="hidden" name="JustSelectedACustomer" value="Yes" />
 					<br />
@@ -677,7 +677,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 //end of page full new headings if
 		}
 //end of while loop
-        echo '</table>
+		echo '</table>
 			</div>';
 	}//end if results to show
 	echo '</form>';
@@ -865,7 +865,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$DbgMsg = _('The SQL used to get the part selection was');
-		
+
 		$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
@@ -884,7 +884,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 #Always do the stuff below if not looking for a customerid
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" id="SelectParts" method="post">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 //Get The exchange rate used for GPPercent calculations on adding or amending items
@@ -1366,7 +1366,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-        echo '<div class="page_help_text">' . _('Quantity (required) - Enter the number of units ordered.  Price (required) - Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP% (optional) - Enter a percentage Gross Profit (GP) to add to the unit cost.  Due Date (optional) - Enter a date for delivery.') . '</div><br />';
+		echo '<div class="page_help_text">' . _('Quantity (required) - Enter the number of units ordered.  Price (required) - Enter the unit price.  Discount (optional) - Enter a percentage discount.  GP% (optional) - Enter a percentage Gross Profit (GP) to add to the unit cost.  Due Date (optional) - Enter a date for delivery.') . '</div><br />';
 		echo '<br />
 				<table width="90%" cellpadding="2">
 				<tr style="background-color:#800000">';
@@ -1411,7 +1411,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 
 			echo $RowStarter;
-            echo '<td>';
+			echo '<td>';
 			if($_SESSION['Items'.$identifier]->DefaultPOLine ==1){ //show the input field only if required
 				echo '<input tabindex="1" type="text" name="POLine_' . $OrderLine->LineNumber . '" size="20" maxlength="20" value="' . $OrderLine->POLine . '" /></td><td>';
 			} else {
@@ -1525,15 +1525,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$result2 = DB_query($SQL,$db);
 			echo '<p class="page_title_text">
-					<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . 
-					' ' . _('Frequently Ordered Items') . 
+					<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
+					' ' . _('Frequently Ordered Items') .
 					'</p>
 					<br />
-					<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . 
+					<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') .
 					'.</div>
 					<br />
 					<table class="table1">';
-					
+
 			$TableHeader = '<tr>
 								<th>' . _('Code') . '</th>
 								<th>' . _('Description') . '</th>
@@ -1685,16 +1685,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</select></td>
 			<td><b>' . _('Enter partial Description') . ':</b><input tabindex="2" type="text" name="Keywords" size="20" maxlength="25" value="' ;
 
-        if (isset($_POST['Keywords'])) {
-             echo $_POST['Keywords'] ;
-        }
-        echo '" /></td>';
+		if (isset($_POST['Keywords'])) {
+			 echo $_POST['Keywords'] ;
+		}
+		echo '" /></td>';
 
 		echo '<td align="right"><b>' . _('OR') .  ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="';
-        if (isset($_POST['StockCode'])) {
-            echo  $_POST['StockCode'];
-        }
-        echo '" /></td>
+		if (isset($_POST['StockCode'])) {
+			echo  $_POST['StockCode'];
+		}
+		echo '" /></td>
 			</tr>';
 
 		echo '<tr>
@@ -1705,18 +1705,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td style="text-align:center" colspan="1"><input tabindex="6" type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" /></td>
 			<td style="text-align:center" colspan="1"><input tabindex="7" type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" /></td>';
 		}
-        echo '</tr></table><br />';
-        echo '</div>';
-        if (!isset($_POST['PartSearch'])) {
-            echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
-        }
+		echo '</tr></table><br />';
+		echo '</div>';
+		if (!isset($_POST['PartSearch'])) {
+			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
+		}
 		if (isset($SearchResult)) {
 			echo '<br />';
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 			$j = 1;
 			//echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="orderform">';
-            echo '<div>';
+			echo '<div>';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
 			echo '<tr><td colspan="1"><input type="hidden" name="PreviousList" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+8).'" type="submit" name="Previous" value="'._('Previous').'" /></td>';
@@ -1845,7 +1845,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'. strval($j+8).'" type="submit" value="'._('Add to Sales Order').'" /></td>';
 			echo '<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td></tr>';
 			echo '</table>
-                  </div>';
+				  </div>';
 			echo $jsCall;
 
 		}#end if SearchResults to show
@@ -1874,15 +1874,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
 						<td><input type="text" name="qty_' . $i . '" size="6" maxlength="6" /></td>
 						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" maxlength="25"
-                        alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" /></td></tr>';
+						alt="'.$_SESSION['DefaultDateFormat'].'" value="' . $DefaultDeliveryDate . '" /></td></tr>';
 	   		}
 			echo '</table><script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
 		 	echo '<br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
-                     <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
+					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
-            echo '</div>
-                  </form>';
+			echo '</div>
+				  </form>';
 	  	} elseif (isset($_POST['SelectAsset'])){
 
 			echo '<div class="page_help_text"><b>' . _('Use this screen to select an asset to dispose of to this customer') . '</b></div><br />
@@ -1901,16 +1901,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 			echo '</select></td></tr></table>
 						<br /><div class="centre"><input type="submit" name="AssetDisposalEntered" value="' . _('Add Asset To Order') . '" />
-                     <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
+					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
-            echo '</div></form>';
+			echo '</div></form>';
 
 		} //end of if it is a Quick Entry screen/part search or asset selection form to display
 
 		if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
 			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .
 				'" method="post" name="deleteform">';
-            		echo '<div>';
+					echo '<div>';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
 		}

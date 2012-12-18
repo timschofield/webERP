@@ -19,9 +19,9 @@ if (empty($_GET['identifier'])) {
 }
 
 if (isset($_GET['LineNo'])){
-        $LineNo = (int)$_GET['LineNo'];
+		$LineNo = (int)$_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
-        $LineNo = (int)$_POST['LineNo'];
+		$LineNo = (int)$_POST['LineNo'];
 } else {
 	echo '<div class="centre">
 			<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php">'. _('Select a line item to invoice').'</a>

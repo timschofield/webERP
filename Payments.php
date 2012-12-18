@@ -117,7 +117,7 @@ if (isset($_GET['SupplierID'])){
 		}
 		if (isset($_GET['Amount']) AND is_numeric($_GET['Amount'])){
 			$_SESSION['PaymentDetail' . $identifier]->Amount = filter_number_format($_GET['Amount']);
-		} 
+		}
 	}
 }
 
@@ -286,7 +286,7 @@ if (isset($_POST['CommitBatch'])){
 			<br />';
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">';
-        echo '<div>';
+		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?
 			<br />
@@ -297,8 +297,8 @@ if (isset($_POST['CommitBatch'])){
 			<input type="submit" name="PaymentCancelled" value="' . _('No / Cancel Payment') . '" />';
 
 		echo '<br />Payment amount = ' . $_SESSION['PaymentDetail' . $identifier]->Amount;
-        echo '</div>
-              </form>';
+		echo '</div>
+			  </form>';
 
 	} else {
 
@@ -817,7 +817,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->SupplierID==''){
 	}
 } else { /*its a supplier payment so it must be in the suppliers currency */
 	echo '<tr>';
-    echo '<td><input type="hidden" name="Currency" value="' . $_SESSION['PaymentDetail' . $identifier]->Currency . '" />
+	echo '<td><input type="hidden" name="Currency" value="' . $_SESSION['PaymentDetail' . $identifier]->Currency . '" />
 			' . _('Supplier Currency') . ':</td>
 			<td>' . $_SESSION['PaymentDetail' . $identifier]->Currency . '</td>
 		</tr>';
@@ -910,7 +910,7 @@ echo '<tr>
 	</tr>
 
 
-	        <td><input type="hidden" name="PreviousCurrency" value="'.$_POST['Currency'].'" /></td>
+			<td><input type="hidden" name="PreviousCurrency" value="'.$_POST['Currency'].'" /></td>
 
 
 	<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update'). '" /></div></td>
@@ -1112,7 +1112,7 @@ the fields for entry of receipt amt and disc */
 
 	if (isset($_SESSION['PaymentDetail' . $identifier]->SupplierID)){ /*So it is a supplier payment so show the discount entry item */
 		echo '<tr>';
-        echo '<td><input type="hidden" name="SuppName" value="' . $_SESSION['PaymentDetail' . $identifier]->SuppName . '" />
+		echo '<td><input type="hidden" name="SuppName" value="' . $_SESSION['PaymentDetail' . $identifier]->SuppName . '" />
 				' . _('Amount of Discount') . ':</td>
 				<td><input class="number" type="text" name="Discount" maxlength="12" size="13" value="' . $_SESSION['PaymentDetail' . $identifier]->Discount . '" /></td>
 			</tr>';

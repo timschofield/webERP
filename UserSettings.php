@@ -35,7 +35,7 @@ if (isset($_POST['Modify'])) {
 	}
  */
  	$UpdatePassword = 'N';
-	
+
 	if ($_POST['PasswordCheck'] != ''){
 		if (mb_strlen($_POST['Password'])<5){
 			$InputError = 1;
@@ -51,7 +51,7 @@ if (isset($_POST['Modify'])) {
 			$UpdatePassword = 'Y';
 		}
 	}
-	
+
 
 	if ($InputError != 1) {
 		// no errors
@@ -128,7 +128,7 @@ echo '<tr>
 echo '<tr>
 	<td>' . _('Language') . ':</td>
 	<td><select name="Language">';
-	
+
 if (!isset($_POST['Language'])){
 	$_POST['Language']=$_SESSION['Language'];
 }
@@ -201,7 +201,7 @@ if (!isset($_POST['PDFLanguage'])){
 echo '<tr>
 		<td>' . _('PDF Language Support') . ': </td>
 		<td><select name="PDFLanguage">';
-		
+
 for($i=0;$i<count($PDFLanguages);$i++){
 	if ($_POST['PDFLanguage']==$i){
 		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
@@ -214,7 +214,7 @@ echo '</select></td>
 	</table>
 	<br />
 	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>
-    </div>
+	</div>
 	</form>';
 
 include('includes/footer.inc');

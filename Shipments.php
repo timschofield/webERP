@@ -19,29 +19,29 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/m
 
 if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment']) AND !isset($_GET['SelectedShipment'])){
 	prnMsg( _('To set up a shipment') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'error');
-        echo '<table class="selection">
-                <tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSupplier.php">' . _('Select the Supplier') . '</a></li>
-                </td></tr></table></div>';
-        include('includes/footer.inc');
-        exit;
+		echo '<table class="selection">
+				<tr><td class="menu_group_item">
+				<li><a href="'. $rootpath . '/SelectSupplier.php">' . _('Select the Supplier') . '</a></li>
+				</td></tr></table></div>';
+		include('includes/footer.inc');
+		exit;
 }
 
 if (isset($_GET['SelectedShipment'])){
 
 	if (isset($_SESSION['Shipment'])){
-              unset ($_SESSION['Shipment']->LineItems);
-              unset ($_SESSION['Shipment']);
+			  unset ($_SESSION['Shipment']->LineItems);
+			  unset ($_SESSION['Shipment']);
 	}
 
-       $_SESSION['Shipment'] = new Shipment;
+	   $_SESSION['Shipment'] = new Shipment;
 
-       $_SESSION['Shipment']->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
+	   $_SESSION['Shipment']->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 
 /*read in all the guff from the selected shipment into the Shipment Class variable - the class code is included in the main script before this script is included  */
 
-       $ShipmentHeaderSQL = "SELECT shipments.supplierid,
-				       				suppliers.suppname,
+	   $ShipmentHeaderSQL = "SELECT shipments.supplierid,
+					   				suppliers.suppname,
 								shipments.eta,
 								suppliers.currcode,
 								shipments.vessel,
@@ -51,37 +51,37 @@ if (isset($_GET['SelectedShipment'])){
 								ON shipments.supplierid = suppliers.supplierid
 							WHERE shipments.shiptref = '" . $_GET['SelectedShipment'] . "'";
 
-       $ErrMsg = _('Shipment').' '. $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred');
-       $GetShiptHdrResult = DB_query($ShipmentHeaderSQL,$db, $ErrMsg);
+	   $ErrMsg = _('Shipment').' '. $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred');
+	   $GetShiptHdrResult = DB_query($ShipmentHeaderSQL,$db, $ErrMsg);
 
-       if (DB_num_rows($GetShiptHdrResult)==0) {
+	   if (DB_num_rows($GetShiptHdrResult)==0) {
 		prnMsg ( _('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
-	        include('includes/footer.inc');
-        	exit();
+			include('includes/footer.inc');
+			exit();
 	}
 
-       if (DB_num_rows($GetShiptHdrResult)==1) {
+	   if (DB_num_rows($GetShiptHdrResult)==1) {
 
-              $myrow = DB_fetch_array($GetShiptHdrResult);
+			  $myrow = DB_fetch_array($GetShiptHdrResult);
 
-	      if ($myrow['closed']==1){
+		  if ($myrow['closed']==1){
 			prnMsg( _('Shipment No.') .' '. $_GET['SelectedShipment'] .': '.
 				_('The selected shipment is already closed and no further modifications to the shipment are possible'), 'error');
 			include('includes/footer.inc');
 			exit;
-	      }
-              $_SESSION['Shipment']->ShiptRef = $_GET['SelectedShipment'];
-              $_SESSION['Shipment']->SupplierID = $myrow['supplierid'];
-              $_SESSION['Shipment']->SupplierName = $myrow['suppname'];
-              $_SESSION['Shipment']->CurrCode = $myrow['currcode'];
-              $_SESSION['Shipment']->ETA = $myrow['eta'];
-              $_SESSION['Shipment']->Vessel = $myrow['vessel'];
-              $_SESSION['Shipment']->VoyageRef = $myrow['voyageref'];
+		  }
+			  $_SESSION['Shipment']->ShiptRef = $_GET['SelectedShipment'];
+			  $_SESSION['Shipment']->SupplierID = $myrow['supplierid'];
+			  $_SESSION['Shipment']->SupplierName = $myrow['suppname'];
+			  $_SESSION['Shipment']->CurrCode = $myrow['currcode'];
+			  $_SESSION['Shipment']->ETA = $myrow['eta'];
+			  $_SESSION['Shipment']->Vessel = $myrow['vessel'];
+			  $_SESSION['Shipment']->VoyageRef = $myrow['voyageref'];
 
 /*now populate the shipment details records */
 
-              $LineItemsSQL = "SELECT purchorderdetails.podetailitem,
-				      				purchorders.orderno,
+			  $LineItemsSQL = "SELECT purchorderdetails.podetailitem,
+					  				purchorders.orderno,
 									purchorderdetails.itemcode,
 									purchorderdetails.itemdescription,
 									purchorderdetails.deliverydate,
@@ -99,16 +99,16 @@ if (isset($_GET['SelectedShipment'])){
 							INNER JOIN purchorders
 								ON purchorderdetails.orderno=purchorders.orderno
 							WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'";
-	      $ErrMsg = _('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg($db);
-              $LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
+		  $ErrMsg = _('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg($db);
+			  $LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
 
-        if (DB_num_rows($GetShiptHdrResult)==0) {
-                prnMsg ( _('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
-                include('includes/footer.inc');
-                exit();
-        }
+		if (DB_num_rows($GetShiptHdrResult)==0) {
+				prnMsg ( _('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
+				include('includes/footer.inc');
+				exit();
+		}
 
-        if (DB_num_rows($LineItemsResult) > 0) {
+		if (DB_num_rows($LineItemsResult) > 0) {
 
 			while ($myrow=DB_fetch_array($LineItemsResult)) {
 
@@ -136,8 +136,8 @@ if (isset($_GET['SelectedShipment'])){
 		   $myrow=DB_fetch_array($LineItemsResult);
 		   $_SESSION['Shipment']->StockLocation = $myrow['intostocklocation'];
 
-              } //end of checks on returned data set
-       }
+			  } //end of checks on returned data set
+	   }
 } // end of reading in the existing shipment
 
 
@@ -165,8 +165,8 @@ if (!isset($_SESSION['Shipment'])){
 
 
 
-if (isset($_POST['Update']) 
-	OR (isset($_GET['Add']) 
+if (isset($_POST['Update'])
+	OR (isset($_GET['Add'])
 	AND $_SESSION['Shipment']->Closed==0)) { //user hit the update button
 
 	$InputError = 0;
@@ -188,7 +188,7 @@ if (isset($_POST['Update'])
 		if (mb_strlen($_POST['VoyageRef'])<2){
 			prnMsg( _('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
 		}
-	} elseif(mb_strlen($_SESSION['Shipment']->Vessel)<2 
+	} elseif(mb_strlen($_SESSION['Shipment']->Vessel)<2
 			OR mb_strlen($_SESSION['Shipment']->VoyageRef)<2){
 		prnMsg(_('Cannot add purchase order lines to the shipment unless the shipment is first initiated - hit update to setup the shipment first'),'info');
 		$InputError = 1;
@@ -199,7 +199,7 @@ if (isset($_POST['Update'])
 	}
 /*The user hit the update the shipment button and there are some lines on the shipment*/
 	if ($InputError == 0 AND (count($_SESSION['Shipment']->LineItems) > 0 OR isset($_GET['Add']))){
-		
+
 		$sql = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result)==1){
@@ -245,8 +245,8 @@ if (isset($_POST['Update'])
 
 } //user hit Update
 
-if (isset($_GET['Add']) 
-	AND $_SESSION['Shipment']->Closed==0 
+if (isset($_GET['Add'])
+	AND $_SESSION['Shipment']->Closed==0
 	AND $InputError==0){
 
 	$sql = "SELECT purchorderdetails.orderno,
@@ -336,10 +336,10 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 		$sql = "SELECT purchorders.intostocklocation
 				FROM purchorders INNER JOIN purchorderdetails
 				ON purchorders.orderno=purchorderdetails.orderno AND podetailitem = '" . key($_SESSION['Shipment']->LineItems) . "'";
-	
+
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-	
+
 		$_SESSION['Shipment']->StockLocation = $myrow[0];
 		$_POST['StockLocation']=$_SESSION['Shipment']->StockLocation;
 
@@ -362,7 +362,7 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 
 		if (isset($_POST['StockLocation'])){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
-				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>'; 
+				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			} else {
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
@@ -528,7 +528,7 @@ if (DB_num_rows($result)>0){
 }
 
 echo '</div>
-      </form>';
+	  </form>';
 
 include('includes/footer.inc');
 ?>

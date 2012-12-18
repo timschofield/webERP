@@ -14,7 +14,7 @@ if (isset($_POST['PrintPDF'])) {
 	$FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
-    PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
+	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
 
 	if (!$_POST['Quantity'] or !is_numeric(filter_number_format($_POST['Quantity']))) {
 		$_POST['Quantity'] = 1;
@@ -250,8 +250,8 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
-        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<tr>
 			<td>' . _('Part') . ':</td>
@@ -282,8 +282,8 @@ if (isset($_POST['PrintPDF'])) {
 			<br />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
-        </form>';
+		</div>
+		</form>';
 
 	include('includes/footer.inc');
 

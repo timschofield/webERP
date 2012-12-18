@@ -54,20 +54,20 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 	echo '</select></td></tr></table>';
 
 	echo '<div class="centre"><input type="submit" name="recalc" value="' . _('Do the Recalculation') . '" /></div>
-        </div>
-        </form>';
+		</div>
+		</form>';
 
 } else {  /*OK do the updates */
 
 	for ($i=$_POST['FromPeriod'];$i<=$_POST['ToPeriod'];$i++){
 
-		$sql="SELECT accountcode, 
-					period, 
-					budget, 
-					actual, 
-					bfwd, 
-					bfwdbudget 
-				FROM chartdetails 
+		$sql="SELECT accountcode,
+					period,
+					budget,
+					actual,
+					bfwd,
+					bfwdbudget
+				FROM chartdetails
 				WHERE period ='" . $i . "'";
 
 		$ErrMsg = _('Could not retrieve the ChartDetail records because');
@@ -80,9 +80,9 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 			echo '<br />' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
 
-			$sql = "UPDATE chartdetails SET bfwd='" . $CFwd . "', 
-										bfwdbudget='" . $CFwdBudget . "' 
-					WHERE period='" . ($myrow['period'] +1) . "' 
+			$sql = "UPDATE chartdetails SET bfwd='" . $CFwd . "',
+										bfwdbudget='" . $CFwdBudget . "'
+					WHERE period='" . ($myrow['period'] +1) . "'
 					AND  accountcode = '" . $myrow['accountcode'] . "'";
 
 			$ErrMsg =_('Could not update the chartdetails record because');

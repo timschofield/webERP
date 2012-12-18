@@ -29,9 +29,9 @@ switch ($PaperSize) {
   case 'A4':
 // Javier: Now I use the native TCPDF constructor to which I send these values in each case,
 //	this should have been done whith FPDF which use the same values in its constructor.
-		$DocumentPaper = 'A4'; 
+		$DocumentPaper = 'A4';
 		$DocumentOrientation ='P';
-		
+
 		// Javier: DIN-A4 is 210 mm width, i.e., 595'2756 points (inches * 72 ppi)
 		$Page_Width=595;
 		$Page_Height=842;
@@ -42,10 +42,10 @@ switch ($PaperSize) {
 		break;
 
   case 'A4_Landscape':
-		
-		$DocumentPaper = 'A4'; 
+
+		$DocumentPaper = 'A4';
 		$DocumentOrientation ='L';
-		
+
 		$Page_Width=842;
 		$Page_Height=595;
 		$Top_Margin=30;
@@ -56,9 +56,9 @@ switch ($PaperSize) {
 
   case 'A5':
 
-		$DocumentPaper = 'A5'; 
+		$DocumentPaper = 'A5';
 		$DocumentOrientation ='P';
-		
+
 		$Page_Width=421;
 		$Page_Height=595;
 		$Top_Margin=30;
@@ -68,10 +68,10 @@ switch ($PaperSize) {
 		break;
 
   case 'A5_Landscape':
-		
-		$DocumentPaper = 'A5'; 
+
+		$DocumentPaper = 'A5';
 		$DocumentOrientation ='L';
-		
+
 		$Page_Width=595;
 		$Page_Height=421;
 		$Top_Margin=30;
@@ -82,9 +82,9 @@ switch ($PaperSize) {
 
    case 'A3':
 
-		$DocumentPaper = 'A3'; 
+		$DocumentPaper = 'A3';
 		$DocumentOrientation ='P';
-		
+
 		$Page_Width=842;
 		$Page_Height=1190;
 		$Top_Margin=50;
@@ -95,9 +95,9 @@ switch ($PaperSize) {
 
    case 'A3_landscape':
 
-		$DocumentPaper = 'A3'; 
+		$DocumentPaper = 'A3';
 		$DocumentOrientation ='L';
-		
+
 		$Page_Width=1190;
 		$Page_Height=842;
 		$Top_Margin=50;
@@ -107,10 +107,10 @@ switch ($PaperSize) {
 		break;
 
    case 'letter':
-		
-		$DocumentPaper = 'LETTER'; 
+
+		$DocumentPaper = 'LETTER';
 		$DocumentOrientation ='P';
-		
+
 		$Page_Width=612;
 		$Page_Height=792;
 		$Top_Margin=30;
@@ -121,9 +121,9 @@ switch ($PaperSize) {
 
    case 'letter_landscape':
 
-		$DocumentPaper = 'LETTER'; 
+		$DocumentPaper = 'LETTER';
 		$DocumentOrientation ='L';
-		
+
 		$Page_Width=792;
 		$Page_Height=612;
 		$Top_Margin=30;
@@ -131,12 +131,12 @@ switch ($PaperSize) {
 		$Left_Margin=30;
 		$Right_Margin=25;
 		break;
-		
+
    case 'legal':
 
-		$DocumentPaper = 'LEGAL'; 
+		$DocumentPaper = 'LEGAL';
 		$DocumentOrientation ='P';
-		
+
 		$Page_Width=612;
 		$Page_Height=1008;
 		$Top_Margin=50;
@@ -147,9 +147,9 @@ switch ($PaperSize) {
 
    case 'legal_landscape':
 
-		$DocumentPaper = 'LEGAL'; 
+		$DocumentPaper = 'LEGAL';
 		$DocumentOrientation ='L';
-	
+
 		$Page_Width=1008;
 		$Page_Height=612;
 		$Top_Margin=50;

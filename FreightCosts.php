@@ -28,7 +28,7 @@ if (isset($_GET['SelectedFreightCost'])){
 if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT shippername, shipper_id FROM shippers";
 	$ShipperResults = DB_query($sql,$db);
@@ -46,8 +46,8 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 				<td>' . _('Select the warehouse') . ' (' . _('ship from location') . ')</td>
 				<td><select name="LocationFrom">';
 
-	$sql = "SELECT loccode, 
-					locationname 
+	$sql = "SELECT loccode,
+					locationname
 			FROM locations";
 	$LocationResults = DB_query($sql,$db);
 
@@ -58,7 +58,7 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	echo '</select></td></tr>
 			</table>
 			<br /><div class="centre"><input type="submit" value="' . _('Accept') . '" name="Accept" /></div>
-            </div>
+			</div>
 			</form>';
 
 } else {
@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['FixedPrice'] ."',
 											'" . $_POST['MinimumChg'] . "'
 										)";
-							
+
 		$msg = _('Freight cost record inserted');
 
 	}
@@ -197,7 +197,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 				WHERE freightcosts.locationfrom = '".$LocationFrom. "'
 				AND freightcosts.shipperid = '" . $ShipperID . "'
 				ORDER BY destination";
-		
+
 	$result = DB_query($sql,$db);
 
 	echo '<br /><table class="selection">';
@@ -272,7 +272,7 @@ if (isset($SelectedFreightCost)) {
 if (isset($LocationFrom) AND isset($ShipperID)) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedFreightCost)) {
@@ -340,7 +340,7 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 	echo '</table><br />';
 
 	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
-    echo '</div>';
+	echo '</div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

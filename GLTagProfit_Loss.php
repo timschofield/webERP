@@ -17,7 +17,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $title . '
@@ -39,9 +39,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				<td>' . _('Select Period From') . ':</td>
 				<td><select name="FromPeriod">';
 
-	$sql = "SELECT periodno, 
-					lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT periodno,
+					lastdate_in_period
+			FROM periods
 			ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);
 
@@ -103,11 +103,11 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	$result=DB_query($SQL,$db);
 	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
-    	if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
+		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
 			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
-    	} else {
+		} else {
 			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
-    	}
+		}
 	}
 	echo '</select></td></tr>';
 // End select tag
@@ -155,8 +155,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT lastdate_in_period
+			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
@@ -465,7 +465,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 		<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -479,8 +479,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT lastdate_in_period
+			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
@@ -508,7 +508,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
 					gltrans.account";
-		
+
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 	$sql="SELECT tagdescription FROM tags WHERE tagref='".$_POST['tag'] . "'";
@@ -645,7 +645,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 					echo '<tr>
 							<td colspan="2"></td>
-	      					<td><hr /></td>
+		  					<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 						</tr>';
@@ -686,7 +686,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 								<td class="number">%s</td>
 							</tr>',
 							locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']));
-	
+
 					if ($TotalIncome !=0){
 						$PrdGPPercent = 100*($TotalIncome - $SectionPrdActual)/$TotalIncome;
 					} else {
@@ -732,7 +732,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							<td colspan="6"><h4><b>%s</b></h4></td>
 						</tr>',
 						$myrow['groupname']);
-				
+
 				echo $TableHeader;
 			}
 		}
@@ -900,7 +900,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td class="number"><i>' . locale_number_format($PrdGPPercent,1) . '%</i></td>
 					<td></td>
 				</tr>';
-					
+
 			$j++;
 		}
 
@@ -928,7 +928,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			<td class="number">%s</td>
 			</tr>',
 			locale_number_format($PeriodProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']));
-	
+
 	echo '<tr>
 			<td colspan="2"></td>
 			<td colspan="4"><hr /></td>

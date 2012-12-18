@@ -34,7 +34,7 @@ if (!isset($_GET['OrderNo'])) {
 
 	echo '<table class="table_index">
 		<tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+				<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
 	include('includes/footer.inc');
 	exit;
@@ -48,12 +48,12 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 			www_users.realname,
 			locations.locationname,
 			currencies.decimalplaces AS currdecimalplaces
-		FROM purchorders 
+		FROM purchorders
 		INNER JOIN locations
 		ON locations.loccode=purchorders.intostocklocation
 		INNER JOIN suppliers
 		ON purchorders.supplierno = suppliers.supplierid
-		INNER JOIN currencies 
+		INNER JOIN currencies
 		ON suppliers.currcode = currencies.currabrev
 		LEFT JOIN www_users
 		ON purchorders.initiator=www_users.userid
@@ -68,10 +68,10 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 	} else {
 		prnMsg ( _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either several purchase orders'), 'error');
 	}
-        echo '<table class="table_index">
-                <tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-                </td></tr></table>';
+		echo '<table class="table_index">
+				<tr><td class="menu_group_item">
+				<li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+				</td></tr></table>';
 
 	include('includes/footer.inc');
 	exit;
@@ -171,14 +171,14 @@ while ($myrow=DB_fetch_array($LineItemsResult)) {
 	// if overdue and outstanding quantities, then highlight as so
 	if (($myrow['quantityord'] - $myrow['quantityrecd'] > 0)
 	  	AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
-    	 	echo '<tr class="OsRow">';
+		 	echo '<tr class="OsRow">';
 	} else {
-    		if ($k==1){
-    			echo '<tr class="EvenTableRows">';
-    			$k=0;
-    		} else {
-    			echo '<tr class="OddTableRows">';
-    			$k=1;
+			if ($k==1){
+				echo '<tr class="EvenTableRows">';
+				$k=0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k=1;
 		}
 	}
 

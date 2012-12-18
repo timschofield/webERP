@@ -31,10 +31,10 @@ echo $TableHeader;
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">
-      <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-      <input type="hidden" name="LineNo" value="' . $LineNo . '">
-      <input type="hidden" name="StockID" value="' . $StockID . '">
-      <input type="hidden" name="EntryType" value="SEQUENCE">';
+	  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	  <input type="hidden" name="LineNo" value="' . $LineNo . '">
+	  <input type="hidden" name="StockID" value="' . $StockID . '">
+	  <input type="hidden" name="EntryType" value="SEQUENCE">';
 if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;
 } elseif ( isset($_POST['EditControlled']) ){

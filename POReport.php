@@ -548,7 +548,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						<th>' . _('Item Due') . '</th>
 						<th>' . _('Part Description') . '</th>
 						</tr>';
-						
+
 				$linectr = 0;
 				$k = 0;
 				while ($myrow = DB_fetch_array($result)) {
@@ -673,7 +673,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							$myrow['linestatus'],
 							ConvertSQLDate($myrow['deliverydate']),
 							$myrow['description']);
-							
+
 					$LastDecimalPlaces = $myrow['decimalplaces'];
 					$TotalQty += $myrow['quantityord'];
 					$TotalExtCost += $myrow['extcost'];
@@ -814,10 +814,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						locale_number_format($TotalExtPrice,2),
 						locale_number_format($TotalInvQty,2),
 						' ');
-            echo '</table>';
+			echo '</table>';
 		} // End of if ($_POST['ReportType']
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>';
+		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="ReportType" value="'.$_POST['ReportType'].'" />';
 		echo '<input type="hidden" name="DateType" value="'.$_POST['DateType'].'" />';
@@ -836,7 +836,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		echo '<input type="hidden" name="SummaryType" value="'.$_POST['SummaryType'].'" />';
 		echo '<br /><div class="centre"><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '" /></div>';
 		echo '</div>
-              </form>';
+			  </form>';
 	} // End of if inputerror != 1
 } // End of function submit()
 
@@ -1497,7 +1497,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // the page is called.
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
@@ -1517,7 +1517,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr>
 		<td>' . _('Date Range') . ':</td>
 		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
-        <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+		<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 
 	echo '<tr><td>' . _('Part Number') . ':</td>';
@@ -1526,8 +1526,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
 	echo '&nbsp;&nbsp;<input type="text" name="PartNumber" size="20" maxlength="20" value="';
-    if (isset($_POST['PartNumber'])) {
-        echo $_POST['PartNumber'] . '" /></td></tr>';
+	if (isset($_POST['PartNumber'])) {
+		echo $_POST['PartNumber'] . '" /></td></tr>';
 	} else {
 		echo '" /></td></tr>';
 	}
@@ -1538,8 +1538,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
 	echo '&nbsp;&nbsp;<input type="text" name="SupplierId" size="10" maxlength="10" value="';
-    if (isset($_POST['SupplierId'])) {
-        echo $_POST['SupplierId'] . '" /></td></tr>';
+	if (isset($_POST['SupplierId'])) {
+		echo $_POST['SupplierId'] . '" /></td></tr>';
 	} else {
 		echo  '" /></td></tr>';
 	}
@@ -1559,8 +1559,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr><td>' . _('Order Number') . ':</td>';
 	echo '<td>'._('Equals').':&nbsp;&nbsp;';
 	echo '<input type="text" name="OrderNo" size="10" maxlength="10" value="';
-    if (isset($_POST['OrderNo'])) {
-        echo $_POST['OrderNo'] . '" /></td></tr>';
+	if (isset($_POST['OrderNo'])) {
+		echo $_POST['OrderNo'] . '" /></td></tr>';
 	} else {
 		echo  '" /></td></tr>';
 	}
@@ -1587,7 +1587,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="purchorderdetails.orderno">' . _('Order Number') . '</option>';
 	echo '<option value="purchorderdetails.itemcode">' . _('Part Number') . '</option>';
 	echo '<option value="suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Number') . '</option>';
-	echo '<option value="suppliers.suppname,suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Name') . '</option>'; 
+	echo '<option value="suppliers.suppname,suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Name') . '</option>';
 	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '<tr><td>&nbsp;</td></tr>';
@@ -1612,7 +1612,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	</table>
 	<br/>';
    echo '</div>
-         </form>';
+		 </form>';
 
 } // End of function display()
 

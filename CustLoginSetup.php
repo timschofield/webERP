@@ -162,7 +162,7 @@ echo '<tr>
 			<td>' . _('Email Address') .':</td>
 			<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
 		</tr>
-        <tr>
+		<tr>
 		<td><input type="hidden" name="Access" value="1" />
 			' . _('Branch Code') . ':</td>
 			<td><select name="BranchCode">';
@@ -272,7 +272,7 @@ echo '</select></td>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
 
 if (isset($_GET['SelectedUser'])) {

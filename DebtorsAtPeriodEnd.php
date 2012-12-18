@@ -42,8 +42,8 @@ if (isset($_POST['PrintPDF'])
 					) AS fxafterdatetrans
 			FROM debtorsmaster INNER JOIN currencies
 			ON debtorsmaster.currcode = currencies.currabrev
-			INNER JOIN debtortrans 
-			ON debtorsmaster.debtorno = debtortrans.debtorno 
+			INNER JOIN debtortrans
+			ON debtorsmaster.debtorno = debtortrans.debtorno
 			WHERE debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 			AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY debtorsmaster.debtorno,
@@ -114,9 +114,9 @@ if (isset($_POST['PrintPDF'])
 
 	$LeftOvers = $pdf->addTextWrap(50,$YPos,160,$FontSize,_('Total balances'),'left');
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-	
+
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
@@ -130,8 +130,8 @@ if (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-              <div>';
-        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+			  <div>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table class="selection">';
 		echo '<tr>
@@ -163,7 +163,7 @@ if (isset($_POST['PrintPDF'])
 		<div class="centre">
 			<input tabindex="5" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 	include('includes/footer.inc');

@@ -183,9 +183,9 @@ if (isset($_POST['submit'])) {
 
 $sql = "SELECT prices.price,
 				prices.currabrev,
-               prices.typeabbrev,
-               prices.startdate,
-               prices.enddate
+			   prices.typeabbrev,
+			   prices.startdate,
+			   prices.enddate
 		FROM prices
 		WHERE  prices.stockid='" . $Item . "'
 		AND prices.typeabbrev='". $SalesType ."'
@@ -227,7 +227,7 @@ echo '</table></td><td valign="top">';
 //now get the prices for the customer selected
 
 $sql = "SELECT prices.price,
-               prices.branchcode,
+			   prices.branchcode,
 			   custbranch.brname,
 			   prices.startdate,
 			   prices.enddate
@@ -253,7 +253,7 @@ if (DB_num_rows($result) == 0) {
 } else {
 /*THERE IS ALREADY A spl price setup */
 	echo '<tr><th>' . _('Special Price') .
-	     '</th><th>' . _('Branch') . '</th></tr>';
+		 '</th><th>' . _('Branch') . '</th></tr>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -351,7 +351,7 @@ echo '<tr>
 		<td><input type="text" name="EndDate" class="date" alt="'.$_SESSION['DefaultDateFormat']. '" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('Price') . ':</td>
-          <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" /></td>
+		  <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" /></td>
 		</tr>
 	</table>';
 
@@ -360,7 +360,7 @@ echo '<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 include('includes/footer.inc');

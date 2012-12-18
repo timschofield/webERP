@@ -61,9 +61,9 @@ if (isset($_POST['SummaryType'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType);
+	submit($db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType);
 } else {
-    display($db);
+	display($db);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
@@ -108,79 +108,79 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	// Variables that end with Op - meaning operator - are either = or LIKE
 	$WherePart = ' ';
 	if (mb_strlen($PartNumber) > 0 AND $PartNumberOp == 'LIKE') {
-	    $PartNumber = $PartNumber . '%';
+		$PartNumber = $PartNumber . '%';
 	} else {
-	    $PartNumberOp = '=';
+		$PartNumberOp = '=';
 	}
 	if (mb_strlen($PartNumber) > 0) {
-	    $WherePart = " AND salesorderdetails.stkcode " . $PartNumberOp . " '" . $PartNumber . "'  ";
+		$WherePart = " AND salesorderdetails.stkcode " . $PartNumberOp . " '" . $PartNumber . "'  ";
 	}
 
 	$WhereDebtorNo = ' ';
 	if ($DebtorNoOp == 'LIKE') {
-	    $DebtorNo = $DebtorNo . '%';
+		$DebtorNo = $DebtorNo . '%';
 	} else {
-	    $DebtorNoOp = '=';
+		$DebtorNoOp = '=';
 	}
 	if (mb_strlen($DebtorNo) > 0) {
-	    $WhereDebtorNo = " AND salesorders.debtorno " . $DebtorNoOp . " '" . $DebtorNo . "'  ";
+		$WhereDebtorNo = " AND salesorders.debtorno " . $DebtorNoOp . " '" . $DebtorNo . "'  ";
 	} else {
 		$WhereDebtorNo = ' ';
 	}
 
 	$WhereDebtorName = ' ';
 	if (mb_strlen($DebtorName) > 0 AND $DebtorNameOp == 'LIKE') {
-	    $DebtorName = $DebtorName . '%';
+		$DebtorName = $DebtorName . '%';
 	} else {
-	    $DebtorNameOp = '=';
+		$DebtorNameOp = '=';
 	}
 	if (mb_strlen($DebtorName) > 0) {
-	    $WhereDebtorName = " AND debtorsmaster.name " . $DebtorNameOp . " '" . $DebtorName . "'  ";
+		$WhereDebtorName = " AND debtorsmaster.name " . $DebtorNameOp . " '" . $DebtorName . "'  ";
 	}
 	if (mb_strlen($_POST['OrderNo']) > 0) {
-	    $WhereOrderNo = " AND salesorderdetails.orderno = " . " '" . $_POST['OrderNo'] . "'  ";
+		$WhereOrderNo = " AND salesorderdetails.orderno = " . " '" . $_POST['OrderNo'] . "'  ";
 	} else {
 		$WhereOrderNo =  " ";
 	}
 
-    $WhereLineStatus = ' ';
-    # Had to use IF statement instead of comparing 'linestatus' to $_POST['LineStatus']
-    #in WHERE clause because the WHERE clause did not recognize
-    # that had used the IF statement to create a field caused linestatus
-    if ($_POST['LineStatus'] != 'All') {
-        $WhereLineStatus = " AND IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
+	$WhereLineStatus = ' ';
+	# Had to use IF statement instead of comparing 'linestatus' to $_POST['LineStatus']
+	#in WHERE clause because the WHERE clause did not recognize
+	# that had used the IF statement to create a field caused linestatus
+	if ($_POST['LineStatus'] != 'All') {
+		$WhereLineStatus = " AND IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced ||
 		  salesorderdetails.completed = 1,'Completed','Open') = '" . $_POST['LineStatus'] . "'";
-    }
+	}
 
-    // The following is from PDFCustomerList.php and shows how to set up WHERE clause
-    // for multiple selections from Areas - decided to just allow selection of one Area at
-    // a time, so used simpler code
+	// The following is from PDFCustomerList.php and shows how to set up WHERE clause
+	// for multiple selections from Areas - decided to just allow selection of one Area at
+	// a time, so used simpler code
 	 $WhereArea = ' ';
-    if ($_POST['Area'] != 'All') {
-        $WhereArea = " AND custbranch.area = '" . $_POST['Area'] . "'";
-    }
+	if ($_POST['Area'] != 'All') {
+		$WhereArea = " AND custbranch.area = '" . $_POST['Area'] . "'";
+	}
 
 	 $WhereSalesman = ' ';
-    if ($_POST['Salesman'] != 'All') {
+	if ($_POST['Salesman'] != 'All') {
 
-        $WhereSalesman = " AND custbranch.salesman = '" . $_POST['Salesman'] . "'";
-    }
+		$WhereSalesman = " AND custbranch.salesman = '" . $_POST['Salesman'] . "'";
+	}
 
  	 $WhereCategory = ' ';
-    if ($_POST['Category'] != 'All') {
-        $WhereCategory = " AND stockmaster.categoryid = '" . $_POST['Category'] . "'";
-    }
+	if ($_POST['Category'] != 'All') {
+		$WhereCategory = " AND stockmaster.categoryid = '" . $_POST['Category'] . "'";
+	}
 
 // Only used for Invoice Date type where tempstockmoves is the main table
  	 $WhereType = " AND (tempstockmoves.type='10' OR tempstockmoves.type='11')";
-    if ($_POST['InvoiceType'] != 'All') {
-        $WhereType = " AND tempstockmoves.type = '" . $_POST['InvoiceType'] . "'";
-    }
-    if ($InputError !=1) {
+	if ($_POST['InvoiceType'] != 'All') {
+		$WhereType = " AND tempstockmoves.type = '" . $_POST['InvoiceType'] . "'";
+	}
+	if ($InputError !=1) {
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		if ($_POST['ReportType'] == 'Detail') {
-		    if ($_POST['DateType'] == 'Order') {
+			if ($_POST['DateType'] == 'Order') {
 				$sql = "SELECT salesorderdetails.orderno,
 							   salesorderdetails.stkcode,
 							   salesorderdetails.itemdue,
@@ -217,7 +217,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 						$WhereCategory .
 						"ORDER BY " . $_POST['SortBy'];
 			  } else {
-			    // Selects by tempstockmoves.trandate not order date
+				// Selects by tempstockmoves.trandate not order date
 				$sql = "SELECT salesorderdetails.orderno,
 							   salesorderdetails.stkcode,
 							   salesorderdetails.itemdue,
@@ -261,7 +261,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 						$WhereSalesman .
 						$WhereCategory .
 						"ORDER BY " . $_POST['SortBy'];
-		    }
+			}
 		} else {
 		  // sql for Summary report
 		  $orderby = $_POST['SummaryType'];
@@ -269,11 +269,11 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		  // summaries, you group and order on the same field; with 'extprice', you are actually
 		  // grouping on the stkcode and ordering by extprice descending
 		  if ($_POST['SummaryType'] == 'extprice') {
-		      $_POST['SummaryType'] = 'stkcode';
-		      $orderby = 'extprice DESC';
+			  $_POST['SummaryType'] = 'stkcode';
+			  $orderby = 'extprice DESC';
 		  }
 		  if ($_POST['DateType'] == 'Order') {
-		      if ($_POST['SummaryType'] == 'extprice' OR $_POST['SummaryType'] == 'stkcode') {
+			  if ($_POST['SummaryType'] == 'extprice' OR $_POST['SummaryType'] == 'stkcode') {
 					$sql = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
@@ -307,8 +307,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'orderno') {
 					$sql = "SELECT salesorderdetails.orderno,
-					               salesorders.debtorno,
-					               debtorsmaster.name,
+								   salesorders.debtorno,
+								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
@@ -337,11 +337,11 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 								   debtorsmaster.name
 								   ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'debtorno' OR $_POST['SummaryType'] == 'name') {
-				    if ($_POST['SummaryType'] == 'name') {
-				        $orderby = 'name';
-				    }
+					if ($_POST['SummaryType'] == 'name') {
+						$orderby = 'name';
+					}
 					$sql = "SELECT debtorsmaster.debtorno,
-					               debtorsmaster.name,
+								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) as extprice,
@@ -487,8 +487,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							ORDER BY " . $orderby;
 				}
 		   } else {
-		        // Selects by tempstockmoves.trandate not order date
-		      if ($_POST['SummaryType'] == 'extprice' OR $_POST['SummaryType'] == 'stkcode') {
+				// Selects by tempstockmoves.trandate not order date
+			  if ($_POST['SummaryType'] == 'extprice' OR $_POST['SummaryType'] == 'stkcode') {
 					$sql = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
@@ -501,13 +501,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
-						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.stockid=salesorderdetails.stkcode
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
 							$WherePart .
@@ -524,8 +524,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'orderno') {
 					$sql = "SELECT salesorderdetails.orderno,
-					               salesorders.debtorno,
-					               debtorsmaster.name,
+								   salesorders.debtorno,
+								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
@@ -536,13 +536,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
-						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.stockid=salesorderdetails.stkcode
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
 							$WherePart .
@@ -559,11 +559,11 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							  debtorsmaster.name
 							ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'debtorno' OR $_POST['SummaryType'] == 'name') {
-				    if ($_POST['SummaryType'] == 'name') {
-				        $orderby = 'name';
-				    }
+					if ($_POST['SummaryType'] == 'name') {
+						$orderby = 'name';
+					}
 					$sql = "SELECT debtorsmaster.debtorno,
-					               debtorsmaster.name,
+								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
 								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
@@ -574,13 +574,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
-						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.stockid=salesorderdetails.stkcode
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
 							$WherePart .
@@ -608,13 +608,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
-						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.stockid=salesorderdetails.stkcode
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
 							$WherePart .
@@ -628,7 +628,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",monthname
-						    ORDER BY " . $orderby;
+							ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'categoryid') {
 					$sql = "SELECT stockmaster.categoryid,
 								   stockcategory.categorydescription,
@@ -642,13 +642,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
-						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.stockid=salesorderdetails.stkcode
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
 							$WherePart .
@@ -662,7 +662,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",categorydescription
-						    ORDER BY " . $orderby;
+							ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'salesman') {
 					$sql = "SELECT custbranch.salesman,
 								   salesman.salesmanname,
@@ -676,13 +676,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
-						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.stockid=salesorderdetails.stkcode
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
 							$WherePart .
@@ -696,7 +696,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",salesmanname
-						    ORDER BY " . $orderby;
+							ORDER BY " . $orderby;
 				} elseif ($_POST['SummaryType'] == 'area') {
 					$sql = "SELECT custbranch.area,
 								   areas.areadescription,
@@ -710,13 +710,13 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = custbranch.salesman
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE tempstockmoves.trandate >='" . $FromDate . "'
 							 AND tempstockmoves.trandate <='" . $ToDate . "'
-						     AND tempstockmoves.stockid=salesorderdetails.stkcode
+							 AND tempstockmoves.stockid=salesorderdetails.stkcode
 							 AND tempstockmoves.hidemovt=0
 							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" .
 							$WherePart .
@@ -730,7 +730,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",areas.areadescription
-						    ORDER BY " . $orderby;
+							ORDER BY " . $orderby;
 				}
 		   }
 		} // End of if ($_POST['ReportType']
@@ -755,8 +755,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 	$Summary_Array['salesman'] =  _('Salesman');
 	$Summary_Array['area'] = _('Sales Area');
 	$Summary_Array['transno'] = _('Transaction Number');
-    // Create array for sort for detail report to display in header
-    $Detail_Array['salesorderdetails.orderno'] = _('Order Number');
+	// Create array for sort for detail report to display in header
+	$Detail_Array['salesorderdetails.orderno'] = _('Order Number');
 	$Detail_Array['salesorderdetails.stkcode'] = _('Stock Code');
 	$Detail_Array['debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Code');
 	$Detail_Array['debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno'] = _('Customer Name');
@@ -764,15 +764,15 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 
 		// Display Header info
 		if ($_POST['ReportType'] == 'Summary') {
-		    $SortBy_Display = $Summary_Array[$SaveSummaryType];
+			$SortBy_Display = $Summary_Array[$SaveSummaryType];
 		} else {
-		    $SortBy_Display = $Detail_Array[$_POST['SortBy']];
+			$SortBy_Display = $Detail_Array[$_POST['SortBy']];
 		}
 		echo '  ' . _('Sales Inquiry') . ' - ' . $_POST['ReportType'] . ' ' . _('By') . ' ' . $SortBy_Display . '<br/>';
 		if ($_POST['OrderType'] == '0') {
-		    echo '  ' . _('Order Type - Sales Orders') . '<br/>';
+			echo '  ' . _('Order Type - Sales Orders') . '<br/>';
 		} else {
-		    echo '  ' . _('Order Type - Quotations') . '<br/>';
+			echo '  ' . _('Order Type - Quotations') . '<br/>';
 		}
 		echo '  ' . _('Date Type') . ' - ' . $_POST['DateType'] . '<br/>';
 		echo '  ' . _('Date Range') . ' - ' . $_POST['FromDate'] . ' ' . _('To') . ' ' .  $_POST['ToDate'] . '<br/>';
@@ -790,17 +790,17 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 		echo '  ' . _('Salesman') . '  - ' . $_POST['Salesman'] . '<br/>';
 		echo '  ' . _('Sales Area') . '  - ' . $_POST['Area'] . '<br/>';
 		If ($_POST['DateType'] != 'Order') {
-		    $itype = 'All';
-		    if ($_POST['InvoiceType'] == '10') {
-		        $itype = 'Sales Invoice';
-		    } elseif ($_POST['InvoiceType'] == '11') {
-		        $itype = 'Credit Notes';
-		    }
-		    echo '  ' . _('Invoice Type') . '  - ' . $itype . '<br/>';
-        }
+			$itype = 'All';
+			if ($_POST['InvoiceType'] == '10') {
+				$itype = 'Sales Invoice';
+			} elseif ($_POST['InvoiceType'] == '11') {
+				$itype = 'Credit Notes';
+			}
+			echo '  ' . _('Invoice Type') . '  - ' . $itype . '<br/>';
+		}
 		echo '<br/><br/>';
 		if ($_POST['ReportType'] == 'Detail') {
-		    if ($_POST['DateType'] == 'Order') {
+			if ($_POST['DateType'] == 'Order') {
 				printf('%10s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %14s | %12s | %-10s | %-10s | %-10s | %-40s ',
 					 _('Order No'),
 					 _('Stock Code'),
@@ -818,7 +818,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					 _('Area'),
 					 _('Item Description'));
 			} else {
-			    // Headings for Invoiced Date
+				// Headings for Invoiced Date
 				printf('%10s | %14s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %12s | %-10s | %-10s | %-10s | %-40s ',
 					 _('Order No'),
 					 _('Trans. No'),
@@ -839,8 +839,8 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				print '<br/><br/>';
 				$linectr = 0;
 			while ($myrow = DB_fetch_array($result)) {
-			    $linectr++;
-			    if ($_POST['DateType'] == 'Order') {
+				$linectr++;
+				if ($_POST['DateType'] == 'Order') {
 					printf('%10s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %14s | %12s | %-10s | %-10s | %-10s | %-40s ',
 					$myrow['orderno'],
 					$myrow['stkcode'],
@@ -860,7 +860,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 					print '<br/>';
 					$TotalQty += $myrow['quantity'];
 				} else {
-				    // Detail for Invoiced Date
+					// Detail for Invoiced Date
 					printf('%10s | %14s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %12s | %-10s | %-10s | %-10s | %-40s ',
 					$myrow['orderno'],
 					$myrow['transno'],
@@ -984,19 +984,19 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 				$column7 = ' ';
 				$linectr = 0;
 			while ($myrow = DB_fetch_array($result)) {
-			    $linectr++;
+				$linectr++;
 				if ($SummaryType == 'orderno') {
-				    $column7 = $myrow['name'];
+					$column7 = $myrow['name'];
 				}
 				if ($SummaryType == 'transno') {
-				    $column7 =  $myrow['orderno'];
+					$column7 =  $myrow['orderno'];
 				}
 				if ($_POST['DateType'] == 'Order') {
-				    // quantity is from salesorderdetails
-				    $DisplayQty = $myrow['quantity'];
+					// quantity is from salesorderdetails
+					$DisplayQty = $myrow['quantity'];
 				} else {
-				    // qty is from stockmoves
-				    $DisplayQty = $myrow['qty'];
+					// qty is from stockmoves
+					$DisplayQty = $myrow['qty'];
 				}
 				printf('    %-30s | %-40s | %12s | %14s | %14s | %14s |  %-40s',
 				$myrow[$SummaryType],
@@ -1025,7 +1025,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 			echo '</pre>';
 		} // End of if ($_POST['ReportType']
 
-    } // End of if inputerror != 1
+	} // End of if inputerror != 1
 } // End of function submit()
 
 
@@ -1035,7 +1035,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // the page is called.
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
+		  <div>
 			<br/>
 			<br/>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -1125,14 +1125,14 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	if (!isset($_POST['OrderNo'])){
 		$_POST['OrderNo']='';
 	}
-    echo '<tr>
+	echo '<tr>
 			<td>' . _('Order Number') . ':</td>
 			<td>' . _('Equals') . '</td>
 			<td>&nbsp;</td>
 			<td><input type="text" name="OrderNo" size="10" maxlength="10" value="' . $_POST['OrderNo'] . '" /></td>
 		</tr>';
 
-    echo '<tr>
+	echo '<tr>
 			<td>' . _('Line Item Status') . ':</td>
 			<td><select name="LineStatus">
 				<option selected="selected" value="All">' . _('All') . '</option>
@@ -1176,7 +1176,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '</select></td></tr>';
 
 	echo '<tr><td>&nbsp;</td></tr>';
-    echo '<tr>
+	echo '<tr>
 			<td>' . _('Sort By') . ':</td>
 			<td><select name="SortBy">
 				<option selected="selected" value="salesorderdetails.orderno">' . _('Order Number') . '</option>
@@ -1194,7 +1194,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 		<tr><td>&nbsp;</td></tr>';
 
 	echo '<tr><td>&nbsp;</td></tr>';
-    echo '<tr><td>' . _('Summary Type') . ':</td>
+	echo '<tr><td>' . _('Summary Type') . ':</td>
 			<td><select name="SummaryType">
 				<option selected="selected" value="orderno">' . _('Order Number') . '</option>
 				<option value="transno">' . _('Transaction Number') . '</option>
@@ -1221,7 +1221,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 		</table>
 	<br />';
    echo '</div>
-         </form>';
+		 </form>';
 
 } // End of function display()
 
@@ -1241,19 +1241,19 @@ function TempStockmoves(&$db) {
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = "INSERT tempstockmoves
-	          SELECT * FROM stockmoves
-	          WHERE (stockmoves.type='10' OR stockmoves.type='11')
-	          AND stockmoves.trandate >='" . $FromDate .
+			  SELECT * FROM stockmoves
+			  WHERE (stockmoves.type='10' OR stockmoves.type='11')
+			  AND stockmoves.trandate >='" . $FromDate .
 			  "' AND stockmoves.trandate <='" . $ToDate . "'";
 	$ErrMsg = _('The SQL to insert temporary stockmoves records failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$sql = "UPDATE tempstockmoves, stockmoves
-	          SET tempstockmoves.reference = stockmoves.reference
-	          WHERE tempstockmoves.type='11'
-	            AND SUBSTR(tempstockmoves.reference,10,10) = stockmoves.transno
-                AND tempstockmoves.stockid = stockmoves.stockid
-                AND stockmoves.type ='10'";
+			  SET tempstockmoves.reference = stockmoves.reference
+			  WHERE tempstockmoves.type='11'
+				AND SUBSTR(tempstockmoves.reference,10,10) = stockmoves.transno
+				AND tempstockmoves.stockid = stockmoves.stockid
+				AND stockmoves.type ='10'";
 	$ErrMsg = _('The SQL to update tempstockmoves failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 

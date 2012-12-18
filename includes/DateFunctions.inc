@@ -296,7 +296,7 @@ function ConvertSQLDateTime($DateEntry) {
 		}
 	}
 
-	if (mb_strlen($Date_Array[2])>4) {  
+	if (mb_strlen($Date_Array[2])>4) {
 		$Time = mb_substr($Date_Array[2],3,8);
 		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
 	}
@@ -559,10 +559,10 @@ and converts to a yyyy/mm/dd format */
 }// end of function
 
 function FormatDateWithTimeForSQL ($datetime) {
-    //  Split the time off, fix date and add the time to returned value.
-    $dt = explode(' ', $datetime);
+	//  Split the time off, fix date and add the time to returned value.
+	$dt = explode(' ', $datetime);
 
-    return FormatDateForSQL( $dt[0] ) . ' ' . $dt[1];
+	return FormatDateForSQL( $dt[0] ) . ' ' . $dt[1];
 }
 
 function LastDayOfMonth ( $DateEntry) {

@@ -303,24 +303,24 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	while ($myrow=DB_fetch_array($MovtsResult)) {
 	  if ($LastPrice != $myrow['price']
 			OR $LastDiscount != $myrow['discount']) { /* consolidate price history for records with same price/discount */
-	    if (isset($qty)) {
-	    	$DateRange=ConvertSQLDate($FromDate);
-	    	if ($FromDate != $ToDate) {
-	        	$DateRange .= ' - ' . ConvertSQLDate($ToDate);
-	     	}
-	    	$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
-	    	$k++;
-	    	if ($k > 9) {
-                  break; /* 10 price records is enough to display */
-                }
-	    	if ($myrow['trandate'] < FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'y', -1))) {
-	    	  break; /* stop displaying pirce history more than a year old once we have at least one  to display */
-   	        }
-	    }
-	    $LastPrice = $myrow['price'];
-	    $LastDiscount = $myrow['discountpercent'];
-	    $ToDate = $myrow['trandate'];
-	    $qty = 0;
+		if (isset($qty)) {
+			$DateRange=ConvertSQLDate($FromDate);
+			if ($FromDate != $ToDate) {
+				$DateRange .= ' - ' . ConvertSQLDate($ToDate);
+		 	}
+			$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
+			$k++;
+			if ($k > 9) {
+				  break; /* 10 price records is enough to display */
+				}
+			if ($myrow['trandate'] < FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'y', -1))) {
+			  break; /* stop displaying pirce history more than a year old once we have at least one  to display */
+   			}
+		}
+		$LastPrice = $myrow['price'];
+		$LastDiscount = $myrow['discountpercent'];
+		$ToDate = $myrow['trandate'];
+		$qty = 0;
 	  }
 	  $qty += $myrow['qty'];
 	  $FromDate = $myrow['trandate'];
@@ -335,7 +335,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	if (isset($PriceHistory)) {
 	  echo '<br />
 			<table class="selection">';
-      echo '<tr>
+	  echo '<tr>
 				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
 			</tr>';
 	  $tableheader = '<tr>

@@ -12,7 +12,7 @@ echo '<div class="centre">
 	<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $title . '
 	</p>
-    </div>';
+	</div>';
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 			OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['creditorsact']
 			OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['grnact']
 			OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['grnact']){
-				
+
 		prnMsg(_('The accounts selected to post cost or accumulated depreciation to cannot be either of the debtors control account, creditors control account or GRN suspense accounts'),'error');
 		$InputError =1;
 	}
@@ -80,14 +80,14 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE fixedassetcategories 
+		$sql = "UPDATE fixedassetcategories
 					SET categorydescription = '" . $_POST['CategoryDescription'] . "',
 						costact = '" . $_POST['CostAct'] . "',
 						depnact = '" . $_POST['DepnAct'] . "',
 						disposalact = '" . $_POST['DisposalAct'] . "',
 						accumdepnact = '" . $_POST['AccumDepnAct'] . "'
 				WHERE categoryid = '".$SelectedCategory . "'";
-				
+
 		$ErrMsg = _('Could not update the fixed asset category') . $_POST['CategoryDescription'] . _('because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -200,7 +200,7 @@ or deletion of the records*/
 	}
 	//END WHILE LIST LOOP
 	echo '</table>
-          <br />';
+		  <br />';
 }
 
 //end of ifs and buts!
@@ -257,7 +257,7 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 $sql = "SELECT accountcode,
 				 accountname
 		FROM chartmaster INNER JOIN accountgroups
-		ON chartmaster.group_=accountgroups.groupname 
+		ON chartmaster.group_=accountgroups.groupname
 		WHERE accountgroups.pandl=0
 		ORDER BY accountcode";
 
@@ -266,7 +266,7 @@ $BSAccountsResult = DB_query($sql,$db);
 $sql = "SELECT accountcode,
 				 accountname
 		FROM chartmaster INNER JOIN accountgroups
-		ON chartmaster.group_=accountgroups.groupname 
+		ON chartmaster.group_=accountgroups.groupname
 		WHERE accountgroups.pandl!=0
 		ORDER BY accountcode";
 
@@ -346,7 +346,7 @@ echo '</select></td>
 echo '<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
 
 include('includes/footer.inc');

@@ -1,7 +1,7 @@
 <?php
 /* $Id$*/
 
-include('includes/session.inc');
+i nclude('includes/session.inc');
 $title=_('Check Period Sales Ledger Control Account');
 include('includes/header.inc');
 

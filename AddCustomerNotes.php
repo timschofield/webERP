@@ -162,7 +162,7 @@ echo '<br />';
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo=' . $DebtorNo . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
@@ -244,7 +244,7 @@ if (!isset($_GET['delete'])) {
 			</td>
 		</tr>
 		</table>
-        </div>
+		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

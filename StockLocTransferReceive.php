@@ -411,7 +411,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?'. SID . '" method="post">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	prnMsg(_('Please Verify Shipment Quantities Received'),'info');
@@ -450,11 +450,11 @@ if (isset($_SESSION['Transfer'])){
 
 		echo '<td class="number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
 		if (isset($_POST['Qty' . $i]) AND is_numeric(filter_number_format($_POST['Qty' . $i]))){
-			
+
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= round(filter_number_format($_POST['Qty' . $i]),$TrfLine->DecimalPlaces);
-			
+
 			$Qty = round(filter_number_format($_POST['Qty' . $i]),$TrfLine->DecimalPlaces);
-		
+
 		} else if ($TrfLine->Controlled==1) {
 			if (sizeOf($TrfLine->SerialItems)==0) {
 				$Qty = 0;
@@ -496,7 +496,7 @@ if (isset($_SESSION['Transfer'])){
 			<input type="submit" name="ProcessTransfer" value="'. _('Process Inventory Transfer'). '" />
 			<br />
 		</div>
-        </div>
+		</div>
 		</form>';
 	echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?NewTransfer=true">'. _('Select A Different Transfer').'</a>';
 
@@ -505,7 +505,7 @@ if (isset($_SESSION['Transfer'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$LocResult = DB_query("SELECT locationname, loccode FROM locations ORDER BY locationname",$db);
@@ -571,7 +571,7 @@ if (isset($_SESSION['Transfer'])){
 		prnMsg(_('There are no incoming transfers to this location'), 'info');
 	}
 	echo '</div>
-          </form>';
+		  </form>';
 }
 include('includes/footer.inc');
 ?>

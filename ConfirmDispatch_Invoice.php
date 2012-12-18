@@ -116,7 +116,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items'.$identifier]->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items'.$identifier]->Email = $myrow['contactemail'];
 		$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesperson'];
-		
+
 		$_SESSION['Items'.$identifier]->Location = $myrow['fromstkloc'];
 		$_SESSION['Items'.$identifier]->FreightCost = $myrow['freightcost'];
 		$_SESSION['Old_FreightCost'] = $myrow['freightcost'];
@@ -322,7 +322,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $LnItm) {
 	$_SESSION['Items'.$identifier]->totalVolume += ($LnItm->QtyDispatched * $LnItm->Volume);
 	$_SESSION['Items'.$identifier]->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
 
-    echo $RowStarter;
+	echo $RowStarter;
 	echo '<td>'.$LnItm->StockID.'</td>
 		<td title="'. $LnItm->LongDescription . '">' .$LnItm->ItemDescription.'</td>
 		<td class="number">' . locale_number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</td>
@@ -635,9 +635,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		} //end of loop around items on the order for negative check
 
 		if ($NegativesFound){
-            echo '</div>';
-            echo '</form>';
-            echo '<div class="centre">
+			echo '</div>';
+			echo '</form>';
+			echo '<div class="centre">
 					<input type="submit" name="Update" value="' . _('Update'). '" /></div>';
 			include('includes/footer.inc');
 			exit;
@@ -941,7 +941,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 				/* Need to get the current location quantity
 				will need it later for the stock movement */
-               	$SQL="SELECT locstock.quantity
+			   	$SQL="SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.stockid='" . $OrderLine->StockID . "'
 						AND loccode= '" . $_SESSION['Items'.$identifier]->Location . "'";
@@ -949,8 +949,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$Result = DB_query($SQL, $db, $ErrMsg);
 
 				if (DB_num_rows($Result)==1){
-                       			$LocQtyRow = DB_fetch_row($Result);
-                       			$QtyOnHandPrior = $LocQtyRow[0];
+					   			$LocQtyRow = DB_fetch_row($Result);
+					   			$QtyOnHandPrior = $LocQtyRow[0];
 				} else {
 					/* There must be some error this should never happen */
 					$QtyOnHandPrior = 0;
@@ -988,7 +988,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$StandardCost += ($AssParts['standard'] * $AssParts['quantity']) ;
 					/* Need to get the current location quantity
 					will need it later for the stock movement */
-	                  		$SQL="SELECT locstock.quantity
+					  		$SQL="SELECT locstock.quantity
 							FROM locstock
 							WHERE locstock.stockid='" . $AssParts['component'] . "'
 							AND loccode= '" . $_SESSION['Items'.$identifier]->Location . "'";
@@ -996,9 +996,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Can not retrieve assembly components location stock quantities because ');
 					$DbgMsg = _('The SQL that failed was');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-	                  		if (DB_num_rows($Result)==1){
-	                  			$LocQtyRow = DB_fetch_row($Result);
-	                  			$QtyOnHandPrior = $LocQtyRow[0];
+					  		if (DB_num_rows($Result)==1){
+					  			$LocQtyRow = DB_fetch_row($Result);
+					  			$QtyOnHandPrior = $LocQtyRow[0];
 					} else {
 						/*There must be some error this should never happen */
 						$QtyOnHandPrior = 0;
@@ -1060,7 +1060,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$OrderLine->StandardCost=0;
 			}
 			if ($MBFlag=='B' OR $MBFlag=='M'){
-            			$SQL = "INSERT INTO stockmoves (stockid,
+						$SQL = "INSERT INTO stockmoves (stockid,
 														type,
 														transno,
 														loccode,
@@ -1091,7 +1091,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 														'" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . "',
 														'" . $OrderLine->Narrative . "' )";
 			} else {
-            // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
+			// its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				if (empty($OrderLine->StandardCost)) {
 					$OrderLine->StandardCost=0;
 				}
@@ -1157,7 +1157,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			if ($OrderLine->Controlled ==1){
 				foreach($OrderLine->SerialItems as $Item){
-                   /*We need to add the StockSerialItem record and the StockSerialMoves as well */
+				   /*We need to add the StockSerialItem record and the StockSerialMoves as well */
 
 					$SQL = "UPDATE stockserialitems	SET quantity= quantity - " . $Item->BundleQty . "
 							WHERE stockid='" . $OrderLine->StockID . "'

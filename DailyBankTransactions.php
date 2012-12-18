@@ -13,7 +13,7 @@ echo '<p class="page_title_text">
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
@@ -67,19 +67,19 @@ if (!isset($_POST['Show'])) {
 		<div class="centre">
 			<input type="submit" name="Show" value="' . _('Show transactions'). '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 } else {
 	$SQL = "SELECT 	bankaccountname,
 					bankaccounts.currcode,
 					currencies.decimalplaces
-			FROM bankaccounts 
+			FROM bankaccounts
 			INNER JOIN currencies
 				ON bankaccounts.currcode = currencies.currabrev
 			WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'";
 	$BankResult = DB_query($SQL,$db,_('Could not retrieve the bank account details'));
-	
-	
+
+
 	$sql="SELECT 	banktrans.currcode,
 					banktrans.amount,
 					banktrans.functionalexrate,
@@ -97,7 +97,7 @@ if (!isset($_POST['Show'])) {
 				ON banktrans.type=systypes.typeid
 				WHERE bankact='".$_POST['BankAccount']."'
 					AND transdate>='" . FormatDateForSQL($_POST['FromTransDate']) . "'
-					AND transdate<='" . FormatDateForSQL($_POST['ToTransDate']) . "' 
+					AND transdate<='" . FormatDateForSQL($_POST['ToTransDate']) . "'
 				ORDER BY banktrans.transdate";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
@@ -118,15 +118,15 @@ if (!isset($_POST['Show'])) {
 					<th>'._('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
 					<th>'._('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
 				</tr>';
-		
+
 		$AccountCurrTotal=0;
 		$LocalCurrTotal =0;
-		
+
 		while ($myrow = DB_fetch_array($result)){
-			
+
 			$AccountCurrTotal += $myrow['amount'];
 			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
-			
+
 			echo '<tr>
 					<td>'. ConvertSQLDate($myrow['transdate']) . '</td>
 					<td>'.$myrow['typename'].'</td>
@@ -140,12 +140,12 @@ if (!isset($_POST['Show'])) {
 		}
 		echo '</table>';
 	} //end if no bank trans in the range to show
-	
+
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date'). '" /></div>';
-    echo '</div>';
+	echo '</div>';
 	echo '</form>';
 }
 include('includes/footer.inc');

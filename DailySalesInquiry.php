@@ -63,7 +63,7 @@ echo '</tr>
 	<div class="centre">
 		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Daily Sales For The Selected Month') . '" />
 	</div>
-    </div>
+	</div>
 	</form>
 	<br />';
 /*Now get and display the sales data returned */
@@ -87,7 +87,7 @@ $sql = "SELECT 	trandate,
 			FROM stockmoves
 			INNER JOIN stockmaster
 			ON stockmoves.stockid=stockmaster.stockid
-			INNER JOIN custbranch 
+			INNER JOIN custbranch
 			ON stockmoves.debtorno=custbranch.debtorno
 				AND stockmoves.branchcode=custbranch.branchcode
 			WHERE (stockmoves.type=10 or stockmoves.type=11)

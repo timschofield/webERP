@@ -27,7 +27,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 	$result=DB_query($sql, $db);
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 		<tr>
@@ -46,7 +46,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 		<div class="centre">
 			<input type="submit" name="Process" value="' . _('Print Picking Lists') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 	include('includes/footer.inc');
 	exit();
@@ -58,81 +58,81 @@ $ErrMsg = _('There was a problem retrieving the order header details from the da
 if (!isset($_POST['TransDate']) AND $_GET['TransNo'] != 'Preview') {
 /* If there is no transaction date set, then it must be for a single order */
 	$sql = "SELECT salesorders.debtorno,
-        		salesorders.orderno,
-        		salesorders.customerref,
-        		salesorders.comments,
-        		salesorders.orddate,
-        		salesorders.deliverto,
-        		salesorders.deladd1,
-        		salesorders.deladd2,
-        		salesorders.deladd3,
-        		salesorders.deladd4,
-        		salesorders.deladd5,
-        		salesorders.deladd6,
-        		salesorders.deliverblind,
-        		salesorders.deliverydate,
-        		debtorsmaster.name,
-        		debtorsmaster.address1,
-        		debtorsmaster.address2,
-        		debtorsmaster.address3,
-        		debtorsmaster.address4,
-        		debtorsmaster.address5,
-        		debtorsmaster.address6,
-        		shippers.shippername,
-        		salesorders.printedpackingslip,
-        		salesorders.datepackingslipprinted,
-        		locations.locationname
-        	FROM salesorders,
-        		debtorsmaster,
-        		shippers,
-        		locations
-        	WHERE salesorders.debtorno=debtorsmaster.debtorno
-        	AND salesorders.shipvia=shippers.shipper_id
-        	AND salesorders.fromstkloc=locations.loccode
-        	AND salesorders.orderno='" . $_GET['TransNo']."'";
+				salesorders.orderno,
+				salesorders.customerref,
+				salesorders.comments,
+				salesorders.orddate,
+				salesorders.deliverto,
+				salesorders.deladd1,
+				salesorders.deladd2,
+				salesorders.deladd3,
+				salesorders.deladd4,
+				salesorders.deladd5,
+				salesorders.deladd6,
+				salesorders.deliverblind,
+				salesorders.deliverydate,
+				debtorsmaster.name,
+				debtorsmaster.address1,
+				debtorsmaster.address2,
+				debtorsmaster.address3,
+				debtorsmaster.address4,
+				debtorsmaster.address5,
+				debtorsmaster.address6,
+				shippers.shippername,
+				salesorders.printedpackingslip,
+				salesorders.datepackingslipprinted,
+				locations.locationname
+			FROM salesorders,
+				debtorsmaster,
+				shippers,
+				locations
+			WHERE salesorders.debtorno=debtorsmaster.debtorno
+			AND salesorders.shipvia=shippers.shipper_id
+			AND salesorders.fromstkloc=locations.loccode
+			AND salesorders.orderno='" . $_GET['TransNo']."'";
 } else if (isset($_POST['TransDate'])
 		OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 /* We are printing picking lists for all orders on a day */
 	$sql = "SELECT salesorders.debtorno,
-            		salesorders.orderno,
-            		salesorders.customerref,
-            		salesorders.comments,
-            		salesorders.orddate,
-            		salesorders.deliverto,
-            		salesorders.deladd1,
-            		salesorders.deladd2,
-            		salesorders.deladd3,
-            		salesorders.deladd4,
-            		salesorders.deladd5,
-            		salesorders.deladd6,
-            		salesorders.deliverblind,
-            		salesorders.deliverydate,
-            		debtorsmaster.name,
-            		debtorsmaster.address1,
-            		debtorsmaster.address2,
-            		debtorsmaster.address3,
-            		debtorsmaster.address4,
-            		debtorsmaster.address5,
-            		debtorsmaster.address6,
-            		shippers.shippername,
-            		salesorders.printedpackingslip,
-            		salesorders.datepackingslipprinted,
-            		locations.locationname
-            	FROM salesorders,
-            		debtorsmaster,
-            		shippers,
-            		locations
-            	WHERE salesorders.debtorno=debtorsmaster.debtorno
-            	AND salesorders.shipvia=shippers.shipper_id
-            	AND salesorders.fromstkloc=locations.loccode
-            	AND salesorders.fromstkloc='".$_POST['loccode']."'
-            	AND salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate'])."'";
+					salesorders.orderno,
+					salesorders.customerref,
+					salesorders.comments,
+					salesorders.orddate,
+					salesorders.deliverto,
+					salesorders.deladd1,
+					salesorders.deladd2,
+					salesorders.deladd3,
+					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
+					salesorders.deliverblind,
+					salesorders.deliverydate,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					shippers.shippername,
+					salesorders.printedpackingslip,
+					salesorders.datepackingslipprinted,
+					locations.locationname
+				FROM salesorders,
+					debtorsmaster,
+					shippers,
+					locations
+				WHERE salesorders.debtorno=debtorsmaster.debtorno
+				AND salesorders.shipvia=shippers.shipper_id
+				AND salesorders.fromstkloc=locations.loccode
+				AND salesorders.fromstkloc='".$_POST['loccode']."'
+				AND salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate'])."'";
 }
 
 if (isset($_POST['TransDate'])
 	OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 	$result=DB_query($sql,$db, $ErrMsg);
-	
+
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($result)==0){
 		$title = _('Print Picking List Error');
@@ -226,47 +226,47 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		if ($Count[0]==0) {
 		/* There are no previous picking lists for this order */
 			$sql = "SELECT salesorderdetails.stkcode,
-            				stockmaster.description,
-            				salesorderdetails.orderlineno,
-            				salesorderdetails.quantity,
-            				salesorderdetails.qtyinvoiced,
-            				salesorderdetails.unitprice,
-            				salesorderdetails.narrative,
-            				stockmaster.decimalplaces
-            			FROM salesorderdetails
-            			INNER JOIN stockmaster
-            				ON salesorderdetails.stkcode=stockmaster.stockid
-            			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'";
+							stockmaster.description,
+							salesorderdetails.orderlineno,
+							salesorderdetails.quantity,
+							salesorderdetails.qtyinvoiced,
+							salesorderdetails.unitprice,
+							salesorderdetails.narrative,
+							stockmaster.decimalplaces
+						FROM salesorderdetails
+						INNER JOIN stockmaster
+							ON salesorderdetails.stkcode=stockmaster.stockid
+						WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'";
 		} else {
 		/* There are previous picking lists for this order so
 		 * need to take those quantities into account
 		 */
 			$sql = "SELECT salesorderdetails.stkcode,
-            				stockmaster.description,
-            				salesorderdetails.orderlineno,
-            				salesorderdetails.quantity,
-            				salesorderdetails.qtyinvoiced,
-            				SUM(pickinglistdetails.qtyexpected) as qtyexpected,
-            				SUM(pickinglistdetails.qtypicked) as qtypicked,
-            				salesorderdetails.unitprice,
-            				salesorderdetails.narrative,
-            				stockmaster.decimalplaces
-            			FROM salesorderdetails
-            			INNER JOIN stockmaster
-            				ON salesorderdetails.stkcode=stockmaster.stockid
-            			LEFT JOIN pickinglists
-            				ON salesorderdetails.orderno=pickinglists.orderno
-            			LEFT JOIN pickinglistdetails
-            				ON pickinglists.pickinglistno=pickinglistdetails.pickinglistno
-            			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'
-            			AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
+							stockmaster.description,
+							salesorderdetails.orderlineno,
+							salesorderdetails.quantity,
+							salesorderdetails.qtyinvoiced,
+							SUM(pickinglistdetails.qtyexpected) as qtyexpected,
+							SUM(pickinglistdetails.qtypicked) as qtypicked,
+							salesorderdetails.unitprice,
+							salesorderdetails.narrative,
+							stockmaster.decimalplaces
+						FROM salesorderdetails
+						INNER JOIN stockmaster
+							ON salesorderdetails.stkcode=stockmaster.stockid
+						LEFT JOIN pickinglists
+							ON salesorderdetails.orderno=pickinglists.orderno
+						LEFT JOIN pickinglistdetails
+							ON pickinglists.pickinglistno=pickinglistdetails.pickinglistno
+						WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'
+						AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
 		}
 		$LineResult=DB_query($sql,$db, $ErrMsg);
 	}
 
-	if ((isset($_GET['TransNo']) 
-		AND $_GET['TransNo'] == 'Preview') 
-		OR (isset($LineResult) 
+	if ((isset($_GET['TransNo'])
+		AND $_GET['TransNo'] == 'Preview')
+		OR (isset($LineResult)
 		AND DB_num_rows($LineResult)>0)){
 		/*Yes there are line items to start the ball rolling with a page header */
 		include('includes/PDFPickingListHeader.inc');

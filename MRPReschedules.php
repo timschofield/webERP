@@ -114,7 +114,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReschedules_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit so display form */
 
@@ -129,8 +129,8 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<br />
 		<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
-        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<div>
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<tr>
 			<td>' . _('Print Option') . ':</td>
@@ -152,8 +152,8 @@ if (isset($_POST['PrintPDF'])) {
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
-        </form>';
+		</div>
+		</form>';
 
 	include('includes/footer.inc');
 

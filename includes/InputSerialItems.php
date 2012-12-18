@@ -20,18 +20,18 @@ if (isset($_GET['LineNo'])){
 	$LineNo=0;
 }
 /*
-        Entry Types:
-             Keyed Mode: 'Qty' Rows of Input Fields. Upto X shown per page (100 max)
-             Barcode Mode: Part Keyed, part not. 1st, 'Qty' of barcodes entered. Then extra data as/if
-             necessary
-             FileUpload Mode: File Uploaded must fulfill item requirements when parsed... no form based data
-                 entry. 1-upload, 2-parse&validate, 3-bad>1 good>4, 4-import.
-        switch the type we are updating from, w/ some rules...
-                Qty < X   - Default to keyed
-                X < Qty < Y - Default to barcode
-                Y < Qty - Default to upload
+		Entry Types:
+			 Keyed Mode: 'Qty' Rows of Input Fields. Upto X shown per page (100 max)
+			 Barcode Mode: Part Keyed, part not. 1st, 'Qty' of barcodes entered. Then extra data as/if
+			 necessary
+			 FileUpload Mode: File Uploaded must fulfill item requirements when parsed... no form based data
+				 entry. 1-upload, 2-parse&validate, 3-bad>1 good>4, 4-import.
+		switch the type we are updating from, w/ some rules...
+				Qty < X   - Default to keyed
+				X < Qty < Y - Default to barcode
+				Y < Qty - Default to upload
 
-        possibly override setting elsewhere.
+		possibly override setting elsewhere.
 */
 if (!isset($RecvQty)) {
 	$RecvQty=0;
@@ -104,7 +104,7 @@ $EditLink =  '<br />
 $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">'. _('Remove All'). '</a>
 			<br />
 			</div>';
-			
+
 $sql="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";

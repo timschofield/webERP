@@ -419,7 +419,7 @@ if (!isset($DebtorNo)) {
 		exit;
 	}
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="Yes" />';
@@ -469,14 +469,14 @@ if (!isset($DebtorNo)) {
 		$DataError =1;
 		echo '<tr><td colspan="2">' . prnMsg(_('No sales types/price lists defined'),'error') . '<br /><a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a></td></tr>';
 	} else {
-        echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
+		echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
 			   <td><select tabindex="9" name="SalesType">';
 
 		while ($myrow = DB_fetch_array($result)) {
 		   echo '<option value="'. $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		} //end while loopre
 		DB_data_seek($result,0);
-        echo '</select></td></tr>';
+		echo '</select></td></tr>';
 	}
 
 // Show Customer Type drop down list
@@ -612,7 +612,7 @@ if (!isset($DebtorNo)) {
 			</div>';
 
 	}
-    echo '</div>';
+	echo '</div>';
 	echo '</form>';
 
 } else {
@@ -620,7 +620,7 @@ if (!isset($DebtorNo)) {
 //DebtorNo exists - either passed when calling the form or from the form itself
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr><td valign="top">';
@@ -684,12 +684,12 @@ if (!isset($DebtorNo)) {
 		$_POST['typeid'] = $myrow['typeid'];
 
 		echo '<input type="hidden" name="DebtorNo" value="' . $DebtorNo . '" />';
-        echo '<table class="selection">';
+		echo '<table class="selection">';
 
 	} else {
 	// its a new customer being added
 		echo '<input type="hidden" name="New" value="Yes" />';
-        echo '<table class="selection">';
+		echo '<table class="selection">';
 
 		/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 		then provide an input box for the DebtorNo to manually assigned */
@@ -796,7 +796,7 @@ if (!isset($DebtorNo)) {
 			}
 		} //end while loop
 		DB_data_seek($result,0);
-        echo '</select></td></tr>';
+		echo '</select></td></tr>';
 	}
 
 // Select Customer types for drop down list for SELECT/UPDATE
@@ -1112,11 +1112,11 @@ if (!isset($DebtorNo)) {
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Update Customer') . '" />&nbsp;
 				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
-            </div>';
+			</div>';
 	}
 
 	echo '</div>
-          </form>';
+		  </form>';
 } // end of main ifs
 
 include('includes/footer.inc');

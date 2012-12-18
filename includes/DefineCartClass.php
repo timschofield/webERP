@@ -234,9 +234,9 @@ Class Cart {
 				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder' . $identifier], 'success');
 			} else {
 				/* something has been delivered. Clear the remaining Qty and Mark Completed */
-				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, 
+				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced,
 																completed=1
-									WHERE orderno='".$_SESSION['ExistingOrder']."' 
+									WHERE orderno='".$_SESSION['ExistingOrder']."'
 									AND orderlineno='" . $LineNumber . "'" ,
 									$db,
 								   _('The order line could not be updated as completed because')
@@ -356,9 +356,9 @@ Class Cart {
 		if (DB_num_rows($GetTaxRatesResult)==0){
 			prnMsg(_('It appears that taxes are not defined correctly for this customer tax group') ,'error');
 		} else {
-			
+
 			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-	
+
 				$this->LineItems[$LineNumber]->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
 														$myrow['taxauthid'],
 														$myrow['description'],

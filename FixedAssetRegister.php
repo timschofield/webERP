@@ -74,8 +74,8 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		$csv_output = "'Asset ID','Description','Serial Number','Location','Date Acquired','Cost B/Fwd','Period Additions','Depn B/Fwd','Period Depreciation','Cost C/Fwd', 'Accum Depn C/Fwd','NBV','Disposal Value'\n";
 	} else {
 		echo '<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">
-              <div>';
-        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+			  <div>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
 		echo '<br />
 			<table width="80%" cellspacing="1" class="selection">
@@ -232,17 +232,17 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		echo '<th style="text-align:right">' . locale_number_format($TotalDisposals, $_SESSION['CompanyRecord']['decimalplaces']) . '</th></tr>';
 		echo '</table>';
 
-        echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />';
-        echo '<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';
-        echo '<input type="hidden" name="AssetCategory" value="' . $_POST['AssetCategory'] . '" />';
-        echo '<input type="hidden" name="AssetID" value="' . $_POST['AssetID'] . '" />';
-        echo '<input type="hidden" name="AssetLocation" value="' . $_POST['AssetLocation'] . '" />';
+		echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />';
+		echo '<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';
+		echo '<input type="hidden" name="AssetCategory" value="' . $_POST['AssetCategory'] . '" />';
+		echo '<input type="hidden" name="AssetID" value="' . $_POST['AssetID'] . '" />';
+		echo '<input type="hidden" name="AssetLocation" value="' . $_POST['AssetLocation'] . '" />';
 
 		echo '<br /><div class="centre"><input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;';
 		echo '<input type="submit" name="csv" value="' . _('Print as CSV') . '" />
-              </div>
-              </div>
-              </form>';
+			  </div>
+			  </div>
+			  </form>';
 	}
 } else {
 	include ('includes/header.inc');
@@ -250,9 +250,9 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories', $db);
 	echo '<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    echo '<table class="selection">';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Asset Category') . '</th>
 			<td><select name="AssetCategory">
@@ -318,7 +318,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;
 		<input type="submit" name = "csv" value="' . _('Print as CSV') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
 }
 include ('includes/footer.inc');

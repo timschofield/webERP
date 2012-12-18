@@ -53,10 +53,10 @@
 								currencies.decimalplaces
 							FROM purchorders
 							INNER JOIN locations ON purchorders.intostocklocation=locations.loccode
-							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid 
+							INNER JOIN suppliers ON purchorders.supplierno = suppliers.supplierid
 							INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
 							WHERE purchorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
-										
+
 	   $ErrMsg =  _('The order cannot be retrieved because');
 	   $DbgMsg =  _('The SQL statement that was used and failed was');
 	   $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
@@ -137,7 +137,7 @@
 									accountname,
 									purchorderdetails.qtyinvoiced,
 									purchorderdetails.unitprice,
-									stockmaster.units, 
+									stockmaster.units,
 									purchorderdetails.quantityord,
 									purchorderdetails.quantityrecd,
 									purchorderdetails.shiptref,
@@ -185,7 +185,7 @@
 					} else {
 						$StockID = $myrow['itemcode'];
 					}
-					
+
 					$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 															$StockID,
 															$myrow['serialised'],
@@ -208,7 +208,7 @@
 															1,
 															$myrow['suppliers_partno'],
 															$myrow['assetid'] );
-																		
+
 					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
 					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
 			 } /* line PO from purchase order details */

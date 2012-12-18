@@ -15,7 +15,7 @@ $sql = "INSERT INTO locstock (stockid, loccode)
 			LEFT JOIN locstock
 				ON stockmaster.stockid = locstock.stockid
 				AND locations.loccode = locstock.loccode
-                WHERE locstock.stockid IS NULL";
+				WHERE locstock.stockid IS NULL";
 
 $ErrMsg = _('The items/locations that need stock location records created cannot be retrieved because');
 $Result = DB_query($sql,$db,$ErrMsg);

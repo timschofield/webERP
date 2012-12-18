@@ -6,9 +6,9 @@ $title = _('Search Purchase Orders');
 include ('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') . 
+		<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
 	'</p>';
-	
+
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = $_GET['SelectedStockItem'];
 } elseif (isset($_POST['SelectedStockItem'])) {
@@ -166,9 +166,9 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 		</tr>
 		</table>';
 }
-$SQL = "SELECT categoryid, 
-			categorydescription 
-		FROM stockcategory 
+$SQL = "SELECT categoryid,
+			categorydescription
+		FROM stockcategory
 		ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 echo '<br />
@@ -199,14 +199,14 @@ echo '</select></td>
 		<td colspan="3">
 			<div class="centre">
 				<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
-                <input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+				<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
 			</div>
 		</td>
 	</tr>
 	</table>
 	<br />
 	<br />';
-	
+
 if (isset($StockItemsResult)) {
 	echo '<table class="selection">';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>
@@ -246,7 +246,7 @@ if (isset($StockItemsResult)) {
 //end if stock search results to show
 else {
 	//figure out the SQL required from the inputs available
-	
+
 	if (!isset($_POST['Status']) OR $_POST['Status']=='Pending_Authorised_Completed'){
 		$StatusCriteria = " AND (purchorders.status='Pending' OR purchorders.status='Authorised' OR purchorders.status='Printed' OR purchorders.status='Completed') ";
 	}elseif ($_POST['Status']=='Authorised'){
@@ -272,12 +272,12 @@ else {
 						suppliers.currcode,
 						currencies.decimalplaces AS currdecimalplaces,
 						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-					FROM purchorders 
-					INNER JOIN purchorderdetails 
+					FROM purchorders
+					INNER JOIN purchorderdetails
 					ON purchorders.orderno = purchorderdetails.orderno
 					INNER JOIN suppliers
 					ON purchorders.supplierno = suppliers.supplierid
-					INNER JOIN currencies 
+					INNER JOIN currencies
 					ON suppliers.currcode=currencies.currabrev
 					WHERE purchorders.orderno='" . filter_number_format($OrderNumber) . "'
 					GROUP BY purchorders.orderno,
@@ -307,12 +307,12 @@ else {
 								suppliers.currcode,
 								currencies.decimalplaces AS currdecimalplaces,
 								SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-							FROM purchorders 
-							INNER JOIN purchorderdetails 
+							FROM purchorders
+							INNER JOIN purchorderdetails
 							ON purchorders.orderno = purchorderdetails.orderno
 							INNER JOIN suppliers
 							ON purchorders.supplierno = suppliers.supplierid
-							INNER JOIN currencies 
+							INNER JOIN currencies
 							ON suppliers.currcode=currencies.currabrev
 							WHERE  purchorderdetails.itemcode='" . $SelectedStockItem . "'
 							AND purchorders.supplierno='" . $SelectedSupplier . "'
@@ -338,12 +338,12 @@ else {
 								suppliers.currcode,
 								currencies.decimalplaces AS currdecimalplaces,
 								SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-							FROM purchorders 
-							INNER JOIN purchorderdetails 
+							FROM purchorders
+							INNER JOIN purchorderdetails
 							ON purchorders.orderno = purchorderdetails.orderno
 							INNER JOIN suppliers
 							ON purchorders.supplierno = suppliers.supplierid
-							INNER JOIN currencies 
+							INNER JOIN currencies
 							ON suppliers.currcode=currencies.currabrev
 							WHERE purchorders.supplierno='" . $SelectedSupplier . "'
 							AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
@@ -370,12 +370,12 @@ else {
 								suppliers.currcode,
 								currencies.decimalplaces AS currdecimalplaces,
 								SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-							FROM purchorders 
-							INNER JOIN purchorderdetails 
+							FROM purchorders
+							INNER JOIN purchorderdetails
 							ON purchorders.orderno = purchorderdetails.orderno
 							INNER JOIN suppliers
 							ON purchorders.supplierno = suppliers.supplierid
-							INNER JOIN currencies 
+							INNER JOIN currencies
 							ON suppliers.currcode=currencies.currabrev
 							WHERE purchorderdetails.itemcode='" . $SelectedStockItem . "'
 							AND purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
@@ -400,12 +400,12 @@ else {
 								suppliers.currcode,
 								currencies.decimalplaces AS currdecimalplaces,
 								SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-							FROM purchorders 
-							INNER JOIN purchorderdetails 
+							FROM purchorders
+							INNER JOIN purchorderdetails
 							ON purchorders.orderno = purchorderdetails.orderno
 							INNER JOIN suppliers
 							ON purchorders.supplierno = suppliers.supplierid
-							INNER JOIN currencies 
+							INNER JOIN currencies
 							ON suppliers.currcode=currencies.currabrev
 							WHERE purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'
 							" . $StatusCriteria . "
@@ -423,7 +423,7 @@ else {
 	} //end not order number selected
 	$ErrMsg = _('No orders were returned by the SQL because');
 	$PurchOrdersResult = DB_query($SQL, $db, $ErrMsg);
-	
+
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
 		echo '<table cellpadding="2" width="90%" class="selection">';
@@ -462,10 +462,10 @@ else {
 					<td>' . $FormatedDeliveryDate . '</td>
 					<td>' . $myrow['initiator'] . '</td>
 					<td class="number">' . $FormatedOrderValue . '</td>
-					<td>' . _($myrow['status']) .  '</td> 
+					<td>' . _($myrow['status']) .  '</td>
 					</tr>';
 				//$myrow['status'] is a string which has gettext translations from PO_Header.php script
-				
+
 			$j++;
 			if ($j == 12) {
 				$j = 1;
@@ -478,6 +478,6 @@ else {
 	} // end if purchase orders to show
 }
 echo '</div>
-      </form>';
+	  </form>';
 include ('includes/footer.inc');
 ?>

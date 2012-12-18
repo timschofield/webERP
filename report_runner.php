@@ -21,56 +21,56 @@
 /* $Id$*/
 
 $usage="USAGE\n".$argv[0].":\n".
-       "     -r reportnumber (the number of the weberp report)\n".
-       "     -n reportname   (the name you want to give the report)\n".
-       "     -e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)\n".
-       "     -d database name (the mysql db to use for the data for the report)\n".
-       "     [-t reporttext ]  (some words you want to send with the report-optional)\n".
-       "     [ -H weberpHOME]  (the home directory for weberp - or edit the php file)\n";
+	   "     -r reportnumber (the number of the weberp report)\n".
+	   "     -n reportname   (the name you want to give the report)\n".
+	   "     -e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)\n".
+	   "     -d database name (the mysql db to use for the data for the report)\n".
+	   "     [-t reporttext ]  (some words you want to send with the report-optional)\n".
+	   "     [ -H weberpHOME]  (the home directory for weberp - or edit the php file)\n";
 
 if ($argc < 7 ) {
-        echo $usage;
-        exit;
+		echo $usage;
+		exit;
 }
 for ($i=1;$i<$argc;$i++){
-        switch($argv[$i]) {
-        case '-r':
-                $i++;
-                $reportnumber=$argv[$i];
-             break;
-        case '-n':
-                $i++;
-                $reportname=$argv[$i];
-             break;
-        case '-e':
-                $i++;
-                $emailaddresses=$argv[$i];
-             break;
+		switch($argv[$i]) {
+		case '-r':
+				$i++;
+				$reportnumber=$argv[$i];
+			 break;
+		case '-n':
+				$i++;
+				$reportname=$argv[$i];
+			 break;
+		case '-e':
+				$i++;
+				$emailaddresses=$argv[$i];
+			 break;
 	case '-d':
-                $i++;
-                $DatabaseName=$argv[$i];
-             break;
-        case '-H':
-                $i++;
-                $WEBERPHOME=$argv[$i];
-             break;
-        case '-t':
-                $i++;
-                $mailtext=$argv[$i];
-             break;
-         default:
-             echo "unknown option".$argv[$i]."\n";
-             echo $usage;
-             exit;
-             break;
+				$i++;
+				$DatabaseName=$argv[$i];
+			 break;
+		case '-H':
+				$i++;
+				$WEBERPHOME=$argv[$i];
+			 break;
+		case '-t':
+				$i++;
+				$mailtext=$argv[$i];
+			 break;
+		 default:
+			 echo "unknown option".$argv[$i]."\n";
+			 echo $usage;
+			 exit;
+			 break;
 	}
 }
 // test the existance
 if (( $reportname=="") ||
-    ( $reportnumber=="") ||
-    ( $emailaddresses=="")) {
-             echo $usage;
-             exit;
+	( $reportnumber=="") ||
+	( $emailaddresses=="")) {
+			 echo $usage;
+			 exit;
 }
 // do we have a variable
 if ($WEBERPHOME!="") {

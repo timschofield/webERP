@@ -585,7 +585,7 @@ if (isset($_POST['submit'])) {
 				</table>';
 	}
 	echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -634,7 +634,7 @@ if (isset($_POST['submit'])) {
 			<br />
 			<input type="submit" name="submit" value="' . _('Run MRP') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 }  // End of Main program logic -------------------------------------------------------
 
@@ -780,7 +780,7 @@ function LevelNetting(&$db,$part,$eoq,$PanSize,$ShrinkFactor, $LeadTime) {
 			}
 
 			// Calculate required date by subtracting leadtime from top part's required date
-            $PartRequiredDate=$Requirement['daterequired'];
+			$PartRequiredDate=$Requirement['daterequired'];
 			if ((int)$LeadTime>0) {
 
 				$CalendarSQL = "SELECT COUNT(*),cal2.calendardate

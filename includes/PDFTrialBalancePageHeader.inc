@@ -1,11 +1,11 @@
 <?php
-	/* 
+	/*
 	 * PDF page header for the trial balance report.
 	 * Suren Naidu 18/08/2005
 	 *
 	 */
 /* $Id$*/
-	 
+
 	$PageNumber++;
 	if ($PageNumber>1){
 		$pdf->newPage();
@@ -22,7 +22,7 @@
 	$pdf->setFont('','B');
 	$Heading = _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
-	
+
 	$YPos -= (2 * $line_height);
 	$FontSize = 8;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Account'));

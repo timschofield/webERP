@@ -191,7 +191,7 @@ while ($myrow = DB_fetch_array($result)) {
 }
 
 echo '</table>
-      </div>
+	  </div>
 	  </form>';
 
 include('includes/footer.inc');

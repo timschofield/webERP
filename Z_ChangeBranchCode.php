@@ -185,7 +185,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$sql = "DELETE FROM custbranch
 					WHERE debtorno='" . $_POST['DebtorNo'] . "'
 					AND branchcode='" . $_POST['OldBranchCode'] . "'";
-			
+
 	$ErrMsg = _('The SQL to delete the old customer branch record failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true,true);
 	$result = DB_ReinstateForeignKeys($db);
@@ -215,7 +215,7 @@ echo '<br />
 echo '<input type="submit" name="ProcessCustomerChange" value="' . _('Process') . '" />';
 
 echo '</div>
-      </form>';
+	  </form>';
 
 include('includes/footer.inc');
 ?>

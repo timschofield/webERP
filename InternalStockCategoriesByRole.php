@@ -60,8 +60,8 @@ if (isset($_POST['submit'])) {
 		// First check the type is not being duplicated
 
 		$checkSql = "SELECT count(*)
-			     FROM internalstockcatrole
-			     WHERE secroleid= '" .  $_POST['SelectedRole'] . "'
+				 FROM internalstockcatrole
+				 WHERE secroleid= '" .  $_POST['SelectedRole'] . "'
 				 AND categoryid = '" .  $_POST['SelectedCategory'] . "'";
 
 		$checkresult = DB_query($checkSql,$db);
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 if (!isset($SelectedRole)){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">'; //Main table
 
@@ -131,13 +131,13 @@ if (!isset($SelectedRole)){
 	echo '</select></td></tr>';
 
    	echo '</table>'; // close main table
-    DB_free_result($result);
+	DB_free_result($result);
 
 	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
 				<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</div>
-          </form>';
+		  </form>';
 
 }
 
@@ -146,7 +146,7 @@ if (isset($_POST['process'])OR isset($SelectedRole)) {
 
 	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Stock Categories available as internal for role') . ' ' .$SelectedRole. '</a></div>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="SelectedRole" value="' . $SelectedRole . '" />';
@@ -221,13 +221,13 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '</select></td></tr>';
 
 	   	echo '</table>'; // close main table
-        DB_free_result($result);
+		DB_free_result($result);
 
 		echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
 									<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 		echo '</div>
-              </form>';
+			  </form>';
 
 	} // end if user wish to delete
 }

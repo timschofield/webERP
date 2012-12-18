@@ -51,7 +51,7 @@ if (isset($_POST['UpdateRates'])){
 /*Display updated rates
 */
 
-$TaxAuthDetail = DB_query("SELECT description 
+$TaxAuthDetail = DB_query("SELECT description
 							FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'",$db);
 $myrow = DB_fetch_row($TaxAuthDetail);
 
@@ -141,7 +141,7 @@ echo '<br />
 	</div>';
 
 echo '</div>
-      </form>';
+	  </form>';
 
 include( 'includes/footer.inc' );
 ?>

@@ -46,7 +46,7 @@ if (isset($StockID)) {
 echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />';
 
 echo '<br />
-      </div>';
+	  </div>';
 
 if (isset($StockID)) {
 
@@ -92,7 +92,7 @@ if (isset($StockID)) {
 				<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>
 				<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>
 				<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>
-                </tr>';
+				</tr>';
 
 			//end of page full new headings if
 		}

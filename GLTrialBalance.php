@@ -13,16 +13,16 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); //this reads in the Accounts Sections array
 
 
-if (isset($_POST['FromPeriod']) 
-	AND isset($_POST['ToPeriod']) 
+if (isset($_POST['FromPeriod'])
+	AND isset($_POST['ToPeriod'])
 	AND $_POST['FromPeriod'] > $_POST['ToPeriod']){
-		
+
 	prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
 	$_POST['SelectADifferentPeriod']=_('Select A Different Period');
 }
 
-if ((! isset($_POST['FromPeriod']) 
-	AND ! isset($_POST['ToPeriod'])) 
+if ((! isset($_POST['FromPeriod'])
+	AND ! isset($_POST['ToPeriod']))
 	OR isset($_POST['SelectADifferentPeriod'])){
 
 	include  ('includes/header.inc');
@@ -30,7 +30,7 @@ if ((! isset($_POST['FromPeriod'])
 			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $title . '
 		</p>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -385,7 +385,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -671,7 +671,7 @@ if ((! isset($_POST['FromPeriod'])
 						locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
-	
+
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
 				$GrpPrdActual[$Level] =0;
@@ -695,7 +695,7 @@ if ((! isset($_POST['FromPeriod'])
 						locale_number_format($GrpBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
-		
+
 				$GrpActual[$Level] =0;
 				$GrpBudget[$Level] =0;
 				$GrpPrdActual[$Level] =0;
@@ -720,7 +720,7 @@ if ((! isset($_POST['FromPeriod'])
 			locale_number_format($CheckBudgetMonth,$_SESSION['CompanyRecord']['decimalplaces']),
 			locale_number_format($CheckPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 			locale_number_format($CheckPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']));
-	
+
 	echo '</table><br />';
 	echo '<div class="centre"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }

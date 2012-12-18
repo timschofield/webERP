@@ -25,7 +25,7 @@ if (!isset($_POST['FromDate'])){
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
@@ -58,7 +58,7 @@ if (!isset($_POST['FromDate'])){
 			<td>' . _('For Stock Location') . ':</td>
 			<td><select name="StockLocation">
 				<option value="All">' . _('All') . '</option>';
-				
+
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 			if ($myrow['loccode'] == $_POST['StockLocation']){
@@ -80,8 +80,8 @@ if (!isset($_POST['FromDate'])){
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+	echo '</div>
+		  </form>';
 
 	 include('includes/footer.inc');
 	 exit;

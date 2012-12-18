@@ -12,7 +12,7 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -120,$YPos-40,0,60);
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {
 
-        $pdf->addText($Page_Width - 200, $YPos, $FontSize, _('TAX INVOICE') . ' ');
+		$pdf->addText($Page_Width - 200, $YPos, $FontSize, _('TAX INVOICE') . ' ');
 } else {
 	$pdf->addText($Page_Width - 200, $YPos, $FontSize, _('CREDIT NOTE') . ' ');
 }
@@ -113,18 +113,18 @@ if ($InvOrCredit=='Invoice') {
 	$XPos +=80;
 // Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
 if (!function_exists('htmlspecialchars_decode')) {
-        function htmlspecialchars_decode($str) {
-                $trans = get_html_translation_table(HTML_SPECIALCHARS);
+		function htmlspecialchars_decode($str) {
+				$trans = get_html_translation_table(HTML_SPECIALCHARS);
 
-                $decode = ARRAY();
-                foreach ($trans AS $char=>$entity) {
-                        $decode[$entity] = $char;
-                }
+				$decode = ARRAY();
+				foreach ($trans AS $char=>$entity) {
+						$decode[$entity] = $char;
+				}
 
-                $str = strtr($str, $decode);
+				$str = strtr($str, $decode);
 
-                return $str;
-        }
+				return $str;
+		}
 }
 	$pdf->addText($XPos, $YPos, $FontSize, $myrow['deliverto']);
 	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['deladd1']);

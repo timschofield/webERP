@@ -110,8 +110,8 @@ while ($myrow=DB_fetch_array($result)) {
 echo '</table>
 	<br />';
 echo '<form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
-      <div>
-    <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	  <div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table class="selection">
 	<tr>
 		<th style="text-align:left">'._('Location ID').'</th>';
@@ -157,7 +157,7 @@ if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="submit" name="submit" value="' . _('Enter Information') . '" />';
 }
 echo '</div>
-      </div>
+	  </div>
 	</form>';
 
 include('includes/footer.inc');

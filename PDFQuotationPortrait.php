@@ -7,14 +7,14 @@ include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
-        $title = _('Select Quotation To Print');
-        include('includes/header.inc');
-        echo '<div class="centre">
+		$title = _('Select Quotation To Print');
+		include('includes/header.inc');
+		echo '<div class="centre">
 				<br />
 				<br />
 				<br />';
-        prnMsg( _('Select a Quotation to Print before calling this page') , 'error');
-        echo '<br />
+		prnMsg( _('Select a Quotation to Print before calling this page') , 'error');
+		echo '<br />
 				<br />
 				<br />
 				<table class="table_index">
@@ -29,8 +29,8 @@ If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 				<br />
 				<br />
 				<br />';
-        include('includes/footer.inc');
-        exit();
+		include('includes/footer.inc');
+		exit();
 }
 
 /*retrieve the order details from the database to print */
@@ -148,7 +148,7 @@ if (DB_num_rows($result)>0){
 
 	while ($myrow2=DB_fetch_array($result)){
 
-        $ListCount ++;
+		$ListCount ++;
 
 		if ((mb_strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75)
 			OR (mb_strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62)
@@ -261,15 +261,15 @@ if (DB_num_rows($result)>0){
 
 
 if ($ListCount == 0){
-        $title = _('Print Quotation Error');
-        include('includes/header.inc');
-        echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
-                '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation').
-                '</a>' . '<br />'. '<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
-        include('includes/footer.inc');
+		$title = _('Print Quotation Error');
+		include('includes/header.inc');
+		echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
+				'<br /><a href="' . $rootpath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation').
+				'</a>' . '<br />'. '<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		include('includes/footer.inc');
 	exit;
 } else {
-    $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');
-    $pdf->__destruct();
+	$pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');
+	$pdf->__destruct();
 }
 ?>

@@ -209,7 +209,7 @@ function DB_Txn_Commit($Conn){
 }
 
 function DB_Txn_Rollback($Conn){
-    mysql_query("ROLLBACK", $Conn );
+	mysql_query("ROLLBACK", $Conn );
 }
 
 function DB_IgnoreForeignKeys($Conn){

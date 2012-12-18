@@ -122,7 +122,7 @@ echo '<br />
 		<div class="centre">
 			<input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />
 		</div>
-        </div>
+		</div>
 		</form>
 		<br />';
 

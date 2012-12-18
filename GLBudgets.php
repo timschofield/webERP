@@ -81,7 +81,7 @@ echo '<br />
 		</tr>
 		</table>
 		<br />
-    </div>
+	</div>
 	</form>';
 
 // End of account selection
@@ -135,7 +135,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		$Actual[$myrow['period']]=$myrow['actual'];
 	}
 
-	
+
 	if (isset($_POST['Apportion'])) {
 		for ($i=1; $i<=12; $i++) {
 			if (filter_number_format($_POST['AnnualAmountLY']) != '0' AND is_numeric(filter_number_format($_POST['AnnualAmountLY']))){
@@ -160,7 +160,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 // Table Headers
 
 	echo '<form id="form" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 			<table class="selection">
@@ -228,7 +228,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 			<td><input type="submit" name="Apportion" value="' . _('Apportion Budget') . '" /></td>
 		</tr>
 		</table>';
-		
+
 	echo '<input type="hidden" name="SelectedAccount" value="'.$SelectedAccount.'" />';
 
 	echo '<script  type="text/javascript">defaultControl(document.form.1next);</script>';
@@ -257,7 +257,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 					bfwd,
 					bfwdbudget
 				FROM chartdetails
-				WHERE period ='". $i . "' 
+				WHERE period ='". $i . "'
 				AND  accountcode = '" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not retrieve the ChartDetail records because');

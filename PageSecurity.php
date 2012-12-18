@@ -32,7 +32,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 $TokenSql="SELECT tokenid, tokenname
-			FROM securitytokens 
+			FROM securitytokens
 			ORDER BY tokenname";
 $TokenResult=DB_query($TokenSql, $db);
 
@@ -56,7 +56,7 @@ echo '<div class="centre">
 			<input type="submit" name="Update" value="'._('Update Security Levels').'" />
 	</div>
 	<br />
-    </div>
+	</div>
 	</form>';
 
 include('includes/footer.inc');

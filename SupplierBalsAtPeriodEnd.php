@@ -19,7 +19,7 @@ If (isset($_POST['PrintPDF'])
 	$PageNumber=0;
 	$line_height=12;
 
-      /*Now figure out the aged analysis for the Supplier range under review */
+	  /*Now figure out the aged analysis for the Supplier range under review */
 
 	$SQL = "SELECT suppliers.supplierid,
 					suppliers.suppname,
@@ -34,9 +34,9 @@ If (isset($_POST['PrintPDF'])
 						supptrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 						supptrans.ovamount + supptrans.ovgst ELSE 0 END) AS fxafterdatetrans
-			FROM suppliers INNER JOIN currencies 
+			FROM suppliers INNER JOIN currencies
 			ON suppliers.currcode = currencies.currabrev
-			INNER JOIN supptrans 
+			INNER JOIN supptrans
 			ON suppliers.supplierid = supptrans.supplierno
 			WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
 			AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
@@ -124,11 +124,11 @@ If (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	
-    echo '<table class="selection">';
-    echo '<tr>
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	echo '<table class="selection">';
+	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
 			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="'.$_POST['FromCriteria'].'" /></td>
 		</tr>
@@ -140,9 +140,9 @@ If (isset($_POST['PrintPDF'])
 			<td>' . _('Balances As At') . ':</td>
 			<td><select name="PeriodEnd">';
 
-	$sql = "SELECT periodno, 
-					lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT periodno,
+					lastdate_in_period
+			FROM periods
 			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
@@ -159,8 +159,8 @@ If (isset($_POST['PrintPDF'])
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+	echo '</div>
+		  </form>';
 	include('includes/footer.inc');
 }/*end of else not PrintPDF */
 

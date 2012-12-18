@@ -65,10 +65,10 @@ $Amount = $myrow['ovamount'];
 $Narrative = $myrow['invtext'];
 
 $sql="SELECT currency,
-		     decimalplaces
+			 decimalplaces
 		FROM currencies
 		WHERE currabrev=(SELECT currcode
-    	FROM banktrans
+		FROM banktrans
 		WHERE type=12
 		AND transno='" . $_GET['BatchNumber']."')";
 $result=DB_query($sql, $db);
@@ -77,7 +77,7 @@ $Currency=$myrow['currency'];
 $DecimalPlaces=$myrow['decimalplaces'];
 
 $sql="SELECT name,
-             address1,
+			 address1,
 			 address2,
 			 address3,
 			 address4,

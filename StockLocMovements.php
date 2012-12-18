@@ -15,17 +15,17 @@ echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/
 	'" alt="" />' . ' ' . $title.'</p>';
 
 echo '<table class="selection">
-     <tr>
-         <td>  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
+	 <tr>
+		 <td>  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
 $sql = "SELECT loccode, locationname FROM locations";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -46,56 +46,56 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 echo ' ' . _('Show Movements before') . ': <input type="text" name="BeforeDate" size="12" maxlength="12" value="' . $_POST['BeforeDate'] . '" />';
 echo ' ' . _('But after') . ': <input type="text" name="AfterDate" size="12" maxlength="12" value="' . $_POST['AfterDate'] . '" />';
 echo '</td>
-     </tr>
-     </table>
-     <br />';
+	 </tr>
+	 </table>
+	 <br />';
 echo '<div class="centre">
-           <input type="submit" name="ShowMoves" value="' . _('Show Stock Movements') . '" />
-     </div>
-     <br />';
+		   <input type="submit" name="ShowMoves" value="' . _('Show Stock Movements') . '" />
+	 </div>
+	 <br />';
 
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
 $sql = "SELECT stockmoves.stockid,
-        		systypes.typename,
-        		stockmoves.type,
-        		stockmoves.transno,
-        		stockmoves.trandate,
-        		stockmoves.debtorno,
-        		stockmoves.branchcode,
-        		stockmoves.qty,
-        		stockmoves.reference,
-        		stockmoves.price,
-        		stockmoves.discountpercent,
-        		stockmoves.newqoh,
-        		stockmaster.decimalplaces
-        	FROM stockmoves
-        	INNER JOIN systypes ON stockmoves.type=systypes.typeid
-        	INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
-        	WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
-        	AND stockmoves.trandate >= '". $SQLAfterDate . "'
-        	AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
-        	AND hidemovt=0
-        	ORDER BY stkmoveno DESC";
+				systypes.typename,
+				stockmoves.type,
+				stockmoves.transno,
+				stockmoves.trandate,
+				stockmoves.debtorno,
+				stockmoves.branchcode,
+				stockmoves.qty,
+				stockmoves.reference,
+				stockmoves.price,
+				stockmoves.discountpercent,
+				stockmoves.newqoh,
+				stockmaster.decimalplaces
+			FROM stockmoves
+			INNER JOIN systypes ON stockmoves.type=systypes.typeid
+			INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
+			WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
+			AND stockmoves.trandate >= '". $SQLAfterDate . "'
+			AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
+			AND hidemovt=0
+			ORDER BY stkmoveno DESC";
 
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($sql, $db,$ErrMsg);
 
 echo '<table cellpadding="5" cellspacing="4 "class="selection">';
 $tableheader = '<tr>
-            		<th>' . _('Item Code') . '</th>
-            		<th>' . _('Type') . '</th>
-            		<th>' . _('Trans No') . '</th>
-            		<th>' . _('Date') . '</th>
-            		<th>' . _('Customer') . '</th>
-            		<th>' . _('Quantity') . '</th>
-            		<th>' . _('Reference') . '</th>
-            		<th>' . _('Price') . '</th>
-            		<th>' . _('Discount') . '</th>
-            		<th>' . _('Quantity on Hand') . '</th>
-           		</tr>';
+					<th>' . _('Item Code') . '</th>
+					<th>' . _('Type') . '</th>
+					<th>' . _('Trans No') . '</th>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Quantity') . '</th>
+					<th>' . _('Reference') . '</th>
+					<th>' . _('Price') . '</th>
+					<th>' . _('Discount') . '</th>
+					<th>' . _('Quantity on Hand') . '</th>
+		   		</tr>';
 echo $tableheader;
 
 $j = 1;
@@ -148,7 +148,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 
 echo '</table>';
 echo '</div>
-      </form>';
+	  </form>';
 
 include('includes/footer.inc');
 

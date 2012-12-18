@@ -33,9 +33,9 @@ $Ypos = $Page_Height - $Top_Margin - 24;
 
 DB_data_seek($ColsResult,0);
 while ($Cols=DB_fetch_array($ColsResult)){
-    $Xpos = 160 + $Cols['colno']*60;
-    $LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize,$Cols['heading1'], 'centre');
-    $LeftOvers = $pdf->addTextWrap($Xpos,$Ypos - $line_height,60,$FontSize,$Cols['heading2'], 'centre');
+	$Xpos = 160 + $Cols['colno']*60;
+	$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize,$Cols['heading1'], 'centre');
+	$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos - $line_height,60,$FontSize,$Cols['heading2'], 'centre');
 }
 $Ypos =$Ypos - (2*$line_height);
 

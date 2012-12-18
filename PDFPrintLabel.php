@@ -22,7 +22,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 					prices.price,
 					currencies.decimalplaces
 			FROM stockmaster INNER JOIN	stockcategory
-   			     ON stockmaster.categoryid=stockcategory.categoryid
+   				 ON stockmaster.categoryid=stockcategory.categoryid
 			INNER JOIN prices
 				ON stockmaster.stockid=prices.stockid
 			INNER JOIN currencies
@@ -269,7 +269,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
-         ' . ' ' . _('Print Price Labels') . '</p>';
+		 ' . ' ' . _('Print Price Labels') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) OR !isset($_POST['ToCriteria'])) {
 
@@ -299,7 +299,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('To Inventory Category Code'). ':</td>
-                  <td><select name="ToCriteria">';
+				  <td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -310,7 +310,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
-                  <td><select name="SalesType">';
+				  <td><select name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult=DB_query($sql,$db);
 
@@ -324,7 +324,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('For Currency').':</td>
-                  <td><select name="Currency">';
+				  <td><select name="Currency">';
 		$sql = "SELECT currabrev, country, currency FROM currencies";
 		$CurrenciesResult=DB_query($sql,$db);
 
@@ -338,8 +338,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Effective As At') . ':</td>';
-        echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
-        echo '</td></tr>';
+		echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+		echo '</td></tr>';
 
 		echo '</table>
 				<br />

@@ -62,7 +62,7 @@ if (isset($_POST['ModifyGRN'])){
 	} else {
 		$Complete = False;
 	}
-	
+
 	/* It is not logical to allow being charged for more than was received  - and doing so would leave the goods received suspense account out of balance */
 	/*
 	if ($_SESSION['Check_Qty_Charged_vs_Del_Qty']==True) {
@@ -146,7 +146,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Modify=' . $EnteredGRN->GRNNo . '">'. _('Modify') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredGRN->GRNNo . '">' . _('Delete') . '</a></td>
 		</tr>';
-	
+
 	$TotalValueCharged = $TotalValueCharged + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
 	$i++;
@@ -362,6 +362,6 @@ else {
 }
 
 echo '</div>
-      </form>';
+	  </form>';
 include('includes/footer.inc');
 ?>

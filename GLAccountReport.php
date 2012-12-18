@@ -64,10 +64,10 @@ if (isset($_POST['RunReport'])){
 					ON gltrans.type=systypes.typeid
 					WHERE gltrans.account = '" . $SelectedAccount . "'
 					AND posted=1
-					AND periodno>='" . $FirstPeriodSelected . "' 
-					AND periodno<='" . $LastPeriodSelected . "' 
-					ORDER BY periodno, 
-						gltrans.trandate, 
+					AND periodno>='" . $FirstPeriodSelected . "'
+					AND periodno<='" . $LastPeriodSelected . "'
+					ORDER BY periodno,
+						gltrans.trandate,
 						counterindex";
 
 		} else {
@@ -85,9 +85,9 @@ if (isset($_POST['RunReport'])){
 					AND posted=1
 					AND periodno>='" . $FirstPeriodSelected . "'
 					AND periodno<='" . $LastPeriodSelected . "'
-	                AND tag='" . $_POST['tag'] . "'
-	                ORDER BY periodno, 
-							gltrans.trandate, 
+					AND tag='" . $_POST['tag'] . "'
+					ORDER BY periodno,
+							gltrans.trandate,
 							counterindex";
 		}
 
@@ -109,7 +109,7 @@ if (isset($_POST['RunReport'])){
 						actual,
 						period
 					FROM chartdetails
-					WHERE chartdetails.accountcode='" .  $SelectedAccount . "' 
+					WHERE chartdetails.accountcode='" .  $SelectedAccount . "'
 					AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
@@ -123,7 +123,7 @@ if (isset($_POST['RunReport'])){
 			if ($RunningTotal < 0 ){ //its a credit balance b/fwd
    			   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			} else { //its a debit balance b/fwd
-               $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+			   $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			}
 		}
 		$PeriodTotal = 0;
@@ -139,9 +139,9 @@ if (isset($_POST['RunReport'])){
 					$YPos -=$line_height;
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Period Total'));
 					if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
-	                   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
-                    } else { //its a debit balance b/fwd
-                       $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+					   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+					} else { //its a debit balance b/fwd
+					   $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					}
 				}
 				$PeriodNo = $myrow['periodno'];
@@ -193,12 +193,12 @@ if (isset($_POST['RunReport'])){
 		if ($RunningTotal < 0){
 		   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 		} else { //its a debit balance b/fwd
-           $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
-        }
-       	$YPos -=$line_height;
-       	//draw a line under each account printed
-        $pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
-        $YPos -=$line_height;
+		   $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+		}
+	   	$YPos -=$line_height;
+	   	//draw a line under each account printed
+		$pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
+		$YPos -=$line_height;
 	} /*end for each SelectedAccount */
 	/*Now check that there is some output and print the report out */
 	if (count($_POST['Account'])==0) {
@@ -208,8 +208,8 @@ if (isset($_POST['RunReport'])){
 
 	} else { //print the report
 
-	    $pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Accounts_' . date('Y-m-d') . '.pdf');
-	    $pdf->__destruct();
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Accounts_' . date('Y-m-d') . '.pdf');
+		$pdf->__destruct();
 	} //end if the report has some output
 } /* end of if PrintReport button hit */
  else {
@@ -229,9 +229,9 @@ if (isset($_POST['RunReport'])){
 
 	/*Show a form to allow input of criteria for the report */
 	echo '<table>
-		        <tr>
-		         <td>'._('Selected Accounts') . ':</td>
-		         <td><select name="Account[]" multiple="multiple">';
+				<tr>
+				 <td>'._('Selected Accounts') . ':</td>
+				 <td><select name="Account[]" multiple="multiple">';
 	$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 	$AccountsResult = DB_query($sql,$db);
 	$i=0;

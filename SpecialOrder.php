@@ -176,7 +176,7 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 
 		echo '</table>';
 		echo '</div>
-              </form>';
+			  </form>';
 		include('includes/footer.inc');
 		exit;
 
@@ -755,7 +755,7 @@ echo '<div class="centre">
 		<br />
 		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
 
 include('includes/footer.inc');

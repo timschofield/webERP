@@ -138,7 +138,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
 				<td class="select">';
 		$PriceResult = DB_query("SELECT typeabbrev,
-										price 
+										price
 								FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
@@ -556,7 +556,7 @@ echo '</td></tr></table><br />';
 echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 echo '</div>
-      </form>';
+	  </form>';
 // query for list of record(s)
 if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	$_POST['Search']='Search';
@@ -720,7 +720,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -812,9 +812,9 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>
-              </div>
-              </form>
-              <br />';
+			  </div>
+			  </form>
+			  <br />';
 	}
 }
 /* end display list if there is more than one record */

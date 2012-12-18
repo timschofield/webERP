@@ -56,7 +56,7 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 	}
 
 	if ($InputError == False){
-		$_SESSION['SuppTrans']->Add_Shipt_To_Trans($_POST['ShiptRef'], 
+		$_SESSION['SuppTrans']->Add_Shipt_To_Trans($_POST['ShiptRef'],
 													filter_number_format($_POST['Amount']));
 		unset($_POST['ShiptRef']);
 		unset($_POST['Amount']);
@@ -153,8 +153,8 @@ echo '<br />
 	<div class="centre">
 		<input type="submit" name="AddShiptChgToInvoice" value="' . _('Enter Shipment Charge') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
-	
+
 include('includes/footer.inc');
 ?>

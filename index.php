@@ -195,14 +195,14 @@ be generated, one for standard reports and the other for custom reports.
 
 	$RptLinks = '';
 	for ($Def=1; $Def>=0; $Def--) {
-        $RptLinks .= '<li class="menu_group_headers">';
-        $RptLinks .= '<b>'. $Title[$Def] . '</b>';
-        $RptLinks .= '</li>';
+		$RptLinks .= '<li class="menu_group_headers">';
+		$RptLinks .= '<b>'. $Title[$Def] . '</b>';
+		$RptLinks .= '</li>';
 		$NoEntries = true;
 		if ($ReportList) { // then there are reports to show, show by grouping
 			foreach ($ReportList as $Report) {
 				if ($Report['groupname']==$GroupID AND $Report['defaultreport']==$Def) {
-                    $RptLinks .= '<li class="menu_group_item">';
+					$RptLinks .= '<li class="menu_group_item">';
 					$RptLinks .= '<p>&bull; <a href="' . $rootpath . '/reportwriter/ReportMaker.php?action=go&amp;reportid=' . $Report['id'] . '">' . _($Report['reportname']) . '</a></p>';
 					$RptLinks .= '</li>';
 					$NoEntries = false;
@@ -213,7 +213,7 @@ be generated, one for standard reports and the other for custom reports.
 			foreach ($ReportList as $Report) {
 				$Group=explode(':',$Report['groupname']); // break into main group and form group array
 				if ($NoForms AND $Group[0]==$GroupID AND $Report['reporttype']=='frm' AND $Report['defaultreport']==$Def) {
-                    $RptLinks .= '<li class="menu_group_item">';
+					$RptLinks .= '<li class="menu_group_item">';
 					$RptLinks .= '<img src="' . $rootpath . '/css/' . $_SESSION['Theme'] . '/images/folders.gif" width="16" height="13" alt="" />&nbsp;';
 					$RptLinks .= '<p>&bull; <a href="' . $rootpath . '/reportwriter/FormMaker.php?id=' . $Report['groupname'] . '"></p>';
 					$RptLinks .= $FormGroups[$Report['groupname']] . '</a>';

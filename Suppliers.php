@@ -660,7 +660,7 @@ if (!isset($SupplierID)) {
 /*If the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="Yes" />';
@@ -742,7 +742,7 @@ if (!isset($SupplierID)) {
 		echo '<option value="'. $myrow['termsindicator'] . '">' . $myrow['terms'] .'</option>';
 	} //end while loop
 	DB_data_seek($result, 0);
-    echo '</select></td></tr>';
+	echo '</select></td></tr>';
 
 	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
@@ -806,16 +806,16 @@ if (!isset($SupplierID)) {
 	echo '</select></td></tr>
 		</table>
 		<br />
-        <div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
+		<div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
 	echo '</div>
-          </form>';
+		  </form>';
 
 } else {
 
 //SupplierID exists - either passed when calling the form or from the form itself
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
@@ -947,7 +947,7 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
-    echo '</select></td></tr>';
+	echo '</select></td></tr>';
 
 	$result=DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
@@ -962,7 +962,7 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
-    echo '</select></td></tr>';
+	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] .'" /></td></tr>';
 
@@ -1015,9 +1015,9 @@ if (!isset($SupplierID)) {
 
 	if (isset($_POST['New'])) {
 		echo '<br />
-                <div class="centre">
-                     <input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" />
-                </div>';
+				<div class="centre">
+					 <input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" />
+				</div>';
 	} else {
 		echo '<br />
 				<div class="centre">
@@ -1034,7 +1034,7 @@ if (!isset($SupplierID)) {
 			</div>';
 	}
 	echo '</div>
-          </form>';
+		  </form>';
 } // end of main ifs
 
 include('includes/footer.inc');

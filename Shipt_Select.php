@@ -32,7 +32,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 
 If (isset($_POST['ResetPart'])) {
-     unset($SelectedStockItem);
+	 unset($SelectedStockItem);
 }
 
 If (isset($ShiptRef) AND $ShiptRef!='') {
@@ -97,7 +97,7 @@ if (isset($_POST['SearchParts'])) {
 						stockmaster.description,
 						stockmaster.decimalplaces,
 						stockmaster.units";
-						
+
 	$ErrMsg = _('No Stock Items were returned from the database because'). ' - '. DB_error_msg($db);
 	$StockItemsResult = DB_query($SQL,$db, $ErrMsg);
 
@@ -214,9 +214,9 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td>%s</td></tr>',
-				$myrow['stockid'], 
-				$myrow['description'], 
-				locale_number_format($myrow['qoh'],$myrow['decimalplaces']), 
+				$myrow['stockid'],
+				$myrow['description'],
+				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
 				locale_number_format($myrow['qord'],$myrow['decimalplaces']),
 				$myrow['units']);
 
@@ -369,6 +369,6 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 }
 
 echo '</div>
-      </form>';
+	  </form>';
 include('includes/footer.inc');
 ?>

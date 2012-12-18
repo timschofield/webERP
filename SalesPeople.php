@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
 
-	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1'])) 
+	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1']))
 			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
 		$InputError = 1;
 		prnMsg(_('The commission rates must be a floating point number'),'error');
@@ -216,7 +216,7 @@ or deletion of the records*/
 		$k++;
 	}
 	if ($myrow[7] == 1) {
-		$ActiveText = _('Yes'); 
+		$ActiveText = _('Yes');
 	} else {
 		$ActiveText = _('No');
 	}
@@ -244,7 +244,7 @@ or deletion of the records*/
 			$myrow['salesmancode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['salesmancode']);
-	
+
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!
@@ -256,7 +256,7 @@ if (isset($SelectedSalesPerson)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPerson)) {
@@ -369,7 +369,7 @@ if (! isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

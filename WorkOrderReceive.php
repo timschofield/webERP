@@ -83,8 +83,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	if (DB_num_rows($WOResult)==0){
 		prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-        echo '</div>';
-        echo '</form>';
+		echo '</div>';
+		echo '</form>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -377,7 +377,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			$DbgMsg =  _('The following SQL to update the work order cost was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-			if ($_SESSION['CompanyRecord']['gllink_stock']==1 
+			if ($_SESSION['CompanyRecord']['gllink_stock']==1
 				AND ($AutoIssueCompRow['qtypu'] * $QuantityReceived * $AutoIssueCompRow['cost'])!=0){
 			//if GL linked then do the GL entries to DR wip and CR stock
 
@@ -705,8 +705,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			unset($_POST['QualityText'.$i]);
 			unset($_POST['QtyReqd'.$i]);
 		}
-        echo '</div>';
-        echo '</form>';
+		echo '</div>';
+		echo '</form>';
 		/*end of process work order goods received entry */
 		include('includes/footer.inc');
 		exit;
@@ -743,8 +743,8 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-    echo '</div>';
-    echo '</form>';
+	echo '</div>';
+	echo '</form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -752,8 +752,8 @@ $WORow = DB_fetch_array($WOResult);
 
 if ($WORow['closed']==1){
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more receipts of manufactured items can be received against this work order. You should make up a new work order to receive this item against.'),'info');
-    echo '</div>';
-    echo '</form>';
+	echo '</div>';
+	echo '</form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -867,7 +867,7 @@ if($WORow['controlled']==1){ //controlled
 		if (!isset($i)){
 			$i=0;
 		}
-        echo '<td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>';
+		echo '<td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>';
 		echo '</tr>';
 		echo '<tr>
 				<td colspan="5"></td>
@@ -883,8 +883,8 @@ if($WORow['controlled']==1){ //controlled
 			</tr>';
 		if ($_SESSION['DefineControlledOnWOEntry']==1){ //then potentially batches/lots already set up
 			//retrieve them from woserialnos
-			$WOSNResult = DB_query("SELECT serialno, 
-											quantity, 
+			$WOSNResult = DB_query("SELECT serialno,
+											quantity,
 											qualitytext
 									FROM woserialnos
 									WHERE wo='" . $_POST['WO'] . "'
@@ -919,9 +919,9 @@ if($WORow['controlled']==1){ //controlled
 			}
 		}
 		echo '<tr>
-                 <td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>
-              </tr>
-              </table>';
+				 <td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>
+			  </tr>
+			  </table>';
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
@@ -930,7 +930,7 @@ if($WORow['controlled']==1){ //controlled
 } else { //not controlled - an easy one!
 
 	echo '<tr>
-            <td><input type="hidden" name="CountOfInputs" value="1" /></td>
+			<td><input type="hidden" name="CountOfInputs" value="1" /></td>
 			<td>' . _('Quantity Received') . ':</td>
 			<td><input type="text" class="number" name="Qty" /></td>
 		</tr>

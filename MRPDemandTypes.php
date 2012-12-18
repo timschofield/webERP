@@ -79,13 +79,13 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'MRPDemands'
 
 	$sql= "SELECT COUNT(*) FROM mrpdemands
-	         WHERE mrpdemands.mrpdemandtype='" . $SelectedDT . "'
-	         GROUP BY mrpdemandtype";
+			 WHERE mrpdemands.mrpdemandtype='" . $SelectedDT . "'
+			 GROUP BY mrpdemandtype";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this demand type because MRP Demand records exist for this type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' ._('MRP Demands referring to this type'),'warn');
-    } else {
+	} else {
 			$sql="DELETE FROM mrpdemandtypes WHERE mrpdemandtype='" . $SelectedDT . "'";
 			$result = DB_query($sql,$db);
 			prnMsg(_('The selected demand type record has been deleted'),'succes');
@@ -145,7 +145,7 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	//editing an existing demand type
 
 	$sql = "SELECT mrpdemandtype,
-	        description
+			description
 		FROM mrpdemandtypes
 		WHERE mrpdemandtype='" . $SelectedDT . "'";
 
@@ -187,8 +187,8 @@ echo '<tr>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
-	
+
 include('includes/footer.inc');
 ?>

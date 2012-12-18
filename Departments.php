@@ -111,7 +111,7 @@ if (isset($_POST['Submit'])) {
 			$result = DB_query($sql,$db);
 		}
 		prnMsg($msg,'success');
-        echo '<br />';
+		echo '<br />';
 	}
 	unset ($SelectedDepartmentID);
 	unset ($_POST['SelectedDepartmentID']);
@@ -203,7 +203,7 @@ echo '<br />';
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .  '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedDepartmentID)) {
@@ -257,7 +257,7 @@ if (! isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

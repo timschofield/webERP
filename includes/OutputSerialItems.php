@@ -97,7 +97,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 	}
 
 	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">'. _('Delete'). '</a></td></tr>';
-	
+
 	$TotalQuantity += $Bundle->BundleQty;
 }
 
@@ -125,9 +125,9 @@ echo $tableheader;
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="Ga6uF5Wa" method="post">
-      <input type="hidden" name="LineNo" value="' . $LineNo . '" />
-      <input type="hidden" name="StockID" value="' . $StockID . '" />
-      <input type="hidden" name="EntryType" value="KEYED" />';
+	  <input type="hidden" name="LineNo" value="' . $LineNo . '" />
+	  <input type="hidden" name="StockID" value="' . $StockID . '" />
+	  <input type="hidden" name="EntryType" value="KEYED" />';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;

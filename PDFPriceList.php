@@ -69,7 +69,7 @@ If (isset($_POST['PrintPDF'])
 						ON stockmaster.stockid=prices.stockid
 						INNER JOIN currencies
 						ON prices.currabrev=currencies.currabrev
-                        LEFT JOIN custbranch
+						LEFT JOIN custbranch
 						ON prices.debtorno=custbranch.debtorno
 						AND prices.branchcode=custbranch.branchcode
 						WHERE prices.typeabbrev = '" . $SalesType . "'
@@ -91,33 +91,33 @@ If (isset($_POST['PrintPDF'])
 		$SalesTypeName = $SalesTypeRow[0];
 
 		$SQL = "SELECT prices.typeabbrev,
-        				prices.stockid,
-        				prices.startdate,
-        				prices.enddate,
-        				stockmaster.description,
-        				stockmaster.longdescription,
-        				prices.currabrev,
-        				prices.price,
-        				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
-        				stockmaster.categoryid,
-        				stockcategory.categorydescription,
-        				currencies.decimalplaces
+						prices.stockid,
+						prices.startdate,
+						prices.enddate,
+						stockmaster.description,
+						stockmaster.longdescription,
+						prices.currabrev,
+						prices.price,
+						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+						stockmaster.categoryid,
+						stockcategory.categorydescription,
+						currencies.decimalplaces
 				FROM stockmaster INNER JOIN	stockcategory
-	   			     ON stockmaster.categoryid=stockcategory.categoryid
+	   				 ON stockmaster.categoryid=stockcategory.categoryid
 				INNER JOIN prices
-    				ON stockmaster.stockid=prices.stockid
+					ON stockmaster.stockid=prices.stockid
 				INNER JOIN currencies
 					ON prices.currabrev=currencies.currabrev
-                WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
-    			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-    			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
-    			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-    			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
-    			AND prices.debtorno=''
-    			ORDER BY prices.currabrev,
-    				stockmaster.categoryid,
-    				stockmaster.stockid,
-    				prices.startdate";
+				WHERE stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+				AND prices.typeabbrev='" . $_POST['SalesType'] . "'
+				AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
+				AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+				AND prices.debtorno=''
+				ORDER BY prices.currabrev,
+					stockmaster.categoryid,
+					stockmaster.stockid,
+					prices.startdate";
 	}
 	$PricesResult = DB_query($SQL,$db,'','',false,false);
 
@@ -252,18 +252,18 @@ If (isset($_POST['PrintPDF'])
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
-         ' . ' ' . _('Print a price list') . '</p>';
+		 ' . ' ' . _('Print a price list') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>';
+		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-        echo '<table class="selection">';
+		echo '<table class="selection">';
 		echo '<tr><td>'. _('From Inventory Category Code') .':</td>
-                  <td><select name="FromCriteria">';
+				  <td><select name="FromCriteria">';
 
 		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
@@ -273,7 +273,7 @@ If (isset($_POST['PrintPDF'])
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('To Inventory Category Code'). ':</td>
-                  <td><select name="ToCriteria">';
+				  <td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -284,17 +284,17 @@ If (isset($_POST['PrintPDF'])
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
-                  <td><select name="SalesType">';
+				  <td><select name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)){
-		          echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+				  echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Show Gross Profit %') . ':</td>
-                  <td><select name="ShowGPPercentages">';
+				  <td><select name="ShowGPPercentages">';
 		echo '<option selected="selected" value="No">'. _('Prices Only') . '</option>';
 		echo '<option value="Yes">'. _('Show GP % too') . '</option>';
 		echo '</select></td></tr>';
@@ -306,12 +306,12 @@ If (isset($_POST['PrintPDF'])
 		echo '</select></td></tr>';
 
 		echo '<tr><td>' . _('Effective As At') . ':</td>';
-        echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
-        echo '</td></tr>';
+		echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+		echo '</td></tr>';
 
 		echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" /></div>';
-        echo '</div>
-              </form>';
+		echo '</div>
+			  </form>';
 	}
 	include('includes/footer.inc');
 

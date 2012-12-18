@@ -484,7 +484,7 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 }
 echo '</select>';
 echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" /></td>
-    </tr>';
+	</tr>';
 
 echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
 
@@ -736,7 +736,7 @@ echo '</table>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
 
 if (isset($_GET['SelectedUser'])) {

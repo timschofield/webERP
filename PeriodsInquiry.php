@@ -35,7 +35,7 @@ for ($i=0;$i<3;$i++) {
 	echo '<table cellpadding="2" class="selection">';
 	echo $TableHeader;
 	$k=0;
-	$j=0; 
+	$j=0;
 	while ($myrow=DB_fetch_array($PeriodsResult)){
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';

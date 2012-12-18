@@ -48,8 +48,8 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	} elseif (isset($SelectedRole) ) {
 		$PageTokenId = $_GET['PageToken'];
 		if( isset($_GET['add']) ) { // updating Security Groups add a page token
-			$sql = "INSERT INTO securitygroups (secroleid, 
-											tokenid) 
+			$sql = "INSERT INTO securitygroups (secroleid,
+											tokenid)
 									VALUES ('".$SelectedRole."',
 											'".$PageTokenId."' )";
 			$ErrMsg = _('The addition of the page group access failed because');
@@ -175,7 +175,7 @@ echo '</table>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Role') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
 
 if (isset($SelectedRole)) {

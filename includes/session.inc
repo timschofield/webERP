@@ -152,11 +152,11 @@ if(isset($_SESSION['DB_Maintenance'])){
 
 /*Check to see if currency rates need to be updated */
 if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-	
+
 	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 			ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
-				
+
 			if ($_SESSION['ExchangeRateFeed']=='ECB') {
 				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 				/*Loop around the defined currencies and get the rate from ECB */
@@ -164,7 +164,7 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 					$CurrenciesResult = DB_query("SELECT currabrev FROM currencies",$db);
 					while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 						if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-	
+
 							$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
 																WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
 						}

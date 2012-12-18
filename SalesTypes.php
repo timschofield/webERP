@@ -69,8 +69,8 @@ if (isset($_POST['submit'])) {
 		// First check the type is not being duplicated
 
 		$checkSql = "SELECT count(*)
-			     FROM salestypes
-			     WHERE typeabbrev = '" . $_POST['TypeAbbrev'] . "'";
+				 FROM salestypes
+				 WHERE typeabbrev = '" . $_POST['TypeAbbrev'] . "'";
 
 		$CheckResult = DB_query($checkSql,$db);
 		$CheckRow = DB_fetch_row($CheckResult);
@@ -102,8 +102,8 @@ if (isset($_POST['submit'])) {
 
 	// Check the default price list exists
 		$checkSql = "SELECT count(*)
-			     FROM salestypes
-			     WHERE typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'";
+				 FROM salestypes
+				 WHERE typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'";
 		$CheckResult = DB_query($checkSql,$db);
 		$CheckRow = DB_fetch_row($CheckResult);
 
@@ -129,8 +129,8 @@ if (isset($_POST['submit'])) {
 	// Prevent delete if saletype exist in customer transactions
 
 	$sql= "SELECT COUNT(*)
-	       FROM debtortrans
-	       WHERE debtortrans.tpe='".$SelectedType."'";
+		   FROM debtortrans
+		   WHERE debtortrans.tpe='".$SelectedType."'";
 
 	$ErrMsg = _('The number of transactions using this customer/sales/pricelist type could not be retrieved');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -223,7 +223,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />';
 
@@ -233,9 +233,9 @@ if (! isset($_GET['delete'])) {
 	{
 
 		$sql = "SELECT typeabbrev,
-			       sales_type
-		        FROM salestypes
-		        WHERE typeabbrev='" . $SelectedType . "'";
+				   sales_type
+				FROM salestypes
+				WHERE typeabbrev='" . $SelectedType . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -274,7 +274,7 @@ if (! isset($_GET['delete'])) {
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
 	echo '</div>
-          </form>';
+		  </form>';
 
 } // end if user wish to delete
 
