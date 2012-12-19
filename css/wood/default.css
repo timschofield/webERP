@@ -20,7 +20,7 @@ Notes:
 
 body{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:12px;
+	font-size:10pt;
 	margin:10px;
 	background:url(images/desk.jpg) #631;
 }
@@ -74,7 +74,7 @@ table .selection{ /* nested table for more complex data display/input */
 }
 th { /* table headers */
 	font-weight: normal;
-	font-size:12px;
+	font-size:100%;
 	background-color: #ffd980;
 	color: black;
 	text-align: center;
@@ -102,7 +102,7 @@ td.number {
 
 input { /* used for text box and buttons (buttons should have their own styles) */
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size:100%;
 }
 input.number{
 	text-align: right;
@@ -116,8 +116,8 @@ input:hover{
 }
 
 select { /* drop down */
-	font-family: Arial, Verdana, Helvetica, sans-serif;;
-	font-size: 12px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 100%;
 }
 select:hover { /* drop down */
 	background:#fff791;
@@ -125,7 +125,7 @@ select:hover { /* drop down */
 
 textarea{
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 100%;
 }
 textarea:hover{
 	background:#fff791;
@@ -188,7 +188,7 @@ DIV.page_help_text {
 	POSITION: static;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-weight: normal;
-	font-size:12px;
+	font-size: 100%;
 	color: black;
 	TEXT-ALIGN:center;
 	
@@ -198,18 +198,17 @@ DIV.page_help_text {
 	width:80%;
 }
 DIV.system_check { /* probably not used anywhere */
-	BORDER: #a52a2a 1px solid;
-	Z-INDEX: 1;
-	FLOAT: none;
-	VISIBILITY: visible;
-	POSITION: static;
+	border: #a52a2a 1px solid;
+	z-index: 1;
+	float: none;
+	visibility: visible;
+	position: static;
 	background: lightgray;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-family: arial, verdana, helvetica, sans-serif;
 	font-weight: normal;
-	font-size:12px;
+	font-size:100%;
 	color: black;
-	TEXT-ALIGN:left;
-
+	text-align:left;
 	box-shadow:3px 3px 4px;
 	margin:0 auto 10px;
 	padding:10px;
@@ -267,7 +266,7 @@ DIV.system_check { /* probably not used anywhere */
 .label {
 	font-weight:bold;
 	font-style:normal;
-	font-size:12px;
+	font-size:120%;
 	color:black;
 	background-color:#cccccc;
 }
@@ -363,7 +362,7 @@ select.selecterror{
 }
 #AppInfoModuleDiv{
 	font-weight:bold;
-	font-size:12px;
+	font-size:120%;
 	padding:3px;
 }
 

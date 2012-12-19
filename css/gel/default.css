@@ -17,7 +17,7 @@ the next project. :)
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 10pt;
 	background-color: white;
 	margin:0;
 	padding:5px;
@@ -37,13 +37,11 @@ img {
 	vertical-align:middle;
 }
 .page_title_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
     padding-top: 2px;
     padding-bottom: 2px;
 	font-weight: bold;
-	font-size: 12px;
 	color: black;
-	TEXT-ALIGN:center;
+	text-align:center;
 }
 p.good {
     font-weight: bold;
@@ -67,7 +65,6 @@ table.selection {
 th {
 	font-weight: normal;
 	background-color: #ccc;
-	font-size: 12px;
 	color: #330000;
 	text-align: center;
 }
@@ -75,12 +72,10 @@ th.number {
 	text-align: right;
 	font-weight: normal;
 	background-color: #ccc;
-	font-size: 12px;
 	color: #330000;
 }
 td {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
 	text-align: left;
 }
 td.select {
@@ -97,8 +92,6 @@ input{
   	background: url(images/input.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
 }
 input:hover{
 	background: url(images/inputh.png) #eee;
@@ -115,15 +108,11 @@ input.image {
 select {
 	background:#eee;
 	color:#111;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
 }
 textarea{
   	background: url(images/input.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 12px;
 }
 textarea:hover{
 }
@@ -137,8 +126,6 @@ textarea{
 	background: url(images/inputtxt.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Verdana, Arial, Helvetica;
-	font-size: 12px;
 	}
 textarea:hover{
 	background: url(images/inputhtxt.png) #eee;
@@ -148,7 +135,8 @@ textarea:hover{
 div.error { /*** is this used??? ***/
 	background-color:red;
 	color: white;
-	font-style: italic; font-weight:bold;
+	font-style: italic; 
+	font-weight:bold;
 	border: 3px solid red;
 }
 div.warn { 
@@ -168,71 +156,67 @@ div.info { /* ??? */
 }
 DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
+	border: #a52a2a 1px solid;
 	padding-top:2px;
-        padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	z-index: 1;
 	width: 80%;
-	FLOAT: none;
-	VISIBILITY: visible;
-	MARGIN: 0 auto;
-	POSITION: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
     font-weight: normal;
-    font-size: 12px;
     color: black;
-	TEXT-ALIGN:center;
+	text-align:center;
 }
 DIV.system_check { /*** is this used???  */
-        BORDER: #a52a2a 1px solid;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 40%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        background: lightgray;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        font-size: 12px;
-        color: black;
-        TEXT-ALIGN:left;
+	border: #a52a2a 1px solid;
+	padding-left: 3px;
+	z-index: 1;
+	width: 40%;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
+	background: lightgray;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-weight: normal;
+	color: black;
+	text-align:left;
 }
 
 .dpTbl {
 	border: solid navy 1px;
 }
 .dpTD{
-border:0;
-width:20px;
-background-color:#EEEEEE;
-text-align:right;
-cursor:pointer;
+	border:0;
+	width:20px;
+	background-color:#EEEEEE;
+	text-align:right;
+	cursor:pointer;
 }
 .dpDayHighlight{
-border:0;
-width:20px;
-background-color:yellow;
-text-align:right;
-cursor:pointer;
+	border:0;
+	width:20px;
+	background-color:yellow;
+	text-align:right;
+	cursor:pointer;
 }
 .dpTDHover{
-border:0;
-width:20px;
-background-color:#CCCCCC;
-text-align:right;
-cursor:pointer;
+	border:0;
+	width:20px;
+	background-color:#CCCCCC;
+	text-align:right;
+	cursor:pointer;
 }
 
 .table1 { /*** used ***/
-  width:90%;
-  background: #eee;
-  border: 1px solid #222;
-  margin: 0 auto;
+	width:90%;
+	background: #eee;
+	border: 1px solid #222;
+	margin: 0 auto;
 }
 .tableheader { /* used */
 	font-weight: normal;
@@ -247,7 +231,7 @@ cursor:pointer;
 .label { /* used */
 	font-weight:bold;
 	font-style:normal;
-	font-size:12px;
+	font-size:120%;
 	color:black;
 	background-color:#cccccc;
 }

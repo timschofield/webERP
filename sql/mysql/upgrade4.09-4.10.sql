@@ -8,6 +8,8 @@ ALTER TABLE purchorders MODIFY `initiator` VARCHAR(20);
 INSERT INTO `weberpdemo`.`scripts` (`script` , `pagesecurity` , `description`)
 VALUES ('OrderEntryDiscountPricing', '13', 'Not a script but an authority level marker - required if the user is allowed to enter discounts against a customer order'
 );
+ALTER TABLE `gltrans` ADD INDEX ( `tag` );
+INSERT INTO scripts VALUES ('CustomerPurchases.php','5','Shows the purchases a customer has made.');
 UPDATE config SET confvalue='4.10.0' WHERE confname='VersionNumber';
 
-INSERT INTO scripts VALUES ('CustomerPurchases.php','5','Shows the purchases a customer has made.');
+

@@ -18,7 +18,7 @@ the next project. :)
 
 body{
 	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:12px;
+	font-size:10pt;
 	background:url(images/stripe.png) white;
 	margin:0;
 	padding:5px;
@@ -48,7 +48,6 @@ p.bad{
 }
 p.page_title_text{ /* page title, used in many *.php */
 	background:gainsboro;
-	font-size:12px;
 	margin:10px auto;
 	padding:5px;
 	text-align:center;
@@ -236,7 +235,7 @@ div.page_help_text{ /* many */
 .label{ /*WorkOrderCosting.php, WorkOrderEntry.php, WorkOrderIssue.php, WorkOrderStatus.php */
 	font-weight:bold;
 	font-style:normal;
-	font-size:12px;
+	font-size:120%;
 	color:black;
 	background-color:#ccc;
 }
@@ -245,37 +244,36 @@ div.page_help_text{ /* many */
 }
 
 .header{ /* used in \includes\InputSerialItemsFile.php */
-background-image:url("");
-background-repeat:no-repeat;
-background-attachment:fixed;
-border:none;
-margin:0px;
-padding:0px;
+	background-image:url("");
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	border:none;
+	margin:0px;
+	padding:0px;
 }
 input.inputerror{ /* many * .php */
-background-color:#fddbdb;
+	background-color:#fddbdb;
 }
 textarea{
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-size:100%;
-background-color:#e3e1e1;
-border-width:1px;
-border-bottom-color:gray;
-border-bottom-style:solid;
-border-top-color:gray;
-border-top-style:solid;
-border-left-color:gray;
-border-left-style:solid;
-border-right-color:gray;
-border-right-style:solid;
+	font-size:100%;
+	background-color:#e3e1e1;
+	border-width:1px;
+	border-bottom-color:gray;
+	border-bottom-style:solid;
+	border-top-color:gray;
+	border-top-style:solid;
+	border-left-color:gray;
+	border-left-style:solid;
+	border-right-color:gray;
+	border-right-style:solid;
 }
 select.selecterror{ /*AccountGroups.php, BankAccounts.php, BOMs.php, Stocks.php */
-background-color:#fddbdb;
+	background-color:#fddbdb;
 }
 
 .OsRow{ /* PO_OrderDetails.php */
-background-color:#234567;
-color:white;
+	background-color:#234567;
+	color:white;
 }
 
 /*** CANVAS ***/
@@ -286,11 +284,11 @@ color:white;
 /*** HEADER ***/
 
 #HeaderDiv{
-overflow:hidden; /* REQUIRED:height according to items contained */
-background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
-color:gray;
-padding:3px;
-border:thin solid lightgray;
+	overflow:hidden; /* REQUIRED:height according to items contained */
+	background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
+	color:gray;
+	padding:3px;
+	border:thin solid lightgray;
 }
 #HeaderWrapDiv{
 }
@@ -298,23 +296,23 @@ border:thin solid lightgray;
 /*** HEADER - APP INFO ***/
 
 #AppInfoDiv{
-float:left; /* REQUIRED:to the left */
+	float:left; /* REQUIRED:to the left */
 }
 #AppInfoDiv img{
-vertical-align:middle; /* center image and text vertically */
+	vertical-align:middle; /* center image and text vertically */
 }
 #AppInfoCompanyDiv{
-display:table-cell; /* REQUIRED:as a cell */
+	display:table-cell; /* REQUIRED:as a cell */
 }
 #AppInfoUserDiv{
-display:table-cell; /* REQUIRED:as a cell */
+	display:table-cell; /* REQUIRED:as a cell */
 }
 #AppInfoUserDiv a{
-color:gray;
+	color:gray;
 }
 #AppInfoUserDiv a:hover{
-color:black;
-text-decoration:underline;
+	color:black;
+	text-decoration:underline;
 }
 #AppInfoModuleDiv{
 }
@@ -322,146 +320,146 @@ text-decoration:underline;
 /*** HEADER - QUICK MENU ***/
 
 #QuickMenuDiv{
-float:right; /* to the right side  */
-margin-top:2px;
+	float:right; /* to the right side  */
+	margin-top:2px;
 }
 #QuickMenuDiv ul{
-list-style:none; /* hide the bullets */
+	list-style:none; /* hide the bullets */
 }
 #QuickMenuDiv li{
-display:inline; /* items are inline */
+	display:inline; /* items are inline */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate 
  the link!!! ***HJ***/
  
 #QuickMenuDiv li a{
-padding:9px; /* links as button */
-border:thin outset lightgray; /* un-pressed state */
+	padding:9px; /* links as button */
+	border:thin outset lightgray; /* un-pressed state */
 }
 #QuickMenuDiv li a:hover{
-padding:9px; /* links as button */
-border:thin inset lightgray; /* pressed state */
-text-decoration:none; /* no underline */
-color:black;
+	padding:9px; /* links as button */
+	border:thin inset lightgray; /* pressed state */
+	text-decoration:none; /* no underline */
+	color:black;
 }
 
 /*** BODY ***/
 
 #BodyDiv{
-clear:both; /* REQUIRED */
-overflow:hidden; /* REQUIRED */
-color:black;
-background:whitesmoke;
-padding-bottom:5px;
-text-align:center;
+	clear:both; /* REQUIRED */
+	overflow:hidden; /* REQUIRED */
+	color:black;
+	background:whitesmoke;
+	padding-bottom:5px;
+	text-align:center;
 }
 
 
 /*** BODY - MAIN MENU ***/
 
 #MainMenuDiv{
-float:left; /* REQUIRED:to the left side */
-white-space:nowrap; /* don't break text */
-text-align:center; 
-width:12%;
-margin-top:3px;
+	float:left; /* REQUIRED:to the left side */
+	white-space:nowrap; /* don't break text */
+	text-align:center; 
+	width:12%;
+	margin-top:3px;
 }
 #MainMenuDiv ul{
-padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
-margin:0 3px 0 0;
-border:thin outset silver;
+	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	margin:0 3px 0 0;
+	border:thin outset silver;
 }
 #MainMenuDiv li{
-list-style:none; /* REQUIRED */
-padding:0; /* REQUIRED */
+	list-style:none; /* REQUIRED */
+	padding:0; /* REQUIRED */
 }
 #MainMenuDiv li a,
 #MainMenuDiv li a:hover,
 #MainMenuDiv li a:active,
 #MainMenuDiv .main_menu_selected a,
 #MainMenuDiv .main_menu_selected a:hover{ /* common styles */
-display:block; /* REQUIRED */
-padding:3px;
-border:thin outset silver;
-color:black;
-text-decoration:none;
-background:silver;
+	display:block; /* REQUIRED */
+	padding:3px;
+	border:thin outset silver;
+	color:black;
+	text-decoration:none;
+	background:silver;
 }
 #MainMenuDiv li a:hover{ /* link as button!!! pressed state */
-border:thin inset silver;
+	border:thin inset silver;
 }
 #MainMenuDiv .main_menu_selected a,#MainMenuDiv .main_menu_selected a:hover{ /* the selected button */
-border:thin inset silver;
-background:dimgray;
-color:white;
+	border:thin inset silver;
+	background:dimgray;
+	color:white;
 }
 
 /*** BODY - SUB MENU ***/
 
 #SubMenuDiv{
-display:table;
-float:right;
-overflow:hidden;
-width:88%;
-margin-top:3px;
-text-align:left;
+	display:table;
+	float:right;
+	overflow:hidden;
+	width:88%;
+	margin-top:3px;
+	text-align:left;
 }
 #SubMenuDiv ul{
-list-style-type:none; /* REQUIRED:hide bullets */
-padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
-margin:0;
-background:gainsboro;
-border:thin outset gainsboro;
-margin-left:3px;
+	list-style-type:none; /* REQUIRED:hide bullets */
+	padding:0; /* REQUIRED:remove extra gaps (ex-bullets) */
+	margin:0;
+	background:gainsboro;
+	border:thin outset gainsboro;
+	margin-left:3px;
 }
 #SubMenuDiv li{
-list-style:none; /* REQUIRED:hide the bullets */
-padding:2px;
+	list-style:none; /* REQUIRED:hide the bullets */
+	padding:2px;
 }
 .menu_group_headers{
-background:silver;
-outline:thin outset silver;
-text-align:center;
-color:black;
+	background:silver;
+	outline:thin outset silver;
+	text-align:center;
+	color:black;
 }
 
 #TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
-display:table-cell;
+	display:table-cell;
 }
 #InquiriesDiv div{ /* default div, used for custom report header */
-background:silver;
-color:black;
-padding:2px;
+	background:silver;
+	color:black;
+	padding:2px;
 }
 .menu_group_item p{
-color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
-margin:0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+	color:#00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
+	text-indent:-10px; /* this makes the bullet to appear as the li tag previously used */
+	margin:0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
 }
 
 /*** FOOTER ***/
 
 #FooterDiv{
-clear:both; /* REQUIRED */
-overflow:hidden;
-color:gray;
-background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
-border:thin solid lightgray;
+	clear:both; /* REQUIRED */
+	overflow:hidden;
+	color:gray;
+	background:url(images/menu_bg_grey.png) repeat-x #cfcfcf;
+	border:thin solid lightgray;
 }
 #FooterWrapDiv{
-overflow:hidden;
-padding:3px;
+	overflow:hidden;
+	padding:3px;
 }
 #FooterLogoDiv{
-float:left;
-background:white;
-border-radius:8px 8px 8px 8px;
-padding:3px;
-margin-left:47%; /* to the center (approx) */
+	float:left;
+	background:white;
+	border-radius:8px 8px 8px 8px;
+	padding:3px;
+	margin-left:47%; /* to the center (approx) */
 }
 #FooterLogoDiv img{
-vertical-align:middle;
+	vertical-align:middle;
 }
 #FooterVersionDiv{
 clear:both; /* below the logo */
@@ -469,8 +467,8 @@ float:left;
 margin-left:47%; /* to the center (approx) */
 }
 #FooterTimeDiv{
-float:right;
-margin-top:-22px; /* go up to center */
+	float:right;
+	margin-top:-22px; /* go up to center */
 }
 
 /*** END ***/

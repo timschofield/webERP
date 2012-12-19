@@ -19,7 +19,7 @@ the next project. :)
 
 body {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size:12px;
+	font-size:10pt;
 	background-color: #ddd;
 	margin:0;
 	padding:0;
@@ -45,8 +45,6 @@ a:hover {
 
 /*table detail items default format */
 td {
-	font-family: Arial, Verdana, Helvetica;
-	font-size:12px;
 	text-align: left;
 }
 td.select {
@@ -92,14 +90,12 @@ td.number {
 
 th { /* table heading */
 	font-weight: normal;
-	font-size:12px;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: center;
 }
 th.number {
 	font-weight: normal;
-	font-size:12px;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: right;
@@ -132,8 +128,6 @@ div.info {
 which should have the same width as the column where it is located 
 e.g.: class input_button, input_column_button, input_text */
 input {
-	font-family: Arial, Verdana, Helvetica;
-	font-size:12px;
 }
 input.number{
 	text-align: right;
@@ -157,7 +151,6 @@ input.inputerror {
 
 /* for buttons ***HJ***/
 button{
-	font-size:12px;
 }
 button:hover{
 	background:lightblue;
@@ -166,8 +159,6 @@ button:hover{
 /* dropdown box */
 
 select {
-	font-family: Arial, Verdana, Helvetica;
-	font-size:12px;
 }
 select.selecterror {
 	background-color: #fddbdb;
@@ -194,9 +185,7 @@ p.bad {
 	padding: 0px;
 }
 
-textarea{ /* default style for textarre */
-	font-family: Arial, Verdana, Helvetica;
-	font-size:12px;
+textarea{ /* default style for textarea */
 }
 textarea:hover{
 }
@@ -217,19 +206,18 @@ div.csv {
         background:lightgray;
         color: black;
         border: 1px solid black;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
+        padding-left: 3px;
+        z-index: 1;
         width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        font-family: Arial, Verdana, Helvetica;
+        float: none;
+        visibility: visible;
+        margin: 0 auto;
+        position: static;
+        font-family: arial, verdana, helvetica;
         padding-top: 1px;
         padding-bottom: 1px;
         font-weight: normal;
-        font-size:12px;
-        TEXT-ALIGN:center;
+        text-align:center;
 }
 
 .page_title_text { /* used */
@@ -237,28 +225,25 @@ div.csv {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	font-weight: bold;
-	font-size:12px;
 	color: black;
-	TEXT-ALIGN:center;
+	text-align:center;
 }
 
 DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
+	border: #a52a2a 1px solid;
 	padding-top:2px;
 	padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
+	padding-left: 10px;
+	z-index: 1;
 	width: 80%;
-	FLOAT: none;
-	VISIBILITY: visible;
-	MARGIN: 0 auto;
-	POSITION: static;
-	font-family: Arial, Verdana, Helvetica;
+	float: none;
+	visibility: visible;
+	margin: 0 auto;
+	position: static;
 	font-weight: normal;
-	font-size:12px;
 	color: black;
-	TEXT-ALIGN:center;
+	text-align:center;
 }
 
 .menu_group_item a {
@@ -268,13 +253,9 @@ DIV.page_help_text {
 	text-decoration: underline;
 }
 
-
-
 textarea.texterror {
 	background-color: #fddbdb;
 }
-
-
 
 .tableheader {
 	font-weight: normal;
@@ -291,7 +272,7 @@ textarea.texterror {
 .label { /* used */
 	font-weight:bold;
 	font-style:normal;
-	font-size:12px;
+	font-size:120%;
 	color:black;
 	background-color:#cccccc;
 }
