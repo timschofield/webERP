@@ -34,7 +34,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('Orders Invoiced Report') . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -69,8 +69,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '</table>
 			<br />
 			<div class="centre"><input type="submit" name="Go" value="' . _('Create PDF') . '" /></div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 	exit;
@@ -170,7 +170,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 					stockmaster.description,
 					stockmaster.units,
 					stockmaster.decimalplaces";
-
+	
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 	$sql= "SELECT salesorders.orderno,
 				  salesorders.debtorno,

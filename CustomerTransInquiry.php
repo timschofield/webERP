@@ -21,12 +21,12 @@ echo '<table class="selection">
 			<td>' . _('Type') . ':</td>
 			<td><select tabindex="1" name="TransType"> ';
 
-$sql = "SELECT typeid,
-				typename
-		FROM systypes
-		WHERE typeid >= 10
+$sql = "SELECT typeid, 
+				typename 
+		FROM systypes 
+		WHERE typeid >= 10 
 		AND typeid <= 14";
-
+		
 $resultTypes = DB_query($sql,$db);
 
 echo '<option value="All">' . _('All') . '</option>';
@@ -155,7 +155,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$rootpath,
 					$myrow['transno'],
 					$rootpath.'/css/'.$theme.'/images/preview.gif');
-
+					
 		} elseif ($_POST['TransType']==11){ /* credit notes */
 			printf($format_base .
 					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit"><img src="%s" title="' . _('Click to preview the credit') . '" /></a></td>

@@ -48,7 +48,7 @@ $SQL = "SELECT email
 		FROM custbranch INNER JOIN debtortrans
 			ON custbranch.debtorno= debtortrans.debtorno
 			AND custbranch.branchcode=debtortrans.branchcode
-		WHERE debtortrans.type='" . $TypeCode . "'
+		WHERE debtortrans.type='" . $TypeCode . "' 
 		AND debtortrans.transno='" .$_GET['FromTransNo'] . "'";
 
 $ErrMsg = _('There was a problem retrieving the contact details for the customer');
@@ -63,12 +63,12 @@ if (DB_num_rows($ContactResult)>0){
 
 echo '<tr><td>' . _('Email') . ' ' . $_GET['InvOrCredit'] . ' ' . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('to') . ':</td>
 	<td><input type="text" name="EmailAddr" maxlength="60" size="60" value="' . $EmailAddress . '" /></td>
-	</tr>
+    </tr>
 	</table>';
 
 echo '<br /><div class="centre"><input type="submit" name="DoIt" value="' . _('OK') . '" />';
 echo '</div>
-	  </div>
-	  </form>';
+      </div>
+      </form>';
 include ('includes/footer.inc');
 ?>

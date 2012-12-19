@@ -14,7 +14,7 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -118,$YPos-60,0,35);
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {
 
-		$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
+        $pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX INVOICE') . ' ');
 } else {
 	$pdf->addText($Page_Width/2 - 60, $YPos, $FontSize, _('TAX CREDIT NOTE') . ' ');
 }
@@ -97,7 +97,7 @@ if ($_SESSION['CompanyRecord']['regoffice2'] <> '') {
   $LineCount += 1;
   $pdf->addText($XPos, $YPos-$LineCount*$LineHeight,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
 }
-if (($_SESSION['CompanyRecord']['regoffice3'] <> '') OR ($_SESSION['CompanyRecord']['regoffice4'] <> '') OR ($_SESSION['CompanyRecord']['regoffice5'] <> '')) {
+if (($_SESSION['CompanyRecord']['regoffice3'] <> '') OR ($_SESSION['CompanyRecord']['regoffice4'] <> '') OR ($_SESSION['CompanyRecord']['regoffice5'] <> '')) { 
   $LineCount += 1;
   $pdf->addText($XPos, $YPos-$LineCount*$LineHeight,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);  // country in 6 not printed
 }
@@ -161,18 +161,18 @@ if ($InvOrCredit=='Invoice') {
 	$LineCount += 1;
 // Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
 if (!function_exists('htmlspecialchars_decode')) {
-		function htmlspecialchars_decode($str) {
-				$trans = get_html_translation_table(HTML_SPECIALCHARS);
+        function htmlspecialchars_decode($str) {
+                $trans = get_html_translation_table(HTML_SPECIALCHARS);
 
-				$decode = ARRAY();
-				foreach ($trans AS $char=>$entity) {
-						$decode[$entity] = $char;
-				}
+                $decode = ARRAY();
+                foreach ($trans AS $char=>$entity) {
+                        $decode[$entity] = $char;
+                }
 
-				$str = strtr($str, $decode);
+                $str = strtr($str, $decode);
 
-				return $str;
-		}
+                return $str;
+        }
 }
 	$pdf->addText($XPos, $YPos-$LineCount*$LineHeight, $FontSize, $myrow['deliverto']);
 	$LineCount += 1;

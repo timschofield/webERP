@@ -617,17 +617,17 @@ while ($myrow1 = DB_fetch_array($result1)) {
 }
 
 if (!isset($_POST['Keywords'])) {
-	$_POST['Keywords']='';
+    $_POST['Keywords']='';
 }
 
 if (!isset($_POST['StockCode'])) {
-	$_POST['StockCode']='';
+    $_POST['StockCode']='';
 }
 
 echo '</select>
-	<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-	<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
-	<tr><td>&nbsp;</td>
+    <td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
+    <td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
+    <tr><td>&nbsp;</td>
 	<td><font size="3"><b>' . _('OR') . ' </b></font>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
 	<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 	</tr>

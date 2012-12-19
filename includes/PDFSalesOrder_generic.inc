@@ -9,7 +9,7 @@ $XPos = $Page_Width/2 - 60;
 /* if the deliver blind flag is set on the order, we do not want to output
 the company logo */
 if ($DeliverBlind < 2) {
-	$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+20,520,0,60);
+    $pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+20,520,0,60);
 }
 $FontSize=18;
 
@@ -24,15 +24,15 @@ if ($Copy=='Customer'){
 /* if the deliver blind flag is set on the order, we do not want to output
 the company contact info */
 if ($DeliverBlind < 2) {
-	$FontSize=14;
-	$YPos = 470;
-	$pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
-	$FontSize =8;
-	$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
-	$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-	$pdf->addText($XPos, $YPos-30,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
-	$pdf->addText($XPos, $YPos-39,$FontSize, _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
-	$pdf->addText($XPos, $YPos-48,$FontSize, $_SESSION['CompanyRecord']['email']);
+    $FontSize=14;
+    $YPos = 470;
+    $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
+    $FontSize =8;
+    $pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+    $pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+    $pdf->addText($XPos, $YPos-30,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
+    $pdf->addText($XPos, $YPos-39,$FontSize, _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
+    $pdf->addText($XPos, $YPos-48,$FontSize, $_SESSION['CompanyRecord']['email']);
 }
 
 $XPos = 46;

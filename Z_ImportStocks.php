@@ -290,13 +290,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		<br />
 		<br />';
 	echo '<form action="Z_ImportStocks.php" method="post" enctype="multipart/form-data">';
-	echo '<div class="centre">';
+    echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
 			_('Upload file') . ': <input name="userfile" type="file" />
 			<input type="submit" value="' . _('Send File') . '" />
-		</div>
+        </div>
 		</form>';
 
 }

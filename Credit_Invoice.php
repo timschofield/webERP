@@ -57,14 +57,14 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 								stockmoves.loccode,
 								locations.taxprovinceid,
 								currencies.decimalplaces
-							FROM debtortrans INNER JOIN debtorsmaster
+							FROM debtortrans INNER JOIN debtorsmaster 
 							ON debtortrans.debtorno = debtorsmaster.debtorno
-							INNER JOIN custbranch
+							INNER JOIN custbranch 
 							ON debtortrans.branchcode = custbranch.branchcode
 							AND debtortrans.debtorno = custbranch.debtorno
-							INNER JOIN currencies
+							INNER JOIN currencies 
 							ON debtorsmaster.currcode = currencies.currabrev
-							INNER JOIN stockmoves
+							INNER JOIN stockmoves 
 							ON stockmoves.transno=debtortrans.transno
 							AND stockmoves.type=debtortrans.type
 							INNER JOIN locations ON
@@ -100,7 +100,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 		$_SESSION['CreditItems' . $identifier]->GetFreightTaxes();
 		$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
 		$_SESSION['CreditItems' . $identifier]->SalesPerson = $myrow['salesman'];
-
+		
 		DB_free_result($GetInvHdrResult);
 
 /*now populate the line items array with the stock movement records for the invoice*/
@@ -168,7 +168,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 														'',
 														'',
 														$myrow['standardcost']);
-
+														
 				$_SESSION['CreditItems' . $identifier]->GetExistingTaxes($LineNumber, $myrow['stkmoveno']);
 
 				if ($myrow['controlled']==1){/* Populate the SerialItems array too*/
@@ -272,7 +272,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/c
 if (!isset($_POST['ProcessCredit'])) {
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -521,7 +521,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /*Start an SQL transaction */
 
-
+	
 	$Result = DB_Txn_Begin($db);
 
 	$DefaultDispatchDate= FormatDateForSQL($DefaultDispatchDate);
@@ -530,7 +530,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 	$SQL = "SELECT (ovamount+ovgst+ovfreight-ovdiscount-alloc) AS baltoallocate
 			FROM debtortrans
-			WHERE transno=" . $_SESSION['ProcessingCredit'] . "
+			WHERE transno=" . $_SESSION['ProcessingCredit'] . " 
 			AND type=10";
 	$Result = DB_query($SQL,$db);
 	$myrow = DB_fetch_row($Result);
@@ -653,7 +653,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $CreditLine) {
 
 		if ($CreditLine->QtyDispatched >0){
-
+			
 			$LocalCurrencyPrice= round(($CreditLine->Price / $_SESSION['CurrencyRate']),$_SESSION['CompanyRecord']['decimalplaces']);
 
 			if ($CreditLine->MBflag=='M' oR $CreditLine->MBflag=='B'){
@@ -662,7 +662,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					FROM locstock
 					WHERE locstock.stockid='" . $CreditLine->StockID . "'
 					AND loccode= '" . $_SESSION['CreditItems' . $identifier]->Location . "'";
-
+					
 				$Result = DB_query($SQL, $db);
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
@@ -677,10 +677,10 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 			if ($_POST['CreditType']=='Return'){
 
-				/* some want this some do not
+				/* some want this some do not 
 				 * We cannot use the orderlineno to update with as it could be different when added to the credit note than it was when the order was created
 				 * Also there could potentially be the same item on the order multiple times with different delivery dates
-				 * So all up the SQL below is a bit hit and miss !!
+				 * So all up the SQL below is a bit hit and miss !! 
 				 * Probably right 99% of time with the item on the order only once */
 
 				$SQL = "UPDATE salesorderdetails
@@ -689,7 +689,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						WHERE orderno = '" . $_SESSION['CreditItems' . $identifier]->OrderNo . "'
 						AND stkcode = '" . $CreditLine->StockID . "'
 						AND quantity >=" . $CreditLine->QtyDispatched;
-
+						
 
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated for the reduced quantity invoiced because');
 				$DbgMsg = _('The following SQL to update the sales order detail record was used');
@@ -998,13 +998,13 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											'" . $CreditLine->StandardCost . "',
 											'" . ($QtyOnHandPrior + $CreditLine->QtyDispatched)  . "',
 											'" . $CreditLine->Narrative . "')";
-
+						
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL, $db,$ErrMsg, $DbgMsg, true);
 				/*Get the ID of the StockMove... */
 				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
-
+			
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
 												transno,
@@ -1038,7 +1038,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											0,
 											'" . $QtyOnHandPrior . "',
 											'" . $CreditLine->Narrative . "')";
-
+						
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -1077,7 +1077,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 											'" . $QtyOnHandPrior  . "',
 											1,
 											'" . $CreditLine->Narrative . "')";
-
+						
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records for the purpose of display on the credit note was used');
@@ -1125,8 +1125,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					AND salesanalysis.stockid = '" . $CreditLine->StockID . "'
 					AND budgetoractual=1
 					AND salesanalysis.salesperson='" . $_SESSION['CreditItems' . $identifier]->SalesPerson . "'
-					GROUP BY stkcategory,
-							salesanalysis.area,
+					GROUP BY stkcategory, 
+							salesanalysis.area, 
 							salesperson";
 
 			$ErrMsg = _('The count to check for existing Sales analysis records could not run because');
@@ -1527,9 +1527,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 					accountname
 				FROM chartmaster INNER JOIN accountgroups
 				ON chartmaster.group_=accountgroups.groupname
-				WHERE accountgroups.pandl=1
+				WHERE accountgroups.pandl=1 
 				ORDER BY chartmaster.accountcode";
-
+	
 		$Result = DB_query($SQL,$db);
 
 		while ($myrow = DB_fetch_array($Result)) {
@@ -1554,7 +1554,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 		$_SESSION['CreditItems'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 	}
-
+	
 	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
 		if ($SalesPersonRow['salesmancode']==$_SESSION['CreditItems'.$identifier]->SalesPerson){
 			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
@@ -1562,7 +1562,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 		}
 	}
-
+	
 	echo '</select></td>
 		</tr>';
 	echo '<tr>

@@ -262,7 +262,7 @@ echo '<tr>
 	<tr>
 		<td>' . _('Exclude Total Quantity Less Than') . ':</td>
 		<td><input type ="text" class="number" name="ExcludeQuantity" size="4" value="1" /></td>
-	</tr>
+    </tr>
 	<tr>
 		<td>' . _('Exclude Total Dollars Less Than') . ':</td>
 		<td><input type ="text" class="number" name="ExcludeAmount" size="8" value="0" /></td>
@@ -280,7 +280,7 @@ echo '<tr>
 		<input type="submit" name="submit" value="' . _('Submit') .  '" />
 	</div>';
 echo '</div>
-	  </form>';
+      </form>';
 
 include('includes/footer.inc');
 ?>

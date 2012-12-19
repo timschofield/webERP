@@ -16,7 +16,7 @@ if (!isset($_GET['TransferNo'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Reprint transfer docket').'</p><br />';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>
 			<tr>
@@ -25,11 +25,11 @@ if (!isset($_GET['TransferNo'])){
 			</tr>
 		</table>';
 	echo '<br />
-		  <div class="centre">
+          <div class="centre">
 			<input type="submit" name="Print" value="' . _('Print') .'" />
-		  </div>';
-	echo '</div>
-		  </form>';
+          </div>';
+    echo '</div>
+          </form>';
 	include ('includes/footer.inc');
 	exit;
 }

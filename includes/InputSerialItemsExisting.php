@@ -11,8 +11,8 @@ if ($_POST['EntryType'] == 'KEYED'){
         /*Also a multi select box for adding bundles to the dispatch without keying */
      $sql = "SELECT serialno, quantity
 			FROM stockserialitems
-			WHERE stockid='" . $StockID . "'
-			AND loccode ='" . $LocationOut."'
+			WHERE stockid='" . $StockID . "' 
+			AND loccode ='" . $LocationOut."' 
 			AND quantity > 0";
 
 	$ErrMsg = '<br />'. _('Could not retrieve the items for'). ' ' . $StockID;
@@ -24,9 +24,9 @@ if ($_POST['EntryType'] == 'KEYED'){
 		foreach ($LineItem->SerialItems as $Itm){
 			$AllSerials[$Itm->BundleRef] = $Itm->BundleQty;
 		}
-
+	
 		echo '<td valign="top"><b>'. _('Select Existing Items'). '</b><br />';
-
+	
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="LineNo" value="' . $LineNo . '">
@@ -35,7 +35,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 			<input type="hidden" name="identifier" value="' . $identifier . '">
 			<input type="hidden" name="EditControlled" value="true">
 			<select name=Bundles[] multiple="multiple">';
-
+	
 		$id=0;
 		$ItemsAvailable=0;
 		while ($myrow=DB_fetch_array($Bundles,$db)){
@@ -47,13 +47,13 @@ if ($_POST['EntryType'] == 'KEYED'){
 			} else {
 				if ( !array_key_exists($myrow['serialno'], $AllSerials)  OR
 					($myrow['quantity'] - $AllSerials[$myrow['serialno']] >= 0) ) {
-
+						
 					$RecvQty = $myrow['quantity'] - $AllSerials[$myrow['serialno']];
 					echo '<option value="' . $myrow['serialno'] . '/|/'. $RecvQty .'">' . $myrow['serialno'].' - ' . _('Qty left'). ': ' . $RecvQty . '</option>';
 					$ItemsAvailable += $RecvQty;
 				}
 			}
-		}
+		} 
 		echo '</select>
 			<br />';
 		echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. _('Enter'). '"></div>
@@ -66,4 +66,3 @@ if ($_POST['EntryType'] == 'KEYED'){
 	}
 	echo '</tr></table>';
 }
-?>

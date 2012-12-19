@@ -66,7 +66,7 @@ $sql="SELECT fixedassets.assetid,
 			fixedassetcategories.depnact,
 			fixedassetcategories.categorydescription
 		ORDER BY assetcategoryid, assetid";
-
+		
 $AssetsResult=DB_query($sql, $db);
 
 $InputError = false; //always hope for the best
@@ -169,8 +169,8 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	$TotalAccumDepn +=$AssetRow['depnbfwd'];
 	$TotalDepn +=$NewDepreciation;
 
-	if (isset($_POST['CommitDepreciation'])
-		AND $NewDepreciation !=0
+	if (isset($_POST['CommitDepreciation']) 
+		AND $NewDepreciation !=0 
 		AND $InputError==false){
 
 		//debit depreciation expense
@@ -188,11 +188,11 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . $AssetRow['depnact'] . "',
 								'" . $AssetRow['assetid'] . "',
 								'" . $NewDepreciation ."')";
-
+		
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
+		
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
@@ -268,7 +268,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	include ('includes/GLPostings.inc');
 } else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 		<table class="selection" width="30%">
@@ -284,7 +284,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 		</tr>
 		</table>
 		<br />
-		</div>
+        </div>
 		</form>';
 }
 include('includes/footer.inc');

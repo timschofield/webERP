@@ -13,7 +13,7 @@ $sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance
 		SUM((ovamount+ovgst+ovdiscount+ovfreight-alloc)/debtortrans.rate) AS localbalance
 	FROM debtortrans INNER JOIN debtorsmaster
 		ON debtortrans.debtorno=debtorsmaster.debtorno
-	INNER JOIN currencies
+	INNER JOIN currencies 
 	ON debtorsmaster.currcode=currencies.currabrev
 	WHERE (ovamount+ovgst+ovdiscount+ovfreight-alloc)<>0 GROUP BY currcode";
 

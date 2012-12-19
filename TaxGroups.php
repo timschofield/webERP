@@ -240,9 +240,9 @@ echo '<tr><td>' . _('Tax Group') . ':</td>
 		<td><input type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
 echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '" /></td>
 	</tr>
-	</table>
-	<br />
-	</div>
+    </table>
+    <br />
+    </div>
 	</form>';
 
 
@@ -278,7 +278,7 @@ if (isset($SelectedGroup)) {
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if (count($TaxAuthsUsed)>0) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<div>';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<input type="hidden" name="SelectedGroup" value="' . $SelectedGroup .'" />';
 		echo '<table class="selection">
@@ -326,7 +326,7 @@ if (isset($SelectedGroup)) {
 	}
 
 	echo '</div>
-		  </form>';
+          </form>';
 
 	if (DB_num_rows($Result)>0 ) {
 		echo '<br />';

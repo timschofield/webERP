@@ -144,18 +144,18 @@ if (!isset($_SESSION['Items'.$identifier])){
 			/* now get the branch defaults from the customer branches table CustBranch. */
 
 			$sql = "SELECT custbranch.brname,
-					   custbranch.braddress1,
-					   custbranch.defaultshipvia,
-					   custbranch.deliverblind,
-					   custbranch.specialinstructions,
-					   custbranch.estdeliverydays,
-					   custbranch.salesman,
-					   custbranch.taxgroupid,
-					   custbranch.defaultshipvia
+				       custbranch.braddress1,
+				       custbranch.defaultshipvia,
+				       custbranch.deliverblind,
+				       custbranch.specialinstructions,
+				       custbranch.estdeliverydays,
+				       custbranch.salesman,
+				       custbranch.taxgroupid,
+				       custbranch.defaultshipvia
 				FROM custbranch
 				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
 				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-			$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
+            $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
 			$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -179,9 +179,9 @@ if (!isset($_SESSION['Items'.$identifier])){
 			$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
 			$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
 			$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
-			$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
+			$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];			
 			$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesman'];
-
+	
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 				prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 			}
@@ -318,7 +318,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous']
 					AND stockmaster.controlled <> 1
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
-			} else {
+        	} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units,
@@ -662,8 +662,8 @@ if (isset($NewItemArray) AND isset($_POST['SelectingOrderItems'])){
 			if ($myrow=DB_fetch_array($KitResult)){
 				if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 					$sql = "SELECT bom.component,
-								bom.quantity
-				  			FROM bom
+	        					bom.quantity
+		          			FROM bom
 							WHERE bom.parent='" . $NewItem . "'
 							AND bom.effectiveto > '" . Date('Y-m-d') . "'
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
@@ -741,19 +741,19 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 		<table width="90%" cellpadding="2">
 		<tr style="background-color:#800000">';
 	echo '<th>' . _('Item Code') . '</th>
-   		  <th>' . _('Item Description') . '</th>
-		  <th>' . _('Quantity') . '</th>
-		  <th>' . _('QOH') . '</th>
-		  <th>' . _('Unit') . '</th>
-		  <th>' . _('Price') . '</th>';
+   	      <th>' . _('Item Description') . '</th>
+	      <th>' . _('Quantity') . '</th>
+	      <th>' . _('QOH') . '</th>
+	      <th>' . _('Unit') . '</th>
+	      <th>' . _('Price') . '</th>';
 	if (in_array($_SESSION['PageSecurityArray']['OrderEntryDiscountPricing'], $_SESSION['AllowedPageSecurityTokens'])){
 		echo '<th>' . _('Discount') . '</th>
 			  <th>' . _('GP %') . '</th>';
 	}
 	echo '<th>' . _('Net') . '</th>
-		  <th>' . _('Tax') . '</th>
-		  <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
-		  </tr>';
+	      <th>' . _('Tax') . '</th>
+	      <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
+	      </tr>';
 
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -880,7 +880,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 	}
-
+	
 	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
 		if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
 			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
@@ -888,7 +888,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 		}
 	}
-
+	
 	echo '</select></td>
 		</tr>';
 	echo '<tr>
@@ -1448,7 +1448,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 													qty,
 													standardcost,
 													show_on_inv_crds,
-													newqoh)
+													newqoh) 
 										VALUES ('" . $AssParts['component'] . "',
 												 10,
 												'" . $InvoiceNo . "',
@@ -2224,13 +2224,13 @@ if (!isset($_POST['ProcessSale'])){
 		echo '</select></td>
 		<td><b>' . _('Enter partial Description') . ':</b>
 		<input tabindex="2" type="text" name="Keywords" size="20" maxlength="25" value="';
-		if (isset($_POST['Keywords'])) echo $_POST['Keywords'];
-		echo '" /></td>
+        if (isset($_POST['Keywords'])) echo $_POST['Keywords'];
+        echo '" /></td>
 
 		<td align="right"><b> ' . _('OR') . ' </b><b>' . _('Enter extract of the Stock Code') . ':</b>
 		<input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="';
-		if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
-		echo '" /></td>
+        if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
+        echo '" /></td>
 
 		</tr><tr>
 		<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
@@ -2376,13 +2376,13 @@ if (!isset($_POST['ProcessSale'])){
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr><td>';
+            echo '<tr><td>';
 			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items'.$identifier]->CustRef.'" />';
 			echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items'.$identifier]->Comments.'" />';
 			echo '<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items'.$identifier]->DeliverTo.'" />';
 			echo '<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items'.$identifier]->PhoneNo.'" />';
 			echo '<input type="hidden" name="Email" value="'.$_SESSION['Items'.$identifier]->Email.'" />';
-			echo '</td></tr>';
+            echo '</td></tr>';
 
 			echo '<tr><td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'._('Prev').'" /></td>';
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
@@ -2395,13 +2395,13 @@ if (!isset($_POST['ProcessSale'])){
 		else { /* show the quick entry form variable */
 
 		echo '<div class="page_help_text"><b>' . _('Use this form to add items quickly if the item codes are already known') . '</b></div><br />';
-		if (count($_SESSION['Items'.$identifier]->LineItems)==0) {
-			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items'.$identifier]->CustRef.'" />';
-			echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items'.$identifier]->Comments.'" />';
-			echo '<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items'.$identifier]->DeliverTo.'" />';
-			echo '<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items'.$identifier]->PhoneNo.'" />';
-			echo '<input type="hidden" name="Email" value="'.$_SESSION['Items'.$identifier]->Email.'" />';
-		}
+        if (count($_SESSION['Items'.$identifier]->LineItems)==0) {
+            echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items'.$identifier]->CustRef.'" />';
+            echo '<input type="hidden" name="Comments" value="'.$_SESSION['Items'.$identifier]->Comments.'" />';
+            echo '<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items'.$identifier]->DeliverTo.'" />';
+            echo '<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items'.$identifier]->PhoneNo.'" />';
+            echo '<input type="hidden" name="Email" value="'.$_SESSION['Items'.$identifier]->Email.'" />';
+        }
 		echo '<table border="1">
 				<tr>';
 			/*do not display colum unless customer requires po line number by sales order line*/
@@ -2420,11 +2420,11 @@ if (!isset($_POST['ProcessSale'])){
 	 	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
-		echo '</div>';
-		echo '</form>';
-		echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
+        echo '</div>';
+        echo '</form>';
+        echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
-	}
+  	}
 	if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
   		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
 	}

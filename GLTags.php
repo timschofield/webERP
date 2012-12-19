@@ -10,8 +10,8 @@ include('includes/header.inc');
 if (isset($_GET['SelectedTag'])) {
 	if($_GET['Action']=='delete'){
 		//first off test there are no transactions created with this tag
-		$Result = DB_query("SELECT counterindex
-							FROM gltrans
+		$Result = DB_query("SELECT counterindex 
+							FROM gltrans 
 							WHERE tag='" . $_GET['SelectedTag'] . "'",$db);
 		if (DB_num_rows($Result)>0){
 			prnMsg(_('This tag cannot be deleted since there are already general ledger transactions created using it.'),'error');
@@ -21,11 +21,11 @@ if (isset($_GET['SelectedTag'])) {
 		}
 		$Description='';
 	} else {
-		$sql="SELECT tagref,
-					tagdescription
-				FROM tags
+		$sql="SELECT tagref, 
+					tagdescription 
+				FROM tags 
 				WHERE tagref='".$_GET['SelectedTag']."'";
-
+			
 		$result= DB_query($sql,$db);
 		$myrow = DB_fetch_array($result,$db);
 		$ref=$myrow['tagref'];
@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 }
 
 if (isset($_POST['update'])) {
-	$sql = "UPDATE tags SET tagdescription='" . $_POST['Description'] . "'
+	$sql = "UPDATE tags SET tagdescription='" . $_POST['Description'] . "' 
 		WHERE tagref='".$_POST['reference']."'";
 	$result= DB_query($sql,$db);
 }
@@ -71,7 +71,7 @@ echo '</td>
 	</tr>
 	</table>
 	<br />
-	</div>
+    </div>
 	</form>
 	<table class="selection">
 	<tr>
@@ -79,11 +79,11 @@ echo '</td>
 		<th>'. _('Description'). '</th>
 	</tr>';
 
-$sql="SELECT tagref,
-			tagdescription
-		FROM tags
+$sql="SELECT tagref, 
+			tagdescription 
+		FROM tags 
 		ORDER BY tagref";
-
+		
 $result= DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($result,$db)){

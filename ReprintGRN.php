@@ -26,8 +26,8 @@ echo '<table class="selection">
 			<td colspan="2" style="text-align: center"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>
 		</tr>
 	</table>
-	<br />
-	</div>
+    <br />
+    </div>
 	</form>';
 
 if (isset($_POST['Show'])) {
@@ -86,7 +86,7 @@ if (isset($_POST['Show'])) {
 				<th>' . _('Delivery Date') . '</th>
 				<th>' . _('Quantity Received') . '</th>
 			</tr>';
-
+			
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';

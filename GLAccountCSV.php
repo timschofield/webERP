@@ -27,9 +27,9 @@ $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for the report */
 echo '<table>
-			<tr>
-			 <td>'._('Selected Accounts') . ':</td>
-			 <td><select name="Account[]" size="12" multiple="multiple">';
+	        <tr>
+	         <td>'._('Selected Accounts') . ':</td>
+	         <td><select name="Account[]" size="12" multiple="multiple">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $AccountsResult = DB_query($sql,$db);
 $i=0;
@@ -63,7 +63,7 @@ echo '</select></td></tr>';
 echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
 
 $SQL = "SELECT tagref,
-		   tagdescription
+	       tagdescription
 		FROM tags
 		ORDER BY tagref";
 
@@ -81,7 +81,7 @@ echo '</select></td></tr>';
 
 echo '</table><br />
 		<div class="centre"><input type="submit" name="MakeCSV" value="'._('Make CSV File').'" /></div>
-	</div>
+    </div>
 	</form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
@@ -117,9 +117,9 @@ if (isset($_POST['MakeCSV'])){
 		/*Is the account a balance sheet or a profit and loss account */
 		$result = DB_query("SELECT chartmaster.accountname,
 								accountgroups.pandl
-								FROM accountgroups
-								INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-								WHERE chartmaster.accountcode=$SelectedAccount",$db);
+							    FROM accountgroups
+							    INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
+							    WHERE chartmaster.accountcode=$SelectedAccount",$db);
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[1];
 		if ($AccountDetailRow[1]==1){
@@ -133,13 +133,13 @@ if (isset($_POST['MakeCSV'])){
 
 		if ($_POST['tag']==0) {
 	 		$sql= "SELECT type,
-					  typename,
-					  gltrans.typeno,
-					  gltrans.trandate,
-					  gltrans.narrative,
-		  				  gltrans.amount,
-					  gltrans.periodno,
-					  gltrans.tag
+				      typename,
+				      gltrans.typeno,
+				      gltrans.trandate,
+				      gltrans.narrative,
+          			      gltrans.amount,
+				      gltrans.periodno,
+				      gltrans.tag
 				FROM gltrans, systypes
 				WHERE gltrans.account = '" . $SelectedAccount . "'
 				AND systypes.typeid=gltrans.type

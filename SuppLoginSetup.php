@@ -178,9 +178,9 @@ while ($myroles = DB_fetch_array($RolesResult)){
 }
 
 if (!$FoundTheSupplierRole){
-	echo '</table>
-		  </div>
-		  </form>';
+    echo '</table>
+          </div>
+          </form>';
 	prnMsg(_('The supplier login role is expected to contain just one token - number 9. There is no such role currently defined - so a supplier login cannot be set up until this role is defined'),'error');
 	include('includes/footer.inc');
 	exit;
@@ -294,7 +294,7 @@ echo '</select></td>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-	</div>
+    </div>
 	</form>';
 
 echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';

@@ -48,8 +48,8 @@ if (isset($_POST['submit'])) {
 	}
 
 	$checksql = "SELECT count(*)
-			 FROM debtortype
-			 WHERE typename = '" . $_POST['typename'] . "'";
+		     FROM debtortype
+		     WHERE typename = '" . $_POST['typename'] . "'";
 	$checkresult=DB_query($checksql, $db);
 	$checkrow=DB_fetch_row($checkresult);
 	if ($checkrow[0]>0 and !isset($SelectedType)) {
@@ -72,8 +72,8 @@ if (isset($_POST['submit'])) {
 		// First check the type is not being duplicated
 
 		$checkSql = "SELECT count(*)
-				 FROM debtortype
-				 WHERE typename = '" . $_POST['typename'] . "'";
+			     FROM debtortype
+			     WHERE typename = '" . $_POST['typename'] . "'";
 
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
@@ -92,7 +92,7 @@ if (isset($_POST['submit'])) {
 
 			$msg = _('Customer type') . ' ' . $_POST["typename"] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typeid)
-				 FROM debtortype";
+			     FROM debtortype";
 			$result = DB_query($checkSql, $db);
 			$row = DB_fetch_row($result);
 
@@ -109,8 +109,8 @@ if (isset($_POST['submit'])) {
 
 	// Does it exist
 		$checkSql = "SELECT count(*)
-				 FROM debtortype
-				 WHERE typeid = '" . $DefaultCustomerType . "'";
+			     FROM debtortype
+			     WHERE typeid = '" . $DefaultCustomerType . "'";
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
 
@@ -136,8 +136,8 @@ if (isset($_POST['submit'])) {
 	// Prevent delete if saletype exist in customer transactions
 
 	$sql= "SELECT COUNT(*)
-		   FROM debtortrans
-		   WHERE debtortrans.type='".$SelectedType."'";
+	       FROM debtortrans
+	       WHERE debtortrans.type='".$SelectedType."'";
 
 	$ErrMsg = _('The number of transactions using this customer type could not be retrieved');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
 			if (DB_Num_Rows($result)>0){
 				$TypeRow = DB_fetch_array($result);
 				$TypeName = $TypeRow['typename'];
-
+			
 				$sql="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
 				$ErrMsg = _('The Type record could not be deleted because');
 				$result = DB_query($sql,$db,$ErrMsg);
@@ -208,9 +208,9 @@ printf('<td>%s</td>
 		</tr>',
 		$myrow[0],
 		$myrow[1],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', 
 		$myrow[0],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', 
 		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
@@ -225,7 +225,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />';
 
@@ -234,9 +234,9 @@ if (! isset($_GET['delete'])) {
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
 
 		$sql = "SELECT typeid,
-				   typename
-				FROM debtortype
-				WHERE typeid='".$SelectedType."'";
+			       typename
+		        FROM debtortype
+		        WHERE typeid='".$SelectedType."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -246,7 +246,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />';
-		echo '<table class="selection">';
+		echo '<table class="selection">'; 
 
 		// We dont allow the user to change an existing type code
 
@@ -266,7 +266,7 @@ if (! isset($_GET['delete'])) {
    	echo '</table>'; // close main table
 
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /></div>';
-	echo '</div>';
+    echo '</div>';
 	echo '</form>';
 
 } // end if user wish to delete

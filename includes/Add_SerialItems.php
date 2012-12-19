@@ -4,10 +4,10 @@
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
 /********************************************
-		Added KEYED Entry values
+        Added KEYED Entry values
 ********************************************/
 if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
-
+	
 	for ($i=0;$i < 10;$i++){
 		if(isset($_POST['SerialNo' . $i]) AND mb_strlen($_POST['SerialNo' . $i])>0){
 			if ($ItemMustExist){
@@ -42,8 +42,8 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 					}
 				} /*end if ExistingBundleQty >0 */
 				else {
-					echo '<br />';
-					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='.$_POST['SerialNo'. $i] . '" target=_blank>'.$_POST['SerialNo'. $i]. '</a> ' ._('not available') . '...' , '', 'Notice' );
+        	        echo '<br />';
+	                prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='.$_POST['SerialNo'. $i] . '" target=_blank>'.$_POST['SerialNo'. $i]. '</a> ' ._('not available') . '...' , '', 'Notice' );
 					unset($_POST['SerialNo' . $i]);
 				}
 			} // end of ItemMustExist
@@ -85,7 +85,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 			$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i],  ($InOutModifier>0 ? 1:-1) );
 		} else {
 			list($SerialNo, $Qty) = explode ('/|/', $_POST['Bundles'][$i]);
-			if ($Qty != 0) {
+            if ($Qty != 0) {
 				$LineItem->SerialItems[$SerialNo] = new SerialItem ($SerialNo,  $Qty*($InOutModifier>0?1:-1) );
 			}
 		}
@@ -124,8 +124,8 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
   Validate an uploaded FILE and save entries
 ********************************************/
 $valid = true;
-if (isset($_POST['EntryType'])
-	AND $_POST['EntryType']=='FILE'
+if (isset($_POST['EntryType']) 
+	AND $_POST['EntryType']=='FILE' 
 	AND isset($_POST['ValidateFile'])){
 
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
@@ -227,7 +227,7 @@ if (isset($_POST['EntryType'])
 }
 /********************************************
   Revalidate Array of Items
-	 The point of this is to allow "copying" an array of items from 1 object to another, checking them, and insuring that nothing else
+     The point of this is to allow "copying" an array of items from 1 object to another, checking them, and insuring that nothing else
 	 is added. So, after the validation, we will exit and NOT allow more items to be added.
 
 ********************************************/
@@ -331,18 +331,18 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
   Process Remove actions
 ********************************************/
 if (isset($_GET['DELETEALL'])){
-		$RemAll = $_GET['DELETEALL'];
+        $RemAll = $_GET['DELETEALL'];
 } else {
-		$RemAll = 'NO';
+        $RemAll = 'NO';
 }
 
 if ($RemAll == 'YES'){
-		unset($LineItem->SerialItems);
-		$LineItem->SerialItems=array();
+        unset($LineItem->SerialItems);
+        $LineItem->SerialItems=array();
 	unset($_SESSION['CurImportFile']);
 }
 
 if (isset($_GET['Delete'])){
-		unset($LineItem->SerialItems[$_GET['Delete']]);
+        unset($LineItem->SerialItems[$_GET['Delete']]);
 }
 ?>

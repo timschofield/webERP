@@ -253,7 +253,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 											'" . Date('Y-m-d') . "',
 											'depn',
 											'" . $AccumDepn . "')";
-
+	
 				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
 				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
 				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -289,7 +289,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		<br />
 	';
 	echo '<form enctype="multipart/form-data" action="Z_ImportFixedAssets.php" method="post">';
-	echo '<div class="centre">';
+    echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
@@ -303,7 +303,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Fixed Assets Upload file:') . '</td><td><input name="SelectedAssetFile" type="file" /></td></tr></table>
 			<input type="submit" value="' . _('Send File') . '" />
-		</div>
+        </div>
 		</form>';
 
 }

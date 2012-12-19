@@ -25,7 +25,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('Delivery Differences Report') . '</p></div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -39,12 +39,12 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<td>' . _('Inventory Category') . '</td>
 			<td>';
 
-	$sql = "SELECT categorydescription,
-					categoryid
-			FROM stockcategory
-			WHERE stocktype<>'D'
+	$sql = "SELECT categorydescription, 
+					categoryid 
+			FROM stockcategory 
+			WHERE stocktype<>'D' 
 			AND stocktype<>'L'";
-
+	 
 	$result = DB_query($sql,$db);
 
 
@@ -81,8 +81,8 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
-	 echo '</div>
-		   </form>';
+     echo '</div>
+           </form>';
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');

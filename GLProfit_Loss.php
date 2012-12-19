@@ -28,7 +28,7 @@ if ((!isset($_POST['FromPeriod'])
 	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -551,7 +551,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -750,7 +750,7 @@ if ((!isset($_POST['FromPeriod'])
 
 					echo '<tr>
 							<td colspan="3"></td>
-	  						<td><hr /></td>
+      						<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 							<td></td>
@@ -776,7 +776,7 @@ if ((!isset($_POST['FromPeriod'])
 				} else {
 					echo '<tr>
 							<td colspan="2"></td>
-			  				<td><hr /></td>
+		      				<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 							<td></td>
@@ -899,8 +899,8 @@ if ((!isset($_POST['FromPeriod'])
 					echo '<tr>
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
-						</tr>';
-				}
+						</tr>';		
+				} 
 
 			}
 			$SectionPrdLY =0;
@@ -1218,7 +1218,7 @@ if ((!isset($_POST['FromPeriod'])
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}
-
+		
 		$j++;
 
 	}

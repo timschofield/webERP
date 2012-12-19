@@ -49,7 +49,7 @@ Class SpecialOrder {
 	function remove_from_order(&$LineNo){
 		 unset($this->LineItems[$LineNo]);
 	}
-
+	
 	function Order_Value() {
 		$TotalValue=0;
 		foreach ($this->LineItems as $OrderedItems) {

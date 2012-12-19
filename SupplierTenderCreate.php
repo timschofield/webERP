@@ -226,7 +226,7 @@ if (!isset($_SESSION['tender'.$identifier])
 		$_SESSION['tender'.$identifier]=new Tender();
 	}
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
@@ -445,7 +445,7 @@ if (!isset($_SESSION['tender'.$identifier])
 			</div>';
 	}
 	echo '</div>
-		  </form>';
+          </form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -517,7 +517,7 @@ if (!isset($_POST['PageOffset'])) {
 
 if (isset($_POST['Suppliers'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
 		<table cellpadding="3" class="selection">
@@ -537,12 +537,12 @@ if (isset($_POST['Suppliers'])) {
 	}
 	echo '</td></tr></table><br /><div class="centre"><input type="submit" name="SearchSupplier" value="' . _('Search Now') . '" /></div>';
 	echo '</div>
-		  </form>';
+          </form>';
 }
 
 if (isset($_POST['SearchSupplier'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($result);
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
@@ -615,15 +615,15 @@ if (isset($_POST['SearchSupplier'])) {
 	}
 	//end of while loop
 	echo '</table>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 }
 
 /*The supplier has chosen option 2
  */
 if (isset($_POST['Items'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 	$sql = "SELECT categoryid,
@@ -681,14 +681,14 @@ if (isset($_POST['Items'])) {
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 		</div>
 		<br />
-		</div>
+        </div>
 		</form>';
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 }
 
 if (isset($_POST['Search'])){  /*ie seach for stock items */
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier,ENT_QUOTES,'UTF-8') .'">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Select items required on this tender').'</p>';
 
@@ -866,7 +866,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	}#end if SearchResults to show
 
 	echo '</div>
-		  </form>';
+          </form>';
 
 } //end of if search
 

@@ -126,9 +126,9 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_array($result);
 	if ($myrow['sections']>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
-		echo '<div>';
+        echo '<div>';
 		echo '<br />' . _('There are') . ' ' . $myrow['sections'] . ' ' . _('general ledger accounts groups that refer to this account section');
-		echo '</div>';
+        echo '</div>';
 
 	} else {
 		//Fetch section name
@@ -205,7 +205,7 @@ if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" id="AccountSections" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div><br />';
+    echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedSectionID'])) {
@@ -266,7 +266,7 @@ if (! isset($_GET['delete'])) {
 	} else {
 		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionName);</script>';
 	}
-	echo '</div>';
+    echo '</div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

@@ -27,7 +27,7 @@ if (isset($_POST['CheckCode'])) {
 
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />
-			' . ' ' . _('Select Item to Transfer') . '
+            ' . ' ' . _('Select Item to Transfer') . '
 		  </p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
@@ -579,7 +579,7 @@ if (isset($_SESSION['Transfer'])) {
 		<a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
 }
 echo '</div>
-	</div>
+    </div>
 	</form>';
 include('includes/footer.inc');
 ?>

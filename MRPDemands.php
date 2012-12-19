@@ -85,7 +85,7 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 	// If the SELECT found records, display them
 	if (DB_num_rows($result) > 0) {
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-		echo '<div>';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr><th>' . _('Code') . '</th>
@@ -111,7 +111,7 @@ function search(&$db,&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARC
 	}  //end of while loop
 
 	echo '</table>';
-	echo '</div>';
+    echo '</div>';
 	echo '</form>';
 
 } else {
@@ -265,7 +265,7 @@ function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 // demandtype
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  .'" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$where = " ";
 	if ($DemandType) {
@@ -285,7 +285,7 @@ function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 			FROM mrpdemands
 			LEFT JOIN stockmaster on mrpdemands.stockid = stockmaster.stockid" .
 			 $where	. " ORDER BY mrpdemands.stockid, mrpdemands.duedate";
-
+	
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
@@ -315,7 +315,7 @@ function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 	echo '<tr><td>' . _('Number of Records') . '</td>
 				<td>' . $ctr . '</td></tr>';
 	echo '</table>';
-	echo '</div>';
+    echo '</div>';
 	echo '</form><br/><br/><br/><br/>';
 	unset ($StockID);
 	display($db,$StockID,$DemandID);
@@ -329,7 +329,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 // the page is called, and is also invoked at the end of all of the other functions.
 // echo "<br/>DISPLAY - DemandID = $DemandID<br/>";
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($StockID)) {
 		echo'<table cellpadding="3" class="selection"><tr>
@@ -341,7 +341,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 			<td><b>' . _('OR') . '</b></td>
 			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?listall=yes">' . _('List All Demands') .'</a></td></tr>
 			<tr><td colspan="7"><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') .
-			'" /></div></td></tr></table>';
+            '" /></div></td></tr></table>';
 	} else {
 		if (isset($DemandID)) {
 		//editing an existing MRP demand
@@ -403,7 +403,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 		echo '<tr>
 				<td>' . _('Demand Type') . '</td>
 				<td><select name="MRPDemandtype">';
-
+				
 		$sql = "SELECT mrpdemandtype,
 						description
 				FROM mrpdemandtypes";
@@ -428,7 +428,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 		if ((isset($DemandID)) AND (DB_num_rows($result) > 0)) {
 			echo '<br/><br/><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?delete=yes&amp;StockID='.$StockID.'&amp;DemandID=' . $DemandID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Or Delete Record') . '</a>';
 		}
-		echo '</div>';
+        echo '</div>';
 	}
 	echo '</div>
 		</form>';

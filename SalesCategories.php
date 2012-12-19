@@ -48,7 +48,7 @@ if (isset($SelectedCategory) AND isset($_FILES['ItemPicture']) AND $_FILES['Item
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['ItemPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
-		 	$UploadTheFile ='No';
+         	$UploadTheFile ='No';
 	} elseif (file_exists($FileName)){
 		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
 		$result = unlink($FileName);
@@ -89,17 +89,17 @@ if (isset($_POST['submit'])  AND $EditName == 1 ) { // Creating or updating a ca
 		delete code below*/
 
 		$sql = "UPDATE salescat SET salescatname = '" . $_POST['SalesCatName'] . "'
-							WHERE salescatid = '" .$SelectedCategory . "'";
+                            WHERE salescatid = '" .$SelectedCategory . "'";
 		$msg = _('The Sales category record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected category is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new stock category form */
 
 		$sql = "INSERT INTO salescat (salescatname,
-									   parentcatid)
-									   VALUES (
-									   '" . $_POST['SalesCatName'] . "',
-									   '" . (isset($ParentCategory)?($ParentCategory):('NULL')) . "')";
+                                       parentcatid)
+                                       VALUES (
+                                       '" . $_POST['SalesCatName'] . "',
+                                       '" . (isset($ParentCategory)?($ParentCategory):('NULL')) . "')";
 		$msg = _('A new Sales category record has been added');
 	}
 
@@ -288,9 +288,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedCategory)) {
 	//editing an existing stock category
 
-	$sql = "SELECT salescatid,
-				parentcatid,
-				salescatname
+	$sql = "SELECT salescatid, 
+				parentcatid, 
+				salescatname 
 			FROM salescat
 			WHERE salescatid='". $SelectedCategory."'";
 
@@ -311,14 +311,14 @@ if (isset($SelectedCategory)) {
 		$_POST['ParentCategory']  = $ParentCategory;
 	}
 	echo '<input type="hidden" name="ParentCategory" value="' .
-		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" />';
+        (isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" />';
 	$FormCaps = _('New Sub Category');
 }
 echo '<input type="hidden" name="EditName" value="1" />';
 echo '<table class="selection">';
 echo '<tr><th colspan="2">' . $FormCaps . '</th></tr>';
 echo '<tr><td>' . _('Category Name') . ':</td>
-			<td><input type="text" name="SalesCatName" size="20" maxlength="20" value="' . $_POST['SalesCatName'] . '" /></td></tr>';
+            <td><input type="text" name="SalesCatName" size="20" maxlength="20" value="' . $_POST['SalesCatName'] . '" /></td></tr>';
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
 	echo '<tr><td>'. _('Image File (.jpg)') . ':</td>
@@ -329,7 +329,7 @@ echo '</table>';
 echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Submit Information') . '" /></div>';
 
 echo '</div>
-	  </form>';
+      </form>';
 
 // END Show New or Edit Category
 // ----------------------------------------------------------------------------------------
@@ -368,7 +368,7 @@ $result = DB_query($sql,$db);
 if($result && DB_num_rows($result)) {
 	// continue id stock id in the stockid array
 	echo '<br /><form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if( isset($SelectedCategory) ) { // If we selected a category we need to keep it selected
 		echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
@@ -376,12 +376,12 @@ if($result && DB_num_rows($result)) {
 	echo '<input type="hidden" name="ParentCategory" value="' .
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" /> ';
 
-
+	
 	echo '<table class="selection">
 		<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>
 		<tr><td>' . _('Select Inv. Item') . ':</td>
 		<td><select name="AddStockID">';
-
+		
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected
@@ -394,7 +394,7 @@ if($result && DB_num_rows($result)) {
 	echo '</td></tr></table>';
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Add Inventory Item') . '" /></div>';
 	echo '</div>
-		  </form>';
+          </form>';
 } else {
 	echo '<p>';
 	echo prnMsg( _('No more Inventory items to add') );

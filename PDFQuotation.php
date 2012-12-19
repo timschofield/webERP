@@ -74,14 +74,14 @@ $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
-		$title = _('Print Quotation Error');
-		include('includes/header.inc');
-		 echo '<div class="centre">
+        $title = _('Print Quotation Error');
+        include('includes/header.inc');
+         echo '<div class="centre">
 				<br />
 				<br />
 				<br />';
-		prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
-		echo '<br />
+        prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
+        echo '<br />
 				<br />
 				<br />
 				<table class="table_index">
@@ -95,11 +95,11 @@ if (DB_num_rows($result)==0){
 				<br />
 				<br />
 				<br />';
-		include('includes/footer.inc');
-		exit;
+        include('includes/footer.inc');
+        exit;
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
-		$myrow = DB_fetch_array($result);
+        $myrow = DB_fetch_array($result);
 }
 
 /*retrieve the order details from the database to print */
@@ -148,7 +148,7 @@ if (DB_num_rows($result)>0){
 
 	while ($myrow2=DB_fetch_array($result)){
 
-		$ListCount ++;
+        $ListCount ++;
 
 		if ((mb_strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75)
 			OR (mb_strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62)
@@ -273,7 +273,7 @@ if ($ListCount == 0){
 	include('includes/footer.inc');
 	exit;
 } else {
-	$pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+    $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . date('Y-m-d') . '.pdf');
+    $pdf->__destruct();
 }
 ?>

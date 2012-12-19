@@ -147,7 +147,7 @@ or deletion of the records*/
 				$myrow['overheadrecoveryact'],
 				$myrow['overheadperhour'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['code'],
+				$myrow['code'], 
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow['code']);
 	}
@@ -178,7 +178,7 @@ if (isset($SelectedWC)) {
 					overheadperhour
 			FROM workcentres
 			WHERE code='" . $SelectedWC . "'";
-
+		
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
@@ -287,6 +287,6 @@ if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
 }
 
 echo '</div>
-	  </form>';
+      </form>';
 include('includes/footer.inc');
 ?>

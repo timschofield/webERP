@@ -43,11 +43,11 @@ if (!isset($_POST['Date'])){
 	 echo '</select></td></tr>
 			</table>
 			<div class="centre">
-				<br />
+                <br />
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>
-			</form>
-			</div>';
+            </form>
+            </div>';
 
 	 include('includes/footer.inc');
 	 exit;

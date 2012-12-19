@@ -10,7 +10,7 @@ Class Journal {
 	var $GLItemCounter; /*Counter for the number of GL entires being posted to by the journal */
 	var $GLItemID;
 	var $JournalTotal; /*Running total for the journal */
-	var $BankAccounts; /*Array of bank account GLCodes that must be posted to by a bank payment or receipt
+	var $BankAccounts; /*Array of bank account GLCodes that must be posted to by a bank payment or receipt 
 				to ensure integrity for matching off vs bank stmts */
 
 	function Journal(){
@@ -28,7 +28,7 @@ Class Journal {
 			$this->GLItemCounter++;
 			$this->GLItemID++;
 			$this->JournalTotal += $Amount;
-
+			
 			Return 1;
 		}
 		Return 0;
@@ -51,7 +51,7 @@ Class JournalGLAnalysis {
 	Var $ID;
 	var $tag;
 	var $assetid;
-
+	
 	function JournalGLAnalysis ($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $assetid){
 
 /* Constructor function to add a new JournalGLAnalysis object with passed params */

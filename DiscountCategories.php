@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 
 if (isset($_POST['selectchoice'])) {
 	echo '<form id="update" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
@@ -92,11 +92,11 @@ if (isset($_POST['selectchoice'])) {
 			</table>
 			<br />';
 	}
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ChooseOption" value="'.$_POST['ChooseOption'].'" />';
 	echo '<input type="hidden" name="selectchoice" value="'.$_POST['selectchoice'].'" />';
@@ -177,7 +177,7 @@ if (isset($_POST['selectchoice'])) {
 		echo '<br /><div class="centre"><input type="submit" name="SubmitCategory" value="'. _('Update Items') .'" /></div>';
 	}
 	echo '</div>
-		  </form>';
+          </form>';
 
 	if (! isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for first cat defined */
 
@@ -242,7 +242,7 @@ if (isset($_POST['selectchoice'])) {
 
 if (!isset($_POST['selectchoice'])) {
 	echo '<form method="post" id="choose" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr><td>'._('Update discount category for').'</td>';
@@ -253,8 +253,8 @@ if (!isset($_POST['selectchoice'])) {
 		</table>
 		<br />';
 	echo '<div class="centre"><input type="submit" name="selectchoice" value="'._('Select').'" /></div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 }
 
 include('includes/footer.inc');

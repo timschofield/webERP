@@ -8,7 +8,7 @@ include('includes/DefineSerialItems.php');
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-/*The identifier makes this goods received session unique so cannot get confused
+/*The identifier makes this goods received session unique so cannot get confused 
  * with other sessions of goods received on the same machine/browser
  * The identifier only needs to be unique for this php session, so a
  * unix timestamp will be sufficient.
@@ -31,16 +31,16 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 			<a href= "' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Select a purchase order to receive').'</a>
 		</div>
 		<br />'. _('This page can only be opened if a purchase order has been selected. Please select a purchase order first');
-
+		
 	include ('includes/footer.inc');
 	exit;
-} elseif (isset($_GET['PONumber'])
+} elseif (isset($_GET['PONumber']) 
 			AND !isset($_POST['Update'])) {
 /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
 
 	$_GET['ModifyOrderNumber'] = intval($_GET['PONumber']);
 	include('includes/PO_ReadInOrder.inc');
-} elseif (isset($_POST['Update'])
+} elseif (isset($_POST['Update']) 
 			OR isset($_POST['ProcessGoodsReceived'])) {
 
 /* if update quantities button is hit page has been called and ${$Line->LineNo} would have be
@@ -123,7 +123,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 $k=0; //row colour counter
 
 if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGoodsReceived'])){
-
+	
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $LnItm) {
 
 		if ($k==1){
@@ -155,7 +155,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 
 		//Now Display LineItem
-
+		
 		echo '<td><a href="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" target="_blank">'. $LnItm->StockID . '</a></td>
 			<td>' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . $DisplaySupplierQtyOrd . '</td>
@@ -177,9 +177,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 		echo '<td><input type="checkbox" name="Complete_'. $LnItm->LineNo . '"';
 		if ($LnItm->Completed ==1){
 			echo ' checked';
-		}
+		} 
 		echo ' /></td>';
-
+		
 		if ($_SESSION['ShowValueOnGRN']==1) {
 			echo '<td class="number">' . $DisplayPrice . '</td>';
 			echo '<td class="number">' . $DisplayLineTotal . '</td>';
@@ -205,8 +205,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 	} else {
 		echo '</table>';
 	}
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].RecvQty_'.$LnItm->LineNo.');</script>';
-
+    echo '<script  type="text/javascript">defaultControl(document.forms[0].RecvQty_'.$LnItm->LineNo.');</script>';
+    
 }//If count(LineItems) > 0
 
 
@@ -229,11 +229,11 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0){
 		}
 		if ($OrderLine->ReceiveQty < 0 AND $_SESSION['ProhibitNegativeStock']==1){
 
-			$SQL = "SELECT locstock.quantity
-						FROM locstock
+			$SQL = "SELECT locstock.quantity 
+						FROM locstock 
 						WHERE locstock.stockid='" . $OrderLine->StockID . "'
 						AND loccode= '" . $_SESSION['PO'.$identifier]->Location . "'";
-
+						
 			$CheckNegResult = DB_query($SQL,$db);
 			$CheckNegRow = DB_fetch_row($CheckNegResult);
 			if ($CheckNegRow[0]+$OrderLine->ReceiveQty<0){
@@ -270,8 +270,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	if ($_SESSION['CompanyRecord']==0){
 		/*The company data and preferences could not be retrieved for some reason */
-		echo '</div>';
-		echo '</form>';
+        echo '</div>';
+        echo '</form>';
 		prnMsg(_('The company information and preferences could not be retrieved') . ' - ' . _('see your system administrator') , 'error');
 		include('includes/footer.inc');
 		exit;
@@ -356,8 +356,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			unset($_SESSION['PO'.$identifier]->LineItems);
 			unset($_SESSION['PO'.$identifier]);
 			unset($_POST['ProcessGoodsReceived']);
-			echo '</div>';
-			echo '</form>';
+            echo '</div>';
+            echo '</form>';
 			include ('includes/footer.inc');
 			exit;
 		}
@@ -597,9 +597,9 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 				$CheckAssetExistsResult = DB_query("SELECT assetid,
 															datepurchased,
 															costact
-													FROM fixedassets
+													FROM fixedassets 
 													INNER JOIN fixedassetcategories
-													ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+													ON fixedassets.assetcategoryid=fixedassetcategories.categoryid 
 													WHERE assetid='" . $OrderLine->AssetID . "'",$db);
 				if (DB_num_rows($CheckAssetExistsResult)==1){ //then work with the assetid provided
 
@@ -629,11 +629,11 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 					/*Over-ride any GL account specified in the order with the asset category cost account */
 					$_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->GLCode = $AssetRow['costact'];
 					/*Now if there are no previous additions to this asset update the date purchased */
-					if ($AssetRow['datepurchased']=='0000-00-00'){
+					if ($AssetRow['datepurchased']=='0000-00-00'){ 
 						/* it is a new addition as the date is set to 0000-00-00 when the asset record is created
 						 * before any cost is added to the asset
 						 */
-						$SQL = "UPDATE fixedassets
+						$SQL = "UPDATE fixedassets 
 									SET datepurchased='" . $_POST['DefaultReceivedDate'] . "',
 										cost = cost + " . ($CurrentStandardCost * $OrderLine->ReceiveQty)  . "
 									WHERE assetid = '" . $OrderLine->AssetID . "'";
@@ -647,9 +647,9 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 				} //assetid provided doesn't exist so ignore it and treat as a normal nominal item
 			} //assetid is set so the nominal item is an asset
-
+			
 			/* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
-			if ($_SESSION['PO'.$identifier]->GLLink==1 AND $OrderLine->GLCode !=0){
+			if ($_SESSION['PO'.$identifier]->GLLink==1 AND $OrderLine->GLCode !=0){ 
 				/*GLCode is set to 0 when the GLLink is not activated this covers a situation where the GLLink is now active but it wasn't when this PO was entered */
 
 				/*first the debit using the GLCode in the PO detail record entry*/
@@ -702,7 +702,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			} /* end of if GL and stock integrated and standard cost !=0 */
 		} /*Quantity received is != 0 */
 	} /*end of OrderLine loop */
-
+	
 	if ($_SESSION['PO'.$identifier]->AllLinesReceived()==1 OR $OrderCompleted) { //all lines on the purchase order are now completed
 		$StatusComment=date($_SESSION['DefaultDateFormat']) .' - ' . _('Order Completed on entry of GRN') .'<br />' . $_SESSION['PO'.$identifier]->StatusComments;
 		$sql="UPDATE purchorders
@@ -711,7 +711,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 				WHERE orderno='" . $_SESSION['PO'.$identifier]->OrderNo . "'";
 		$result=DB_query($sql,$db);
 	}
-
+	
 	if ($_SESSION['PO'.$identifier]->GLLink==1) {
 		EnsureGLEntriesBalance(25, $GRN,$db);
 	}
@@ -733,8 +733,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			<a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Select a different purchase order for receiving goods against'). '</a>
 		</div>';
 /*end of process goods received entry */
-	echo '</div>';
-	echo '</form>';
+    echo '</div>';
+    echo '</form>';
 	include('includes/footer.inc');
 	exit;
 

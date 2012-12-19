@@ -226,12 +226,12 @@ if (isset($_GET['AllocTrans'])) {
 					debtortrans.diffonexch,
 					debtortrans.alloc,
 					currencies.decimalplaces
-			FROM debtortrans INNER JOIN systypes
+			FROM debtortrans INNER JOIN systypes 
 			ON debtortrans.type = systypes.typeid
-			INNER JOIN debtorsmaster
-			ON debtortrans.debtorno = debtorsmaster.debtorno
-			INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
+			INNER JOIN debtorsmaster 
+			ON debtortrans.debtorno = debtorsmaster.debtorno 
+			INNER JOIN currencies 
+			ON debtorsmaster.currcode=currencies.currabrev 
 			WHERE debtortrans.id='" . $_POST['AllocTrans'] . "'";
 	$Result = DB_query($SQL,$db);
 	$myrow = DB_fetch_array($Result);
@@ -291,13 +291,13 @@ if (isset($_GET['AllocTrans'])) {
 					amt,
 					custallocns.id AS allocid
 			FROM debtortrans INNER JOIN systypes
-			ON debtortrans.type = systypes.typeid
+			ON debtortrans.type = systypes.typeid 
 			INNER JOIN custallocns
 			ON debtortrans.id=custallocns.transid_allocto
-			WHERE custallocns.transid_allocfrom='" . $_POST['AllocTrans'] . "'
+			WHERE custallocns.transid_allocfrom='" . $_POST['AllocTrans'] . "' 
 			AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
 			ORDER BY debtortrans.trandate";
-
+	
 	$Result=DB_query($SQL,$db);
 
 	while ($myrow=DB_fetch_array($Result)) {
@@ -337,7 +337,7 @@ $TableHeader = '<tr>
 if (isset($_POST['AllocTrans'])) {
 	// Page called with trans number
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="AllocTrans" value="' . $_POST['AllocTrans'] . '" />';
 
@@ -423,7 +423,7 @@ if (isset($_POST['AllocTrans'])) {
 	$j++;
 	echo '<td colspan="2">
 			<input tabindex="'.$j.'" type="submit" name="RefreshAllocTotal" value="' . _('Recalculate Total To Allocate') . '" /></td>
-		</tr>
+        </tr>
 		<tr>
 			<td colspan="5" class="number"><b>'._('Left to allocate').'</b></td>
 			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt-$TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces).'</b></td>
@@ -435,8 +435,8 @@ if (isset($_POST['AllocTrans'])) {
 			<input tabindex="' . $j . '" type="submit" name="UpdateDatabase" value="' . _('Process Allocations') . '" />
 			<input tabindex="' . $j . '" type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>
-		</div>
-		</form>';
+        </div>
+        </form>';
 
 } elseif (isset($_GET['DebtorNo'])) {
 	// Page called with customer code
@@ -456,14 +456,14 @@ if (isset($_POST['AllocTrans'])) {
 				debtortrans.alloc,
 				currencies.decimalplaces AS currdecimalplaces,
 				debtorsmaster.currcode
-			FROM debtortrans INNER JOIN debtorsmaster
+			FROM debtortrans INNER JOIN debtorsmaster 
 			ON debtortrans.debtorno=debtorsmaster.debtorno
-			INNER JOIN systypes
+			INNER JOIN systypes 
 			ON debtortrans.type=systypes.typeid
-			INNER JOIN currencies
+			INNER JOIN currencies 
 			ON debtorsmaster.currcode=currencies.currabrev
-			WHERE debtortrans.debtorno='" . $_GET['DebtorNo'] . "'
-			AND (debtortrans.type=12 OR debtortrans.type=11)
+			WHERE debtortrans.debtorno='" . $_GET['DebtorNo'] . "' 
+			AND (debtortrans.type=12 OR debtortrans.type=11) 
 			AND debtortrans.settled=0
 			ORDER BY debtortrans.id";
 	$result = DB_query($SQL,$db);
@@ -499,7 +499,7 @@ if (isset($_POST['AllocTrans'])) {
 	/* Page called with no parameters */
 	unset($_SESSION['Alloc']->Allocs);
 	unset($_SESSION['Alloc']);
-
+	
 	$SQL = "SELECT debtortrans.id,
 				debtortrans.transno,
 				systypes.typename,
@@ -513,14 +513,14 @@ if (isset($_POST['AllocTrans'])) {
 				debtortrans.alloc,
 				debtorsmaster.currcode,
 				currencies.decimalplaces AS currdecimalplaces
-			FROM debtortrans INNER JOIN debtorsmaster
-			ON debtortrans.debtorno=debtorsmaster.debtorno
-			INNER JOIN systypes
-			ON debtortrans.type=systypes.typeid
-			INNER JOIN currencies
+			FROM debtortrans INNER JOIN debtorsmaster 
+			ON debtortrans.debtorno=debtorsmaster.debtorno 
+			INNER JOIN systypes 
+			ON debtortrans.type=systypes.typeid  
+			INNER JOIN currencies 
 			ON debtorsmaster.currcode=currencies.currabrev
-			WHERE (debtortrans.type=12 OR debtortrans.type=11)
-			AND debtortrans.settled=0
+			WHERE (debtortrans.type=12 OR debtortrans.type=11) 
+			AND debtortrans.settled=0 
 			AND debtortrans.ovamount<0
 			ORDER BY debtorsmaster.name";
 	$result = DB_query($SQL,$db);
@@ -532,7 +532,7 @@ if (isset($_POST['AllocTrans'])) {
 
 	$k=0;
 	while ($myrow = DB_fetch_array($result)) {
-
+		
 		$AllocateLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '">' . _('Allocate') . '</a>';
 
 		if ( $CurrentDebtor != $myrow['debtorno'] ) {
@@ -580,9 +580,9 @@ if (isset($_POST['AllocTrans'])) {
 				<td>' . $CurrCode . '</td>
 				<td>' . $AllocateLink . '</td>
 				</tr>';
-
+		
 	} //end loop around unallocated receipts and credit notes
-
+	
 	if (!isset($Balance)) {
 		$Balance=0;
 	}

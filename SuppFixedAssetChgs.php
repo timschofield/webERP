@@ -49,7 +49,7 @@ if (isset($_POST['AddAssetToInvoice'])){
 	}
 
 	if ($InputError == False){
-		$_SESSION['SuppTrans']->Add_Asset_To_Trans($_POST['AssetID'],
+		$_SESSION['SuppTrans']->Add_Asset_To_Trans($_POST['AssetID'], 
 													filter_number_format($_POST['Amount']));
 		unset($_POST['AssetID']);
 		unset($_POST['Amount']);
@@ -158,6 +158,6 @@ echo '<br />
 	</div>';
 
 echo '</div>
-	  </form>';
+      </form>';
 include('includes/footer.inc');
 ?>

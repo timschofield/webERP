@@ -129,7 +129,7 @@ echo '</select></td>
 
 echo '<tr><td>'._('Customer EDI Reference') . ':</td>
 	<td><input ' . (in_array('EDIReference',$Errors) ?  'class="inputerror"' : '' ) .
-		' tabindex="3" type="text" name="EDIReference" size="20" maxlength="20" value="' . $myrow['edireference'] . '" /></td></tr>';
+        ' tabindex="3" type="text" name="EDIReference" size="20" maxlength="20" value="' . $myrow['edireference'] . '" /></td></tr>';
 
 echo '<tr><td>'._('EDI Communication Method') . ':</td>
 	<td><select tabindex="4" name="EDITransport" >';
@@ -146,7 +146,7 @@ echo '</select></td></tr>';
 
 echo '<tr><td>'._('FTP Server or Email Address') . ':</td>
 	<td><input ' . (in_array('EDIAddress',$Errors) ?  'class="inputerror"' : '' ) .
-		' tabindex="5" type="text" name="EDIAddress" size="42" maxlength="40" value="' . $myrow['ediaddress'] . '" /></td></tr>';
+        ' tabindex="5" type="text" name="EDIAddress" size="42" maxlength="40" value="' . $myrow['ediaddress'] . '" /></td></tr>';
 
 if ($myrow['editransport']=='ftp'){
 
@@ -158,7 +158,7 @@ if ($myrow['editransport']=='ftp'){
 
 echo '</table>
 		<br /><div class="centre"><input tabindex="8" type="submit" name="submit" value="' ._('Update EDI Configuration'). '" /></div>
-	</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

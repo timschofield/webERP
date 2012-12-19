@@ -1166,7 +1166,7 @@ $PropertyWidth = array();
 
 if (DB_num_rows($PropertiesResult)>0) {
 echo '<br />
-	<table class="selection">';
+    <table class="selection">';
 	echo '<tr>
 			<th colspan="2">' . _('Item Category Properties') . '</th>
 		</tr>';
@@ -1184,11 +1184,11 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 	} else {
 		$PropertyValue =  '';
 	}
-	echo '<tr>
-			<td>';
-  			echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="' .$PropertyRow['stkcatpropid'] .'" />';
-			echo '<input type="hidden" name="PropNumeric' . $PropertyCounter . '" value="' .$PropertyRow['numericvalue'] .'" />';
-			echo $PropertyRow['label'] . '</td>
+    echo '<tr>
+            <td>';
+  	        echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="' .$PropertyRow['stkcatpropid'] .'" />';
+	        echo '<input type="hidden" name="PropNumeric' . $PropertyCounter . '" value="' .$PropertyRow['numericvalue'] .'" />';
+            echo $PropertyRow['label'] . '</td>
 
 			<td>';
 	switch ($PropertyRow['controltype']) {
@@ -1252,7 +1252,7 @@ if ($New==1) {
 }
 
 echo '</div>
-	</div>
+    </div>
 	</form>';
 include('includes/footer.inc');
 ?>

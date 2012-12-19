@@ -125,7 +125,7 @@ echo '<tr>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('to') . ':</td>
+        <td>' . _('to') . ':</td>
 		<td><input tabindex="2" type="text" name="BeforeDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="12" maxlength="10" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['BeforeDate'] . '" /></td>
 	</tr>';
 echo '<tr>

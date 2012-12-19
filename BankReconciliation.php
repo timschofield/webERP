@@ -254,8 +254,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	//end of while loop
 
 	echo '<tr>
-			 <td><br /></td>
-		  </tr>
+             <td><br /></td>
+          </tr>
 			<tr class="EvenTableRows">
 				<td colspan="6">' . _('Total of all unpresented cheques') . '</td>
 				<td class="number">' . locale_number_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td>
@@ -330,7 +330,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	}
 	//end of while loop
 	echo '<tr>
-			<td><br /></td>
+            <td><br /></td>
 		</tr>
 		<tr class="EvenTableRows">
 			<td colspan="6">' . _('Total of all uncleared deposits') . '</td>
@@ -338,7 +338,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		</tr>';
 	$FXStatementBalance = ($Balance*$CurrencyRow['rate'] - $TotalUnpresentedCheques -$TotalUnclearedDeposits);
 	echo '<tr>
-			<td><br /></td>
+            <td><br /></td>
 		</tr>
 		<tr class="EvenTableRows">
 			<td colspan="6"><b>' . _('Bank statement balance should be') . ' (' . $CurrencyRow['currcode'] . ')</b></td>

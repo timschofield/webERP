@@ -82,7 +82,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		/*First get the StockMovement Reference for the GRN */
 		$SQL = "SELECT stockserialmoves.serialno,
 				stockserialmoves.moveqty
-				FROM stockmoves INNER JOIN stockserialmoves
+		        FROM stockmoves INNER JOIN stockserialmoves
 				ON stockmoves.stkmoveno= stockserialmoves.stockmoveno
 				WHERE stockmoves.stockid='" . $GRN['itemcode'] . "'
 				AND stockmoves.type =25
@@ -92,7 +92,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
 
 			$SQL = "SELECT stockserialitems.quantity
-					FROM stockserialitems
+			        FROM stockserialitems
 					WHERE stockserialitems.stockid='" . $GRN['itemcode'] . "'
 					AND stockserialitems.loccode ='" . $GRN['intostocklocation'] . "'
 					AND stockserialitems.serialno ='" . $SerialStockMoves['serialno'] . "'";
@@ -221,7 +221,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 	/* If its a stock item .... Insert stock movements - with unit cost */
-		$NewQtyOnHand = $QtyOnHandPrior -  $QtyToReverse;
+        $NewQtyOnHand = $QtyOnHandPrior -  $QtyToReverse;
 		$SQL = "INSERT INTO stockmoves (stockid,
 										type,
 										transno,
@@ -340,14 +340,14 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 } else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['RecdAfterDate']) OR !Is_Date($_POST['RecdAfterDate'])) {
 		$_POST['RecdAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date("m")-3,Date("d"),Date("Y")));
 	}
-	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
-	echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';
+    echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
+    echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';
 	echo '<table class="selection"><tr>';
 	echo '<td>'._('Show all goods received after') . ': </td>
 			<td><input type="text" class="date" alt="'. $_SESSION['DefaultDateFormat'].'" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="10" /></td>
@@ -357,8 +357,8 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		<div class="centre">
 			<input type="submit" name="ShowGRNS" value="' . _('Show Outstanding Goods Received') . '" />
 		</div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 	if (isset($_POST['ShowGRNS'])){
 

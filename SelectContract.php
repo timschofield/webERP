@@ -196,8 +196,8 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 //end of while loop
 
 echo '</table>
-	  </div>
-	  </form>
-	  <br />';
+      </div>
+      </form>
+      <br />';
 include('includes/footer.inc');
 ?>

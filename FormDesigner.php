@@ -128,7 +128,7 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 if (empty($_POST['FormName'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<form method="post" id="ChooseForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr>';
 	echo '<td>'. _('Select the form to edit') .'</td><td><select name="FormName">';
@@ -145,7 +145,7 @@ if (empty($_POST['FormName'])) {
 	}
 	echo '</select></td></tr></table>';
 	echo '<br /><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Edit Form Layout') . '" /></div>';
-	echo '</div>';
+    echo '</div>';
 	echo '</form>';
 	include('includes/footer.inc');
 	exit;
@@ -186,28 +186,28 @@ foreach ($FormDesign as $key) {
 	switch ($key['type']) {
 		case 'image':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">'.$key['name'].'</th></tr>';
-			echo '<tr>';
+            echo '<tr>';
 			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
 			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
-			echo '</tr>';
+            echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'SimpleText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>'."\n";
-			echo '<tr>';
+            echo '<tr>';
 			SimpleTextLine($key);
-			echo '</tr>';
+            echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'MultiLineText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="4">'.$key['name'].'</th></tr>'."\n";
-			echo '<tr>';
+            echo '<tr>';
 			MultiTextLine($key);
-			echo '</tr>';
+            echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
@@ -240,35 +240,35 @@ foreach ($FormDesign as $key) {
 			break;
 		case 'CurvedRectangle':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
-			echo '<tr>';
+            echo '<tr>';
 			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td>';
 			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td></tr><tr>';
 			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
 			echo '<td class="number">'._('Radius').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'radius" size="3" maxlength="3" value="'.$key->radius.'" /></td>';
-			echo '</tr>';
+            echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'Rectangle':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
-			echo '<tr>';
+            echo '<tr>';
 			echo '<td class="number">'._('x').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'x" size="4" maxlength="4" value="'.$key->x.'" /></td>';
 			echo '<td class="number">'._('y').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'y" size="4" maxlength="4" value="'.$key->y.'" /></td></tr><tr>';
 			echo '<td class="number">'._('Width').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'width" size="4" maxlength="4" value="'.$key->width.'" /></td>';
 			echo '<td class="number">'._('Height').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'height" size="4" maxlength="4" value="'.$key->height.'" /></td>';
-			echo '</tr>';
+            echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;
 		case 'Line':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">'.$key['name'].'</th></tr>';
-			echo '<tr>';
+            echo '<tr>';
 			echo '<td class="number">'._('Start x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'startx" size="4" maxlength="4" value="'.$key->startx.'" /></td>';
 			echo '<td class="number">'._('Start y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'starty" size="4" maxlength="4" value="'.$key->starty.'" /></td></tr><tr>';
 			echo '<td class="number">'._('End x co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endx" size="4" maxlength="4" value="'.$key->endx.'" /></td>';
 			echo '<td class="number">'._('End y co-ordinate').' = '.'</td><td><input type="text" class="number" name="'.$key['id'].'endy" size="4" maxlength="4" value="'.$key->endy.'" /></td>';
-			echo '</tr>';
+            echo '</tr>';
 			echo '</table></td>';
 			$counter=$counter+1;
 			break;

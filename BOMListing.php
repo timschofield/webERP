@@ -17,7 +17,7 @@ If (isset($_POST['PrintPDF'])
 	$PageNumber=0;
 	$line_height=12;
 
-	  /*Now figure out the bills to report for the part range under review */
+      /*Now figure out the bills to report for the part range under review */
 	$SQL = "SELECT bom.parent,
 				bom.component,
 				stockmaster.description as compdescription,
@@ -43,7 +43,7 @@ If (isset($_POST['PrintPDF'])
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo '<br />' . $SQL;
+	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -98,9 +98,9 @@ If (isset($_POST['PrintPDF'])
 
 	$YPos -=$line_height;
 	$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
-
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct();
+  
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');
+    $pdf->__destruct(); 
 
 } else { /*The option to print PDF was not hit */
 
@@ -113,8 +113,8 @@ If (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			  <div>
-			  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+              <div>
+              <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			  <table class="selection">';
 
 		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</td>
@@ -128,8 +128,8 @@ If (isset($_POST['PrintPDF'])
 
 		echo '</table>
 				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
-			 </div>
-			 </form>';
+             </div>
+             </form>';
 		echo '<script type="text/javascript">defaultControl(document.forms[0].FromCriteria);</script>';
 	}
 	include('includes/footer.inc');

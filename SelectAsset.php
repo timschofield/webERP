@@ -78,7 +78,7 @@ echo '</td>
 	<tr>
 		<td>' . _('Asset Location') . ':</td>
 		<td><select name="AssetLocation">';
-
+		
 if (!isset($_POST['AssetLocation'])) {
 	$_POST['AssetLocation'] = 'ALL';
 }
@@ -114,7 +114,7 @@ echo '</td>
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
 	</div>
 	<br />
-	</div>
+    </div>
 	</form>';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
@@ -143,21 +143,21 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 		if ($_POST['AssetCategory'] == 'ALL') {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE description " . LIKE .  "'" . $SearchString . "'
+				$SQL .= "WHERE description " . LIKE .  "'" . $SearchString . "' 
 						ORDER BY fixedassets.assetid";
 			} else {
-				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						AND description " . LIKE .  "'" . $SearchString . "'
+				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "' 
+						AND description " . LIKE .  "'" . $SearchString . "' 
 						ORDER BY fixedassets.assetid";
 			}
 		} else {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE description " . LIKE .  "'" . $SearchString . "'
-						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
+				$SQL .= "WHERE description " . LIKE .  "'" . $SearchString . "' 
+						AND  assetcategoryid='" . $_POST['AssetCategory'] . "' 
 						ORDER BY fixedassets.assetid";
 			} else {
-				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						AND description " . LIKE .  "'" . $SearchString . "'
+				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "' 
+						AND description " . LIKE .  "'" . $SearchString . "' 
 						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
 						ORDER BY fixedassets.assetid";
 			}
@@ -165,22 +165,22 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	} elseif (isset($_POST['AssetCode'])) {
 		if ($_POST['AssetCategory'] == 'ALL') {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
+				$SQL .= "WHERE fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%' 
 						ORDER BY fixedassets.assetid";
 			} else {
-				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						AND fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
+				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "' 
+						AND fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%' 
 						ORDER BY fixedassets.assetid";
 			}
 		} else {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
+				$SQL .= "WHERE fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%' 
 						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
 						ORDER BY fixedassets.assetid";
 			} else {
-				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						AND fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
-						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
+				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "' 
+						AND fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%' 
+						AND  assetcategoryid='" . $_POST['AssetCategory'] . "' 
 						ORDER BY fixedassets.assetid";
 			}
 		}
@@ -189,16 +189,16 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			if ($_POST['AssetLocation']=='ALL'){
 				$SQL .= 'ORDER BY fixedassets.assetid';
 			} else {
-				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
+				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'  
 						ORDER BY fixedassets.assetid";
 			}
 		} else {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE assetcategoryid='" . $_POST['AssetCategory'] . "'
+				$SQL .= "WHERE assetcategoryid='" . $_POST['AssetCategory'] . "' 
 						ORDER BY fixedassets.assetid";
 			} else {
-				$SQL .= "WHERE assetcategoryid='" . $_POST['AssetCategory'] . "'
-						AND fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
+				$SQL .= "WHERE assetcategoryid='" . $_POST['AssetCategory'] . "' 
+						AND fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'  
 						ORDER BY fixedassets.assetid";
 			}
 		}
@@ -207,7 +207,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
 	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-
+	
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No assets were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
@@ -217,7 +217,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($SearchResult) AND !isset($_POST['Select'])) {
 	echo '<form action="FixedAssetItems.php" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($SearchResult);
 	if ($ListCount > 0) {
@@ -293,8 +293,8 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		//end of while loop
 		echo '</table>';
 	} // there were records to list
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 }
 /* end display list if there is more than one record */
 include ('includes/footer.inc');

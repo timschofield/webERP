@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "  
 				 AND stockmaster.mbflag IN ('B','P')
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
 	} elseif ($_POST['Consolidation'] == 'Weekly') {
@@ -64,7 +64,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . " 
 				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 weekindex,
@@ -93,7 +93,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . "
+				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . " 
 				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 yearmonth,
@@ -265,9 +265,9 @@ if (isset($_POST['PrintPDF'])) {
 		_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		  <div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+          <div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    echo '<table class="selection">';
 	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
 	echo '<option selected="selected" value="None">' . _('None') . '</option>';
 	echo '<option value="Weekly">' . _('Weekly') . '</option>';
@@ -280,8 +280,8 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<tr><td>' . _('Cut Off Date') . ':</td><td><input type ="text" class="date" alt="'.$_SESSION['DefaultDateFormat'] .
 			'" name="cutoffdate" size="10" value="'.date($_SESSION['DefaultDateFormat']).'" /></td></tr>';
 	echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
-		  </div>
-		  </form>';
+          </div>
+          </form>';
 
 	include('includes/footer.inc');
 

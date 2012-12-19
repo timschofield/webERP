@@ -318,7 +318,7 @@ if (!isset($_POST['BankAccountNumber'])) {
 	$_POST['BankAccountNumber']='';
 }
 if (!isset($_POST['BankAccountCode'])) {
-		$_POST['BankAccountCode']='';
+        $_POST['BankAccountCode']='';
 }
 if (!isset($_POST['BankAddress'])) {
 	$_POST['BankAddress']='';

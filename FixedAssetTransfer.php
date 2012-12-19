@@ -10,15 +10,15 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $title . '</p>';
-
+		
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 	if (mb_substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off
 		$AssetID	= mb_substr($AssetToMove,4);
-		if (isset($_POST['Location' . $AssetID]) AND $_POST['Location' . $AssetID] !=''){
+		if (isset($_POST['Location' . $AssetID]) AND $_POST['Location' . $AssetID] !=''){ 
 			$sql		= "UPDATE fixedassets
 						SET assetlocation='".$_POST['Location'.$AssetID] ."'
 						WHERE assetid='". $AssetID . "'";
-
+	
 			$result=DB_query($sql, $db);
 			prnMsg(_('The Fixed Asset has been moved successfully'), 'success');
 			echo '<br />';
@@ -34,9 +34,9 @@ if (isset($_GET['AssetID'])) {
 	$sql="SELECT categoryid, categorydescription FROM fixedassetcategories";
 	$result=DB_query($sql, $db);
 	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
+	
 	echo '<table class="selection"><tr>';
 	echo '<td>'. _('In Asset Category') . ': </td>';
 	echo '<td><select name="AssetCat">';
@@ -64,10 +64,10 @@ if (isset($_GET['AssetID'])) {
 	}
 
 	echo '</td></tr><tr>
-
-
+	
+	
 	<td>' . _('Asset Location') . ':</td>
-		<td><select name="AssetLocation">';
+		<td><select name="AssetLocation">';		
 			if (!isset($_POST['AssetLocation'])) {
 				$_POST['AssetLocation'] = 'ALL';
 			}
@@ -100,13 +100,13 @@ if (isset($_GET['AssetID'])) {
 	echo '</td></tr></table><br />';
 
 	echo '<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '" /></div>
-		  </div>
-		  </form>
-		  <br />';
+          </div>
+          </form>
+          <br />';
 }
 
 if (isset($_POST['Search'])) {
-
+	
 	if ($_POST['AssetLocation']=='ALL') {
 		$AssetLocation	='%';
 	} else {
@@ -125,8 +125,8 @@ if (isset($_POST['Search'])) {
 	} else {
 		$AssetID	='%';
 	}
-
-
+		
+				
 	$sql= "SELECT fixedassets.assetid,
 				fixedassets.cost,
 				fixedassets.accumdepn,
@@ -143,14 +143,14 @@ if (isset($_POST['Search'])) {
 			AND fixedassets.description " . LIKE . "'".$Keywords."'
 			AND fixedassets.assetid " . LIKE . "'".$AssetID."'
 			AND fixedassets.assetlocation " . LIKE . "'".$AssetLocation."'
-			ORDER BY fixedassets.assetid";
-
-
+			ORDER BY fixedassets.assetid";			
+			
+				
 	$Result=DB_query($sql, $db);
 	echo '<br />';
 	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		  <div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+          <div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Asset ID') . '</th>
@@ -177,7 +177,7 @@ if (isset($_POST['Search'])) {
 		echo '<td><select name="Location' . $myrow['assetid'] . '" onchange="ReloadForm(Move'.$myrow['assetid'].')">';
 		$ThisDropDownName	= 'Location' . $myrow['assetid'];
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
-
+		
 			if(isset($_POST[$ThisDropDownName]) AND ($_POST[$ThisDropDownName] == $LocationRow['locationid'])) {
 				echo '<option selected="selected" value="' . $LocationRow['locationid'].'">'.$LocationRow['locationdescription'] . '</option>';
 			} elseif ($LocationRow['locationid'] == $myrow['ItemAssetLocation']) {
@@ -197,8 +197,8 @@ if (isset($_POST['Search'])) {
 		echo '</tr>';
 	}
 	echo '</table>
-		  </div>
-		  </form>';
+          </div>
+          </form>';
 }
 
 include('includes/footer.inc');

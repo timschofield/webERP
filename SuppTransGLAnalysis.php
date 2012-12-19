@@ -25,7 +25,7 @@ if (!isset($_SESSION['SuppTrans'])){
 
 /*If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
 
-if (isset($_POST['AddGLCodeToTrans'])
+if (isset($_POST['AddGLCodeToTrans']) 
 	AND $_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 
 	$InputError = False;
@@ -63,7 +63,7 @@ if (isset($_POST['AddGLCodeToTrans'])
 	}
 
 	if ($InputError == False){
-
+		
 		$_SESSION['SuppTrans']->Add_GLCodes_To_Trans($_POST['GLCode'],
 													$GLActName,
 													filter_number_format($_POST['Amount']),
@@ -115,7 +115,7 @@ $TotalGLValue=0;
 $i=0;
 
 foreach ( $_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode){
-
+	
 	echo '<tr>
 			<td>' . $EnteredGLCode->GLCode . '</td>
 			<td>' . $EnteredGLCode->GLActName . '</td>
@@ -235,6 +235,6 @@ echo '<div class="centre">
 	</div>';
 
 echo '</div>
-	  </form>';
+      </form>';
 include('includes/footer.inc');
 ?>

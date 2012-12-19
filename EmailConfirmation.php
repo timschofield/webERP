@@ -93,8 +93,8 @@ if (DB_num_rows($result)==0){
 			<tr>
 				<td class="menu_group_item">
 				<ul>
-					<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-					<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+	                <li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+	                <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 				</ul>
 				</td>
 			</tr>
@@ -192,7 +192,7 @@ $MailMessage =  '<html>
 				</tr>';
 
 if(mb_strlen(trim($myrow['deladd2']))) {
-	  $MailMessage .= '<tr>
+      $MailMessage .= '<tr>
 						<td> <b>' . $myrow['deladd2'] . '</td>
 					</tr>
 					<tr>
@@ -202,7 +202,7 @@ if(mb_strlen(trim($myrow['deladd2']))) {
 							<br /></td>
 					/tr>';
 } else {
-	  $MailMessage .= '<tr>
+      $MailMessage .= '<tr>
 						<td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
 							<br />
 							<br />
@@ -242,15 +242,15 @@ if($_GET['POLine'] == 1){
 			$DisplayQty = locale_number_format($myrow2['quantity'],0);
 			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],0);
 			$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],0);
-		 		$StkCode[$i] = $myrow2['stkcode'];
-		 		$DscCode[$i] = $myrow2['description'];
-		 		$QtyCode[$i] = $DisplayQty ;
-		 		$POLine[$i]  = $myrow2['poline'];
-				if($myrow2['itemdue'] =='') {
-		 			$ItemDue[$i] = date('M d, Y',strtotime($DeliveryDate));
-				} else {
-					$ItemDue[$i] = date('M d, Y',strtotime($myrow2['itemdue']));
-				}
+         		$StkCode[$i] = $myrow2['stkcode'];
+         		$DscCode[$i] = $myrow2['description'];
+         		$QtyCode[$i] = $DisplayQty ;
+         		$POLine[$i]  = $myrow2['poline'];
+        		if($myrow2['itemdue'] =='') {
+         			$ItemDue[$i] = date('M d, Y',strtotime($DeliveryDate));
+        		} else {
+        			$ItemDue[$i] = date('M d, Y',strtotime($myrow2['itemdue']));
+        		}
 			$MailMessage .= '<tr>';
 			if($_GET['POLine'] == 1){
 				$MailMessage .= '<td align="right">' . $POLine[$i] . '</td>';
@@ -318,12 +318,12 @@ echo '<html>
 	 			<br />
 	 			<br />
 	 		</td>
-		 		<td nowrap width="50%">
-		   		<b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
-		   		<br />
-		   		<br />
-		   		<br />
-		  		</td>
+	     		<td nowrap width="50%">
+	       		<b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
+	       		<br />
+	       		<br />
+	       		<br />
+	      		</td>
 	 	</tr>
 	</table>
 	<table border="1" width="60%" cellpadding="2" cellspacing="2">

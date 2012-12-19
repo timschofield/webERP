@@ -19,10 +19,10 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 			<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
-			<ul>
-				<li><a href="'. $rootpath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
-				<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-			</ul>
+            <ul>
+			    <li><a href="'. $rootpath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
+			    <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+            </ul>
 			</td>
 			</tr>
 			</table>
@@ -38,7 +38,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
 $sql = "SELECT salesorders.debtorno,
-			salesorders.customerref,
+    		salesorders.customerref,
 			salesorders.comments,
 			salesorders.orddate,
 			salesorders.deliverto,
@@ -68,7 +68,7 @@ $sql = "SELECT salesorders.debtorno,
 		AND salesorders.shipvia=shippers.shipper_id
 		AND salesorders.fromstkloc=locations.loccode
 		AND salesorders.orderno='" . $_GET['TransNo'] . "'";
-
+	
 $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
@@ -92,44 +92,44 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-
+			
 	include('includes/footer.inc');
 	exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
-		$myrow = DB_fetch_array($result);
-		/* Place the deliver blind variable into a hold variable to used when
-		producing the packlist */
-		$DeliverBlind = $myrow['deliverblind'];
-		if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
-				$title = _('Print Packing Slip Error');
-				include('includes/header.inc');
-				echo '<p>';
-				prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-						_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
-						'<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-			  echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
-				. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-				'<a href="' . $rootpath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+        $myrow = DB_fetch_array($result);
+        /* Place the deliver blind variable into a hold variable to used when
+        producing the packlist */
+        $DeliverBlind = $myrow['deliverblind'];
+        if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
+                $title = _('Print Packing Slip Error');
+                include('includes/header.inc');
+                echo '<p>';
+                prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
+                        _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
+                        '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
+              echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
+                . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
+                '<a href="' . $rootpath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
 
-				echo '<br /><br /><br />';
-				echo  _('Or select another Order Number to Print');
-				echo '<table class="table_index">
+                echo '<br /><br /><br />';
+                echo  _('Or select another Order Number to Print');
+                echo '<table class="table_index">
 						<tr>
 						<td class="menu_group_item">
-						<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-						<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-						</td>
-						</tr>
-						</table>
-						</div>
-						<br />
-						<br />
-						<br />';
+                        <li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+                        <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+                        </td>
+                        </tr>
+                        </table>
+                        </div>
+                        <br />
+                        <br />
+                        <br />';
 
-				include('includes/footer.inc');
-				exit;
-		}//packing slip has been printed.
+                include('includes/footer.inc');
+                exit;
+        }//packing slip has been printed.
 }
 
 /*retrieve the order details from the database to print */
@@ -147,7 +147,7 @@ $line_height=24;
 $PageNumber = 1;
 $Copy = 'Office';
 
-$ListCount = 0;
+$ListCount = 0; 
 
 for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for office */
 	if ($i==2){
@@ -177,8 +177,8 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 		while ($myrow2=DB_fetch_array($result)){
 
-			$ListCount ++;
-
+            $ListCount ++;
+			
 			$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 			$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
@@ -188,7 +188,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
 			$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 			$LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize,$DisplayPrevDel,'right');
-
+		
 			if ($YPos-$line_height <= 50){
 			/* We reached the end of the page so finsih off the page and start a newy */
 				$PageNumber++;
@@ -198,13 +198,13 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				/*increment a line down for the next line item */
 				$YPos -= ($line_height);
 			}
-			if ($myrow2['mbflag']=='A'){
+			if ($myrow2['mbflag']=='A'){ 
 				/*Then its an assembly item - need to explode into it's components for packing list purposes */
 				$sql = "SELECT bom.component,
 								bom.quantity,
 								stockmaster.description,
 								stockmaster.decimalplaces
-						FROM bom INNER JOIN stockmaster
+						FROM bom INNER JOIN stockmaster 
 						ON bom.component=stockmaster.stockid
 						WHERE bom.parent='" . $myrow2['stkcode'] . "'";
 				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
@@ -246,10 +246,10 @@ if ($ListCount == 0) {
 	include('includes/footer.inc');
 	exit;
 } else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
-	$sql = "UPDATE salesorders SET printedpackingslip=1,
-									datepackingslipprinted='" . Date('Y-m-d') . "'
+    	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');
+    	$pdf->__destruct();
+	$sql = "UPDATE salesorders SET printedpackingslip=1, 
+									datepackingslipprinted='" . Date('Y-m-d') . "' 
 				WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 	$result = DB_query($sql,$db);
 }

@@ -247,7 +247,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
 		echo '<form action="MRPConvertWorkOrders.php" method="post">';
-		echo '<div>';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
 		echo '<tr><th colspan="9"><h3>' . _('Consolidation') . ': ' . $_POST['Consolidation'] .
@@ -305,8 +305,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<td colspan="4" class="number">' . _('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			</table>';
-		echo '</div>
-			  </form>';
+        echo '</div>
+              </form>';
 
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
@@ -321,9 +321,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<br /><br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+    echo '<table class="selection">';
 	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
 	echo '<option selected="selected" value="None">' . _('None') . '</option>';
 	echo '<option value="Weekly">' . _('Weekly') . '</option>';
@@ -339,8 +339,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			<td><input type ="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="cutoffdate" size="10" value="' .date($_SESSION['DefaultDateFormat']).'" /></td>
 		</tr>';
 	echo '</table><div class="centre"><input type="submit" name="Review" value="' . _('Review') . '" /> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 

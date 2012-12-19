@@ -333,14 +333,14 @@ if (DB_num_rows($WOSerialNoResult)==0){
 	echo '<input type="submit" name="UpdateItems" value="' . _('Update') . '" /></td></tr>';
 	echo '</table>';
 
-	echo '<input type="hidden" name="CountOfItems" value="' . $i . '" />';
+    echo '<input type="hidden" name="CountOfItems" value="' . $i . '" />';
 
 } //end of if there are woserialno items defined
 
 echo '<br /><a href="' . $rootpath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
 
 echo '</div>
-	  </form>';
+      </form>';
 
 include('includes/footer.inc');
 

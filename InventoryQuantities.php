@@ -19,17 +19,17 @@ If (isset($_POST['PrintPDF'])) {
 	$WhereCategory = ' ';
 	$CatDescription = ' ';
 	if ($_POST['StockCat'] != 'All') {
-		$WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
-		$sql= "SELECT categoryid,
-					categorydescription
-				FROM stockcategory
+	    $WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
+		$sql= "SELECT categoryid, 
+					categorydescription 
+				FROM stockcategory 
 				WHERE categoryid='" . $_POST['StockCat'] . "' ";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		$CatDescription = $myrow[1];
 	}
 
-	if ($_POST['Selection'] == 'All') {
+    if ($_POST['Selection'] == 'All') {
 		$sql = "SELECT locstock.stockid,
 					stockmaster.description,
 					locstock.loccode,
@@ -39,13 +39,13 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock INNER JOIN stockmaster
-				ON locstock.stockid=stockmaster.stockid
-				INNER JOIN locations
+				FROM locstock INNER JOIN stockmaster 
+				ON locstock.stockid=stockmaster.stockid 
+				INNER JOIN locations 
 				ON locstock.loccode=locations.loccode
 				WHERE locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$WhereCategory . "
+				$WhereCategory . " 
 				ORDER BY locstock.stockid,
 						locstock.loccode";
 	} else {
@@ -61,10 +61,10 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock INNER JOIN stockmaster
-				ON locstock.stockid=stockmaster.stockid
-				INNER JOIN locations
-				ON locstock.loccode=locations.loccode
+				FROM locstock INNER JOIN stockmaster 
+				ON locstock.stockid=stockmaster.stockid 
+				INNER JOIN locations 
+				ON locstock.loccode=locations.loccode 
 				WHERE (SELECT count(*)
 					  FROM locstock
 					  WHERE stockmaster.stockid = locstock.stockid
@@ -72,7 +72,7 @@ If (isset($_POST['PrintPDF'])) {
 					  GROUP BY locstock.stockid) > 1
 				AND locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$WhereCategory . "
+				$WhereCategory . " 
 				ORDER BY locstock.stockid,
 						locstock.loccode";
 	}
@@ -86,7 +86,7 @@ If (isset($_POST['PrintPDF'])) {
 	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo '<br />' . $sql;
+	      echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -110,15 +110,15 @@ If (isset($_POST['PrintPDF'])) {
 				$Right_Margin,
 				$CatDescription);
 
-	$FontSize=8;
+    $FontSize=8;
 
-	$holdpart = " ";
+    $holdpart = " ";
 	While ($myrow = DB_fetch_array($result,$db)){
-		  if ($myrow['stockid'] != $holdpart) {
+	      if ($myrow['stockid'] != $holdpart) {
 			  $YPos -=(2 * $line_height);
 			  $holdpart = $myrow['stockid'];
 		  } else {
-			  $YPos -=($line_height);
+	          $YPos -=($line_height);
 		  }
 
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -130,19 +130,19 @@ If (isset($_POST['PrintPDF'])) {
 				$pdf->addTextWrap(150,$YPos,150,$FontSize,$myrow['description'],'',0);
 				$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow['loccode'],'left',0);
 				$pdf->addTextWrap(370,$YPos,50,$FontSize,locale_number_format($myrow['quantity'],
-													$myrow['decimalplaces']),'right',0);
+				                                    $myrow['decimalplaces']),'right',0);
 				$pdf->addTextWrap(420,$YPos,50,$FontSize,locale_number_format($myrow['reorderlevel'],
-													$myrow['decimalplaces']),'right',0);
+				                                    $myrow['decimalplaces']),'right',0);
 
 			if ($YPos < $Bottom_Margin + $line_height){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-						   $Right_Margin,$CatDescription);
+			               $Right_Margin,$CatDescription);
 			}
 	} /*end while loop */
 
 	if ($YPos < $Bottom_Margin + $line_height){
-		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$CatDescription);
+	       PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+	                   $Right_Margin,$CatDescription);
 	}
 /*Print out the grand totals */
 
@@ -159,7 +159,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 	echo '<br />
 		<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<div>
+        <div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<tr>
@@ -170,9 +170,9 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 				</select></td>
 		</tr>';
 
-	$SQL="SELECT categoryid,
-				categorydescription
-			FROM stockcategory
+	$SQL="SELECT categoryid, 
+				categorydescription 
+			FROM stockcategory 
 			ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){
@@ -209,14 +209,14 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$CatDescription) {
+                     $Page_Width,$Right_Margin,$CatDescription) {
 
 	/*PDF page header for Reorder Level report */
 	if ($PageNumber>1){

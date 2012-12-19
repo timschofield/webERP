@@ -100,7 +100,7 @@ include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])){
 
-	include ('includes/class.pdf.php');
+    include ('includes/class.pdf.php');
 
 	/* A4_Landscape */
 
@@ -140,8 +140,8 @@ if (isset($_POST['PrintPDF'])){
 	$PageNumber= 1;
 	$line_height= 12;
 
-	  /*Now figure out the inventory data to report for the category range under review
-	  need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
+      /*Now figure out the inventory data to report for the category range under review
+      need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
 
 	if ($_POST['Location']=='All'){
 
@@ -203,7 +203,7 @@ if (isset($_POST['PrintPDF'])){
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo '<br />' . $SQL;
+	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -271,7 +271,7 @@ if (isset($_POST['PrintPDF'])){
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-		  			echo '<br />'. $SQL;
+	      			echo '<br />'. $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -305,7 +305,7 @@ if (isset($_POST['PrintPDF'])){
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-		  			echo '<br />'.$SQL;
+	      			echo '<br />'.$SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -350,7 +350,7 @@ if (isset($_POST['PrintPDF'])){
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-		  			echo '<br />'.$SQL;
+	      			echo '<br />'.$SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -398,7 +398,7 @@ if (isset($_POST['PrintPDF'])){
 	   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   		if ($debug==1){
-		  			echo '<br />'. $SQL;
+	      			echo '<br />'. $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -469,8 +469,8 @@ if (isset($_POST['PrintPDF'])){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
 	echo '<tr><td>' . _('For Inventory in Location') . ':</td>
@@ -518,8 +518,8 @@ if (isset($_POST['PrintPDF'])){
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

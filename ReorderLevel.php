@@ -84,11 +84,11 @@ if (isset($_POST['PrintPDF'])) {
 								FROM purchorders
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorders.status !='Cancelled'
+								WHERE purchorders.status !='Cancelled' 
 								AND purchorders.status !='Rejected'
 								AND purchorders.status !='Pending'
 								AND purchorderdetails.itemcode='".$myrow['stockid']."'
-									  AND purchorders.intostocklocation='".$myrow['loccode']."'";
+								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL, $db);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -116,8 +116,8 @@ if (isset($_POST['PrintPDF'])) {
 								WHERE purchorders.status != 'Cancelled'
 									AND purchorders.status != 'Rejected'
 									AND purchorders.status != 'Pending'
-									  AND purchorderdetails.itemcode='".$myrow['stockid']."'
-									  AND purchorders.intostocklocation='".$myrow['loccode']."'";
+								      AND purchorderdetails.itemcode='".$myrow['stockid']."'
+								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL, $db);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 
@@ -147,8 +147,8 @@ if (isset($_POST['PrintPDF'])) {
 								WHERE purchorders.status !='Cancelled'
 									AND purchorders.status !='Rejected'
 									AND purchorders.status !='Pending'
-								  		  AND purchorderdetails.itemcode='".$myrow['stockid']."'
-									  AND purchorders.intostocklocation='".$myrow2['loccode']."'";
+							      	      AND purchorderdetails.itemcode='".$myrow['stockid']."'
+								      AND purchorders.intostocklocation='".$myrow2['loccode']."'";
 			$OnOrderResult = DB_query($OnOrderSQL, $db);
 			$OnOrderRow = DB_fetch_array($OnOrderResult);
 
@@ -195,7 +195,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
 
 	echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 			locationname
@@ -258,8 +258,8 @@ if (isset($_POST['PrintPDF'])) {
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */

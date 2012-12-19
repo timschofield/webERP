@@ -138,12 +138,12 @@ if (!isset($SelectedCOGSPostingID)) {
 			$sql = "INSERT INTO accountgroups (	groupname,
 												sectioninaccounts,
 												pandl,
-												sequenceintb )
+												sequenceintb ) 
 										VALUES ('Sales',
 												'1',
 												'1',
 												'10')";
-
+							
 			$result = DB_query($sql,$db);
 		}
 		$sql = "SELECT accountcode FROM chartmaster WHERE accountcode ='1'";
@@ -215,7 +215,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				$myrow['id'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow['id']);
-
+	
 		}//END WHILE LIST LOOP
 		echo '</table>';
 	}
@@ -355,7 +355,7 @@ echo '</select></td>
 	<div class="centre">
 		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-	</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

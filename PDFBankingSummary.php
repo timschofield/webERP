@@ -25,8 +25,8 @@ if (!isset($_POST['BatchNo'])){
 	$result=DB_query($sql, $db);
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    echo '<div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
 	echo '<td><select name="BatchNo">';
@@ -40,7 +40,7 @@ if (!isset($_POST['BatchNo'])){
 			<div class="centre">
 				<input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '" />
 			</div>
-		</div>
+        </div>
 		</form>';
 
 	include ('includes/footer.inc');
@@ -86,7 +86,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$BankActName = $myrow['bankaccountname'];
 	$BankActNumber = $myrow['bankaccountnumber'];
 	$BankingReference = $myrow['ref'];
-	$BankCurrDecimalPlaces = $myrow['currdecimalplaces'];
+    $BankCurrDecimalPlaces = $myrow['currdecimalplaces'];
 
 	$SQL = "SELECT debtorsmaster.name,
 			ovamount,
@@ -103,7 +103,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 		include ('includes/header.inc');
 	   	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 		if ($debug==1){
-				prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br />' . $SQL,'error');
+	        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br />' . $SQL,'error');
 	  	}
 		include('includes/footer.inc');
 	  	exit;
@@ -156,10 +156,10 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 			include ('includes/PDFBankingSummaryPageHeader.inc');
 		} /*end of new page header  */
 	} /* end of while there are customer receipts in the batch to print */
-
+	
 	/* Right now print out the GL receipt entries in the batch */
 	while ($myrow=DB_fetch_array($GLRecs)){
-
+	
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),$BankCurrDecimalPlaces), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
 		$YPos -= ($line_height);

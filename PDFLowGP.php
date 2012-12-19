@@ -41,15 +41,15 @@ if (isset($_POST['PrintPDF'])) {
 					debtorsmaster.name
 				FROM stockmaster INNER JOIN stockmoves
 					ON stockmaster.stockid=stockmoves.stockid
-				INNER JOIN systypes
+				INNER JOIN systypes 
 					ON stockmoves.type=systypes.typeid
-				INNER JOIN debtorsmaster
+				INNER JOIN debtorsmaster 
 					ON stockmoves.debtorno=debtorsmaster.debtorno
 				WHERE stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
 				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
 				ORDER BY stockmaster.stockid";
-
+	
 	$LowGPSalesResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
@@ -125,8 +125,8 @@ if (isset($_POST['PrintPDF'])) {
 		$_POST['ToDate']=Date($_SESSION['DefaultDateFormat']);
 		$_POST['GPMin']=0;
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-		echo '<div>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+        echo '<div>';
+        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
 		echo '<tr><td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
 				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
@@ -145,8 +145,8 @@ if (isset($_POST['PrintPDF'])) {
 				<div class="centre">
 					<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 				</div>';
-		echo '</div>
-			  </form>';
+        echo '</div>
+              </form>';
 	}
 	include('includes/footer.inc');
 

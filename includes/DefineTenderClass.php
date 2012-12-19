@@ -150,7 +150,7 @@ Class Tender {
 								$UOM,
 								$DecimalPlaces,
 								$ExpiryDate){
-
+				
 		if (isset($Qty) and $Qty!=0){
 
 			$this->LineItems[$LineNo] = new LineDetails($LineNo,

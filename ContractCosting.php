@@ -51,7 +51,7 @@ while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 	$InventoryIssues[$InventoryIssuesRow['stockid']]->Units = $InventoryIssuesRow['units'];
 	$InventoryIssues[$InventoryIssuesRow['stockid']]->DecimalPlaces = $InventoryIssuesRow['decimalplaces'];
 	$InventoryIssues[$InventoryIssuesRow['stockid']]->Matched = 0;
-
+	
 }
 
 echo '<p class="page_title_text">
@@ -89,7 +89,7 @@ echo '<tr>
 		<th>' . _('Unit Cost') . '</th>
 		<th>' . _('Total Cost') . '</th>
 		</tr>';
-
+		
 $ContractBOMBudget = 0;
 $ContractBOMActual = 0;
 foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
@@ -100,9 +100,9 @@ foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $Component) {
 			<td>' . $Component->UOM . '</td>
 			<td class="number">' . locale_number_format($Component->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format(($Component->ItemCost * $Component->Quantity),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
-
+	
 	$ContractBOMBudget += ($Component->ItemCost *  $Component->Quantity);
-
+	
 	if (isset($InventoryIssues[$Component->StockID])){
 		$InventoryIssues[$Component->StockID]->Matched=1;
 		echo '<td colspan="2" align="center">' . _('Actual usage') . '</td>
@@ -153,7 +153,7 @@ echo '<tr>
 			<th>' . _('Unit Cost') . '</th>
 			<th>' . _('Total Cost') . '</th>
 		</tr>';
-
+						
 foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $Requirement) {
 	echo '<tr><td>' . $Requirement->Requirement . '</td>
 			<td class="number">' . locale_number_format($Requirement->Quantity,'Variable') . '</td>
@@ -355,7 +355,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 									1,
 									'" .  ($OtherReqtsBudget+$ContractBOMBudget)  . "',
 									'" . ($QtyOnHandPrior + 1) . "')";
-
+					
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('stock movement records could not be inserted when processing the work order receipt because');
 				$DbgMsg =  _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -433,13 +433,13 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order being processed now
 
 	echo '<form  method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&amp;identifier=' . $identifier . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 		<div class="centre">
 			<input type="submit" name="CloseContract" value="' . _('Close Contract') .  '" onclick="return confirm(\'' . _('Closing the contract will prevent further stock being issued to it and charges being made against it. Variances will be taken to the profit and loss account. Are You Sure?') . '\');" />
 		</div>
-		</div>
+        </div>
 		</form>';
 }
 

@@ -25,7 +25,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 						materialcost+labourcost+overheadcost AS standardcost
 				FROM stockmaster INNER JOIN stockcheckfreeze
 				ON stockcheckfreeze.stockid=stockmaster.stockid
-				ORDER BY stockcheckfreeze.loccode,
+				ORDER BY stockcheckfreeze.loccode, 
 						stockcheckfreeze.stockid";
 
 		$StockChecks = DB_query($sql, $db,'','',false,false);
@@ -36,7 +36,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu').'</a>';
 			if ($debug==1){
-		  			echo '<br />' . $sql;
+	      			echo '<br />' . $sql;
 			}
 			include('includes/footer.inc');
 			exit;
@@ -166,7 +166,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['stockact'] . "',
 								'" . $myrow['standardcost'] * $StockQtyDifference . "',
-								'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
+                                '" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
@@ -267,7 +267,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
 	   		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
 	   		if ($debug==1){
-		  			echo '<br />'. $SQL;
+	      			echo '<br />'. $SQL;
 	   		}
 	   		include('includes/footer.inc');
 	   		exit;
@@ -309,8 +309,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	$YPos -= (2*$line_height);
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
+    $pdf->__destruct(); 
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		//need to print the report first before this but don't risk re-adjusting all the stock!!
@@ -330,12 +330,12 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		. $title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-	echo '<table class="selection">';
+    
+    echo '<table class="selection">';
 	echo '<tr><td>' . _('Choose Option'). ':</td>
-			  <td><select name="ReportOrClose">';
+              <td><select name="ReportOrClose">';
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		echo '<option selected="selected" value="ReportAndClose">'. _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
@@ -347,7 +347,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	echo '</select></td></tr>';
 	echo '<tr><td>'. _('Action for Zero Counts') . ':</td>
-			  <td><select name="ZeroCounts">';
+              <td><select name="ZeroCounts">';
 
 	if ($_POST['ZeroCounts'] =='Adjust'){
 		echo '<option selected="selected" value="Adjust">'. _('Adjust System stock to Nil') . '</option>';
@@ -357,10 +357,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		echo '<option selected="selected" value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	}
 
-	echo '</select></td></tr>';
+    echo '</select></td></tr>';
 	echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF'). '" /></div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 

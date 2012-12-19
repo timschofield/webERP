@@ -11,7 +11,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Indented BOM Listing'));
 	$pdf->addInfo('Subject',_('Indented BOM Listing'));
-		$FontSize=9;
+    	$FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
 
@@ -49,7 +49,7 @@ if (isset($_POST['PrintPDF'])) {
 					  CONCAT(bom.parent,bom.component) AS sortpart
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW()
+			  AND bom.effectiveto >= NOW() 
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 
@@ -76,7 +76,7 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.quantity
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW()
+			  AND bom.effectiveto >= NOW() 
 			  AND bom.effectiveafter <= NOW()";
 	$result = DB_query($sql,$db);
 	//echo "<br />sql is $sql<br />";
@@ -132,7 +132,7 @@ if (isset($_POST['PrintPDF'])) {
 							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
 					   FROM bom,passbom2
 					   WHERE bom.parent = passbom2.part
-						AND bom.effectiveto >= NOW()
+						AND bom.effectiveto >= NOW() 
 						AND bom.effectiveafter <= NOW()";
 			$result = DB_query($sql,$db);
 
@@ -152,27 +152,27 @@ if (isset($_POST['PrintPDF'])) {
 	   prnMsg( _('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo '<br />' . $sql;
+	      echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
 	}
 
 
-	$sql = "SELECT stockmaster.stockid,
-				   stockmaster.description
-			  FROM stockmaster
-			  WHERE stockid = " . "'" . $_POST['Part'] . "'";
+    $sql = "SELECT stockmaster.stockid,
+                   stockmaster.description
+              FROM stockmaster
+              WHERE stockid = " . "'" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
 	$assembly = $_POST['Part'];
 	$assemblydesc = $myrow['description'];
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$assemblydesc);
+	                   $Right_Margin,$assemblydesc);
 
-	$Tot_Val=0;
-	$sql = "SELECT tempbom.*,
+    $Tot_Val=0;
+    $sql = "SELECT tempbom.*,
 				stockmaster.description,
 				stockmaster.mbflag
 			FROM tempbom,stockmaster
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDF'])) {
 	$fill = false;
 	$pdf->SetFillColor(224,235,255);
 
-	$ListCount = DB_num_rows($result);
+	$ListCount = DB_num_rows($result); 
 
 	while ($myrow = DB_fetch_array($result,$db)){
 
@@ -196,7 +196,7 @@ if (isset($_POST['PrintPDF'])) {
 
 
 		if ($_POST['Fill'] == 'yes'){
-			$fill=!$fill;
+		    $fill=!$fill;
 		}
 
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -214,7 +214,7 @@ if (isset($_POST['PrintPDF'])) {
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$assemblydesc);
+	                   $Right_Margin,$assemblydesc);
 		}
 
 	} /*end while loop */
@@ -224,10 +224,10 @@ if (isset($_POST['PrintPDF'])) {
 
 	if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$assemblydesc);
+	                   $Right_Margin,$assemblydesc);
 	}
 
-	if ($ListCount == 0) {
+    if ($ListCount == 0) {
 			$title = _('Print Indented BOM Listing Error');
 			include('includes/header.inc');
 			prnMsg(_('There were no items for the selected assembly'),'error');
@@ -243,11 +243,11 @@ if (isset($_POST['PrintPDF'])) {
 
 	$title=_('Indented BOM Listing');
 	include('includes/header.inc');
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+        echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		  <div>
-		  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+          <div> 
+          <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">';
 	echo '<tr>
 			<td>' . _('Part') . ':</td>
@@ -271,11 +271,11 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>
 		</table>
 		<div class="centre">
-			<br />
+            <br />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-		</div>
-		</form>';
+        </div>
+        </form>';
 
 	include('includes/footer.inc');
 
@@ -283,7 +283,7 @@ if (isset($_POST['PrintPDF'])) {
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$assemblydesc) {
+                     $Page_Width,$Right_Margin,$assemblydesc) {
 
 	$line_height=12;
 	/*PDF page header for Indented BOM Listing report */

@@ -27,9 +27,9 @@ echo '<table class="selection">
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockCategory']) AND $_POST['StockCategory']!='All'){
 		if ($myrow['categoryid'] == $_POST['StockCategory']){
-			 echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		     echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 		} else {
-			 echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		     echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 		}
 	}else {
 		 echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
@@ -46,9 +46,9 @@ echo '<td>' . _('For Stock Location') . ':</td>
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
-			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		     echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -72,26 +72,26 @@ echo '<tr>
 		</div></td>
 	</tr>
 	</table>
-	</div>
+    </div>
 	</form>';
 
 $TotalQuantity = 0;
 
 if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
-		if ($_POST['StockCategory']=='All') {
-				 $sql = "SELECT stockid,
-								 description,
-								 decimalplaces
-						 FROM stockmaster
-						 WHERE (mbflag='M' OR mbflag='B')";
-		 } else {
-				 $sql = "SELECT stockid,
-								 description,
-								 decimalplaces
-						 FROM stockmaster
-						 WHERE categoryid = '" . $_POST['StockCategory'] . "'
-						 AND (mbflag='M' OR mbflag='B')";
-		 }
+        if ($_POST['StockCategory']=='All') {
+                 $sql = "SELECT stockid,
+                                 description,
+                                 decimalplaces
+                         FROM stockmaster
+                         WHERE (mbflag='M' OR mbflag='B')";
+         } else {
+                 $sql = "SELECT stockid,
+                                 description,
+                                 decimalplaces
+                         FROM stockmaster
+                         WHERE categoryid = '" . $_POST['StockCategory'] . "'
+                         AND (mbflag='M' OR mbflag='B')";
+         }
 
 	$ErrMsg = _('The stock items in the category selected cannot be retrieved because');
 	$DbgMsg = _('The SQL that failed was');

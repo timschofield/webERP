@@ -4,7 +4,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 
 	set_time_limit(1800);
 	ini_set('max_execution_time',1800);
-
+	
 	$result = DB_query("SELECT confvalue FROM config WHERE confname='reports_dir'",$db);
 	$ReportDirRow = DB_fetch_row($result);
 	$ReportDir = $ReportDirRow[0];
@@ -34,7 +34,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 	}
 
 	fwrite($FileHandle,"UPDATE config SET configvalue='" . $DefaultDateFormat . "' WHERE configname='DefaultDateFormat';\n");
-
+	
 	fwrite($FileHandle,"DELETE FROM currencies;\n");
 	$result = DB_query('SELECT currency, currabrev, country, hundredsname,decimalplaces, rate FROM currencies',$db);
 	while ($CurrRow = DB_fetch_array($result)) {
@@ -127,8 +127,8 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix, $db) {
 
 		  fwrite($FileHandle,"DELETE FROM prices WHERE stockid='" . $myrow['stockid'] . "';\n");
 
-		  $Price = GetPriceQuick ($myrow['stockid'], $POSDebtorNo, $POSBranchCode, $DefaultPriceList, $db);
-		  if ($Price!=0) {
+	      $Price = GetPriceQuick ($myrow['stockid'], $POSDebtorNo, $POSBranchCode, $DefaultPriceList, $db);
+	      if ($Price!=0) {
 		  	  fwrite($FileHandle,"INSERT INTO prices (stockid, currabrev, typeabbrev, price) VALUES('" . $myrow['stockid'] . "', '" . $CurrCode . "', '" . $SalesType . "', '" . $Price . "');\n");
   		  }
 

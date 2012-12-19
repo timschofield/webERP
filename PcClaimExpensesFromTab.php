@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 										notes,
 										receipt)
 								VALUES (NULL,
-										'" . $_POST['SelectedTabs'] . "',
+                                        '" . $_POST['SelectedTabs'] . "',
 										'".FormatDateForSQL($_POST['Date'])."',
 										'" . $_POST['SelectedExpense'] . "',
 										'" . -filter_number_format($_POST['amount']) . "',
@@ -142,7 +142,7 @@ if (!isset($SelectedTabs)){
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')	. '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br /><table class="selection">'; //Main table
 
@@ -167,22 +167,22 @@ if (!isset($SelectedTabs)){
 
 	echo '</select></td></tr>';
    	echo '</table>'; // close main table
-	DB_free_result($result);
+    DB_free_result($result);
 
 	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
-	echo '</div>';
+    echo '</div>';
 	echo '</form>';
 
 } else { // isset($SelectedTabs)
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Petty Cash Claim Entry') . '" alt="" />
-		 ' . ' ' . $title . '</p>';
+         ' . ' ' . $title . '</p>';
 
 	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another tab') . '</a></div>';
 
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<div>';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<br /><table class="selection">';
 		echo '<tr><th colspan="8"><h3>' . _('Petty Cash Tab') . ' ' .$SelectedTabs. '</h3></th></tr>';
@@ -312,14 +312,14 @@ if (!isset($SelectedTabs)){
 
 
 		echo '</table>';
-		echo '</div>
-			  </form>';
+        echo '</div>
+              </form>';
 		}
 
 	if (! isset($_GET['delete'])) {
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<div>';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		if ( isset($_GET['edit'])) {
@@ -346,7 +346,7 @@ if (!isset($SelectedTabs)){
 			$_POST['Date']=Date($_SESSION['DefaultDateFormat']);
 		}
 
-		echo '<br /><table class="selection">'; //Main table
+        echo '<br /><table class="selection">'; //Main table
 		echo '<tr><td>' . _('Date Of Expense') . ':</td>
 				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" maxlength="10" value="' . $_POST['Date']. '" /></td></tr>';
 		echo '<tr><td>' . _('Code Of Expense') . ':</td><td><select name="SelectedExpense">';
@@ -397,12 +397,12 @@ if (!isset($SelectedTabs)){
 				<td><input type="text" name="Receipt" size="50" maxlength="49" value="' . $_POST['Receipt'] . '" /></td></tr>';
 		echo '</table>'; // close main table
 
-		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-		echo '<input type="hidden" name="Days" value="' .$Days. '" />';
+        echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
+        echo '<input type="hidden" name="Days" value="' .$Days. '" />';
 
 		echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 		echo '</div>
-			  </form>';
+              </form>';
 
 	} // end if user wish to delete
 

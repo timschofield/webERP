@@ -543,7 +543,7 @@ if (isset($SelectedCategory)) {
 	$PropertyCounter =0;
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<tr>
-				<td><input type="hidden" name="PropID' . $PropertyCounter .'" value="' . $myrow['stkcatpropid'] . '" />';
+                <td><input type="hidden" name="PropID' . $PropertyCounter .'" value="' . $myrow['stkcatpropid'] . '" />';
 		echo '<input type="text" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" value="' . $myrow['label'] . '" /></td>
 				<td><select name="PropControlType' . $PropertyCounter . '">';
 		if ($myrow['controltype']==0){
@@ -590,7 +590,7 @@ if (isset($SelectedCategory)) {
 		$PropertyCounter++;
 	} //end loop around defined properties for this category
 	echo '<tr>
-			<td><input type="hidden" name="PropID' . $PropertyCounter .'" value="NewProperty" />';
+            <td><input type="hidden" name="PropID' . $PropertyCounter .'" value="NewProperty" />';
 	echo '<input type="text" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" /></td>
 			<td><select name="PropControlType' . $PropertyCounter . '">
 				<option selected="selected" value="0">' . _('Text Box') . '</option>
@@ -613,7 +613,7 @@ echo '<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-	</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

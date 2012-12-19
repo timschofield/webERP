@@ -8,10 +8,10 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 if (isset($_GET['Select'])) {
 	$_SESSION['CustomerID'] = $_GET['Select'];
-}
+} 
 if (!isset($_SESSION['CustomerID'])) { //initialise if not already done
 	$_SESSION['CustomerID'] = '';
-}
+} 
 if (isset($_GET['Area'])) {
 	$_POST['Area'] = $_GET['Area'];
 	$_POST['Search'] = 'Search';
@@ -172,7 +172,7 @@ if (isset($_POST['JustSelectedACustomer'])) {
 	for ($i = 0; $i < count($_POST); $i++) { //loop through the returned customers
 		if (isset($_POST['SubmitCustomerSelection' . $i])) {
 			break;
-		}
+		} 
 	} //end loop through $_POST array
 	if ($i == count($_POST)) {
 		prnMsg(_('Unable to identify the selected customer'), 'error');
@@ -326,7 +326,7 @@ if (isset($_POST['CustType'])) {
 		DB_data_seek($result2, 0);
 		echo '</select></td>';
 	}
-} else { //CustType is not set
+} else { //CustType is not set 
 	// No option selected="selected" yet, so show Customer Type drop down list
 	$result2 = DB_query("SELECT typeid, typename FROM debtortype", $db);
 	// Error if no customer types setup
@@ -377,7 +377,7 @@ echo '<div class="centre">
 	</div>';
 if (isset($_SESSION['SalesmanLogin']) AND $_SESSION['SalesmanLogin'] != '') {
 	prnMsg(_('Your account enables you to see only customers allocated to you'), 'warn', _('Note: Sales-person Login'));
-}
+} 
 
 if (isset($result)) {
 	unset($_SESSION['CustomerID']);
@@ -388,7 +388,7 @@ if (isset($result)) {
 			if ($_POST['PageOffset'] < $ListPageMax) {
 				$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
 			}
-		}
+		} 
 		if (isset($_POST['Previous'])) {
 			if ($_POST['PageOffset'] > 1) {
 				$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
@@ -415,7 +415,7 @@ if (isset($result)) {
 		}
 		echo '<br />
 				<table cellpadding="2" class="selection">';
-
+		
 		$TableHeader = '<tr>
 							<th>' . _('Code') . '</th>
 							<th>' . _('Customer Name') . '</th>
@@ -442,7 +442,7 @@ if (isset($result)) {
 		} //end if producing a CSV
 		if (!isset($_POST['CSV'])) {
 			DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
-		}
+		} 
 		$i = 0; //counter for input controls
 		while (($myrow = DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($k == 1) {
@@ -497,10 +497,10 @@ if (!isset($_POST['CSV'])) {
 			<input type="submit" name="Next" value="' . _('Next') . '" />';
 		echo '</div>';
 	}//end if results to show
-}
+} 
 
 echo '</div>
-	  </form>';
+      </form>';
 // Only display the geocode map if the integration is turned on, AND there is a latitude/longitude to display
 if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {

@@ -26,9 +26,9 @@ $ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_e
 $ShiptsResult = DB_query($SQL,$db, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult)==0){
-	   prnMsg(_('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
+       prnMsg(_('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
 	include('includes/footer.inc');
-	   exit;
+       exit;
 }
 /*show a table of the shipments returned by the SQL */
 
@@ -42,16 +42,16 @@ $j = 1;
 $k = 0; //row colour counter
 
 while ($myrow=DB_fetch_array($ShiptsResult)) {
-	   if ($k==1){
-			  echo '<tr class="OddTableRows">';
-			  $k=0;
-	   } else {
-			  echo '<tr class="EvenTableRows">';
-			  $k=1;
-	   }
+       if ($k==1){
+              echo '<tr class="OddTableRows">';
+              $k=0;
+       } else {
+              echo '<tr class="EvenTableRows">';
+              $k=1;
+       }
 
-	   echo '<td><a href="'.$rootpath.'/Shipments.php?' . SID . 'SelectedShipment='.$myrow['shiptref'].'">'.$myrow['shiptref'].'</a></td>
-	   		<td>'.$myrow['vessel'].'</td>
+       echo '<td><a href="'.$rootpath.'/Shipments.php?' . SID . 'SelectedShipment='.$myrow['shiptref'].'">'.$myrow['shiptref'].'</a></td>
+       		<td>'.$myrow['vessel'].'</td>
 		<td>'.ConvertSQLDate($myrow['eta']).'</td>
 		</tr>';
 

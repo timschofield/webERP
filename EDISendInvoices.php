@@ -97,11 +97,11 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			then replace variable names with data
 			write the output to a file one line at a time */
 
-		$sql = "SELECT section,
-					   linetext
-				FROM edimessageformat
-				WHERE partnercode='" . $CustDetails['debtorno'] . "'
-				AND messagetype='INVOIC' ORDER BY sequenceno";
+		$sql = "SELECT section, 
+                       linetext 
+                FROM edimessageformat 
+                WHERE partnercode='" . $CustDetails['debtorno'] . "' 
+                AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
 		$MessageLinesResult = DB_query($sql, $db,$ErrMsg);
 

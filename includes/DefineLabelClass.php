@@ -5,9 +5,9 @@ define('LABELS_FILE', $_SESSION['reports_dir'] . '/labels.xml');
 /**
  *  These tags contains the more general data of the labels
  */
-$GlobalTags = array('id'=>array('desc'=> _('Label id'),
-							'type'=>'t',
-							'sz'=>8,
+$GlobalTags = array('id'=>array('desc'=> _('Label id'), 
+							'type'=>'t', 
+							'sz'=>8, 
 							'maxsz'=>12),  // text
 							'description'=>array('desc'=>_('Description'),
 							'type'=>'t',
@@ -18,36 +18,36 @@ $GlobalTags = array('id'=>array('desc'=> _('Label id'),
  *  These tags specifies the dimension of individual label
  */
 $DimensionTags = array(
-	'Unit'=>array('desc'=>_('Units'),'type'=>'s',
-	'values'=>array('pt'=>'pt', 'in'=>'in', 'mm'=>'mm', 'cm'=>'cm' ) ), // select
-	'Rows'=>array('desc'=>_('Rows per sheet'),'type'=>'i','sz'=>2,'maxsz'=>3), // integer numeric
-	'Cols'=>array('desc'=>_('Cols per sheet'),'type'=>'i','sz'=>2,'maxsz'=>3),
-	'Sh'=>array('desc'=>_('Sheet height'),'type'=>'n','sz'=>5,'maxsz'=>8),  // float numeric
-	'Sw'=> array('desc'=>_('Sheet width'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'He'=>array('desc'=>_('Label height'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'Wi'=> array('desc'=>_('Label width'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'Tm'=>array('desc'=>_('Top margin'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'Lm'=> array('desc'=>_('Left margin'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'Rh'=> array('desc'=>_('Row height'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'Cw'=>array('desc'=>_('Column width'),'type'=>'n','sz'=>5,'maxsz'=>8)
+    'Unit'=>array('desc'=>_('Units'),'type'=>'s',
+    'values'=>array('pt'=>'pt', 'in'=>'in', 'mm'=>'mm', 'cm'=>'cm' ) ), // select
+    'Rows'=>array('desc'=>_('Rows per sheet'),'type'=>'i','sz'=>2,'maxsz'=>3), // integer numeric
+    'Cols'=>array('desc'=>_('Cols per sheet'),'type'=>'i','sz'=>2,'maxsz'=>3),
+    'Sh'=>array('desc'=>_('Sheet height'),'type'=>'n','sz'=>5,'maxsz'=>8),  // float numeric
+    'Sw'=> array('desc'=>_('Sheet width'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'He'=>array('desc'=>_('Label height'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'Wi'=> array('desc'=>_('Label width'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'Tm'=>array('desc'=>_('Top margin'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'Lm'=> array('desc'=>_('Left margin'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'Rh'=> array('desc'=>_('Row height'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'Cw'=>array('desc'=>_('Column width'),'type'=>'n','sz'=>5,'maxsz'=>8)
 );
 /**
  *  These tags will come as arrays from the input screen, ie: row[], pos[], etc.
  */
 $DataTags =  array(
-	'row'=>array('desc'=>_('Vert. pos.'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'pos'=>array('desc'=>_('Horiz. pos.'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'max'=> array('desc'=>_('Max text<br />length'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'font'=>array('desc'=>_('Font size'),'type'=>'n','sz'=>5,'maxsz'=>8),
-	'dat'=>array('desc'=>_('Data to display'),'type'=>'s',
-		'values'=>array(
-			'code'=>_('Code item'),
-			'name1'=>_('Description'),
-			'name2'=>_('Description remainder'),
-			'lname1'=>_('Long description'),
-			'lname2'=>_('Long description remainder'),
-			'price'=>_('Price'),
-			'bcode'=>_('Bar Code') ) )
+    'row'=>array('desc'=>_('Vert. pos.'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'pos'=>array('desc'=>_('Horiz. pos.'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'max'=> array('desc'=>_('Max text<br />length'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'font'=>array('desc'=>_('Font size'),'type'=>'n','sz'=>5,'maxsz'=>8),
+    'dat'=>array('desc'=>_('Data to display'),'type'=>'s',
+        'values'=>array(
+            'code'=>_('Code item'),
+            'name1'=>_('Description'),
+            'name2'=>_('Description remainder'),
+            'lname1'=>_('Long description'),
+            'lname2'=>_('Long description remainder'),
+            'price'=>_('Price'),
+            'bcode'=>_('Bar Code') ) )
 );
 
 /*! \brief Read the list of labels from the XML file
@@ -59,50 +59,50 @@ $DataTags =  array(
  *  @return the list of label in an objects array
  */
 function getXMLFile($file) {
-	$list=null;
-	libxml_use_internal_errors(true);
+    $list=null;
+    libxml_use_internal_errors(true);
 
-	if (file_exists($file)) {
-		$list= simplexml_load_file($file, "LabelList");
-		if (!$list) {
-			prnMsg(_('Failed loading XML file').' '. $file.':');
-			foreach(libxml_get_errors() as $error) {
-				echo "
-				<br />", $error->message;
-			}
-			exit(_('Report this problem'));
-		}
-	}
-	return $list;
+    if (file_exists($file)) {
+        $list= simplexml_load_file($file, "LabelList");
+        if (!$list) {
+            prnMsg(_('Failed loading XML file').' '. $file.':');
+            foreach(libxml_get_errors() as $error) {
+                echo "
+                <br />", $error->message;
+            }
+            exit(_('Report this problem'));
+        }
+    }
+    return $list;
 }
 
 /**
  *  The newLabel function.
  */
 function newLabel($data=null) {
-	global $GlobalTags, $DimensionTags, $DataTags;
-	$label0 = '<?xml version="1.0"  standalone="yes"?><label><id>""</id><description>""</description><dimensions></dimensions><data></data></label>';
-	$label = new LabelList($label0);
-	if ($data!=null) {
-		foreach ($GlobalTags as $iTag=>$tag)
-			$label->$iTag = $data[$iTag];
-		foreach ($DimensionTags as $iTag=>$tag)
-			$label->dimensions->addChild($iTag, $data[$iTag]);
-	// we suppose that this data comes from the input, then there are:
-	// $data[$tag][$i] begining with $data['row'][$i]
-		foreach ($data['row'] as $i=>$val) {
-			if (empty($val)) continue;
-			$line=$label->data->addChild('line');
-			foreach ($DataTags as $iTag=>$tag)
-				$line->addChild($iTag, $data[$iTag][$i]);
-		}
-	}
-	return $label;
+    global $GlobalTags, $DimensionTags, $DataTags;
+    $label0 = '<?xml version="1.0"  standalone="yes"?><label><id>""</id><description>""</description><dimensions></dimensions><data></data></label>';
+    $label = new LabelList($label0);
+    if ($data!=null) {
+        foreach ($GlobalTags as $iTag=>$tag)
+            $label->$iTag = $data[$iTag];
+        foreach ($DimensionTags as $iTag=>$tag)
+            $label->dimensions->addChild($iTag, $data[$iTag]);
+    // we suppose that this data comes from the input, then there are:
+    // $data[$tag][$i] begining with $data['row'][$i]
+        foreach ($data['row'] as $i=>$val) {
+            if (empty($val)) continue;
+            $line=$label->data->addChild('line');
+            foreach ($DataTags as $iTag=>$tag)
+                $line->addChild($iTag, $data[$iTag][$i]);
+        }
+    }
+    return $label;
 }
 
 function emptyList() {
-	$emptyListXML = '<?xml version="1.0"?><labels></labels>';
-	return new LabelList($emptyListXML);
+    $emptyListXML = '<?xml version="1.0"?><labels></labels>';
+    return new LabelList($emptyListXML);
 }
 
 
@@ -119,39 +119,39 @@ function emptyList() {
  */
 
 class LabelList extends SimpleXMLElement {
-	function getLabel($labelID) {
-		foreach ($this->label as $label) {
-			if ($label->id == $labelID)
-				return $label;
-		}
-		return false;
-	}
+    function getLabel($labelID) {
+        foreach ($this->label as $label) {
+            if ($label->id == $labelID)
+                return $label;
+        }
+        return false;
+    }
 
-	function findLabel($labelID) {
-		foreach ($this->label as $i=>$ll) {
-			if ((string)$ll->id==$labelID)
-				return $i;  // found!
-		}
-		return false; // Not found!
-	}
+    function findLabel($labelID) {
+        foreach ($this->label as $i=>$ll) {
+            if ((string)$ll->id==$labelID)
+                return $i;  // found!
+        }
+        return false; // Not found!
+    }
 
-	function addLabel($label) {
-		global $GlobalTags, $DimensionTags, $DataTags;
-		$new=$this->addChild('label');
-		foreach ($GlobalTags as $iTag=>$tag)
-			$new->addChild($iTag, (string)$label->$iTag);
-		$dimensions=$new->addChild('dimensions');
-		foreach ($DimensionTags as $iTag=>$tag)
-			$dimensions->addChild($iTag, (string)$label->dimensions->$iTag);
-	// $data[$tag][$i] begining with $data['row'][$i]
-		$data=$new->addChild('data');
-		foreach ($label->data->line as $line) {
-			$newLine=$data->addChild('line');
-			foreach ($DataTags as $iTag=>$tag)
-				$newLine->addChild($iTag, (string)$line->$iTag);
-		}
-		return true;
-	}
+    function addLabel($label) {
+        global $GlobalTags, $DimensionTags, $DataTags;
+        $new=$this->addChild('label');
+        foreach ($GlobalTags as $iTag=>$tag)
+            $new->addChild($iTag, (string)$label->$iTag);
+        $dimensions=$new->addChild('dimensions');
+        foreach ($DimensionTags as $iTag=>$tag)
+            $dimensions->addChild($iTag, (string)$label->dimensions->$iTag);
+    // $data[$tag][$i] begining with $data['row'][$i]
+        $data=$new->addChild('data');
+        foreach ($label->data->line as $line) {
+            $newLine=$data->addChild('line');
+            foreach ($DataTags as $iTag=>$tag)
+                $newLine->addChild($iTag, (string)$line->$iTag);
+        }
+        return true;
+    }
 }
 
 /*! \brief Abort routine
@@ -164,12 +164,12 @@ class LabelList extends SimpleXMLElement {
  *  @return nothing
  */
 function abortMsg($msg) {
-	global $rootpath, $DefaultClock, $Version, $theme;
-	$title=_('No label templates exist');
-	include ('includes/header.inc');
-	echo '<br />';
-	prnMsg( $msg, 'error');
-	include ('includes/footer.inc');
-	exit;
+    global $rootpath, $DefaultClock, $Version, $theme;
+    $title=_('No label templates exist');
+    include ('includes/header.inc');
+    echo '<br />';
+    prnMsg( $msg, 'error');
+    include ('includes/footer.inc');
+    exit;
 }
 ?>

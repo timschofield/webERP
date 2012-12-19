@@ -132,7 +132,7 @@ Class Offer {
 						prnMsg(_('The offer for').' '.$LineItem->StockID.' ' ._('has been deleted in the database'), 'info');
 						$this->OfferMailText .= $LineItem->Quantity.' '.$LineItem->Units.' '._('of').' ' .$LineItem->StockID.' '
 							._('at a price of').' '.$this->CurrCode.$LineItem->Price.' '._('has been deleted')."\n";
-
+					
 					}
 				}
 			}

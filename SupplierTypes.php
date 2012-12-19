@@ -47,8 +47,8 @@ if (isset($_POST['submit'])) {
 	}
 
 	$checksql = "SELECT count(*)
-			 FROM suppliertype
-			 WHERE typename = '" . $_POST['TypeName'] . "'";
+		     FROM suppliertype
+		     WHERE typename = '" . $_POST['TypeName'] . "'";
 	$checkresult=DB_query($checksql, $db);
 	$checkrow=DB_fetch_row($checkresult);
 	if ($checkrow[0]>0) {
@@ -70,8 +70,8 @@ if (isset($_POST['submit'])) {
 		// First check the type is not being duplicated
 
 		$checkSql = "SELECT count(*)
-				 FROM suppliertype
-				 WHERE typeid = '" . $_POST['TypeID'] . "'";
+			     FROM suppliertype
+			     WHERE typeid = '" . $_POST['TypeID'] . "'";
 
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 
 			$msg = _('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . _('has been created');
 			$checkSql = "SELECT count(typeid)
-				 FROM suppliertype";
+			     FROM suppliertype";
 			$result = DB_query($checkSql, $db);
 			$row = DB_fetch_row($result);
 
@@ -112,8 +112,8 @@ if (isset($_POST['submit'])) {
 
 	// Does it exist
 		$checkSql = "SELECT count(*)
-				 FROM suppliertype
-				 WHERE typeid = '" . $DefaultSupplierType . "'";
+			     FROM suppliertype
+			     WHERE typeid = '" . $DefaultSupplierType . "'";
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
 
@@ -192,9 +192,9 @@ while ($myrow = DB_fetch_row($result)) {
 		</tr>',
 		$myrow[0],
 		$myrow[1],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', 
 		$myrow[0],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', 
 		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
@@ -211,7 +211,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 		<table class="selection">'; //Main table
@@ -220,9 +220,9 @@ if (! isset($_GET['delete'])) {
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
 
 		$sql = "SELECT typeid,
-				   typename
-				FROM suppliertype
-				WHERE typeid='" . $SelectedType . "'";
+			       typename
+		        FROM suppliertype
+		        WHERE typeid='" . $SelectedType . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);

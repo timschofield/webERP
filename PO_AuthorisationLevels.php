@@ -11,7 +11,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/g
 
 
 /*Note: If CanCreate==0 then this means the user can create orders
- *     Also if OffHold==0 then the user can release purchase invocies
+ *     Also if OffHold==0 then the user can release purchase invocies 
  *     This logic confused me a bit to start with
  */
 
@@ -120,14 +120,14 @@ $ErrMsg = _('The authentication details cannot be retrieved because');
 $Result=DB_query($sql,$db,$ErrMsg);
 
 echo '<table class="selection">
-	 <tr>
+     <tr>
 		<th>' . _('User ID') . '</th>
 		<th>' . _('User Name') . '</th>
 		<th>' . _('Currency') . '</th>
 		<th>' . _('Create Order') . '</th>
 		<th>' . _('Can Release') . '<br />'. _('Invoices').'</th>
 		<th>' . _('Authority Level') . '</th>
-	</tr>';
+    </tr>';
 
 while ($myrow=DB_fetch_array($Result)) {
 	if ($myrow['cancreate']==0) {
@@ -263,6 +263,6 @@ if (isset($_GET['Edit'])) {
 		</div>';
 }
 echo '</div>
-		</form>';
+        </form>';
 include('includes/footer.inc');
 ?>

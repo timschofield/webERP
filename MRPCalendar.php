@@ -253,7 +253,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		  <div>
+          <div>
 			<br />
 			<br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -317,7 +317,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		</table>
 		<br />
 		<br />
-		</div>
+        </div>
 		</form>';
 
 } // End of function display()

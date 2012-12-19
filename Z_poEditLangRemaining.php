@@ -33,13 +33,13 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 	$LangFileEntries = sizeof($LangFile);
 
 	if (isset($_POST['submit'])) {
-	// save the modifications
+    // save the modifications
 
 		echo '<br /><table><tr><td>';
 		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	/* write the new language file */
+    /* write the new language file */
 
 		prnMsg (_('Writing the language file') . '.....<br />', 'info', ' ');
 
@@ -54,8 +54,8 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 		}
 		$Result = fclose($fpOut);
 
-	/* Done writing, now move the original file to a .old */
-	/* and the new one to the default */
+    /* Done writing, now move the original file to a .old */
+    /* and the new one to the default */
 
 		if (file_exists($PathToLanguage . '.old')) {
 			$Result = rename($PathToLanguage . '.old', $PathToLanguage . '.bak');
@@ -66,7 +66,7 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 			$Result = unlink($PathToLanguage . '.bak');
 		}
 
-	/*now need to create the .mo file from the .po file */
+    /*now need to create the .mo file from the .po file */
 		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($msgfmtCommand);
 
@@ -77,7 +77,7 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 	/* End of Submit block */
 	} else {
 
-	/* now we need to parse the resulting array into something we can show the user */
+    /* now we need to parse the resulting array into something we can show the user */
 
 		$j = 1;
 
@@ -97,7 +97,7 @@ echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 /* stick it on the screen */
 
-	echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
+    echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
 		echo '<br />';
 		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));

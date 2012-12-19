@@ -60,11 +60,11 @@ function IsEmailAddress($Email){
 
 	$AtIndex = strrpos ($Email, "@");
 	if ($AtIndex == false) {
-		return  false;	// No @ sign is not acceptable.
+	    return  false;	// No @ sign is not acceptable.
 	}
 
 	if (preg_match('/\\.\\./', $Email)){
-		return  false;	// > 1 consecutive dot is not allowed.
+	    return  false;	// > 1 consecutive dot is not allowed.
 	}
 	//  Check component length limits
 	$Domain = mb_substr ($Email, $AtIndex+1);
@@ -72,27 +72,27 @@ function IsEmailAddress($Email){
 	$LocalLen = mb_strlen ($Local);
 	$DomainLen = mb_strlen ($Domain);
 	if ($LocalLen < 1 || $LocalLen > 64){
-		// local part length exceeded
-		return  false;
+	    // local part length exceeded
+	    return  false;
 	}
 	if ($DomainLen < 1 || $DomainLen > 255){
-		// domain part length exceeded
-		return  false;
+	    // domain part length exceeded
+	    return  false;
 	}
 
 	if ($Local[0] == '.' OR $Local[$LocalLen-1] == '.') {
-		// local part starts or ends with '.'
-		return  false;
+	    // local part starts or ends with '.'
+	    return  false;
 	}
 	if (!preg_match ('/^[A-Za-z0-9\\-\\.]+$/', $Domain )){
-		// character not valid in domain part
-		return  false;
+	    // character not valid in domain part
+	    return  false;
 	}
 	if (!preg_match ('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/', str_replace ("\\\\", "" ,$Local) )){
-		// character not valid in local part unless local part is quoted
-		if (!preg_match ('/^"(\\\\"|[^"])+"$/', str_replace("\\\\", "", $Local) ))  {
+	    // character not valid in local part unless local part is quoted
+	    if (!preg_match ('/^"(\\\\"|[^"])+"$/', str_replace("\\\\", "", $Local) ))  {
 			return  false;
-		}
+	    }
 	}
 
 	//  Check for a DNS 'MX' or 'A' record.
@@ -100,7 +100,7 @@ function IsEmailAddress($Email){
 	$Ret = true;
 	/*  Apparentely causes some problems on some versions - perhaps bleeding edge just yet
 	if (version_compare(PHP_VERSION, '5.3.0') >= 0 OR mb_strtoupper(mb_substr(PHP_OS, 0, 3) !== 'WIN')) {
-		$Ret = checkdnsrr( $Domain, 'MX' ) OR checkdnsrr( $Domain, 'A' );
+	    $Ret = checkdnsrr( $Domain, 'MX' ) OR checkdnsrr( $Domain, 'A' );
 	}
 	*/
 	return  $Ret;
@@ -224,7 +224,7 @@ function quote_oanda_currency($CurrCode) {
 }
 
 function google_currency_rate($CurrCode) {
-
+	
 	$Rate = 0;
 	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
 	foreach ($PageLines as $Line){
@@ -260,66 +260,66 @@ function wikiLink($type, $id) {
 
 //  Lindsay debug stuff
 function LogBackTrace( $dest = 0 ) {
-	error_log( "***BEGIN STACK BACKTRACE***", $dest );
+    error_log( "***BEGIN STACK BACKTRACE***", $dest );
 
-	$stack = debug_backtrace();
-	//  Leave out our frame and the topmost - huge for xmlrpc!
-	for( $ii = 1; $ii < count( $stack ) - 3; $ii++ )
-	{
+    $stack = debug_backtrace();
+    //  Leave out our frame and the topmost - huge for xmlrpc!
+    for( $ii = 1; $ii < count( $stack ) - 3; $ii++ )
+    {
 	$frame = $stack[$ii];
 	$msg = "FRAME " . $ii . ": ";
 	if( isset( $frame['file'] ) ) {
-		$msg .= "; file=" . $frame['file'];
+	    $msg .= "; file=" . $frame['file'];
 	}
 	if( isset( $frame['line'] ) ) {
-		$msg .= "; line=" . $frame['line'];
+	    $msg .= "; line=" . $frame['line'];
 	}
 	if( isset( $frame['function'] ) ) {
-		$msg .= "; function=" . $frame['function'];
+	    $msg .= "; function=" . $frame['function'];
 	}
 	if( isset( $frame['args'] ) ) {
-		// Either function args, or included file name(s)
-		$msg .= ' (';
-		foreach( $frame['args'] as $val ) {
+	    // Either function args, or included file name(s)
+	    $msg .= ' (';
+	    foreach( $frame['args'] as $val ) {
 
 			$typ = gettype( $val );
 			switch( $typ ) {
 				case 'array':
-					$msg .= '[ ';
-					foreach( $val as $v2 ) {
+				    $msg .= '[ ';
+				    foreach( $val as $v2 ) {
 						if( gettype( $v2 ) == 'array' ) {
-							$msg .= '[ ';
-							foreach( $v2 as $v3 )
+						    $msg .= '[ ';
+						    foreach( $v2 as $v3 )
 							$msg .= $v3;
-							$msg .= ' ]';
+						    $msg .= ' ]';
 						} else {
-							$msg .= $v2 . ', ';
-						}
-						$msg .= ' ]';
-						break;
+						    $msg .= $v2 . ', ';
+					    }
+					    $msg .= ' ]';
+					    break;
 					}
 				case 'string':
-					$msg .= $val . ', ';
-					break;
+				    $msg .= $val . ', ';
+				    break;
 
 				case 'integer':
-					$msg .= sprintf( "%d, ", $val );
-					break;
+				    $msg .= sprintf( "%d, ", $val );
+				    break;
 
 				default:
-					$msg .= '<' . gettype( $val ) . '>, ';
-					break;
+				    $msg .= '<' . gettype( $val ) . '>, ';
+				    break;
 
-				}
-			$msg .= ' )';
+		    	}
+		    $msg .= ' )';
 			}
 		}
 	error_log( $msg, $dest );
-	}
+    }
 
-	error_log( '++++END STACK BACKTRACE++++', $dest );
+    error_log( '++++END STACK BACKTRACE++++', $dest );
 
-	return;
+    return;
 }
 
 function http_file_exists($url)  {

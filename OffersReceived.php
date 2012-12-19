@@ -39,9 +39,9 @@ if (!isset($_POST['supplierid'])) {
 		prnMsg(_('There are no offers outstanding that you are authorised to deal with'), 'information');
 	} else {
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Select Supplier') . '" alt="" />
-			 ' . ' ' . _('Select Supplier') . '</p>';
+             ' . ' ' . _('Select Supplier') . '</p>';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
-		echo '<div>';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">
 			<tr>
@@ -59,7 +59,7 @@ if (!isset($_POST['supplierid'])) {
 				</td>
 			</tr>
 			</table>
-			</div>
+            </div>
 			</form>';
 	}
 }
@@ -82,7 +82,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				ON offers.currcode=purchorderauth.currabrev
 			INNER JOIN suppliers
 				ON suppliers.supplierid=offers.supplierid
-			INNER JOIN currencies
+			INNER JOIN currencies 
 				ON suppliers.currcode=currencies.currabrev
 			LEFT JOIN stockmaster
 				ON stockmaster.stockid=offers.stockid
@@ -93,7 +93,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	$result=DB_query($sql, $db);
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
@@ -148,8 +148,8 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			</td>
 		</tr>
 		</table>
-		</div>
-		</form>';
+        </div>
+        </form>';
 } else if(isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	include ('includes/htmlMimeMail.php');
 	$accepts=array();

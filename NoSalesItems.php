@@ -13,12 +13,12 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name="SelectCustomer" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
-
+	
 	//select location
 	echo '<tr>
-				 <td>'._('Select Location') . '</td>
+		         <td>'._('Select Location') . '</td>
 				 <td>:</td>
-				 <td><select name="Location[]" multiple="multiple">
+		         <td><select name="Location[]" multiple="multiple">
 				 <option value="All" selected="selected">' . _('All') . '</option>';;
 	$sql = "SELECT 	loccode,locationname
 			FROM 	locations ORDER BY locationname";
@@ -34,13 +34,13 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	}
 	echo '</select></td>
 		</tr>';
-
+		
 	//to view list of customer
 	echo '<tr>
 			<td width="150">' . _('Select Customer Type') . '</td>
 			<td>:</td>
 			<td><select name="Customers">';
-
+			
 	$sql = "SELECT typename,
 					typeid
 				FROM debtortype";
@@ -51,7 +51,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	}
 	echo '</select></td>
 		</tr>';
-
+		
 	// stock category selection
 	$SQL="SELECT categoryid,categorydescription
 			FROM stockcategory
@@ -76,7 +76,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-
+		
 	//View number of days
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
@@ -90,7 +90,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	</div>
 	</form>';
 } else {
-
+	
 	// everything below here to view NumberOfNoSalesItems on selected location
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($_POST['NumberOfDays'])));
 	if ($_POST['StockCat']=='All'){
@@ -98,7 +98,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 	}else{
 		$WhereStockCat = " AND stockmaster.categoryid = '" . $_POST['StockCat'] ."'";
 	}
-
+	
 	if ($_POST['Location'][0] == 'All') {
 		$SQL = "SELECT 	stockmaster.stockid,
 					stockmaster.description,
@@ -108,24 +108,24 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 						$WhereStockCat . "
 					AND (locstock.quantity > 0)
 					AND NOT EXISTS (
-							SELECT *
+							SELECT * 
 							FROM 	salesorderdetails, salesorders
 							WHERE 	stockmaster.stockid = salesorderdetails.stkcode
 									AND (salesorderdetails.orderno = salesorders.orderno)
 									AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
 					AND NOT EXISTS (
-							SELECT *
+							SELECT * 
 							FROM 	stockmoves
 							WHERE 	stockmoves.stockid = stockmaster.stockid
 									AND stockmoves.trandate >= '" . $FromDate . "')
 					AND EXISTS (
-							SELECT *
+							SELECT * 
 							FROM 	stockmoves
 							WHERE 	stockmoves.stockid = stockmaster.stockid
 									AND stockmoves.trandate < '" . $FromDate . "'
-									AND stockmoves.qty >0)
+									AND stockmoves.qty >0) 
 				GROUP BY stockmaster.stockid
-				ORDER BY stockmaster.stockid";
+				ORDER BY stockmaster.stockid";	
 	}else{
 		$WhereLocation = '';
 		if (sizeof($_POST['Location']) == 1) {
@@ -141,12 +141,12 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 				} // End of if
 			} // End of foreach
 			$WhereLocation .= ')';
-		}
+		}	
 		$SQL = "SELECT 	stockmaster.stockid,
 						stockmaster.description,
-						stockmaster.units,
+						stockmaster.units, 
 						locstock.quantity,
-						locations.locationname
+						locations.locationname 
 				FROM 	stockmaster,locstock,locations
 				WHERE 	stockmaster.stockid = locstock.stockid
 						AND (locstock.loccode = locations.loccode)".
@@ -154,28 +154,28 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 						$WhereStockCat . "
 						AND (locstock.quantity > 0)
 						AND NOT EXISTS (
-								SELECT *
+								SELECT * 
 								FROM 	salesorderdetails, salesorders
 								WHERE 	stockmaster.stockid = salesorderdetails.stkcode
 										AND (salesorders.fromstkloc = locstock.loccode)
 										AND (salesorderdetails.orderno = salesorders.orderno)
 										AND salesorderdetails.actualdispatchdate > '" . $FromDate . "')
 						AND NOT EXISTS (
-								SELECT *
+								SELECT * 
 								FROM 	stockmoves
-								WHERE 	stockmoves.loccode = locstock.loccode
+								WHERE 	stockmoves.loccode = locstock.loccode 
 										AND stockmoves.stockid = stockmaster.stockid
 										AND stockmoves.trandate >= '" . $FromDate . "')
 						AND EXISTS (
-								SELECT *
+								SELECT * 
 								FROM 	stockmoves
-								WHERE 	stockmoves.loccode = locstock.loccode
+								WHERE 	stockmoves.loccode = locstock.loccode 
 										AND stockmoves.stockid = stockmaster.stockid
 										AND stockmoves.trandate < '" . $FromDate . "'
-										AND stockmoves.qty >0)
-				ORDER BY stockmaster.stockid";
+										AND stockmoves.qty >0) 
+				ORDER BY stockmaster.stockid";	
 	}
-	$result = DB_query($SQL, $db);
+	$result = DB_query($SQL, $db);		
 	echo '<p class="page_title_text" align="center"><strong>' . _('No Sales Items') . '</strong></p>';
 	echo '<form action="PDFNoSalesItems.php"  method="GET">
 		<table class="selection">';
@@ -187,7 +187,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 						<th>' . _('Description') . '</th>
 						<th>' . _('Location QOH') . '</th>
 						<th>' . _('Total QOH') . '</th>
-						<th>' . _('Units') . '</th>
+						<th>' . _('Units') . '</th>		
 					</tr>';
 	echo $TableHeader;
 	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
@@ -215,34 +215,34 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td class="number">%s</td>
+					<td class="number">%s</td>	
 					<td class="number">%s</td>
 					<td>%s</td>
-					</tr>',
+					</tr>', 
 					$i,
-					'All',
-					$CodeLink,
-					$myrow['description'],
+					'All', 
+					$CodeLink, 				
+					$myrow['description'], 
 					$QOH, //on hand on ALL locations
-					$QOH, // total on hand
-					$myrow['units'] //unit
+					$QOH, // total on hand 
+					$myrow['units'] //unit			
 					);
 		}else{
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td class="number">%s</td>
+					<td class="number">%s</td>	
 					<td class="number">%s</td>
 					<td>%s</td>
-					</tr>',
+					</tr>', 
 					$i,
-					$myrow['locationname'],
-					$CodeLink,
-					$myrow['description'],
+					$myrow['locationname'], 
+					$CodeLink, 				
+					$myrow['description'], 
 					$myrow['quantity'], //on hand on location selected only
-					$QOH, // total on hand
-					$myrow['units'] //unit
+					$QOH, // total on hand 
+					$myrow['units'] //unit			
 					);
 		}
 		$i++;

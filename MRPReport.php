@@ -77,8 +77,8 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$sql = "SELECT mrpsupplies.*,
 				   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
 				   TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE) AS datediff
-			 FROM mrpsupplies
-			 WHERE part = '" . $_POST['Part'] . "'
+			 FROM mrpsupplies 
+			 WHERE part = '" . $_POST['Part'] . "' 
 			 ORDER BY mrpdate";
 	$result = DB_query($sql,$db,'','',false,true);
 	if (DB_error_no($db) !=0) {
@@ -422,7 +422,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 
 	// Details for Demand/Supply Sections
 	$i = 0;
-	while ((isset($Supplies[$i]) AND mb_strlen($Supplies[$i]['part'])) > 1
+	while ((isset($Supplies[$i]) AND mb_strlen($Supplies[$i]['part'])) > 1 
 			OR (isset($Requirements[$i]) AND mb_strlen($Requirements[$i]['part']) > 1)){
 
 		$YPos -=$line_height;
@@ -488,7 +488,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	}
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct();
+	$pdf->__destruct(); 
 
 } else { /*The option to print PDF was not hit so display form */
 
@@ -511,7 +511,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items').'</p>';
 	echo '<table class="selection"><tr>';
@@ -555,9 +555,9 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 		</div>
 		<br />';
-
+		
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-	echo '</div>';
+    echo '</div>';
 	echo '</form>';
 	if (!isset($_POST['Search'])) {
 		include('includes/footer.inc');
@@ -702,7 +702,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -787,7 +787,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>
-			</div>
+            </div>
 			</form>
 			<br />';
 	}
@@ -804,27 +804,27 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-
+	
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
-
+	
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-
+	
 	$YPos -=$line_height;
-
+	
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Report'));
 	$pdf->addTextWrap($Page_Width-$Right_Margin-110,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-
+	
 	$YPos -=(2*$line_height);
-
+	
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
-
+	
 	$FontSize=8;
 	$YPos =$YPos - (2*$line_height);
 	$PageNumber++;
-
+	
 } // End of PrintHeader function
 
 ?>

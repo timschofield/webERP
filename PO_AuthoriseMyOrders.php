@@ -41,7 +41,7 @@ $sql="SELECT purchorders.*,
 			currencies.decimalplaces AS currdecimalplaces
 		FROM purchorders INNER JOIN suppliers
 			ON suppliers.supplierid=purchorders.supplierno
-		INNER JOIN currencies
+		INNER JOIN currencies 
 			ON suppliers.currcode=currencies.currabrev
 		INNER JOIN www_users
 			ON www_users.userid=purchorders.initiator
@@ -74,8 +74,8 @@ while ($myrow=DB_fetch_array($result)) {
 	$AuthLevel=$myauthrow['authlevel'];
 
 	$OrderValueSQL="SELECT sum(unitprice*quantityord) as ordervalue
-				   	FROM purchorderdetails
-					WHERE orderno='".$myrow['orderno'] . "'";
+		           	FROM purchorderdetails
+			        WHERE orderno='".$myrow['orderno'] . "'";
 
 	$OrderValueResult=DB_query($OrderValueSQL, $db);
 	$MyOrderValueRow=DB_fetch_array($OrderValueResult);
@@ -141,7 +141,7 @@ echo '<br />
 		<div class="centre">
 			<input type="submit" name="UpdateAll" value="' . _('Update'). '" />
 		</div>
-		</div>
+        </div>
 		</form>';
 include('includes/footer.inc');
 ?>

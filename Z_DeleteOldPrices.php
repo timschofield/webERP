@@ -18,7 +18,7 @@ echo '<br />
 	<input type="submit" name="DeleteOldPrices" value="' . _('Purge Old Prices') . '" onclick="return confirm(\'' . _('Are You Sure you wish to delete all old prices?') . '\');" />';
 
 echo '</div>
-	  </form>';
+      </form>';
 
 include('includes/footer.inc');
 ?>

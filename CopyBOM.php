@@ -19,7 +19,7 @@ if(isset($_POST['Submit'])) {
 	$NewOrExisting = $_POST['NewOrExisting'];
 	$NewStockID = '';
 	$InputError = 0; //assume the best
-
+	
 	if($NewOrExisting == 'N') {
 		$NewStockID = $_POST['ToStockID'];
 		if (mb_strlen($NewStockID)==0 OR $NewStockID==''){
@@ -33,7 +33,7 @@ if(isset($_POST['Submit'])) {
 		$result = DB_Txn_Begin($db);
 
 		if($NewOrExisting == 'N') {
-		  /* duplicate rows into stockmaster */
+	      /* duplicate rows into stockmaster */
 			$sql = "INSERT INTO stockmaster( stockid,
 									categoryid,
 									description,
@@ -104,9 +104,9 @@ if(isset($_POST['Submit'])) {
 						FROM stockmaster
 						WHERE stockid='".$StockID."';";
 			$result = DB_query($sql, $db);
-
+	
 			$myrow = DB_fetch_row($result);
-
+	
 			$sql = "UPDATE stockmaster set
 					lastcostupdate  = " . $myrow[0] . ",
 					actualcost      = " . $myrow[1] . ",
@@ -118,7 +118,7 @@ if(isset($_POST['Submit'])) {
 					WHERE stockid='".$NewStockID."';";
 			$result = DB_query($sql, $db);
 		}
-
+	
 		$sql = "INSERT INTO bom
 					SELECT '".$NewStockID."' AS parent,
 							component,
@@ -131,23 +131,23 @@ if(isset($_POST['Submit'])) {
 					FROM bom
 					WHERE parent='".$StockID."';";
 		$result = DB_query($sql, $db);
-
+	
 		if($NewOrExisting == 'N') {
 			$sql = "INSERT INTO locstock
-			  SELECT loccode,
+		      SELECT loccode,
 					'".$NewStockID."' AS stockid,
 					0 AS quantity,
 					reorderlevel
 				FROM locstock
 				WHERE stockid='".$StockID."'";
-
+				
 			$result = DB_query($sql, $db);
 		}
-
+	
 		$result = DB_Txn_Commit($db);
-
+	
 		UpdateCost($db, $NewStockID);
-
+	
 		header('Location: BOMs.php?Select='.$NewStockID);
 		ob_end_flush();
 	} //end  if there is no input error
@@ -156,7 +156,7 @@ if(isset($_POST['Submit'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT stockid,
@@ -197,8 +197,8 @@ if(isset($_POST['Submit'])) {
 	}
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="Submit" value="Submit" /></div>
-		  </div>
-		  </form>';
+          </div>
+          </form>';
 
 	include('includes/footer.inc');
 }

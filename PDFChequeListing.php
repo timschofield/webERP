@@ -65,10 +65,10 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 			</tr>
 			</table>
 			<div class="centre">
-				<br />
+                <br />
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>
-			</form>';
+            </form>';
 
 	 include('includes/footer.inc');
 	 exit;
@@ -78,9 +78,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 }
 
 $sql = "SELECT bankaccountname,
-			   decimalplaces AS bankcurrdecimalplaces
+               decimalplaces AS bankcurrdecimalplaces
 	FROM bankaccounts INNER JOIN currencies
-	ON bankaccounts.currcode=currencies.currabrev
+    ON bankaccounts.currcode=currencies.currabrev
 	WHERE accountcode = '" .$_POST['BankAccount'] . "'";
 $BankActResult = DB_query($sql,$db);
 $myrow = DB_fetch_row($BankActResult);

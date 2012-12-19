@@ -9,7 +9,7 @@ $title = _('Payment Terms Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $title .
+		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $title . 
 	'</p>';
 
 if (isset($_GET['SelectedTerms'])){
@@ -199,7 +199,7 @@ or deletion of the records*/
 		}
 
 	printf('<tr><td>%s</td>
-			<td>%s</td>
+	        <td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedTerms=%s">' . _('Edit') . '</a></td>
@@ -213,7 +213,7 @@ or deletion of the records*/
 			$myrow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 			$myrow[0]);
-
+	
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!
@@ -227,7 +227,7 @@ if (isset($SelectedTerms)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTerms)) {
@@ -288,10 +288,10 @@ if (!isset($_GET['delete'])) {
 		<tr>
 			<td>'._('Due After A Given No. Of Days').':</td>
 			<td><input type="checkbox" name="DaysOrFoll" ';
-	if (isset($DayInFollowingMonth) AND !$DayInFollowingMonth) {
-		 echo 'checked';
-	}
-	echo '  /></td>
+    if (isset($DayInFollowingMonth) AND !$DayInFollowingMonth) {
+         echo 'checked'; 
+    }
+    echo '  /></td>
 		</tr>
 		<tr><td>'._('Days (Or Day In Following Month)').':</td>
 			<td><input type="text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" class="number"  size="4" maxlength="3" value="';
@@ -309,8 +309,8 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="submit" value="'._('Enter Information').'" />
 		</div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');

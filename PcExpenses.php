@@ -101,8 +101,8 @@ if (isset($_POST['submit'])) {
 		// First check the type is not being duplicated
 
 		$checkSql = "SELECT count(*)
-				 FROM pcexpenses
-				 WHERE codeexpense = '" . $_POST['CodeExpense'] . "'";
+			     FROM pcexpenses
+			     WHERE codeexpense = '" . $_POST['CodeExpense'] . "'";
 
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
@@ -150,8 +150,8 @@ if (isset($_POST['submit'])) {
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'PcTabExpenses'
 
 	$sql= "SELECT COUNT(*)
-		   FROM pctabexpenses
-		   WHERE codeexpense='" . $SelectedExpense . "'";
+	       FROM pctabexpenses
+	       WHERE codeexpense='" . $SelectedExpense . "'";
 
 	$ErrMsg = _('The number of type of tabs using this expense code could not be retrieved');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -163,7 +163,7 @@ if (isset($_POST['submit'])) {
 	} else {
 
 			$sql="DELETE FROM pcexpenses
-				  WHERE codeexpense='" . $SelectedExpense . "'";
+                  WHERE codeexpense='" . $SelectedExpense . "'";
 			$ErrMsg = _('The expense type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Expense type') .  ' ' . $SelectedExpense  . ' ' . _('has been deleted') ,'success');
@@ -246,7 +246,7 @@ if (isset($SelectedExpense)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />'; //Main table
 
@@ -254,11 +254,11 @@ if (! isset($_GET['delete'])) {
 	if ( isset($SelectedExpense) AND $SelectedExpense!='' ){
 
 		$sql = "SELECT codeexpense,
-				   description,
+			       description,
 				   glaccount,
 				   tag
-				FROM pcexpenses
-				WHERE codeexpense='" . $SelectedExpense . "'";
+		        FROM pcexpenses
+		        WHERE codeexpense='" . $SelectedExpense . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -343,7 +343,7 @@ if (! isset($_GET['delete'])) {
 	// End select tag
 
    	echo '</table>'; // close main table
-	DB_free_result($result);
+    DB_free_result($result);
 
 	echo '<br />
 		<div class="centre">
@@ -352,7 +352,7 @@ if (! isset($_GET['delete'])) {
 		</div>';
 
 	echo '</div>
-		  </form>';
+          </form>';
 
 } // end if user wish to delete
 

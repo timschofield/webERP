@@ -107,16 +107,16 @@ If ((isset($_POST['PrintPDF']))
 			}
 		} /*end while there are detail transactions to show */
 		$YPos -= (0.5*$line_height);
-		$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+    	$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,75,$FontSize,_('Total Payment:'), 'right');
+	    $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,75,$FontSize,_('Total Payment:'), 'right');
 
-		$TotalPayments += $AccumBalance;
+        $TotalPayments += $AccumBalance;
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+355,$YPos,80,$FontSize,locale_number_format($AccumBalance,$SuppliersPaid['currdecimalplaces']), 'right');
+	    $LeftOvers = $pdf->addTextWrap($Left_Margin+355,$YPos,80,$FontSize,locale_number_format($AccumBalance,$SuppliersPaid['currdecimalplaces']), 'right');
 
-		$YPos -= (1.5*$line_height);
-		$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+	    $YPos -= (1.5*$line_height);
+	    $pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 
 	} /* end while there are supplier payments to retrieve allocations for */
 
@@ -130,14 +130,14 @@ If ((isset($_POST['PrintPDF']))
 	$title=_('Remittance Advices');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . $title . '" alt="" />' . ' '
-		. $title . '</p>';
+    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . $title . '" alt="" />' . ' '
+        . $title . '</p>';
 	/* show form to allow input	*/
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
+    echo '<table>';
 
 	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
@@ -170,13 +170,13 @@ If ((isset($_POST['PrintPDF']))
 		</tr>';
 
 	echo '</table>
-		<br />
+        <br />
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
-
-	echo '</div>
-		  </form>';
+        
+    echo '</div>
+          </form>';
 
 	include ('includes/footer.inc');
 } /*end of else not PrintPDF */

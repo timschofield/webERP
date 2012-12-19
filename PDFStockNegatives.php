@@ -16,19 +16,19 @@ $ErrMsg = _('An error occurred retrieving the negative quantities.');
 $DbgMsg = _('The sql that failed to retrieve the negative quantities was');
 
 $sql = "SELECT stockmaster.stockid,
-			   stockmaster.description,
-			   stockmaster.categoryid,
-			   stockmaster.decimalplaces,
-			   locstock.loccode,
-			   locations.locationname,
-			   locstock.quantity
-		FROM stockmaster INNER JOIN locstock
-		ON stockmaster.stockid=locstock.stockid
-		INNER JOIN locations
-		ON locstock.loccode = locations.loccode
-		WHERE locstock.quantity < 0
-		ORDER BY locstock.loccode,
-			stockmaster.categoryid,
+               stockmaster.description,
+               stockmaster.categoryid,
+               stockmaster.decimalplaces,
+               locstock.loccode,
+               locations.locationname,
+               locstock.quantity
+        FROM stockmaster INNER JOIN locstock 
+        ON stockmaster.stockid=locstock.stockid
+        INNER JOIN locations 
+        ON locstock.loccode = locations.loccode
+        WHERE locstock.quantity < 0
+        ORDER BY locstock.loccode, 
+			stockmaster.categoryid, 
 			stockmaster.stockid,
 			stockmaster.decimalplaces";
 

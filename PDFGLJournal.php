@@ -101,7 +101,7 @@ if ($LineCount == 0) {   //UldisN
 	include('includes/footer.inc');
 	exit;
 } else {
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct(); //UldisN
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d').'.pdf');//UldisN
+    $pdf->__destruct(); //UldisN
 }
 ?>

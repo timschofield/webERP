@@ -14,13 +14,13 @@ if (!isset($_POST['FromPeriod'])){
 
 /*Show a form to allow input of criteria for TB to show */
 	echo '<table>
-							 <tr>
-								 <td>' . _('Select Period From') . ':</td>
-								 <td><select name="FromPeriod">';
+                             <tr>
+                                 <td>' . _('Select Period From') . ':</td>
+                                 <td><select name="FromPeriod">';
 
 	$sql = "SELECT periodno,
-					   lastdate_in_period
-				FROM periods ORDER BY periodno";
+                       lastdate_in_period
+                FROM periods ORDER BY periodno";
 	$Periods = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
@@ -28,12 +28,12 @@ if (!isset($_POST['FromPeriod'])){
 	}
 
 	echo '</select></td>
-			 </tr>
-			 </table>';
+             </tr>
+             </table>';
 
 	echo '<div class="centre"><input type="submit" name="recalc" value="' . _('Do the Recalculation') . '" onclick="return confirm(\'' . _('Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?') . '\');" /></div>
-	</div>
-	</form>';
+    </div>
+    </form>';
 
 } else {  /*OK do the updates */
 

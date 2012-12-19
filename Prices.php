@@ -185,7 +185,7 @@ if (isset($_POST['submit'])) {
 //Always do this stuff
 
 $sql = "SELECT currencies.currency,
-			salestypes.sales_type,
+        	salestypes.sales_type,
 		prices.price,
 		prices.stockid,
 		prices.typeabbrev,
@@ -340,13 +340,13 @@ echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
 			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
 echo '<tr><td>' . _('Price') . ':</td>
-		  <td>
-		  <input type="text" class="number" name="Price" size="12" maxlength="11" value="';
-		  if (isset($_POST['Price'])) {
-			 echo $_POST['Price'];
-		  }
-		  echo '" />
-	 </td></tr>
+          <td>
+          <input type="text" class="number" name="Price" size="12" maxlength="11" value="';
+          if (isset($_POST['Price'])) {
+	         echo $_POST['Price'];
+          }
+          echo '" />
+     </td></tr>
 </table>
 <br /><div class="centre">
 <input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />
@@ -354,7 +354,7 @@ echo '<tr><td>' . _('Price') . ':</td>
 
 
 echo '</div>
-	  </form>';
+      </form>';
 include('includes/footer.inc');
 
 

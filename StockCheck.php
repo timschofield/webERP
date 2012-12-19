@@ -265,8 +265,8 @@ If (isset($_POST['PrintPDF'])
 			. _('print') . '" alt="" />' . ' ' . $title.'</p><br />';
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-		echo '<div>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+        echo '<div>';
+        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
 
 		echo '<tr><td>' . _('From Inventory Category Code') . ':</td>
@@ -356,7 +356,7 @@ If (isset($_POST['PrintPDF'])
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print and Process') . '" />
 			</div>
-			</div>
+            </div>
 			</form>';
 	}
 	include('includes/footer.inc');

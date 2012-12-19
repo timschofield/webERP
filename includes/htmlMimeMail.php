@@ -14,8 +14,8 @@ class htmlMimeMail
 {
 	/**
 	* The html part of the message
-	* @var string
-	*/
+    * @var string
+    */
 	var $html;
 
 	/**
@@ -73,16 +73,16 @@ class htmlMimeMail
 	var $is_built;
 
 	/**
-	* The return path address. If not set the From:
+    * The return path address. If not set the From:
 	* address is used instead
 	* @var string
-	*/
+    */
 	var $return_path;
 
 	/**
-	* Array of information needed for smtp sending
+    * Array of information needed for smtp sending
 	* @var array
-	*/
+    */
 	var $smtp_params;
 
 /**
@@ -93,17 +93,17 @@ class htmlMimeMail
 	function htmlMimeMail()
 	{
 		/**
-		* Initialise some variables.
-		*/
+        * Initialise some variables.
+        */
 		$this->html_images = array();
 		$this->headers     = array();
 		$this->is_built    = false;
 
 		/**
-		* If you want the auto load functionality
+        * If you want the auto load functionality
 		* to find other image/file types, add the
 		* extension and content type here.
-		*/
+        */
 		$this->image_types = array(
 									'gif'	=> 'image/gif',
 									'jpg'	=> 'image/jpeg',
@@ -117,8 +117,8 @@ class htmlMimeMail
 								  );
 
 		/**
-		* Set these up
-		*/
+        * Set these up
+        */
 		$this->build_params['html_encoding'] = 'quoted-printable';
 		$this->build_params['text_encoding'] = '7bit';
 		$this->build_params['html_charset']  = 'ISO-8859-1';
@@ -127,8 +127,8 @@ class htmlMimeMail
 		$this->build_params['text_wrap']     = 998;
 
 		/**
-		* Defaults for smtp sending
-		*/
+        * Defaults for smtp sending
+        */
 		if (!empty($GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'])) {
 			$helo = $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'];
 		} elseif (!empty($GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'])) {
@@ -145,8 +145,8 @@ class htmlMimeMail
 		$this->smtp_params['pass'] = html_entity_decode($_SESSION['SMTPSettings']['password']);
 
 		/**
-		* Make sure the MIME version header is first.
-		*/
+        * Make sure the MIME version header is first.
+        */
 		$this->headers['MIME-Version'] = '1.0';
 	}
 

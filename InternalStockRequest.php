@@ -129,7 +129,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/s
 
 if (isset($_GET['Edit'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
@@ -161,7 +161,7 @@ if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
 			<input type="submit" name="Edit" value="' . _('Update Line') . '" />
 		</div>
-		</div>
+        </div>
 		</form>';
 	include('includes/footer.inc');
 	exit;
@@ -225,7 +225,7 @@ echo '</select></td>
 	<tr>
 		<td>' . _('Date when required') . ':</td>';
 echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="DispatchDate" maxlength="10" size="11" value="' . $_SESSION['Request']->DispatchDate . '" /></td>
-	  </tr>';
+      </tr>';
 
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
@@ -237,7 +237,7 @@ echo '<tr>
 echo '<div class="centre">
 		<input type="submit" name="Update" value="' . _('Update') . '" />
 	</div>
-	</div>
+    </div>
 	</form>';
 
 if (!isset($_SESSION['Request']->Location)) {
@@ -290,8 +290,8 @@ echo '</table>
 		<input type="submit" name="Submit" value="' . _('Submit') . '" />
 	</div>
 	<br />
-	</div>
-	</form>';
+    </div>
+    </form>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<div>';
@@ -508,7 +508,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -593,9 +593,9 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>
-			  </div>
-			  </form>
-			  <br />';
+              </div>
+              </form>
+              <br />';
 	}
 }
 /* end display list if there is more than one record */
@@ -606,7 +606,7 @@ if (isset($SearchResult)) {
 	echo '<br />';
 	$j = 1;
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="orderform">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="table1">';
 	echo '<tr><td>
@@ -741,8 +741,8 @@ if (isset($SearchResult)) {
 	echo '<td><input type="hidden" name="NextList" value="'.($Offset+1).'" />
 		<input tabindex="'.($j+9).'" type="submit" name="Next" value="'._('Next').'" /></td><tr/>';
 	echo '</table>
-		  </div>
-		  </form>';
+          </div>
+          </form>';
 	echo $jsCall;
 
 }#end if SearchResults to show

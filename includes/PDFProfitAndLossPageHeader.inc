@@ -1,11 +1,11 @@
 <?php
-	/*
+	/* 
 	 * PDF page header for the profit and loss report.
 	 * Suren Naidu 28/08/2005
 	 *
 	 */
 /* $Id$*/
-
+	 
 	$PageNumber++;
 	if ($PageNumber>1){
 		$pdf->newPage();

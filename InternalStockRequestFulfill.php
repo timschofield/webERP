@@ -199,7 +199,7 @@ if (isset($_POST['UpdateAll'])) {
 
 if (!isset($_POST['Location'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -227,8 +227,8 @@ if (!isset($_POST['Location'])) {
 	echo '</select></td></tr>';
 	echo '</table><br />';
 	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="'. _('Show Requests'). '" /></div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -264,7 +264,7 @@ if (isset($_POST['Location'])) {
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -347,8 +347,8 @@ if (isset($_POST['Location'])) {
 	} //end while header loop
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></div>
-		  </div>
-		  </form>';
+          </div>
+          </form>';
 }
 
 include('includes/footer.inc');

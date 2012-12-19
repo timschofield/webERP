@@ -146,7 +146,7 @@ if (isset($_POST['PrintPDF'])){
 					INNER JOIN salesman
 					ON custbranch.salesman=salesman.salesmancode
 					WHERE (";
-
+	
 			$i=0;
 			foreach ($_POST['Areas'] as $Area){
 				if ($i>0){
@@ -232,7 +232,7 @@ if (isset($_POST['PrintPDF'])){
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db) );
 	   echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
 	   if ($debug==1){
-		  echo '<br />'. $SQL;
+	      echo '<br />'. $SQL;
 	   }
 	   include('includes/footer.inc');
 	   exit;
@@ -369,9 +369,9 @@ if (isset($_POST['PrintPDF'])){
 		 $title . '" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+    echo '<table class="selection">';
 	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name="Areas[]" multiple="multiple">';
 
 	$sql="SELECT areacode, areadescription FROM areas";
@@ -418,8 +418,8 @@ if (isset($_POST['PrintPDF'])){
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" />
 			</div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 	include('includes/footer.inc');
 

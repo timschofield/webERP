@@ -55,11 +55,11 @@ foreach ($LineItem->SerialItems as $Bundle){
 	if ($Perishable==1){
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
-
-
+	
+	
 	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo .'&amp;identifier=' . $identifier . $CreditInvoice . '">'. _('Delete'). '</a></td>
 		</tr>';
-
+	
 	$TotalQuantity += $Bundle->BundleQty;
 }
 
@@ -160,7 +160,7 @@ echo '</table>
 		</form>
 		</td>
 		<td valign="top">';
-
+	
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
 }

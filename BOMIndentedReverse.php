@@ -12,7 +12,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Indented BOM Listing'));
 	$pdf->addInfo('Subject',_('Indented BOM Listing'));
-		$FontSize=9;
+    	$FontSize=9;
 	$PageNumber=1;
 	$line_height=12;
 
@@ -143,17 +143,17 @@ if (isset($_POST['PrintPDF'])) {
 	   echo '<br />
 			<a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
-		  echo '<br />' . $sql;
+	      echo '<br />' . $sql;
 	   }
 	   include('includes/footer.inc');
 	   exit;
 	}
 
 
-	$sql = "SELECT stockmaster.stockid,
-				   stockmaster.description
-			  FROM stockmaster
-			  WHERE stockid = '" . $_POST['Part'] . "'";
+    $sql = "SELECT stockmaster.stockid,
+                   stockmaster.description
+              FROM stockmaster
+              WHERE stockid = '" . $_POST['Part'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result,$db);
 	$Assembly = $_POST['Part'];
@@ -161,18 +161,18 @@ if (isset($_POST['PrintPDF'])) {
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$AssemblyDesc);
 
-	$Tot_Val=0;
-	$fill = false;
-	$pdf->SetFillColor(224,235,255);
-	$sql = "SELECT tempbom.*,
-				   stockmaster.description,
-				   stockmaster.mbflag
-			  FROM tempbom INNER JOIN stockmaster
-			  ON tempbom.parent = stockmaster.stockid
-			  ORDER BY sortpart";
+    $Tot_Val=0;
+    $fill = false;
+    $pdf->SetFillColor(224,235,255);
+    $sql = "SELECT tempbom.*,
+                   stockmaster.description,
+                   stockmaster.mbflag
+              FROM tempbom INNER JOIN stockmaster
+              ON tempbom.parent = stockmaster.stockid
+              ORDER BY sortpart";
 	$result = DB_query($sql,$db);
 
-	$ListCount = DB_num_rows($result);
+    $ListCount = DB_num_rows($result);
 
 	While ($myrow = DB_fetch_array($result,$db)){
 
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDF'])) {
 
 		// Use to alternate between lines with transparent and painted background
 		if ($_POST['Fill'] == 'yes'){
-			$fill=!$fill;
+		    $fill=!$fill;
 		}
 
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -202,7 +202,7 @@ if (isset($_POST['PrintPDF'])) {
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$AssemblyDesc);
+	                   $Right_Margin,$AssemblyDesc);
 		}
 
 	} /*end while loop */
@@ -212,7 +212,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$AssemblyDesc);
+	                   $Right_Margin,$AssemblyDesc);
 	}
 	if ($ListCount == 0) {
 			$title = _('Print Reverse Indented BOM Listing Error');
@@ -234,8 +234,8 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+        <div>
+        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<tr>
 			<td>' . _('Part') . ':</td>
@@ -250,11 +250,11 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>
 		</table>
 		<div class="centre">
-			<br />
+            <br />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
 		</div>
-		</form>';
+        </form>';
 
 	include('includes/footer.inc');
 
@@ -262,7 +262,7 @@ if (isset($_POST['PrintPDF'])) {
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$AssemblyDesc) {
+                     $Page_Width,$Right_Margin,$AssemblyDesc) {
 
 
 	$line_height=12;

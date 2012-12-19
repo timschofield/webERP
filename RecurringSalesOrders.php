@@ -497,7 +497,7 @@ if ($_SESSION['Items'.$identifier]->AllDummyLineItems()==true){
 	}
 	echo '</select></td></tr></table>';
 } else {
-	echo '</table>';
+    echo '</table>';
 	echo '<input type="hidden" name="AutoInvoice" value="0" />';
 }
 
@@ -516,6 +516,6 @@ if ($NewRecurringOrder=='Yes'){
 
 echo '</div>';
 echo '</div>
-	  </form>';
+      </form>';
 include('includes/footer.inc');
 ?>

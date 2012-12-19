@@ -35,7 +35,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 
 		$_POST['NewCompany'] = strtolower($_POST['NewCompany']);
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
-		echo '<div class="centre">';
+        echo '<div class="centre">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		/* check for directory existence */
 		if (!file_exists('./companies/' . $_POST['NewCompany'])
@@ -137,11 +137,11 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Pending');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/FormDesigns');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reportwriter');
-
+		
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/GoodsReceived.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/GoodsReceived.xml');
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PickingList.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/PickingList.xml');
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PurchaseOrder.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/PurchaseOrder.xml');
-
+					
 			/*OK Now upload the logo */
 			if ($UploadTheLogo=='Yes'){
 				$result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $filename);
@@ -161,7 +161,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				prnMsg('_FILES[LogoFile][name] ' ._('is blank'),'info');
 			}
 
-			echo '</div>';
+            echo '</div>';
   			echo '</form>';
 			include('includes/footer.inc');
 			exit;
@@ -195,7 +195,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		echo '<p><a href="' . $rootpath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
 		echo '<p><a href="' . $rootpath . '/WWW_Users.php">' . _('Set Up User Accounts') . '</a>';
 
-		echo '</div>';
+        echo '</div>';
 		echo '</form>';
 		include('includes/footer.inc');
 		exit;

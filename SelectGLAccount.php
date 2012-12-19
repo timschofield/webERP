@@ -34,15 +34,15 @@ if (isset($_POST['Select'])) {
 		$msg=_('Account name keywords have been used in preference to the account code extract entered');
 	}
 	if ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
-			$SQL = "SELECT chartmaster.accountcode,
-					chartmaster.accountname,
-					chartmaster.group_,
-					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
-					FROM chartmaster,
-						accountgroups
-					WHERE chartmaster.group_=accountgroups.groupname
-					ORDER BY chartmaster.accountcode";
-	}
+            $SQL = "SELECT chartmaster.accountcode,
+                    chartmaster.accountname,
+                    chartmaster.group_,
+                    CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
+                    FROM chartmaster,
+                        accountgroups
+                    WHERE chartmaster.group_=accountgroups.groupname
+                    ORDER BY chartmaster.accountcode";
+    }
 	elseif (mb_strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -88,7 +88,7 @@ if (!isset($AccountID)) {
 		'" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 	echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(mb_strlen($msg)>1){
@@ -130,14 +130,14 @@ if (!isset($AccountID)) {
 
 			printf('<tr>
 					<td><input type="submit" name="Select" value="%s" /></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$myrow['accountcode'],
-					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
-					$myrow['group_'],
-					$myrow['pl']);
+	                <td>%s</td>
+	                <td>%s</td>
+	                <td>%s</td>
+	                </tr>',
+	                $myrow['accountcode'],
+	                htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
+	                $myrow['group_'],
+	                $myrow['pl']);
 
 			$j++;
 			if ($j == 12){
@@ -155,7 +155,7 @@ if (!isset($AccountID)) {
 //end if results to show
 
 	echo '</div>
-		  </form>';
+          </form>';
 
 } //end AccountID already selected
 

@@ -199,10 +199,10 @@ if (!isset($StockID)) {
 	  	</tr>
 	  </table><br />';
 	echo '<div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Items Now') . '" />
-		<input type="submit" name="ResetPart" value="' . _('Show All') . '" /></div>';
+        <input type="submit" name="ResetPart" value="' . _('Show All') . '" /></div>';
 
 	if (isset($StockItemsResult)) {
-
+	
 		echo '<br />
 			<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
@@ -212,12 +212,12 @@ if (!isset($StockID)) {
 							<th>' . _('Units') . '</th>
 						</tr>';
 		echo $TableHeader;
-
+	
 		$j = 1;
 		$k=0; //row colour counter
-
+	
 		while ($myrow=DB_fetch_array($StockItemsResult)) {
-
+	
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
@@ -225,7 +225,7 @@ if (!isset($StockID)) {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-
+	
 			printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -235,7 +235,7 @@ if (!isset($StockID)) {
 					$myrow['description'],
 					locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
 					$myrow['units']);
-
+	
 			$j++;
 			if ($j == 12){
 				$j=1;
@@ -244,17 +244,17 @@ if (!isset($StockID)) {
 	//end of page full new headings if
 		}
 	//end of while loop
-
+	
 		echo '</table>';
-
+	
 	}
 	//end if stock search results to show
 	  else {
-
+	
 	  	if (!isset($_POST['StockLocation'])) {
 	  		$_POST['StockLocation'] = '';
 	  	}
-
+	
 		//figure out the SQL required from the inputs available
 		if (isset($_POST['ClosedOrOpen']) and $_POST['ClosedOrOpen']=='Open_Only'){
 			$ClosedOrOpen = 0;
@@ -279,7 +279,7 @@ if (!isset($StockID)) {
 								woitems.stockid";
 		} else {
 			  /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
-
+	
 				if (isset($SelectedStockItem)) {
 					$SQL = "SELECT workorders.wo,
 									woitems.stockid,
@@ -315,16 +315,16 @@ if (!isset($StockID)) {
 									 woitems.stockid";
 				}
 		} //end not order number selected
-
+	
 		$ErrMsg = _('No works orders were returned by the SQL because');
 		$WorkOrdersResult = DB_query($SQL,$db,$ErrMsg);
-
+	
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult)>0) {
 			echo '<br />
 				<table cellpadding="2" width="95%" class="selection">';
-
-
+	
+	
 			$tableheader = '<tr>
 								<th>' . _('Modify') . '</th>
 								<th>' . _('Status') . '</th>
@@ -338,13 +338,13 @@ if (!isset($StockID)) {
 								<th>' . _('Start Date')  . '</th>
 								<th>' . _('Required Date') . '</th>
 							</tr>';
-
+	
 			echo $tableheader;
 
 		$j = 1;
 		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
-
+	
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
 				$k=0;
@@ -352,17 +352,17 @@ if (!isset($StockID)) {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-
+	
 			$ModifyPage = $rootpath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
 			$Status_WO = $rootpath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Receive_WO = $rootpath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Issue_WO = $rootpath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
 			$Costing_WO =$rootpath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
-
+	
 			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
-
-
+	
+	
 			printf('<td><a href="%s">%s</a></td>
 					<td><a href="%s">' . _('Status') . '</a></td>
 					<td><a href="%s">' . _('Receive') . '</a></td>
@@ -388,7 +388,7 @@ if (!isset($StockID)) {
 					locale_number_format($myrow['qtyreqd']-$myrow['qtyrecd'],$myrow['decimalplaces']),
 					$FormatedStartDate,
 					$FormatedRequiredByDate);
-
+	
 			$j++;
 			if ($j == 12){
 				$j=1;
@@ -397,15 +397,15 @@ if (!isset($StockID)) {
 		//end of page full new headings if
 		}
 		//end of while loop
-
+	
 		echo '</table>';
-	  }
+      }
 	}
-
+	
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].WO);</script>';
-
+	
 	echo '</div>
-		  </form>';
+          </form>';
 }
 
 include('includes/footer.inc');

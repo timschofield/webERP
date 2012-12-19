@@ -137,18 +137,18 @@ if (!isset($_SESSION['Items'.$identifier])){
 			/* now get the branch defaults from the customer branches table CustBranch. */
 
 		$sql = "SELECT custbranch.brname,
-					   custbranch.braddress1,
-					   custbranch.defaultshipvia,
-					   custbranch.deliverblind,
-					   custbranch.specialinstructions,
-					   custbranch.estdeliverydays,
-					   custbranch.salesman,
-					   custbranch.taxgroupid,
-					   custbranch.defaultshipvia
+				       custbranch.braddress1,
+				       custbranch.defaultshipvia,
+				       custbranch.deliverblind,
+				       custbranch.specialinstructions,
+				       custbranch.estdeliverydays,
+				       custbranch.salesman,
+				       custbranch.taxgroupid,
+				       custbranch.defaultshipvia
 				FROM custbranch
 				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
 				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
-		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
+        $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
 		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -173,7 +173,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
 		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
 		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
-		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
+		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];			
 		$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesman'];
 		if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 			prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
@@ -296,7 +296,7 @@ if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])){
 					AND stockmaster.controlled <> 1
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
-			} else {
+        	} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.longdescription,
@@ -626,8 +626,8 @@ if (isset($NewItemArray) AND isset($_POST['SelectingReturnItems'])){
 			if ($myrow=DB_fetch_array($KitResult)){
 				if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 					$sql = "SELECT bom.component,
-								bom.quantity
-				  			FROM bom
+	        					bom.quantity
+		          			FROM bom
 							WHERE bom.parent='" . $NewItem . "'
 							AND bom.effectiveto > '" . Date('Y-m-d') . "'
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
@@ -668,16 +668,16 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 		<table width="90%" cellpadding="2" colspan="7">
 		<tr bgcolor="#800000">';
 	echo '<th>' . _('Item Code') . '</th>
-   		  <th>' . _('Item Description') . '</th>
-		  <th>' . _('Quantity') . '</th>
-		  <th>' . _('Unit') . '</th>
-		  <th>' . _('Price') . '</th>
+   	      <th>' . _('Item Description') . '</th>
+	      <th>' . _('Quantity') . '</th>
+	      <th>' . _('Unit') . '</th>
+	      <th>' . _('Price') . '</th>
 		  <th>' . _('Discount') . '</th>
 		  <th>' . _('GP %') . '</th>
 		  <th>' . _('Net') . '</th>
-		  <th>' . _('Tax') . '</th>
-		  <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
-		  </tr>';
+	      <th>' . _('Tax') . '</th>
+	      <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
+	      </tr>';
 
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
@@ -790,7 +790,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
 	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
-	}
+	}	
 	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
 		if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
 			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
@@ -798,7 +798,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 		}
 	}
-
+	
 	echo '</select></td>
 		</tr>';
 	echo '<tr>

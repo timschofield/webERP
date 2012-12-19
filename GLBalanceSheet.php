@@ -22,7 +22,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	. _('webERP is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -148,7 +148,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		exit;
 	}
 
-	$ListCount = DB_num_rows($AccountsResult); // UldisN
+    $ListCount = DB_num_rows($AccountsResult); // UldisN
 
 	include('includes/PDFBalanceSheetPageHeader.inc');
 
@@ -176,35 +176,35 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			$LYAccountBalance += $AccumProfitRow['lyaccumprofitbfwd'];
 		}
 		if ($ActGrp !=''){
-				if ($myrow['groupname']!=$ActGrp){
+        		if ($myrow['groupname']!=$ActGrp){
 					$FontSize = 8;
 					$pdf->setFont('','B');
-					while ($myrow['groupname']!= $ParentGroups[$Level] AND $Level>0) {
-						$YPos -= $line_height;
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($LYGroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$ParentGroups[$Level]='';
-						$GroupTotal[$Level]=0;
-						$LYGroupTotal[$Level]=0;
-						$Level--;
-						if ($YPos < $Bottom_Margin){
-							include('includes/PDFBalanceSheetPageHeader.inc');
-						}
-					}
-					$YPos -= $line_height;
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($LYGroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$ParentGroups[$Level]='';
-					$GroupTotal[$Level]=0;
-					$LYGroupTotal[$Level]=0;
-					$YPos -= $line_height;
-					if ($YPos < $Bottom_Margin){
-						include('includes/PDFBalanceSheetPageHeader.inc');
-					}
-				}
-		}
+        			while ($myrow['groupname']!= $ParentGroups[$Level] AND $Level>0) {
+        				$YPos -= $line_height;
+        				$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
+        				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+        				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($LYGroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+        				$ParentGroups[$Level]='';
+        				$GroupTotal[$Level]=0;
+        				$LYGroupTotal[$Level]=0;
+        				$Level--;
+                        if ($YPos < $Bottom_Margin){
+                            include('includes/PDFBalanceSheetPageHeader.inc');
+                        }
+        			}
+        			$YPos -= $line_height;
+        			$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
+        			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+        			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($LYGroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
+        			$ParentGroups[$Level]='';
+        			$GroupTotal[$Level]=0;
+        			$LYGroupTotal[$Level]=0;
+        			$YPos -= $line_height;
+                    if ($YPos < $Bottom_Margin){
+                        include('includes/PDFBalanceSheetPageHeader.inc');
+                    }
+        		}
+        }
 
 		if ($myrow['sectioninaccounts']!= $Section){
 
@@ -215,9 +215,9 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,locale_number_format($SectionBalance,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($SectionBalanceLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$YPos -= (2 * $line_height);
-				if ($YPos < $Bottom_Margin){
-					include('includes/PDFBalanceSheetPageHeader.inc');
-				}
+                if ($YPos < $Bottom_Margin){
+                    include('includes/PDFBalanceSheetPageHeader.inc');
+                }
 			}
 			$SectionBalanceLY = 0;
 			$SectionBalance = 0;
@@ -227,18 +227,18 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
 				$YPos -= (2 * $line_height);
-				if ($YPos < $Bottom_Margin){
-					include('includes/PDFBalanceSheetPageHeader.inc');
-				}
+                if ($YPos < $Bottom_Margin){
+                    include('includes/PDFBalanceSheetPageHeader.inc');
+                }
 			}
 		}
 
 		if ($myrow['groupname']!= $ActGrp){
-			if ($YPos < $Bottom_Margin + $line_height){
-			   include('includes/PDFBalanceSheetPageHeader.inc');
-			}
-			$FontSize =8;
-			$pdf->setFont('','B');
+            if ($YPos < $Bottom_Margin + $line_height){
+               include('includes/PDFBalanceSheetPageHeader.inc');
+            }
+            $FontSize =8;
+            $pdf->setFont('','B');
 			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp!=''){
 				$Level++;
 			}
@@ -264,7 +264,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 
 		if ($_POST['Detail']=='Detailed'){
-				$FontSize =8;
+		        $FontSize =8;
 			$pdf->setFont('','');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,$myrow['accountcode']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,200,$FontSize,$myrow['accountname']);
@@ -277,7 +277,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		}
 	}//end of loop
 
-	$FontSize = 8;
+    $FontSize = 8;
 	$pdf->setFont('','B');
 	while ($Level>0) {
 		$YPos -= $line_height;
@@ -321,14 +321,14 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 		include('includes/footer.inc');
 		exit;
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Balance_Sheet_' . date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
+	    $pdf->OutputD($_SESSION['DatabaseName'] . '_GL_Balance_Sheet_' . date('Y-m-d') . '.pdf');
+        $pdf->__destruct();
 	}
 	exit;
 } else {
 	include('includes/header.inc');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="BalancePeriodEnd" value="' . $_POST['BalancePeriodEnd'] . '" />';
 
@@ -436,14 +436,14 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 					if ($_POST['Detail']=='Detailed'){
 						echo '<tr>
 								<td colspan="2"></td>
-	  							<td><hr /></td>
+      							<td><hr /></td>
 								<td></td>
 								<td><hr /></td>
 								<td></td>
 							</tr>';
 					}
 					printf('<tr>
-							  <td colspan="2"><I>%s</I></td>
+                              <td colspan="2"><I>%s</I></td>
 							  <td class="number">%s</td>
 							  <td></td>
 							  <td class="number">%s</td>
@@ -469,7 +469,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				}
 
 				printf('<tr>
-						  <td colspan="2">%s</td>
+                          <td colspan="2">%s</td>
 						  <td class="number">%s</td>
 						  <td></td>
 						  <td class="number">%s</td>
@@ -477,7 +477,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 						$ParentGroups[$Level],
 						locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($LYGroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']) );
-
+						
 				$GroupTotal[$Level] = 0;
 				$LYGroupTotal[$Level] = 0;
 				$ParentGroups[$Level]='';
@@ -598,7 +598,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				</tr>';
 		}
 		printf('<tr>
-				  <td colspan="2"><I>%s</I></td>
+                  <td colspan="2"><I>%s</I></td>
 				  <td class="number">%s</td>
 				  <td></td>
 				  <td class="number">%s</td>
@@ -620,10 +620,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	}
 
 	printf('<tr>
-			  <td colspan="2">%s</td>
-			  <td class="number">%s</td>
-			  <td></td>
-			  <td class="number">%s</td>
+              <td colspan="2">%s</td>
+		      <td class="number">%s</td>
+		      <td></td>
+		      <td class="number">%s</td>
 		   </tr>',
 		$ParentGroups[$Level],
 		locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -668,7 +668,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '<tr>
 			<td colspan="3"></td>
-	  		<td><hr /></td>
+      		<td><hr /></td>
 			<td></td>
 			<td><hr /></td>
 		</tr>';
@@ -684,15 +684,15 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '<tr>
 		<td colspan="3"></td>
-	  	<td><hr /></td>
+      	<td><hr /></td>
 		<td></td>
 		<td><hr /></td>
 		</tr>';
 
 	echo '</table>';
-	echo '</div>';
+    echo '</div>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';
-	echo '</div></form>';
+    echo '</div></form>';
 }
 
 include('includes/footer.inc');

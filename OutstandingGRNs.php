@@ -35,8 +35,8 @@ If (isset($_POST['PrintPDF'])
 					stockmaster.decimalplaces as itemdecimalplaces
 				FROM grns INNER JOIN purchorderdetails
 				ON grns.podetailitem = purchorderdetails.podetailitem
-				INNER JOIN suppliers
-				ON grns.supplierid=suppliers.supplierid
+				INNER JOIN suppliers 
+				ON grns.supplierid=suppliers.supplierid 
 				INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				LEFT JOIN stockmaster
@@ -84,9 +84,9 @@ If (isset($_POST['PrintPDF'])
 
 			if ($Supplier!=''){ /*Then it's NOT the first time round */
 				/* need to print the total of previous supplier */
-			   if ($YPos < $Bottom_Margin + $line_height * 5){
-				  include('includes/PDFOstdgGRNsPageHeader.inc');
-			   }
+               if ($YPos < $Bottom_Margin + $line_height * 5){
+                  include('includes/PDFOstdgGRNsPageHeader.inc');
+               }
 				$YPos -= (2*$line_height);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
 				$DisplaySuppTotVal = locale_number_format($SuppTot_Val,$GRNs['currdecimalplaces']);
@@ -101,7 +101,7 @@ If (isset($_POST['PrintPDF'])
 			$SupplierName = $GRNs['suppname'];
 		}
 		$YPos -=$line_height;
-
+		
 		if ($GRNs['itemdecimalplaces']==null){
 			$ItemDecimalPlaces = 2;
 		} else {
@@ -154,7 +154,7 @@ If (isset($_POST['PrintPDF'])
 	$YPos -=(2*$line_height);
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct();
+	$pdf->__destruct(); 
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Outstanding GRNs Report');
@@ -164,8 +164,8 @@ If (isset($_POST['PrintPDF'])
 		'" alt="" />' . ' ' . $title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		  <div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+          <div>';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
 	echo '<tr>
@@ -181,8 +181,8 @@ If (isset($_POST['PrintPDF'])
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-		</div>
-		</form>';
+        </div>
+        </form>';
 
 	include('includes/footer.inc');
 

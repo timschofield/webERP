@@ -36,7 +36,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$Sequence="locstock.stockid";
 	}
 
-	$sql="SELECT locstock.stockid,
+	$sql="SELECT locstock.stockid, 
 				description,
 				reorderlevel,
 				decimalplaces
@@ -60,17 +60,17 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo'<p class="page_title_text"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
 	$k=0; //row colour counter
 	echo '<form action="ReorderLevelLocation.php" method="post" id="Update">';
-	echo '<div>';
+    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
-			<th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
-			<th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
-			<th>' . _('Reorder Level') . '</th>
-		</tr>';
+    echo '<table>';
+    echo '<tr>
+            <th>' . _('Code') . '</th>
+            <th>' . _('Description') . '</th>
+            <th>' . _('Total Invoiced').'<br />'._('At Location') . '</th>
+            <th>' . _('On Hand') .'<br />'._('At All Locations') . '</th>
+            <th>' . _('On Hand') .'<br />' ._('At Location') . '</th>
+            <th>' . _('Reorder Level') . '</th>
+        </tr>';
 
 	$i=1;
 	while ($myrow=DB_fetch_array($result))	{
@@ -90,14 +90,14 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
 			<input type="hidden" value="' . locale_number_format($_POST['NumberOfDays'],0) . '" name="NumberOfDays" />';
 
-
+		
 		$SqlInv="SELECT SUM(-qty) AS qtyinvoiced
 				FROM stockmoves
 				WHERE stockid='".$myrow['stockid']."'
 				AND (type=10 OR type=11)
 				AND loccode='" . $_POST['StockLocation'] ."'
 				AND trandate >= '" . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-filter_number_format($_POST['NumberOfDays']))) . "'";
-
+		
 		$ResultInvQty = DB_query($SqlInv,$db);
 		$SalesRow=DB_fetch_array($ResultInvQty);
 
@@ -109,7 +109,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				WHERE stockid='" . $myrow['stockid'] . "'";
 		$TotQtyResult = DB_query($SqlOH,$db);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
-
+		
 		//get On Hand in Location
 		$SqlOHLoc="SELECT SUM(quantity) AS qty
 					FROM locstock
@@ -133,8 +133,8 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				<input type="submit" name="submit" value="' . _('Update') . '" />
 			</td>
 		</tr>
-		</table>
-		</div>
+        </table>
+        </div>
 		</form>';
 
 
@@ -150,7 +150,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,
 				   locationname
-			FROM locations";
+		    FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
 	echo '<table class="selection">
 			<tr>
@@ -162,7 +162,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	}
 	echo '</select></td></tr>';
 
-	$SQL="SELECT categoryid,
+	$SQL="SELECT categoryid, 
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
@@ -180,7 +180,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '<tr>
 			<td>' . _('Number Of Days Sales') . ':</td>
 			<td><input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" /></td>
-		  </tr>';
+          </tr>';
 	echo '<tr>
 			<td>' . _('Order By') . ':</td>
 			<td><select name="Sequence">
@@ -193,8 +193,8 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Submit') . '" />
 			</div>';
-	echo '</div>
-		  </form>';
+    echo '</div>
+          </form>';
 
 } /*end of else not submit */
 include('includes/footer.inc');

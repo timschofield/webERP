@@ -204,7 +204,7 @@ if (isset($SelectedTaxAuthID)) {
 	echo '<div class="centre">
 			<a href="' .  htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Review all defined tax authority records') . '</a>
 		</div>
-		<br />';
+        <br />';
  }
 
 
@@ -328,7 +328,7 @@ echo '<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-	</div>
+    </div>
 	</form>';
 
 include('includes/footer.inc');

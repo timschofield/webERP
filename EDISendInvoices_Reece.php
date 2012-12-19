@@ -71,7 +71,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 	}
 
 	/*Setup the variable from the DebtorsMaster required for the message */
-	$CompanyEDIReference = '0' . strval($_SESSION['EDIReference']); //very annoying, but had to add leading 0
+	$CompanyEDIReference = '0' . strval($_SESSION['EDIReference']); //very annoying, but had to add leading 0 
 	//because our GLN had leading 0 and GetConfig.php looks for numbers and text fields, saw GLN as number and skipped 0
 	$CustEDIReference = $CustDetails['edireference'];
 	$TaxAuthorityRef = $_SESSION['CompanyRecord']['gstno'];
@@ -102,7 +102,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 		$TaxTotal = number_format($TransDetails['ovgst'],2, '.', '');
 		$ShipToFreight = number_format(round($TransDetails['ovfreight'],2),2, '.', '');
 		$SegCount = 1;
-
+		
 
 		$DatePaymentDue = ConvertToEDIDate(CalcDueDate(ConvertSQLDate($TransDetails['trandate']),$CustDetails['dayinfollowingmonth'], $CustDetails['daysbeforedue']));
 
@@ -110,7 +110,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 		$TotalAmountInclTax = number_format(($TransDetails['ovamount']+ $TransDetails['ovfreight'] + $TransDetails['ovdiscount'] + $TransDetails['ovgst']),2, '.', '');
 
 		//**************Need to get delivery address as may be diff from branch address
-
+		
 		$sql = "SELECT deliverto,
 				deladd1,
 				deladd2,
@@ -121,10 +121,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				salesorders.customerref
 				FROM debtortrans INNER JOIN salesorders ON debtortrans.order_ = salesorders.orderno
 				WHERE order_ = '" . $OrderNo . "'";
-
+				
 				$ErrMsg = _('There was a problem retrieving the ship to details because');
 				$ShipToLines = DB_query($sql,$db,$ErrMsg);
-
+				
 				While ($ShipTo = DB_fetch_array($ShipToLines)){
 					$ShipToName = $ShipTo[0];
 					$ShipToStreet = $ShipTo[1];
@@ -133,53 +133,53 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 					$ShipToZip = $ShipTo[4];
 					$ShipToCountry = $ShipTo[5];
 					$CustOrderNo = $ShipTo[7];
-
+					
 				}
-
+		
 		//**************Need to get delivery address as may be diff from branch address
-
+		
 		//**************Reece needs NAD ST in every invoice, sometimes freeform text, so no real code
-
+		
 		if($ShipToName === $BranchName){
 			$ShipToCode = $CustBranchCode;
 		} Else {
 			$ShipToCode = $ShipToName;
 		}
-
+		
 		//**************Reece needs NAD ST in every invoice, sometimes freeform text, so no real code
-
+		
 		//**************Taxrate, need to find
-
+		
 		$sql = "SELECT 	stockmovestaxes.taxrate
-							FROM stockmoves,
+	                        FROM stockmoves,
 							stockmovestaxes
-							WHERE stockmoves.stkmoveno = stockmovestaxes.stkmoveno
-							AND stockmoves.transno=" . $TransNo . "
-							AND stockmoves.show_on_inv_crds=1
-							LIMIT 0,1";
-
-						$ResultTax = DB_query($sql,$db);
-
-						$TaxRate = 100 * (mysql_result($ResultTax, 0));
-
-				//**************Taxrate, need to find
-
+	                        WHERE stockmoves.stkmoveno = stockmovestaxes.stkmoveno
+	                        AND stockmoves.transno=" . $TransNo . "
+	                        AND stockmoves.show_on_inv_crds=1
+	                        LIMIT 0,1";
+		
+		                $ResultTax = DB_query($sql,$db);
+		                
+		                $TaxRate = 100 * (mysql_result($ResultTax, 0));
+		                
+                //**************Taxrate, need to find
+                
 		//**************Check to see if freight was added, probably specific to Reece and some other OZ hardware stores
-
-				if($ShipToFreight > 0){
-						$FreightTax = number_format(round(($ShipToFreight * $TaxRate/100),2),2, '.', '');
-						$Freight_YN = "ALC+C" . "'" . "MOA+64:" .$ShipToFreight. "'" . "TAX+7+GST+++:::" .$TaxRate. "'". "MOA+124:" .$FreightTax."'";
-						$SegCount = $SegCount + 3;
+		
+		        if($ShipToFreight > 0){
+		                $FreightTax = number_format(round(($ShipToFreight * $TaxRate/100),2),2, '.', '');
+		                $Freight_YN = "ALC+C" . "'" . "MOA+64:" .$ShipToFreight. "'" . "TAX+7+GST+++:::" .$TaxRate. "'". "MOA+124:" .$FreightTax."'";
+		                $SegCount = $SegCount + 3;
 						} else {
-						$Freight_YN = "";
-						}
-
+		                $Freight_YN = "";
+		                }
+		
 		//**************Check to see if freight was added could do this in Substitution, skip if 0 freight
-
-
-
+		
+		
+		
 		//Get the message lines, replace variable names with data, write the output to a file one line at a time
-
+		
 		$sql = "SELECT section, linetext FROM edimessageformat WHERE partnercode='" . $CustDetails['debtorno'] . "' AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
 		$MessageLinesResult = DB_query($sql, $db,$ErrMsg);
@@ -208,12 +208,12 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 					include ('includes/EDIVariableSubstitution.inc');
 					$LastLine ='Heading';
 					}
-
+					
 				if ($LineDetails['section']=='Detail' AND $LastLine=='Heading') {
 					/*This must be the detail section
 					need to get the line details for the invoice or credit note
 					for creating the detail lines */
-
+					
 
 					if ($TransDetails['type']==10){ /*its an invoice */
 						 $sql = "SELECT stockmoves.stockid,
@@ -229,7 +229,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 							AND stockmoves.type=10
 							AND stockmoves.transno=" . $TransNo . "
 							AND stockmoves.show_on_inv_crds=1";
-
+							
 					} else {
 					/* credit note */
 			 			$sql = "SELECT stockmoves.stockid,
@@ -246,7 +246,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 							AND stockmoves.show_on_inv_crds=1";
 					}
 					$TransLinesResult = DB_query($sql,$db);
-
+					
 					$LineNumber = 0;
 					while ($TransLines = DB_fetch_array($TransLinesResult)){
 						/*now set up the variable values */
@@ -279,15 +279,15 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 							$MsgLineText = $DetailLineText;
 							include ('includes/EDIVariableSubstitution.inc');
 						}
-
-
+					
+						
 					}
-
-
+					 
+					
 					$LastLine ='Detail';
 					$NoLines = $LineNumber;
 					}
-
+					
 					if($LineDetails['section']=='Summary' AND $LastLine=='Detail'){
 					$MsgLineText = $LineDetails['linetext'];
 					include ('includes/EDIVariableSubstitution.inc');
@@ -313,44 +313,44 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 					prnMsg(_('EDI Message') . ' ' . $TransNo . _('could not be emailed to') . ' ' . $CustDetails['ediaddress'],'error');
 				}
 			} else { /*it must be ftp transport */
-
+			
 						 //Godaddy limitations make it impossible to sftp using ssl or curl, so save to EDI_Sent file and 'rsynch' back to sftp server
-
-			  			/* set up basic connection
-			  			$conn_id = ftp_connect($CustDetails['ediaddress']); // login with username and password
-			  			$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']); // check connection
-			  			if ((!$conn_id) || (!$login_result)) {
-				  			prnMsg( _('Ftp connection has failed'). '<BR>' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
-				  			include('includes/footer.inc');
+                                
+              			/* set up basic connection
+              			$conn_id = ftp_connect($CustDetails['ediaddress']); // login with username and password
+              			$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']); // check connection
+              			if ((!$conn_id) || (!$login_result)) {
+                  			prnMsg( _('Ftp connection has failed'). '<BR>' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
+                  			include('includes/footer.inc');
 					exit;
-			  			}
-			  			$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
-			  			if (!$MessageSent) {
-				   			echo '<BR><BR>';
+              			}
+              			$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
+              			if (!$MessageSent) {
+                   			echo '<BR><BR>';
 					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('could not be sent via ftp to') .' ' . $CustDetails['ediaddress'],'error');
-				   		} else {
-				   			echo '<BR><BR>';
+                   		} else {
+                   			echo '<BR><BR>';
 					prnMsg( _('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . _('via ftp to') . ' ' . $CustDetails['ediaddress'],'success');
-			  			} // close the FTP stream
-			  			ftp_quit($conn_id);
-			  			*/
+              			} // close the FTP stream
+              			ftp_quit($conn_id);
+              			*/
 			}
 
 
 			if ($MessageSent==True){ /*the email was sent sucessfully */
 				/* move the sent file to sent directory */
 				$source = 'EDI_INV_' . $TransNo . '.txt';
-								$destination = 'EDI_Sent/EDI_INV_' . $TransNo . '.txt';
-								rename($source, $destination);
-
+                                $destination = 'EDI_Sent/EDI_INV_' . $TransNo . '.txt';
+                                rename($source, $destination);
+				
 			}
 
 		} else {
 
 			prnMsg( _('Cannot create EDI message since there is no EDI INVOIC message template set up for') . ' ' . $CustDetails['debtorno'],'error');
 		} /*End if there is a message template defined for the customer invoic*/
-
-
+		
+		
 	} /* loop around all the customer transactions to be sent */
 
 } /*loop around all the customers enabled for EDI Invoices */

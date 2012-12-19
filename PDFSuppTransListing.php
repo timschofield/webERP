@@ -25,10 +25,10 @@ if (!isset($_POST['Date'])){
 	}
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	 echo '<div>';
+     echo '<div>';
 	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	 echo '<table class="selection">
-			<tr>
+	        <tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
 				<td><input type="text" name="Date" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
@@ -47,8 +47,8 @@ if (!isset($_POST['Date'])){
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
-	 echo '</div>
-		   </form>';
+     echo '</div>
+           </form>';
 
 	 include('includes/footer.inc');
 	 exit;
@@ -107,7 +107,7 @@ $TotalCheques = 0;
 include ('includes/PDFSuppTransListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($result)){
-	$CurrDecimalPlaces = $myrow['currdecimalplaces'];
+    $CurrDecimalPlaces = $myrow['currdecimalplaces'];
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$myrow['suppname'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$myrow['suppreference'], 'left');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');

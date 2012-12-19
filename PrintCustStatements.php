@@ -34,7 +34,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	$_POST['FromCust'] = mb_strtoupper($_POST['FromCust']);
 
 	If (!isset($_POST['ToCust'])){
-		  $_POST['ToCust'] = $_POST['FromCust'];
+	      $_POST['ToCust'] = $_POST['FromCust'];
 	} else {
 		$_POST['ToCust'] = mb_strtoupper($_POST['ToCust']);
 	}
@@ -79,7 +79,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	if (DB_Num_Rows($StatementResults) == 0){
 		$title = _('Print Statements') . ' - ' . _('No Customers Found');
-		require('includes/header.inc');
+	    require('includes/header.inc');
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
 		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
 			$_POST['ToCust'].'.' , 'error');
@@ -138,15 +138,15 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 		/* Then there's a statement to print. So print out the statement header from the company record */
 
-		  		$PageNumber =1;
+	      		$PageNumber =1;
 
 			if ($FirstStatement==True){
 				$FirstStatement=False;
-		  		} else {
+	      		} else {
 				$pdf->newPage();
-		  		}
+	      		}
 
-		  		include('includes/PDFStatementPageHeader.inc');
+	      		include('includes/PDFStatementPageHeader.inc');
 
 
 			if ($_SESSION['Show_Settled_LastMonth']==1){
@@ -197,9 +197,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				}
 			} // end of if there are transaction that were settled this month
 
-		  		if (DB_num_rows($OstdgTrans)>=1){
+	      		if (DB_num_rows($OstdgTrans)>=1){
 
-			  		$YPos -= ($line_height);
+		      		$YPos -= ($line_height);
 				if ($YPos-(2 * $line_height) <= $Bottom_Margin){
 					$PageNumber++;
 					$pdf->newPage();
@@ -394,15 +394,15 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 	if (isset($pdf)){
 
-		$pdf->OutputI($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
+        $pdf->OutputI($_SESSION['DatabaseName'] . '_CustStatements_' . date('Y-m-d') . '.pdf');
+        $pdf->__destruct();
 
 	} else {
 		$title = _('Print Statements') . ' - ' . _('No Statements Found');
 		include('includes/header.inc');
 		echo '<br /><br /><br />' . prnMsg( _('There were no statements to print') );
-			echo '<br /><br /><br />';
-			include('includes/footer.inc');
+	        echo '<br /><br /><br />';
+	        include('includes/footer.inc');
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -415,20 +415,20 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-		echo '<div>';
+        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<table class="selection">';
+        echo '<table class="selection">';
 		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)'). '
 			</td><td><input type="text" maxlength="6" size="7" name="FromCust" value="1" /></td></tr>
 			<tr><td>'. _('Ending Customer statement to print (Customer code)').'</td><td>
 				<input type="text" maxlength="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
 				<br /><div class="centre">
 				<input type="submit" name="PrintPDF" value="' .
-				_('Print All Statements in the Range Selected').'" />
+                _('Print All Statements in the Range Selected').'" />
 			</div>';
-		echo '</div>
-			  </form>';
+        echo '</div>
+              </form>';
 	}
 	echo '<br /><br /><br />';
 	include('includes/footer.inc');

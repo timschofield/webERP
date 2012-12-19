@@ -179,7 +179,7 @@ echo '<br /><table>
 echo '<input type="submit" name="ProcessDeletions" value="' . _('Process') . '"  onclick="return confirm(\'' . _('Are You Really REALLY Sure?') . '\');" />';
 
 echo '</div>
-	  </form>';
+      </form>';
 
 include('includes/footer.inc');
 ?>
