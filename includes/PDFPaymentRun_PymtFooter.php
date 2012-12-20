@@ -36,7 +36,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					rate,
 					ovamount,
 					diffonexch,
-					alloc) 
+					alloc)
 			VALUES (22,
 				'" . $SuppPaymentNo . "',
 				'" . $PaytReference . "',
@@ -49,7 +49,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				'" . -$AccumBalance . "',
 				'" . -$AccumDiffOnExch . "',
 				'" . -$AccumBalance . "')";
-				
+
 	$ProcessResult = DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db) !=0) {
 		$title = _('Payment Processing - Problem Report');

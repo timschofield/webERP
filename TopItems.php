@@ -9,7 +9,7 @@ $title = _('Top Items Searching');
 include ('includes/header.inc');
 //check if input already
 if (!(isset($_POST['Search']))) {
-			
+
 	echo '<p class="page_title_text">
 			<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
 		</p>';
@@ -37,7 +37,7 @@ if (!(isset($_POST['Search']))) {
 			<td style="width:150px">' . _('Select Customer Type') . '</td>
 			<td>:</td>
 			<td><select name="Customers">';
-			
+
 	$sql = "SELECT typename,
 					typeid
 				FROM debtortype";
@@ -77,7 +77,7 @@ if (!(isset($_POST['Search']))) {
 	}
     echo '</select></td>
         </tr>';
-		
+
 	//view order by list to display
 	echo '<tr>
 			<td style="width:150px">' . _('Select Order By ') . ' </td>
@@ -132,9 +132,9 @@ if (!(isset($_POST['Search']))) {
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 					AND salesorderdetails.stkcode = stockmaster.stockid
 					AND salesorders.debtorno = debtorsmaster.debtorno
-					AND debtorsmaster.currcode = currencies.currabrev 
+					AND debtorsmaster.currcode = currencies.currabrev
 					AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'";
-	
+
 	if ($_POST['Location'] != 'All') {
 		$SQL = $SQL . "	AND salesorders.fromstkloc = '" . $_POST['Location'] . "'";
 	}
@@ -150,9 +150,9 @@ if (!(isset($_POST['Search']))) {
 	$SQL = $SQL . "	GROUP BY salesorderdetails.stkcode
 					ORDER BY `" . $_POST['Sequence'] . "` DESC
 					LIMIT " . filter_number_format($_POST['NumberOfTopItems']);
-	
+
 	$result = DB_query($SQL, $db);
-	
+
 	echo '<p class="page_title_text" align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
 	echo '<form action="PDFTopItems.php"  method="GET">';
     echo '<div>';
@@ -241,16 +241,16 @@ if (!(isset($_POST['Search']))) {
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$myrow['stkcode'], 
-					$myrow['description'], 
+					</tr>',
+					$i,
+					$myrow['stkcode'],
+					$myrow['description'],
 					locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
 					$myrow['units'], //unit
 					locale_number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
-					locale_number_format($QOH, $myrow['decimalplaces']),  //on hand 
-					locale_number_format($QOO, $myrow['decimalplaces']), //on order 
-					locale_number_format($DaysOfStock, 0) //days of available stock 
+					locale_number_format($QOH, $myrow['decimalplaces']),  //on hand
+					locale_number_format($QOO, $myrow['decimalplaces']), //on order
+					locale_number_format($DaysOfStock, 0) //days of available stock
 					);
 		}
 		$i++;

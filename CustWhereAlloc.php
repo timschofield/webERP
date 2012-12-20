@@ -56,11 +56,11 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 				ovamount+ovgst AS totamt,
 				currencies.decimalplaces AS currdecimalplaces,
 				debtorsmaster.currcode
-			FROM debtortrans INNER JOIN debtorsmaster 
+			FROM debtortrans INNER JOIN debtorsmaster
 			ON debtortrans.debtorno=debtorsmaster.debtorno
-			INNER JOIN currencies 
+			INNER JOIN currencies
 			ON debtorsmaster.currcode=currencies.currabrev
-			WHERE type='" . $_POST['TransType'] . "' 
+			WHERE type='" . $_POST['TransType'] . "'
 			AND transno = '" . $_POST['TransNo']."'";
 
 	$result = DB_query($sql , $db);
@@ -70,7 +70,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 		$AllocToID = $myrow['id'];
 		$CurrCode = $myrow['currcode'];
 		$CurrDecimalPlaces = $myrow['currdecimalplaces'];
-		
+
 		$sql = "SELECT type,
 					transno,
 					trandate,
@@ -79,8 +79,8 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 					debtortrans.rate,
 					ovamount+ovgst+ovfreight+ovdiscount as totalamt,
 					custallocns.amt
-				FROM debtortrans 
-				INNER JOIN custallocns 
+				FROM debtortrans
+				INNER JOIN custallocns
 				ON debtortrans.id=custallocns.transid_allocfrom
 				WHERE custallocns.transid_allocto='". $AllocToID."'";
 
@@ -92,7 +92,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 		} else {
 			echo '<br />
 				<table class="selection">';
-	
+
 			echo '<tr>
 					<th colspan="6">
 					<div class="centre">
@@ -100,7 +100,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 					</div>
 					</th>
 				</tr>';
-	
+
 			$TableHeader = '<tr>
 								<th>' . _('Type') . '</th>
 								<th>' . _('Number') . '</th>
@@ -110,11 +110,11 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 								<th>' . _('Alloc') . '</th>
 							</tr>';
 			echo $TableHeader;
-	
+
 			$RowCounter = 1;
 			$k = 0; //row colour counter
 			$AllocsTotal = 0;
-	
+
 			while ($myrow=DB_fetch_array($TransResult)) {
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';
@@ -123,7 +123,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 					echo '<tr class="OddTableRows">';
 					$k++;
 				}
-		
+
 				if ($myrow['type']==11){
 					$TransType = _('Credit Note');
 				} else {
@@ -136,7 +136,7 @@ if (isset($_POST['ShowResults']) AND $_POST['TransNo']!=''){
 					<td class="number">' . locale_number_format($myrow['totalamt'],$CurrDecimalPlaces) . '</td>
 					<td class="number">' . locale_number_format($myrow['amt'],$CurrDecimalPlaces) . '</td>
 					</tr>';
-		
+
 				$RowCounter++;
 				If ($RowCounter == 12){
 					$RowCounter=1;

@@ -59,7 +59,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 						periods.lastdate_in_period
 					FROM gltrans INNER JOIN chartmaster
 					ON gltrans.account = chartmaster.accountcode
-					INNER JOIN periods 
+					INNER JOIN periods
 					ON periods.periodno=gltrans.periodno
 					WHERE gltrans.type= '" . $_GET['TypeID'] . "'
 					AND gltrans.typeno = '" . $_GET['TransNo'] . "'
@@ -73,7 +73,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 		while ( $TransRow = DB_fetch_array($TransResult) ) {
 			$TranDate = ConvertSQLDate($TransRow['trandate']);
 			$DetailResult = false;
-			
+
 			$AccountName = $TransRow['accountname'];
 			$URL = $rootpath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
 
@@ -107,7 +107,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				$DetailResult = DB_query($DetailSQL,$db);
 			}
 			if ($DetailResult) {
-				$DetailRow = DB_fetch_array($DetailResult);// there can be only one	
+				$DetailRow = DB_fetch_array($DetailResult);// there can be only one
 				if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
 					$URL = $rootpath . '/CustomerInquiry.php?CustomerID=' . $DetailRow['debtorno'] . '&amp;TransAfterDate=' . $TranDate;
 					$AccountName .= ' ' . $DetailRow['name'];
@@ -117,12 +117,12 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 				}
 				DB_free_result($DetailResult);
 			}
-			
-		
+
+
 			if( mb_strlen($TransRow['narrative'])==0 ) {
 				$TransRow['narrative'] = '&nbsp;';
 			}
-			
+
 			if ($j==1) {
 				echo '<tr class="OddTableRows">';
 				$j=0;

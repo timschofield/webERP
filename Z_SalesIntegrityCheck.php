@@ -155,7 +155,7 @@ while ($myrow = DB_fetch_array($Result)) {
 							rate,
 							ovamount,
 							ovgst
-				 	FROM debtortrans WHERE order_ = '" . $myrow['orderno'] . "'"; 
+				 	FROM debtortrans WHERE order_ = '" . $myrow['orderno'] . "'";
 		$invResult = DB_query($invSQL,$db);
 
 		while( $invrow = DB_fetch_array($invResult) ) {

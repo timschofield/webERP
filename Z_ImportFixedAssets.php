@@ -253,7 +253,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 											'" . Date('Y-m-d') . "',
 											'depn',
 											'" . $AccumDepn . "')";
-	
+
 				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
 				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
 				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);

@@ -71,7 +71,7 @@ echo '<br />
 $LocationOut = $_SESSION['Transfer']->StockLocationFrom;
 $ItemMustExist = true;
 $StockID = $LineItem->StockID;
-$InOutModifier=1; 
+$InOutModifier=1;
 $ShowExisting = true;
 if (isset($TransferItem)){
 	$LineNo=$TransferItem;

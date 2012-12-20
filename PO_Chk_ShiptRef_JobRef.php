@@ -24,8 +24,8 @@ by the EnterLine button when a new purchase order line item is entered
                      }
               }
 		/*
-              if (($_POST['JobRef']!='' AND $_POST['JobRef']!='0') OR !isset($_POST['JobRef'])) {  //Dont bother with this lot if there was not Contract selected 
-             
+              if (($_POST['JobRef']!='' AND $_POST['JobRef']!='0') OR !isset($_POST['JobRef'])) {  //Dont bother with this lot if there was not Contract selected
+
               $sql = "SELECT COUNT(*) FROM contracts WHERE contractref ='".  $_POST['JobRef'] . "'";
                      $JobResult = DB_query($sql,$db);
                      if (DB_error_no!=0 OR DB_num_rows($JobResult)==0){

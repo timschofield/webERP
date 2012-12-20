@@ -33,7 +33,7 @@
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
- 
+
 	echo '<table class="selection">
 			<tr><td>' . _('Select Period From:') . '</td>
 			<td><select name="FromPeriod">';
@@ -149,7 +149,7 @@
 		if ($myrow['salesmancode']== $_POST['SalesmanCode']){
 			echo '<option selected="selected" value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>'; 
+			echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 		}
 	}
 	echo '</select></td>

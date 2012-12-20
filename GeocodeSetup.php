@@ -122,13 +122,13 @@ then none of the above are true and the list of status codes will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT geocodeid, 
-					geocode_key, 
-					center_long, 
-					center_lat, 
-					map_height, 
-					map_width, 
-					map_host 
+	$sql = "SELECT geocodeid,
+					geocode_key,
+					center_long,
+					center_lat,
+					map_height,
+					map_width,
+					map_host
 			FROM geocode_param";
 	$result = DB_query($sql, $db);
 
@@ -141,7 +141,7 @@ or deletion of the records*/
 	prnMsg(_('Set the maps centre point using the Center Longitude and Center Latitude. Set the maps screen size using the height and width in pixels (px)'),'info');
 	echo '</div><br />';
 	echo '<table border="1">';
-	
+
 	echo '<tr>
 			<th>'. _('Geocode ID') .'</th>
 			<th>'. _('Geocode Key') .'</th>
@@ -151,7 +151,7 @@ or deletion of the records*/
 			<th>'. _('Map width (px)') . '</th>
 			<th>'. _('Map host') . '</th>
 		</tr>';
-	
+
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_row($result)) {
 
@@ -252,7 +252,7 @@ if (!isset($_GET['delete'])) {
 		<td><input ' . (in_array('GeoCode_Key',$Errors) ? 'class="inputerror"' : '' ) .
          ' tabindex="2" type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" maxlength="300" />
 		</td></tr>
-		
+
 		<tr><td>'. _('Geocode Center Long') . '</td>
 		<td><input tabindex="3" type="text" name="Center_Long" value="'. $_POST['Center_Long'] .'" size="28" maxlength="300" /></td></tr>
 

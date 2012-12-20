@@ -87,7 +87,7 @@ $sql = "SELECT 	trandate,
 			FROM stockmoves
 			INNER JOIN stockmaster
 			ON stockmoves.stockid=stockmaster.stockid
-			INNER JOIN custbranch 
+			INNER JOIN custbranch
 			ON stockmoves.debtorno=custbranch.debtorno
 				AND stockmoves.branchcode=custbranch.branchcode
 			WHERE (stockmoves.type=10 or stockmoves.type=11)

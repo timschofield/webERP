@@ -133,7 +133,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldMeasureName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM banktrans 
+		$sql= "SELECT COUNT(*) FROM banktrans
 				WHERE banktranstype LIKE '" . $OldMeasureName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);

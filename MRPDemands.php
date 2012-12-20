@@ -285,7 +285,7 @@ function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 			FROM mrpdemands
 			LEFT JOIN stockmaster on mrpdemands.stockid = stockmaster.stockid" .
 			 $where	. " ORDER BY mrpdemands.stockid, mrpdemands.duedate";
-	
+
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$result = DB_query($sql,$db,$ErrMsg);
 
@@ -403,7 +403,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 		echo '<tr>
 				<td>' . _('Demand Type') . '</td>
 				<td><select name="MRPDemandtype">';
-				
+
 		$sql = "SELECT mrpdemandtype,
 						description
 				FROM mrpdemandtypes";

@@ -13,9 +13,9 @@ require_once 'class.linearBarcode.php';
 
 /**
  * s2of5
- * 
+ *
  * Standard 2/5 (Interleaved 2/5)
- * 
+ *
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
@@ -46,17 +46,17 @@ class s2of5 extends linearBarcode {
 		'START' => '1110111010',
 		'STOP' => '111010111',
 	);
-	
+
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $text
 	 * @param int $modulesize
 	 */
 	public function  __construct($text, $moduleSize)
 	{
-		
+
 		try {
 			parent::__construct($text, $moduleSize, $this->allowedChars);
 
@@ -64,7 +64,7 @@ class s2of5 extends linearBarcode {
 		}
 		catch(Exception $e) {
 			throw $e;
-		}	
+		}
 	}
 
 

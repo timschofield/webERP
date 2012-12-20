@@ -69,7 +69,7 @@ function DB_query ($SQL,
 	global $PathPrefix;
 
 	$result=mysqli_query($Conn, $SQL);
-	
+
 	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
 
 	if ($DebugMessage == '') {

@@ -86,7 +86,7 @@ if (isset($_POST['Show'])) {
 				<th>' . _('Delivery Date') . '</th>
 				<th>' . _('Quantity Received') . '</th>
 			</tr>';
-			
+
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';

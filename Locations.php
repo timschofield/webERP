@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			$_POST['InternalRequest'] = 0;
 		}
-		
+
 		/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
 		$sql = "INSERT INTO locations (loccode,

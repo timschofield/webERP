@@ -70,9 +70,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		$k=1;
 	}
 
-	if (isset($_POST['UpdateData']) 
-		AND $_POST['Old_' . $myrow['loccode']]!= filter_number_format($_POST[$myrow['loccode']]) 
-		AND is_numeric(filter_number_format($_POST[$myrow['loccode']])) 
+	if (isset($_POST['UpdateData'])
+		AND $_POST['Old_' . $myrow['loccode']]!= filter_number_format($_POST[$myrow['loccode']])
+		AND is_numeric(filter_number_format($_POST[$myrow['loccode']]))
 		AND filter_number_format($_POST[$myrow['loccode']])>=0){
 
 	   $myrow['reorderlevel'] = filter_number_format($_POST[$myrow['loccode']]);
@@ -108,7 +108,7 @@ echo '</table>
 		<input type="submit" name="UpdateData" value="' . _('Update') . '" />
 		<br />
 		<br />';
-		
+
 echo '<a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
 echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage') . '</a>';
 echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';

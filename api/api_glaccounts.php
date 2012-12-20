@@ -101,9 +101,9 @@
 		}
 		$sql = 'SELECT chartmaster.accountcode,
 					chartmaster.accountname,
-					accountgroups.pandl 
-				FROM chartmaster INNER JOIN accountgroups 
-				ON chartmaster.group_=accountgroups.groupname 
+					accountgroups.pandl
+				FROM chartmaster INNER JOIN accountgroups
+				ON chartmaster.group_=accountgroups.groupname
 				ORDER BY accountcode';
 		$result = DB_query($sql, $db);
 		$i=0;

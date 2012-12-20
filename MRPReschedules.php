@@ -114,7 +114,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReschedules_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit so display form */
 

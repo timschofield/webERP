@@ -543,7 +543,7 @@ if ($WORow['closed']==1){
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'),'info');
 	include('includes/footer.inc');
 	exit;
-}	
+}
 DB_data_seek($WOResult,0);
 
 while($WORow = DB_fetch_array($WOResult)){
@@ -677,12 +677,12 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	echo '</select></td>
 	    <td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
 	    <td><input type="text" name="Keywords" size="20" maxlength="25" value="';
-            if (isset($_POST['Keywords'])) echo $_POST['Keywords']; 
+            if (isset($_POST['Keywords'])) echo $_POST['Keywords'];
             echo '" /></td></tr>
 	    <tr><td></td>
 		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
 		<td><input type="text" name="StockCode" size="15" maxlength="18" value="';
-            if (isset($_POST['StockCode'])) echo $_POST['StockCode']; 
+            if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
             echo '" /></td>
 			</tr>
 			</table>

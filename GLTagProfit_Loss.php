@@ -39,9 +39,9 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				<td>' . _('Select Period From') . ':</td>
 				<td><select name="FromPeriod">';
 
-	$sql = "SELECT periodno, 
-					lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT periodno,
+					lastdate_in_period
+			FROM periods
 			ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);
 
@@ -155,8 +155,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT lastdate_in_period
+			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
@@ -479,8 +479,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT lastdate_in_period
+			FROM periods
 			WHERE periodno='" . $_POST['ToPeriod'] . "'";
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
@@ -508,7 +508,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
 					gltrans.account";
-		
+
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 	$sql="SELECT tagdescription FROM tags WHERE tagref='".$_POST['tag'] . "'";
@@ -686,7 +686,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 								<td class="number">%s</td>
 							</tr>',
 							locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']));
-	
+
 					if ($TotalIncome !=0){
 						$PrdGPPercent = 100*($TotalIncome - $SectionPrdActual)/$TotalIncome;
 					} else {
@@ -732,7 +732,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 							<td colspan="6"><h4><b>%s</b></h4></td>
 						</tr>',
 						$myrow['groupname']);
-				
+
 				echo $TableHeader;
 			}
 		}
@@ -900,7 +900,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 					<td class="number"><i>' . locale_number_format($PrdGPPercent,1) . '%</i></td>
 					<td></td>
 				</tr>';
-					
+
 			$j++;
 		}
 
@@ -928,7 +928,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 			<td class="number">%s</td>
 			</tr>',
 			locale_number_format($PeriodProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']));
-	
+
 	echo '<tr>
 			<td colspan="2"></td>
 			<td colspan="4"><hr /></td>

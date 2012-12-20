@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "  
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
 				 AND stockmaster.mbflag IN ('B','P')
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
 	} elseif ($_POST['Consolidation'] == 'Weekly') {
@@ -64,7 +64,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . " 
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
 				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 weekindex,
@@ -93,7 +93,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . " 
+				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . "
 				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 yearmonth,

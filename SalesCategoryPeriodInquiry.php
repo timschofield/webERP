@@ -19,7 +19,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">';
-	
+
 echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
 		</tr>
 		<tr>
@@ -133,33 +133,33 @@ if (isset($_POST['ShowSales'])){
 	}
 	$sql = "SELECT stockmaster.categoryid,
 					stockcategory.categorydescription,
-					SUM(CASE WHEN stockmoves.type=10 THEN 
+					SUM(CASE WHEN stockmoves.type=10 THEN
 							price*(1-discountpercent)* -qty
 							ELSE 0 END) as salesvalue,
-					SUM(CASE WHEN stockmoves.type=11 THEN 
+					SUM(CASE WHEN stockmoves.type=11 THEN
 							price*(1-discountpercent)* (-qty)
 							ELSE 0 END) as returnvalue,
-					SUM(CASE WHEN stockmoves.type=11 
-								OR stockmoves.type=10 THEN 
+					SUM(CASE WHEN stockmoves.type=11
+								OR stockmoves.type=10 THEN
 							price*(1-discountpercent)* (-qty)
 							ELSE 0 END) as netsalesvalue,
 					SUM((standardcost * -qty)) as cost
 			FROM stockmoves INNER JOIN stockmaster
-			ON stockmoves.stockid=stockmaster.stockid 
-			INNER JOIN stockcategory 
-			ON stockmaster.categoryid=stockcategory.categoryid 
+			ON stockmoves.stockid=stockmaster.stockid
+			INNER JOIN stockcategory
+			ON stockmaster.categoryid=stockcategory.categoryid
 			WHERE (stockmoves.type=10 or stockmoves.type=11)
 			AND show_on_inv_crds =1
 			AND trandate>='" . $FromDate . "'
 			AND trandate<='" . $ToDate . "'
 			GROUP BY stockmaster.categoryid
 			ORDER BY netsalesvalue DESC";
-	
+
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
 	$SalesResult = DB_query($sql,$db,$ErrMsg);
-	
+
 	echo '<table cellpadding="2" class="selection">';
-	
+
 	echo'<tr>
 		<th>' . _('Category') . '</th>
 		<th>' . _('Total Sales') . '</th>
@@ -168,13 +168,13 @@ if (isset($_POST['ShowSales'])){
 		<th>' . _('Cost of Sales') . '</th>
 		<th>' . _('Gross Profit') . '</th>
 		</tr>';
-	
+
 	$CumulativeTotalSales = 0;
 	$CumulativeTotalRefunds = 0;
 	$CumulativeTotalNetSales = 0;
 	$CumulativeTotalCost = 0;
 	$CumulativeTotalGP = 0;
-	
+
 	$k=0;
 	while ($SalesRow=DB_fetch_array($SalesResult)) {
 		if ($k==1){
@@ -184,7 +184,7 @@ if (isset($_POST['ShowSales'])){
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-				
+
 		echo '<td>' . $SalesRow['categoryid'] . ' - ' . $SalesRow['categorydescription'] . '</td>
 				<td class="number">' . locale_number_format($SalesRow['salesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($SalesRow['returnvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -192,14 +192,14 @@ if (isset($_POST['ShowSales'])){
 				<td class="number">' . locale_number_format($SalesRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format(($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
-		
+
 		$CumulativeTotalSales += $SalesRow['salesvalue'];
 		$CumulativeTotalRefunds += $SalesRow['returnvalue'];
 		$CumulativeTotalNetSales += ($SalesRow['salesvalue']+$SalesRow['returnvalue']);
 		$CumulativeTotalCost += $SalesRow['cost'];
 		$CumulativeTotalGP += ($SalesRow['salesvalue']+$SalesRow['returnvalue']-$SalesRow['cost']);
 	} //loop around category sales for the period
-	
+
 	if ($k==1){
 		echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
 		echo '<tr class="OddTableRows">';
@@ -214,7 +214,7 @@ if (isset($_POST['ShowSales'])){
 		<td class="number">' . locale_number_format($CumulativeTotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalGP,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
-	
+
 	echo '</table>';
 
 } //end of if user hit show sales

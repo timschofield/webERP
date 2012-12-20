@@ -98,9 +98,9 @@ If (isset($_POST['PrintPDF'])
 
 	$YPos -=$line_height;
 	$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
-  
+
     $pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');
-    $pdf->__destruct(); 
+    $pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 

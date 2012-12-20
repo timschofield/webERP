@@ -29,7 +29,7 @@ if ($GRNNo == 'Preview'){
 	$myrow['supplierid'] = str_pad('', 10,'x');
 	$myrow['suppliersunit'] = str_pad('', 10,'x');
 	$myrow['units'] = str_pad('', 10,'x');
-	
+
 	$SuppRow['suppname'] = str_pad('', 30,'x');
 	$SuppRow['address1'] = str_pad('', 30,'x');
 	$SuppRow['address2'] = str_pad('', 30,'x');
@@ -39,7 +39,7 @@ if ($GRNNo == 'Preview'){
 	$SuppRow['address6'] = str_pad('', 10,'x');
 	$NoOfGRNs =1;
 } else { //NOT PREVIEW
-		
+
 	$sql="SELECT grns.itemcode,
 				grns.grnno,
 				grns.deliverydate,
@@ -110,17 +110,17 @@ if ($NoOfGRNs >0){
 			$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
 			$FooterPrintedInPage= 1;
 		}
-		
+
 		if ($YPos >= $FormDesign->LineAboveFooter->starty){
 			/* We reached the end of the page so finsih off the page and start a newy */
 			//$PageNumber++;	// $PageNumber++ available in PDFGrnHeader.inc
-			$FooterPrintedInPage= 0;	//Set FooterPrintedInPage value zero print footer in new page			
+			$FooterPrintedInPage= 0;	//Set FooterPrintedInPage value zero print footer in new page
 			$YPos=$FormDesign->Data->y;
 			include ('includes/PDFGrnHeader.inc');
 		} //end if need a new page headed up
 	} //end of loop around GRNs to print
 
-	
+
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');
     $pdf->__destruct();
 } else { //there were not GRNs to print

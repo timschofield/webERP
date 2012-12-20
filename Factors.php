@@ -47,7 +47,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	/* If no input errors have been recieved */
 	if ($InputError == 0 AND isset($_POST['Submit'])){
 		//And if its not a new part then update existing one

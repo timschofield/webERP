@@ -345,7 +345,7 @@ if (isset($_POST['SearchCust'])
 				$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 			$SQL .=	" AND custbranch.disabletrans=0
-						ORDER BY custbranch.debtorno, 
+						ORDER BY custbranch.debtorno,
 								custbranch.branchcode";
 	} /*one of keywords or custcode was more than a zero length string */
 
@@ -362,7 +362,7 @@ if (isset($_POST['SearchCust'])
 } /*end of if search for customer codes/names */
 
 if (isset($_POST['JustSelectedACustomer'])){
-	
+
 	/*Need to figure out the number of the form variable that the user clicked on */
 	for ($i=0;$i<count($_POST);$i++){ //loop through the returned customers
 		if(isset($_POST['SubmitCustomerSelection'.$i])){
@@ -865,7 +865,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$DbgMsg = _('The SQL used to get the part selection was');
-		
+
 		$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
@@ -1525,15 +1525,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$result2 = DB_query($SQL,$db);
 			echo '<p class="page_title_text">
-					<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . 
-					' ' . _('Frequently Ordered Items') . 
+					<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
+					' ' . _('Frequently Ordered Items') .
 					'</p>
 					<br />
-					<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . 
+					<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') .
 					'.</div>
 					<br />
 					<table class="table1">';
-					
+
 			$TableHeader = '<tr>
 								<th>' . _('Code') . '</th>
 								<th>' . _('Description') . '</th>

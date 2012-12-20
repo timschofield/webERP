@@ -39,12 +39,12 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<td>' . _('Inventory Category') . '</td>
 			<td>';
 
-	$sql = "SELECT categorydescription, 
-					categoryid 
-			FROM stockcategory 
-			WHERE stocktype<>'D' 
+	$sql = "SELECT categorydescription,
+					categoryid
+			FROM stockcategory
+			WHERE stocktype<>'D'
 			AND stocktype<>'L'";
-	 
+
 	$result = DB_query($sql,$db);
 
 

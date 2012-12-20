@@ -450,11 +450,11 @@ if (isset($_SESSION['Transfer'])){
 
 		echo '<td class="number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
 		if (isset($_POST['Qty' . $i]) AND is_numeric(filter_number_format($_POST['Qty' . $i]))){
-			
+
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= round(filter_number_format($_POST['Qty' . $i]),$TrfLine->DecimalPlaces);
-			
+
 			$Qty = round(filter_number_format($_POST['Qty' . $i]),$TrfLine->DecimalPlaces);
-		
+
 		} else if ($TrfLine->Controlled==1) {
 			if (sizeOf($TrfLine->SerialItems)==0) {
 				$Qty = 0;

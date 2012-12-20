@@ -117,7 +117,7 @@ if (isset($_POST['View'])) {
 		$SQLString = str_replace('SET','',$SQLString);
 		$SQLString = str_replace('WHERE',',',$SQLString);
 		$SQLString = str_replace('AND',',',$SQLString);
-		$FieldArray = preg_split("/[[:space:]]*([[:alnum:].]+[[:space:]]*=[[:space:]]*(?:'[^']*'|[[:digit:].]+))[[:space:]]*,/", $SQLString, 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);		
+		$FieldArray = preg_split("/[[:space:]]*([[:alnum:].]+[[:space:]]*=[[:space:]]*(?:'[^']*'|[[:digit:].]+))[[:space:]]*,/", $SQLString, 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 		for ($i=0; $i<sizeof($FieldArray); $i++) {
 			$Assigment = explode('=', $FieldArray[$i]);
 			$_SESSION['SQLString']['fields'][$i] = $Assigment[0];
@@ -138,7 +138,7 @@ if (isset($_POST['View'])) {
 		$_SESSION['SQLString']['fields'][0] = $Assigment[0];
 		$_SESSION['SQLString']['values'][0] = $Assigment[1];
 	}
-	
+
 	if (mb_strlen($ContainingText) > 0) {
 	    $ContainingText = " AND querystring LIKE '%" . $ContainingText . "%' ";
 	}else{

@@ -138,7 +138,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
 				<td class="select">';
 		$PriceResult = DB_query("SELECT typeabbrev,
-										price 
+										price
 								FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'

@@ -4,7 +4,7 @@ $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 
 // TBD The followiung line needs to be replace when more translations are available
-$ReportLanguage = 'en_US';					// default language file 
+$ReportLanguage = 'en_US';					// default language file
 
 define('DBReports','reports');			// name of the databse table holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database table holding the report fields
@@ -41,13 +41,13 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 	$IncludePage = 'forms/ReportsList.html';
 } elseif (!isset($_POST['todo'])) { // Now find out if an image button button was pressed and act on it
 	for ($i=1; $i<1000; $i++) { // figure out what sequence button was pressed
-		if (isset($_POST['up'.$i.'_x']) OR isset($_POST['dn'.$i.'_x'])) { $SeqNum = $i; break; } 
+		if (isset($_POST['up'.$i.'_x']) OR isset($_POST['dn'.$i.'_x'])) { $SeqNum = $i; break; }
 	}
 	$ReportID = $_POST['ReportID']; // fetch the report id
 	if (isset($_POST['up'.$SeqNum.'_x'])) { // the shift up button was pushed, check for not at first sequence
 		if ($SeqNum<>1) $success = ChangeSequence($ReportID, $SeqNum, 'fieldlist', 'up');
 	} elseif (isset($_POST['dn'.$SeqNum.'_x'])) { // the shift down button was pushed
-		$sql = "SELECT seqnum FROM ".DBRptFields." 
+		$sql = "SELECT seqnum FROM ".DBRptFields."
 						WHERE reportid = '".$ReportID."' AND entrytype = 'fieldlist';";
 		$Result=DB_query($sql,$db,'','',false,true);
 		if ($SeqNum<DB_num_rows($Result)) {
@@ -56,7 +56,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 	}
 	// Overrride stored settings with current selected values
 	$Prefs = FetchReportDetails($_POST['ReportID']); // fetch the current settings
-	if (isset($_POST['FilterForm']) OR isset($_POST['PageForm'])) { 
+	if (isset($_POST['FilterForm']) OR isset($_POST['PageForm'])) {
 		// then we're here from a filter or page form, also read any updtes from the forms.
 		$Prefs = ReadPostData($ReportID, $Prefs);
 	}
@@ -101,10 +101,10 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 				$title=RPT_PAGESAVE;
 				$IncludePage = 'forms/ReportsSave.html';
 			}
-			$usrMsg[] = array('message'=>$success['message'], 'level'=>$success['result']);	
+			$usrMsg[] = array('message'=>$success['message'], 'level'=>$success['result']);
 			break;
 
-		case RPT_BTN_CPYRPT: 
+		case RPT_BTN_CPYRPT:
 			$Prefs = ReadPostData($ReportID, $Prefs); // fetch the current saved values
 			if ($Prefs['defaultreport']) $Prefs['reportname'] = ''; // clear name if default report
 			$ShowReplace = false;
@@ -126,7 +126,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 			}
 			break;
 
-		case RPT_BTN_EXPCSV: 
+		case RPT_BTN_EXPCSV:
 		case RPT_BTN_EXPPDF:
 			$Prefs = ReadPostData($ReportID, $Prefs);
 			// include the necessary files to build report
@@ -141,7 +141,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 				// Check for the report returning with data
 				if(!$ReportData) $usrMsg[] = array('message'=>RPT_NODATA.' The failing sql='.$sql,'level'=>'warn');
 			} else { // Houston, we have a problem, sql build failed
-				$usrMsg[] = array('message'=>$success['message'], 'level'=>$success['level']);	
+				$usrMsg[] = array('message'=>$success['message'], 'level'=>$success['level']);
 			}
 			if ($usrMsg) { // then we have a message to display and no report to show
 				if ($_POST['FilterForm']) { // return to the filter form
@@ -176,22 +176,22 @@ include ( $PathPrefix . 'includes/footer.inc');
 
 // Begin functions
 function GetReports($Default) {
-	
+
 	global $db;
 	$DropDownString = '';
 	if ($Default) {
-		$Def=1; 
+		$Def=1;
 	} else {
 		$Def=0;
 	}
-	
-	$sql= "SELECT id, 
-				reportname, 
-				groupname 
-		FROM ". DBReports." 
+
+	$sql= "SELECT id,
+				reportname,
+				groupname
+		FROM ". DBReports."
 		WHERE defaultreport='".$Def."'
 		ORDER BY groupname, reportname";
-		
+
 	$Result=DB_query($sql,$db,'','',false,true);
 	$DefaultReports = array();
 	while ($Temp = DB_fetch_array($Result)) {
@@ -241,27 +241,27 @@ function FetchReportDetails($ReportID) {
 function RetrieveFields($ReportID, $EntryType) {
 	global $db;
 	$FieldListings = '';
-	$sql= "SELECT *	FROM ".DBRptFields." 
+	$sql= "SELECT *	FROM ".DBRptFields."
 		WHERE reportid = '".$ReportID."' AND entrytype = '".$EntryType."'
 		ORDER BY seqnum";
 	$Result=DB_query($sql,$db,'','',false,true);
-	while ($FieldValues = DB_fetch_assoc($Result)) { 
-		$FieldListings[] = $FieldValues; 
+	while ($FieldValues = DB_fetch_assoc($Result)) {
+		$FieldListings[] = $FieldValues;
 	}
 	return $FieldListings;
 }
 
-function ChangeSequence($ReportID, 
-						$SeqNum, 
-						$EntryType, 
+function ChangeSequence($ReportID,
+						$SeqNum,
+						$EntryType,
 						$UpDown) {
 	global $db;
 	// find the id of the row to move
-	$sql = "SELECT id FROM ".DBRptFields." 
-		WHERE reportid = '".$ReportID."' 
-		AND entrytype = '".$EntryType."' 
+	$sql = "SELECT id FROM ".DBRptFields."
+		WHERE reportid = '".$ReportID."'
+		AND entrytype = '".$EntryType."'
 		AND seqnum = '".$SeqNum."'";
-		
+
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow = DB_fetch_row($Result);
 	$OrigID = $myrow[0];
@@ -271,9 +271,9 @@ function ChangeSequence($ReportID,
 		$NewSeqNum = $SeqNum+1;
 	}
 	// first move affected sequence to seqnum, then seqnum to new position
-	$sql = "UPDATE ".DBRptFields." SET seqnum='".$SeqNum."' 
-		WHERE reportid = '".$ReportID."' 
-		AND entrytype = '".$EntryType."' 
+	$sql = "UPDATE ".DBRptFields." SET seqnum='".$SeqNum."'
+		WHERE reportid = '".$ReportID."'
+		AND entrytype = '".$EntryType."'
 		AND seqnum = '".$NewSeqNum."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$sql = "UPDATE ".DBRptFields." SET seqnum='".$NewSeqNum."' WHERE id = '".$OrigID."'";
@@ -293,9 +293,9 @@ function BuildCriteria($FieldListings) {
 	if (!isset($Params[2])) $Params[2] = ''; // default to no entry for default to box
 	switch (array_shift($CritBlocks)) { // determine how many text boxes to build
 		default:
-		case 0: $EndString = '<td>&nbsp;</td><td>&nbsp;</td>'; 
+		case 0: $EndString = '<td>&nbsp;</td><td>&nbsp;</td>';
 			break;
-		case 1: $EndString = '<td><input name="fromvalue'.$SeqNum.'" type="text" 
+		case 1: $EndString = '<td><input name="fromvalue'.$SeqNum.'" type="text"
 				value="'.$Params[1].'" size="21" maxlength="20"></td><td>&nbsp;</td>';
 			break;
 		case 2: $EndString = '<td><input name="fromvalue'.$SeqNum.'" type="text" value="'.$Params[1].'" size="21" maxlength="20"></td>
@@ -316,17 +316,17 @@ function BuildFieldList($FieldListings) {
 	$CriteriaString = '';
 	foreach ($FieldListings as $FieldValues) {
 		$SeqNum = $FieldValues['seqnum'];
-		$CriteriaString .= '<tr><td><input name="DataField'.$SeqNum.'" type="hidden" value="'.$SeqNum.'">'; 
+		$CriteriaString .= '<tr><td><input name="DataField'.$SeqNum.'" type="hidden" value="'.$SeqNum.'">';
 		$CriteriaString .= $FieldValues['displaydesc'].'</td>'; // add the description
 		if ($FieldValues['visible']=='1') $Checked = ' checked'; else $Checked = '';
 		$CriteriaString .= '<td align="center"><input type="checkbox" name="show'.$SeqNum.'" value="1"'.$Checked.'></td>';
 		if ($FieldValues['columnbreak']=='1') $Checked = ' checked'; else $Checked = '';
 		$CriteriaString .= '<td align="center"><input type="checkbox" name="break'.$SeqNum.'" value="1"'.$Checked.'></td>';
 		if ($FieldValues['visible']=='1') {
-			$CriteriaString .= '<td align="center">'.$ColCount.'</td>'; 
+			$CriteriaString .= '<td align="center">'.$ColCount.'</td>';
 			if ($FieldValues['columnbreak']=='1') $ColCount++;
-		} else { 
-			$CriteriaString .= '<td>&nbsp;</td>'; 
+		} else {
+			$CriteriaString .= '<td>&nbsp;</td>';
 		}
 		$CriteriaString .= '<td align="center"><INPUT type=image name="up'.$SeqNum.'" value="up'.$SeqNum.'" src="images/upicon.png" border="0">
 			&nbsp;<INPUT type=image name="dn'.$SeqNum.'" value="dn" src="images/downicon.png" border="0"></td>';
@@ -381,7 +381,7 @@ function ReadPostData($ReportID, $Prefs) {
 		if ($_POST['tovalue'.$i]==''){ $_POST['tovalue'.$i] = $_POST['fromvalue'.$i]; }
 		$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['tovalue'.$i];
 		if (!$Prefs['defaultreport']) { // save it since it's a custom report
-			$sql = "UPDATE ".DBRptFields." SET params='".$Prefs['CritListings'][$i-1]['params']."' 
+			$sql = "UPDATE ".DBRptFields." SET params='".$Prefs['CritListings'][$i-1]['params']."'
 				WHERE reportid ='".$ReportID."' AND entrytype='critlist' AND seqnum='".$i."'";
 			$Result=DB_query($sql,$db,'','',false,true);
 		}
@@ -396,7 +396,7 @@ function ReadPostData($ReportID, $Prefs) {
 			else { $Prefs['FieldListings'][$i-1]['visible'] = '0'; }
 		if ($_POST['break'.$i]=='1') { $Prefs['FieldListings'][$i-1]['columnbreak'] = '1'; }
 			else { $Prefs['FieldListings'][$i-1]['columnbreak'] = '0'; }
-		$sql = "UPDATE ".DBRptFields." SET 
+		$sql = "UPDATE ".DBRptFields." SET
 				visible='".$Prefs['FieldListings'][$i-1]['visible']."',
 				columnbreak='".$Prefs['FieldListings'][$i-1]['columnbreak']."'
 			WHERE reportid ='".$ReportID."' AND entrytype='fieldlist' AND seqnum='".$i."'";
@@ -418,7 +418,7 @@ function SaveDefSettings($ReportID, $EntryType, $SeqNum) {
 	global $db;
 	$sql = "UPDATE ".DBRptFields." SET params='0' WHERE reportid='".$ReportID."' AND entrytype='".$EntryType."';";
 	$Result=DB_query($sql,$db,'','',false,true);
-	$sql = "UPDATE ".DBRptFields." SET params='1' 
+	$sql = "UPDATE ".DBRptFields." SET params='1'
 		WHERE reportid ='".$ReportID."' AND entrytype='".$EntryType."' AND seqnum='".$SeqNum."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return true;
@@ -430,7 +430,7 @@ function SavePrefs($ReportID) {
 	if (!isset($_POST['CoyNameShow'])) $_POST['CoyNameShow'] = '0';
 	if (!isset($_POST['Title1Show'])) $_POST['Title1Show'] = '0';
 	if (!isset($_POST['Title2Show'])) $_POST['Title2Show'] = '0';
-	$sql = "UPDATE ".DBReports." SET 
+	$sql = "UPDATE ".DBReports." SET
 			papersize = '".$_POST['PaperSize']."',
 			paperorientation = '".$_POST['PaperOrientation']."',
 			margintop = ".$_POST['MarginTop'].",
@@ -516,7 +516,7 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 			$Rtn['default'] = false;
 			$Rtn['message'] = RPT_SAVEDUP;
 			return $Rtn;
-		} 
+		}
 		// check for the same report to update or replace a different report than ReportID
 		if ($myrow['id']<>$ReportID) { // erase the report to overwrite and duplicate ReportID
 			$sql= "DELETE FROM ".DBReports." WHERE id = '".$myrow['id']."'";
@@ -528,7 +528,7 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 			$Rtn['ReportID'] = $ReportID;
 			$Rtn['result'] = 'success';
 			return $Rtn;
-		}		
+		}
 	}
 	// Input validated perform requested operation
 	$OrigID = $ReportID;
@@ -550,7 +550,7 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 	$Result=DB_query($sql,$db,'','',false,true);
 	while ($temp = DB_fetch_array($Result)) $field[] = $temp;
 	foreach ($field as $row) {
-		$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, seqnum, fieldname, 
+		$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, seqnum, fieldname,
 				displaydesc, visible, columnbreak, params)
 			VALUES ('".$ReportID."', '".$row['entrytype']."', '".$row['seqnum']."',
 				'".$row['fieldname']."', '".$row['displaydesc']."', '".$row['visible']."',

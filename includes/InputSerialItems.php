@@ -104,7 +104,7 @@ $EditLink =  '<br />
 $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">'. _('Remove All'). '</a>
 			<br />
 			</div>';
-			
+
 $sql="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";

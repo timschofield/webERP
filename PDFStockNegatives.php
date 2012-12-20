@@ -22,13 +22,13 @@ $sql = "SELECT stockmaster.stockid,
                locstock.loccode,
                locations.locationname,
                locstock.quantity
-        FROM stockmaster INNER JOIN locstock 
+        FROM stockmaster INNER JOIN locstock
         ON stockmaster.stockid=locstock.stockid
-        INNER JOIN locations 
+        INNER JOIN locations
         ON locstock.loccode = locations.loccode
         WHERE locstock.quantity < 0
-        ORDER BY locstock.loccode, 
-			stockmaster.categoryid, 
+        ORDER BY locstock.loccode,
+			stockmaster.categoryid,
 			stockmaster.stockid,
 			stockmaster.decimalplaces";
 

@@ -238,7 +238,7 @@ echo '<br />
 		<td><input type="text" name="NewDebtorNo" size="20" maxlength="20" /></td>
 	</tr>
 	</table>
-	
+
 	<input type="submit" name="ProcessCustomerChange" value="' . _('Process') . '" />
 	</div>
 	</form>';

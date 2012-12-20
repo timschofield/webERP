@@ -4,7 +4,7 @@ error_reporting(E_ALL && ~E_NOTICE);
 ini_set('display_errors', 'On');
 ini_set('max_execution_time', '580');
 /*Klaus Opto advised that timeout issues made it difficult to install even though max_execution_time has been set - Tim though set_time_limit should also be set - it might be a windows thing - Klaus was using WAMP */
-set_time_limit(580); 
+set_time_limit(580);
 
 require_once('../includes/MiscFunctions.php');
 // Start a session
@@ -337,7 +337,7 @@ if (!$db){
 
 if($_POST['install_tables'] == true){
 	$dbName = $_POST['db_prefix'].$_POST['database_name'];
-	
+
 	/* Need to read in the sql script and process the queries to initate a new DB */
 	if ($_POST['DemoData'] == true){ //installing the demo data
 		$SQLScriptFile = file($path_to_root . '/sql/mysql/weberp-demo.sql');
@@ -373,7 +373,7 @@ if($_POST['install_tables'] == true){
 				// Database created above with correct name.
 				if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
 				    AND strncasecmp($SQL, ' USE ', 5)){
-					
+
 					$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 					$result = mysqli_query($db,$SQL);
 				}

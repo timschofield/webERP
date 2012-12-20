@@ -52,7 +52,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	for ($AllocCounter=0; $AllocCounter < $_POST['TotalNumberOfAllocs']; $AllocCounter++){
 
 		$_POST['Amt' . $AllocCounter] = filter_number_format($_POST['Amt' . $AllocCounter]);
-		
+
 		if (!is_numeric($_POST['Amt' . $AllocCounter])){
 		      $_POST['Amt' . $AllocCounter] = 0;
 		 }
@@ -113,10 +113,10 @@ if (isset($_POST['UpdateDatabase'])){
 			    need to delete the old allocation record */
 
 				$SQL = "DELETE FROM suppallocs WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
-				
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existing allocation for') . ' ' . $AllocnItem->TransType .' ' . $AllocnItem->TypeNo . ' ' . _('could not be deleted because');
 				$DbgMsg = _('The following SQL to delete the allocation record was used');
-				
+
 				$Result=DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 			 }
 
@@ -127,10 +127,10 @@ if (isset($_POST['UpdateDatabase'])){
 			 the transaction with the new alloc amount and diff on exch */
 
 				     if ($AllocnItem->AllocAmt > 0){
-					     $SQL = "INSERT INTO suppallocs (datealloc, 
-														amt, 
-														transid_allocfrom, 
-														transid_allocto) 
+					     $SQL = "INSERT INTO suppallocs (datealloc,
+														amt,
+														transid_allocfrom,
+														transid_allocto)
 										VALUES ('" . FormatDateForSQL(date($_SESSION['DefaultDateFormat'])) . "',
 										     		'" . $AllocnItem->AllocAmt . "',
 												'" . $_SESSION['Alloc']->AllocTrans . "',
@@ -310,9 +310,9 @@ If (isset($_GET['AllocTrans'])){
 		    FROM supptrans INNER JOIN systypes
 			ON supptrans.type = systypes.typeid
 			INNER JOIN suppliers
-			ON supptrans.supplierno = suppliers.supplierid 
-			INNER JOIN currencies 
-			ON suppliers.currcode=currencies.currabrev 
+			ON supptrans.supplierno = suppliers.supplierid
+			INNER JOIN currencies
+			ON suppliers.currcode=currencies.currabrev
 		    WHERE supptrans.id='" . $_SESSION['AllocTrans'] . "'";
 
 	$Result = DB_query($SQL, $db);
@@ -393,7 +393,7 @@ If (isset($_GET['AllocTrans'])){
 					amt,
 					suppallocs.id AS allocid
 			FROM supptrans INNER JOIN systypes
-			ON supptrans.type = systypes.typeid 
+			ON supptrans.type = systypes.typeid
 			INNER JOIN suppallocs
 			ON supptrans.id=suppallocs.transid_allocto
 			WHERE suppallocs.transid_allocfrom='" . $_SESSION['AllocTrans'] .
@@ -409,8 +409,8 @@ If (isset($_GET['AllocTrans'])){
 
 		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
 
-		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'], 
-												$myrow['typename'], 
+		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
+												$myrow['typename'],
 												$myrow['transno'],
 												ConvertSQLDate($myrow['trandate']), $myrow['suppreference'], $myrow['amt'],
 												$myrow['total'],
@@ -545,13 +545,13 @@ if (isset($_POST['AllocTrans'])){
 				decimalplaces AS currdecimalplaces
 		  	FROM supptrans INNER JOIN suppliers
 		  	ON supptrans.supplierno=suppliers.supplierid
-		  	INNER JOIN systypes  
-		  	ON supptrans.type=systypes.typeid 
-		  	INNER JOIN currencies 
+		  	INNER JOIN systypes
+		  	ON supptrans.type=systypes.typeid
+		  	INNER JOIN currencies
 		  	ON suppliers.currcode=currencies.currabrev
 		  	WHERE suppliers.supplierid='" . $_GET['SupplierID'] ."'
-			AND (supptrans.type=21 OR supptrans.type=22) 
-			AND settled=0 
+			AND (supptrans.type=21 OR supptrans.type=22)
+			AND settled=0
 			ORDER BY id";
 
   $result = DB_query($sql, $db);
@@ -602,7 +602,7 @@ if (isset($_POST['AllocTrans'])){
 			locale_number_format($myrow['total']-$myrow['alloc'], $myrow['currdecimalplaces']),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['id']);
-	
+
   }
 
 } else { /* show all outstanding payments and credits to be allocated */
@@ -627,11 +627,11 @@ if (isset($_POST['AllocTrans'])){
 		  	FROM supptrans INNER JOIN suppliers
 			ON supptrans.supplierno=suppliers.supplierid
 			INNER JOIN systypes
-			ON supptrans.type=systypes.typeid 
-			INNER JOIN currencies 
+			ON supptrans.type=systypes.typeid
+			INNER JOIN currencies
 			ON suppliers.currcode=currencies.currabrev
 			WHERE (supptrans.type=21 OR supptrans.type=22)
-			AND settled=0 
+			AND settled=0
 			ORDER BY id";
 
   $result = DB_query($sql, $db);
@@ -678,7 +678,7 @@ if (isset($_POST['AllocTrans'])){
 			locale_number_format($myrow['total']-$myrow['alloc'],$myrow['currdecimalplaces']),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['id']);
-	
+
 
   }  //END WHILE LIST LOOP
 

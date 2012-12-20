@@ -305,7 +305,7 @@ echo '<tr>
 		<td class="number">' . locale_number_format($TotalUsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($TotalCostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
-	
+
 echo '<tr>
 		<td colspan="3"></td>
 		<td><hr/></td>

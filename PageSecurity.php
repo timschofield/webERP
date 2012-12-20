@@ -32,7 +32,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 $TokenSql="SELECT tokenid, tokenname
-			FROM securitytokens 
+			FROM securitytokens
 			ORDER BY tokenname";
 $TokenResult=DB_query($TokenSql, $db);
 

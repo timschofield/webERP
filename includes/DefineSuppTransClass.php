@@ -197,7 +197,7 @@ Class SuppTrans {
 									$Amount,
 									$Narrative,
 									$Tag){
-		
+
 		if ($Amount!=0 AND isset($Amount)){
 			$this->GLCodes[$this->GLCodesCounter] = new GLCodes($this->GLCodesCounter,
 																$GLCode,
@@ -263,7 +263,7 @@ Class SuppTrans {
 	function Remove_Contract_From_Trans($ContractID){
 	     unset($this->Contracts[$ContractID]);
 	}
-	
+
 	function Total_GRN_Value(){
 		$TotalGRNs =0;
 		foreach ($this->GRNs as $GRN) {
@@ -423,7 +423,7 @@ Class GLCodes {
 		$this->Amount = $Amount;
 		$this->Narrative = $Narrative;
 		$this->Tag = $Tag;
-		
+
 		$TagResult=DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'", $db);
 		$TagMyrow=DB_fetch_array($TagResult);
 		if ($Tag==0) {

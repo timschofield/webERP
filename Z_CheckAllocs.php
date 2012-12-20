@@ -13,7 +13,7 @@ $sql = "SELECT debtortrans.id,
 		ovamount+ovgst AS totamt,
 		SUM(custallocns.Amt) AS totalalloc,
 		debtortrans.alloc
-	FROM debtortrans INNER JOIN custallocns 
+	FROM debtortrans INNER JOIN custallocns
 	ON debtortrans.id=custallocns.transid_allocto
 	WHERE debtortrans.type=10
 	GROUP BY debtortrans.ID,
@@ -45,10 +45,10 @@ while ($myrow = DB_fetch_array($result)){
 				ovamount+ovgst+ovfreight+ovdiscount AS totalamt,
 				custallocns.amt,
 				decimalplaces AS currdecimalplaces
-			FROM debtortrans INNER JOIN custallocns 
+			FROM debtortrans INNER JOIN custallocns
 			ON debtortrans.id=custallocns.transid_allocfrom
 			INNER JOIN debtorsmaster ON
-			debtortrans.debtorno=debtorsmaster.debtorno 
+			debtortrans.debtorno=debtorsmaster.debtorno
 			INNER JOIN currencies ON
 			debtorsmaster.currcode=currencies.currabrev
 			WHERE custallocns.transid_allocto='" . $AllocToID . "'";
@@ -87,7 +87,7 @@ while ($myrow = DB_fetch_array($result)){
 			$TransType = _('Receipt');
 		}
 		$CurrDecimalPlaces = $myrow1['currdecimalplaces'];
-		
+
 		printf( '<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -101,7 +101,7 @@ while ($myrow = DB_fetch_array($result)){
 				locale_number_format($myrow1['exrate'],4),
 				locale_number_format($myrow1['totalamt'],$CurrDecimalPlaces),
 				locale_number_format($myrow1['amt'],$CurrDecimalPlaces));
-	
+
 		$RowCounter++;
 		If ($RowCounter == 12){
 			$RowCounter=1;

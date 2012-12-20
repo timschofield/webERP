@@ -146,7 +146,7 @@ if (isset($_POST['PrintPDF'])){
 					INNER JOIN salesman
 					ON custbranch.salesman=salesman.salesmancode
 					WHERE (";
-	
+
 			$i=0;
 			foreach ($_POST['Areas'] as $Area){
 				if ($i>0){

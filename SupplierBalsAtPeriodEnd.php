@@ -34,9 +34,9 @@ If (isset($_POST['PrintPDF'])
 						supptrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 						supptrans.ovamount + supptrans.ovgst ELSE 0 END) AS fxafterdatetrans
-			FROM suppliers INNER JOIN currencies 
+			FROM suppliers INNER JOIN currencies
 			ON suppliers.currcode = currencies.currabrev
-			INNER JOIN supptrans 
+			INNER JOIN supptrans
 			ON suppliers.supplierid = supptrans.supplierno
 			WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
 			AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
@@ -126,7 +126,7 @@ If (isset($_POST['PrintPDF'])
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	
+
     echo '<table class="selection">';
     echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
@@ -140,9 +140,9 @@ If (isset($_POST['PrintPDF'])
 			<td>' . _('Balances As At') . ':</td>
 			<td><select name="PeriodEnd">';
 
-	$sql = "SELECT periodno, 
-					lastdate_in_period 
-			FROM periods 
+	$sql = "SELECT periodno,
+					lastdate_in_period
+			FROM periods
 			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');

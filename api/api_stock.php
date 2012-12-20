@@ -1,5 +1,5 @@
 <?php
-	
+
 /* Check that the stock code*/
 	function VerifyStockCode($StockCode, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(stockid)
@@ -560,8 +560,8 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT quantity, 
-                     loccode 
+		$sql="SELECT quantity,
+                     loccode
                FROM locstock WHERE stockid='" . $StockID."'";
 		$result = DB_query($sql, $db);
 		if (sizeof($Errors)==0) {
@@ -618,8 +618,8 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="UPDATE locstock SET reorderlevel='".$ReorderLevel."' 
-                     WHERE stockid='".$StockID."' 
+		$sql="UPDATE locstock SET reorderlevel='".$ReorderLevel."'
+                     WHERE stockid='".$StockID."'
                      AND loccode='".$Location."'";
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
@@ -641,8 +641,8 @@
 			return $Errors;
 		}
 		$sql="SELECT sum(quantity)
-             FROM salesorderdetails 
-             WHERE stkcode='".$StockID."' 
+             FROM salesorderdetails
+             WHERE stkcode='".$StockID."'
              AND completed=0";
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
@@ -665,8 +665,8 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT sum(quantityord-quantityrecd) 
-              FROM purchorderdetails 
+		$sql="SELECT sum(quantityord-quantityrecd)
+              FROM purchorderdetails
               WHERE itemcode='".$StockID."'
               AND completed=0";
 		$result = DB_Query($sql, $db);
@@ -700,8 +700,8 @@
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]==0) {
 			$sql="INSERT INTO prices VALUES('". $StockID."',
-                                            '". $SalesType ."', 
-                                            '". $Currency."', 
+                                            '". $SalesType ."',
+                                            '". $Currency."',
                                             '',
                                             '". $Price ."',
                                             '')";
@@ -814,7 +814,7 @@
                                        '" .$Quantity."',
                                        '" .$newqoh."')";
 		$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity."
-                             WHERE loccode='".$Location."' 
+                             WHERE loccode='".$Location."'
                              AND stockid='".$StockID."'";
 		$glupdatesql1="INSERT INTO gltrans (type,
                                             typeno,

@@ -14,7 +14,7 @@ $sql = "SELECT debtortrans.type,
 	FROM debtortrans INNER JOIN custallocns
 	ON debtortrans.id=custallocns.transid_allocfrom
 	INNER JOIN debtorsmaster ON
-	debtortrans.debtorno=debtorsmaster.debtorno 
+	debtortrans.debtorno=debtorsmaster.debtorno
 	INNER JOIN currencies ON
 	debtorsmaster.currcode=currencies.currabrev
 	GROUP BY debtortrans.type,
@@ -51,7 +51,7 @@ if (DB_num_rows($result)>0){
 				locale_number_format($myrow['ovamount'],$myrow['currdecimalplaces']),
 				locale_number_format($myrow['alloc'],$myrow['currdecimalplaces']),
 				locale_number_format($myrow['totallocfrom'],$myrow['currdecimalplaces']));
-		
+
 		$RowCounter++;
 		if ($RowCounter==20){
 			echo '<tr><td>' . _('Type') . '</td>

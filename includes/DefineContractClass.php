@@ -27,7 +27,7 @@ Class Contract {
 
 	var $ContractBOM; /*array of stockid components  required for the contract */
 	var $ContractReqts; /*array of other items required for the contract */
-	
+
 	function Contract(){
 	/*Constructor function initialises a new Payment batch */
 		$this->ContractBOM = array();
@@ -37,21 +37,21 @@ Class Contract {
 		$this->Status = 0;
 	}
 
-	function Add_To_ContractBOM($StockID, 
-							    $ItemDescription, 
-							    $WorkCentre, 
-							    $Quantity, 
-							    $ItemCost, 
+	function Add_To_ContractBOM($StockID,
+							    $ItemDescription,
+							    $WorkCentre,
+							    $Quantity,
+							    $ItemCost,
 							    $UOM,
 							    $DecimalPlaces){
-																
+
 		if (isset($StockID) AND $Quantity!=0){
 			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($this->BOMComponentCounter,
-																	$StockID, 
-																	$ItemDescription, 
-																	$WorkCentre, 
+																	$StockID,
+																	$ItemDescription,
+																	$WorkCentre,
 																	$Quantity,
-																	$ItemCost, 
+																	$ItemCost,
 																	$UOM,
 																	$DecimalPlaces);
 			$this->BOMComponentCounter++;
@@ -62,21 +62,21 @@ Class Contract {
 
 	function Remove_ContractComponent($ContractComponent_ID){
 		global $db;
-		$result = DB_query("DELETE FROM contractbom 
-											WHERE contractref='" . $this->ContractRef . "' 
+		$result = DB_query("DELETE FROM contractbom
+											WHERE contractref='" . $this->ContractRef . "'
 											AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'",
 											$db);
 		unset($this->ContractBOM[$ContractComponent_ID]);
 	}
 
-	
+
 /*Requirments Methods */
 
-function Add_To_ContractRequirements($Requirement, 
-									$Quantity, 
+function Add_To_ContractRequirements($Requirement,
+									$Quantity,
 									$CostPerUnit,
 									$ContractReqID=0){
-										
+
 		if (isset($Requirement) AND $Quantity!=0 AND $CostPerUnit!=0){
 			$this->ContractReqts[$this->RequirementsCounter] = new ContractRequirement($Requirement, $Quantity, $CostPerUnit,$ContractReqID);
 			$this->RequirementsCounter++;
@@ -102,16 +102,16 @@ Class ContractComponent {
 	var $ItemCost;
 	var $UOM;
 	var $DecimalPlaces;
-	
-	function ContractComponent ($ComponentID, 
-								$StockID, 
-								$ItemDescription, 
-								$WorkCentre, 
-								$Quantity, 
-								$ItemCost, 
+
+	function ContractComponent ($ComponentID,
+								$StockID,
+								$ItemDescription,
+								$WorkCentre,
+								$Quantity,
+								$ItemCost,
 								$UOM,
 								$DecimalPlaces=0){
-	
+
 /* Constructor function to add a new Contract Component object with passed params */
 		$this->ComponentID = $ComponentID;
 		$this->StockID = $StockID;
@@ -130,9 +130,9 @@ Class ContractRequirement {
 	var $Requirement; /*The description of the requirement for the contract */
 	var $Quantity;
 	var $CostPerUnit;
-	
-	function ContractRequirement ($Requirement, 
-									$Quantity, 
+
+	function ContractRequirement ($Requirement,
+									$Quantity,
 									$CostPerUnit,
 									$ContractReqID=0){
 

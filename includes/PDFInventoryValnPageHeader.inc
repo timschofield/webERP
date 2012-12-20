@@ -28,7 +28,7 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Marg
 $Xpos = $Left_Margin+1;
 
 if ($_POST['DetailedReport']=='Yes'){
-	
+
 	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,_('Category') . '/' . _('Item'), 'left');
 	$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,_('Quantity'), 'center');
 	$LeftOvers = $pdf->addTextWrap(422,$YPos,15,$FontSize,_('Units'), 'center');

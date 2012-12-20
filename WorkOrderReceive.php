@@ -377,7 +377,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			$DbgMsg =  _('The following SQL to update the work order cost was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-			if ($_SESSION['CompanyRecord']['gllink_stock']==1 
+			if ($_SESSION['CompanyRecord']['gllink_stock']==1
 				AND ($AutoIssueCompRow['qtypu'] * $QuantityReceived * $AutoIssueCompRow['cost'])!=0){
 			//if GL linked then do the GL entries to DR wip and CR stock
 
@@ -883,8 +883,8 @@ if($WORow['controlled']==1){ //controlled
 			</tr>';
 		if ($_SESSION['DefineControlledOnWOEntry']==1){ //then potentially batches/lots already set up
 			//retrieve them from woserialnos
-			$WOSNResult = DB_query("SELECT serialno, 
-											quantity, 
+			$WOSNResult = DB_query("SELECT serialno,
+											quantity,
 											qualitytext
 									FROM woserialnos
 									WHERE wo='" . $_POST['WO'] . "'

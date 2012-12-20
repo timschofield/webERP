@@ -22,8 +22,8 @@ if (!isset($_GET['CreditNoteNo'])){
 }
 /*get the order number that was credited */
 
-$SQL = "SELECT order_, id 
-		FROM debtortrans 
+$SQL = "SELECT order_, id
+		FROM debtortrans
 		WHERE transno='" . $_GET['CreditNoteNo'] . "' AND type='11'";
 $Result = DB_query($SQL, $db);
 
@@ -104,7 +104,7 @@ foreach ($StockMovement as $CreditLine) {
 
 	$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg, true);
 
-/*Delete Sales Analysis records 
+/*Delete Sales Analysis records
  * This is unreliable as the salesanalysis record contains totals for the item cust custbranch periodno */
 	$SQL = "DELETE FROM salesanalysis
                        WHERE periodno = '" . $CreditLine['prd'] . "'

@@ -30,13 +30,13 @@ if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
 	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a purchase order number to print');
 	echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a></div>';
 	exit;
-} 
+}
 if (isset($_GET['OrderNo'])) {
 	$OrderNo = $_GET['OrderNo'];
-} 
+}
 elseif (isset($_POST['OrderNo'])) {
 	$OrderNo = $_POST['OrderNo'];
-} 
+}
 $title = _('Print Purchase Order Number') . ' ' . $OrderNo;
 
 if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
@@ -45,16 +45,16 @@ if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
 		prnMsg(_('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
 		include('includes/footer.inc');
 		exit;
-	} 
-} 
+	}
+}
 $ViewingOnly = 0;
 
 if (isset($_GET['ViewingOnly']) AND $_GET['ViewingOnly'] != '') {
 	$ViewingOnly = $_GET['ViewingOnly'];
-} 
+}
 elseif (isset($_POST['ViewingOnly']) AND $_POST['ViewingOnly'] != '') {
 	$ViewingOnly = $_POST['ViewingOnly'];
-} 
+}
 
 /* If we are previewing the order then we dont want to email it */
 if ($OrderNo == 'Preview') { //OrderNo is set to 'Preview' when just looking at the format of the printed order
@@ -71,7 +71,7 @@ if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly
 } elseif (isset($_POST['DoIt']) AND $_POST['PrintOrEmail'] == 'Email' AND isset($_POST['EmailTo'])) {
 	$MakePDFThenEmailIt = True;
 	$MakePDFThenDisplayIt = False;
-} 
+}
 
 if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview') {
 	/*retrieve the order details from the database to print */
@@ -137,8 +137,8 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 			prnMsg(_('Purchase orders can only be printed once they have been authorised') . '. ' . _('This order is currently at a status of') . ' ' . _($POHeader['status']), 'warn');
 			include('includes/footer.inc');
 			exit;
-		} 
-		
+		}
+
 		if ($ViewingOnly == 0) {
 			if ($POHeader['allowprint'] == 0) {
 				$title = _('Purchase Order Already Printed');
@@ -215,7 +215,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 					ON purchorderdetails.itemcode=stockmaster.stockid
 				WHERE orderno ='" . $OrderNo . "'";
 		$result = DB_query($sql, $db);
-	} 
+	}
 	if ($OrderNo == 'Preview' or DB_num_rows($result) > 0) {
 		/*Yes there are line items to start the ball rolling with a page header */
 		include('includes/PO_PDFOrderPageHeader.inc');
@@ -234,10 +234,10 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				$POLine['quantityord'] = 9999.99;
 				$POLine['conversionfactor'] = 1;
 				$POLine['decimalplaces'] = 2;
-			} 
+			}
 			if ($POLine['decimalplaces'] != NULL) {
 				$DecimalPlaces = $POLine['decimalplaces'];
-			} 
+			}
 			else {
 				$DecimalPlaces = 2;
 			}
@@ -277,7 +277,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			if (mb_strlen($LeftOvers) > 1) {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $line_height, 270, $FontSize, $LeftOvers, 'left');
 				$YPos -= $line_height;
-			} 
+			}
 			if ($YPos - $line_height <= $Bottom_Margin) {
 				/* We reached the end of the page so finsih off the page and start a newy */
 				$PageNumber++;
@@ -305,7 +305,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$pdf->addText($FormDesign->OrderTotalCaption->x, $Page_Height - $FormDesign->OrderTotalCaption->y, $FormDesign->OrderTotalCaption->FontSize, _('Order Total - excl tax') . ' ' . $POHeader['currcode']);
 		$LeftOvers = $pdf->addTextWrap($FormDesign->OrderTotal->x, $Page_Height - $FormDesign->OrderTotal->y, $FormDesign->OrderTotal->Length, $FormDesign->OrderTotal->FontSize, $DisplayOrderTotal, 'right');
 	} /*end if there are order details to show on the order - or its a preview*/
-	
+
 	$Success = 1; //assume the best and email goes - has to be set to 1 to allow update status
 	if ($MakePDFThenDisplayIt) {
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf');
@@ -348,7 +348,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 										stat_comment = '" . htmlspecialchars($StatusComment, ENT_QUOTES, 'UTF-8') . "'
 				WHERE purchorders.orderno = '" . $OrderNo . "'";
 		$result = DB_query($sql, $db);
-	} 
+	}
 	include('includes/footer.inc');
 } //isset($MakePDFThenDisplayIt) OR isset($MakePDFThenEmailIt)
 
@@ -371,10 +371,10 @@ else {
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
-	} 
+	}
 	if ($ViewingOnly != 0) {
 		echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
-	} 
+	}
 	else {
 		if ($_POST['PrintOrEmail'] == 'Print') {
 			echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
@@ -389,7 +389,7 @@ else {
 		<select name="ShowAmounts">';
 	if (!isset($_POST['ShowAmounts'])) {
 		$_POST['ShowAmounts'] = 'Yes';
-	} 
+	}
 	if ($_POST['ShowAmounts'] == 'Yes') {
 		echo '<option selected="selected" value="Yes">' . _('Yes') . '</option>';
 		echo '<option value="No">' . _('No') . '</option>';
@@ -415,8 +415,8 @@ else {
 					} else {
 						echo '<option value="' . $ContactDetails['email'] . '">' . $ContactDetails['contact'] . ' - ' . $ContactDetails['email'] . '</option>';
 					}
-				} 
-			} 
+				}
+			}
 			echo '</select></td></tr></table>';
 		} else {
 			echo '</table><br />';

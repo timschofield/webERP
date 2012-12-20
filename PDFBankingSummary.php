@@ -156,10 +156,10 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 			include ('includes/PDFBankingSummaryPageHeader.inc');
 		} /*end of new page header  */
 	} /* end of while there are customer receipts in the batch to print */
-	
+
 	/* Right now print out the GL receipt entries in the batch */
 	while ($myrow=DB_fetch_array($GLRecs)){
-	
+
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),$BankCurrDecimalPlaces), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
 		$YPos -= ($line_height);

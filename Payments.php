@@ -149,28 +149,20 @@ if (isset($_POST['ExRate']) AND $_POST['ExRate']!=''){
 	$_SESSION['PaymentDetail' . $identifier]->ExRate=filter_number_format($_POST['ExRate']); //ex rate between payment currency and account currency
 }
 if (isset($_POST['FunctionalExRate']) AND $_POST['FunctionalExRate']!=''){
-	$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate=filter_number_format($_POST['FunctionalExRate']); //ex rate between payment currency and account currency
+	$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate=filter_number_format($_POST['FunctionalExRate']); //ex rate between bank account currency and functional (business home) currency
 }
 if (isset($_POST['Paymenttype']) AND $_POST['Paymenttype']!=''){
 	$_SESSION['PaymentDetail' . $identifier]->Paymenttype = $_POST['Paymenttype'];
 }
 
 if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
+	/* Payment currency is the currency that is being paid */
 	$_SESSION['PaymentDetail' . $identifier]->Currency=$_POST['Currency']; //payment currency
-	/*Get the exchange rate between the functional currency and the payment currency*/
-	$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'",$db);
-	$myrow = DB_fetch_row($result);
-	$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency
-
-	if ($_POST['Currency']==$_SESSION['PaymentDetail' . $identifier]->AccountCurrency){
-		$_POST['ExRate']=1;
-		$_SESSION['PaymentDetail' . $identifier]->ExRate=filter_number_format($_POST['ExRate']); //ex rate between payment currency and account currency
-		$SuggestedExRate=1;
-	}
+	
+	
 	if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency==$_SESSION['CompanyRecord']['currencydefault']){
 		$_POST['FunctionalExRate']=1;
-		$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate=filter_number_format($_POST['FunctionalExRate']);
-		$SuggestedExRate = $tableExRate;
+		$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate=1;
 		$SuggestedFunctionalExRate =1;
 
 	} else {
@@ -183,19 +175,28 @@ if (isset($_POST['Currency']) AND $_POST['Currency']!=''){
 			or 0.8/0.9 = 0.88889
 		*/
 
-		/*Get suggested FunctionalExRate */
+		/*Get suggested FunctionalExRate - between bank account and home functional currency */
 		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$SuggestedFunctionalExRate = $myrow[0];
 
-		/*Get the exchange rate between the functional currency and the payment currency*/
+	}
+	
+	
+	if ($_POST['Currency']==$_SESSION['PaymentDetail' . $identifier]->AccountCurrency){
+		/* if the currency being paid is the same as the bank account currency then default ex rate to 1 */
+		$_POST['ExRate']=1;
+		$_SESSION['PaymentDetail' . $identifier]->ExRate = 1; //ex rate between payment currency and account currency is 1 if they are the same!!
+		$SuggestedExRate=1;
+	} elseif(isset($_POST['Currency'])) {
+		/*Get the exchange rate between the bank account currency and the payment currency*/
 		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'",$db);
 		$myrow = DB_fetch_row($result);
-		$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency
+		$TableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency
 		/*Calculate cross rate to suggest appropriate exchange rate between payment currency and account currency */
-		$SuggestedExRate = $tableExRate/$SuggestedFunctionalExRate;
-
+		$SuggestedExRate = $TableExRate/$SuggestedFunctionalExRate;
 	}
+
 }
 
 
@@ -451,7 +452,7 @@ if (isset($_POST['CommitBatch'])){
 					'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
 					'" . date('Y-m-d H-i-s') . "',
 					'" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "',
-					'" . ($_SESSION['PaymentDetail' . $identifier]->FunctionalExRate/$_SESSION['PaymentDetail' . $identifier]->ExRate) . "',
+					'" . ($_SESSION['PaymentDetail' . $identifier]->FunctionalExRate * $_SESSION['PaymentDetail' . $identifier]->ExRate) . "',
 					'" . (-$_SESSION['PaymentDetail' . $identifier]->Amount-$_SESSION['PaymentDetail' . $identifier]->Discount) . "',
 					'" . $_SESSION['PaymentDetail' . $identifier]->Narrative . "'
 				)";

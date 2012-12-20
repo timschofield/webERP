@@ -68,7 +68,7 @@ $sql = "SELECT salesorders.debtorno,
 		AND salesorders.shipvia=shippers.shipper_id
 		AND salesorders.fromstkloc=locations.loccode
 		AND salesorders.orderno='" . $_GET['TransNo'] . "'";
-	
+
 $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
@@ -92,7 +92,7 @@ if (DB_num_rows($result)==0){
 			<br />
 			<br />
 			<br />';
-			
+
 	include('includes/footer.inc');
 	exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
@@ -147,7 +147,7 @@ $line_height=24;
 $PageNumber = 1;
 $Copy = 'Office';
 
-$ListCount = 0; 
+$ListCount = 0;
 
 for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for office */
 	if ($i==2){
@@ -178,7 +178,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 		while ($myrow2=DB_fetch_array($result)){
 
             $ListCount ++;
-			
+
 			$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
 			$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
@@ -188,7 +188,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
 			$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 			$LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize,$DisplayPrevDel,'right');
-		
+
 			if ($YPos-$line_height <= 50){
 			/* We reached the end of the page so finsih off the page and start a newy */
 				$PageNumber++;
@@ -198,13 +198,13 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				/*increment a line down for the next line item */
 				$YPos -= ($line_height);
 			}
-			if ($myrow2['mbflag']=='A'){ 
+			if ($myrow2['mbflag']=='A'){
 				/*Then its an assembly item - need to explode into it's components for packing list purposes */
 				$sql = "SELECT bom.component,
 								bom.quantity,
 								stockmaster.description,
 								stockmaster.decimalplaces
-						FROM bom INNER JOIN stockmaster 
+						FROM bom INNER JOIN stockmaster
 						ON bom.component=stockmaster.stockid
 						WHERE bom.parent='" . $myrow2['stkcode'] . "'";
 				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
@@ -248,8 +248,8 @@ if ($ListCount == 0) {
 } else {
     	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . date('Y-m-d') . '.pdf');
     	$pdf->__destruct();
-	$sql = "UPDATE salesorders SET printedpackingslip=1, 
-									datepackingslipprinted='" . Date('Y-m-d') . "' 
+	$sql = "UPDATE salesorders SET printedpackingslip=1,
+									datepackingslipprinted='" . Date('Y-m-d') . "'
 				WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 	$result = DB_query($sql,$db);
 }

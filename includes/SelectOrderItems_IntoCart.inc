@@ -14,7 +14,7 @@ items into the cart as well as plain vanilla items outside of the kitset loop
 
 $AlreadyOnThisOrder =0;
 
-if (count($_SESSION['Items'.$identifier]->LineItems)>0 
+if (count($_SESSION['Items'.$identifier]->LineItems)>0
 	AND $_SESSION['SO_AllowSameItemMultipleTimes']==0){
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems AS $OrderItem) {
@@ -90,7 +90,7 @@ if ($AlreadyOnThisOrder!=1){
 				$UpdateDB = 'No';
 				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
 			}
-			
+
 			if (isset($StockItem) and $myItemRow['discountcategory'] != '' ){
 				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
 				$QuantityOfDiscCat =0;
@@ -116,7 +116,7 @@ if ($AlreadyOnThisOrder!=1){
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 			  	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
             }
-			if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){  
+			if ($_SESSION['CheckCreditLimits'] > 0 AND $AlreadyWarnedAboutCredit==false){
 				/*Check credit limits is 1 for warn	and 2 for prohibit sales */
 				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 

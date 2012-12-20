@@ -82,7 +82,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				ON offers.currcode=purchorderauth.currabrev
 			INNER JOIN suppliers
 				ON suppliers.supplierid=offers.supplierid
-			INNER JOIN currencies 
+			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 			LEFT JOIN stockmaster
 				ON stockmaster.stockid=offers.stockid

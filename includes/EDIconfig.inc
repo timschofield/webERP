@@ -42,11 +42,11 @@ write the output to a file one line at a time
 
 Need code of supplier or customer and the type of message INVOIC or ORDERS*/
 
-$sql = "SELECT section, 
-		linetext 
-	FROM edimessageformat 
-	WHERE partnercode='" . $PartnerCode . "' 
-	AND messagetype='" . $MessageType . "' 
+$sql = "SELECT section,
+		linetext
+	FROM edimessageformat
+	WHERE partnercode='" . $PartnerCode . "'
+	AND messagetype='" . $MessageType . "'
 	ORDER BY sequenceno";
 
 $MessageLinesResult = DB_query($sql, $db);

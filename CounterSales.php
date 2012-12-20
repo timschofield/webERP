@@ -179,9 +179,9 @@ if (!isset($_SESSION['Items'.$identifier])){
 			$_SESSION['Items'.$identifier]->DeliverBlind = $myrow['deliverblind'];
 			$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
 			$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
-			$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];			
+			$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
 			$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesman'];
-	
+
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 				prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 			}
@@ -880,7 +880,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 	}
-	
+
 	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
 		if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
 			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
@@ -888,7 +888,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ){ /*only show order line
 			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 		}
 	}
-	
+
 	echo '</select></td>
 		</tr>';
 	echo '<tr>
@@ -1448,7 +1448,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 													qty,
 													standardcost,
 													show_on_inv_crds,
-													newqoh) 
+													newqoh)
 										VALUES ('" . $AssParts['component'] . "',
 												 10,
 												'" . $InvoiceNo . "',

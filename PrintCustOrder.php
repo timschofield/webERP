@@ -170,7 +170,7 @@ if (DB_num_rows($result)>0){
 		$this->Cell(0, 10, _('Page').$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
 		}
 	}
-	
+
 	$pdf = new Cpdf1('L', 'pt', 'LETTER');
 
 	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');

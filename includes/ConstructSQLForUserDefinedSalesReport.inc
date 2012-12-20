@@ -204,9 +204,9 @@ $SQLGroupCls = $SQLGroupCls . GetGroupBySQL($ReportSpec['groupbydata1']);
 
 If ($ReportSpec['groupbydata2'] != 'Not Used') {
      $SQLSelectCls = $SQLSelectCls . ', ' . GetFieldSQL($ReportSpec['groupbydata2'],3);
-     
+
      $SQLWhereCls = $SQLWhereCls . " AND " . GetHavingSQL($ReportSpec['groupbydata2']) . " >= '" . $ReportSpec['lower2'] . "' AND " . GetHavingSQL($ReportSpec['groupbydata2']) . " <= '" . $ReportSpec['upper2'] . "'";
-     
+
 
      $SQLGroupCls = $SQLGroupCls . ', ' . GetGroupBySQL($ReportSpec['groupbydata2']);
 } else {
@@ -216,9 +216,9 @@ If ($ReportSpec['groupbydata2'] != 'Not Used') {
 
 If ($ReportSpec['groupbydata3'] != 'Not Used') {
 	 $SQLSelectCls = $SQLSelectCls . ', ' . GetFieldSQL($ReportSpec['groupbydata3'],5);
-	 
+
 	$SQLWhereCls = $SQLWhereCls . " AND " . GetHavingSQL($ReportSpec['groupbydata3']) . " >= '" . $ReportSpec['lower3'] . "' AND " . GetHavingSQL($ReportSpec['groupbydata3']) . " <= '" . $ReportSpec['upper3'] . "'";
-		 
+
 	 $SQLGroupCls = $SQLGroupCls . ', ' . GetGroupBySQL($ReportSpec['groupbydata3']);
 } else {
     	 $ReportSpec['groupbydata4'] = 'Not Used'; /*This is forced if no entry in Group By 3 */
@@ -228,7 +228,7 @@ If ($ReportSpec['groupbydata3'] != 'Not Used') {
 If ($ReportSpec['groupbydata4'] != 'Not Used') {
 	 $SQLSelectCls = $SQLSelectCls . ', ' . GetFieldSQL($ReportSpec['groupbydata4'],7);
 	$SQLWhereCls = $SQLWhereCls . " AND " . GetHavingSQL($ReportSpec['groupbydata4']) . " >= '" . $ReportSpec['lower4'] . "' AND " . GetHavingSQL($ReportSpec['groupbydata4']) . " <= '" . $ReportSpec['upper4'] . "'";
-	
+
 	 $SQLGroupCls = $SQLGroupCls . ', ' . GetGroupBySQL($ReportSpec['groupbydata4']);
 } else {
 	 $SQLSelectCls = $SQLSelectCls . ', 0 AS col7, 0 AS col8';

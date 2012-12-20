@@ -40,15 +40,15 @@ $myrow = DB_fetch_row($result);
 $DecimalPlaces = $myrow[3];
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';        
+echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
-if ($myrow[2]=='K' 
-	OR $myrow[2]=='A' 
+if ($myrow[2]=='K'
+	OR $myrow[2]=='A'
 	OR $myrow[2]=='D') {
-		
+
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	echo '<h3>' . $StockID . ' - ' . $myrow[0] . '</h3>';
 
@@ -106,11 +106,11 @@ if (isset($_POST['ShowUsage'])){
 	if($_POST['StockLocation']=='All'){
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
-				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
-							AND stockmoves.hidemovt=0 
-							AND stockmoves.stockid = '" . $StockID . "' 
+				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
+							AND stockmoves.hidemovt=0
+							AND stockmoves.stockid = '" . $StockID . "'
 						THEN -stockmoves.qty ELSE 0 END) AS qtyused
-				FROM periods LEFT JOIN stockmoves 
+				FROM periods LEFT JOIN stockmoves
 					ON periods.periodno=stockmoves.prd
 				WHERE periods.periodno <='" . $CurrentPeriod . "'
 				GROUP BY periods.periodno,
@@ -119,18 +119,18 @@ if (isset($_POST['ShowUsage'])){
 	} else {
 		$sql = "SELECT periods.periodno,
 				periods.lastdate_in_period,
-				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
-								AND stockmoves.hidemovt=0 
+				SUM(CASE WHEN (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28)
+								AND stockmoves.hidemovt=0
 								AND stockmoves.stockid = '" . $StockID . "'
 								AND stockmoves.loccode='" . $_POST['StockLocation'] . "'
 							THEN -stockmoves.qty ELSE 0 END) AS qtyused
-				FROM periods LEFT JOIN stockmoves 
+				FROM periods LEFT JOIN stockmoves
 					ON periods.periodno=stockmoves.prd
 				WHERE periods.periodno <='" . $CurrentPeriod . "'
 				GROUP BY periods.periodno,
 					periods.lastdate_in_period
 				ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
-			
+
 	}
 	$MovtsResult = DB_query($sql, $db);
 	if (DB_error_no($db) !=0) {
@@ -170,8 +170,8 @@ if (isset($_POST['ShowUsage'])){
 		$PeriodsCounter++;
 		printf('<td>%s</td>
 				<td class="number">%s</td>
-				</tr>', 
-				$DisplayDate, 
+				</tr>',
+				$DisplayDate,
 				locale_number_format($myrow['qtyused'],$DecimalPlaces));
 
 	//end of page full new headings if

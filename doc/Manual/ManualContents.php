@@ -74,7 +74,7 @@ if (!isset($_GET['ViewTopic'])){
 foreach ($TOC_Array['TableOfContents'] as $Name=>$FullName){
 	$PostName = 'Select' . $Name;
 	if (($_GET['ViewTopic'] == $Name)  OR (isset($_POST[$PostName]))){
-		
+
 		if ($Name=='APIFunctions') {
 			$ManualPage = 'Manual' . $Name . '.php';
 		} else {

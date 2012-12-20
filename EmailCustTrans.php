@@ -48,7 +48,7 @@ $SQL = "SELECT email
 		FROM custbranch INNER JOIN debtortrans
 			ON custbranch.debtorno= debtortrans.debtorno
 			AND custbranch.branchcode=debtortrans.branchcode
-		WHERE debtortrans.type='" . $TypeCode . "' 
+		WHERE debtortrans.type='" . $TypeCode . "'
 		AND debtortrans.transno='" .$_GET['FromTransNo'] . "'";
 
 $ErrMsg = _('There was a problem retrieving the contact details for the customer');

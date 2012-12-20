@@ -40,13 +40,13 @@ Class Shipment {
 		$this->LineItems[$PODetailItem]= new LineDetails($PODetailItem,
 														$OrderNo,
 														$StockID,
-														$ItemDescr, 
-														$QtyInvoiced, 
-														$UnitPrice, 
-														$UOM, 
-														$DelDate, 
-														$QuantityOrd, 
-														$QuantityRecd, 
+														$ItemDescr,
+														$QtyInvoiced,
+														$UnitPrice,
+														$UOM,
+														$DelDate,
+														$QuantityOrd,
+														$QuantityRecd,
 														$StdCostUnit,
 														$DecimalPlaces);
 
@@ -89,16 +89,16 @@ Class LineDetails {
 	var $DecimalPlaces;
 
 
-	function LineDetails ($PODetailItem, 
-							$OrderNo, 
-							$StockID, 
-							$ItemDescr, 
-							$QtyInvoiced, 
-							$UnitPrice, 
-							$UOM, 
-							$DelDate, 
-							$QuantityOrd, 
-							$QuantityRecd, 
+	function LineDetails ($PODetailItem,
+							$OrderNo,
+							$StockID,
+							$ItemDescr,
+							$QtyInvoiced,
+							$UnitPrice,
+							$UOM,
+							$DelDate,
+							$QuantityOrd,
+							$QuantityRecd,
 							$StdCostUnit,
 							$DecimalPlaces=2){
 

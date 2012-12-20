@@ -29,9 +29,9 @@ if (isset($_GET['SelectedToken'])) {
 			$Result = DB_query("DELETE FROM securitytokens WHERE tokenid='" . $_GET['SelectedToken'] . "'",$db);
 		}
 	} else { // it must be an edit
-		$sql="SELECT tokenid, 
-					tokenname 
-				FROM securitytokens 
+		$sql="SELECT tokenid,
+					tokenname
+				FROM securitytokens
 				WHERE tokenid='".$_GET['SelectedToken']."'";
 		$Result= DB_query($sql,$db);
 		$myrow = DB_fetch_array($Result,$db);
@@ -50,7 +50,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])){
 	if (!is_numeric($_POST['TokenID'])){
 		prnMsg(_('The token ID is expected to be a number. Please enter a number for the token ID'),'error');
 		$InputError = 1;
-	} 
+	}
 	if (mb_strlen($_POST['TokenDescription'])==0){
 		prnMsg(_('A token description must be entered'),'error');
 		$InputError = 1;
@@ -58,7 +58,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])){
 }
 
 if (isset($_POST['Submit'])) {
-	
+
 	$TestSQL="SELECT tokenid FROM securitytokens WHERE tokenid='".$_POST['TokenID']."'";
 	$TestResult=DB_query($TestSQL, $db);
 	if (DB_num_rows($TestResult)!=0) {
@@ -74,8 +74,8 @@ if (isset($_POST['Submit'])) {
 }
 
 if (isset($_POST['Update']) AND $InputError == 0) {
-	$sql = "UPDATE securitytokens 
-				SET tokenname='".$_POST['TokenDescription'] . "' 
+	$sql = "UPDATE securitytokens
+				SET tokenname='".$_POST['TokenDescription'] . "'
 			WHERE tokenid='".$_POST['TokenID']."'";
 	$Result= DB_query($sql,$db);
 	$_POST['TokenDescription']='';

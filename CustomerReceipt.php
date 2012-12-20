@@ -105,21 +105,10 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 
 	}
 
-	/*Get the exchange rate between the functional currency and the receipt currency*/
-	$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->Currency . "'",$db);
-	$myrow = DB_fetch_row($result);
-	$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the receipt currency
-
-	if ($_POST['Currency']==$_SESSION['ReceiptBatch']->AccountCurrency){
-		$_SESSION['ReceiptBatch']->ExRate = 1; //ex rate between receipt currency and account currency
-		$SuggestedExRate=1;
-	}
 	if ($_SESSION['ReceiptBatch']->AccountCurrency==$_SESSION['CompanyRecord']['currencydefault']){
 		$_SESSION['ReceiptBatch']->FunctionalExRate = 1;
 		$SuggestedFunctionalExRate =1;
-		$SuggestedExRate = $tableExRate;
-
-	} else if (!$BankAccountEmpty) {
+	} elseif (!$BankAccountEmpty) {
 		/*To illustrate the rates required
 			Take an example functional currency NZD receipt in USD from an AUD bank account
 			1 NZD = 0.80 USD
@@ -129,18 +118,27 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){
 			or 0.8/0.9 = 0.88889
 		*/
 
-		/*Get suggested FunctionalExRate */
+		/*Get suggested FunctionalExRate between the bank account currency and the home (functional) currency */
 		$result = DB_query("SELECT rate, decimalplaces FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->AccountCurrency . "'",$db);
 		$myrow = DB_fetch_array($result);
 		$SuggestedFunctionalExRate = $myrow['rate'];
 		$_SESSION['ReceiptBatch']->CurrDecimalPlaces = $myrow['decimalplaces'];
+		
+	} //end else account currency != functional currency
+	
+	if ($_POST['Currency']==$_SESSION['ReceiptBatch']->AccountCurrency){
+		$_SESSION['ReceiptBatch']->ExRate = 1; //ex rate between receipt currency and account currency
+		$SuggestedExRate=1;
+	} elseif(isset($_POST['Currency'])) {
 		/*Get the exchange rate between the functional currency and the receipt currency*/
 		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->Currency . "'",$db);
 		$myrow = DB_fetch_array($result);
-		$tableExRate = $myrow['rate']; //this is the rate of exchange between the functional currency and the receipt currency
+		$TableExRate = $myrow['rate']; //this is the rate of exchange between the functional currency and the receipt currency
 		/*Calculate cross rate to suggest appropriate exchange rate between receipt currency and account currency */
-		$SuggestedExRate = $tableExRate/$SuggestedFunctionalExRate;
-	} //end else account currency != functional currency
+		$SuggestedExRate = $TableExRate/$SuggestedFunctionalExRate;
+	}
+	
+	
 
 	$_SESSION['ReceiptBatch']->Narrative = $_POST['BatchNarrative'];
 
@@ -388,6 +386,10 @@ if (isset($_POST['CommitBatch'])){
 			$BatchDebtorTotal += (($ReceiptItem->Discount + $ReceiptItem->Amount)/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
 			/*Create a DebtorTrans entry for each customer deposit */
 
+			/*The rate of exchange required here is the rate between the functional (home) currency and the customer receipt currency 
+			 * We have the exchange rate between the bank account and the functional home currency  $_SESSION['ReceiptBatch']->ExRate
+			 * and the exchange rate betwen the currency being paid and the bank account */
+
 			$SQL = "INSERT INTO debtortrans (transno,
 											type,
 											debtorno,
@@ -411,7 +413,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . $PeriodNo . "',
 						'" . $_SESSION['ReceiptBatch']->ReceiptType  . ' ' . $ReceiptItem->PayeeBankDetail . "',
 						'',
-						'" . ($_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . "',
+						'" . ($_SESSION['ReceiptBatch']->FunctionalExRate*$_SESSION['ReceiptBatch']->ExRate) . "',
 						'" . -$ReceiptItem->Amount . "',
 						'" . -$ReceiptItem->Discount . "',
 						'" . $ReceiptItem->Narrative. "'

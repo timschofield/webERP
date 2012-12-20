@@ -7,7 +7,7 @@
         Added KEYED Entry values
 ********************************************/
 if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
-	
+
 	for ($i=0;$i < 10;$i++){
 		if(isset($_POST['SerialNo' . $i]) AND mb_strlen($_POST['SerialNo' . $i])>0){
 			if ($ItemMustExist){
@@ -124,8 +124,8 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
   Validate an uploaded FILE and save entries
 ********************************************/
 $valid = true;
-if (isset($_POST['EntryType']) 
-	AND $_POST['EntryType']=='FILE' 
+if (isset($_POST['EntryType'])
+	AND $_POST['EntryType']=='FILE'
 	AND isset($_POST['ValidateFile'])){
 
 	$filename = $_SESSION['CurImportFile']['tmp_name'];

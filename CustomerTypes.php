@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
 			if (DB_Num_Rows($result)>0){
 				$TypeRow = DB_fetch_array($result);
 				$TypeName = $TypeRow['typename'];
-			
+
 				$sql="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
 				$ErrMsg = _('The Type record could not be deleted because');
 				$result = DB_query($sql,$db,$ErrMsg);
@@ -208,9 +208,9 @@ printf('<td>%s</td>
 		</tr>',
 		$myrow[0],
 		$myrow[1],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', 
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 		$myrow[0],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', 
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
@@ -246,7 +246,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />';
-		echo '<table class="selection">'; 
+		echo '<table class="selection">';
 
 		// We dont allow the user to change an existing type code
 

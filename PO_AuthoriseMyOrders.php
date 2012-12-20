@@ -41,7 +41,7 @@ $sql="SELECT purchorders.*,
 			currencies.decimalplaces AS currdecimalplaces
 		FROM purchorders INNER JOIN suppliers
 			ON suppliers.supplierid=purchorders.supplierno
-		INNER JOIN currencies 
+		INNER JOIN currencies
 			ON suppliers.currcode=currencies.currabrev
 		INNER JOIN www_users
 			ON www_users.userid=purchorders.initiator

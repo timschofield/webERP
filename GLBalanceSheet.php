@@ -477,7 +477,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 						$ParentGroups[$Level],
 						locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 						locale_number_format($LYGroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']) );
-						
+
 				$GroupTotal[$Level] = 0;
 				$LYGroupTotal[$Level] = 0;
 				$ParentGroups[$Level]='';

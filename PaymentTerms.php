@@ -9,7 +9,7 @@ $title = _('Payment Terms Maintenance');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $title . 
+		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $title .
 	'</p>';
 
 if (isset($_GET['SelectedTerms'])){
@@ -213,7 +213,7 @@ or deletion of the records*/
 			$myrow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 			$myrow[0]);
-	
+
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
 } //end of ifs and buts!
@@ -289,7 +289,7 @@ if (!isset($_GET['delete'])) {
 			<td>'._('Due After A Given No. Of Days').':</td>
 			<td><input type="checkbox" name="DaysOrFoll" ';
     if (isset($DayInFollowingMonth) AND !$DayInFollowingMonth) {
-         echo 'checked'; 
+         echo 'checked';
     }
     echo '  /></td>
 		</tr>

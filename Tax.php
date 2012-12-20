@@ -340,7 +340,7 @@ if (isset($_POST['TaxAuthority']) AND
 	echo '<tr>
 			<td>' . _('Detail Or Summary Only') . ':</td>
 			<td><select name="DetailOrSummary">
-				<option value="Detail">' . _('Detail and Summary') . '</option> 
+				<option value="Detail">' . _('Detail and Summary') . '</option>
 				<option selected="selected" value="Summary">' . _('Summary Only') . '</option>
 			</select></td>
 		</tr>';

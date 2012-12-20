@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF'])) {
 							   extcost
 					  HAVING demand > supply
 					  ORDER BY '" . $_POST['Sort']."'";
-	  
+
 	  if ($_POST['CategoryID'] == 'All'){
 		$SQLCategory = ' ';
 	  }else{
@@ -147,7 +147,7 @@ if (isset($_POST['PrintPDF'])) {
 			   computedcost,
 			   supplytotal.supply,
 			   demandtotal.demand "
-			   . $SQLHaving . 
+			   . $SQLHaving .
 			   " ORDER BY '" . $_POST['Sort'] . "'";
 	$result = DB_query($sql,$db,'','',false,true);
 
@@ -183,13 +183,13 @@ if (isset($_POST['PrintPDF'])) {
 	$fill = false;
 	$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
 	while ($myrow = DB_fetch_array($result,$db)){
-	
+
 	if ($_POST['ReportType'] == 'Shortage'){
 		$LineToPrint = ($myrow['demand'] > $myrow['supply']);
 	}else{
 		$LineToPrint = ($myrow['demand'] <= $myrow['supply']);
 	}
-	
+
 	if ($LineToPrint) {
 			$YPos -=$line_height;
 			$FontSize=8;
@@ -251,7 +251,7 @@ if (isset($_POST['PrintPDF'])) {
 	}else{
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPExcess_' . date('Y-m-d').'.pdf');
 	}
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 } else { /*The option to print PDF was not hit so display form */
 
 	$title=_('MRP Shortages - Excess Reporting');
@@ -281,7 +281,7 @@ if (isset($_POST['PrintPDF'])) {
 				</select>
 			</td>
 		</tr>';
-	
+
 	echo '<tr><td>' . _('Shortage-Excess Option') . ':</td>
 			<td><select name="ReportType">
 				<option selected="selected" value="Shortage">' . _('Report MRP Shortages').'</option>
@@ -289,7 +289,7 @@ if (isset($_POST['PrintPDF'])) {
 				</select>
 			</td>
 		</tr>';
-	
+
 	echo '<tr><td>' . _('Print Option') . ':</td>
 			<td><select name="Fill">
 				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines').'</option>

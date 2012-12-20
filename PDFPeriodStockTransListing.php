@@ -58,7 +58,7 @@ if (!isset($_POST['FromDate'])){
 			<td>' . _('For Stock Location') . ':</td>
 			<td><select name="StockLocation">
 				<option value="All">' . _('All') . '</option>';
-				
+
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
 			if ($myrow['loccode'] == $_POST['StockLocation']){

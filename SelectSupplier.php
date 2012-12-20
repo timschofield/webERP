@@ -77,11 +77,11 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 	unset($_POST['Next']);
 	unset($_POST['Previous']);
 }
-if (isset($_POST['Search']) 
-	OR isset($_POST['Go']) 
-	OR isset($_POST['Next']) 
+if (isset($_POST['Search'])
+	OR isset($_POST['Go'])
+	OR isset($_POST['Next'])
 	OR isset($_POST['Previous'])) {
-	
+
 	if (mb_strlen($_POST['Keywords']) > 0 AND mb_strlen($_POST['SupplierCode']) > 0) {
 		prnMsg( _('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
 	}
@@ -164,7 +164,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<a href="' . $rootpath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
 		<br />
 		<br />';
-	
+
 	echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Add / Receive / View Outstanding Purchase Orders') . '</a>';
 	echo '<br /><a href="' . $rootpath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('View All Purchase Orders') . '</a><br />';
 	wikiLink('Supplier', $_SESSION['SupplierID']);

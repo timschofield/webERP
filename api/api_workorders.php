@@ -155,9 +155,9 @@
 			$Errors[$i] = ItemSerialised;
 			return $Errors;
 		}
-		$sql="SELECT quantity FROM stockserialitems 
-              WHERE stockid='".$stockid. "' 
-              AND loccode='".$location."' 
+		$sql="SELECT quantity FROM stockserialitems
+              WHERE stockid='".$stockid. "'
+              AND loccode='".$location."'
               AND serialno='".$batch."'";
 		$result=DB_query($sql, $db);
 		if (DB_num_rows($result)==0) {
@@ -299,7 +299,7 @@
                                                    newqoh,
 				                                   price,
                                                    standardcost)
-                                   		VALUES ('".$StockID."', 
+                                   		VALUES ('".$StockID."',
                                                 28,
                                                 '" .$TransactionNo. "',
                                                 '".$Location."',
@@ -311,7 +311,7 @@
                                                 '".$cost."',
                                                 '".$cost."')";
 			$locstocksql="UPDATE locstock SET quantity = quantity + " . $Quantity ."
-			                           WHERE loccode='". $Location."' 
+			                           WHERE loccode='". $Location."'
 			                           AND stockid='".$StockID."'";
 			$glupdatesql1="INSERT INTO gltrans (type,
 						                                               typeno,
@@ -343,7 +343,7 @@
 						                                        '".$StockID.' x '.$Quantity.' @ '.$cost."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=28";
 			$batchsql="UPDATE stockserialitems SET quantity=quantity-" . $Quantity.
-				              " WHERE stockid='".$StockID."' 
+				              " WHERE stockid='".$StockID."'
                               AND loccode='".$Location."' AND serialno='".$Batch."'";
 			$costsql = "UPDATE workorders SET costissued=costissued+".$cost." WHERE wo='".$WONumber . "'";
 
@@ -435,12 +435,12 @@
                                                '".$wipglact."',
                                                '".$cost*$Quantity. "',
                                                '".$StockID.' x '.$Quantity.' @ '.$cost."')";
-			$glupdatesql2="INSERT INTO gltrans (type, 
-                                                typeno, 
-                                                trandate, 
-                                                periodno, 
-                                                account, 
-                                                amount, 
+			$glupdatesql2="INSERT INTO gltrans (type,
+                                                typeno,
+                                                trandate,
+                                                periodno,
+                                                account,
+                                                amount,
                                                 narrative)
                                     	VALUES (26,
                                                '".$TransactionNo."',

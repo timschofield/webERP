@@ -21,10 +21,10 @@ $FontSize=10;
 $PageNumber=1;
 $line_height=12;
 
-$result = DB_query("SELECT hundredsname, 
+$result = DB_query("SELECT hundredsname,
                            decimalplaces,
                            currency
-                    FROM currencies 
+                    FROM currencies
                     WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'",$db);
 
 If (DB_num_rows($result) == 0){
@@ -108,13 +108,13 @@ exit;
 /* ****************************************************************************************** */
 
 function number_to_words($Number) {
-	
+
     if (($Number < 0) OR ($Number > 999999999)) {
 		prnMsg(_('Number is out of the range of numbers that can be expressed in words'),'error');
 		return _('error');
     }
 
-	$Millions = floor($Number / 1000000);  
+	$Millions = floor($Number / 1000000);
 	$Number -= $Millions * 1000000;
 	$Thousands = floor($Number / 1000);
 	$Number -= $Thousands * 1000;
@@ -122,21 +122,21 @@ function number_to_words($Number) {
 	$Number -= $Hundreds * 100;
 	$NoOfTens = floor($Number / 10);
 	$NoOfOnes = $Number % 10;
-	
-	$NumberInWords = ''; 
-	
+
+	$NumberInWords = '';
+
 	if ($Millions) {
-		$NumberInWords .= number_to_words($Millions) . ' ' . _('million');  
-	} 
+		$NumberInWords .= number_to_words($Millions) . ' ' . _('million');
+	}
 
     if ($Thousands) {
-		$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Thousands) . ' ' . _('thousand'); 
-	} 
+		$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Thousands) . ' ' . _('thousand');
+	}
 
     if ($Hundreds) {
-		$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Hundreds) . ' ' . _('hundred');  
-	} 
- 
+		$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Hundreds) . ' ' . _('hundred');
+	}
+
 	$Ones = array(	0 => '',
 					1 => _('one'),
 					2 => _('two'),
@@ -171,26 +171,26 @@ function number_to_words($Number) {
 
 
     if ($NoOfTens OR $NoOfOnes) {
-		if (!empty($NumberInWords)) {  
+		if (!empty($NumberInWords)) {
 			$NumberInWords .= ' ' . _('and') . ' ';
-		} 
+		}
 
 		if ($NoOfTens < 2){
 			$NumberInWords .= $Ones[$NoOfTens * 10 + $NoOfOnes];
 		}
 		else {
 			$NumberInWords .= $Tens[$NoOfTens];
-			if ($NoOfOnes) { 
+			if ($NoOfOnes) {
 				$NumberInWords .= '-' . $Ones[$NoOfOnes];
 			}
 		}
 	}
 
 	if (empty($NumberInWords)){
-		$NumberInWords = _('zero'); 
-	} 
+		$NumberInWords = _('zero');
+	}
 
 	return $NumberInWords;
-} 
+}
 
 ?>

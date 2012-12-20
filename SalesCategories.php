@@ -288,9 +288,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedCategory)) {
 	//editing an existing stock category
 
-	$sql = "SELECT salescatid, 
-				parentcatid, 
-				salescatname 
+	$sql = "SELECT salescatid,
+				parentcatid,
+				salescatname
 			FROM salescat
 			WHERE salescatid='". $SelectedCategory."'";
 
@@ -376,12 +376,12 @@ if($result && DB_num_rows($result)) {
 	echo '<input type="hidden" name="ParentCategory" value="' .
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '" /> ';
 
-	
+
 	echo '<table class="selection">
 		<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>
 		<tr><td>' . _('Select Inv. Item') . ':</td>
 		<td><select name="AddStockID">';
-		
+
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected

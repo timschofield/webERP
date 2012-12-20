@@ -81,10 +81,10 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 					suppliers.taxgroupid,
 					taxgroups.taxgroupdescription
 				FROM suppliers INNER JOIN taxgroups
-				ON suppliers.taxgroupid=taxgroups.taxgroupid 
-				INNER JOIN currencies 
-				ON suppliers.currcode=currencies.currabrev 
-				INNER JOIN paymentterms 
+				ON suppliers.taxgroupid=taxgroups.taxgroupid
+				INNER JOIN currencies
+				ON suppliers.currcode=currencies.currabrev
+				INNER JOIN paymentterms
 				ON suppliers.paymentterms=paymentterms.termsindicator
 				WHERE suppliers.supplierid = '" . $_GET['SupplierID'] . "'";
 
@@ -200,13 +200,13 @@ if the link is not active then OvAmount must be entered manually. */
 	}
 }
 
-if (isset($_POST['GRNS']) 
+if (isset($_POST['GRNS'])
 	AND $_POST['GRNS'] == _('Purchase Orders')){
 
 	/*This ensures that any changes in the page are stored in the session before calling the grn page */
 
 	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppCreditGRNs.php">';
-	echo '<br />' . 
+	echo '<br />' .
 		_('You should automatically be forwarded to the entry of credit notes against goods received page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $rootpath . '/SuppCreditGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 		<br />';
 	include('includes/footer.inc');
@@ -223,7 +223,7 @@ if (isset($_POST['Shipts'])){
 	include('includes/footer.inc');
 	exit;
 }
-if (isset($_POST['GL']) 
+if (isset($_POST['GL'])
 	AND $_POST['GL'] == _('General Ledger')){
 
 	/*This ensures that any changes in the page are stored in the session before calling the shipments page */
@@ -235,7 +235,7 @@ if (isset($_POST['GL'])
 	include('includes/footer.inc');
 	exit;
 }
-if (isset($_POST['Contracts']) 
+if (isset($_POST['Contracts'])
 	AND $_POST['Contracts'] == _('Contracts')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppContractChgs.php">';
@@ -245,7 +245,7 @@ if (isset($_POST['Contracts'])
 			<br />';
 		exit;
 }
-if (isset($_POST['FixedAssets']) 
+if (isset($_POST['FixedAssets'])
 	AND $_POST['FixedAssets'] == _('Fixed Assets')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppFixedAssetChgs.php">';
@@ -295,8 +295,8 @@ echo '<td style="color:red">' . _('Credit Note Date') . ' (' . _('in format') . 
 
 echo '<br />
 	<div class="centre">
-		<input type="submit" name="GRNS" value="' . _('Purchase Orders') . '"/> 
-		<input type="submit" name="Shipts" value="' . _('Shipments') . '" /> 
+		<input type="submit" name="GRNS" value="' . _('Purchase Orders') . '"/>
+		<input type="submit" name="Shipts" value="' . _('Shipments') . '" />
 		<input type="submit" name="Contracts" value="' . _('Contracts') . '" /> ';
 if ( $_SESSION['SuppTrans']->GLLink_Creditors ==1){
 	echo '<input type="submit" name="GL" value="' . _('General Ledger') . '" /> ';
@@ -551,7 +551,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 	/*If a tax rate is entered that is not the same as it was previously then recalculate automatically the tax amounts */
 
-	if (!isset($_POST['OverRideTax']) 
+	if (!isset($_POST['OverRideTax'])
 		OR $_POST['OverRideTax']=='Auto'){
 
 		echo  ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,2) . '" />%';
@@ -771,7 +771,7 @@ then do the updates and inserts to process the credit note entered */
 											account,
 											narrative,
 											amount)
-									VALUES ('21', 
+									VALUES ('21',
 										'" . $CreditNoteNo . "',
 										'" . $SQLCreditNoteDate . "',
 										'" . $PeriodNo . "',
@@ -791,7 +791,7 @@ then do the updates and inserts to process the credit note entered */
 			 *  debit postings to this WIP account
 			 * the WIP account is tidied up when the contract is closed*/
 				$result = DB_query("SELECT wipact FROM stockcategory
-									INNER JOIN stockmaster 
+									INNER JOIN stockmaster
 									ON stockcategory.categoryid=stockmaster.categoryid
 									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'",$db);
 				$WIPRow = DB_fetch_row($result);
@@ -824,8 +824,8 @@ then do the updates and inserts to process the credit note entered */
 
 			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-				if (mb_strlen($EnteredGRN->ShiptRef)==0 
-					OR $EnteredGRN->ShiptRef=='' 
+				if (mb_strlen($EnteredGRN->ShiptRef)==0
+					OR $EnteredGRN->ShiptRef==''
 					OR $EnteredGRN->ShiptRef==0){ /*so its not a shipment item */
 				/*so its not a shipment item
 				  enter the GL entry to reverse the GRN suspense entry created on delivery at standard cost used on delivery */
@@ -914,7 +914,7 @@ then do the updates and inserts to process the credit note entered */
 															'" . $StockGLCode['purchpricevaract'] . "',
 															'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN Credit Note') . ' ' . $EnteredGRN->GRNNo .' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' . locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces'])  ."',
 															'" . (-$WriteOffToVariances) . "')";
-					
+
 									$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 									$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -939,7 +939,7 @@ then do the updates and inserts to process the credit note entered */
 												' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
 												locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces'])  . "',
 												'" . (-($PurchPriceVar - $WriteOffToVariances)) . "')";
-		
+
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -960,9 +960,9 @@ then do the updates and inserts to process the credit note entered */
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-																	materialcost=materialcost+" . $CostIncrement . " 
+																	materialcost=materialcost+" . $CostIncrement . "
 											WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-									
+
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								} else {
 									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
@@ -987,7 +987,7 @@ then do the updates and inserts to process the credit note entered */
 														'" . $StockGLCode['purchpricevaract'] . "',
 														'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' . locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces'])  . "',
 														'" . (-$PurchPriceVar) . "')";
-		
+
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -1156,18 +1156,18 @@ then do the updates and inserts to process the credit note entered */
 									VALUES ('" . $SuppTransID . "',
 											'" . $TaxTotals->TaxAuthID . "',
 											'" . -$TaxTotals->TaxOvAmount . "')";
-					
+
 			$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier transaction taxes records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the supplier transaction taxes record was used:');
  			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 
-		/* Now update the GRN and PurchOrderDetails records for amounts invoiced 
+		/* Now update the GRN and PurchOrderDetails records for amounts invoiced
 		 * can't use the previous loop around GRNs as this was only for where the creditors->GL link was active*/
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-			$SQL = "UPDATE purchorderdetails SET qtyinvoiced = qtyinvoiced - " .$EnteredGRN->This_QuantityInv . " 
+			$SQL = "UPDATE purchorderdetails SET qtyinvoiced = qtyinvoiced - " .$EnteredGRN->This_QuantityInv . "
 					WHERE podetailitem = '" . $EnteredGRN->PODetailItem ."'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity credited of the purchase order line could not be updated because');
@@ -1198,7 +1198,7 @@ then do the updates and inserts to process the credit note entered */
 													'" . $CreditNoteNo . "',
 													'" . $EnteredGRN->ItemCode . "',
 													'" . (-$EnteredGRN->This_QuantityInv * $EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate) . "')";
-				
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') . ' ' . $EnteredGRN->ShiptRef . ' ' . _('could not be added because');
 				$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
 
@@ -1227,7 +1227,7 @@ then do the updates and inserts to process the credit note entered */
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
-	
+
 					/*Now update the asset cost in fixedassets table */
 					$SQL = "UPDATE fixedassets SET cost = cost - " . $PurchPriceVar  . "
 							WHERE assetid = '" . $EnteredGRN->AssetID . "'";

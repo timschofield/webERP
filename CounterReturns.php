@@ -173,7 +173,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 		$_SESSION['Items'.$identifier]->SpecialInstructions = $myrow['specialinstructions'];
 		$_SESSION['Items'.$identifier]->DeliveryDays = $myrow['estdeliverydays'];
 		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
-		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];			
+		$_SESSION['Items'.$identifier]->TaxGroup = $myrow['taxgroupid'];
 		$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesman'];
 		if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 			prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
@@ -790,7 +790,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1",$db);
 	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 		$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
-	}	
+	}
 	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)){
 		if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson){
 			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
@@ -798,7 +798,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 		}
 	}
-	
+
 	echo '</select></td>
 		</tr>';
 	echo '<tr>

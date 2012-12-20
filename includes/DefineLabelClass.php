@@ -5,9 +5,9 @@ define('LABELS_FILE', $_SESSION['reports_dir'] . '/labels.xml');
 /**
  *  These tags contains the more general data of the labels
  */
-$GlobalTags = array('id'=>array('desc'=> _('Label id'), 
-							'type'=>'t', 
-							'sz'=>8, 
+$GlobalTags = array('id'=>array('desc'=> _('Label id'),
+							'type'=>'t',
+							'sz'=>8,
 							'maxsz'=>12),  // text
 							'description'=>array('desc'=>_('Description'),
 							'type'=>'t',

@@ -76,17 +76,17 @@ if (isset($_POST['submit'])) {
 				WHERE taxprovincename " .LIKE. " '".$_POST['TaxProvinceName'] ."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-		
+
 		if ( $myrow[0] > 0 ) {
-		
+
 			$InputError = 1;
 			prnMsg( _('The tax province cannot be created because another with the same name already exists'),'error');
-		
+
 		} else {
-			
+
 			$sql = "INSERT INTO taxprovinces (taxprovincename )
 					VALUES ('" . $_POST['TaxProvinceName'] ."')";
-					
+
 			$ErrMsg = _('Could not add tax province');
 			$result = DB_query($sql,$db, $ErrMsg);
 

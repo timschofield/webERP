@@ -24,7 +24,7 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 			WHERE 	salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorderdetails.actualdispatchdate >='" . $FromDate . "' 
+				AND salesorderdetails.actualdispatchdate >='" . $FromDate . "'
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY `" . $_GET['Sequence'] . "` DESC
 			LIMIT " . intval($_GET['NumberOfTopItems']) ;

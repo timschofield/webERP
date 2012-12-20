@@ -23,8 +23,8 @@ if (isset($_POST['PrintPDF'])) {
 	$sqlsup = "SELECT suppname,
 					  currcode,
 					  decimalplaces AS currdecimalplaces
-				FROM suppliers INNER JOIN currencies 
-				ON suppliers.currcode=currencies.currabrev 
+				FROM suppliers INNER JOIN currencies
+				ON suppliers.currcode=currencies.currabrev
 				WHERE supplierid='" . $_POST['supplier'] . "'";
 	$resultsup = DB_query($sqlsup,$db);
 	$RowSup = DB_fetch_array($resultsup);
@@ -34,10 +34,10 @@ if (isset($_POST['PrintPDF'])) {
 
 	//get category
 	if ($_POST['category']!='all'){
-		$sqlcat="SELECT categorydescription 
-				FROM `stockcategory` 
+		$sqlcat="SELECT categorydescription
+				FROM `stockcategory`
 				WHERE categoryid ='" . $_POST['category'] . "'";
-				
+
 		$resultcat = DB_query($sqlcat,$db);
 		$RowCat = DB_fetch_row($resultcat);
 		$Categoryname=$RowCat['0'];
@@ -45,7 +45,7 @@ if (isset($_POST['PrintPDF'])) {
 		$Categoryname='ALL';
 	}
 
-	
+
 	//get date price
 	if ($_POST['price']=='all'){
 		$CurrentOrAllPrices=_('All Prices');
@@ -146,7 +146,7 @@ if (isset($_POST['PrintPDF'])) {
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	if (DB_num_rows($result)==0) {
 
 		$title = _('Supplier Price List') . '-' . _('Report');
@@ -163,7 +163,7 @@ if (isset($_POST['PrintPDF'])) {
 	$code='';
 	while ($myrow = DB_fetch_array($result,$db)){
 		$YPos -=$line_height;
-		
+
 		$PriceDated=ConvertSQLDate($myrow[4]);
 
 		//if item has more than 1 price, write only price, date and supplier code for the old ones
@@ -199,9 +199,9 @@ if (isset($_POST['PrintPDF'])) {
 	                   $Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 	}
 
-	
+
 	$pdf->OutputD( $_SESSION['DatabaseName'] . '_SupplierPriceList_' . Date('Y-m-d') . '.pdf');
-	
+
 
 } else { /*The option to print PDF was not hit so display form */
 
@@ -249,7 +249,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	echo '<tr>
 			<td>' . _('Price List') . ':</td>
-			<td><select name="price"> 
+			<td><select name="price">
 				<option value="all">' ._('All Prices').'</option>
 				<option value="current">' ._('Only Current Price').'</option>
 				</select>

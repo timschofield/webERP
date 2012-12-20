@@ -277,7 +277,7 @@ then none of the above are true and the list of Reports will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	
+
 	$result = DB_query("SELECT reportid, reportheading FROM reportheaders ORDER BY reportid",$db);
 
 	echo '<table class="selection">';
@@ -318,7 +318,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow[0]);
-	
+
 	}
 	//END WHILE LIST LOOP
 	echo '</table><br />';

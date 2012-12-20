@@ -74,7 +74,7 @@ echo '</select></td>
 echo '<tr>
 		<td>'._('For Period range').':</td>
 		<td><select name="Period[]" size="12" multiple="multiple">';
-		
+
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql,$db);
 $id=0;
@@ -132,7 +132,7 @@ if (isset($_POST['Show'])){
 					tagdescription
 				FROM gltrans INNER JOIN systypes
 				ON systypes.typeid=gltrans.type
-				LEFT JOIN tags 
+				LEFT JOIN tags
 				ON gltrans.tag = tags.tagref
 				WHERE gltrans.account = '" . $SelectedAccount . "'
 				AND posted=1
@@ -152,7 +152,7 @@ if (isset($_POST['Show'])){
 					tagdescription
 				FROM gltrans INNER JOIN systypes
 				ON systypes.typeid=gltrans.type
-				LEFT JOIN tags 
+				LEFT JOIN tags
 				ON gltrans.tag = tags.tagref
 				WHERE gltrans.account = '" . $SelectedAccount . "'
 				AND posted=1
@@ -174,7 +174,7 @@ if (isset($_POST['Show'])){
 		<tr>
 			<th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th>
 		</tr>';
-		
+
 	$TableHeader = '<tr>
 						<th>' . _('Type') . '</th>
 						<th>' . _('Number') . '</th>
@@ -185,7 +185,7 @@ if (isset($_POST['Show'])){
 						<th>' . _('Balance') . '</th>
 						<th>' . _('Tag') . '</th>
 					</tr>';
-			
+
 	echo $TableHeader;
 
 	if ($PandLAccount==True) {
@@ -202,7 +202,7 @@ if (isset($_POST['Show'])){
 		$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 		$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 		$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-		
+
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
 			echo '<tr style="background-color:#FDFEEF">
@@ -309,7 +309,7 @@ if (isset($_POST['Show'])){
 				$myrow['narrative'],
 				locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']),
 				$myrow['tagdescription']);
-	
+
 	}
 
 	echo '<tr style="background-color:#FDFEEF">

@@ -35,8 +35,8 @@ If (isset($_POST['PrintPDF'])
 					stockmaster.decimalplaces as itemdecimalplaces
 				FROM grns INNER JOIN purchorderdetails
 				ON grns.podetailitem = purchorderdetails.podetailitem
-				INNER JOIN suppliers 
-				ON grns.supplierid=suppliers.supplierid 
+				INNER JOIN suppliers
+				ON grns.supplierid=suppliers.supplierid
 				INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				LEFT JOIN stockmaster
@@ -101,7 +101,7 @@ If (isset($_POST['PrintPDF'])
 			$SupplierName = $GRNs['suppname'];
 		}
 		$YPos -=$line_height;
-		
+
 		if ($GRNs['itemdecimalplaces']==null){
 			$ItemDecimalPlaces = 2;
 		} else {
@@ -154,7 +154,7 @@ If (isset($_POST['PrintPDF'])
 	$YPos -=(2*$line_height);
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 } else { /*The option to print PDF was not hit */
 
 	$title=_('Outstanding GRNs Report');

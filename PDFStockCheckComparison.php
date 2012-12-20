@@ -25,7 +25,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 						materialcost+labourcost+overheadcost AS standardcost
 				FROM stockmaster INNER JOIN stockcheckfreeze
 				ON stockcheckfreeze.stockid=stockmaster.stockid
-				ORDER BY stockcheckfreeze.loccode, 
+				ORDER BY stockcheckfreeze.loccode,
 						stockcheckfreeze.stockid";
 
 		$StockChecks = DB_query($sql, $db,'','',false,false);
@@ -310,7 +310,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$YPos -= (2*$line_height);
 
     $pdf->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
-    $pdf->__destruct(); 
+    $pdf->__destruct();
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		//need to print the report first before this but don't risk re-adjusting all the stock!!
@@ -332,7 +332,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    
+
     echo '<table class="selection">';
 	echo '<tr><td>' . _('Choose Option'). ':</td>
               <td><select name="ReportOrClose">';

@@ -39,7 +39,7 @@
 		}
 		$Searchsql = "SELECT count(debtorno)
 				     FROM custbranch
-				     WHERE debtorno='".$DebtorNumber."' 
+				     WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchNumber."'";
 		$SearchResult=api_DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
@@ -468,7 +468,7 @@
 		foreach ($BranchDetails as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."' 
+		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."'
                                    AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
@@ -495,7 +495,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT branchcode FROM custbranch 
+		$sql = "SELECT branchcode FROM custbranch
                 WHERE debtorno = '" . $DebtorNumber . "'";
 		$result = api_DB_query($sql, $db);
 		if (DB_error_no($db) != 0)
@@ -524,8 +524,8 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM custbranch 
-                     WHERE debtorno='".$DebtorNumber."' 
+		$sql="SELECT * FROM custbranch
+                     WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchCode."'";
 		$result = api_DB_Query($sql, $db);
 		if (DB_error_no($db) != 0 ) {

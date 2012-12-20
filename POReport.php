@@ -548,7 +548,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						<th>' . _('Item Due') . '</th>
 						<th>' . _('Part Description') . '</th>
 						</tr>';
-						
+
 				$linectr = 0;
 				$k = 0;
 				while ($myrow = DB_fetch_array($result)) {
@@ -673,7 +673,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 							$myrow['linestatus'],
 							ConvertSQLDate($myrow['deliverydate']),
 							$myrow['description']);
-							
+
 					$LastDecimalPlaces = $myrow['decimalplaces'];
 					$TotalQty += $myrow['quantityord'];
 					$TotalExtCost += $myrow['extcost'];
@@ -1587,7 +1587,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="purchorderdetails.orderno">' . _('Order Number') . '</option>';
 	echo '<option value="purchorderdetails.itemcode">' . _('Part Number') . '</option>';
 	echo '<option value="suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Number') . '</option>';
-	echo '<option value="suppliers.suppname,suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Name') . '</option>'; 
+	echo '<option value="suppliers.suppname,suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Name') . '</option>';
 	echo '</select></td><td>&nbsp;</td></tr>';
 
 	echo '<tr><td>&nbsp;</td></tr>';

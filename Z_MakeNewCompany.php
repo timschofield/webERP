@@ -137,11 +137,11 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Pending');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/FormDesigns');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reportwriter');
-		
+
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/GoodsReceived.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/GoodsReceived.xml');
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PickingList.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/PickingList.xml');
 			copy ('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PurchaseOrder.xml', './companies/' .$_POST['NewCompany']  . '/FormDesigns/PurchaseOrder.xml');
-					
+
 			/*OK Now upload the logo */
 			if ($UploadTheLogo=='Yes'){
 				$result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $filename);

@@ -33,7 +33,7 @@ if (isset($_POST['AddContractChgToInvoice'])){
 		$_POST['ContractRef'] = $_POST['ContractSelection'];
 	} else{
 		$result = DB_query("SELECT contractref FROM contracts
-							WHERE status=2 
+							WHERE status=2
 							AND contractref='" . $_POST['ContractRef'] . "'",$db);
 		if (DB_num_rows($result)==0){
 			prnMsg(_('The contract reference entered does not exist as a customer ordered contract. This contract cannot be charged to'),'error');
@@ -46,8 +46,8 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	}
 
 	if ($InputError == False){
-		$_SESSION['SuppTrans']->Add_Contract_To_Trans($_POST['ContractRef'], 
-														filter_number_format($_POST['Amount']), 
+		$_SESSION['SuppTrans']->Add_Contract_To_Trans($_POST['ContractRef'],
+														filter_number_format($_POST['Amount']),
 														$_POST['Narrative'],
 														$_POST['AnticipatedCost']);
 		unset($_POST['ContractRef']);
@@ -98,7 +98,7 @@ foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract){
 			<td>' . $AnticipatedCost . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredContract->Counter . '">' . _('Delete') . '</a></td>
 		</tr>';
-	
+
 	$TotalContractsValue += $EnteredContract->Amount;
 
 }

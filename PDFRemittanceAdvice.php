@@ -174,7 +174,7 @@ If ((isset($_POST['PrintPDF']))
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
-        
+
     echo '</div>
           </form>';
 

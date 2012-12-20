@@ -42,10 +42,10 @@ if (isset($_POST['AddGRNToTrans'])){
 		$InputError = True;
 		prnMsg(_('The credit quantity is not numeric or the quantity to credit is more that quantity invoiced') . '. ' . _('The goods received cannot be credited by this quantity'),'error');
 		}
-	
-	if (!is_numeric(filter_number_format($_POST['ChgPrice'])) 
+
+	if (!is_numeric(filter_number_format($_POST['ChgPrice']))
 		or filter_number_format($_POST['ChgPrice'])<0){
-			
+
 		$InputError = True;
 		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be credited at this price'),'error');
 	}
@@ -111,7 +111,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredGRN->GRNNo . '">' . _('Delete') . '</a></td>
 		</tr>';
-			
+
 	$TotalValueCharged = $TotalValueCharged + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
 	$i++;
@@ -141,7 +141,7 @@ $SQL = "SELECT grnno,
 			purchorderdetails.orderno,
 			purchorderdetails.unitprice,
 			purchorderdetails.actprice,
-			grns.itemcode, 
+			grns.itemcode,
 			grns.deliverydate,
 			grns.itemdescription,
 			grns.qtyrecd,
@@ -150,10 +150,10 @@ $SQL = "SELECT grnno,
 			purchorderdetails.assetid,
 			stockmaster.decimalplaces
 		FROM grns INNER JOIN purchorderdetails
-		ON grns.podetailitem=purchorderdetails.podetailitem 
+		ON grns.podetailitem=purchorderdetails.podetailitem
 		LEFT JOIN stockmaster
 		ON purchorderdetails.itemcode=stockmaster.stockid
-		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "' 
+		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
 		AND grns.deliverydate >= '" . FormatDateForSQL($_POST['Show_Since']) . "'
 		ORDER BY grns.grnno";
 $GRNResults = DB_query($SQL,$db);
@@ -192,21 +192,21 @@ if (DB_num_rows($GRNResults)>0){
 						<th>' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
 						<th>' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					</tr>';
-	
+
 	echo $TableHeader;
-	
+
 	$i=0;
 	while ($myrow=DB_fetch_array($GRNResults)){
-	
+
 		$GRNAlreadyOnCredit = False;
-	
+
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 			if ($EnteredGRN->GRNNo == $myrow['grnno']) {
 				$GRNAlreadyOnCredit = True;
 			}
 		}
 		if ($GRNAlreadyOnCredit == False){
-		
+
 			if ($myrow['actprice']<>0){
 				$Price = $myrow['actprice'];
 			} else {
@@ -234,11 +234,11 @@ if (DB_num_rows($GRNResults)>0){
 			}
 		}
 	}
-	
+
 	echo '</table>';
-	
+
 	if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
-	
+
 		$SQL = "SELECT grnno,
 						grns.grnbatch,
 						grns.podetailitem,
@@ -259,15 +259,15 @@ if (DB_num_rows($GRNResults)>0){
 						shipments.closed,
 						purchorderdetails.assetid,
 						stockmaster.decimalplaces
-				FROM grns INNER JOIN purchorderdetails 
-				ON grns.podetailitem=purchorderdetails.podetailitem 
+				FROM grns INNER JOIN purchorderdetails
+				ON grns.podetailitem=purchorderdetails.podetailitem
 				LEFT JOIN shipments ON purchorderdetails.shiptref=shipments.shiptref
 				LEFT JOIN stockmaster ON purchorderdetails.itemcode=stockmaster.stockid
 				WHERE grns.grnno='" .$_POST['GRNNo'] . "'";
-	                 
+
 		$GRNEntryResult = DB_query($SQL,$db);
 		$myrow = DB_fetch_array($GRNEntryResult);
-	
+
 		echo '<br />
 			<table class="selection">';
 		echo '<tr>
@@ -298,19 +298,19 @@ if (DB_num_rows($GRNResults)>0){
 				<td><input type="text" name="ChgPrice" value="' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" maxlength="10" /></td>
 			</tr>
 			</table>';
-	
+
 		if ($myrow['closed']==1){ /*Shipment is closed so pre-empt problems later by warning the user - need to modify the order first */
 			echo '<input type="hidden" name="ShiptRef" value="" />';
 			prnMsg(_('Unfortunately the shipment that this purchase order line item was allocated to has been closed') . ' - ' . _('if you add this item to the transaction then no shipments will not be updated') . '. ' . _('If you wish to allocate the order line item to a different shipment the order must be modified first'),'error');
 		} else {
 			echo '<input type="hidden" name="ShiptRef" value="' . $myrow['shiptref'] . '" />';
 		}
-	
+
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="AddGRNToTrans" value="' . _('Add to Credit Note') . '" />
 			</div>';
-		
+
 		echo '<input type="hidden" name="GRNNumber" value="' . $_POST['GRNNo'] . '" />';
 		echo '<input type="hidden" name="ItemCode" value="' . $myrow['itemcode'] . '" />';
 		echo '<input type="hidden" name="ItemDescription" value="' . $myrow['itemdescription'] . '" />';
@@ -318,7 +318,7 @@ if (DB_num_rows($GRNResults)>0){
 		echo '<input type="hidden" name="Prev_QuantityInv" value="' . $myrow['quantityinv'] . '" />';
 		echo '<input type="hidden" name="OrderPrice" value="' . $myrow['unitprice'] . '" />';
 		echo '<input type="hidden" name="StdCostUnit" value="' . $myrow['stdcostunit'] . '" />';
-	
+
 		echo '<input type="hidden" name="JobRef" value="' . $myrow['jobref'] . '" />';
 		echo '<input type="hidden" name="GLCode" value="' . $myrow['glcode'] . '" />';
 		echo '<input type="hidden" name="PODetailItem" value="' . $myrow['podetailitem'] . '" />';

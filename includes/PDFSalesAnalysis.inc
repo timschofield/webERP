@@ -6,7 +6,7 @@ include ('includes/class.pdf.php');
 
 
 /* A4_Landscape */
-$DocumentPaper = 'A4'; 
+$DocumentPaper = 'A4';
 $DocumentOrientation ='L';
 $Page_Width=842;
 $Page_Height=595;
@@ -183,7 +183,7 @@ While ($myrow = DB_fetch_array($result)){
 					if ($Cols['calculation']==0){
 						$LeftOvers = $pdf->addTextWrap($Xpos, $Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']],0),'right');
 					} else { /* its a calculation need to re-perform on the totals*/
-	
+
 						switch ($Cols['calcoperator']) {
 							Case '/':
 								if ($AccumLvl1[$Cols['coldenominator']]==0){
@@ -218,14 +218,14 @@ While ($myrow = DB_fetch_array($result)){
 					}/*end if its not a calculation */
 				} /* end loop around column defintions */
 				$Ypos -=(2*$line_height);
-	
+
 				/*reset the accumulators to 0 */
 				for ($i=0;$i<=10;$i++){
 					$AccumLvl1[$i]=0;
 				}
 			}/* end if counter>0 */
 		}
-	
+
 		$NewHeading =0;
 
 		if ($myrow['col1']!=$GrpData1){ /*Need a new heading for Level 1 */

@@ -104,7 +104,7 @@ echo '<br />
 			<td><input type="text" name="NewStockCategory" size="20" maxlength="20" /></td>
 		</tr>
 	</table>
-	
+
 		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
 	</div>
 	</form>';

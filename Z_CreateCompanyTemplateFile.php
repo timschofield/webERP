@@ -87,8 +87,8 @@ if (isset($_POST['CreateTemplate'])){
                 if ($_POST['IncludeAccount_' .$i]=='on'){
 
                          $SQLScript .= "INSERT INTO chartmaster (accountcode,accountname,group_)
-                                               VALUES ('" . $ChartRow['accountcode'] . "', 
-								'" . $ChartRow['accountname'] . "', 
+                                               VALUES ('" . $ChartRow['accountcode'] . "',
+								'" . $ChartRow['accountname'] . "',
 								'" . $ChartRow['group_'] . "');\n";
                 }
                 $i++;

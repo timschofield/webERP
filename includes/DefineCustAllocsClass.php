@@ -27,7 +27,7 @@ Class Allocation {
 
 			$this->Allocs[$ID] = new Allocn($ID, $TransType, $TypeNo, $TransDate, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID);
 			Return 1;
-		
+
 	}
 
 	function remove_alloc_item($AllocnID){

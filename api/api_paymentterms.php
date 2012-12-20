@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* This function returns a list of the payment terms abbreviations
- * currently setup on webERP 
+ * currently setup on webERP
  */
 
 	function GetPaymentTermsList($user, $password) {
@@ -21,12 +21,12 @@
 		}
 		return $PaymentTermsList;
 	}
-	
+
 /* This function takes as a parameter a payment terms code
- * and returns an array containing the details of the selected 
+ * and returns an array containing the details of the selected
  * payment terms.
  */
-	
+
 	function GetPaymentTermsDetails($paymentterms, $user, $password) {
 		$Errors = array();
 		if (!isset($db)) {
@@ -40,7 +40,7 @@
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}
-/* This function returns a list of the payment methods 
+/* This function returns a list of the payment methods
  * currently setup on webERP
  */
 	function GetPaymentMethodsList($User, $Password) {

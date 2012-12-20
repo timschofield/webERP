@@ -1,7 +1,7 @@
 <?php
 /* $Id: Contract_Readin.php 3692 2010-08-15 09:22:08Z daintree $ */
 /*Contract_Readin.php is used by the modify existing Contract in Contracts.php and also by ContractCosting.php */
-	
+
 $ContractHeaderSQL = "SELECT contractdescription,
 							contracts.debtorno,
 							contracts.branchcode,
@@ -17,13 +17,13 @@ $ContractHeaderSQL = "SELECT contractdescription,
 							debtorsmaster.name,
 							custbranch.brname,
 							debtorsmaster.currcode
-						FROM contracts INNER JOIN debtorsmaster 
+						FROM contracts INNER JOIN debtorsmaster
 						ON contracts.debtorno=debtorsmaster.debtorno
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
-						INNER JOIN custbranch 
-						ON debtorsmaster.debtorno=custbranch.debtorno 
-						AND contracts.branchcode=custbranch.branchcode 		
+						INNER JOIN custbranch
+						ON debtorsmaster.debtorno=custbranch.debtorno
+						AND contracts.branchcode=custbranch.branchcode
 						WHERE contractref= '" . $ContractRef . "'";
 
 $ErrMsg =  _('The contract cannot be retrieved because');
@@ -51,7 +51,7 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 	$_SESSION['Contract'.$identifier]->CustomerName = $myrow['name'];
 	$_SESSION['Contract'.$identifier]->CurrCode = $myrow['currcode'];
 
-	
+
 /*now populate the contract BOM array with the items required for the contract */
 
 	$ContractBOMsql = "SELECT contractbom.stockid,
@@ -71,7 +71,7 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 
 	if (DB_num_rows($ContractBOMResult) > 0) {
 		while ($myrow=DB_fetch_array($ContractBOMResult)) {
-			$_SESSION['Contract'.$identifier]->Add_To_ContractBOM($myrow['stockid'], 
+			$_SESSION['Contract'.$identifier]->Add_To_ContractBOM($myrow['stockid'],
 																	$myrow['description'],
 																	$myrow['workcentreadded'],
 																	$myrow['quantity'],
@@ -85,8 +85,8 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 								quantity,
 								costperunit,
 								contractreqid
-						FROM contractreqts 
-						WHERE contractref ='" . $ContractRef . "' 
+						FROM contractreqts
+						WHERE contractref ='" . $ContractRef . "'
 						ORDER BY contractreqid";
 
 	$ErrMsg =  _('The other contract requirementscannot be retrieved because');

@@ -132,7 +132,7 @@ if (!isset($_POST['TransDate']) AND $_GET['TransNo'] != 'Preview') {
 if (isset($_POST['TransDate'])
 	OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
 	$result=DB_query($sql,$db, $ErrMsg);
-	
+
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($result)==0){
 		$title = _('Print Picking List Error');
@@ -264,9 +264,9 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		$LineResult=DB_query($sql,$db, $ErrMsg);
 	}
 
-	if ((isset($_GET['TransNo']) 
-		AND $_GET['TransNo'] == 'Preview') 
-		OR (isset($LineResult) 
+	if ((isset($_GET['TransNo'])
+		AND $_GET['TransNo'] == 'Preview')
+		OR (isset($LineResult)
 		AND DB_num_rows($LineResult)>0)){
 		/*Yes there are line items to start the ball rolling with a page header */
 		include('includes/PDFPickingListHeader.inc');

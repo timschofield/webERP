@@ -20,9 +20,9 @@ If (isset($_POST['PrintPDF'])) {
 	$CatDescription = ' ';
 	if ($_POST['StockCat'] != 'All') {
 	    $WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
-		$sql= "SELECT categoryid, 
-					categorydescription 
-				FROM stockcategory 
+		$sql= "SELECT categoryid,
+					categorydescription
+				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "' ";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -39,13 +39,13 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock INNER JOIN stockmaster 
-				ON locstock.stockid=stockmaster.stockid 
-				INNER JOIN locations 
+				FROM locstock INNER JOIN stockmaster
+				ON locstock.stockid=stockmaster.stockid
+				INNER JOIN locations
 				ON locstock.loccode=locations.loccode
 				WHERE locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$WhereCategory . " 
+				$WhereCategory . "
 				ORDER BY locstock.stockid,
 						locstock.loccode";
 	} else {
@@ -61,10 +61,10 @@ If (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock INNER JOIN stockmaster 
-				ON locstock.stockid=stockmaster.stockid 
-				INNER JOIN locations 
-				ON locstock.loccode=locations.loccode 
+				FROM locstock INNER JOIN stockmaster
+				ON locstock.stockid=stockmaster.stockid
+				INNER JOIN locations
+				ON locstock.loccode=locations.loccode
 				WHERE (SELECT count(*)
 					  FROM locstock
 					  WHERE stockmaster.stockid = locstock.stockid
@@ -72,7 +72,7 @@ If (isset($_POST['PrintPDF'])) {
 					  GROUP BY locstock.stockid) > 1
 				AND locstock.quantity <> 0
 				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
-				$WhereCategory . " 
+				$WhereCategory . "
 				ORDER BY locstock.stockid,
 						locstock.loccode";
 	}
@@ -170,9 +170,9 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 				</select></td>
 		</tr>';
 
-	$SQL="SELECT categoryid, 
-				categorydescription 
-			FROM stockcategory 
+	$SQL="SELECT categoryid,
+				categorydescription
+			FROM stockcategory
 			ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 	if (DB_num_rows($result1)==0){

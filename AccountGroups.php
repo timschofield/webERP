@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 	$i=1;
 
 	$sql="SELECT count(groupname)
-			FROM accountgroups 
+			FROM accountgroups
 			WHERE groupname='".$_POST['GroupName']."'";
 
 	$DbgMsg = _('The SQL that was used to retrieve the information was');
@@ -191,7 +191,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
 		echo '<br />' . _('There are') . ' ' . $myrow['groups'] . ' ' . _('general ledger accounts that refer to this account group');
 		echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-			
+
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
 		echo '<input  type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
@@ -358,7 +358,7 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 
 	} elseif (!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
-	
+
 		if (!isset($_POST['SelectedAccountGroup'])){
 			$_POST['SelectedAccountGroup']='';
 		}

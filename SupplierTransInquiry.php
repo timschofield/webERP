@@ -20,12 +20,12 @@ echo '<table class="selection">
 			<td>' . _('Type') . ':</td>
 			<td><select name="TransType">';
 
-$sql = "SELECT typeid, 
-				typename 
-		FROM systypes 
-		WHERE typeid >= 20 
+$sql = "SELECT typeid,
+				typename
+		FROM systypes
+		WHERE typeid >= 20
 		AND typeid <= 23";
-		
+
 $resultTypes = DB_query($sql,$db);
 
 echo '<option value="All">' ._('All') . '</option>';
@@ -82,7 +82,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				decimalplaces AS currdecimalplaces
 			FROM supptrans
 			INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
-			INNER JOIN systypes ON supptrans.type = systypes.typeid 
+			INNER JOIN systypes ON supptrans.type = systypes.typeid
 			INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
 			WHERE ";
 
@@ -148,9 +148,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				$myrow['currcode']);
 
 
-		$GLTransResult = DB_query("SELECT account, 
-										accountname, 
-										narrative, 
+		$GLTransResult = DB_query("SELECT account,
+										accountname,
+										narrative,
 										amount
 									FROM gltrans INNER JOIN chartmaster
 									ON gltrans.account=chartmaster.accountcode

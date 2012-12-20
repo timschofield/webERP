@@ -8,7 +8,7 @@ $PgConnStr = 'dbname='.$_SESSION['DatabaseName'];
 
 if ( isset($host) && ($host != "")) {
 	$PgConnStr = 'host='.$host.' '.$PgConnStr;
-} 
+}
 
 if ( isset( $dbuser ) && ($dbuser != "") ) {
     // if we have a user we need to use password if supplied
@@ -131,7 +131,7 @@ function INTERVAL( $val, $Inter ) {
 }
 function DB_show_tables (&$Conn){
 	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",$Conn);
-	Return $Result; 
+	Return $Result;
 }
 function DB_show_fields($TableName,&$Conn){
 	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'",$Conn);
@@ -143,11 +143,11 @@ function DB_show_fields($TableName,&$Conn){
 function DB_Maintenance($Conn){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
-	
+
 	$Result = DB_query('VACUUM ANALYZE',$Conn);
-	
-	$Result = DB_query("UPDATE config 
-				SET confvalue='" . Date('Y-m-d') . "' 
+
+	$Result = DB_query("UPDATE config
+				SET confvalue='" . Date('Y-m-d') . "'
 				WHERE confname='DB_Maintenance_LastRun'",
 				$Conn);
 }

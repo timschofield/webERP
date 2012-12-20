@@ -311,7 +311,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 								$lines[$i] = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,stripslashes($lines[$i]));
 							}
 							$YPos -= ($line_height);
-						} 
+						}
 					} //end for loop around lines of narrative to display
 					if ($YPos <= $Bottom_Margin) {
 
@@ -417,8 +417,8 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 				$PrintBankDetails = true; //assume we print bank details by default
 				$BankResult = DB_query("SELECT bankaddress,
 												bankaccountnumber,
-												bankaccountcode 
-										FROM bankaccounts 
+												bankaccountcode
+										FROM bankaccounts
 										WHERE invoice=2
 										AND currcode='" . $myrow['currcode'] . "'",
 										$db);
@@ -427,7 +427,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					$BankResult = DB_query("SELECT bankaddress,
 												bankaccountnumber,
 												bankaccountcode
-											FROM bankaccounts 
+											FROM bankaccounts
 											WHERE invoice=1",
 											$db);
 					if (DB_num_rows($BankResult)==0){
@@ -441,7 +441,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 					$YPos-=12;
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,220,$FontSize,$BankDetailsRow['bankaccountcode'] . ' ' . _('Account No:') . ' ' . $BankDetailsRow['bankaccountnumber']);
 				}
-				
+
 				/* Add Images for Visa / Mastercard / Paypal */
 				if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
 					$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
@@ -456,7 +456,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 		$FromTransNo++;
 	} /* end loop to print invoices */
-	
+
 	/* Put the transaction number back as would have been incremented by one after last pass */
 	$FromTransNo--;
 
@@ -549,7 +549,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 		$myrow = DB_fetch_row($result);
 
 		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</b>
-              <br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . 
+              <br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') .
               '</div>';
         echo '</div>
               </form>';
@@ -675,8 +675,8 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 
 				$myrow = DB_fetch_array($result);
 				/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
-				if (count($_SESSION['AllowedPageSecurityTokens'])==1 
-                     AND in_array(1, $_SESSION['AllowedPageSecurityTokens']) 
+				if (count($_SESSION['AllowedPageSecurityTokens'])==1
+                     AND in_array(1, $_SESSION['AllowedPageSecurityTokens'])
                      AND $myrow['debtorno'] != $_SESSION['CustomerID']){
 
 					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
@@ -722,12 +722,12 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 						</tr>
 						<tr>
 							<td style="background-color:#EEEEEE">';
-				echo $myrow['name'] . 
-					'<br />' . $myrow['address1'] . 
-					'<br />' . $myrow['address2'] . 
-					'<br />' . $myrow['address3'] . 
-					'<br />' . $myrow['address4'] . 
-					'<br />' . $myrow['address5'] . 
+				echo $myrow['name'] .
+					'<br />' . $myrow['address1'] .
+					'<br />' . $myrow['address2'] .
+					'<br />' . $myrow['address3'] .
+					'<br />' . $myrow['address4'] .
+					'<br />' . $myrow['address5'] .
 					'<br />' . $myrow['address6'];
 				echo '</td>
 					</tr>
@@ -747,20 +747,20 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 								<td align="left" style="background-color:#BBBBBB"><b>' . _('Delivered To') . ':</b></td>
 							</tr>';
 				   echo '<tr>
-				   		<td style="background-color:#EEEEEE">' .$myrow['brname'] . 
-					   		'<br />' . $myrow['braddress1'] . 
-					   		'<br />' . $myrow['braddress2'] . 
-					   		'<br />' . $myrow['braddress3'] . 
-					   		'<br />' . $myrow['braddress4'] . 
-					   		'<br />' . $myrow['braddress5'] . 
+				   		<td style="background-color:#EEEEEE">' .$myrow['brname'] .
+					   		'<br />' . $myrow['braddress1'] .
+					   		'<br />' . $myrow['braddress2'] .
+					   		'<br />' . $myrow['braddress3'] .
+					   		'<br />' . $myrow['braddress4'] .
+					   		'<br />' . $myrow['braddress5'] .
 					   		'<br />' . $myrow['braddress6'] . '</td>';
-	
-				   	echo '<td style="background-color:#EEEEEE">' . $myrow['deliverto'] . 
-							'<br />' . $myrow['deladd1'] . 
-							'<br />' . $myrow['deladd2'] . 
-							'<br />' . $myrow['deladd3'] . 
-							'<br />' . $myrow['deladd4'] . 
-							'<br />' . $myrow['deladd5'] . 
+
+				   	echo '<td style="background-color:#EEEEEE">' . $myrow['deliverto'] .
+							'<br />' . $myrow['deladd1'] .
+							'<br />' . $myrow['deladd2'] .
+							'<br />' . $myrow['deladd3'] .
+							'<br />' . $myrow['deladd4'] .
+							'<br />' . $myrow['deladd5'] .
 							'<br />' . $myrow['deladd6'] . '</td>
 							</tr>
 						</table>
@@ -809,12 +809,12 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 				   		<td align="left" style="background-color:#BBBBBB"><b>' . _('Branch') . ':</b></td>
 						</tr>';
 				   echo '<tr>
-				   		<td style="background-color:#EEEEEE">' .$myrow['brname'] . 
-							'<br />' . $myrow['braddress1'] . 
-							'<br />' . $myrow['braddress2'] . 
-							'<br />' . $myrow['braddress3'] . 
-							'<br />' . $myrow['braddress4'] . 
-							'<br />' . $myrow['braddress5'] . 
+				   		<td style="background-color:#EEEEEE">' .$myrow['brname'] .
+							'<br />' . $myrow['braddress1'] .
+							'<br />' . $myrow['braddress2'] .
+							'<br />' . $myrow['braddress3'] .
+							'<br />' . $myrow['braddress4'] .
+							'<br />' . $myrow['braddress5'] .
 							'<br />' . $myrow['braddress6'] . '</td>
 					</tr></table>';
 				   echo '<hr /><table class="table1"><tr>
@@ -864,7 +864,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 							<th>' . _('Discount') . '</th>
 							<th>' . _('Net') . '</th>
 						</tr>';
-	
+
 					$LineCounter =17;
 					$k=0;	//row colour counter
 
@@ -905,7 +905,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
 									$DisplayPrice,
 									$DisplayDiscount,
 									$DisplayNet);
-		
+
 					      if (mb_strlen($myrow2['narrative'])>1){
 					      		echo $RowStarter . '<td></td><td colspan="6">' . $myrow2['narrative'] . '</td></tr>';
 							$LineCounter++;

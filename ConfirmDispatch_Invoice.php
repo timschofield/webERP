@@ -116,7 +116,7 @@ if (!isset($_GET['OrderNumber']) AND !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items'.$identifier]->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items'.$identifier]->Email = $myrow['contactemail'];
 		$_SESSION['Items'.$identifier]->SalesPerson = $myrow['salesperson'];
-		
+
 		$_SESSION['Items'.$identifier]->Location = $myrow['fromstkloc'];
 		$_SESSION['Items'.$identifier]->FreightCost = $myrow['freightcost'];
 		$_SESSION['Old_FreightCost'] = $myrow['freightcost'];

@@ -64,10 +64,10 @@ if (isset($_POST['RunReport'])){
 					ON gltrans.type=systypes.typeid
 					WHERE gltrans.account = '" . $SelectedAccount . "'
 					AND posted=1
-					AND periodno>='" . $FirstPeriodSelected . "' 
-					AND periodno<='" . $LastPeriodSelected . "' 
-					ORDER BY periodno, 
-						gltrans.trandate, 
+					AND periodno>='" . $FirstPeriodSelected . "'
+					AND periodno<='" . $LastPeriodSelected . "'
+					ORDER BY periodno,
+						gltrans.trandate,
 						counterindex";
 
 		} else {
@@ -86,8 +86,8 @@ if (isset($_POST['RunReport'])){
 					AND periodno>='" . $FirstPeriodSelected . "'
 					AND periodno<='" . $LastPeriodSelected . "'
 	                AND tag='" . $_POST['tag'] . "'
-	                ORDER BY periodno, 
-							gltrans.trandate, 
+	                ORDER BY periodno,
+							gltrans.trandate,
 							counterindex";
 		}
 
@@ -109,7 +109,7 @@ if (isset($_POST['RunReport'])){
 						actual,
 						period
 					FROM chartdetails
-					WHERE chartdetails.accountcode='" .  $SelectedAccount . "' 
+					WHERE chartdetails.accountcode='" .  $SelectedAccount . "'
 					AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');

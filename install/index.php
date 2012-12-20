@@ -187,29 +187,29 @@ function change_data(type) {
 			<td>
 				<p style="cursor: pointer;" onclick="javascript: change_os('linux');">
                 <input type="radio" tabindex="40" name="operating_system" id="operating_system_linux" onclick="document.getElementById('file_perms_box').style.display = 'block';" value="linux"
-				<?php 
-					if(!isset($_SESSION['operating_system']) OR $_SESSION['operating_system'] == 'linux') { 
-						echo ' checked="checked"'; 
-					} ?> 
+				<?php
+					if(!isset($_SESSION['operating_system']) OR $_SESSION['operating_system'] == 'linux') {
+						echo ' checked="checked"';
+					} ?>
 				/>Linux/Unix based</p>
 				<br />
                 <p style="cursor: pointer;" onclick="javascript: change_os('windows');">
 				<input type="radio" tabindex="41" name="operating_system" id="operating_system_windows" onclick="document.getElementById('file_perms_box').style.display = 'none';" value="windows"
-				<?php 
-					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') { 
-						echo ' checked="checked"'; } 
-					?> 
+				<?php
+					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') {
+						echo ' checked="checked"'; }
+					?>
 				/>Windows</p>
 			</td>
 			<td>
-			  <?php 
+			  <?php
 					if(isset($_SESSION['operating_system']) AND $_SESSION['operating_system'] == 'windows') {
 						echo '<div id="file_perms_box" style="margin:0; padding:0; display:none">';
 					} else {
 						echo '<div id="file_perms_box" style="margin:0; padding:0; display:block">';
 					}
 				?>
-                
+
 					<input type="checkbox" tabindex="42" name="world_writeable" id="world_writeable" value="true"<?php if(isset($_SESSION['world_writeable']) AND $_SESSION['world_writeable'] == true) { echo 'checked="checked"'; } ?> />
 					<label for="world_writeable">
 						World-writeable file permissions (777)
@@ -336,8 +336,8 @@ function change_data(type) {
 			<td style="color: #666666;">Username:</td>
 			<td>
 				admin
-				<!--<input type="text" tabindex="60" name="admin_username" style="width: 98%;" value="<?php if(isset($_SESSION['admin_username'])) { echo $_SESSION['admin_username']; 
-				} else { 
+				<!--<input type="text" tabindex="60" name="admin_username" style="width: 98%;" value="<?php if(isset($_SESSION['admin_username'])) { echo $_SESSION['admin_username'];
+				} else {
 					echo 'admin'; } ?>" />-->
 			</td>
 			<td>&nbsp;</td>

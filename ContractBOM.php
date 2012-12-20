@@ -399,7 +399,7 @@ if (isset($SearchResult)) {
 }#end if SearchResults to show
 
 echo '<hr />
-    </div> 
+    </div>
 	</form>';
 include('includes/footer.inc');
 ?>

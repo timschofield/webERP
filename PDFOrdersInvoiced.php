@@ -170,7 +170,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 					stockmaster.description,
 					stockmaster.units,
 					stockmaster.decimalplaces";
-	
+
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 	$sql= "SELECT salesorders.orderno,
 				  salesorders.debtorno,

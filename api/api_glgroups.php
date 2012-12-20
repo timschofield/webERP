@@ -79,7 +79,7 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = "INSERT INTO accountgroups ('" .mb_substr($FieldNames,0,-2) . "') 
+			$sql = "INSERT INTO accountgroups ('" .mb_substr($FieldNames,0,-2) . "')
 					VALUES ('" . mb_substr($FieldValues,0,-2) . "' ) ";
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {

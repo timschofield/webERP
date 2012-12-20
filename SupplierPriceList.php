@@ -85,8 +85,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						ON stockmaster.categoryid=stockcategory.categoryid,
 							locstock
 						WHERE stockmaster.stockid=locstock.stockid
-						AND stockmaster.description " . LIKE . " '$SearchString' 
-						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+						AND stockmaster.description " . LIKE . " '$SearchString'
+						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units,
@@ -105,7 +105,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 						FROM stockmaster INNER JOIN locstock
 						ON stockmaster.stockid=locstock.stockid
 						WHERE description " . LIKE . " '$SearchString'
-						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+						AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 						AND categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
 							stockmaster.description,
@@ -127,10 +127,10 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							stockmaster.decimalplaces
 						FROM stockmaster
 						INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid 
+						ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN locstock
 						ON stockmaster.stockid=locstock.stockid
-						WHERE (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+						WHERE (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 						AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 						GROUP BY stockmaster.stockid,
 								stockmaster.description,
@@ -150,7 +150,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				FROM stockmaster INNER JOIN locstock
 				ONstockmaster.stockid=locstock.stockid
 				WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 				AND categoryid='" . $_POST['StockCat'] . "'
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
@@ -174,7 +174,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				ON stockmaster.categoryid=stockcategory.categoryid,
 					locstock
 				WHERE stockmaster.stockid=locstock.stockid
-				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -193,7 +193,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				FROM stockmaster INNER JOIN locstock
 				ONstockmaster.stockid=locstock.stockid
 				WHERE categoryid='" . $_POST['StockCat'] . "'
-				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') 
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -392,7 +392,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
         echo '<div>';
         echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-        
+
 		echo '<table cellpadding="3" class="selection"><tr>';
 		echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>';
 		echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>';
@@ -443,7 +443,7 @@ if (isset($SuppliersResult)) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
     echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    
+
 	echo '<table cellpadding="2" class="selection">';
 	$TableHeader = '<tr><th>' . _('Code') . '</th>
 						<th>' . _('Supplier Name') . '</th>

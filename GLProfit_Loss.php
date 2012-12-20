@@ -899,8 +899,8 @@ if ((!isset($_POST['FromPeriod'])
 					echo '<tr>
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
-						</tr>';		
-				} 
+						</tr>';
+				}
 
 			}
 			$SectionPrdLY =0;
@@ -1218,7 +1218,7 @@ if ((!isset($_POST['FromPeriod'])
 				</tr>',
 				$Sections[$myrow['sectioninaccounts']]);
 		}
-		
+
 		$j++;
 
 	}

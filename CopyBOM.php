@@ -19,7 +19,7 @@ if(isset($_POST['Submit'])) {
 	$NewOrExisting = $_POST['NewOrExisting'];
 	$NewStockID = '';
 	$InputError = 0; //assume the best
-	
+
 	if($NewOrExisting == 'N') {
 		$NewStockID = $_POST['ToStockID'];
 		if (mb_strlen($NewStockID)==0 OR $NewStockID==''){
@@ -104,9 +104,9 @@ if(isset($_POST['Submit'])) {
 						FROM stockmaster
 						WHERE stockid='".$StockID."';";
 			$result = DB_query($sql, $db);
-	
+
 			$myrow = DB_fetch_row($result);
-	
+
 			$sql = "UPDATE stockmaster set
 					lastcostupdate  = " . $myrow[0] . ",
 					actualcost      = " . $myrow[1] . ",
@@ -118,7 +118,7 @@ if(isset($_POST['Submit'])) {
 					WHERE stockid='".$NewStockID."';";
 			$result = DB_query($sql, $db);
 		}
-	
+
 		$sql = "INSERT INTO bom
 					SELECT '".$NewStockID."' AS parent,
 							component,
@@ -131,7 +131,7 @@ if(isset($_POST['Submit'])) {
 					FROM bom
 					WHERE parent='".$StockID."';";
 		$result = DB_query($sql, $db);
-	
+
 		if($NewOrExisting == 'N') {
 			$sql = "INSERT INTO locstock
 		      SELECT loccode,
@@ -140,14 +140,14 @@ if(isset($_POST['Submit'])) {
 					reorderlevel
 				FROM locstock
 				WHERE stockid='".$StockID."'";
-				
+
 			$result = DB_query($sql, $db);
 		}
-	
+
 		$result = DB_Txn_Commit($db);
-	
+
 		UpdateCost($db, $NewStockID);
-	
+
 		header('Location: BOMs.php?Select='.$NewStockID);
 		ob_end_flush();
 	} //end  if there is no input error

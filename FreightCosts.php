@@ -46,8 +46,8 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 				<td>' . _('Select the warehouse') . ' (' . _('ship from location') . ')</td>
 				<td><select name="LocationFrom">';
 
-	$sql = "SELECT loccode, 
-					locationname 
+	$sql = "SELECT loccode,
+					locationname
 			FROM locations";
 	$LocationResults = DB_query($sql,$db);
 
@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['FixedPrice'] ."',
 											'" . $_POST['MinimumChg'] . "'
 										)";
-							
+
 		$msg = _('Freight cost record inserted');
 
 	}
@@ -197,7 +197,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 				WHERE freightcosts.locationfrom = '".$LocationFrom. "'
 				AND freightcosts.shipperid = '" . $ShipperID . "'
 				ORDER BY destination";
-		
+
 	$result = DB_query($sql,$db);
 
 	echo '<br /><table class="selection">';

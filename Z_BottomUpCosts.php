@@ -44,8 +44,8 @@ if (isset($Run)) { //start bom processing
 		prnMsg( _('All cost updates committed to the database.'),'success');
 	}
 
-} else { 
-	
+} else {
+
 	echo '<br />
 		<br />';
 	prnMsg(_('This script will not update the General Ledger stock balances for the changed costs. If you use integrated stock then do not use this utility'),'warn');

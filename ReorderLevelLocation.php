@@ -36,7 +36,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		$Sequence="locstock.stockid";
 	}
 
-	$sql="SELECT locstock.stockid, 
+	$sql="SELECT locstock.stockid,
 				description,
 				reorderlevel,
 				decimalplaces
@@ -90,14 +90,14 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
 			<input type="hidden" value="' . locale_number_format($_POST['NumberOfDays'],0) . '" name="NumberOfDays" />';
 
-		
+
 		$SqlInv="SELECT SUM(-qty) AS qtyinvoiced
 				FROM stockmoves
 				WHERE stockid='".$myrow['stockid']."'
 				AND (type=10 OR type=11)
 				AND loccode='" . $_POST['StockLocation'] ."'
 				AND trandate >= '" . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-filter_number_format($_POST['NumberOfDays']))) . "'";
-		
+
 		$ResultInvQty = DB_query($SqlInv,$db);
 		$SalesRow=DB_fetch_array($ResultInvQty);
 
@@ -109,7 +109,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				WHERE stockid='" . $myrow['stockid'] . "'";
 		$TotQtyResult = DB_query($SqlOH,$db);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
-		
+
 		//get On Hand in Location
 		$SqlOHLoc="SELECT SUM(quantity) AS qty
 					FROM locstock
@@ -162,7 +162,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	}
 	echo '</select></td></tr>';
 
-	$SQL="SELECT categoryid, 
+	$SQL="SELECT categoryid,
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";

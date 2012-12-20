@@ -84,7 +84,7 @@ if (isset($_POST['PrintPDF'])) {
 								FROM purchorders
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorders.status !='Cancelled' 
+								WHERE purchorders.status !='Cancelled'
 								AND purchorders.status !='Rejected'
 								AND purchorders.status !='Pending'
 								AND purchorderdetails.itemcode='".$myrow['stockid']."'

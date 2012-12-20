@@ -42,8 +42,8 @@ if (isset($_POST['PrintPDF'])
 					) AS fxafterdatetrans
 			FROM debtorsmaster INNER JOIN currencies
 			ON debtorsmaster.currcode = currencies.currabrev
-			INNER JOIN debtortrans 
-			ON debtorsmaster.debtorno = debtortrans.debtorno 
+			INNER JOIN debtortrans
+			ON debtorsmaster.debtorno = debtortrans.debtorno
 			WHERE debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 			AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY debtorsmaster.debtorno,
@@ -114,9 +114,9 @@ if (isset($_POST['PrintPDF'])
 
 	$LeftOvers = $pdf->addTextWrap(50,$YPos,160,$FontSize,_('Total balances'),'left');
 	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-	
+
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct(); 
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 

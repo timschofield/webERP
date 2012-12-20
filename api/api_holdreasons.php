@@ -2,7 +2,7 @@
 /* $Id$*/
 
 /* This function returns a list of the hold reason codes
- * currently setup on webERP 
+ * currently setup on webERP
  */
 
 	function GetHoldReasonList($user, $password) {
@@ -21,12 +21,12 @@
 		}
 		return $HoldReasonList;
 	}
-	
+
 /* This function takes as a parameter a hold reason code
- * and returns an array containing the details of the selected 
+ * and returns an array containing the details of the selected
  * hold reason.
  */
-	
+
 	function GetHoldReasonDetails($holdreason, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);

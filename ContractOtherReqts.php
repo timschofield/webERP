@@ -159,15 +159,15 @@ echo '<table class="selection">
 			<td>' . _('Cost Per Unit') . ':</td>
 			<td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
 		</tr>
-		
+
 		</table>
-		
+
 		<br />
 		<div class="centre">
 			<input type="submit" name="EnterNewRequirement" value="' . _('Enter New Contract Requirement') . '" />
 		</div>
 		</div>
 		</form>';
-		
+
 include('includes/footer.inc');
 ?>

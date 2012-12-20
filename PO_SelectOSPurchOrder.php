@@ -13,24 +13,24 @@ include('includes/DefinePOClass.php');
 
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = trim($_GET['SelectedStockItem']);
-} 
+}
 elseif (isset($_POST['SelectedStockItem'])) {
 	$SelectedStockItem = trim($_POST['SelectedStockItem']);
-} 
+}
 
 if (isset($_GET['OrderNumber'])) {
 	$OrderNumber = $_GET['OrderNumber'];
-} 
+}
 elseif (isset($_POST['OrderNumber'])) {
 	$OrderNumber = $_POST['OrderNumber'];
-} 
+}
 
 if (isset($_GET['SelectedSupplier'])) {
 	$SelectedSupplier = trim($_GET['SelectedSupplier']);
-} 
+}
 elseif (isset($_POST['SelectedSupplier'])) {
 	$SelectedSupplier = trim($_POST['SelectedSupplier']);
-} 
+}
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<div>';
@@ -39,7 +39,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
-} 
+}
 
 if (isset($OrderNumber) AND $OrderNumber != '') {
 	if (!is_numeric($OrderNumber)) {
@@ -87,7 +87,7 @@ if (isset($_POST['SearchParts'])) {
 
 
 	} elseif ($_POST['StockCode']) {
-		
+
 		$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					SUM(locstock.quantity) AS qoh,
@@ -121,7 +121,7 @@ if (isset($_POST['SearchParts'])) {
 					stockmaster.description,
 					stockmaster.units
 				ORDER BY stockmaster.stockid";
-	} 
+	}
 
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL used to retrieve the searched parts was');
@@ -159,7 +159,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 		} else {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
-	} 
+	}
 	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
 	if (!isset($_POST['Status']) OR $_POST['Status'] == 'Pending_Authorised') {
 		echo '<option selected="selected" value="Pending_Authorised">' . _('Pending and Authorised') . '</option>';
@@ -199,7 +199,7 @@ echo '<br /><div class="page_help_text">' . _('To search for purchase orders for
 echo '<br />
 		<table class="selection">
 		<tr>';
- 
+
 echo '<td>' . _('Select a stock category') . ':
 		<select name="StockCat">';
 
@@ -317,8 +317,8 @@ else {
 		if (isset($SelectedSupplier)) {
 			if (!isset($_POST['StockLocation'])) {
 				$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-			} 
-			
+			}
+
 			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT purchorders.realorderno,
 							purchorders.orderno,
@@ -391,7 +391,7 @@ else {
 		else { //no supplier selected
 			if (!isset($_POST['StockLocation'])) {
 				$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-			} 
+			}
 			if (isset($SelectedStockItem) AND isset($_POST['StockLocation'])) {
 				$SQL = "SELECT purchorders.realorderno,
 							purchorders.orderno,
@@ -479,7 +479,7 @@ else {
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<th>' . _('Order Total') . '</th>';
-	} 
+	}
 	echo '<th>' . _('Status') . '</th>
 			<th>' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
@@ -531,7 +531,7 @@ else {
 			<td>' . $myrow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 			echo '<td class="number">' . $FormatedOrderValue . '</td>';
-		} 
+		}
 		echo '<td>' . _($myrow['status']) . '</td>
 					<td>' . $PrintPurchOrder . '</td>
 					<td>' . $ReceiveOrder . '</td>

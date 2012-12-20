@@ -19,7 +19,7 @@ include('includes/header.inc');
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">'; 
+	echo '<table class="selection">';
 
 	$DefaultFromPeriod = ( !isset($_POST['FromPeriod']) OR $_POST['FromPeriod']=='' ) ? 1 : $_POST['FromPeriod'];
 
@@ -37,7 +37,7 @@ include('includes/header.inc');
 	echo '<tr>
 			<td>' . _('Start Period:') . '</td>
 			<td><select name="FromPeriod">';
-	
+
 	$ToSelect = '<tr><td>' . _('End Period:') .'</td>
 					<td><select name="ToPeriod">';
 
@@ -56,7 +56,7 @@ include('includes/header.inc');
 
 	echo $ToSelect . '</select></td></tr>';
 
-	echo '</table>'; 
+	echo '</table>';
 
 	echo '<br /><input type="submit" name="Show" value="'._('Accept').'" />';
 	echo '<input type="submit" value="' . _('Cancel') .'" />';

@@ -18,68 +18,68 @@ require_once(dirname(__FILE__).'/tcpdf/config/lang/eng.php');
 require_once(dirname(__FILE__).'/tcpdf/tcpdf.php');
 
 if (!class_exists('Cpdf', false)) {
-	
+
 	class Cpdf extends TCPDF {
-	
+
 		public function __construct($DocOrientation='P', $DocUnits='pt', $DocPaper='A4') {
-	
+
 			parent::__construct($DocOrientation, $DocUnits, $DocPaper, true, 'utf-8', false);
-	
+
 			$this->setuserpdffont();
 		}
-	
+
 		protected function setuserpdffont() {
-	
+
 			if (session_id()=='') {
 				session_start();
 			}
-	
+
 			if (isset($_SESSION['PDFLanguage'])) {
-	
+
 				$UserPdfLang = $_SESSION['PDFLanguage'];
-	
+
 				switch ($UserPdfLang) {
-					case 0: 
-						$UserPdfFont = 'times';     
+					case 0:
+						$UserPdfFont = 'times';
 						break;
-					case 1: 
-						$UserPdfFont = 'javierjp';  
+					case 1:
+						$UserPdfFont = 'javierjp';
 						break;
-					case 2: 
-						$UserPdfFont = 'javiergb';  
+					case 2:
+						$UserPdfFont = 'javiergb';
 						break;
 				}
-	
+
 			} else {
 				$UserPdfFont = 'helvetica';
 			}
-	
+
 			$this->SetFont($UserPdfFont, '', 11);
 			//     SetFont($family, $style='', $size=0, $fontfile='')
 		}
-	
-	
+
+
 		function newPage() {
 	/* Javier: 	$this->setPrintHeader(false);  This is not a removed call but added in. */
 			$this->AddPage();
 		}
-	
+
 		function line($x1,$y1,$x2,$y2,$style=array()) {
 	// Javier	FPDF::line($x1, $this->h-$y1, $x2, $this->h-$y2);
 	// Javier: width, color and style might be edited
 			TCPDF::Line ($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
 		}
-	
+
 		function addText($xb,$YPos,$size,$text)//,$angle=0,$wordSpaceAdjust=0)
 																{
 	// Javier	$text = html_entity_decode($text);
 			$this->SetFontSize($size);
 			$this->Text($xb, $this->h-$YPos, $text);
 		}
-	
+
 		function addInfo($label, $value) {
 			if ($label == 'Creator') {
-	
+
 	/* Javier: Some scripts set the creator to be WebERP like this
 				$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
 		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in tcpdf/config/tcpdfconfig.php
@@ -101,22 +101,22 @@ if (!class_exists('Cpdf', false)) {
 				$this->SetKeywords( $value );
 			}
 		}
-		
+
 		function addJpegFromFile($img,$XPos,$YPos,$Width=0,$Height=0,$Type=''){
 			$this->Image($img, $x=$XPos, $y=$this->h-$YPos-$Height, $w=$Width, $h=$Height,$type=$Type);
 		}
-	
+
 		/*
 		* Next Two functions are adopted from R&OS pdf class
 		*/
-	
+
 		/**
 		* draw a part of an ellipse
 		*/
 		function partEllipse($x0,$y0,$astart,$afinish,$r1,$r2=0,$angle=0,$nSeg=8) {
 			$this->ellipse($x0,$y0,$r1,$r2,$angle,$nSeg,$astart,$afinish,0);
 		}
-	
+
 		/**
 		* draw an ellipse
 		* note that the part and filled ellipse are just special cases of this function
@@ -128,7 +128,7 @@ if (!class_exists('Cpdf', false)) {
 		* pretty crappy shape at 2, as we are approximating with bezier curves.
 		*/
 		function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1,$fill=0,$fill_color=array(),$nc=8) {
-	
+
 			if ($r1==0){
 				return;
 			}
@@ -138,14 +138,14 @@ if (!class_exists('Cpdf', false)) {
 			if ($nSeg<2){
 				$nSeg=2;
 			}
-	
+
 			$astart = deg2rad((float)$astart);
 			$afinish = deg2rad((float)$afinish);
 			$totalAngle =$afinish-$astart;
-	
+
 			$dt = $totalAngle/$nSeg;
 			$dtm = $dt/3;
-	
+
 			if ($angle != 0){
 				$a = -1*deg2rad((float)$angle);
 				$tmp = "\n q ";
@@ -156,13 +156,13 @@ if (!class_exists('Cpdf', false)) {
 			} else {
 				$tmp='';
 			}
-	
+
 			$t1 = $astart;
 			$a0 = $x0+$r1*cos($t1);
 			$b0 = $y0+$r2*sin($t1);
 			$c0 = -$r1*sin($t1);
 			$d0 = $r2*cos($t1);
-	
+
 			$tmp.="\n".sprintf('%.3f',$a0).' '.sprintf('%.3f',$b0).' m ';
 			for ($i=1;$i<=$nSeg;$i++){
 				// draw this bit of the total curve
@@ -193,28 +193,28 @@ if (!class_exists('Cpdf', false)) {
 			}
 			$this->_out($tmp);
 		}
-	
+
 	/* Javier:
 		A file's name is needed if we don't want file extension to be .php
 		TCPDF has a different behaviour than FPDF, the recursive scripts needs D.
 		The admin/user may change I to D to force all pdf to be downloaded or open in a desktop app instead the browser plugin, but not vice-versa.
 		The admin/user may change I and D to F to save all pdf in the server for Document Management.
 	*/
-	
+
 		function OutputI($DocumentFilename = 'Document.pdf') {
 			if (($DocumentFilename == null) or ($DocumentFilename == '')) {
 				$DocumentFilename = _('Document.pdf');
 			}
 			$this->Output($DocumentFilename,'I');
 		}
-	
+
 		function OutputD($DocumentFilename = 'Document.pdf') {
 			if (($DocumentFilename == null) or ($DocumentFilename == '')) {
 				$DocumentFilename = _('Document.pdf');
 			}
 			$this->Output($DocumentFilename,'D');
 		}
-	
+
 		function RoundRectangle($XPos, $YPos, $Width, $Height, $Radius) {
 			/*from the top right */
 			$this->partEllipse($XPos+$Width,$YPos,0,90,$Radius,$Radius);
@@ -233,14 +233,14 @@ if (!class_exists('Cpdf', false)) {
 			/*Finally join up to the top right corner where started */
 			$this->line($XPos+$Width+$Radius, $YPos-$Height,$XPos+$Width+$Radius, $YPos);
 		}
-	
+
 		function Rectangle($XPos, $YPos, $Width, $Height) {
 			$this->line($XPos, $YPos, $XPos+$Width, $YPos);
 			$this->line($XPos+$Width, $YPos, $XPos+$Width, $YPos-$Height);
 			$this->line($XPos+$Width, $YPos-$Height, $XPos, $YPos-$Height);
 			$this->line($XPos, $YPos-$Height, $XPos, $YPos);
 		}
-	
+
 		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
 
 			/* Returns the balance of the string that could not fit in the width
@@ -250,10 +250,10 @@ if (!class_exists('Cpdf', false)) {
 			//some special characters are html encoded
 			//this code serves to make them appear human readable in pdf file
 			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');
-	
+
 			$this->x = $XPos;
 			$this->y = $this->h - $YPos - $Height;
-	
+
 			switch($Align) {
 				case 'right':
 				$Align = 'R'; break;
@@ -261,7 +261,7 @@ if (!class_exists('Cpdf', false)) {
 				$Align = 'C'; break;
 				default:
 				$Align = 'L';
-	
+
 			}
 			$this->SetFontSize($Height);
 
@@ -313,7 +313,7 @@ if (!class_exists('Cpdf', false)) {
 				if($i==0) {
 					$i++;
 				}
-	
+
 				if(isset($this->ws) and $this->ws>0) {
 					$this->ws=0;
 					$this->_out('0 Tw');
@@ -325,12 +325,12 @@ if (!class_exists('Cpdf', false)) {
 					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
 				}
 			}
-	
+
 			$this->Cell($Width,$Height,mb_substr($s,0,$sep),$b,2,$Align,$fill);
 			$this->x=$this->lMargin;
 			return mb_substr($s, $sep);
 		} //end function addTextWrap
-	
+
 	} // end of class
 } //end if  Cpdf class exists already
 ?>

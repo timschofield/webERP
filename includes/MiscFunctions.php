@@ -224,7 +224,7 @@ function quote_oanda_currency($CurrCode) {
 }
 
 function google_currency_rate($CurrCode) {
-	
+
 	$Rate = 0;
 	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
 	foreach ($PageLines as $Line){

@@ -169,7 +169,7 @@
 	Define('NoReadItem',1164);
 	Define('MustBeReceiptOrCreditNote',1165);
 	Define('NoTransactionToAllocate',1166);
-	
+
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');

@@ -63,7 +63,7 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = "INSERT INTO stockcategory ('" . mb_substr($FieldNames,0,-2) . "') 
+		$sql = "INSERT INTO stockcategory ('" . mb_substr($FieldNames,0,-2) . "')
 				VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
@@ -152,7 +152,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql="SELECT categoryid, 
+		$sql="SELECT categoryid,
 					categorydescription
 			FROM stockcategory
 			WHERE " . $Field ." " . LIKE  . " '%".$Criteria."%'";
@@ -202,8 +202,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql="SELECT value FROM stockitemproperties 
-		               WHERE stockid='".$StockID."' 
+		$sql="SELECT value FROM stockitemproperties
+		               WHERE stockid='".$StockID."'
 		               AND stkcatpropid='".$Property . "'";
 		$result = DB_Query($sql, $db);
 		$myrow=DB_fetch_array($result);

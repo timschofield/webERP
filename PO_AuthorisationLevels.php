@@ -11,7 +11,7 @@ echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/g
 
 
 /*Note: If CanCreate==0 then this means the user can create orders
- *     Also if OffHold==0 then the user can release purchase invocies 
+ *     Also if OffHold==0 then the user can release purchase invocies
  *     This logic confused me a bit to start with
  */
 

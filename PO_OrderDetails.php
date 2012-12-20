@@ -48,12 +48,12 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 			www_users.realname,
 			locations.locationname,
 			currencies.decimalplaces AS currdecimalplaces
-		FROM purchorders 
+		FROM purchorders
 		INNER JOIN locations
 		ON locations.loccode=purchorders.intostocklocation
 		INNER JOIN suppliers
 		ON purchorders.supplierno = suppliers.supplierid
-		INNER JOIN currencies 
+		INNER JOIN currencies
 		ON suppliers.currcode = currencies.currabrev
 		LEFT JOIN www_users
 		ON purchorders.initiator=www_users.userid

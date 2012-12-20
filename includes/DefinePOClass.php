@@ -79,7 +79,7 @@ Class PurchOrder {
 						$LeadTime=1,
 						$Suppliers_PartNo='',
 						$AssetID=0){
-							
+
 		if ($Qty!=0 && isset($Qty)){
 
 			$this->LineItems[$LineNo] = new LineDetails($LineNo,
@@ -184,7 +184,7 @@ Class PurchOrder {
 		}
 		return $TotalValue;
 	}
-	
+
 	function AllLinesReceived(){
 		foreach ($this->LineItems as $OrderedItems) {
 			if (($OrderedItems->QtyReceived + $OrderedItems->ReceiveQty) < $OrderedItems->Quantity){
@@ -193,7 +193,7 @@ Class PurchOrder {
 		}
 		return 1; //all lines must be fully received
 	}
-	
+
 	function SomethingReceived(){
 		foreach ($this->LineItems as $OrderedItems) {
 			if ($OrderedItems->ReceiveQty !=0){
@@ -202,7 +202,7 @@ Class PurchOrder {
 		}
 		return 0; //nowt received
 	}
-	
+
 } /* end of class defintion */
 
 Class LineDetails {
