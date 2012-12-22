@@ -145,7 +145,8 @@ $MenuItems['AP']['Reports']['Caption'] = array (_('Aged Supplier Report'),
 												_('Outstanding GRNs Report'),
 												_('Supplier Balances At A Prior Month End'),
 												_('List Daily Transactions'),
-												_('Supplier Transaction Inquiries')
+												_('Supplier Transaction Inquiries'),
+												_('Goods Received Not Invoiced Yet')
 												);
 
 $MenuItems['AP']['Reports']['URL'] = array ('/AgedSuppliers.php',
@@ -154,7 +155,8 @@ $MenuItems['AP']['Reports']['URL'] = array ('/AgedSuppliers.php',
 											'/OutstandingGRNs.php',
 											'/SupplierBalsAtPeriodEnd.php',
 											'/PDFSuppTransListing.php',
-											'/SupplierTransInquiry.php'
+											'/SupplierTransInquiry.php',
+											'/GoodsReceivedNotInvoiced.php'
 											);
 
 $MenuItems['AP']['Maintenance']['Caption'] = array (_('Add Supplier'),
