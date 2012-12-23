@@ -7,20 +7,24 @@ $title = _('Goods Received But Not Invoiced Yet');
 include ('includes/header.inc');
 
 $SQL = "SELECT grns.supplierid,
+				purchorderdetails.orderno,
+				grns.itemcode,
+				grns.qtyrecd,
+				grns.quantityinv,
+				purchorderdetails.unitprice,
+				suppliers.currcode,
+				currencies.rate,
+				currencies.decimalplaces
+		FROM grns INNER JOIN purchorderdetails
+		ON grns.podetailitem=purchorderdetails.podetailitem
+		INNER JOIN suppliers
+		ON grns.supplierid = suppliers.supplierid
+		INNER JOIN currencies
+		ON suppliers.currcode = currencies.currabrev
+		WHERE grns.qtyrecd - grns.quantityinv > 0
+		ORDER BY grns.supplierid,
 			purchorderdetails.orderno,
-			grns.itemcode,
-			grns.qtyrecd,
-			grns.quantityinv,
-			purchorderdetails.unitprice,
-			suppliers.currcode,
-			currencies.rate,
-			currencies.decimalplaces
-		FROM grns, purchorderdetails, suppliers, currencies
-		WHERE grns.podetailitem=purchorderdetails.podetailitem
-			AND grns.supplierid = suppliers.supplierid
-			AND suppliers.currcode = currencies.currabrev
-			AND grns.qtyrecd - grns.quantityinv > 0
-		ORDER BY grns.supplierid, purchorderdetails.orderno, grns.itemcode";
+			grns.itemcode";
 $result = DB_query($SQL, $db);
 
 if (DB_num_rows($result) != 0){
@@ -103,15 +107,15 @@ if (DB_num_rows($result) != 0){
 			<td class="number">%s</td>
 			<td>%s</td>
 			</tr>', 
-			"", 
-			"", 
-			"", 
-			"", 
-			"", 
-			"", 
-			"", 
-			"", 
-			"", 
+			'', 
+			'', 
+			'', 
+			'', 
+			'', 
+			'', 
+			'', 
+			'', 
+			'', 
 			_('Total').':', 
 			locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']),
 			$_SESSION['CountryOfOperation']

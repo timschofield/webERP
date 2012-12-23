@@ -146,8 +146,7 @@ $MenuItems['AP']['Reports']['Caption'] = array (_('Aged Supplier Report'),
 												_('Supplier Balances At A Prior Month End'),
 												_('List Daily Transactions'),
 												_('Supplier Transaction Inquiries'),
-												_('Goods Received Not Invoiced Yet')
-												);
+												_('All Goods Received Not Invoiced'));
 
 $MenuItems['AP']['Reports']['URL'] = array ('/AgedSuppliers.php',
 											'/SuppPaymentRun.php',
@@ -568,7 +567,7 @@ $MenuItems['Utilities']['Reports']['Caption'] = array (_('Show Local Currency To
 $MenuItems['Utilities']['Reports']['URL'] = array ('/Z_CurrencyDebtorsBalances.php',
 												'/Z_CurrencySuppliersBalances.php',
 												'/Z_CheckGLTransBalance.php',
-												'/ItemsWithoutPicture.php');
+												'/Z_ItemsWithoutPicture.php');
 
 $MenuItems['Utilities']['Maintenance']['Caption'] = array (_('Maintain Language Files'),
 																_('Make New Company'),

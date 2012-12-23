@@ -6,9 +6,6 @@ include('includes/DefineCartClass.php');
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc $PageSecurity now comes from session.inc (and gets read in by GetConfig.php*/
 
-/* style="color:red" */
-
-
 include('includes/session.inc');
 
 $title = _('Counter Returns');
