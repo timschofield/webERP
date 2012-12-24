@@ -9,9 +9,10 @@ include('includes/header.inc');
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/user.png" title="' .
 	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
 
-$PDFLanguages = array(_('Latin Western Languages'),
+$PDFLanguages = array(_('Latin Western Languages - Times'),
 					_('Eastern European Russian Japanese Korean Hebrew Arabic Thai'),
-					_('Chinese'));
+					_('Chinese'),
+					_('Free Serif'));
 
 
 if (isset($_POST['Modify'])) {

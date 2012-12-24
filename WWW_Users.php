@@ -24,7 +24,8 @@ $ModuleList = array(_('Orders'),
 
 $PDFLanguages = array(_('Latin Western Languages'),
 						_('Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai'),
-						_('Chinese'));
+						_('Chinese'),
+						_('Free Serif'));
 
 $title = _('User Maintenance');
 /* webERP manual links before header.inc */

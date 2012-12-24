@@ -48,6 +48,9 @@ if (!class_exists('Cpdf', false)) {
 					case 2:
 						$UserPdfFont = 'javiergb';
 						break;
+					case 3:
+						$UserPdfFont = 'freeserif';
+						break;
 				}
 
 			} else {
@@ -256,12 +259,11 @@ if (!class_exists('Cpdf', false)) {
 
 			switch($Align) {
 				case 'right':
-				$Align = 'R'; break;
+					$Align = 'R'; break;
 				case 'center':
-				$Align = 'C'; break;
+					$Align = 'C'; break;
 				default:
-				$Align = 'L';
-
+					$Align = 'L';
 			}
 			$this->SetFontSize($Height);
 
