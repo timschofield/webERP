@@ -164,6 +164,8 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
 	$pdf->__destruct();
 } elseif (isset($_POST['ShowOnScreen'])  AND DB_num_rows($GRNsResult)>0) {
+	
+	include('includes/header.inc');
 
 	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
 
@@ -236,7 +238,8 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
-			</tr>', 
+			</tr>',
+			'',			
 			_('Total').':', 
 			locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']),
 			$_SESSION['CompanyRecord']['currencydefault']);
