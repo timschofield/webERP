@@ -9,7 +9,7 @@ include('includes/header.inc');
 // If this script is called with the gettemplate flag, then a template file is served
 // Otherwise, a file upload form is displayed
 
-$headers = array(
+$FieldHeadings = array(
 	'StockID',         	//  0 'STOCKID',
 	'Description',     	//  1 'DESCRIPTION',
 	'LongDescription', 	//  2 'LONGDESCRIPTION',
@@ -33,31 +33,24 @@ $headers = array(
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 
 	//initialize
-	$AllowType='text/csv';
-	$fieldTarget = 18;
+	$FieldTarget = 18;
 	$InputError = 0;
 
 	//check file info
 	$FileName = $_FILES['userfile']['name'];
-	$tmpName  = $_FILES['userfile']['tmp_name'];
-	$fileSize = $_FILES['userfile']['size'];
-	$fileType = $_FILES['userfile']['type'];
-	if ($fileType != $AllowType) {
-		prnMsg (_('File has type '. $fileType. ', but only '. $AllowType. ' is allowed.'),'error');
-		include('includes/footer.inc');
-		exit;
-	}
-
+	$TempName  = $_FILES['userfile']['tmp_name'];
+	$FileSize = $_FILES['userfile']['size'];
+	
 	//get file handle
-	$handle = fopen($tmpName, 'r');
+	$FileHandle = fopen($TempName, 'r');
 
 	//get the header row
-	$headRow = fgetcsv($handle, 10000, ",");
+	$headRow = fgetcsv($FileHandle, 10000, ",");
 
 	//check for correct number of fields
-	if ( count($headRow) != count($headers) ) {
-		prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($headers). '. Try downloading a new template.'),'error');
-		fclose($handle);
+	if ( count($headRow) != count($FieldHeadings) ) {
+		prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+		fclose($FileHandle);
 		include('includes/footer.inc');
 		exit;
 	}
@@ -65,9 +58,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	//test header row field name and sequence
 	$head = 0;
 	foreach ($headRow as $headField) {
-		if ( mb_strtoupper($headField) != mb_strtoupper($headers[$head]) ) {
+		if ( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
 			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($headField). ' != '. mb_strtoupper($header[$head]). '. Try downloading a new template.'),'error');
-			fclose($handle);
+			fclose($FileHandle);
 			include('includes/footer.inc');
 			exit;
 		}
@@ -79,13 +72,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//loop through file rows
 	$row = 1;
-	while ( ($myrow = fgetcsv($handle, 10000, ",")) !== FALSE ) {
+	while ( ($myrow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
 
 		//check for correct number of fields
 		$fieldCount = count($myrow);
-		if ($fieldCount != $fieldTarget){
-			prnMsg (_($fieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
-			fclose($handle);
+		if ($fieldCount != $FieldTarget){
+			prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
+			fclose($FileHandle);
 			include('includes/footer.inc');
 			exit;
 		}
@@ -276,11 +269,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
 	}
 
-	fclose($handle);
+	fclose($FileHandle);
 
 } elseif ( isset($_POST['gettemplate']) || isset($_GET['gettemplate']) ) { //download an import template
 
-	echo '<br /><br /><br />"'. implode('","',$headers). '"<br /><br /><br />';
+	echo '<br /><br /><br />"'. implode('","',$FieldHeadings). '"<br /><br /><br />';
 
 } else { //show file upload form
 
