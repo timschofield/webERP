@@ -32,8 +32,7 @@ if (DB_num_rows($result) != 0){
 
 	echo '<div class="page_help_text">'
 	. _('Shows the list of Goods Received Not Yet Invoiced, both in supplier currency and home currency.'). '<br />'
-	. _('Total in home curency should match the GL Account for Goods received not invoiced.'). '<br />'
-	. _('Any discrepancy is due (probably) to multicurrency errors and must be fixed via GL Journal.') 
+	. _('Total in home currency calculated at Purchasing Price converted at current exchange rate, not Standard cost!'). '<br />'
 	. '</div>';
 
 	echo '<div>';
