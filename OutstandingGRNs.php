@@ -200,7 +200,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 			$k = 1;
 		}
 		$QtyPending = $GRNs['qtyrecd'] - $GRNs['quantityinv'];
-		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $GRNs['unitprice'] / $GRNs['rate']);
+		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $GRNs['stdcostunit']);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
