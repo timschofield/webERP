@@ -215,7 +215,15 @@ Each of the three types of entries in a purchase invoice are posted to the gener
             <li>With Shipment costing - the total amount of the charge is posted to the debit of the goods received clearing account - variances are taken up only once all shipment charges are in and the user explicity "closes" the shipment</li>
         </ul>
     </li>
-</ul><!-- Help End: SupplierInvoices -->
+</ul>
+<h3>Inventory Costing and GL Postings</h3>
+<p>
+The Outsanding Goods Received report shows the calculation of the cost of goods received but not yet invoiced. This calculation is done using the standard cost as it is this figure that is used for the posting to the GL at the time the goods are received. Note that the &quot;standard cost&quot; field is actually the weighted average cost if you are using the weighted average cost method. The standard cost should be reflective of the purchase cost in FX as converted to local currency plus all landing costs. The FX cost as converted to local currency will of course exclude any landing costs and obviously it will be different each time the currency rates of exchange are updated.</p>
+<p>
+Variances are only taken to the GL based on the comparison of the standard cost (at the time the goods were received) compared to what the purchase invoice at the rate used during the purchase invoice entry. If weighted average costing is used then actually the variance is taken to the value of inventory and the unit weighted average cost is updated to reflect the new value.</p>
+<p>
+Exchange differences subsequent i.e. when the purchase invoice is paid is taken to exchange differences and not against the cost of the items that were purchased.</p>
+<!-- Help End: SupplierInvoices -->
 <!-- Help Start: SupplierPayments -->
 </p>
 <div class="floatright"><a class="minitext" href="#top">⬆ Top</a></div>
