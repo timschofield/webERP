@@ -98,11 +98,12 @@ if (DB_num_rows($result) != 0){
 			$i++;
 		}
 	}
-	printf('<td colspan="10">%s</td>
+	printf('<td colspan="9">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
 			</tr>', 
+			'',
 			_('Total').':', 
 			locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']),
 			$_SESSION['CompanyRecord']['currencydefault']);
