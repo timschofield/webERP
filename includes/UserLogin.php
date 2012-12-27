@@ -36,6 +36,7 @@ function userLogin($Name, $Password, $db) {
 		if (!isset($Name) or $Name == '') {
 			return  UL_SHOWLOGIN;
 		}
+		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
 		$sql = "SELECT *
 				FROM www_users
 				WHERE www_users.userid='" . $Name . "'
