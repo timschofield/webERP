@@ -5,7 +5,7 @@ ALTER TABLE `salesorderdetails` DROP `commissionrate`;
 ALTER TABLE `salesorderdetails` DROP `commissionearned`;
 INSERT INTO scripts VALUES ('CounterReturns.php','5','Allows credits and refunds from the default Counter Sale account for an inventory location');
 ALTER TABLE purchorders MODIFY `initiator` VARCHAR(20);
-INSERT INTO `weberpdemo`.`scripts` (`script` , `pagesecurity` , `description`)
+INSERT INTO `scripts` (`script` , `pagesecurity` , `description`)
 VALUES ('OrderEntryDiscountPricing', '13', 'Not a script but an authority level marker - required if the user is allowed to enter discounts against a customer order'
 );
 ALTER TABLE `gltrans` ADD INDEX ( `tag` );

@@ -36,23 +36,7 @@ function userLogin($Name, $Password, $db) {
 		if (!isset($Name) or $Name == '') {
 			return  UL_SHOWLOGIN;
 		}
-		$sql = "SELECT userid,
-						fullaccess,
-						customerid,
-						branchcode,
-						pagesize,
-						defaultlocation,
-						email,
-						modulesallowed,
-						realname,
-						theme,
-						language,
-						salesman,
-						cancreatetender,
-						department,
-						blocked,
-						pdflanguage,
-						displayrecordsmax
+		$sql = "SELECT *
 				FROM www_users
 				WHERE www_users.userid='" . $Name . "'
 				AND (www_users.password='" . CryptPass($Password) . "'
