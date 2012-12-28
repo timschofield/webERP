@@ -118,8 +118,11 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 	}
 } /* only do security checks if AllowAnyone is not true */
-
-
+ elseif(basename($_SERVER['SCRIPT_NAME'])!='Logout.php'){
+	/* User nust have hit refresh on Logout page */
+	die(include($PathPrefix . 'includes/Login.php'));
+}
+	
 
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');

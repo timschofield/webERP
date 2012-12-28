@@ -1,5 +1,6 @@
 webERP Change Log
 
+29/12/12 Phil: trap refresh on logout
 24/12/12 Ricard: OutstandingGRNs.php now has show on screen option
 15/12/12 Phil: Customer login selection of branch option removed unecessary fields from customer order placement
 15/12/12 Bob Thomas: modified default.css for the default theme to use pt based default font and other font sizes based on this
