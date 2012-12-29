@@ -55,7 +55,7 @@ while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 }
 
 echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />';
 if ($_SESSION['Contract'.$identifier]->Status==3){
 	echo _('Closed')  . ' ';
 } elseif ($_SESSION['Contract'.$identifier]->Status==2){

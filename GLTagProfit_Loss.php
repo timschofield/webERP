@@ -20,7 +20,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -517,7 +517,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="'
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'
 		. _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<table cellpadding="2" class="selection">';

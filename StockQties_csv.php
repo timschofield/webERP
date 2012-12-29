@@ -5,7 +5,7 @@ include ('includes/session.inc');
 $Title = _('Produce Stock Quantities CSV');
 include ('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);

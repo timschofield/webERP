@@ -8,7 +8,7 @@ $Title = _('Authorise Purchase Orders');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title .
 	 '" alt="" />' . ' ' . $Title . '</p>';
 
 $EmailSQL="SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";

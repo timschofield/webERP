@@ -7,7 +7,7 @@ include('includes/session.inc');
 $Title = _('Access Permission Maintenance');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_GET['SelectedRole'])){

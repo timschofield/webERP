@@ -6,7 +6,7 @@ include('includes/session.inc');
 $Title = _('Departments');
 
 include('includes/header.inc');
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' .
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		_('Departments') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedDepartmentID']) )

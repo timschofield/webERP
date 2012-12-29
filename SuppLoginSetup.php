@@ -30,7 +30,7 @@ $ModuleList = array(_('Orders'),
 
 echo '<a href="' . $RootPath . '/SelectSupplier.php?">' . _('Back to Suppliers') . '</a><br />';
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
 
 
 

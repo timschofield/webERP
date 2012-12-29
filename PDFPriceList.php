@@ -251,7 +251,7 @@ If (isset($_POST['PrintPDF'])
 	$Title= _('Price Listing');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
          ' . ' ' . _('Print a price list') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {

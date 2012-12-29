@@ -317,7 +317,7 @@ If (isset($_POST['Process'])) {
 	}
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
 		'" alt="" /><b>'.' '. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName .'</b></p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
 echo '<div>';

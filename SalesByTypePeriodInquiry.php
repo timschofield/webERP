@@ -7,7 +7,7 @@ $Title = _('Sales Report');
 include('includes/header.inc');
 
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
 echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DisplayData'])){

@@ -47,7 +47,7 @@ if (isset($_POST['update'])) {
 	$result= DB_query($sql,$db);
 }
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
 		_('Print') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 

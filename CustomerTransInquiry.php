@@ -7,7 +7,7 @@ $Title = _('Customer Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
 	</p>';
 echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div>
 	<br />';
@@ -154,7 +154,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.gif');
 
 		} elseif ($_POST['TransType']==11){ /* credit notes */
 			printf($format_base .
@@ -173,7 +173,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					$myrow['currcode'],
 					$RootPath,
 					$myrow['transno'],
-					$RootPath.'/css/'.$theme.'/images/preview.gif');
+					$RootPath.'/css/'.$Theme.'/images/preview.gif');
 		} else {  /* otherwise */
 			printf($format_base . '</tr>',
 					$myrow['typename'],

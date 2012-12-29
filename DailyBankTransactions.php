@@ -7,7 +7,7 @@ $Title = _('Bank Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 	 _('Search') . '" alt="" />' . ' ' . $Title.'
 	 </p>';
 

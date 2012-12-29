@@ -19,7 +19,7 @@ if (!isset($_POST['Date'])){
 
 	echo '<div class="centre">
 			<p class="page_title_text">
-				<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Customer Transaction Listing').
+				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Customer Transaction Listing').
 			'</p>';
 
 	if ($InputError==1){

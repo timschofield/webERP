@@ -221,7 +221,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
 		</p>';
 
 	echo '<table class="selection">';
@@ -291,7 +291,7 @@ if (!isset($_GET['Edit'])) {
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') .
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') .
 		'</p>';
 	echo '<table class="selection">
 			<tr></tr>

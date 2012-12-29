@@ -25,7 +25,7 @@ $sql = "SELECT loccode,
 $resultStkLocs = DB_query($sql,$db);
 
 echo '<p class="page_title_text">
-         <img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+         <img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
       </p>';
 
 echo '<table class="selection">

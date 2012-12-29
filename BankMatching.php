@@ -12,7 +12,7 @@ if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
 		</p>';
 
 } elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments')
@@ -21,7 +21,7 @@ if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 	$Type = 'Payments';
 	$TypeName =_('Payments');
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Payments') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Payments') . '
 		</p>';
 
 } else {

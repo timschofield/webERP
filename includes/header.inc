@@ -53,10 +53,10 @@
 
 		echo '<div id="AppInfoDiv">'; //===HJ===
 			echo '<div id="AppInfoCompanyDiv">';
-				echo '<img src="'.$RootPath.'/css/'.$theme.'/images/company.png" title="'._('Company').'" alt="'._('Company').'"/>'.stripslashes($_SESSION['CompanyRecord']['coyname']);
+				echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/company.png" title="'._('Company').'" alt="'._('Company').'"/>'.stripslashes($_SESSION['CompanyRecord']['coyname']);
 			echo '</div>';
 			echo '<div id="AppInfoUserDiv">';
-				echo '<a href="'. $RootPath.'/UserSettings.php"><img src="'.$RootPath.'/css/'.$theme.'/images/user.png" title="User" alt="'._('User').'"/>'.stripslashes($_SESSION['UsersRealName']).'</a>';
+				echo '<a href="'. $RootPath.'/UserSettings.php"><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="User" alt="'._('User').'"/>'.stripslashes($_SESSION['UsersRealName']).'</a>';
 			echo '</div>';
 			echo '<div id="AppInfoModuleDiv">';
 				// Make the title text a class, can be set to display:none is some themes

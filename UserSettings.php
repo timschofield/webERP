@@ -6,7 +6,7 @@ include('includes/session.inc');
 $Title = _('User Settings');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/user.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' .
 	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
 
 $PDFLanguages = array(_('Latin Western Languages - Times'),
@@ -91,7 +91,7 @@ if (isset($_POST['Modify'])) {
 	  // update the session variables to reflect user changes on-the-fly
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
-		$theme = $_SESSION['Theme'];
+		$Theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
 		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
 		include ('includes/LanguageSetup.php');

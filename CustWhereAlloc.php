@@ -11,7 +11,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="" />' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="" />' . $Title . '
 	</p>
 	<table class="selection">
 	<tr>

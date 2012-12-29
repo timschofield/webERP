@@ -667,7 +667,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 /*need to set up entry for item description where not a stock item and GL Codes */
 
 if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="" />  '.$_SESSION['PO'.$identifier]->SupplierName;
 
 	if (isset($_SESSION['PO'.$identifier]->OrderNo)) {

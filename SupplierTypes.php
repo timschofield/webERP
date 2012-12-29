@@ -18,7 +18,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . _('Supplier Type Setup') . '</p>';
 echo '<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div><br />';
 

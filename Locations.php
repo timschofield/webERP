@@ -371,7 +371,7 @@ or deletion of the records*/
 	if (DB_num_rows($result)==0){
 		prnMsg (_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
 	}
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<table class="selection">';
@@ -432,7 +432,7 @@ if (!isset($_GET['delete'])) {
 
 	if (isset($SelectedLocation)) {
 		//editing an existing Location
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' .
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		$sql = "SELECT loccode,

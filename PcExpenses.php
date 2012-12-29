@@ -9,7 +9,7 @@ $ViewTopic= "PettyCash";
 $BookMark = "PCExpenses";
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedExpense'])){

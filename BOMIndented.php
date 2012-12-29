@@ -243,7 +243,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Title=_('Indented BOM Listing');
 	include('includes/header.inc');
-        echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+        echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>

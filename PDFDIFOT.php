@@ -21,7 +21,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	 $Title = _('Delivery In Full On Time (DIFOT) Report');
 	 include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('DIFOT Report') . '</p>';
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

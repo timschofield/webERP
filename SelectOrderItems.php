@@ -606,7 +606,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['Items'.$identifier]->DebtorNo)
 	OR $_SESSION['Items'.$identifier]->DebtorNo=='') {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
 	' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
 	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch. A Customer may have several Branches.') . '</div>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post">
@@ -736,7 +736,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 	} else { /*Not cancelling the order */
 
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Order') . '" alt="" />' . ' ';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Order') . '" alt="" />' . ' ';
 
 		if ($_SESSION['Items'.$identifier]->Quotation==1){
 			echo _('Quotation for customer') . ' ';
@@ -1525,7 +1525,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$result2 = DB_query($SQL,$db);
 			echo '<p class="page_title_text">
-					<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
+					<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' .
 					' ' . _('Frequently Ordered Items') .
 					'</p>
 					<br />
@@ -1654,7 +1654,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		echo '<br /><div class="centre">' . $msg;
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 		echo _('Search for Order Items') . '</p></div>';
 		echo '<div class="page_help_text">' . _('Search for Order Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection">

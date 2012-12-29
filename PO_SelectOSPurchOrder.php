@@ -139,7 +139,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	} else {
 		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	}
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':

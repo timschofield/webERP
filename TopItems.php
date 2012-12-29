@@ -11,7 +11,7 @@ include ('includes/header.inc');
 if (!(isset($_POST['Search']))) {
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
 		</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';

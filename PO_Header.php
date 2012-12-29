@@ -521,7 +521,7 @@ else {
 
 // part of step 1
 if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $identifier]->SupplierID) OR $_SESSION['PO' . $identifier]->SupplierID == '') {
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />' . ' ' . _('Purchase Order: Select Supplier') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />' . ' ' . _('Purchase Order: Select Supplier') . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" id="choosesupplier">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -600,7 +600,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO' . $ident
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />
 			' . $_SESSION['PO' . $identifier]->SupplierName . ' - ' . _('All amounts stated in') . '
 			' . $_SESSION['PO' . $identifier]->CurrCode . '</p>';
 

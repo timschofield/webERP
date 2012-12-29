@@ -22,7 +22,7 @@ if (isset($_POST['Create'])) {
 	$_POST['New'] = 'Yes';
 };
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="'
+echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="'
 	. _('Factor Companies') . '" alt="" />' . ' ' .$Title . '</p></div>';
 
 /* This section has been reached because the user has pressed either the insert/update buttons on the

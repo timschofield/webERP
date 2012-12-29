@@ -17,7 +17,7 @@ if (isset($_POST['ChangeDate'])){
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 

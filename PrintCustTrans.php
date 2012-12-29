@@ -501,7 +501,7 @@ if (isset($PrintPDF) OR isset($_GET['PrintPDF'])
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</p></div>';
+		echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</p></div>';
 		echo '<table class="table1">
 				<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name="InvOrCredit">';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {

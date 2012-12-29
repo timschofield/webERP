@@ -69,27 +69,27 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 
 				$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
 
-				if ($dbType=='postgres'){
+				if ($DBType=='postgres'){
 
 					$PgConnStr = 'dbname=' . $_POST['NewCompany'];
 					if ( isset($host) && ($host != "")) {
 						$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
 					}
 
-					if (isset( $dbuser ) && ($dbuser != "")) {
+					if (isset( $DBUser ) && ($DBUser != "")) {
 						// if we have a user we need to use password if supplied
-						$PgConnStr .= " user=".$dbuser;
-						if ( isset( $dbpassword ) && ($dbpassword != "") ) {
-							$PgConnStr .= " password=".$dbpassword;
+						$PgConnStr .= " user=".$DBUser;
+						if ( isset( $DBPassword ) && ($DBPassword != "") ) {
+							$PgConnStr .= " password=".$DBPassword;
 						}
 					}
 					$db = pg_connect( $PgConnStr );
 					$SQLScriptFile = file('./sql/pg/weberp-new.psql');
 
-				} elseif ($dbType =='mysql') { //its a mysql db < 4.1
+				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
 					mysql_select_db($_POST['NewCompany'],$db);
 					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
-				} elseif ($dbType =='mysqli') { //its a mysql db using the >4.1 library functions
+				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
 					mysqli_select_db($db,$_POST['NewCompany']);
 					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
 				}

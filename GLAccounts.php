@@ -15,7 +15,7 @@ if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_GET['SelectedAccount'];
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
 		_('General Ledger Accounts') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {

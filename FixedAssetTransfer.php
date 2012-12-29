@@ -8,7 +8,7 @@ $Title = _('Change Asset Location');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
 
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?

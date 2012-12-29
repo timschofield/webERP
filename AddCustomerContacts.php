@@ -22,9 +22,9 @@ $SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname,$db);
 $row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Contacts for Customer') . ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Contacts for Customer') . ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
 } else {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Edit contact for'). ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Edit contact for'). ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
 }
 if ( isset($_POST['submit']) ) {
 

@@ -26,7 +26,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
 	<br />';
 
 if (isset($_POST['submit'])) {

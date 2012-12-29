@@ -9,7 +9,7 @@
 $DefaultLanguage ='en_GB.utf8';
 
 // Whether to display the demo login and password or not on the login screen
-$allow_demo_mode = True;
+$AllowDemoMode = True;
 
 // webERP version
 
@@ -31,14 +31,14 @@ date_default_timezone_set('Asia/Shanghai');
 $host = 'localhost';
 $mysqlport=3306;
 //The type of db server being used - currently only postgres or mysql
-$dbType = 'mysqli';
-//$dbType = 'postgres' - DEPRECIATED;
-//$dbType = 'mysql';
-//$dbType = 'mysqli'; for PHP 5 and mysql > 4.1
+$DBType = 'mysqli';
+//$DBType = 'postgres' - DEPRECIATED;
+//$DBType = 'mysql';
+//$DBType = 'mysqli'; for PHP 5 and mysql > 4.1
 
 // sql user & password
-$dbuser = 'weberp_db_user';
-$dbpassword = 'weberp_db_pwd';
+$DBUser = 'weberp_db_user';
+$DBPassword = 'weberp_db_pwd';
 
 //It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be turned off with this parameter
 $AllowCompanySelectionBox = true;

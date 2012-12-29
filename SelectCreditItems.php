@@ -214,7 +214,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .  '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' .
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note').'</p>';
 
 	echo '<table cellpadding="3" class="selection">';
@@ -285,7 +285,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /* everything below here only do if a customer is selected
    first add a header to show who we are making a credit note for */
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' .
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $_SESSION['CreditItems'.$identifier]->CustomerName  . ' - ' . $_SESSION['CreditItems'.$identifier]->DeliverTo.'</p>';
 
 	if (isset($_POST['SalesPerson'])){

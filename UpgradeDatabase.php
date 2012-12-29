@@ -61,7 +61,7 @@ if (!isset($_POST['DoUpgrade'])){
 
 if (isset($_POST['DoUpgrade'])){
 
-	if ($dbType=='mysql' OR $dbType =='mysqli'){
+	if ($DBType=='mysql' OR $DBType =='mysqli'){
 
 		$SQLScripts = array();
 

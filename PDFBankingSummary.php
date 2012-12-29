@@ -13,7 +13,7 @@ if (!isset($_POST['BatchNo'])){
 	$Title = _('Create PDF Print Out For A Batch Of Receipts');
 	include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$sql="SELECT DISTINCT

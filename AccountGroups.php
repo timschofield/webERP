@@ -259,7 +259,7 @@ or deletion of the records*/
 	$DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'<br /></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'<br /></p>';
 
 	echo '<table class="selection">
 			<tr>

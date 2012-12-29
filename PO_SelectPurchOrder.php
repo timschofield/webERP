@@ -6,7 +6,7 @@ $Title = _('Search Purchase Orders');
 include ('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
 	'</p>';
 
 if (isset($_GET['SelectedStockItem'])) {

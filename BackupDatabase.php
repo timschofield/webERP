@@ -32,7 +32,7 @@ if (isset($_GET['BackupFile'])){
 } else {
 
 	$BackupFile =   $RootPath . '/companies/' . $_SESSION['DatabaseName']  .'/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
-	$Command = 'mysqldump --opt -h' . $host . ' -u' . $dbuser . ' -p' . $dbpassword  . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' .
+	$Command = 'mysqldump --opt -h' . $host . ' -u' . $DBUser . ' -p' . $DBPassword  . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' .
 	$_SERVER['DOCUMENT_ROOT'] . $BackupFile;
 
 

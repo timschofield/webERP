@@ -17,7 +17,7 @@ if (!isset($_POST['FromDate'])){
 	 include ('includes/header.inc');
 
 	echo '<div class="centre">
-			<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '. _('Stock Transaction Listing').'</p>
+			<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '. _('Stock Transaction Listing').'</p>
 		</div>';
 
 	if ($InputError==1){

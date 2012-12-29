@@ -8,7 +8,7 @@ $Title = _('Authorise Internal Stock Requests');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $value) {

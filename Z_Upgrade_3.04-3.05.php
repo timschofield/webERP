@@ -16,11 +16,11 @@ echo '</form>';
 
 if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 
-	if ($dbType=='postgres'){
+	if ($DBType=='postgres'){
 
 		$SQLScriptFile = file('./sql/pg/upgrade3.04-3.05.psql');
 
-	} elseif ($dbType ='mysql') { //its a mysql db
+	} elseif ($DBType ='mysql') { //its a mysql db
 
 		$SQLScriptFile = file('./sql/mysql/upgrade3.04-3.05.sql');
 	}

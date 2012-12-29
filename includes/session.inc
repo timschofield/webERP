@@ -43,18 +43,18 @@ to limit possibility for SQL injection attacks and cross scripting attacks
 */
 
 if (isset($_SESSION['DatabaseName'])){
-	foreach ($_POST as $key => $value) {
-		if (gettype($value) != 'array') {
+	foreach ($_POST as $PostVariableName => $PostVariableValue) {
+		if (gettype($PostVariableValue) != 'array') {
 			if(get_magic_quotes_gpc()) {
 				$_POST['name'] = stripslashes($_POST['name']);
 			}
-			$_POST[$key] = DB_escape_string($value);
+			$_POST[$PostVariableName] = DB_escape_string($PostVariableValue);
 		} else {
-			foreach ($value as $key1 => $value1) {
+			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				if(get_magic_quotes_gpc()) {
-					$value[$key1] = stripslashes($value[$key1]);
+					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
 				}
-				$value[$key1] = DB_escape_string($value1);
+				$PostVariableValue[$PostArrayKey] = DB_escape_string($PostArrayValue);
 			}
 		}
 	}
@@ -62,9 +62,9 @@ if (isset($_SESSION['DatabaseName'])){
 	/* iterate through all elements of the $_GET array and DB_escape_string them
 	to limit possibility for SQL injection attacks and cross scripting attacks
 	*/
-	foreach ($_GET as $key => $value) {
+	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($value) != 'array') {
-			$_GET[$key] = DB_escape_string($value);
+			$_GET[$GetKey] = DB_escape_string($GetValue);
 		}
 	}
 } else { //set SESSION['FormID'] before the a user has even logged in
@@ -87,7 +87,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 
 	/*  Need to set the theme to make login screen nice */
-	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
+	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
 	switch ($rc) {
 	case  UL_OK;
 		include($PathPrefix . 'includes/LanguageSetup.php');
@@ -119,8 +119,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 	}
 } /* only do security checks if AllowAnyone is not true */
  elseif(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
-	/* User nust have hit refresh on Logout page */
-	die(include($PathPrefix . 'includes/Login.php'));
+	header('Location: index.php');
 }
 	
 
@@ -191,13 +190,13 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
-	$theme = $_POST['Theme'];
+	$Theme = $_POST['Theme'];
 } elseif (!isset($_SESSION['Theme'])) {
-	$theme = $_SESSION['DefaultTheme'];
+	$Theme = $_SESSION['DefaultTheme'];
 	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
 
 } else {
-	$theme = $_SESSION['Theme'];
+	$Theme = $_SESSION['Theme'];
 }
 
 /* Set the logo if not yet set.

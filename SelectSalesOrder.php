@@ -399,7 +399,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 /*To the sales order selection form */
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post">';
 echo '<div>';
@@ -930,7 +930,7 @@ if (isset($StockItemsResult)
 				if ($AuthRow['cancreate']==0 AND $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
 				printf('<td><a href="%s">%s</a></td>
         				<td><a href="%s">' . _('Invoice') . '</a></td>
-        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
         				<td>%s</td>
         				<td>%s</td>
         				<td>%s</td>
@@ -957,7 +957,7 @@ if (isset($StockItemsResult)
 				} else {  /*User is not authorised to create POs so don't even show the option */
 					printf('<td><a href="%s">%s</a></td>
 							<td><a href="%s">' . _('Invoice') . '</a></td>
-							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath . '/css/' . $theme .'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath . '/css/' . $Theme .'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>

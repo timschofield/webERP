@@ -10,11 +10,11 @@ if ( isset($host) && ($host != "")) {
 	$PgConnStr = 'host='.$host.' '.$PgConnStr;
 }
 
-if ( isset( $dbuser ) && ($dbuser != "") ) {
+if ( isset( $DBUser ) && ($DBUser != "") ) {
     // if we have a user we need to use password if supplied
-    $PgConnStr .= " user=".$dbuser;
-    if ( isset( $dbpassword ) && ($dbpassword != "") ) {
-	$PgConnStr .= " password=".$dbpassword;
+    $PgConnStr .= " user=".$DBUser;
+    if ( isset( $DBPassword ) && ($DBPassword != "") ) {
+	$PgConnStr .= " password=".$DBPassword;
     }
 }
 

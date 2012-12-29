@@ -16,7 +16,7 @@ if (isset($_POST['SelectedCOGSPostingID'])){
 	$SelectedCOGSPostingID=$_GET['SelectedCOGSPostingID'];
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_POST['submit'])) {
 

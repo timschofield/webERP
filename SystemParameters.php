@@ -9,7 +9,7 @@ $ViewTopic= 'GettingStarted';
 $BookMark = 'SystemConfiguration';
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $Title. '</p>';
 
 if (isset($_POST['submit'])) {

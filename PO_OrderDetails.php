@@ -81,7 +81,7 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 $myrow = DB_fetch_array($GetOrdHdrResult);
 
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection" cellpadding="2">';

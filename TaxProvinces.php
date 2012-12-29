@@ -8,7 +8,7 @@ $Title = _('Dispatch Tax Provinces');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 if ( isset($_GET['SelectedTaxProvince']) )

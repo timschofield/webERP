@@ -6,7 +6,7 @@ $Title = _('SMTP Server details');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/email.gif" title="' . _('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/email.gif" title="' . _('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
 // First check if there are smtp server data or not
 
 

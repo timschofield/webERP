@@ -53,7 +53,7 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);

@@ -6,7 +6,7 @@ $Title = _('Stock Of Controlled Items');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
 '" alt="" /><b>' . $Title. '</b>
 	</p>';
 

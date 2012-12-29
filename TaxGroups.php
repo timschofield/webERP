@@ -12,7 +12,7 @@ if (isset($_GET['SelectedGroup'])){
 	$SelectedGroup = $_POST['SelectedGroup'];
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 

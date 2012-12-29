@@ -34,7 +34,7 @@ $BookMark = "UserMaintenance";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
 	<br />';
 
 // Make an array of the security roles

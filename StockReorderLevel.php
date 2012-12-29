@@ -15,7 +15,7 @@ if (isset($_GET['StockID'])){
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID . "'", $db);

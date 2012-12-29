@@ -25,7 +25,7 @@ if (isset($_POST['ShowGraphUsage'])) {
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $Title . '
 	</p>';
 

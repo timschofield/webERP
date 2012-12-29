@@ -5,7 +5,7 @@ include('includes/session.inc');
 $Title=_('Reprint a GRN');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['PONumber'])) {
 	$_POST['PONumber']='';

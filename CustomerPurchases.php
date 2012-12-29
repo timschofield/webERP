@@ -28,7 +28,7 @@ $CustomerResult = DB_query($SQL, $db, $ErrMsg);
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
 echo '<p class="page_title_text">
-		<img src="' . $RootPath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Items Purchased by Customer') . ' : ' . $CustomerRecord['name'] . '
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Items Purchased by Customer') . ' : ' . $CustomerRecord['name'] . '
 	</p>';
 
 $SQL = "SELECT stockmoves.stockid,

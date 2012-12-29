@@ -91,11 +91,11 @@ if($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zer
 	$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
 
 if (isset($_POST['CheckCode'])) {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid,

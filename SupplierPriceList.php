@@ -12,7 +12,7 @@ if (isset($_POST['StockSearch'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('In Stock Category') . ':';
 	echo '<select name="StockCat">';
@@ -214,7 +214,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* end query for list of records */
 /* display list if there is more than one record */
 if (isset($searchresult) AND !isset($_POST['Select'])) {
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -384,11 +384,11 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 	}
 } else {
 	if ($NoPurchasingData=0) {
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' .
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' .
 			$Title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
 	if (!isset($_POST['SearchSupplier'])) {
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Search for a supplier') . '</p><br />';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Search for a supplier') . '</p><br />';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
         echo '<div>';
         echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -439,7 +439,7 @@ if (isset($_POST['SearchSupplier'])) {
 } //end of if search
 
 if (isset($SuppliersResult)) {
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Select a supplier') . '</p><br />';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Select a supplier') . '</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
     echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -489,7 +489,7 @@ if (isset($SuppliersResult)) {
 //end if results to show
 
 if (isset($_POST['SupplierID'])) {
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Supplier Purchasing Data') . '</p><br />';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Supplier Purchasing Data') . '</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -520,7 +520,7 @@ if (isset($_POST['SupplierID'])) {
 	echo '<table class="selection">';
 	echo '<tr><th colspan="8" style="text-align: left"><h3>' . _('Supplier purchasing data for') . ' ' . $_POST['SupplierID'] . '</h3></th>';
 	echo '<th colspan="5" style="text-align: right">' . _('Find new Item Code') . '
-			<button type="submit" name="StockSearch"><img width="15" src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" alt="" /></button></th></tr>';
+			<button type="submit" name="StockSearch"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" alt="" /></button></th></tr>';
 	echo '<tr>
 			<th>' . _('StockID') . '</th>
 			<th>' . _('Description') . '</th>
@@ -560,7 +560,7 @@ if (isset($_POST['SupplierID'])) {
 				echo '<td><input type="text" class="date" size="11" value="' . date( $_SESSION['DefaultDateFormat']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom0" /></td>
 				<td><input type="text" size="20" maxlength="50" value="" name="SupplierPartNo0" /></td>
 				<td><input type="text" class="number" size="11" value="1" name="MinOrderQty0" /></td>
-				<td><button type="submit" style="width:100%;text-align:left" name="Insert"><img width="15" src="' . $RootPath . '/css/' . $theme . '/images/tick.png" alt="" /></button></td>
+				<td><button type="submit" style="width:100%;text-align:left" name="Insert"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/tick.png" alt="" /></button></td>
 			</tr>';
 	}
 
@@ -591,7 +591,7 @@ if (isset($_POST['SupplierID'])) {
 				echo '<td><input type="text" class="date" size="11" value="' . ConvertSQLDate($myrow['effectivefrom']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom'.$RowCounter.'" /></td>
 				<td><input type="text" size="20" maxlength="50" value="' . $myrow['suppliers_partno'] . '" name="SupplierPartNo'.$RowCounter.'" /></td>
 				<td><input type="text" class="number" size="11" value="' . $myrow['minorderqty'] . '" name="MinOrderQty'.$RowCounter.'" /></td>
-				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img width="15" src="' . $RootPath . '/css/' . $theme . '/images/tick.png" alt="" /></button></td>
+				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/tick.png" alt="" /></button></td>
 			</tr>';
 		$RowCounter++;
 	}

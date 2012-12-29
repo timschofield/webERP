@@ -745,7 +745,7 @@ if (isset($_POST['SelectedCustomer1'])) {
 if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		OR $_SESSION['Contract'.$identifier]->DebtorNo=='' ) {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier .'" name="CustomerSelection" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -817,7 +817,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" /> ' . $_SESSION['Contract'.$identifier]->CustomerName;
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract') . '" alt="" /> ' . $_SESSION['Contract'.$identifier]->CustomerName;
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
 		echo ' - ' . _('All amounts stated in') . ' ' . $_SESSION['Contract'.$identifier]->CurrCode . '<br />';

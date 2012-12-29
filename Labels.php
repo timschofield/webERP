@@ -20,7 +20,7 @@ $PaperSize['Legal']['PageHeight'] = 355.6;
 $PaperSize['Legal']['PageWidth'] = 215.9;
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
 	. '" alt="" />' . $Title. '
 	</p>';
 

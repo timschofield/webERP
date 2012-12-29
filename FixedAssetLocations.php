@@ -6,7 +6,7 @@ include('includes/session.inc');
 $Title = _('Fixed Asset Locations');
 include('includes/header.inc');
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 if (isset($_POST['submit']) AND !isset($_POST['delete'])) {

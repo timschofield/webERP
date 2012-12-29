@@ -123,7 +123,7 @@ if ($NIL_BALANCE==True){
 }
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Customer') . ' : ' . $CustomerRecord['name'] . ' - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')
 			<br />
 			<br />' . _('Terms') . ' : ' . $CustomerRecord['terms'] . '
 			<br />' . _('Credit Limit') . ': ' . locale_number_format($CustomerRecord['creditlimit'],0) . ' ' . _('Credit Status') . ': ' . $CustomerRecord['reasondescription'] . '
@@ -249,11 +249,11 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	$CreditInvoiceFormatString = '<td><a href="%s/Credit_Invoice.php?InvoiceNumber=%s">' . _('Credit ') .'<img src="%s/credit.gif" title="' . _('Click to credit the invoice') . '" alt="" /></a></td>';
 
 	$PreviewInvoiceFormatString = '<td><a href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Invoice">' . _('HTML ') . '<img src="%s/preview.gif" title="' . _('Click to preview the invoice') . '" alt="" /></a></td>
-	<td><a href="%s/%s?FromTransNo=%s&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' . _('PDF ') . '<img src="%s/css/' . $theme . '/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+	<td><a href="%s/%s?FromTransNo=%s&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' . _('PDF ') . '<img src="%s/css/' . $Theme . '/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
 		<td><a href="%s/EmailCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Invoice">' . _('Email ') . '<img src="%s/email.gif" title="' . _('Click to email the invoice') . '" alt="" /></a></td>';
 
 	$PreviewCreditFormatString = '<td><a href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">' . _('HTML ') . ' <IMG SRC="%s/preview.gif" title="' . _('Click to preview the credit note') . '" /></a></td>
-	<td><a href="%s/%s?FromTransNo=%s&amp;InvOrCredit=Credit&amp;PrintPDF=True">' . _('PDF ') . '<img src="%s/css/' . $theme . '/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+	<td><a href="%s/%s?FromTransNo=%s&amp;InvOrCredit=Credit&amp;PrintPDF=True">' . _('PDF ') . '<img src="%s/css/' . $Theme . '/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
 	<td><a href="%s/EmailCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">' . _('Email') . ' <img src="%s/email.gif" title="' . _('Click to email the credit note') . '" alt="" /></a></td>';
 
 	/* assumed allowed page security token 3 allows the user to create credits for invoices */
@@ -267,7 +267,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 			printf($BaseFormatString . $CreditInvoiceFormatString . $PreviewInvoiceFormatString .
 				'<td><a href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Entries') . '
-					<img src="' .$RootPath. '/css/'.$theme.'/images/gl.png" title="' . _('View the GL Entries') . '" alt="" /></a></td>
+					<img src="' .$RootPath. '/css/'.$Theme.'/images/gl.png" title="' . _('View the GL Entries') . '" alt="" /></a></td>
 				</tr>',
 				//$BaseFormatString parameters
 				$myrow['typename'],
@@ -283,18 +283,18 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				//$CreditInvoiceFormatString parameters
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 				//$PreviewInvoiceFormatString parameters
 				$RootPath,
                 $myrow['transno'],
-                $RootPath.'/css/'.$theme.'/images',
+                $RootPath.'/css/'.$Theme.'/images',
 				$RootPath,
 				$PrintCustomerTransactionScript,
 				$myrow['transno'],
 				$RootPath,
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 				//Parameter for string for GL Trans Inquiries
 				$RootPath,
 				$myrow['type'],
@@ -316,18 +316,18 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				//CreditInvoiceFormatString parameters
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 			//$PreviewInvoiceFormatString parameters
 				$RootPath,
                 $myrow['transno'],
-                $RootPath.'/css/'.$theme.'/images',
+                $RootPath.'/css/'.$Theme.'/images',
 				$RootPath,
 				$PrintCustomerTransactionScript,
 				$myrow['transno'],
 				$RootPath,
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images');
+				$RootPath.'/css/'.$Theme.'/images');
 		}
 
 	} elseif($myrow['type']==10) { /*its an invoice but not high enough priveliges to credit it */
@@ -349,21 +349,21 @@ while ($myrow=DB_fetch_array($TransResult)) {
 			//$PreviewInvoiceFormatString parameters
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 				$RootPath,
 				$PrintCustomerTransactionScript,
 				$myrow['transno'],
 				$RootPath,
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images');
+				$RootPath.'/css/'.$Theme.'/images');
 
 	} elseif ($myrow['type']==11) { /*its a credit note */
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($BaseFormatString .
 				$PreviewCreditFormatString .
-				'<td><a href="%s/CustomerAllocations.php?AllocTrans=%s">' . _('Allocation') . '<img src="' .$RootPath .'/css/' . $theme .'/images/allocation.png" title="' . _('Click to allocate funds') . '" alt="" /></a></td>
-				<td><a href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Entries') . ' <a><img src="' .$RootPath.'/css/'.$theme.'/images/gl.png" title="' . _('View the GL Entries') . '" alt="" /></a></td></tr>',
+				'<td><a href="%s/CustomerAllocations.php?AllocTrans=%s">' . _('Allocation') . '<img src="' .$RootPath .'/css/' . $Theme .'/images/allocation.png" title="' . _('Click to allocate funds') . '" alt="" /></a></td>
+				<td><a href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Entries') . ' <a><img src="' .$RootPath.'/css/'.$Theme.'/images/gl.png" title="' . _('View the GL Entries') . '" alt="" /></a></td></tr>',
 				//$BaseFormatString parameters
 				$myrow['typename'],
 				$myrow['transno'],
@@ -378,14 +378,14 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				//$PreviewCreditFormatString parameters
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 				$RootPath,
 				$PrintCustomerTransactionScript,
 				$myrow['transno'],
 				$RootPath,
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 				// hand coded format string for Allocations and GLTrans Inquiry parameters
 				$RootPath,
 				$myrow['id'],
@@ -410,26 +410,26 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				//$PreviewCreditFormatString parameters
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 				$RootPath,
 				$PrintCustomerTransactionScript,
 				$myrow['transno'],
 				$RootPath,
 				$RootPath,
 				$myrow['transno'],
-				$RootPath.'/css/'.$theme.'/images',
+				$RootPath.'/css/'.$Theme.'/images',
 				//Parameters for hand coded string to show allocations
 				$RootPath,
 				$myrow['id'],
-				$RootPath.'/css/'.$theme.'/images');
+				$RootPath.'/css/'.$Theme.'/images');
 		}
 	} elseif ($myrow['type']==12 AND $myrow['totalamount']<0) { /*its a receipt  which could have an allocation*/
 
 		//If security token 8 in the allowed page security tokens then assumed ok for GL trans inquiries
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($BaseFormatString .
-				'<td><a href="%s/CustomerAllocations.php?AllocTrans=%s">' . _('Allocation') . '<img src="' .$RootPath . '/css/' . $theme .'/images/allocation.png" title="' . _('Click to allocate funds') . '" alt="" /></a></td>
-				<td><a href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Entries') . ' <img src="' .$RootPath . '/css/' . $theme .'/images/gl.png" title="' . _('View the GL Entries') . '" alt="" /></a></td>
+				'<td><a href="%s/CustomerAllocations.php?AllocTrans=%s">' . _('Allocation') . '<img src="' .$RootPath . '/css/' . $Theme .'/images/allocation.png" title="' . _('Click to allocate funds') . '" alt="" /></a></td>
+				<td><a href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Entries') . ' <img src="' .$RootPath . '/css/' . $Theme .'/images/gl.png" title="' . _('View the GL Entries') . '" alt="" /></a></td>
 				</tr>',
 				$myrow['typename'],
 				$myrow['transno'],
@@ -448,7 +448,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				$myrow['transno']);
 		} else { //no permission for GLTrans Inquiries
 			printf($BaseFormatString .
-				'<td><a href="%s/CustomerAllocations.php?AllocTrans=%s">' . _('Allocation') . '<img src="' .$RootPath . '/css/' . $theme .'/images/allocation.png" title="' . _('Click to allocate funds') . '" alt="" /></a></td>
+				'<td><a href="%s/CustomerAllocations.php?AllocTrans=%s">' . _('Allocation') . '<img src="' .$RootPath . '/css/' . $Theme .'/images/allocation.png" title="' . _('Click to allocate funds') . '" alt="" /></a></td>
 				</tr>',
 				$myrow['typename'],
 				$myrow['transno'],

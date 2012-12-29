@@ -27,7 +27,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	include  ('includes/header.inc');
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -431,7 +431,7 @@ if ((! isset($_POST['FromPeriod'])
 				 _('No general ledger accounts were returned by the SQL because'),
 				 _('The SQL that failed was:'));
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		_('Trial Balance') . '" alt="" />' . ' ' . _('Trial Balance Report') . '</p>';
 
 	/*show a table of the accounts info returned by the SQL

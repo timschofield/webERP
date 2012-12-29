@@ -8,7 +8,7 @@ $Title = _('Internal Stock Categories Requests By Security Role Maintenance ');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedType'])){

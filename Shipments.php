@@ -14,7 +14,7 @@ if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']);
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
 	'" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment']) AND !isset($_GET['SelectedShipment'])){

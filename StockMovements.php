@@ -19,7 +19,7 @@ if (isset($_GET['StockID'])){
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='".$StockID."'",$db);
 $myrow = DB_fetch_row($result);
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '</b></p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '</b></p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';

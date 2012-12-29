@@ -43,7 +43,7 @@ if ($Serialised==1){
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
 	</p>';
 
 $DbgMsg = _('The SQL that failed was');

@@ -8,7 +8,7 @@ global  $db;		// Make sure it IS global, regardless of our context
 if (!isset($mysqlport)){
 	$mysqlport = 3306;
 }
-$db = mysql_connect($host.':'.$mysqlport , $dbuser, $dbpassword);
+$db = mysql_connect($host.':'.$mysqlport , $DBUser, $DBPassword);
 
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysql server and mysql client/library may assume otherwise

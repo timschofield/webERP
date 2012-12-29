@@ -6,7 +6,7 @@ include('includes/session.inc');
 $Title = _('Daily Sales Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
 echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>
 	<br />';
 

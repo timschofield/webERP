@@ -36,7 +36,7 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
      ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
 echo '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){

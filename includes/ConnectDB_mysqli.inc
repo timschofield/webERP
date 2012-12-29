@@ -14,7 +14,7 @@ if (!isset($mysqlport)){
 }
 global $db;	// Make sure it IS global, regardless of our context
 
-$db = mysqli_connect($host , $dbuser, $dbpassword,$_SESSION['DatabaseName'], $mysqlport);
+$db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
 //$result=DB_query('SET sql_mode = ANSI', $db);
 
 

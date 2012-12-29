@@ -122,7 +122,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 These variable if required are in config.php
 
 $DefaultLanguage = en_GB
-$allow_demo_mode = 1
+$AllowDemoMode = 1
 
 $EDIHeaderMsgId = D:01B:UN:EAN010
 $EDIReference = WEBERP

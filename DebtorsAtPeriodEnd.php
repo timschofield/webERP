@@ -122,7 +122,7 @@ if (isset($_POST['PrintPDF'])
 
 	$Title=_('Debtor Balances');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
 	 '" alt="" />' . ' ' . $Title.'</p><br />';
 
 	if (!isset($_POST['FromCriteria']) OR !isset($_POST['ToCriteria'])) {

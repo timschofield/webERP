@@ -130,7 +130,7 @@ If ((isset($_POST['PrintPDF']))
 	$Title=_('Remittance Advices');
 	include('includes/header.inc');
 
-    echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '
+    echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '
         . $Title . '</p>';
 	/* show form to allow input	*/
 

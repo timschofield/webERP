@@ -132,7 +132,7 @@ or deletion of the records*/
 			FROM geocode_param";
 	$result = DB_query($sql, $db);
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'.
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'.
 			_('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
 	echo '<div class="page_help_text">'. _('Get a google API key at ') .
 		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
@@ -227,7 +227,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedParam" value="' . $SelectedParam . '" />';
 		echo '<input type="hidden" name="GeoCodeID" value="' . $_POST['GeoCodeID'] . '" />';
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
 		echo '<br /><table>
 				<tr><td>'. _('Geocode Code') .':</td>
 					<td>' . $_POST['GeoCodeID'] . '</td></tr>';

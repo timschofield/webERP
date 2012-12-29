@@ -277,19 +277,19 @@ $msg .= "//---------------------------------------------------\n\n";
 $msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";
 $msg .= "\$DefaultLanguage ='en_GB.utf8';\n\n";
 $msg .= "// Whether to display the demo login and password or not on the login screen\n";
-$msg .= "\$allow_demo_mode = False;\n\n";
+$msg .= "\$AllowDemoMode = False;\n\n";
 $msg .= "//  Connection information for the database\n";
 $msg .= "// \$host is the computer ip address or name where the database is located\n";
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$host = '" . $_POST['database_host'] . "';\n\n";
 
 $msg .= "// assuming that the web server is also the sql server\n";
-$msg .= "\$dbType = 'mysqli';\n";
+$msg .= "\$DBType = 'mysqli';\n";
 
 $msg .= "// assuming that the web server is also the sql server\n";
-$msg .= "\$dbuser = '" . $_POST['database_username'] . "';\n";
+$msg .= "\$DBUser = '" . $_POST['database_username'] . "';\n";
 $msg .= "// assuming that the web server is also the sql server\n";
-$msg .= "\$dbpassword = '" . $_POST['database_password'] . "';\n";
+$msg .= "\$DBPassword = '" . $_POST['database_password'] . "';\n";
 
 $msg .= "// The timezone of the business - this allows the possibility of having;\n";
 $msg .= "date_default_timezone_set('" . $_POST['timezone'] . "');\n";
@@ -305,14 +305,15 @@ $msg .= "\$MaximumExecutionTime =120;\n";
 $msg .= "\$CryptFunction = 'sha1';\n";
 $msg .= "\$DefaultClock = 12;\n";
 
-$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
+$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-$msg .= "\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
-$msg .= "} }\n";
+$msg .= "		\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
+$msg .= "	}\n";
+$msg .= "}\n";
 
-$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {;\n";
-$msg .= "\$RootPath = '';\n";
+$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
+$msg .= "	\$RootPath = '';\n";
 $msg .= "}\n";
 $msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";
 $msg .= "?>";

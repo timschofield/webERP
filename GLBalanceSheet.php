@@ -14,7 +14,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="'
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'
 		. _('Print') . '" alt="" />' . ' ' . _('Balance Sheet') . '</p></div>';
 	echo '<div class="page_help_text">'
 	. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />'
@@ -375,7 +375,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
 
 	echo '<div class="invoice">
 			<table class="selection">

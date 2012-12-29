@@ -5,7 +5,7 @@ include ('includes/session.inc');
 $Title = _('Update of Prices By A Multiple Of Cost');
 include ('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';
 
 if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	if ($_POST['Margin'] == '') {

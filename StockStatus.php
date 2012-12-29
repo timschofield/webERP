@@ -37,7 +37,7 @@ $DecimalPlaces = $myrow['decimalplaces'];
 $Serialised = $myrow['serialised'];
 $Controlled = $myrow['controlled'];
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
 	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;

@@ -319,7 +319,7 @@ if (isset($_GET['AllocTrans'])) {
 
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="" />' . ' ' . _('Allocate Receipts') . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="" />' . ' ' . _('Allocate Receipts') . '
 	</p>';
 
 $TableHeader = '<tr>

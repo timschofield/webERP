@@ -244,7 +244,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		$Title = _('Review/Convert MRP Planned Work Orders');
 		include('includes/header.inc');
 		echo '<p class="page_title_text">
-				<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		echo '<form action="MRPConvertWorkOrders.php" method="post">';
         echo '<div>';
@@ -318,7 +318,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	$Title=_('MRP Planned Work Orders Reporting');
 	include('includes/header.inc');
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<br /><br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';

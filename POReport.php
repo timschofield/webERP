@@ -57,15 +57,15 @@ if (isset($_POST['SummaryType']) and $_POST['SummaryType'] == 'suppname') {
 }
 
 if (isset($_POST['submit'])) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title.'</p>';
 	submit($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
 } else if (isset($_POST['submitcsv'])) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title.'</p>';
 	submitcsv($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
 } else {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . $Title.'</p>';
 	display($db);
 }

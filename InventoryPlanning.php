@@ -376,7 +376,7 @@ if (isset($_POST['PrintPDF'])
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 

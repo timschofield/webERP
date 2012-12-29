@@ -13,7 +13,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/CountriesArray.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') .
 	'" alt="" />' . ' ' . _('Customer Maintenance') . '
 	</p>';
 

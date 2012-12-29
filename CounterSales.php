@@ -223,7 +223,7 @@ if (isset($_POST['CancelOrder'])) {
 
 } else { /*Not cancelling the order */
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Counter Sales') . '" alt="" />' . ' ';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Counter Sales') . '" alt="" />' . ' ';
 	echo $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('Counter Sale') . ' ' ._('from') . ' ' . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('inventory') . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
 	echo '</p>';
 }
@@ -2030,9 +2030,9 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 		echo '<br /><div class="centre">';
 
 		if ($_SESSION['InvoicePortraitFormat']==0){
-			echo '<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
+			echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
 		} else {
-			echo '<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
+			echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
 		}
 		echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Start a new Counter Sale') . '</a></div>';
 
@@ -2071,7 +2071,7 @@ if (!isset($_POST['ProcessSale'])){
 				  ORDER BY sales DESC
 				  LIMIT " . $_SESSION['FrequentlyOrderedItems'];
 			$result2 = DB_query($SQL,$db);
-			echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
+			echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 			echo _('Frequently Ordered Items') . '</p><br />';
 			echo '<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br />';
 			echo '<table class="table1">';
@@ -2196,7 +2196,7 @@ if (!isset($_POST['ProcessSale'])){
 		if (isset($msg)){
 			echo '<div class="page_help_text"><p><b>' . $msg . '</b></p></div>';
 		}
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 		echo _('Search for Items') . '</p>';
 		echo '<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection"><tr><td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';

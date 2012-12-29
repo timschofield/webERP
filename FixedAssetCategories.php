@@ -10,7 +10,7 @@ include('includes/header.inc');
 
 echo '<div class="centre">
 	<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
 	</p>
     </div>';
 

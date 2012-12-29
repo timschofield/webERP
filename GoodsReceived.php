@@ -70,7 +70,7 @@ if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
 /* Always display quantities received and recalc balance for all items on the order */
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . ' : '. $_SESSION['PO'.$identifier]->OrderNo .' '. _('from'). ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</p>';
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . ' : '. $_SESSION['PO'.$identifier]->OrderNo .' '. _('from'). ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

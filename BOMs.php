@@ -228,7 +228,7 @@ $InputError = 0;
 if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Component
 	$SelectedParent = $Select;
 	unset($Select);// = NULL;
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title.'</p><br />';
 
 	if (isset($SelectedParent) AND isset($_POST['Submit'])) {
@@ -855,7 +855,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 if (!isset($SelectedParent)) {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">' .
 	'<div class="page_help_text">'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to maintain the bill of material for using the options below') .  '<br />' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') .'</div>'. '
     <div>

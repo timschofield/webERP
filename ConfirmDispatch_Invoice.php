@@ -258,11 +258,11 @@ set all the necessary session variables changed by the POST  */
 if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
   prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 }
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Confirm Invoice') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Confirm Invoice') .
 	'" alt="" />' . ' ' . _('Confirm Dispatch and Invoice'). '</p>';
 echo '<table class="selection">
 			<tr>
-				<th><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo.'</b></th>
+				<th><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo.'</b></th>
 				<th>' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName. '</b></th>
 			</tr>
 			<tr>
@@ -1621,9 +1621,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo '<br /><div class="centre">';
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
+		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Landscape') . ')</a><br /><br />';
 	} else {
-		echo '<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
+		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">'. _('Print this invoice'). ' (' . _('Portrait') . ')</a><br /><br />';
 	}
 	echo '<a href="'.$RootPath.'/SelectSalesOrder.php">'. _('Select another order for invoicing'). '</a><br /><br />';
 	echo '<a href="'.$RootPath.'/SelectOrderItems.php?NewOrder=Yes">'._('Sales Order Entry').'</a></div><br />';

@@ -46,7 +46,7 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="" />' . ' '
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="" />' . ' '
         . _('Enter Supplier Credit Note:') . ' ' . $SupplierName;
 echo '</p>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){

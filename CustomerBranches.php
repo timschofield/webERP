@@ -363,7 +363,7 @@ if (!isset($SelectedBranch)){
 	$TotalEnable = 0;
 	$TotalDisable = 0;
 	if ($myrow) {
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
 				 ' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
 		echo '<table class="selection">
 			<tr>
@@ -540,7 +540,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedBranch" value="' . $SelectedBranch . '" />';
 		echo '<input type="hidden" name="BranchCode" value="' . $_POST['BranchCode'] . '" />';
 
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
 				 ' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
 		if (isset($SelectedBranch)) {
 			echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorNo=' . $DebtorNo. '">' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
@@ -587,7 +587,7 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['BranchCode'])) {
 			$_POST['BranchCode']='';
 		}
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
 		echo '<table class="selection">
 				<tr>
 					<td>'._('Branch Code'). ':</td>

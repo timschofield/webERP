@@ -23,7 +23,7 @@ if (isset($_POST['StockID'])){
 	$StockID =trim(mb_strtoupper($_GET['StockID']));
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
 	_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['Search'])) {
