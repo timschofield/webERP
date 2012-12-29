@@ -3005,7 +3005,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-18 21:54:17
+-- Dump completed on 2012-12-29 13:45:19
 -- MySQL dump 10.13  Distrib 5.5.24, for Linux (i686)
 --
 -- Host: localhost    Database: weberpdemo
@@ -3215,11 +3215,11 @@ INSERT INTO `cogsglpostings` VALUES (5,'AN','ANY',5000,'AN');
 -- Dumping data for table `currencies`
 --
 
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,0.9491);
-INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9175);
-INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.7593);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.6169);
-INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,86.1);
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',2,0.9643);
+INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',2,0.9133);
+INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',2,0.7563);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',2,0.6191);
+INSERT INTO `currencies` VALUES ('Kenyian Shillings','KES','Kenya','none',0,86);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',2,1);
 
 --
@@ -6067,9 +6067,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,0,'2012-12-18 16:32:42','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB.utf8',0,0);
-INSERT INTO `www_users` VALUES ('angry','8cb2237d0679ca88db6464eac60da96345513964','Mr Angry','ANGRY','','','','','TOR',7,0,'2012-12-15 12:54:51','ANGRYFL','A4','1,1,0,0,0,0,0,0',0,50,'silverwolf','en_GB.utf8',0,0);
-INSERT INTO `www_users` VALUES ('whynot','8cb2237d0679ca88db6464eac60da96345513964','Why Not User','','WHYNOT','','','','MEL',9,0,'2012-12-15 05:09:36','','A4',',,,,,,,,,,',0,50,'silverwolf','en_GB.utf8',0,0);
+INSERT INTO `www_users` VALUES ('admin','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','','info@weberp.org','MEL',8,0,'2012-12-29 08:22:07','','A4','1,1,1,1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB.utf8',0,0);
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -6296,7 +6294,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','');
-INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2012-12-18');
+INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','2012-12-29');
 INSERT INTO `config` VALUES ('VersionNumber','4.09.1');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
@@ -6419,6 +6417,7 @@ INSERT INTO `scripts` VALUES ('GLTrialBalance.php',8,'Shows the trial balance fo
 INSERT INTO `scripts` VALUES ('GLTrialBalance_csv.php',8,'Produces a CSV of the Trial Balance for a particular period');
 INSERT INTO `scripts` VALUES ('GoodsReceived.php',11,'Entry of items received against purchase orders');
 INSERT INTO `scripts` VALUES ('GoodsReceivedControlled.php',11,'Entry of the serial numbers or batch references for controlled items received against purchase orders');
+INSERT INTO `scripts` VALUES ('GoodsReceivedNotInvoiced.php',2,'Shows the list of goods received but not yet invoiced, both in supplier currency and home currency. Total in home curency should match the GL Account for Goods received not invoiced. Any discrepancy is due to multicurrency errors.');
 INSERT INTO `scripts` VALUES ('index.php',1,'The main menu from where all functions available to the user are accessed by clicking on the links');
 INSERT INTO `scripts` VALUES ('InternalStockCategoriesByRole.php',15,'Maintains the stock categories to be used as internal for any user security role');
 INSERT INTO `scripts` VALUES ('InternalStockRequest.php',1,'Create an internal stock request');
@@ -6647,6 +6646,7 @@ INSERT INTO `scripts` VALUES ('Z_ImportGLAccountSections.php',11,'');
 INSERT INTO `scripts` VALUES ('Z_ImportPartCodes.php',11,'Allows inventory items to be imported from a csv');
 INSERT INTO `scripts` VALUES ('Z_ImportStocks.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_index.php',15,'Utility menu page');
+INSERT INTO `scripts` VALUES ('Z_ItemsWithoutPicture.php',15,'Shows the list of curent items without picture in webERP');
 INSERT INTO `scripts` VALUES ('Z_MakeNewCompany.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_MakeStockLocns.php',15,'Utility to make LocStock records for all items and locations if not already set up.');
 INSERT INTO `scripts` VALUES ('Z_poAddLanguage.php',15,'Allows a new language po file to be created');
@@ -6786,7 +6786,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-18 21:54:17
+-- Dump completed on 2012-12-29 13:45:19
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);

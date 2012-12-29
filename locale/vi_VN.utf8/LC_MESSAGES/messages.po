@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.071\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 21:50+1300\n"
+"POT-Creation-Date: 2012-12-29 13:44+1300\n"
 "PO-Revision-Date: 2011-05-18 07:33+0000\n"
 "Last-Translator: BrainCo Technologies Pte Ltd <Unknown>\n"
 "Language-Team: BrainCo Technologies <sales@braincotech.com>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: webERP;SQL;GL\n"
 
-#: AccountGroups.php:7 includes/MainMenuLinksArray.php:381
+#: AccountGroups.php:7 includes/MainMenuLinksArray.php:379
 msgid "Account Groups"
 msgstr "Các nhóm tài khoản"
 
@@ -236,7 +236,7 @@ msgstr "Không thể tìm ra các nhóm tài khoản vì"
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:14
 #: BOMExtendedQty.php:250 BOMIndented.php:246 BOMIndentedReverse.php:235
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:231 BOMs.php:858
-#: COGSGLPostings.php:19 CompanyPreferences.php:155 CounterReturns.php:1610
+#: COGSGLPostings.php:19 CompanyPreferences.php:155 CounterReturns.php:1607
 #: CounterSales.php:2074 CounterSales.php:2199 Credit_Invoice.php:270
 #: CreditStatus.php:21 Currencies.php:29 CustEDISetup.php:17
 #: DailyBankTransactions.php:11 DebtorsAtPeriodEnd.php:125
@@ -247,7 +247,7 @@ msgstr "Không thể tìm ra các nhóm tài khoản vì"
 #: GLBudgets.php:29 GLJournalInquiry.php:7 GLJournal.php:247
 #: InternalStockRequest.php:300 InventoryPlanning.php:379
 #: InventoryPlanningPrefSupplier.php:469 MRPReport.php:516 NoSalesItems.php:89
-#: OutstandingGRNs.php:163 PcAssignCashToTab.php:59 PcAssignCashToTab.php:133
+#: PcAssignCashToTab.php:59 PcAssignCashToTab.php:133
 #: PcAssignCashToTab.php:149 PcAssignCashToTab.php:193 PDFPickingList.php:28
 #: PDFStockLocTransfer.php:16 PO_AuthorisationLevels.php:10 POReport.php:60
 #: POReport.php:64 POReport.php:68 PO_SelectOSPurchOrder.php:142
@@ -274,7 +274,7 @@ msgstr "Không thể tìm ra các nhóm tài khoản vì"
 #: WhereUsedInquiry.php:18 WorkCentres.php:111 WorkCentres.php:162
 #: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
 #: WorkOrderReceive.php:31 WorkOrderStatus.php:58 WWW_Access.php:11
-#: WWW_Users.php:36 Z_BottomUpCosts.php:57
+#: WWW_Users.php:37 Z_BottomUpCosts.php:57
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -305,8 +305,7 @@ msgstr "Lãi và lỗ"
 #: Customers.php:965 Customers.php:974 Customers.php:977
 #: DeliveryDetails.php:1116 DeliveryDetails.php:1159 DeliveryDetails.php:1162
 #: GLTransInquiry.php:69 Labels.php:491 Labels.php:493 Labels.php:518
-#: Locations.php:617 Locations.php:619 MRP_2012-10.php:540 MRP_2012-10.php:544
-#: MRP_2012-10.php:548 MRP_2012-10.php:552 MRPCalendar.php:224 MRP.php:540
+#: Locations.php:617 Locations.php:619 MRPCalendar.php:224 MRP.php:540
 #: MRP.php:544 MRP.php:548 MRP.php:552 PaymentMethods.php:204
 #: PaymentMethods.php:205 PaymentMethods.php:206 PaymentMethods.php:207
 #: PaymentMethods.php:273 PaymentMethods.php:280 PaymentMethods.php:287
@@ -330,8 +329,8 @@ msgstr "Lãi và lỗ"
 #: SystemParameters.php:965 SystemParameters.php:975 SystemParameters.php:977
 #: SystemParameters.php:1031 SystemParameters.php:1043
 #: SystemParameters.php:1045 TaxGroups.php:311 TaxGroups.php:314
-#: TaxGroups.php:371 WWW_Users.php:493 WWW_Users.php:495 WWW_Users.php:666
-#: WWW_Users.php:668
+#: TaxGroups.php:371 WWW_Users.php:494 WWW_Users.php:496 WWW_Users.php:667
+#: WWW_Users.php:669
 msgid "Yes"
 msgstr "Có"
 
@@ -345,8 +344,7 @@ msgstr "Có"
 #: Customers.php:960 Customers.php:973 Customers.php:976
 #: DeliveryDetails.php:1117 DeliveryDetails.php:1160 DeliveryDetails.php:1163
 #: GLTransInquiry.php:90 Labels.php:490 Labels.php:494 Labels.php:519
-#: Locations.php:622 Locations.php:624 MRP_2012-10.php:538 MRP_2012-10.php:542
-#: MRP_2012-10.php:546 MRP_2012-10.php:550 MRPCalendar.php:226 MRP.php:538
+#: Locations.php:622 Locations.php:624 MRPCalendar.php:226 MRP.php:538
 #: MRP.php:542 MRP.php:546 MRP.php:550 NoSalesItems.php:184
 #: PaymentMethods.php:204 PaymentMethods.php:205 PaymentMethods.php:206
 #: PaymentMethods.php:207 PaymentMethods.php:274 PaymentMethods.php:281
@@ -370,8 +368,8 @@ msgstr "Có"
 #: SystemParameters.php:966 SystemParameters.php:974 SystemParameters.php:978
 #: SystemParameters.php:1032 SystemParameters.php:1042
 #: SystemParameters.php:1046 TaxGroups.php:312 TaxGroups.php:315
-#: TaxGroups.php:373 WWW_Users.php:492 WWW_Users.php:496 WWW_Users.php:665
-#: WWW_Users.php:669 includes/PDFLowGPPageHeader.inc:44
+#: TaxGroups.php:373 WWW_Users.php:493 WWW_Users.php:497 WWW_Users.php:666
+#: WWW_Users.php:670 includes/PDFLowGPPageHeader.inc:44
 #: includes/PDFTaxPageHeader.inc:35
 msgid "No"
 msgstr "Không"
@@ -398,7 +396,7 @@ msgstr "Không"
 #: SupplierTenderCreate.php:145 SupplierTypes.php:189
 #: SuppTransGLAnalysis.php:125 TaxAuthorities.php:174 TaxCategories.php:182
 #: TaxGroups.php:188 TaxProvinces.php:180 UnitsOfMeasure.php:185
-#: WorkCentres.php:141 WWW_Access.php:123 WWW_Users.php:332
+#: WorkCentres.php:141 WWW_Access.php:123 WWW_Users.php:333
 #: includes/InputSerialItems.php:102 includes/OutputSerialItems.php:20
 #, php-format
 msgid "Edit"
@@ -413,7 +411,7 @@ msgstr "Bạn có chắc chắn muốn xóa chi nhánh này?"
 #: AddCustomerNotes.php:138 AddCustomerTypeNotes.php:132 Areas.php:165
 #: BankAccounts.php:224 BOMs.php:153 COGSGLPostings.php:110
 #: COGSGLPostings.php:208 ContractBOM.php:267 ContractOtherReqts.php:120
-#: CounterReturns.php:743 CounterSales.php:832 Credit_Invoice.php:408
+#: CounterReturns.php:740 CounterSales.php:832 Credit_Invoice.php:408
 #: CreditStatus.php:176 Currencies.php:279 CustomerReceipt.php:927
 #: Customers.php:1086 CustomerTypes.php:207 Departments.php:187
 #: DiscountCategories.php:225 DiscountMatrix.php:183 EDIMessageFormat.php:151
@@ -439,7 +437,7 @@ msgstr "Bạn có chắc chắn muốn xóa chi nhánh này?"
 #: SupplierTypes.php:191 SuppShiptChgs.php:90 SuppTransGLAnalysis.php:126
 #: TaxAuthorities.php:175 TaxCategories.php:183 TaxGroups.php:189
 #: TaxProvinces.php:181 UnitsOfMeasure.php:186 WorkCentres.php:142
-#: WOSerialNos.php:323 WWW_Access.php:124 WWW_Users.php:333
+#: WOSerialNos.php:323 WWW_Access.php:124 WWW_Users.php:334
 #: includes/InputSerialItemsKeyed.php:60 includes/OutputSerialItems.php:99
 #, php-format
 msgid "Delete"
@@ -502,11 +500,11 @@ msgstr "Các mục trong tài khoản"
 #: SalesPeople.php:370 Shippers.php:203 StockCategories.php:614
 #: SupplierContacts.php:284 SuppLoginSetup.php:295 TaxAuthorities.php:329
 #: TaxCategories.php:238 TaxProvinces.php:235 UnitsOfMeasure.php:241
-#: WorkCentres.php:280 WWW_Users.php:737
+#: WorkCentres.php:280 WWW_Users.php:738
 msgid "Enter Information"
 msgstr "Nhập thông tin"
 
-#: AccountSections.php:7 includes/MainMenuLinksArray.php:382
+#: AccountSections.php:7 includes/MainMenuLinksArray.php:380
 msgid "Account Sections"
 msgstr "mục tài khoản"
 
@@ -656,8 +654,8 @@ msgstr "Số điện thoại"
 #: PrintCustTrans.php:993 PrintCustTransPortrait.php:759
 #: PrintCustTransPortrait.php:1005 PrintCustTransPortrait.php:1061
 #: SelectCustomer.php:427 SelectCustomer.php:619 SelectSupplier.php:278
-#: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:185
-#: WWW_Users.php:288 includes/PDFPickingListHeader.inc:25
+#: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:186
+#: WWW_Users.php:289 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:29
@@ -872,7 +870,7 @@ msgstr ""
 #: MailInventoryValuation.php:114 MRPPlannedPurchaseOrders.php:114
 #: MRPPlannedWorkOrders.php:106 MRPReport.php:147 MRPReport.php:508
 #: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:155
-#: MRPShortages.php:167 OutstandingGRNs.php:53 OutstandingGRNs.php:65
+#: MRPShortages.php:167 OutstandingGRNs.php:46 OutstandingGRNs.php:59
 #: PDFCustomerList.php:18 PDFCustomerList.php:230 PDFCustomerList.php:242
 #: PDFLowGP.php:20 PDFStockCheckComparison.php:33
 #: PDFStockCheckComparison.php:59 PDFStockCheckComparison.php:264
@@ -911,7 +909,7 @@ msgstr ""
 #: MRPPlannedWorkOrders.php:120 MRPPlannedWorkOrders.php:311 MRPReport.php:39
 #: MRPReport.php:50 MRPReport.php:150 MRPReschedules.php:48
 #: MRPReschedules.php:60 MRPShortages.php:158 MRPShortages.php:170
-#: OutstandingGRNs.php:56 OutstandingGRNs.php:68 PDFCustomerList.php:233
+#: OutstandingGRNs.php:49 OutstandingGRNs.php:62 PDFCustomerList.php:233
 #: PDFCustomerList.php:245 PDFGLJournal.php:100 PDFGrn.php:130 PDFLowGP.php:59
 #: PDFLowGP.php:71 PDFPriceList.php:128 PDFPrintLabel.php:46
 #: PDFQuotation.php:272 PDFQuotationPortrait.php:268
@@ -955,8 +953,8 @@ msgstr "không thể lấy làm lại vì"
 
 #: AgedDebtors.php:368 AgedSuppliers.php:200 Areas.php:94
 #: ConfirmDispatch_Invoice.php:164 ConfirmDispatch_Invoice.php:983
-#: ConfirmDispatch_Invoice.php:997 Contracts.php:582 CounterReturns.php:1015
-#: CounterReturns.php:1029 CounterSales.php:1413 CounterSales.php:1427
+#: ConfirmDispatch_Invoice.php:997 Contracts.php:582 CounterReturns.php:1012
+#: CounterReturns.php:1026 CounterSales.php:1413 CounterSales.php:1427
 #: Credit_Invoice.php:729 Credit_Invoice.php:750 CustomerReceipt.php:547
 #: CustomerReceipt.php:686 CustomerReceipt.php:714 CustomerTransInquiry.php:93
 #: DeliveryDetails.php:398 GLProfit_Loss.php:598 GLTagProfit_Loss.php:513
@@ -1050,7 +1048,7 @@ msgstr "Báo cáo chi tiết"
 #: InventoryPlanningPrefSupplier.php:519 InventoryQuantities.php:210
 #: InventoryValuation.php:269 MRPPlannedPurchaseOrders.php:282
 #: MRPPlannedWorkOrders.php:341 MRPReschedules.php:153 MRPShortages.php:303
-#: OutstandingGRNs.php:182 PDFCustomerList.php:419 PDFLowGP.php:146
+#: OutstandingGRNs.php:277 PDFCustomerList.php:419 PDFLowGP.php:146
 #: PDFPriceList.php:312 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:361 PrintCustTrans.php:537
 #: PrintCustTransPortrait.php:582 ReorderLevel.php:259 StockDispatch.php:407
@@ -1092,12 +1090,12 @@ msgstr "phân tích nhà cung cấp truyền thống"
 msgid "There are no results so the PDF is empty"
 msgstr "Chưa có trung tâm làm việc nào được thiết lập"
 
-#: AgedSuppliers.php:287 OutstandingGRNs.php:172 PDFRemittanceAdvice.php:153
+#: AgedSuppliers.php:287 OutstandingGRNs.php:267 PDFRemittanceAdvice.php:153
 #: SupplierBalsAtPeriodEnd.php:132 SuppPaymentRun.php:265
 msgid "From Supplier Code"
 msgstr "From Vendor Code"
 
-#: AgedSuppliers.php:291 OutstandingGRNs.php:176 PDFRemittanceAdvice.php:157
+#: AgedSuppliers.php:291 OutstandingGRNs.php:271 PDFRemittanceAdvice.php:157
 #: SupplierBalsAtPeriodEnd.php:136 SuppPaymentRun.php:269
 msgid "To Supplier Code"
 msgstr "To Vendor Code"
@@ -1225,17 +1223,17 @@ msgstr "Đến ngày"
 
 #: AuditTrail.php:48 PO_AuthorisationLevels.php:124
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
-#: UserSettings.php:113
+#: UserSettings.php:114
 msgid "User ID"
 msgstr "ID người sử dụng"
 
 #: AuditTrail.php:50 AuditTrail.php:63 ContractBOM.php:300
-#: CounterReturns.php:1618 CounterReturns.php:1621 CounterSales.php:2205
+#: CounterReturns.php:1615 CounterReturns.php:1618 CounterSales.php:2205
 #: CounterSales.php:2208 CustomerTransInquiry.php:32 DailySalesInquiry.php:46
 #: DailySalesInquiry.php:48 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:168
-#: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP_2012-10.php:597
-#: MRP.php:597 MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
+#: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:597
+#: MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:48 NoSalesItems.php:68
 #: NoSalesItems.php:70 PDFPeriodStockTransListing.php:60 PDFPriceList.php:198
 #: PO_Items.php:1051 POReport.php:1570 ReorderLevel.php:212
@@ -1605,7 +1603,7 @@ msgid "from"
 msgstr "Từ"
 
 #: BankMatching.php:128 ConfirmDispatchControlled_Invoice.php:68
-#: CounterReturns.php:200 EmailCustTrans.php:64 FixedAssetRegister.php:79
+#: CounterReturns.php:197 EmailCustTrans.php:64 FixedAssetRegister.php:79
 #: FTP_RadioBeacon.php:280 GLAccountCSV.php:173 GLAccountReport.php:103
 #: Payments.php:746 PcReportTab.php:101 PDFChequeListing.php:115
 #: PDFChequeListing.php:125 PDFChequeListing.php:200
@@ -1883,8 +1881,8 @@ msgstr "Số"
 #: CustomerTransInquiry.php:105 CustWhereAlloc.php:107
 #: DailyBankTransactions.php:115 GLAccountReport.php:339
 #: PaymentAllocations.php:64 PaymentAllocations.php:65
-#: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:115
-#: StockCounts.php:158 StockLocMovements.php:94 StockMovements.php:102
+#: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:113
+#: StockCounts.php:156 StockLocMovements.php:94 StockMovements.php:102
 #: Z_CheckAllocs.php:64 includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -1938,7 +1936,7 @@ msgstr ""
 "sự cân đối hiện tại của tài khoản. Điều quan trọng là tỷ giá trên phản ánh "
 "giá trị hiện tại của các loại tiền tệ  trong tài khoản ngân hàng"
 
-#: BankReconciliation.php:358 CounterReturns.php:743 CounterSales.php:832
+#: BankReconciliation.php:358 CounterReturns.php:740 CounterSales.php:832
 #: Customers.php:1114 SelectOrderItems.php:1456 Stocks.php:1251
 #: WorkOrderCosting.php:551 WorkOrderEntry.php:590
 msgid "Are You Sure?"
@@ -1976,12 +1974,12 @@ msgid "Quantity Extended BOM Listing"
 msgstr "Liệt kê số lượng mở rộng BOM"
 
 #: BOMExtendedQty.php:30 BOMIndented.php:27 BOMIndentedReverse.php:26
-#: MRP_2012-10.php:27 MRPCalendar.php:86 MRP.php:27
+#: MRPCalendar.php:86 MRP.php:27
 msgid "The SQL to create passbom failed with the message"
 msgstr "D? li?u dùng d? t?o passbom không thành công v?i thông di?p"
 
 #: BOMExtendedQty.php:43 BOMIndented.php:40 BOMIndentedReverse.php:39
-#: MRP_2012-10.php:34 MRP.php:34
+#: MRP.php:34
 msgid "Create of tempbom failed because"
 msgstr ""
 
@@ -2009,8 +2007,8 @@ msgstr "phần"
 #: BOMIndentedReverse.php:295 BOMInquiry.php:200 BOMs.php:556 BOMs.php:735
 #: ContractBOM.php:238 ContractBOM.php:351 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:95
-#: Contracts.php:987 Contracts.php:1023 CounterReturns.php:672
-#: CounterReturns.php:1682 CounterReturns.php:1809 CounterSales.php:745
+#: Contracts.php:987 Contracts.php:1023 CounterReturns.php:669
+#: CounterReturns.php:1679 CounterReturns.php:1806 CounterSales.php:745
 #: CounterSales.php:2085 CounterSales.php:2272 CounterSales.php:2409
 #: Credit_Invoice.php:289 CustomerPurchases.php:73 DeliveryDetails.php:852
 #: DeliveryDetails.php:922 GoodsReceived.php:101 GoodsReceived.php:105
@@ -2033,7 +2031,7 @@ msgstr "phần"
 #: SelectOrderItems.php:1733 SelectOrderItems.php:1863 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:628
-#: StockCounts.php:114 StockLocMovements.php:93 StockLocTransfer.php:307
+#: StockCounts.php:112 StockLocMovements.php:93 StockLocTransfer.php:307
 #: StockMovements.php:101 StockStatus.php:343 StockUsageGraph.php:12
 #: SuppCreditGRNs.php:279 SuppCreditGRNs.php:280 SupplierCredit.php:318
 #: SupplierTenderCreate.php:412 SupplierTenderCreate.php:821
@@ -2197,7 +2195,7 @@ msgid "Build"
 msgstr "lập nên"
 
 #: BOMExtendedQty.php:321 BOMInquiry.php:110 BOMs.php:883
-#: CounterReturns.php:1678 CounterSales.php:2081 CounterSales.php:2268
+#: CounterReturns.php:1675 CounterSales.php:2081 CounterSales.php:2268
 #: InternalStockRequest.php:625 PO_SelectOSPurchOrder.php:237
 #: PO_SelectPurchOrder.php:214 ReorderLevelLocation.php:70
 #: ReorderLevelLocation.php:71 SelectCompletedOrder.php:556
@@ -2267,7 +2265,7 @@ msgstr "mức 1"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:109
 #: BOMInquiry.php:199 BOMs.php:553 BOMs.php:882 ContractBOM.php:237
-#: ContractBOM.php:348 ContractOtherReqts.php:94 CounterReturns.php:1676
+#: ContractBOM.php:348 ContractOtherReqts.php:94 CounterReturns.php:1673
 #: CounterSales.php:2079 CounterSales.php:2266 CreditStatus.php:152
 #: CreditStatus.php:243 CustomerPurchases.php:67 EmailConfirmation.php:218
 #: EmailConfirmation.php:336 FixedAssetCategories.php:164
@@ -2302,7 +2300,7 @@ msgstr "mức 1"
 #: SupplierTenders.php:326 SupplierTenders.php:421 SupplierTenders.php:689
 #: SuppPriceList.php:309 TaxAuthorities.php:147 TopItems.php:164
 #: WorkCentres.php:127 WorkOrderCosting.php:98 WorkOrderCosting.php:130
-#: WorkOrderEntry.php:643 WorkOrderIssue.php:707
+#: WorkOrderEntry.php:643 WorkOrderIssue.php:707 Z_ItemsWithoutPicture.php:33
 #: includes/DefineLabelClass.php:12 includes/DefineLabelClass.php:45
 #: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
@@ -2388,7 +2386,7 @@ msgid "description"
 msgstr "mô tả"
 
 #: BOMInquiry.php:28 BOMs.php:866 ContractBOM.php:326 ContractBOM.php:331
-#: Contracts.php:756 Contracts.php:759 CounterReturns.php:1643
+#: Contracts.php:756 Contracts.php:759 CounterReturns.php:1640
 #: CounterSales.php:2230 CustomerReceipt.php:1115 CustomerReceipt.php:1118
 #: DiscountCategories.php:109 DiscountCategories.php:111
 #: DiscountCategories.php:115 DiscountCategories.php:117
@@ -2422,8 +2420,8 @@ msgstr "Nhập thông tin chiết xuất của"
 #: SalesInquiry.php:780 SalesInquiry.php:806 SalesInquiry.php:825
 #: SalesInquiry.php:935 SalesInquiry.php:1093 SalesInquiry.php:1183
 #: SalesInquiry.php:1201 SelectProduct.php:548 Shipt_Select.php:174
-#: StockAdjustments.php:116 StockAdjustments.php:394 StockCounts.php:113
-#: StockCounts.php:155 StockMovements.php:36 StockReorderLevel.php:47
+#: StockAdjustments.php:116 StockAdjustments.php:394 StockCounts.php:111
+#: StockCounts.php:153 StockMovements.php:36 StockReorderLevel.php:47
 #: StockStatus.php:57 StockTransfers.php:49 StockTransfers.php:470
 #: StockUsage.php:64 SupplierPriceList.php:47 SupplierTenderCreate.php:670
 #: SupplierTenders.php:433 WorkOrderEntry.php:631 WorkOrderIssue.php:683
@@ -2432,7 +2430,7 @@ msgid "Stock Code"
 msgstr "Mã kho"
 
 #: BOMInquiry.php:35 BOMs.php:871 ContractBOM.php:336 Contracts.php:764
-#: CounterReturns.php:1647 CounterSales.php:2236 CustomerReceipt.php:1125
+#: CounterReturns.php:1644 CounterSales.php:2236 CustomerReceipt.php:1125
 #: FixedAssetTransfer.php:102 InternalStockRequest.php:354 MRPDemands.php:343
 #: MRPReport.php:555 PO_Header.php:544 PO_Items.php:1088 SelectAsset.php:114
 #: SelectCreditItems.php:232 SelectCreditItems.php:1010 SelectCustomer.php:375
@@ -2469,7 +2467,7 @@ msgstr ""
 "Cơ sở dữ liệu SQL để tìm phần được chọn đã không thành công với thông điệp"
 
 #: BOMInquiry.php:108 BOMs.php:552 BOMs.php:881 ContractBOM.php:347
-#: CounterReturns.php:1675 CounterSales.php:2078 CounterSales.php:2265
+#: CounterReturns.php:1672 CounterSales.php:2078 CounterSales.php:2265
 #: CustomerBranches.php:370 CustomerReceipt.php:1136 GLCodesInquiry.php:26
 #: InternalStockRequest.php:554 InternalStockRequest.php:622 MRPDemands.php:91
 #: MRPPlannedWorkOrders.php:257 MRPReport.php:748 NoSalesItems.php:186
@@ -2490,7 +2488,7 @@ msgid "Code"
 msgstr "Mã"
 
 #: BOMInquiry.php:111 BOMs.php:884 ConfirmDispatch_Invoice.php:286
-#: ContractBOM.php:349 CounterReturns.php:1677 CounterSales.php:2080
+#: ContractBOM.php:349 CounterReturns.php:1674 CounterSales.php:2080
 #: CounterSales.php:2267 Credit_Invoice.php:288 GoodsReceived.php:102
 #: GoodsReceived.php:106 InternalStockRequestAuthorisation.php:89
 #: InternalStockRequestFulfill.php:310 InternalStockRequest.php:557
@@ -2564,7 +2562,7 @@ msgid "to view the costed bill of material for"
 msgstr "để xem trị giá hóa đơn nguyên liệu cho"
 
 #: BOMListing.php:14 BOMListing.php:15 BOMListing.php:107
-#: includes/MainMenuLinksArray.php:296
+#: includes/MainMenuLinksArray.php:294
 msgid "Bill Of Material Listing"
 msgstr "Danh sách liệt kê các mặt hàng"
 
@@ -2784,7 +2782,7 @@ msgstr "Không thể lấy lại mô tả của các phần gốc vì"
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr "Cơ sở dữ liệu dùng để truy xuất mô tả cho phần gốc là"
 
-#: BOMs.php:425 ConfirmDispatch_Invoice.php:1030 CounterReturns.php:1063
+#: BOMs.php:425 ConfirmDispatch_Invoice.php:1030 CounterReturns.php:1060
 #: CounterSales.php:1460 Credit_Invoice.php:785 Credit_Invoice.php:813
 #: SelectCreditItems.php:1484 Stocks.php:983 Stocks.php:985
 #: api/api_debtortransactions.php:753 api/api_salesorders.php:920
@@ -2828,11 +2826,10 @@ msgid "Level"
 msgstr "mức,cấp độ"
 
 #: BOMs.php:554 BOMs.php:685 Contracts.php:869 FixedAssetRegister.php:86
-#: InventoryQuantities.php:247 Locations.php:349 MRP_2012-10.php:562
-#: MRP_2012-10.php:595 MRP.php:562 MRP.php:595 NoSalesItems.php:185
-#: PDFOrdersInvoiced.php:312 PDFOrderStatus.php:281
+#: InventoryQuantities.php:247 Locations.php:349 MRP.php:562 MRP.php:595
+#: NoSalesItems.php:185 PDFOrdersInvoiced.php:312 PDFOrderStatus.php:281
 #: ReorderLevelLocation.php:157 ReorderLevel.php:290 ReorderLevel.php:299
-#: StockCounts.php:156 StockReorderLevel.php:54 StockSerialItemResearch.php:80
+#: StockCounts.php:154 StockReorderLevel.php:54 StockSerialItemResearch.php:80
 #: StockStatus.php:80 StockStatus.php:85 SupplierTenderCreate.php:125
 #: WhereUsedInquiry.php:72 WorkCentres.php:128 WorkCentres.php:222
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
@@ -2841,7 +2838,7 @@ msgstr "mức,cấp độ"
 msgid "Location"
 msgstr "vùng, địa điểm"
 
-#: BOMs.php:555 WhereUsedInquiry.php:71 includes/MainMenuLinksArray.php:321
+#: BOMs.php:555 WhereUsedInquiry.php:71 includes/MainMenuLinksArray.php:319
 msgid "Work Centre"
 msgstr "Trung tâm làm việc"
 
@@ -2977,7 +2974,7 @@ msgstr "B?n có ch?c mu?n xóa nhà cung c?p này?"
 #: COGSGLPostings.php:191 CustomerReceipt.php:1031 GLJournal.php:384
 #: GLTransInquiry.php:44 Payments.php:1066 SupplierTransInquiry.php:172
 #: TaxAuthorities.php:148 TaxAuthorities.php:149
-#: includes/MainMenuLinksArray.php:379
+#: includes/MainMenuLinksArray.php:377
 msgid "GL Account"
 msgstr "Sổ cái tài khoản"
 
@@ -3002,7 +2999,7 @@ msgstr "Danh sách giá cả"
 msgid "Post to GL account"
 msgstr "Đăng vào sổ cái tài khoản"
 
-#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:447
+#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:445
 msgid "Company Preferences"
 msgstr "Tùy chọn về công ty"
 
@@ -3124,7 +3121,7 @@ msgstr "Số Fax"
 
 #: CompanyPreferences.php:281 CustLoginSetup.php:162 Suppliers.php:712
 #: Suppliers.php:914 SupplierTenderCreate.php:394 SuppLoginSetup.php:148
-#: WWW_Users.php:471
+#: WWW_Users.php:472
 msgid "Email Address"
 msgstr "Địa chỉ email"
 
@@ -3341,7 +3338,7 @@ msgstr "khách hàng"
 #: OrderDetails.php:73 SalesAnalRepts.php:30 SalesAnalRepts.php:32
 #: SalesInquiry.php:751 SalesInquiry.php:761 SalesInquiry.php:783
 #: SalesInquiry.php:931 SalesInquiry.php:946 SalesInquiry.php:952
-#: SalesInquiry.php:1203 WWW_Users.php:289 WWW_Users.php:528
+#: SalesInquiry.php:1203 WWW_Users.php:290 WWW_Users.php:529
 #: Z_ChangeBranchCode.php:202 includes/PDFStatementPageHeader.inc:112
 #: includes/PDFTransPageHeader.inc:46
 #: includes/PDFTransPageHeaderPortrait.inc:55
@@ -3364,23 +3361,24 @@ msgid "Invoice amounts stated in"
 msgstr "Số tiền ghi trong hoá đơn"
 
 #: ConfirmDispatch_Invoice.php:283 ContractBOM.php:236 ContractCosting.php:79
-#: ContractCosting.php:85 Contracts.php:985 CounterReturns.php:670
-#: CounterReturns.php:1808 CounterSales.php:743 CounterSales.php:2408
+#: ContractCosting.php:85 Contracts.php:985 CounterReturns.php:667
+#: CounterReturns.php:1805 CounterSales.php:743 CounterSales.php:2408
 #: Credit_Invoice.php:285 DeliveryDetails.php:850 GoodsReceived.php:99
 #: InternalStockRequest.php:260 Labels.php:465 Labels.php:467 Labels.php:509
-#: OrderDetails.php:168 PDFPrintLabel.php:65 PO_Items.php:679
-#: PO_OrderDetails.php:146 PrintCustTrans.php:859 PrintCustTrans.php:948
-#: PrintCustTrans.php:997 PrintCustTransPortrait.php:913
-#: PrintCustTransPortrait.php:1011 PrintCustTransPortrait.php:1067
-#: RecurringSalesOrders.php:329 ReorderLevelLocation.php:188 ReprintGRN.php:84
-#: ReverseGRN.php:390 SalesGraph.php:182 SelectCreditItems.php:684
-#: SelectOrderItems.php:1376 StockCostUpdate.php:125 StockLocMovements.php:88
-#: StockLocTransfer.php:306 StockLocTransferReceive.php:428
-#: StockQuantityByDate.php:107 Stocks.php:776 Stocks.php:779 Stocks.php:833
-#: Stocks.php:839 SuppCreditGRNs.php:91 SuppCreditGRNs.php:186
-#: SuppInvGRNs.php:125 SuppInvGRNs.php:306 SupplierCredit.php:316
-#: SupplierInvoice.php:664 SupplierTenders.php:122 SupplierTenders.php:530
-#: SupplierTenders.php:532 includes/PDFOrderPageHeader_generic.inc:91
+#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPrintLabel.php:65
+#: PO_Items.php:679 PO_OrderDetails.php:146 PrintCustTrans.php:859
+#: PrintCustTrans.php:948 PrintCustTrans.php:997
+#: PrintCustTransPortrait.php:913 PrintCustTransPortrait.php:1011
+#: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:329
+#: ReorderLevelLocation.php:188 ReprintGRN.php:84 ReverseGRN.php:390
+#: SalesGraph.php:182 SelectCreditItems.php:684 SelectOrderItems.php:1376
+#: StockCostUpdate.php:125 StockLocMovements.php:88 StockLocTransfer.php:306
+#: StockLocTransferReceive.php:428 StockQuantityByDate.php:107 Stocks.php:776
+#: Stocks.php:779 Stocks.php:833 Stocks.php:839 SuppCreditGRNs.php:91
+#: SuppCreditGRNs.php:186 SuppInvGRNs.php:125 SuppInvGRNs.php:306
+#: SupplierCredit.php:316 SupplierInvoice.php:664 SupplierTenders.php:122
+#: SupplierTenders.php:530 SupplierTenders.php:532
+#: Z_ItemsWithoutPicture.php:32 includes/PDFOrderPageHeader_generic.inc:91
 #: includes/PDFPickingListHeader.inc:72
 #: includes/PDFQuotationPageHeader.inc:102
 #: includes/PDFQuotationPortraitPageHeader.inc:102
@@ -3392,7 +3390,7 @@ msgid "Item Code"
 msgstr "Mã mặt hàng"
 
 #: ConfirmDispatch_Invoice.php:284 ContractCosting.php:80
-#: ContractCosting.php:86 Contracts.php:986 CounterReturns.php:671
+#: ContractCosting.php:86 Contracts.php:986 CounterReturns.php:668
 #: CounterSales.php:744 Credit_Invoice.php:286 DeliveryDetails.php:851
 #: DeliveryDetails.php:921 InternalStockRequest.php:147
 #: InternalStockRequest.php:261 Labels.php:470 OrderDetails.php:169
@@ -3435,7 +3433,7 @@ msgstr "gửi"
 msgid "This Dispatch"
 msgstr "thông báo (công văn) này"
 
-#: ConfirmDispatch_Invoice.php:289 CounterReturns.php:674 CounterSales.php:748
+#: ConfirmDispatch_Invoice.php:289 CounterReturns.php:671 CounterSales.php:748
 #: Credit_Invoice.php:290 CustomerPurchases.php:72 DeliveryDetails.php:854
 #: DeliveryDetails.php:924 GoodsReceived.php:112 Labels.php:480 Labels.php:482
 #: Labels.php:512 OffersReceived.php:110 OffersReceived.php:219
@@ -3458,7 +3456,7 @@ msgstr "thông báo (công văn) này"
 msgid "Price"
 msgstr "giá"
 
-#: ConfirmDispatch_Invoice.php:290 CounterReturns.php:675 CounterSales.php:750
+#: ConfirmDispatch_Invoice.php:290 CounterReturns.php:672 CounterSales.php:750
 #: Credit_Invoice.php:291 CustomerReceipt.php:907 DeliveryDetails.php:855
 #: OrderDetails.php:173 PrintCustTrans.php:864 PrintCustTrans.php:953
 #: PrintCustTrans.php:1002 PrintCustTransPortrait.php:918
@@ -3473,7 +3471,7 @@ msgid "Discount"
 msgstr "giảm giá"
 
 #: ConfirmDispatch_Invoice.php:291 ConfirmDispatch_Invoice.php:295
-#: CounterReturns.php:679 CounterReturns.php:759 CounterSales.php:755
+#: CounterReturns.php:676 CounterReturns.php:756 CounterSales.php:755
 #: CounterSales.php:849 CounterSales.php:851 Credit_Invoice.php:292
 #: Credit_Invoice.php:296 CustomerAllocations.php:331
 #: CustomerAllocations.php:365 CustomerInquiry.php:205 DeliveryDetails.php:856
@@ -3483,18 +3481,19 @@ msgstr "giảm giá"
 #: GLTrialBalance.php:238 GLTrialBalance.php:259 GLTrialBalance.php:355
 #: GLTrialBalance.php:487 GLTrialBalance.php:507 GLTrialBalance.php:531
 #: GLTrialBalance.php:643 GLTrialBalance.php:663 GLTrialBalance.php:687
-#: OffersReceived.php:111 OrderDetails.php:174 PDFCustTransListing.php:133
-#: PDFOrdersInvoiced.php:395 PDFRemittanceAdvice.php:310
-#: PDFSuppTransListing.php:131 RecurringSalesOrders.php:335
-#: SalesByTypePeriodInquiry.php:375 SalesByTypePeriodInquiry.php:410
-#: SalesByTypePeriodInquiry.php:445 SalesByTypePeriodInquiry.php:480
-#: SalesByTypePeriodInquiry.php:541 SelectCreditItems.php:691
-#: SelectCreditItems.php:695 SelectOrderItems.php:1387
-#: SuppContractChgs.php:107 SuppFixedAssetChgs.php:94
-#: SupplierAllocations.php:458 SupplierAllocations.php:570
-#: SupplierAllocations.php:645 SupplierCredit.php:407 SupplierInquiry.php:212
-#: SuppShiptChgs.php:97 SuppTransGLAnalysis.php:139
-#: Z_CheckDebtorsControl.php:149 includes/PDFQuotationPageHeader.inc:109
+#: OffersReceived.php:111 OrderDetails.php:174 OutstandingGRNs.php:243
+#: PDFCustTransListing.php:133 PDFOrdersInvoiced.php:395
+#: PDFRemittanceAdvice.php:310 PDFSuppTransListing.php:131
+#: RecurringSalesOrders.php:335 SalesByTypePeriodInquiry.php:375
+#: SalesByTypePeriodInquiry.php:410 SalesByTypePeriodInquiry.php:445
+#: SalesByTypePeriodInquiry.php:480 SalesByTypePeriodInquiry.php:541
+#: SelectCreditItems.php:691 SelectCreditItems.php:695
+#: SelectOrderItems.php:1387 SuppContractChgs.php:107
+#: SuppFixedAssetChgs.php:94 SupplierAllocations.php:458
+#: SupplierAllocations.php:570 SupplierAllocations.php:645
+#: SupplierCredit.php:407 SupplierInquiry.php:212 SuppShiptChgs.php:97
+#: SuppTransGLAnalysis.php:139 Z_CheckDebtorsControl.php:149
+#: includes/PDFQuotationPageHeader.inc:109
 #: includes/PDFQuotationPortraitPageHeader.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:82 api/api_debtortransactions.php:1269
 #: api/api_debtortransactions.php:1282 api/api_debtortransactions.php:1579
@@ -3516,7 +3515,7 @@ msgstr "Cơ quan thuế"
 msgid "Tax %"
 msgstr "phần trăm thuế"
 
-#: ConfirmDispatch_Invoice.php:294 CounterReturns.php:678 CounterSales.php:754
+#: ConfirmDispatch_Invoice.php:294 CounterReturns.php:675 CounterSales.php:754
 #: Credit_Invoice.php:294 Credit_Invoice.php:295 PrintCustTrans.php:396
 #: PrintCustTrans.php:1040 PrintCustTransPortrait.php:456
 #: PrintCustTransPortrait.php:1110 SelectCreditItems.php:693
@@ -3524,7 +3523,7 @@ msgstr "phần trăm thuế"
 msgid "Tax"
 msgstr "thuế"
 
-#: ConfirmDispatch_Invoice.php:295 CounterReturns.php:679 CounterSales.php:755
+#: ConfirmDispatch_Invoice.php:295 CounterReturns.php:676 CounterSales.php:755
 #: Credit_Invoice.php:296 SelectCreditItems.php:695
 msgid "Incl Tax"
 msgstr "Đã bao gồm thuế"
@@ -3755,12 +3754,12 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:1602 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterReturns.php:942 CounterReturns.php:958
-#: CounterReturns.php:995 CounterReturns.php:1014 CounterReturns.php:1028
-#: CounterReturns.php:1069 CounterReturns.php:1079 CounterReturns.php:1159
-#: CounterReturns.php:1180 CounterReturns.php:1304 CounterReturns.php:1326
-#: CounterReturns.php:1351 CounterReturns.php:1372 CounterReturns.php:1398
-#: CounterReturns.php:1421 CounterSales.php:1298 CounterSales.php:1340
+#: ContractCosting.php:415 CounterReturns.php:939 CounterReturns.php:955
+#: CounterReturns.php:992 CounterReturns.php:1011 CounterReturns.php:1025
+#: CounterReturns.php:1066 CounterReturns.php:1076 CounterReturns.php:1156
+#: CounterReturns.php:1177 CounterReturns.php:1301 CounterReturns.php:1323
+#: CounterReturns.php:1348 CounterReturns.php:1369 CounterReturns.php:1395
+#: CounterReturns.php:1418 CounterSales.php:1298 CounterSales.php:1340
 #: CounterSales.php:1356 CounterSales.php:1393 CounterSales.php:1412
 #: CounterSales.php:1426 CounterSales.php:1466 CounterSales.php:1476
 #: CounterSales.php:1558 CounterSales.php:1579 CounterSales.php:1741
@@ -3877,12 +3876,12 @@ msgstr "Lỗi lớn"
 #: ConfirmDispatch_Invoice.php:1602 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterReturns.php:942 CounterReturns.php:958
-#: CounterReturns.php:995 CounterReturns.php:1014 CounterReturns.php:1028
-#: CounterReturns.php:1069 CounterReturns.php:1079 CounterReturns.php:1159
-#: CounterReturns.php:1180 CounterReturns.php:1304 CounterReturns.php:1326
-#: CounterReturns.php:1351 CounterReturns.php:1372 CounterReturns.php:1398
-#: CounterReturns.php:1421 CounterSales.php:1298 CounterSales.php:1340
+#: ContractCosting.php:415 CounterReturns.php:939 CounterReturns.php:955
+#: CounterReturns.php:992 CounterReturns.php:1011 CounterReturns.php:1025
+#: CounterReturns.php:1066 CounterReturns.php:1076 CounterReturns.php:1156
+#: CounterReturns.php:1177 CounterReturns.php:1301 CounterReturns.php:1323
+#: CounterReturns.php:1348 CounterReturns.php:1369 CounterReturns.php:1395
+#: CounterReturns.php:1418 CounterSales.php:1298 CounterSales.php:1340
 #: CounterSales.php:1356 CounterSales.php:1393 CounterSales.php:1412
 #: CounterSales.php:1426 CounterSales.php:1466 CounterSales.php:1476
 #: CounterSales.php:1558 CounterSales.php:1579 CounterSales.php:1741
@@ -3988,23 +3987,23 @@ msgstr "Các tiêu đề đơn đặt hàng có thể không được cập nh�
 msgid "The following SQL to update the sales order was used"
 msgstr "Cơ sở dữ liệu SQL sau để cập nhật các đơn hàng đã được sử dụng"
 
-#: ConfirmDispatch_Invoice.php:801 CounterReturns.php:942
+#: ConfirmDispatch_Invoice.php:801 CounterReturns.php:939
 #: CounterSales.php:1340 RecurringSalesOrdersProcess.php:680
 msgid "The debtor transaction record could not be inserted because"
 msgstr "Các bản ghi nợ giao dịch không thể được chèn vào bởi vì"
 
-#: ConfirmDispatch_Invoice.php:802 CounterReturns.php:943
+#: ConfirmDispatch_Invoice.php:802 CounterReturns.php:940
 #: CounterSales.php:1341 RecurringSalesOrdersProcess.php:681
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr "qua cơ sở dữ liệu SQL để chèn các bản ghi nợ giao dịch đã được sử dụng"
 
-#: ConfirmDispatch_Invoice.php:817 CounterReturns.php:958
+#: ConfirmDispatch_Invoice.php:817 CounterReturns.php:955
 #: CounterSales.php:1356 Credit_Invoice.php:629
 #: RecurringSalesOrdersProcess.php:694 SelectCreditItems.php:1177
 msgid "The debtor transaction taxes records could not be inserted because"
 msgstr "các thuế giao dịch ghi nợ không thể chèn vào vì"
 
-#: ConfirmDispatch_Invoice.php:818 CounterReturns.php:959
+#: ConfirmDispatch_Invoice.php:818 CounterReturns.php:956
 #: CounterSales.php:1357 Credit_Invoice.php:630
 #: RecurringSalesOrdersProcess.php:695 SelectCreditItems.php:1178
 msgid ""
@@ -4042,24 +4041,24 @@ msgstr ""
 msgid "Cannot retrieve the mbflag"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:979
+#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:976
 #: CounterSales.php:1377 FixedAssetItems.php:628 SalesAnalReptCols.php:327
 #: Stocks.php:1248 Suppliers.php:1028 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "cảnh báo"
 
-#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:979
+#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:976
 #: CounterSales.php:1377
 msgid "Could not retrieve current location stock"
 msgstr "Không thể lấy lại vị trí đặt hiện tại"
 
-#: ConfirmDispatch_Invoice.php:964 CounterReturns.php:995
+#: ConfirmDispatch_Invoice.php:964 CounterReturns.php:992
 #: CounterSales.php:1393 Credit_Invoice.php:707 SelectCreditItems.php:1417
 msgid "Location stock record could not be updated because"
 msgstr "Hồ sơ vị trí kho không được cập nhật bởi"
 
 #: ConfirmDispatch_Invoice.php:965 ContractCosting.php:331
-#: CounterReturns.php:996 CounterSales.php:1394 Credit_Invoice.php:708
+#: CounterReturns.php:993 CounterSales.php:1394 Credit_Invoice.php:708
 #: GoodsReceived.php:491 ReverseGRN.php:220 SelectCreditItems.php:1418
 #: StockTransfers.php:434 StockTransfers.php:443 SupplierInvoice.php:277
 #: WorkOrderIssue.php:162 WorkOrderReceive.php:340 WorkOrderReceive.php:447
@@ -4067,12 +4066,12 @@ msgid "The following SQL to update the location stock record was used"
 msgstr ""
 "D? li?u SQL sau dây dùng d? c?p nh?t h? so d?a di?m kho dã du?c s? d?ng"
 
-#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1014
+#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1011
 #: CounterSales.php:1412 Credit_Invoice.php:728 SelectCreditItems.php:1438
 msgid "Could not retrieve assembly components from the database for"
 msgstr "Không truy xu?t du?c linh kiên l?p ráp t? co s? d? li?u"
 
-#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1014
+#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1011
 #: CounterSales.php:1412 Credit_Invoice.php:728 EDIMessageFormat.php:43
 #: EDISendInvoices.php:105 EDISendInvoices_Reece.php:184
 #: FixedAssetCategories.php:91 FixedAssetCategories.php:110
@@ -4083,7 +4082,7 @@ msgstr "Không truy xu?t du?c linh kiên l?p ráp t? co s? d? li?u"
 msgid "because"
 msgstr "vì"
 
-#: ConfirmDispatch_Invoice.php:996 CounterReturns.php:1028
+#: ConfirmDispatch_Invoice.php:996 CounterReturns.php:1025
 #: CounterSales.php:1426
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr ""
@@ -4102,12 +4101,12 @@ msgstr ""
 msgid "Order"
 msgstr "Đơn đặt hàng"
 
-#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1069
+#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1066
 #: CounterSales.php:1466 Credit_Invoice.php:819 SelectCreditItems.php:1491
 msgid "Stock movement records for the assembly components of"
 msgstr "H? so di chuy?n kho cho các linh ki?n l?p ráp c?a"
 
-#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1069
+#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1066
 #: CounterSales.php:1466 Credit_Invoice.php:819 SelectCreditItems.php:1491
 #: ShipmentCosting.php:397 SupplierAllocations.php:139
 #: includes/PDFPaymentRun_PymtFooter.php:57
@@ -4119,7 +4118,7 @@ msgstr "H? so di chuy?n kho cho các linh ki?n l?p ráp c?a"
 msgid "could not be inserted because"
 msgstr "không thể chèn thêm được vì"
 
-#: ConfirmDispatch_Invoice.php:1037 CounterReturns.php:1070
+#: ConfirmDispatch_Invoice.php:1037 CounterReturns.php:1067
 #: CounterSales.php:1467 Credit_Invoice.php:820 SelectCreditItems.php:1492
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
@@ -4128,13 +4127,13 @@ msgstr ""
 "D? li?u SLQ dùng d? chèn h? so di chuy?n kho các linh kiên l?p ráp dã du?c "
 "s? d?ng"
 
-#: ConfirmDispatch_Invoice.php:1046 CounterReturns.php:1079
+#: ConfirmDispatch_Invoice.php:1046 CounterReturns.php:1076
 #: CounterSales.php:1476 Credit_Invoice.php:829 SelectCreditItems.php:1501
 msgid ""
 "Location stock record could not be updated for an assembly component because"
 msgstr "Không c?p nh?t du?c d?a di?m kho cho m?t linh kiên l?p ráp vì"
 
-#: ConfirmDispatch_Invoice.php:1047 CounterReturns.php:1080
+#: ConfirmDispatch_Invoice.php:1047 CounterReturns.php:1077
 #: CounterSales.php:1477
 msgid ""
 "The following SQL to update the locations stock record for the component was "
@@ -4142,7 +4141,7 @@ msgid ""
 msgstr ""
 "D? li?u SQL dùng d? c?p nh?t h? so d?a di?m kho sau dây dã du?c s? d?ng"
 
-#: ConfirmDispatch_Invoice.php:1129 CounterReturns.php:1159
+#: ConfirmDispatch_Invoice.php:1129 CounterReturns.php:1156
 #: CounterSales.php:1558 Credit_Invoice.php:904 Credit_Invoice.php:1002
 #: Credit_Invoice.php:1042 Credit_Invoice.php:1082
 #: RecurringSalesOrdersProcess.php:363 ReverseGRN.php:248
@@ -4151,7 +4150,7 @@ msgid "Stock movement records could not be inserted because"
 msgstr "Không chèn du?c h? so di chuy?n kho vì"
 
 #: ConfirmDispatch_Invoice.php:1130 ContractCosting.php:360
-#: CounterReturns.php:1160 CounterSales.php:1559 Credit_Invoice.php:905
+#: CounterReturns.php:1157 CounterSales.php:1559 Credit_Invoice.php:905
 #: Credit_Invoice.php:1003 Credit_Invoice.php:1043 GoodsReceived.php:522
 #: RecurringSalesOrdersProcess.php:364 ReverseGRN.php:249
 #: SelectCreditItems.php:1316 SupplierInvoice.php:308 WorkOrderIssue.php:193
@@ -4159,14 +4158,14 @@ msgstr "Không chèn du?c h? so di chuy?n kho vì"
 msgid "The following SQL to insert the stock movement records was used"
 msgstr "D? li?u SQL dùng d? chèn h? so di chuy?n kho dã du?c s? d?ng"
 
-#: ConfirmDispatch_Invoice.php:1150 CounterReturns.php:1180
+#: ConfirmDispatch_Invoice.php:1150 CounterReturns.php:1177
 #: CounterSales.php:1579 RecurringSalesOrdersProcess.php:384
 msgid ""
 "Taxes and rates applicable to this invoice line item could not be inserted "
 "because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1151 CounterReturns.php:1181
+#: ConfirmDispatch_Invoice.php:1151 CounterReturns.php:1178
 #: CounterSales.php:1580 Credit_Invoice.php:1105
 #: RecurringSalesOrdersProcess.php:385 SelectCreditItems.php:1337
 msgid ""
@@ -4208,32 +4207,32 @@ msgid "The following SQL to insert the serial stock movement records was used"
 msgstr ""
 "D? li?u SQL sau dùng d? chèn se-ri h? so di chuy?n kho và dã du?c s? d?ng"
 
-#: ConfirmDispatch_Invoice.php:1223 CounterReturns.php:1221
+#: ConfirmDispatch_Invoice.php:1223 CounterReturns.php:1218
 #: CounterSales.php:1658 RecurringSalesOrdersProcess.php:423
 #: api/api_salesorders.php:1026
 msgid "The count of existing Sales analysis records could not run because"
 msgstr "Số đếm phân tích hồ sơ bán hàng hiện tại không thể chạy vì"
 
-#: ConfirmDispatch_Invoice.php:1224 CounterReturns.php:1222
+#: ConfirmDispatch_Invoice.php:1224 CounterReturns.php:1219
 #: CounterSales.php:1659 Credit_Invoice.php:1133
 #: RecurringSalesOrdersProcess.php:424 SelectCreditItems.php:1659
 #: api/api_salesorders.php:1027
 msgid "SQL to count the no of sales analysis records"
 msgstr "cơ sở dữ liệu SQL để tính toán  bảng  doanh số chưa phân tích"
 
-#: ConfirmDispatch_Invoice.php:1279 CounterReturns.php:1279
+#: ConfirmDispatch_Invoice.php:1279 CounterReturns.php:1276
 #: CounterSales.php:1716 RecurringSalesOrdersProcess.php:482
 msgid "Sales analysis record could not be added or updated because"
 msgstr "bảng phân tích doanh số không thể  thêm vào hay cập nhật vì"
 
-#: ConfirmDispatch_Invoice.php:1280 CounterReturns.php:1280
+#: ConfirmDispatch_Invoice.php:1280 CounterReturns.php:1277
 #: CounterSales.php:1717 Credit_Invoice.php:1245
 #: RecurringSalesOrdersProcess.php:483 SelectCreditItems.php:1769
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr ""
 "Cơ sở dữ liệu SQL sau để chèn các bản ghi  phân tích bán hàng đã được sử dụng"
 
-#: ConfirmDispatch_Invoice.php:1305 CounterReturns.php:1304
+#: ConfirmDispatch_Invoice.php:1305 CounterReturns.php:1301
 #: CounterSales.php:1741 Credit_Invoice.php:1275
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr ""
@@ -4243,9 +4242,9 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:1424 ConfirmDispatch_Invoice.php:1446
 #: ConfirmDispatch_Invoice.php:1468 ConfirmDispatch_Invoice.php:1490
 #: ConfirmDispatch_Invoice.php:1581 ConfirmDispatch_Invoice.php:1603
-#: ContractCosting.php:249 ContractCosting.php:267 CounterReturns.php:1305
-#: CounterReturns.php:1327 CounterReturns.php:1352 CounterReturns.php:1373
-#: CounterReturns.php:1422 CounterSales.php:1742 CounterSales.php:1764
+#: ContractCosting.php:249 ContractCosting.php:267 CounterReturns.php:1302
+#: CounterReturns.php:1324 CounterReturns.php:1349 CounterReturns.php:1370
+#: CounterReturns.php:1419 CounterSales.php:1742 CounterSales.php:1764
 #: CounterSales.php:1789 CounterSales.php:1810 CounterSales.php:1859
 #: Credit_Invoice.php:1276 Credit_Invoice.php:1316 Credit_Invoice.php:1343
 #: Credit_Invoice.php:1364 Credit_Invoice.php:1393 Credit_Invoice.php:1419
@@ -4263,18 +4262,18 @@ msgstr ""
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1328 CounterReturns.php:1326
+#: ConfirmDispatch_Invoice.php:1328 CounterReturns.php:1323
 #: CounterSales.php:1763
 msgid ""
 "The stock side of the cost of sales GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1355 CounterReturns.php:1351
+#: ConfirmDispatch_Invoice.php:1355 CounterReturns.php:1348
 #: CounterSales.php:1788 RecurringSalesOrdersProcess.php:510
 msgid "The sales GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1377 CounterReturns.php:1372
+#: ConfirmDispatch_Invoice.php:1377 CounterReturns.php:1369
 #: CounterSales.php:1809 RecurringSalesOrdersProcess.php:537
 msgid "The sales discount GL posting could not be inserted because"
 msgstr ""
@@ -4331,12 +4330,12 @@ msgstr ""
 msgid "The following SQL to update the fixed asset record was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1555 CounterReturns.php:1398
+#: ConfirmDispatch_Invoice.php:1555 CounterReturns.php:1395
 #: CounterSales.php:1835 RecurringSalesOrdersProcess.php:604
 msgid "The total debtor GL posting could not be inserted because"
 msgstr "tổng số người nợ trong sổ cái  không đưa lên chèn vào bởi vì"
 
-#: ConfirmDispatch_Invoice.php:1556 CounterReturns.php:1399
+#: ConfirmDispatch_Invoice.php:1556 CounterReturns.php:1396
 #: CounterSales.php:1836 RecurringSalesOrdersProcess.php:605
 msgid ""
 "The following SQL to insert the total debtors control GLTrans record was used"
@@ -4348,7 +4347,7 @@ msgstr ""
 msgid "The freight GL posting could not be inserted because"
 msgstr "The shipping GL posting could not be inserted because"
 
-#: ConfirmDispatch_Invoice.php:1602 CounterReturns.php:1421
+#: ConfirmDispatch_Invoice.php:1602 CounterReturns.php:1418
 #: CounterSales.php:1858 Credit_Invoice.php:1444
 #: RecurringSalesOrdersProcess.php:577 SelectCreditItems.php:1974
 msgid "The tax GL posting could not be inserted because"
@@ -4359,14 +4358,14 @@ msgstr ""
 msgid "Invoice number"
 msgstr "Số hóa đơn"
 
-#: ConfirmDispatch_Invoice.php:1619 CounterReturns.php:1583
+#: ConfirmDispatch_Invoice.php:1619 CounterReturns.php:1580
 #: CounterSales.php:2028 RecurringSalesOrdersProcess.php:700
 #: SelectCreditItems.php:1989
 msgid "processed"
 msgstr "xử lý"
 
 #: ConfirmDispatch_Invoice.php:1624 ConfirmDispatch_Invoice.php:1626
-#: ContractBOM.php:294 CounterReturns.php:1588 CounterReturns.php:1590
+#: ContractBOM.php:294 CounterReturns.php:1585 CounterReturns.php:1587
 #: CounterSales.php:2033 CounterSales.php:2035 CustomerReceipt.php:552
 #: DeliveryDetails.php:581 DeliveryDetails.php:585 DeliveryDetails.php:803
 #: DeliveryDetails.php:807 GLBalanceSheet.php:18 GLJournalInquiry.php:109
@@ -4387,13 +4386,13 @@ msgstr "in"
 msgid "Print this invoice"
 msgstr "In hóa đơn này"
 
-#: ConfirmDispatch_Invoice.php:1624 CounterReturns.php:1588
+#: ConfirmDispatch_Invoice.php:1624 CounterReturns.php:1585
 #: CounterSales.php:2033 SelectSalesOrder.php:984 SystemParameters.php:480
 #, php-format
 msgid "Landscape"
 msgstr "cảnh (hiện tượng)"
 
-#: ConfirmDispatch_Invoice.php:1626 CounterReturns.php:1590
+#: ConfirmDispatch_Invoice.php:1626 CounterReturns.php:1587
 #: CounterSales.php:2035 SelectSalesOrder.php:984 SystemParameters.php:481
 #, php-format
 msgid "Portrait"
@@ -4471,7 +4470,7 @@ msgstr "nhấn vào đây"
 msgid "to continue"
 msgstr "tiếp tục"
 
-#: ContractBOM.php:139 CounterReturns.php:327 CounterSales.php:348
+#: ContractBOM.php:139 CounterReturns.php:324 CounterSales.php:348
 #: InternalStockRequest.php:496 PO_Items.php:1017 SelectCreditItems.php:388
 #: SelectOrderItems.php:866 SupplierTenderCreate.php:799
 #: SupplierTenders.php:669 WorkOrderEntry.php:181 WorkOrderIssue.php:468
@@ -4524,7 +4523,7 @@ msgstr ""
 "Cơ sở dữ liệu SQL dùng để truy xuất thông tin mặt hàng nhưng không thành "
 "công là"
 
-#: ContractBOM.php:204 CounterReturns.php:412 CounterSales.php:448
+#: ContractBOM.php:204 CounterReturns.php:409 CounterSales.php:448
 #: PO_Items.php:648 SelectOrderItems.php:962
 #: includes/SelectOrderItems_IntoCart.inc:60
 #: includes/SelectOrderItems_IntoCart.inc:166
@@ -4589,7 +4588,7 @@ msgstr "Tìm kiếm hàng trong kho"
 msgid "Enter text extracts in the description"
 msgstr "Nh?p vào"
 
-#: ContractBOM.php:326 CounterReturns.php:1643 CounterSales.php:2230
+#: ContractBOM.php:326 CounterReturns.php:1640 CounterSales.php:2230
 #: PO_Items.php:1080 SelectCompletedOrder.php:534 SelectCreditItems.php:1003
 #: SelectOrderItems.php:1693 SelectSalesOrder.php:595 SelectWorkOrder.php:197
 msgid "Enter extract of the Stock Code"
@@ -4678,7 +4677,7 @@ msgid "Inventory Required"
 msgstr "yêu cầu kiểm kê (kiểm kê bắt buộc)"
 
 #: ContractCosting.php:82 ContractCosting.php:88 Contracts.php:988
-#: CounterReturns.php:673 CounterSales.php:747 DeliveryDetails.php:853
+#: CounterReturns.php:670 CounterSales.php:747 DeliveryDetails.php:853
 #: DeliveryDetails.php:923 OrderDetails.php:171 PO_Items.php:793
 #: PrintCustTrans.php:862 PrintCustTrans.php:951 PrintCustTrans.php:1000
 #: PrintCustTransPortrait.php:916 PrintCustTransPortrait.php:1014
@@ -4712,11 +4711,12 @@ msgstr "yêu cầu"
 msgid "Budgeted Other Costs"
 msgstr "Thắt chặt các chi phí khác"
 
-#: ContractCosting.php:171 OffersReceived.php:106 PO_AuthoriseMyOrders.php:59
-#: PO_SelectOSPurchOrder.php:477 PO_SelectPurchOrder.php:432 PurchData.php:166
-#: ReprintGRN.php:81 SelectProduct.php:365 SelectSupplier.php:154
-#: ShipmentCosting.php:535 ShipmentCosting.php:612 Shipt_Select.php:294
-#: ShiptsList.php:11 SuppCreditGRNs.php:281 SupplierAllocations.php:567
+#: ContractCosting.php:171 OffersReceived.php:106 OutstandingGRNs.php:177
+#: PO_AuthoriseMyOrders.php:59 PO_SelectOSPurchOrder.php:477
+#: PO_SelectPurchOrder.php:432 PurchData.php:166 ReprintGRN.php:81
+#: SelectProduct.php:365 SelectSupplier.php:154 ShipmentCosting.php:535
+#: ShipmentCosting.php:612 Shipt_Select.php:294 ShiptsList.php:11
+#: SuppCreditGRNs.php:281 SupplierAllocations.php:567
 #: SupplierAllocations.php:642 SupplierCredit.php:262 SupplierInquiry.php:118
 #: SupplierInvoice.php:605 SupplierTransInquiry.php:106 SuppLoginSetup.php:33
 #: SuppPriceList.php:222 SuppPriceList.php:295
@@ -5148,7 +5148,7 @@ msgstr "Không thể thêm mục mới vào hợp đồng bởi vì"
 msgid "The SQL that was used to insert the contract item failed was"
 msgstr "D? li?u SQL dùng d? chèn h?p d?ng m?t hàng không thành công là"
 
-#: Contracts.php:492 Stocks.php:605 Z_ImportStocks.php:245
+#: Contracts.php:492 Stocks.php:605 Z_ImportStocks.php:238
 msgid "The locations for the item"
 msgstr "Vị trí cho mặt hàng"
 
@@ -5156,15 +5156,15 @@ msgstr "Vị trí cho mặt hàng"
 #: SupplierCredit.php:815 SupplierCredit.php:1202 SupplierCredit.php:1256
 #: SupplierCredit.php:1284 SupplierInvoice.php:1140 SupplierInvoice.php:1198
 #: SupplierInvoice.php:1563 SupplierInvoice.php:1798 SupplierInvoice.php:1827
-#: Suppliers.php:573 Z_ImportStocks.php:245
+#: Suppliers.php:573 Z_ImportStocks.php:238
 msgid "could not be added because"
 msgstr "không thể thêm vào vì"
 
-#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:246
+#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:239
 msgid "NB Locations records can be added by opening the utility page"
 msgstr "H? so d?a di?m NB có th? thêm vào b?ng cách m? trang h?u ích"
 
-#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:246
+#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:239
 msgid "The SQL that was used to add the location records that failed was"
 msgstr ""
 "Cơ sở dữ liệu SQL đã được sử dụng để thêm các vị trí bảng  mà không được"
@@ -5237,8 +5237,8 @@ msgstr "Lưu ý  Tên một chi nhánh của khách hàng có thể khác với 
 msgid "The customer record selected"
 msgstr "H? so khách hàng dã du?c ch?n"
 
-#: Contracts.php:715 CounterReturns.php:122 CounterReturns.php:151
-#: CounterReturns.php:1707 CounterSales.php:124 CounterSales.php:158
+#: Contracts.php:715 CounterReturns.php:119 CounterReturns.php:148
+#: CounterReturns.php:1704 CounterSales.php:124 CounterSales.php:158
 #: CounterSales.php:2113 CounterSales.php:2298 DeliveryDetails.php:147
 #: InternalStockRequest.php:663 PO_Header.php:406 PO_Header.php:480
 #: SelectCreditItems.php:180 SelectOrderItems.php:405 SelectOrderItems.php:452
@@ -5251,7 +5251,7 @@ msgstr "H? so khách hàng dã du?c ch?n"
 msgid "cannot be retrieved because"
 msgstr "không thể lấy lại vì"
 
-#: Contracts.php:716 CounterReturns.php:123 CounterSales.php:125
+#: Contracts.php:716 CounterReturns.php:120 CounterSales.php:125
 #: SelectOrderItems.php:406 SpecialOrder.php:93
 msgid "The SQL used to retrieve the customer details and failed was"
 msgstr ""
@@ -5361,7 +5361,7 @@ msgstr "hợp đồng tham khảo"
 #: PricesByCost.php:244 ReorderLevelLocation.php:172 ReorderLevel.php:286
 #: SalesCategoryPeriodInquiry.php:164 SalesTopItemsInquiry.php:221
 #: SpecialOrder.php:697 StockDispatch.php:447 Stocks.php:888
-#: SuppPriceList.php:237 SuppPriceList.php:299
+#: SuppPriceList.php:237 SuppPriceList.php:299 Z_ItemsWithoutPicture.php:31
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
 msgid "Category"
@@ -5410,7 +5410,7 @@ msgstr "Chỉ dành cho định dạng"
 msgid "Required Date"
 msgstr "ngày yêu cầu"
 
-#: Contracts.php:923 CounterReturns.php:784 CounterSales.php:872
+#: Contracts.php:923 CounterReturns.php:781 CounterSales.php:872
 #: DeliveryDetails.php:1062 OrderDetails.php:79 RecurringSalesOrders.php:415
 msgid "Customer Reference"
 msgstr "khách hàng tham khảo"
@@ -5546,12 +5546,12 @@ msgstr "Mã số kho"
 msgid "To Existing Stock ID"
 msgstr ""
 
-#: CounterReturns.php:14
+#: CounterReturns.php:11
 #, fuzzy
 msgid "Counter Returns"
 msgstr "bảng kê bán hàng"
 
-#: CounterReturns.php:80 CounterSales.php:82
+#: CounterReturns.php:77 CounterSales.php:82
 msgid ""
 "Your user account does not have a valid default inventory location set up. "
 "Please see the system administrator to modify your user account."
@@ -5560,7 +5560,7 @@ msgstr ""
 "thiết lập. Xin xem các quản trị hệ thống để sửa đổi tài khoản người dùng của "
 "bạn."
 
-#: CounterReturns.php:87 CounterSales.php:89
+#: CounterReturns.php:84 CounterSales.php:89
 #, fuzzy
 msgid ""
 "To use this script it is first necessary to define a cash sales customer for "
@@ -5575,144 +5575,144 @@ msgstr ""
 "bảo trì. khách hàng phải được nhập bằng cách sử dụng mã số khách hàng bằng "
 "một dấu nối sau đó nhập mã ngành của khách hàng sử dụng."
 
-#: CounterReturns.php:122 CounterSales.php:124 SelectOrderItems.php:405
+#: CounterReturns.php:119 CounterSales.php:124 SelectOrderItems.php:405
 msgid "The details of the customer selected"
 msgstr "Chi tiết về khách hàng đươch chọn"
 
-#: CounterReturns.php:151 CounterSales.php:158 DeliveryDetails.php:147
+#: CounterReturns.php:148 CounterSales.php:158 DeliveryDetails.php:147
 #: SelectCreditItems.php:180 SelectOrderItems.php:452 SelectOrderItems.php:575
 msgid "The customer branch record of the customer selected"
 msgstr "bảng chi nhánh khách hàng của các khách hàng được lựa chọn"
 
-#: CounterReturns.php:152 CounterSales.php:159 DeliveryDetails.php:148
+#: CounterReturns.php:149 CounterSales.php:159 DeliveryDetails.php:148
 #: SelectCreditItems.php:181 SelectOrderItems.php:453 SelectOrderItems.php:576
 msgid "SQL used to retrieve the branch details was"
 msgstr "D? li?u SQL dùng d? truy xu?t chi ti?t chi nhánh là"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "The branch details for branch code"
 msgstr "Các chi ti?t chi nhánh cho mã chi nhánh"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "against customer code"
 msgstr ""
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: GLAccountCSV.php:184 GLAccountCSV.php:213 GLAccountInquiry.php:202
 #: GLAccountInquiry.php:240 GLAccountReport.php:115 SelectOrderItems.php:458
 msgid "could not be retrieved"
 msgstr "Không truy xuất được"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "Check the set up of the customer and branch"
 msgstr "Kiểm tra các thiết lập của khách hàng và chi nhánh"
 
-#: CounterReturns.php:160 CounterSales.php:167 DeliveryDetails.php:155
+#: CounterReturns.php:157 CounterSales.php:167 DeliveryDetails.php:155
 #: SelectOrderItems.php:461
 msgid "The SQL that failed to get the branch details was"
 msgstr "Cơ sở dữ liệu SQL lỗi do đưa các chi tiết của chi nhánh  vào"
 
-#: CounterReturns.php:192
+#: CounterReturns.php:189
 #, fuzzy
 msgid "This return has been cancelled as requested"
 msgstr "mua bán này đã bị hủy theo yêu cầu"
 
-#: CounterReturns.php:193 CounterReturns.php:1592
+#: CounterReturns.php:190 CounterReturns.php:1589
 #, fuzzy
 msgid "Start a new Counter Return"
 msgstr "bắt đầu một lượt bán hàng mới"
 
-#: CounterReturns.php:199 CounterReturns.php:200 CounterReturns.php:1446
-#: CounterReturns.php:1465
+#: CounterReturns.php:196 CounterReturns.php:197 CounterReturns.php:1443
+#: CounterReturns.php:1462
 #, fuzzy
 msgid "Counter Return"
 msgstr "bảng kê bán hàng"
 
-#: CounterReturns.php:200 CounterSales.php:227
+#: CounterReturns.php:197 CounterSales.php:227
 #, fuzzy
 msgid "inventory"
 msgstr "hàng tồn kho"
 
-#: CounterReturns.php:200 CounterSales.php:227
+#: CounterReturns.php:197 CounterSales.php:227
 msgid "all amounts in"
 msgstr "Toàn bộ số lượng trong"
 
-#: CounterReturns.php:207 CounterSales.php:234
+#: CounterReturns.php:204 CounterSales.php:234
 msgid "Item description has been used in search"
 msgstr "mục mô tả đã được sử dụng trong tìm kiếm"
 
-#: CounterReturns.php:209 CounterSales.php:236
+#: CounterReturns.php:206 CounterSales.php:236
 msgid "Item Code has been used in search"
 msgstr "Mã số mặt hàng đã được sử dụng trong tìm kiếm"
 
-#: CounterReturns.php:211 CounterSales.php:238 InternalStockRequest.php:368
+#: CounterReturns.php:208 CounterSales.php:238 InternalStockRequest.php:368
 #: SelectOrderItems.php:762
 msgid "Stock Category has been used in search"
 msgstr "Loại Cổ phần đã được sử dụng trong tìm kiếm"
 
-#: CounterReturns.php:328 CounterSales.php:349 InternalStockRequest.php:497
+#: CounterReturns.php:325 CounterSales.php:349 InternalStockRequest.php:497
 #: SelectOrderItems.php:867 WorkOrderEntry.php:182 WorkOrderIssue.php:469
 msgid "The SQL used to get the part selection was"
 msgstr "Cơ sở dữ liệu SQL được sử dụng để có được phần lựa chọn  là"
 
-#: CounterReturns.php:332 CounterSales.php:353 InternalStockRequest.php:501
+#: CounterReturns.php:329 CounterSales.php:353 InternalStockRequest.php:501
 #: SelectOrderItems.php:872 WorkOrderEntry.php:186 WorkOrderIssue.php:473
 msgid "There are no products available meeting the criteria specified"
 msgstr "Không có sản phẩm có đạt tiêu chuẩn quy định"
 
-#: CounterReturns.php:406 CounterReturns.php:523 CounterReturns.php:568
+#: CounterReturns.php:403 CounterReturns.php:520 CounterReturns.php:565
 #: CounterSales.php:442 CounterSales.php:557 CounterSales.php:603
 #: CounterSales.php:655 SelectOrderItems.php:956 SelectOrderItems.php:1244
-#: SelectOrderItems.php:1293 StockCounts.php:56
+#: SelectOrderItems.php:1293 StockCounts.php:54
 msgid ""
 "Could not determine if the part being ordered was a kitset or not because"
 msgstr ""
 
-#: CounterReturns.php:407 CounterReturns.php:524 CounterSales.php:443
-#: CounterSales.php:558 SelectOrderItems.php:957 StockCounts.php:57
+#: CounterReturns.php:404 CounterReturns.php:521 CounterSales.php:443
+#: CounterSales.php:558 SelectOrderItems.php:957 StockCounts.php:55
 msgid ""
 "The sql that was used to determine if the part being ordered was a kitset or "
 "not was "
 msgstr ""
 
-#: CounterReturns.php:412
+#: CounterReturns.php:409
 #, fuzzy
 msgid ""
 "could not be retrieved from the database and has not been added to the return"
 msgstr "Không truy xu?t du?c t? co s? d? li?u và chua du?c thêm vào don hàng"
 
-#: CounterReturns.php:422 CounterReturns.php:535 CounterReturns.php:584
-#: CounterReturns.php:635 CounterSales.php:458 CounterSales.php:569
+#: CounterReturns.php:419 CounterReturns.php:532 CounterReturns.php:581
+#: CounterReturns.php:632 CounterSales.php:458 CounterSales.php:569
 #: CounterSales.php:619 CounterSales.php:671 SelectOrderItems.php:972
 #: SelectOrderItems.php:1260 SelectOrderItems.php:1309
 msgid "Could not retrieve kitset components from the database because"
 msgstr "Không truy xu?t du?c"
 
-#: CounterReturns.php:435
+#: CounterReturns.php:432
 msgid ""
 "Phantom assemblies cannot be returned, these items exist only as bills of "
 "materials used in other manufactured items. The following item has not been "
 "added to the return:"
 msgstr ""
 
-#: CounterReturns.php:437
+#: CounterReturns.php:434
 msgid ""
 "The system does not currently cater for counter returns of lot controlled or "
 "serialised items"
 msgstr ""
 
-#: CounterReturns.php:439
+#: CounterReturns.php:436
 msgid "Only items entered with a positive quantity can be added to the return"
 msgstr ""
 
-#: CounterReturns.php:473 CounterSales.php:508 SelectOrderItems.php:1117
+#: CounterReturns.php:470 CounterSales.php:508 SelectOrderItems.php:1117
 msgid "Recalculated the price from the GP % entered - the GP % was"
 msgstr ""
 
-#: CounterReturns.php:492
+#: CounterReturns.php:489
 #, fuzzy
 msgid ""
 "The item could not be updated because you are attempting to set the quantity "
@@ -5723,25 +5723,25 @@ msgstr ""
 "lượng ghi ít hơn 0 hoặc giá nhỏ hơn 0 hoặc% giảm giá nhiều hơn 100 hoặc nhỏ "
 "hơn 0%"
 
-#: CounterReturns.php:619
+#: CounterReturns.php:616
 #, fuzzy
 msgid ""
 "Could not determine if the part being returned was a kitset or not because"
 msgstr "Không thể lấy lại mô tả của các phần gốc vì"
 
-#: CounterReturns.php:676 CounterSales.php:751 PricesByCost.php:158
+#: CounterReturns.php:673 CounterSales.php:751 PricesByCost.php:158
 #: SelectOrderItems.php:1385
 msgid "GP %"
 msgstr "phần trăm GP"
 
-#: CounterReturns.php:677 CounterSales.php:753 PrintCustTrans.php:865
+#: CounterReturns.php:674 CounterSales.php:753 PrintCustTrans.php:865
 #: PrintCustTrans.php:954 PrintCustTrans.php:1003
 #: PrintCustTransPortrait.php:919 PrintCustTransPortrait.php:1017
 #: PrintCustTransPortrait.php:1073 includes/PDFTaxPageHeader.inc:39
 msgid "Net"
 msgstr "thuần, ròng"
 
-#: CounterReturns.php:747 CounterSales.php:836 CustomerPurchases.php:76
+#: CounterReturns.php:744 CounterSales.php:836 CustomerPurchases.php:76
 #: CustomerReceipt.php:882 CustomerReceipt.php:910 CustomerReceipt.php:1093
 #: GLAccountInquiry.php:184 GLAccountReport.php:343 GLJournalInquiry.php:80
 #: GLJournal.php:363 GLJournal.php:387
@@ -5756,60 +5756,60 @@ msgstr "thuần, ròng"
 msgid "Narrative"
 msgstr "tường thuật"
 
-#: CounterReturns.php:765
+#: CounterReturns.php:762
 #, fuzzy
 msgid "Rounded Total"
 msgstr "Ch?y toàn b?"
 
-#: CounterReturns.php:773
+#: CounterReturns.php:770
 #, fuzzy
 msgid "Returned By"
 msgstr "Yêu cầu theo"
 
-#: CounterReturns.php:777 CounterSales.php:866 DeliveryDetails.php:1055
+#: CounterReturns.php:774 CounterSales.php:866 DeliveryDetails.php:1055
 #: RecurringSalesOrders.php:409
 msgid "Contact Phone Number"
 msgstr "số điện thoại liên lạc"
 
-#: CounterReturns.php:781 CounterSales.php:870 DeliveryDetails.php:1059
+#: CounterReturns.php:778 CounterSales.php:870 DeliveryDetails.php:1059
 #: RecurringSalesOrders.php:412
 msgid "Contact Email"
 msgstr "Địa chỉ email"
 
-#: CounterReturns.php:788 CounterSales.php:877 Credit_Invoice.php:1551
+#: CounterReturns.php:785 CounterSales.php:877 Credit_Invoice.php:1551
 #: DeliveryDetails.php:1078 SelectCreditItems.php:923
 #, fuzzy
 msgid "Sales person"
 msgstr "nhân viên bán hàng"
 
-#: CounterReturns.php:805
+#: CounterReturns.php:802
 msgid "Reason for Return"
 msgstr ""
 
-#: CounterReturns.php:816 CounterSales.php:904 SuppPaymentRun.php:351
+#: CounterReturns.php:813 CounterSales.php:904 SuppPaymentRun.php:351
 msgid "Payment Type"
 msgstr "loại thanh toán"
 
-#: CounterReturns.php:837
+#: CounterReturns.php:834
 #, fuzzy
 msgid "Paid to Customer"
 msgstr "và cho khách hàng"
 
-#: CounterReturns.php:846 CounterSales.php:944 SelectOrderItems.php:1495
+#: CounterReturns.php:843 CounterSales.php:944 SelectOrderItems.php:1495
 msgid "Re-Calculate"
 msgstr "tính toán lại"
 
-#: CounterReturns.php:847
+#: CounterReturns.php:844
 #, fuzzy
 msgid "Process The Return"
 msgstr "tiến trình bán hàng"
 
-#: CounterReturns.php:862
+#: CounterReturns.php:859
 #, fuzzy
 msgid "There are no lines on this return. Please enter lines to return first"
 msgstr "Không có đường vào bán này. Xin vui lòng nhập dòng để hóa đơn đầu tiên"
 
-#: CounterReturns.php:866
+#: CounterReturns.php:863
 #, fuzzy
 msgid ""
 "The amount entered as payment to the customer does not equal the amount of "
@@ -5819,7 +5819,7 @@ msgstr ""
 "chẳng hạn. Hãy đảm bảo các khách hàng đã thanh toán số tiền chính xác và "
 "nhập lại"
 
-#: CounterReturns.php:880
+#: CounterReturns.php:877
 #, fuzzy
 msgid ""
 "We were unable to load the area where the sale is to from the custbranch "
@@ -5828,7 +5828,7 @@ msgstr ""
 "chúng tôi không thể tải khu vực, nơi bán hàng từ bảng biểu các chi nhánh "
 "(ngành)"
 
-#: CounterReturns.php:891 CounterSales.php:1047
+#: CounterReturns.php:888 CounterSales.php:1047
 msgid ""
 "The company information and preferences could not be retrieved. See your "
 "system administrator"
@@ -5836,17 +5836,17 @@ msgstr ""
 "Các thông tin công ty và các ưu đãi không thể được lấy ra. Xem lại quản trị "
 "hệ thống của bạn"
 
-#: CounterReturns.php:1448 CounterSales.php:1885
+#: CounterReturns.php:1445 CounterSales.php:1885
 msgid ""
 "The SQL that failed to insert the GL transaction for the bank account debit "
 "was"
 msgstr ""
 
-#: CounterReturns.php:1449 CounterSales.php:1886 CustomerReceipt.php:491
+#: CounterReturns.php:1446 CounterSales.php:1886 CustomerReceipt.php:491
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "Không thể chèn một giao dịch GL cho tài khoản ghi nợ của ngân hàng"
 
-#: CounterReturns.php:1467 CounterSales.php:1904 CustomerReceipt.php:514
+#: CounterReturns.php:1464 CounterSales.php:1904 CustomerReceipt.php:514
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
@@ -5854,36 +5854,36 @@ msgstr ""
 "Cơ sở dữ liệu SQL báo lỗi  khi chèn các giao dịch GL cho các tài khoản tín "
 "dụng của người nợ"
 
-#: CounterReturns.php:1468 CounterSales.php:1905 CustomerReceipt.php:515
+#: CounterReturns.php:1465 CounterSales.php:1905 CustomerReceipt.php:515
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr ""
 "Không thể chèn một giao dịch GL cho tài khoản tín dụng của những người nợ"
 
-#: CounterReturns.php:1516 CounterReturns.php:1551 CounterSales.php:227
+#: CounterReturns.php:1513 CounterReturns.php:1548 CounterSales.php:227
 #: CounterSales.php:1086 CounterSales.php:1883 CounterSales.php:1902
 #: CounterSales.php:1952 CounterSales.php:1988
 msgid "Counter Sale"
 msgstr "bảng kê bán hàng"
 
-#: CounterReturns.php:1524 CounterSales.php:1960 CustomerReceipt.php:465
+#: CounterReturns.php:1521 CounterSales.php:1960 CustomerReceipt.php:465
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr ""
 "Cơ sở dữ liệu SQL bị lỗi khi chèn các giao dịch  trên tài khoản ngân hàng"
 
-#: CounterReturns.php:1525 CounterSales.php:1961 CustomerReceipt.php:466
+#: CounterReturns.php:1522 CounterSales.php:1961 CustomerReceipt.php:466
 msgid "Cannot insert a bank transaction"
 msgstr "không thể thêm giao dịch ngân hàng vào"
 
-#: CounterReturns.php:1553 CounterSales.php:1991 CustomerReceipt.php:421
+#: CounterReturns.php:1550 CounterSales.php:1991 CustomerReceipt.php:421
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr ""
 "Cơ sở dữ liệu SQL không thành công để chèn các giao dịch khách hàng nhận được"
 
-#: CounterReturns.php:1554 CounterSales.php:1992 CustomerReceipt.php:422
+#: CounterReturns.php:1551 CounterSales.php:1992 CustomerReceipt.php:422
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr "Không thể chèn một giao dịch nhận lại với khách hàng vì"
 
-#: CounterReturns.php:1570
+#: CounterReturns.php:1567
 #, fuzzy
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the credit "
@@ -5892,31 +5892,31 @@ msgstr ""
 "D? li?u SQL không thành công trong vi?c chèn phân b? các biên lai vào hóa "
 "don là"
 
-#: CounterReturns.php:1571 CounterSales.php:2016
+#: CounterReturns.php:1568 CounterSales.php:2016
 msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr "Không thể chèn thêm các phân bổ khách hàng nhận để các hoá đơn do"
 
-#: CounterReturns.php:1583 Credit_Invoice.php:1460 SelectCreditItems.php:1989
+#: CounterReturns.php:1580 Credit_Invoice.php:1460 SelectCreditItems.php:1989
 msgid "Credit Note number"
 msgstr "S? ghi chú n?"
 
-#: CounterReturns.php:1588 CounterReturns.php:1590 Credit_Invoice.php:1462
+#: CounterReturns.php:1585 CounterReturns.php:1587 Credit_Invoice.php:1462
 #: Credit_Invoice.php:1464
 msgid "Print this credit note"
 msgstr "in ghi (lưu ý) tín dụng này"
 
-#: CounterReturns.php:1609 CounterSales.php:2054 SelectCreditItems.php:969
+#: CounterReturns.php:1606 CounterSales.php:2054 SelectCreditItems.php:969
 #: SelectOrderItems.php:1506
 msgid "Yes Please"
 msgstr "Vâng, có"
 
-#: CounterReturns.php:1611 CounterReturns.php:1612 CounterSales.php:2200
+#: CounterReturns.php:1608 CounterReturns.php:1609 CounterSales.php:2200
 #: CounterSales.php:2201
 msgid "Search for Items"
 msgstr "Tìm kiếm mặt hàng"
 
-#: CounterReturns.php:1612 CounterSales.php:2201 SelectOrderItems.php:1659
+#: CounterReturns.php:1609 CounterSales.php:2201 SelectOrderItems.php:1659
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -5925,19 +5925,19 @@ msgstr ""
 "cách chọn một loại hàng (cổ phiếu) , hoặc chỉ cần nhập một phần mục mô tả "
 "hoặc một phần mã mặt hàng"
 
-#: CounterReturns.php:1615 CounterSales.php:2202 SelectOrderItems.php:1662
+#: CounterReturns.php:1612 CounterSales.php:2202 SelectOrderItems.php:1662
 msgid "Select a Stock Category"
 msgstr "Chọn một kho mục"
 
-#: CounterReturns.php:1640 CounterSales.php:2225 SelectOrderItems.php:1686
+#: CounterReturns.php:1637 CounterSales.php:2225 SelectOrderItems.php:1686
 msgid "Enter partial Description"
 msgstr "Nh?p m?t ph?n mô t?"
 
-#: CounterReturns.php:1648 CounterSales.php:2237 SelectOrderItems.php:1702
+#: CounterReturns.php:1645 CounterSales.php:2237 SelectOrderItems.php:1702
 msgid "Use Quick Entry"
 msgstr ""
 
-#: CounterReturns.php:1659
+#: CounterReturns.php:1656
 #, fuzzy
 msgid ""
 "Select an item by entering the quantity required.  Click Return when ready."
@@ -5945,18 +5945,18 @@ msgstr ""
 "Chọn một mục bằng cách nhập số lượng cần thiết. Nhấp vào đặt hàng khi đã sẵn "
 "sàng."
 
-#: CounterReturns.php:1670 CounterReturns.php:1794 CounterSales.php:2260
+#: CounterReturns.php:1667 CounterReturns.php:1791 CounterSales.php:2260
 #: CounterSales.php:2387 InternalStockRequest.php:614
 #: InternalStockRequest.php:738
 msgid "Prev"
 msgstr "xem lại"
 
-#: CounterReturns.php:1671
+#: CounterReturns.php:1668
 #, fuzzy
 msgid "Return Item(s)"
 msgstr "Mặt hàng"
 
-#: CounterReturns.php:1672 CounterReturns.php:1796 CounterSales.php:2262
+#: CounterReturns.php:1669 CounterReturns.php:1793 CounterSales.php:2262
 #: CounterSales.php:2389 InternalStockRequest.php:545
 #: InternalStockRequest.php:620 InternalStockRequest.php:742 MRPReport.php:740
 #: SelectAsset.php:254 SelectCustomer.php:413 SelectCustomer.php:497
@@ -5966,20 +5966,20 @@ msgstr "Mặt hàng"
 msgid "Next"
 msgstr "Tiếp theo >"
 
-#: CounterReturns.php:1679 CounterSales.php:2082 CounterSales.php:2269
+#: CounterReturns.php:1676 CounterSales.php:2082 CounterSales.php:2269
 #: InternalStockRequest.php:626 SelectOrderItems.php:1542
 #: SelectOrderItems.php:1730
 msgid "On Demand"
 msgstr "Đang có nhu cầu"
 
-#: CounterReturns.php:1680 CounterSales.php:2083 CounterSales.php:2270
+#: CounterReturns.php:1677 CounterSales.php:2083 CounterSales.php:2270
 #: InternalStockRequest.php:627 ReorderLevel.php:302 SelectOrderItems.php:1543
 #: SelectOrderItems.php:1731 StockLocStatus.php:173 StockStatus.php:91
 #: TopItems.php:169
 msgid "On Order"
 msgstr "Đang được đặt hàng"
 
-#: CounterReturns.php:1681 CounterSales.php:2084 CounterSales.php:2271
+#: CounterReturns.php:1678 CounterSales.php:2084 CounterSales.php:2271
 #: InternalStockRequest.php:628 SelectOrderItems.php:1544
 #: SelectOrderItems.php:1732 StockDispatch.php:477 StockDispatch.php:478
 #: StockLocStatus.php:172 StockStatus.php:90 includes/OutputSerialItems.php:37
@@ -5987,14 +5987,14 @@ msgstr "Đang được đặt hàng"
 msgid "Available"
 msgstr "có thể dùng, có gía trị"
 
-#: CounterReturns.php:1707 CounterSales.php:2112 CounterSales.php:2298
+#: CounterReturns.php:1704 CounterSales.php:2112 CounterSales.php:2298
 #: InternalStockRequest.php:663 SelectOrderItems.php:1573
 #: SelectOrderItems.php:1762 StockCheck.php:222 StockLocStatus.php:191
 #: StockLocStatus.php:215 StockStatus.php:116 StockStatus.php:140
 msgid "The demand for this product from"
 msgstr "yêu cầu của sản phẩm này từ"
 
-#: CounterReturns.php:1725 CounterReturns.php:1739 CounterSales.php:2130
+#: CounterReturns.php:1722 CounterReturns.php:1736 CounterSales.php:2130
 #: CounterSales.php:2144 CounterSales.php:2317 CounterSales.php:2331
 #: InternalStockRequest.php:683 InternalStockRequest.php:697
 #: SelectOrderItems.php:1592 SelectOrderItems.php:1606
@@ -6002,12 +6002,12 @@ msgstr "yêu cầu của sản phẩm này từ"
 msgid "The order details for this product cannot be retrieved because"
 msgstr "Không thể truy xuất chi tiết đơn hàng cho sản phẩm này bởi vì"
 
-#: CounterReturns.php:1795 CounterSales.php:2193 CounterSales.php:2261
+#: CounterReturns.php:1792 CounterSales.php:2193 CounterSales.php:2261
 #: CounterSales.php:2388
 msgid "Add to Sale"
 msgstr "Thêm vào mục Bán"
 
-#: CounterReturns.php:1804
+#: CounterReturns.php:1801
 #, fuzzy
 msgid ""
 "Use this form to add return items quickly if the item codes are already known"
@@ -6015,23 +6015,23 @@ msgstr ""
 "Sử dụng mẫu này để thêm các mục một cách nhanh chóng nếu các mã hàng đã được "
 "biết đến"
 
-#: CounterReturns.php:1830 CounterSales.php:2420 SelectCreditItems.php:1012
+#: CounterReturns.php:1827 CounterSales.php:2420 SelectCreditItems.php:1012
 #: SelectCreditItems.php:1063 SelectOrderItems.php:1855
 #: SelectOrderItems.php:1881
 msgid "Quick Entry"
 msgstr "nhập vào nhanh"
 
-#: CounterReturns.php:1831 CounterSales.php:2421 SelectCreditItems.php:1081
+#: CounterReturns.php:1828 CounterSales.php:2421 SelectCreditItems.php:1081
 #: SelectOrderItems.php:1882 SelectOrderItems.php:1904
 msgid "Search Parts"
 msgstr "Tìm kiếm các phần"
 
-#: CounterReturns.php:1835
+#: CounterReturns.php:1832
 #, fuzzy
 msgid "Cancel Return"
 msgstr "hủy bán"
 
-#: CounterReturns.php:1835
+#: CounterReturns.php:1832
 #, fuzzy
 msgid "Are you sure you wish to cancel this return?"
 msgstr "Bạn có chắc chắn muốn huỷ  mua bán này?"
@@ -6805,8 +6805,8 @@ msgstr "Mã tiền tệ không thể chứa bất kỳ các ký tự sau"
 
 #: Currencies.php:108 CustEDISetup.php:31 CustLoginSetup.php:51
 #: Customers.php:58 Stocks.php:116 SuppLoginSetup.php:51 TaxCategories.php:31
-#: WorkCentres.php:35 WWW_Users.php:73 Z_ChangeBranchCode.php:28
-#: Z_ImportStocks.php:123
+#: WorkCentres.php:35 WWW_Users.php:74 Z_ChangeBranchCode.php:28
+#: Z_ImportStocks.php:116
 msgid "or a space"
 msgstr "hoặc một khoảng, chỗ"
 
@@ -7051,40 +7051,40 @@ msgstr "Lựa chọn một khách hàng"
 msgid " has been selected"
 msgstr " Đã được chọn"
 
-#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:70
+#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:71
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "tên mã người dùng nhập vào phải là ít nhất 4 ký tự dài"
 
-#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:73
+#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:74
 msgid "User names cannot contain any of the following characters"
 msgstr "tên người dùng không thể chứa bất kỳ các ký tự sau"
 
-#: CustLoginSetup.php:55 SuppLoginSetup.php:55 UserSettings.php:42
-#: WWW_Users.php:77
+#: CustLoginSetup.php:55 SuppLoginSetup.php:55 UserSettings.php:43
+#: WWW_Users.php:78
 msgid "The password entered must be at least 5 characters long"
 msgstr "Các mật khẩu nhập phải có ít nhất 5 ký tự"
 
-#: CustLoginSetup.php:59 SuppLoginSetup.php:59 UserSettings.php:45
-#: WWW_Users.php:81
+#: CustLoginSetup.php:59 SuppLoginSetup.php:59 UserSettings.php:46
+#: WWW_Users.php:82
 msgid "The password cannot contain the user id"
 msgstr "Các mật khẩu không thể chứa các tên xác định của người dùng"
 
-#: CustLoginSetup.php:62 WWW_Users.php:85
+#: CustLoginSetup.php:62 WWW_Users.php:86
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
 msgstr ""
 "Khi nhập mã khách hàng, cần nhập cả Mã chi nhánh hợp lệ của khách hàng đó"
 
-#: CustLoginSetup.php:72 WWW_Users.php:110
+#: CustLoginSetup.php:72 WWW_Users.php:111
 msgid "The check on validity of the customer code and branch failed because"
 msgstr "Kiểm tra không thành công Mã khách hàng và mã chi nhánh"
 
-#: CustLoginSetup.php:73 WWW_Users.php:111
+#: CustLoginSetup.php:73 WWW_Users.php:112
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr "Dữ liệu SQL dùng để kiểm tra mã khách hàng và mã chi nhánh là"
 
-#: CustLoginSetup.php:77 WWW_Users.php:115
+#: CustLoginSetup.php:77 WWW_Users.php:116
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr "Mã chi nhánh nhập vào không hợp lệ với mã khách hàng nhập vào"
 
@@ -7103,47 +7103,47 @@ msgstr "Dữ liệu SQL dùng để cập nhật người sử dụng không th�
 msgid "A new customer login has been created"
 msgstr "Lệnh làm việc mới đã được tạo ra ch"
 
-#: CustLoginSetup.php:132 SuppLoginSetup.php:118 WWW_Users.php:285
-#: WWW_Users.php:427
+#: CustLoginSetup.php:132 SuppLoginSetup.php:118 WWW_Users.php:286
+#: WWW_Users.php:428
 msgid "User Login"
 msgstr "người đăng nhập"
 
 #: CustLoginSetup.php:150 SMTPServer.php:105 SuppLoginSetup.php:136
-#: WWW_Users.php:459 includes/Login.php:64
+#: WWW_Users.php:460 includes/Login.php:64
 msgid "Password"
 msgstr "mật khẩu"
 
-#: CustLoginSetup.php:154 SuppLoginSetup.php:140 WWW_Users.php:286
-#: WWW_Users.php:463
+#: CustLoginSetup.php:154 SuppLoginSetup.php:140 WWW_Users.php:287
+#: WWW_Users.php:464
 msgid "Full Name"
 msgstr "Tên đầy đủ"
 
 #: CustLoginSetup.php:158 Locations.php:579 SalesPeople.php:332
-#: SupplierContacts.php:265 SuppLoginSetup.php:144 WWW_Users.php:467
+#: SupplierContacts.php:265 SuppLoginSetup.php:144 WWW_Users.php:468
 msgid "Telephone No"
 msgstr "Số điện thoại"
 
 #: CustLoginSetup.php:167 CustomerBranches.php:556 CustomerBranches.php:593
-#: CustomerPurchases.php:71 WWW_Users.php:290 WWW_Users.php:533
+#: CustomerPurchases.php:71 WWW_Users.php:291 WWW_Users.php:534
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:241
 msgid "Branch Code"
 msgstr "Mã chi nhánh"
 
-#: CustLoginSetup.php:187 SuppLoginSetup.php:207 WWW_Users.php:567
+#: CustLoginSetup.php:187 SuppLoginSetup.php:207 WWW_Users.php:568
 msgid "Reports Page Size"
 msgstr "báo cáo kích thước trang"
 
 #: CustLoginSetup.php:191 CustLoginSetup.php:193 EmailConfirmation.php:120
 #: PrintCustOrder_generic.php:113 PrintCustOrder.php:103
-#: SuppLoginSetup.php:211 SuppLoginSetup.php:213 WWW_Users.php:571
-#: WWW_Users.php:573
+#: SuppLoginSetup.php:211 SuppLoginSetup.php:213 WWW_Users.php:572
+#: WWW_Users.php:574
 msgid "A4"
 msgstr "khổ A4"
 
 #: CustLoginSetup.php:197 CustLoginSetup.php:199 CustLoginSetup.php:203
 #: CustLoginSetup.php:205 SuppLoginSetup.php:217 SuppLoginSetup.php:219
-#: SuppLoginSetup.php:223 SuppLoginSetup.php:225 WWW_Users.php:577
-#: WWW_Users.php:579 WWW_Users.php:583 WWW_Users.php:585
+#: SuppLoginSetup.php:223 SuppLoginSetup.php:225 WWW_Users.php:578
+#: WWW_Users.php:580 WWW_Users.php:584 WWW_Users.php:586
 msgid "A3"
 msgstr "khổ A3"
 
@@ -7152,32 +7152,32 @@ msgstr "khổ A3"
 #: EmailConfirmation.php:120 PrintCustOrder_generic.php:113
 #: PrintCustOrder.php:103 SuppLoginSetup.php:223 SuppLoginSetup.php:225
 #: SuppLoginSetup.php:235 SuppLoginSetup.php:237 SuppLoginSetup.php:246
-#: SuppLoginSetup.php:248 WWW_Users.php:583 WWW_Users.php:585
-#: WWW_Users.php:595 WWW_Users.php:597 WWW_Users.php:606 WWW_Users.php:608
+#: SuppLoginSetup.php:248 WWW_Users.php:584 WWW_Users.php:586
+#: WWW_Users.php:596 WWW_Users.php:598 WWW_Users.php:607 WWW_Users.php:609
 msgid "landscape"
 msgstr "cảnh quan"
 
 #: CustLoginSetup.php:209 CustLoginSetup.php:211 CustLoginSetup.php:215
 #: CustLoginSetup.php:217 SuppLoginSetup.php:229 SuppLoginSetup.php:231
-#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:589
-#: WWW_Users.php:591 WWW_Users.php:595 WWW_Users.php:597
+#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:590
+#: WWW_Users.php:592 WWW_Users.php:596 WWW_Users.php:598
 msgid "Letter"
 msgstr "thư tín"
 
 #: CustLoginSetup.php:221 CustLoginSetup.php:223 CustLoginSetup.php:226
 #: CustLoginSetup.php:228 SuppLoginSetup.php:241 SuppLoginSetup.php:243
-#: SuppLoginSetup.php:246 SuppLoginSetup.php:248 WWW_Users.php:601
-#: WWW_Users.php:603 WWW_Users.php:606 WWW_Users.php:608
+#: SuppLoginSetup.php:246 SuppLoginSetup.php:248 WWW_Users.php:602
+#: WWW_Users.php:604 WWW_Users.php:607 WWW_Users.php:609
 msgid "Legal"
 msgstr "luật"
 
-#: CustLoginSetup.php:234 SuppLoginSetup.php:254 UserSettings.php:148
-#: WWW_Users.php:296 WWW_Users.php:615
+#: CustLoginSetup.php:234 SuppLoginSetup.php:254 UserSettings.php:149
+#: WWW_Users.php:297 WWW_Users.php:616
 msgid "Theme"
 msgstr "chủ đề"
 
-#: CustLoginSetup.php:256 SuppLoginSetup.php:278 UserSettings.php:129
-#: WWW_Users.php:297 WWW_Users.php:640
+#: CustLoginSetup.php:256 SuppLoginSetup.php:278 UserSettings.php:130
+#: WWW_Users.php:298 WWW_Users.php:641
 msgid "Language"
 msgstr "Ngôn ngữ"
 
@@ -7676,7 +7676,7 @@ msgid "Define Sales People"
 msgstr "Xác định người bán hàng"
 
 #: CustomerBranches.php:706 DailySalesInquiry.php:40 SalesPeople.php:170
-#: WWW_Users.php:292
+#: WWW_Users.php:293
 msgid "Salesperson"
 msgstr "nhân viên bán hàng"
 
@@ -7836,7 +7836,7 @@ msgstr "Hạn mức tín dụng"
 
 #: CustomerInquiry.php:129 CustomerReceipt.php:962 Customers.php:544
 #: Customers.php:913 Customers.php:919 Customers.php:937 Customers.php:959
-#: Customers.php:964 includes/MainMenuLinksArray.php:492
+#: Customers.php:964 includes/MainMenuLinksArray.php:490
 msgid "Credit Status"
 msgstr "Giới hạn tín dụng"
 
@@ -8593,7 +8593,7 @@ msgstr ""
 
 #: Customers.php:533 Customers.php:889 Customers.php:895 PaymentTerms.php:12
 #: PO_Header.php:1079 PrintCustTrans.php:375 PrintCustTransPortrait.php:441
-#: Suppliers.php:738 Suppliers.php:939 includes/MainMenuLinksArray.php:493
+#: Suppliers.php:738 Suppliers.php:939 includes/MainMenuLinksArray.php:491
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
 msgid "Payment Terms"
 msgstr "thời hạn thanh toán"
@@ -8749,7 +8749,7 @@ msgid "Click to preview the credit"
 msgstr "Nhấn vào đây để xem trước các khoản tín dụng"
 
 #: CustomerTypes.php:6 CustomerTypes.php:21
-#: includes/MainMenuLinksArray.php:490
+#: includes/MainMenuLinksArray.php:488
 msgid "Customer Types"
 msgstr "Loại khách hàng"
 
@@ -10572,7 +10572,7 @@ msgstr "Tên công ty mua tài kho?n ph?i thu"
 #: PrintCustTransPortrait.php:757 PrintCustTransPortrait.php:1003
 #: PrintCustTransPortrait.php:1059 SalesPeople.php:201 SelectSupplier.php:277
 #: Suppliers.php:706 Suppliers.php:910 SupplierTenderCreate.php:132
-#: WWW_Users.php:287
+#: WWW_Users.php:288
 msgid "Telephone"
 msgstr "số điện thoại"
 
@@ -10837,7 +10837,7 @@ msgstr ""
 #: FixedAssetDepreciation.php:112 FixedAssetDepreciation.php:242
 #: InventoryValuation.php:116 InventoryValuation.php:168
 #: MailInventoryValuation.php:140 MailInventoryValuation.php:186
-#: OutstandingGRNs.php:91 OutstandingGRNs.php:138
+#: OutstandingGRNs.php:99 OutstandingGRNs.php:146
 #: PDFStockCheckComparison.php:296
 msgid "Total for"
 msgstr "Tổng số cho"
@@ -10933,7 +10933,7 @@ msgid ""
 "description is required"
 msgstr ""
 
-#: FixedAssetItems.php:90 Stocks.php:129 Z_ImportStocks.php:132
+#: FixedAssetItems.php:90 Stocks.php:129 Z_ImportStocks.php:125
 msgid "The barcode must be 20 characters or less long"
 msgstr "Một mã vạch phải dài dưới 20 kí tự"
 
@@ -11099,7 +11099,7 @@ msgstr "vị trí tài sản"
 msgid "Add Asset Location"
 msgstr "vị trí tài sản"
 
-#: FixedAssetItems.php:548 StockCounts.php:112 Stocks.php:1100
+#: FixedAssetItems.php:548 StockCounts.php:110 Stocks.php:1100
 #: includes/DefineLabelClass.php:50
 msgid "Bar Code"
 msgstr "Mã vạch"
@@ -11312,7 +11312,7 @@ msgstr ""
 msgid "Depn C/Fwd"
 msgstr ""
 
-#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:395
+#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:393
 msgid "Change Asset Location"
 msgstr "Thay đổi địa điểm tài sản"
 
@@ -11601,7 +11601,7 @@ msgstr "Không có đơn hàng nào được trả lại vì"
 #: FTP_RadioBeacon.php:49 SelectContract.php:135 SelectContract.php:165
 #: SelectRecurringSalesOrder.php:90 SelectSalesOrder.php:859
 #: SelectSalesOrder.php:877 SelectWorkOrder.php:329 Shipt_Select.php:331
-#: SuppInvGRNs.php:146 UserSettings.php:216 Z_poEditLangHeader.php:106
+#: SuppInvGRNs.php:146 UserSettings.php:217 Z_poEditLangHeader.php:106
 #: Z_poEditLangModule.php:168 Z_poEditLangRemaining.php:137
 #, php-format
 msgid "Modify"
@@ -11754,7 +11754,7 @@ msgid "Geocode Generate"
 msgstr "Tạo mã hóa địa lý"
 
 #: geocode.php:26 GeocodeSetup.php:135 GeocodeSetup.php:230
-#: includes/MainMenuLinksArray.php:462
+#: includes/MainMenuLinksArray.php:460
 msgid "Geocode Setup"
 msgstr "Thiết lập mã hóa địa lý"
 
@@ -12230,7 +12230,7 @@ msgstr "Tên tài khoản"
 #: GLAccounts.php:285 GLBalanceSheet.php:9 GLBalanceSheet.php:18
 #: GLBalanceSheet.php:77 GLBalanceSheet.php:78 GLBalanceSheet.php:101
 #: GLBalanceSheet.php:140 SelectGLAccount.php:40 SelectGLAccount.php:55
-#: SelectGLAccount.php:68 includes/MainMenuLinksArray.php:360
+#: SelectGLAccount.php:68 includes/MainMenuLinksArray.php:358
 msgid "Balance Sheet"
 msgstr "Bảng cân đối chi tiêu"
 
@@ -12435,7 +12435,7 @@ msgstr "Yêu cầu mã tài khoản sổ cái"
 msgid "Group"
 msgstr "Nhóm"
 
-#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:355
+#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:353
 #, fuzzy
 msgid "General Ledger Journal Inquiry"
 msgstr "Yêu cầu sổ cái tài khoản chính"
@@ -12464,7 +12464,7 @@ msgstr "T?ng h?p báo cáo ngày"
 msgid "Account Description"
 msgstr "Mô tả tài khoản"
 
-#: GLJournal.php:8 includes/MainMenuLinksArray.php:339
+#: GLJournal.php:8 includes/MainMenuLinksArray.php:337
 msgid "Journal Entry"
 msgstr "Nhập báo cáo ngày"
 
@@ -12833,7 +12833,7 @@ msgstr ""
 
 #: GLTrialBalance.php:11 GLTrialBalance.php:30 GLTrialBalance.php:117
 #: GLTrialBalance.php:118 GLTrialBalance.php:160 GLTrialBalance.php:435
-#: includes/MainMenuLinksArray.php:351
+#: includes/MainMenuLinksArray.php:349
 msgid "Trial Balance"
 msgstr "Cân d?i th?"
 
@@ -12936,7 +12936,7 @@ msgstr "Quay lại đơn hàng thu mua"
 msgid "Receive controlled item"
 msgstr "Nhận hàng đã qua kiểm soát"
 
-#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:202
+#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:200
 msgid "Receive Purchase Orders"
 msgstr "Nhận đơn hàng thu mua"
 
@@ -12968,7 +12968,7 @@ msgstr "có tình tr?ng"
 #: PO_SelectOSPurchOrder.php:502 SelectWorkOrder.php:331
 #: SelectWorkOrder.php:368 StockLocTransferReceive.php:566
 #: WorkOrderCosting.php:103 WorkOrderCosting.php:117
-#: includes/MainMenuLinksArray.php:204
+#: includes/MainMenuLinksArray.php:202
 #, php-format
 msgid "Receive"
 msgstr "nhận"
@@ -13252,7 +13252,7 @@ msgstr "T?o d? ngh? m?i t?"
 msgid "View any open tenders without an offer"
 msgstr "Xem ho?c s?a các d? ngh? xu?t s?c t?"
 
-#: index.php:36 WWW_Users.php:722
+#: index.php:36 WWW_Users.php:723
 msgid "Account Status"
 msgstr "Trình trạng tài khoản"
 
@@ -13396,7 +13396,7 @@ msgstr "B?n có ch?c mu?n xóa thông tin liên h? này?"
 msgid "Select Stock Category Code"
 msgstr "Chọn một kho mục"
 
-#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:210
+#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:208
 msgid "Authorise Internal Stock Requests"
 msgstr ""
 
@@ -13619,7 +13619,7 @@ msgstr "T?o các c?p d? khác"
 #: StockLocTransfer.php:244 StockLocTransferReceive.php:411
 #: StockLocTransferReceive.php:505 StockTransfers.php:29
 #: StockTransfers.php:458 StockUsage.php:28 SuppCreditGRNs.php:19
-#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:203
+#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:201
 msgid "Dispatch"
 msgstr "công văn"
 
@@ -13770,7 +13770,7 @@ msgstr ""
 msgid "Add to Requisition"
 msgstr "V? vi?c trung d?ng"
 
-#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:235
+#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:233
 msgid "Inventory Planning Report"
 msgstr "Báo cáo kế hoạch hàng tồn kho"
 
@@ -14011,7 +14011,7 @@ msgstr "Báo cáo lượng hàng tồn kho"
 msgid "Parts With Quantities"
 msgstr "Từng phần cùng số lượng"
 
-#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:231
+#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:229
 msgid "Inventory Quantities"
 msgstr "Lượng hàng tồn kho"
 
@@ -14032,9 +14032,9 @@ msgid "Inventory Quantities Reporting"
 msgstr "Việc báo cáo lượng hàng tồn kho"
 
 #: InventoryQuantities.php:155 InventoryValuation.php:205 Locations.php:375
-#: Locations.php:436 MRP_2012-10.php:528 MRPCalendar.php:21
-#: MRPCreateDemands.php:195 MRPDemands.php:27 MRPDemandTypes.php:17
-#: MRP.php:528 MRPPlannedPurchaseOrders.php:265 MRPPlannedWorkOrders.php:247
+#: Locations.php:436 MRPCalendar.php:21 MRPCreateDemands.php:195
+#: MRPDemands.php:27 MRPDemandTypes.php:17 MRP.php:528
+#: MRPPlannedPurchaseOrders.php:265 MRPPlannedWorkOrders.php:247
 #: MRPPlannedWorkOrders.php:321 PricesByCost.php:8 ReorderLevelLocation.php:12
 #: ReorderLevel.php:194 SelectProduct.php:86 StockDispatch.php:281
 #: StockMovements.php:22 StockQties_csv.php:8 StockQuantityByDate.php:10
@@ -14063,7 +14063,7 @@ msgid "Reorder"
 msgstr "Sắp xếp lại"
 
 #: InventoryValuation.php:15 MailInventoryValuation.php:46
-#: MailInventoryValuation.php:225 includes/MainMenuLinksArray.php:234
+#: MailInventoryValuation.php:225 includes/MainMenuLinksArray.php:232
 msgid "Inventory Valuation Report"
 msgstr "Báo cáo giá trị hàng tồn kho"
 
@@ -14086,7 +14086,7 @@ msgid ""
 msgstr ""
 
 #: InventoryValuation.php:188 MailInventoryValuation.php:201
-#: OutstandingGRNs.php:150
+#: OutstandingGRNs.php:158
 msgid "Grand Total Value"
 msgstr "Tổng cộng giá trị"
 
@@ -14546,150 +14546,6 @@ msgstr "Báo cáo phân tích kinh doanh"
 msgid "Error running automated sales report number"
 msgstr "G?p l?i khi ch?y s? báo cáo kinh doanh t? d?ng"
 
-#: MRP_2012-10.php:6 MRP.php:6
-msgid "Run MRP Calculation"
-msgstr "Chạy tính toán MRP"
-
-#: MRP_2012-10.php:16 MRP.php:16
-msgid "Start time"
-msgstr "Thời gian bắt đầu"
-
-#: MRP_2012-10.php:17 MRP.php:17
-msgid "Initialising tables ....."
-msgstr "T?o b?ng ....."
-
-#: MRP_2012-10.php:42 MRP.php:42
-msgid "Creating first level"
-msgstr "Tạo cấp độ đầu tiên"
-
-#: MRP_2012-10.php:66 MRP.php:66
-msgid "Creating other levels"
-msgstr "T?o các c?p d? khác"
-
-#: MRP_2012-10.php:104 MRP.php:104
-msgid "Creating bomlevels table"
-msgstr ""
-
-#: MRP_2012-10.php:130 MRP.php:130
-msgid "Creating levels table"
-msgstr "T?o b?ng c?p d?"
-
-#: MRP_2012-10.php:198 MRP.php:198
-msgid "Levels table has been created"
-msgstr "B?ng c?p d? dã du?c t?o"
-
-#: MRP_2012-10.php:213 MRP.php:213
-msgid "Creating requirements table"
-msgstr "T?o b?ng yêu c?u"
-
-#: MRP_2012-10.php:230 MRP.php:230
-msgid "Create of mrprequirements failed because"
-msgstr ""
-
-#: MRP_2012-10.php:232 MRP.php:232
-msgid "Loading requirements from sales orders"
-msgstr "T?i các yêu c?u t? don hàng"
-
-#: MRP_2012-10.php:258 MRP.php:258
-msgid "Loading requirements from work orders"
-msgstr "T?i các yêu c?u t? l?nh s?n xu?t"
-
-#: MRP_2012-10.php:306 MRP.php:306
-msgid "Loading requirements based on mrpdemands"
-msgstr ""
-
-#: MRP_2012-10.php:328 MRP.php:328
-msgid "Loading requirements based on reorder level"
-msgstr ""
-
-#: MRP_2012-10.php:334 MRP.php:334
-msgid "Creating supplies table"
-msgstr "T?o b?ng ngu?n cung c?p"
-
-#: MRP_2012-10.php:348 MRP.php:348
-msgid "Create of mrpsupplies failed because"
-msgstr ""
-
-#: MRP_2012-10.php:350 MRP.php:350
-msgid "Loading supplies from purchase orders"
-msgstr "T?i các ngu?n cung c?p t? don d?t hàng"
-
-#: MRP_2012-10.php:376 MRP.php:376
-msgid "Loading supplies from inventory on hand"
-msgstr "Tài ngu?n cung c?p t? hàng t?n kho hi?n có"
-
-#: MRP_2012-10.php:417 MRP.php:417
-msgid "Loading supplies from work orders"
-msgstr "T?i ngu?n cung c?p t? l?nh s?n xu?t"
-
-#: MRP_2012-10.php:446 MRP.php:446
-msgid "Creating planned orders table"
-msgstr "T?o b?ng k? ho?ch d?t hàng"
-
-#: MRP_2012-10.php:458 MRP.php:458
-msgid "Create of mrpplannedorders failed because"
-msgstr ""
-
-#: MRP_2012-10.php:477 MRP.php:477
-msgid "Processing level"
-msgstr "mức quá trình"
-
-#: MRP_2012-10.php:484 MRP.php:484
-msgid "End time"
-msgstr "hết thời gian"
-
-#: MRP_2012-10.php:556 MRP.php:556
-msgid "Last Run Details"
-msgstr "Chi tiết lần chạy gần đây nhất"
-
-#: MRP_2012-10.php:559 MRP.php:559
-msgid "Last Run Time"
-msgstr "Lần chạy cuối cùng"
-
-#: MRP_2012-10.php:566 MRP_2012-10.php:612 MRP.php:566 MRP.php:612
-msgid "Days Leeway"
-msgstr ""
-
-#: MRP_2012-10.php:570 MRP.php:570
-msgid "Use MRP Demands"
-msgstr "Sử dụng nhu cầu MRP"
-
-#: MRP_2012-10.php:574 MRP.php:574
-msgid "Use EOQ"
-msgstr "Sử dụng EOQ"
-
-#: MRP_2012-10.php:578 MRP.php:578
-msgid "Use Pan Size"
-msgstr ""
-
-#: MRP_2012-10.php:582 MRP.php:582
-msgid "Use Shrinkage"
-msgstr ""
-
-#: MRP_2012-10.php:592 MRP.php:592
-msgid "This Run Details"
-msgstr "Ch?y chi ti?t"
-
-#: MRP_2012-10.php:616 MRP.php:616
-msgid "Use MRP Demands?"
-msgstr "Sử dụng nhu cầu MRP?"
-
-#: MRP_2012-10.php:620 MRP.php:620
-msgid "Use EOQ?"
-msgstr "Sử dụng EOQ?"
-
-#: MRP_2012-10.php:624 MRP.php:624
-msgid "Use Pan Size?"
-msgstr ""
-
-#: MRP_2012-10.php:628 MRP.php:628
-msgid "Use Shrinkage?"
-msgstr ""
-
-#: MRP_2012-10.php:635 MRP.php:635
-msgid "Run MRP"
-msgstr "Ch?y MRP"
-
 #: MRPCalendar.php:9
 msgid "MRP Calendar"
 msgstr "L?ch MRP"
@@ -14929,7 +14785,7 @@ msgstr "Xóa bỏ loại yêu cầu"
 msgid "Or Delete Record"
 msgstr "Hoặc xóa báo cáo"
 
-#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:526
+#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:524
 msgid "MRP Demand Types"
 msgstr ""
 
@@ -14979,6 +14835,150 @@ msgstr "Hiển thi tất cả các loại nhu cầu"
 #: MRPDemandTypes.php:182
 msgid "Demand Type Description"
 msgstr "Mô t? lo?i nhu c?u"
+
+#: MRP.php:6
+msgid "Run MRP Calculation"
+msgstr "Chạy tính toán MRP"
+
+#: MRP.php:16
+msgid "Start time"
+msgstr "Thời gian bắt đầu"
+
+#: MRP.php:17
+msgid "Initialising tables ....."
+msgstr "T?o b?ng ....."
+
+#: MRP.php:42
+msgid "Creating first level"
+msgstr "Tạo cấp độ đầu tiên"
+
+#: MRP.php:66
+msgid "Creating other levels"
+msgstr "T?o các c?p d? khác"
+
+#: MRP.php:104
+msgid "Creating bomlevels table"
+msgstr ""
+
+#: MRP.php:130
+msgid "Creating levels table"
+msgstr "T?o b?ng c?p d?"
+
+#: MRP.php:198
+msgid "Levels table has been created"
+msgstr "B?ng c?p d? dã du?c t?o"
+
+#: MRP.php:213
+msgid "Creating requirements table"
+msgstr "T?o b?ng yêu c?u"
+
+#: MRP.php:230
+msgid "Create of mrprequirements failed because"
+msgstr ""
+
+#: MRP.php:232
+msgid "Loading requirements from sales orders"
+msgstr "T?i các yêu c?u t? don hàng"
+
+#: MRP.php:258
+msgid "Loading requirements from work orders"
+msgstr "T?i các yêu c?u t? l?nh s?n xu?t"
+
+#: MRP.php:306
+msgid "Loading requirements based on mrpdemands"
+msgstr ""
+
+#: MRP.php:328
+msgid "Loading requirements based on reorder level"
+msgstr ""
+
+#: MRP.php:334
+msgid "Creating supplies table"
+msgstr "T?o b?ng ngu?n cung c?p"
+
+#: MRP.php:348
+msgid "Create of mrpsupplies failed because"
+msgstr ""
+
+#: MRP.php:350
+msgid "Loading supplies from purchase orders"
+msgstr "T?i các ngu?n cung c?p t? don d?t hàng"
+
+#: MRP.php:376
+msgid "Loading supplies from inventory on hand"
+msgstr "Tài ngu?n cung c?p t? hàng t?n kho hi?n có"
+
+#: MRP.php:417
+msgid "Loading supplies from work orders"
+msgstr "T?i ngu?n cung c?p t? l?nh s?n xu?t"
+
+#: MRP.php:446
+msgid "Creating planned orders table"
+msgstr "T?o b?ng k? ho?ch d?t hàng"
+
+#: MRP.php:458
+msgid "Create of mrpplannedorders failed because"
+msgstr ""
+
+#: MRP.php:477
+msgid "Processing level"
+msgstr "mức quá trình"
+
+#: MRP.php:484
+msgid "End time"
+msgstr "hết thời gian"
+
+#: MRP.php:556
+msgid "Last Run Details"
+msgstr "Chi tiết lần chạy gần đây nhất"
+
+#: MRP.php:559
+msgid "Last Run Time"
+msgstr "Lần chạy cuối cùng"
+
+#: MRP.php:566 MRP.php:612
+msgid "Days Leeway"
+msgstr ""
+
+#: MRP.php:570
+msgid "Use MRP Demands"
+msgstr "Sử dụng nhu cầu MRP"
+
+#: MRP.php:574
+msgid "Use EOQ"
+msgstr "Sử dụng EOQ"
+
+#: MRP.php:578
+msgid "Use Pan Size"
+msgstr ""
+
+#: MRP.php:582
+msgid "Use Shrinkage"
+msgstr ""
+
+#: MRP.php:592
+msgid "This Run Details"
+msgstr "Ch?y chi ti?t"
+
+#: MRP.php:616
+msgid "Use MRP Demands?"
+msgstr "Sử dụng nhu cầu MRP?"
+
+#: MRP.php:620
+msgid "Use EOQ?"
+msgstr "Sử dụng EOQ?"
+
+#: MRP.php:624
+msgid "Use Pan Size?"
+msgstr ""
+
+#: MRP.php:628
+msgid "Use Shrinkage?"
+msgstr ""
+
+#: MRP.php:635
+msgid "Run MRP"
+msgstr "Ch?y MRP"
 
 #: MRPPlannedPurchaseOrders.php:14 MRPPlannedWorkOrders.php:13
 #: MRPShortages.php:13
@@ -15321,7 +15321,7 @@ msgstr "Lựa chọn:"
 msgid "MRP Shortages Report"
 msgstr "Báo cáo rút g?n MRP"
 
-#: MRPShortages.php:27 includes/MainMenuLinksArray.php:301
+#: MRPShortages.php:27 includes/MainMenuLinksArray.php:299
 msgid "MRP Shortages"
 msgstr ""
 
@@ -15482,7 +15482,7 @@ msgid "There are no offers outstanding that you are authorised to deal with"
 msgstr "Không có d? ngh? n?i b?t nào mà b?n du?c ?y quy?n d? x? lý"
 
 #: OffersReceived.php:41 OffersReceived.php:42 OffersReceived.php:48
-#: includes/MainMenuLinksArray.php:135 includes/MainMenuLinksArray.php:161
+#: includes/MainMenuLinksArray.php:135 includes/MainMenuLinksArray.php:159
 msgid "Select Supplier"
 msgstr "Lựa chọn nhà cung cấp"
 
@@ -15640,28 +15640,83 @@ msgstr ""
 msgid "Last Del"
 msgstr ""
 
-#: OutstandingGRNs.php:14 OutstandingGRNs.php:160
-#: includes/MainMenuLinksArray.php:145
-msgid "Outstanding GRNs Report"
-msgstr "Báo cáo GRNs xuất sắc"
-
-#: OutstandingGRNs.php:15
-msgid "Outstanding GRNs Valuation"
-msgstr "Tr? giá GRNs xu?t s?c"
-
-#: OutstandingGRNs.php:53 OutstandingGRNs.php:65
+#: OutstandingGRNs.php:46 OutstandingGRNs.php:59
 msgid "Outstanding GRN Valuation"
 msgstr "Tr? giá GRN xu?t s?c"
 
-#: OutstandingGRNs.php:55
+#: OutstandingGRNs.php:48
 msgid ""
 "The outstanding GRNs valuation details could not be retrieved by the SQL "
 "because"
 msgstr "Không truy xu?t du?c chi ti?t tr? giá GRNs xu?t s?c t? d? li?u SQL vì"
 
-#: OutstandingGRNs.php:67
+#: OutstandingGRNs.php:61
 msgid "No outstanding GRNs valuation details retrieved"
 msgstr "Không có Chi ti?t tr? giá GRNs xu?t s?c nào du?c truy xu?t"
+
+#: OutstandingGRNs.php:77 OutstandingGRNs.php:254
+#: includes/MainMenuLinksArray.php:145
+msgid "Outstanding GRNs Report"
+msgstr "Báo cáo GRNs xuất sắc"
+
+#: OutstandingGRNs.php:78
+msgid "Outstanding GRNs Valuation"
+msgstr "Tr? giá GRNs xu?t s?c"
+
+#: OutstandingGRNs.php:170
+#, fuzzy
+msgid "Goods Received but not invoiced Yet"
+msgstr "Bổ sung nhưng không lập hoá đơn"
+
+#: OutstandingGRNs.php:172
+msgid ""
+"Shows the list of goods received not yet invoiced, both in supplier currency "
+"and home currency. When run for all suppliers, the total in home curency "
+"should match the GL Account for Goods received not invoiced."
+msgstr ""
+
+#: OutstandingGRNs.php:178
+#, fuzzy
+msgid "PO#"
+msgstr "PO"
+
+#: OutstandingGRNs.php:180 WorkOrderEntry.php:534
+#: includes/PDFStockLocTransferHeader.inc:51
+msgid "Qty Received"
+msgstr "Số lượng nhận được"
+
+#: OutstandingGRNs.php:181 SuppCreditGRNs.php:190 SuppInvGRNs.php:259
+msgid "Qty Invoiced"
+msgstr ""
+
+#: OutstandingGRNs.php:182
+#, fuzzy
+msgid "Qty Pending"
+msgstr "Chưa xong..."
+
+#: OutstandingGRNs.php:183 SpecialOrder.php:735
+#: includes/PDFTransPageHeader.inc:208
+#: includes/PDFTransPageHeaderPortrait.inc:263
+msgid "Unit Price"
+msgstr "Giá đơn vị"
+
+#: OutstandingGRNs.php:185 OutstandingGRNs.php:187
+#: PO_AuthoriseMyOrders.php:117 SupplierCredit.php:320 SupplierInvoice.php:668
+#: SupplierTenders.php:330
+msgid "Line Total"
+msgstr ""
+
+#: OutstandingGRNs.php:259
+msgid ""
+"Shows the list of goods received not yet invoiced, both in supplier currency "
+"and home currency. When run for all suppliers the total in home curency "
+"should match the GL Account for Goods received not invoiced."
+msgstr ""
+
+#: OutstandingGRNs.php:278
+#, fuzzy
+msgid "Show On Screen"
+msgstr "Hiển thị trên màn hình (HTML)"
 
 #: PageSecurity.php:6 PageSecurity.php:9
 msgid "Page Security Levels"
@@ -15727,7 +15782,7 @@ msgstr "thanh toán"
 msgid "Total Payment"
 msgstr "Tổng thanh toán"
 
-#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:495
+#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:493
 msgid "Payment Methods"
 msgstr "phương thức  thanh toán"
 
@@ -16809,7 +16864,7 @@ msgid "The Tab record could not be deleted because"
 msgstr "Không xóa du?c h? so m?c này vì"
 
 #: PcTabs.php:206 PcTabs.php:306 PO_AuthorisationLevels.php:125
-#: SMTPServer.php:103 UserSettings.php:118
+#: SMTPServer.php:103 UserSettings.php:119
 msgid "User Name"
 msgstr "Tên người sử dụng"
 
@@ -17770,7 +17825,7 @@ msgstr "Danh sách giá cả"
 msgid "Price_Labels"
 msgstr "Bảng giá"
 
-#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:226
+#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:224
 msgid "Print Price Labels"
 msgstr ""
 
@@ -18279,11 +18334,6 @@ msgstr "Bị từ chối"
 #: PO_SelectPurchOrder.php:158
 msgid "Cancelled"
 msgstr "Bị hủy bỏ"
-
-#: PO_AuthoriseMyOrders.php:117 SupplierCredit.php:320 SupplierInvoice.php:668
-#: SupplierTenders.php:330
-msgid "Line Total"
-msgstr ""
 
 #: PO_Chk_ShiptRef_JobRef.php:17 PO_Chk_ShiptRef_JobRef.php:22
 msgid "The update could not be processed"
@@ -19064,7 +19114,7 @@ msgid "Order Header Details"
 msgstr "Chi tiết tiêu đề đơn hàng"
 
 #: PO_OrderDetails.php:89 Suppliers.php:669 Suppliers.php:878
-#: SupplierTenderCreate.php:392 WWW_Users.php:291 WWW_Users.php:538
+#: SupplierTenderCreate.php:392 WWW_Users.php:292 WWW_Users.php:539
 msgid "Supplier Code"
 msgstr "mã của nhà cung cấp"
 
@@ -19133,7 +19183,7 @@ msgid "Select a Purchase Order Number to Print before calling this page"
 msgstr ""
 
 #: PO_PDFPurchOrder.php:20 PO_PDFPurchOrder.php:123
-#: includes/MainMenuLinksArray.php:188
+#: includes/MainMenuLinksArray.php:186
 msgid "Purchase Order Inquiry"
 msgstr "Yêu cầu đơn hàng thu mua"
 
@@ -19442,7 +19492,7 @@ msgid "The SQL used to retrieve the searched parts was"
 msgstr ""
 
 #: PO_SelectOSPurchOrder.php:138 PO_SelectOSPurchOrder.php:140
-#: includes/MainMenuLinksArray.php:170
+#: includes/MainMenuLinksArray.php:168
 msgid "Add Purchase Order"
 msgstr "Thêm một đơn hàng thu mua"
 
@@ -19513,7 +19563,7 @@ msgstr "In ngay bây giờ"
 
 #: PO_SelectPurchOrder.php:9 SelectCompletedOrder.php:557
 #: SupplierCredit.php:204 SupplierCredit.php:298 SupplierInvoice.php:557
-#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:169
+#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:167
 msgid "Purchase Orders"
 msgstr "Đơn hàng thu mua"
 
@@ -21196,7 +21246,7 @@ msgid "At All Locations"
 msgstr "Ở mọi địa điểm"
 
 #: ReorderLevelLocation.php:72 ReorderLevel.php:60
-#: includes/MainMenuLinksArray.php:232
+#: includes/MainMenuLinksArray.php:230
 msgid "Reorder Level"
 msgstr "Cấp độ đặt hàng lại"
 
@@ -21306,7 +21356,7 @@ msgstr ""
 msgid "Reprint"
 msgstr ""
 
-#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:207
+#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:205
 msgid "Reverse Goods Received"
 msgstr ""
 
@@ -21969,7 +22019,7 @@ msgstr ""
 msgid "Group By 4"
 msgstr ""
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:291
+#: SalesAnalysis_UserDefined.php:9 includes/session.inc:295
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -22137,7 +22187,7 @@ msgstr ""
 msgid "Qtr"
 msgstr "M?t ph?n tu"
 
-#: SalesCategories.php:7 includes/MainMenuLinksArray.php:273
+#: SalesCategories.php:7 includes/MainMenuLinksArray.php:271
 msgid "Sales Category Maintenance"
 msgstr "Bảo trì các mục bán hàng"
 
@@ -22693,7 +22743,7 @@ msgstr "Yêu cầu bán hàng"
 msgid "Top Sales Items Inquiry"
 msgstr "Yêu cầu bán hàng"
 
-#: SalesTopItemsInquiry.php:83 WWW_Users.php:662
+#: SalesTopItemsInquiry.php:83 WWW_Users.php:663
 msgid "Display"
 msgstr "Hiển thị"
 
@@ -22717,7 +22767,7 @@ msgstr "Số ngày"
 msgid "Rank"
 msgstr "ngân hàng"
 
-#: SalesTypes.php:5 includes/MainMenuLinksArray.php:489
+#: SalesTypes.php:5 includes/MainMenuLinksArray.php:487
 msgid "Sales Types"
 msgstr "Các kiểu bán hàng"
 
@@ -22836,7 +22886,7 @@ msgstr ""
 msgid "Sales Type Name"
 msgstr "Tên loại bán hàng"
 
-#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:450
+#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:448
 #, fuzzy
 msgid "Maintain Security Tokens"
 msgstr "Giữ nguyên Chi phí tiêu chuẩn"
@@ -22875,7 +22925,7 @@ msgstr "Mã ghi chú"
 msgid "Are you sure you wish to delete this security token?"
 msgstr "Bạn có chắc chắn muốn xóa chi nhánh này?"
 
-#: SelectAsset.php:7 includes/MainMenuLinksArray.php:394
+#: SelectAsset.php:7 includes/MainMenuLinksArray.php:392
 msgid "Select an Asset"
 msgstr "Chọn một tài sản"
 
@@ -23488,7 +23538,7 @@ msgstr ""
 msgid "Edit Account"
 msgstr "Chỉnh sửa tài khoản"
 
-#: SelectGLAccount.php:27 includes/MainMenuLinksArray.php:352
+#: SelectGLAccount.php:27 includes/MainMenuLinksArray.php:350
 msgid "Account Inquiry"
 msgstr "Yêu cầu tài khoản"
 
@@ -24107,7 +24157,7 @@ msgstr ""
 
 #: SelectSupplier.php:173 SuppPriceList.php:16 SuppPriceList.php:152
 #: SuppPriceList.php:208 SuppPriceList.php:210
-#: includes/MainMenuLinksArray.php:190
+#: includes/MainMenuLinksArray.php:188
 msgid "Supplier Price List"
 msgstr "Bảng giá nhà cung cấp"
 
@@ -24991,11 +25041,6 @@ msgstr "Tổng không tính thuế"
 msgid "Ordered item Description"
 msgstr "Mô tả của các mặt hàng được đặt"
 
-#: SpecialOrder.php:735 includes/PDFTransPageHeader.inc:208
-#: includes/PDFTransPageHeaderPortrait.inc:263
-msgid "Unit Price"
-msgstr "Giá đơn vị"
-
 #: SpecialOrder.php:743
 msgid "Required Delivery Date"
 msgstr "Ngày giao hàng theo yêu c?u"
@@ -25057,7 +25102,7 @@ msgid "Please try again"
 msgstr "Vui lòng thử lai"
 
 #: StockAdjustments.php:94 StockCategories.php:11 StockCostUpdate.php:21
-#: StockCounts.php:17
+#: StockCounts.php:15
 msgid "Inventory Adjustment"
 msgstr "Ði?u ch?nh hàng t?n kho"
 
@@ -25572,91 +25617,91 @@ msgstr ""
 msgid "Standard Overhead Cost Per Unit"
 msgstr ""
 
-#: StockCounts.php:8
+#: StockCounts.php:6
 msgid "Stock Check Sheets Entry"
 msgstr ""
 
-#: StockCounts.php:32
+#: StockCounts.php:30
 msgid "Resuming Entering Counts"
 msgstr ""
 
-#: StockCounts.php:32
+#: StockCounts.php:30
 msgid "Viewing Entered Counts"
 msgstr ""
 
-#: StockCounts.php:34
+#: StockCounts.php:32
 msgid "Entering Counts"
 msgstr ""
 
-#: StockCounts.php:34
+#: StockCounts.php:32
 msgid "View Entered Counts"
 msgstr ""
 
-#: StockCounts.php:66
+#: StockCounts.php:64
 msgid "The quantity entered for line"
 msgstr ""
 
-#: StockCounts.php:66 StockLocTransfer.php:125 StockLocTransferReceive.php:34
+#: StockCounts.php:64 StockLocTransfer.php:125 StockLocTransferReceive.php:34
 msgid "is not numeric"
 msgstr "Không ở dạng số"
 
-#: StockCounts.php:66
+#: StockCounts.php:64
 msgid "this line was for the part code"
 msgstr ""
 
-#: StockCounts.php:66 StockCounts.php:72
+#: StockCounts.php:64 StockCounts.php:70
 msgid "This line will have to be re-entered"
 msgstr ""
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "The stock code entered on line"
 msgstr ""
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "is not a part code that has been added to the stock check file"
 msgstr ""
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "the code entered was"
 msgstr "Mã số nhập vào là"
 
-#: StockCounts.php:87
+#: StockCounts.php:85
 msgid "The stock count line number"
 msgstr ""
 
-#: StockCounts.php:87
+#: StockCounts.php:85
 msgid "could not be entered because"
 msgstr ""
 
-#: StockCounts.php:92
+#: StockCounts.php:90
 msgid " Stock Counts Entered"
 msgstr ""
 
-#: StockCounts.php:98
+#: StockCounts.php:96
 msgid "Stock Check Counts at Location"
 msgstr ""
 
-#: StockCounts.php:132
+#: StockCounts.php:130
 msgid "Enter Above Counts"
 msgstr ""
 
-#: StockCounts.php:142
+#: StockCounts.php:140
 msgid "Failed to delete StockCount ID #"
 msgstr "Không xóa du?c Mã tài kho?n kho"
 
-#: StockCounts.php:144
+#: StockCounts.php:142
 msgid "Deleted Id #"
 msgstr "Số ID đã bị xóa"
 
-#: StockCounts.php:157
+#: StockCounts.php:155
 msgid "Qty Counted"
 msgstr ""
 
-#: StockCounts.php:159
+#: StockCounts.php:157
 msgid "Delete?"
 msgstr "Xóa?"
 
-#: StockCounts.php:170
+#: StockCounts.php:168
 msgid "Save Changes"
 msgstr "Lưu thay đổi"
 
@@ -26388,73 +26433,73 @@ msgstr ""
 msgid "Total quantity"
 msgstr "Tổng số lượng"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid ""
 "The stock item description must be entered and be fifty characters or less "
 "long"
 msgstr "Mô tả cho mặt hàng trong kho phải dưới 50 kí tự"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid "It cannot be a zero length string either"
 msgstr "Không được phép là một chuỗi có độ dài bằng 0"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid "a description is required"
 msgstr "Yêu cầu cần có mô tả"
 
-#: Stocks.php:104 Z_ImportStocks.php:115
+#: Stocks.php:104 Z_ImportStocks.php:108
 msgid "The stock item description cannot be a zero length string"
 msgstr "Mô tả mặt hàng trong kho không được là 1 chuỗi có độ dài bằng 0"
 
-#: Stocks.php:104 Z_ImportStocks.php:115
+#: Stocks.php:104 Z_ImportStocks.php:108
 msgid "a long description is required"
 msgstr "Yêu cầu có mô tả dài"
 
-#: Stocks.php:110 Z_ImportStocks.php:119
+#: Stocks.php:110 Z_ImportStocks.php:112
 msgid "The Stock Item code cannot be empty"
 msgstr "Mã hàng trong kho không được để trống"
 
-#: Stocks.php:116 Z_ImportStocks.php:123
+#: Stocks.php:116 Z_ImportStocks.php:116
 msgid "The stock item code cannot contain any of the following characters"
 msgstr "Mã hàng trong kho không được chứa một trong những kí tự sau"
 
-#: Stocks.php:123 Z_ImportStocks.php:128
+#: Stocks.php:123 Z_ImportStocks.php:121
 msgid "The unit of measure must be 20 characters or less long"
 msgstr "Các đơn vị đo phải được 20 ký tự hoặc ít hơn"
 
-#: Stocks.php:135 Z_ImportStocks.php:140
+#: Stocks.php:135 Z_ImportStocks.php:133
 msgid "The volume of the packaged item in cubic metres must be numeric"
 msgstr "Khối lượng các mặt hàng đóng gói bằng mét khối phải có dạng số"
 
-#: Stocks.php:141 Z_ImportStocks.php:144
+#: Stocks.php:141 Z_ImportStocks.php:137
 msgid "The volume of the packaged item must be a positive number"
 msgstr "Khối lượng các mặt hàng đóng gói phải là một số dương"
 
-#: Stocks.php:147 Z_ImportStocks.php:148
+#: Stocks.php:147 Z_ImportStocks.php:141
 msgid "The weight of the packaged item in KGs must be numeric"
 msgstr "Trọng lượng của các mặt hàng đóng gói tính theo kgs phải có dạng số"
 
-#: Stocks.php:153 Z_ImportStocks.php:152
+#: Stocks.php:153 Z_ImportStocks.php:145
 msgid "The weight of the packaged item must be a positive number"
 msgstr "Trọng lượng của các mặt hàng đóng gói phải là một số dương"
 
-#: Stocks.php:159 Z_ImportStocks.php:156
+#: Stocks.php:159 Z_ImportStocks.php:149
 msgid "The economic order quantity must be numeric"
 msgstr "S? lu?ng don hàng kinh t? ph?i ? d?ng s?"
 
-#: Stocks.php:165 Z_ImportStocks.php:160
+#: Stocks.php:165 Z_ImportStocks.php:153
 msgid "The economic order quantity must be a positive number"
 msgstr "S? lu?ng don hàng kinh t? ph?i ? d?ng s? duong"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "The item can only be serialised if there is lot control enabled already"
 msgstr ""
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "Batch control"
 msgstr "kiểm soát lô hàng"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid ""
 "with any number of items in a lot/bundle/roll is enabled when controlled is "
 "enabled"
@@ -26462,15 +26507,15 @@ msgstr ""
 "v?i b?t kì m?t d?i tu?ng nào trong m?t lo?t/bó/cu?n du?c kích ho?t khi ki?m "
 "soát du?c kích ho?t"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "Serialised control requires that only one item is in the batch"
 msgstr ""
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "For serialised control"
 msgstr ""
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "both controlled and serialised must be enabled"
 msgstr ""
 
@@ -26497,7 +26542,7 @@ msgid ""
 "serial control is therefore not appropriate"
 msgstr ""
 
-#: Stocks.php:200 Z_ImportStocks.php:178
+#: Stocks.php:200 Z_ImportStocks.php:171
 msgid ""
 "There are no inventory categories defined. All inventory items must belong "
 "to a valid inventory category,"
@@ -26656,15 +26701,15 @@ msgstr ""
 "Mã kho nh?p vào dã có trong co s? d? li?u - L?p l?i mã kho b? ngan ch?n b?i "
 "h? th?ng. Vui lòng ch?n m?t mã kho khác"
 
-#: Stocks.php:567 Z_ImportStocks.php:233
+#: Stocks.php:567 Z_ImportStocks.php:226
 msgid "The item could not be added because"
 msgstr "Không thêm hàng mới vào được vì"
 
-#: Stocks.php:568 Z_ImportStocks.php:234
+#: Stocks.php:568 Z_ImportStocks.php:227
 msgid "The SQL that was used to add the item failed was"
 msgstr "Dữ liệu SQL dùng để thêm mặt hàng đã không thành công vì"
 
-#: Stocks.php:610 Z_ImportStocks.php:250
+#: Stocks.php:610 Z_ImportStocks.php:243
 msgid "New Item"
 msgstr "Hàng mới"
 
@@ -26808,7 +26853,7 @@ msgstr "khối lượng đóng gói (kgs)"
 
 #: Stocks.php:959 SupplierTenders.php:125 SupplierTenders.php:534
 #: SupplierTenders.php:537 UnitsOfMeasure.php:170
-#: includes/MainMenuLinksArray.php:524
+#: includes/MainMenuLinksArray.php:522
 msgid "Units of Measure"
 msgstr "đơn vị đo lường"
 
@@ -27279,10 +27324,6 @@ msgstr "Hiển thị"
 #: SuppCreditGRNs.php:189
 msgid "Total Qty"
 msgstr "Tổng số lượng"
-
-#: SuppCreditGRNs.php:190 SuppInvGRNs.php:259
-msgid "Qty Invoiced"
-msgstr ""
 
 #: SuppCreditGRNs.php:191
 msgid "Qty Yet"
@@ -29039,7 +29080,7 @@ msgstr ""
 
 #: SupplierTypes.php:6 SupplierTypes.php:21 SuppPaymentRun.php:240
 #: SystemParameters.php:12 TaxAuthorities.php:10 TaxAuthorityRates.php:16
-#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:491
+#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:489
 msgid "Supplier Types"
 msgstr "Các kiểu nhà cung cấp"
 
@@ -29133,7 +29174,7 @@ msgid ""
 "up until this role is defined"
 msgstr ""
 
-#: SuppLoginSetup.php:190 WWW_Users.php:501
+#: SuppLoginSetup.php:190 WWW_Users.php:502
 msgid "Default Location"
 msgstr "Địa điểm mặc định"
 
@@ -31310,8 +31351,9 @@ msgstr "lỗi số"
 msgid "User Settings"
 msgstr "Cài đặt cho người sử dụng"
 
-#: UserSettings.php:12 WWW_Users.php:25
-msgid "Latin Western Languages"
+#: UserSettings.php:12
+#, fuzzy
+msgid "Latin Western Languages - Times"
 msgstr "Ngôn ngữ Latin Phương Tây"
 
 #: UserSettings.php:13
@@ -31322,55 +31364,59 @@ msgstr ""
 msgid "Chinese"
 msgstr "Tiếng Trung"
 
-#: UserSettings.php:27
+#: UserSettings.php:15 WWW_Users.php:28
+msgid "Free Serif"
+msgstr ""
+
+#: UserSettings.php:28
 msgid "The Maximum Number of Records on Display entered must not be negative"
 msgstr "T?ng s? t?i da h? so hi?n th? du?c nh?p vào không du?c là s? âm"
 
-#: UserSettings.php:27
+#: UserSettings.php:28
 msgid "0 will default to system setting"
 msgstr "S? 0 s? m?c d?nh cho cài d?t h? th?ng"
 
-#: UserSettings.php:49
+#: UserSettings.php:50
 msgid "The password and password confirmation fields entered do not match"
 msgstr "Mật khẩu và xác nhận mật khẩu nhập vào không khớp"
 
-#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:212
+#: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:213
 msgid "The user alterations could not be processed because"
 msgstr "Không xử lý được việc thay đổi người sử dụng vì"
 
-#: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:213
+#: UserSettings.php:69 UserSettings.php:85 WWW_Users.php:214
 msgid "The SQL that was used to update the user and failed was"
 msgstr "Dữ liệu SQL dùng để cập nhật người sử dụng không thành công vì"
 
-#: UserSettings.php:72 UserSettings.php:88
+#: UserSettings.php:73 UserSettings.php:89
 msgid "The user settings have been updated"
 msgstr "Các cài đặt của người sử dụng đã được cập nhật"
 
-#: UserSettings.php:72
+#: UserSettings.php:73
 msgid "Be sure to remember your password for the next time you login"
 msgstr ""
 
-#: UserSettings.php:123
+#: UserSettings.php:124
 msgid "Maximum Number of Records to Display"
 msgstr ""
 
-#: UserSettings.php:174
+#: UserSettings.php:175
 msgid "New Password"
 msgstr "Mật khẩu mới"
 
-#: UserSettings.php:178
+#: UserSettings.php:179
 msgid "Confirm Password"
 msgstr "Xác nhận lại mật khẩu"
 
-#: UserSettings.php:182
+#: UserSettings.php:183
 msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 
-#: UserSettings.php:202 WWW_Users.php:680
+#: UserSettings.php:203 WWW_Users.php:681
 msgid "PDF Language Support"
 msgstr "Hỗ trợ ngôn ngữ PDF"
 
-#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:295
+#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:293
 msgid "Where Used Inquiry"
 msgstr ""
 
@@ -31663,7 +31709,7 @@ msgid ""
 "or receipts of manufactured items"
 msgstr ""
 
-#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:286
+#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:284
 msgid "Work Order Entry"
 msgstr ""
 
@@ -31761,10 +31807,6 @@ msgstr "Vị trí nhà máy"
 #: WorkOrderEntry.php:532
 msgid "Output Item"
 msgstr ""
-
-#: WorkOrderEntry.php:534 includes/PDFStockLocTransferHeader.inc:51
-msgid "Qty Received"
-msgstr "Số lượng nhận được"
 
 #: WorkOrderEntry.php:535
 msgid "Balance Remaining"
@@ -32383,102 +32425,106 @@ msgstr "Bạn có chắc muốn xóa giá của nhà cung cấp không?"
 msgid "Utilities"
 msgstr ""
 
+#: WWW_Users.php:25
+msgid "Latin Western Languages"
+msgstr "Ngôn ngữ Latin Phương Tây"
+
 #: WWW_Users.php:26
 msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
 msgstr ""
 
-#: WWW_Users.php:29 includes/MainMenuLinksArray.php:449
+#: WWW_Users.php:30 includes/MainMenuLinksArray.php:447
 msgid "User Maintenance"
 msgstr "Bảo trì người sử dụng"
 
-#: WWW_Users.php:99
+#: WWW_Users.php:100
 #, fuzzy
 msgid "The user ID"
 msgstr "ID người sử dụng"
 
-#: WWW_Users.php:99
+#: WWW_Users.php:100
 #, fuzzy
 msgid "already exists and cannot be used again"
 msgstr " dã t?n t?i trong lo?i m?c này"
 
-#: WWW_Users.php:166
+#: WWW_Users.php:167
 msgid "The selected user record has been updated"
 msgstr "Đã cập nhật hồ sơ người sử dụng vừa chọn"
 
-#: WWW_Users.php:207
+#: WWW_Users.php:208
 msgid "A new user record has been inserted"
 msgstr "Đã chèn vào hồ sơ khách hàng mới"
 
-#: WWW_Users.php:250
+#: WWW_Users.php:251
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr ""
 
-#: WWW_Users.php:254
+#: WWW_Users.php:255
 msgid "The User could not be deleted because"
 msgstr "Không thể xóa người sử dụng bởi vì"
 
-#: WWW_Users.php:256
+#: WWW_Users.php:257
 msgid "User Deleted"
 msgstr "Người sử dụng đã bị xóa"
 
-#: WWW_Users.php:293
+#: WWW_Users.php:294
 msgid "Last Visit"
 msgstr "Lần thăm gần đây nhất"
 
-#: WWW_Users.php:294 WWW_Users.php:475
+#: WWW_Users.php:295 WWW_Users.php:476
 msgid "Security Role"
 msgstr "vai trò bảo vệ"
 
-#: WWW_Users.php:295
+#: WWW_Users.php:296
 msgid "Report Size"
 msgstr "Kích cỡ báo cáo"
 
-#: WWW_Users.php:333
+#: WWW_Users.php:334
 #, fuzzy, php-format
 msgid "Are you sure you wish to delete this user?"
 msgstr "B?n có ch?c mu?n xóa nhà cung c?p này?"
 
-#: WWW_Users.php:359
+#: WWW_Users.php:360
 msgid "Review Existing Users"
 msgstr "Xem lại người dùng hiện tại"
 
-#: WWW_Users.php:419
+#: WWW_Users.php:420
 msgid "User code"
 msgstr "Mã người sử dụng"
 
-#: WWW_Users.php:489
+#: WWW_Users.php:490
 #, fuzzy
 msgid "User Can Create Tenders"
 msgstr "Ngu?i s? d?ng có th? t?o don hàng"
 
-#: WWW_Users.php:543
+#: WWW_Users.php:544
 msgid "Restrict to Sales Person"
 msgstr "Hạn chế người bán hàng"
 
-#: WWW_Users.php:549 WWW_Users.php:551
+#: WWW_Users.php:550 WWW_Users.php:552
 msgid "Not a salesperson only login"
 msgstr "Đăng nhập cho người không phải nhân viên bán hàng"
 
-#: WWW_Users.php:662
+#: WWW_Users.php:663
 #, fuzzy
 msgid "module"
 msgstr "Vai trò"
 
-#: WWW_Users.php:695
+#: WWW_Users.php:696
 #, fuzzy
 msgid "Allowed Department for Internal Requests"
 msgstr "Bạn phải chọn loại danh sách bao gói để in"
 
-#: WWW_Users.php:705 WWW_Users.php:707
+#: WWW_Users.php:706 WWW_Users.php:708
 #, fuzzy
 msgid "Any Internal Department"
 msgstr "Hiển thị thanh toán"
 
-#: WWW_Users.php:725 WWW_Users.php:729
+#: WWW_Users.php:726 WWW_Users.php:730
 msgid "Open"
 msgstr "Mở"
 
-#: WWW_Users.php:726 WWW_Users.php:728
+#: WWW_Users.php:727 WWW_Users.php:729
 msgid "Blocked"
 msgstr "bị chặn"
 
@@ -34314,11 +34360,11 @@ msgstr ""
 msgid "Inserted the new asset:"
 msgstr ""
 
-#: Z_ImportFixedAssets.php:270 Z_ImportStocks.php:272
+#: Z_ImportFixedAssets.php:270 Z_ImportStocks.php:265
 msgid "Failed on row "
 msgstr ""
 
-#: Z_ImportFixedAssets.php:274 Z_ImportStocks.php:276
+#: Z_ImportFixedAssets.php:274 Z_ImportStocks.php:269
 msgid "Batch Import of"
 msgstr ""
 
@@ -34341,7 +34387,7 @@ msgstr ""
 msgid "Fixed Assets Upload file:"
 msgstr ""
 
-#: Z_ImportFixedAssets.php:305 Z_ImportStocks.php:298 Z_UploadForm.php:17
+#: Z_ImportFixedAssets.php:305 Z_ImportStocks.php:291 Z_UploadForm.php:17
 msgid "Send File"
 msgstr "Gửi tệp tin"
 
@@ -34374,61 +34420,65 @@ msgstr ""
 msgid "Import Items"
 msgstr "Nhập hàng"
 
-#: Z_ImportStocks.php:46
-msgid "File has type "
-msgstr ""
-
-#: Z_ImportStocks.php:59
+#: Z_ImportStocks.php:52
 msgid "File contains "
 msgstr "Tệp tin chứa "
 
-#: Z_ImportStocks.php:69
+#: Z_ImportStocks.php:62
 msgid "File contains incorrect headers ("
 msgstr ""
 
-#: Z_ImportStocks.php:87
+#: Z_ImportStocks.php:80
 msgid " fields required, "
 msgstr ""
 
-#: Z_ImportStocks.php:105
+#: Z_ImportStocks.php:98
 msgid "Stock item \""
 msgstr "Mặt hàng trong kho \""
 
-#: Z_ImportStocks.php:136
+#: Z_ImportStocks.php:129
 msgid "Values in the Perishable field must be either 0 (No) or 1 (Yes)"
 msgstr ""
 
-#: Z_ImportStocks.php:170
+#: Z_ImportStocks.php:163
 msgid ""
 "Items must be of MBFlag type Manufactured(M), Assembly(A), Kit-Set(K), "
 "Purchased(B), Dummy(D) or Phantom(G)"
 msgstr ""
 
-#: Z_ImportStocks.php:174
+#: Z_ImportStocks.php:167
 msgid "Assembly/Kitset/Phantom/Service items cannot also be controlled items"
 msgstr ""
 
-#: Z_ImportStocks.php:174
+#: Z_ImportStocks.php:167
 msgid ""
 "Assemblies, Dummies and Kitsets are not physical items and batch/serial "
 "control is therefore not appropriate"
 msgstr ""
 
-#: Z_ImportStocks.php:182
+#: Z_ImportStocks.php:175
 msgid "ItemPDF must contain either a filename, or the keyword `none`"
 msgstr ""
 
-#: Z_ImportStocks.php:250
+#: Z_ImportStocks.php:243
 msgid "has been added to the transaction"
 msgstr "Đã được thêm vào giao dịch"
 
-#: Z_ImportStocks.php:276
+#: Z_ImportStocks.php:269
 msgid "has been completed. All transactions committed to the database."
 msgstr ""
 
-#: Z_ImportStocks.php:297
+#: Z_ImportStocks.php:290
 msgid "Upload file"
 msgstr "Tải tệp tin lên"
+
+#: Z_ItemsWithoutPicture.php:6
+msgid "List of Items without picture"
+msgstr ""
+
+#: Z_ItemsWithoutPicture.php:21
+msgid "Current Items without picture in webERP"
+msgstr ""
 
 #: Z_MakeNewCompany.php:16
 msgid "Make New Company Database Utility"
@@ -35296,7 +35346,7 @@ msgstr ""
 msgid "problems found. Please research and correct them"
 msgstr ""
 
-#: includes/class.pdf.php:206 includes/class.pdf.php:213
+#: includes/class.pdf.php:209 includes/class.pdf.php:216
 msgid "Document.pdf"
 msgstr "tài liệu dạng pdf"
 
@@ -37033,492 +37083,496 @@ msgstr ""
 msgid "Supplier Transaction Inquiries"
 msgstr "Các yêu cầu giao dịch của nhà cung cấp"
 
-#: includes/MainMenuLinksArray.php:160
+#: includes/MainMenuLinksArray.php:158
 msgid "Add Supplier"
 msgstr "Thêm nhà cung cấp"
 
-#: includes/MainMenuLinksArray.php:162
+#: includes/MainMenuLinksArray.php:160
 msgid "Maintain Factor Companies"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:171
+#: includes/MainMenuLinksArray.php:169
 #, fuzzy
 msgid "Create a New Tender"
 msgstr "Thiết lập lịch"
 
-#: includes/MainMenuLinksArray.php:172
+#: includes/MainMenuLinksArray.php:170
 #, fuzzy
 msgid "Edit Existing Tenders"
 msgstr "Xem lại người dùng hiện tại"
 
-#: includes/MainMenuLinksArray.php:173
+#: includes/MainMenuLinksArray.php:171
 msgid "Process Tenders and Offers"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:174
+#: includes/MainMenuLinksArray.php:172
 msgid "Orders to Authorise"
 msgstr "Đơn hàng cần đăng ký"
 
-#: includes/MainMenuLinksArray.php:175
+#: includes/MainMenuLinksArray.php:173
 msgid "Shipment Entry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:176
+#: includes/MainMenuLinksArray.php:174
 msgid "Select A Shipment"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:189
+#: includes/MainMenuLinksArray.php:187
 msgid "Purchase Order Detail Or Summary Inquiries"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:198
+#: includes/MainMenuLinksArray.php:196
 #, fuzzy
 msgid "Maintain Supplier Price Lists"
 msgstr "Bảng giá nhà cung cấp"
 
-#: includes/MainMenuLinksArray.php:203 includes/MainMenuLinksArray.php:204
+#: includes/MainMenuLinksArray.php:201 includes/MainMenuLinksArray.php:202
 msgid "Bulk Inventory Transfer"
 msgstr "Chuyển số lượng lớn hàng tồn kho"
 
-#: includes/MainMenuLinksArray.php:205
+#: includes/MainMenuLinksArray.php:203
 msgid "Inventory Location Transfers"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:206
+#: includes/MainMenuLinksArray.php:204
 msgid "Inventory Adjustments"
 msgstr "Các điều chỉnh hàng tồn kho"
 
-#: includes/MainMenuLinksArray.php:208
+#: includes/MainMenuLinksArray.php:206
 msgid "Enter Stock Counts"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:209
+#: includes/MainMenuLinksArray.php:207
 #, fuzzy
 msgid "Create a New Internal Stock Request"
 msgstr "Tạo một mặt hàng mới"
 
-#: includes/MainMenuLinksArray.php:211
+#: includes/MainMenuLinksArray.php:209
 msgid "Fulfill Internal Stock Requests"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:225
+#: includes/MainMenuLinksArray.php:223
 msgid "Serial Item Research Tool"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:227
+#: includes/MainMenuLinksArray.php:225
 #, fuzzy
 msgid "Reprint GRN"
 msgstr "In lại ngay bây giờ"
 
-#: includes/MainMenuLinksArray.php:228
+#: includes/MainMenuLinksArray.php:226
 msgid "Inventory Item Movements"
 msgstr "Xu hướng hàng tồn kho"
 
-#: includes/MainMenuLinksArray.php:229
+#: includes/MainMenuLinksArray.php:227
 msgid "Inventory Item Status"
 msgstr "Tình trạng hàng tồn kho"
 
-#: includes/MainMenuLinksArray.php:230
+#: includes/MainMenuLinksArray.php:228
 msgid "Inventory Item Usage"
 msgstr "Việc sử dụng hàng tồn kho"
 
-#: includes/MainMenuLinksArray.php:233
+#: includes/MainMenuLinksArray.php:231
 msgid "Stock Dispatch"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:236
+#: includes/MainMenuLinksArray.php:234
 msgid "Inventory Planning Based On Preferred Supplier Data"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:237
+#: includes/MainMenuLinksArray.php:235
 msgid "Inventory Stock Check Sheets"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:238
+#: includes/MainMenuLinksArray.php:236
 msgid "Make Inventory Quantities CSV"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:239
+#: includes/MainMenuLinksArray.php:237
 msgid "Compare Counts Vs Stock Check Data"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:240
+#: includes/MainMenuLinksArray.php:238
 msgid "All Inventory Movements By Location/Date"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:241
+#: includes/MainMenuLinksArray.php:239
 msgid "List Inventory Status By Location/Category"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:242
+#: includes/MainMenuLinksArray.php:240
 msgid "Historical Stock Quantity By Location/Category"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:243
+#: includes/MainMenuLinksArray.php:241
 msgid "List Negative Stocks"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:244
+#: includes/MainMenuLinksArray.php:242
 #, fuzzy
 msgid "Period Stock Transaction Listing"
 msgstr "Danh sách giao d?ch kho"
 
-#: includes/MainMenuLinksArray.php:245
+#: includes/MainMenuLinksArray.php:243
 #, fuzzy
 msgid "Stock Transfer Note"
 msgstr "M?u trao d?i kho"
 
-#: includes/MainMenuLinksArray.php:271
+#: includes/MainMenuLinksArray.php:269
 msgid "Add A New Item"
 msgstr "Thêm một mặt hàng"
 
-#: includes/MainMenuLinksArray.php:272
+#: includes/MainMenuLinksArray.php:270
 msgid "Select An Item"
 msgstr "Chọn một mặt hàng"
 
-#: includes/MainMenuLinksArray.php:274
+#: includes/MainMenuLinksArray.php:272
 #, fuzzy
 msgid "Add or Update Prices Based On Costs"
 msgstr "Cập nhật về giá theo chi phí"
 
-#: includes/MainMenuLinksArray.php:275
+#: includes/MainMenuLinksArray.php:273
 msgid "View or Update Prices Based On Costs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:276
+#: includes/MainMenuLinksArray.php:274
 msgid "Reorder Level By Category/Location"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:287 includes/MainMenuLinksArray.php:293
+#: includes/MainMenuLinksArray.php:285 includes/MainMenuLinksArray.php:291
 msgid "Select A Work Order"
 msgstr "Chọn một lệnh sản xuất"
 
-#: includes/MainMenuLinksArray.php:294
+#: includes/MainMenuLinksArray.php:292
 msgid "Costed Bill Of Material Inquiry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:297
+#: includes/MainMenuLinksArray.php:295
 msgid "Indented Bill Of Material Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:298
+#: includes/MainMenuLinksArray.php:296
 msgid "List Components Required"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:299
+#: includes/MainMenuLinksArray.php:297
 msgid "Indented Where Used Listing"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:300
+#: includes/MainMenuLinksArray.php:298
 msgid "MRP"
 msgstr "MRP"
 
-#: includes/MainMenuLinksArray.php:302
+#: includes/MainMenuLinksArray.php:300
 msgid "MRP Suggested Purchase Orders"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:303
+#: includes/MainMenuLinksArray.php:301
 msgid "MRP Suggested Work Orders"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:304
+#: includes/MainMenuLinksArray.php:302
 msgid "MRP Reschedules Required"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:322
+#: includes/MainMenuLinksArray.php:320
 msgid "Bills Of Material"
 msgstr "Danh sách nguyên vật liệu"
 
-#: includes/MainMenuLinksArray.php:323
+#: includes/MainMenuLinksArray.php:321
 #, fuzzy
 msgid "Copy a Bill Of Materials Between Items"
 msgstr "hợp đồng nguyên vật liệu"
 
-#: includes/MainMenuLinksArray.php:324
+#: includes/MainMenuLinksArray.php:322
 msgid "Master Schedule"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:325
+#: includes/MainMenuLinksArray.php:323
 msgid "Auto Create Master Schedule"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:326
+#: includes/MainMenuLinksArray.php:324
 msgid "MRP Calculation"
 msgstr "Tính toán MRP"
 
-#: includes/MainMenuLinksArray.php:337
+#: includes/MainMenuLinksArray.php:335
 msgid "Bank Account Payments Entry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:338
+#: includes/MainMenuLinksArray.php:336
 msgid "Bank Account Receipts Entry"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:340
+#: includes/MainMenuLinksArray.php:338
 msgid "Bank Account Payments Matching"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:341
+#: includes/MainMenuLinksArray.php:339
 msgid "Bank Account Receipts Matching"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:353
+#: includes/MainMenuLinksArray.php:351
 msgid "Account Listing"
 msgstr "Bảng liệt kê tài khoản"
 
-#: includes/MainMenuLinksArray.php:354
+#: includes/MainMenuLinksArray.php:352
 msgid "Account Listing to CSV File"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:356
+#: includes/MainMenuLinksArray.php:354
 msgid "Bank Account Reconciliation Statement"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:357
+#: includes/MainMenuLinksArray.php:355
 msgid "Cheque Payments Listing"
 msgstr "Bảng liệt kê thanh toán séc"
 
-#: includes/MainMenuLinksArray.php:358
+#: includes/MainMenuLinksArray.php:356
 msgid "Daily Bank Transactions"
 msgstr "Các giao dịch ngân hàng hàng ngày"
 
-#: includes/MainMenuLinksArray.php:359
+#: includes/MainMenuLinksArray.php:357
 msgid "Profit and Loss Statement"
 msgstr "Bản báo cáo lỗ lãi"
 
-#: includes/MainMenuLinksArray.php:361
+#: includes/MainMenuLinksArray.php:359
 msgid "Tag Reports"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:362
+#: includes/MainMenuLinksArray.php:360
 msgid "Tax Reports"
 msgstr "Các báo cáo thuế"
 
-#: includes/MainMenuLinksArray.php:380
+#: includes/MainMenuLinksArray.php:378
 msgid "GL Budgets"
 msgstr "Ngân sách so cái"
 
-#: includes/MainMenuLinksArray.php:383
+#: includes/MainMenuLinksArray.php:381
 msgid "GL Tags"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:393
+#: includes/MainMenuLinksArray.php:391
 msgid "Add a new Asset"
 msgstr "Thêm một tài sản mới"
 
-#: includes/MainMenuLinksArray.php:396
+#: includes/MainMenuLinksArray.php:394
 msgid "Depreciation Journal"
 msgstr "báo cáo khấu hao"
 
-#: includes/MainMenuLinksArray.php:405
+#: includes/MainMenuLinksArray.php:403
 msgid "Asset Register"
 msgstr "Đăng ký tài sản"
 
-#: includes/MainMenuLinksArray.php:411
+#: includes/MainMenuLinksArray.php:409
 msgid "Asset Categories Maintenance"
 msgstr "Bảo trì Các mục tài sản"
 
-#: includes/MainMenuLinksArray.php:412
+#: includes/MainMenuLinksArray.php:410
 msgid "Add or Maintain Asset Locations"
 msgstr "thêm hoặc duy trì vị trí tài sản"
 
-#: includes/MainMenuLinksArray.php:419
+#: includes/MainMenuLinksArray.php:417
 msgid "Assign Cash to PC Tab"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:420
+#: includes/MainMenuLinksArray.php:418
 msgid "Claim Expenses From PC Tab"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:421
+#: includes/MainMenuLinksArray.php:419
 msgid "Expenses Authorisation"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:429
+#: includes/MainMenuLinksArray.php:427
 msgid "PC Tab General Report"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:435
+#: includes/MainMenuLinksArray.php:433
 msgid "Types of PC Tabs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:436
+#: includes/MainMenuLinksArray.php:434
 msgid "PC Tabs"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:437
+#: includes/MainMenuLinksArray.php:435
 msgid "PC Expenses"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:438
+#: includes/MainMenuLinksArray.php:436
 msgid "Expenses for Type of PC Tab"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:448
+#: includes/MainMenuLinksArray.php:446
 msgid "Configuration Settings"
 msgstr "Cài đặt cấu hình"
 
-#: includes/MainMenuLinksArray.php:451
+#: includes/MainMenuLinksArray.php:449
 #, fuzzy
 msgid "Access Permissions Maintenance"
 msgstr "Bảo trì Các mục tài sản"
 
-#: includes/MainMenuLinksArray.php:452
+#: includes/MainMenuLinksArray.php:450
 msgid "Page Security Settings"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:453
+#: includes/MainMenuLinksArray.php:451
 msgid "Bank Accounts"
 msgstr "tài khoản ngân hàng"
 
-#: includes/MainMenuLinksArray.php:454
+#: includes/MainMenuLinksArray.php:452
 msgid "Currency Maintenance"
 msgstr "Bảo trì tiền tệ"
 
-#: includes/MainMenuLinksArray.php:455
+#: includes/MainMenuLinksArray.php:453
 msgid "Tax Authorities and Rates Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:456
+#: includes/MainMenuLinksArray.php:454
 msgid "Tax Group Maintenance"
 msgstr "Bảo trì nhóm thuế"
 
-#: includes/MainMenuLinksArray.php:457
+#: includes/MainMenuLinksArray.php:455
 msgid "Dispatch Tax Province Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:458
+#: includes/MainMenuLinksArray.php:456
 msgid "Tax Category Maintenance"
 msgstr "Bảo trì các nhóm thuế"
 
-#: includes/MainMenuLinksArray.php:459
+#: includes/MainMenuLinksArray.php:457
 msgid "List Periods Defined"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:460
+#: includes/MainMenuLinksArray.php:458
 msgid "Report Builder Tool"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:461
+#: includes/MainMenuLinksArray.php:459
 msgid "View Audit Trail"
 msgstr "xem kiểm tra thử"
 
-#: includes/MainMenuLinksArray.php:463
+#: includes/MainMenuLinksArray.php:461
 msgid "Form Layout Editor"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:464
+#: includes/MainMenuLinksArray.php:462
 msgid "Label Templates Maintenance"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:465
+#: includes/MainMenuLinksArray.php:463
 msgid "SMTP Server Details"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:494
+#: includes/MainMenuLinksArray.php:492
 msgid "Set Purchase Order Authorisation levels"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:496
+#: includes/MainMenuLinksArray.php:494
 msgid "Sales People"
 msgstr "Nhân viên bán hàng"
 
-#: includes/MainMenuLinksArray.php:497
+#: includes/MainMenuLinksArray.php:495
 msgid "Sales Areas"
 msgstr "Khu vực bán hàng"
 
-#: includes/MainMenuLinksArray.php:498
+#: includes/MainMenuLinksArray.php:496
 msgid "Shippers"
 msgstr "Các hãng tàu"
 
-#: includes/MainMenuLinksArray.php:499
+#: includes/MainMenuLinksArray.php:497
 msgid "Sales GL Interface Postings"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:500
+#: includes/MainMenuLinksArray.php:498
 msgid "COGS GL Interface Postings"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:501
+#: includes/MainMenuLinksArray.php:499
 msgid "Freight Costs Maintenance"
 msgstr "Bảo dưỡng chi phí vận tải hảng hóa"
 
-#: includes/MainMenuLinksArray.php:502
+#: includes/MainMenuLinksArray.php:500
 msgid "Discount Matrix"
 msgstr "Ma trận chiết khấu"
 
-#: includes/MainMenuLinksArray.php:521
+#: includes/MainMenuLinksArray.php:519
 msgid "Inventory Categories Maintenance"
 msgstr "Bảo trì các loại hàng tồn kho"
 
-#: includes/MainMenuLinksArray.php:522
+#: includes/MainMenuLinksArray.php:520
 msgid "Inventory Locations Maintenance"
 msgstr "Bảo trì địa điểm hàng tồn kho"
 
-#: includes/MainMenuLinksArray.php:523
+#: includes/MainMenuLinksArray.php:521
 msgid "Discount Category Maintenance"
 msgstr "Bảo trì các mục chiết khấu"
 
-#: includes/MainMenuLinksArray.php:525
+#: includes/MainMenuLinksArray.php:523
 msgid "MRP Available Production Days"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:527
+#: includes/MainMenuLinksArray.php:525
 msgid "Maintain Internal Departments"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:528
+#: includes/MainMenuLinksArray.php:526
 msgid "Maintain Internal Stock Categories to User Roles"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:541
+#: includes/MainMenuLinksArray.php:539
 msgid "Change A Customer Code"
 msgstr "Thay đổi một mã số khách hàng"
 
-#: includes/MainMenuLinksArray.php:542
+#: includes/MainMenuLinksArray.php:540
 msgid "Change A Customer Branch Code"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:543
+#: includes/MainMenuLinksArray.php:541
 #, fuzzy
 msgid "Change A Supplier Code"
 msgstr "Thay đổi một mã số khách hàng"
 
-#: includes/MainMenuLinksArray.php:544
+#: includes/MainMenuLinksArray.php:542
 msgid "Change An Inventory Item Code"
 msgstr "Thay đổi"
 
-#: includes/MainMenuLinksArray.php:545
+#: includes/MainMenuLinksArray.php:543
 #, fuzzy
 msgid "Change A Location Code"
 msgstr "Thay đổi địa điểm tài sản"
 
-#: includes/MainMenuLinksArray.php:546
+#: includes/MainMenuLinksArray.php:544
 msgid "Update costs for all BOM items, from the bottom up"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:547
+#: includes/MainMenuLinksArray.php:545
 msgid "Re-apply costs to Sales Analysis"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:548
+#: includes/MainMenuLinksArray.php:546
 msgid "Delete sales transactions"
 msgstr "Xóa giao dịch bán hàng"
 
-#: includes/MainMenuLinksArray.php:549
+#: includes/MainMenuLinksArray.php:547
 msgid "Reverse all supplier payments on a specified date"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:561
+#: includes/MainMenuLinksArray.php:559
 msgid "Show Local Currency Total Debtor Balances"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:562
+#: includes/MainMenuLinksArray.php:560
 msgid "Show Local Currency Total Suppliers Balances"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:563
+#: includes/MainMenuLinksArray.php:561
 msgid "Show General Transactions That Do Not Balance"
+msgstr ""
+
+#: includes/MainMenuLinksArray.php:562
+msgid "List of items without picture"
 msgstr ""
 
 #: includes/MainMenuLinksArray.php:569
@@ -37624,7 +37678,7 @@ msgstr ""
 msgid "The SQL that failed was: "
 msgstr ""
 
-#: includes/UserLogin.php:60
+#: includes/UserLogin.php:45
 msgid "Could not retrieve user details on login because"
 msgstr ""
 
@@ -38522,7 +38576,7 @@ msgid ""
 "items with no cost data entered"
 msgstr ""
 
-#: includes/session.inc:104 includes/session.inc:266
+#: includes/session.inc:104 includes/session.inc:270
 msgid "Account Error Report"
 msgstr ""
 
@@ -38556,17 +38610,17 @@ msgstr ""
 msgid "during maintenance of the system"
 msgstr "trong quá trình bảo trì hệ thống"
 
-#: includes/session.inc:145 api/api_login.php:122
+#: includes/session.inc:149 api/api_login.php:122
 msgid "There was a problem deleting expired audit-trail history"
 msgstr ""
 
-#: includes/session.inc:254
+#: includes/session.inc:258
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
 msgstr ""
 
-#: includes/session.inc:269
+#: includes/session.inc:273
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -38576,16 +38630,16 @@ msgstr ""
 "thông báo ban qu?n tr? h? th?ng. Cung có th? có v?n d? v?i máy ch? PHP c?a b?"
 "n"
 
-#: includes/session.inc:285
+#: includes/session.inc:289
 msgid "Security Permissions Problem"
 msgstr "V?n d? cho phép an ninh"
 
-#: includes/session.inc:332
+#: includes/session.inc:336
 #, fuzzy
 msgid "Error in form verification"
 msgstr "L?i trong m?u xác minh"
 
-#: includes/session.inc:334
+#: includes/session.inc:338
 msgid "This form was not submitted with a correct ID"
 msgstr "M?u này không du?c n?p v?i ID dúng"
 

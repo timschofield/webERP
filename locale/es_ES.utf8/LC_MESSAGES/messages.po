@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebERP 4.081\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 21:50+1300\n"
+"POT-Creation-Date: 2012-12-29 13:44+1300\n"
 "PO-Revision-Date: 2012-12-11 15:23-0430\n"
 "Last-Translator: Daniel Rodriguez - TecnoSoluciones.com "
 "<webmaster@tecnosoluciones.com>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "Language: es_ES\n"
 
-#: AccountGroups.php:7 includes/MainMenuLinksArray.php:381
+#: AccountGroups.php:7 includes/MainMenuLinksArray.php:379
 msgid "Account Groups"
 msgstr "Grupos de Cuentas"
 
@@ -247,7 +247,7 @@ msgstr "No se pudieron obtener los subgrupos de cuentas porque"
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:14
 #: BOMExtendedQty.php:250 BOMIndented.php:246 BOMIndentedReverse.php:235
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:231 BOMs.php:858
-#: COGSGLPostings.php:19 CompanyPreferences.php:155 CounterReturns.php:1610
+#: COGSGLPostings.php:19 CompanyPreferences.php:155 CounterReturns.php:1607
 #: CounterSales.php:2074 CounterSales.php:2199 Credit_Invoice.php:270
 #: CreditStatus.php:21 Currencies.php:29 CustEDISetup.php:17
 #: DailyBankTransactions.php:11 DebtorsAtPeriodEnd.php:125
@@ -258,7 +258,7 @@ msgstr "No se pudieron obtener los subgrupos de cuentas porque"
 #: GLBudgets.php:29 GLJournalInquiry.php:7 GLJournal.php:247
 #: InternalStockRequest.php:300 InventoryPlanning.php:379
 #: InventoryPlanningPrefSupplier.php:469 MRPReport.php:516 NoSalesItems.php:89
-#: OutstandingGRNs.php:163 PcAssignCashToTab.php:59 PcAssignCashToTab.php:133
+#: PcAssignCashToTab.php:59 PcAssignCashToTab.php:133
 #: PcAssignCashToTab.php:149 PcAssignCashToTab.php:193 PDFPickingList.php:28
 #: PDFStockLocTransfer.php:16 PO_AuthorisationLevels.php:10 POReport.php:60
 #: POReport.php:64 POReport.php:68 PO_SelectOSPurchOrder.php:142
@@ -285,7 +285,7 @@ msgstr "No se pudieron obtener los subgrupos de cuentas porque"
 #: WhereUsedInquiry.php:18 WorkCentres.php:111 WorkCentres.php:162
 #: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
 #: WorkOrderReceive.php:31 WorkOrderStatus.php:58 WWW_Access.php:11
-#: WWW_Users.php:36 Z_BottomUpCosts.php:57
+#: WWW_Users.php:37 Z_BottomUpCosts.php:57
 msgid "Search"
 msgstr "Buscar"
 
@@ -316,8 +316,7 @@ msgstr "Ganancias y Pérdidas"
 #: Customers.php:965 Customers.php:974 Customers.php:977
 #: DeliveryDetails.php:1116 DeliveryDetails.php:1159 DeliveryDetails.php:1162
 #: GLTransInquiry.php:69 Labels.php:491 Labels.php:493 Labels.php:518
-#: Locations.php:617 Locations.php:619 MRP_2012-10.php:540 MRP_2012-10.php:544
-#: MRP_2012-10.php:548 MRP_2012-10.php:552 MRPCalendar.php:224 MRP.php:540
+#: Locations.php:617 Locations.php:619 MRPCalendar.php:224 MRP.php:540
 #: MRP.php:544 MRP.php:548 MRP.php:552 PaymentMethods.php:204
 #: PaymentMethods.php:205 PaymentMethods.php:206 PaymentMethods.php:207
 #: PaymentMethods.php:273 PaymentMethods.php:280 PaymentMethods.php:287
@@ -341,8 +340,8 @@ msgstr "Ganancias y Pérdidas"
 #: SystemParameters.php:965 SystemParameters.php:975 SystemParameters.php:977
 #: SystemParameters.php:1031 SystemParameters.php:1043
 #: SystemParameters.php:1045 TaxGroups.php:311 TaxGroups.php:314
-#: TaxGroups.php:371 WWW_Users.php:493 WWW_Users.php:495 WWW_Users.php:666
-#: WWW_Users.php:668
+#: TaxGroups.php:371 WWW_Users.php:494 WWW_Users.php:496 WWW_Users.php:667
+#: WWW_Users.php:669
 msgid "Yes"
 msgstr "Sí"
 
@@ -356,8 +355,7 @@ msgstr "Sí"
 #: Customers.php:960 Customers.php:973 Customers.php:976
 #: DeliveryDetails.php:1117 DeliveryDetails.php:1160 DeliveryDetails.php:1163
 #: GLTransInquiry.php:90 Labels.php:490 Labels.php:494 Labels.php:519
-#: Locations.php:622 Locations.php:624 MRP_2012-10.php:538 MRP_2012-10.php:542
-#: MRP_2012-10.php:546 MRP_2012-10.php:550 MRPCalendar.php:226 MRP.php:538
+#: Locations.php:622 Locations.php:624 MRPCalendar.php:226 MRP.php:538
 #: MRP.php:542 MRP.php:546 MRP.php:550 NoSalesItems.php:184
 #: PaymentMethods.php:204 PaymentMethods.php:205 PaymentMethods.php:206
 #: PaymentMethods.php:207 PaymentMethods.php:274 PaymentMethods.php:281
@@ -381,8 +379,8 @@ msgstr "Sí"
 #: SystemParameters.php:966 SystemParameters.php:974 SystemParameters.php:978
 #: SystemParameters.php:1032 SystemParameters.php:1042
 #: SystemParameters.php:1046 TaxGroups.php:312 TaxGroups.php:315
-#: TaxGroups.php:373 WWW_Users.php:492 WWW_Users.php:496 WWW_Users.php:665
-#: WWW_Users.php:669 includes/PDFLowGPPageHeader.inc:44
+#: TaxGroups.php:373 WWW_Users.php:493 WWW_Users.php:497 WWW_Users.php:666
+#: WWW_Users.php:670 includes/PDFLowGPPageHeader.inc:44
 #: includes/PDFTaxPageHeader.inc:35
 msgid "No"
 msgstr "No"
@@ -409,7 +407,7 @@ msgstr "No"
 #: SupplierTenderCreate.php:145 SupplierTypes.php:189
 #: SuppTransGLAnalysis.php:125 TaxAuthorities.php:174 TaxCategories.php:182
 #: TaxGroups.php:188 TaxProvinces.php:180 UnitsOfMeasure.php:185
-#: WorkCentres.php:141 WWW_Access.php:123 WWW_Users.php:332
+#: WorkCentres.php:141 WWW_Access.php:123 WWW_Users.php:333
 #: includes/InputSerialItems.php:102 includes/OutputSerialItems.php:20
 #, php-format
 msgid "Edit"
@@ -423,7 +421,7 @@ msgstr "¿Confirma que desea eliminar este grupo de cuenta?"
 #: AddCustomerNotes.php:138 AddCustomerTypeNotes.php:132 Areas.php:165
 #: BankAccounts.php:224 BOMs.php:153 COGSGLPostings.php:110
 #: COGSGLPostings.php:208 ContractBOM.php:267 ContractOtherReqts.php:120
-#: CounterReturns.php:743 CounterSales.php:832 Credit_Invoice.php:408
+#: CounterReturns.php:740 CounterSales.php:832 Credit_Invoice.php:408
 #: CreditStatus.php:176 Currencies.php:279 CustomerReceipt.php:927
 #: Customers.php:1086 CustomerTypes.php:207 Departments.php:187
 #: DiscountCategories.php:225 DiscountMatrix.php:183 EDIMessageFormat.php:151
@@ -449,7 +447,7 @@ msgstr "¿Confirma que desea eliminar este grupo de cuenta?"
 #: SupplierTypes.php:191 SuppShiptChgs.php:90 SuppTransGLAnalysis.php:126
 #: TaxAuthorities.php:175 TaxCategories.php:183 TaxGroups.php:189
 #: TaxProvinces.php:181 UnitsOfMeasure.php:186 WorkCentres.php:142
-#: WOSerialNos.php:323 WWW_Access.php:124 WWW_Users.php:333
+#: WOSerialNos.php:323 WWW_Access.php:124 WWW_Users.php:334
 #: includes/InputSerialItemsKeyed.php:60 includes/OutputSerialItems.php:99
 #, php-format
 msgid "Delete"
@@ -508,11 +506,11 @@ msgstr "Sección de Cuentas"
 #: SalesPeople.php:370 Shippers.php:203 StockCategories.php:614
 #: SupplierContacts.php:284 SuppLoginSetup.php:295 TaxAuthorities.php:329
 #: TaxCategories.php:238 TaxProvinces.php:235 UnitsOfMeasure.php:241
-#: WorkCentres.php:280 WWW_Users.php:737
+#: WorkCentres.php:280 WWW_Users.php:738
 msgid "Enter Information"
 msgstr "Guardar la Información"
 
-#: AccountSections.php:7 includes/MainMenuLinksArray.php:382
+#: AccountSections.php:7 includes/MainMenuLinksArray.php:380
 msgid "Account Sections"
 msgstr "Grupos Principales"
 
@@ -654,8 +652,8 @@ msgstr "Número de teléfono"
 #: PrintCustTrans.php:993 PrintCustTransPortrait.php:759
 #: PrintCustTransPortrait.php:1005 PrintCustTransPortrait.php:1061
 #: SelectCustomer.php:427 SelectCustomer.php:619 SelectSupplier.php:278
-#: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:185
-#: WWW_Users.php:288 includes/PDFPickingListHeader.inc:25
+#: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:186
+#: WWW_Users.php:289 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:29
@@ -868,7 +866,7 @@ msgstr "Análisis de Saldos de Cuentas a Cobrar por Vencimiento"
 #: MailInventoryValuation.php:114 MRPPlannedPurchaseOrders.php:114
 #: MRPPlannedWorkOrders.php:106 MRPReport.php:147 MRPReport.php:508
 #: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:155
-#: MRPShortages.php:167 OutstandingGRNs.php:53 OutstandingGRNs.php:65
+#: MRPShortages.php:167 OutstandingGRNs.php:46 OutstandingGRNs.php:59
 #: PDFCustomerList.php:18 PDFCustomerList.php:230 PDFCustomerList.php:242
 #: PDFLowGP.php:20 PDFStockCheckComparison.php:33
 #: PDFStockCheckComparison.php:59 PDFStockCheckComparison.php:264
@@ -906,7 +904,7 @@ msgstr "No se pudo obtener mediante SQL el detalle del cliente porque"
 #: MRPPlannedWorkOrders.php:120 MRPPlannedWorkOrders.php:311 MRPReport.php:39
 #: MRPReport.php:50 MRPReport.php:150 MRPReschedules.php:48
 #: MRPReschedules.php:60 MRPShortages.php:158 MRPShortages.php:170
-#: OutstandingGRNs.php:56 OutstandingGRNs.php:68 PDFCustomerList.php:233
+#: OutstandingGRNs.php:49 OutstandingGRNs.php:62 PDFCustomerList.php:233
 #: PDFCustomerList.php:245 PDFGLJournal.php:100 PDFGrn.php:130 PDFLowGP.php:59
 #: PDFLowGP.php:71 PDFPriceList.php:128 PDFPrintLabel.php:46
 #: PDFQuotation.php:272 PDFQuotationPortrait.php:268
@@ -950,8 +948,8 @@ msgstr "no se pudo obtener porque"
 
 #: AgedDebtors.php:368 AgedSuppliers.php:200 Areas.php:94
 #: ConfirmDispatch_Invoice.php:164 ConfirmDispatch_Invoice.php:983
-#: ConfirmDispatch_Invoice.php:997 Contracts.php:582 CounterReturns.php:1015
-#: CounterReturns.php:1029 CounterSales.php:1413 CounterSales.php:1427
+#: ConfirmDispatch_Invoice.php:997 Contracts.php:582 CounterReturns.php:1012
+#: CounterReturns.php:1026 CounterSales.php:1413 CounterSales.php:1427
 #: Credit_Invoice.php:729 Credit_Invoice.php:750 CustomerReceipt.php:547
 #: CustomerReceipt.php:686 CustomerReceipt.php:714 CustomerTransInquiry.php:93
 #: DeliveryDetails.php:398 GLProfit_Loss.php:598 GLTagProfit_Loss.php:513
@@ -1045,7 +1043,7 @@ msgstr "Informe Detallado"
 #: InventoryPlanningPrefSupplier.php:519 InventoryQuantities.php:210
 #: InventoryValuation.php:269 MRPPlannedPurchaseOrders.php:282
 #: MRPPlannedWorkOrders.php:341 MRPReschedules.php:153 MRPShortages.php:303
-#: OutstandingGRNs.php:182 PDFCustomerList.php:419 PDFLowGP.php:146
+#: OutstandingGRNs.php:277 PDFCustomerList.php:419 PDFLowGP.php:146
 #: PDFPriceList.php:312 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:361 PrintCustTrans.php:537
 #: PrintCustTransPortrait.php:582 ReorderLevel.php:259 StockDispatch.php:407
@@ -1085,12 +1083,12 @@ msgstr "Análisis de Saldos de Proveedores por Vencimiento"
 msgid "There are no results so the PDF is empty"
 msgstr "No hay resultados por lo que el PDF esta vacío"
 
-#: AgedSuppliers.php:287 OutstandingGRNs.php:172 PDFRemittanceAdvice.php:153
+#: AgedSuppliers.php:287 OutstandingGRNs.php:267 PDFRemittanceAdvice.php:153
 #: SupplierBalsAtPeriodEnd.php:132 SuppPaymentRun.php:265
 msgid "From Supplier Code"
 msgstr "Desde Código-Proveedor"
 
-#: AgedSuppliers.php:291 OutstandingGRNs.php:176 PDFRemittanceAdvice.php:157
+#: AgedSuppliers.php:291 OutstandingGRNs.php:271 PDFRemittanceAdvice.php:157
 #: SupplierBalsAtPeriodEnd.php:136 SuppPaymentRun.php:269
 msgid "To Supplier Code"
 msgstr "Hasta Código-Proveedor"
@@ -1218,17 +1216,17 @@ msgstr "Hasta la Fecha"
 
 #: AuditTrail.php:48 PO_AuthorisationLevels.php:124
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
-#: UserSettings.php:113
+#: UserSettings.php:114
 msgid "User ID"
 msgstr "ID de Usuario"
 
 #: AuditTrail.php:50 AuditTrail.php:63 ContractBOM.php:300
-#: CounterReturns.php:1618 CounterReturns.php:1621 CounterSales.php:2205
+#: CounterReturns.php:1615 CounterReturns.php:1618 CounterSales.php:2205
 #: CounterSales.php:2208 CustomerTransInquiry.php:32 DailySalesInquiry.php:46
 #: DailySalesInquiry.php:48 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:168
-#: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP_2012-10.php:597
-#: MRP.php:597 MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
+#: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:597
+#: MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:48 NoSalesItems.php:68
 #: NoSalesItems.php:70 PDFPeriodStockTransListing.php:60 PDFPriceList.php:198
 #: PO_Items.php:1051 POReport.php:1570 ReorderLevel.php:212
@@ -1614,7 +1612,7 @@ msgid "from"
 msgstr "Desde"
 
 #: BankMatching.php:128 ConfirmDispatchControlled_Invoice.php:68
-#: CounterReturns.php:200 EmailCustTrans.php:64 FixedAssetRegister.php:79
+#: CounterReturns.php:197 EmailCustTrans.php:64 FixedAssetRegister.php:79
 #: FTP_RadioBeacon.php:280 GLAccountCSV.php:173 GLAccountReport.php:103
 #: Payments.php:746 PcReportTab.php:101 PDFChequeListing.php:115
 #: PDFChequeListing.php:125 PDFChequeListing.php:200
@@ -1895,8 +1893,8 @@ msgstr "Número"
 #: CustomerTransInquiry.php:105 CustWhereAlloc.php:107
 #: DailyBankTransactions.php:115 GLAccountReport.php:339
 #: PaymentAllocations.php:64 PaymentAllocations.php:65
-#: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:115
-#: StockCounts.php:158 StockLocMovements.php:94 StockMovements.php:102
+#: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:113
+#: StockCounts.php:156 StockLocMovements.php:94 StockMovements.php:102
 #: Z_CheckAllocs.php:64 includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -1948,7 +1946,7 @@ msgstr ""
 "balance actual de la cuenta. Es importante que la tasa de cambio de arriba "
 "refleje el valor actual de la moneda de la cuenta bancaria"
 
-#: BankReconciliation.php:358 CounterReturns.php:743 CounterSales.php:832
+#: BankReconciliation.php:358 CounterReturns.php:740 CounterSales.php:832
 #: Customers.php:1114 SelectOrderItems.php:1456 Stocks.php:1251
 #: WorkOrderCosting.php:551 WorkOrderEntry.php:590
 msgid "Are You Sure?"
@@ -1987,12 +1985,12 @@ msgid "Quantity Extended BOM Listing"
 msgstr "Listado LDM de Cantidades Extendido"
 
 #: BOMExtendedQty.php:30 BOMIndented.php:27 BOMIndentedReverse.php:26
-#: MRP_2012-10.php:27 MRPCalendar.php:86 MRP.php:27
+#: MRPCalendar.php:86 MRP.php:27
 msgid "The SQL to create passbom failed with the message"
 msgstr "El SQL para crear passbom falló con el mensaje"
 
 #: BOMExtendedQty.php:43 BOMIndented.php:40 BOMIndentedReverse.php:39
-#: MRP_2012-10.php:34 MRP.php:34
+#: MRP.php:34
 msgid "Create of tempbom failed because"
 msgstr "Falló la creación del tempbom porque"
 
@@ -2020,8 +2018,8 @@ msgstr "Componente"
 #: BOMIndentedReverse.php:295 BOMInquiry.php:200 BOMs.php:556 BOMs.php:735
 #: ContractBOM.php:238 ContractBOM.php:351 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:95
-#: Contracts.php:987 Contracts.php:1023 CounterReturns.php:672
-#: CounterReturns.php:1682 CounterReturns.php:1809 CounterSales.php:745
+#: Contracts.php:987 Contracts.php:1023 CounterReturns.php:669
+#: CounterReturns.php:1679 CounterReturns.php:1806 CounterSales.php:745
 #: CounterSales.php:2085 CounterSales.php:2272 CounterSales.php:2409
 #: Credit_Invoice.php:289 CustomerPurchases.php:73 DeliveryDetails.php:852
 #: DeliveryDetails.php:922 GoodsReceived.php:101 GoodsReceived.php:105
@@ -2044,7 +2042,7 @@ msgstr "Componente"
 #: SelectOrderItems.php:1733 SelectOrderItems.php:1863 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:628
-#: StockCounts.php:114 StockLocMovements.php:93 StockLocTransfer.php:307
+#: StockCounts.php:112 StockLocMovements.php:93 StockLocTransfer.php:307
 #: StockMovements.php:101 StockStatus.php:343 StockUsageGraph.php:12
 #: SuppCreditGRNs.php:279 SuppCreditGRNs.php:280 SupplierCredit.php:318
 #: SupplierTenderCreate.php:412 SupplierTenderCreate.php:821
@@ -2207,7 +2205,7 @@ msgid "Build"
 msgstr "estructura"
 
 #: BOMExtendedQty.php:321 BOMInquiry.php:110 BOMs.php:883
-#: CounterReturns.php:1678 CounterSales.php:2081 CounterSales.php:2268
+#: CounterReturns.php:1675 CounterSales.php:2081 CounterSales.php:2268
 #: InternalStockRequest.php:625 PO_SelectOSPurchOrder.php:237
 #: PO_SelectPurchOrder.php:214 ReorderLevelLocation.php:70
 #: ReorderLevelLocation.php:71 SelectCompletedOrder.php:556
@@ -2276,7 +2274,7 @@ msgstr "Un Nivel"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:109
 #: BOMInquiry.php:199 BOMs.php:553 BOMs.php:882 ContractBOM.php:237
-#: ContractBOM.php:348 ContractOtherReqts.php:94 CounterReturns.php:1676
+#: ContractBOM.php:348 ContractOtherReqts.php:94 CounterReturns.php:1673
 #: CounterSales.php:2079 CounterSales.php:2266 CreditStatus.php:152
 #: CreditStatus.php:243 CustomerPurchases.php:67 EmailConfirmation.php:218
 #: EmailConfirmation.php:336 FixedAssetCategories.php:164
@@ -2311,7 +2309,7 @@ msgstr "Un Nivel"
 #: SupplierTenders.php:326 SupplierTenders.php:421 SupplierTenders.php:689
 #: SuppPriceList.php:309 TaxAuthorities.php:147 TopItems.php:164
 #: WorkCentres.php:127 WorkOrderCosting.php:98 WorkOrderCosting.php:130
-#: WorkOrderEntry.php:643 WorkOrderIssue.php:707
+#: WorkOrderEntry.php:643 WorkOrderIssue.php:707 Z_ItemsWithoutPicture.php:33
 #: includes/DefineLabelClass.php:12 includes/DefineLabelClass.php:45
 #: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
@@ -2402,7 +2400,7 @@ msgid "description"
 msgstr "descripción"
 
 #: BOMInquiry.php:28 BOMs.php:866 ContractBOM.php:326 ContractBOM.php:331
-#: Contracts.php:756 Contracts.php:759 CounterReturns.php:1643
+#: Contracts.php:756 Contracts.php:759 CounterReturns.php:1640
 #: CounterSales.php:2230 CustomerReceipt.php:1115 CustomerReceipt.php:1118
 #: DiscountCategories.php:109 DiscountCategories.php:111
 #: DiscountCategories.php:115 DiscountCategories.php:117
@@ -2436,8 +2434,8 @@ msgstr "Introduzca una parte del"
 #: SalesInquiry.php:780 SalesInquiry.php:806 SalesInquiry.php:825
 #: SalesInquiry.php:935 SalesInquiry.php:1093 SalesInquiry.php:1183
 #: SalesInquiry.php:1201 SelectProduct.php:548 Shipt_Select.php:174
-#: StockAdjustments.php:116 StockAdjustments.php:394 StockCounts.php:113
-#: StockCounts.php:155 StockMovements.php:36 StockReorderLevel.php:47
+#: StockAdjustments.php:116 StockAdjustments.php:394 StockCounts.php:111
+#: StockCounts.php:153 StockMovements.php:36 StockReorderLevel.php:47
 #: StockStatus.php:57 StockTransfers.php:49 StockTransfers.php:470
 #: StockUsage.php:64 SupplierPriceList.php:47 SupplierTenderCreate.php:670
 #: SupplierTenders.php:433 WorkOrderEntry.php:631 WorkOrderIssue.php:683
@@ -2446,7 +2444,7 @@ msgid "Stock Code"
 msgstr "Código de Inventario"
 
 #: BOMInquiry.php:35 BOMs.php:871 ContractBOM.php:336 Contracts.php:764
-#: CounterReturns.php:1647 CounterSales.php:2236 CustomerReceipt.php:1125
+#: CounterReturns.php:1644 CounterSales.php:2236 CustomerReceipt.php:1125
 #: FixedAssetTransfer.php:102 InternalStockRequest.php:354 MRPDemands.php:343
 #: MRPReport.php:555 PO_Header.php:544 PO_Items.php:1088 SelectAsset.php:114
 #: SelectCreditItems.php:232 SelectCreditItems.php:1010 SelectCustomer.php:375
@@ -2486,7 +2484,7 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "El SQL para encontrar las piezas seleccionadas falló con el mensaje"
 
 #: BOMInquiry.php:108 BOMs.php:552 BOMs.php:881 ContractBOM.php:347
-#: CounterReturns.php:1675 CounterSales.php:2078 CounterSales.php:2265
+#: CounterReturns.php:1672 CounterSales.php:2078 CounterSales.php:2265
 #: CustomerBranches.php:370 CustomerReceipt.php:1136 GLCodesInquiry.php:26
 #: InternalStockRequest.php:554 InternalStockRequest.php:622 MRPDemands.php:91
 #: MRPPlannedWorkOrders.php:257 MRPReport.php:748 NoSalesItems.php:186
@@ -2507,7 +2505,7 @@ msgid "Code"
 msgstr "Código"
 
 #: BOMInquiry.php:111 BOMs.php:884 ConfirmDispatch_Invoice.php:286
-#: ContractBOM.php:349 CounterReturns.php:1677 CounterSales.php:2080
+#: ContractBOM.php:349 CounterReturns.php:1674 CounterSales.php:2080
 #: CounterSales.php:2267 Credit_Invoice.php:288 GoodsReceived.php:102
 #: GoodsReceived.php:106 InternalStockRequestAuthorisation.php:89
 #: InternalStockRequestFulfill.php:310 InternalStockRequest.php:557
@@ -2582,7 +2580,7 @@ msgid "to view the costed bill of material for"
 msgstr "para ver el costo de la lista de materiales para"
 
 #: BOMListing.php:14 BOMListing.php:15 BOMListing.php:107
-#: includes/MainMenuLinksArray.php:296
+#: includes/MainMenuLinksArray.php:294
 msgid "Bill Of Material Listing"
 msgstr "Informe de Lista de Materiales"
 
@@ -2804,7 +2802,7 @@ msgstr "No se pudo obtener la descripción de la pieza que usa ésta porque"
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr "El SQL usado para obtener la descripción de la pieza que usa ésta fue"
 
-#: BOMs.php:425 ConfirmDispatch_Invoice.php:1030 CounterReturns.php:1063
+#: BOMs.php:425 ConfirmDispatch_Invoice.php:1030 CounterReturns.php:1060
 #: CounterSales.php:1460 Credit_Invoice.php:785 Credit_Invoice.php:813
 #: SelectCreditItems.php:1484 Stocks.php:983 Stocks.php:985
 #: api/api_debtortransactions.php:753 api/api_salesorders.php:920
@@ -2848,11 +2846,10 @@ msgid "Level"
 msgstr "Nivel"
 
 #: BOMs.php:554 BOMs.php:685 Contracts.php:869 FixedAssetRegister.php:86
-#: InventoryQuantities.php:247 Locations.php:349 MRP_2012-10.php:562
-#: MRP_2012-10.php:595 MRP.php:562 MRP.php:595 NoSalesItems.php:185
-#: PDFOrdersInvoiced.php:312 PDFOrderStatus.php:281
+#: InventoryQuantities.php:247 Locations.php:349 MRP.php:562 MRP.php:595
+#: NoSalesItems.php:185 PDFOrdersInvoiced.php:312 PDFOrderStatus.php:281
 #: ReorderLevelLocation.php:157 ReorderLevel.php:290 ReorderLevel.php:299
-#: StockCounts.php:156 StockReorderLevel.php:54 StockSerialItemResearch.php:80
+#: StockCounts.php:154 StockReorderLevel.php:54 StockSerialItemResearch.php:80
 #: StockStatus.php:80 StockStatus.php:85 SupplierTenderCreate.php:125
 #: WhereUsedInquiry.php:72 WorkCentres.php:128 WorkCentres.php:222
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
@@ -2861,7 +2858,7 @@ msgstr "Nivel"
 msgid "Location"
 msgstr "Ubicación"
 
-#: BOMs.php:555 WhereUsedInquiry.php:71 includes/MainMenuLinksArray.php:321
+#: BOMs.php:555 WhereUsedInquiry.php:71 includes/MainMenuLinksArray.php:319
 msgid "Work Centre"
 msgstr "Centro de Trabajo"
 
@@ -3002,7 +2999,7 @@ msgstr ""
 #: COGSGLPostings.php:191 CustomerReceipt.php:1031 GLJournal.php:384
 #: GLTransInquiry.php:44 Payments.php:1066 SupplierTransInquiry.php:172
 #: TaxAuthorities.php:148 TaxAuthorities.php:149
-#: includes/MainMenuLinksArray.php:379
+#: includes/MainMenuLinksArray.php:377
 msgid "GL Account"
 msgstr "Cuentas Contables"
 
@@ -3027,7 +3024,7 @@ msgstr "Lista de Precios"
 msgid "Post to GL account"
 msgstr "Publicar a una cuenta"
 
-#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:447
+#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:445
 msgid "Company Preferences"
 msgstr "Configuración de la Compañía"
 
@@ -3146,7 +3143,7 @@ msgstr "Fax"
 
 #: CompanyPreferences.php:281 CustLoginSetup.php:162 Suppliers.php:712
 #: Suppliers.php:914 SupplierTenderCreate.php:394 SuppLoginSetup.php:148
-#: WWW_Users.php:471
+#: WWW_Users.php:472
 msgid "Email Address"
 msgstr "Correo Electrónico"
 
@@ -3367,7 +3364,7 @@ msgstr "Cliente"
 #: OrderDetails.php:73 SalesAnalRepts.php:30 SalesAnalRepts.php:32
 #: SalesInquiry.php:751 SalesInquiry.php:761 SalesInquiry.php:783
 #: SalesInquiry.php:931 SalesInquiry.php:946 SalesInquiry.php:952
-#: SalesInquiry.php:1203 WWW_Users.php:289 WWW_Users.php:528
+#: SalesInquiry.php:1203 WWW_Users.php:290 WWW_Users.php:529
 #: Z_ChangeBranchCode.php:202 includes/PDFStatementPageHeader.inc:112
 #: includes/PDFTransPageHeader.inc:46
 #: includes/PDFTransPageHeaderPortrait.inc:55
@@ -3390,23 +3387,24 @@ msgid "Invoice amounts stated in"
 msgstr "Factura importes que constan en"
 
 #: ConfirmDispatch_Invoice.php:283 ContractBOM.php:236 ContractCosting.php:79
-#: ContractCosting.php:85 Contracts.php:985 CounterReturns.php:670
-#: CounterReturns.php:1808 CounterSales.php:743 CounterSales.php:2408
+#: ContractCosting.php:85 Contracts.php:985 CounterReturns.php:667
+#: CounterReturns.php:1805 CounterSales.php:743 CounterSales.php:2408
 #: Credit_Invoice.php:285 DeliveryDetails.php:850 GoodsReceived.php:99
 #: InternalStockRequest.php:260 Labels.php:465 Labels.php:467 Labels.php:509
-#: OrderDetails.php:168 PDFPrintLabel.php:65 PO_Items.php:679
-#: PO_OrderDetails.php:146 PrintCustTrans.php:859 PrintCustTrans.php:948
-#: PrintCustTrans.php:997 PrintCustTransPortrait.php:913
-#: PrintCustTransPortrait.php:1011 PrintCustTransPortrait.php:1067
-#: RecurringSalesOrders.php:329 ReorderLevelLocation.php:188 ReprintGRN.php:84
-#: ReverseGRN.php:390 SalesGraph.php:182 SelectCreditItems.php:684
-#: SelectOrderItems.php:1376 StockCostUpdate.php:125 StockLocMovements.php:88
-#: StockLocTransfer.php:306 StockLocTransferReceive.php:428
-#: StockQuantityByDate.php:107 Stocks.php:776 Stocks.php:779 Stocks.php:833
-#: Stocks.php:839 SuppCreditGRNs.php:91 SuppCreditGRNs.php:186
-#: SuppInvGRNs.php:125 SuppInvGRNs.php:306 SupplierCredit.php:316
-#: SupplierInvoice.php:664 SupplierTenders.php:122 SupplierTenders.php:530
-#: SupplierTenders.php:532 includes/PDFOrderPageHeader_generic.inc:91
+#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPrintLabel.php:65
+#: PO_Items.php:679 PO_OrderDetails.php:146 PrintCustTrans.php:859
+#: PrintCustTrans.php:948 PrintCustTrans.php:997
+#: PrintCustTransPortrait.php:913 PrintCustTransPortrait.php:1011
+#: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:329
+#: ReorderLevelLocation.php:188 ReprintGRN.php:84 ReverseGRN.php:390
+#: SalesGraph.php:182 SelectCreditItems.php:684 SelectOrderItems.php:1376
+#: StockCostUpdate.php:125 StockLocMovements.php:88 StockLocTransfer.php:306
+#: StockLocTransferReceive.php:428 StockQuantityByDate.php:107 Stocks.php:776
+#: Stocks.php:779 Stocks.php:833 Stocks.php:839 SuppCreditGRNs.php:91
+#: SuppCreditGRNs.php:186 SuppInvGRNs.php:125 SuppInvGRNs.php:306
+#: SupplierCredit.php:316 SupplierInvoice.php:664 SupplierTenders.php:122
+#: SupplierTenders.php:530 SupplierTenders.php:532
+#: Z_ItemsWithoutPicture.php:32 includes/PDFOrderPageHeader_generic.inc:91
 #: includes/PDFPickingListHeader.inc:72
 #: includes/PDFQuotationPageHeader.inc:102
 #: includes/PDFQuotationPortraitPageHeader.inc:102
@@ -3418,7 +3416,7 @@ msgid "Item Code"
 msgstr "Código de Artículo"
 
 #: ConfirmDispatch_Invoice.php:284 ContractCosting.php:80
-#: ContractCosting.php:86 Contracts.php:986 CounterReturns.php:671
+#: ContractCosting.php:86 Contracts.php:986 CounterReturns.php:668
 #: CounterSales.php:744 Credit_Invoice.php:286 DeliveryDetails.php:851
 #: DeliveryDetails.php:921 InternalStockRequest.php:147
 #: InternalStockRequest.php:261 Labels.php:470 OrderDetails.php:169
@@ -3461,7 +3459,7 @@ msgstr "Enviada"
 msgid "This Dispatch"
 msgstr "Esta Nota de Entrega"
 
-#: ConfirmDispatch_Invoice.php:289 CounterReturns.php:674 CounterSales.php:748
+#: ConfirmDispatch_Invoice.php:289 CounterReturns.php:671 CounterSales.php:748
 #: Credit_Invoice.php:290 CustomerPurchases.php:72 DeliveryDetails.php:854
 #: DeliveryDetails.php:924 GoodsReceived.php:112 Labels.php:480 Labels.php:482
 #: Labels.php:512 OffersReceived.php:110 OffersReceived.php:219
@@ -3484,7 +3482,7 @@ msgstr "Esta Nota de Entrega"
 msgid "Price"
 msgstr "Precio"
 
-#: ConfirmDispatch_Invoice.php:290 CounterReturns.php:675 CounterSales.php:750
+#: ConfirmDispatch_Invoice.php:290 CounterReturns.php:672 CounterSales.php:750
 #: Credit_Invoice.php:291 CustomerReceipt.php:907 DeliveryDetails.php:855
 #: OrderDetails.php:173 PrintCustTrans.php:864 PrintCustTrans.php:953
 #: PrintCustTrans.php:1002 PrintCustTransPortrait.php:918
@@ -3499,7 +3497,7 @@ msgid "Discount"
 msgstr "Descuento"
 
 #: ConfirmDispatch_Invoice.php:291 ConfirmDispatch_Invoice.php:295
-#: CounterReturns.php:679 CounterReturns.php:759 CounterSales.php:755
+#: CounterReturns.php:676 CounterReturns.php:756 CounterSales.php:755
 #: CounterSales.php:849 CounterSales.php:851 Credit_Invoice.php:292
 #: Credit_Invoice.php:296 CustomerAllocations.php:331
 #: CustomerAllocations.php:365 CustomerInquiry.php:205 DeliveryDetails.php:856
@@ -3509,18 +3507,19 @@ msgstr "Descuento"
 #: GLTrialBalance.php:238 GLTrialBalance.php:259 GLTrialBalance.php:355
 #: GLTrialBalance.php:487 GLTrialBalance.php:507 GLTrialBalance.php:531
 #: GLTrialBalance.php:643 GLTrialBalance.php:663 GLTrialBalance.php:687
-#: OffersReceived.php:111 OrderDetails.php:174 PDFCustTransListing.php:133
-#: PDFOrdersInvoiced.php:395 PDFRemittanceAdvice.php:310
-#: PDFSuppTransListing.php:131 RecurringSalesOrders.php:335
-#: SalesByTypePeriodInquiry.php:375 SalesByTypePeriodInquiry.php:410
-#: SalesByTypePeriodInquiry.php:445 SalesByTypePeriodInquiry.php:480
-#: SalesByTypePeriodInquiry.php:541 SelectCreditItems.php:691
-#: SelectCreditItems.php:695 SelectOrderItems.php:1387
-#: SuppContractChgs.php:107 SuppFixedAssetChgs.php:94
-#: SupplierAllocations.php:458 SupplierAllocations.php:570
-#: SupplierAllocations.php:645 SupplierCredit.php:407 SupplierInquiry.php:212
-#: SuppShiptChgs.php:97 SuppTransGLAnalysis.php:139
-#: Z_CheckDebtorsControl.php:149 includes/PDFQuotationPageHeader.inc:109
+#: OffersReceived.php:111 OrderDetails.php:174 OutstandingGRNs.php:243
+#: PDFCustTransListing.php:133 PDFOrdersInvoiced.php:395
+#: PDFRemittanceAdvice.php:310 PDFSuppTransListing.php:131
+#: RecurringSalesOrders.php:335 SalesByTypePeriodInquiry.php:375
+#: SalesByTypePeriodInquiry.php:410 SalesByTypePeriodInquiry.php:445
+#: SalesByTypePeriodInquiry.php:480 SalesByTypePeriodInquiry.php:541
+#: SelectCreditItems.php:691 SelectCreditItems.php:695
+#: SelectOrderItems.php:1387 SuppContractChgs.php:107
+#: SuppFixedAssetChgs.php:94 SupplierAllocations.php:458
+#: SupplierAllocations.php:570 SupplierAllocations.php:645
+#: SupplierCredit.php:407 SupplierInquiry.php:212 SuppShiptChgs.php:97
+#: SuppTransGLAnalysis.php:139 Z_CheckDebtorsControl.php:149
+#: includes/PDFQuotationPageHeader.inc:109
 #: includes/PDFQuotationPortraitPageHeader.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:82 api/api_debtortransactions.php:1269
 #: api/api_debtortransactions.php:1282 api/api_debtortransactions.php:1579
@@ -3542,7 +3541,7 @@ msgstr "Autoridad Fiscal"
 msgid "Tax %"
 msgstr "Impuestos %"
 
-#: ConfirmDispatch_Invoice.php:294 CounterReturns.php:678 CounterSales.php:754
+#: ConfirmDispatch_Invoice.php:294 CounterReturns.php:675 CounterSales.php:754
 #: Credit_Invoice.php:294 Credit_Invoice.php:295 PrintCustTrans.php:396
 #: PrintCustTrans.php:1040 PrintCustTransPortrait.php:456
 #: PrintCustTransPortrait.php:1110 SelectCreditItems.php:693
@@ -3550,7 +3549,7 @@ msgstr "Impuestos %"
 msgid "Tax"
 msgstr "Impuestos"
 
-#: ConfirmDispatch_Invoice.php:295 CounterReturns.php:679 CounterSales.php:755
+#: ConfirmDispatch_Invoice.php:295 CounterReturns.php:676 CounterSales.php:755
 #: Credit_Invoice.php:296 SelectCreditItems.php:695
 msgid "Incl Tax"
 msgstr "Con Impuesto"
@@ -3784,12 +3783,12 @@ msgstr "El SQL utilizada para actualizar la compañía por defecto fue"
 #: ConfirmDispatch_Invoice.php:1602 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterReturns.php:942 CounterReturns.php:958
-#: CounterReturns.php:995 CounterReturns.php:1014 CounterReturns.php:1028
-#: CounterReturns.php:1069 CounterReturns.php:1079 CounterReturns.php:1159
-#: CounterReturns.php:1180 CounterReturns.php:1304 CounterReturns.php:1326
-#: CounterReturns.php:1351 CounterReturns.php:1372 CounterReturns.php:1398
-#: CounterReturns.php:1421 CounterSales.php:1298 CounterSales.php:1340
+#: ContractCosting.php:415 CounterReturns.php:939 CounterReturns.php:955
+#: CounterReturns.php:992 CounterReturns.php:1011 CounterReturns.php:1025
+#: CounterReturns.php:1066 CounterReturns.php:1076 CounterReturns.php:1156
+#: CounterReturns.php:1177 CounterReturns.php:1301 CounterReturns.php:1323
+#: CounterReturns.php:1348 CounterReturns.php:1369 CounterReturns.php:1395
+#: CounterReturns.php:1418 CounterSales.php:1298 CounterSales.php:1340
 #: CounterSales.php:1356 CounterSales.php:1393 CounterSales.php:1412
 #: CounterSales.php:1426 CounterSales.php:1466 CounterSales.php:1476
 #: CounterSales.php:1558 CounterSales.php:1579 CounterSales.php:1741
@@ -3906,12 +3905,12 @@ msgstr "ERROR CRÍTICO"
 #: ConfirmDispatch_Invoice.php:1602 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterReturns.php:942 CounterReturns.php:958
-#: CounterReturns.php:995 CounterReturns.php:1014 CounterReturns.php:1028
-#: CounterReturns.php:1069 CounterReturns.php:1079 CounterReturns.php:1159
-#: CounterReturns.php:1180 CounterReturns.php:1304 CounterReturns.php:1326
-#: CounterReturns.php:1351 CounterReturns.php:1372 CounterReturns.php:1398
-#: CounterReturns.php:1421 CounterSales.php:1298 CounterSales.php:1340
+#: ContractCosting.php:415 CounterReturns.php:939 CounterReturns.php:955
+#: CounterReturns.php:992 CounterReturns.php:1011 CounterReturns.php:1025
+#: CounterReturns.php:1066 CounterReturns.php:1076 CounterReturns.php:1156
+#: CounterReturns.php:1177 CounterReturns.php:1301 CounterReturns.php:1323
+#: CounterReturns.php:1348 CounterReturns.php:1369 CounterReturns.php:1395
+#: CounterReturns.php:1418 CounterSales.php:1298 CounterSales.php:1340
 #: CounterSales.php:1356 CounterSales.php:1393 CounterSales.php:1412
 #: CounterSales.php:1426 CounterSales.php:1466 CounterSales.php:1476
 #: CounterSales.php:1558 CounterSales.php:1579 CounterSales.php:1741
@@ -4019,18 +4018,18 @@ msgstr ""
 msgid "The following SQL to update the sales order was used"
 msgstr "Se usó el siguiente SQL para actualizar las órdenes de venta"
 
-#: ConfirmDispatch_Invoice.php:801 CounterReturns.php:942
+#: ConfirmDispatch_Invoice.php:801 CounterReturns.php:939
 #: CounterSales.php:1340 RecurringSalesOrdersProcess.php:680
 msgid "The debtor transaction record could not be inserted because"
 msgstr "No se pudo agregar el registro de transacción del deudor porque"
 
-#: ConfirmDispatch_Invoice.php:802 CounterReturns.php:943
+#: ConfirmDispatch_Invoice.php:802 CounterReturns.php:940
 #: CounterSales.php:1341 RecurringSalesOrdersProcess.php:681
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr ""
 "Se usó el siguiente SQL para agregar el registro de transacción del deudor"
 
-#: ConfirmDispatch_Invoice.php:817 CounterReturns.php:958
+#: ConfirmDispatch_Invoice.php:817 CounterReturns.php:955
 #: CounterSales.php:1356 Credit_Invoice.php:629
 #: RecurringSalesOrdersProcess.php:694 SelectCreditItems.php:1177
 msgid "The debtor transaction taxes records could not be inserted because"
@@ -4038,7 +4037,7 @@ msgstr ""
 "No se pudo agregar los registros de impuestos de la transacción del deudor "
 "porque"
 
-#: ConfirmDispatch_Invoice.php:818 CounterReturns.php:959
+#: ConfirmDispatch_Invoice.php:818 CounterReturns.php:956
 #: CounterSales.php:1357 Credit_Invoice.php:630
 #: RecurringSalesOrdersProcess.php:695 SelectCreditItems.php:1178
 msgid ""
@@ -4082,24 +4081,24 @@ msgstr ""
 msgid "Cannot retrieve the mbflag"
 msgstr "No puede recuperar la mbflag"
 
-#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:979
+#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:976
 #: CounterSales.php:1377 FixedAssetItems.php:628 SalesAnalReptCols.php:327
 #: Stocks.php:1248 Suppliers.php:1028 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "ADVERTENCIA"
 
-#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:979
+#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:976
 #: CounterSales.php:1377
 msgid "Could not retrieve current location stock"
 msgstr "No se pudo obtener las existencias de la ubicación actual"
 
-#: ConfirmDispatch_Invoice.php:964 CounterReturns.php:995
+#: ConfirmDispatch_Invoice.php:964 CounterReturns.php:992
 #: CounterSales.php:1393 Credit_Invoice.php:707 SelectCreditItems.php:1417
 msgid "Location stock record could not be updated because"
 msgstr "No se pudo actualizar el registro de Ubicación del almacén porque"
 
 #: ConfirmDispatch_Invoice.php:965 ContractCosting.php:331
-#: CounterReturns.php:996 CounterSales.php:1394 Credit_Invoice.php:708
+#: CounterReturns.php:993 CounterSales.php:1394 Credit_Invoice.php:708
 #: GoodsReceived.php:491 ReverseGRN.php:220 SelectCreditItems.php:1418
 #: StockTransfers.php:434 StockTransfers.php:443 SupplierInvoice.php:277
 #: WorkOrderIssue.php:162 WorkOrderReceive.php:340 WorkOrderReceive.php:447
@@ -4107,12 +4106,12 @@ msgid "The following SQL to update the location stock record was used"
 msgstr ""
 "Para actualizar el registro de Ubicación del almacén, se usó el SQL siguiente"
 
-#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1014
+#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1011
 #: CounterSales.php:1412 Credit_Invoice.php:728 SelectCreditItems.php:1438
 msgid "Could not retrieve assembly components from the database for"
 msgstr "No se pudo obtener componentes del conjunto de la base de datos"
 
-#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1014
+#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1011
 #: CounterSales.php:1412 Credit_Invoice.php:728 EDIMessageFormat.php:43
 #: EDISendInvoices.php:105 EDISendInvoices_Reece.php:184
 #: FixedAssetCategories.php:91 FixedAssetCategories.php:110
@@ -4123,7 +4122,7 @@ msgstr "No se pudo obtener componentes del conjunto de la base de datos"
 msgid "because"
 msgstr "porque"
 
-#: ConfirmDispatch_Invoice.php:996 CounterReturns.php:1028
+#: ConfirmDispatch_Invoice.php:996 CounterReturns.php:1025
 #: CounterSales.php:1426
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr ""
@@ -4144,13 +4143,13 @@ msgstr ""
 msgid "Order"
 msgstr "Pedidos"
 
-#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1069
+#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1066
 #: CounterSales.php:1466 Credit_Invoice.php:819 SelectCreditItems.php:1491
 msgid "Stock movement records for the assembly components of"
 msgstr ""
 "Registro de movimientos de existencias para los componentes del conjunto"
 
-#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1069
+#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1066
 #: CounterSales.php:1466 Credit_Invoice.php:819 SelectCreditItems.php:1491
 #: ShipmentCosting.php:397 SupplierAllocations.php:139
 #: includes/PDFPaymentRun_PymtFooter.php:57
@@ -4162,7 +4161,7 @@ msgstr ""
 msgid "could not be inserted because"
 msgstr "no se pudo agregar porque"
 
-#: ConfirmDispatch_Invoice.php:1037 CounterReturns.php:1070
+#: ConfirmDispatch_Invoice.php:1037 CounterReturns.php:1067
 #: CounterSales.php:1467 Credit_Invoice.php:820 SelectCreditItems.php:1492
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
@@ -4171,7 +4170,7 @@ msgstr ""
 "Se usó el siguiente SQL para agregar los registros de movimientos de "
 "existencias de componentes de ensamblados"
 
-#: ConfirmDispatch_Invoice.php:1046 CounterReturns.php:1079
+#: ConfirmDispatch_Invoice.php:1046 CounterReturns.php:1076
 #: CounterSales.php:1476 Credit_Invoice.php:829 SelectCreditItems.php:1501
 msgid ""
 "Location stock record could not be updated for an assembly component because"
@@ -4179,7 +4178,7 @@ msgstr ""
 "No se pudo actualizar el registro de existencias de ubicación para un "
 "componente de ensamblado porque"
 
-#: ConfirmDispatch_Invoice.php:1047 CounterReturns.php:1080
+#: ConfirmDispatch_Invoice.php:1047 CounterReturns.php:1077
 #: CounterSales.php:1477
 msgid ""
 "The following SQL to update the locations stock record for the component was "
@@ -4188,7 +4187,7 @@ msgstr ""
 "Se usó el siguiente SQL para actualizar el registro de existencias de "
 "ubicaciones del componente"
 
-#: ConfirmDispatch_Invoice.php:1129 CounterReturns.php:1159
+#: ConfirmDispatch_Invoice.php:1129 CounterReturns.php:1156
 #: CounterSales.php:1558 Credit_Invoice.php:904 Credit_Invoice.php:1002
 #: Credit_Invoice.php:1042 Credit_Invoice.php:1082
 #: RecurringSalesOrdersProcess.php:363 ReverseGRN.php:248
@@ -4197,7 +4196,7 @@ msgid "Stock movement records could not be inserted because"
 msgstr "No se pudo agregar los registros de movimiento de existencias porque"
 
 #: ConfirmDispatch_Invoice.php:1130 ContractCosting.php:360
-#: CounterReturns.php:1160 CounterSales.php:1559 Credit_Invoice.php:905
+#: CounterReturns.php:1157 CounterSales.php:1559 Credit_Invoice.php:905
 #: Credit_Invoice.php:1003 Credit_Invoice.php:1043 GoodsReceived.php:522
 #: RecurringSalesOrdersProcess.php:364 ReverseGRN.php:249
 #: SelectCreditItems.php:1316 SupplierInvoice.php:308 WorkOrderIssue.php:193
@@ -4207,7 +4206,7 @@ msgstr ""
 "Se usó el siguiente SQL para agregar los registros de movimiento de "
 "existencias"
 
-#: ConfirmDispatch_Invoice.php:1150 CounterReturns.php:1180
+#: ConfirmDispatch_Invoice.php:1150 CounterReturns.php:1177
 #: CounterSales.php:1579 RecurringSalesOrdersProcess.php:384
 msgid ""
 "Taxes and rates applicable to this invoice line item could not be inserted "
@@ -4216,7 +4215,7 @@ msgstr ""
 "No se pudo agregar los impuestos y tasas aplicables al artículo de esta fila "
 "de la factura porque"
 
-#: ConfirmDispatch_Invoice.php:1151 CounterReturns.php:1181
+#: ConfirmDispatch_Invoice.php:1151 CounterReturns.php:1178
 #: CounterSales.php:1580 Credit_Invoice.php:1105
 #: RecurringSalesOrdersProcess.php:385 SelectCreditItems.php:1337
 msgid ""
@@ -4264,7 +4263,7 @@ msgstr ""
 "Se usó el siguiente SQL para agregar los registros de movimientos de "
 "existencias seriadas"
 
-#: ConfirmDispatch_Invoice.php:1223 CounterReturns.php:1221
+#: ConfirmDispatch_Invoice.php:1223 CounterReturns.php:1218
 #: CounterSales.php:1658 RecurringSalesOrdersProcess.php:423
 #: api/api_salesorders.php:1026
 msgid "The count of existing Sales analysis records could not run because"
@@ -4272,27 +4271,27 @@ msgstr ""
 "No se pudo procesar el cómputo de registros existentes del análisis de "
 "Ventas porque"
 
-#: ConfirmDispatch_Invoice.php:1224 CounterReturns.php:1222
+#: ConfirmDispatch_Invoice.php:1224 CounterReturns.php:1219
 #: CounterSales.php:1659 Credit_Invoice.php:1133
 #: RecurringSalesOrdersProcess.php:424 SelectCreditItems.php:1659
 #: api/api_salesorders.php:1027
 msgid "SQL to count the no of sales analysis records"
 msgstr "SQL para contar el número registros de análisis de ventas"
 
-#: ConfirmDispatch_Invoice.php:1279 CounterReturns.php:1279
+#: ConfirmDispatch_Invoice.php:1279 CounterReturns.php:1276
 #: CounterSales.php:1716 RecurringSalesOrdersProcess.php:482
 msgid "Sales analysis record could not be added or updated because"
 msgstr ""
 "No se pudo agregar ó actualizar el registro de análisis de ventas porque"
 
-#: ConfirmDispatch_Invoice.php:1280 CounterReturns.php:1280
+#: ConfirmDispatch_Invoice.php:1280 CounterReturns.php:1277
 #: CounterSales.php:1717 Credit_Invoice.php:1245
 #: RecurringSalesOrdersProcess.php:483 SelectCreditItems.php:1769
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr ""
 "Se usó el siguiente SQL para agregar el registro del análisis de ventas"
 
-#: ConfirmDispatch_Invoice.php:1305 CounterReturns.php:1304
+#: ConfirmDispatch_Invoice.php:1305 CounterReturns.php:1301
 #: CounterSales.php:1741 Credit_Invoice.php:1275
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable de costo de ventas porque"
@@ -4302,9 +4301,9 @@ msgstr "No se pudo agregar el registro contable de costo de ventas porque"
 #: ConfirmDispatch_Invoice.php:1424 ConfirmDispatch_Invoice.php:1446
 #: ConfirmDispatch_Invoice.php:1468 ConfirmDispatch_Invoice.php:1490
 #: ConfirmDispatch_Invoice.php:1581 ConfirmDispatch_Invoice.php:1603
-#: ContractCosting.php:249 ContractCosting.php:267 CounterReturns.php:1305
-#: CounterReturns.php:1327 CounterReturns.php:1352 CounterReturns.php:1373
-#: CounterReturns.php:1422 CounterSales.php:1742 CounterSales.php:1764
+#: ContractCosting.php:249 ContractCosting.php:267 CounterReturns.php:1302
+#: CounterReturns.php:1324 CounterReturns.php:1349 CounterReturns.php:1370
+#: CounterReturns.php:1419 CounterSales.php:1742 CounterSales.php:1764
 #: CounterSales.php:1789 CounterSales.php:1810 CounterSales.php:1859
 #: Credit_Invoice.php:1276 Credit_Invoice.php:1316 Credit_Invoice.php:1343
 #: Credit_Invoice.php:1364 Credit_Invoice.php:1393 Credit_Invoice.php:1419
@@ -4323,7 +4322,7 @@ msgid "The following SQL to insert the GLTrans record was used"
 msgstr ""
 "Se usó el siguiente SQL para agregar el registro de transacción contable"
 
-#: ConfirmDispatch_Invoice.php:1328 CounterReturns.php:1326
+#: ConfirmDispatch_Invoice.php:1328 CounterReturns.php:1323
 #: CounterSales.php:1763
 msgid ""
 "The stock side of the cost of sales GL posting could not be inserted because"
@@ -4331,12 +4330,12 @@ msgstr ""
 "No se pudo agregar la parte de existencias del registro contable de costo de "
 "ventas porque"
 
-#: ConfirmDispatch_Invoice.php:1355 CounterReturns.php:1351
+#: ConfirmDispatch_Invoice.php:1355 CounterReturns.php:1348
 #: CounterSales.php:1788 RecurringSalesOrdersProcess.php:510
 msgid "The sales GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable de ventas porque"
 
-#: ConfirmDispatch_Invoice.php:1377 CounterReturns.php:1372
+#: ConfirmDispatch_Invoice.php:1377 CounterReturns.php:1369
 #: CounterSales.php:1809 RecurringSalesOrdersProcess.php:537
 msgid "The sales discount GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable del descuento de ventas porque"
@@ -4410,12 +4409,12 @@ msgid "The following SQL to update the fixed asset record was used"
 msgstr ""
 "Se utilizó el SQL siguiente para actualizar el registro de activos fijos"
 
-#: ConfirmDispatch_Invoice.php:1555 CounterReturns.php:1398
+#: ConfirmDispatch_Invoice.php:1555 CounterReturns.php:1395
 #: CounterSales.php:1835 RecurringSalesOrdersProcess.php:604
 msgid "The total debtor GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable del total deudor porque"
 
-#: ConfirmDispatch_Invoice.php:1556 CounterReturns.php:1399
+#: ConfirmDispatch_Invoice.php:1556 CounterReturns.php:1396
 #: CounterSales.php:1836 RecurringSalesOrdersProcess.php:605
 msgid ""
 "The following SQL to insert the total debtors control GLTrans record was used"
@@ -4427,7 +4426,7 @@ msgstr ""
 msgid "The freight GL posting could not be inserted because"
 msgstr "No se pudo agregar el registro contable de transporte porque"
 
-#: ConfirmDispatch_Invoice.php:1602 CounterReturns.php:1421
+#: ConfirmDispatch_Invoice.php:1602 CounterReturns.php:1418
 #: CounterSales.php:1858 Credit_Invoice.php:1444
 #: RecurringSalesOrdersProcess.php:577 SelectCreditItems.php:1974
 msgid "The tax GL posting could not be inserted because"
@@ -4438,14 +4437,14 @@ msgstr "No se pudo agregar el registro contable de impuestos porque"
 msgid "Invoice number"
 msgstr "Factura número"
 
-#: ConfirmDispatch_Invoice.php:1619 CounterReturns.php:1583
+#: ConfirmDispatch_Invoice.php:1619 CounterReturns.php:1580
 #: CounterSales.php:2028 RecurringSalesOrdersProcess.php:700
 #: SelectCreditItems.php:1989
 msgid "processed"
 msgstr "procesado"
 
 #: ConfirmDispatch_Invoice.php:1624 ConfirmDispatch_Invoice.php:1626
-#: ContractBOM.php:294 CounterReturns.php:1588 CounterReturns.php:1590
+#: ContractBOM.php:294 CounterReturns.php:1585 CounterReturns.php:1587
 #: CounterSales.php:2033 CounterSales.php:2035 CustomerReceipt.php:552
 #: DeliveryDetails.php:581 DeliveryDetails.php:585 DeliveryDetails.php:803
 #: DeliveryDetails.php:807 GLBalanceSheet.php:18 GLJournalInquiry.php:109
@@ -4466,13 +4465,13 @@ msgstr "Imprimir"
 msgid "Print this invoice"
 msgstr "Imprimir esta factura"
 
-#: ConfirmDispatch_Invoice.php:1624 CounterReturns.php:1588
+#: ConfirmDispatch_Invoice.php:1624 CounterReturns.php:1585
 #: CounterSales.php:2033 SelectSalesOrder.php:984 SystemParameters.php:480
 #, php-format
 msgid "Landscape"
 msgstr "Horizontal"
 
-#: ConfirmDispatch_Invoice.php:1626 CounterReturns.php:1590
+#: ConfirmDispatch_Invoice.php:1626 CounterReturns.php:1587
 #: CounterSales.php:2035 SelectSalesOrder.php:984 SystemParameters.php:481
 #, php-format
 msgid "Portrait"
@@ -4550,7 +4549,7 @@ msgstr "haga clic aquí"
 msgid "to continue"
 msgstr "para continuar"
 
-#: ContractBOM.php:139 CounterReturns.php:327 CounterSales.php:348
+#: ContractBOM.php:139 CounterReturns.php:324 CounterSales.php:348
 #: InternalStockRequest.php:496 PO_Items.php:1017 SelectCreditItems.php:388
 #: SelectOrderItems.php:866 SupplierTenderCreate.php:799
 #: SupplierTenders.php:669 WorkOrderEntry.php:181 WorkOrderIssue.php:468
@@ -4603,7 +4602,7 @@ msgstr "No se pudieron recopilar los detalles del artículo"
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "El SQL que falló al obtener los detalles del artículo fue"
 
-#: ContractBOM.php:204 CounterReturns.php:412 CounterSales.php:448
+#: ContractBOM.php:204 CounterReturns.php:409 CounterSales.php:448
 #: PO_Items.php:648 SelectOrderItems.php:962
 #: includes/SelectOrderItems_IntoCart.inc:60
 #: includes/SelectOrderItems_IntoCart.inc:166
@@ -4668,7 +4667,7 @@ msgstr "Buscar Artículos de Existencias"
 msgid "Enter text extracts in the description"
 msgstr "Introduzca una parte de la descripción"
 
-#: ContractBOM.php:326 CounterReturns.php:1643 CounterSales.php:2230
+#: ContractBOM.php:326 CounterReturns.php:1640 CounterSales.php:2230
 #: PO_Items.php:1080 SelectCompletedOrder.php:534 SelectCreditItems.php:1003
 #: SelectOrderItems.php:1693 SelectSalesOrder.php:595 SelectWorkOrder.php:197
 msgid "Enter extract of the Stock Code"
@@ -4759,7 +4758,7 @@ msgid "Inventory Required"
 msgstr "Inventario requerido"
 
 #: ContractCosting.php:82 ContractCosting.php:88 Contracts.php:988
-#: CounterReturns.php:673 CounterSales.php:747 DeliveryDetails.php:853
+#: CounterReturns.php:670 CounterSales.php:747 DeliveryDetails.php:853
 #: DeliveryDetails.php:923 OrderDetails.php:171 PO_Items.php:793
 #: PrintCustTrans.php:862 PrintCustTrans.php:951 PrintCustTrans.php:1000
 #: PrintCustTransPortrait.php:916 PrintCustTransPortrait.php:1014
@@ -4793,11 +4792,12 @@ msgstr "Requisito"
 msgid "Budgeted Other Costs"
 msgstr "Otros Costos Presupuestados"
 
-#: ContractCosting.php:171 OffersReceived.php:106 PO_AuthoriseMyOrders.php:59
-#: PO_SelectOSPurchOrder.php:477 PO_SelectPurchOrder.php:432 PurchData.php:166
-#: ReprintGRN.php:81 SelectProduct.php:365 SelectSupplier.php:154
-#: ShipmentCosting.php:535 ShipmentCosting.php:612 Shipt_Select.php:294
-#: ShiptsList.php:11 SuppCreditGRNs.php:281 SupplierAllocations.php:567
+#: ContractCosting.php:171 OffersReceived.php:106 OutstandingGRNs.php:177
+#: PO_AuthoriseMyOrders.php:59 PO_SelectOSPurchOrder.php:477
+#: PO_SelectPurchOrder.php:432 PurchData.php:166 ReprintGRN.php:81
+#: SelectProduct.php:365 SelectSupplier.php:154 ShipmentCosting.php:535
+#: ShipmentCosting.php:612 Shipt_Select.php:294 ShiptsList.php:11
+#: SuppCreditGRNs.php:281 SupplierAllocations.php:567
 #: SupplierAllocations.php:642 SupplierCredit.php:262 SupplierInquiry.php:118
 #: SupplierInvoice.php:605 SupplierTransInquiry.php:106 SuppLoginSetup.php:33
 #: SuppPriceList.php:222 SuppPriceList.php:295
@@ -5253,7 +5253,7 @@ msgstr "El nuevo artículo del contrato no pudo ser añadido porque"
 msgid "The SQL that was used to insert the contract item failed was"
 msgstr "El SQL que se usa para insertar el artículo del contrato que falló fue"
 
-#: Contracts.php:492 Stocks.php:605 Z_ImportStocks.php:245
+#: Contracts.php:492 Stocks.php:605 Z_ImportStocks.php:238
 msgid "The locations for the item"
 msgstr "Las ubicaciones del artículo"
 
@@ -5261,17 +5261,17 @@ msgstr "Las ubicaciones del artículo"
 #: SupplierCredit.php:815 SupplierCredit.php:1202 SupplierCredit.php:1256
 #: SupplierCredit.php:1284 SupplierInvoice.php:1140 SupplierInvoice.php:1198
 #: SupplierInvoice.php:1563 SupplierInvoice.php:1798 SupplierInvoice.php:1827
-#: Suppliers.php:573 Z_ImportStocks.php:245
+#: Suppliers.php:573 Z_ImportStocks.php:238
 msgid "could not be added because"
 msgstr "no se pudo agregar porque"
 
-#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:246
+#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:239
 msgid "NB Locations records can be added by opening the utility page"
 msgstr ""
 "Los registros de localidades NB pueden agregarse abriendo la página de "
 "utilidades"
 
-#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:246
+#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:239
 msgid "The SQL that was used to add the location records that failed was"
 msgstr "El SQL que se utilizo para agregar los registros de ubicación fue"
 
@@ -5349,8 +5349,8 @@ msgstr ""
 msgid "The customer record selected"
 msgstr "El registro de cliente seleccionado"
 
-#: Contracts.php:715 CounterReturns.php:122 CounterReturns.php:151
-#: CounterReturns.php:1707 CounterSales.php:124 CounterSales.php:158
+#: Contracts.php:715 CounterReturns.php:119 CounterReturns.php:148
+#: CounterReturns.php:1704 CounterSales.php:124 CounterSales.php:158
 #: CounterSales.php:2113 CounterSales.php:2298 DeliveryDetails.php:147
 #: InternalStockRequest.php:663 PO_Header.php:406 PO_Header.php:480
 #: SelectCreditItems.php:180 SelectOrderItems.php:405 SelectOrderItems.php:452
@@ -5363,7 +5363,7 @@ msgstr "El registro de cliente seleccionado"
 msgid "cannot be retrieved because"
 msgstr "no se pudo obtener porque"
 
-#: Contracts.php:716 CounterReturns.php:123 CounterSales.php:125
+#: Contracts.php:716 CounterReturns.php:120 CounterSales.php:125
 #: SelectOrderItems.php:406 SpecialOrder.php:93
 msgid "The SQL used to retrieve the customer details and failed was"
 msgstr "El SQL que falló al obtener los detalles del cliente fue"
@@ -5469,7 +5469,7 @@ msgstr "Referencia de Contrato"
 #: PricesByCost.php:244 ReorderLevelLocation.php:172 ReorderLevel.php:286
 #: SalesCategoryPeriodInquiry.php:164 SalesTopItemsInquiry.php:221
 #: SpecialOrder.php:697 StockDispatch.php:447 Stocks.php:888
-#: SuppPriceList.php:237 SuppPriceList.php:299
+#: SuppPriceList.php:237 SuppPriceList.php:299 Z_ItemsWithoutPicture.php:31
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
 msgid "Category"
@@ -5519,7 +5519,7 @@ msgstr "solo formato"
 msgid "Required Date"
 msgstr "Fecha de Entrega"
 
-#: Contracts.php:923 CounterReturns.php:784 CounterSales.php:872
+#: Contracts.php:923 CounterReturns.php:781 CounterSales.php:872
 #: DeliveryDetails.php:1062 OrderDetails.php:79 RecurringSalesOrders.php:415
 msgid "Customer Reference"
 msgstr "Referencia del Cliente"
@@ -5656,12 +5656,12 @@ msgstr " al Nuevo ID de Existencia"
 msgid "To Existing Stock ID"
 msgstr "A ID Stock Existente"
 
-#: CounterReturns.php:14
+#: CounterReturns.php:11
 #, fuzzy
 msgid "Counter Returns"
 msgstr "Ventas de Mostrador"
 
-#: CounterReturns.php:80 CounterSales.php:82
+#: CounterReturns.php:77 CounterSales.php:82
 msgid ""
 "Your user account does not have a valid default inventory location set up. "
 "Please see the system administrator to modify your user account."
@@ -5670,7 +5670,7 @@ msgstr ""
 "inventario válida. Por favor, consulte al administrador del sistema para "
 "modificar su cuenta de usuario."
 
-#: CounterReturns.php:87 CounterSales.php:89
+#: CounterReturns.php:84 CounterSales.php:89
 msgid ""
 "To use this script it is first necessary to define a cash sales customer for "
 "the location that is your default location. The default cash sale customer "
@@ -5685,125 +5685,125 @@ msgstr ""
 "utilizando el código de cliente y un código de sucursal válido del cliente "
 "introducido."
 
-#: CounterReturns.php:122 CounterSales.php:124 SelectOrderItems.php:405
+#: CounterReturns.php:119 CounterSales.php:124 SelectOrderItems.php:405
 msgid "The details of the customer selected"
 msgstr "El detalle del cliente seleccionado"
 
-#: CounterReturns.php:151 CounterSales.php:158 DeliveryDetails.php:147
+#: CounterReturns.php:148 CounterSales.php:158 DeliveryDetails.php:147
 #: SelectCreditItems.php:180 SelectOrderItems.php:452 SelectOrderItems.php:575
 msgid "The customer branch record of the customer selected"
 msgstr "El registro de la Sucursal del cliente seleccionado"
 
-#: CounterReturns.php:152 CounterSales.php:159 DeliveryDetails.php:148
+#: CounterReturns.php:149 CounterSales.php:159 DeliveryDetails.php:148
 #: SelectCreditItems.php:181 SelectOrderItems.php:453 SelectOrderItems.php:576
 msgid "SQL used to retrieve the branch details was"
 msgstr "El SQL usado para obtener los detalles de la Sucursal fue"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "The branch details for branch code"
 msgstr "Los detalles de la Sucursal del código de Sucursal"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "against customer code"
 msgstr "contra cliente código"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: GLAccountCSV.php:184 GLAccountCSV.php:213 GLAccountInquiry.php:202
 #: GLAccountInquiry.php:240 GLAccountReport.php:115 SelectOrderItems.php:458
 msgid "could not be retrieved"
 msgstr "no pudo obternese"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "Check the set up of the customer and branch"
 msgstr "Compruebe la configuración del cliente y Sucursal"
 
-#: CounterReturns.php:160 CounterSales.php:167 DeliveryDetails.php:155
+#: CounterReturns.php:157 CounterSales.php:167 DeliveryDetails.php:155
 #: SelectOrderItems.php:461
 msgid "The SQL that failed to get the branch details was"
 msgstr "El SQL que falló al obtener los detalles de la Sucursal fue"
 
-#: CounterReturns.php:192
+#: CounterReturns.php:189
 #, fuzzy
 msgid "This return has been cancelled as requested"
 msgstr "Esta venta ha sido cancelada conforme a lo solicitado"
 
-#: CounterReturns.php:193 CounterReturns.php:1592
+#: CounterReturns.php:190 CounterReturns.php:1589
 #, fuzzy
 msgid "Start a new Counter Return"
 msgstr "Iniciar una nueva Venta de Mostrador"
 
-#: CounterReturns.php:199 CounterReturns.php:200 CounterReturns.php:1446
-#: CounterReturns.php:1465
+#: CounterReturns.php:196 CounterReturns.php:197 CounterReturns.php:1443
+#: CounterReturns.php:1462
 #, fuzzy
 msgid "Counter Return"
 msgstr "Venta de Mostrador"
 
-#: CounterReturns.php:200 CounterSales.php:227
+#: CounterReturns.php:197 CounterSales.php:227
 msgid "inventory"
 msgstr "inventario"
 
-#: CounterReturns.php:200 CounterSales.php:227
+#: CounterReturns.php:197 CounterSales.php:227
 msgid "all amounts in"
 msgstr "todas las cantidades en"
 
-#: CounterReturns.php:207 CounterSales.php:234
+#: CounterReturns.php:204 CounterSales.php:234
 msgid "Item description has been used in search"
 msgstr "Descripción del artículo ha sido utilizada en la búsqueda"
 
-#: CounterReturns.php:209 CounterSales.php:236
+#: CounterReturns.php:206 CounterSales.php:236
 msgid "Item Code has been used in search"
 msgstr "Código del artículo ha sido utilizado en la búsqueda"
 
-#: CounterReturns.php:211 CounterSales.php:238 InternalStockRequest.php:368
+#: CounterReturns.php:208 CounterSales.php:238 InternalStockRequest.php:368
 #: SelectOrderItems.php:762
 msgid "Stock Category has been used in search"
 msgstr "La Categoría de Stock se usó en la búsqueda"
 
-#: CounterReturns.php:328 CounterSales.php:349 InternalStockRequest.php:497
+#: CounterReturns.php:325 CounterSales.php:349 InternalStockRequest.php:497
 #: SelectOrderItems.php:867 WorkOrderEntry.php:182 WorkOrderIssue.php:469
 msgid "The SQL used to get the part selection was"
 msgstr "El SQL usado para obtener la selección de piezas fue"
 
-#: CounterReturns.php:332 CounterSales.php:353 InternalStockRequest.php:501
+#: CounterReturns.php:329 CounterSales.php:353 InternalStockRequest.php:501
 #: SelectOrderItems.php:872 WorkOrderEntry.php:186 WorkOrderIssue.php:473
 msgid "There are no products available meeting the criteria specified"
 msgstr "No hay productos disponibles que correspondan al criterio especificado"
 
-#: CounterReturns.php:406 CounterReturns.php:523 CounterReturns.php:568
+#: CounterReturns.php:403 CounterReturns.php:520 CounterReturns.php:565
 #: CounterSales.php:442 CounterSales.php:557 CounterSales.php:603
 #: CounterSales.php:655 SelectOrderItems.php:956 SelectOrderItems.php:1244
-#: SelectOrderItems.php:1293 StockCounts.php:56
+#: SelectOrderItems.php:1293 StockCounts.php:54
 msgid ""
 "Could not determine if the part being ordered was a kitset or not because"
 msgstr ""
 "No se pudo determinar si la parte que se ordenó fue un kit o no, porque"
 
-#: CounterReturns.php:407 CounterReturns.php:524 CounterSales.php:443
-#: CounterSales.php:558 SelectOrderItems.php:957 StockCounts.php:57
+#: CounterReturns.php:404 CounterReturns.php:521 CounterSales.php:443
+#: CounterSales.php:558 SelectOrderItems.php:957 StockCounts.php:55
 msgid ""
 "The sql that was used to determine if the part being ordered was a kitset or "
 "not was "
 msgstr ""
 "El SQL usado para determinar si el producto pedido fue un kit ó no, fue "
 
-#: CounterReturns.php:412
+#: CounterReturns.php:409
 #, fuzzy
 msgid ""
 "could not be retrieved from the database and has not been added to the return"
 msgstr ""
 "No se pudo recuperar de la base de datos y no ha sido añadido a la orden"
 
-#: CounterReturns.php:422 CounterReturns.php:535 CounterReturns.php:584
-#: CounterReturns.php:635 CounterSales.php:458 CounterSales.php:569
+#: CounterReturns.php:419 CounterReturns.php:532 CounterReturns.php:581
+#: CounterReturns.php:632 CounterSales.php:458 CounterSales.php:569
 #: CounterSales.php:619 CounterSales.php:671 SelectOrderItems.php:972
 #: SelectOrderItems.php:1260 SelectOrderItems.php:1309
 msgid "Could not retrieve kitset components from the database because"
 msgstr "No se pudo obtener conjuntos de componentes de la base de datos porque"
 
-#: CounterReturns.php:435
+#: CounterReturns.php:432
 #, fuzzy
 msgid ""
 "Phantom assemblies cannot be returned, these items exist only as bills of "
@@ -5814,7 +5814,7 @@ msgstr ""
 "como las listas de los materiales utilizados en otros artículos "
 "manufacturados. Lo siguiente no ha sido añadido a la orden:"
 
-#: CounterReturns.php:437
+#: CounterReturns.php:434
 #, fuzzy
 msgid ""
 "The system does not currently cater for counter returns of lot controlled or "
@@ -5823,18 +5823,18 @@ msgstr ""
 "El sistema actualmente no realiza ventas de mostrador de artículos "
 "serializados o controlados por lotes"
 
-#: CounterReturns.php:439
+#: CounterReturns.php:436
 #, fuzzy
 msgid "Only items entered with a positive quantity can be added to the return"
 msgstr ""
 "Sólo los artículos introducidos con una cantidad positiva se pueden añadir a "
 "la venta"
 
-#: CounterReturns.php:473 CounterSales.php:508 SelectOrderItems.php:1117
+#: CounterReturns.php:470 CounterSales.php:508 SelectOrderItems.php:1117
 msgid "Recalculated the price from the GP % entered - the GP % was"
 msgstr "Recalculado el precio desde el % de GB introducido - El % de GB fue"
 
-#: CounterReturns.php:492
+#: CounterReturns.php:489
 #, fuzzy
 msgid ""
 "The item could not be updated because you are attempting to set the quantity "
@@ -5845,26 +5845,26 @@ msgstr ""
 "la cantidad pedida a menos de 0 o el precio es menor que 0 o el descuento de "
 "más de 100% o menos de 0%"
 
-#: CounterReturns.php:619
+#: CounterReturns.php:616
 #, fuzzy
 msgid ""
 "Could not determine if the part being returned was a kitset or not because"
 msgstr ""
 "No se pudo determinar si la parte que se ordenó fue un kit o no, porque"
 
-#: CounterReturns.php:676 CounterSales.php:751 PricesByCost.php:158
+#: CounterReturns.php:673 CounterSales.php:751 PricesByCost.php:158
 #: SelectOrderItems.php:1385
 msgid "GP %"
 msgstr "% GB"
 
-#: CounterReturns.php:677 CounterSales.php:753 PrintCustTrans.php:865
+#: CounterReturns.php:674 CounterSales.php:753 PrintCustTrans.php:865
 #: PrintCustTrans.php:954 PrintCustTrans.php:1003
 #: PrintCustTransPortrait.php:919 PrintCustTransPortrait.php:1017
 #: PrintCustTransPortrait.php:1073 includes/PDFTaxPageHeader.inc:39
 msgid "Net"
 msgstr "Neto"
 
-#: CounterReturns.php:747 CounterSales.php:836 CustomerPurchases.php:76
+#: CounterReturns.php:744 CounterSales.php:836 CustomerPurchases.php:76
 #: CustomerReceipt.php:882 CustomerReceipt.php:910 CustomerReceipt.php:1093
 #: GLAccountInquiry.php:184 GLAccountReport.php:343 GLJournalInquiry.php:80
 #: GLJournal.php:363 GLJournal.php:387
@@ -5879,63 +5879,63 @@ msgstr "Neto"
 msgid "Narrative"
 msgstr "Observaciones"
 
-#: CounterReturns.php:765
+#: CounterReturns.php:762
 #, fuzzy
 msgid "Rounded Total"
 msgstr "Total"
 
-#: CounterReturns.php:773
+#: CounterReturns.php:770
 #, fuzzy
 msgid "Returned By"
 msgstr "Requerido por"
 
-#: CounterReturns.php:777 CounterSales.php:866 DeliveryDetails.php:1055
+#: CounterReturns.php:774 CounterSales.php:866 DeliveryDetails.php:1055
 #: RecurringSalesOrders.php:409
 msgid "Contact Phone Number"
 msgstr "Número de Teléfono del Contacto"
 
-#: CounterReturns.php:781 CounterSales.php:870 DeliveryDetails.php:1059
+#: CounterReturns.php:778 CounterSales.php:870 DeliveryDetails.php:1059
 #: RecurringSalesOrders.php:412
 msgid "Contact Email"
 msgstr "Correo Electrónico del Contacto"
 
-#: CounterReturns.php:788 CounterSales.php:877 Credit_Invoice.php:1551
+#: CounterReturns.php:785 CounterSales.php:877 Credit_Invoice.php:1551
 #: DeliveryDetails.php:1078 SelectCreditItems.php:923
 #, fuzzy
 msgid "Sales person"
 msgstr "Vendedor"
 
-#: CounterReturns.php:805
+#: CounterReturns.php:802
 #, fuzzy
 msgid "Reason for Return"
 msgstr "No se Configuró la Razón para Retener"
 
-#: CounterReturns.php:816 CounterSales.php:904 SuppPaymentRun.php:351
+#: CounterReturns.php:813 CounterSales.php:904 SuppPaymentRun.php:351
 msgid "Payment Type"
 msgstr "Tipo de Pago"
 
-#: CounterReturns.php:837
+#: CounterReturns.php:834
 #, fuzzy
 msgid "Paid to Customer"
 msgstr "y para el Cliente"
 
-#: CounterReturns.php:846 CounterSales.php:944 SelectOrderItems.php:1495
+#: CounterReturns.php:843 CounterSales.php:944 SelectOrderItems.php:1495
 msgid "Re-Calculate"
 msgstr "Recalcular"
 
-#: CounterReturns.php:847
+#: CounterReturns.php:844
 #, fuzzy
 msgid "Process The Return"
 msgstr "Procesar la Venta"
 
-#: CounterReturns.php:862
+#: CounterReturns.php:859
 #, fuzzy
 msgid "There are no lines on this return. Please enter lines to return first"
 msgstr ""
 "No hay líneas en esta venta. Por favor, introduzca las líneas para facturar "
 "primero"
 
-#: CounterReturns.php:866
+#: CounterReturns.php:863
 #, fuzzy
 msgid ""
 "The amount entered as payment to the customer does not equal the amount of "
@@ -5945,13 +5945,13 @@ msgstr ""
 "factura. Por favor, asegúrese que el cliente ha pagado la cantidad correcta "
 "y re-ingrese"
 
-#: CounterReturns.php:880
+#: CounterReturns.php:877
 msgid ""
 "We were unable to load the area where the sale is to from the custbranch "
 "table"
 msgstr "No se pudo cargar el área de donde es la venta de la tabla custbranch"
 
-#: CounterReturns.php:891 CounterSales.php:1047
+#: CounterReturns.php:888 CounterSales.php:1047
 msgid ""
 "The company information and preferences could not be retrieved. See your "
 "system administrator"
@@ -5959,7 +5959,7 @@ msgstr ""
 "La información de la empresa y las preferencias no se pudieron recuperar. "
 "Consulte a su administrador del sistema"
 
-#: CounterReturns.php:1448 CounterSales.php:1885
+#: CounterReturns.php:1445 CounterSales.php:1885
 msgid ""
 "The SQL that failed to insert the GL transaction for the bank account debit "
 "was"
@@ -5967,12 +5967,12 @@ msgstr ""
 "El SQL que no pudo insertar la transacción contable para el cargo en la "
 "cuenta bancaria fue"
 
-#: CounterReturns.php:1449 CounterSales.php:1886 CustomerReceipt.php:491
+#: CounterReturns.php:1446 CounterSales.php:1886 CustomerReceipt.php:491
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr ""
 "No se puede agregar una transacción contable en el debe de la cuenta bancaria"
 
-#: CounterReturns.php:1467 CounterSales.php:1904 CustomerReceipt.php:514
+#: CounterReturns.php:1464 CounterSales.php:1904 CustomerReceipt.php:514
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
@@ -5980,36 +5980,36 @@ msgstr ""
 "El SQL que falló al agregar la transacción contable al haber de la cuenta de "
 "deudores fue"
 
-#: CounterReturns.php:1468 CounterSales.php:1905 CustomerReceipt.php:515
+#: CounterReturns.php:1465 CounterSales.php:1905 CustomerReceipt.php:515
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr ""
 "No se puede agregar una transacción contable en el haber de la cuenta de "
 "deudores"
 
-#: CounterReturns.php:1516 CounterReturns.php:1551 CounterSales.php:227
+#: CounterReturns.php:1513 CounterReturns.php:1548 CounterSales.php:227
 #: CounterSales.php:1086 CounterSales.php:1883 CounterSales.php:1902
 #: CounterSales.php:1952 CounterSales.php:1988
 msgid "Counter Sale"
 msgstr "Venta de Mostrador"
 
-#: CounterReturns.php:1524 CounterSales.php:1960 CustomerReceipt.php:465
+#: CounterReturns.php:1521 CounterSales.php:1960 CustomerReceipt.php:465
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "El SQL que falló al agregar la transacción de la cuenta bancaria fue"
 
-#: CounterReturns.php:1525 CounterSales.php:1961 CustomerReceipt.php:466
+#: CounterReturns.php:1522 CounterSales.php:1961 CustomerReceipt.php:466
 msgid "Cannot insert a bank transaction"
 msgstr "No se puede agregar una transacción bancaria"
 
-#: CounterReturns.php:1553 CounterSales.php:1991 CustomerReceipt.php:421
+#: CounterReturns.php:1550 CounterSales.php:1991 CustomerReceipt.php:421
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "El SQL que falló al agregar la transacción del ingreso del cliente fue"
 
-#: CounterReturns.php:1554 CounterSales.php:1992 CustomerReceipt.php:422
+#: CounterReturns.php:1551 CounterSales.php:1992 CustomerReceipt.php:422
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr ""
 "No se puede agregar una transacción de ingreso contra el cliente porque"
 
-#: CounterReturns.php:1570
+#: CounterReturns.php:1567
 #, fuzzy
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the credit "
@@ -6017,33 +6017,33 @@ msgid ""
 msgstr ""
 "El SQL que no pudo insertar la asignación de la recepción a la factura fue"
 
-#: CounterReturns.php:1571 CounterSales.php:2016
+#: CounterReturns.php:1568 CounterSales.php:2016
 msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr ""
 "No se puede insertar la asignación de clientes de la recepción de la factura "
 "porque"
 
-#: CounterReturns.php:1583 Credit_Invoice.php:1460 SelectCreditItems.php:1989
+#: CounterReturns.php:1580 Credit_Invoice.php:1460 SelectCreditItems.php:1989
 msgid "Credit Note number"
 msgstr "abono No."
 
-#: CounterReturns.php:1588 CounterReturns.php:1590 Credit_Invoice.php:1462
+#: CounterReturns.php:1585 CounterReturns.php:1587 Credit_Invoice.php:1462
 #: Credit_Invoice.php:1464
 msgid "Print this credit note"
 msgstr "Imprimir Abono"
 
-#: CounterReturns.php:1609 CounterSales.php:2054 SelectCreditItems.php:969
+#: CounterReturns.php:1606 CounterSales.php:2054 SelectCreditItems.php:969
 #: SelectOrderItems.php:1506
 msgid "Yes Please"
 msgstr "Sí, por favor"
 
-#: CounterReturns.php:1611 CounterReturns.php:1612 CounterSales.php:2200
+#: CounterReturns.php:1608 CounterReturns.php:1609 CounterSales.php:2200
 #: CounterSales.php:2201
 msgid "Search for Items"
 msgstr "Buscar Artículos"
 
-#: CounterReturns.php:1612 CounterSales.php:2201 SelectOrderItems.php:1659
+#: CounterReturns.php:1609 CounterSales.php:2201 SelectOrderItems.php:1659
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -6053,19 +6053,19 @@ msgstr ""
 "introduzca una descripción parcial del artículo o un código parcial del "
 "artículo"
 
-#: CounterReturns.php:1615 CounterSales.php:2202 SelectOrderItems.php:1662
+#: CounterReturns.php:1612 CounterSales.php:2202 SelectOrderItems.php:1662
 msgid "Select a Stock Category"
 msgstr "Seleccionar una Categoría de Existencia"
 
-#: CounterReturns.php:1640 CounterSales.php:2225 SelectOrderItems.php:1686
+#: CounterReturns.php:1637 CounterSales.php:2225 SelectOrderItems.php:1686
 msgid "Enter partial Description"
 msgstr "Introduzca una parte de la Descripción"
 
-#: CounterReturns.php:1648 CounterSales.php:2237 SelectOrderItems.php:1702
+#: CounterReturns.php:1645 CounterSales.php:2237 SelectOrderItems.php:1702
 msgid "Use Quick Entry"
 msgstr "Introducción rápida"
 
-#: CounterReturns.php:1659
+#: CounterReturns.php:1656
 #, fuzzy
 msgid ""
 "Select an item by entering the quantity required.  Click Return when ready."
@@ -6073,18 +6073,18 @@ msgstr ""
 "Seleccione un artículo mediante la introducción de la cantidad requerida. "
 "Haga clic en Orden cuando esté listo."
 
-#: CounterReturns.php:1670 CounterReturns.php:1794 CounterSales.php:2260
+#: CounterReturns.php:1667 CounterReturns.php:1791 CounterSales.php:2260
 #: CounterSales.php:2387 InternalStockRequest.php:614
 #: InternalStockRequest.php:738
 msgid "Prev"
 msgstr "Anterior"
 
-#: CounterReturns.php:1671
+#: CounterReturns.php:1668
 #, fuzzy
 msgid "Return Item(s)"
 msgstr "Quitando Artículos"
 
-#: CounterReturns.php:1672 CounterReturns.php:1796 CounterSales.php:2262
+#: CounterReturns.php:1669 CounterReturns.php:1793 CounterSales.php:2262
 #: CounterSales.php:2389 InternalStockRequest.php:545
 #: InternalStockRequest.php:620 InternalStockRequest.php:742 MRPReport.php:740
 #: SelectAsset.php:254 SelectCustomer.php:413 SelectCustomer.php:497
@@ -6094,20 +6094,20 @@ msgstr "Quitando Artículos"
 msgid "Next"
 msgstr "Siguiente"
 
-#: CounterReturns.php:1679 CounterSales.php:2082 CounterSales.php:2269
+#: CounterReturns.php:1676 CounterSales.php:2082 CounterSales.php:2269
 #: InternalStockRequest.php:626 SelectOrderItems.php:1542
 #: SelectOrderItems.php:1730
 msgid "On Demand"
 msgstr "En Demanda"
 
-#: CounterReturns.php:1680 CounterSales.php:2083 CounterSales.php:2270
+#: CounterReturns.php:1677 CounterSales.php:2083 CounterSales.php:2270
 #: InternalStockRequest.php:627 ReorderLevel.php:302 SelectOrderItems.php:1543
 #: SelectOrderItems.php:1731 StockLocStatus.php:173 StockStatus.php:91
 #: TopItems.php:169
 msgid "On Order"
 msgstr "En Pedidos"
 
-#: CounterReturns.php:1681 CounterSales.php:2084 CounterSales.php:2271
+#: CounterReturns.php:1678 CounterSales.php:2084 CounterSales.php:2271
 #: InternalStockRequest.php:628 SelectOrderItems.php:1544
 #: SelectOrderItems.php:1732 StockDispatch.php:477 StockDispatch.php:478
 #: StockLocStatus.php:172 StockStatus.php:90 includes/OutputSerialItems.php:37
@@ -6115,14 +6115,14 @@ msgstr "En Pedidos"
 msgid "Available"
 msgstr "Disponible"
 
-#: CounterReturns.php:1707 CounterSales.php:2112 CounterSales.php:2298
+#: CounterReturns.php:1704 CounterSales.php:2112 CounterSales.php:2298
 #: InternalStockRequest.php:663 SelectOrderItems.php:1573
 #: SelectOrderItems.php:1762 StockCheck.php:222 StockLocStatus.php:191
 #: StockLocStatus.php:215 StockStatus.php:116 StockStatus.php:140
 msgid "The demand for this product from"
 msgstr "Demanda de este producto desde"
 
-#: CounterReturns.php:1725 CounterReturns.php:1739 CounterSales.php:2130
+#: CounterReturns.php:1722 CounterReturns.php:1736 CounterSales.php:2130
 #: CounterSales.php:2144 CounterSales.php:2317 CounterSales.php:2331
 #: InternalStockRequest.php:683 InternalStockRequest.php:697
 #: SelectOrderItems.php:1592 SelectOrderItems.php:1606
@@ -6130,12 +6130,12 @@ msgstr "Demanda de este producto desde"
 msgid "The order details for this product cannot be retrieved because"
 msgstr "No se puede obtener los detalles del pedido de este producto porque"
 
-#: CounterReturns.php:1795 CounterSales.php:2193 CounterSales.php:2261
+#: CounterReturns.php:1792 CounterSales.php:2193 CounterSales.php:2261
 #: CounterSales.php:2388
 msgid "Add to Sale"
 msgstr "Agregar a la Venta"
 
-#: CounterReturns.php:1804
+#: CounterReturns.php:1801
 #, fuzzy
 msgid ""
 "Use this form to add return items quickly if the item codes are already known"
@@ -6143,23 +6143,23 @@ msgstr ""
 "Utilice este formulario para agregar artículos con mayor facilidad si los "
 "códigos de artículos ya se conocen"
 
-#: CounterReturns.php:1830 CounterSales.php:2420 SelectCreditItems.php:1012
+#: CounterReturns.php:1827 CounterSales.php:2420 SelectCreditItems.php:1012
 #: SelectCreditItems.php:1063 SelectOrderItems.php:1855
 #: SelectOrderItems.php:1881
 msgid "Quick Entry"
 msgstr "Entrada Abreviada"
 
-#: CounterReturns.php:1831 CounterSales.php:2421 SelectCreditItems.php:1081
+#: CounterReturns.php:1828 CounterSales.php:2421 SelectCreditItems.php:1081
 #: SelectOrderItems.php:1882 SelectOrderItems.php:1904
 msgid "Search Parts"
 msgstr "Buscar Piezas"
 
-#: CounterReturns.php:1835
+#: CounterReturns.php:1832
 #, fuzzy
 msgid "Cancel Return"
 msgstr "Cancelar la Oferta"
 
-#: CounterReturns.php:1835
+#: CounterReturns.php:1832
 #, fuzzy
 msgid "Are you sure you wish to cancel this return?"
 msgstr "¿Seguro que desea cancelar de esta venta?"
@@ -6993,8 +6993,8 @@ msgstr ""
 
 #: Currencies.php:108 CustEDISetup.php:31 CustLoginSetup.php:51
 #: Customers.php:58 Stocks.php:116 SuppLoginSetup.php:51 TaxCategories.php:31
-#: WorkCentres.php:35 WWW_Users.php:73 Z_ChangeBranchCode.php:28
-#: Z_ImportStocks.php:123
+#: WorkCentres.php:35 WWW_Users.php:74 Z_ChangeBranchCode.php:28
+#: Z_ImportStocks.php:116
 msgid "or a space"
 msgstr "ó un espacio"
 
@@ -7240,25 +7240,25 @@ msgstr "Seleccionar un Cliente"
 msgid " has been selected"
 msgstr " ha sido seleccionado"
 
-#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:70
+#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:71
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "El  identificador de usuario debe tener al menos 4 caracteres"
 
-#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:73
+#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:74
 msgid "User names cannot contain any of the following characters"
 msgstr "Los nombres de usuario no pueden contener los siguientes caracteres"
 
-#: CustLoginSetup.php:55 SuppLoginSetup.php:55 UserSettings.php:42
-#: WWW_Users.php:77
+#: CustLoginSetup.php:55 SuppLoginSetup.php:55 UserSettings.php:43
+#: WWW_Users.php:78
 msgid "The password entered must be at least 5 characters long"
 msgstr "La clave debe tener  al menos 5 caracteres"
 
-#: CustLoginSetup.php:59 SuppLoginSetup.php:59 UserSettings.php:45
-#: WWW_Users.php:81
+#: CustLoginSetup.php:59 SuppLoginSetup.php:59 UserSettings.php:46
+#: WWW_Users.php:82
 msgid "The password cannot contain the user id"
 msgstr "La contraseña no puede contener el id de usuario"
 
-#: CustLoginSetup.php:62 WWW_Users.php:85
+#: CustLoginSetup.php:62 WWW_Users.php:86
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
@@ -7266,16 +7266,16 @@ msgstr ""
 "Si entra un Código de Cliente también debe entrar un Código de Sucursal "
 "válido para este Cliente"
 
-#: CustLoginSetup.php:72 WWW_Users.php:110
+#: CustLoginSetup.php:72 WWW_Users.php:111
 msgid "The check on validity of the customer code and branch failed because"
 msgstr ""
 "Falló la comprobación de la validez del código de cliente y Sucursal porque"
 
-#: CustLoginSetup.php:73 WWW_Users.php:111
+#: CustLoginSetup.php:73 WWW_Users.php:112
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr "El SQL usado para comprobar el código de cliente y Sucursal fue"
 
-#: CustLoginSetup.php:77 WWW_Users.php:115
+#: CustLoginSetup.php:77 WWW_Users.php:116
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr ""
 "El Código de Sucursal introducido no es válido para el Código de Cliente"
@@ -7292,47 +7292,47 @@ msgstr "El SQL usado para insertar el nuevo usuario fallo:"
 msgid "A new customer login has been created"
 msgstr "Se creó un nuevo acceso de cliente"
 
-#: CustLoginSetup.php:132 SuppLoginSetup.php:118 WWW_Users.php:285
-#: WWW_Users.php:427
+#: CustLoginSetup.php:132 SuppLoginSetup.php:118 WWW_Users.php:286
+#: WWW_Users.php:428
 msgid "User Login"
 msgstr "Nombre de Usuario"
 
 #: CustLoginSetup.php:150 SMTPServer.php:105 SuppLoginSetup.php:136
-#: WWW_Users.php:459 includes/Login.php:64
+#: WWW_Users.php:460 includes/Login.php:64
 msgid "Password"
 msgstr "Contraseña"
 
-#: CustLoginSetup.php:154 SuppLoginSetup.php:140 WWW_Users.php:286
-#: WWW_Users.php:463
+#: CustLoginSetup.php:154 SuppLoginSetup.php:140 WWW_Users.php:287
+#: WWW_Users.php:464
 msgid "Full Name"
 msgstr "Nombre completo"
 
 #: CustLoginSetup.php:158 Locations.php:579 SalesPeople.php:332
-#: SupplierContacts.php:265 SuppLoginSetup.php:144 WWW_Users.php:467
+#: SupplierContacts.php:265 SuppLoginSetup.php:144 WWW_Users.php:468
 msgid "Telephone No"
 msgstr "Nº de Teléfono"
 
 #: CustLoginSetup.php:167 CustomerBranches.php:556 CustomerBranches.php:593
-#: CustomerPurchases.php:71 WWW_Users.php:290 WWW_Users.php:533
+#: CustomerPurchases.php:71 WWW_Users.php:291 WWW_Users.php:534
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:241
 msgid "Branch Code"
 msgstr "Código de la Sucursal"
 
-#: CustLoginSetup.php:187 SuppLoginSetup.php:207 WWW_Users.php:567
+#: CustLoginSetup.php:187 SuppLoginSetup.php:207 WWW_Users.php:568
 msgid "Reports Page Size"
 msgstr "Tamaño de página para Informes"
 
 #: CustLoginSetup.php:191 CustLoginSetup.php:193 EmailConfirmation.php:120
 #: PrintCustOrder_generic.php:113 PrintCustOrder.php:103
-#: SuppLoginSetup.php:211 SuppLoginSetup.php:213 WWW_Users.php:571
-#: WWW_Users.php:573
+#: SuppLoginSetup.php:211 SuppLoginSetup.php:213 WWW_Users.php:572
+#: WWW_Users.php:574
 msgid "A4"
 msgstr "A4"
 
 #: CustLoginSetup.php:197 CustLoginSetup.php:199 CustLoginSetup.php:203
 #: CustLoginSetup.php:205 SuppLoginSetup.php:217 SuppLoginSetup.php:219
-#: SuppLoginSetup.php:223 SuppLoginSetup.php:225 WWW_Users.php:577
-#: WWW_Users.php:579 WWW_Users.php:583 WWW_Users.php:585
+#: SuppLoginSetup.php:223 SuppLoginSetup.php:225 WWW_Users.php:578
+#: WWW_Users.php:580 WWW_Users.php:584 WWW_Users.php:586
 msgid "A3"
 msgstr "A3"
 
@@ -7341,32 +7341,32 @@ msgstr "A3"
 #: EmailConfirmation.php:120 PrintCustOrder_generic.php:113
 #: PrintCustOrder.php:103 SuppLoginSetup.php:223 SuppLoginSetup.php:225
 #: SuppLoginSetup.php:235 SuppLoginSetup.php:237 SuppLoginSetup.php:246
-#: SuppLoginSetup.php:248 WWW_Users.php:583 WWW_Users.php:585
-#: WWW_Users.php:595 WWW_Users.php:597 WWW_Users.php:606 WWW_Users.php:608
+#: SuppLoginSetup.php:248 WWW_Users.php:584 WWW_Users.php:586
+#: WWW_Users.php:596 WWW_Users.php:598 WWW_Users.php:607 WWW_Users.php:609
 msgid "landscape"
 msgstr "Vertical"
 
 #: CustLoginSetup.php:209 CustLoginSetup.php:211 CustLoginSetup.php:215
 #: CustLoginSetup.php:217 SuppLoginSetup.php:229 SuppLoginSetup.php:231
-#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:589
-#: WWW_Users.php:591 WWW_Users.php:595 WWW_Users.php:597
+#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:590
+#: WWW_Users.php:592 WWW_Users.php:596 WWW_Users.php:598
 msgid "Letter"
 msgstr "Carta"
 
 #: CustLoginSetup.php:221 CustLoginSetup.php:223 CustLoginSetup.php:226
 #: CustLoginSetup.php:228 SuppLoginSetup.php:241 SuppLoginSetup.php:243
-#: SuppLoginSetup.php:246 SuppLoginSetup.php:248 WWW_Users.php:601
-#: WWW_Users.php:603 WWW_Users.php:606 WWW_Users.php:608
+#: SuppLoginSetup.php:246 SuppLoginSetup.php:248 WWW_Users.php:602
+#: WWW_Users.php:604 WWW_Users.php:607 WWW_Users.php:609
 msgid "Legal"
 msgstr "Legal"
 
-#: CustLoginSetup.php:234 SuppLoginSetup.php:254 UserSettings.php:148
-#: WWW_Users.php:296 WWW_Users.php:615
+#: CustLoginSetup.php:234 SuppLoginSetup.php:254 UserSettings.php:149
+#: WWW_Users.php:297 WWW_Users.php:616
 msgid "Theme"
 msgstr "Tema"
 
-#: CustLoginSetup.php:256 SuppLoginSetup.php:278 UserSettings.php:129
-#: WWW_Users.php:297 WWW_Users.php:640
+#: CustLoginSetup.php:256 SuppLoginSetup.php:278 UserSettings.php:130
+#: WWW_Users.php:298 WWW_Users.php:641
 msgid "Language"
 msgstr "Idioma"
 
@@ -7867,7 +7867,7 @@ msgid "Define Sales People"
 msgstr "Vendedores Definidos"
 
 #: CustomerBranches.php:706 DailySalesInquiry.php:40 SalesPeople.php:170
-#: WWW_Users.php:292
+#: WWW_Users.php:293
 msgid "Salesperson"
 msgstr "Vendedor"
 
@@ -8027,7 +8027,7 @@ msgstr "Limite de Credito"
 
 #: CustomerInquiry.php:129 CustomerReceipt.php:962 Customers.php:544
 #: Customers.php:913 Customers.php:919 Customers.php:937 Customers.php:959
-#: Customers.php:964 includes/MainMenuLinksArray.php:492
+#: Customers.php:964 includes/MainMenuLinksArray.php:490
 msgid "Credit Status"
 msgstr "Tipos de Estado de Crédito"
 
@@ -8803,7 +8803,7 @@ msgstr ""
 
 #: Customers.php:533 Customers.php:889 Customers.php:895 PaymentTerms.php:12
 #: PO_Header.php:1079 PrintCustTrans.php:375 PrintCustTransPortrait.php:441
-#: Suppliers.php:738 Suppliers.php:939 includes/MainMenuLinksArray.php:493
+#: Suppliers.php:738 Suppliers.php:939 includes/MainMenuLinksArray.php:491
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
 msgid "Payment Terms"
 msgstr "Condiciones de Pago"
@@ -8960,7 +8960,7 @@ msgid "Click to preview the credit"
 msgstr "Clic para previsualizar el crédito"
 
 #: CustomerTypes.php:6 CustomerTypes.php:21
-#: includes/MainMenuLinksArray.php:490
+#: includes/MainMenuLinksArray.php:488
 msgid "Customer Types"
 msgstr "Tipos de Cliente"
 
@@ -10783,7 +10783,7 @@ msgstr "Nombre de la Compañía Financiera"
 #: PrintCustTransPortrait.php:757 PrintCustTransPortrait.php:1003
 #: PrintCustTransPortrait.php:1059 SalesPeople.php:201 SelectSupplier.php:277
 #: Suppliers.php:706 Suppliers.php:910 SupplierTenderCreate.php:132
-#: WWW_Users.php:287
+#: WWW_Users.php:288
 msgid "Telephone"
 msgstr "Teléfono"
 
@@ -11068,7 +11068,7 @@ msgstr "Nueva Depreciación"
 #: FixedAssetDepreciation.php:112 FixedAssetDepreciation.php:242
 #: InventoryValuation.php:116 InventoryValuation.php:168
 #: MailInventoryValuation.php:140 MailInventoryValuation.php:186
-#: OutstandingGRNs.php:91 OutstandingGRNs.php:138
+#: OutstandingGRNs.php:99 OutstandingGRNs.php:146
 #: PDFStockCheckComparison.php:296
 msgid "Total for"
 msgstr "Total para"
@@ -11175,7 +11175,7 @@ msgid ""
 "description is required"
 msgstr "Se requiere una descripción larga de los activos"
 
-#: FixedAssetItems.php:90 Stocks.php:129 Z_ImportStocks.php:132
+#: FixedAssetItems.php:90 Stocks.php:129 Z_ImportStocks.php:125
 msgid "The barcode must be 20 characters or less long"
 msgstr "El código de barras debe tener 20 caracteres o menos"
 
@@ -11361,7 +11361,7 @@ msgstr "Ubicación de Activos"
 msgid "Add Asset Location"
 msgstr "Agregar Ubicaciones de Activo Fijo"
 
-#: FixedAssetItems.php:548 StockCounts.php:112 Stocks.php:1100
+#: FixedAssetItems.php:548 StockCounts.php:110 Stocks.php:1100
 #: includes/DefineLabelClass.php:50
 msgid "Bar Code"
 msgstr "Código de Barras"
@@ -11579,7 +11579,7 @@ msgstr "Costo C/Adelante"
 msgid "Depn C/Fwd"
 msgstr "Depreciación C/Adelante"
 
-#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:395
+#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:393
 msgid "Change Asset Location"
 msgstr "Cambiar Ubicación de Activos"
 
@@ -11868,7 +11868,7 @@ msgstr "No hay pedido de regreso porque"
 #: FTP_RadioBeacon.php:49 SelectContract.php:135 SelectContract.php:165
 #: SelectRecurringSalesOrder.php:90 SelectSalesOrder.php:859
 #: SelectSalesOrder.php:877 SelectWorkOrder.php:329 Shipt_Select.php:331
-#: SuppInvGRNs.php:146 UserSettings.php:216 Z_poEditLangHeader.php:106
+#: SuppInvGRNs.php:146 UserSettings.php:217 Z_poEditLangHeader.php:106
 #: Z_poEditLangModule.php:168 Z_poEditLangRemaining.php:137
 #, php-format
 msgid "Modify"
@@ -12027,7 +12027,7 @@ msgid "Geocode Generate"
 msgstr "Generar Geocode"
 
 #: geocode.php:26 GeocodeSetup.php:135 GeocodeSetup.php:230
-#: includes/MainMenuLinksArray.php:462
+#: includes/MainMenuLinksArray.php:460
 msgid "Geocode Setup"
 msgstr "Configurar Códigos Geográficos (Geocode)"
 
@@ -12537,7 +12537,7 @@ msgstr "Cuenta"
 #: GLAccounts.php:285 GLBalanceSheet.php:9 GLBalanceSheet.php:18
 #: GLBalanceSheet.php:77 GLBalanceSheet.php:78 GLBalanceSheet.php:101
 #: GLBalanceSheet.php:140 SelectGLAccount.php:40 SelectGLAccount.php:55
-#: SelectGLAccount.php:68 includes/MainMenuLinksArray.php:360
+#: SelectGLAccount.php:68 includes/MainMenuLinksArray.php:358
 msgid "Balance Sheet"
 msgstr "Balance General"
 
@@ -12765,7 +12765,7 @@ msgstr "Consultar Códigos Contables"
 msgid "Group"
 msgstr "Grupo"
 
-#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:355
+#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:353
 #, fuzzy
 msgid "General Ledger Journal Inquiry"
 msgstr "Consultar Cuentas Contables"
@@ -12794,7 +12794,7 @@ msgstr "Resumen Diario"
 msgid "Account Description"
 msgstr "Descripción de Cuenta"
 
-#: GLJournal.php:8 includes/MainMenuLinksArray.php:339
+#: GLJournal.php:8 includes/MainMenuLinksArray.php:337
 msgid "Journal Entry"
 msgstr "Ingreso del Diario"
 
@@ -13189,7 +13189,7 @@ msgstr "Publicado"
 
 #: GLTrialBalance.php:11 GLTrialBalance.php:30 GLTrialBalance.php:117
 #: GLTrialBalance.php:118 GLTrialBalance.php:160 GLTrialBalance.php:435
-#: includes/MainMenuLinksArray.php:351
+#: includes/MainMenuLinksArray.php:349
 msgid "Trial Balance"
 msgstr "Balance de Comprobación"
 
@@ -13298,7 +13298,7 @@ msgstr "Volver a Orden de Compra"
 msgid "Receive controlled item"
 msgstr "Recibir artículo controlado"
 
-#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:202
+#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:200
 msgid "Receive Purchase Orders"
 msgstr "Aceptar Órdenes de Compra"
 
@@ -13332,7 +13332,7 @@ msgstr "tiene un estado de"
 #: PO_SelectOSPurchOrder.php:502 SelectWorkOrder.php:331
 #: SelectWorkOrder.php:368 StockLocTransferReceive.php:566
 #: WorkOrderCosting.php:103 WorkOrderCosting.php:117
-#: includes/MainMenuLinksArray.php:204
+#: includes/MainMenuLinksArray.php:202
 #, php-format
 msgid "Receive"
 msgstr "Recibir"
@@ -13653,7 +13653,7 @@ msgstr "Crear una Nueva Oferta"
 msgid "View any open tenders without an offer"
 msgstr "Ver las licitaciones abiertas sin una oferta"
 
-#: index.php:36 WWW_Users.php:722
+#: index.php:36 WWW_Users.php:723
 msgid "Account Status"
 msgstr "Estado de la cuenta"
 
@@ -13798,7 +13798,7 @@ msgstr "¿Seguro que desea eliminar esta categoría de impuestos?"
 msgid "Select Stock Category Code"
 msgstr "Seleccionar una Categoría de Existencia"
 
-#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:210
+#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:208
 msgid "Authorise Internal Stock Requests"
 msgstr "Autorizar las Solicitudes de Existencia Internas"
 
@@ -14014,7 +14014,7 @@ msgstr "Crear otra Requisición"
 #: StockLocTransfer.php:244 StockLocTransferReceive.php:411
 #: StockLocTransferReceive.php:505 StockTransfers.php:29
 #: StockTransfers.php:458 StockUsage.php:28 SuppCreditGRNs.php:19
-#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:203
+#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:201
 msgid "Dispatch"
 msgstr "Enviar"
 
@@ -14157,7 +14157,7 @@ msgstr "Obsoleto"
 msgid "Add to Requisition"
 msgstr "Agregar a Requisición"
 
-#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:235
+#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:233
 msgid "Inventory Planning Report"
 msgstr "Informe de Planificación de Existencias"
 
@@ -14405,7 +14405,7 @@ msgstr "Informe de Cantidades del Inventario"
 msgid "Parts With Quantities"
 msgstr "Componentes con Cantidades"
 
-#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:231
+#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:229
 msgid "Inventory Quantities"
 msgstr "Cantidades del Inventario"
 
@@ -14426,9 +14426,9 @@ msgid "Inventory Quantities Reporting"
 msgstr "Informe de Cantidades del Inventario"
 
 #: InventoryQuantities.php:155 InventoryValuation.php:205 Locations.php:375
-#: Locations.php:436 MRP_2012-10.php:528 MRPCalendar.php:21
-#: MRPCreateDemands.php:195 MRPDemands.php:27 MRPDemandTypes.php:17
-#: MRP.php:528 MRPPlannedPurchaseOrders.php:265 MRPPlannedWorkOrders.php:247
+#: Locations.php:436 MRPCalendar.php:21 MRPCreateDemands.php:195
+#: MRPDemands.php:27 MRPDemandTypes.php:17 MRP.php:528
+#: MRPPlannedPurchaseOrders.php:265 MRPPlannedWorkOrders.php:247
 #: MRPPlannedWorkOrders.php:321 PricesByCost.php:8 ReorderLevelLocation.php:12
 #: ReorderLevel.php:194 SelectProduct.php:86 StockDispatch.php:281
 #: StockMovements.php:22 StockQties_csv.php:8 StockQuantityByDate.php:10
@@ -14459,7 +14459,7 @@ msgid "Reorder"
 msgstr "Reorden"
 
 #: InventoryValuation.php:15 MailInventoryValuation.php:46
-#: MailInventoryValuation.php:225 includes/MainMenuLinksArray.php:234
+#: MailInventoryValuation.php:225 includes/MainMenuLinksArray.php:232
 msgid "Inventory Valuation Report"
 msgstr "Informe de Valoración del Inventario"
 
@@ -14484,7 +14484,7 @@ msgstr ""
 "No hubo artículos con algún valor que imprimir para la ubicación indicada"
 
 #: InventoryValuation.php:188 MailInventoryValuation.php:201
-#: OutstandingGRNs.php:150
+#: OutstandingGRNs.php:158
 msgid "Grand Total Value"
 msgstr "Valor Gran Total"
 
@@ -14939,150 +14939,6 @@ msgstr "Informe de Análisis de Ventas"
 msgid "Error running automated sales report number"
 msgstr "Error al procesar el número de informe de ventas automatizado"
 
-#: MRP_2012-10.php:6 MRP.php:6
-msgid "Run MRP Calculation"
-msgstr "Correr el Cálculo de la Planificación de Requerimiento de Materiales"
-
-#: MRP_2012-10.php:16 MRP.php:16
-msgid "Start time"
-msgstr "Fecha de Inicio"
-
-#: MRP_2012-10.php:17 MRP.php:17
-msgid "Initialising tables ....."
-msgstr "Inicializando tablas ..."
-
-#: MRP_2012-10.php:42 MRP.php:42
-msgid "Creating first level"
-msgstr "Creando el primer nivel"
-
-#: MRP_2012-10.php:66 MRP.php:66
-msgid "Creating other levels"
-msgstr "Creando otros niveles"
-
-#: MRP_2012-10.php:104 MRP.php:104
-msgid "Creating bomlevels table"
-msgstr "Creando tabla de niveles LDM"
-
-#: MRP_2012-10.php:130 MRP.php:130
-msgid "Creating levels table"
-msgstr "Creando tabla de niveles"
-
-#: MRP_2012-10.php:198 MRP.php:198
-msgid "Levels table has been created"
-msgstr "La tabla de Niveles ha sido creada"
-
-#: MRP_2012-10.php:213 MRP.php:213
-msgid "Creating requirements table"
-msgstr "Creando tabla de requisitos"
-
-#: MRP_2012-10.php:230 MRP.php:230
-msgid "Create of mrprequirements failed because"
-msgstr "La creación de requerimientos MRP falló porque"
-
-#: MRP_2012-10.php:232 MRP.php:232
-msgid "Loading requirements from sales orders"
-msgstr "Cargando Requisitos desde pedidos de venta"
-
-#: MRP_2012-10.php:258 MRP.php:258
-msgid "Loading requirements from work orders"
-msgstr "Cargando Requisitos desde órdenes de trabajo"
-
-#: MRP_2012-10.php:306 MRP.php:306
-msgid "Loading requirements based on mrpdemands"
-msgstr "Cargando requerimientos basados en solicitudes MRP"
-
-#: MRP_2012-10.php:328 MRP.php:328
-msgid "Loading requirements based on reorder level"
-msgstr "Los requisitos de carga basados en el nivel de reorden"
-
-#: MRP_2012-10.php:334 MRP.php:334
-msgid "Creating supplies table"
-msgstr "Creando tabla de suministros"
-
-#: MRP_2012-10.php:348 MRP.php:348
-msgid "Create of mrpsupplies failed because"
-msgstr "La creación de suministros MRP falló porque"
-
-#: MRP_2012-10.php:350 MRP.php:350
-msgid "Loading supplies from purchase orders"
-msgstr "Cargando suministros desde órdenes de compra"
-
-#: MRP_2012-10.php:376 MRP.php:376
-msgid "Loading supplies from inventory on hand"
-msgstr "Carga de los suministros del inventario disponible"
-
-#: MRP_2012-10.php:417 MRP.php:417
-msgid "Loading supplies from work orders"
-msgstr "Cargando suministros desde órdenes de trabajo"
-
-#: MRP_2012-10.php:446 MRP.php:446
-msgid "Creating planned orders table"
-msgstr "Creando la tabla de pedidos planeados"
-
-#: MRP_2012-10.php:458 MRP.php:458
-msgid "Create of mrpplannedorders failed because"
-msgstr "La creación de órdenes planificadas MRP falló porque"
-
-#: MRP_2012-10.php:477 MRP.php:477
-msgid "Processing level"
-msgstr "Nivel de Proceso"
-
-#: MRP_2012-10.php:484 MRP.php:484
-msgid "End time"
-msgstr "Hora Final"
-
-#: MRP_2012-10.php:556 MRP.php:556
-msgid "Last Run Details"
-msgstr "Detalles de la última ejecución"
-
-#: MRP_2012-10.php:559 MRP.php:559
-msgid "Last Run Time"
-msgstr "Hora de la Última Ejecución"
-
-#: MRP_2012-10.php:566 MRP_2012-10.php:612 MRP.php:566 MRP.php:612
-msgid "Days Leeway"
-msgstr "Margen en Días (retraso o perdido)"
-
-#: MRP_2012-10.php:570 MRP.php:570
-msgid "Use MRP Demands"
-msgstr "Usar Solicitudes MRP"
-
-#: MRP_2012-10.php:574 MRP.php:574
-msgid "Use EOQ"
-msgstr "Usar Cantidad de Requisición Económica"
-
-#: MRP_2012-10.php:578 MRP.php:578
-msgid "Use Pan Size"
-msgstr "Usar Tamaño Panorámico"
-
-#: MRP_2012-10.php:582 MRP.php:582
-msgid "Use Shrinkage"
-msgstr "Usar Merma"
-
-#: MRP_2012-10.php:592 MRP.php:592
-msgid "This Run Details"
-msgstr "Detalles de esta Corrida"
-
-#: MRP_2012-10.php:616 MRP.php:616
-msgid "Use MRP Demands?"
-msgstr "¿Usar Solicitudes MRP?"
-
-#: MRP_2012-10.php:620 MRP.php:620
-msgid "Use EOQ?"
-msgstr "Usar Cantidad de Requisición Económica?"
-
-#: MRP_2012-10.php:624 MRP.php:624
-msgid "Use Pan Size?"
-msgstr "Usar Tamaño Pan?"
-
-#: MRP_2012-10.php:628 MRP.php:628
-msgid "Use Shrinkage?"
-msgstr "¿Usar Merma?"
-
-#: MRP_2012-10.php:635 MRP.php:635
-msgid "Run MRP"
-msgstr "Ejecutar MRP"
-
 #: MRPCalendar.php:9
 msgid "MRP Calendar"
 msgstr "Calendario MRP"
@@ -15322,7 +15178,7 @@ msgstr "Eliminar Tipo de Demanda"
 msgid "Or Delete Record"
 msgstr "Ó Eliminar Registro"
 
-#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:526
+#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:524
 msgid "MRP Demand Types"
 msgstr "PRM - Tipos de Solicitud (exigencia)"
 
@@ -15372,6 +15228,150 @@ msgstr "Mostrar todos los tipos de Demanda"
 #: MRPDemandTypes.php:182
 msgid "Demand Type Description"
 msgstr "Descripción del Tipo de Solicitud"
+
+#: MRP.php:6
+msgid "Run MRP Calculation"
+msgstr "Correr el Cálculo de la Planificación de Requerimiento de Materiales"
+
+#: MRP.php:16
+msgid "Start time"
+msgstr "Fecha de Inicio"
+
+#: MRP.php:17
+msgid "Initialising tables ....."
+msgstr "Inicializando tablas ..."
+
+#: MRP.php:42
+msgid "Creating first level"
+msgstr "Creando el primer nivel"
+
+#: MRP.php:66
+msgid "Creating other levels"
+msgstr "Creando otros niveles"
+
+#: MRP.php:104
+msgid "Creating bomlevels table"
+msgstr "Creando tabla de niveles LDM"
+
+#: MRP.php:130
+msgid "Creating levels table"
+msgstr "Creando tabla de niveles"
+
+#: MRP.php:198
+msgid "Levels table has been created"
+msgstr "La tabla de Niveles ha sido creada"
+
+#: MRP.php:213
+msgid "Creating requirements table"
+msgstr "Creando tabla de requisitos"
+
+#: MRP.php:230
+msgid "Create of mrprequirements failed because"
+msgstr "La creación de requerimientos MRP falló porque"
+
+#: MRP.php:232
+msgid "Loading requirements from sales orders"
+msgstr "Cargando Requisitos desde pedidos de venta"
+
+#: MRP.php:258
+msgid "Loading requirements from work orders"
+msgstr "Cargando Requisitos desde órdenes de trabajo"
+
+#: MRP.php:306
+msgid "Loading requirements based on mrpdemands"
+msgstr "Cargando requerimientos basados en solicitudes MRP"
+
+#: MRP.php:328
+msgid "Loading requirements based on reorder level"
+msgstr "Los requisitos de carga basados en el nivel de reorden"
+
+#: MRP.php:334
+msgid "Creating supplies table"
+msgstr "Creando tabla de suministros"
+
+#: MRP.php:348
+msgid "Create of mrpsupplies failed because"
+msgstr "La creación de suministros MRP falló porque"
+
+#: MRP.php:350
+msgid "Loading supplies from purchase orders"
+msgstr "Cargando suministros desde órdenes de compra"
+
+#: MRP.php:376
+msgid "Loading supplies from inventory on hand"
+msgstr "Carga de los suministros del inventario disponible"
+
+#: MRP.php:417
+msgid "Loading supplies from work orders"
+msgstr "Cargando suministros desde órdenes de trabajo"
+
+#: MRP.php:446
+msgid "Creating planned orders table"
+msgstr "Creando la tabla de pedidos planeados"
+
+#: MRP.php:458
+msgid "Create of mrpplannedorders failed because"
+msgstr "La creación de órdenes planificadas MRP falló porque"
+
+#: MRP.php:477
+msgid "Processing level"
+msgstr "Nivel de Proceso"
+
+#: MRP.php:484
+msgid "End time"
+msgstr "Hora Final"
+
+#: MRP.php:556
+msgid "Last Run Details"
+msgstr "Detalles de la última ejecución"
+
+#: MRP.php:559
+msgid "Last Run Time"
+msgstr "Hora de la Última Ejecución"
+
+#: MRP.php:566 MRP.php:612
+msgid "Days Leeway"
+msgstr "Margen en Días (retraso o perdido)"
+
+#: MRP.php:570
+msgid "Use MRP Demands"
+msgstr "Usar Solicitudes MRP"
+
+#: MRP.php:574
+msgid "Use EOQ"
+msgstr "Usar Cantidad de Requisición Económica"
+
+#: MRP.php:578
+msgid "Use Pan Size"
+msgstr "Usar Tamaño Panorámico"
+
+#: MRP.php:582
+msgid "Use Shrinkage"
+msgstr "Usar Merma"
+
+#: MRP.php:592
+msgid "This Run Details"
+msgstr "Detalles de esta Corrida"
+
+#: MRP.php:616
+msgid "Use MRP Demands?"
+msgstr "¿Usar Solicitudes MRP?"
+
+#: MRP.php:620
+msgid "Use EOQ?"
+msgstr "Usar Cantidad de Requisición Económica?"
+
+#: MRP.php:624
+msgid "Use Pan Size?"
+msgstr "Usar Tamaño Pan?"
+
+#: MRP.php:628
+msgid "Use Shrinkage?"
+msgstr "¿Usar Merma?"
+
+#: MRP.php:635
+msgid "Run MRP"
+msgstr "Ejecutar MRP"
 
 #: MRPPlannedPurchaseOrders.php:14 MRPPlannedWorkOrders.php:13
 #: MRPShortages.php:13
@@ -15723,7 +15723,7 @@ msgstr "Selección:"
 msgid "MRP Shortages Report"
 msgstr "Informe de Escasez MRP"
 
-#: MRPShortages.php:27 includes/MainMenuLinksArray.php:301
+#: MRPShortages.php:27 includes/MainMenuLinksArray.php:299
 msgid "MRP Shortages"
 msgstr "PRM - Escasez"
 
@@ -15880,7 +15880,7 @@ msgid "There are no offers outstanding that you are authorised to deal with"
 msgstr "No hay ofertas destacadas que estén autorizadas para hacer tratos"
 
 #: OffersReceived.php:41 OffersReceived.php:42 OffersReceived.php:48
-#: includes/MainMenuLinksArray.php:135 includes/MainMenuLinksArray.php:161
+#: includes/MainMenuLinksArray.php:135 includes/MainMenuLinksArray.php:159
 msgid "Select Supplier"
 msgstr "Seleccionar un Proveedor"
 
@@ -16043,30 +16043,85 @@ msgstr "Cant. Ya enviada"
 msgid "Last Del"
 msgstr "Cant. ultimo envio"
 
-#: OutstandingGRNs.php:14 OutstandingGRNs.php:160
-#: includes/MainMenuLinksArray.php:145
-msgid "Outstanding GRNs Report"
-msgstr "Informe de Remisiones (GRNs) Pendientes"
-
-#: OutstandingGRNs.php:15
-msgid "Outstanding GRNs Valuation"
-msgstr "Valoración de GRNs Pendientes"
-
-#: OutstandingGRNs.php:53 OutstandingGRNs.php:65
+#: OutstandingGRNs.php:46 OutstandingGRNs.php:59
 msgid "Outstanding GRN Valuation"
 msgstr "Valoración GRN Pendiente"
 
-#: OutstandingGRNs.php:55
+#: OutstandingGRNs.php:48
 msgid ""
 "The outstanding GRNs valuation details could not be retrieved by the SQL "
 "because"
 msgstr ""
 "SQL no pudo obtener los detalles de la valoración de GRNs pendientes porque"
 
-#: OutstandingGRNs.php:67
+#: OutstandingGRNs.php:61
 msgid "No outstanding GRNs valuation details retrieved"
 msgstr ""
 "No hay detalles sobresalientes de valuación de Notas de Recepción de Bienes"
+
+#: OutstandingGRNs.php:77 OutstandingGRNs.php:254
+#: includes/MainMenuLinksArray.php:145
+msgid "Outstanding GRNs Report"
+msgstr "Informe de Remisiones (GRNs) Pendientes"
+
+#: OutstandingGRNs.php:78
+msgid "Outstanding GRNs Valuation"
+msgstr "Valoración de GRNs Pendientes"
+
+#: OutstandingGRNs.php:170
+#, fuzzy
+msgid "Goods Received but not invoiced Yet"
+msgstr "Los bienes recibidos. Sin embargo, para ser facturados de"
+
+#: OutstandingGRNs.php:172
+msgid ""
+"Shows the list of goods received not yet invoiced, both in supplier currency "
+"and home currency. When run for all suppliers, the total in home curency "
+"should match the GL Account for Goods received not invoiced."
+msgstr ""
+
+#: OutstandingGRNs.php:178
+#, fuzzy
+msgid "PO#"
+msgstr "OC"
+
+#: OutstandingGRNs.php:180 WorkOrderEntry.php:534
+#: includes/PDFStockLocTransferHeader.inc:51
+msgid "Qty Received"
+msgstr "Cant. Recibida"
+
+#: OutstandingGRNs.php:181 SuppCreditGRNs.php:190 SuppInvGRNs.php:259
+msgid "Qty Invoiced"
+msgstr "Cantidad facturada"
+
+#: OutstandingGRNs.php:182
+#, fuzzy
+msgid "Qty Pending"
+msgstr "Pendiente"
+
+#: OutstandingGRNs.php:183 SpecialOrder.php:735
+#: includes/PDFTransPageHeader.inc:208
+#: includes/PDFTransPageHeaderPortrait.inc:263
+msgid "Unit Price"
+msgstr "Precio Unitario"
+
+#: OutstandingGRNs.php:185 OutstandingGRNs.php:187
+#: PO_AuthoriseMyOrders.php:117 SupplierCredit.php:320 SupplierInvoice.php:668
+#: SupplierTenders.php:330
+msgid "Line Total"
+msgstr "Total"
+
+#: OutstandingGRNs.php:259
+msgid ""
+"Shows the list of goods received not yet invoiced, both in supplier currency "
+"and home currency. When run for all suppliers the total in home curency "
+"should match the GL Account for Goods received not invoiced."
+msgstr ""
+
+#: OutstandingGRNs.php:278
+#, fuzzy
+msgid "Show On Screen"
+msgstr "Mostrar en Pantalla (HTML)"
 
 #: PageSecurity.php:6 PageSecurity.php:9
 msgid "Page Security Levels"
@@ -16137,7 +16192,7 @@ msgstr "Pago"
 msgid "Total Payment"
 msgstr "Total Pagos"
 
-#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:495
+#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:493
 msgid "Payment Methods"
 msgstr "Formas de Pago"
 
@@ -17208,7 +17263,7 @@ msgid "The Tab record could not be deleted because"
 msgstr "El registro de pestaña no pudo ser eliminado por"
 
 #: PcTabs.php:206 PcTabs.php:306 PO_AuthorisationLevels.php:125
-#: SMTPServer.php:103 UserSettings.php:118
+#: SMTPServer.php:103 UserSettings.php:119
 msgid "User Name"
 msgstr "Nombre usuario"
 
@@ -18193,7 +18248,7 @@ msgstr "Etiquetas de Precios"
 msgid "Price_Labels"
 msgstr "Etiquetas_Precio"
 
-#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:226
+#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:224
 msgid "Print Price Labels"
 msgstr "Imrpimir Etiquetas de Precios"
 
@@ -18705,11 +18760,6 @@ msgstr "Rechazado"
 #: PO_SelectPurchOrder.php:158
 msgid "Cancelled"
 msgstr "Cancelado"
-
-#: PO_AuthoriseMyOrders.php:117 SupplierCredit.php:320 SupplierInvoice.php:668
-#: SupplierTenders.php:330
-msgid "Line Total"
-msgstr "Total"
 
 #: PO_Chk_ShiptRef_JobRef.php:17 PO_Chk_ShiptRef_JobRef.php:22
 msgid "The update could not be processed"
@@ -19517,7 +19567,7 @@ msgid "Order Header Details"
 msgstr "Detalles de la Cabecera de la Orden"
 
 #: PO_OrderDetails.php:89 Suppliers.php:669 Suppliers.php:878
-#: SupplierTenderCreate.php:392 WWW_Users.php:291 WWW_Users.php:538
+#: SupplierTenderCreate.php:392 WWW_Users.php:292 WWW_Users.php:539
 msgid "Supplier Code"
 msgstr "Código del Proveedor"
 
@@ -19588,7 +19638,7 @@ msgstr ""
 "página"
 
 #: PO_PDFPurchOrder.php:20 PO_PDFPurchOrder.php:123
-#: includes/MainMenuLinksArray.php:188
+#: includes/MainMenuLinksArray.php:186
 msgid "Purchase Order Inquiry"
 msgstr "Consultar Órdenes de Compra"
 
@@ -19902,7 +19952,7 @@ msgid "The SQL used to retrieve the searched parts was"
 msgstr "El SQL usado para obtener los códigos buscados fue"
 
 #: PO_SelectOSPurchOrder.php:138 PO_SelectOSPurchOrder.php:140
-#: includes/MainMenuLinksArray.php:170
+#: includes/MainMenuLinksArray.php:168
 msgid "Add Purchase Order"
 msgstr "Crear Orden de Compra"
 
@@ -19974,7 +20024,7 @@ msgstr "Imprimir Copia"
 
 #: PO_SelectPurchOrder.php:9 SelectCompletedOrder.php:557
 #: SupplierCredit.php:204 SupplierCredit.php:298 SupplierInvoice.php:557
-#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:169
+#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:167
 msgid "Purchase Orders"
 msgstr "Órdenes de Compra"
 
@@ -21773,7 +21823,7 @@ msgid "At All Locations"
 msgstr "En Todas las Ubicaciones"
 
 #: ReorderLevelLocation.php:72 ReorderLevel.php:60
-#: includes/MainMenuLinksArray.php:232
+#: includes/MainMenuLinksArray.php:230
 msgid "Reorder Level"
 msgstr "Nivel de Reorden"
 
@@ -21878,7 +21928,7 @@ msgstr "Cantidades recibidas"
 msgid "Reprint"
 msgstr "Reimprimir"
 
-#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:207
+#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:205
 msgid "Reverse Goods Received"
 msgstr "Reversar Productos Recibidos"
 
@@ -22592,7 +22642,7 @@ msgstr "Grupo Por 3"
 msgid "Group By 4"
 msgstr "Grupo Por 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:291
+#: SalesAnalysis_UserDefined.php:9 includes/session.inc:295
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -22750,7 +22800,7 @@ msgstr "week"
 msgid "Qtr"
 msgstr "Cant"
 
-#: SalesCategories.php:7 includes/MainMenuLinksArray.php:273
+#: SalesCategories.php:7 includes/MainMenuLinksArray.php:271
 msgid "Sales Category Maintenance"
 msgstr "Administrar Categorías de Ventas"
 
@@ -23326,7 +23376,7 @@ msgstr "Consulta de Mejores Ventas"
 msgid "Top Sales Items Inquiry"
 msgstr "Consulta de Artículos Más Vendidos"
 
-#: SalesTopItemsInquiry.php:83 WWW_Users.php:662
+#: SalesTopItemsInquiry.php:83 WWW_Users.php:663
 msgid "Display"
 msgstr "Mostrar"
 
@@ -23346,7 +23396,7 @@ msgstr "Número a Mostrar"
 msgid "Rank"
 msgstr "Rango"
 
-#: SalesTypes.php:5 includes/MainMenuLinksArray.php:489
+#: SalesTypes.php:5 includes/MainMenuLinksArray.php:487
 msgid "Sales Types"
 msgstr "Tipos de Venta (Listas de Precios)"
 
@@ -23485,7 +23535,7 @@ msgstr "Configuración de Tipos de Venta / Lista de Precios"
 msgid "Sales Type Name"
 msgstr "Denominación del Tipo"
 
-#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:450
+#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:448
 msgid "Maintain Security Tokens"
 msgstr "Administrar Testigos de Seguridad"
 
@@ -23521,7 +23571,7 @@ msgstr "ID Testigo"
 msgid "Are you sure you wish to delete this security token?"
 msgstr "¿Confirma que desea eliminar este testigo de seguridad?"
 
-#: SelectAsset.php:7 includes/MainMenuLinksArray.php:394
+#: SelectAsset.php:7 includes/MainMenuLinksArray.php:392
 msgid "Select an Asset"
 msgstr "Seleccionar un Activo"
 
@@ -24189,7 +24239,7 @@ msgstr "Escoja la función a aplicar sobre esta cuenta"
 msgid "Edit Account"
 msgstr "Editar Cuenta"
 
-#: SelectGLAccount.php:27 includes/MainMenuLinksArray.php:352
+#: SelectGLAccount.php:27 includes/MainMenuLinksArray.php:350
 msgid "Account Inquiry"
 msgstr "Consulta de Cuentas"
 
@@ -24861,7 +24911,7 @@ msgstr "Buscar/Modificar/Cerrar Envíos"
 
 #: SelectSupplier.php:173 SuppPriceList.php:16 SuppPriceList.php:152
 #: SuppPriceList.php:208 SuppPriceList.php:210
-#: includes/MainMenuLinksArray.php:190
+#: includes/MainMenuLinksArray.php:188
 msgid "Supplier Price List"
 msgstr "Listado de Precios del Proveedor"
 
@@ -25797,11 +25847,6 @@ msgstr "TOTAL sin Impuestos"
 msgid "Ordered item Description"
 msgstr "Descripción del artículo solicitado"
 
-#: SpecialOrder.php:735 includes/PDFTransPageHeader.inc:208
-#: includes/PDFTransPageHeaderPortrait.inc:263
-msgid "Unit Price"
-msgstr "Precio Unitario"
-
 #: SpecialOrder.php:743
 msgid "Required Delivery Date"
 msgstr "Enviar el"
@@ -25867,7 +25912,7 @@ msgid "Please try again"
 msgstr "Por favor intente nuevamente"
 
 #: StockAdjustments.php:94 StockCategories.php:11 StockCostUpdate.php:21
-#: StockCounts.php:17
+#: StockCounts.php:15
 msgid "Inventory Adjustment"
 msgstr "Ajuste de Inventario"
 
@@ -26412,93 +26457,93 @@ msgstr "Costo Estándar de Mano de Obra por Unidad"
 msgid "Standard Overhead Cost Per Unit"
 msgstr "Costo de Gastos Generales Estándar Por Unidad"
 
-#: StockCounts.php:8
+#: StockCounts.php:6
 msgid "Stock Check Sheets Entry"
 msgstr "Introducir de hojas de comprobación de existencias"
 
-#: StockCounts.php:32
+#: StockCounts.php:30
 msgid "Resuming Entering Counts"
 msgstr "Resumiendo Cuentas de Ingreso"
 
-#: StockCounts.php:32
+#: StockCounts.php:30
 msgid "Viewing Entered Counts"
 msgstr "Viendo Cómputo (recuento) Introducido"
 
-#: StockCounts.php:34
+#: StockCounts.php:32
 msgid "Entering Counts"
 msgstr "Introduciendo Cómputos (recuentos)"
 
-#: StockCounts.php:34
+#: StockCounts.php:32
 msgid "View Entered Counts"
 msgstr "Ver Cómputos (recuentos) Introducidos"
 
-#: StockCounts.php:66
+#: StockCounts.php:64
 msgid "The quantity entered for line"
 msgstr "La cantidad de la linea"
 
-#: StockCounts.php:66 StockLocTransfer.php:125 StockLocTransferReceive.php:34
+#: StockCounts.php:64 StockLocTransfer.php:125 StockLocTransferReceive.php:34
 msgid "is not numeric"
 msgstr "no es numérica"
 
-#: StockCounts.php:66
+#: StockCounts.php:64
 msgid "this line was for the part code"
 msgstr "esta línea fue para el código"
 
-#: StockCounts.php:66 StockCounts.php:72
+#: StockCounts.php:64 StockCounts.php:70
 msgid "This line will have to be re-entered"
 msgstr "Esta linea tiene que volverse a introducir"
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "The stock code entered on line"
 msgstr "El código de existencia de la linea"
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "is not a part code that has been added to the stock check file"
 msgstr ""
 "no es un código de pieza presente en el archivo de comprobación de "
 "existencias"
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "the code entered was"
 msgstr "el código introducido fue"
 
-#: StockCounts.php:87
+#: StockCounts.php:85
 msgid "The stock count line number"
 msgstr "El recuento de artículos en el número de línea"
 
-#: StockCounts.php:87
+#: StockCounts.php:85
 msgid "could not be entered because"
 msgstr "no pudo entrarse porque"
 
-#: StockCounts.php:92
+#: StockCounts.php:90
 msgid " Stock Counts Entered"
 msgstr " Cómputos de Existencias Introducidos"
 
-#: StockCounts.php:98
+#: StockCounts.php:96
 msgid "Stock Check Counts at Location"
 msgstr "Cómputos de Comprobación de Existencias en la Ubicación"
 
-#: StockCounts.php:132
+#: StockCounts.php:130
 msgid "Enter Above Counts"
 msgstr "Introduzca Cuentas Anteriores"
 
-#: StockCounts.php:142
+#: StockCounts.php:140
 msgid "Failed to delete StockCount ID #"
 msgstr "Falla al borrar el ID de la cuenta del artículo"
 
-#: StockCounts.php:144
+#: StockCounts.php:142
 msgid "Deleted Id #"
 msgstr "Eliminar Id #"
 
-#: StockCounts.php:157
+#: StockCounts.php:155
 msgid "Qty Counted"
 msgstr "Cantidad Contada"
 
-#: StockCounts.php:159
+#: StockCounts.php:157
 msgid "Delete?"
 msgstr "Eliminar?"
 
-#: StockCounts.php:170
+#: StockCounts.php:168
 msgid "Save Changes"
 msgstr "Guardar Cambios"
 
@@ -27261,7 +27306,7 @@ msgstr "Referencia Lotes/Paquete"
 msgid "Total quantity"
 msgstr "Cantidad Total"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid ""
 "The stock item description must be entered and be fifty characters or less "
 "long"
@@ -27269,72 +27314,72 @@ msgstr ""
 "Debe introducir la descripción del artículo del inventario y no debe pasar "
 "de 50 caracteres"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid "It cannot be a zero length string either"
 msgstr "No puede ser una cadena de longitud cero tampoco"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid "a description is required"
 msgstr "se requiere una descripción"
 
-#: Stocks.php:104 Z_ImportStocks.php:115
+#: Stocks.php:104 Z_ImportStocks.php:108
 msgid "The stock item description cannot be a zero length string"
 msgstr "La descripción del artículo del inventario no puede estar vacía"
 
-#: Stocks.php:104 Z_ImportStocks.php:115
+#: Stocks.php:104 Z_ImportStocks.php:108
 msgid "a long description is required"
 msgstr "se requiere una descripción larga"
 
-#: Stocks.php:110 Z_ImportStocks.php:119
+#: Stocks.php:110 Z_ImportStocks.php:112
 msgid "The Stock Item code cannot be empty"
 msgstr "El código del Artículo de Existencias no puede estar vacío"
 
-#: Stocks.php:116 Z_ImportStocks.php:123
+#: Stocks.php:116 Z_ImportStocks.php:116
 msgid "The stock item code cannot contain any of the following characters"
 msgstr ""
 "El código del artículo de existencias no puede contener ninguno de los "
 "siguientes caracteres"
 
-#: Stocks.php:123 Z_ImportStocks.php:128
+#: Stocks.php:123 Z_ImportStocks.php:121
 msgid "The unit of measure must be 20 characters or less long"
 msgstr "La unidad de medida debe tener 20 caracteres o menos"
 
-#: Stocks.php:135 Z_ImportStocks.php:140
+#: Stocks.php:135 Z_ImportStocks.php:133
 msgid "The volume of the packaged item in cubic metres must be numeric"
 msgstr ""
 "El volumen del artículo empaquetado en metros cúbicos debe ser numérico"
 
-#: Stocks.php:141 Z_ImportStocks.php:144
+#: Stocks.php:141 Z_ImportStocks.php:137
 msgid "The volume of the packaged item must be a positive number"
 msgstr "El volumen del artículo empaquetado debe ser un número positivo"
 
-#: Stocks.php:147 Z_ImportStocks.php:148
+#: Stocks.php:147 Z_ImportStocks.php:141
 msgid "The weight of the packaged item in KGs must be numeric"
 msgstr "El peso del artículo empaquetado en Kg debe ser numérico"
 
-#: Stocks.php:153 Z_ImportStocks.php:152
+#: Stocks.php:153 Z_ImportStocks.php:145
 msgid "The weight of the packaged item must be a positive number"
 msgstr "El peso del artículo empaquetado debe ser un número positivo"
 
-#: Stocks.php:159 Z_ImportStocks.php:156
+#: Stocks.php:159 Z_ImportStocks.php:149
 msgid "The economic order quantity must be numeric"
 msgstr "La cantidad económica de la orden debe ser numérica"
 
-#: Stocks.php:165 Z_ImportStocks.php:160
+#: Stocks.php:165 Z_ImportStocks.php:153
 msgid "The economic order quantity must be a positive number"
 msgstr "La cantidad económica de la orden debe ser un número positivo"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "The item can only be serialised if there is lot control enabled already"
 msgstr ""
 "El elemento sólo puede ser serializado si hay control de lotes anteriormente "
 "habilitado"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "Batch control"
 msgstr "Control de lotes"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid ""
 "with any number of items in a lot/bundle/roll is enabled when controlled is "
 "enabled"
@@ -27342,17 +27387,17 @@ msgstr ""
 "con cualquier número de elementos de un lote / paquete / rollo se activa "
 "cuando el control se activa"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "Serialised control requires that only one item is in the batch"
 msgstr ""
 "El control de serialización requiere que sólo un artículo se encuentre en el "
 "lote"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "For serialised control"
 msgstr "Para control de serialización"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "both controlled and serialised must be enabled"
 msgstr "ambos, el control y la serialización deben estar habilitados"
 
@@ -27387,7 +27432,7 @@ msgstr ""
 "Los Ensamblajes/Comodines/Fantasmas y Kits no son artículos físicos por lo "
 "que no es apropiado un control de lotes/serial"
 
-#: Stocks.php:200 Z_ImportStocks.php:178
+#: Stocks.php:200 Z_ImportStocks.php:171
 msgid ""
 "There are no inventory categories defined. All inventory items must belong "
 "to a valid inventory category,"
@@ -27555,15 +27600,15 @@ msgstr ""
 "El código de existencia indicado ya existe en la BD y el sistema prohibe "
 "códigos de existencias duplicados. Pruebe eligiendo otro código."
 
-#: Stocks.php:567 Z_ImportStocks.php:233
+#: Stocks.php:567 Z_ImportStocks.php:226
 msgid "The item could not be added because"
 msgstr "No se pudo agregar el artículo porque"
 
-#: Stocks.php:568 Z_ImportStocks.php:234
+#: Stocks.php:568 Z_ImportStocks.php:227
 msgid "The SQL that was used to add the item failed was"
 msgstr "El SQL que falló al agregar el artículo fue"
 
-#: Stocks.php:610 Z_ImportStocks.php:250
+#: Stocks.php:610 Z_ImportStocks.php:243
 msgid "New Item"
 msgstr "Elemento nuevo"
 
@@ -27717,7 +27762,7 @@ msgstr "Peso (KG)"
 
 #: Stocks.php:959 SupplierTenders.php:125 SupplierTenders.php:534
 #: SupplierTenders.php:537 UnitsOfMeasure.php:170
-#: includes/MainMenuLinksArray.php:524
+#: includes/MainMenuLinksArray.php:522
 msgid "Units of Measure"
 msgstr "Unidades de Medida"
 
@@ -28231,10 +28276,6 @@ msgstr "Mostrar GRN"
 #: SuppCreditGRNs.php:189
 msgid "Total Qty"
 msgstr "Cant. Total"
-
-#: SuppCreditGRNs.php:190 SuppInvGRNs.php:259
-msgid "Qty Invoiced"
-msgstr "Cantidad facturada"
 
 #: SuppCreditGRNs.php:191
 msgid "Qty Yet"
@@ -30116,7 +30157,7 @@ msgstr ""
 
 #: SupplierTypes.php:6 SupplierTypes.php:21 SuppPaymentRun.php:240
 #: SystemParameters.php:12 TaxAuthorities.php:10 TaxAuthorityRates.php:16
-#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:491
+#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:489
 msgid "Supplier Types"
 msgstr "Tipos de Proveedor"
 
@@ -30220,7 +30261,7 @@ msgstr ""
 "testigo - el número 9. No hay un papel definido actualmente - por lo que el "
 "acceso del proveedor no se puede establecer hasta que esta función se defina"
 
-#: SuppLoginSetup.php:190 WWW_Users.php:501
+#: SuppLoginSetup.php:190 WWW_Users.php:502
 msgid "Default Location"
 msgstr "Ubicación Predeterminada"
 
@@ -32645,8 +32686,9 @@ msgstr "Número de Error"
 msgid "User Settings"
 msgstr "Configuración del Usuario"
 
-#: UserSettings.php:12 WWW_Users.php:25
-msgid "Latin Western Languages"
+#: UserSettings.php:12
+#, fuzzy
+msgid "Latin Western Languages - Times"
 msgstr "Lenguas Latinas Occidentales"
 
 #: UserSettings.php:13
@@ -32657,55 +32699,59 @@ msgstr "Europa del Este Ruso Japonés Coreano Árabe Hebreo Tailandés"
 msgid "Chinese"
 msgstr "Chino"
 
-#: UserSettings.php:27
+#: UserSettings.php:15 WWW_Users.php:28
+msgid "Free Serif"
+msgstr ""
+
+#: UserSettings.php:28
 msgid "The Maximum Number of Records on Display entered must not be negative"
 msgstr "El número máximo de registros a mostrar no debe ser negativo"
 
-#: UserSettings.php:27
+#: UserSettings.php:28
 msgid "0 will default to system setting"
 msgstr "0 será por defecto en el configuración del sistema"
 
-#: UserSettings.php:49
+#: UserSettings.php:50
 msgid "The password and password confirmation fields entered do not match"
 msgstr "La contraseña y su verificación no coinciden"
 
-#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:212
+#: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:213
 msgid "The user alterations could not be processed because"
 msgstr "No se pudo procesar las modificaciones del usuario porque"
 
-#: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:213
+#: UserSettings.php:69 UserSettings.php:85 WWW_Users.php:214
 msgid "The SQL that was used to update the user and failed was"
 msgstr "EL SQL fallo:"
 
-#: UserSettings.php:72 UserSettings.php:88
+#: UserSettings.php:73 UserSettings.php:89
 msgid "The user settings have been updated"
 msgstr "Se han actualizado los configuracións de usuario"
 
-#: UserSettings.php:72
+#: UserSettings.php:73
 msgid "Be sure to remember your password for the next time you login"
 msgstr "Asegúrese de recordar la contraseña para la próxima vez que entre"
 
-#: UserSettings.php:123
+#: UserSettings.php:124
 msgid "Maximum Number of Records to Display"
 msgstr "Número máximo de registros a mostrar"
 
-#: UserSettings.php:174
+#: UserSettings.php:175
 msgid "New Password"
 msgstr "Nueva Contraseña"
 
-#: UserSettings.php:178
+#: UserSettings.php:179
 msgid "Confirm Password"
 msgstr "Confirme Contraseña"
 
-#: UserSettings.php:182
+#: UserSettings.php:183
 msgid "If you leave the password boxes empty your password will not change"
 msgstr "Si deja vacías los campos de contraseña su contraseña no cambiará"
 
-#: UserSettings.php:202 WWW_Users.php:680
+#: UserSettings.php:203 WWW_Users.php:681
 msgid "PDF Language Support"
 msgstr "Soporte de Idiomas PDF"
 
-#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:295
+#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:293
 msgid "Where Used Inquiry"
 msgstr "Consultar Dónde fue Usado"
 
@@ -33040,7 +33086,7 @@ msgstr ""
 "Esta orden de trabajo está cerrada y no puede aceptar asuntos adicionales de "
 "los materiales o los recibos de los artículos manufacturados"
 
-#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:286
+#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:284
 msgid "Work Order Entry"
 msgstr "Ingreso de Órdenes de Trabajo"
 
@@ -33145,10 +33191,6 @@ msgstr "Ubicación de la Fábrica"
 #: WorkOrderEntry.php:532
 msgid "Output Item"
 msgstr "Artículo de Salida"
-
-#: WorkOrderEntry.php:534 includes/PDFStockLocTransferHeader.inc:51
-msgid "Qty Received"
-msgstr "Cant. Recibida"
 
 #: WorkOrderEntry.php:535
 msgid "Balance Remaining"
@@ -33860,99 +33902,103 @@ msgstr "¿Confirma que desea eliminar este testigo de seguridad de este rol?"
 msgid "Utilities"
 msgstr "Utilidades"
 
+#: WWW_Users.php:25
+msgid "Latin Western Languages"
+msgstr "Lenguas Latinas Occidentales"
+
 #: WWW_Users.php:26
 msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
 msgstr "Europa del Este Ruso Japonés Coreano Vietnamita Árabe Hebreo Tailandés"
 
-#: WWW_Users.php:29 includes/MainMenuLinksArray.php:449
+#: WWW_Users.php:30 includes/MainMenuLinksArray.php:447
 msgid "User Maintenance"
 msgstr "Administrar Usuarios"
 
-#: WWW_Users.php:99
+#: WWW_Users.php:100
 msgid "The user ID"
 msgstr "ID del Usuario"
 
-#: WWW_Users.php:99
+#: WWW_Users.php:100
 msgid "already exists and cannot be used again"
 msgstr "Ya existe y no puede usarse de nuevo"
 
-#: WWW_Users.php:166
+#: WWW_Users.php:167
 msgid "The selected user record has been updated"
 msgstr "El usuario ha  sido actualizado"
 
-#: WWW_Users.php:207
+#: WWW_Users.php:208
 msgid "A new user record has been inserted"
 msgstr "El nuevo usuario a  sido insertado"
 
-#: WWW_Users.php:250
+#: WWW_Users.php:251
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr ""
 "No se puede eliminar el usuario mientras existen entradas en la auditoría"
 
-#: WWW_Users.php:254
+#: WWW_Users.php:255
 msgid "The User could not be deleted because"
 msgstr "No se pudo eliminar el Usuario porque"
 
-#: WWW_Users.php:256
+#: WWW_Users.php:257
 msgid "User Deleted"
 msgstr "Usuario borrado"
 
-#: WWW_Users.php:293
+#: WWW_Users.php:294
 msgid "Last Visit"
 msgstr "Última Sesión"
 
-#: WWW_Users.php:294 WWW_Users.php:475
+#: WWW_Users.php:295 WWW_Users.php:476
 msgid "Security Role"
 msgstr "Perfil de Seguridad"
 
-#: WWW_Users.php:295
+#: WWW_Users.php:296
 msgid "Report Size"
 msgstr "Tamaño del Informe"
 
-#: WWW_Users.php:333
+#: WWW_Users.php:334
 #, php-format
 msgid "Are you sure you wish to delete this user?"
 msgstr "¿Confirma que desea eliminar este usuario?"
 
-#: WWW_Users.php:359
+#: WWW_Users.php:360
 msgid "Review Existing Users"
 msgstr "Revisar usuarios existentes"
 
-#: WWW_Users.php:419
+#: WWW_Users.php:420
 msgid "User code"
 msgstr "Código usuario"
 
-#: WWW_Users.php:489
+#: WWW_Users.php:490
 msgid "User Can Create Tenders"
 msgstr "El usuario puede crear licitaciones"
 
-#: WWW_Users.php:543
+#: WWW_Users.php:544
 msgid "Restrict to Sales Person"
 msgstr "Restringir al Vendedor"
 
-#: WWW_Users.php:549 WWW_Users.php:551
+#: WWW_Users.php:550 WWW_Users.php:552
 msgid "Not a salesperson only login"
 msgstr "No es un ingreso de sólo un vendedor"
 
-#: WWW_Users.php:662
+#: WWW_Users.php:663
 msgid "module"
 msgstr "módulo"
 
-#: WWW_Users.php:695
+#: WWW_Users.php:696
 #, fuzzy
 msgid "Allowed Department for Internal Requests"
 msgstr "Debe seleccionar el Departamento para la requisición"
 
-#: WWW_Users.php:705 WWW_Users.php:707
+#: WWW_Users.php:706 WWW_Users.php:708
 #, fuzzy
 msgid "Any Internal Department"
 msgstr "Administrar Departamentos Internos"
 
-#: WWW_Users.php:725 WWW_Users.php:729
+#: WWW_Users.php:726 WWW_Users.php:730
 msgid "Open"
 msgstr "Abierto"
 
-#: WWW_Users.php:726 WWW_Users.php:728
+#: WWW_Users.php:727 WWW_Users.php:729
 msgid "Blocked"
 msgstr "Bloqueada"
 
@@ -35896,11 +35942,11 @@ msgstr ""
 msgid "Inserted the new asset:"
 msgstr "Inserte el nuevo activo:"
 
-#: Z_ImportFixedAssets.php:270 Z_ImportStocks.php:272
+#: Z_ImportFixedAssets.php:270 Z_ImportStocks.php:265
 msgid "Failed on row "
 msgstr "Falló en la fila "
 
-#: Z_ImportFixedAssets.php:274 Z_ImportStocks.php:276
+#: Z_ImportFixedAssets.php:274 Z_ImportStocks.php:269
 msgid "Batch Import of"
 msgstr "Importación Por Lotes (batch) de"
 
@@ -35924,7 +35970,7 @@ msgstr "Selecciona la fecha para cargar los Activos Atrás/Adelante:"
 msgid "Fixed Assets Upload file:"
 msgstr "Subir archivo de Activos Fijos:"
 
-#: Z_ImportFixedAssets.php:305 Z_ImportStocks.php:298 Z_UploadForm.php:17
+#: Z_ImportFixedAssets.php:305 Z_ImportStocks.php:291 Z_UploadForm.php:17
 msgid "Send File"
 msgstr "Enviar Archivo"
 
@@ -35963,31 +36009,27 @@ msgstr ""
 msgid "Import Items"
 msgstr "Importar Artículos"
 
-#: Z_ImportStocks.php:46
-msgid "File has type "
-msgstr "El archivo es de tipo "
-
-#: Z_ImportStocks.php:59
+#: Z_ImportStocks.php:52
 msgid "File contains "
 msgstr "El fichero contiene "
 
-#: Z_ImportStocks.php:69
+#: Z_ImportStocks.php:62
 msgid "File contains incorrect headers ("
 msgstr "El fichero contiene cabeceras incorrectas ("
 
-#: Z_ImportStocks.php:87
+#: Z_ImportStocks.php:80
 msgid " fields required, "
 msgstr " campos requeridos, "
 
-#: Z_ImportStocks.php:105
+#: Z_ImportStocks.php:98
 msgid "Stock item \""
 msgstr "Artículo de Existencias \""
 
-#: Z_ImportStocks.php:136
+#: Z_ImportStocks.php:129
 msgid "Values in the Perishable field must be either 0 (No) or 1 (Yes)"
 msgstr "Los valores Perecederos en el campo deben ser 0 (No) o 1 (Sí)"
 
-#: Z_ImportStocks.php:170
+#: Z_ImportStocks.php:163
 msgid ""
 "Items must be of MBFlag type Manufactured(M), Assembly(A), Kit-Set(K), "
 "Purchased(B), Dummy(D) or Phantom(G)"
@@ -35995,13 +36037,13 @@ msgstr ""
 "Los Artículos deben ser del tipo MBFlag Manufacturados(M), Ensamblados(A), "
 "Kits(K), Comprados(B), ComodinesD) ó Fantasmas(G)"
 
-#: Z_ImportStocks.php:174
+#: Z_ImportStocks.php:167
 msgid "Assembly/Kitset/Phantom/Service items cannot also be controlled items"
 msgstr ""
 "Artículos como Ensamblajes/Kits/Virtuales/Servicios/Trabajos no pueden ser "
 "además artículos controlados."
 
-#: Z_ImportStocks.php:174
+#: Z_ImportStocks.php:167
 msgid ""
 "Assemblies, Dummies and Kitsets are not physical items and batch/serial "
 "control is therefore not appropriate"
@@ -36009,22 +36051,30 @@ msgstr ""
 "Los ensamblajes, comodines y kits no son artículos físicos y por ende no es "
 "apropiado el control por lotes/serial"
 
-#: Z_ImportStocks.php:182
+#: Z_ImportStocks.php:175
 msgid "ItemPDF must contain either a filename, or the keyword `none`"
 msgstr ""
 "El elemento PDF debe contener un nombre de archivo o la palabra clave `none` "
 
-#: Z_ImportStocks.php:250
+#: Z_ImportStocks.php:243
 msgid "has been added to the transaction"
 msgstr "ha sido añadido a la transacción"
 
-#: Z_ImportStocks.php:276
+#: Z_ImportStocks.php:269
 msgid "has been completed. All transactions committed to the database."
 msgstr "ha sido completado. Todas las transacciones encomendadas a la BD"
 
-#: Z_ImportStocks.php:297
+#: Z_ImportStocks.php:290
 msgid "Upload file"
 msgstr "Subir(upload) fichero"
+
+#: Z_ItemsWithoutPicture.php:6
+msgid "List of Items without picture"
+msgstr ""
+
+#: Z_ItemsWithoutPicture.php:21
+msgid "Current Items without picture in webERP"
+msgstr ""
 
 #: Z_MakeNewCompany.php:16
 msgid "Make New Company Database Utility"
@@ -36999,7 +37049,7 @@ msgstr "Elementos Validados Terminados"
 msgid "problems found. Please research and correct them"
 msgstr "se han encontrado problemas. Por favor, investigar y corregirlos"
 
-#: includes/class.pdf.php:206 includes/class.pdf.php:213
+#: includes/class.pdf.php:209 includes/class.pdf.php:216
 msgid "Document.pdf"
 msgstr "Documento.pdf"
 
@@ -38760,485 +38810,489 @@ msgstr "Balances de Proveedores a Fin de Mes Previo"
 msgid "Supplier Transaction Inquiries"
 msgstr "Consultas de Proveedores de Transacción"
 
-#: includes/MainMenuLinksArray.php:160
+#: includes/MainMenuLinksArray.php:158
 msgid "Add Supplier"
 msgstr "Registrar un Nuevo Proveedor"
 
-#: includes/MainMenuLinksArray.php:162
+#: includes/MainMenuLinksArray.php:160
 msgid "Maintain Factor Companies"
 msgstr "Administrar Compañías Financieras"
 
-#: includes/MainMenuLinksArray.php:171
+#: includes/MainMenuLinksArray.php:169
 msgid "Create a New Tender"
 msgstr "Crear una Nueva Licitación"
 
-#: includes/MainMenuLinksArray.php:172
+#: includes/MainMenuLinksArray.php:170
 msgid "Edit Existing Tenders"
 msgstr "Editar las Licitaciones Existentes"
 
-#: includes/MainMenuLinksArray.php:173
+#: includes/MainMenuLinksArray.php:171
 msgid "Process Tenders and Offers"
 msgstr "Tramitar las Licitaciones y Promociones"
 
-#: includes/MainMenuLinksArray.php:174
+#: includes/MainMenuLinksArray.php:172
 msgid "Orders to Authorise"
 msgstr "Órdenes a Autorizar"
 
-#: includes/MainMenuLinksArray.php:175
+#: includes/MainMenuLinksArray.php:173
 msgid "Shipment Entry"
 msgstr "Ingreso de Envíos"
 
-#: includes/MainMenuLinksArray.php:176
+#: includes/MainMenuLinksArray.php:174
 msgid "Select A Shipment"
 msgstr "Seleccionar Un Envío"
 
-#: includes/MainMenuLinksArray.php:189
+#: includes/MainMenuLinksArray.php:187
 msgid "Purchase Order Detail Or Summary Inquiries"
 msgstr "Consultar Detalle ó Sumario de Órdenes de Compra"
 
-#: includes/MainMenuLinksArray.php:198
+#: includes/MainMenuLinksArray.php:196
 msgid "Maintain Supplier Price Lists"
 msgstr "Administrar Listas de Precios del Proveedor"
 
-#: includes/MainMenuLinksArray.php:203 includes/MainMenuLinksArray.php:204
+#: includes/MainMenuLinksArray.php:201 includes/MainMenuLinksArray.php:202
 msgid "Bulk Inventory Transfer"
 msgstr "Transferencia de Inventario en Lote"
 
-#: includes/MainMenuLinksArray.php:205
+#: includes/MainMenuLinksArray.php:203
 msgid "Inventory Location Transfers"
 msgstr "Transferencias de Ubicación de Inventario"
 
-#: includes/MainMenuLinksArray.php:206
+#: includes/MainMenuLinksArray.php:204
 msgid "Inventory Adjustments"
 msgstr "Ajustes de Inventario"
 
-#: includes/MainMenuLinksArray.php:208
+#: includes/MainMenuLinksArray.php:206
 msgid "Enter Stock Counts"
 msgstr "Introducir Cómputo de Existencias"
 
-#: includes/MainMenuLinksArray.php:209
+#: includes/MainMenuLinksArray.php:207
 msgid "Create a New Internal Stock Request"
 msgstr "Crear nueva Solicitud de Existencia Interna"
 
-#: includes/MainMenuLinksArray.php:211
+#: includes/MainMenuLinksArray.php:209
 msgid "Fulfill Internal Stock Requests"
 msgstr "Cumplir con las Solicitudes de Existencia Internas"
 
-#: includes/MainMenuLinksArray.php:225
+#: includes/MainMenuLinksArray.php:223
 msgid "Serial Item Research Tool"
 msgstr "Herramienta de Investigación de Artículos Seriados"
 
-#: includes/MainMenuLinksArray.php:227
+#: includes/MainMenuLinksArray.php:225
 msgid "Reprint GRN"
 msgstr "Reimprimir"
 
-#: includes/MainMenuLinksArray.php:228
+#: includes/MainMenuLinksArray.php:226
 msgid "Inventory Item Movements"
 msgstr "Movimientos de Artículos del Inventario"
 
-#: includes/MainMenuLinksArray.php:229
+#: includes/MainMenuLinksArray.php:227
 msgid "Inventory Item Status"
 msgstr "Estado de Artículos del Inventario"
 
-#: includes/MainMenuLinksArray.php:230
+#: includes/MainMenuLinksArray.php:228
 msgid "Inventory Item Usage"
 msgstr "Uso de Artículos del Inventario"
 
-#: includes/MainMenuLinksArray.php:233
+#: includes/MainMenuLinksArray.php:231
 msgid "Stock Dispatch"
 msgstr "Despacho de Existencias"
 
-#: includes/MainMenuLinksArray.php:236
+#: includes/MainMenuLinksArray.php:234
 msgid "Inventory Planning Based On Preferred Supplier Data"
 msgstr ""
 "Planificación del Inventario en base a información del Proveedor Preferido"
 
-#: includes/MainMenuLinksArray.php:237
+#: includes/MainMenuLinksArray.php:235
 msgid "Inventory Stock Check Sheets"
 msgstr "Hojas de Comprobación de Existencias del Inventario"
 
-#: includes/MainMenuLinksArray.php:238
+#: includes/MainMenuLinksArray.php:236
 msgid "Make Inventory Quantities CSV"
 msgstr "Crear CSV con Cantidades del Inventario"
 
-#: includes/MainMenuLinksArray.php:239
+#: includes/MainMenuLinksArray.php:237
 msgid "Compare Counts Vs Stock Check Data"
 msgstr "Comparar Datos de Cómputos vs Comprobación de Existencias"
 
-#: includes/MainMenuLinksArray.php:240
+#: includes/MainMenuLinksArray.php:238
 msgid "All Inventory Movements By Location/Date"
 msgstr "Todos los Movimientos de Inventario por Ubicación/Fecha"
 
-#: includes/MainMenuLinksArray.php:241
+#: includes/MainMenuLinksArray.php:239
 msgid "List Inventory Status By Location/Category"
 msgstr "Listar Estado del Inventario por Ubicación/Categoría"
 
-#: includes/MainMenuLinksArray.php:242
+#: includes/MainMenuLinksArray.php:240
 msgid "Historical Stock Quantity By Location/Category"
 msgstr "Histórico de Cantidad de Existencias por Ubicación/Categoría"
 
-#: includes/MainMenuLinksArray.php:243
+#: includes/MainMenuLinksArray.php:241
 msgid "List Negative Stocks"
 msgstr "Informe de Existencias en negativo"
 
-#: includes/MainMenuLinksArray.php:244
+#: includes/MainMenuLinksArray.php:242
 msgid "Period Stock Transaction Listing"
 msgstr "Listado de Transacciones de Existencias por Período"
 
-#: includes/MainMenuLinksArray.php:245
+#: includes/MainMenuLinksArray.php:243
 msgid "Stock Transfer Note"
 msgstr "Nota de Transferencia de Existencias"
 
-#: includes/MainMenuLinksArray.php:271
+#: includes/MainMenuLinksArray.php:269
 msgid "Add A New Item"
 msgstr "Agregar un Nuevo Artículo"
 
-#: includes/MainMenuLinksArray.php:272
+#: includes/MainMenuLinksArray.php:270
 msgid "Select An Item"
 msgstr "Seleccionar un Artículo"
 
-#: includes/MainMenuLinksArray.php:274
+#: includes/MainMenuLinksArray.php:272
 msgid "Add or Update Prices Based On Costs"
 msgstr "Añadir ó Actualizar Precios Basados en Costos"
 
-#: includes/MainMenuLinksArray.php:275
+#: includes/MainMenuLinksArray.php:273
 msgid "View or Update Prices Based On Costs"
 msgstr "Ver o Actualizar los Precios Basados en Costos"
 
-#: includes/MainMenuLinksArray.php:276
+#: includes/MainMenuLinksArray.php:274
 msgid "Reorder Level By Category/Location"
 msgstr "Nivel de Reorden por Categoría/Ubicación"
 
-#: includes/MainMenuLinksArray.php:287 includes/MainMenuLinksArray.php:293
+#: includes/MainMenuLinksArray.php:285 includes/MainMenuLinksArray.php:291
 msgid "Select A Work Order"
 msgstr "Seleccionar una Orden de Trabajo"
 
-#: includes/MainMenuLinksArray.php:294
+#: includes/MainMenuLinksArray.php:292
 #, fuzzy
 msgid "Costed Bill Of Material Inquiry"
 msgstr "Consulta de Listas de Materiales Valoradas"
 
-#: includes/MainMenuLinksArray.php:297
+#: includes/MainMenuLinksArray.php:295
 msgid "Indented Bill Of Material Listing"
 msgstr "Informe de Lista de Materiales Identada"
 
-#: includes/MainMenuLinksArray.php:298
+#: includes/MainMenuLinksArray.php:296
 msgid "List Components Required"
 msgstr "Listado de Componentes Requeridos"
 
-#: includes/MainMenuLinksArray.php:299
+#: includes/MainMenuLinksArray.php:297
 msgid "Indented Where Used Listing"
 msgstr "Informe Identado de Dónde se Usaron"
 
-#: includes/MainMenuLinksArray.php:300
+#: includes/MainMenuLinksArray.php:298
 msgid "MRP"
 msgstr "PRM (Planificación de Requerimientos de Materiales)"
 
-#: includes/MainMenuLinksArray.php:302
+#: includes/MainMenuLinksArray.php:300
 msgid "MRP Suggested Purchase Orders"
 msgstr "PRM - Órdenes de Compra Sugeridas"
 
-#: includes/MainMenuLinksArray.php:303
+#: includes/MainMenuLinksArray.php:301
 msgid "MRP Suggested Work Orders"
 msgstr "PRM - Órdenes de Trabajo Sugeridas"
 
-#: includes/MainMenuLinksArray.php:304
+#: includes/MainMenuLinksArray.php:302
 msgid "MRP Reschedules Required"
 msgstr "PRM - Reprogramación Requerida"
 
-#: includes/MainMenuLinksArray.php:322
+#: includes/MainMenuLinksArray.php:320
 msgid "Bills Of Material"
 msgstr "Listas de Materiales"
 
-#: includes/MainMenuLinksArray.php:323
+#: includes/MainMenuLinksArray.php:321
 msgid "Copy a Bill Of Materials Between Items"
 msgstr "Copiar una Lista de Materiales entre Artículos"
 
-#: includes/MainMenuLinksArray.php:324
+#: includes/MainMenuLinksArray.php:322
 msgid "Master Schedule"
 msgstr "Programación Maestra (Horario)"
 
-#: includes/MainMenuLinksArray.php:325
+#: includes/MainMenuLinksArray.php:323
 msgid "Auto Create Master Schedule"
 msgstr "Auto Crear Programación Maestra"
 
-#: includes/MainMenuLinksArray.php:326
+#: includes/MainMenuLinksArray.php:324
 msgid "MRP Calculation"
 msgstr "PRM - Cálculo"
 
-#: includes/MainMenuLinksArray.php:337
+#: includes/MainMenuLinksArray.php:335
 msgid "Bank Account Payments Entry"
 msgstr "Registro de Pagos de la Cuenta Bancaria"
 
-#: includes/MainMenuLinksArray.php:338
+#: includes/MainMenuLinksArray.php:336
 msgid "Bank Account Receipts Entry"
 msgstr "Registro de Ingresos de la Cuenta Bancaria"
 
-#: includes/MainMenuLinksArray.php:340
+#: includes/MainMenuLinksArray.php:338
 msgid "Bank Account Payments Matching"
 msgstr "Conciliar Pagos de la Cuenta Bancaria"
 
-#: includes/MainMenuLinksArray.php:341
+#: includes/MainMenuLinksArray.php:339
 msgid "Bank Account Receipts Matching"
 msgstr "Conciliar Ingresos de la Cuenta Bancaria"
 
-#: includes/MainMenuLinksArray.php:353
+#: includes/MainMenuLinksArray.php:351
 msgid "Account Listing"
 msgstr "Lista de Cuentas"
 
-#: includes/MainMenuLinksArray.php:354
+#: includes/MainMenuLinksArray.php:352
 msgid "Account Listing to CSV File"
 msgstr "Lista de Cuentas a Archivo CSV"
 
-#: includes/MainMenuLinksArray.php:356
+#: includes/MainMenuLinksArray.php:354
 msgid "Bank Account Reconciliation Statement"
 msgstr "Estado de la Conciliación Bancaria"
 
-#: includes/MainMenuLinksArray.php:357
+#: includes/MainMenuLinksArray.php:355
 msgid "Cheque Payments Listing"
 msgstr "Lista de Pagos en Cheque"
 
-#: includes/MainMenuLinksArray.php:358
+#: includes/MainMenuLinksArray.php:356
 msgid "Daily Bank Transactions"
 msgstr "Transacciones Diarias del Banco"
 
-#: includes/MainMenuLinksArray.php:359
+#: includes/MainMenuLinksArray.php:357
 msgid "Profit and Loss Statement"
 msgstr "Estado de Ganancias y Pérdidas"
 
-#: includes/MainMenuLinksArray.php:361
+#: includes/MainMenuLinksArray.php:359
 msgid "Tag Reports"
 msgstr "Informes de Centros de Costo"
 
-#: includes/MainMenuLinksArray.php:362
+#: includes/MainMenuLinksArray.php:360
 msgid "Tax Reports"
 msgstr "Informes de Impuestos"
 
-#: includes/MainMenuLinksArray.php:380
+#: includes/MainMenuLinksArray.php:378
 msgid "GL Budgets"
 msgstr "Presupuestos Contables"
 
-#: includes/MainMenuLinksArray.php:383
+#: includes/MainMenuLinksArray.php:381
 msgid "GL Tags"
 msgstr "Centros de Costo"
 
-#: includes/MainMenuLinksArray.php:393
+#: includes/MainMenuLinksArray.php:391
 msgid "Add a new Asset"
 msgstr "Añadir un Nuevo Activo"
 
-#: includes/MainMenuLinksArray.php:396
+#: includes/MainMenuLinksArray.php:394
 msgid "Depreciation Journal"
 msgstr "Diario de Amortización"
 
-#: includes/MainMenuLinksArray.php:405
+#: includes/MainMenuLinksArray.php:403
 msgid "Asset Register"
 msgstr "Registro de Activos"
 
-#: includes/MainMenuLinksArray.php:411
+#: includes/MainMenuLinksArray.php:409
 msgid "Asset Categories Maintenance"
 msgstr "Administrar Categorías de Activos"
 
-#: includes/MainMenuLinksArray.php:412
+#: includes/MainMenuLinksArray.php:410
 msgid "Add or Maintain Asset Locations"
 msgstr "Agregar o Administrar Ubicaciones de Activos"
 
-#: includes/MainMenuLinksArray.php:419
+#: includes/MainMenuLinksArray.php:417
 msgid "Assign Cash to PC Tab"
 msgstr "Asignación de Efectivo a la Ficha de la Caja Chica"
 
-#: includes/MainMenuLinksArray.php:420
+#: includes/MainMenuLinksArray.php:418
 msgid "Claim Expenses From PC Tab"
 msgstr "Gastos de Solicitud en Ficha de la Caja Chica"
 
-#: includes/MainMenuLinksArray.php:421
+#: includes/MainMenuLinksArray.php:419
 msgid "Expenses Authorisation"
 msgstr "Autorización de Gastos"
 
-#: includes/MainMenuLinksArray.php:429
+#: includes/MainMenuLinksArray.php:427
 msgid "PC Tab General Report"
 msgstr "Informe General de la Ficha de la Caja Chica"
 
-#: includes/MainMenuLinksArray.php:435
+#: includes/MainMenuLinksArray.php:433
 msgid "Types of PC Tabs"
 msgstr "Tipos de Fichas de la Caja Chica"
 
-#: includes/MainMenuLinksArray.php:436
+#: includes/MainMenuLinksArray.php:434
 msgid "PC Tabs"
 msgstr "Fichas de la Caja Chica"
 
-#: includes/MainMenuLinksArray.php:437
+#: includes/MainMenuLinksArray.php:435
 msgid "PC Expenses"
 msgstr "Gastos de la Caja Chica"
 
-#: includes/MainMenuLinksArray.php:438
+#: includes/MainMenuLinksArray.php:436
 msgid "Expenses for Type of PC Tab"
 msgstr "Gastos por Tipo de Fichas de la Caja Chica"
 
-#: includes/MainMenuLinksArray.php:448
+#: includes/MainMenuLinksArray.php:446
 msgid "Configuration Settings"
 msgstr "Parámetros ERP de la Compañía"
 
-#: includes/MainMenuLinksArray.php:451
+#: includes/MainMenuLinksArray.php:449
 msgid "Access Permissions Maintenance"
 msgstr "Administrar Permisos de Acceso"
 
-#: includes/MainMenuLinksArray.php:452
+#: includes/MainMenuLinksArray.php:450
 msgid "Page Security Settings"
 msgstr "Configuración de la Página de Seguridad"
 
-#: includes/MainMenuLinksArray.php:453
+#: includes/MainMenuLinksArray.php:451
 msgid "Bank Accounts"
 msgstr "Cuentas Bancarias"
 
-#: includes/MainMenuLinksArray.php:454
+#: includes/MainMenuLinksArray.php:452
 msgid "Currency Maintenance"
 msgstr "Administrar Divisas (moneda)"
 
-#: includes/MainMenuLinksArray.php:455
+#: includes/MainMenuLinksArray.php:453
 msgid "Tax Authorities and Rates Maintenance"
 msgstr "Administrar Autoridades Fiscales y Tasas"
 
-#: includes/MainMenuLinksArray.php:456
+#: includes/MainMenuLinksArray.php:454
 msgid "Tax Group Maintenance"
 msgstr "Administrar Grupos de Impuestos"
 
-#: includes/MainMenuLinksArray.php:457
+#: includes/MainMenuLinksArray.php:455
 msgid "Dispatch Tax Province Maintenance"
 msgstr "Administrar Jurisdicciones Fiscales"
 
-#: includes/MainMenuLinksArray.php:458
+#: includes/MainMenuLinksArray.php:456
 msgid "Tax Category Maintenance"
 msgstr "Administrar Clases de Impuestos"
 
-#: includes/MainMenuLinksArray.php:459
+#: includes/MainMenuLinksArray.php:457
 msgid "List Periods Defined"
 msgstr "Lista de Períodos definidos"
 
-#: includes/MainMenuLinksArray.php:460
+#: includes/MainMenuLinksArray.php:458
 msgid "Report Builder Tool"
 msgstr "Generador de Informes"
 
-#: includes/MainMenuLinksArray.php:461
+#: includes/MainMenuLinksArray.php:459
 msgid "View Audit Trail"
 msgstr "Ver Auditor"
 
-#: includes/MainMenuLinksArray.php:463
+#: includes/MainMenuLinksArray.php:461
 msgid "Form Layout Editor"
 msgstr "Editor de Formulario de Presentación"
 
-#: includes/MainMenuLinksArray.php:464
+#: includes/MainMenuLinksArray.php:462
 msgid "Label Templates Maintenance"
 msgstr "Mantenimiento de Plantillas de Etiquetas"
 
-#: includes/MainMenuLinksArray.php:465
+#: includes/MainMenuLinksArray.php:463
 msgid "SMTP Server Details"
 msgstr "Detalles del Servidor SMTP"
 
-#: includes/MainMenuLinksArray.php:494
+#: includes/MainMenuLinksArray.php:492
 msgid "Set Purchase Order Authorisation levels"
 msgstr "Defina los niveles de Autorización de Órdenes de Compra"
 
-#: includes/MainMenuLinksArray.php:496
+#: includes/MainMenuLinksArray.php:494
 msgid "Sales People"
 msgstr "Vendedores"
 
-#: includes/MainMenuLinksArray.php:497
+#: includes/MainMenuLinksArray.php:495
 msgid "Sales Areas"
 msgstr "Zonas de Ventas"
 
-#: includes/MainMenuLinksArray.php:498
+#: includes/MainMenuLinksArray.php:496
 msgid "Shippers"
 msgstr "Transportistas"
 
-#: includes/MainMenuLinksArray.php:499
+#: includes/MainMenuLinksArray.php:497
 msgid "Sales GL Interface Postings"
 msgstr "Registros de la Interfaz Contable de Ventas"
 
-#: includes/MainMenuLinksArray.php:500
+#: includes/MainMenuLinksArray.php:498
 msgid "COGS GL Interface Postings"
 msgstr "Registros de la Interfaz Contable de Costo de Bienes Vendidos"
 
-#: includes/MainMenuLinksArray.php:501
+#: includes/MainMenuLinksArray.php:499
 msgid "Freight Costs Maintenance"
 msgstr "Administrar Costos de Flete"
 
-#: includes/MainMenuLinksArray.php:502
+#: includes/MainMenuLinksArray.php:500
 msgid "Discount Matrix"
 msgstr "Matriz de Descuentos"
 
-#: includes/MainMenuLinksArray.php:521
+#: includes/MainMenuLinksArray.php:519
 msgid "Inventory Categories Maintenance"
 msgstr "Administrar Categorías de Inventario"
 
-#: includes/MainMenuLinksArray.php:522
+#: includes/MainMenuLinksArray.php:520
 msgid "Inventory Locations Maintenance"
 msgstr "Administrar Ubicaciones (Sedes, Almacenes)"
 
-#: includes/MainMenuLinksArray.php:523
+#: includes/MainMenuLinksArray.php:521
 msgid "Discount Category Maintenance"
 msgstr "Administrar Clases de Descuento"
 
-#: includes/MainMenuLinksArray.php:525
+#: includes/MainMenuLinksArray.php:523
 msgid "MRP Available Production Days"
 msgstr "PRM - Días de Producción Disponibles"
 
-#: includes/MainMenuLinksArray.php:527
+#: includes/MainMenuLinksArray.php:525
 msgid "Maintain Internal Departments"
 msgstr "Administrar Departamentos Internos"
 
-#: includes/MainMenuLinksArray.php:528
+#: includes/MainMenuLinksArray.php:526
 msgid "Maintain Internal Stock Categories to User Roles"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:541
+#: includes/MainMenuLinksArray.php:539
 msgid "Change A Customer Code"
 msgstr "Modificar Código de Cliente"
 
-#: includes/MainMenuLinksArray.php:542
+#: includes/MainMenuLinksArray.php:540
 msgid "Change A Customer Branch Code"
 msgstr "Cambiar un Código de Sucursal de Cliente"
 
-#: includes/MainMenuLinksArray.php:543
+#: includes/MainMenuLinksArray.php:541
 msgid "Change A Supplier Code"
 msgstr "Cambiar Código de Proveedor"
 
-#: includes/MainMenuLinksArray.php:544
+#: includes/MainMenuLinksArray.php:542
 msgid "Change An Inventory Item Code"
 msgstr "Cambiar un Código de Artículo del Inventario"
 
-#: includes/MainMenuLinksArray.php:545
+#: includes/MainMenuLinksArray.php:543
 msgid "Change A Location Code"
 msgstr "Cambiar un Código de Ubicación"
 
-#: includes/MainMenuLinksArray.php:546
+#: includes/MainMenuLinksArray.php:544
 msgid "Update costs for all BOM items, from the bottom up"
 msgstr ""
 "Actualización de costos de todos los elementos de lista de materiales, de "
 "abajo hacia arriba"
 
-#: includes/MainMenuLinksArray.php:547
+#: includes/MainMenuLinksArray.php:545
 msgid "Re-apply costs to Sales Analysis"
 msgstr "Aplicar Costos al Análisis de Ventas"
 
-#: includes/MainMenuLinksArray.php:548
+#: includes/MainMenuLinksArray.php:546
 msgid "Delete sales transactions"
 msgstr "Eliminar transacciones de venta"
 
-#: includes/MainMenuLinksArray.php:549
+#: includes/MainMenuLinksArray.php:547
 msgid "Reverse all supplier payments on a specified date"
 msgstr "Revocar todos los pagos a proveedores en una fecha específica"
 
-#: includes/MainMenuLinksArray.php:561
+#: includes/MainMenuLinksArray.php:559
 msgid "Show Local Currency Total Debtor Balances"
 msgstr "Mostrar Total de Saldos del Deudor en Moneda Local"
 
-#: includes/MainMenuLinksArray.php:562
+#: includes/MainMenuLinksArray.php:560
 msgid "Show Local Currency Total Suppliers Balances"
 msgstr "Mostrar Total de Saldos de Proveedores en Moneda Local"
 
-#: includes/MainMenuLinksArray.php:563
+#: includes/MainMenuLinksArray.php:561
 msgid "Show General Transactions That Do Not Balance"
 msgstr "Mostrar Transacciones Generales que no Cuadran"
+
+#: includes/MainMenuLinksArray.php:562
+msgid "List of items without picture"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:569
 msgid "Maintain Language Files"
@@ -39345,7 +39399,7 @@ msgstr ""
 msgid "The SQL that failed was: "
 msgstr "El SQL que generó el error:"
 
-#: includes/UserLogin.php:60
+#: includes/UserLogin.php:45
 msgid "Could not retrieve user details on login because"
 msgstr "No se pudieron obtener datos de usuario al iniciar sesión debido a que"
 
@@ -40287,7 +40341,7 @@ msgstr ""
 "no se ha fijado un costo y el sistema de pedidos está configurado para "
 "prohibir la venta de artículos carentes de información de costo"
 
-#: includes/session.inc:104 includes/session.inc:266
+#: includes/session.inc:104 includes/session.inc:270
 msgid "Account Error Report"
 msgstr "Informe de Error Contable"
 
@@ -40323,12 +40377,12 @@ msgstr "webERP no está disponible en este momento"
 msgid "during maintenance of the system"
 msgstr "durante el mantenimiento del sistema"
 
-#: includes/session.inc:145 api/api_login.php:122
+#: includes/session.inc:149 api/api_login.php:122
 msgid "There was a problem deleting expired audit-trail history"
 msgstr ""
 "Hubo un problema eliminando el histórico de auditorías expiradas (vencidas)"
 
-#: includes/session.inc:254
+#: includes/session.inc:258
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -40336,7 +40390,7 @@ msgstr ""
 "webERP está configurado para permitir conexiones de socket sólo de "
 "seguridad. Las páginas deben ser llamados por https://"
 
-#: includes/session.inc:269
+#: includes/session.inc:273
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -40346,16 +40400,16 @@ msgstr ""
 "Por favor, avise a su administrador del sistema. También podría ser que hay "
 "un problema de sesión con el servidor web de PHP"
 
-#: includes/session.inc:285
+#: includes/session.inc:289
 msgid "Security Permissions Problem"
 msgstr "Problema de Permisos de Seguridad"
 
-#: includes/session.inc:332
+#: includes/session.inc:336
 #, fuzzy
 msgid "Error in form verification"
 msgstr "Error en la verificación de la forma"
 
-#: includes/session.inc:334
+#: includes/session.inc:338
 msgid "This form was not submitted with a correct ID"
 msgstr "Este formulario no se presentó con una identificación correcta"
 
@@ -43038,6 +43092,9 @@ msgstr "Parámetros"
 #: api/api_xml-rpc.php:3495
 msgid "Return Value"
 msgstr "Valor de Retorno"
+
+#~ msgid "File has type "
+#~ msgstr "El archivo es de tipo "
 
 #~ msgid "The SQL to to create passbom failed with the message"
 #~ msgstr "El SQL para crear el passbom falló con el mensaje"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 21:50+1300\n"
+"POT-Creation-Date: 2012-12-29 13:44+1300\n"
 "PO-Revision-Date: 2011-04-28 13:56+0000\n"
 "Last-Translator: Skender Mustafi <contact@skendermustafi.ch>\n"
 "Language-Team: Albanian\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Launchpad (build 13085)\n"
 "Language: sw\n"
 
-#: AccountGroups.php:7 includes/MainMenuLinksArray.php:381
+#: AccountGroups.php:7 includes/MainMenuLinksArray.php:379
 msgid "Account Groups"
 msgstr "Grupet e Llogarive"
 
@@ -236,7 +236,7 @@ msgstr "Nuk mund të merrni parasysh sepse grupe"
 #: Areas.php:144 AuditTrail.php:11 BankReconciliation.php:14
 #: BOMExtendedQty.php:250 BOMIndented.php:246 BOMIndentedReverse.php:235
 #: BOMInquiry.php:187 BOMListing.php:109 BOMs.php:231 BOMs.php:858
-#: COGSGLPostings.php:19 CompanyPreferences.php:155 CounterReturns.php:1610
+#: COGSGLPostings.php:19 CompanyPreferences.php:155 CounterReturns.php:1607
 #: CounterSales.php:2074 CounterSales.php:2199 Credit_Invoice.php:270
 #: CreditStatus.php:21 Currencies.php:29 CustEDISetup.php:17
 #: DailyBankTransactions.php:11 DebtorsAtPeriodEnd.php:125
@@ -247,7 +247,7 @@ msgstr "Nuk mund të merrni parasysh sepse grupe"
 #: GLBudgets.php:29 GLJournalInquiry.php:7 GLJournal.php:247
 #: InternalStockRequest.php:300 InventoryPlanning.php:379
 #: InventoryPlanningPrefSupplier.php:469 MRPReport.php:516 NoSalesItems.php:89
-#: OutstandingGRNs.php:163 PcAssignCashToTab.php:59 PcAssignCashToTab.php:133
+#: PcAssignCashToTab.php:59 PcAssignCashToTab.php:133
 #: PcAssignCashToTab.php:149 PcAssignCashToTab.php:193 PDFPickingList.php:28
 #: PDFStockLocTransfer.php:16 PO_AuthorisationLevels.php:10 POReport.php:60
 #: POReport.php:64 POReport.php:68 PO_SelectOSPurchOrder.php:142
@@ -274,7 +274,7 @@ msgstr "Nuk mund të merrni parasysh sepse grupe"
 #: WhereUsedInquiry.php:18 WorkCentres.php:111 WorkCentres.php:162
 #: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
 #: WorkOrderReceive.php:31 WorkOrderStatus.php:58 WWW_Access.php:11
-#: WWW_Users.php:36 Z_BottomUpCosts.php:57
+#: WWW_Users.php:37 Z_BottomUpCosts.php:57
 msgid "Search"
 msgstr "Kërko"
 
@@ -305,8 +305,7 @@ msgstr "Fitimi dhe Humbja"
 #: Customers.php:965 Customers.php:974 Customers.php:977
 #: DeliveryDetails.php:1116 DeliveryDetails.php:1159 DeliveryDetails.php:1162
 #: GLTransInquiry.php:69 Labels.php:491 Labels.php:493 Labels.php:518
-#: Locations.php:617 Locations.php:619 MRP_2012-10.php:540 MRP_2012-10.php:544
-#: MRP_2012-10.php:548 MRP_2012-10.php:552 MRPCalendar.php:224 MRP.php:540
+#: Locations.php:617 Locations.php:619 MRPCalendar.php:224 MRP.php:540
 #: MRP.php:544 MRP.php:548 MRP.php:552 PaymentMethods.php:204
 #: PaymentMethods.php:205 PaymentMethods.php:206 PaymentMethods.php:207
 #: PaymentMethods.php:273 PaymentMethods.php:280 PaymentMethods.php:287
@@ -330,8 +329,8 @@ msgstr "Fitimi dhe Humbja"
 #: SystemParameters.php:965 SystemParameters.php:975 SystemParameters.php:977
 #: SystemParameters.php:1031 SystemParameters.php:1043
 #: SystemParameters.php:1045 TaxGroups.php:311 TaxGroups.php:314
-#: TaxGroups.php:371 WWW_Users.php:493 WWW_Users.php:495 WWW_Users.php:666
-#: WWW_Users.php:668
+#: TaxGroups.php:371 WWW_Users.php:494 WWW_Users.php:496 WWW_Users.php:667
+#: WWW_Users.php:669
 msgid "Yes"
 msgstr "Po"
 
@@ -345,8 +344,7 @@ msgstr "Po"
 #: Customers.php:960 Customers.php:973 Customers.php:976
 #: DeliveryDetails.php:1117 DeliveryDetails.php:1160 DeliveryDetails.php:1163
 #: GLTransInquiry.php:90 Labels.php:490 Labels.php:494 Labels.php:519
-#: Locations.php:622 Locations.php:624 MRP_2012-10.php:538 MRP_2012-10.php:542
-#: MRP_2012-10.php:546 MRP_2012-10.php:550 MRPCalendar.php:226 MRP.php:538
+#: Locations.php:622 Locations.php:624 MRPCalendar.php:226 MRP.php:538
 #: MRP.php:542 MRP.php:546 MRP.php:550 NoSalesItems.php:184
 #: PaymentMethods.php:204 PaymentMethods.php:205 PaymentMethods.php:206
 #: PaymentMethods.php:207 PaymentMethods.php:274 PaymentMethods.php:281
@@ -370,8 +368,8 @@ msgstr "Po"
 #: SystemParameters.php:966 SystemParameters.php:974 SystemParameters.php:978
 #: SystemParameters.php:1032 SystemParameters.php:1042
 #: SystemParameters.php:1046 TaxGroups.php:312 TaxGroups.php:315
-#: TaxGroups.php:373 WWW_Users.php:492 WWW_Users.php:496 WWW_Users.php:665
-#: WWW_Users.php:669 includes/PDFLowGPPageHeader.inc:44
+#: TaxGroups.php:373 WWW_Users.php:493 WWW_Users.php:497 WWW_Users.php:666
+#: WWW_Users.php:670 includes/PDFLowGPPageHeader.inc:44
 #: includes/PDFTaxPageHeader.inc:35
 msgid "No"
 msgstr "Jo"
@@ -398,7 +396,7 @@ msgstr "Jo"
 #: SupplierTenderCreate.php:145 SupplierTypes.php:189
 #: SuppTransGLAnalysis.php:125 TaxAuthorities.php:174 TaxCategories.php:182
 #: TaxGroups.php:188 TaxProvinces.php:180 UnitsOfMeasure.php:185
-#: WorkCentres.php:141 WWW_Access.php:123 WWW_Users.php:332
+#: WorkCentres.php:141 WWW_Access.php:123 WWW_Users.php:333
 #: includes/InputSerialItems.php:102 includes/OutputSerialItems.php:20
 #, php-format
 msgid "Edit"
@@ -413,7 +411,7 @@ msgstr "A jeni i sigurt se doni të fshini këtë degë?"
 #: AddCustomerNotes.php:138 AddCustomerTypeNotes.php:132 Areas.php:165
 #: BankAccounts.php:224 BOMs.php:153 COGSGLPostings.php:110
 #: COGSGLPostings.php:208 ContractBOM.php:267 ContractOtherReqts.php:120
-#: CounterReturns.php:743 CounterSales.php:832 Credit_Invoice.php:408
+#: CounterReturns.php:740 CounterSales.php:832 Credit_Invoice.php:408
 #: CreditStatus.php:176 Currencies.php:279 CustomerReceipt.php:927
 #: Customers.php:1086 CustomerTypes.php:207 Departments.php:187
 #: DiscountCategories.php:225 DiscountMatrix.php:183 EDIMessageFormat.php:151
@@ -439,7 +437,7 @@ msgstr "A jeni i sigurt se doni të fshini këtë degë?"
 #: SupplierTypes.php:191 SuppShiptChgs.php:90 SuppTransGLAnalysis.php:126
 #: TaxAuthorities.php:175 TaxCategories.php:183 TaxGroups.php:189
 #: TaxProvinces.php:181 UnitsOfMeasure.php:186 WorkCentres.php:142
-#: WOSerialNos.php:323 WWW_Access.php:124 WWW_Users.php:333
+#: WOSerialNos.php:323 WWW_Access.php:124 WWW_Users.php:334
 #: includes/InputSerialItemsKeyed.php:60 includes/OutputSerialItems.php:99
 #, php-format
 msgid "Delete"
@@ -502,11 +500,11 @@ msgstr "Seksioni Në Llogari"
 #: SalesPeople.php:370 Shippers.php:203 StockCategories.php:614
 #: SupplierContacts.php:284 SuppLoginSetup.php:295 TaxAuthorities.php:329
 #: TaxCategories.php:238 TaxProvinces.php:235 UnitsOfMeasure.php:241
-#: WorkCentres.php:280 WWW_Users.php:737
+#: WorkCentres.php:280 WWW_Users.php:738
 msgid "Enter Information"
 msgstr "Shto Informacionet"
 
-#: AccountSections.php:7 includes/MainMenuLinksArray.php:382
+#: AccountSections.php:7 includes/MainMenuLinksArray.php:380
 msgid "Account Sections"
 msgstr "Seksioni i Llogarisë"
 
@@ -658,8 +656,8 @@ msgstr "Telefoni nuk ka"
 #: PrintCustTrans.php:993 PrintCustTransPortrait.php:759
 #: PrintCustTransPortrait.php:1005 PrintCustTransPortrait.php:1061
 #: SelectCustomer.php:427 SelectCustomer.php:619 SelectSupplier.php:278
-#: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:185
-#: WWW_Users.php:288 includes/PDFPickingListHeader.inc:25
+#: SupplierContacts.php:156 SupplierContacts.php:277 UserSettings.php:186
+#: WWW_Users.php:289 includes/PDFPickingListHeader.inc:25
 #: includes/PDFStatementPageHeader.inc:67 includes/PDFTransPageHeader.inc:82
 #: includes/PDFTransPageHeaderPortrait.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:29
@@ -874,7 +872,7 @@ msgstr "Llogaria Aged Customer Analiza"
 #: MailInventoryValuation.php:114 MRPPlannedPurchaseOrders.php:114
 #: MRPPlannedWorkOrders.php:106 MRPReport.php:147 MRPReport.php:508
 #: MRPReschedules.php:45 MRPReschedules.php:57 MRPShortages.php:155
-#: MRPShortages.php:167 OutstandingGRNs.php:53 OutstandingGRNs.php:65
+#: MRPShortages.php:167 OutstandingGRNs.php:46 OutstandingGRNs.php:59
 #: PDFCustomerList.php:18 PDFCustomerList.php:230 PDFCustomerList.php:242
 #: PDFLowGP.php:20 PDFStockCheckComparison.php:33
 #: PDFStockCheckComparison.php:59 PDFStockCheckComparison.php:264
@@ -912,7 +910,7 @@ msgstr "Detajet e konsumatorit nuk mund të shikohet nga SQL sepse"
 #: MRPPlannedWorkOrders.php:120 MRPPlannedWorkOrders.php:311 MRPReport.php:39
 #: MRPReport.php:50 MRPReport.php:150 MRPReschedules.php:48
 #: MRPReschedules.php:60 MRPShortages.php:158 MRPShortages.php:170
-#: OutstandingGRNs.php:56 OutstandingGRNs.php:68 PDFCustomerList.php:233
+#: OutstandingGRNs.php:49 OutstandingGRNs.php:62 PDFCustomerList.php:233
 #: PDFCustomerList.php:245 PDFGLJournal.php:100 PDFGrn.php:130 PDFLowGP.php:59
 #: PDFLowGP.php:71 PDFPriceList.php:128 PDFPrintLabel.php:46
 #: PDFQuotation.php:272 PDFQuotationPortrait.php:268
@@ -956,8 +954,8 @@ msgstr "nuk mund të shikohet, sepse"
 
 #: AgedDebtors.php:368 AgedSuppliers.php:200 Areas.php:94
 #: ConfirmDispatch_Invoice.php:164 ConfirmDispatch_Invoice.php:983
-#: ConfirmDispatch_Invoice.php:997 Contracts.php:582 CounterReturns.php:1015
-#: CounterReturns.php:1029 CounterSales.php:1413 CounterSales.php:1427
+#: ConfirmDispatch_Invoice.php:997 Contracts.php:582 CounterReturns.php:1012
+#: CounterReturns.php:1026 CounterSales.php:1413 CounterSales.php:1427
 #: Credit_Invoice.php:729 Credit_Invoice.php:750 CustomerReceipt.php:547
 #: CustomerReceipt.php:686 CustomerReceipt.php:714 CustomerTransInquiry.php:93
 #: DeliveryDetails.php:398 GLProfit_Loss.php:598 GLTagProfit_Loss.php:513
@@ -1051,7 +1049,7 @@ msgstr "Raporti i detajuar"
 #: InventoryPlanningPrefSupplier.php:519 InventoryQuantities.php:210
 #: InventoryValuation.php:269 MRPPlannedPurchaseOrders.php:282
 #: MRPPlannedWorkOrders.php:341 MRPReschedules.php:153 MRPShortages.php:303
-#: OutstandingGRNs.php:182 PDFCustomerList.php:419 PDFLowGP.php:146
+#: OutstandingGRNs.php:277 PDFCustomerList.php:419 PDFLowGP.php:146
 #: PDFPriceList.php:312 PDFRemittanceAdvice.php:175
 #: PDFStockCheckComparison.php:361 PrintCustTrans.php:537
 #: PrintCustTransPortrait.php:582 ReorderLevel.php:259 StockDispatch.php:407
@@ -1092,12 +1090,12 @@ msgstr "Analiza Aged Furnizuesi"
 msgid "There are no results so the PDF is empty"
 msgstr "Nuk ka çmime të ngritur për këtë pjesë"
 
-#: AgedSuppliers.php:287 OutstandingGRNs.php:172 PDFRemittanceAdvice.php:153
+#: AgedSuppliers.php:287 OutstandingGRNs.php:267 PDFRemittanceAdvice.php:153
 #: SupplierBalsAtPeriodEnd.php:132 SuppPaymentRun.php:265
 msgid "From Supplier Code"
 msgstr "Nga Kodi Furnizuesi"
 
-#: AgedSuppliers.php:291 OutstandingGRNs.php:176 PDFRemittanceAdvice.php:157
+#: AgedSuppliers.php:291 OutstandingGRNs.php:271 PDFRemittanceAdvice.php:157
 #: SupplierBalsAtPeriodEnd.php:136 SuppPaymentRun.php:269
 msgid "To Supplier Code"
 msgstr "Të Kodit të Furnizuesit"
@@ -1225,17 +1223,17 @@ msgstr "Për Data"
 
 #: AuditTrail.php:48 PO_AuthorisationLevels.php:124
 #: PO_AuthorisationLevels.php:173 PO_AuthorisationLevels.php:176
-#: UserSettings.php:113
+#: UserSettings.php:114
 msgid "User ID"
 msgstr "User ID"
 
 #: AuditTrail.php:50 AuditTrail.php:63 ContractBOM.php:300
-#: CounterReturns.php:1618 CounterReturns.php:1621 CounterSales.php:2205
+#: CounterReturns.php:1615 CounterReturns.php:1618 CounterSales.php:2205
 #: CounterSales.php:2208 CustomerTransInquiry.php:32 DailySalesInquiry.php:46
 #: DailySalesInquiry.php:48 FixedAssetRegister.php:56
 #: FixedAssetRegister.php:65 InventoryQuantities.php:168
-#: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP_2012-10.php:597
-#: MRP.php:597 MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
+#: InventoryQuantities.php:194 InventoryQuantities.php:196 MRP.php:597
+#: MRPReport.php:524 MRPReport.php:526 MRPReschedules.php:145
 #: NoSalesItems.php:22 NoSalesItems.php:48 NoSalesItems.php:68
 #: NoSalesItems.php:70 PDFPeriodStockTransListing.php:60 PDFPriceList.php:198
 #: PO_Items.php:1051 POReport.php:1570 ReorderLevel.php:212
@@ -1615,7 +1613,7 @@ msgid "from"
 msgstr "nga"
 
 #: BankMatching.php:128 ConfirmDispatchControlled_Invoice.php:68
-#: CounterReturns.php:200 EmailCustTrans.php:64 FixedAssetRegister.php:79
+#: CounterReturns.php:197 EmailCustTrans.php:64 FixedAssetRegister.php:79
 #: FTP_RadioBeacon.php:280 GLAccountCSV.php:173 GLAccountReport.php:103
 #: Payments.php:746 PcReportTab.php:101 PDFChequeListing.php:115
 #: PDFChequeListing.php:125 PDFChequeListing.php:200
@@ -1893,8 +1891,8 @@ msgstr "Numri"
 #: CustomerTransInquiry.php:105 CustWhereAlloc.php:107
 #: DailyBankTransactions.php:115 GLAccountReport.php:339
 #: PaymentAllocations.php:64 PaymentAllocations.php:65
-#: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:115
-#: StockCounts.php:158 StockLocMovements.php:94 StockMovements.php:102
+#: PDFRemittanceAdvice.php:309 ShiptsList.php:37 StockCounts.php:113
+#: StockCounts.php:156 StockLocMovements.php:94 StockMovements.php:102
 #: Z_CheckAllocs.php:64 includes/PDFBankingSummaryPageHeader.inc:40
 #: includes/PDFCustTransListingPageHeader.inc:49
 #: includes/PDFPeriodStockTransListingPageHeader.inc:48
@@ -1947,7 +1945,7 @@ msgstr ""
 "që kursi i këmbimit mësipërme pasqyron vlera aktuale e monedhës llogari "
 "bankare"
 
-#: BankReconciliation.php:358 CounterReturns.php:743 CounterSales.php:832
+#: BankReconciliation.php:358 CounterReturns.php:740 CounterSales.php:832
 #: Customers.php:1114 SelectOrderItems.php:1456 Stocks.php:1251
 #: WorkOrderCosting.php:551 WorkOrderEntry.php:590
 msgid "Are You Sure?"
@@ -1986,12 +1984,12 @@ msgid "Quantity Extended BOM Listing"
 msgstr "Sasia Extended Listing bom"
 
 #: BOMExtendedQty.php:30 BOMIndented.php:27 BOMIndentedReverse.php:26
-#: MRP_2012-10.php:27 MRPCalendar.php:86 MRP.php:27
+#: MRPCalendar.php:86 MRP.php:27
 msgid "The SQL to create passbom failed with the message"
 msgstr "SQL të krijuar passbom dështoi me mesazh"
 
 #: BOMExtendedQty.php:43 BOMIndented.php:40 BOMIndentedReverse.php:39
-#: MRP_2012-10.php:34 MRP.php:34
+#: MRP.php:34
 msgid "Create of tempbom failed because"
 msgstr "Krijo e tempbom dështuar për shkak se"
 
@@ -2017,8 +2015,8 @@ msgstr "Pjesa"
 #: BOMIndentedReverse.php:295 BOMInquiry.php:200 BOMs.php:556 BOMs.php:735
 #: ContractBOM.php:238 ContractBOM.php:351 ContractCosting.php:81
 #: ContractCosting.php:87 ContractCosting.php:152 ContractOtherReqts.php:95
-#: Contracts.php:987 Contracts.php:1023 CounterReturns.php:672
-#: CounterReturns.php:1682 CounterReturns.php:1809 CounterSales.php:745
+#: Contracts.php:987 Contracts.php:1023 CounterReturns.php:669
+#: CounterReturns.php:1679 CounterReturns.php:1806 CounterSales.php:745
 #: CounterSales.php:2085 CounterSales.php:2272 CounterSales.php:2409
 #: Credit_Invoice.php:289 CustomerPurchases.php:73 DeliveryDetails.php:852
 #: DeliveryDetails.php:922 GoodsReceived.php:101 GoodsReceived.php:105
@@ -2041,7 +2039,7 @@ msgstr "Pjesa"
 #: SelectOrderItems.php:1733 SelectOrderItems.php:1863 ShipmentCosting.php:149
 #: ShipmentCosting.php:150 Shipments.php:401 Shipments.php:403
 #: Shipments.php:404 Shipments.php:488 Shipments.php:490 SpecialOrder.php:628
-#: StockCounts.php:114 StockLocMovements.php:93 StockLocTransfer.php:307
+#: StockCounts.php:112 StockLocMovements.php:93 StockLocTransfer.php:307
 #: StockMovements.php:101 StockStatus.php:343 StockUsageGraph.php:12
 #: SuppCreditGRNs.php:279 SuppCreditGRNs.php:280 SupplierCredit.php:318
 #: SupplierTenderCreate.php:412 SupplierTenderCreate.php:821
@@ -2205,7 +2203,7 @@ msgid "Build"
 msgstr "Build"
 
 #: BOMExtendedQty.php:321 BOMInquiry.php:110 BOMs.php:883
-#: CounterReturns.php:1678 CounterSales.php:2081 CounterSales.php:2268
+#: CounterReturns.php:1675 CounterSales.php:2081 CounterSales.php:2268
 #: InternalStockRequest.php:625 PO_SelectOSPurchOrder.php:237
 #: PO_SelectPurchOrder.php:214 ReorderLevelLocation.php:70
 #: ReorderLevelLocation.php:71 SelectCompletedOrder.php:556
@@ -2274,7 +2272,7 @@ msgstr "Një nivel"
 
 #: BOMIndented.php:312 BOMIndentedReverse.php:292 BOMInquiry.php:109
 #: BOMInquiry.php:199 BOMs.php:553 BOMs.php:882 ContractBOM.php:237
-#: ContractBOM.php:348 ContractOtherReqts.php:94 CounterReturns.php:1676
+#: ContractBOM.php:348 ContractOtherReqts.php:94 CounterReturns.php:1673
 #: CounterSales.php:2079 CounterSales.php:2266 CreditStatus.php:152
 #: CreditStatus.php:243 CustomerPurchases.php:67 EmailConfirmation.php:218
 #: EmailConfirmation.php:336 FixedAssetCategories.php:164
@@ -2309,7 +2307,7 @@ msgstr "Një nivel"
 #: SupplierTenders.php:326 SupplierTenders.php:421 SupplierTenders.php:689
 #: SuppPriceList.php:309 TaxAuthorities.php:147 TopItems.php:164
 #: WorkCentres.php:127 WorkOrderCosting.php:98 WorkOrderCosting.php:130
-#: WorkOrderEntry.php:643 WorkOrderIssue.php:707
+#: WorkOrderEntry.php:643 WorkOrderIssue.php:707 Z_ItemsWithoutPicture.php:33
 #: includes/DefineLabelClass.php:12 includes/DefineLabelClass.php:45
 #: includes/PDFGrnHeader.inc:29 includes/PDFInventoryPlanPageHeader.inc:51
 #: includes/PDFOstdgGRNsPageHeader.inc:38
@@ -2397,7 +2395,7 @@ msgid "description"
 msgstr "përshkrim"
 
 #: BOMInquiry.php:28 BOMs.php:866 ContractBOM.php:326 ContractBOM.php:331
-#: Contracts.php:756 Contracts.php:759 CounterReturns.php:1643
+#: Contracts.php:756 Contracts.php:759 CounterReturns.php:1640
 #: CounterSales.php:2230 CustomerReceipt.php:1115 CustomerReceipt.php:1118
 #: DiscountCategories.php:109 DiscountCategories.php:111
 #: DiscountCategories.php:115 DiscountCategories.php:117
@@ -2431,8 +2429,8 @@ msgstr "Enter ekstrakt i"
 #: SalesInquiry.php:780 SalesInquiry.php:806 SalesInquiry.php:825
 #: SalesInquiry.php:935 SalesInquiry.php:1093 SalesInquiry.php:1183
 #: SalesInquiry.php:1201 SelectProduct.php:548 Shipt_Select.php:174
-#: StockAdjustments.php:116 StockAdjustments.php:394 StockCounts.php:113
-#: StockCounts.php:155 StockMovements.php:36 StockReorderLevel.php:47
+#: StockAdjustments.php:116 StockAdjustments.php:394 StockCounts.php:111
+#: StockCounts.php:153 StockMovements.php:36 StockReorderLevel.php:47
 #: StockStatus.php:57 StockTransfers.php:49 StockTransfers.php:470
 #: StockUsage.php:64 SupplierPriceList.php:47 SupplierTenderCreate.php:670
 #: SupplierTenders.php:433 WorkOrderEntry.php:631 WorkOrderIssue.php:683
@@ -2441,7 +2439,7 @@ msgid "Stock Code"
 msgstr "Stock Kodi"
 
 #: BOMInquiry.php:35 BOMs.php:871 ContractBOM.php:336 Contracts.php:764
-#: CounterReturns.php:1647 CounterSales.php:2236 CustomerReceipt.php:1125
+#: CounterReturns.php:1644 CounterSales.php:2236 CustomerReceipt.php:1125
 #: FixedAssetTransfer.php:102 InternalStockRequest.php:354 MRPDemands.php:343
 #: MRPReport.php:555 PO_Header.php:544 PO_Items.php:1088 SelectAsset.php:114
 #: SelectCreditItems.php:232 SelectCreditItems.php:1010 SelectCustomer.php:375
@@ -2481,7 +2479,7 @@ msgid "The SQL to find the parts selected failed with the message"
 msgstr "SQL për të gjetur pjesët e zgjedhura dështoi me mesazh"
 
 #: BOMInquiry.php:108 BOMs.php:552 BOMs.php:881 ContractBOM.php:347
-#: CounterReturns.php:1675 CounterSales.php:2078 CounterSales.php:2265
+#: CounterReturns.php:1672 CounterSales.php:2078 CounterSales.php:2265
 #: CustomerBranches.php:370 CustomerReceipt.php:1136 GLCodesInquiry.php:26
 #: InternalStockRequest.php:554 InternalStockRequest.php:622 MRPDemands.php:91
 #: MRPPlannedWorkOrders.php:257 MRPReport.php:748 NoSalesItems.php:186
@@ -2502,7 +2500,7 @@ msgid "Code"
 msgstr "Kodi"
 
 #: BOMInquiry.php:111 BOMs.php:884 ConfirmDispatch_Invoice.php:286
-#: ContractBOM.php:349 CounterReturns.php:1677 CounterSales.php:2080
+#: ContractBOM.php:349 CounterReturns.php:1674 CounterSales.php:2080
 #: CounterSales.php:2267 Credit_Invoice.php:288 GoodsReceived.php:102
 #: GoodsReceived.php:106 InternalStockRequestAuthorisation.php:89
 #: InternalStockRequestFulfill.php:310 InternalStockRequest.php:557
@@ -2576,7 +2574,7 @@ msgid "to view the costed bill of material for"
 msgstr "për të parë faturën kosto e materialit për"
 
 #: BOMListing.php:14 BOMListing.php:15 BOMListing.php:107
-#: includes/MainMenuLinksArray.php:296
+#: includes/MainMenuLinksArray.php:294
 msgid "Bill Of Material Listing"
 msgstr "Bill Of Listing Materiale"
 
@@ -2799,7 +2797,7 @@ msgstr "Nuk mund të marrë përshkrimin e pjesës prind sepse"
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr "SQL përdorur për të marrë përshkrimin e pjesës së prindit ishte"
 
-#: BOMs.php:425 ConfirmDispatch_Invoice.php:1030 CounterReturns.php:1063
+#: BOMs.php:425 ConfirmDispatch_Invoice.php:1030 CounterReturns.php:1060
 #: CounterSales.php:1460 Credit_Invoice.php:785 Credit_Invoice.php:813
 #: SelectCreditItems.php:1484 Stocks.php:983 Stocks.php:985
 #: api/api_debtortransactions.php:753 api/api_salesorders.php:920
@@ -2843,11 +2841,10 @@ msgid "Level"
 msgstr "Nivel"
 
 #: BOMs.php:554 BOMs.php:685 Contracts.php:869 FixedAssetRegister.php:86
-#: InventoryQuantities.php:247 Locations.php:349 MRP_2012-10.php:562
-#: MRP_2012-10.php:595 MRP.php:562 MRP.php:595 NoSalesItems.php:185
-#: PDFOrdersInvoiced.php:312 PDFOrderStatus.php:281
+#: InventoryQuantities.php:247 Locations.php:349 MRP.php:562 MRP.php:595
+#: NoSalesItems.php:185 PDFOrdersInvoiced.php:312 PDFOrderStatus.php:281
 #: ReorderLevelLocation.php:157 ReorderLevel.php:290 ReorderLevel.php:299
-#: StockCounts.php:156 StockReorderLevel.php:54 StockSerialItemResearch.php:80
+#: StockCounts.php:154 StockReorderLevel.php:54 StockSerialItemResearch.php:80
 #: StockStatus.php:80 StockStatus.php:85 SupplierTenderCreate.php:125
 #: WhereUsedInquiry.php:72 WorkCentres.php:128 WorkCentres.php:222
 #: includes/PDFPeriodStockTransListingPageHeader.inc:51
@@ -2856,7 +2853,7 @@ msgstr "Nivel"
 msgid "Location"
 msgstr "Vendndodhja"
 
-#: BOMs.php:555 WhereUsedInquiry.php:71 includes/MainMenuLinksArray.php:321
+#: BOMs.php:555 WhereUsedInquiry.php:71 includes/MainMenuLinksArray.php:319
 msgid "Work Centre"
 msgstr "Punë Qendra"
 
@@ -2994,7 +2991,7 @@ msgstr "A jeni i sigurt se doni të fshini këtë çmim?"
 #: COGSGLPostings.php:191 CustomerReceipt.php:1031 GLJournal.php:384
 #: GLTransInquiry.php:44 Payments.php:1066 SupplierTransInquiry.php:172
 #: TaxAuthorities.php:148 TaxAuthorities.php:149
-#: includes/MainMenuLinksArray.php:379
+#: includes/MainMenuLinksArray.php:377
 msgid "GL Account"
 msgstr "Llogaria GL"
 
@@ -3019,7 +3016,7 @@ msgstr "Lista e Çmimeve"
 msgid "Post to GL account"
 msgstr "Post to GL llogari"
 
-#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:447
+#: CompanyPreferences.php:7 includes/MainMenuLinksArray.php:445
 msgid "Company Preferences"
 msgstr "Preferences Company"
 
@@ -3140,7 +3137,7 @@ msgstr "Facsimile Number"
 
 #: CompanyPreferences.php:281 CustLoginSetup.php:162 Suppliers.php:712
 #: Suppliers.php:914 SupplierTenderCreate.php:394 SuppLoginSetup.php:148
-#: WWW_Users.php:471
+#: WWW_Users.php:472
 msgid "Email Address"
 msgstr "Email Adresa"
 
@@ -3360,7 +3357,7 @@ msgstr "Klient"
 #: OrderDetails.php:73 SalesAnalRepts.php:30 SalesAnalRepts.php:32
 #: SalesInquiry.php:751 SalesInquiry.php:761 SalesInquiry.php:783
 #: SalesInquiry.php:931 SalesInquiry.php:946 SalesInquiry.php:952
-#: SalesInquiry.php:1203 WWW_Users.php:289 WWW_Users.php:528
+#: SalesInquiry.php:1203 WWW_Users.php:290 WWW_Users.php:529
 #: Z_ChangeBranchCode.php:202 includes/PDFStatementPageHeader.inc:112
 #: includes/PDFTransPageHeader.inc:46
 #: includes/PDFTransPageHeaderPortrait.inc:55
@@ -3383,23 +3380,24 @@ msgid "Invoice amounts stated in"
 msgstr "Faturë shumat e përcaktuara në"
 
 #: ConfirmDispatch_Invoice.php:283 ContractBOM.php:236 ContractCosting.php:79
-#: ContractCosting.php:85 Contracts.php:985 CounterReturns.php:670
-#: CounterReturns.php:1808 CounterSales.php:743 CounterSales.php:2408
+#: ContractCosting.php:85 Contracts.php:985 CounterReturns.php:667
+#: CounterReturns.php:1805 CounterSales.php:743 CounterSales.php:2408
 #: Credit_Invoice.php:285 DeliveryDetails.php:850 GoodsReceived.php:99
 #: InternalStockRequest.php:260 Labels.php:465 Labels.php:467 Labels.php:509
-#: OrderDetails.php:168 PDFPrintLabel.php:65 PO_Items.php:679
-#: PO_OrderDetails.php:146 PrintCustTrans.php:859 PrintCustTrans.php:948
-#: PrintCustTrans.php:997 PrintCustTransPortrait.php:913
-#: PrintCustTransPortrait.php:1011 PrintCustTransPortrait.php:1067
-#: RecurringSalesOrders.php:329 ReorderLevelLocation.php:188 ReprintGRN.php:84
-#: ReverseGRN.php:390 SalesGraph.php:182 SelectCreditItems.php:684
-#: SelectOrderItems.php:1376 StockCostUpdate.php:125 StockLocMovements.php:88
-#: StockLocTransfer.php:306 StockLocTransferReceive.php:428
-#: StockQuantityByDate.php:107 Stocks.php:776 Stocks.php:779 Stocks.php:833
-#: Stocks.php:839 SuppCreditGRNs.php:91 SuppCreditGRNs.php:186
-#: SuppInvGRNs.php:125 SuppInvGRNs.php:306 SupplierCredit.php:316
-#: SupplierInvoice.php:664 SupplierTenders.php:122 SupplierTenders.php:530
-#: SupplierTenders.php:532 includes/PDFOrderPageHeader_generic.inc:91
+#: OrderDetails.php:168 OutstandingGRNs.php:179 PDFPrintLabel.php:65
+#: PO_Items.php:679 PO_OrderDetails.php:146 PrintCustTrans.php:859
+#: PrintCustTrans.php:948 PrintCustTrans.php:997
+#: PrintCustTransPortrait.php:913 PrintCustTransPortrait.php:1011
+#: PrintCustTransPortrait.php:1067 RecurringSalesOrders.php:329
+#: ReorderLevelLocation.php:188 ReprintGRN.php:84 ReverseGRN.php:390
+#: SalesGraph.php:182 SelectCreditItems.php:684 SelectOrderItems.php:1376
+#: StockCostUpdate.php:125 StockLocMovements.php:88 StockLocTransfer.php:306
+#: StockLocTransferReceive.php:428 StockQuantityByDate.php:107 Stocks.php:776
+#: Stocks.php:779 Stocks.php:833 Stocks.php:839 SuppCreditGRNs.php:91
+#: SuppCreditGRNs.php:186 SuppInvGRNs.php:125 SuppInvGRNs.php:306
+#: SupplierCredit.php:316 SupplierInvoice.php:664 SupplierTenders.php:122
+#: SupplierTenders.php:530 SupplierTenders.php:532
+#: Z_ItemsWithoutPicture.php:32 includes/PDFOrderPageHeader_generic.inc:91
 #: includes/PDFPickingListHeader.inc:72
 #: includes/PDFQuotationPageHeader.inc:102
 #: includes/PDFQuotationPortraitPageHeader.inc:102
@@ -3411,7 +3409,7 @@ msgid "Item Code"
 msgstr "Item Kodi"
 
 #: ConfirmDispatch_Invoice.php:284 ContractCosting.php:80
-#: ContractCosting.php:86 Contracts.php:986 CounterReturns.php:671
+#: ContractCosting.php:86 Contracts.php:986 CounterReturns.php:668
 #: CounterSales.php:744 Credit_Invoice.php:286 DeliveryDetails.php:851
 #: DeliveryDetails.php:921 InternalStockRequest.php:147
 #: InternalStockRequest.php:261 Labels.php:470 OrderDetails.php:169
@@ -3454,7 +3452,7 @@ msgstr "Sent"
 msgid "This Dispatch"
 msgstr "Kjo Dërgimi"
 
-#: ConfirmDispatch_Invoice.php:289 CounterReturns.php:674 CounterSales.php:748
+#: ConfirmDispatch_Invoice.php:289 CounterReturns.php:671 CounterSales.php:748
 #: Credit_Invoice.php:290 CustomerPurchases.php:72 DeliveryDetails.php:854
 #: DeliveryDetails.php:924 GoodsReceived.php:112 Labels.php:480 Labels.php:482
 #: Labels.php:512 OffersReceived.php:110 OffersReceived.php:219
@@ -3477,7 +3475,7 @@ msgstr "Kjo Dërgimi"
 msgid "Price"
 msgstr "Çmimi"
 
-#: ConfirmDispatch_Invoice.php:290 CounterReturns.php:675 CounterSales.php:750
+#: ConfirmDispatch_Invoice.php:290 CounterReturns.php:672 CounterSales.php:750
 #: Credit_Invoice.php:291 CustomerReceipt.php:907 DeliveryDetails.php:855
 #: OrderDetails.php:173 PrintCustTrans.php:864 PrintCustTrans.php:953
 #: PrintCustTrans.php:1002 PrintCustTransPortrait.php:918
@@ -3492,7 +3490,7 @@ msgid "Discount"
 msgstr "Zbritje"
 
 #: ConfirmDispatch_Invoice.php:291 ConfirmDispatch_Invoice.php:295
-#: CounterReturns.php:679 CounterReturns.php:759 CounterSales.php:755
+#: CounterReturns.php:676 CounterReturns.php:756 CounterSales.php:755
 #: CounterSales.php:849 CounterSales.php:851 Credit_Invoice.php:292
 #: Credit_Invoice.php:296 CustomerAllocations.php:331
 #: CustomerAllocations.php:365 CustomerInquiry.php:205 DeliveryDetails.php:856
@@ -3502,18 +3500,19 @@ msgstr "Zbritje"
 #: GLTrialBalance.php:238 GLTrialBalance.php:259 GLTrialBalance.php:355
 #: GLTrialBalance.php:487 GLTrialBalance.php:507 GLTrialBalance.php:531
 #: GLTrialBalance.php:643 GLTrialBalance.php:663 GLTrialBalance.php:687
-#: OffersReceived.php:111 OrderDetails.php:174 PDFCustTransListing.php:133
-#: PDFOrdersInvoiced.php:395 PDFRemittanceAdvice.php:310
-#: PDFSuppTransListing.php:131 RecurringSalesOrders.php:335
-#: SalesByTypePeriodInquiry.php:375 SalesByTypePeriodInquiry.php:410
-#: SalesByTypePeriodInquiry.php:445 SalesByTypePeriodInquiry.php:480
-#: SalesByTypePeriodInquiry.php:541 SelectCreditItems.php:691
-#: SelectCreditItems.php:695 SelectOrderItems.php:1387
-#: SuppContractChgs.php:107 SuppFixedAssetChgs.php:94
-#: SupplierAllocations.php:458 SupplierAllocations.php:570
-#: SupplierAllocations.php:645 SupplierCredit.php:407 SupplierInquiry.php:212
-#: SuppShiptChgs.php:97 SuppTransGLAnalysis.php:139
-#: Z_CheckDebtorsControl.php:149 includes/PDFQuotationPageHeader.inc:109
+#: OffersReceived.php:111 OrderDetails.php:174 OutstandingGRNs.php:243
+#: PDFCustTransListing.php:133 PDFOrdersInvoiced.php:395
+#: PDFRemittanceAdvice.php:310 PDFSuppTransListing.php:131
+#: RecurringSalesOrders.php:335 SalesByTypePeriodInquiry.php:375
+#: SalesByTypePeriodInquiry.php:410 SalesByTypePeriodInquiry.php:445
+#: SalesByTypePeriodInquiry.php:480 SalesByTypePeriodInquiry.php:541
+#: SelectCreditItems.php:691 SelectCreditItems.php:695
+#: SelectOrderItems.php:1387 SuppContractChgs.php:107
+#: SuppFixedAssetChgs.php:94 SupplierAllocations.php:458
+#: SupplierAllocations.php:570 SupplierAllocations.php:645
+#: SupplierCredit.php:407 SupplierInquiry.php:212 SuppShiptChgs.php:97
+#: SuppTransGLAnalysis.php:139 Z_CheckDebtorsControl.php:149
+#: includes/PDFQuotationPageHeader.inc:109
 #: includes/PDFQuotationPortraitPageHeader.inc:109
 #: includes/PO_PDFOrderPageHeader.inc:82 api/api_debtortransactions.php:1269
 #: api/api_debtortransactions.php:1282 api/api_debtortransactions.php:1579
@@ -3535,7 +3534,7 @@ msgstr "Autoriteti tatimor"
 msgid "Tax %"
 msgstr "% Tax"
 
-#: ConfirmDispatch_Invoice.php:294 CounterReturns.php:678 CounterSales.php:754
+#: ConfirmDispatch_Invoice.php:294 CounterReturns.php:675 CounterSales.php:754
 #: Credit_Invoice.php:294 Credit_Invoice.php:295 PrintCustTrans.php:396
 #: PrintCustTrans.php:1040 PrintCustTransPortrait.php:456
 #: PrintCustTransPortrait.php:1110 SelectCreditItems.php:693
@@ -3543,7 +3542,7 @@ msgstr "% Tax"
 msgid "Tax"
 msgstr "Tatim"
 
-#: ConfirmDispatch_Invoice.php:295 CounterReturns.php:679 CounterSales.php:755
+#: ConfirmDispatch_Invoice.php:295 CounterReturns.php:676 CounterSales.php:755
 #: Credit_Invoice.php:296 SelectCreditItems.php:695
 msgid "Incl Tax"
 msgstr "Përfshirë Tatimore"
@@ -3777,12 +3776,12 @@ msgstr "SQL të përdorura për të rinovuar default degë bartës ishte"
 #: ConfirmDispatch_Invoice.php:1602 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterReturns.php:942 CounterReturns.php:958
-#: CounterReturns.php:995 CounterReturns.php:1014 CounterReturns.php:1028
-#: CounterReturns.php:1069 CounterReturns.php:1079 CounterReturns.php:1159
-#: CounterReturns.php:1180 CounterReturns.php:1304 CounterReturns.php:1326
-#: CounterReturns.php:1351 CounterReturns.php:1372 CounterReturns.php:1398
-#: CounterReturns.php:1421 CounterSales.php:1298 CounterSales.php:1340
+#: ContractCosting.php:415 CounterReturns.php:939 CounterReturns.php:955
+#: CounterReturns.php:992 CounterReturns.php:1011 CounterReturns.php:1025
+#: CounterReturns.php:1066 CounterReturns.php:1076 CounterReturns.php:1156
+#: CounterReturns.php:1177 CounterReturns.php:1301 CounterReturns.php:1323
+#: CounterReturns.php:1348 CounterReturns.php:1369 CounterReturns.php:1395
+#: CounterReturns.php:1418 CounterSales.php:1298 CounterSales.php:1340
 #: CounterSales.php:1356 CounterSales.php:1393 CounterSales.php:1412
 #: CounterSales.php:1426 CounterSales.php:1466 CounterSales.php:1476
 #: CounterSales.php:1558 CounterSales.php:1579 CounterSales.php:1741
@@ -3899,12 +3898,12 @@ msgstr "KRITIK GABIM"
 #: ConfirmDispatch_Invoice.php:1602 ContractCosting.php:248
 #: ContractCosting.php:266 ContractCosting.php:274 ContractCosting.php:330
 #: ContractCosting.php:359 ContractCosting.php:388 ContractCosting.php:408
-#: ContractCosting.php:415 CounterReturns.php:942 CounterReturns.php:958
-#: CounterReturns.php:995 CounterReturns.php:1014 CounterReturns.php:1028
-#: CounterReturns.php:1069 CounterReturns.php:1079 CounterReturns.php:1159
-#: CounterReturns.php:1180 CounterReturns.php:1304 CounterReturns.php:1326
-#: CounterReturns.php:1351 CounterReturns.php:1372 CounterReturns.php:1398
-#: CounterReturns.php:1421 CounterSales.php:1298 CounterSales.php:1340
+#: ContractCosting.php:415 CounterReturns.php:939 CounterReturns.php:955
+#: CounterReturns.php:992 CounterReturns.php:1011 CounterReturns.php:1025
+#: CounterReturns.php:1066 CounterReturns.php:1076 CounterReturns.php:1156
+#: CounterReturns.php:1177 CounterReturns.php:1301 CounterReturns.php:1323
+#: CounterReturns.php:1348 CounterReturns.php:1369 CounterReturns.php:1395
+#: CounterReturns.php:1418 CounterSales.php:1298 CounterSales.php:1340
 #: CounterSales.php:1356 CounterSales.php:1393 CounterSales.php:1412
 #: CounterSales.php:1426 CounterSales.php:1466 CounterSales.php:1476
 #: CounterSales.php:1558 CounterSales.php:1579 CounterSales.php:1741
@@ -4010,24 +4009,24 @@ msgstr "Header shitjes mënyrë nuk mund të rifreskohet me numrin e faturës"
 msgid "The following SQL to update the sales order was used"
 msgstr "SQL e mëposhtme për të rinovuar për shitje është përdorur"
 
-#: ConfirmDispatch_Invoice.php:801 CounterReturns.php:942
+#: ConfirmDispatch_Invoice.php:801 CounterReturns.php:939
 #: CounterSales.php:1340 RecurringSalesOrdersProcess.php:680
 msgid "The debtor transaction record could not be inserted because"
 msgstr "Transaksioni i debitorit rekord nuk mund të shtohet sepse"
 
-#: ConfirmDispatch_Invoice.php:802 CounterReturns.php:943
+#: ConfirmDispatch_Invoice.php:802 CounterReturns.php:940
 #: CounterSales.php:1341 RecurringSalesOrdersProcess.php:681
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr ""
 "SQL e mëposhtme për të futur në transaksion debitorit rekord është përdorur"
 
-#: ConfirmDispatch_Invoice.php:817 CounterReturns.php:958
+#: ConfirmDispatch_Invoice.php:817 CounterReturns.php:955
 #: CounterSales.php:1356 Credit_Invoice.php:629
 #: RecurringSalesOrdersProcess.php:694 SelectCreditItems.php:1177
 msgid "The debtor transaction taxes records could not be inserted because"
 msgstr "Transaksioni i debitorit tatimeve të dhënat nuk mund të futet, sepse"
 
-#: ConfirmDispatch_Invoice.php:818 CounterReturns.php:959
+#: ConfirmDispatch_Invoice.php:818 CounterReturns.php:956
 #: CounterSales.php:1357 Credit_Invoice.php:630
 #: RecurringSalesOrdersProcess.php:695 SelectCreditItems.php:1178
 msgid ""
@@ -4067,24 +4066,24 @@ msgstr ""
 msgid "Cannot retrieve the mbflag"
 msgstr "Nuk mund të rifitoj mbflag"
 
-#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:979
+#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:976
 #: CounterSales.php:1377 FixedAssetItems.php:628 SalesAnalReptCols.php:327
 #: Stocks.php:1248 Suppliers.php:1028 includes/MiscFunctions.php:36
 msgid "WARNING"
 msgstr "KUJDES"
 
-#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:979
+#: ConfirmDispatch_Invoice.php:948 CounterReturns.php:976
 #: CounterSales.php:1377
 msgid "Could not retrieve current location stock"
 msgstr "Nuk mund të rifitoj vendin e aksioneve të tanishme"
 
-#: ConfirmDispatch_Invoice.php:964 CounterReturns.php:995
+#: ConfirmDispatch_Invoice.php:964 CounterReturns.php:992
 #: CounterSales.php:1393 Credit_Invoice.php:707 SelectCreditItems.php:1417
 msgid "Location stock record could not be updated because"
 msgstr "Vendndodhja rekord aksioneve nuk mund të rifreskohet për shkak se"
 
 #: ConfirmDispatch_Invoice.php:965 ContractCosting.php:331
-#: CounterReturns.php:996 CounterSales.php:1394 Credit_Invoice.php:708
+#: CounterReturns.php:993 CounterSales.php:1394 Credit_Invoice.php:708
 #: GoodsReceived.php:491 ReverseGRN.php:220 SelectCreditItems.php:1418
 #: StockTransfers.php:434 StockTransfers.php:443 SupplierInvoice.php:277
 #: WorkOrderIssue.php:162 WorkOrderReceive.php:340 WorkOrderReceive.php:447
@@ -4092,12 +4091,12 @@ msgid "The following SQL to update the location stock record was used"
 msgstr ""
 "SQL e mëposhtme për të rinovuar të aksioneve vend rekord është përdorur"
 
-#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1014
+#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1011
 #: CounterSales.php:1412 Credit_Invoice.php:728 SelectCreditItems.php:1438
 msgid "Could not retrieve assembly components from the database for"
 msgstr "Nuk mund të rifitoj komponente kuvendit nga baza e të dhënave për"
 
-#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1014
+#: ConfirmDispatch_Invoice.php:982 CounterReturns.php:1011
 #: CounterSales.php:1412 Credit_Invoice.php:728 EDIMessageFormat.php:43
 #: EDISendInvoices.php:105 EDISendInvoices_Reece.php:184
 #: FixedAssetCategories.php:91 FixedAssetCategories.php:110
@@ -4108,7 +4107,7 @@ msgstr "Nuk mund të rifitoj komponente kuvendit nga baza e të dhënave për"
 msgid "because"
 msgstr "sepse"
 
-#: ConfirmDispatch_Invoice.php:996 CounterReturns.php:1028
+#: ConfirmDispatch_Invoice.php:996 CounterReturns.php:1025
 #: CounterSales.php:1426
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr ""
@@ -4129,12 +4128,12 @@ msgstr ""
 msgid "Order"
 msgstr "Mënyrë"
 
-#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1069
+#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1066
 #: CounterSales.php:1466 Credit_Invoice.php:819 SelectCreditItems.php:1491
 msgid "Stock movement records for the assembly components of"
 msgstr "lëvizje të dhënat Stock për komponentët e asamblesë së"
 
-#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1069
+#: ConfirmDispatch_Invoice.php:1036 CounterReturns.php:1066
 #: CounterSales.php:1466 Credit_Invoice.php:819 SelectCreditItems.php:1491
 #: ShipmentCosting.php:397 SupplierAllocations.php:139
 #: includes/PDFPaymentRun_PymtFooter.php:57
@@ -4146,7 +4145,7 @@ msgstr "lëvizje të dhënat Stock për komponentët e asamblesë së"
 msgid "could not be inserted because"
 msgstr "nuk mund të futet, sepse"
 
-#: ConfirmDispatch_Invoice.php:1037 CounterReturns.php:1070
+#: ConfirmDispatch_Invoice.php:1037 CounterReturns.php:1067
 #: CounterSales.php:1467 Credit_Invoice.php:820 SelectCreditItems.php:1492
 msgid ""
 "The following SQL to insert the assembly components stock movement records "
@@ -4155,7 +4154,7 @@ msgstr ""
 "SQL e mëposhtme për të futur në komponentët e asamblesë të dhënat e "
 "aksioneve të lëvizjes është përdorur"
 
-#: ConfirmDispatch_Invoice.php:1046 CounterReturns.php:1079
+#: ConfirmDispatch_Invoice.php:1046 CounterReturns.php:1076
 #: CounterSales.php:1476 Credit_Invoice.php:829 SelectCreditItems.php:1501
 msgid ""
 "Location stock record could not be updated for an assembly component because"
@@ -4163,7 +4162,7 @@ msgstr ""
 "Vendndodhja rekord aksioneve nuk mund të rifreskohet për një komponent i "
 "kuvendit, sepse"
 
-#: ConfirmDispatch_Invoice.php:1047 CounterReturns.php:1080
+#: ConfirmDispatch_Invoice.php:1047 CounterReturns.php:1077
 #: CounterSales.php:1477
 msgid ""
 "The following SQL to update the locations stock record for the component was "
@@ -4172,7 +4171,7 @@ msgstr ""
 "SQL e mëposhtme për të rinovuar rekordin e vende të aksioneve për komponent "
 "është përdorur"
 
-#: ConfirmDispatch_Invoice.php:1129 CounterReturns.php:1159
+#: ConfirmDispatch_Invoice.php:1129 CounterReturns.php:1156
 #: CounterSales.php:1558 Credit_Invoice.php:904 Credit_Invoice.php:1002
 #: Credit_Invoice.php:1042 Credit_Invoice.php:1082
 #: RecurringSalesOrdersProcess.php:363 ReverseGRN.php:248
@@ -4181,7 +4180,7 @@ msgid "Stock movement records could not be inserted because"
 msgstr "lëvizje të dhënat Stock nuk mund të shtohet sepse"
 
 #: ConfirmDispatch_Invoice.php:1130 ContractCosting.php:360
-#: CounterReturns.php:1160 CounterSales.php:1559 Credit_Invoice.php:905
+#: CounterReturns.php:1157 CounterSales.php:1559 Credit_Invoice.php:905
 #: Credit_Invoice.php:1003 Credit_Invoice.php:1043 GoodsReceived.php:522
 #: RecurringSalesOrdersProcess.php:364 ReverseGRN.php:249
 #: SelectCreditItems.php:1316 SupplierInvoice.php:308 WorkOrderIssue.php:193
@@ -4190,7 +4189,7 @@ msgid "The following SQL to insert the stock movement records was used"
 msgstr ""
 "SQL e mëposhtme për të futur të dhënat e lëvizjes së aksioneve është përdorur"
 
-#: ConfirmDispatch_Invoice.php:1150 CounterReturns.php:1180
+#: ConfirmDispatch_Invoice.php:1150 CounterReturns.php:1177
 #: CounterSales.php:1579 RecurringSalesOrdersProcess.php:384
 msgid ""
 "Taxes and rates applicable to this invoice line item could not be inserted "
@@ -4199,7 +4198,7 @@ msgstr ""
 "Taksat dhe normat e zbatueshme për këtë artikull faturë linjë nuk mund të "
 "futet, sepse"
 
-#: ConfirmDispatch_Invoice.php:1151 CounterReturns.php:1181
+#: ConfirmDispatch_Invoice.php:1151 CounterReturns.php:1178
 #: CounterSales.php:1580 Credit_Invoice.php:1105
 #: RecurringSalesOrdersProcess.php:385 SelectCreditItems.php:1337
 msgid ""
@@ -4245,7 +4244,7 @@ msgstr ""
 "SQL e mëposhtme për të futur të dhënat serial lëvizjen e aksioneve është "
 "përdorur"
 
-#: ConfirmDispatch_Invoice.php:1223 CounterReturns.php:1221
+#: ConfirmDispatch_Invoice.php:1223 CounterReturns.php:1218
 #: CounterSales.php:1658 RecurringSalesOrdersProcess.php:423
 #: api/api_salesorders.php:1026
 msgid "The count of existing Sales analysis records could not run because"
@@ -4253,27 +4252,27 @@ msgstr ""
 "Numërimin e të dhënave ekzistuese të shitjes analizë nuk mund të kandidojë "
 "për shkak se"
 
-#: ConfirmDispatch_Invoice.php:1224 CounterReturns.php:1222
+#: ConfirmDispatch_Invoice.php:1224 CounterReturns.php:1219
 #: CounterSales.php:1659 Credit_Invoice.php:1133
 #: RecurringSalesOrdersProcess.php:424 SelectCreditItems.php:1659
 #: api/api_salesorders.php:1027
 msgid "SQL to count the no of sales analysis records"
 msgstr "SQL për të numëruar nuk e shitjeve të dhënat Analiza"
 
-#: ConfirmDispatch_Invoice.php:1279 CounterReturns.php:1279
+#: ConfirmDispatch_Invoice.php:1279 CounterReturns.php:1276
 #: CounterSales.php:1716 RecurringSalesOrdersProcess.php:482
 msgid "Sales analysis record could not be added or updated because"
 msgstr ""
 "Shitje rekord analizë nuk mund të shtohet ose të përditësuar për shkak se"
 
-#: ConfirmDispatch_Invoice.php:1280 CounterReturns.php:1280
+#: ConfirmDispatch_Invoice.php:1280 CounterReturns.php:1277
 #: CounterSales.php:1717 Credit_Invoice.php:1245
 #: RecurringSalesOrdersProcess.php:483 SelectCreditItems.php:1769
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr ""
 "SQL e mëposhtme për të futur të dhënat e shitjes analizës është përdorur"
 
-#: ConfirmDispatch_Invoice.php:1305 CounterReturns.php:1304
+#: ConfirmDispatch_Invoice.php:1305 CounterReturns.php:1301
 #: CounterSales.php:1741 Credit_Invoice.php:1275
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr "Kostoja e shitjes GL postimi nuk mund të shtohet sepse"
@@ -4283,9 +4282,9 @@ msgstr "Kostoja e shitjes GL postimi nuk mund të shtohet sepse"
 #: ConfirmDispatch_Invoice.php:1424 ConfirmDispatch_Invoice.php:1446
 #: ConfirmDispatch_Invoice.php:1468 ConfirmDispatch_Invoice.php:1490
 #: ConfirmDispatch_Invoice.php:1581 ConfirmDispatch_Invoice.php:1603
-#: ContractCosting.php:249 ContractCosting.php:267 CounterReturns.php:1305
-#: CounterReturns.php:1327 CounterReturns.php:1352 CounterReturns.php:1373
-#: CounterReturns.php:1422 CounterSales.php:1742 CounterSales.php:1764
+#: ContractCosting.php:249 ContractCosting.php:267 CounterReturns.php:1302
+#: CounterReturns.php:1324 CounterReturns.php:1349 CounterReturns.php:1370
+#: CounterReturns.php:1419 CounterSales.php:1742 CounterSales.php:1764
 #: CounterSales.php:1789 CounterSales.php:1810 CounterSales.php:1859
 #: Credit_Invoice.php:1276 Credit_Invoice.php:1316 Credit_Invoice.php:1343
 #: Credit_Invoice.php:1364 Credit_Invoice.php:1393 Credit_Invoice.php:1419
@@ -4303,19 +4302,19 @@ msgstr "Kostoja e shitjes GL postimi nuk mund të shtohet sepse"
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr "SQL e mëposhtme për të futur të dhënat GLTrans është përdorur"
 
-#: ConfirmDispatch_Invoice.php:1328 CounterReturns.php:1326
+#: ConfirmDispatch_Invoice.php:1328 CounterReturns.php:1323
 #: CounterSales.php:1763
 msgid ""
 "The stock side of the cost of sales GL posting could not be inserted because"
 msgstr ""
 "Ana e aksioneve të kostos së shitjes GL postimi nuk mund të shtohet sepse"
 
-#: ConfirmDispatch_Invoice.php:1355 CounterReturns.php:1351
+#: ConfirmDispatch_Invoice.php:1355 CounterReturns.php:1348
 #: CounterSales.php:1788 RecurringSalesOrdersProcess.php:510
 msgid "The sales GL posting could not be inserted because"
 msgstr "GL shitjes postimi nuk mund të shtohet sepse"
 
-#: ConfirmDispatch_Invoice.php:1377 CounterReturns.php:1372
+#: ConfirmDispatch_Invoice.php:1377 CounterReturns.php:1369
 #: CounterSales.php:1809 RecurringSalesOrdersProcess.php:537
 msgid "The sales discount GL posting could not be inserted because"
 msgstr "GL shitjes zbritje postimi nuk mund të shtohet sepse"
@@ -4377,12 +4376,12 @@ msgid "The following SQL to update the fixed asset record was used"
 msgstr ""
 "SQL e mëposhtme për të rinovuar rekordin e aseteve fikse është përdorur"
 
-#: ConfirmDispatch_Invoice.php:1555 CounterReturns.php:1398
+#: ConfirmDispatch_Invoice.php:1555 CounterReturns.php:1395
 #: CounterSales.php:1835 RecurringSalesOrdersProcess.php:604
 msgid "The total debtor GL posting could not be inserted because"
 msgstr "GL total debitori postimi nuk mund të shtohet sepse"
 
-#: ConfirmDispatch_Invoice.php:1556 CounterReturns.php:1399
+#: ConfirmDispatch_Invoice.php:1556 CounterReturns.php:1396
 #: CounterSales.php:1836 RecurringSalesOrdersProcess.php:605
 msgid ""
 "The following SQL to insert the total debtors control GLTrans record was used"
@@ -4394,7 +4393,7 @@ msgstr ""
 msgid "The freight GL posting could not be inserted because"
 msgstr "GL mallrave postimi nuk mund të shtohet sepse"
 
-#: ConfirmDispatch_Invoice.php:1602 CounterReturns.php:1421
+#: ConfirmDispatch_Invoice.php:1602 CounterReturns.php:1418
 #: CounterSales.php:1858 Credit_Invoice.php:1444
 #: RecurringSalesOrdersProcess.php:577 SelectCreditItems.php:1974
 msgid "The tax GL posting could not be inserted because"
@@ -4405,14 +4404,14 @@ msgstr "GL tatimore postimi nuk mund të shtohet sepse"
 msgid "Invoice number"
 msgstr "Numri Faturë"
 
-#: ConfirmDispatch_Invoice.php:1619 CounterReturns.php:1583
+#: ConfirmDispatch_Invoice.php:1619 CounterReturns.php:1580
 #: CounterSales.php:2028 RecurringSalesOrdersProcess.php:700
 #: SelectCreditItems.php:1989
 msgid "processed"
 msgstr "i përpunuar"
 
 #: ConfirmDispatch_Invoice.php:1624 ConfirmDispatch_Invoice.php:1626
-#: ContractBOM.php:294 CounterReturns.php:1588 CounterReturns.php:1590
+#: ContractBOM.php:294 CounterReturns.php:1585 CounterReturns.php:1587
 #: CounterSales.php:2033 CounterSales.php:2035 CustomerReceipt.php:552
 #: DeliveryDetails.php:581 DeliveryDetails.php:585 DeliveryDetails.php:803
 #: DeliveryDetails.php:807 GLBalanceSheet.php:18 GLJournalInquiry.php:109
@@ -4433,13 +4432,13 @@ msgstr "Shtyp"
 msgid "Print this invoice"
 msgstr "Printo këtë faturë"
 
-#: ConfirmDispatch_Invoice.php:1624 CounterReturns.php:1588
+#: ConfirmDispatch_Invoice.php:1624 CounterReturns.php:1585
 #: CounterSales.php:2033 SelectSalesOrder.php:984 SystemParameters.php:480
 #, php-format
 msgid "Landscape"
 msgstr "Peizazh"
 
-#: ConfirmDispatch_Invoice.php:1626 CounterReturns.php:1590
+#: ConfirmDispatch_Invoice.php:1626 CounterReturns.php:1587
 #: CounterSales.php:2035 SelectSalesOrder.php:984 SystemParameters.php:481
 #, php-format
 msgid "Portrait"
@@ -4517,7 +4516,7 @@ msgstr "kliko këtu"
 msgid "to continue"
 msgstr "për të vazhduar"
 
-#: ContractBOM.php:139 CounterReturns.php:327 CounterSales.php:348
+#: ContractBOM.php:139 CounterReturns.php:324 CounterSales.php:348
 #: InternalStockRequest.php:496 PO_Items.php:1017 SelectCreditItems.php:388
 #: SelectOrderItems.php:866 SupplierTenderCreate.php:799
 #: SupplierTenders.php:669 WorkOrderEntry.php:181 WorkOrderIssue.php:468
@@ -4568,7 +4567,7 @@ msgstr "Detajet e sendit nuk mund të shikohet"
 msgid "The SQL used to retrieve the item details but failed was"
 msgstr "SQL përdorur për të marrë të dhënat e sendit, por nuk arriti ishte"
 
-#: ContractBOM.php:204 CounterReturns.php:412 CounterSales.php:448
+#: ContractBOM.php:204 CounterReturns.php:409 CounterSales.php:448
 #: PO_Items.php:648 SelectOrderItems.php:962
 #: includes/SelectOrderItems_IntoCart.inc:60
 #: includes/SelectOrderItems_IntoCart.inc:166
@@ -4632,7 +4631,7 @@ msgstr "Kërko për Items Stock"
 msgid "Enter text extracts in the description"
 msgstr "Enter ekstrakte tekst në përshkrimin e"
 
-#: ContractBOM.php:326 CounterReturns.php:1643 CounterSales.php:2230
+#: ContractBOM.php:326 CounterReturns.php:1640 CounterSales.php:2230
 #: PO_Items.php:1080 SelectCompletedOrder.php:534 SelectCreditItems.php:1003
 #: SelectOrderItems.php:1693 SelectSalesOrder.php:595 SelectWorkOrder.php:197
 msgid "Enter extract of the Stock Code"
@@ -4721,7 +4720,7 @@ msgid "Inventory Required"
 msgstr "Inventari Patjetėr"
 
 #: ContractCosting.php:82 ContractCosting.php:88 Contracts.php:988
-#: CounterReturns.php:673 CounterSales.php:747 DeliveryDetails.php:853
+#: CounterReturns.php:670 CounterSales.php:747 DeliveryDetails.php:853
 #: DeliveryDetails.php:923 OrderDetails.php:171 PO_Items.php:793
 #: PrintCustTrans.php:862 PrintCustTrans.php:951 PrintCustTrans.php:1000
 #: PrintCustTransPortrait.php:916 PrintCustTransPortrait.php:1014
@@ -4755,11 +4754,12 @@ msgstr "Kërkesë"
 msgid "Budgeted Other Costs"
 msgstr "Shpenzimet e buxhetuara të tjera"
 
-#: ContractCosting.php:171 OffersReceived.php:106 PO_AuthoriseMyOrders.php:59
-#: PO_SelectOSPurchOrder.php:477 PO_SelectPurchOrder.php:432 PurchData.php:166
-#: ReprintGRN.php:81 SelectProduct.php:365 SelectSupplier.php:154
-#: ShipmentCosting.php:535 ShipmentCosting.php:612 Shipt_Select.php:294
-#: ShiptsList.php:11 SuppCreditGRNs.php:281 SupplierAllocations.php:567
+#: ContractCosting.php:171 OffersReceived.php:106 OutstandingGRNs.php:177
+#: PO_AuthoriseMyOrders.php:59 PO_SelectOSPurchOrder.php:477
+#: PO_SelectPurchOrder.php:432 PurchData.php:166 ReprintGRN.php:81
+#: SelectProduct.php:365 SelectSupplier.php:154 ShipmentCosting.php:535
+#: ShipmentCosting.php:612 Shipt_Select.php:294 ShiptsList.php:11
+#: SuppCreditGRNs.php:281 SupplierAllocations.php:567
 #: SupplierAllocations.php:642 SupplierCredit.php:262 SupplierInquiry.php:118
 #: SupplierInvoice.php:605 SupplierTransInquiry.php:106 SuppLoginSetup.php:33
 #: SuppPriceList.php:222 SuppPriceList.php:295
@@ -5206,7 +5206,7 @@ msgstr "Pika të reja të kontratës nuk mund të shtohet sepse"
 msgid "The SQL that was used to insert the contract item failed was"
 msgstr "SQL që është përdorur për të futur në pika të kontratës nuk është"
 
-#: Contracts.php:492 Stocks.php:605 Z_ImportStocks.php:245
+#: Contracts.php:492 Stocks.php:605 Z_ImportStocks.php:238
 msgid "The locations for the item"
 msgstr "Vende për artikull"
 
@@ -5214,15 +5214,15 @@ msgstr "Vende për artikull"
 #: SupplierCredit.php:815 SupplierCredit.php:1202 SupplierCredit.php:1256
 #: SupplierCredit.php:1284 SupplierInvoice.php:1140 SupplierInvoice.php:1198
 #: SupplierInvoice.php:1563 SupplierInvoice.php:1798 SupplierInvoice.php:1827
-#: Suppliers.php:573 Z_ImportStocks.php:245
+#: Suppliers.php:573 Z_ImportStocks.php:238
 msgid "could not be added because"
 msgstr "nuk mund të shtohet, sepse"
 
-#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:246
+#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:239
 msgid "NB Locations records can be added by opening the utility page"
 msgstr "NB dhënat Locations mund të shtohet duke hapur faqen e shërbimeve"
 
-#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:246
+#: Contracts.php:493 Stocks.php:606 Z_ImportStocks.php:239
 msgid "The SQL that was used to add the location records that failed was"
 msgstr "SQL që është përdorur për të shtuar të dhënat vend që nuk ishte"
 
@@ -5296,8 +5296,8 @@ msgstr ""
 msgid "The customer record selected"
 msgstr "Të dhënat e konsumatorëve të zgjedhura"
 
-#: Contracts.php:715 CounterReturns.php:122 CounterReturns.php:151
-#: CounterReturns.php:1707 CounterSales.php:124 CounterSales.php:158
+#: Contracts.php:715 CounterReturns.php:119 CounterReturns.php:148
+#: CounterReturns.php:1704 CounterSales.php:124 CounterSales.php:158
 #: CounterSales.php:2113 CounterSales.php:2298 DeliveryDetails.php:147
 #: InternalStockRequest.php:663 PO_Header.php:406 PO_Header.php:480
 #: SelectCreditItems.php:180 SelectOrderItems.php:405 SelectOrderItems.php:452
@@ -5310,7 +5310,7 @@ msgstr "Të dhënat e konsumatorëve të zgjedhura"
 msgid "cannot be retrieved because"
 msgstr "nuk mund të shikohet, sepse"
 
-#: Contracts.php:716 CounterReturns.php:123 CounterSales.php:125
+#: Contracts.php:716 CounterReturns.php:120 CounterSales.php:125
 #: SelectOrderItems.php:406 SpecialOrder.php:93
 msgid "The SQL used to retrieve the customer details and failed was"
 msgstr "SQL përdorur për të marrë të dhënat e klientit dhe nuk ishte"
@@ -5418,7 +5418,7 @@ msgstr "Kontratës Reference"
 #: PricesByCost.php:244 ReorderLevelLocation.php:172 ReorderLevel.php:286
 #: SalesCategoryPeriodInquiry.php:164 SalesTopItemsInquiry.php:221
 #: SpecialOrder.php:697 StockDispatch.php:447 Stocks.php:888
-#: SuppPriceList.php:237 SuppPriceList.php:299
+#: SuppPriceList.php:237 SuppPriceList.php:299 Z_ItemsWithoutPicture.php:31
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:38
 msgid "Category"
@@ -5467,7 +5467,7 @@ msgstr "Formati i vetëm"
 msgid "Required Date"
 msgstr "Data e kërkuar"
 
-#: Contracts.php:923 CounterReturns.php:784 CounterSales.php:872
+#: Contracts.php:923 CounterReturns.php:781 CounterSales.php:872
 #: DeliveryDetails.php:1062 OrderDetails.php:79 RecurringSalesOrders.php:415
 msgid "Customer Reference"
 msgstr "Customer Reference"
@@ -5603,12 +5603,12 @@ msgstr " Për Stock të reja të identifikimit"
 msgid "To Existing Stock ID"
 msgstr "Të aksioneve ekzistuese ID"
 
-#: CounterReturns.php:14
+#: CounterReturns.php:11
 #, fuzzy
 msgid "Counter Returns"
 msgstr "Sales Counter"
 
-#: CounterReturns.php:80 CounterSales.php:82
+#: CounterReturns.php:77 CounterSales.php:82
 msgid ""
 "Your user account does not have a valid default inventory location set up. "
 "Please see the system administrator to modify your user account."
@@ -5617,7 +5617,7 @@ msgstr ""
 "ngritur. Ju lutem shikoni administratori i sistemit për të modifikuar "
 "llogarinë tuaj të përdoruesit."
 
-#: CounterReturns.php:87 CounterSales.php:89
+#: CounterReturns.php:84 CounterSales.php:89
 #, fuzzy
 msgid ""
 "To use this script it is first necessary to define a cash sales customer for "
@@ -5633,106 +5633,106 @@ msgstr ""
 "përdorur kodin e klientit një hypen pastaj kodin degës së konsumatorit për "
 "t&#39;u përdorur."
 
-#: CounterReturns.php:122 CounterSales.php:124 SelectOrderItems.php:405
+#: CounterReturns.php:119 CounterSales.php:124 SelectOrderItems.php:405
 msgid "The details of the customer selected"
 msgstr "Detajet e klientit të zgjedhura"
 
-#: CounterReturns.php:151 CounterSales.php:158 DeliveryDetails.php:147
+#: CounterReturns.php:148 CounterSales.php:158 DeliveryDetails.php:147
 #: SelectCreditItems.php:180 SelectOrderItems.php:452 SelectOrderItems.php:575
 msgid "The customer branch record of the customer selected"
 msgstr "Dega e konsumatorëve rekord të klientit të zgjedhura"
 
-#: CounterReturns.php:152 CounterSales.php:159 DeliveryDetails.php:148
+#: CounterReturns.php:149 CounterSales.php:159 DeliveryDetails.php:148
 #: SelectCreditItems.php:181 SelectOrderItems.php:453 SelectOrderItems.php:576
 msgid "SQL used to retrieve the branch details was"
 msgstr "SQL përdorur për të marrë të dhënat e degës u"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "The branch details for branch code"
 msgstr "Detajet e degës për kodin e degës"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "against customer code"
 msgstr "kundër kodit të konsumatorëve"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: GLAccountCSV.php:184 GLAccountCSV.php:213 GLAccountInquiry.php:202
 #: GLAccountInquiry.php:240 GLAccountReport.php:115 SelectOrderItems.php:458
 msgid "could not be retrieved"
 msgstr "nuk mund të shikohet"
 
-#: CounterReturns.php:157 CounterSales.php:164 DeliveryDetails.php:152
+#: CounterReturns.php:154 CounterSales.php:164 DeliveryDetails.php:152
 #: SelectOrderItems.php:458
 msgid "Check the set up of the customer and branch"
 msgstr "Kontrolloni të ngritur e konsumatorit dhe dega"
 
-#: CounterReturns.php:160 CounterSales.php:167 DeliveryDetails.php:155
+#: CounterReturns.php:157 CounterSales.php:167 DeliveryDetails.php:155
 #: SelectOrderItems.php:461
 msgid "The SQL that failed to get the branch details was"
 msgstr "SQL që nuk arriti të marrë të dhënat e degës u"
 
-#: CounterReturns.php:192
+#: CounterReturns.php:189
 #, fuzzy
 msgid "This return has been cancelled as requested"
 msgstr "Kjo shitje është anuluar kërkuar si"
 
-#: CounterReturns.php:193 CounterReturns.php:1592
+#: CounterReturns.php:190 CounterReturns.php:1589
 #, fuzzy
 msgid "Start a new Counter Return"
 msgstr "Fillimi i një Shitje ri Counter"
 
-#: CounterReturns.php:199 CounterReturns.php:200 CounterReturns.php:1446
-#: CounterReturns.php:1465
+#: CounterReturns.php:196 CounterReturns.php:197 CounterReturns.php:1443
+#: CounterReturns.php:1462
 #, fuzzy
 msgid "Counter Return"
 msgstr "Shitje Counter"
 
-#: CounterReturns.php:200 CounterSales.php:227
+#: CounterReturns.php:197 CounterSales.php:227
 #, fuzzy
 msgid "inventory"
 msgstr "Inventar"
 
-#: CounterReturns.php:200 CounterSales.php:227
+#: CounterReturns.php:197 CounterSales.php:227
 msgid "all amounts in"
 msgstr "të gjitha shumat në"
 
-#: CounterReturns.php:207 CounterSales.php:234
+#: CounterReturns.php:204 CounterSales.php:234
 msgid "Item description has been used in search"
 msgstr "Përshkrimi i artikullit është përdorur në kërkim"
 
-#: CounterReturns.php:209 CounterSales.php:236
+#: CounterReturns.php:206 CounterSales.php:236
 msgid "Item Code has been used in search"
 msgstr "Item Kodi është përdorur në kërkim"
 
-#: CounterReturns.php:211 CounterSales.php:238 InternalStockRequest.php:368
+#: CounterReturns.php:208 CounterSales.php:238 InternalStockRequest.php:368
 #: SelectOrderItems.php:762
 msgid "Stock Category has been used in search"
 msgstr "Kategoria e aksioneve ka qenë përdorur në kërkim"
 
-#: CounterReturns.php:328 CounterSales.php:349 InternalStockRequest.php:497
+#: CounterReturns.php:325 CounterSales.php:349 InternalStockRequest.php:497
 #: SelectOrderItems.php:867 WorkOrderEntry.php:182 WorkOrderIssue.php:469
 msgid "The SQL used to get the part selection was"
 msgstr "SQL të përdorura për të marrë pjesë u zgjedhjes"
 
-#: CounterReturns.php:332 CounterSales.php:353 InternalStockRequest.php:501
+#: CounterReturns.php:329 CounterSales.php:353 InternalStockRequest.php:501
 #: SelectOrderItems.php:872 WorkOrderEntry.php:186 WorkOrderIssue.php:473
 msgid "There are no products available meeting the criteria specified"
 msgstr "Nuk ka produkte takim në dispozicion të kritereve të specifikuara"
 
-#: CounterReturns.php:406 CounterReturns.php:523 CounterReturns.php:568
+#: CounterReturns.php:403 CounterReturns.php:520 CounterReturns.php:565
 #: CounterSales.php:442 CounterSales.php:557 CounterSales.php:603
 #: CounterSales.php:655 SelectOrderItems.php:956 SelectOrderItems.php:1244
-#: SelectOrderItems.php:1293 StockCounts.php:56
+#: SelectOrderItems.php:1293 StockCounts.php:54
 msgid ""
 "Could not determine if the part being ordered was a kitset or not because"
 msgstr ""
 "Nuk mund të përcaktojë nëse pjesa qenë të urdhëruar ishte një kitset apo jo, "
 "sepse"
 
-#: CounterReturns.php:407 CounterReturns.php:524 CounterSales.php:443
-#: CounterSales.php:558 SelectOrderItems.php:957 StockCounts.php:57
+#: CounterReturns.php:404 CounterReturns.php:521 CounterSales.php:443
+#: CounterSales.php:558 SelectOrderItems.php:957 StockCounts.php:55
 msgid ""
 "The sql that was used to determine if the part being ordered was a kitset or "
 "not was "
@@ -5740,22 +5740,22 @@ msgstr ""
 "Sql që është përdorur për të përcaktuar nëse në pjesën qenë të urdhëruar "
 "ishte një kitset apo nuk ishte "
 
-#: CounterReturns.php:412
+#: CounterReturns.php:409
 #, fuzzy
 msgid ""
 "could not be retrieved from the database and has not been added to the return"
 msgstr ""
 "nuk mund të shikohet nga baza e të dhënave dhe nuk është shtuar në mënyrë"
 
-#: CounterReturns.php:422 CounterReturns.php:535 CounterReturns.php:584
-#: CounterReturns.php:635 CounterSales.php:458 CounterSales.php:569
+#: CounterReturns.php:419 CounterReturns.php:532 CounterReturns.php:581
+#: CounterReturns.php:632 CounterSales.php:458 CounterSales.php:569
 #: CounterSales.php:619 CounterSales.php:671 SelectOrderItems.php:972
 #: SelectOrderItems.php:1260 SelectOrderItems.php:1309
 msgid "Could not retrieve kitset components from the database because"
 msgstr ""
 "Nuk mund të rifitoj komponente kitset nga baza e të dhënave për shkak se"
 
-#: CounterReturns.php:435
+#: CounterReturns.php:432
 #, fuzzy
 msgid ""
 "Phantom assemblies cannot be returned, these items exist only as bills of "
@@ -5766,7 +5766,7 @@ msgstr ""
 "faturat e materialeve të përdorura në sende të tjera të prodhuar. Pika e "
 "mëposhtme nuk është shtuar në mënyrë që:"
 
-#: CounterReturns.php:437
+#: CounterReturns.php:434
 #, fuzzy
 msgid ""
 "The system does not currently cater for counter returns of lot controlled or "
@@ -5775,15 +5775,15 @@ msgstr ""
 "Sistemi nuk ka aktualisht të kujdesem për shitje counter të artikujve shumë "
 "të kontrolluara ose serialized"
 
-#: CounterReturns.php:439
+#: CounterReturns.php:436
 msgid "Only items entered with a positive quantity can be added to the return"
 msgstr ""
 
-#: CounterReturns.php:473 CounterSales.php:508 SelectOrderItems.php:1117
+#: CounterReturns.php:470 CounterSales.php:508 SelectOrderItems.php:1117
 msgid "Recalculated the price from the GP % entered - the GP % was"
 msgstr ""
 
-#: CounterReturns.php:492
+#: CounterReturns.php:489
 #, fuzzy
 msgid ""
 "The item could not be updated because you are attempting to set the quantity "
@@ -5794,7 +5794,7 @@ msgstr ""
 "sasinë urdhëruar që të më pak se 0 apo çmim më pak se 0 ose zbritje më shumë "
 "se 100% ose më pak se 0%"
 
-#: CounterReturns.php:619
+#: CounterReturns.php:616
 #, fuzzy
 msgid ""
 "Could not determine if the part being returned was a kitset or not because"
@@ -5802,19 +5802,19 @@ msgstr ""
 "Nuk mund të përcaktojë nëse pjesa qenë të urdhëruar ishte një kitset apo jo, "
 "sepse"
 
-#: CounterReturns.php:676 CounterSales.php:751 PricesByCost.php:158
+#: CounterReturns.php:673 CounterSales.php:751 PricesByCost.php:158
 #: SelectOrderItems.php:1385
 msgid "GP %"
 msgstr "% GP"
 
-#: CounterReturns.php:677 CounterSales.php:753 PrintCustTrans.php:865
+#: CounterReturns.php:674 CounterSales.php:753 PrintCustTrans.php:865
 #: PrintCustTrans.php:954 PrintCustTrans.php:1003
 #: PrintCustTransPortrait.php:919 PrintCustTransPortrait.php:1017
 #: PrintCustTransPortrait.php:1073 includes/PDFTaxPageHeader.inc:39
 msgid "Net"
 msgstr "Neto"
 
-#: CounterReturns.php:747 CounterSales.php:836 CustomerPurchases.php:76
+#: CounterReturns.php:744 CounterSales.php:836 CustomerPurchases.php:76
 #: CustomerReceipt.php:882 CustomerReceipt.php:910 CustomerReceipt.php:1093
 #: GLAccountInquiry.php:184 GLAccountReport.php:343 GLJournalInquiry.php:80
 #: GLJournal.php:363 GLJournal.php:387
@@ -5829,63 +5829,63 @@ msgstr "Neto"
 msgid "Narrative"
 msgstr "Tregim"
 
-#: CounterReturns.php:765
+#: CounterReturns.php:762
 #, fuzzy
 msgid "Rounded Total"
 msgstr "Line Gjithsej"
 
-#: CounterReturns.php:773
+#: CounterReturns.php:770
 #, fuzzy
 msgid "Returned By"
 msgstr "Kërkohet nga"
 
-#: CounterReturns.php:777 CounterSales.php:866 DeliveryDetails.php:1055
+#: CounterReturns.php:774 CounterSales.php:866 DeliveryDetails.php:1055
 #: RecurringSalesOrders.php:409
 msgid "Contact Phone Number"
 msgstr "Numri kontaktues i telefonit"
 
-#: CounterReturns.php:781 CounterSales.php:870 DeliveryDetails.php:1059
+#: CounterReturns.php:778 CounterSales.php:870 DeliveryDetails.php:1059
 #: RecurringSalesOrders.php:412
 msgid "Contact Email"
 msgstr "Email Contact"
 
-#: CounterReturns.php:788 CounterSales.php:877 Credit_Invoice.php:1551
+#: CounterReturns.php:785 CounterSales.php:877 Credit_Invoice.php:1551
 #: DeliveryDetails.php:1078 SelectCreditItems.php:923
 #, fuzzy
 msgid "Sales person"
 msgstr "Shites"
 
-#: CounterReturns.php:805
+#: CounterReturns.php:802
 #, fuzzy
 msgid "Reason for Return"
 msgstr "Arsye nuk mbajnë Setup"
 
-#: CounterReturns.php:816 CounterSales.php:904 SuppPaymentRun.php:351
+#: CounterReturns.php:813 CounterSales.php:904 SuppPaymentRun.php:351
 msgid "Payment Type"
 msgstr "Pagesa Type"
 
-#: CounterReturns.php:837
+#: CounterReturns.php:834
 #, fuzzy
 msgid "Paid to Customer"
 msgstr "dhe për Klientin"
 
-#: CounterReturns.php:846 CounterSales.php:944 SelectOrderItems.php:1495
+#: CounterReturns.php:843 CounterSales.php:944 SelectOrderItems.php:1495
 msgid "Re-Calculate"
 msgstr "Re-Llogarit"
 
-#: CounterReturns.php:847
+#: CounterReturns.php:844
 #, fuzzy
 msgid "Process The Return"
 msgstr "Proces Shitje"
 
-#: CounterReturns.php:862
+#: CounterReturns.php:859
 #, fuzzy
 msgid "There are no lines on this return. Please enter lines to return first"
 msgstr ""
 "Nuk ka linja në këtë shitje. Ju lutemi shkruani linjave për të parë të "
 "faturës"
 
-#: CounterReturns.php:866
+#: CounterReturns.php:863
 #, fuzzy
 msgid ""
 "The amount entered as payment to the customer does not equal the amount of "
@@ -5894,7 +5894,7 @@ msgstr ""
 "Shuma e regjistruar si e pagesës nuk ka të barabartë me shumën e faturës. Ju "
 "lutemi sigurohuni që konsumatori ka paguar shumën korrekte dhe re-enter"
 
-#: CounterReturns.php:880
+#: CounterReturns.php:877
 #, fuzzy
 msgid ""
 "We were unable to load the area where the sale is to from the custbranch "
@@ -5902,7 +5902,7 @@ msgid ""
 msgstr ""
 "Ne ishim në gjendje të ngarkesës Zona ku Shitje është që nga tabela DEGËVE"
 
-#: CounterReturns.php:891 CounterSales.php:1047
+#: CounterReturns.php:888 CounterSales.php:1047
 msgid ""
 "The company information and preferences could not be retrieved. See your "
 "system administrator"
@@ -5910,7 +5910,7 @@ msgstr ""
 "Të dhënat e kompanisë dhe preferencat nuk mund të shikohet. Shih "
 "administratorin tuaj të sistemit"
 
-#: CounterReturns.php:1448 CounterSales.php:1885
+#: CounterReturns.php:1445 CounterSales.php:1885
 msgid ""
 "The SQL that failed to insert the GL transaction for the bank account debit "
 "was"
@@ -5918,11 +5918,11 @@ msgstr ""
 "SQL që nuk arriti të futur në transaksion GL për debi të llogarisë bankare "
 "është"
 
-#: CounterReturns.php:1449 CounterSales.php:1886 CustomerReceipt.php:491
+#: CounterReturns.php:1446 CounterSales.php:1886 CustomerReceipt.php:491
 msgid "Cannot insert a GL transaction for the bank account debit"
 msgstr "Nuk mund të vendos një transaksion GL për debi të llogarisë bankare"
 
-#: CounterReturns.php:1467 CounterSales.php:1904 CustomerReceipt.php:514
+#: CounterReturns.php:1464 CounterSales.php:1904 CustomerReceipt.php:514
 msgid ""
 "The SQL that failed to insert the GL transaction for the debtors account "
 "credit was"
@@ -5930,68 +5930,68 @@ msgstr ""
 "SQL që nuk arriti të futur në transaksion GL për kredi llogarisë së "
 "debitorëve u"
 
-#: CounterReturns.php:1468 CounterSales.php:1905 CustomerReceipt.php:515
+#: CounterReturns.php:1465 CounterSales.php:1905 CustomerReceipt.php:515
 msgid "Cannot insert a GL transaction for the debtors account credit"
 msgstr ""
 "Nuk mund të vendos një transaksion GL për llogarisë së debitorëve të kreditit"
 
-#: CounterReturns.php:1516 CounterReturns.php:1551 CounterSales.php:227
+#: CounterReturns.php:1513 CounterReturns.php:1548 CounterSales.php:227
 #: CounterSales.php:1086 CounterSales.php:1883 CounterSales.php:1902
 #: CounterSales.php:1952 CounterSales.php:1988
 msgid "Counter Sale"
 msgstr "Shitje Counter"
 
-#: CounterReturns.php:1524 CounterSales.php:1960 CustomerReceipt.php:465
+#: CounterReturns.php:1521 CounterSales.php:1960 CustomerReceipt.php:465
 msgid "The SQL that failed to insert the bank account transaction was"
 msgstr "SQL që nuk arriti të futur në llogarinë bankare transaksioni është"
 
-#: CounterReturns.php:1525 CounterSales.php:1961 CustomerReceipt.php:466
+#: CounterReturns.php:1522 CounterSales.php:1961 CustomerReceipt.php:466
 msgid "Cannot insert a bank transaction"
 msgstr "Nuk mund të vendos një transaksioni bankar"
 
-#: CounterReturns.php:1553 CounterSales.php:1991 CustomerReceipt.php:421
+#: CounterReturns.php:1550 CounterSales.php:1991 CustomerReceipt.php:421
 msgid "The SQL that failed to insert the customer receipt transaction was"
 msgstr "SQL që nuk arriti të futur pranimin konsumatorit transaksioni është"
 
-#: CounterReturns.php:1554 CounterSales.php:1992 CustomerReceipt.php:422
+#: CounterReturns.php:1551 CounterSales.php:1992 CustomerReceipt.php:422
 msgid "Cannot insert a receipt transaction against the customer because"
 msgstr ""
 "Nuk mund të vendos një transaksion marrjes kundër të konsumatorit sepse"
 
-#: CounterReturns.php:1570
+#: CounterReturns.php:1567
 #, fuzzy
 msgid ""
 "The SQL that failed to insert the allocation of the receipt to the credit "
 "note was"
 msgstr "SQL që nuk arriti të futur në ndarjen e pranimit të faturës është"
 
-#: CounterReturns.php:1571 CounterSales.php:2016
+#: CounterReturns.php:1568 CounterSales.php:2016
 msgid ""
 "Cannot insert the customer allocation of the receipt to the invoice because"
 msgstr ""
 "Nuk mund të vendos ndarjen e konsumatorëve të pranimit të faturës për shkak "
 "se"
 
-#: CounterReturns.php:1583 Credit_Invoice.php:1460 SelectCreditItems.php:1989
+#: CounterReturns.php:1580 Credit_Invoice.php:1460 SelectCreditItems.php:1989
 msgid "Credit Note number"
 msgstr "Numri Credit Note"
 
-#: CounterReturns.php:1588 CounterReturns.php:1590 Credit_Invoice.php:1462
+#: CounterReturns.php:1585 CounterReturns.php:1587 Credit_Invoice.php:1462
 #: Credit_Invoice.php:1464
 msgid "Print this credit note"
 msgstr "Printo këtë notë krediti"
 
-#: CounterReturns.php:1609 CounterSales.php:2054 SelectCreditItems.php:969
+#: CounterReturns.php:1606 CounterSales.php:2054 SelectCreditItems.php:969
 #: SelectOrderItems.php:1506
 msgid "Yes Please"
 msgstr "Po Ju lutemi"
 
-#: CounterReturns.php:1611 CounterReturns.php:1612 CounterSales.php:2200
+#: CounterReturns.php:1608 CounterReturns.php:1609 CounterSales.php:2200
 #: CounterSales.php:2201
 msgid "Search for Items"
 msgstr "Kërko për Items"
 
-#: CounterReturns.php:1612 CounterSales.php:2201 SelectOrderItems.php:1659
+#: CounterReturns.php:1609 CounterSales.php:2201 SelectOrderItems.php:1659
 msgid ""
 ", Searches the database for items, you can narrow the results by selecting a "
 "stock category, or just enter a partial item description or partial item code"
@@ -6000,19 +6000,19 @@ msgstr ""
 "zgjedhur një kategori të aksioneve, ose vetëm të hyjë në një përshkrim të "
 "pjesshëm ose të pjesshme artikull kodin pika"
 
-#: CounterReturns.php:1615 CounterSales.php:2202 SelectOrderItems.php:1662
+#: CounterReturns.php:1612 CounterSales.php:2202 SelectOrderItems.php:1662
 msgid "Select a Stock Category"
 msgstr "Zgjidh një Kategoria Stock"
 
-#: CounterReturns.php:1640 CounterSales.php:2225 SelectOrderItems.php:1686
+#: CounterReturns.php:1637 CounterSales.php:2225 SelectOrderItems.php:1686
 msgid "Enter partial Description"
 msgstr "Enter Description pjesshme"
 
-#: CounterReturns.php:1648 CounterSales.php:2237 SelectOrderItems.php:1702
+#: CounterReturns.php:1645 CounterSales.php:2237 SelectOrderItems.php:1702
 msgid "Use Quick Entry"
 msgstr "Përdorimi Hyrja shpejta"
 
-#: CounterReturns.php:1659
+#: CounterReturns.php:1656
 #, fuzzy
 msgid ""
 "Select an item by entering the quantity required.  Click Return when ready."
@@ -6020,18 +6020,18 @@ msgstr ""
 "Përzgjidhni një objekt nga hyrja në sasinë e nevojshme. Klikoni Rendit kur "
 "gati."
 
-#: CounterReturns.php:1670 CounterReturns.php:1794 CounterSales.php:2260
+#: CounterReturns.php:1667 CounterReturns.php:1791 CounterSales.php:2260
 #: CounterSales.php:2387 InternalStockRequest.php:614
 #: InternalStockRequest.php:738
 msgid "Prev"
 msgstr "Prev"
 
-#: CounterReturns.php:1671
+#: CounterReturns.php:1668
 #, fuzzy
 msgid "Return Item(s)"
 msgstr "Items"
 
-#: CounterReturns.php:1672 CounterReturns.php:1796 CounterSales.php:2262
+#: CounterReturns.php:1669 CounterReturns.php:1793 CounterSales.php:2262
 #: CounterSales.php:2389 InternalStockRequest.php:545
 #: InternalStockRequest.php:620 InternalStockRequest.php:742 MRPReport.php:740
 #: SelectAsset.php:254 SelectCustomer.php:413 SelectCustomer.php:497
@@ -6041,20 +6041,20 @@ msgstr "Items"
 msgid "Next"
 msgstr "Tjetër"
 
-#: CounterReturns.php:1679 CounterSales.php:2082 CounterSales.php:2269
+#: CounterReturns.php:1676 CounterSales.php:2082 CounterSales.php:2269
 #: InternalStockRequest.php:626 SelectOrderItems.php:1542
 #: SelectOrderItems.php:1730
 msgid "On Demand"
 msgstr "On Demand"
 
-#: CounterReturns.php:1680 CounterSales.php:2083 CounterSales.php:2270
+#: CounterReturns.php:1677 CounterSales.php:2083 CounterSales.php:2270
 #: InternalStockRequest.php:627 ReorderLevel.php:302 SelectOrderItems.php:1543
 #: SelectOrderItems.php:1731 StockLocStatus.php:173 StockStatus.php:91
 #: TopItems.php:169
 msgid "On Order"
 msgstr "Në Rendit"
 
-#: CounterReturns.php:1681 CounterSales.php:2084 CounterSales.php:2271
+#: CounterReturns.php:1678 CounterSales.php:2084 CounterSales.php:2271
 #: InternalStockRequest.php:628 SelectOrderItems.php:1544
 #: SelectOrderItems.php:1732 StockDispatch.php:477 StockDispatch.php:478
 #: StockLocStatus.php:172 StockStatus.php:90 includes/OutputSerialItems.php:37
@@ -6062,14 +6062,14 @@ msgstr "Në Rendit"
 msgid "Available"
 msgstr "Në dispozicion"
 
-#: CounterReturns.php:1707 CounterSales.php:2112 CounterSales.php:2298
+#: CounterReturns.php:1704 CounterSales.php:2112 CounterSales.php:2298
 #: InternalStockRequest.php:663 SelectOrderItems.php:1573
 #: SelectOrderItems.php:1762 StockCheck.php:222 StockLocStatus.php:191
 #: StockLocStatus.php:215 StockStatus.php:116 StockStatus.php:140
 msgid "The demand for this product from"
 msgstr "Kërkesa për këtë produkt nga"
 
-#: CounterReturns.php:1725 CounterReturns.php:1739 CounterSales.php:2130
+#: CounterReturns.php:1722 CounterReturns.php:1736 CounterSales.php:2130
 #: CounterSales.php:2144 CounterSales.php:2317 CounterSales.php:2331
 #: InternalStockRequest.php:683 InternalStockRequest.php:697
 #: SelectOrderItems.php:1592 SelectOrderItems.php:1606
@@ -6077,12 +6077,12 @@ msgstr "Kërkesa për këtë produkt nga"
 msgid "The order details for this product cannot be retrieved because"
 msgstr "Detajet e rendit për këtë produkt nuk mund të shikohet, sepse"
 
-#: CounterReturns.php:1795 CounterSales.php:2193 CounterSales.php:2261
+#: CounterReturns.php:1792 CounterSales.php:2193 CounterSales.php:2261
 #: CounterSales.php:2388
 msgid "Add to Sale"
 msgstr "Add to Shitje"
 
-#: CounterReturns.php:1804
+#: CounterReturns.php:1801
 #, fuzzy
 msgid ""
 "Use this form to add return items quickly if the item codes are already known"
@@ -6090,23 +6090,23 @@ msgstr ""
 "Përdorni këtë formular për të shtuar artikuj shpejt nëse kodet pika janë të "
 "njohur tashmë"
 
-#: CounterReturns.php:1830 CounterSales.php:2420 SelectCreditItems.php:1012
+#: CounterReturns.php:1827 CounterSales.php:2420 SelectCreditItems.php:1012
 #: SelectCreditItems.php:1063 SelectOrderItems.php:1855
 #: SelectOrderItems.php:1881
 msgid "Quick Entry"
 msgstr "Quick Hyrja"
 
-#: CounterReturns.php:1831 CounterSales.php:2421 SelectCreditItems.php:1081
+#: CounterReturns.php:1828 CounterSales.php:2421 SelectCreditItems.php:1081
 #: SelectOrderItems.php:1882 SelectOrderItems.php:1904
 msgid "Search Parts"
 msgstr "Search Parts"
 
-#: CounterReturns.php:1835
+#: CounterReturns.php:1832
 #, fuzzy
 msgid "Cancel Return"
 msgstr "Shitje Cancel"
 
-#: CounterReturns.php:1835
+#: CounterReturns.php:1832
 #, fuzzy
 msgid "Are you sure you wish to cancel this return?"
 msgstr "A jeni i sigurt se doni të anuloni këtë shitje?"
@@ -6922,8 +6922,8 @@ msgstr "Kodi i monedhës nuk mund të përmbajë asnjë nga këto karaktere"
 
 #: Currencies.php:108 CustEDISetup.php:31 CustLoginSetup.php:51
 #: Customers.php:58 Stocks.php:116 SuppLoginSetup.php:51 TaxCategories.php:31
-#: WorkCentres.php:35 WWW_Users.php:73 Z_ChangeBranchCode.php:28
-#: Z_ImportStocks.php:123
+#: WorkCentres.php:35 WWW_Users.php:74 Z_ChangeBranchCode.php:28
+#: Z_ImportStocks.php:116
 msgid "or a space"
 msgstr "ose një hapësirë"
 
@@ -7173,25 +7173,25 @@ msgstr "Zgjidh një Customer"
 msgid " has been selected"
 msgstr " ka qenë i zgjedhur"
 
-#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:70
+#: CustLoginSetup.php:48 SuppLoginSetup.php:48 WWW_Users.php:71
 msgid "The user ID entered must be at least 4 characters long"
 msgstr "ID i perdoruesit e dhëna duhet të jetë të paktën 4 karaktere të gjatë"
 
-#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:73
+#: CustLoginSetup.php:51 SuppLoginSetup.php:51 WWW_Users.php:74
 msgid "User names cannot contain any of the following characters"
 msgstr "User emrat nuk mund të përmbajë asnjë nga këto karaktere"
 
-#: CustLoginSetup.php:55 SuppLoginSetup.php:55 UserSettings.php:42
-#: WWW_Users.php:77
+#: CustLoginSetup.php:55 SuppLoginSetup.php:55 UserSettings.php:43
+#: WWW_Users.php:78
 msgid "The password entered must be at least 5 characters long"
 msgstr "Fjalëkalimi e dhëna duhet të jetë së paku 5 karaktere të gjatë"
 
-#: CustLoginSetup.php:59 SuppLoginSetup.php:59 UserSettings.php:45
-#: WWW_Users.php:81
+#: CustLoginSetup.php:59 SuppLoginSetup.php:59 UserSettings.php:46
+#: WWW_Users.php:82
 msgid "The password cannot contain the user id"
 msgstr "Fjalëkalimi nuk mund të përmbajë user id"
 
-#: CustLoginSetup.php:62 WWW_Users.php:85
+#: CustLoginSetup.php:62 WWW_Users.php:86
 msgid ""
 "If you enter a Customer Code you must also enter a Branch Code valid for "
 "this Customer"
@@ -7199,18 +7199,18 @@ msgstr ""
 "Nëse ju shkruani një Kod Customer ju duhet të hyjë në një Kod Drejtimi i "
 "vlefshëm për këtë Customer"
 
-#: CustLoginSetup.php:72 WWW_Users.php:110
+#: CustLoginSetup.php:72 WWW_Users.php:111
 msgid "The check on validity of the customer code and branch failed because"
 msgstr ""
 "Kontroll mbi vlefshmërinë e kodit të konsumatorëve dhe të degës së dështuar "
 "për shkak se"
 
-#: CustLoginSetup.php:73 WWW_Users.php:111
+#: CustLoginSetup.php:73 WWW_Users.php:112
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr ""
 "SQL që është përdorur për të kontrolluar kodin e klientit dhe degë ishte"
 
-#: CustLoginSetup.php:77 WWW_Users.php:115
+#: CustLoginSetup.php:77 WWW_Users.php:116
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr "Kodi hyri Dega nuk është e vlefshme për të Kodit hyri Customer"
 
@@ -7229,47 +7229,47 @@ msgstr "SQL që është përdorur për të rinovuar të përdoruesit dhe nuk ish
 msgid "A new customer login has been created"
 msgstr "Një mënyrë e re pune është krijuar për"
 
-#: CustLoginSetup.php:132 SuppLoginSetup.php:118 WWW_Users.php:285
-#: WWW_Users.php:427
+#: CustLoginSetup.php:132 SuppLoginSetup.php:118 WWW_Users.php:286
+#: WWW_Users.php:428
 msgid "User Login"
 msgstr "User Login"
 
 #: CustLoginSetup.php:150 SMTPServer.php:105 SuppLoginSetup.php:136
-#: WWW_Users.php:459 includes/Login.php:64
+#: WWW_Users.php:460 includes/Login.php:64
 msgid "Password"
 msgstr "Fjalëkalimi"
 
-#: CustLoginSetup.php:154 SuppLoginSetup.php:140 WWW_Users.php:286
-#: WWW_Users.php:463
+#: CustLoginSetup.php:154 SuppLoginSetup.php:140 WWW_Users.php:287
+#: WWW_Users.php:464
 msgid "Full Name"
 msgstr "Emri i plotë"
 
 #: CustLoginSetup.php:158 Locations.php:579 SalesPeople.php:332
-#: SupplierContacts.php:265 SuppLoginSetup.php:144 WWW_Users.php:467
+#: SupplierContacts.php:265 SuppLoginSetup.php:144 WWW_Users.php:468
 msgid "Telephone No"
 msgstr "Numri i telefonit"
 
 #: CustLoginSetup.php:167 CustomerBranches.php:556 CustomerBranches.php:593
-#: CustomerPurchases.php:71 WWW_Users.php:290 WWW_Users.php:533
+#: CustomerPurchases.php:71 WWW_Users.php:291 WWW_Users.php:534
 #: includes/PDFCustomerListPageHeader.inc:84 api/api_xml-rpc.php:241
 msgid "Branch Code"
 msgstr "Dega Kodi"
 
-#: CustLoginSetup.php:187 SuppLoginSetup.php:207 WWW_Users.php:567
+#: CustLoginSetup.php:187 SuppLoginSetup.php:207 WWW_Users.php:568
 msgid "Reports Page Size"
 msgstr "Size Raportet Page"
 
 #: CustLoginSetup.php:191 CustLoginSetup.php:193 EmailConfirmation.php:120
 #: PrintCustOrder_generic.php:113 PrintCustOrder.php:103
-#: SuppLoginSetup.php:211 SuppLoginSetup.php:213 WWW_Users.php:571
-#: WWW_Users.php:573
+#: SuppLoginSetup.php:211 SuppLoginSetup.php:213 WWW_Users.php:572
+#: WWW_Users.php:574
 msgid "A4"
 msgstr "A4"
 
 #: CustLoginSetup.php:197 CustLoginSetup.php:199 CustLoginSetup.php:203
 #: CustLoginSetup.php:205 SuppLoginSetup.php:217 SuppLoginSetup.php:219
-#: SuppLoginSetup.php:223 SuppLoginSetup.php:225 WWW_Users.php:577
-#: WWW_Users.php:579 WWW_Users.php:583 WWW_Users.php:585
+#: SuppLoginSetup.php:223 SuppLoginSetup.php:225 WWW_Users.php:578
+#: WWW_Users.php:580 WWW_Users.php:584 WWW_Users.php:586
 msgid "A3"
 msgstr "A3"
 
@@ -7278,32 +7278,32 @@ msgstr "A3"
 #: EmailConfirmation.php:120 PrintCustOrder_generic.php:113
 #: PrintCustOrder.php:103 SuppLoginSetup.php:223 SuppLoginSetup.php:225
 #: SuppLoginSetup.php:235 SuppLoginSetup.php:237 SuppLoginSetup.php:246
-#: SuppLoginSetup.php:248 WWW_Users.php:583 WWW_Users.php:585
-#: WWW_Users.php:595 WWW_Users.php:597 WWW_Users.php:606 WWW_Users.php:608
+#: SuppLoginSetup.php:248 WWW_Users.php:584 WWW_Users.php:586
+#: WWW_Users.php:596 WWW_Users.php:598 WWW_Users.php:607 WWW_Users.php:609
 msgid "landscape"
 msgstr "peizazh"
 
 #: CustLoginSetup.php:209 CustLoginSetup.php:211 CustLoginSetup.php:215
 #: CustLoginSetup.php:217 SuppLoginSetup.php:229 SuppLoginSetup.php:231
-#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:589
-#: WWW_Users.php:591 WWW_Users.php:595 WWW_Users.php:597
+#: SuppLoginSetup.php:235 SuppLoginSetup.php:237 WWW_Users.php:590
+#: WWW_Users.php:592 WWW_Users.php:596 WWW_Users.php:598
 msgid "Letter"
 msgstr "Letër"
 
 #: CustLoginSetup.php:221 CustLoginSetup.php:223 CustLoginSetup.php:226
 #: CustLoginSetup.php:228 SuppLoginSetup.php:241 SuppLoginSetup.php:243
-#: SuppLoginSetup.php:246 SuppLoginSetup.php:248 WWW_Users.php:601
-#: WWW_Users.php:603 WWW_Users.php:606 WWW_Users.php:608
+#: SuppLoginSetup.php:246 SuppLoginSetup.php:248 WWW_Users.php:602
+#: WWW_Users.php:604 WWW_Users.php:607 WWW_Users.php:609
 msgid "Legal"
 msgstr "Ligjore"
 
-#: CustLoginSetup.php:234 SuppLoginSetup.php:254 UserSettings.php:148
-#: WWW_Users.php:296 WWW_Users.php:615
+#: CustLoginSetup.php:234 SuppLoginSetup.php:254 UserSettings.php:149
+#: WWW_Users.php:297 WWW_Users.php:616
 msgid "Theme"
 msgstr "Temë"
 
-#: CustLoginSetup.php:256 SuppLoginSetup.php:278 UserSettings.php:129
-#: WWW_Users.php:297 WWW_Users.php:640
+#: CustLoginSetup.php:256 SuppLoginSetup.php:278 UserSettings.php:130
+#: WWW_Users.php:298 WWW_Users.php:641
 msgid "Language"
 msgstr "Gjuhën"
 
@@ -7819,7 +7819,7 @@ msgid "Define Sales People"
 msgstr "Define Sales People"
 
 #: CustomerBranches.php:706 DailySalesInquiry.php:40 SalesPeople.php:170
-#: WWW_Users.php:292
+#: WWW_Users.php:293
 msgid "Salesperson"
 msgstr "Shites"
 
@@ -7980,7 +7980,7 @@ msgstr "Limiti"
 
 #: CustomerInquiry.php:129 CustomerReceipt.php:962 Customers.php:544
 #: Customers.php:913 Customers.php:919 Customers.php:937 Customers.php:959
-#: Customers.php:964 includes/MainMenuLinksArray.php:492
+#: Customers.php:964 includes/MainMenuLinksArray.php:490
 msgid "Credit Status"
 msgstr "Statusit Credit"
 
@@ -8757,7 +8757,7 @@ msgstr ""
 
 #: Customers.php:533 Customers.php:889 Customers.php:895 PaymentTerms.php:12
 #: PO_Header.php:1079 PrintCustTrans.php:375 PrintCustTransPortrait.php:441
-#: Suppliers.php:738 Suppliers.php:939 includes/MainMenuLinksArray.php:493
+#: Suppliers.php:738 Suppliers.php:939 includes/MainMenuLinksArray.php:491
 #: includes/PO_PDFOrderPageHeader.inc:62 includes/PO_PDFOrderPageHeader.inc:64
 msgid "Payment Terms"
 msgstr "Kushtet e pagesës"
@@ -8913,7 +8913,7 @@ msgid "Click to preview the credit"
 msgstr "Klikoni për të preview kredi"
 
 #: CustomerTypes.php:6 CustomerTypes.php:21
-#: includes/MainMenuLinksArray.php:490
+#: includes/MainMenuLinksArray.php:488
 msgid "Customer Types"
 msgstr "Llojet e konsumatorëve"
 
@@ -10759,7 +10759,7 @@ msgstr "Emri i kompanisë Faktori"
 #: PrintCustTransPortrait.php:757 PrintCustTransPortrait.php:1003
 #: PrintCustTransPortrait.php:1059 SalesPeople.php:201 SelectSupplier.php:277
 #: Suppliers.php:706 Suppliers.php:910 SupplierTenderCreate.php:132
-#: WWW_Users.php:287
+#: WWW_Users.php:288
 msgid "Telephone"
 msgstr "Telefon"
 
@@ -11049,7 +11049,7 @@ msgstr "Ri Depn"
 #: FixedAssetDepreciation.php:112 FixedAssetDepreciation.php:242
 #: InventoryValuation.php:116 InventoryValuation.php:168
 #: MailInventoryValuation.php:140 MailInventoryValuation.php:186
-#: OutstandingGRNs.php:91 OutstandingGRNs.php:138
+#: OutstandingGRNs.php:99 OutstandingGRNs.php:146
 #: PDFStockCheckComparison.php:296
 msgid "Total for"
 msgstr "Gjithsej për"
@@ -11156,7 +11156,7 @@ msgstr ""
 "Përshkrimi i pasurisë të gjatë nuk mund të jetë një varg gjatësi zero, një "
 "përshkrim të gjatë është e nevojshme"
 
-#: FixedAssetItems.php:90 Stocks.php:129 Z_ImportStocks.php:132
+#: FixedAssetItems.php:90 Stocks.php:129 Z_ImportStocks.php:125
 msgid "The barcode must be 20 characters or less long"
 msgstr "Barcode duhet të jetë 20 shkronja ose më pak gjatë"
 
@@ -11336,7 +11336,7 @@ msgstr "Vendndodhja aktiv"
 msgid "Add Asset Location"
 msgstr "Vendndodhja aktiv"
 
-#: FixedAssetItems.php:548 StockCounts.php:112 Stocks.php:1100
+#: FixedAssetItems.php:548 StockCounts.php:110 Stocks.php:1100
 #: includes/DefineLabelClass.php:50
 msgid "Bar Code"
 msgstr "Bar Code"
@@ -11553,7 +11553,7 @@ msgstr "C Kosto / Fwd"
 msgid "Depn C/Fwd"
 msgstr "Depn C / Fwd"
 
-#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:395
+#: FixedAssetTransfer.php:7 includes/MainMenuLinksArray.php:393
 msgid "Change Asset Location"
 msgstr "Vendndodhja Ndryshimi Aseteve"
 
@@ -11844,7 +11844,7 @@ msgstr "Asnjë urdhër u kthyen, sepse"
 #: FTP_RadioBeacon.php:49 SelectContract.php:135 SelectContract.php:165
 #: SelectRecurringSalesOrder.php:90 SelectSalesOrder.php:859
 #: SelectSalesOrder.php:877 SelectWorkOrder.php:329 Shipt_Select.php:331
-#: SuppInvGRNs.php:146 UserSettings.php:216 Z_poEditLangHeader.php:106
+#: SuppInvGRNs.php:146 UserSettings.php:217 Z_poEditLangHeader.php:106
 #: Z_poEditLangModule.php:168 Z_poEditLangRemaining.php:137
 #, php-format
 msgid "Modify"
@@ -12001,7 +12001,7 @@ msgid "Geocode Generate"
 msgstr "Geocode Generate"
 
 #: geocode.php:26 GeocodeSetup.php:135 GeocodeSetup.php:230
-#: includes/MainMenuLinksArray.php:462
+#: includes/MainMenuLinksArray.php:460
 msgid "Geocode Setup"
 msgstr "Setup Geocode"
 
@@ -12501,7 +12501,7 @@ msgstr "Emri i llogarisë"
 #: GLAccounts.php:285 GLBalanceSheet.php:9 GLBalanceSheet.php:18
 #: GLBalanceSheet.php:77 GLBalanceSheet.php:78 GLBalanceSheet.php:101
 #: GLBalanceSheet.php:140 SelectGLAccount.php:40 SelectGLAccount.php:55
-#: SelectGLAccount.php:68 includes/MainMenuLinksArray.php:360
+#: SelectGLAccount.php:68 includes/MainMenuLinksArray.php:358
 msgid "Balance Sheet"
 msgstr "Bilanci i Gjendjes"
 
@@ -12722,7 +12722,7 @@ msgstr "GL Codes Hetim"
 msgid "Group"
 msgstr "Grup"
 
-#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:355
+#: GLJournalInquiry.php:4 includes/MainMenuLinksArray.php:353
 #, fuzzy
 msgid "General Ledger Journal Inquiry"
 msgstr "Llogaria Libri Hetim"
@@ -12751,7 +12751,7 @@ msgstr "Journal Përmbledhje"
 msgid "Account Description"
 msgstr "Përshkrimi i llogarisë"
 
-#: GLJournal.php:8 includes/MainMenuLinksArray.php:339
+#: GLJournal.php:8 includes/MainMenuLinksArray.php:337
 msgid "Journal Entry"
 msgstr "Ditar"
 
@@ -13148,7 +13148,7 @@ msgstr "Postuar"
 
 #: GLTrialBalance.php:11 GLTrialBalance.php:30 GLTrialBalance.php:117
 #: GLTrialBalance.php:118 GLTrialBalance.php:160 GLTrialBalance.php:435
-#: includes/MainMenuLinksArray.php:351
+#: includes/MainMenuLinksArray.php:349
 msgid "Trial Balance"
 msgstr "Bilanci gjyq"
 
@@ -13256,7 +13256,7 @@ msgstr "Back To Urdhër blerjes"
 msgid "Receive controlled item"
 msgstr "Marrë pikën e kontrolluara"
 
-#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:202
+#: GoodsReceived.php:22 includes/MainMenuLinksArray.php:200
 msgid "Receive Purchase Orders"
 msgstr "Merre urdhëron Blerje"
 
@@ -13291,7 +13291,7 @@ msgstr "ka një status të"
 #: PO_SelectOSPurchOrder.php:502 SelectWorkOrder.php:331
 #: SelectWorkOrder.php:368 StockLocTransferReceive.php:566
 #: WorkOrderCosting.php:103 WorkOrderCosting.php:117
-#: includes/MainMenuLinksArray.php:204
+#: includes/MainMenuLinksArray.php:202
 #, php-format
 msgid "Receive"
 msgstr "Merre"
@@ -13608,7 +13608,7 @@ msgstr "Krijo një ofertë të re nga"
 msgid "View any open tenders without an offer"
 msgstr "View ose ofron ndryshimin të shquar nga"
 
-#: index.php:36 WWW_Users.php:722
+#: index.php:36 WWW_Users.php:723
 msgid "Account Status"
 msgstr "Llogaria statusit"
 
@@ -13752,7 +13752,7 @@ msgstr "A jeni i sigurt se doni të fshini këtë kontakt?"
 msgid "Select Stock Category Code"
 msgstr "Zgjidh një Kategoria Stock"
 
-#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:210
+#: InternalStockRequestAuthorisation.php:7 includes/MainMenuLinksArray.php:208
 #, fuzzy
 msgid "Authorise Internal Stock Requests"
 msgstr "Autorizimin e kërkuar"
@@ -13979,7 +13979,7 @@ msgstr "Krijimi nivelet e tjera"
 #: StockLocTransfer.php:244 StockLocTransferReceive.php:411
 #: StockLocTransferReceive.php:505 StockTransfers.php:29
 #: StockTransfers.php:458 StockUsage.php:28 SuppCreditGRNs.php:19
-#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:203
+#: SuppInvGRNs.php:16 includes/MainMenuLinksArray.php:201
 msgid "Dispatch"
 msgstr "Dërgoj"
 
@@ -14132,7 +14132,7 @@ msgstr "Vjetëruara"
 msgid "Add to Requisition"
 msgstr "Kërkesë me shkrim"
 
-#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:235
+#: InventoryPlanning.php:37 includes/MainMenuLinksArray.php:233
 msgid "Inventory Planning Report"
 msgstr "Raporti Inventari Planifikimit"
 
@@ -14376,7 +14376,7 @@ msgstr "Sasitë Inventari Report"
 msgid "Parts With Quantities"
 msgstr "Parts me sasi të"
 
-#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:231
+#: InventoryQuantities.php:84 includes/MainMenuLinksArray.php:229
 msgid "Inventory Quantities"
 msgstr "Inventari sasitë"
 
@@ -14397,9 +14397,9 @@ msgid "Inventory Quantities Reporting"
 msgstr "Sasitë Inventari Raportimi"
 
 #: InventoryQuantities.php:155 InventoryValuation.php:205 Locations.php:375
-#: Locations.php:436 MRP_2012-10.php:528 MRPCalendar.php:21
-#: MRPCreateDemands.php:195 MRPDemands.php:27 MRPDemandTypes.php:17
-#: MRP.php:528 MRPPlannedPurchaseOrders.php:265 MRPPlannedWorkOrders.php:247
+#: Locations.php:436 MRPCalendar.php:21 MRPCreateDemands.php:195
+#: MRPDemands.php:27 MRPDemandTypes.php:17 MRP.php:528
+#: MRPPlannedPurchaseOrders.php:265 MRPPlannedWorkOrders.php:247
 #: MRPPlannedWorkOrders.php:321 PricesByCost.php:8 ReorderLevelLocation.php:12
 #: ReorderLevel.php:194 SelectProduct.php:86 StockDispatch.php:281
 #: StockMovements.php:22 StockQties_csv.php:8 StockQuantityByDate.php:10
@@ -14430,7 +14430,7 @@ msgid "Reorder"
 msgstr "Reorder"
 
 #: InventoryValuation.php:15 MailInventoryValuation.php:46
-#: MailInventoryValuation.php:225 includes/MainMenuLinksArray.php:234
+#: MailInventoryValuation.php:225 includes/MainMenuLinksArray.php:232
 msgid "Inventory Valuation Report"
 msgstr "Raporti i Vlerësimit Inventari"
 
@@ -14454,7 +14454,7 @@ msgstr ""
 "Nuk ka pasur objekte me ndonjë vlerë për të shkruar për vendin e specifikuar"
 
 #: InventoryValuation.php:188 MailInventoryValuation.php:201
-#: OutstandingGRNs.php:150
+#: OutstandingGRNs.php:158
 msgid "Grand Total Value"
 msgstr "Vlera e Grand Total"
 
@@ -14930,150 +14930,6 @@ msgstr "Sales Report Analiza"
 msgid "Error running automated sales report number"
 msgstr "Gabim duke automatizuar numrin e shitjeve të raportit"
 
-#: MRP_2012-10.php:6 MRP.php:6
-msgid "Run MRP Calculation"
-msgstr "Llogaritja Run MRP"
-
-#: MRP_2012-10.php:16 MRP.php:16
-msgid "Start time"
-msgstr "Koha e fillimit"
-
-#: MRP_2012-10.php:17 MRP.php:17
-msgid "Initialising tables ....."
-msgstr "Initialising tavolina ....."
-
-#: MRP_2012-10.php:42 MRP.php:42
-msgid "Creating first level"
-msgstr "Krijimi i nivelit të parë"
-
-#: MRP_2012-10.php:66 MRP.php:66
-msgid "Creating other levels"
-msgstr "Krijimi nivelet e tjera"
-
-#: MRP_2012-10.php:104 MRP.php:104
-msgid "Creating bomlevels table"
-msgstr "Krijimi i bomlevels tryezë"
-
-#: MRP_2012-10.php:130 MRP.php:130
-msgid "Creating levels table"
-msgstr "Krijimi i niveleve tryezë"
-
-#: MRP_2012-10.php:198 MRP.php:198
-msgid "Levels table has been created"
-msgstr "Nivelet tryezë është krijuar"
-
-#: MRP_2012-10.php:213 MRP.php:213
-msgid "Creating requirements table"
-msgstr "Krijimi i kërkesave të tabelës"
-
-#: MRP_2012-10.php:230 MRP.php:230
-msgid "Create of mrprequirements failed because"
-msgstr "Krijo e mrprequirements dështuar për shkak se"
-
-#: MRP_2012-10.php:232 MRP.php:232
-msgid "Loading requirements from sales orders"
-msgstr "Loading kërkesat nga shitja e urdhrave të"
-
-#: MRP_2012-10.php:258 MRP.php:258
-msgid "Loading requirements from work orders"
-msgstr "Loading nga kërkesat e urdhëresave të punës"
-
-#: MRP_2012-10.php:306 MRP.php:306
-msgid "Loading requirements based on mrpdemands"
-msgstr "Loading kërkesat në bazë të mrpdemands"
-
-#: MRP_2012-10.php:328 MRP.php:328
-msgid "Loading requirements based on reorder level"
-msgstr "Loading kërkesat në bazë të nivelit të Reorder"
-
-#: MRP_2012-10.php:334 MRP.php:334
-msgid "Creating supplies table"
-msgstr "Krijimi i furnizon tryezë"
-
-#: MRP_2012-10.php:348 MRP.php:348
-msgid "Create of mrpsupplies failed because"
-msgstr "Krijo e mrpsupplies dështuar për shkak se"
-
-#: MRP_2012-10.php:350 MRP.php:350
-msgid "Loading supplies from purchase orders"
-msgstr "furnizimet Loading nga urdhrat e blerjes"
-
-#: MRP_2012-10.php:376 MRP.php:376
-msgid "Loading supplies from inventory on hand"
-msgstr "Loading furnizimet nga inventari në dorë"
-
-#: MRP_2012-10.php:417 MRP.php:417
-msgid "Loading supplies from work orders"
-msgstr "furnizimet Loading nga urdhëresave të punës"
-
-#: MRP_2012-10.php:446 MRP.php:446
-msgid "Creating planned orders table"
-msgstr "Krijimi i planifikuar tryezë urdhërat"
-
-#: MRP_2012-10.php:458 MRP.php:458
-msgid "Create of mrpplannedorders failed because"
-msgstr "Krijo e mrpplannedorders dështuar për shkak se"
-
-#: MRP_2012-10.php:477 MRP.php:477
-msgid "Processing level"
-msgstr "nivelit të përpunimit të"
-
-#: MRP_2012-10.php:484 MRP.php:484
-msgid "End time"
-msgstr "kohë End"
-
-#: MRP_2012-10.php:556 MRP.php:556
-msgid "Last Run Details"
-msgstr "Detajet e fundit Run"
-
-#: MRP_2012-10.php:559 MRP.php:559
-msgid "Last Run Time"
-msgstr "Hera e fundit Run"
-
-#: MRP_2012-10.php:566 MRP_2012-10.php:612 MRP.php:566 MRP.php:612
-msgid "Days Leeway"
-msgstr "Ditët liri veprimi"
-
-#: MRP_2012-10.php:570 MRP.php:570
-msgid "Use MRP Demands"
-msgstr "Përdorimi kërkon MRP"
-
-#: MRP_2012-10.php:574 MRP.php:574
-msgid "Use EOQ"
-msgstr "Përdorimi EOQ"
-
-#: MRP_2012-10.php:578 MRP.php:578
-msgid "Use Pan Size"
-msgstr "Përdorimi Pan Size"
-
-#: MRP_2012-10.php:582 MRP.php:582
-msgid "Use Shrinkage"
-msgstr "Përdorimi Tkurrje"
-
-#: MRP_2012-10.php:592 MRP.php:592
-msgid "This Run Details"
-msgstr "Kjo Details Run"
-
-#: MRP_2012-10.php:616 MRP.php:616
-msgid "Use MRP Demands?"
-msgstr "Përdorimi kërkon MRP?"
-
-#: MRP_2012-10.php:620 MRP.php:620
-msgid "Use EOQ?"
-msgstr "Përdorimi EOQ?"
-
-#: MRP_2012-10.php:624 MRP.php:624
-msgid "Use Pan Size?"
-msgstr "Përdorimi Pan Size?"
-
-#: MRP_2012-10.php:628 MRP.php:628
-msgid "Use Shrinkage?"
-msgstr "Tkurrje Përdor?"
-
-#: MRP_2012-10.php:635 MRP.php:635
-msgid "Run MRP"
-msgstr "Run MRP"
-
 #: MRPCalendar.php:9
 msgid "MRP Calendar"
 msgstr "MRP Kalendari"
@@ -15313,7 +15169,7 @@ msgstr "Lloji Delete Demand"
 msgid "Or Delete Record"
 msgstr "Ose Fshije Record"
 
-#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:526
+#: MRPDemandTypes.php:6 includes/MainMenuLinksArray.php:524
 msgid "MRP Demand Types"
 msgstr "Kërkesa Llojet MRP"
 
@@ -15363,6 +15219,150 @@ msgstr "Trego të gjitha Llojet Demand"
 #: MRPDemandTypes.php:182
 msgid "Demand Type Description"
 msgstr "Lloji Kërkesa Description"
+
+#: MRP.php:6
+msgid "Run MRP Calculation"
+msgstr "Llogaritja Run MRP"
+
+#: MRP.php:16
+msgid "Start time"
+msgstr "Koha e fillimit"
+
+#: MRP.php:17
+msgid "Initialising tables ....."
+msgstr "Initialising tavolina ....."
+
+#: MRP.php:42
+msgid "Creating first level"
+msgstr "Krijimi i nivelit të parë"
+
+#: MRP.php:66
+msgid "Creating other levels"
+msgstr "Krijimi nivelet e tjera"
+
+#: MRP.php:104
+msgid "Creating bomlevels table"
+msgstr "Krijimi i bomlevels tryezë"
+
+#: MRP.php:130
+msgid "Creating levels table"
+msgstr "Krijimi i niveleve tryezë"
+
+#: MRP.php:198
+msgid "Levels table has been created"
+msgstr "Nivelet tryezë është krijuar"
+
+#: MRP.php:213
+msgid "Creating requirements table"
+msgstr "Krijimi i kërkesave të tabelës"
+
+#: MRP.php:230
+msgid "Create of mrprequirements failed because"
+msgstr "Krijo e mrprequirements dështuar për shkak se"
+
+#: MRP.php:232
+msgid "Loading requirements from sales orders"
+msgstr "Loading kërkesat nga shitja e urdhrave të"
+
+#: MRP.php:258
+msgid "Loading requirements from work orders"
+msgstr "Loading nga kërkesat e urdhëresave të punës"
+
+#: MRP.php:306
+msgid "Loading requirements based on mrpdemands"
+msgstr "Loading kërkesat në bazë të mrpdemands"
+
+#: MRP.php:328
+msgid "Loading requirements based on reorder level"
+msgstr "Loading kërkesat në bazë të nivelit të Reorder"
+
+#: MRP.php:334
+msgid "Creating supplies table"
+msgstr "Krijimi i furnizon tryezë"
+
+#: MRP.php:348
+msgid "Create of mrpsupplies failed because"
+msgstr "Krijo e mrpsupplies dështuar për shkak se"
+
+#: MRP.php:350
+msgid "Loading supplies from purchase orders"
+msgstr "furnizimet Loading nga urdhrat e blerjes"
+
+#: MRP.php:376
+msgid "Loading supplies from inventory on hand"
+msgstr "Loading furnizimet nga inventari në dorë"
+
+#: MRP.php:417
+msgid "Loading supplies from work orders"
+msgstr "furnizimet Loading nga urdhëresave të punës"
+
+#: MRP.php:446
+msgid "Creating planned orders table"
+msgstr "Krijimi i planifikuar tryezë urdhërat"
+
+#: MRP.php:458
+msgid "Create of mrpplannedorders failed because"
+msgstr "Krijo e mrpplannedorders dështuar për shkak se"
+
+#: MRP.php:477
+msgid "Processing level"
+msgstr "nivelit të përpunimit të"
+
+#: MRP.php:484
+msgid "End time"
+msgstr "kohë End"
+
+#: MRP.php:556
+msgid "Last Run Details"
+msgstr "Detajet e fundit Run"
+
+#: MRP.php:559
+msgid "Last Run Time"
+msgstr "Hera e fundit Run"
+
+#: MRP.php:566 MRP.php:612
+msgid "Days Leeway"
+msgstr "Ditët liri veprimi"
+
+#: MRP.php:570
+msgid "Use MRP Demands"
+msgstr "Përdorimi kërkon MRP"
+
+#: MRP.php:574
+msgid "Use EOQ"
+msgstr "Përdorimi EOQ"
+
+#: MRP.php:578
+msgid "Use Pan Size"
+msgstr "Përdorimi Pan Size"
+
+#: MRP.php:582
+msgid "Use Shrinkage"
+msgstr "Përdorimi Tkurrje"
+
+#: MRP.php:592
+msgid "This Run Details"
+msgstr "Kjo Details Run"
+
+#: MRP.php:616
+msgid "Use MRP Demands?"
+msgstr "Përdorimi kërkon MRP?"
+
+#: MRP.php:620
+msgid "Use EOQ?"
+msgstr "Përdorimi EOQ?"
+
+#: MRP.php:624
+msgid "Use Pan Size?"
+msgstr "Përdorimi Pan Size?"
+
+#: MRP.php:628
+msgid "Use Shrinkage?"
+msgstr "Tkurrje Përdor?"
+
+#: MRP.php:635
+msgid "Run MRP"
+msgstr "Run MRP"
 
 #: MRPPlannedPurchaseOrders.php:14 MRPPlannedWorkOrders.php:13
 #: MRPShortages.php:13
@@ -15714,7 +15714,7 @@ msgstr "Përzgjedhja:"
 msgid "MRP Shortages Report"
 msgstr "Mungesat e MRP Report"
 
-#: MRPShortages.php:27 includes/MainMenuLinksArray.php:301
+#: MRPShortages.php:27 includes/MainMenuLinksArray.php:299
 msgid "MRP Shortages"
 msgstr "MRP Mungesat"
 
@@ -15876,7 +15876,7 @@ msgid "There are no offers outstanding that you are authorised to deal with"
 msgstr "Nuk ka oferta të pazgjidhura që ju jeni autorizuar që të merren me"
 
 #: OffersReceived.php:41 OffersReceived.php:42 OffersReceived.php:48
-#: includes/MainMenuLinksArray.php:135 includes/MainMenuLinksArray.php:161
+#: includes/MainMenuLinksArray.php:135 includes/MainMenuLinksArray.php:159
 msgid "Select Supplier"
 msgstr "Zgjidhni Furnizuesin"
 
@@ -16035,28 +16035,83 @@ msgstr "Del Qty"
 msgid "Last Del"
 msgstr "Del Fundit"
 
-#: OutstandingGRNs.php:14 OutstandingGRNs.php:160
-#: includes/MainMenuLinksArray.php:145
-msgid "Outstanding GRNs Report"
-msgstr "GRNs Outstanding Report"
-
-#: OutstandingGRNs.php:15
-msgid "Outstanding GRNs Valuation"
-msgstr "Outstanding GRNs Vlerësimit"
-
-#: OutstandingGRNs.php:53 OutstandingGRNs.php:65
+#: OutstandingGRNs.php:46 OutstandingGRNs.php:59
 msgid "Outstanding GRN Valuation"
 msgstr "Vlerësimit të papaguara GRN"
 
-#: OutstandingGRNs.php:55
+#: OutstandingGRNs.php:48
 msgid ""
 "The outstanding GRNs valuation details could not be retrieved by the SQL "
 "because"
 msgstr "Vlerësimi shquar të dhënat GRNs nuk mund të shikohet nga SQL sepse"
 
-#: OutstandingGRNs.php:67
+#: OutstandingGRNs.php:61
 msgid "No outstanding GRNs valuation details retrieved"
 msgstr "Nuk ka vlerësim të shquar të dhënat GRNs marrë"
+
+#: OutstandingGRNs.php:77 OutstandingGRNs.php:254
+#: includes/MainMenuLinksArray.php:145
+msgid "Outstanding GRNs Report"
+msgstr "GRNs Outstanding Report"
+
+#: OutstandingGRNs.php:78
+msgid "Outstanding GRNs Valuation"
+msgstr "Outstanding GRNs Vlerësimit"
+
+#: OutstandingGRNs.php:170
+#, fuzzy
+msgid "Goods Received but not invoiced Yet"
+msgstr "Mallrave të marrë ende për t&#39;u faturuar Nga"
+
+#: OutstandingGRNs.php:172
+msgid ""
+"Shows the list of goods received not yet invoiced, both in supplier currency "
+"and home currency. When run for all suppliers, the total in home curency "
+"should match the GL Account for Goods received not invoiced."
+msgstr ""
+
+#: OutstandingGRNs.php:178
+#, fuzzy
+msgid "PO#"
+msgstr "PO"
+
+#: OutstandingGRNs.php:180 WorkOrderEntry.php:534
+#: includes/PDFStockLocTransferHeader.inc:51
+msgid "Qty Received"
+msgstr "Qty Received"
+
+#: OutstandingGRNs.php:181 SuppCreditGRNs.php:190 SuppInvGRNs.php:259
+msgid "Qty Invoiced"
+msgstr "Qty faturuar"
+
+#: OutstandingGRNs.php:182
+#, fuzzy
+msgid "Qty Pending"
+msgstr "Në pritje të"
+
+#: OutstandingGRNs.php:183 SpecialOrder.php:735
+#: includes/PDFTransPageHeader.inc:208
+#: includes/PDFTransPageHeaderPortrait.inc:263
+msgid "Unit Price"
+msgstr "Çmimi njësi"
+
+#: OutstandingGRNs.php:185 OutstandingGRNs.php:187
+#: PO_AuthoriseMyOrders.php:117 SupplierCredit.php:320 SupplierInvoice.php:668
+#: SupplierTenders.php:330
+msgid "Line Total"
+msgstr "Line Gjithsej"
+
+#: OutstandingGRNs.php:259
+msgid ""
+"Shows the list of goods received not yet invoiced, both in supplier currency "
+"and home currency. When run for all suppliers the total in home curency "
+"should match the GL Account for Goods received not invoiced."
+msgstr ""
+
+#: OutstandingGRNs.php:278
+#, fuzzy
+msgid "Show On Screen"
+msgstr "Trego më Screen (HTML)"
 
 #: PageSecurity.php:6 PageSecurity.php:9
 msgid "Page Security Levels"
@@ -16124,7 +16179,7 @@ msgstr "Pagesë"
 msgid "Total Payment"
 msgstr "Gjithsej pagesa"
 
-#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:495
+#: PaymentMethods.php:7 includes/MainMenuLinksArray.php:493
 msgid "Payment Methods"
 msgstr "Metodat e pagesës"
 
@@ -17236,7 +17291,7 @@ msgid "The Tab record could not be deleted because"
 msgstr "Rekord Tab nuk mund të fshihet sepse"
 
 #: PcTabs.php:206 PcTabs.php:306 PO_AuthorisationLevels.php:125
-#: SMTPServer.php:103 UserSettings.php:118
+#: SMTPServer.php:103 UserSettings.php:119
 msgid "User Name"
 msgstr "Emri i përdoruesit"
 
@@ -18235,7 +18290,7 @@ msgstr "Çmimi Etiketa Print"
 msgid "Price_Labels"
 msgstr "Çmimi Etiketa Print"
 
-#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:226
+#: PDFPrintLabel.php:272 includes/MainMenuLinksArray.php:224
 msgid "Print Price Labels"
 msgstr "Çmimi Etiketa Print"
 
@@ -18753,11 +18808,6 @@ msgstr "Refuzuar"
 #: PO_SelectPurchOrder.php:158
 msgid "Cancelled"
 msgstr "Anullohen"
-
-#: PO_AuthoriseMyOrders.php:117 SupplierCredit.php:320 SupplierInvoice.php:668
-#: SupplierTenders.php:330
-msgid "Line Total"
-msgstr "Line Gjithsej"
 
 #: PO_Chk_ShiptRef_JobRef.php:17 PO_Chk_ShiptRef_JobRef.php:22
 msgid "The update could not be processed"
@@ -19588,7 +19638,7 @@ msgid "Order Header Details"
 msgstr "Header Details Rendit"
 
 #: PO_OrderDetails.php:89 Suppliers.php:669 Suppliers.php:878
-#: SupplierTenderCreate.php:392 WWW_Users.php:291 WWW_Users.php:538
+#: SupplierTenderCreate.php:392 WWW_Users.php:292 WWW_Users.php:539
 msgid "Supplier Code"
 msgstr "Furnizuesi Kodi"
 
@@ -19658,7 +19708,7 @@ msgstr ""
 "Zgjidh një Urdhër Blerje Numri për të shtypur para se të quajtur këtë faqe"
 
 #: PO_PDFPurchOrder.php:20 PO_PDFPurchOrder.php:123
-#: includes/MainMenuLinksArray.php:188
+#: includes/MainMenuLinksArray.php:186
 msgid "Purchase Order Inquiry"
 msgstr "Hetim Urdhër blerjes"
 
@@ -19973,7 +20023,7 @@ msgid "The SQL used to retrieve the searched parts was"
 msgstr "SQL përdorur për të marrë pjesë ishte e kontrolluar"
 
 #: PO_SelectOSPurchOrder.php:138 PO_SelectOSPurchOrder.php:140
-#: includes/MainMenuLinksArray.php:170
+#: includes/MainMenuLinksArray.php:168
 msgid "Add Purchase Order"
 msgstr "Shto Urdhër blerjes"
 
@@ -20046,7 +20096,7 @@ msgstr "Print një Kopjo"
 
 #: PO_SelectPurchOrder.php:9 SelectCompletedOrder.php:557
 #: SupplierCredit.php:204 SupplierCredit.php:298 SupplierInvoice.php:557
-#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:169
+#: SupplierInvoice.php:642 includes/MainMenuLinksArray.php:167
 msgid "Purchase Orders"
 msgstr "Urdhërat Blerje"
 
@@ -21863,7 +21913,7 @@ msgid "At All Locations"
 msgstr "Në të gjitha vendet"
 
 #: ReorderLevelLocation.php:72 ReorderLevel.php:60
-#: includes/MainMenuLinksArray.php:232
+#: includes/MainMenuLinksArray.php:230
 msgid "Reorder Level"
 msgstr "Reorder Level"
 
@@ -21976,7 +22026,7 @@ msgstr "Sasia e marra"
 msgid "Reprint"
 msgstr "Ribotim"
 
-#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:207
+#: ReverseGRN.php:9 includes/MainMenuLinksArray.php:205
 msgid "Reverse Goods Received"
 msgstr "Reverse Mallrat e pranuara"
 
@@ -22684,7 +22734,7 @@ msgstr "Grupi Nga 3"
 msgid "Group By 4"
 msgstr "Grupi Nga 4"
 
-#: SalesAnalysis_UserDefined.php:9 includes/session.inc:291
+#: SalesAnalysis_UserDefined.php:9 includes/session.inc:295
 msgid ""
 "The security settings on your account do not permit you to access this "
 "function"
@@ -22861,7 +22911,7 @@ msgstr ""
 msgid "Qtr"
 msgstr "Qty"
 
-#: SalesCategories.php:7 includes/MainMenuLinksArray.php:273
+#: SalesCategories.php:7 includes/MainMenuLinksArray.php:271
 msgid "Sales Category Maintenance"
 msgstr "Sales Mirëmbajtja Category"
 
@@ -23438,7 +23488,7 @@ msgstr "Sales Hetim"
 msgid "Top Sales Items Inquiry"
 msgstr "Top Sales Items Lista"
 
-#: SalesTopItemsInquiry.php:83 WWW_Users.php:662
+#: SalesTopItemsInquiry.php:83 WWW_Users.php:663
 msgid "Display"
 msgstr "Ekran"
 
@@ -23462,7 +23512,7 @@ msgstr "Numri i ditëve"
 msgid "Rank"
 msgstr "Banka"
 
-#: SalesTypes.php:5 includes/MainMenuLinksArray.php:489
+#: SalesTypes.php:5 includes/MainMenuLinksArray.php:487
 msgid "Sales Types"
 msgstr "Llojet e shitjes"
 
@@ -23601,7 +23651,7 @@ msgstr "Sales Lloji / Lista e Çmimeve Setup"
 msgid "Sales Type Name"
 msgstr "Sales Emri Lloji"
 
-#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:450
+#: SecurityTokens.php:6 includes/MainMenuLinksArray.php:448
 #, fuzzy
 msgid "Maintain Security Tokens"
 msgstr "Argumentet e Sigurimit Available"
@@ -23639,7 +23689,7 @@ msgstr "Shënim ID"
 msgid "Are you sure you wish to delete this security token?"
 msgstr "A jeni i sigurt se doni të fshini këtë degë?"
 
-#: SelectAsset.php:7 includes/MainMenuLinksArray.php:394
+#: SelectAsset.php:7 includes/MainMenuLinksArray.php:392
 msgid "Select an Asset"
 msgstr "Zgjidh një të Aseteve"
 
@@ -24306,7 +24356,7 @@ msgstr ""
 msgid "Edit Account"
 msgstr "Edit Account"
 
-#: SelectGLAccount.php:27 includes/MainMenuLinksArray.php:352
+#: SelectGLAccount.php:27 includes/MainMenuLinksArray.php:350
 msgid "Account Inquiry"
 msgstr "Hetim llogari"
 
@@ -24978,7 +25028,7 @@ msgstr "Kërko / Ndrysho / Mbyll Dërgesat"
 
 #: SelectSupplier.php:173 SuppPriceList.php:16 SuppPriceList.php:152
 #: SuppPriceList.php:208 SuppPriceList.php:210
-#: includes/MainMenuLinksArray.php:190
+#: includes/MainMenuLinksArray.php:188
 msgid "Supplier Price List"
 msgstr "Lista e Çmimeve Furnizuesi"
 
@@ -25911,11 +25961,6 @@ msgstr "Tatimore TOTALI excl"
 msgid "Ordered item Description"
 msgstr "Description Urdhërohet artikull"
 
-#: SpecialOrder.php:735 includes/PDFTransPageHeader.inc:208
-#: includes/PDFTransPageHeaderPortrait.inc:263
-msgid "Unit Price"
-msgstr "Çmimi njësi"
-
 #: SpecialOrder.php:743
 msgid "Required Delivery Date"
 msgstr "Data e kërkuar për dorëzim"
@@ -25981,7 +26026,7 @@ msgid "Please try again"
 msgstr "Ju lutemi provoni përsëri"
 
 #: StockAdjustments.php:94 StockCategories.php:11 StockCostUpdate.php:21
-#: StockCounts.php:17
+#: StockCounts.php:15
 msgid "Inventory Adjustment"
 msgstr "Inventari Rregullimit"
 
@@ -26525,91 +26570,91 @@ msgstr "Kosto Standard Punës për njësi"
 msgid "Standard Overhead Cost Per Unit"
 msgstr "Kosto indirekte për njësi Standard"
 
-#: StockCounts.php:8
+#: StockCounts.php:6
 msgid "Stock Check Sheets Entry"
 msgstr "Check Stock Sheets Hyrja"
 
-#: StockCounts.php:32
+#: StockCounts.php:30
 msgid "Resuming Entering Counts"
 msgstr "Rinisjen Pikat Hyrja"
 
-#: StockCounts.php:32
+#: StockCounts.php:30
 msgid "Viewing Entered Counts"
 msgstr "Duke parë Pikat Regjistruar"
 
-#: StockCounts.php:34
+#: StockCounts.php:32
 msgid "Entering Counts"
 msgstr "Hyrja Pikat"
 
-#: StockCounts.php:34
+#: StockCounts.php:32
 msgid "View Entered Counts"
 msgstr "Shiko Regjistruar Pikat"
 
-#: StockCounts.php:66
+#: StockCounts.php:64
 msgid "The quantity entered for line"
 msgstr "Sasia hyri për vijë"
 
-#: StockCounts.php:66 StockLocTransfer.php:125 StockLocTransferReceive.php:34
+#: StockCounts.php:64 StockLocTransfer.php:125 StockLocTransferReceive.php:34
 msgid "is not numeric"
 msgstr "nuk është numerike"
 
-#: StockCounts.php:66
+#: StockCounts.php:64
 msgid "this line was for the part code"
 msgstr "këtë linjë ishte për kodin pjesë"
 
-#: StockCounts.php:66 StockCounts.php:72
+#: StockCounts.php:64 StockCounts.php:70
 msgid "This line will have to be re-entered"
 msgstr "Kjo linjë do të duhet të ri-hyrë"
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "The stock code entered on line"
 msgstr "Kodi i aksioneve ka hyrë në linjë"
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "is not a part code that has been added to the stock check file"
 msgstr "nuk është një kod pjesë që është shtuar në dosjen e parë të aksioneve"
 
-#: StockCounts.php:72
+#: StockCounts.php:70
 msgid "the code entered was"
 msgstr "Kodi hyrë ishte"
 
-#: StockCounts.php:87
+#: StockCounts.php:85
 msgid "The stock count line number"
 msgstr "Numërimin e aksioneve linjë numër"
 
-#: StockCounts.php:87
+#: StockCounts.php:85
 msgid "could not be entered because"
 msgstr "nuk mund të regjistrohen për shkak se"
 
-#: StockCounts.php:92
+#: StockCounts.php:90
 msgid " Stock Counts Entered"
 msgstr " Stock Pikat Regjistruar"
 
-#: StockCounts.php:98
+#: StockCounts.php:96
 msgid "Stock Check Counts at Location"
 msgstr "Check Stock Pikat në Vendndodhja"
 
-#: StockCounts.php:132
+#: StockCounts.php:130
 msgid "Enter Above Counts"
 msgstr "Enter Mbi Pikat"
 
-#: StockCounts.php:142
+#: StockCounts.php:140
 msgid "Failed to delete StockCount ID #"
 msgstr "Nuk arriti të fshini StockCount ID #"
 
-#: StockCounts.php:144
+#: StockCounts.php:142
 msgid "Deleted Id #"
 msgstr "Deleted Id #"
 
-#: StockCounts.php:157
+#: StockCounts.php:155
 msgid "Qty Counted"
 msgstr "Qty numëruara"
 
-#: StockCounts.php:159
+#: StockCounts.php:157
 msgid "Delete?"
 msgstr "Delete?"
 
-#: StockCounts.php:170
+#: StockCounts.php:168
 msgid "Save Changes"
 msgstr "Ruaj Ndryshimet"
 
@@ -27369,7 +27414,7 @@ msgstr "/ Batch Bundle Ref"
 msgid "Total quantity"
 msgstr "Sasia totale"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid ""
 "The stock item description must be entered and be fifty characters or less "
 "long"
@@ -27377,68 +27422,68 @@ msgstr ""
 "Pika e aksioneve Përshkrimi duhet të lidhet dhe të karaktereve të pesëdhjetë "
 "apo më pak të gjatë"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid "It cannot be a zero length string either"
 msgstr "Ajo nuk mund të jetë një varg gjatësi zero ose"
 
-#: Stocks.php:98 Z_ImportStocks.php:111
+#: Stocks.php:98 Z_ImportStocks.php:104
 msgid "a description is required"
 msgstr "një përshkrim është e nevojshme"
 
-#: Stocks.php:104 Z_ImportStocks.php:115
+#: Stocks.php:104 Z_ImportStocks.php:108
 msgid "The stock item description cannot be a zero length string"
 msgstr "Pika e aksioneve përshkrim nuk mund të jetë një varg gjatësi zero"
 
-#: Stocks.php:104 Z_ImportStocks.php:115
+#: Stocks.php:104 Z_ImportStocks.php:108
 msgid "a long description is required"
 msgstr "një përshkrim të gjatë është e nevojshme"
 
-#: Stocks.php:110 Z_ImportStocks.php:119
+#: Stocks.php:110 Z_ImportStocks.php:112
 msgid "The Stock Item code cannot be empty"
 msgstr "Kodi Item Stock nuk mund të jetë bosh"
 
-#: Stocks.php:116 Z_ImportStocks.php:123
+#: Stocks.php:116 Z_ImportStocks.php:116
 msgid "The stock item code cannot contain any of the following characters"
 msgstr "Pika e aksioneve kodi nuk mund të përmbajë asnjë nga këto karaktere"
 
-#: Stocks.php:123 Z_ImportStocks.php:128
+#: Stocks.php:123 Z_ImportStocks.php:121
 msgid "The unit of measure must be 20 characters or less long"
 msgstr "Njësia e matjes duhet të jenë 20 shkronja ose më pak gjatë"
 
-#: Stocks.php:135 Z_ImportStocks.php:140
+#: Stocks.php:135 Z_ImportStocks.php:133
 msgid "The volume of the packaged item in cubic metres must be numeric"
 msgstr "Vëllimi i elementit të paketuara në metra kub duhet të jetë një numër"
 
-#: Stocks.php:141 Z_ImportStocks.php:144
+#: Stocks.php:141 Z_ImportStocks.php:137
 msgid "The volume of the packaged item must be a positive number"
 msgstr "Vëllimi i elementit të paketuara duhet të jetë një numër pozitiv"
 
-#: Stocks.php:147 Z_ImportStocks.php:148
+#: Stocks.php:147 Z_ImportStocks.php:141
 msgid "The weight of the packaged item in KGs must be numeric"
 msgstr "Pesha e elementit të paketuara në KGS duhet të jetë një numër"
 
-#: Stocks.php:153 Z_ImportStocks.php:152
+#: Stocks.php:153 Z_ImportStocks.php:145
 msgid "The weight of the packaged item must be a positive number"
 msgstr "Pesha e elementit të paketuara duhet të jetë një numër pozitiv"
 
-#: Stocks.php:159 Z_ImportStocks.php:156
+#: Stocks.php:159 Z_ImportStocks.php:149
 msgid "The economic order quantity must be numeric"
 msgstr "Sasia ekonomike që duhet të jetë një numër"
 
-#: Stocks.php:165 Z_ImportStocks.php:160
+#: Stocks.php:165 Z_ImportStocks.php:153
 msgid "The economic order quantity must be a positive number"
 msgstr "Sasia ekonomike që duhet të jetë një numër pozitiv"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "The item can only be serialised if there is lot control enabled already"
 msgstr ""
 "Pika mund të jenë vetëm serialized nëse ka kontroll shumë aktivizuar tashmë"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "Batch control"
 msgstr "kontrollit Batch"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid ""
 "with any number of items in a lot/bundle/roll is enabled when controlled is "
 "enabled"
@@ -27446,15 +27491,15 @@ msgstr ""
 "me ndonjë numër të artikujve në një shumë / pako / roll është aktivizuar kur "
 "e kontrolluar është aktivizuar"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "Serialised control requires that only one item is in the batch"
 msgstr "kontrollit Serialised kërkon që vetëm një send është në grumbull"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "For serialised control"
 msgstr "Për kontrollin e serialized"
 
-#: Stocks.php:171 Z_ImportStocks.php:164
+#: Stocks.php:171 Z_ImportStocks.php:157
 msgid "both controlled and serialised must be enabled"
 msgstr "të dyja të kontrolluara dhe serialized duhet të jenë të aktivizuara"
 
@@ -27489,7 +27534,7 @@ msgstr ""
 "Kuvendet / Dummies / Phantom dhe Kitsets nuk janë sende fizike dhe "
 "grumbull / kontroll serial është e përshtatshme për këtë arsye nuk"
 
-#: Stocks.php:200 Z_ImportStocks.php:178
+#: Stocks.php:200 Z_ImportStocks.php:171
 msgid ""
 "There are no inventory categories defined. All inventory items must belong "
 "to a valid inventory category,"
@@ -27659,15 +27704,15 @@ msgstr ""
 "kodet e aksioneve janë të ndaluara nga sistemi. Provoni të zgjedhur një kod "
 "alternativ të aksioneve"
 
-#: Stocks.php:567 Z_ImportStocks.php:233
+#: Stocks.php:567 Z_ImportStocks.php:226
 msgid "The item could not be added because"
 msgstr "Pika nuk mund të shtohet sepse"
 
-#: Stocks.php:568 Z_ImportStocks.php:234
+#: Stocks.php:568 Z_ImportStocks.php:227
 msgid "The SQL that was used to add the item failed was"
 msgstr "SQL që është përdorur për të shtuar pika nuk ishte"
 
-#: Stocks.php:610 Z_ImportStocks.php:250
+#: Stocks.php:610 Z_ImportStocks.php:243
 msgid "New Item"
 msgstr "Item reja"
 
@@ -27816,7 +27861,7 @@ msgstr "Paketuara Pesha (KGS)"
 
 #: Stocks.php:959 SupplierTenders.php:125 SupplierTenders.php:534
 #: SupplierTenders.php:537 UnitsOfMeasure.php:170
-#: includes/MainMenuLinksArray.php:524
+#: includes/MainMenuLinksArray.php:522
 msgid "Units of Measure"
 msgstr "Njësitë e matjes"
 
@@ -28326,10 +28371,6 @@ msgstr "Ekran"
 #: SuppCreditGRNs.php:189
 msgid "Total Qty"
 msgstr "Total Qty"
-
-#: SuppCreditGRNs.php:190 SuppInvGRNs.php:259
-msgid "Qty Invoiced"
-msgstr "Qty faturuar"
 
 #: SuppCreditGRNs.php:191
 msgid "Qty Yet"
@@ -30224,7 +30265,7 @@ msgstr "Transaksionet e GL për këtë transaksion AP janë jashtë bilancit me"
 
 #: SupplierTypes.php:6 SupplierTypes.php:21 SuppPaymentRun.php:240
 #: SystemParameters.php:12 TaxAuthorities.php:10 TaxAuthorityRates.php:16
-#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:491
+#: TaxCategories.php:10 Tax.php:289 includes/MainMenuLinksArray.php:489
 msgid "Supplier Types"
 msgstr "Furnizuesi Llojet"
 
@@ -30323,7 +30364,7 @@ msgid ""
 "up until this role is defined"
 msgstr ""
 
-#: SuppLoginSetup.php:190 WWW_Users.php:501
+#: SuppLoginSetup.php:190 WWW_Users.php:502
 msgid "Default Location"
 msgstr "Default Vendndodhja"
 
@@ -32731,8 +32772,9 @@ msgstr "Numri Gabim"
 msgid "User Settings"
 msgstr "User Settings"
 
-#: UserSettings.php:12 WWW_Users.php:25
-msgid "Latin Western Languages"
+#: UserSettings.php:12
+#, fuzzy
+msgid "Latin Western Languages - Times"
 msgstr "Gjuhët latine perëndimore"
 
 #: UserSettings.php:13
@@ -32743,59 +32785,63 @@ msgstr "Rusisht Japoneze Hebraisht Koreane Lindore Thai Arabic"
 msgid "Chinese"
 msgstr "Kineze"
 
-#: UserSettings.php:27
+#: UserSettings.php:15 WWW_Users.php:28
+msgid "Free Serif"
+msgstr ""
+
+#: UserSettings.php:28
 msgid "The Maximum Number of Records on Display entered must not be negative"
 msgstr "Numri maksimal i Records mbi Display dhëna duhet të mos jetë negativ"
 
-#: UserSettings.php:27
+#: UserSettings.php:28
 msgid "0 will default to system setting"
 msgstr "0 do default të sistemin vendosjen"
 
-#: UserSettings.php:49
+#: UserSettings.php:50
 msgid "The password and password confirmation fields entered do not match"
 msgstr "Fushat fjalekalimin dhe fjalëkalimin konfirmimi futur nuk përputhen"
 
-#: UserSettings.php:67 UserSettings.php:83 WWW_Users.php:212
+#: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:213
 msgid "The user alterations could not be processed because"
 msgstr "Ndryshime përdorues nuk mund të përpunohet sepse"
 
-#: UserSettings.php:68 UserSettings.php:84 WWW_Users.php:213
+#: UserSettings.php:69 UserSettings.php:85 WWW_Users.php:214
 msgid "The SQL that was used to update the user and failed was"
 msgstr "SQL që është përdorur për të rinovuar të përdoruesit dhe nuk ishte"
 
-#: UserSettings.php:72 UserSettings.php:88
+#: UserSettings.php:73 UserSettings.php:89
 msgid "The user settings have been updated"
 msgstr "Konfigurimet e përdoruesit janë azhurnuar"
 
-#: UserSettings.php:72
+#: UserSettings.php:73
 msgid "Be sure to remember your password for the next time you login"
 msgstr ""
 "Sigurohuni që të mbani mend fjalëkalimin tuaj për herën tjetër që ju hyrje "
 "me emrin përkatës"
 
-#: UserSettings.php:123
+#: UserSettings.php:124
 msgid "Maximum Number of Records to Display"
 msgstr "Numri maksimal i Records në Display"
 
-#: UserSettings.php:174
+#: UserSettings.php:175
 msgid "New Password"
 msgstr "Fjalëkalimi i ri"
 
-#: UserSettings.php:178
+#: UserSettings.php:179
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: UserSettings.php:182
+#: UserSettings.php:183
 msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 "Qoftë se ju largoheni kutitë bosh fjalëkalimin fjalëkalimin tuaj nuk do të "
 "ndryshojë"
 
-#: UserSettings.php:202 WWW_Users.php:680
+#: UserSettings.php:203 WWW_Users.php:681
 msgid "PDF Language Support"
 msgstr "Support PDF Gjuhësh"
 
-#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:295
+#: WhereUsedInquiry.php:6 includes/MainMenuLinksArray.php:293
 msgid "Where Used Inquiry"
 msgstr "Ku përdorura Hetim"
 
@@ -33113,7 +33159,7 @@ msgstr ""
 "Kjo mënyrë pune është i mbyllur dhe nuk mund të pranojë çështje të veçantë "
 "të materialeve apo të ardhurat e sendeve të prodhuara"
 
-#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:286
+#: WorkOrderEntry.php:6 includes/MainMenuLinksArray.php:284
 msgid "Work Order Entry"
 msgstr "Hyrja Puna Rendit"
 
@@ -33220,10 +33266,6 @@ msgstr "Fabrika Vendndodhja"
 #: WorkOrderEntry.php:532
 msgid "Output Item"
 msgstr "Item Output"
-
-#: WorkOrderEntry.php:534 includes/PDFStockLocTransferHeader.inc:51
-msgid "Qty Received"
-msgstr "Qty Received"
 
 #: WorkOrderEntry.php:535
 msgid "Balance Remaining"
@@ -33924,106 +33966,110 @@ msgstr "A jeni i sigurt se doni të fshini këtë zë nga notë krediti?"
 msgid "Utilities"
 msgstr ""
 
+#: WWW_Users.php:25
+msgid "Latin Western Languages"
+msgstr "Gjuhët latine perëndimore"
+
 #: WWW_Users.php:26
 #, fuzzy
 msgid "Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai"
 msgstr "Rusisht Japoneze Hebraisht Koreane Lindore Thai Arabic"
 
-#: WWW_Users.php:29 includes/MainMenuLinksArray.php:449
+#: WWW_Users.php:30 includes/MainMenuLinksArray.php:447
 msgid "User Maintenance"
 msgstr "User Mirëmbajtja"
 
-#: WWW_Users.php:99
+#: WWW_Users.php:100
 #, fuzzy
 msgid "The user ID"
 msgstr "User ID"
 
-#: WWW_Users.php:99
+#: WWW_Users.php:100
 #, fuzzy
 msgid "already exists and cannot be used again"
 msgstr " tashmë ekzistojnë në këtë Lloji i Tab."
 
-#: WWW_Users.php:166
+#: WWW_Users.php:167
 msgid "The selected user record has been updated"
 msgstr "Të dhënat e përdoruesit e zgjedhur është përditësuar"
 
-#: WWW_Users.php:207
+#: WWW_Users.php:208
 msgid "A new user record has been inserted"
 msgstr "Një rekord i ri i përdoruesit është futur"
 
-#: WWW_Users.php:250
+#: WWW_Users.php:251
 msgid "Cannot delete user as entries already exist in the audit trail"
 msgstr ""
 "Nuk mund të fshini përdorues si të hyra tashmë ekzistojnë në gjurmë të "
 "auditimit"
 
-#: WWW_Users.php:254
+#: WWW_Users.php:255
 msgid "The User could not be deleted because"
 msgstr "Përdoruesi nuk mund të fshihet sepse"
 
-#: WWW_Users.php:256
+#: WWW_Users.php:257
 msgid "User Deleted"
 msgstr "Përdoruesi u Fshi"
 
-#: WWW_Users.php:293
+#: WWW_Users.php:294
 msgid "Last Visit"
 msgstr "Vizitoni fundit"
 
-#: WWW_Users.php:294 WWW_Users.php:475
+#: WWW_Users.php:295 WWW_Users.php:476
 msgid "Security Role"
 msgstr "Sigurisë Roli"
 
-#: WWW_Users.php:295
+#: WWW_Users.php:296
 msgid "Report Size"
 msgstr "Size Report"
 
-#: WWW_Users.php:333
+#: WWW_Users.php:334
 #, fuzzy, php-format
 msgid "Are you sure you wish to delete this user?"
 msgstr "A jeni i sigurt se doni te fshini kete furnizuesit?"
 
-#: WWW_Users.php:359
+#: WWW_Users.php:360
 msgid "Review Existing Users"
 msgstr "Përdoruesit Review Ekzistuese"
 
-#: WWW_Users.php:419
+#: WWW_Users.php:420
 msgid "User code"
 msgstr "Kodi User"
 
-#: WWW_Users.php:489
+#: WWW_Users.php:490
 #, fuzzy
 msgid "User Can Create Tenders"
 msgstr "Përdorues mund të krijojnë urdhërat"
 
-#: WWW_Users.php:543
+#: WWW_Users.php:544
 msgid "Restrict to Sales Person"
 msgstr "Ndaloj me Sales Person"
 
-#: WWW_Users.php:549 WWW_Users.php:551
+#: WWW_Users.php:550 WWW_Users.php:552
 msgid "Not a salesperson only login"
 msgstr "Jo një shitës vetëm hyrje me emrin përkatës"
 
-#: WWW_Users.php:662
+#: WWW_Users.php:663
 #, fuzzy
 msgid "module"
 msgstr "Modul"
 
-#: WWW_Users.php:695
+#: WWW_Users.php:696
 #, fuzzy
 msgid "Allowed Department for Internal Requests"
 msgstr ""
 "Ju duhet të zgjidhni një kod i përgjithshëm libër nga lista e mëposhtme"
 
-#: WWW_Users.php:705 WWW_Users.php:707
+#: WWW_Users.php:706 WWW_Users.php:708
 #, fuzzy
 msgid "Any Internal Department"
 msgstr "Tags Ruajtja Libri themelor"
 
-#: WWW_Users.php:725 WWW_Users.php:729
+#: WWW_Users.php:726 WWW_Users.php:730
 msgid "Open"
 msgstr "Hapur"
 
-#: WWW_Users.php:726 WWW_Users.php:728
+#: WWW_Users.php:727 WWW_Users.php:729
 msgid "Blocked"
 msgstr "I bllokuar"
 
@@ -35955,11 +36001,11 @@ msgstr ""
 msgid "Inserted the new asset:"
 msgstr "Futur pasuri të reja:"
 
-#: Z_ImportFixedAssets.php:270 Z_ImportStocks.php:272
+#: Z_ImportFixedAssets.php:270 Z_ImportStocks.php:265
 msgid "Failed on row "
 msgstr "Dështuar në rresht "
 
-#: Z_ImportFixedAssets.php:274 Z_ImportStocks.php:276
+#: Z_ImportFixedAssets.php:274 Z_ImportStocks.php:269
 msgid "Batch Import of"
 msgstr "Import të Serisë të"
 
@@ -35984,7 +36030,7 @@ msgstr "Data Zgjidhni të Ngarko B / Mjetet AlbClub To:"
 msgid "Fixed Assets Upload file:"
 msgstr "Fixed Mjetet Ngarko foto:"
 
-#: Z_ImportFixedAssets.php:305 Z_ImportStocks.php:298 Z_UploadForm.php:17
+#: Z_ImportFixedAssets.php:305 Z_ImportStocks.php:291 Z_UploadForm.php:17
 msgid "Send File"
 msgstr "Send File"
 
@@ -36022,31 +36068,27 @@ msgstr ""
 msgid "Import Items"
 msgstr "Items Import"
 
-#: Z_ImportStocks.php:46
-msgid "File has type "
-msgstr "File i ka lloj "
-
-#: Z_ImportStocks.php:59
+#: Z_ImportStocks.php:52
 msgid "File contains "
 msgstr "File përmban "
 
-#: Z_ImportStocks.php:69
+#: Z_ImportStocks.php:62
 msgid "File contains incorrect headers ("
 msgstr "Skeda përmban headers pasaktë ("
 
-#: Z_ImportStocks.php:87
+#: Z_ImportStocks.php:80
 msgid " fields required, "
 msgstr " fushat e detyrueshme, "
 
-#: Z_ImportStocks.php:105
+#: Z_ImportStocks.php:98
 msgid "Stock item \""
 msgstr "pika Stock \""
 
-#: Z_ImportStocks.php:136
+#: Z_ImportStocks.php:129
 msgid "Values in the Perishable field must be either 0 (No) or 1 (Yes)"
 msgstr "Vlerat në fushën e prishet duhet të jetë ose 0 (Nuk ka) apo 1 (Po)"
 
-#: Z_ImportStocks.php:170
+#: Z_ImportStocks.php:163
 msgid ""
 "Items must be of MBFlag type Manufactured(M), Assembly(A), Kit-Set(K), "
 "Purchased(B), Dummy(D) or Phantom(G)"
@@ -36054,13 +36096,13 @@ msgstr ""
 "Artikujt duhet të jetë i tipit MBFlag Prodhuar (M), Kuvendi (A), Kit-Set "
 "(K), blera (B), Dummy (D) ose Phantom (G)"
 
-#: Z_ImportStocks.php:174
+#: Z_ImportStocks.php:167
 msgid "Assembly/Kitset/Phantom/Service items cannot also be controlled items"
 msgstr ""
 "Kuvendi / Kitset / Phantom / artikuj Service nuk mund të artikujve të "
 "kontrolluar"
 
-#: Z_ImportStocks.php:174
+#: Z_ImportStocks.php:167
 msgid ""
 "Assemblies, Dummies and Kitsets are not physical items and batch/serial "
 "control is therefore not appropriate"
@@ -36068,21 +36110,29 @@ msgstr ""
 "Kuvendet, Dummies dhe Kitsets nuk janë objekte fizike dhe grumbull / "
 "kontroll serial nuk është e përshtatshme"
 
-#: Z_ImportStocks.php:182
+#: Z_ImportStocks.php:175
 msgid "ItemPDF must contain either a filename, or the keyword `none`"
 msgstr "ItemPDF duhet të përmbajë ose një filename, ose `fjalen asnjë`"
 
-#: Z_ImportStocks.php:250
+#: Z_ImportStocks.php:243
 msgid "has been added to the transaction"
 msgstr "është shtuar në transaksion"
 
-#: Z_ImportStocks.php:276
+#: Z_ImportStocks.php:269
 msgid "has been completed. All transactions committed to the database."
 msgstr "ka përfunduar. Të gjitha transaksionet e kryera në bazën e të dhënave."
 
-#: Z_ImportStocks.php:297
+#: Z_ImportStocks.php:290
 msgid "Upload file"
 msgstr "Ngarkoni skeda"
+
+#: Z_ItemsWithoutPicture.php:6
+msgid "List of Items without picture"
+msgstr ""
+
+#: Z_ItemsWithoutPicture.php:21
+msgid "Current Items without picture in webERP"
+msgstr ""
 
 #: Z_MakeNewCompany.php:16
 msgid "Make New Company Database Utility"
@@ -37037,7 +37087,7 @@ msgstr "Përfunduar Vleresimin Items"
 msgid "problems found. Please research and correct them"
 msgstr "problemet e gjetur. Ju lutemi të kërkimit dhe të korrigjojnë ato"
 
-#: includes/class.pdf.php:206 includes/class.pdf.php:213
+#: includes/class.pdf.php:209 includes/class.pdf.php:216
 msgid "Document.pdf"
 msgstr "Document.pdf"
 
@@ -38814,494 +38864,498 @@ msgstr "Furnizuesi ekuilibrave në një fund të muajit paraprak"
 msgid "Supplier Transaction Inquiries"
 msgstr "Transaksion Hetimet Furnizuesi"
 
-#: includes/MainMenuLinksArray.php:160
+#: includes/MainMenuLinksArray.php:158
 msgid "Add Supplier"
 msgstr "Add Furnizuesi"
 
-#: includes/MainMenuLinksArray.php:162
+#: includes/MainMenuLinksArray.php:160
 msgid "Maintain Factor Companies"
 msgstr "Faktori Kompanitë Ruajtja"
 
-#: includes/MainMenuLinksArray.php:171
+#: includes/MainMenuLinksArray.php:169
 #, fuzzy
 msgid "Create a New Tender"
 msgstr "Krijo Kalendari"
 
-#: includes/MainMenuLinksArray.php:172
+#: includes/MainMenuLinksArray.php:170
 #, fuzzy
 msgid "Edit Existing Tenders"
 msgstr "Përdoruesit Review Ekzistuese"
 
-#: includes/MainMenuLinksArray.php:173
+#: includes/MainMenuLinksArray.php:171
 msgid "Process Tenders and Offers"
 msgstr "Tenderët Procesi dhe Oferta"
 
-#: includes/MainMenuLinksArray.php:174
+#: includes/MainMenuLinksArray.php:172
 msgid "Orders to Authorise"
 msgstr "Urdhrave të Authorise"
 
-#: includes/MainMenuLinksArray.php:175
+#: includes/MainMenuLinksArray.php:173
 msgid "Shipment Entry"
 msgstr "Dërgesë Hyrja"
 
-#: includes/MainMenuLinksArray.php:176
+#: includes/MainMenuLinksArray.php:174
 msgid "Select A Shipment"
 msgstr "Zgjidh nje Dërgesë"
 
-#: includes/MainMenuLinksArray.php:189
+#: includes/MainMenuLinksArray.php:187
 msgid "Purchase Order Detail Or Summary Inquiries"
 msgstr "Detail Urdhër blerjes ose përmbledhje Hetimet"
 
-#: includes/MainMenuLinksArray.php:198
+#: includes/MainMenuLinksArray.php:196
 #, fuzzy
 msgid "Maintain Supplier Price Lists"
 msgstr "Lista e Çmimeve Furnizuesi"
 
-#: includes/MainMenuLinksArray.php:203 includes/MainMenuLinksArray.php:204
+#: includes/MainMenuLinksArray.php:201 includes/MainMenuLinksArray.php:202
 msgid "Bulk Inventory Transfer"
 msgstr "Bulk Transfer Inventari"
 
-#: includes/MainMenuLinksArray.php:205
+#: includes/MainMenuLinksArray.php:203
 msgid "Inventory Location Transfers"
 msgstr "Vendndodhja Transferet Inventari"
 
-#: includes/MainMenuLinksArray.php:206
+#: includes/MainMenuLinksArray.php:204
 msgid "Inventory Adjustments"
 msgstr "Inventari Rregullimet"
 
-#: includes/MainMenuLinksArray.php:208
+#: includes/MainMenuLinksArray.php:206
 msgid "Enter Stock Counts"
 msgstr "Enter Pikat Stock"
 
-#: includes/MainMenuLinksArray.php:209
+#: includes/MainMenuLinksArray.php:207
 #, fuzzy
 msgid "Create a New Internal Stock Request"
 msgstr "Krijo një Item York Stock"
 
-#: includes/MainMenuLinksArray.php:211
+#: includes/MainMenuLinksArray.php:209
 msgid "Fulfill Internal Stock Requests"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:225
+#: includes/MainMenuLinksArray.php:223
 msgid "Serial Item Research Tool"
 msgstr "Serial Tool Item Kërkimit"
 
-#: includes/MainMenuLinksArray.php:227
+#: includes/MainMenuLinksArray.php:225
 #, fuzzy
 msgid "Reprint GRN"
 msgstr "Ribotim Tani"
 
-#: includes/MainMenuLinksArray.php:228
+#: includes/MainMenuLinksArray.php:226
 msgid "Inventory Item Movements"
 msgstr "Lëvizjet Inventari Item"
 
-#: includes/MainMenuLinksArray.php:229
+#: includes/MainMenuLinksArray.php:227
 msgid "Inventory Item Status"
 msgstr "Statusit Inventari Item"
 
-#: includes/MainMenuLinksArray.php:230
+#: includes/MainMenuLinksArray.php:228
 msgid "Inventory Item Usage"
 msgstr "Usage Item Inventari"
 
-#: includes/MainMenuLinksArray.php:233
+#: includes/MainMenuLinksArray.php:231
 msgid "Stock Dispatch"
 msgstr "Stock Dërgimi"
 
-#: includes/MainMenuLinksArray.php:236
+#: includes/MainMenuLinksArray.php:234
 msgid "Inventory Planning Based On Preferred Supplier Data"
 msgstr "Planifikimit Inventari bazuar në të dhënat Furnizuesi i parapëlqyer"
 
-#: includes/MainMenuLinksArray.php:237
+#: includes/MainMenuLinksArray.php:235
 msgid "Inventory Stock Check Sheets"
 msgstr "Check Inventari Stock Sheets"
 
-#: includes/MainMenuLinksArray.php:238
+#: includes/MainMenuLinksArray.php:236
 msgid "Make Inventory Quantities CSV"
 msgstr "Make sasitë CSV Inventari"
 
-#: includes/MainMenuLinksArray.php:239
+#: includes/MainMenuLinksArray.php:237
 msgid "Compare Counts Vs Stock Check Data"
 msgstr "Krahaso Pikat Vs Data Check Stock"
 
-#: includes/MainMenuLinksArray.php:240
+#: includes/MainMenuLinksArray.php:238
 msgid "All Inventory Movements By Location/Date"
 msgstr "Të gjitha Lëvizjet Inventari Nga Vendi / Data"
 
-#: includes/MainMenuLinksArray.php:241
+#: includes/MainMenuLinksArray.php:239
 msgid "List Inventory Status By Location/Category"
 msgstr "Inventari Lista Status Nga Vendi / Category"
 
-#: includes/MainMenuLinksArray.php:242
+#: includes/MainMenuLinksArray.php:240
 msgid "Historical Stock Quantity By Location/Category"
 msgstr "Sasia historike Stock Nga Vendi / Category"
 
-#: includes/MainMenuLinksArray.php:243
+#: includes/MainMenuLinksArray.php:241
 msgid "List Negative Stocks"
 msgstr "Stoqet Lista e Negativ"
 
-#: includes/MainMenuLinksArray.php:244
+#: includes/MainMenuLinksArray.php:242
 #, fuzzy
 msgid "Period Stock Transaction Listing"
 msgstr "Listing Stock Transaction"
 
-#: includes/MainMenuLinksArray.php:245
+#: includes/MainMenuLinksArray.php:243
 #, fuzzy
 msgid "Stock Transfer Note"
 msgstr "Formë Stock Transfer"
 
-#: includes/MainMenuLinksArray.php:271
+#: includes/MainMenuLinksArray.php:269
 msgid "Add A New Item"
 msgstr "Shto një artikull të ri"
 
-#: includes/MainMenuLinksArray.php:272
+#: includes/MainMenuLinksArray.php:270
 msgid "Select An Item"
 msgstr "Përzgjidhni një objekt"
 
-#: includes/MainMenuLinksArray.php:274
+#: includes/MainMenuLinksArray.php:272
 #, fuzzy
 msgid "Add or Update Prices Based On Costs"
 msgstr "View ose Update Çmimet bazuar në kostot e"
 
-#: includes/MainMenuLinksArray.php:275
+#: includes/MainMenuLinksArray.php:273
 msgid "View or Update Prices Based On Costs"
 msgstr "View ose Update Çmimet bazuar në kostot e"
 
-#: includes/MainMenuLinksArray.php:276
+#: includes/MainMenuLinksArray.php:274
 msgid "Reorder Level By Category/Location"
 msgstr "Nivel aktive për Nga Category / Lokacioni"
 
-#: includes/MainMenuLinksArray.php:287 includes/MainMenuLinksArray.php:293
+#: includes/MainMenuLinksArray.php:285 includes/MainMenuLinksArray.php:291
 msgid "Select A Work Order"
 msgstr "Zgjidh nje Urdhrin e Punës"
 
-#: includes/MainMenuLinksArray.php:294
+#: includes/MainMenuLinksArray.php:292
 msgid "Costed Bill Of Material Inquiry"
 msgstr "Bill kosto e materiale Hetim"
 
-#: includes/MainMenuLinksArray.php:297
+#: includes/MainMenuLinksArray.php:295
 msgid "Indented Bill Of Material Listing"
 msgstr "Bill prerë të renditur Materiale"
 
-#: includes/MainMenuLinksArray.php:298
+#: includes/MainMenuLinksArray.php:296
 msgid "List Components Required"
 msgstr "Përbërësit Lista e kërkuar"
 
-#: includes/MainMenuLinksArray.php:299
+#: includes/MainMenuLinksArray.php:297
 msgid "Indented Where Used Listing"
 msgstr "Prerë Ku përdorura Listing"
 
-#: includes/MainMenuLinksArray.php:300
+#: includes/MainMenuLinksArray.php:298
 msgid "MRP"
 msgstr "MRP"
 
-#: includes/MainMenuLinksArray.php:302
+#: includes/MainMenuLinksArray.php:300
 msgid "MRP Suggested Purchase Orders"
 msgstr "MRP sugjeruara urdhëron Blerje"
 
-#: includes/MainMenuLinksArray.php:303
+#: includes/MainMenuLinksArray.php:301
 msgid "MRP Suggested Work Orders"
 msgstr "MRP sugjeruara urdhëron Puna"
 
-#: includes/MainMenuLinksArray.php:304
+#: includes/MainMenuLinksArray.php:302
 msgid "MRP Reschedules Required"
 msgstr "MRP Reschedules Patjetėr"
 
-#: includes/MainMenuLinksArray.php:322
+#: includes/MainMenuLinksArray.php:320
 msgid "Bills Of Material"
 msgstr "Faturat e materiale"
 
-#: includes/MainMenuLinksArray.php:323
+#: includes/MainMenuLinksArray.php:321
 #, fuzzy
 msgid "Copy a Bill Of Materials Between Items"
 msgstr "Bill Kontrata e Materiale"
 
-#: includes/MainMenuLinksArray.php:324
+#: includes/MainMenuLinksArray.php:322
 msgid "Master Schedule"
 msgstr "Master Schedule"
 
-#: includes/MainMenuLinksArray.php:325
+#: includes/MainMenuLinksArray.php:323
 msgid "Auto Create Master Schedule"
 msgstr "Auto Krijo Schedule Master"
 
-#: includes/MainMenuLinksArray.php:326
+#: includes/MainMenuLinksArray.php:324
 msgid "MRP Calculation"
 msgstr "MRP Llogaritja"
 
-#: includes/MainMenuLinksArray.php:337
+#: includes/MainMenuLinksArray.php:335
 msgid "Bank Account Payments Entry"
 msgstr "Xhirollogaria Pagesat Hyrja"
 
-#: includes/MainMenuLinksArray.php:338
+#: includes/MainMenuLinksArray.php:336
 msgid "Bank Account Receipts Entry"
 msgstr "Xhirollogaria Pranimet Hyrja"
 
-#: includes/MainMenuLinksArray.php:340
+#: includes/MainMenuLinksArray.php:338
 msgid "Bank Account Payments Matching"
 msgstr "Llogaria Pagesat Banka Matching"
 
-#: includes/MainMenuLinksArray.php:341
+#: includes/MainMenuLinksArray.php:339
 msgid "Bank Account Receipts Matching"
 msgstr "Llogaria Pranimet Banka Matching"
 
-#: includes/MainMenuLinksArray.php:353
+#: includes/MainMenuLinksArray.php:351
 msgid "Account Listing"
 msgstr "Llogaria Listing"
 
-#: includes/MainMenuLinksArray.php:354
+#: includes/MainMenuLinksArray.php:352
 msgid "Account Listing to CSV File"
 msgstr "Listing Llogaria për CSV File"
 
-#: includes/MainMenuLinksArray.php:356
+#: includes/MainMenuLinksArray.php:354
 msgid "Bank Account Reconciliation Statement"
 msgstr "Pajtimi i llogarisë bankare Deklaratë"
 
-#: includes/MainMenuLinksArray.php:357
+#: includes/MainMenuLinksArray.php:355
 msgid "Cheque Payments Listing"
 msgstr "Pagesat çek Listing"
 
-#: includes/MainMenuLinksArray.php:358
+#: includes/MainMenuLinksArray.php:356
 msgid "Daily Bank Transactions"
 msgstr "Transaksionet bankare Daily"
 
-#: includes/MainMenuLinksArray.php:359
+#: includes/MainMenuLinksArray.php:357
 msgid "Profit and Loss Statement"
 msgstr "Llogaria e Fitimit dhe"
 
-#: includes/MainMenuLinksArray.php:361
+#: includes/MainMenuLinksArray.php:359
 msgid "Tag Reports"
 msgstr "Tag Raportet"
 
-#: includes/MainMenuLinksArray.php:362
+#: includes/MainMenuLinksArray.php:360
 msgid "Tax Reports"
 msgstr "Raportet e taksave"
 
-#: includes/MainMenuLinksArray.php:380
+#: includes/MainMenuLinksArray.php:378
 msgid "GL Budgets"
 msgstr "GL Buxhetet"
 
-#: includes/MainMenuLinksArray.php:383
+#: includes/MainMenuLinksArray.php:381
 msgid "GL Tags"
 msgstr "GL Tags"
 
-#: includes/MainMenuLinksArray.php:393
+#: includes/MainMenuLinksArray.php:391
 msgid "Add a new Asset"
 msgstr "Shto një Pasurive të ri"
 
-#: includes/MainMenuLinksArray.php:396
+#: includes/MainMenuLinksArray.php:394
 msgid "Depreciation Journal"
 msgstr "Zhvlerësimi Journal"
 
-#: includes/MainMenuLinksArray.php:405
+#: includes/MainMenuLinksArray.php:403
 msgid "Asset Register"
 msgstr "Aktiv Regjistrohu"
 
-#: includes/MainMenuLinksArray.php:411
+#: includes/MainMenuLinksArray.php:409
 msgid "Asset Categories Maintenance"
 msgstr "Kategoritë aktiv Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:412
+#: includes/MainMenuLinksArray.php:410
 msgid "Add or Maintain Asset Locations"
 msgstr "Shto ose Ruajtja e Pasurive Locations"
 
-#: includes/MainMenuLinksArray.php:419
+#: includes/MainMenuLinksArray.php:417
 msgid "Assign Cash to PC Tab"
 msgstr "Cash Cakto për Tab PC"
 
-#: includes/MainMenuLinksArray.php:420
+#: includes/MainMenuLinksArray.php:418
 msgid "Claim Expenses From PC Tab"
 msgstr "Shpenzimet e kërkesës Nga Tab PC"
 
-#: includes/MainMenuLinksArray.php:421
+#: includes/MainMenuLinksArray.php:419
 msgid "Expenses Authorisation"
 msgstr "Shpenzimet e autorizimit"
 
-#: includes/MainMenuLinksArray.php:429
+#: includes/MainMenuLinksArray.php:427
 msgid "PC Tab General Report"
 msgstr "Raporti i PC Tab Përgjithshëm"
 
-#: includes/MainMenuLinksArray.php:435
+#: includes/MainMenuLinksArray.php:433
 msgid "Types of PC Tabs"
 msgstr "Llojet e Tabs PC"
 
-#: includes/MainMenuLinksArray.php:436
+#: includes/MainMenuLinksArray.php:434
 msgid "PC Tabs"
 msgstr "PC Tabs"
 
-#: includes/MainMenuLinksArray.php:437
+#: includes/MainMenuLinksArray.php:435
 msgid "PC Expenses"
 msgstr "Shpenzimet e PC"
 
-#: includes/MainMenuLinksArray.php:438
+#: includes/MainMenuLinksArray.php:436
 msgid "Expenses for Type of PC Tab"
 msgstr "Shpenzimet për Lloji i Tab PC"
 
-#: includes/MainMenuLinksArray.php:448
+#: includes/MainMenuLinksArray.php:446
 msgid "Configuration Settings"
 msgstr "Configuration Settings"
 
-#: includes/MainMenuLinksArray.php:451
+#: includes/MainMenuLinksArray.php:449
 #, fuzzy
 msgid "Access Permissions Maintenance"
 msgstr "Mirëmbajtja Access Permission"
 
-#: includes/MainMenuLinksArray.php:452
+#: includes/MainMenuLinksArray.php:450
 msgid "Page Security Settings"
 msgstr "Paneli i punëve të sigurisë Page"
 
-#: includes/MainMenuLinksArray.php:453
+#: includes/MainMenuLinksArray.php:451
 msgid "Bank Accounts"
 msgstr "Llogaritë e bankës"
 
-#: includes/MainMenuLinksArray.php:454
+#: includes/MainMenuLinksArray.php:452
 msgid "Currency Maintenance"
 msgstr "Valuta Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:455
+#: includes/MainMenuLinksArray.php:453
 msgid "Tax Authorities and Rates Maintenance"
 msgstr "Autoritetet e taksave dhe Çmimet Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:456
+#: includes/MainMenuLinksArray.php:454
 msgid "Tax Group Maintenance"
 msgstr "Mirëmbajtjen e taksave Group"
 
-#: includes/MainMenuLinksArray.php:457
+#: includes/MainMenuLinksArray.php:455
 msgid "Dispatch Tax Province Maintenance"
 msgstr "Provinca Dërgimi Tatimore Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:458
+#: includes/MainMenuLinksArray.php:456
 msgid "Tax Category Maintenance"
 msgstr "Mirëmbajtja Tatimore Category"
 
-#: includes/MainMenuLinksArray.php:459
+#: includes/MainMenuLinksArray.php:457
 msgid "List Periods Defined"
 msgstr "Periudha Lista Përcaktuar"
 
-#: includes/MainMenuLinksArray.php:460
+#: includes/MainMenuLinksArray.php:458
 msgid "Report Builder Tool"
 msgstr "Mjet Raporti Builder"
 
-#: includes/MainMenuLinksArray.php:461
+#: includes/MainMenuLinksArray.php:459
 msgid "View Audit Trail"
 msgstr "Trail View Auditimit"
 
-#: includes/MainMenuLinksArray.php:463
+#: includes/MainMenuLinksArray.php:461
 msgid "Form Layout Editor"
 msgstr "Layout Editor Form"
 
-#: includes/MainMenuLinksArray.php:464
+#: includes/MainMenuLinksArray.php:462
 msgid "Label Templates Maintenance"
 msgstr "Label Templates Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:465
+#: includes/MainMenuLinksArray.php:463
 msgid "SMTP Server Details"
 msgstr "SMTP server Details"
 
-#: includes/MainMenuLinksArray.php:494
+#: includes/MainMenuLinksArray.php:492
 msgid "Set Purchase Order Authorisation levels"
 msgstr "Set Urdhër blerjes nivelet e autorizimit"
 
-#: includes/MainMenuLinksArray.php:496
+#: includes/MainMenuLinksArray.php:494
 msgid "Sales People"
 msgstr "Sales People"
 
-#: includes/MainMenuLinksArray.php:497
+#: includes/MainMenuLinksArray.php:495
 msgid "Sales Areas"
 msgstr "Sales Zonat"
 
-#: includes/MainMenuLinksArray.php:498
+#: includes/MainMenuLinksArray.php:496
 msgid "Shippers"
 msgstr "Transportuesit"
 
-#: includes/MainMenuLinksArray.php:499
+#: includes/MainMenuLinksArray.php:497
 msgid "Sales GL Interface Postings"
 msgstr "Sales GL Njoftimet Interface"
 
-#: includes/MainMenuLinksArray.php:500
+#: includes/MainMenuLinksArray.php:498
 msgid "COGS GL Interface Postings"
 msgstr "Njoftimet e cogs GL Interface"
 
-#: includes/MainMenuLinksArray.php:501
+#: includes/MainMenuLinksArray.php:499
 msgid "Freight Costs Maintenance"
 msgstr "Mallrave Shpenzimet Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:502
+#: includes/MainMenuLinksArray.php:500
 msgid "Discount Matrix"
 msgstr "Discount Matrix"
 
-#: includes/MainMenuLinksArray.php:521
+#: includes/MainMenuLinksArray.php:519
 msgid "Inventory Categories Maintenance"
 msgstr "Inventari Kategoritë Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:522
+#: includes/MainMenuLinksArray.php:520
 msgid "Inventory Locations Maintenance"
 msgstr "Inventari Locations Mirëmbajtja"
 
-#: includes/MainMenuLinksArray.php:523
+#: includes/MainMenuLinksArray.php:521
 msgid "Discount Category Maintenance"
 msgstr "Mirëmbajtja Discount Category"
 
-#: includes/MainMenuLinksArray.php:525
+#: includes/MainMenuLinksArray.php:523
 msgid "MRP Available Production Days"
 msgstr "Ditët e MRP në dispozicion Production"
 
-#: includes/MainMenuLinksArray.php:527
+#: includes/MainMenuLinksArray.php:525
 #, fuzzy
 msgid "Maintain Internal Departments"
 msgstr "Tags Ruajtja Libri themelor"
 
-#: includes/MainMenuLinksArray.php:528
+#: includes/MainMenuLinksArray.php:526
 msgid "Maintain Internal Stock Categories to User Roles"
 msgstr ""
 
-#: includes/MainMenuLinksArray.php:541
+#: includes/MainMenuLinksArray.php:539
 msgid "Change A Customer Code"
 msgstr "Ndryshimi Një kod Customer"
 
-#: includes/MainMenuLinksArray.php:542
+#: includes/MainMenuLinksArray.php:540
 msgid "Change A Customer Branch Code"
 msgstr "Ndryshimi Një kod Dega Customer"
 
-#: includes/MainMenuLinksArray.php:543
+#: includes/MainMenuLinksArray.php:541
 #, fuzzy
 msgid "Change A Supplier Code"
 msgstr "Ndryshimi Një kod Customer"
 
-#: includes/MainMenuLinksArray.php:544
+#: includes/MainMenuLinksArray.php:542
 msgid "Change An Inventory Item Code"
 msgstr "Ndryshimi Një Kodi Item Inventari"
 
-#: includes/MainMenuLinksArray.php:545
+#: includes/MainMenuLinksArray.php:543
 #, fuzzy
 msgid "Change A Location Code"
 msgstr "Vendndodhja Ndryshimi Aseteve"
 
-#: includes/MainMenuLinksArray.php:546
+#: includes/MainMenuLinksArray.php:544
 msgid "Update costs for all BOM items, from the bottom up"
 msgstr "Update shpenzimet për të gjitha sendet bom, nga poshtë lart"
 
-#: includes/MainMenuLinksArray.php:547
+#: includes/MainMenuLinksArray.php:545
 msgid "Re-apply costs to Sales Analysis"
 msgstr "Ri-aplikohen shpenzimet të Sales Analiza"
 
-#: includes/MainMenuLinksArray.php:548
+#: includes/MainMenuLinksArray.php:546
 msgid "Delete sales transactions"
 msgstr "Fshije transaksionet e shitjes"
 
-#: includes/MainMenuLinksArray.php:549
+#: includes/MainMenuLinksArray.php:547
 msgid "Reverse all supplier payments on a specified date"
 msgstr "Kundërt të gjitha pagesat furnizuesi në një datë të caktuar"
 
-#: includes/MainMenuLinksArray.php:561
+#: includes/MainMenuLinksArray.php:559
 msgid "Show Local Currency Total Debtor Balances"
 msgstr "Debitorit Currency Show Lokal Total bilancet"
 
-#: includes/MainMenuLinksArray.php:562
+#: includes/MainMenuLinksArray.php:560
 msgid "Show Local Currency Total Suppliers Balances"
 msgstr "Totali Show lokale Currency Furnizuesit bilancet"
 
-#: includes/MainMenuLinksArray.php:563
+#: includes/MainMenuLinksArray.php:561
 msgid "Show General Transactions That Do Not Balance"
 msgstr "Transaksionet Show Përgjithshëm që nuk Bilanci"
+
+#: includes/MainMenuLinksArray.php:562
+msgid "List of items without picture"
+msgstr ""
 
 #: includes/MainMenuLinksArray.php:569
 msgid "Maintain Language Files"
@@ -39412,7 +39466,7 @@ msgstr ""
 msgid "The SQL that failed was: "
 msgstr "SQL që nuk është: "
 
-#: includes/UserLogin.php:60
+#: includes/UserLogin.php:45
 msgid "Could not retrieve user details on login because"
 msgstr "Nuk mund të rifitoj detaje përdorues në hyrje me emrin përkatës sepse"
 
@@ -40361,7 +40415,7 @@ msgstr ""
 "nuk ka një kosto të ngritur dhe qëllim hyrjen është ngritur për të ndalojnë "
 "shitjet e artikujve me kosto ka të dhëna të hyrë"
 
-#: includes/session.inc:104 includes/session.inc:266
+#: includes/session.inc:104 includes/session.inc:270
 msgid "Account Error Report"
 msgstr "Raporti i llogarisë Gabim"
 
@@ -40397,11 +40451,11 @@ msgstr "webERP nuk është në dispozicion tani për tani"
 msgid "during maintenance of the system"
 msgstr "gjatë mirëmbajtjen e sistemit të"
 
-#: includes/session.inc:145 api/api_login.php:122
+#: includes/session.inc:149 api/api_login.php:122
 msgid "There was a problem deleting expired audit-trail history"
 msgstr "Nuk ishte një problem fshirjes mbaruar histori-audituese gjurmë"
 
-#: includes/session.inc:254
+#: includes/session.inc:258
 msgid ""
 "webERP is configured to allow only secure socket connections. Pages must be "
 "called with https://"
@@ -40409,7 +40463,7 @@ msgstr ""
 "webERP është konfiguruar për të lejuar vetëm lidhje të sigurt fole. Faqet "
 "duhet të quhet me https: / /"
 
-#: includes/session.inc:269
+#: includes/session.inc:273
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator. It could also be that there is a session problem "
@@ -40419,16 +40473,16 @@ msgstr ""
 "përdoruesit. Ju lutemi të këshillojë administratorin tuaj të sistemit. Kjo "
 "mund të jetë gjithashtu se ka një problem sesion me PHP web serverin tuaj"
 
-#: includes/session.inc:285
+#: includes/session.inc:289
 msgid "Security Permissions Problem"
 msgstr "Sigurisë Permissions Problem"
 
-#: includes/session.inc:332
+#: includes/session.inc:336
 #, fuzzy
 msgid "Error in form verification"
 msgstr "Gabim në formë verificationm"
 
-#: includes/session.inc:334
+#: includes/session.inc:338
 msgid "This form was not submitted with a correct ID"
 msgstr "Kjo formë nuk është dorëzuar me një ID saktë"
 
@@ -43038,6 +43092,9 @@ msgstr "Parameters"
 #: api/api_xml-rpc.php:3495
 msgid "Return Value"
 msgstr "Vlera e kthimit"
+
+#~ msgid "File has type "
+#~ msgstr "File i ka lloj "
 
 #~ msgid "Could not determine if the item"
 #~ msgstr "Nuk mund të përcaktojë nëse pika"
