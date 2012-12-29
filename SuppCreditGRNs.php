@@ -11,18 +11,18 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Enter Supplier Credit Note Against Goods Received');
+$Title = _('Enter Supplier Credit Note Against Goods Received');
 
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier credit note must be clicked on'),'info');
 	echo '<br />
-		<a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
+		<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected and credit note initiated ie $_SESSION['SuppTrans'] started off*/
@@ -128,7 +128,7 @@ echo '<tr>
 echo '</table>
 	<br />
 	<div class="centre">
-		<a href="' . $rootpath . '/SupplierCredit.php?">' . _('Back to Credit Note Entry') . '</a>
+		<a href="' . $RootPath . '/SupplierCredit.php?">' . _('Back to Credit Note Entry') . '</a>
 	</div>';
 
 /* Now get all the GRNs for this supplier from the database
@@ -161,7 +161,7 @@ $GRNResults = DB_query($SQL,$db);
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no goods received records for') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('since') . ' ' . $_POST['Show_Since'] . '<br /> ' . _('To enter a credit against goods received') . ', ' . _('the goods must first be received using the link below to select purchase orders to receive'),'info');
 	echo '<br />
-	<a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID . '">' . _('Select Purchase Orders to Receive') . '</a>';
+	<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID . '">' . _('Select Purchase Orders to Receive') . '</a>';
 }
 
 

@@ -7,7 +7,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Rebuild');
+$Title = _('Rebuild');
 
 include('includes/header.inc');
 
@@ -18,7 +18,7 @@ $PathToDefault		= './locale/en_GB.utf8/LC_MESSAGES/messages.po';
 $FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
 $xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
-echo "<br />&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br /><br />&nbsp;' . _('Utility page to rebuild the system default language file');
 
 if (isset($_POST['submit'])) {
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 
 	prnMsg (_('Done') .  '. ' . _('You should now edit the default language file header') . '<br />', 'info', ' ');
 
-	echo "<div class='centre'><a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</a></div>";
+	echo "<div class='centre'><a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</a></div>";
 	echo '</form>';
 	echo '</td></tr></table>';
 

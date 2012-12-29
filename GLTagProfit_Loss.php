@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Income and Expenditure by Tag');
+$Title = _('Income and Expenditure by Tag');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
@@ -20,7 +20,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $title . '
+			<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -189,11 +189,11 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 	$AccountsResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) != 0) {
-		$title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Income and Expenditure') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
 		echo '<br />
-				<a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+				<a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug == 1){
 			echo '<br />'. $SQL;
 		}
@@ -201,12 +201,12 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 		exit;
 	}
 	if (DB_num_rows($AccountsResult)==0){
-		$title = _('Print Income and Expenditure Error');
+		$Title = _('Print Income and Expenditure Error');
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'info');
 		echo '<br />
-				<a href="'. $rootpath.'/index.php">'. _('Back to the menu'). '</a>';
+				<a href="'. $RootPath.'/index.php">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -517,8 +517,8 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
-		. _('Print') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="'
+		. _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
@@ -760,7 +760,7 @@ if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POS
 				$k++;
 			}
 
-			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['account'] . '&amp;Show=Yes">' . $myrow['account'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['account'] . '&amp;Show=Yes">' . $myrow['account'] . '</a>';
 
 			if ($Section ==4){
 				 printf('<td>%s</td>

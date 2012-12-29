@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Assignment of Cash to Petty Cash Tab');
+$Title = _('Assignment of Cash to Petty Cash Tab');
 /* webERP manual links before header.inc */
 $ViewTopic= "PettyCash";
 $BookMark = "CashAssignment";
@@ -55,8 +55,8 @@ if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $title. '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .
+		_('Search') . '" alt="" />' . ' ' . $Title. '</p>';
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -129,8 +129,8 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $title. '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .
+		_('Search') . '" alt="" />' . ' ' . $Title. '</p>';
 	$sql="DELETE FROM pcashdetails
 		WHERE counterindex='" . $SelectedIndex . "'";
 	$ErrMsg = _('The assignment of cash record could not be deleted because');
@@ -145,8 +145,8 @@ if (!isset($SelectedTabs)){
 	then none of the above are true and the list of sales types will be displayed with
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $title. '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .
+		_('Search') . '" alt="" />' . ' ' . $Title. '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -189,8 +189,8 @@ if (!isset($SelectedTabs)){
 if (isset($_POST['process']) OR isset($SelectedTabs)) {
 
 	if (!isset($_POST['submit'])) {
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-			_('Search') . '" alt="" />' . ' ' . $title. '</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .
+			_('Search') . '" alt="" />' . ' ' . $Title. '</p>';
 	}
 	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another tab') . '</a></div>';
 

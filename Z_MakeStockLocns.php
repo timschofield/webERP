@@ -3,7 +3,7 @@
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 include ('includes/session.inc');
-$title = _('Make LocStock Records');
+$Title = _('Make LocStock Records');
 include('includes/header.inc');
 
 echo '<br /><br />' . _('This script makes stock location records for parts where they do not already exist');

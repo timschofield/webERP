@@ -124,10 +124,10 @@ if ($NoOfGRNs >0){
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');
     $pdf->__destruct();
 } else { //there were not GRNs to print
-	$title = _('GRN Error');
+	$Title = _('GRN Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no GRNs to print'),'warn');
-	echo '<br /><a href="'.$rootpath.'/index.php">'. _('Back to the menu').'</a>';
+	echo '<br /><a href="'.$RootPath.'/index.php">'. _('Back to the menu').'</a>';
 	include('includes/footer.inc');
 }
 ?>

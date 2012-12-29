@@ -30,11 +30,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 		$StockChecks = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
+			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<br />';
 			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu').'</a>';
+			echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu').'</a>';
 			if ($debug==1){
 	      			echo '<br />' . $sql;
 			}
@@ -56,11 +56,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 			$StockCounts = DB_query($sql, $db);
 			if (DB_error_no($db) !=0) {
-				$title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
+				$Title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				echo '<br />';
 				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg($db). 'error');
-				echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu').'</a>';
+				echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu').'</a>';
 				if ($debug==1){
 					echo '<br />'. $sql;
 				}
@@ -202,11 +202,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$CheckedItems = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($CheckedItems)==0){
-		$title= _('Inventory Comparison Comparison Report');
+		$Title= _('Inventory Comparison Comparison Report');
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg(_('There is no inventory check data to report on'), 'warn');
-		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $rootpath . '/StockCheck.php">'. _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
+		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $RootPath . '/StockCheck.php">'. _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -261,11 +261,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		$Counts = DB_query($SQL,$db,'','',false,false);
 
 		if (DB_error_no($db) !=0) {
-	 		$title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
+	 		$Title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
 	   		echo '<br />';
 			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
-	   		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+	   		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 	   		if ($debug==1){
 	      			echo '<br />'. $SQL;
 	   		}
@@ -323,11 +323,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 } else { /*The option to print PDF was not hit */
 
-	$title= _('Inventory Comparison Report');
+	$Title= _('Inventory Comparison Report');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
-		. $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+		. $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';

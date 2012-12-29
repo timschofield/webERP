@@ -3,14 +3,14 @@
 /* $Id$ */
 
 include('includes/session.inc');
-$title = _('Fixed Assets');
+$Title = _('Fixed Assets');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<a href="' . $rootpath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
+echo '<a href="' . $RootPath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		_('Fixed Asset Items') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .
+		_('Fixed Asset Items') . '" alt="" />' . ' ' . $Title . '</p>';
 
 /* If this form is called with the AssetID then it is assumed that the asset is to be modified  */
 if (isset($_GET['AssetID'])){
@@ -513,7 +513,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 	$category=$myrow['categoryid'];
 }
-echo '</select><a target="_blank" href="'. $rootpath . '/FixedAssetCategories.php">'.' ' . _('Add or Modify Asset Categories') . '</a></td></tr>';
+echo '</select><a target="_blank" href="'. $RootPath . '/FixedAssetCategories.php">'.' ' . _('Add or Modify Asset Categories') . '</a></td></tr>';
 if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$category;
 }
@@ -542,7 +542,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 }
 echo '</select>
-	<a target="_blank" href="'. $rootpath . '/FixedAssetLocations.php">'.' ' . _('Add Asset Location') . '</a></td>
+	<a target="_blank" href="'. $RootPath . '/FixedAssetLocations.php">'.' ' . _('Add Asset Location') . '</a></td>
 	</tr>
 	<tr>
 		<td>' . _('Bar Code') . ':</td>

@@ -4,11 +4,11 @@
 
 include('includes/session.inc');
 
-$title = _('Access Permission Maintenance');
+$Title = _('Access Permission Maintenance');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' .
+		_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_GET['SelectedRole'])){
 	$SelectedRole = $_GET['SelectedRole'];

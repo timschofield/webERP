@@ -9,19 +9,19 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
-$title = _('Enter Supplier Invoice Against Goods Received');
+$Title = _('Enter Supplier Invoice Against Goods Received');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
+		'" alt="" />' . ' ' . $Title . '
 	</p>';
 
 $Complete=false;
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice must be clicked on'),'info');
 	echo '<br />
-			<a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
+			<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
@@ -163,7 +163,7 @@ echo '<tr>
 	</table>
 	<br />
 	<div class="centre">
-		<a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
+		<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
 	</div>
 	<br />';
 
@@ -196,7 +196,7 @@ $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br />' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');
-	echo '<div class="centre"><p><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . _('Select Purchase Orders to Receive') .'</a></p></div>';
+	echo '<div class="centre"><p><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . _('Select Purchase Orders to Receive') .'</a></p></div>';
 	include('includes/footer.inc');
 	exit;
 }

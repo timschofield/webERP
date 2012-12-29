@@ -3,7 +3,7 @@
 /* $Id$ */
 
 include ('includes/session.inc');
-$title = _('UTILITY PAGE Change A Stock Category');
+$Title = _('UTILITY PAGE Change A Stock Category');
 include ('includes/header.inc');
 include ('includes/SQL_CommonFunctions.inc');
 

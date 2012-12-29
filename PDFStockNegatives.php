@@ -11,7 +11,7 @@ $FontSize=9;
 $PageNumber=1;
 $line_height=15;
 
-$title = _('Negative Stock Listing Error');
+$Title = _('Negative Stock Listing Error');
 $ErrMsg = _('An error occurred retrieving the negative quantities.');
 $DbgMsg = _('The sql that failed to retrieve the negative quantities was');
 
@@ -68,7 +68,7 @@ if (DB_num_rows($result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 } else {
-	$title = _('Negative Stock Listing Problem');
+	$Title = _('Negative Stock Listing Problem');
 	include('includes/header.inc');
 	prnMsg(_('There are no negative stocks to list'),'info');
 	include('includes/footer.inc');

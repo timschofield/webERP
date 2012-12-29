@@ -3,10 +3,10 @@
 /* $Id: SalesTopItemsInquiry.php 4261 2010-12-22 15:56:50Z  $*/
 
 include('includes/session.inc');
-$title = _('Top Sales Inquiry');
+$Title = _('Top Sales Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
 echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DateRange'])){

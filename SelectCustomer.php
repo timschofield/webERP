@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Search Customers');
+$Title = _('Search Customers');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 if (isset($_GET['Select'])) {
@@ -21,7 +21,7 @@ if (isset($_GET['Area'])) {
 	$_POST['CustAdd'] = '';
 	$_POST['CustType'] = '';
 }
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customers') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customers') . '</p>';
 if (!isset($_SESSION['CustomerType'])) { //initialise if not already done
 	$_SESSION['CustomerType'] = '';
 }
@@ -207,7 +207,7 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 	} //$myrow = DB_fetch_array($result)
 	unset($result);
 
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $PhoneNo . _(' has been selected') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' - ' . $PhoneNo . _(' has been selected') . '</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this customer') . '.</div><br />';
 
 	echo '<table cellpadding="4" width="90%" class="selection">
@@ -218,25 +218,25 @@ if ($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST
 			</tr>';
 	echo '<tr><td valign="top" class="select">';
 	/* Customer Inquiry Options */
-	echo '<a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><br />';
-	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '&amp;Modify=No">' . _('View Customer Details') . '</a><br />';
-	echo '<a href="' . $rootpath . '/PrintCustStatements.php?FromCust=' . $_SESSION['CustomerID'] . '&amp;ToCust=' . $_SESSION['CustomerID'] . '&amp;PrintPDF=Yes">' . _('Print Customer Statement') . '</a><br />';
-	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><br />';
-	echo '<a href="' . $rootpath . '/CustomerPurchases.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Show purchases from this customer') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '&amp;Modify=No">' . _('View Customer Details') . '</a><br />';
+	echo '<a href="' . $RootPath . '/PrintCustStatements.php?FromCust=' . $_SESSION['CustomerID'] . '&amp;ToCust=' . $_SESSION['CustomerID'] . '&amp;PrintPDF=Yes">' . _('Print Customer Statement') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustomerPurchases.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Show purchases from this customer') . '</a><br />';
 	wikiLink('Customer', $_SESSION['CustomerID']);
 	echo '</td><td valign="top" class="select">';
-	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><br />';
-	echo '<a href="' . $rootpath . '/CustomerAllocations.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Allocate Receipts OR Credit Notes') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustomerAllocations.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Allocate Receipts OR Credit Notes') . '</a><br />';
 	if (isset($_SESSION['CustomerID']) AND isset($_SESSION['BranchCode'])) {
-		echo '<a href="' . $rootpath . '/CounterSales.php?DebtorNo=' . $_SESSION['CustomerID'] . '&amp;BranchNo=' . $_SESSION['BranchCode'] . '">' . _('Create a Counter Sale for this Customer') . '</a><br />';
+		echo '<a href="' . $RootPath . '/CounterSales.php?DebtorNo=' . $_SESSION['CustomerID'] . '&amp;BranchNo=' . $_SESSION['BranchCode'] . '">' . _('Create a Counter Sale for this Customer') . '</a><br />';
 	}
 	echo '</td><td valign="top" class="select">';
-	echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br />';
-	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><br />';
-	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Modify/Delete Customer Branches') . '</a><br />';
-	echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><br />';
-	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a><br />';
-	echo '<a href="' . $rootpath . '/CustLoginSetup.php">' . _('Customer Login Configuration') . '</a>';
+	echo '<a href="' . $RootPath . '/Customers.php?">' . _('Add a New Customer') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Modify/Delete Customer Branches') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a><br />';
+	echo '<a href="' . $RootPath . '/CustLoginSetup.php">' . _('Customer Login Configuration') . '</a>';
 	echo '</td>';
 	echo '</tr></table><br />';
 } //$_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST['CSV'])
@@ -252,7 +252,7 @@ else {
 			<td class="select"></td>
 			<td class="select">';
 	if (!isset($_SESSION['SalesmanLogin']) OR $_SESSION['SalesmanLogin'] == '') {
-		echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br />';
+		echo '<a href="' . $RootPath . '/Customers.php?">' . _('Add a New Customer') . '</a><br />';
 	}
 	echo '</td></tr></table>';
 }
@@ -262,7 +262,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (mb_strlen($msg) > 1) {
 	prnMsg($msg, 'info');
 }
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Customers') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Customers') . '</p>';
 echo '<table cellpadding="3" class="selection">';
 echo '<tr><td colspan="2">' . _('Enter a partial Name') . ':</td><td>';
 if (isset($_POST['Keywords'])) {
@@ -610,7 +610,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 				ORDER BY contid";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
-			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</div>';
+			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</div>';
 			echo '<br /><table width="45%">';
 			echo '<tr>
 					<th>' . _('Name') . '</th>
@@ -645,7 +645,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		} //end if there are contact rows returned
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" /><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a></div>';
+				echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" /><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a></div>';
 			}
 		}
 		// Customer Notes
@@ -660,7 +660,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
-			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
+			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
 					<th>' . _('Date') . '</th>
@@ -693,7 +693,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		} //end if there are  customer notes to display
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" /><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div>';
+				echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" /><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a></div>';
 			}
 		}
 		// Custome Type Notes
@@ -702,7 +702,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 				ORDER BY date DESC";
 		$result = DB_query($sql, $db);
 		if (DB_num_rows($result) <> 0) {
-			echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
+			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for:' . '<b> ' . $CustomerTypeName . '</b>') . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
 				 	<th>' . _('Date') . '</th>
@@ -734,7 +734,7 @@ if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		} // end if there are customer group notes to display
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-				echo '<br /><div class="centre"><img src="' . $rootpath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Group Notes') . '" alt="" /><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . ' ' . _('Add New Group Note') . '</a></div><br />';
+				echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $theme . '/images/folder_add.png" title="' . _('Customer Group Notes') . '" alt="" /><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . ' ' . _('Add New Group Note') . '</a></div><br />';
 			}
 		}
 	} //end if Extended_CustomerInfo is turned on

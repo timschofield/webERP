@@ -38,10 +38,10 @@ If (isset($_POST['PrintPDF'])
 	$BOMResult = DB_query($SQL,$db,'','',false,false); //dont do error trapping inside DB_query
 
 	if (DB_error_no($db) !=0) {
-	   $title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
+	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $SQL;
 	   }
@@ -49,7 +49,7 @@ If (isset($_POST['PrintPDF'])
 	   exit;
 	}
 	if (DB_num_rows($BOMResult)==0){
-	   $title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
+	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
 	   prnMsg( _('The Bill of Material listing has no bills to report on'),'warn');
 	   include('includes/footer.inc');
@@ -104,10 +104,10 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Bill Of Material Listing');
+	$Title=_('Bill Of Material Listing');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/reports.png" title="' . _('Search') .
+		'" alt="" />' . ' ' . $Title . '</p><br />';
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/

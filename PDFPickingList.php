@@ -9,7 +9,7 @@ include('includes/SQL_CommonFunctions.inc');
  * picking notes and get out if not.
  */
 if ($_SESSION['RequirePickingNote']==0) {
-	$title = _('Picking Lists Not Enabled');
+	$Title = _('Picking Lists Not Enabled');
 	include('includes/header.inc');
 	echo '<br />';
 	prnMsg( _('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
@@ -19,13 +19,13 @@ if ($_SESSION['RequirePickingNote']==0) {
 
 /* Show selection screen if we have no orders to work with */
 if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransDate'])){
-	$title = _('Select Picking Lists');
+	$Title = _('Select Picking Lists');
 	include('includes/header.inc');
 	$sql="SELECT loccode,
 				locationname
 			FROM locations";
 	$result=DB_query($sql, $db);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -135,14 +135,14 @@ if (isset($_POST['TransDate'])
 
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($result)==0){
-		$title = _('Print Picking List Error');
+		$Title = _('Print Picking List Error');
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('Unable to Locate any orders for this criteria '), 'info');
 		echo '<br />
 				<table class="selection">
 				<tr>
-					<td><a href="'. $rootpath . '/PDFPickingList.php">' . _('Enter Another Date') . '</a></td>
+					<td><a href="'. $RootPath . '/PDFPickingList.php">' . _('Enter Another Date') . '</a></td>
 				</tr>
 				</table>
 				<br />';
@@ -340,7 +340,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 } /*end for loop to print the whole lot twice */
 
 if ($ListCount == 0){
-	$title = _('Print Picking List Error');
+	$Title = _('Print Picking List Error');
 	include('includes/header.inc');
 	include('includes/footer.inc');
 	exit;

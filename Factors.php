@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Factor Company Maintenance');
+$Title = _('Factor Company Maintenance');
 
 include('includes/header.inc');
 
@@ -22,8 +22,8 @@ if (isset($_POST['Create'])) {
 	$_POST['New'] = 'Yes';
 };
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="'
-	. _('Factor Companies') . '" alt="" />' . ' ' .$title . '</p></div>';
+echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="'
+	. _('Factor Companies') . '" alt="" />' . ' ' .$Title . '</p></div>';
 
 /* This section has been reached because the user has pressed either the insert/update buttons on the
  form hopefully with input in the correct fields, which we check for firsrt. */
@@ -331,7 +331,7 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 			<td>' . $myrow['telephone'].'</td>
 			<td>' . $myrow['fax'].'</td>
 			<td>' . $myrow['email'].'</td>
-			<td><a href="'.$rootpath . '/Factors.php?FactorID='.$myrow['id'].'">'._('Edit').'</a></td>
+			<td><a href="'.$RootPath . '/Factors.php?FactorID='.$myrow['id'].'">'._('Edit').'</a></td>
 			</tr>';
 	} //end while loop
 	echo '</table>

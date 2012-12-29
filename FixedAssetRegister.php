@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.inc');
-$title = _('Fixed Asset Register');
+$Title = _('Fixed Asset Register');
 $csv_output = '';
 // Reports being generated in HTML, PDF and CSV/EXCEL format
 if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
@@ -10,7 +10,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		include ('includes/PDFStarter.php');
 	} else if (empty($_POST['csv'])) {
 		include ('includes/header.inc');
-		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 	}
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
 	$DateTo = FormatDateForSQL($_POST['ToDate']);
@@ -246,7 +246,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	}
 } else {
 	include ('includes/header.inc');
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories', $db);
 	echo '<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

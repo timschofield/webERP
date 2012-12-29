@@ -10,11 +10,11 @@ if (isset($_GET['BatchNo'])){
 }
 
 if (!isset($_POST['BatchNo'])){
-	$title = _('Create PDF Print Out For A Batch Of Receipts');
+	$Title = _('Create PDF Print Out For A Batch Of Receipts');
 	include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' .
-		 $title . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' .
+		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$sql="SELECT DISTINCT
 			transno,
@@ -70,7 +70,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 	$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($Result) == 0){
-		$title = _('Create PDF Print-out For A Batch Of Receipts');
+		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include ('includes/header.inc');
 		prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database') . '. ' . _('Please try again selecting a different batch number'), 'warn');
 		include('includes/footer.inc');
@@ -99,7 +99,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 
 	$CustRecs=DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db)!=0){
-		$title = _('Create PDF Print-out For A Batch Of Receipts');
+		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include ('includes/header.inc');
 	   	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 		if ($debug==1){
@@ -118,7 +118,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 
 	$GLRecs=DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db)!=0){
-		$title = _('Create PDF Print-out For A Batch Of Receipts');
+		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include ('includes/header.inc');
 		prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 		if ($debug==1){

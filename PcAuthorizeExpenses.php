@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Authorisation of Petty Cash Expenses');
+$Title = _('Authorisation of Petty Cash Expenses');
 /* webERP manual links before header.inc */
 $ViewTopic= "PettyCash";
 $BookMark = "AuthorizeExpense";
@@ -42,10 +42,10 @@ if (isset($_POST['Go'])) {
 }
 
 if (isset($SelectedTabs)) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
 		'" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . ''.$SelectedTabs.'</p>';
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Petty Cash') .
 		'" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . '</p>';
 }
 if (isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR isset ($_POST['GO'])) {

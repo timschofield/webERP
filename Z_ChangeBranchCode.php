@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('UTILITY PAGE To Changes A Customer Branch Code In All Tables');
+$Title = _('UTILITY PAGE To Changes A Customer Branch Code In All Tables');
 include('includes/header.inc');
 
 if (isset($_POST['ProcessCustomerChange'])){

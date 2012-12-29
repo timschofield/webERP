@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('General Ledger Account Inquiry');
+$Title = _('General Ledger Account Inquiry');
 include('includes/header.inc');
 include('includes/GLPostings.inc');
 
@@ -19,7 +19,7 @@ if (isset($_POST['Period'])){
 	$SelectedPeriod = $_GET['Period'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
 
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
 
@@ -289,7 +289,7 @@ if (isset($_POST['Show'])){
 		}
 
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
-		$URL_to_TransDetail = $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
+		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
 
 		printf('<td>%s</td>
 				<td class="number"><a href="%s">%s</a></td>

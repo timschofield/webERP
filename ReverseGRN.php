@@ -6,7 +6,7 @@ include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/session.inc');
 
-$title = _('Reverse Goods Received');
+$Title = _('Reverse Goods Received');
 
 include('includes/header.inc');
 
@@ -19,7 +19,7 @@ if ((isset($_SESSION['SupplierID']) AND $_SESSION['SupplierID']!='')
 
 if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	echo '<br />' . _('This page is expected to be called after a supplier has been selected');
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SelectSupplier.php">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectSupplier.php">';
 	exit;
 } elseif (!isset($_POST['SuppName']) or $_POST['SuppName']=="") {
 	$sql = "SELECT suppname FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
@@ -28,7 +28,7 @@ if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	$_POST['SuppName'] = $SuppRow[0];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
 
 if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 /* SQL to process the postings for the GRN reversal.. */

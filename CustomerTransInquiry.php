@@ -3,11 +3,11 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Transactions Inquiry');
+$Title = _('Customer Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
 	</p>';
 echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div>
 	<br />';
@@ -152,9 +152,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					locale_number_format($myrow['rate'],6),
 					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
 					$myrow['currcode'],
-					$rootpath,
+					$RootPath,
 					$myrow['transno'],
-					$rootpath.'/css/'.$theme.'/images/preview.gif');
+					$RootPath.'/css/'.$theme.'/images/preview.gif');
 
 		} elseif ($_POST['TransType']==11){ /* credit notes */
 			printf($format_base .
@@ -171,9 +171,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					locale_number_format($myrow['rate'],6),
 					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
 					$myrow['currcode'],
-					$rootpath,
+					$RootPath,
 					$myrow['transno'],
-					$rootpath.'/css/'.$theme.'/images/preview.gif');
+					$RootPath.'/css/'.$theme.'/images/preview.gif');
 		} else {  /* otherwise */
 			printf($format_base . '</tr>',
 					$myrow['typename'],

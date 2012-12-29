@@ -3,10 +3,10 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Search Work Orders');
+$Title = _('Search Work Orders');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -167,7 +167,7 @@ if (!isset($StockID)) {
 
 		echo '</select> &nbsp;&nbsp;';
 		echo '<input type="submit" name="SearchOrders" value="' . _('Search') . '" />';
-		echo '&nbsp;&nbsp;<a href="' . $rootpath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td></tr></table><br />';
+		echo '&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td></tr></table><br />';
 	}
 
 	$SQL="SELECT categoryid,
@@ -353,11 +353,11 @@ if (!isset($StockID)) {
 				$k++;
 			}
 
-			$ModifyPage = $rootpath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
-			$Status_WO = $rootpath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-			$Receive_WO = $rootpath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-			$Issue_WO = $rootpath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-			$Costing_WO =$rootpath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
+			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
+			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
+			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
+			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
+			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
 
 			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);

@@ -2,11 +2,11 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Search Purchase Orders');
+$Title = _('Search Purchase Orders');
 include ('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
+		<img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
 	'</p>';
 
 if (isset($_GET['SelectedStockItem'])) {
@@ -449,7 +449,7 @@ else {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-			$ViewPurchOrder = $rootpath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
+			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 			$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 			$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $myrow['currdecimalplaces']);

@@ -4,7 +4,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Process EDI Orders');
+$Title = _('Process EDI Orders');
 
 include ('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo
@@ -50,7 +50,7 @@ while ($SegRow=DB_fetch_array($OrderSeg)){
 $TotalNoOfSegments = $i-1;
 
 /*get the list of files in the incoming orders directory - from config.php */
-$dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSION['EDI_Incoming_Orders']);
+$dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders']);
 
  while (false !== ($OrderFile=readdir($dirhandle))){ /*there are files in the incoming orders dir */
 
@@ -61,7 +61,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 	$FirstSegInGrp =0;
 	$SegGroup =0;
 
-	$fp = fopen($_SERVER['DOCUMENT_ROOT'] .'/$rootpath/'.$_SESSION['EDI_Incoming_Orders'].'/'.$OrderFile,'r');
+	$fp = fopen($_SERVER['DOCUMENT_ROOT'] .'/$RootPath/'.$_SESSION['EDI_Incoming_Orders'].'/'.$OrderFile,'r');
 
 	$SegID = 0;
 	$SegCounter =0;

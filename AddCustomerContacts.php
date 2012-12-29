@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Contacts');
+$Title = _('Customer Contacts');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -17,14 +17,14 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
+echo '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
 $SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname,$db);
 $row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Contacts for Customer') . ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Contacts for Customer') . ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Edit contact for'). ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Edit contact for'). ': <b>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</b></p><br />';
 }
 if ( isset($_POST['submit']) ) {
 

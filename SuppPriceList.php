@@ -135,11 +135,11 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Price List') . ' - ' . _('Problem Report');
+		$Title = _('Price List') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 		echo '<br />
-				<a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+				<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;
 		}
@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_num_rows($result)==0) {
 
-		$title = _('Supplier Price List') . '-' . _('Report');
+		$Title = _('Supplier Price List') . '-' . _('Report');
 		include('includes/header.inc');
 		prnMsg(_('There are no result so the PDF is empty'));
 		include('includes/footer.inc');
@@ -205,9 +205,9 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('Supplier Price List');
+	$Title=_('Supplier Price List');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '</p>';
 	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br />';
 
 	echo '<br/>

@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Notes');
+$Title = _('Customer Notes');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -18,7 +18,7 @@ if (isset($_POST['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
 
-echo '<a href="' . $rootpath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Select Customer') . '</a>
+echo '<a href="' . $RootPath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Select Customer') . '</a>
 	<br />';
 
 if ( isset($_POST['submit']) ) {
@@ -98,7 +98,7 @@ if (!isset($Id)) {
 				WHERE debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$row['name'].'</b></p>
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$row['name'].'</b></p>
 		<br />';
 
 	$sql = "SELECT noteid,

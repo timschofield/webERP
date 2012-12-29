@@ -4,7 +4,7 @@
 
 include('includes/DefineContractClass.php');
 include('includes/session.inc');
-$title = _('Contract Costing');
+$Title = _('Contract Costing');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 
@@ -55,7 +55,7 @@ while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 }
 
 echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />';
+			<img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />';
 if ($_SESSION['Contract'.$identifier]->Status==3){
 	echo _('Closed')  . ' ';
 } elseif ($_SESSION['Contract'.$identifier]->Status==2){

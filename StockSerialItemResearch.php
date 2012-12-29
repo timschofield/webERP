@@ -2,11 +2,11 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Serial Item Research');
+$Title = _('Serial Item Research');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $title. '</b>
+		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	  </p>';
 
 

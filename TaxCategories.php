@@ -3,12 +3,12 @@
 
 include('includes/session.inc');
 
-$title = _('Tax Categories');
+$Title = _('Tax Categories');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . $title. '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	. '" alt="" />' . $Title. '</p>';
 
 if ( isset($_GET['SelectedTaxCategory']) )
 	$SelectedTaxCategory = $_GET['SelectedTaxCategory'];

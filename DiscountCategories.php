@@ -4,12 +4,12 @@
 
 include('includes/session.inc');
 
-$title = _('Discount Categories Maintenance');
+$Title = _('Discount Categories Maintenance');
 /* webERP manual links before header.inc */
 $ViewTopic= "SalesOrders";
 $BookMark = "DiscountMatrix";
 include('includes/header.inc');
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_POST['stockID'])) {
 	$_POST['StockID']=$_POST['stockID'];

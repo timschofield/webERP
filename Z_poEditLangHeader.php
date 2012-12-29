@@ -8,14 +8,14 @@
 
 include ('includes/session.inc');
 
-$title = _('Edit Header');
+$Title = _('Edit Header');
 
 include('includes/header.inc');
 
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
 
-echo "<br />&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br /><br />&nbsp;' . _('Utility to edit a language file header');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 

@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Search Recurring Sales Orders');
+$Title = _('Search Recurring Sales Orders');
 /* webERP manual links before header.inc */
 $ViewTopic= 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
@@ -12,8 +12,8 @@ include('includes/header.inc');
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' .
-	_('Inventory Items') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/customer.png" title="' .
+	_('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection">
 		<tr>
@@ -112,7 +112,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 			$k++;
 		}
 
-		$ModifyPage = $rootpath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
+		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($myrow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);

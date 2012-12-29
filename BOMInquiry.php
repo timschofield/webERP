@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Costed Bill Of Material');
+$Title = _('Costed Bill Of Material');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
@@ -182,9 +182,9 @@ if (isset($StockID) and $StockID!=""){
 	if (DB_num_rows($BOMResult)==0){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
 	} else {
-		echo '<a href="'.$rootpath.'/index.php">'._('Return to Main Menu').'</a>';
+		echo '<a href="'.$RootPath.'/index.php">'._('Return to Main Menu').'</a>';
 		echo '<p class="page_title_text">
-				<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+				<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 				</p>
 				<br />';
 
@@ -218,7 +218,7 @@ if (isset($StockID) and $StockID!=""){
 				$k++;
 			}
 
-			$ComponentLink = '<a href="' . $rootpath . '/SelectProduct.php?StockID=' . $myrow['component'] . '">' . $myrow['component'] . '</a>';
+			$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['component'] . '">' . $myrow['component'] . '</a>';
 
 			/* Component Code  Description  Quantity Std Cost  Total Cost */
 			printf('<td>%s</td>

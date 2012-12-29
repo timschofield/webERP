@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Stock Status');
+$Title = _('Stock Status');
 
 include('includes/header.inc');
 
@@ -17,7 +17,7 @@ if (isset($_GET['StockID'])){
 }
 
 // This is already linked from this page
-//echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br />';
+//echo "<a href='" . $RootPath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><br />';
 
 $result = DB_query("SELECT description,
 						   units,
@@ -37,7 +37,7 @@ $DecimalPlaces = $myrow['decimalplaces'];
 $Serialised = $myrow['serialised'];
 $Controlled = $myrow['controlled'];
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
 	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
@@ -252,9 +252,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
-			echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
 		} elseif ($Controlled==1){
-			echo '<td><a target="_blank" href="' . $rootpath . '/StockSerialItems.php?Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Batches') . '</a></td></tr>';
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $myrow['loccode'] . '&StockID=' .$StockID . '">' . _('Batches') . '</a></td></tr>';
 		}
 
 	} else {
@@ -381,12 +381,12 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 }//end of displaying price history for a debtor
 
-echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>';
-echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>';
-echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
-	echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
 }
 
 echo '</div></form>';

@@ -3,7 +3,7 @@
 /* Script to import fixed assets into a specified period*/
 
 include('includes/session.inc');
-$title = _('Import Fixed Assets');
+$Title = _('Import Fixed Assets');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

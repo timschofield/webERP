@@ -9,7 +9,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
-	$title = _('Select Order To Print');
+	$Title = _('Select Order To Print');
 	include('includes/header.inc');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
@@ -20,8 +20,8 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 			<tr>
 			<td class="menu_group_item">
             <ul>
-			    <li><a href="'. $rootpath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
-			    <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			    <li><a href="'. $RootPath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
+			    <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
             </ul>
 			</td>
 			</tr>
@@ -73,7 +73,7 @@ $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
-	$title = _('Print Packing Slip Error');
+	$Title = _('Print Packing Slip Error');
 	include('includes/header.inc');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
@@ -83,8 +83,8 @@ if (DB_num_rows($result)==0){
 			<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
-			<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-			<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 			</td>
 			</tr>
 			</table>
@@ -102,23 +102,23 @@ if (DB_num_rows($result)==0){
         producing the packlist */
         $DeliverBlind = $myrow['deliverblind'];
         if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
-                $title = _('Print Packing Slip Error');
+                $Title = _('Print Packing Slip Error');
                 include('includes/header.inc');
                 echo '<p>';
                 prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
                         _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
                         '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-              echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
+              echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
                 . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-                '<a href="' . $rootpath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+                '<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
 
                 echo '<br /><br /><br />';
                 echo  _('Or select another Order Number to Print');
                 echo '<table class="table_index">
 						<tr>
 						<td class="menu_group_item">
-                        <li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-                        <li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+                        <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+                        <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
                         </td>
                         </tr>
                         </table>
@@ -237,12 +237,12 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 } /*end for loop to print the whole lot twice */
 
 if ($ListCount == 0) {
-	$title = _('Print Packing Slip Error');
+	$Title = _('Print Packing Slip Error');
 	include('includes/header.inc');
 	echo '<p>'. _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
-			'<br /><a href="' . $rootpath . '/SelectSalesOrder.php">'. _('Print Another Packing Slip/Order').
+			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">'. _('Print Another Packing Slip/Order').
 			'</a>
-			<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit;
 } else {

@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Supplier Maintenance');
+$Title = _('Supplier Maintenance');
 /* webERP manual links before header.inc */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'NewSupplier';
@@ -302,7 +302,7 @@ if (isset($_GET['SupplierID'])){
 	unset($SupplierID);
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 
 $InputError = 0;
 
@@ -1030,7 +1030,7 @@ if (!isset($SupplierID)) {
 			<div class="centre">
 				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />';
 		echo '<br />
-			<a href="' . $rootpath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a>
+			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a>
 			</div>';
 	}
 	echo '</div>

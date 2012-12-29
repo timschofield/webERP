@@ -2,7 +2,7 @@
 
 /* $Id$*/
 //$PageSecurity = 3;
-$title = _('Geocode Generate XML');
+$Title = _('Geocode Generate XML');
 
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');

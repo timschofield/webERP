@@ -104,7 +104,7 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND 
 	$LineItem->SerialItemsValid=false;
 	$_SESSION['CurImportFile']['Processed']=false;
 	$_SESSION['CurImportFile'] = $_FILES['ImportFile'];
-	$_SESSION['CurImportFile']['tmp_name'] = $_SERVER['DOCUMENT_ROOT'].$rootpath.$PathPrefix . '/' . $_SESSION['reports_dir'] . '/'.$LineItem->StockID.'_'.$LineNo.'_'.uniqid(4);
+	$_SESSION['CurImportFile']['tmp_name'] = $_SERVER['DOCUMENT_ROOT'].$RootPath.$PathPrefix . '/' . $_SESSION['reports_dir'] . '/'.$LineItem->StockID.'_'.$LineNo.'_'.uniqid(4);
 	if (!move_uploaded_file($_FILES['ImportFile']['tmp_name'],$_SESSION['CurImportFile']['tmp_name'])){
 		prnMsg(_('Error moving temporary file') . '. ' . _('Please check your configuration'),'error' );
 		$LineItem->SerialItemsValid=false;

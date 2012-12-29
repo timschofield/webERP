@@ -5,7 +5,7 @@
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
-$title = _('Stock Adjustments');
+$Title = _('Stock Adjustments');
 
 /* webERP manual links before header.inc */
 $ViewTopic= 'Inventory';
@@ -91,11 +91,11 @@ if($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zer
 	$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
 
 if (isset($_POST['CheckCode'])) {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
 		$sql="SELECT stockid,
@@ -457,8 +457,8 @@ if ($Controlled==1){
 		}
 		echo '<input type="hidden" name="Quantity" value="' . $_SESSION['Adjustment' . $identifier]->Quantity . '" />
 				'.locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$DecimalPlaces) .' &nbsp; &nbsp; &nbsp; &nbsp;
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&identifier='.$identifier.'">'._('Remove').'</a>]
-				[<a href="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD&identifier='.$identifier.'">'._('Add').'</a>]';
+				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&identifier='.$identifier.'">'._('Remove').'</a>]
+				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=ADD&identifier='.$identifier.'">'._('Add').'</a>]';
 } else {
 	echo '<input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($Quantity,$DecimalPlaces) . '" />';
 }
@@ -496,15 +496,15 @@ if (!isset($_POST['StockLocation'])) {
 }
 
 echo '<br />
-	<a href="'. $rootpath. '/StockStatus.php?StockID='. $StockID . '">'._('Show Stock Status').'</a>';
+	<a href="'. $RootPath. '/StockStatus.php?StockID='. $StockID . '">'._('Show Stock Status').'</a>';
 echo '<br />
-	<a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
+	<a href="'.$RootPath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
 echo '<br />
-	<a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</a>';
+	<a href="'.$RootPath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</a>';
 echo '<br />
-	<a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&amp;StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</a>';
+	<a href="'.$RootPath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&amp;StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</a>';
 echo '<br />
-	<a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</a>';
+	<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</a>';
 
 echo '</div>
       </div>

@@ -12,7 +12,7 @@ This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????
 
 
 include ('includes/session.inc');
-$title = _('Delete Invoice');
+$Title = _('Delete Invoice');
 include('includes/header.inc');
 
 if (!isset($_GET['InvoiceNo'])){

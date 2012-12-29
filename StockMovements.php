@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Stock Movements');
+$Title = _('Stock Movements');
 /* webERP manual links before header.inc */
 $ViewTopic= "Inventory";
 $BookMark = "InventoryMovement";
@@ -19,7 +19,7 @@ if (isset($_GET['StockID'])){
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='".$StockID."'",$db);
 $myrow = DB_fetch_row($result);
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '</b></p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['0'] . ' : ' . _('in units of') . ' : ' . $myrow[1] . '</b></p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -135,7 +135,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td class="number">%s%%</td>
 				<td class="number">%s</td>
 				</tr>',
-				$rootpath,
+				$RootPath,
 				$myrow['transno'],
 				$myrow['typename'],
 				$myrow['transno'],
@@ -161,7 +161,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td class="number">%s%%</td>
 				<td class="number">%s</td>
 				</tr>',
-				$rootpath,
+				$RootPath,
 				$myrow['transno'],
 				$myrow['typename'],
 				$myrow['transno'],
@@ -202,10 +202,10 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 //end of while loop
 
 echo '</table>';
-echo '<div class="centre"><br /><a href="' . $rootpath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
-echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Usage') . '</a>';
-echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Search Outstanding Sales Orders') . '</a>';
-echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<div class="centre"><br /><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Usage') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
       </div>

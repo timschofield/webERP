@@ -3,7 +3,7 @@
 
 //$PageSecurity = 15;
 include('includes/session.inc');
-$title = _('Upgrade webERP 3.01 - 3.02');
+$Title = _('Upgrade webERP 3.01 - 3.02');
 include('includes/header.inc');
 
 prnMsg(_('Upgrade script to number salesorderdetails records as required by version 3.02 .... please wait'),'info');

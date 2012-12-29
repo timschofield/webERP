@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Claim Petty Cash Expenses From Tab');
+$Title = _('Claim Petty Cash Expenses From Tab');
 /* webERP manual links before header.inc */
 $ViewTopic= "PettyCash";
 $BookMark = "ExpenseClaim";
@@ -139,7 +139,7 @@ if (!isset($SelectedTabs)){
 	then none of the above are true and the list of sales types will be displayed with
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')	. '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')	. '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -175,8 +175,8 @@ if (!isset($SelectedTabs)){
 
 } else { // isset($SelectedTabs)
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Petty Cash Claim Entry') . '" alt="" />
-         ' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Petty Cash Claim Entry') . '" alt="" />
+         ' . ' ' . $Title . '</p>';
 
 	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another tab') . '</a></div>';
 

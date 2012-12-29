@@ -11,11 +11,11 @@ $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirem
 
 $result=DB_query($sql,$db);
 if (DB_num_rows($result)==0) {
-	$title=_('MRP error');
+	$Title=_('MRP error');
 	include('includes/header.inc');
 	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report').'<br />'.
-			_('To run the MRP calculation click').' '.'<a href='.$rootpath .'/MRP.php>'._('here').'</a>', 'error');
+			_('To run the MRP calculation click').' '.'<a href='.$RootPath .'/MRP.php>'._('here').'</a>', 'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -111,10 +111,10 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
+	  $Title = _('MRP Planned Purchase Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP planned purchase orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
@@ -122,10 +122,10 @@ if (isset($_POST['PrintPDF'])) {
 	   exit;
 	}
 	if (DB_num_rows($result)==0){ //then there is nothing to print
-		$title = _('Print MRP Planned Purchase Orders Error');
+		$Title = _('Print MRP Planned Purchase Orders Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with planned purchase orders'),'info');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -259,10 +259,10 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('MRP Planned Purchase Orders Reporting');
+	$Title=_('MRP Planned Purchase Orders Reporting');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-		_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+		_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>';

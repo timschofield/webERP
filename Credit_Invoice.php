@@ -9,7 +9,7 @@ include('includes/DefineSerialItems.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Credit An Invoice');
+$Title = _('Credit An Invoice');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -192,7 +192,7 @@ if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 
 		} else { /* there are no stock movement records created for that invoice */
 
-			echo '<div class="centre"><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a></div>';
+			echo '<div class="centre"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 			prnMsg( _('There are no line items that were retrieved for this invoice') . '. ' . _('The automatic credit program can not create a credit note from this invoice'),'warn');
 			include('includes/footer.inc');
 			exit;
@@ -267,7 +267,7 @@ if ($_SESSION['CreditItems' . $identifier]->ItemsOrdered > 0 OR isset($_POST['Ne
 
 /* Always display credit quantities
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/credit.gif" title="' . _('Search') . '" alt="" />' . $Title.'</p>';
 
 if (!isset($_POST['ProcessCredit'])) {
 
@@ -342,7 +342,7 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 		if ($LnItm->Controlled==1){
 
-			echo '<td><input type="hidden" name="Quantity_' . $LnItm->LineNumber .'"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&amp;CreditInvoice=Yes&amp;identifier=' . $identifier . '">' . $LnItm->QtyDispatched . '</a></td>';
+			echo '<td><input type="hidden" name="Quantity_' . $LnItm->LineNumber .'"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&amp;CreditInvoice=Yes&amp;identifier=' . $identifier . '">' . $LnItm->QtyDispatched . '</a></td>';
 
 		} else {
 
@@ -1459,9 +1459,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 	echo '<div class="centre">'._('Credit Note number') . ' ' . $CreditNo . ' ' . _('has been processed');
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<br /><a href="' . $rootpath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this credit note') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this credit note') . '</a>';
 	} else {
-		echo '<br /><a href="' . $rootpath . '/PrintCustTransPortrait.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this credit note') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this credit note') . '</a>';
 	}
 	echo '</div>';
 /*end of process credit note */

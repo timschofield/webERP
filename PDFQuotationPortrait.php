@@ -7,7 +7,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
-        $title = _('Select Quotation To Print');
+        $Title = _('Select Quotation To Print');
         include('includes/header.inc');
         echo '<div class="centre">
 				<br />
@@ -20,7 +20,7 @@ If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 				<table class="table_index">
 				<tr>
 					<td class="menu_group_item">
-						<ul><li><a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Quotations') . '</a></li>
+						<ul><li><a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Quotations') . '</a></li>
 						</ul>
 					</td>
 				</tr>
@@ -76,7 +76,7 @@ $result=DB_query($sql,$db, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
-	$title = _('Print Quotation Error');
+	$Title = _('Print Quotation Error');
 	include('includes/header.inc');
 	 echo '<div class="centre">
 			<br />
@@ -89,7 +89,7 @@ if (DB_num_rows($result)==0){
 			<table class="table_index">
 			<tr>
 				<td class="menu_group_item">
-					<ul><li><a href="'. $rootpath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li></ul>
+					<ul><li><a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>
@@ -261,11 +261,11 @@ if (DB_num_rows($result)>0){
 
 
 if ($ListCount == 0){
-        $title = _('Print Quotation Error');
+        $Title = _('Print Quotation Error');
         include('includes/header.inc');
         echo '<p>'. _('There were no items on the quotation') . '. ' . _('The quotation cannot be printed').
-                '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation').
-                '</a>' . '<br />'. '<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+                '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation').
+                '</a>' . '<br />'. '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
         include('includes/footer.inc');
 	exit;
 } else {

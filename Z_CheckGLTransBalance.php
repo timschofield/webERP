@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title=_('Check Period Sales Ledger Control Account');
+$Title=_('Check Period Sales Ledger Control Account');
 include('includes/header.inc');
 
 echo '<table>';
@@ -44,7 +44,7 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 		$RowCounter++;
 	}
 	echo '<tr>
-	<td><a href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $OutOfWackRow['type'] . '&TransNo=' . $OutOfWackRow['typeno'] . '">' . $OutOfWackRow['typename'] . '</a></td>
+	<td><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $OutOfWackRow['type'] . '&TransNo=' . $OutOfWackRow['typeno'] . '">' . $OutOfWackRow['typename'] . '</a></td>
 	<td class="number">' . $OutOfWackRow['typeno'] . '</td>
 	<td class="number">' . $OutOfWackRow['periodno'] . '</td>
 	<td class="number">' . locale_number_format($OutOfWackRow['nettot'],3) . '</td>

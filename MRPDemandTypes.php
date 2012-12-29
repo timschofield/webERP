@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('MRP Demand Types');
+$Title = _('MRP Demand Types');
 include('includes/header.inc');
 
 //SelectedDT is the Selected MRPDemandType
@@ -13,8 +13,8 @@ if (isset($_POST['SelectedDT'])){
 	$SelectedDT = trim(mb_strtoupper($_GET['SelectedDT']));
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-		_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+		_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 

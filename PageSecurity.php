@@ -3,10 +3,10 @@
 /*$Id: PageSecurity.php 4500 2011-02-27 09:18:42Z daintree $ */
 
 include('includes/session.inc');
-$title = _('Page Security Levels');
+$Title = _('Page Security Levels');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_POST['Update'])) {
 	foreach ($_POST as $ScriptName => $PageSecurityValue) {

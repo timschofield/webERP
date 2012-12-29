@@ -3,7 +3,7 @@
 
 include('includes/session.inc');
 
-$title = _('Search GL Accounts');
+$Title = _('Search GL Accounts');
 
 include('includes/header.inc');
 
@@ -14,7 +14,7 @@ if (isset($_POST['Select'])) {
 
 	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
 	$myrow = DB_fetch_row($result);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 
 	echo '<div class="page_help_text">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br />' . _('Select one of the links below to operate using this Account') . '.</div>';
 	$AccountID = $_POST['Select'];
@@ -22,9 +22,9 @@ if (isset($_POST['Select'])) {
 
 	echo '<br />
 		<div class="centre">
-			<a href="' . $rootpath . '/GLAccounts.php?SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
+			<a href="' . $RootPath . '/GLAccounts.php?SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
 	echo '<br />
-			<a href="' . $rootpath . '/GLAccountInquiry.php?Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
+			<a href="' . $RootPath . '/GLAccountInquiry.php?Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
 	echo '<br />
 		<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">' . _('New Search') . '</a></div>';
 
@@ -84,7 +84,7 @@ if (isset($_POST['Select'])) {
 if (!isset($AccountID)) {
 
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 	echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';

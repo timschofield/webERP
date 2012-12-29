@@ -10,9 +10,9 @@ Revision History:
 Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
 */
 function GetReports($GroupID) {
-	global $db, $rootpath;
+	global $db, $RootPath;
 	$Title= array(_('Custom Reports'), _('Default Reports'));
-	$RptForm = '<form name="ReportList" method="post" action="'.$rootpath.'/reportwriter/ReportMaker.php?action=go">';
+	$RptForm = '<form name="ReportList" method="post" action="'.$RootPath.'/reportwriter/ReportMaker.php?action=go">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$RptForm .= '<table align="center" border="0" cellspacing="1" cellpadding="1" class="table_index">';
 	for ($Def=1; $Def>=0; $Def--) {

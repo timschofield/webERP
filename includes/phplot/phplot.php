@@ -84,7 +84,7 @@ class PHPlot
     public $bar_width_adjust = 1;          // 1 = bars of normal width, must be > 0
 
 // Titles
-    public $title_txt = '';
+    public $Title_txt = '';
 
     public $x_title_txt = '';
     public $x_title_pos = 'none';          // plotdown, plotup, both, none
@@ -2949,7 +2949,7 @@ class PHPlot
         $min_margin = 2 * $gap + $base_margin;
 
         // Calculate the title sizes:
-        list($unused, $title_height) = $this->SizeText($this->fonts['title'], 0, $this->title_txt);
+        list($unused, $Title_height) = $this->SizeText($this->fonts['title'], 0, $this->title_txt);
         list($unused, $x_title_height) = $this->SizeText($this->fonts['x_title'], 0, $this->x_title_txt);
         list($y_title_width, $unused) = $this->SizeText($this->fonts['y_title'], 90, $this->y_title_txt);
 
@@ -2961,8 +2961,8 @@ class PHPlot
                 $this->x_right_margin = $base_margin;
             if (!isset($this->y_top_margin)) {
                 $this->y_top_margin = $base_margin;
-                if ($title_height > 0)
-                    $this->y_top_margin += $title_height + $gap;
+                if ($Title_height > 0)
+                    $this->y_top_margin += $Title_height + $gap;
             }
             if (!isset($this->y_bot_margin))
                 $this->y_bot_margin = $base_margin;
@@ -3086,8 +3086,8 @@ class PHPlot
         $this->x_title_bot_offset = $gap;
 
         // Space for main title?
-        if ($title_height > 0)
-            $top_margin += $title_height + $gap;
+        if ($Title_height > 0)
+            $top_margin += $Title_height + $gap;
 
         // Space for X Title?
         if ($x_title_height > 0) {
@@ -4908,10 +4908,10 @@ class PHPlot
 
         case 'title': // SetLegendPosition with mode='title', relative to main title.
             // Recalculate main title position/size, since CalcMargins does not save it. See DrawTitle()
-            list($title_width, $title_height) = $this->SizeText($this->fonts['title'], 0, $this->title_txt);
-            $title_x = (int)(($this->image_width - $title_width) / 2);
-            return array((int)($x_base * $title_width - $x * $width) + $title_x + $x_offset,
-                         (int)($y_base * $title_height - $y * $height) + $this->title_offset + $y_offset);
+            list($Title_width, $Title_height) = $this->SizeText($this->fonts['title'], 0, $this->title_txt);
+            $Title_x = (int)(($this->image_width - $Title_width) / 2);
+            return array((int)($x_base * $Title_width - $x * $width) + $Title_x + $x_offset,
+                         (int)($y_base * $Title_height - $y * $height) + $this->title_offset + $y_offset);
 
         default: // If mode is unset (or invalid), use default position.
             return array ($this->plot_area[2] - $width - $this->safe_margin,

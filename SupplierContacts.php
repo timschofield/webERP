@@ -3,7 +3,7 @@
 
 include('includes/session.inc');
 
-$title = _('Supplier Contacts');
+$Title = _('Supplier Contacts');
 /* webERP manual links before header.inc */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'SupplierContact';
@@ -15,10 +15,10 @@ if (isset($_GET['SupplierID'])){
 	$SupplierID = $_POST['SupplierID'];
 }
 
-echo '<a href="' . $rootpath . '/SelectSupplier.php">' . _('Back to Suppliers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectSupplier.php">' . _('Back to Suppliers') . '</a><br />';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
-	_('Supplier Allocations') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' .
+	_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($SupplierID)) {
 	echo '<p /><p />';

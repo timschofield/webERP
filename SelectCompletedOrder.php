@@ -4,11 +4,11 @@
 
 include('includes/session.inc');
 
-$title = _('Search All Sales Orders');
+$Title = _('Search All Sales Orders');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
      ' . ' ' . _('Search Sales Orders') . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -65,7 +65,7 @@ if (isset($_POST['ResetPart'])) {
 }
 
 if (isset($OrderNumber)) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales Order') . '" alt="" />
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/sales.png" title="' . _('Sales Order') . '" alt="" />
          ' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
 	if (mb_strlen($_SESSION['UserBranch'])>1){
    	   echo _('For customer') . ': ' . $SelectedCustomer;
@@ -627,7 +627,7 @@ If (isset($SalesOrdersResult)) {
 			$k=1;
 		}
 
-		$ViewPage = $rootpath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'];
+		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);

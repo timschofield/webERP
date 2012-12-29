@@ -2,12 +2,12 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Stock Of Controlled Items');
+$Title = _('Stock Of Controlled Items');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
-'" alt="" /><b>' . $title. '</b>
+		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .
+'" alt="" /><b>' . $Title. '</b>
 	</p>';
 
 if (isset($_GET['StockID'])){

@@ -21,12 +21,12 @@
 include('includes/DefineSuppAllocsClass.php');
 include('includes/session.inc');
 
-$title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
+$Title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' .
 	_('Supplier Allocations') . '" alt="" />' . ' ' . _('Supplier Allocations') . '</p>';
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {

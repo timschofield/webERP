@@ -496,7 +496,7 @@ class TCPDF {
 	 * Document title.
 	 * @protected
 	 */
-	protected $title = '';
+	protected $Title = '';
 
 	/**
 	 * Document subject.
@@ -3700,13 +3700,13 @@ class TCPDF {
 
 	/**
 	 * Defines the title of the document.
-	 * @param $title (string) The title.
+	 * @param $Title (string) The title.
 	 * @public
 	 * @since 1.2
 	 * @see SetAuthor(), SetCreator(), SetKeywords(), SetSubject()
 	 */
-	public function SetTitle($title) {
-		$this->title = $title;
+	public function SetTitle($Title) {
+		$this->title = $Title;
 	}
 
 	/**
@@ -16583,12 +16583,12 @@ class TCPDF {
 		foreach ($this->outlines as $i => $o) {
 			$oid = $this->_newobj();
 			// covert HTML title to string
-			$title = preg_replace($nltags, "\n", $o['t']);
-			$title = preg_replace("/[\r]+/si", '', $title);
-			$title = preg_replace("/[\n]+/si", "\n", $title);
-			$title = strip_tags($title);
-			$title = $this->stringTrim($title);
-			$out = '<</Title '.$this->_textstring($title, $oid);
+			$Title = preg_replace($nltags, "\n", $o['t']);
+			$Title = preg_replace("/[\r]+/si", '', $Title);
+			$Title = preg_replace("/[\n]+/si", "\n", $Title);
+			$Title = strip_tags($Title);
+			$Title = $this->stringTrim($Title);
+			$out = '<</Title '.$this->_textstring($Title, $oid);
 			$out .= ' /Parent '.($n + $o['parent']).' 0 R';
 			if (isset($o['prev'])) {
 				$out .= ' /Prev '.($n + $o['prev']).' 0 R';

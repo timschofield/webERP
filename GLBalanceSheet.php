@@ -6,7 +6,7 @@
 
 
 include ('includes/session.inc');
-$title = _('Balance Sheet');
+$Title = _('Balance Sheet');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
@@ -14,7 +14,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	/*Show a form to allow input of criteria for TB to show */
 	include('includes/header.inc');
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="'
 		. _('Print') . '" alt="" />' . ' ' . _('Balance Sheet') . '</p></div>';
 	echo '<div class="page_help_text">'
 	. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />'
@@ -98,11 +98,11 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	$AccumProfitResult = DB_query($SQL,$db);
 	if (DB_error_no($db) !=0) {
-		$title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg($db) );
 		echo '<br />
-				<a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+				<a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />'. $SQL;
 		}
@@ -137,10 +137,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$AccountsResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />'. $SQL;
 		}
@@ -314,10 +314,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($LYCheckTotal,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 	if ($ListCount == 0) {   //UldisN
-		$title = _('Print Balance Sheet Error');
+		$Title = _('Print Balance Sheet Error');
 		include('includes/header.inc');
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br /><a href="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath.'/index.php?' . SID . '">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -375,7 +375,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
 
 	echo '<div class="invoice">
 			<table class="selection">
@@ -569,7 +569,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 				$k++;
 			}
 
-			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
 
 			printf('<td>%s</td>
 					<td>%s</td>

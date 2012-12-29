@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Profit and Loss');
+$Title = _('Profit and Loss');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
@@ -19,7 +19,7 @@ if ((!isset($_POST['FromPeriod'])
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Profit and Loss Report') . '
+			<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Profit and Loss Report') . '
 		</p>';
 	echo '<div class="page_help_text">' . _('Profit and loss statement (P&amp;L), also called an Income Statement, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') .
 		'<br />'
@@ -175,10 +175,10 @@ if ((!isset($_POST['FromPeriod'])
 	$AccountsResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) != 0) {
-		$title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug == 1){
 			echo '<br />'. $SQL;
 		}
@@ -186,11 +186,11 @@ if ((!isset($_POST['FromPeriod'])
 		exit;
 	}
 	if (DB_num_rows($AccountsResult)==0){
-		$title = _('Print Profit and Loss Error');
+		$Title = _('Print Profit and Loss Error');
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'warn' );
-		echo '<br /><a href="'. $rootpath.'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath.'/index.php">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -597,7 +597,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="" />' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="" />' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
@@ -967,7 +967,7 @@ if ((!isset($_POST['FromPeriod'])
 				$k++;
 			}
 
-			$ActEnquiryURL = '<a href="' . $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 
 			if ($Section ==1){
 				 printf('<td>%s</td>

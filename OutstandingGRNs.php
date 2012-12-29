@@ -43,10 +43,10 @@ if (isset($_POST['FromCriteria'])
 	$GRNsResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
+	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
 	   if ($debug==1){
 		  echo '<br />' . $SQL;
@@ -56,10 +56,10 @@ if (isset($_POST['FromCriteria'])
 	   exit;
 	}
 	if (DB_num_rows($GRNsResult) == 0) {
-	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
+	  $Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	  prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
 	   if ($debug==1){
 		  echo '<br />' . $SQL;
@@ -251,10 +251,10 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 
 } else { /*Neither the print PDF nor show on scrren option was hit */
 
-	$title=_('Outstanding GRNs Report');
+	$Title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text" align="center"><strong>' . $title . '</strong></p>';
+	echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 
 	echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 	

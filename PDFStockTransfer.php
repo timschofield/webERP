@@ -17,9 +17,9 @@ if (!isset($_GET['TransferNo'])){
 	}
 	if (!isset($_GET['TransferNo'])){ //still not set from a post then
 	//open a form for entering a transfer number
-		$title = _('Print Stock Transfer');
+		$Title = _('Print Stock Transfer');
 		include('includes/header.inc');
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $title.'</p><br />';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $Title.'</p><br />';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -69,7 +69,7 @@ $sql="SELECT stockmoves.stockid,
 
 $result=DB_query($sql, $db);
 if (DB_num_rows($result) == 0){
-	$title = _('Print Stock Transfer - Error');
+	$Title = _('Print Stock Transfer - Error');
 	include ('includes/header.inc');
 	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
 	echo '<a href="PDFStockTransfer.php">' . _('Try Again') .'</a>';

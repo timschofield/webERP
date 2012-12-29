@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Credit Status Code Maintenance');
+$Title = _('Credit Status Code Maintenance');
 include('includes/header.inc');
 
 if (isset($_GET['SelectedReason'])){
@@ -18,7 +18,7 @@ if (isset($Errors)) {
 $Errors = array();
 $InputError = 0;
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>
 	<br />';
 

@@ -6,7 +6,7 @@ include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.inc');
-$title = _('Stock Transfers');
+$Title = _('Stock Transfers');
 /* webERP manual links before header.inc */
 $ViewTopic= "Inventory";
 $BookMark = "LocationTransfers";
@@ -26,7 +26,7 @@ if (isset($_GET['From'])) {
 if (isset($_POST['CheckCode'])) {
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />
+			<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />
             ' . ' ' . _('Select Item to Transfer') . '
 		  </p>';
 
@@ -53,7 +53,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr>
 				<td>'.$myrow['stockid'].'</td>
 				<td>'.$myrow['description'].'</td>
-				<td><a href="' . $rootpath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&amp;Description='.$myrow['description'].'&amp;NewTransfer=Yes&amp;Quantity='. filter_number_format($_POST['Quantity']).'&amp;From='.$_POST['StockLocationFrom'].'&amp;To='.$_POST['StockLocationTo'].'">'
+				<td><a href="' . $RootPath . '/StockTransfers.php?StockID='.$myrow['stockid'].'&amp;Description='.$myrow['description'].'&amp;NewTransfer=Yes&amp;Quantity='. filter_number_format($_POST['Quantity']).'&amp;From='.$_POST['StockLocationFrom'].'&amp;To='.$_POST['StockLocationTo'].'">'
 				._('Transfer').'</a></td>
 			</tr>';
 
@@ -132,7 +132,7 @@ if ($NewTransfer){
 		if ($myrow['mbflag']=='D' OR $myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
 			prnMsg(_('The part entered is either or a dummy part or an assembly or a kit-set part') . '. ' . _('These parts are not physical parts and no stock holding is maintained for them') . '. ' . _('Stock Transfers are therefore not possible'),'warn');
 			echo '.<hr />';
-			echo '<a href="' . $rootpath . '/StockTransfers.php?NewTransfer=Yes">' . _('Enter another Transfer') . '</a>';
+			echo '<a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . _('Enter another Transfer') . '</a>';
 			unset ($_SESSION['Transfer']);
 			include ('includes/footer.inc');
 			exit;
@@ -455,7 +455,7 @@ if ( isset($_POST['EnterTransfer']) ){
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
 	  </p>';
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -545,7 +545,7 @@ echo '<tr>
 if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 	AND $_SESSION['Transfer']->TransferItem[0]->Controlled==1){
 
-	echo '<td class="number"><input type="hidden" name="Quantity" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /><a href="' . $rootpath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
+	echo '<td class="number"><input type="hidden" name="Quantity" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /><a href="' . $RootPath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
 } elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)){
 	echo '<td><input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /></td></tr>';
 } else {
@@ -568,15 +568,15 @@ if (empty($_SESSION['Transfer']->TransferItem[0]->StockID) and isset($_POST['Sto
 }
 if (isset($_SESSION['Transfer'])) {
 	echo '<br />
-		<a href="'.$rootpath.'/StockStatus.php?StockID=' . $StockID . '">'._('Show Stock Status').'</a>';
+		<a href="'.$RootPath.'/StockStatus.php?StockID=' . $StockID . '">'._('Show Stock Status').'</a>';
 	echo '<br />
-		<a href="'.$rootpath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
+		<a href="'.$RootPath.'/StockMovements.php?StockID=' . $StockID . '">'._('Show Movements').'</a>';
 	echo '<br />
-		<a href="'.$rootpath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
+		<a href="'.$RootPath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</a>';
 	echo '<br />
-		<a href="'.$rootpath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
+		<a href="'.$RootPath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</a>';
 	echo '<br />
-		<a href="'.$rootpath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
+		<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">'._('Search Completed Sales Orders').'</a>';
 }
 echo '</div>
     </div>

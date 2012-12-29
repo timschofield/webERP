@@ -2,7 +2,7 @@
 
 /* $Id$*/
 include('includes/session.inc');
-$title = _('Stock Location Transfer Docket Error');
+$Title = _('Stock Location Transfer Docket Error');
 
 include('includes/PDFStarter.php');
 
@@ -13,7 +13,7 @@ if (isset($_POST['TransferNo'])) {
 if (!isset($_GET['TransferNo'])){
 
 	include ('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Reprint transfer docket').'</p><br />';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';

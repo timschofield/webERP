@@ -3,10 +3,10 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Search Shipments');
+$Title = _('Search Shipments');
 include('includes/header.inc');
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+	'" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedStockItem'])){
 	$SelectedStockItem=$_GET['SelectedStockItem'];
@@ -312,8 +312,8 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 				$k++;
 			}
 
-			$URL_Modify_Shipment = $rootpath . '/Shipments.php?SelectedShipment=' . $myrow['shiptref'];
-			$URL_View_Shipment = $rootpath . '/ShipmentCosting.php?SelectedShipment=' . $myrow['shiptref'];
+			$URL_Modify_Shipment = $RootPath . '/Shipments.php?SelectedShipment=' . $myrow['shiptref'];
+			$URL_View_Shipment = $RootPath . '/ShipmentCosting.php?SelectedShipment=' . $myrow['shiptref'];
 
 			$FormatedETA = ConvertSQLDate($myrow['eta']);
 			/* ShiptRef   Supplier  Vessel  Voyage  ETA */

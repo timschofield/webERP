@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Issue Materials To Work Order');
+$Title = _('Issue Materials To Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -13,13 +13,13 @@ if (isset($_GET['StockID'])){
 	$_POST['StockID']=$_GET['StockID'];
 }
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
 	<br />';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a>
+echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a>
 	<br />';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' .
+	_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -28,7 +28,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['WO']) OR !isset($_POST['StockID'])) {
 	/* This page can only be called with a work order number for issuing stock to*/
-	echo '<div class="centre"><a href="' . $rootpath . '/SelectWorkOrder.php">'.
+	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">'.
 		_('Select a work order to issue materials to').'</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'),'info');
 	include ('includes/footer.inc');
@@ -351,8 +351,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		$Result = DB_Txn_Commit($db);
 
 		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
-		echo '<p><ul><li><a href="' . $rootpath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
-		echo '<li><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against'). '</a></li></ul>';
+		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
+		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against'). '</a></li></ul>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
 		unset($_POST['IssueItem']);
@@ -718,8 +718,8 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					if (function_exists('imagecreatefrompng') ){
 						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . urlencode($myrow['stockid']). '&amp;text=&amp;width=64&amp;height=64" alt="" />';
 					} else {
-						if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-							$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" alt="" />';
+						if(file_exists($_SERVER['DOCUMENT_ROOT'] . $RootPath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
+							$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" alt="" />';
 						} else {
 							$ImageSource = _('No Image');
 						}

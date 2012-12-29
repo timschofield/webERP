@@ -13,7 +13,7 @@ must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 
 
 include ('includes/session.inc');
-$title = _('Delete Credit Note');
+$Title = _('Delete Credit Note');
 include('includes/header.inc');
 
 

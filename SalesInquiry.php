@@ -6,7 +6,7 @@
 // If Date Type is Invoice, stockmoves is the main table
 
 include('includes/session.inc');
-$title = _('Sales Inquiry');
+$Title = _('Sales Inquiry');
 include('includes/header.inc');
 
 # Sets default date range for current month

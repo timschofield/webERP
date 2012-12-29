@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Company Preferences');
+$Title = _('Company Preferences');
 /* webERP manual links before header.inc */
 $ViewTopic= "CreatingNewSystem";
 $BookMark = "CompanyParameters";
@@ -152,8 +152,8 @@ if (isset($_POST['submit'])) {
 
 } /* end of if submit */
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title.'</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="" />' . ' ' . $Title.'</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';

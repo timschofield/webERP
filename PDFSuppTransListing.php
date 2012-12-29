@@ -14,10 +14,10 @@ if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
 
 if (!isset($_POST['Date'])){
 
-	 $title = _('Supplier Transaction Listing');
+	 $Title = _('Supplier Transaction Listing');
 	 include ('includes/header.inc');
 
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Supplier Transaction Listing').'</p></div>';
 
 	if ($InputError==1){
@@ -77,7 +77,7 @@ $sql= "SELECT type,
 $result=DB_query($sql,$db,'','',false,false);
 
 if (DB_error_no($db)!=0){
-	$title = _('Payment Listing');
+	$Title = _('Payment Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($debug==1){
@@ -86,7 +86,7 @@ if (DB_error_no($db)!=0){
 	include('includes/footer.inc');
   	exit;
 } elseif (DB_num_rows($result) == 0){
-	$title = _('Payment Listing');
+	$Title = _('Payment Listing');
 	include('includes/header.inc');
 	echo '<br />';
   	prnMsg (_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '._('Please try again selecting a different date'), 'info');

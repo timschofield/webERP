@@ -2,7 +2,7 @@
 /* $Id$*/
 //$PageSecurity = 15;
 include('includes/session.inc');
-$title = _('Upgrade webERP 3.08 - 3.09');
+$Title = _('Upgrade webERP 3.08 - 3.09');
 include('includes/header.inc');
 
 

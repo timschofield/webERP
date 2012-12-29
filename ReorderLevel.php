@@ -57,10 +57,10 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Reorder Level') . ' - ' . _('Problem Report');
+	  $Title = _('Reorder Level') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Reorder Level report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
@@ -176,10 +176,10 @@ if (isset($_POST['PrintPDF'])) {
 	//$len = mb_strlen($pdfcode);
 
 	if ($ListCount == 0){
-			$title = _('Print Reorder Level Report');
+			$Title = _('Print Reorder Level Report');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with demand greater than supply'),'error');
-			echo '<br /><a href="' . $rootpath . '/index.php?">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	} else {
@@ -189,9 +189,9 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('Reorder Level Reporting');
+	$Title=_('Reorder Level Reporting');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
 
 	echo '<br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -229,7 +229,7 @@ if (isset($_POST['PrintPDF'])) {
 			</table>
 			<br />';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		include ('includes/footer.inc');
 		exit;
 	}

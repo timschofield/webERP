@@ -97,11 +97,11 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Stock Dispatch - Problem Report');
+		$Title = _('Stock Dispatch - Problem Report');
 		include('includes/header.inc');
 		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 		echo '<br />
-				<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;
 		}
@@ -109,12 +109,12 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 	if (DB_num_rows($result) ==0) {
-		$title = _('Stock Dispatch - Problem Report');
+		$Title = _('Stock Dispatch - Problem Report');
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
 		echo '<br />
-				<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -276,9 +276,9 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('Stock Dispatch Report');
+	$Title=_('Stock Dispatch Report');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>'
 										. _('Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a') . '<br/>'
 										. _('dispatch percentage entered, that needed quantity is inflated by the percentage entered.') . '<br/>'
@@ -338,7 +338,7 @@ if (isset($_POST['PrintPDF'])) {
 	if (DB_num_rows($result1)==0){
 		echo '</table>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		echo '</div>
 			  </form>';
 		include ('includes/footer.inc');

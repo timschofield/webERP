@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$title = _('Geocoded Supplier Report');
+$Title = _('Geocoded Supplier Report');
 
 include ('includes/session.inc');
 include ('includes/header.inc');
@@ -87,7 +87,7 @@ var iconRed = new GIcon();
 </p>
   </body>
 <?
-echo '<div class="centre"><a href="' . $rootpath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
+echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
 include ('includes/footer.inc');
 ?>
 </html>

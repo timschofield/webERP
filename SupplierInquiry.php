@@ -5,7 +5,7 @@
 include('includes/SQL_CommonFunctions.inc');
 
 include('includes/session.inc');
-$title = _('Supplier Inquiry');
+$Title = _('Supplier Inquiry');
 include('includes/header.inc');
 
 // always figure out the SQL required from the inputs available
@@ -14,7 +14,7 @@ if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])){
 	echo '<br />' . _('To display the enquiry a Supplier must first be selected from the Supplier selection screen') .
 		 '<br />
 			<div class="centre">
-				<a href="' . $rootpath . '/SelectSupplier.php">' . _('Select a Supplier to Inquire On') . '</a>
+				<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a Supplier to Inquire On') . '</a>
 			</div>';
 	include('includes/footer.inc');
 	exit;
@@ -115,7 +115,7 @@ if ($NIL_BALANCE == True){
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') . ' ' . $SupplierRecord['currency'] . ')
+		<img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $SupplierRecord['suppname'] . ' - (' . _('All amounts stated in') . ' ' . $SupplierRecord['currency'] . ')
 		<br />
 		<br />' . _('Terms') . ': ' . $SupplierRecord['terms'] . '
 	</p>';
@@ -256,8 +256,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<td class="number">' . locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($myrow['totalamount']-$myrow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
 					<td align="left">' . $myrow['transtext'] . '</td>
-					<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['transno'] .'">' . _('View GL Postings') . '</a></td>
-					<td><a href="' . $rootpath . '/PaymentAllocations.php?SuppID=' . $myrow['supplierno'] . '&amp;InvID=' . $myrow['suppreference'] .'">' . _('View Payments') . '</a></td>
+					<td><a target="_blank" href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['transno'] .'">' . _('View GL Postings') . '</a></td>
+					<td><a href="' . $RootPath . '/PaymentAllocations.php?SuppID=' . $myrow['supplierno'] . '&amp;InvID=' . $myrow['suppreference'] .'">' . _('View Payments') . '</a></td>
 					</tr>';
 			} else {
 				echo '<td>' . $myrow['transno'] . '</td>
@@ -287,7 +287,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?' . 'HoldType=' . $myrow['type'] .'&amp;HoldTrans=' . $myrow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] .'">'.$HoldValue .'</a></td>';
 					}
 				}
-				echo '<td><a target="_blank" href="' . $rootpath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] .'&amp;TransNo=' . $myrow['transno'] .'">' ._('View GL Postings') . '</a></td></tr>';
+				echo '<td><a target="_blank" href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] .'&amp;TransNo=' . $myrow['transno'] .'">' ._('View GL Postings') . '</a></td></tr>';
 			}
 		} else {
 
@@ -339,7 +339,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						$HoldValue,
 						$_POST['TransAfterDate'],
 						$HoldValue,
-						$rootpath,
+						$RootPath,
 						$myrow['supplierno'],
 						$myrow['suppreference']);
 			}
@@ -368,9 +368,9 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']),
 					locale_number_format($myrow['totalamount']-$myrow['allocated'],$SupplierRecord['currdecimalplaces']),
 					$myrow['transtext'],
-					$rootpath,
+					$RootPath,
 					$myrow['id'],
-					$rootpath,
+					$RootPath,
 					$myrow['type'],
 					$myrow['transno'] );
 
@@ -394,7 +394,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					locale_number_format($myrow['allocated'],$SupplierRecord['currdecimalplaces']),
 					locale_number_format($myrow['totalamount'] - $myrow['allocated'],$SupplierRecord['currdecimalplaces']),
 					$myrow['transtext'],
-					$rootpath,
+					$RootPath,
 					$myrow['id']);
 
 		}

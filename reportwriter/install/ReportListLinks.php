@@ -10,7 +10,7 @@ Revision History:
 Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
 */
 function GetRptLinks($GroupID) {
-	global $db, $rootpath;
+	global $db, $RootPath;
 	$Title= array(_('Custom Reports'), _('Standard Reports'));
 	$RptLinks = '';
 	for ($Def=1; $Def>=0; $Def--) {
@@ -22,7 +22,7 @@ function GetRptLinks($GroupID) {
 		if (DB_num_rows($Result)>0) {
 			while ($Temp = DB_fetch_array($Result)) {
 				$RptLinks .= '<tr><td class="menu_group_item">';
-				$RptLinks .= '<a href="'.$rootpath.'/reportwriter/ReportMaker.php?action=go&reportid='.$Temp['id'].'"><li>'._($Temp['reportname']).'</li></a>';
+				$RptLinks .= '<a href="'.$RootPath.'/reportwriter/ReportMaker.php?action=go&reportid='.$Temp['id'].'"><li>'._($Temp['reportname']).'</li></a>';
 				$RptLinks .= '</td></tr>';
 			}
 		} else {

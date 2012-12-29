@@ -3,7 +3,7 @@
 /* $Id SupplierTypes.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 include('includes/session.inc');
-$title = _('Supplier Types') . ' / ' . _('Maintenance');
+$Title = _('Supplier Types') . ' / ' . _('Maintenance');
 include('includes/header.inc');
 
 if (isset($_POST['SelectedType'])){
@@ -18,7 +18,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . _('Supplier Type Setup') . '</p>';
 echo '<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div><br />';
 

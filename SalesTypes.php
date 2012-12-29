@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Sales Types') . ' / ' . _('Price List Maintenance');
+$Title = _('Sales Types') . ' / ' . _('Price List Maintenance');
 include('includes/header.inc');
 
 if (isset($_POST['SelectedType'])){
@@ -17,7 +17,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_POST['submit'])) {
 

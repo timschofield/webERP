@@ -3,12 +3,12 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Work Order Entry');
+$Title = _('Work Order Entry');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+		<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 
@@ -282,8 +282,8 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has been clicked
 
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .'">' . _('Enter a new work order') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
-	echo '<br /><a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Go to Costing'). '</a></div>';
+	echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
+	echo '<br /><a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Go to Costing'). '</a></div>';
 
 	$Input_Error = false; //hope for the best
 	 for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
@@ -415,7 +415,7 @@ if (isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button ha
 		prnMsg(_('The work order has been cancelled'),'success');
 
 
-		echo '<p><a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select an existing outstanding work order') . '</a></p>';
+		echo '<p><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing outstanding work order') . '</a></p>';
 		unset($_POST['WO']);
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
 			unset($_POST['OutputItem'.$i]);
@@ -564,7 +564,7 @@ if (isset($NumberOfOutputs)){
 				} else {
 					$LotOrSN = _('Batches');
 				}
-				echo '<td><a href="' . $rootpath . '/WOSerialNos.php?WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
+				echo '<td><a href="' . $RootPath . '/WOSerialNos.php?WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' .$i] . '&Description=' . $_POST['OutputItemDesc' .$i] . '&Serialised=' . $_POST['Serialised' .$i] . '&NextSerialNo=' . $_POST['NextLotSNRef' .$i] . '">' . $LotOrSN . '</a></td>';
 			}
 		}
 		echo '<td>';
@@ -656,8 +656,8 @@ if (isset($SearchResult)) {
 				if (function_exists('imagecreatefrompng') ){
 					$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64" />';
 				} else {
-					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
-						$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath .  '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" />';
+					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
+						$ImageSource = '<img src="' .$_SERVER['DOCUMENT_ROOT'] . $RootPath .  '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" />';
 					} else {
 						$ImageSource = _('No Image');
 					}

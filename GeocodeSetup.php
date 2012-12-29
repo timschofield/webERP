@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Geocode Maintenance');
+$Title = _('Geocode Maintenance');
 include('includes/header.inc');
 
 if (isset($_GET['SelectedParam'])){
@@ -132,7 +132,7 @@ or deletion of the records*/
 			FROM geocode_param";
 	$result = DB_query($sql, $db);
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'.
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'.
 			_('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
 	echo '<div class="page_help_text">'. _('Get a google API key at ') .
 		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
@@ -227,7 +227,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedParam" value="' . $SelectedParam . '" />';
 		echo '<input type="hidden" name="GeoCodeID" value="' . $_POST['GeoCodeID'] . '" />';
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
 		echo '<br /><table>
 				<tr><td>'. _('Geocode Code') .':</td>
 					<td>' . $_POST['GeoCodeID'] . '</td></tr>';
@@ -276,9 +276,9 @@ if (!isset($_GET['delete'])) {
 echo '<div class="page_help_text">' . _('When ready, click on the link below to run the GeoCode process. This will Geocode all Branches and Suppliers. This may take some time. Errors will be returned to the screen.') . '<br />';
 echo '<p>' . _('Suppliers and Customer Branches are geocoded when being entered/updated. You can rerun the geocode process from this screen at any time.') . '</p></div><br />';
 
-echo '<div class="centre"><a href="' . $rootpath . '/geocode.php">' . _('Run GeoCode process (may take a long time)') . '</a><br />';
-echo '<a href="' . $rootpath . '/geo_displaymap_customers.php">' . _('Display Map of Customer Branches') . '</a><br />';
-echo '<a href="' . $rootpath . '/geo_displaymap_suppliers.php">' . _('Display Map of Suppliers') . '</a></div>';
+echo '<div class="centre"><a href="' . $RootPath . '/geocode.php">' . _('Run GeoCode process (may take a long time)') . '</a><br />';
+echo '<a href="' . $RootPath . '/geo_displaymap_customers.php">' . _('Display Map of Customer Branches') . '</a><br />';
+echo '<a href="' . $RootPath . '/geo_displaymap_suppliers.php">' . _('Display Map of Suppliers') . '</a></div>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
 ?>

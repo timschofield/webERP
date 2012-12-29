@@ -3,7 +3,7 @@
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 include('includes/session.inc');
-$title = _('Customer Allocations != DebtorTrans.Alloc');
+$Title = _('Customer Allocations != DebtorTrans.Alloc');
 include('includes/header.inc');
 
 /*First off get the DebtorTransID of all invoices where allocations dont agree to the recorded allocation */

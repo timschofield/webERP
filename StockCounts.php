@@ -5,7 +5,7 @@
 
 include('includes/session.inc');
 
-$title = _('Stock Check Sheets Entry');
+$Title = _('Stock Check Sheets Entry');
 
 include('includes/header.inc');
 
@@ -13,8 +13,8 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-	_('Inventory Adjustment') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+	_('Inventory Adjustment') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Action']) and !isset($_GET['Action'])) {
 	$_GET['Action'] = 'Enter';
@@ -29,9 +29,9 @@ if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){
 
 echo '<table class="selection"><tr>';
 if ($_GET['Action']=='View'){
-	echo '<td><a href="' . $rootpath . '/StockCounts.php?&amp;Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
+	echo '<td><a href="' . $RootPath . '/StockCounts.php?&amp;Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
 } else {
-	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $rootpath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
+	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
 }
 echo '</tr></table><br />';
 

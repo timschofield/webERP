@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Stock Re-Order Level Maintenance');
+$Title = _('Stock Re-Order Level Maintenance');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
@@ -12,10 +12,10 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
+echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $title. '</b>
+		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID . "'", $db);
@@ -109,10 +109,10 @@ echo '</table>
 		<br />
 		<br />';
 
-echo '<a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
-echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage') . '</a>';
-echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
     </div>

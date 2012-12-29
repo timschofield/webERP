@@ -54,10 +54,10 @@ if (isset($_POST['PrintPDF'])
 	$CustomerResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Customer Balances') . ' - ' . _('Problem Report');
+		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg($db),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -66,10 +66,10 @@ if (isset($_POST['PrintPDF'])
 	}
 
 	if (DB_num_rows($CustomerResult) == 0) {
-		$title = _('Customer Balances') . ' - ' . _('Problem Report');
+		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The customer details listing has no clients to report on'),'warn');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -120,10 +120,10 @@ if (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Debtor Balances');
+	$Title=_('Debtor Balances');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
-	 '" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
+	 '" alt="" />' . ' ' . $Title.'</p><br />';
 
 	if (!isset($_POST['FromCriteria']) OR !isset($_POST['ToCriteria'])) {
 

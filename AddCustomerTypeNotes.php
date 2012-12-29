@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Type (Group) Notes');
+$Title = _('Customer Type (Group) Notes');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -16,7 +16,7 @@ if (isset($_POST['DebtorType'])){
 } elseif (isset($_GET['DebtorType'])){
 	$DebtorType = $_GET['DebtorType'];
 }
-echo '<a href="' . $rootpath . '/SelectCustomer.php?DebtorType='.$DebtorType.'">' . _('Back to Select Customer') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectCustomer.php?DebtorType='.$DebtorType.'">' . _('Back to Select Customer') . '</a><br />';
 
 if (isset($_POST['submit']) ) {
 
@@ -91,7 +91,7 @@ if (!isset($Id)) {
 	$SQLname="SELECT typename from debtortype where typeid='".$DebtorType."'";
 	$result = DB_query($SQLname,$db);
 	$myrow = DB_fetch_array($result);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />'  . _('Notes for Customer Type').': <b>' .$myrow['typename'].'</b></p>
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />'  . _('Notes for Customer Type').': <b>' .$myrow['typename'].'</b></p>
 		<br />';
 
 	$sql = "SELECT noteid,

@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title=_('Debtors Control Integrity');
+$Title=_('Debtors Control Integrity');
 include('includes/header.inc');
 
 
@@ -11,8 +11,8 @@ include('includes/header.inc');
 //
 
     // Context Navigation and Title
-    echo '<a href="'. $rootpath . '/index.php?&amp;Application=AR">' . _('Back to Customers') . '</a>';
-    echo '<div class="centre"><h3>' . $title . '</h3></div>';
+    echo '<a href="'. $RootPath . '/index.php?&amp;Application=AR">' . _('Back to Customers') . '</a>';
+    echo '<div class="centre"><h3>' . $Title . '</h3></div>';
 
 	// Page Border
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';

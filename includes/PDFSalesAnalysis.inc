@@ -538,13 +538,13 @@ if (isset($_GET['ProduceCVSFile'])){
 			fputs($fp, $line."\n");
 	      }
 	 }
-	 $title = _('Sales Analysis Comma Separated File (CSV) Generation');
+	 $Title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.inc');
 
-	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
-	 echo "<meta http-equiv='Refresh' content='0; url=http://" . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
+	 echo 'http://' . getenv(SERVER_NAME) . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
+	 echo "<meta http-equiv='Refresh' content='0; url=http://" . getenv(SERVER_NAME) . $RootPath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
 
-	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $rootpath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') .'<br />';
+	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') .'<br />';
 	 include('includes/footer.inc');
 }
 

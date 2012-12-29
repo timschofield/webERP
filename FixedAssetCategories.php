@@ -4,13 +4,13 @@
 
 include('includes/session.inc');
 
-$title = _('Fixed Asset Category Maintenance');
+$Title = _('Fixed Asset Category Maintenance');
 
 include('includes/header.inc');
 
 echo '<div class="centre">
 	<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
 	</p>
     </div>';
 

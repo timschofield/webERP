@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Run MRP Calculation');
+$Title = _('Run MRP Calculation');
 include('includes/header.inc');
 
 if (isset($_POST['submit'])) {
@@ -524,8 +524,8 @@ if (isset($_POST['submit'])) {
 
 } else { // End of if submit isset
 	// Display form if submit has not been hit
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-			_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	// Display parameters from last run
 	$sql = "SELECT * FROM mrpparameters";

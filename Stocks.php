@@ -3,7 +3,7 @@
 /* $Id$ */
 
 include('includes/session.inc');
-$title = _('Item Maintenance');
+$Title = _('Item Maintenance');
 /* webERP manual links before header.inc */
 $ViewTopic= 'Inventory';
 $BookMark = 'InventoryAddingItems';
@@ -39,10 +39,10 @@ if (isset($_POST['New'])) {
 	$New=$_POST['New'];
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
 	<br />
 	<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
@@ -906,7 +906,7 @@ if (!isset($_POST['CategoryID'])) {
 	$_POST['CategoryID']=$Category;
 }
 
-echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php">' . _('Add or Modify Stock Categories') . '</a></td>
+echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Stock Categories') . '</a></td>
 	</tr>';
 
 if (!isset($_POST['EOQ']) OR $_POST['EOQ']==''){

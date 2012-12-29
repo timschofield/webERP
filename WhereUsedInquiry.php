@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Where Used Inquiry');
+$Title = _('Where Used Inquiry');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
@@ -12,10 +12,10 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
 	<br />
 	<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 if (isset($StockID)){
 	$result = DB_query("SELECT description,
@@ -86,7 +86,7 @@ if (isset($StockID)) {
 				$k=1;
 			}
 
-			echo '<td><a target="_blank" href="' . $rootpath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
+			echo '<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
 				<td>' . $myrow['workcentreadded']. '</td>
 				<td>' . $myrow['loccode']. '</td>
 				<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>

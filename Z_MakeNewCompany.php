@@ -9,11 +9,11 @@ include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['EnterCompanyDetails'])) {
 
-	header ('Location:' . $rootpath . '/CompanyPreferences.php?' . SID);
+	header ('Location:' . $RootPath . '/CompanyPreferences.php?' . SID);
 	exit;
 }
 
-$title = _('Make New Company Database Utility');
+$Title = _('Make New Company Database Utility');
 
 include('includes/header.inc');
 
@@ -191,9 +191,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 
 		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
-		echo '<p><a href="' . $rootpath . '/CompanyPreferences.php">' . _('Set Up New Company Details') . '</a>';
-		echo '<p><a href="' . $rootpath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
-		echo '<p><a href="' . $rootpath . '/WWW_Users.php">' . _('Set Up User Accounts') . '</a>';
+		echo '<p><a href="' . $RootPath . '/CompanyPreferences.php">' . _('Set Up New Company Details') . '</a>';
+		echo '<p><a href="' . $RootPath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
+		echo '<p><a href="' . $RootPath . '/WWW_Users.php">' . _('Set Up User Accounts') . '</a>';
 
         echo '</div>';
 		echo '</form>';

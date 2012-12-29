@@ -5,7 +5,7 @@
 
 include('includes/session.inc');
 
-$title=_('File Upload Result');
+$Title=_('File Upload Result');
 
 include('includes/header.inc');
 

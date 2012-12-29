@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Sales Area Maintenance');
+$Title = _('Sales Area Maintenance');
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'Areas';
 include('includes/header.inc');
@@ -141,7 +141,7 @@ if (!isset($SelectedArea)) {
 				FROM areas";
 	$result = DB_query($sql,$db);
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 	echo '<table class="selection">
 			<tr>

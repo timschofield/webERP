@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Search Suppliers');
+$Title = _('Search Suppliers');
 
 /* webERP manual links before header.inc */
 $ViewTopic= 'AccountsPayable';
@@ -11,7 +11,7 @@ $BookMark = 'SelectSupplier';
 include ('includes/header.inc');
 include ('includes/SQL_CommonFunctions.inc');
 if (!isset($_SESSION['SupplierID'])) {
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 }
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID']=$_GET['SupplierID'];
@@ -151,7 +151,7 @@ if (isset($_SESSION['SupplierID'])) {
 		$myrow = DB_fetch_row($SupplierNameResult);
 		$SupplierName = $myrow[0];
 	}
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
 	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
 	echo '<br />
 		<table width="90%" cellpadding="4">
@@ -161,30 +161,30 @@ if (isset($_SESSION['SupplierID'])) {
 			<th style="width:33%">' . _('Supplier Maintenance') . '</th>
 		</tr>';
 	echo '<tr><td valign="top" class="select">'; /* Inquiry Options */
-	echo '<a href="' . $rootpath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
+	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
 		<br />
 		<br />';
 
-	echo '<br /><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Add / Receive / View Outstanding Purchase Orders') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('View All Purchase Orders') . '</a><br />';
+	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Add / Receive / View Outstanding Purchase Orders') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('View All Purchase Orders') . '</a><br />';
 	wikiLink('Supplier', $_SESSION['SupplierID']);
-	echo '<br /><a href="' . $rootpath . '/ShiptsList.php?SupplierID=' . $_SESSION['SupplierID'] . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('List all open shipments for') .' '.$SupplierName. '</a>';
-	echo '<br /><a href="' . $rootpath . '/Shipt_Select.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Search / Modify / Close Shipments') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/SuppPriceList.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Supplier Price List') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . $_SESSION['SupplierID'] . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('List all open shipments for') .' '.$SupplierName. '</a>';
+	echo '<br /><a href="' . $RootPath . '/Shipt_Select.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Search / Modify / Close Shipments') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SuppPriceList.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Supplier Price List') . '</a>';
 	echo '</td><td valign="top" class="select">'; /* Supplier Transactions */
-	echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Purchase Order for This Supplier') . '</a><br />';
-	echo '<a href="' . $rootpath . '/SupplierInvoice.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Suppliers Invoice') . '</a><br />';
-	echo '<a href="' . $rootpath . '/SupplierCredit.php?New=true&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Suppliers Credit Note') . '</a><br />';
-	echo '<a href="' . $rootpath . '/Payments.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Payment to, or Receipt from the Supplier') . '</a><br />';
+	echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Purchase Order for This Supplier') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Suppliers Invoice') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SupplierCredit.php?New=true&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Suppliers Credit Note') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Payments.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Payment to, or Receipt from the Supplier') . '</a><br />';
 	echo '<br />';
-	echo '<br /><a href="' . $rootpath . '/ReverseGRN.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Reverse an Outstanding Goods Received Note (GRN)') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/ReverseGRN.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Reverse an Outstanding Goods Received Note (GRN)') . '</a>';
 	echo '</td><td valign="top" class="select">'; /* Supplier Maintenance */
-	echo '<a href="' . $rootpath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
-	echo '<a href="' . $rootpath . '/Suppliers.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Modify Or Delete Supplier Details') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Add/Modify/Delete Supplier Contacts') . '</a>';
+	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Suppliers.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Modify Or Delete Supplier Details') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Add/Modify/Delete Supplier Contacts') . '</a>';
 	echo '<br />';
-	echo '<br /><a href="' . $rootpath . '/Shipments.php?NewShipment=Yes">' . _('Set Up A New Shipment') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/SuppLoginSetup.php">' . _('Supplier Login Configuration') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/Shipments.php?NewShipment=Yes">' . _('Set Up A New Shipment') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SuppLoginSetup.php">' . _('Supplier Login Configuration') . '</a>';
 	echo '</td></tr></table>';
 } else {
 	// Supplier is not selected yet
@@ -199,7 +199,7 @@ if (isset($_SESSION['SupplierID'])) {
 			<td valign="top" class="select"></td>
 			<td valign="top" class="select"></td>
 			<td valign="top" class="select">'; /* Supplier Maintenance */
-	echo '<a href="' . $rootpath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
 	echo '</td>
 		</tr>
 		</table>';
@@ -207,7 +207,7 @@ if (isset($_SESSION['SupplierID'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
 	<table cellpadding="3" class="selection">
 	<tr>
 		<td>' . _('Enter a partial Name') . ':</td>

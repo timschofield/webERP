@@ -2,11 +2,11 @@
 /* $Id: SMTPServer.php 4469 2011-01-15 02:28:37Z daintree $*/
 include('includes/session.inc');
 
-$title = _('SMTP Server details');
+$Title = _('SMTP Server details');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/email.gif" title="' . _('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/email.gif" title="' . _('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
 // First check if there are smtp server data or not
 
 

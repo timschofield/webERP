@@ -50,7 +50,7 @@ function DecodeBgColor( $ColourStr ) {
 }
 
 if (!function_exists('imagecreatefrompng')){
-	$title = _('Image Manipulation Script Problem');
+	$Title = _('Image Manipulation Script Problem');
 	include('includes/header.inc');
 	prnMsg(_('This script requires the gd image functions to be available to php - this needs to be enabled in your server php version before this script can be used'),'error');
 	include('includes/footer.inc');
@@ -144,10 +144,10 @@ if ( file_exists($tmpFileName.'.jpg') ) {
 	$IsJpeg = $DefaultIsJpeg;
 }
 if( !$automake && !isset($FileName) ) {
-		$title = _('Stock Image Retrieval ....');
+		$Title = _('Stock Image Retrieval ....');
 		include('includes/header.inc');
 		prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
-		echo '<br /><a href="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 }

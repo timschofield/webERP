@@ -8,7 +8,7 @@
 // got error: Catchable fatal error: Object of class mysqli could not be converted to string
 
 include('includes/session.inc');
-$title = _('MRP Demands');
+$Title = _('MRP Demands');
 include('includes/header.inc');
 
 if (isset($_POST['DemandID'])){
@@ -23,8 +23,8 @@ if (isset($_POST['StockID'])){
 	$StockID =trim(mb_strtoupper($_GET['StockID']));
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-	_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+	_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['Search'])) {
 	search($db,$StockID);

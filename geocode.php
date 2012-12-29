@@ -2,7 +2,7 @@
 
 /* $Id$*/
 //$PageSecurity = 3;
-$title = _('Geocode Generate');
+$Title = _('Geocode Generate');
 
 include ('includes/session.inc');
 include ('includes/header.inc');
@@ -23,7 +23,7 @@ $map_host = $row['map_host'];
 define("MAPS_HOST", $map_host);
 define("KEY", $api_key);
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . ' ' . _('Geocoding of Customers and Suppliers') .'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . ' ' . _('Geocoding of Customers and Suppliers') .'</p>';
 
 // select all the customer branches
 $sql = "SELECT * FROM custbranch WHERE 1";
@@ -132,6 +132,6 @@ while ($row2 = @mysql_fetch_assoc($result2)) {
 }
 echo '</p>';
 
-echo '<br /><div class="centre"><a href="' . $rootpath . '/GeocodeSetup.php">' . _('Go back to Geocode Setup') . '</a></div>';
+echo '<br /><div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go back to Geocode Setup') . '</a></div>';
 include ('includes/footer.inc');
 ?>

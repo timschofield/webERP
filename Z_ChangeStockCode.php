@@ -5,7 +5,7 @@
 /*Script to Delete all sales transactions*/
 
 include ('includes/session.inc');
-$title = _('UTILITY PAGE Change A Stock Code');
+$Title = _('UTILITY PAGE Change A Stock Code');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

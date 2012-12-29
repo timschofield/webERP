@@ -13,19 +13,19 @@ include('includes/DefineSuppTransClass.php');
 /* Session started here for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Shipment Charges or Credits');
+$Title = _('Shipment Charges or Credits');
 
 include('includes/header.inc');
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>';
 } else {
-	echo '<a href="' . $rootpath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>';
 }
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('Shipment charges or credits are entered against supplier invoices or credit notes respectively') . '. ' . _('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
-	echo '<br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
 	exit;
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }

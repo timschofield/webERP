@@ -4,7 +4,7 @@
 
 //$PageSecurity=15;
 include ('includes/session.inc');
-$title = _('Delete Sales Transactions');
+$Title = _('Delete Sales Transactions');
 include('includes/header.inc');
 
 if (isset($_POST['ProcessDeletions'])){

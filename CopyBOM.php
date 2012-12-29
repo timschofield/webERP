@@ -8,7 +8,7 @@
 
 include('includes/session.inc');
 
-$title = _('Copy a BOM to New Item Code');
+$Title = _('Copy a BOM to New Item Code');
 
 include('includes/header.inc');
 
@@ -153,7 +153,7 @@ if(isset($_POST['Submit'])) {
 	} //end  if there is no input error
 } else {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
     echo '<div>';

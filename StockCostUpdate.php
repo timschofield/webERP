@@ -5,7 +5,7 @@
 $UpdateSecurity =10;
 
 include('includes/session.inc');
-$title = _('Stock Cost Update');
+$Title = _('Stock Cost Update');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -15,11 +15,11 @@ if (isset($_GET['StockID'])){
 	$StockID =trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
 
 echo '<p class="page_title_text">
-     <img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />
-     ' . ' ' . $title . '</p>';
+     <img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />
+     ' . ' ' . $Title . '</p>';
 
 if (isset($_POST['UpdateData'])){
 
@@ -191,11 +191,11 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens'])){
          <br />';
 }
 if ($myrow['mbflag']!='D'){
-	echo '<div class="centre"><a href="' . $rootpath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage')  .'</a>';
-	echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-	echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
+	echo '<div class="centre"><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage')  .'</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
 }
 echo '</div>
       </form>';

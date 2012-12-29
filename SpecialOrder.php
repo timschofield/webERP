@@ -7,7 +7,7 @@ include('includes/DefineSpecialOrderClass.php');
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-$title = _('Special Order Entry');
+$Title = _('Special Order Entry');
 
 include('includes/header.inc');
 
@@ -29,7 +29,7 @@ if (isset($_GET['NewSpecial']) and $_GET['NewSpecial']=='yes'){
 if (!isset($_SESSION['SupplierID'])){
 	echo '<br /><br />';
 	prnMsg(_('To set up a special') . ', ' . _('the supplier must first be selected from the Select Supplier page'),'info');
-	echo '<br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select the supplier now') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select the supplier now') . '</a>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -38,7 +38,7 @@ if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID']==''){
 	echo '<br />
 		<br />' . _('To set up a special') . ', ' . _('the customer must first be selected from the Select Customer page') . '
 		<br />
-		<a href="' . $rootpath . '/SelectCustomer.php">' . _('Select the customer now') . '</a>';
+		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Select the customer now') . '</a>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -478,7 +478,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		} /* end of the loop round the detail line items on the order */
 
 		echo '<br /><br />' . _('Purchase Order') . ' ' . $_SESSION['SPL'.$identifier]->PurchOrderNo . ' ' . _('on') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('has been created');
-		echo '<br /><a href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['SPL'.$identifier]->PurchOrderNo . '">' . _('Print Purchase Order') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['SPL'.$identifier]->PurchOrderNo . '">' . _('Print Purchase Order') . '</a>';
 
 /*Now insert the sales order too */
 
@@ -573,14 +573,14 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 
 			/* Only allow print of packing slip for internal staff - customer logon's cannot go here */
-			echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $SalesOrderNo . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')</a></p>';
-			echo '<p><a href="' . $rootpath . '/PrintCustOrder_generic.php?TransNo=' . $SalesOrderNo . '">' . _('Print packing slip') . ' (' . _('Laser') . ')</a></p>';
+			echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $SalesOrderNo . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')</a></p>';
+			echo '<p><a href="' . $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $SalesOrderNo . '">' . _('Print packing slip') . ' (' . _('Laser') . ')</a></p>';
 
 		}
 
 		$Result = DB_Txn_Commit($db);
 		unset($_SESSION['SPL'.$identifier]); /*Clear the PO data to allow a newy to be input*/
-		echo '<br /><br /><a href="' . $rootpath . '/SpecialOrder.php">' . _('Enter A New Special Order') . '</a>';
+		echo '<br /><br /><a href="' . $RootPath . '/SpecialOrder.php">' . _('Enter A New Special Order') . '</a>';
 		exit;
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the SPL object to the database  - user hit the place Order*/

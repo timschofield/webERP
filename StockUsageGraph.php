@@ -46,7 +46,7 @@ if($_GET['StockLocation']=='All'){
 }
 $MovtsResult = DB_query($sql, $db);
 if (DB_error_no($db) !=0) {
-	$title = _('Stock Usage Graph Problem');
+	$Title = _('Stock Usage Graph Problem');
 	include ('includes/header.inc');
 	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
 	if ($debug==1){
@@ -56,7 +56,7 @@ if (DB_error_no($db) !=0) {
 	exit;
 }
 if (DB_num_rows($MovtsResult)==0){
-	$title = _('Stock Usage Graph Problem');
+	$Title = _('Stock Usage Graph Problem');
 	include ('includes/header.inc');
 	prnMsg(_('There are no movements of this item from the selected location to graph'),'info');
 	include('includes/footer.inc');

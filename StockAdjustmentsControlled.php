@@ -6,7 +6,7 @@ include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 include('includes/session.inc');
 
-$title = _('Adjusting Controlled Items');
+$Title = _('Adjusting Controlled Items');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 
@@ -19,7 +19,7 @@ if (empty($_GET['identifier'])) {
 
 if (!isset($_SESSION['Adjustment'.$identifier])) {
 	/* This page can only be called when a stock adjustment is pending */
-	echo '<div class="centre"><a href="' . $rootpath . '/StockAdjustments.php?NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</a><br />';
+	echo '<div class="centre"><a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</a><br />';
 	prnMsg( _('This page can only be opened if a stock adjustment for a controlled item has been entered').'<br />','error');
 	echo '</div>';
 	include('includes/footer.inc');
@@ -36,7 +36,7 @@ $LineItem = $_SESSION['Adjustment'.$identifier];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo '<a href="' . $rootpath . '/StockAdjustments.php?NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</a>';
+	echo '<a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</a>';
 	prnMsg('<br />'. _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
 	include('includes/footer.inc');
 	exit;
@@ -45,7 +45,7 @@ if ( $LineItem->Controlled != 1 ){
 /*****  get the page going now... *****/
 echo '<div class="centre">';
 
-echo '<br /><a href="'.$rootpath.'/StockAdjustments.php?identifier='.$identifier.'">' . _('Back to Adjustment Screen') . '</a>';
+echo '<br /><a href="'.$RootPath.'/StockAdjustments.php?identifier='.$identifier.'">' . _('Back to Adjustment Screen') . '</a>';
 
 echo '<br /><b>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
 

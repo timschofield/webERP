@@ -4,12 +4,12 @@
 
 include('includes/session.inc');
 
-$title = _('Payment Methods');
+$Title = _('Payment Methods');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payments') .
-	'" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payments') .
+	'" alt="" />' . ' ' . $Title.'</p>';
 
 if ( isset($_GET['SelectedPaymentID']) )
 	$SelectedPaymentID = $_GET['SelectedPaymentID'];

@@ -3,7 +3,7 @@
 /* $Id: Z_ChangeLocationCode.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 
 include ('includes/session.inc');
-$title = _('UTILITY PAGE Change A Location Code');
+$Title = _('UTILITY PAGE Change A Location Code');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

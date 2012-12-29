@@ -11,7 +11,7 @@ Call this page with:
 
 include('includes/DefineCustAllocsClass.php');
 include('includes/session.inc');
-$title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
+$Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -319,7 +319,7 @@ if (isset($_GET['AllocTrans'])) {
 
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="" />' . ' ' . _('Allocate Receipts') . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="" />' . ' ' . _('Allocate Receipts') . '
 	</p>';
 
 $TableHeader = '<tr>

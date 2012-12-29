@@ -8,7 +8,7 @@
 // If Date Type is Delivery, the main file is grns
 
 include('includes/session.inc');
-$title = _('Purchase Order Report');
+$Title = _('Purchase Order Report');
 include('includes/header.inc');
 
 # Sets default date range for current month
@@ -57,16 +57,16 @@ if (isset($_POST['SummaryType']) and $_POST['SummaryType'] == 'suppname') {
 }
 
 if (isset($_POST['submit'])) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title.'</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="" />' . ' ' . $Title.'</p>';
 	submit($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
 } else if (isset($_POST['submitcsv'])) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title.'</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="" />' . ' ' . $Title.'</p>';
 	submitcsv($db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
 } else {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . $title.'</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="" />' . $Title.'</p>';
 	display($db);
 }
 
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType) {
 
-	global $rootpath;
+	global $RootPath;
 	//initialize no input errors
 	$InputError = 0;
 
@@ -561,7 +561,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 					}
 					$linectr++;
 				   // Detail for both DateType of Order
-					printf('<td><a href="'. $rootpath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
+					printf('<td><a href="'. $RootPath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>

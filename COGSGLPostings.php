@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Cost Of Sales GL Postings Set Up');
+$Title = _('Cost Of Sales GL Postings Set Up');
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'SalesGLPostings';
 include('includes/header.inc');
@@ -16,7 +16,7 @@ if (isset($_POST['SelectedCOGSPostingID'])){
 	$SelectedCOGSPostingID=$_GET['SelectedCOGSPostingID'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_POST['submit'])) {
 

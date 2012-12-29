@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Database table details');
+$Title = _('Database table details');
 include('includes/header.inc');
 
 $sql='DESCRIBE '.$_GET['table'];

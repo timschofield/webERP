@@ -11,13 +11,13 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Supplier Transaction General Ledger Analysis');
+$Title = _('Supplier Transaction General Ledger Analysis');
 
 include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or supplier credit note must be clicked on'),'info');
-	echo '<br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
@@ -95,10 +95,10 @@ if (isset($_GET['Edit'])){
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+			<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 } else {
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+			<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
 echo '</p>
 	<table class="selection">';
@@ -144,12 +144,12 @@ echo '<tr>
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 	echo '<br />
 		<div class="centre">
-			<a href="' . $rootpath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
+			<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
 		</div>';
 } else {
 	echo '<br />
 		<div class="centre">
-			<a href="' . $rootpath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>
+			<a href="' . $RootPath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>
 		</div>';
 }
 

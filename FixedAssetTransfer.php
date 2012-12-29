@@ -4,12 +4,12 @@
 
 include('includes/session.inc');
 
-$title = _('Change Asset Location');
+$Title = _('Change Asset Location');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+		'" alt="" />' . ' ' . $Title . '</p>';
 
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 	if (mb_substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off

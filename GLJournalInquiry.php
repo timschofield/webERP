@@ -1,10 +1,10 @@
 <?php
 
 include ('includes/session.inc');
-$title = _('General Ledger Journal Inquiry');
+$Title = _('General Ledger Journal Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';

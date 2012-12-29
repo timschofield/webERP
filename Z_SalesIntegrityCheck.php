@@ -7,7 +7,7 @@
 
 
 include ('includes/session.inc');
-$title = _('Sales Integrity');
+$Title = _('Sales Integrity');
 include('includes/header.inc');
 
 

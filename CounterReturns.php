@@ -8,7 +8,7 @@ config.php is in turn included in session.inc $PageSecurity now comes from sessi
 
 include('includes/session.inc');
 
-$title = _('Counter Returns');
+$Title = _('Counter Returns');
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');
@@ -193,7 +193,7 @@ if (isset($_POST['CancelReturn'])) {
 
 } else { /*Not cancelling the return */
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Counter Return') . '" alt="" />' . ' ';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Counter Return') . '" alt="" />' . ' ';
 	echo '<font color="red" size="5">' . $_SESSION['Items'.$identifier]->CustomerName . '<br /> ' . _('Counter Return') . ' ' . _('to') . ' ' . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('inventory') . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
 	echo '</font></p>';
 }
@@ -701,7 +701,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 		echo '<input type="hidden" name="POLine_' .	 $ReturnItemLine->LineNumber . '" value="" />';
 		echo '<input type="hidden" name="ItemDue_' .	 $ReturnItemLine->LineNumber . '" value="'.$ReturnItemLine->ItemDue.'" />';
 
-		echo '<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
+		echo '<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
 			<td title="' . $ReturnItemLine->LongDescription . '">' . $ReturnItemLine->ItemDescription . '</td>';
 
 		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
@@ -1582,9 +1582,9 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 		echo '<br /><div class="centre">';
 
 		if ($_SESSION['InvoicePortraitFormat']==0){
-			echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTrans.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True">'. _('Print this credit note'). ' (' . _('Landscape') . ')</a><br /><br />';
+			echo '<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True">'. _('Print this credit note'). ' (' . _('Landscape') . ')</a><br /><br />';
 		} else {
-			echo '<img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$rootpath.'/PrintCustTransPortrait.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True" onClick="return window.location=\'index.php\'">'. _('Print this credit note'). ' (' . _('Portrait') . ')</a><br /><br />';
+			echo '<img src="'.$RootPath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True" onClick="return window.location=\'index.php\'">'. _('Print this credit note'). ' (' . _('Portrait') . ')</a><br /><br />';
 		}
 		echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Start a new Counter Return') . '</a></div>';
 
@@ -1604,7 +1604,7 @@ if (!isset($_POST['ProcessReturn'])){
 	 if (isset($_POST['PartSearch']) and $_POST['PartSearch']!=''){
 
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '" />';
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 		echo _('Search for Items') . '</p>';
 		echo '<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection">

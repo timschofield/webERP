@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Work Order Costing');
+$Title = _('Work Order Costing');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -15,11 +15,11 @@ if (isset($_GET['WO'])) {
 	unset($SelectedWO);
 }
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
 	<br />
 	<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' .
+	_('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -28,7 +28,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($SelectedWO)) {
 	/* This page can only be called with a work order number */
-	echo '<div class="centre><a href="' . $rootpath . '/SelectWorkOrder.php">'.
+	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">'.
 		_('Select a work order').'</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
 	include ('includes/footer.inc');
@@ -113,9 +113,9 @@ while ($WORow = DB_fetch_array($WOItemsResult)){
 	 			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 	 			<td>' . $WORow['units'] . '</td>
 	 			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-	 			<td class="number"><a href="'. $rootpath . '/WorkOrderStatus.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
-	 			<td class="number"><a href="'. $rootpath . '/WorkOrderReceive.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
-	 			<td class="number"><a href="'. $rootpath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
+	 			<td class="number"><a href="'. $RootPath . '/WorkOrderStatus.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
+	 			<td class="number"><a href="'. $RootPath . '/WorkOrderReceive.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
+	 			<td class="number"><a href="'. $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
  			</tr>';
 
 	$TotalStdValueRecd +=($WORow['stdcost']*$WORow['qtyrecd']);

@@ -5,10 +5,10 @@
 include('includes/session.inc');
 
 if (isset($_GET['OrderNo'])) {
-	$title = _('Reviewing Purchase Order Number').' ' . $_GET['OrderNo'];
+	$Title = _('Reviewing Purchase Order Number').' ' . $_GET['OrderNo'];
 	$_GET['OrderNo']=(int)$_GET['OrderNo'];
 } else {
-	$title = _('Reviewing A Purchase Order');
+	$Title = _('Reviewing A Purchase Order');
 }
 include('includes/header.inc');
 
@@ -34,7 +34,7 @@ if (!isset($_GET['OrderNo'])) {
 
 	echo '<table class="table_index">
 		<tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+                <li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
 	include('includes/footer.inc');
 	exit;
@@ -70,7 +70,7 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 	}
         echo '<table class="table_index">
                 <tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+                <li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
                 </td></tr></table>';
 
 	include('includes/footer.inc');
@@ -81,8 +81,8 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 $myrow = DB_fetch_array($GetOrdHdrResult);
 
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Purchase Order') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' .
+		_('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection" cellpadding="2">';
 echo '<tr><th colspan="8"><b>'. _('Order Header Details'). '</b></th></tr>';

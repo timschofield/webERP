@@ -3,7 +3,7 @@
 /* Script to update costs for all BOM items, from the bottom up */
 
 include('includes/session.inc');
-$title = _('Recalculate BOM costs');
+$Title = _('Recalculate BOM costs');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -54,7 +54,7 @@ if (isset($Run)) { //start bom processing
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Update costs for all items listed in a bill of materials').'<br />
+			<img src="'.$RootPath.'/css/'.$theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Update costs for all items listed in a bill of materials').'<br />
 		</p>
 		<div class="centre">
 			<input type="submit" name="Run" value="' . _('Run') . '" />

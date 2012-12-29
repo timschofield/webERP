@@ -17,9 +17,9 @@ if (isset($_GET['New']) and isset($_SESSION['tender'.$identifier])) {
 }
 
 if (isset($_GET['New']) and $_SESSION['CanCreateTender']==0) {
-	$title = _('Authorisation Problem');
+	$Title = _('Authorisation Problem');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . $title . '" alt="" />  '.$title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . $Title . '" alt="" />  '.$Title . '</p>';
 	prnMsg( _('You do not have authority to create supplier tenders for this company.') . '<br />' .
 			_('Please see your system administrator'), 'warn');
 	include('includes/footer.inc');
@@ -27,9 +27,9 @@ if (isset($_GET['New']) and $_SESSION['CanCreateTender']==0) {
 }
 
 if (isset($_GET['Edit']) and $_SESSION['CanCreateTender']==0) {
-	$title = _('Authorisation Problem');
+	$Title = _('Authorisation Problem');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . $title . '" alt="" />  '.$title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . $Title . '" alt="" />  '.$Title . '</p>';
 	prnMsg( _('You do not have authority to amend supplier tenders for this company.') . '<br />' .
 			_('Please see your system administrator'), 'warn');
 	include('includes/footer.inc');
@@ -104,9 +104,9 @@ if (isset($_GET['ID'])) {
 }
 
 if (isset($_GET['Edit'])) {
-	$title = _('Edit an Existing Supplier Tender Request');
+	$Title = _('Edit an Existing Supplier Tender Request');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  '.$title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  '.$Title . '</p>';
 	$sql="SELECT tenderid,
 				location,
 				address1,
@@ -149,13 +149,13 @@ if (isset($_GET['Edit'])) {
 	include('includes/footer.inc');
 	exit;
 } else if (isset($_GET['ID']) or (isset($_SESSION['tender'.$identifier]->TenderId))) {
-	$title = _('Edit an Existing Supplier Tender Request');
+	$Title = _('Edit an Existing Supplier Tender Request');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  '.$title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  '.$Title . '</p>';
 } else {
-	$title = _('Create a New Supplier Tender Request');
+	$Title = _('Create a New Supplier Tender Request');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  '.$title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  '.$Title . '</p>';
 }
 
 if (isset($_POST['Save'])) {
@@ -519,7 +519,7 @@ if (isset($_POST['Suppliers'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
 		<table cellpadding="3" class="selection">
 			<tr>
 				<td>' . _('Enter a partial Name') . ':</td>
@@ -625,7 +625,7 @@ if (isset($_POST['Items'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier, ENT_QUOTES, 'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 	$sql = "SELECT categoryid,
 				categorydescription
 			FROM stockcategory
@@ -634,7 +634,7 @@ if (isset($_POST['Items'])) {
 	if (DB_num_rows($result) == 0) {
 		echo '<br /><p class="bad">' . _('Problem Report') . ':</p><br />' .
 			_('There are no stock categories currently defined please use the link below to set them up');
-		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		exit;
 	}
 	echo '<table class="selection">
@@ -690,7 +690,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier,ENT_QUOTES,'UTF-8') .'">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Select items required on this tender').'</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Select items required on this tender').'</p>';
 
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
@@ -837,7 +837,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			$FileName = $myrow['stockid'] . '.jpg';
 			if (file_exists( $_SESSION['part_pics_dir'] . '/' . $FileName) ) {
 
-				$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $FileName . '" width="50" height="50" />';
+				$ImageSource = '<img src="'.$RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $FileName . '" width="50" height="50" />';
 
 			} else {
 				$ImageSource = '<i>'._('No Image').'</i>';

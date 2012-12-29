@@ -3,13 +3,13 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Shipment Costing');
+$Title = _('Shipment Costing');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
-     ' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
+     ' . ' ' . $Title . '</p>';
 
 if (isset($_GET['NewShipment']) AND $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']->LineItems);

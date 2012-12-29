@@ -6,9 +6,9 @@ include('includes/DefineContractClass.php');
 include('includes/session.inc');
 
 if (isset($_GET['ModifyContractNo'])) {
-	$title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
+	$Title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
 } else {
-	$title = _('Contract Entry');
+	$Title = _('Contract Entry');
 }
 
 if (isset($_GET['CustomerID'])) {
@@ -80,25 +80,25 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 	}
 
 	if (isset($_POST['EnterContractBOM']) AND !$InputError){
-		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/ContractBOM.php?identifier='.$identifier. '" />';
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/ContractBOM.php?identifier='.$identifier. '" />';
 		echo '<br />';
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
-		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $rootpath . '/ContractBOM.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/ContractBOM.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.inc');
 		exit;
 	}
 	if (isset($_POST['EnterContractRequirements']) AND !$InputError){
-		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/ContractOtherReqts.php?identifier='.$identifier. '" />';
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/ContractOtherReqts.php?identifier='.$identifier. '" />';
 		echo '<br />';
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract requirements page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
-		'<a href="' . $rootpath . '/ContractOtherReqts.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+		'<a href="' . $RootPath . '/ContractOtherReqts.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.inc');
 		exit;
 	}
 } /* end of if going to contract BOM or contract requriements */
 
-echo '<a href="'. $rootpath . '/SelectContract.php">'. _('Back to Contract Selection'). '</a><br />';
+echo '<a href="'. $RootPath . '/SelectContract.php">'. _('Back to Contract Selection'). '</a><br />';
 
 //attempting to upload the drawing image file
 if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION['Contract'.$identifier]->ContractRef!='') {
@@ -375,7 +375,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 			$DbgMsg = _('The SQL that failed to update the quotation was');
 			$UpdQuoteResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 			prnMsg(_('The contract quotation has been updated based on the new contract cost and margin'),'success');
-			echo '<br /><a href="' .$rootpath . '/SelectSalesOrder.php?OrderNumber=' .  $_SESSION['Contract'.$identifier]->OrderNo . '&amp;Quotations=Quotes_Only">' . _('Go to Quotation') . ' ' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a>';
+			echo '<br /><a href="' .$RootPath . '/SelectSalesOrder.php?OrderNumber=' .  $_SESSION['Contract'.$identifier]->OrderNo . '&amp;Quotations=Quotes_Only">' . _('Go to Quotation') . ' ' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a>';
 
 		}
 		if ($ExistingContract['status'] == 0 AND $_POST['Status']==1){
@@ -594,7 +594,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	$_SESSION['Contract'.$identifier]->Status=1;
 	$_SESSION['Contract'.$identifier]->OrderNo=$OrderNo;
 	prnMsg(_('The contract has been made into quotation number') . ' ' . $OrderNo,'info');
-	echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $OrderNo . '&amp;Quotations=Quotes_Only">' . _('Go to quotation number:') . ' ' . $OrderNo . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?OrderNumber=' . $OrderNo . '&amp;Quotations=Quotes_Only">' . _('Go to quotation number:') . ' ' . $OrderNo . '</a>';
 
 } //end of if making a quotation
 
@@ -745,7 +745,7 @@ if (isset($_POST['SelectedCustomer1'])) {
 if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		OR $_SESSION['Contract'.$identifier]->DebtorNo=='' ) {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier .'" name="CustomerSelection" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -817,7 +817,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" /> ' . $_SESSION['Contract'.$identifier]->CustomerName;
+			<img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract') . '" alt="" /> ' . $_SESSION['Contract'.$identifier]->CustomerName;
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
 		echo ' - ' . _('All amounts stated in') . ' ' . $_SESSION['Contract'.$identifier]->CurrCode . '<br />';
@@ -858,7 +858,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		}
 	}
 
-	echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
+	echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
 
 	$sql = "SELECT loccode, locationname FROM locations";
 	$ErrMsg = _('The stock locations could not be retrieved because');
@@ -882,7 +882,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	if (DB_num_rows($result)==0){
 		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
-		echo '<br /><a href="'.$rootpath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
+		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -961,7 +961,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if ($_SESSION['Contract'.$identifier]->Status >=1) {
 		echo '<tr>
 				<td>' . _('Quotation Reference/Sales Order No') . ':</td>
-				<td><a href="' . $rootpath . '/SelectSalesOrder.php?OrderNumber=' . $_SESSION['Contract'.$identifier]->OrderNo . '&amp;Quotations=Quotes_Only">' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a></td>
+				<td><a href="' . $RootPath . '/SelectSalesOrder.php?OrderNumber=' . $_SESSION['Contract'.$identifier]->OrderNo . '&amp;Quotations=Quotes_Only">' .  $_SESSION['Contract'.$identifier]->OrderNo . '</a></td>
 			</tr>';
 	}
 	if ($_SESSION['Contract'.$identifier]->Status!=2 and isset($_SESSION['Contract'.$identifier]->WO)) {

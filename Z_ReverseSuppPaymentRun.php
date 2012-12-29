@@ -6,7 +6,7 @@
  */
 
 include ('includes/session.inc');
-$title = _('Reverse and Delete Supplier Payments');
+$Title = _('Reverse and Delete Supplier Payments');
 include('includes/header.inc');
 
 

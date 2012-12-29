@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Create Chart Details Records');
+$Title = _('Create Chart Details Records');
 include ('includes/header.inc');
 
 /*Script to insert ChartDetails records where one should already exist

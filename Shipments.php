@@ -4,7 +4,7 @@
 
 include('includes/DefineShiptClass.php');
 include('includes/session.inc');
-$title = _('Shipments');
+$Title = _('Shipments');
 include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');
@@ -14,14 +14,14 @@ if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']);
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') .
+	'" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment']) AND !isset($_GET['SelectedShipment'])){
 	prnMsg( _('To set up a shipment') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'error');
         echo '<table class="selection">
                 <tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSupplier.php">' . _('Select the Supplier') . '</a></li>
+                <li><a href="'. $RootPath . '/SelectSupplier.php">' . _('Select the Supplier') . '</a></li>
                 </td></tr></table></div>';
         include('includes/footer.inc');
         exit;

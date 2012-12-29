@@ -27,14 +27,14 @@ $PDFLanguages = array(_('Latin Western Languages'),
 						_('Chinese'),
 						_('Free Serif'));
 
-$title = _('User Maintenance');
+$Title = _('User Maintenance');
 /* webERP manual links before header.inc */
 $ViewTopic= "GettingStarted";
 $BookMark = "UserMaintenance";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
 	<br />';
 
 // Make an array of the security roles

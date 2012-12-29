@@ -13,11 +13,11 @@ if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
 
 if (!isset($_POST['FromDate'])){
 
-	 $title = _('Stock Transaction Listing');
+	 $Title = _('Stock Transaction Listing');
 	 include ('includes/header.inc');
 
 	echo '<div class="centre">
-			<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '. _('Stock Transaction Listing').'</p>
+			<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '. _('Stock Transaction Listing').'</p>
 		</div>';
 
 	if ($InputError==1){
@@ -134,13 +134,13 @@ if ($_POST['StockLocation']=='All') {
 $result=DB_query($sql,$db,'','',false,false);
 
 if (DB_error_no($db)!=0){
-	$title = _('Transaction Listing');
+	$Title = _('Transaction Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the transactions'),'error');
 	include('includes/footer.inc');
 	exit;
 } elseif (DB_num_rows($result) == 0){
-	$title = _('Transaction Listing');
+	$Title = _('Transaction Listing');
 	include('includes/header.inc');
 	echo '<br />';
 	prnMsg (_('There were no transactions found in the database between the dates') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' '. $_POST['ToDate'] .'<br />' ._('Please try again selecting a different date'), 'info');

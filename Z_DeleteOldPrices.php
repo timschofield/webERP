@@ -2,7 +2,7 @@
 /* $Id: Z_DeleteOldPrices.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 
 include ('includes/session.inc');
-$title = _('UTILITY PAGE To Delete All Old Prices');
+$Title = _('UTILITY PAGE To Delete All Old Prices');
 include('includes/header.inc');
 
 if (isset($_POST['DeleteOldPrices'])){

@@ -5,7 +5,7 @@
 include('includes/DefineJournalClass.php');
 
 include('includes/session.inc');
-$title = _('Journal Entry');
+$Title = _('Journal Entry');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -244,7 +244,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 // A new table in the first column of the main table

@@ -10,7 +10,7 @@ include('includes/DefineSerialItems.php');
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Create Credit Note');
+$Title = _('Create Credit Note');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -27,7 +27,7 @@ if (empty($_GET['identifier'])) {
 
 if (isset($_POST['ProcessCredit']) AND !isset($_SESSION['CreditItems'.$identifier])){
 	prnMsg(_('This credit note has already been processed. Refreshing the page will not enter the credit note again') . '<br />' . _('Please use the navigation links provided rather than using the browser back button and then having to refresh'),'info');
-	echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
   exit;
 }
@@ -214,7 +214,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .  '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note').'</p>';
 
 	echo '<table cellpadding="3" class="selection">';
@@ -285,7 +285,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /* everything below here only do if a customer is selected
    first add a header to show who we are making a credit note for */
 
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . $_SESSION['CreditItems'.$identifier]->CustomerName  . ' - ' . $_SESSION['CreditItems'.$identifier]->DeliverTo.'</p>';
 
 	if (isset($_POST['SalesPerson'])){
@@ -723,7 +723,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   if ($LineItem->Controlled==0){
 			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   } else {
-				echo '<td class="number"><a href="' . $rootpath . '/CreditItemsControlled.php?LineNo=' . $LineItem->LineNumber . '&identifier=' . $identifier . '">' . locale_number_format($LineItem->Quantity,$LineItem->DecimalPlaces) . '</a>
+				echo '<td class="number"><a href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LineItem->LineNumber . '&identifier=' . $identifier . '">' . locale_number_format($LineItem->Quantity,$LineItem->DecimalPlaces) . '</a>
                       <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   }
 
@@ -1987,13 +1987,13 @@ then debit the expense account the stock is to written off to */
 	 unset($_SESSION['CreditItems'.$identifier]);
 
 	 echo _('Credit Note number') . ' ' . $CreditNo . ' ' . _('processed') . '<br />';
-	 echo '<a target="_blank" href="' . $rootpath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit">' . _('Show this Credit Note on screen') . '</a><br />';
+	 echo '<a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit">' . _('Show this Credit Note on screen') . '</a><br />';
 	if ($_SESSION['InvoicePortraitFormat']==0){
-	 	echo '<a href="' . $rootpath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this Credit Note') . '</a>';
+	 	echo '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this Credit Note') . '</a>';
 	} else {
-		echo '<a href="' . $rootpath . '/PrintCustTransPortrait.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this Credit Note') . '</a>';
+		echo '<a href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this Credit Note') . '</a>';
 	}
-	 echo '<br /><a href="' . $rootpath . '/SelectCreditItems.php">' . _('Enter Another Credit Note') . '</a>';
+	 echo '<br /><a href="' . $RootPath . '/SelectCreditItems.php">' . _('Enter Another Credit Note') . '</a>';
 
 } /*end of process credit note */
 

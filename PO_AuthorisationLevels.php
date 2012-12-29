@@ -4,10 +4,10 @@
 
 include('includes/session.inc');
 
-$title = _('Purchase Order Authorisation Maintenance');
+$Title = _('Purchase Order Authorisation Maintenance');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 
 /*Note: If CanCreate==0 then this means the user can create orders
@@ -147,9 +147,9 @@ while ($myrow=DB_fetch_array($Result)) {
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
 			<td class="number">'.locale_number_format($myrow['authlevel'],$myrow['decimalplaces']).'</td>
-			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $myrow['userid'] .
+			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $myrow['userid'] .
 	'&amp;Currency='.$myrow['currabrev'].'">'._('Edit').'</a></td>
-			<td><a href="'.$rootpath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $myrow['userid'] .
+			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $myrow['userid'] .
 	'&amp;Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">'._('Delete').'</a></td>
 		</tr>';
 }

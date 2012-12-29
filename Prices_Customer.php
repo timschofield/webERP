@@ -12,7 +12,7 @@ $result = DB_query("SELECT debtorsmaster.name,
 					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_array($result);
 
-$title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
+$Title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
 
 include('includes/header.inc');
 
@@ -32,7 +32,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 	exit;
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . _('Special Customer Prices').'</p><br />';
 echo '<b>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $myrow['currcode'] . '<br />' . ' ' . _('for') . ' ';
 

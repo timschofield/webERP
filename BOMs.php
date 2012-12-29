@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Multi-Level Bill Of Materials Maintenance');
+$Title = _('Multi-Level Bill Of Materials Maintenance');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -228,8 +228,8 @@ $InputError = 0;
 if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Component
 	$SelectedParent = $Select;
 	unset($Select);// = NULL;
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') .
+		'" alt="" />' . ' ' . $Title.'</p><br />';
 
 	if (isset($SelectedParent) AND isset($_POST['Submit'])) {
 
@@ -711,7 +711,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		if (DB_num_rows($result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.','warn');
-			echo '<a href="' . $rootpath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
+			echo '<a href="' . $RootPath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -855,7 +855,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 if (!isset($SelectedParent)) {
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">' .
 	'<div class="page_help_text">'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to maintain the bill of material for using the options below') .  '<br />' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') .'</div>'. '
     <div>

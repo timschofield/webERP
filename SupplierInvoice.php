@@ -13,7 +13,7 @@ include('includes/DefinePOClass.php'); //needed for auto receiving code
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Enter Supplier Invoice');
+$Title = _('Enter Supplier Invoice');
 /* webERP manual links before header.inc */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'SupplierInvoice';
@@ -36,7 +36,7 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
      ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
 echo '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
@@ -126,7 +126,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 } elseif (!isset( $_SESSION['SuppTrans'])){
 
 	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen'),'warn');
-	echo '<br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Invoice For') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Invoice For') . '</a>';
 	include('includes/footer.inc');
 	exit;
 
@@ -556,45 +556,45 @@ if (!isset($_POST['PostInvoice'])){
 	if (isset($_POST['GRNS'])
 		AND $_POST['GRNS'] == _('Purchase Orders')){
 		/*This ensures that any changes in the page are stored in the session before calling the grn page */
-		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppInvGRNs.php">';
+		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppInvGRNs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			'<a href="' . $rootpath . '/SuppInvGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '</div>
+			'<a href="' . $RootPath . '/SuppInvGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '</div>
 			<br />';
 		exit;
 	}
 	if (isset($_POST['Shipts']) AND $_POST['Shipts'] == _('Shipments')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppShiptChgs.php">';
+		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppShiptChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
+			'<a href="' . $RootPath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
 		exit;
 	}
 	if (isset($_POST['GL']) AND $_POST['GL'] == _('General Ledger')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppTransGLAnalysis.php">';
+		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppTransGLAnalysis.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
+			'<a href="' . $RootPath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
 		exit;
 	}
 	if (isset($_POST['Contracts']) AND $_POST['Contracts'] == _('Contracts')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppContractChgs.php">';
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppContractChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against contracts page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div>
+			'<a href="' . $RootPath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div>
 			<br />';
 		exit;
 	}
 	if (isset($_POST['FixedAssets'])
 		AND $_POST['FixedAssets'] == _('Fixed Assets')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppFixedAssetChgs.php">';
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppFixedAssetChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoice amounts against fixed assets page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
-			'<a href="' . $rootpath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</DIV><br />';
+			'<a href="' . $RootPath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</DIV><br />';
 		exit;
 	}
 	/* everything below here only do if a Supplier is selected
@@ -1879,9 +1879,9 @@ then do the updates and inserts to process the invoice entered */
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
 		echo '<br />
 				<div class="centre">
-					<a href="' . $rootpath . '/SupplierInvoice.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Invoice for this Supplier') . '</a>
+					<a href="' . $RootPath . '/SupplierInvoice.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Invoice for this Supplier') . '</a>
 					<br />
-					<a href="' . $rootpath . '/Payments.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '&amp;Amount=' . ($_SESSION['SuppTrans']->OvAmount+$TaxTotal) . '">' . _('Enter payment') . '</a>
+					<a href="' . $RootPath . '/Payments.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '&amp;Amount=' . ($_SESSION['SuppTrans']->OvAmount+$TaxTotal) . '">' . _('Enter payment') . '</a>
 				</div>';
 		unset( $_SESSION['SuppTrans']->GRNs);
 		unset( $_SESSION['SuppTrans']->Shipts);
@@ -1893,7 +1893,7 @@ then do the updates and inserts to process the invoice entered */
 } /*end of process invoice */
 
 if($InputError==true){ //add a link to return if users make input errors.
-	echo '<div class="centre"><a href="'.$rootpath.'/SupplierInvoice.php" >'._('Back to Invoice Entry').'</a></div>';
+	echo '<div class="centre"><a href="'.$RootPath.'/SupplierInvoice.php" >'._('Back to Invoice Entry').'</a></div>';
 } //end of return link for input errors
 
 include('includes/footer.inc');

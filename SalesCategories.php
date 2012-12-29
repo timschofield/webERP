@@ -4,11 +4,11 @@
 
 include('includes/session.inc');
 
-$title = _('Sales Category Maintenance');
+$Title = _('Sales Category Maintenance');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -243,7 +243,7 @@ if (DB_num_rows($result) == 0) {
 				'" />';
 		} else {
 			if( file_exists($_SESSION['part_pics_dir'] . '/' .'cat_'.$myrow['salescatid'].'.jpg') ) {
-				$CatImgLink = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' .
+				$CatImgLink = '<img src="'.$RootPath . '/' . $_SESSION['part_pics_dir'] . '/' .
 					'cat_'.$myrow['salescatid'].'.jpg" >';
 			} else {
 				$CatImgLink = _('No Image');

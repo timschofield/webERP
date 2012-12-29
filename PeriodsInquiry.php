@@ -4,7 +4,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Periods Inquiry');
+$Title = _('Periods Inquiry');
 
 include('includes/header.inc');
 
@@ -16,8 +16,8 @@ $SQL = "SELECT periodno ,
 $ErrMsg =  _('No periods were returned by the SQL because');
 $PeriodsResult = DB_query($SQL,$db,$ErrMsg);
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
-		. $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+		. $Title . '</p>';
 
 /*show a table of the orders returned by the SQL */
 

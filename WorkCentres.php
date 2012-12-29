@@ -3,7 +3,7 @@
 
 
 include('includes/session.inc');
-$title = _('Work Centres');
+$Title = _('Work Centres');
 include('includes/header.inc');
 
 if (isset($_POST['SelectedWC'])){
@@ -108,7 +108,7 @@ then none of the above are true and the list of work centres will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '
+			<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$sql = "SELECT workcentres.code,
@@ -159,7 +159,7 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedWC)) {
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Work Centres') . '</a></div>';
 }
 

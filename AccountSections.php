@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Account Sections');
+$Title = _('Account Sections');
 
 include('includes/header.inc');
 
@@ -166,7 +166,7 @@ if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) 
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$db,$ErrMsg);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'<br /></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'<br /></p>';
 
 	echo '<table class="selection">
 			<tr>

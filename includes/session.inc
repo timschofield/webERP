@@ -7,11 +7,11 @@ if (!isset($PathPrefix)) {
 
 
 if (!file_exists($PathPrefix . 'config.php')){
-	$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
-	if ($rootpath == '/' OR $rootpath == "\\") {
-		$rootpath = '';
+	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
+	if ($RootPath == '/' OR $RootPath == "\\") {
+		$RootPath = '';
 	}
-	header('Location:' . $rootpath . '/install/index.php');
+	header('Location:' . $RootPath . '/install/index.php');
 }
 include($PathPrefix . 'config.php');
 
@@ -101,7 +101,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		die(include($PathPrefix . 'includes/FailedLogin.php'));
 
 	case  UL_CONFIGERR:
-		$title = _('Account Error Report');
+		$Title = _('Account Error Report');
 		include($PathPrefix . 'includes/header.inc');
 		echo '<br /><br /><br />';
 		prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
@@ -266,7 +266,7 @@ if ($_SESSION['HTTPS_Only']==1){
 
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
-	$title = _('Account Error Report');
+	$Title = _('Account Error Report');
 	include($PathPrefix . 'includes/header.inc');
 	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'),'error');
@@ -285,7 +285,7 @@ if (!isset($PageSecurity)){
 
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
-		$title = _('Security Permissions Problem');
+		$Title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
 		echo '<tr>
 			<td class="menu_group_items">
@@ -332,7 +332,7 @@ function CryptPass( $Password ) {
 if (sizeof($_POST) > 0 AND !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$title = _('Error in form verification');
+		$Title = _('Error in form verification');
 		include('includes/header.inc');
 		prnMsg(_('This form was not submitted with a correct ID') , 'error');
 		include('includes/footer.inc');

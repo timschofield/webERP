@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Discount Matrix Maintenance');
+$Title = _('Discount Matrix Maintenance');
 include('includes/header.inc');
 
 if (isset($Errors)) {
@@ -13,7 +13,7 @@ if (isset($Errors)) {
 $Errors = array();
 $i=1;
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_POST['submit'])) {
 

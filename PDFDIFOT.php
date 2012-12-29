@@ -18,10 +18,10 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
-	 $title = _('Delivery In Full On Time (DIFOT) Report');
+	 $Title = _('Delivery In Full On Time (DIFOT) Report');
 	 include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('DIFOT Report') . '</p>';
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -179,7 +179,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 $Result=DB_query($sql,$db,'','',false,false); //dont error check - see below
 
 if (DB_error_no($db)!=0){
-	$title = _('DIFOT Report Error');
+	$Title = _('DIFOT Report Error');
 	include('includes/header.inc');
 	prnMsg( _('An error occurred getting the days between delivery requested and actual invoice'),'error');
 	if ($debug==1){
@@ -188,7 +188,7 @@ if (DB_error_no($db)!=0){
 	include ('includes/footer.inc');
 	exit;
 } elseif (DB_num_rows($Result) == 0){
-	$title = _('DIFOT Report Error');
+	$Title = _('DIFOT Report Error');
   	include('includes/header.inc');
 	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'info');
 	if ($debug==1) {

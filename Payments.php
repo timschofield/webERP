@@ -5,7 +5,7 @@
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
 
-$title = _('Payment Entry');
+$Title = _('Payment Entry');
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'BankAccountPayments';
 include('includes/header.inc');
@@ -45,7 +45,7 @@ if ((isset($_POST['UpdateHeader'])
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payment Entry')
+		<img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Payment Entry')
 . '" alt="" />' . ' ' . _('Payment Entry') . '
 	</p>';
 echo '<div class="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  <br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</div>
@@ -282,7 +282,7 @@ if (isset($_POST['CommitBatch'])){
 	// it is a supplier payment by cheque and haven't printed yet so print cheque
 
 		echo '<br />
-			<a href="' . $rootpath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '">' . _('Print Cheque using pre-printed stationery') . '</a>
+			<a href="' . $RootPath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '">' . _('Print Cheque using pre-printed stationery') . '</a>
 			<br />
 			<br />';
 
@@ -626,7 +626,7 @@ if (isset($_POST['CommitBatch'])){
 					WHERE supplierid='".$LastSupplier."'";
 			$result=DB_query($sql, $db);
 			$myrow=DB_fetch_array($result);
-			echo '<br /><a href="' . $rootpath . '/Payments.php?SupplierID=' . $LastSupplier . '">' .
+			echo '<br /><a href="' . $RootPath . '/Payments.php?SupplierID=' . $LastSupplier . '">' .
 				_('Enter another Payment for') . ' ' . $myrow['suppname'] . '</a>';
 		} else {
 			echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Enter another General Ledger Payment') . '</a><br />';
@@ -771,7 +771,7 @@ if (DB_num_rows($AccountsResults)==0){
 		</tr>
 		</table>
 		<p />';
-	prnMsg( _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'),'warn');
+	prnMsg( _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'),'warn');
 	include('includes/footer.inc');
 	exit;
 } else {

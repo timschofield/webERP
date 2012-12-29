@@ -20,7 +20,7 @@ if (isset($argc)) {
 }
 include('includes/session.inc');
 
-$title = _('Recurring Orders Process');
+$Title = _('Recurring Orders Process');
 /* webERP manual links before header.inc */
 $ViewTopic= "SalesOrders";
 $BookMark = "RecurringSalesOrders";

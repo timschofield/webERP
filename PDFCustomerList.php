@@ -15,7 +15,7 @@ if (isset($_POST['PrintPDF'])){
 
 	if ($_POST['Activity']!='All'){
 		if (!is_numeric($_POST['ActivityAmount'])){
-			$title = _('Customer List') . ' - ' . _('Problem Report') . '....';
+			$Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<p />';
 			prnMsg( _('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
@@ -227,10 +227,10 @@ if (isset($_POST['PrintPDF'])){
 	$CustomersResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Customer List') . ' - ' . _('Problem Report') . '....';
+	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db) );
-	   echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 	   if ($debug==1){
 	      echo '<br />'. $SQL;
 	   }
@@ -239,10 +239,10 @@ if (isset($_POST['PrintPDF'])){
 	}
 
 	if (DB_num_rows($CustomersResult) == 0) {
-	  $title = _('Customer List') . ' - ' . _('Problem Report') . '....';
+	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
 	  prnMsg( _('This report has no output because there were no customers retrieved'), 'error' );
-	  echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+	  echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 	  include('includes/footer.inc');
 	  exit;
 	}
@@ -363,10 +363,10 @@ if (isset($_POST['PrintPDF'])){
 
 } else {
 
-	$title = _('Customer Details Listing');
+	$Title = _('Customer Details Listing');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' .
-		 $title . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' .
+		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';

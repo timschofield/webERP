@@ -6,7 +6,7 @@ $PricesSecurity = 12;
 
 include('includes/session.inc');
 
-$title = _('Search Outstanding Purchase Orders');
+$Title = _('Search Outstanding Purchase Orders');
 
 include('includes/header.inc');
 include('includes/DefinePOClass.php');
@@ -135,11 +135,11 @@ $OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
 
 if (!isset($OrderNumber) or $OrderNumber == '') {
 	if (isset($SelectedSupplier)) {
-		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
+		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
 	} else {
-		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
+		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	}
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
@@ -497,18 +497,18 @@ else {
 			$k++;
 		}
 
-		$ModifyPage = $rootpath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'];
+		$ModifyPage = $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'];
 		if ($myrow['status'] == 'Printed') {
-			$ReceiveOrder = '<a href="' . $rootpath . '/GoodsReceived.php?PONumber=' . $myrow['orderno'] . '">' . _('Receive') . '</a>';
+			$ReceiveOrder = '<a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $myrow['orderno'] . '">' . _('Receive') . '</a>';
 		} else {
 			$ReceiveOrder = '';
 		}
 		if ($myrow['status'] == 'Authorised' AND $myrow['allowprint'] == 1) {
-			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $myrow['orderno'] . '">' . _('Print') . '</a>';
+			$PrintPurchOrder = '<a target="_blank" href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $myrow['orderno'] . '">' . _('Print') . '</a>';
 		} elseif ($myrow['status'] == 'Authorisied' AND $myrow['allowprint'] == 0) {
 			$PrintPurchOrder = _('Printed');
 		} elseif ($myrow['status'] == 'Printed') {
-			$PrintPurchOrder = '<a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $myrow['orderno'] . '&amp;realorderno=' . $myrow['realorderno'] . '&amp;ViewingOnly=2">
+			$PrintPurchOrder = '<a target="_blank" href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $myrow['orderno'] . '&amp;realorderno=' . $myrow['realorderno'] . '&amp;ViewingOnly=2">
 				' . _('Print Copy') . '</a>';
 		} else {
 			$PrintPurchOrder = _('N/A');

@@ -3,7 +3,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Supplier Purchasing Data');
+$Title = _('Supplier Purchasing Data');
 
 include ('includes/header.inc');
 
@@ -25,7 +25,7 @@ if (isset($_POST['StockUOM'])) {
 
 $NoPurchasingData=0;
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
 
 if (isset($_POST['SupplierDescription'])) {
     $_POST['SupplierDescription'] = trim($_POST['SupplierDescription']);
@@ -136,7 +136,7 @@ if (isset($_GET['Delete'])) {
 }
 
 if (!isset($_GET['Edit'])) {
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
     $sql = "SELECT purchdata.supplierno,
 				suppliers.suppname,
 				purchdata.price,
@@ -260,7 +260,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
     }
 } else {
 	if ($NoPurchasingData==0) {
-		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
     if (!isset($_POST['SearchSupplier'])) {
         echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
@@ -284,7 +284,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 }
 
 if (isset($_GET['Edit'])) {
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 }
 
 if (isset($_POST['SearchSupplier'])) {
@@ -533,10 +533,10 @@ if (!isset($SuppliersResult)) {
     echo '</div>';
     echo '<div class="centre">';
     if (isset($StockLocation) and isset($StockID) AND mb_strlen($StockID) != 0) {
-        echo '<br /><a href="' . $rootpath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
-        echo '<br /><a href="' . $rootpath . '/StockMovements.php?StockID=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';
-        echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Search Outstanding Sales Orders') . '</a>';
-        echo '<br /><a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+        echo '<br /><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
+        echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';
+        echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Search Outstanding Sales Orders') . '</a>';
+        echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
     }
     echo '</form></div>';
 }

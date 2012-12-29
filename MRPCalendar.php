@@ -6,7 +6,7 @@
 // Maintains the calendar of valid manufacturing dates for MRP
 
 include('includes/session.inc');
-$title = _('MRP Calendar');
+$Title = _('MRP Calendar');
 include('includes/header.inc');
 
 
@@ -17,8 +17,8 @@ if (isset($_POST['ChangeDate'])){
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' .
-			_('Inventory') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' .
+			_('Inventory') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_POST['submit'])) {

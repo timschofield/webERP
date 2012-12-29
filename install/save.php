@@ -305,14 +305,14 @@ $msg .= "\$MaximumExecutionTime =120;\n";
 $msg .= "\$CryptFunction = 'sha1';\n";
 $msg .= "\$DefaultClock = 12;\n";
 
-$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
+$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-$msg .= "\$rootpath = mb_substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";
+$msg .= "\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
 $msg .= "} }\n";
 
-$msg .= "if (\$rootpath == '/' OR \$rootpath == '\\\') {;\n";
-$msg .= "\$rootpath = '';\n";
+$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {;\n";
+$msg .= "\$RootPath = '';\n";
 $msg .= "}\n";
 $msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";
 $msg .= "?>";

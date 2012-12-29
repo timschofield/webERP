@@ -22,7 +22,7 @@ include('includes/session.inc');
 <div id="container">
 	<div id="login_logo"></div>
 	<div id="login_box">
-	<form action="<?php echo $rootpath;?>/index.php" id="loginform" method="post">
+	<form action="<?php echo $RootPath;?>/index.php" id="loginform" method="post">
     <p>
 <?php
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

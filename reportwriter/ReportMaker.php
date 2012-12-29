@@ -22,7 +22,7 @@ $usrMsg = ''; // setup array for return messages
 if (isset($_GET['reportid'])) { // then entered with report id requested, fix variable to show filter form
 	$_POST['todo'] = RPT_BTN_CONT; // fake the code to think the continue button was pressed
 	$_POST['ReportID'] = (int) $_GET['reportid']; // convert Report ID to a POST variable
-	$GoBackURL = $rootpath.'/index.php'; // set the return path to the index.php page
+	$GoBackURL = $RootPath.'/index.php'; // set the return path to the index.php page
 } elseif (isset($_POST['GoBackURL'])) {
 	$GoBackURL = $_POST['GoBackURL']; // set the return path to the index.php page because entered from a link
 } else {
@@ -37,7 +37,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 	// fetch the existing reports for the selection menus
 	$DefReportList = GetReports($Def = true);
 	$CustReportList = GetReports($Def = false);
-	$title=RPT_MENU;
+	$Title=RPT_MENU;
 	$IncludePage = 'forms/ReportsList.html';
 } elseif (!isset($_POST['todo'])) { // Now find out if an image button button was pressed and act on it
 	for ($i=1; $i<1000; $i++) { // figure out what sequence button was pressed
@@ -61,7 +61,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		$Prefs = ReadPostData($ReportID, $Prefs);
 	}
 	// reload information to display form
-	$title=RPT_CRITERIA;
+	$Title=RPT_CRITERIA;
 	$IncludePage = 'forms/ReportsFilter.html';
 } else { // a submit button was pressed, find out which one
 	$ReportID = $_POST['ReportID']; // fetch the report id
@@ -81,7 +81,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 			} else { // return to report list page
 				$DefReportList = GetReports($Def = true);
 				$CustReportList = GetReports($Def = false);
-				$title=RPT_MENU;
+				$Title=RPT_MENU;
 				$IncludePage = 'forms/ReportsList.html';
 			}
 			break;
@@ -93,12 +93,12 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 			if($success['result']=='success') { // Reload criteria page
 				$ReportID = $success['ReportID'];
 				$Prefs = FetchReportDetails($ReportID);  //fetch the defaults
-				$title=RPT_CRITERIA;
+				$Title=RPT_CRITERIA;
 				$IncludePage = 'forms/ReportsFilter.html';
 			} else { // an error message was sent so reload save form
 				if($success['default']==false) $ShowReplace = true; else $ShowReplace = false;
 				$Prefs['reportname'] = $_POST['ReportName'];
-				$title=RPT_PAGESAVE;
+				$Title=RPT_PAGESAVE;
 				$IncludePage = 'forms/ReportsSave.html';
 			}
 			$usrMsg[] = array('message'=>$success['message'], 'level'=>$success['result']);
@@ -108,7 +108,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 			$Prefs = ReadPostData($ReportID, $Prefs); // fetch the current saved values
 			if ($Prefs['defaultreport']) $Prefs['reportname'] = ''; // clear name if default report
 			$ShowReplace = false;
-			$title=RPT_PAGESAVE;
+			$Title=RPT_PAGESAVE;
 			$IncludePage = 'forms/ReportsSave.html';
 			break;
 
@@ -118,10 +118,10 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 			// Overrride stored settings with selected values
 			$Prefs = ReadPostData($ReportID, $Prefs); // reads and updates the database
 			if ($_POST['todo']==RPT_BTN_PGSETUP) { // return to the page setup screen
-				$title=RPT_PAGESETUP;
+				$Title=RPT_PAGESETUP;
 				$IncludePage = 'forms/ReportsPageUpdate.html';
 			} else { // return to the criterai screen
-				$title=RPT_CRITERIA;
+				$Title=RPT_CRITERIA;
 				$IncludePage = 'forms/ReportsFilter.html';
 			}
 			break;
@@ -145,10 +145,10 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 			}
 			if ($usrMsg) { // then we have a message to display and no report to show
 				if ($_POST['FilterForm']) { // return to the filter form
-					$title=RPT_CRITERIA;
+					$Title=RPT_CRITERIA;
 					$IncludePage = 'forms/ReportsFilter.html';
 				} else { // return to the page setup form
-					$title=RPT_PAGESETUP;
+					$Title=RPT_PAGESETUP;
 					$IncludePage = 'forms/ReportsPageUpdate.html';
 				}
 			} else { // send the report (Both of these function exit the script (the point of no return)
@@ -163,7 +163,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 
 		case RPT_BTN_CONT:
 		default:
-			$title=RPT_CRITERIA;
+			$Title=RPT_CRITERIA;
 			$IncludePage = 'forms/ReportsFilter.html';
 	} // end switch 'todo'
 } // end if (!isset($_POST['todo']))

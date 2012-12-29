@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Work Order Status Inquiry');
+$Title = _('Work Order Status Inquiry');
 include('includes/header.inc');
 
 if (isset($_GET['WO'])) {
@@ -50,12 +50,12 @@ if (DB_num_rows($WOResult)==0){
 }
 $WORow = DB_fetch_array($WOResult);
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a><br />';
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
+echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a><br />';
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $title.'
+		<img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' .
+	_('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 echo '<table cellpadding="2" class="selection">

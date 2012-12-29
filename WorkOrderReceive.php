@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Receive Work Order');
+$Title = _('Receive Work Order');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -21,14 +21,14 @@ if (isset($_GET['StockID'])) {
 	unset($StockID);
 }
 echo '<div>
-		<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
+		<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
 		<br />
-		<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a>
+		<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a>
 		<br />
 	</div>';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/group_add.png" title="' .
+	_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -37,7 +37,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (!isset($SelectedWO) OR !isset($StockID)) {
 	/* This page can only be called with a purchase order number for invoicing*/
 	echo '<div class="centre">
-			<a href="' . $rootpath . '/SelectWorkOrder.php">'. _('Select a work order to receive').'</a>
+			<a href="' . $RootPath . '/SelectWorkOrder.php">'. _('Select a work order to receive').'</a>
 		</div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
 	include ('includes/footer.inc');
@@ -693,7 +693,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		$Result = DB_Txn_Commit($db);
 
 		prnMsg(_('The receipt of') . ' ' . $QuantityReceived . ' ' . $WORow['units'] . ' ' . _('of')  . ' ' . $_POST['StockID'] . ' - ' . $WORow['description'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
-		echo '<a href="' . $rootpath . '/SelectWorkOrder.php">' . _('Select a different work order for receiving finished stock against'). '</a>';
+		echo '<a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for receiving finished stock against'). '</a>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
 		unset($_POST['IntoLocation']);

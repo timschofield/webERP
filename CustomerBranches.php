@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Branches');
+$Title = _('Customer Branches');
 /* webERP manual links before header.inc */
 $ViewTopic= 'AccountsReceivable';
 $BookMark = 'NewCustomerBranch';
@@ -363,7 +363,7 @@ if (!isset($SelectedBranch)){
 	$TotalEnable = 0;
 	$TotalDisable = 0;
 	if ($myrow) {
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
 				 ' . ' ' . _('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</p>';
 		echo '<table class="selection">
 			<tr>
@@ -540,7 +540,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedBranch" value="' . $SelectedBranch . '" />';
 		echo '<input type="hidden" name="BranchCode" value="' . $_POST['BranchCode'] . '" />';
 
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />
 				 ' . ' ' . _('Change Details for Branch'). ' '. $SelectedBranch . '</p>';
 		if (isset($SelectedBranch)) {
 			echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DebtorNo=' . $DebtorNo. '">' . _('Show all branches defined for'). ' '. $DebtorNo . '</a></div>';
@@ -587,7 +587,7 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['BranchCode'])) {
 			$_POST['BranchCode']='';
 		}
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Add a Branch').'</p>';
 		echo '<table class="selection">
 				<tr>
 					<td>'._('Branch Code'). ':</td>
@@ -697,7 +697,7 @@ if (!isset($_GET['delete'])) {
 	if (DB_num_rows($result)==0){
 		echo '</table>';
 		prnMsg(_('There are no sales people defined as yet') . ' - ' . _('customer branches must be allocated to a sales person') . '. ' . _('Please use the link below to define at least one sales person'),'error');
-		echo '<p align="center"><a href="' . $rootpath . '/SalesPeople.php">'._('Define Sales People') . '</a>';
+		echo '<p align="center"><a href="' . $RootPath . '/SalesPeople.php">'._('Define Sales People') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -726,7 +726,7 @@ if (!isset($_GET['delete'])) {
 	if (DB_num_rows($result)==0){
 		echo '</table>';
 		prnMsg(_('There are no areas defined as yet') . ' - ' . _('customer branches must be allocated to an area') . '. ' . _('Please use the link below to define at least one sales area'),'error');
-		echo '<br /><a href="' . $rootpath. '/Areas.php">'._('Define Sales Areas').'</a>';
+		echo '<br /><a href="' . $RootPath. '/Areas.php">'._('Define Sales Areas').'</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -755,7 +755,7 @@ if (!isset($_GET['delete'])) {
 	if (DB_num_rows($result)==0){
 		echo '</table>';
 		prnMsg(_('There are no stock locations defined as yet') . ' - ' . _('customer branches must refer to a default location where stock is normally drawn from') . '. ' . _('Please use the link below to define at least one stock location'),'error');
-		echo '<br /><a href="' . $rootpath . '/Locations.php">'._('Define Stock Locations').'</a>';
+		echo '<br /><a href="' . $RootPath . '/Locations.php">'._('Define Stock Locations').'</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -806,7 +806,7 @@ if (!isset($_GET['delete'])) {
 	if (DB_num_rows($TaxGroupResults)==0){
 		echo '</table>';
 		prnMsg(_('There are no tax groups defined - these must be set up first before any branches can be set up') . '
-				<br /><a href="' . $rootpath . '/TaxGroups.php">' . _('Define Tax Groups') . '</a>','error');
+				<br /><a href="' . $RootPath . '/TaxGroups.php">' . _('Define Tax Groups') . '</a>','error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -845,7 +845,7 @@ if (!isset($_GET['delete'])) {
 	if (DB_num_rows($ShipperResults)==0){
 		echo '</table>';
 		prnMsg(_('There are no shippers defined - these must be set up first before any branches can be set up') . '
-				<br /><a href="' . $rootpath . '/Shippers.php">' . _('Define Shippers') . '</a>','error');
+				<br /><a href="' . $RootPath . '/Shippers.php">' . _('Define Shippers') . '</a>','error');
 		include('includes/footer.inc');
 		exit;
 	}

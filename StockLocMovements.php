@@ -3,7 +3,7 @@
 
 include('includes/session.inc');
 
-$title = _('All Stock Movements By Location');
+$Title = _('All Stock Movements By Location');
 
 include('includes/header.inc');
 
@@ -11,8 +11,8 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title.'</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
+	'" alt="" />' . ' ' . $Title.'</p>';
 
 echo '<table class="selection">
      <tr>
@@ -114,7 +114,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
 
-		printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=%s">%s</a></td>
+		printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

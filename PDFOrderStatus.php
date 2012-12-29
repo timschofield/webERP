@@ -20,14 +20,14 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
-	$title = _('Order Status Report');
+	$Title = _('Order Status Report');
 	include ('includes/header.inc');
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
 	}
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -254,7 +254,7 @@ if (DB_error_no($db)!=0){
 	include ('includes/footer.inc');
 	exit;
 } elseif (DB_num_rows($Result)==0){
-	$title=_('Order Status Report - No Data');
+	$Title=_('Order Status Report - No Data');
   	include('includes/header.inc');
 	prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');
 	include('includes/footer.inc');

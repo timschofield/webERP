@@ -3,10 +3,10 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer EDI Set Up');
+$Title = _('Customer EDI Set Up');
 include('includes/header.inc');
 
-echo '<a href="' . $rootpath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
 if (isset($Errors)) {
 	unset($Errors);
@@ -14,7 +14,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 $i=0;
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -109,7 +109,7 @@ if ($myrow['ediinvoices']==0){
 	echo '<option selected="selected" value="1">'._('Enabled') . '</option>';
 }
 
-echo '</select><a href="' . $rootpath . '/EDIMessageFormat.php?MessageType=INVOIC&amp;PartnerCode=' . $_SESSION['CustomerID'] . '">'._('Create') . '/' . _('Edit Invoice Message Format').'</a></td>
+echo '</select><a href="' . $RootPath . '/EDIMessageFormat.php?MessageType=INVOIC&amp;PartnerCode=' . $_SESSION['CustomerID'] . '">'._('Create') . '/' . _('Edit Invoice Message Format').'</a></td>
 	</tr>';
 
 echo '<tr><td>'._('Enable Receiving of EDI Orders') . ':</td>

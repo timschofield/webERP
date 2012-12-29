@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Chart of Accounts Maintenance');
+$Title = _('Chart of Accounts Maintenance');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
@@ -15,8 +15,8 @@ if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_GET['SelectedAccount'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
-		_('General Ledger Accounts') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' .
+		_('General Ledger Accounts') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 

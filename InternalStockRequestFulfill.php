@@ -4,12 +4,12 @@
 
 include('includes/session.inc');
 
-$title = _('Fulfill Stock Requests');
+$Title = _('Fulfill Stock Requests');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $value) {

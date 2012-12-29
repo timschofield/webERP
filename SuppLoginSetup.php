@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Supplier Login Configuration');
+$Title = _('Supplier Login Configuration');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/LanguagesArray.php');
@@ -12,7 +12,7 @@ include ('includes/LanguagesArray.php');
 if (!isset($_SESSION['SupplierID'])){
 	echo '<br />
 		<br />';
-	prnMsg(_('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>','info');
+	prnMsg(_('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>','info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -28,9 +28,9 @@ $ModuleList = array(_('Orders'),
 					_('Petty Cash'),
 					_('Setup'));
 
-echo '<a href="' . $rootpath . '/SelectSupplier.php?">' . _('Back to Suppliers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectSupplier.php?">' . _('Back to Suppliers') . '</a><br />';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
 
 
 

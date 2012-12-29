@@ -25,13 +25,13 @@ include('includes/DefineSuppTransClass.php');
 
 include('includes/session.inc');
 
-$title = _('Supplier Credit Note');
+$Title = _('Supplier Credit Note');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 //this is available from the menu on this page already
-//echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br />';
+//echo "<a href='" . $RootPath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><br />';
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);
@@ -46,7 +46,7 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="" />' . ' '
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="" />' . ' '
         . _('Enter Supplier Credit Note:') . ' ' . $SupplierName;
 echo '</p>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
@@ -136,7 +136,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 } elseif (!isset($_SESSION['SuppTrans'])){
 
 	prnMsg(_('To enter a supplier credit note the supplier must first be selected from the supplier selection screen'),'warn');
-	echo '<br /><a href="' . $rootpath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Credit Note For') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Credit Note For') . '</a>';
 	include('includes/footer.inc');
 	exit;
 	/*It all stops here if there aint no supplier selected */
@@ -205,9 +205,9 @@ if (isset($_POST['GRNS'])
 
 	/*This ensures that any changes in the page are stored in the session before calling the grn page */
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppCreditGRNs.php">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppCreditGRNs.php">';
 	echo '<br />' .
-		_('You should automatically be forwarded to the entry of credit notes against goods received page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $rootpath . '/SuppCreditGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '.
+		_('You should automatically be forwarded to the entry of credit notes against goods received page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppCreditGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 		<br />';
 	include('includes/footer.inc');
 	exit;
@@ -216,9 +216,9 @@ if (isset($_POST['Shipts'])){
 
 	/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppShiptChgs.php">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppShiptChgs.php">';
 	echo '<br />
-		' . _('You should automatically be forwarded to the entry of credit notes against shipments page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $rootpath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
+		' . _('You should automatically be forwarded to the entry of credit notes against shipments page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 		<br />';
 	include('includes/footer.inc');
 	exit;
@@ -228,9 +228,9 @@ if (isset($_POST['GL'])
 
 	/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SuppTransGLAnalysis.php">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppTransGLAnalysis.php">';
 	echo '<br />
-		' . _('You should automatically be forwarded to the entry of credit notes against the general ledger page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $rootpath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.
+		' . _('You should automatically be forwarded to the entry of credit notes against the general ledger page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.
 		<br />';
 	include('includes/footer.inc');
 	exit;
@@ -238,9 +238,9 @@ if (isset($_POST['GL'])
 if (isset($_POST['Contracts'])
 	AND $_POST['Contracts'] == _('Contracts')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppContractChgs.php">';
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppContractChgs.php">';
 		echo '<div class="centre">
-				' . _('You should automatically be forwarded to the entry of supplier credit notes against contracts page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' . '<a href="' . $rootpath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
+				' . _('You should automatically be forwarded to the entry of supplier credit notes against contracts page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 			</div>
 			<br />';
 		exit;
@@ -248,9 +248,9 @@ if (isset($_POST['Contracts'])
 if (isset($_POST['FixedAssets'])
 	AND $_POST['FixedAssets'] == _('Fixed Assets')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
-		echo '<meta http-equiv="refresh" content="0; url=' . $rootpath . '/SuppFixedAssetChgs.php">';
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppFixedAssetChgs.php">';
 		echo '<div class="centre">
-				' . _('You should automatically be forwarded to the entry of invoices against fixed assets page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' . '<a href="' . $rootpath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
+				' . _('You should automatically be forwarded to the entry of invoices against fixed assets page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 			</div>
 			<br />';
 		exit;
@@ -1327,7 +1327,7 @@ then do the updates and inserts to process the credit note entered */
 		DB_Txn_Commit($db);
 
 		prnMsg(_('Supplier credit note number') . ' ' . $CreditNoteNo . ' ' . _('has been processed'),'success');
-		echo '<br /><div class="centre"><a href="' . $rootpath . '/SupplierCredit.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Credit Note for this Supplier') . '</a></div>';
+		echo '<br /><div class="centre"><a href="' . $RootPath . '/SupplierCredit.php?&SupplierID=' .$_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Credit Note for this Supplier') . '</a></div>';
 		unset($_SESSION['SuppTrans']->GRNs);
 		unset($_SESSION['SuppTrans']->Shipts);
 		unset($_SESSION['SuppTrans']->GLCodes);

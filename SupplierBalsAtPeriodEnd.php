@@ -48,10 +48,10 @@ If (isset($_POST['PrintPDF'])
 	$SupplierResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Supplier Balances - Problem Report');
+		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -59,10 +59,10 @@ If (isset($_POST['PrintPDF'])
 		exit;
 	}
 	if (DB_num_rows($SupplierResult) ==0) {
-		$title = _('Supplier Balances - Problem Report');
+		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('There are no supplier balances to list'),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -110,11 +110,11 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Supplier Balances At A Period End');
+	$Title=_('Supplier Balances At A Period End');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
-		_('Supplier Allocations') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' .
+		_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';
 	}

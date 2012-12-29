@@ -4,7 +4,7 @@
 
 include ('includes/session.inc');
 
-$title = _('GL Codes Inquiry');
+$Title = _('GL Codes Inquiry');
 
 include('includes/header.inc');
 

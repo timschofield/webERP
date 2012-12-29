@@ -4,14 +4,14 @@
 
 include ('includes/session.inc');
 
-$title = _('Bank Reconciliation');
+$Title = _('Bank Reconciliation');
 
 include('includes/header.inc');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_GET['Account'])) {
 	$_POST['BankAccount']=$_GET['Account'];
@@ -109,7 +109,7 @@ if (DB_num_rows($AccountsResults)==0){
 	echo '</select></td>
 			</tr>
 			</table>
-			<p>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . '<a href="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</a>' . ' ' . _('and general ledger accounts to be affected') . '.';
+			<p>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . '<a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a>' . ' ' . _('and general ledger accounts to be affected') . '.';
 	include('includes/footer.inc');
 	exit;
 } else {
@@ -378,18 +378,18 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 if (isset($_POST['BankAccount'])) {
 	echo '<div class="centre">
 			<p>
-			<a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared payments') . '</a>
+			<a tabindex="4" href="' . $RootPath . '/BankMatching.php?Type=Payments&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared payments') . '</a>
 			</p>
 			<br />
-			<a tabindex="5" href="' . $rootpath . '/BankMatching.php?Type=Receipts&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared deposits') . '</a>
+			<a tabindex="5" href="' . $RootPath . '/BankMatching.php?Type=Receipts&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared deposits') . '</a>
 		</div>';
 } else {
 	echo '<div class="centre">
 			<p>
-			<a tabindex="4" href="' . $rootpath . '/BankMatching.php?Type=Payments">' . _('Match off cleared payments') . '</a>
+			<a tabindex="4" href="' . $RootPath . '/BankMatching.php?Type=Payments">' . _('Match off cleared payments') . '</a>
 			</p>
 			<br />
-			<a tabindex="5" href="' . $rootpath . '/BankMatching.php?Type=Receipts">' . _('Match off cleared deposits') . '</a>
+			<a tabindex="5" href="' . $RootPath . '/BankMatching.php?Type=Receipts">' . _('Match off cleared deposits') . '</a>
 		</div>';
 }
 echo '</div>';

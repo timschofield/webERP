@@ -10,7 +10,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Edit Remaining Items');
+$Title = _('Edit Remaining Items');
 
 include('includes/header.inc');
 
@@ -20,7 +20,7 @@ include('includes/header.inc');
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
-echo "<br />&nbsp;<a href='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
+echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 

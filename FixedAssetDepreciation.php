@@ -2,7 +2,7 @@
 /* $Id: FixedAssetDepreciation.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
 
 include('includes/session.inc');
-$title = _('Depreciation Journal Entry');
+$Title = _('Depreciation Journal Entry');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

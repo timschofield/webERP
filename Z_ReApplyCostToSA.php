@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title=_('Apply Current Cost to Sales Analysis');
+$Title=_('Apply Current Cost to Sales Analysis');
 include('includes/header.inc');
 
 $Period = 42;

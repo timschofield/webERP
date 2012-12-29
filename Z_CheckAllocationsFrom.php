@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Identify Allocation Stuff Ups');
+$Title = _('Identify Allocation Stuff Ups');
 include ('includes/header.inc');
 
 $sql = "SELECT debtortrans.type,

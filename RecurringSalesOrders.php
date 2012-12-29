@@ -10,7 +10,7 @@ $ViewTopic= 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
 include('includes/session.inc');
-$title = _('Recurring Orders');
+$Title = _('Recurring Orders');
 
 
 /* webERP manual links before header.inc */
@@ -181,7 +181,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 
 	prnMsg(_('Successfully deleted recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'],'success');
 
-	echo '<p><a href="'.$rootpath.'/SelectRecurringSalesOrder.php">'. _('Select A Recurring Sales Order Template') .'</a>';
+	echo '<p><a href="'.$RootPath.'/SelectRecurringSalesOrder.php">'. _('Select A Recurring Sales Order Template') .'</a>';
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
@@ -305,9 +305,9 @@ If (isset($_POST['Process'])) {
 			prnmsg(_('The recurring order template has been updated'),'success');
 		}
 
-	echo '<p><a href="'.$rootpath.'/SelectOrderItems.php?NewOrder=Yes">'. _('Enter New Sales Order') .'</a>';
+	echo '<p><a href="'.$RootPath.'/SelectOrderItems.php?NewOrder=Yes">'. _('Enter New Sales Order') .'</a>';
 
-	echo '<p><a href="'.$rootpath.'/SelectRecurringSalesOrder.php">'. _('Select A Recurring Sales Order Template') .'</a>';
+	echo '<p><a href="'.$RootPath.'/SelectRecurringSalesOrder.php">'. _('Select A Recurring Sales Order Template') .'</a>';
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
@@ -317,7 +317,7 @@ If (isset($_POST['Process'])) {
 	}
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') .
 		'" alt="" /><b>'.' '. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName .'</b></p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
 echo '<div>';

@@ -5,7 +5,7 @@
 include('includes/DefineStockRequestClass.php');
 
 include('includes/session.inc');
-$title = _('Create an Internal Materials Request');
+$Title = _('Create an Internal Materials Request');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -124,8 +124,8 @@ if (isset($_POST['Submit'])) {
 	exit;
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Dispatch') .
+		'" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['Edit'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -297,7 +297,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
 $SQL = "SELECT stockcategory.categoryid,
 				stockcategory.categorydescription
 			FROM stockcategory, internalstockcatrole
@@ -308,7 +308,7 @@ $result1 = DB_query($SQL, $db);
 if (DB_num_rows($result1) == 0) {
 	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up').'</p>';
 	echo '<br />
-		<a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		<a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 	exit;
 }
 echo '<table class="selection">
@@ -586,7 +586,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 					<td>'.$myrow['description'].'</td>
 					<td class="number">' . $qoh . '</td>
 					<td>' . $myrow['units'] . '</td>
-					<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
+					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'].'">' . _('View') . '</a></td>
 					<td>' . $ItemStatus . '</td>
 				</tr>';
 			//end of page full new headings if

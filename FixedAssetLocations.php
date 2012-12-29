@@ -3,10 +3,10 @@
 /* $Id$ */
 
 include('includes/session.inc');
-$title = _('Fixed Asset Locations');
+$Title = _('Fixed Asset Locations');
 include('includes/header.inc');
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 if (isset($_POST['submit']) AND !isset($_POST['delete'])) {

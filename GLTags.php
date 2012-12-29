@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Maintain General Ledger Tags');
+$Title = _('Maintain General Ledger Tags');
 
 include('includes/header.inc');
 
@@ -47,8 +47,8 @@ if (isset($_POST['update'])) {
 	$result= DB_query($sql,$db);
 }
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-		_('Print') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' .
+		_('Print') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">';

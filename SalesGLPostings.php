@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Sales GL Postings Set Up');
+$Title = _('Sales GL Postings Set Up');
 $ViewTopic= 'CreatingNewSystem';
 $BookMark = 'SalesGLPostings';
 include('includes/header.inc');
@@ -16,7 +16,7 @@ if (isset($_GET['SelectedSalesPostingID'])){
 
 $InputError=false;
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 

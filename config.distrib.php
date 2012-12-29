@@ -72,21 +72,21 @@ $DefaultClock = 12;
 
 
 
-/*The $rootpath is used in most scripts to tell the script the installation details of the files.
+/*The $RootPath is used in most scripts to tell the script the installation details of the files.
 
 NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
 eg. if the files are under the webserver root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
 */
 
-$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 if (isset($DirectoryLevelsDeep)){
 	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
-		$rootpath = mb_substr($rootpath,0, strrpos($rootpath,'/'));
+		$RootPath = mb_substr($RootPath,0, strrpos($RootPath,'/'));
 	}
 }
 
-if ($rootpath == "/" OR $rootpath == "\\") {
-	$rootpath = "";
+if ($RootPath == "/" OR $RootPath == "\\") {
+	$RootPath = "";
 }
 
 

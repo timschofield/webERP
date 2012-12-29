@@ -685,7 +685,7 @@ switch ($_GET['action']) {
 	break; // End Step 8
 } // end switch
 
-$title = $FormParams['title']; // fetch the title for the header.inc file
+$Title = $FormParams['title']; // fetch the title for the header.inc file
 
 include ($PathPrefix . 'includes/header.inc');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);

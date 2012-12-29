@@ -3,10 +3,10 @@
 /* $Id: SelectContract.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/session.inc');
-$title = _('Select Contract');
+$Title = _('Select Contract');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<div>';
@@ -63,7 +63,7 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 	echo '</select> &nbsp;&nbsp;';
 }
 echo '<input type="submit" name="SearchContracts" value="' . _('Search') . '" />';
-echo '&nbsp;&nbsp;<a href="' . $rootpath . '/Contracts.php">' . _('New Contract') . '</a></div><br />';
+echo '&nbsp;&nbsp;<a href="' . $RootPath . '/Contracts.php">' . _('New Contract') . '</a></div><br />';
 
 
 //figure out the SQL required from the inputs available
@@ -155,10 +155,10 @@ while ($myrow=DB_fetch_array($ContractsResult)) {
 		$k++;
 	}
 
-	$ModifyPage = $rootpath . '/Contracts.php?ModifyContractRef=' . $myrow['contractref'];
-	$OrderModifyPage = $rootpath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
-	$IssueToWOPage = $rootpath . '/WorkOrderIssue.php?WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['contractref'];
-	$CostingPage = $rootpath . '/ContractCosting.php?SelectedContract=' . $myrow['contractref'];
+	$ModifyPage = $RootPath . '/Contracts.php?ModifyContractRef=' . $myrow['contractref'];
+	$OrderModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
+	$IssueToWOPage = $RootPath . '/WorkOrderIssue.php?WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['contractref'];
+	$CostingPage = $RootPath . '/ContractCosting.php?SelectedContract=' . $myrow['contractref'];
 	$FormatedRequiredDate = ConvertSQLDate($myrow['requireddate']);
 
 	if ($myrow['status']==0 OR $myrow['status']==1){ //still setting up the contract

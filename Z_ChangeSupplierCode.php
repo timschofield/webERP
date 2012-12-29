@@ -3,7 +3,7 @@
 /*Script to Delete all sales transactions*/
 
 include ('includes/session.inc');
-$title = _('UTILITY PAGE To Changes A Supplier Code In All Tables');
+$Title = _('UTILITY PAGE To Changes A Supplier Code In All Tables');
 include('includes/header.inc');
 
 if (isset($_POST['ProcessSupplierChange']))

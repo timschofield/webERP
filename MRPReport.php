@@ -33,10 +33,10 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	if (DB_error_no($db) !=0) {
 		$errors = 1;
 		$holddb = $db;
-		$title = _('Print MRP Report Error');
+		$Title = _('Print MRP Report Error');
 		include('includes/header.inc');
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -44,10 +44,10 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	if (DB_num_rows($result) == 0) {
 		$errors = 1;
 		$holddb = $db;
-		$title = _('Print MRP Report Warning');
+		$Title = _('Print MRP Report Warning');
 		include('includes/header.inc');
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule, etc'), 'warn');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -144,10 +144,10 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	 }
 
 	if (isset($errors)) {
-		$title = _('MRP Report') . ' - ' . _('Problem Report');
+		$Title = _('MRP Report') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg( _('The MRP Report could not be retrieved by the SQL because') . ' '  . DB_error_msg($holddb),'error');
-		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;
 		}
@@ -492,7 +492,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('MRP Report');
+	$Title=_('MRP Report');
 	include('includes/header.inc');
 
 	if (isset($_POST['PrintPDF'])) {
@@ -506,14 +506,14 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result1 = DB_query($SQL, $db);
 	if (DB_num_rows($result1) == 0) {
 		echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up');
-		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		exit;
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items').'</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items').'</p>';
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('In Stock Category') . ':';
 	echo '<select name="StockCat">';
@@ -775,7 +775,7 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">'.$qoh . '</td>
 				<td>' . $myrow['units'].'</td>
-				<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?StockID=' . $myrow['stockid'] .'">' . _('View') . '</a></td>
+				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] .'">' . _('View') . '</a></td>
 				</tr>';
 			$j++;
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {

@@ -3,14 +3,14 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Maintenance Of Petty Cash Of Expenses');
+$Title = _('Maintenance Of Petty Cash Of Expenses');
 /* webERP manual links before header.inc */
 $ViewTopic= "PettyCash";
 $BookMark = "PCExpenses";
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
-	. '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
+	. '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedExpense'])){
 	$SelectedExpense = mb_strtoupper($_POST['SelectedExpense']);

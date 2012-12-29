@@ -4,13 +4,13 @@
 
 include('includes/session.inc');
 
-$title = _('System Configuration');
+$Title = _('System Configuration');
 $ViewTopic= 'GettingStarted';
 $BookMark = 'SystemConfiguration';
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . $title. '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	. '" alt="" />' . $Title. '</p>';
 
 if (isset($_POST['submit'])) {
 

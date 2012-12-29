@@ -20,11 +20,11 @@ if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
 
-	 $title = _('Payment Listing');
+	 $Title = _('Payment Listing');
 	 include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-		 $title . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/money_add.png" title="' .
+		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
@@ -101,7 +101,7 @@ $sql= "SELECT amount,
 
 $Result=DB_query($sql,$db,'','',false,false);
 if (DB_error_no($db)!=0){
-	$title = _('Payment Listing');
+	$Title = _('Payment Listing');
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($debug==1){
@@ -110,7 +110,7 @@ if (DB_error_no($db)!=0){
 	include('includes/footer.inc');
   	exit;
 } elseif (DB_num_rows($Result) == 0){
-	$title = _('Payment Listing');
+	$Title = _('Payment Listing');
 	include('includes/header.inc');
   	prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' ._('Please try again selecting a different date range or account'), 'error');
 	include('includes/footer.inc');
@@ -145,7 +145,7 @@ while ($myrow=DB_fetch_array($Result)){
 
 	$GLTransResult = DB_query($sql,$db,'','',false,false);
 	if (DB_error_no($db)!=0){
-		$title = _('Payment Listing');
+		$Title = _('Payment Listing');
 		include('includes/header.inc');
    		prnMsg(_('An error occurred getting the GL transactions'),'error');
 		if ($debug==1){

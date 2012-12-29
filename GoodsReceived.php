@@ -19,16 +19,16 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier=$_GET['identifier'];
 }
-$title = _('Receive Purchase Orders');
+$Title = _('Receive Purchase Orders');
 include('includes/header.inc');
 
-echo '<a href="'. $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Back to Purchase Orders'). '</a>
+echo '<a href="'. $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Back to Purchase Orders'). '</a>
 	<br />';
 
 if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.$identifier])) {
 	/* This page can only be called with a purchase order number for invoicing*/
 	echo '<div class="centre">
-			<a href= "' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Select a purchase order to receive').'</a>
+			<a href= "' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Select a purchase order to receive').'</a>
 		</div>
 		<br />'. _('This page can only be opened if a purchase order has been selected. Please select a purchase order first');
 
@@ -70,7 +70,7 @@ if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
 /* Always display quantities received and recalc balance for all items on the order */
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . ' : '. $_SESSION['PO'.$identifier]->OrderNo .' '. _('from'). ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</p>';
+		<img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . _('Receive') . '" alt="" />' . ' ' . _('Receive Purchase Order') . ' : '. $_SESSION['PO'.$identifier]->OrderNo .' '. _('from'). ' ' . $_SESSION['PO'.$identifier]->SupplierName . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -156,7 +156,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		//Now Display LineItem
 
-		echo '<td><a href="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" target="_blank">'. $LnItm->StockID . '</a></td>
+		echo '<td><a href="' . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" target="_blank">'. $LnItm->StockID . '</a></td>
 			<td>' . $LnItm->ItemDescription . '</td>
 			<td class="number">' . $DisplaySupplierQtyOrd . '</td>
 			<td>' . $LnItm->SuppliersUnit . '</td>
@@ -350,9 +350,9 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 					</tr>
 					</table>';
 			}
-			echo '<div class="centre"><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">'.
+			echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">'.
 				_('Select a different purchase order for receiving goods against').'</a></div>';
-			echo '<div class="centre"><a href="' . $rootpath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO'.$identifier]->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</a></div>';
+			echo '<div class="centre"><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO'.$identifier]->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</a></div>';
 			unset($_SESSION['PO'.$identifier]->LineItems);
 			unset($_SESSION['PO'.$identifier]);
 			unset($_POST['ProcessGoodsReceived']);
@@ -730,7 +730,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			<a href="PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">'. _('Print this Goods Received Note (GRN)').'</a>
 			<br />
 			<br />
-			<a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Select a different purchase order for receiving goods against'). '</a>
+			<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Select a different purchase order for receiving goods against'). '</a>
 		</div>';
 /*end of process goods received entry */
     echo '</div>';
@@ -742,7 +742,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	echo '<br />
 		<div class="centre">
-			<a href="' . $rootpath . '/PO_Header.php?ModifyOrderNumber=' .$_SESSION['PO'.$identifier]->OrderNo . '">' . _('Modify Order Items'). '</a>
+			<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' .$_SESSION['PO'.$identifier]->OrderNo . '">' . _('Modify Order Items'). '</a>
 		</div>
 		<br />
 		<div class="centre">

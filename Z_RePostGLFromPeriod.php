@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Recalculation of GL Balances in Chart Details Table');
+$Title = _('Recalculation of GL Balances in Chart Details Table');
 include('includes/header.inc');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

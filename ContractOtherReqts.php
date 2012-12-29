@@ -5,7 +5,7 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.inc');
-$title = _('Contract Other Requirements');
+$Title = _('Contract Other Requirements');
 
 $identifier=$_GET['identifier'];
 
@@ -14,7 +14,7 @@ $identifier=$_GET['identifier'];
  */
 
 if (!isset($_SESSION['Contract'.$identifier])){
-	header('Location:' . $rootpath . '/Contracts.php');
+	header('Location:' . $RootPath . '/Contracts.php');
 	exit;
 }
 include('includes/header.inc');
@@ -38,9 +38,9 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])){
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/Contracts.php?identifier='.$identifier. '" />';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
-	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $rootpath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -78,7 +78,7 @@ if (isset($_POST['EnterNewRequirement'])){
 echo '<form name="ContractReqtsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract'.$identifier]->CustomerName.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/contract.png" title="' . _('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract'.$identifier]->CustomerName.'</p>';
 
 if (count($_SESSION['Contract'.$identifier]->ContractReqts)>0){
 

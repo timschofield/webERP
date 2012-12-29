@@ -2,10 +2,10 @@
 /* $Id: ReprintGrn.php 4486 2011-02-08 09:20:50Z daintree $*/
 
 include('includes/session.inc');
-$title=_('Reprint a GRN');
+$Title=_('Reprint a GRN');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . $title . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['PONumber'])) {
 	$_POST['PONumber']='';

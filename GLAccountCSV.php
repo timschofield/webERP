@@ -4,7 +4,7 @@
 /* $Id: GLAccountCSV.php 4492 2011-02-18 09:56:52Z daintree $ */
 
 include ('includes/session.inc');
-$title = _('General Ledger Account Report');
+$Title = _('General Ledger Account Report');
 include('includes/header.inc');
 include('includes/GLPostings.inc');
 
@@ -14,7 +14,7 @@ if (isset($_POST['Period'])){
 	$SelectedPeriod = $_GET['Period'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
