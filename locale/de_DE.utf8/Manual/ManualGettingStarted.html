@@ -25,7 +25,7 @@ Die Hauptprobleme bei der Installation von PHP scheinen zu sein:
 <ol>
 <li>Einige für Windows deklarierte Installationen kommen mit einer Einstellung für session.save_path = /tmp, das ist natürlich für ein Windows-Verzeichnis unangebracht und sollte auf C:\temp oder etwas passenderes geändert werden.</li>
 <li>Wenn das System bei Ihrem Provider auf einer Rechnergruppe gehostet wird, muss das als ein permanentes Verzeichnis angegeben werden, andernfalls finden von Seite zu Seite wechselnde Server die Anmeldeinformationen nicht. Es gibt in der config.php eine Einstellung $SessionSavePath, diese sollte in diesen Fällen entsprechend gesetzt werden.</li>
-<li>Aus unklaren Gründen sind manche Server nicht in der Lage, über $rootpath = dirname($_SERVER['PHP_SELF']); automatisch das korrekte Verzeichnis zu ermitteln. Das äußert sich darin, dass das System nicht in der Lage ist, die Seiten-Links für die unterschiedlichen Systemfunktionen zu finden. Wenn das geschieht, kann die Variable $rootpath direkt auf den Pfad gesetzt werden, in dem die Skripte liegen.</li>
+<li>Aus unklaren Gründen sind manche Server nicht in der Lage, über $RootPath = dirname($_SERVER['PHP_SELF']); automatisch das korrekte Verzeichnis zu ermitteln. Das äußert sich darin, dass das System nicht in der Lage ist, die Seiten-Links für die unterschiedlichen Systemfunktionen zu finden. Wenn das geschieht, kann die Variable $RootPath direkt auf den Pfad gesetzt werden, in dem die Skripte liegen.</li>
 </ol>
 <br /><br />
 Das System könnte mit vielen anderen Datenbankservern genutzt werden, aber es ist auf MySQL entwickelt und getestet worden. Eine ConnectDB.inc-Datei für Postgres ist mit beigefügt und es gibt eine Einstellung in der config.php ($dbtype), die es dem Systemadministrator erlaubt, eine Postrgres-Datenbank zu verwenden, wenn ihm diese lieber ist. Unabhängige Benchmarks zeigen, dass MySQL für die allgemeinsten Datenbankaufgaben eines der schnellsten Systeme ist. Es ist insbesondere schnell beim Aufbau der Verbindungen, und weil es in der Natur des Web liegt, dass für jede Seite eine neue Verbindung erstellt wird, macht das MySQL für Web-Anwendungen besonders tauglich.
@@ -139,7 +139,7 @@ by Logic Works Ltd<br />
 $DefaultLanguage ='en_GB';<br />
 <br />
 // Whether to display the demo login and password or not on the login screen<br />
-$allow_demo_mode = True;<br />
+$AllowDemoMode = True;<br />
 <br />
 // webERP version<br />
 $Version = '3.04';<br />
@@ -158,13 +158,13 @@ $Version = '3.04';<br />
 $host = 'localhost';<br />
 <br />
 //The type of db server being used - currently only postgres or mysql<br />
-$dbType = 'mysql';<br />
-//$dbType = 'postgres';<br />
-//$dbType = 'mysql';<br />
+$DBType = 'mysql';<br />
+//$DBType = 'postgres';<br />
+//$DBType = 'mysql';<br />
 <br />
 // sql user &amp; password<br />
-$dbuser = 'weberp_db_user';<br />
-$dbpassword = 'weberp_db_pwd';<br />
+$DBUser = 'weberp_db_user';<br />
+$DBPassword = 'weberp_db_pwd';<br />
 <br />
 //It would probably be inappropriate to allow selection of the company in a hosted environment so this option can be turned off with this parameter<br />
 $AllowCompanySelectionBox = true;<br />
@@ -194,17 +194,17 @@ $CryptFunction = "sha1"; // SHA1 Hash<br />
 <br />
 <br />
 <br />
-/*The $rootpath is used in most scripts to tell the script the installation details of the files.<br />
+/*The $RootPath is used in most scripts to tell the script the installation details of the files.<br />
 <br />
 NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
 eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.<br />
 */<br />
 <br />
-$rootpath = dirname($_SERVER['PHP_SELF']);<br />
-if ($rootpath == "/" OR $rootpath == "\\") {<br />
-	$rootpath = "";<br />
+$RootPath = dirname($_SERVER['PHP_SELF']);<br />
+if ($RootPath == "/" OR $RootPath == "\\") {<br />
+	$RootPath = "";<br />
 }<br />
-//$rootpath = '/web-erp';<br />
+//$RootPath = '/web-erp';<br />
 <br />
 /* Report all errors except E_NOTICE
 This is the default value set in php.ini for most installations but just to be sure it is forced here

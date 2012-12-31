@@ -66,7 +66,7 @@
 
 <h3>header.inc</h3>
 
-<p>This file should be included after the variable $title has been set to the name of the page. This file relies on config.php being already loaded, so session.inc (which in turn includes config.php) must be included before header.inc. The code in this script has the following functions:</p>
+<p>This file should be included after the variable $Title has been set to the name of the page. This file relies on config.php being already loaded, so session.inc (which in turn includes config.php) must be included before header.inc. The code in this script has the following functions:</p>
 
 <ul>
     <li>Includes the javascript functions used in scripts from the file javascripts/MiscFunctions.js</li>
@@ -90,7 +90,7 @@
 
 <h3>config.php</h3>
 
-<p>The variables in config.php are available to all of tcripts that have included session.inc. There are not many now most of the configuration is stored in the database using the config table. However, the variables that give the software the information to connect to the database such as datbase user, password and host, together with the database type - dbtype - in fact only mysql is supported but there are two libraries that can be used the mysqli and the old mysql functions. There are a couple of other variables including the timezone, $rootpath which is the directory where the web server holds the system files. Also the php error_reporting code.</p>
+<p>The variables in config.php are available to all of tcripts that have included session.inc. There are not many now most of the configuration is stored in the database using the config table. However, the variables that give the software the information to connect to the database such as datbase user, password and host, together with the database type - dbtype - in fact only mysql is supported but there are two libraries that can be used the mysqli and the old mysql functions. There are a couple of other variables including the timezone, $RootPath which is the directory where the web server holds the system files. Also the php error_reporting code.</p>
 
 <p>Having started the page with session.inc and header.inc - and then finishing with footer.inc much of the work to ensure a consistent look and feel is already done.</p>
 
