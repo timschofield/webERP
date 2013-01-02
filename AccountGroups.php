@@ -44,7 +44,7 @@ $Errors = array();
 if (isset($_POST['MoveGroup'])) {
 	$sql="UPDATE chartmaster SET group_='" . $_POST['DestinyAccountGroup'] . "' WHERE group_='" . $_POST['OriginalAccountGroup'] . "'";
 	$ErrMsg = _('An error occurred in moving the account group');
-	$DbgMsg = _('The SQL that was used to moving the account group was');
+	$DbgMsg = _('The SQL that was used to move the account group was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
 	prnMsg( _('All accounts in the account group:') . ' ' . $_POST['OriginalAccountGroup'] . ' ' . _('have been changed to the account group:') . ' ' . $_POST['DestinyAccountGroup'],'success');

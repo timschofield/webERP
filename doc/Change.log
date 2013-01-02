@@ -1,5 +1,6 @@
 webERP Change Log
 
+2/1/13 Thomas Lie: corrections to various strings where English was suspect!!
 29/12/12 Phil: on log out destroy session and show the login form - avoiding nasty errors
 29/12/12 Phil: Proper casing of $Title $RootPath $Theme $DBType $DBUser $DBPassword $AllowDemoMode variables - may make upgrade tricky!!
 24/12/12 Ricard: OutstandingGRNs.php now has show on screen option

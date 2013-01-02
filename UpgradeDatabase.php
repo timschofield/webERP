@@ -162,7 +162,7 @@ if (isset($_POST['DoUpgrade'])){
 					break;
 			} //end switch
 		}
-	} else { //dbType is not mysql or mysqli
+	} else { //$DBType is not mysql or mysqli
 		prnMsg(_('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');
 	}
 

@@ -19,9 +19,9 @@ if (isset($_POST['SelectedType'])){
 	$SelectedType='';
 }
 
-if (!isset($_GET['delete']) and (ContainsIllegalCharacters($SelectedType) OR mb_strpos($SelectedType,' ')>0)){
+if (!isset($_GET['delete']) AND (ContainsIllegalCharacters($SelectedType) OR mb_strpos($SelectedType,' ')>0)){
 	$InputError = 1;
-	prnMsg(_('The  contain any of the following characters " \' - &amp; or a space'),'error');
+	prnMsg(_('The contain spaces nor any of the following characters') / ': " & \' -';,'error');
 }
 if (isset($_POST['SelectedRole'])){
 	$SelectedRole = mb_strtoupper($_POST['SelectedRole']);
@@ -119,7 +119,7 @@ if (!isset($SelectedRole)){
 	$result = DB_query($SQL,$db);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
-		if (isset($SelectedRole) and $myrow['secroleid']==$SelectedRole) {
+		if (isset($SelectedRole) AND $myrow['secroleid']==$SelectedRole) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';

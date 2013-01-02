@@ -373,7 +373,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			$SQL = "UPDATE workorders SET
 						costissued = costissued+" . ($AutoIssueCompRow['qtypu'] * $QuantityReceived * $AutoIssueCompRow['cost']) ."
 					WHERE wo='" . $_POST['WO'] . "'";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not be update the work order cost for an auto-issue component because');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not update the work order cost for an auto-issue component because');
 			$DbgMsg =  _('The following SQL to update the work order cost was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 

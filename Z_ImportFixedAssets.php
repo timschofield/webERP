@@ -55,7 +55,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	$i = 0;
 	foreach ($HeaderRow as $FieldName) {
 		if ( mb_strtoupper($FieldName) != mb_strtoupper($FieldNames[$i]) ) {
-			prnMsg (_('The selected file contains fields in the incorrect order ('. mb_strtoupper($FieldName). ' != '. mb_strtoupper($FieldNames[$i]). _('. Download a template and ensuer that fields are in the same sequence as the template.')),'error');
+			prnMsg (_('The selected file contains fields in the incorrect order ('. mb_strtoupper($FieldName). ' != '. mb_strtoupper($FieldNames[$i]). '. ' ._('Download a template and ensure that fields are in the same sequence as the template.')),'error');
 			fclose($FileHandle);
 			include('includes/footer.inc');
 			exit;
