@@ -232,6 +232,7 @@ if (!(isset($_POST['Search']))) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
+			$CodeLink = '<a href="' . $rootpath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -243,7 +244,7 @@ if (!(isset($_POST['Search']))) {
 					<td class="number">%s</td>
 					</tr>',
 					$i,
-					$myrow['stkcode'],
+					$CodeLink,
 					$myrow['description'],
 					locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
 					$myrow['units'], //unit
