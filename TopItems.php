@@ -232,7 +232,7 @@ if (!(isset($_POST['Search']))) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			$CodeLink = '<a href="' . $rootpath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
