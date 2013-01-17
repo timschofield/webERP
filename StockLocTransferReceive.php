@@ -331,9 +331,12 @@ if(isset($_POST['ProcessTransfer'])){
 				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
 				if ($_SESSION['InventoryManagerEmail']!=''){
 					$ConfirmationText = _('Cancelled balance at transfer'). ': ' . $_SESSION['Transfer']->TrfID . 
-										' ' . _('stock code') . ': ' . $TrfLine->StockID . 
-										' ' . _('by user') . ': ' . $_SESSION['UserID'] . 
-										' ' . _('at') . ': ' . Date('Y-m-d H:i:s');
+										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
+										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .
+										"\r\n" . _('Stock code') . ': ' . $TrfLine->StockID . 
+										"\r\n" . _('Qty received') . ': ' . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . 
+										"\r\n" . _('By user') . ': ' . $_SESSION['UserID'] . 
+										"\r\n" . _('At') . ': ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Cancelled balance at transfer'). ' ' . $_SESSION['Transfer']->TrfID;
 					mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 				}
