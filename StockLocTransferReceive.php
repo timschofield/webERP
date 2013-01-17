@@ -328,6 +328,15 @@ if(isset($_POST['ProcessTransfer'])){
 						AND stockid = '".  $TrfLine->StockID."'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
 				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
+				// send an email to the inventory manager about this cancellation (as can lead to employee fraud)
+				if ($_SESSION['InventoryManagerEmail']!=''){
+					$ConfirmationText = _('Cancelled balance at transfer'). ': ' . $_SESSION['Transfer']->TrfID . 
+										' ' . _('stock code') . ': ' . $TrfLine->StockID . 
+										' ' . _('by user') . ': ' . $_SESSION['UserID'] . 
+										' ' . _('at') . ': ' . Date('Y-m-d H:i:s');
+					$EmailSubject = _('Cancelled balance at transfer'). ' ' . $_SESSION['Transfer']->TrfID;
+					mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+				}
 			}
 			$i++;
 		} /*end of foreach TransferItem */
