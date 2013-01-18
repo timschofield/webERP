@@ -12,4 +12,5 @@ ALTER TABLE `gltrans` ADD INDEX ( `tag` );
 INSERT INTO scripts VALUES ('CustomerPurchases.php','5','Shows the purchases a customer has made.');
 INSERT INTO scripts VALUES ('GoodsReceivedNotInvoiced.php','2','Shows the list of goods received but not yet invoiced, both in supplier currency and home currency. Total in home curency should match the GL Account for Goods received not invoiced. Any discrepancy is due to multicurrency errors.');
 INSERT INTO scripts VALUES ('Z_ItemsWithoutPicture.php','15','Shows the list of curent items without picture in webERP');
+INSERT INTO scripts VALUES ('MaterialsNotUsed.php',  '4',  'Lists the items from Raw Material Categories not used in any BOM (thus, not used at all)');
 UPDATE config SET confvalue='4.10.0' WHERE confname='VersionNumber';
