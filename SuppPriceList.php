@@ -170,17 +170,17 @@ if (isset($_POST['PrintPDF'])) {
 		if ($code==$myrow['stockid']){
 
 			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($myrow['price'],$CurrDecimalPlaces),'right');
-			$pdf->addTextWrap(430,$YPos,50,$FontSize,$PriceDated,'left');
-			$pdf->addTextWrap(510,$YPos,40,$FontSize,$myrow['suppliers_partno'],'left');
+			$pdf->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
+			$pdf->addTextWrap(470,$YPos,90,$FontSize,$myrow['suppliers_partno'],'left');
 			$code=$myrow['stockid'];
 		} else {
 			$code=$myrow['stockid'];
-			$pdf->addTextWrap(30,$YPos,80,$FontSize,$myrow['stockid'],'left');
-			$pdf->addTextWrap(111,$YPos,150,$FontSize,$myrow['description'],'left');
+			$pdf->addTextWrap(30,$YPos,100,$FontSize,$myrow['stockid'],'left');
+			$pdf->addTextWrap(135,$YPos,160,$FontSize,$myrow['description'],'left');
 			$pdf->addTextWrap(300,$YPos,50,$FontSize,locale_number_format($myrow['conversionfactor'],'Variable'),'right');
 			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($myrow['price'],$CurrDecimalPlaces),'right');
-			$pdf->addTextWrap(430,$YPos,50,$FontSize,$PriceDated,'left');
-			$pdf->addTextWrap(510,$YPos,40,$FontSize,$myrow['suppliers_partno'],'left');
+			$pdf->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
+			$pdf->addTextWrap(470,$YPos,90,$FontSize,$myrow['suppliers_partno'],'left');
 		}
 
 
@@ -306,11 +306,11 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	/*set up the headings */
 
 	$pdf->addTextWrap(30,$YPos,80,$FontSize,_('Code'), 'left');
-	$pdf->addTextWrap(120,$YPos,80,$FontSize,_('Description'), 'left');
+	$pdf->addTextWrap(135,$YPos,80,$FontSize,_('Description'), 'left');
 	$pdf->addTextWrap(300,$YPos,50,$FontSize,_('Conv Factor'), 'left');
 	$pdf->addTextWrap(370,$YPos,50,$FontSize,_('Price'), 'left');
-	$pdf->addTextWrap(390,$YPos,80,$FontSize,_('Date From'), 'right');
-	$pdf->addTextWrap(470,$YPos,80,$FontSize,_('Supp Code'), 'right');
+	$pdf->addTextWrap(410,$YPos,80,$FontSize,_('Date From'), 'left');
+	$pdf->addTextWrap(470,$YPos,80,$FontSize,_('Supp Code'), 'left');
 
 	$FontSize=8;
 	$PageNumber++;
